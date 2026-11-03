@@ -1,4 +1,4 @@
-﻿---
+---
 description: 專案共同規則（與 CLAUDE.md 同步）
 alwaysApply: true
 ---
@@ -10,9 +10,11 @@ alwaysApply: true
 ## 目標
 廠商委託：為天堂 3.81C（`LiTo.bin`，SHA CE6EE68A…）提供可用的**登入器**與**伺服器**，支援登入、大廳、技能、進房、戰鬥結算、正常退出。
 
-## 目前狀態（2026-11-03）
-- 登入器正式版 **0.6.70**（桌面捷徑指向 0.6.71），伺服器 **0.6.69**；聯合基準 `lito登入器/LiTo381-Launcher/backups/baseline-0.6.66.zip`。
-- 戰鬥技能同源化尚有 **12 組開放缺口**（材料技能、娃娃、Source 消費端、同 SHA 回歸），詳 `監製工作流/combat-handoff-status-20261029.md`（已不追蹤，留本機參考）。
+## 目前狀態（2026-11-04，詳見 `PLAN.md`）
+- 登入器與伺服器正式版皆 **0.6.71**（`docs/maintenance/release-0.6.71.json`）；正式伺服器 JAR 放在 `lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`。
+- **伺服器無法從 `pom.xml` 直接建出正式 JAR**：正式 JAR 由 `tools/*/build.py` 對 `base-0.6.70.jar` 逐層 patch；`Build-Server.ps1` 只做檢查。M0 的 T002 要把這條鏈併回 `src/main`。
+- 戰鬥技能同源化：大量隔離候選（最新 `50635f7e…`）**未部署**，開放缺口見 `TASKS.md` M2。
+- `config/server.properties` 不進 git（含 DB 密碼），用 `server.properties.example`。
 - 歷史治理文件（總控任務板、監製索引、對話 ID）只供參考，不再是流程的一部分。
 
 ## 技術棧與建置
@@ -20,10 +22,10 @@ alwaysApply: true
 |---|---|---|---|
 | `lito登入器/LiTo381-Launcher` | C# (.csproj `src/LiTo381Launcher.csproj`) | `release/current/LiTo381Launcher.exe` | `Build.ps1` |
 | `lito登入器/LiTo381-Launcher/native` + `LiTo381-Compat` | C++ ddraw 相容層 (`ddraw_proxy.cpp`) | `ddraw.dll` | `Build-Compat.cmd` |
-| `lito伺服器/LiTo381-Server` | Java 17 / Maven 3.9 (`pom.xml`) | `1.啟動伺服器.bat`（`--check` 預檢、`--smoke` 短啟動） | `Build-Server.cmd` |
+| `lito伺服器/LiTo381-Server` | Java 17 / Maven 3.9 (`pom.xml`) | `1.啟動伺服器.bat`（`--check` 預檢、`--smoke` 短啟動） | `mvn -DskipTests compile`（CI）；正式 JAR 目前靠 `tools/*/build.py`，見 T002 |
 | `lito脫殼資源` | Python + Rust codec (`codec/l1_decode.rs`) | `閱讀入口.md` | — |
 
-- 伺服器設定只有 `LiTo381-Server/config/server.properties`；資料庫 `380_db`、`380_lito`，天堂角色資料**只讀**，僅回存 `character_lito` 勝敗。
+- 伺服器設定只有 `LiTo381-Server/config/server.properties`（**不進 git**，從 `.example` 複製）；資料庫 `380_db`、`380_lito`，天堂角色資料**只讀**，僅回存 `character_lito` 勝敗。
 - 遊戲資源一律引用 `D:\lineage開發\0-客戶端`，不複製 pak/map/sprite 進本專案。
 - Maven 本機倉庫在 `D:\dev-cache\maven\repository`（`~/.m2/settings.xml` 已設定）。
 
@@ -42,4 +44,3 @@ alwaysApply: true
 - Cursor 執行任務時：先讀本檔與 `TASKS.md` 指定項，只改任務列出的檔案範圍，PR 描述寫「做了什麼／怎麼驗證／未驗證什麼」。
 - 實機測試（啟動伺服器、登入器、遊戲）只由使用者執行；AI 提供步驟與核對清單。
 - 發布版本：tag `launcher-v0.6.x` / `server-v0.6.x`，成品放 `release/`，不進 git。
-
