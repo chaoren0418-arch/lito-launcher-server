@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir -p /tmp/out /tmp/sel
           cd /tmp/sel && unzip -q -o "$GITHUB_WORKSPACE/lito伺服器/LiTo381-Server/reference/base-0.6.71.jar" 'local/lito381/server/*'
-          while read c; do ls local/lito381/server/$c.class local/lito381/server/$c\$*.class 2>/dev/null; done < /tmp/missing.txt > /tmp/files.txt
+          while read c; do ls local/lito381/server/$c.class local/lito381/server/$c\$*.class 2>/dev/null || true; done < /tmp/missing.txt > /tmp/files.txt
           echo "class files: $(wc -l < /tmp/files.txt)"
           java -jar /tmp/cfr.jar $(cat /tmp/files.txt) --outputdir /tmp/out --comments false --silent true
           find /tmp/out -name '*.java' | wc -l
