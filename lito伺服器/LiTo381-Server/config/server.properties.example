@@ -29,7 +29,7 @@ database.jdbc.options=?useUnicode=true&characterEncoding=utf8&connectTimeout=500
 database.user=lito_shared
 
 # 資料庫密碼；不要分享此檔。Java properties 特殊字元需使用跳脫。
-database.password=d27b3cf4a15998e41d98e988f442aacf7b26d18f57c42b5e
+database.password=CHANGE_ME
 
 # 共用靜態庫：武防、技能、NPC 等模板。
 database.static.database=380_db

@@ -81,3 +81,6 @@ desktop.ini
 .vscode/
 .cursor/*
 !.cursor/rules/
+
+# ===== 機密：真實設定檔不進 git（用 server.properties.example 當範本）=====
+lito伺服器/LiTo381-Server/config/server.properties

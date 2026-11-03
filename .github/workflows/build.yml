@@ -16,6 +16,9 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+      - name: Stage SharedDatabase.java (lives in tools/shared-database, not src/main)
+        working-directory: lito伺服器/LiTo381-Server
+        run: cp tools/shared-database/SharedDatabase.java src/main/java/local/lito381/server/
       - name: Compile (no tests; tests need MySQL)
         working-directory: lito伺服器/LiTo381-Server
         run: mvn -B -q -DskipTests compile
