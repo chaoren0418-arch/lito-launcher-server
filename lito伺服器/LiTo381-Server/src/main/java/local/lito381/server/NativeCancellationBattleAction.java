@@ -1,99 +1,38 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/cancellation-battle-material/NativeCancellationBattleAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
 import java.util.List;
-import local.lito381.server.BattleQuestEncounter;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.BattleTimeAttackEncounter;
-import local.lito381.server.BattleTimedStatus;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatPoisonLifecycle;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeAreaMaterialAction;
-import local.lito381.server.NativeCombatAttacker;
-import local.lito381.server.Protocol;
 
+/** Capture a battle NPC before waiting; player cancellation retains its qualified path. */
 final class NativeCancellationBattleAction {
-    static final ThreadLocal<Target> current = new ThreadLocal();
-
-    static boolean cast(ClientSession clientSession2, byte[] byArray, BattleSpellCatalog.CancellationSpell cancellationSpell, CombatPoisonLifecycle.Scope scope) throws IOException {
-        if (cancellationSpell.skillId() != 44 || !String.valueOf(CombatAccess.field(clientSession2, "phase")).equals("BATTLE")) {
-            return false;
-        }
-        long l = Protocol.objectSpellRequest(byArray).targetObjectId();
-        NativeAreaMaterialAction.Context context = new NativeAreaMaterialAction.Context(clientSession2);
-        if (context.players.stream().anyMatch(clientSession -> clientSession.playerObjectId() == l)) {
-            return false;
-        }
-        NativeAreaMaterialAction.Npc npc = context.npcs.get(l);
-        if (npc == null || npc.kind() != 1 && npc.kind() != 2) {
-            return false;
-        }
-        Target target = new Target(context, l, npc);
-        NativeAreaMaterialAction.run(clientSession2, 44, () -> {
-            Object object = npc.owner();
-            synchronized (object) {
-                if (!target.valid()) {
-                    return;
-                }
-                Target target2 = current.get();
-                current.set(target);
-                try {
-                    clientSession2.nativeMaterialCancellationBody(byArray, cancellationSpell, scope);
-                }
-                finally {
-                    target.refresh();
-                    if (target2 == null) {
-                        current.remove();
-                    } else {
-                        current.set(target2);
-                    }
-                }
-            }
-        });
-        return true;
-    }
-
-    static List<ClientSession> roomCombatants(GameHub gameHub, long l) {
-        return current.get() == null ? gameHub.roomCombatants(l) : NativeAreaMaterialAction.roomCombatants(gameHub, l);
-    }
-
-    static List<ClientSession> roomMembers(GameHub gameHub, long l) {
-        return current.get() == null ? gameHub.roomMembers(l) : NativeAreaMaterialAction.battleMembers(gameHub, l);
-    }
-
-    static List<ClientSession> battleRecipients(GameHub gameHub, long l, int n) {
-        List<ClientSession> list = gameHub.battleRecipients(l, n);
-        return current.get() == null ? list : NativeAreaMaterialAction.filter(list);
-    }
-
-    static List<BattleQuestEncounter.Snapshot> visibleQuestMonsters(GameHub gameHub, long l, ClientSession clientSession) {
-        return current.get() == null ? gameHub.visibleQuestMonsters(l, clientSession) : NativeAreaMaterialAction.questNpcs(gameHub, l, clientSession);
-    }
-
-    static List<BattleTimeAttackEncounter.Snapshot> visibleTimeAttackActors(GameHub gameHub, long l, ClientSession clientSession) {
-        return current.get() == null ? gameHub.visibleTimeAttackActors(l, clientSession) : NativeAreaMaterialAction.timeNpcs(gameHub, l, clientSession);
-    }
-
-    private NativeCancellationBattleAction() {
-    }
-
-    record Target(NativeAreaMaterialAction.Context scene, long id, NativeAreaMaterialAction.Npc npc) {
-        boolean valid() {
-            return this.scene.scene() && this.scene.npc(this.id);
-        }
-
-        void refresh() {
-            NativeAreaMaterialAction.Context context = NativeAreaMaterialAction.current.get();
-            if (context != null && this.scene.encounter(this.npc.kind()) == this.npc.owner() && this.scene.monster(this.npc.owner(), this.npc.kind(), this.id) == this.npc.actor() && (Integer)CombatAccess.field(this.npc.actor(), "hp") > 0) {
-                Object object = NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(this.npc.actor(), "damagePoison"), true);
-                context.npcs.put(this.id, new NativeAreaMaterialAction.Npc(this.npc.kind(), this.id, this.npc.owner(), this.npc.actor(), object));
-            }
-        }
-    }
+ static final ThreadLocal<Target> current=new ThreadLocal<>();
+ record Target(NativeAreaMaterialAction.Context scene,long id,NativeAreaMaterialAction.Npc npc) {
+  boolean valid(){return scene.scene()&&scene.npc(id);}
+  void refresh(){
+   var owner=NativeAreaMaterialAction.current.get();
+   if(owner!=null&&scene.encounter(npc.kind())==npc.owner()&&scene.monster(npc.owner(),npc.kind(),id)==npc.actor()&&(int)CombatAccess.field(npc.actor(),"hp")>0){
+    var epoch=NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(npc.actor(),"damagePoison"),true);
+    owner.npcs.put(id,new NativeAreaMaterialAction.Npc(npc.kind(),id,npc.owner(),npc.actor(),epoch));
+   }
+  }
+ }
+ static boolean cast(ClientSession pc,byte[] packet,BattleSpellCatalog.CancellationSpell spell,CombatPoisonLifecycle.Scope scope)throws IOException {
+  if(spell.skillId()!=44||!String.valueOf(CombatAccess.field(pc,"phase")).equals("BATTLE"))return false;
+  long id=Protocol.objectSpellRequest(packet).targetObjectId();var scene=new NativeAreaMaterialAction.Context(pc);
+  if(scene.players.stream().anyMatch(p->p.playerObjectId()==id))return false;
+  var npc=scene.npcs.get(id);if(npc==null||(npc.kind()!=1&&npc.kind()!=2))return false;
+  var target=new Target(scene,id,npc);
+  NativeAreaMaterialAction.run(pc,44,()->{synchronized(npc.owner()){
+   if(!target.valid())return;
+   var previous=current.get();current.set(target);
+   try{pc.nativeMaterialCancellationBody(packet,spell,scope);}finally{target.refresh();if(previous==null)current.remove();else current.set(previous);}
+  }});
+  return true;
+ }
+ static List<ClientSession> roomCombatants(GameHub hub,long room){return current.get()==null?hub.roomCombatants(room):NativeAreaMaterialAction.roomCombatants(hub,room);}
+ static List<ClientSession> roomMembers(GameHub hub,long room){return current.get()==null?hub.roomMembers(room):NativeAreaMaterialAction.battleMembers(hub,room);}
+ static List<ClientSession> battleRecipients(GameHub hub,long room,int force){var members=hub.battleRecipients(room,force);return current.get()==null?members:NativeAreaMaterialAction.filter(members);}
+ static List<BattleQuestEncounter.Snapshot> visibleQuestMonsters(GameHub hub,long room,ClientSession pc){return current.get()==null?hub.visibleQuestMonsters(room,pc):NativeAreaMaterialAction.questNpcs(hub,room,pc);}
+ static List<BattleTimeAttackEncounter.Snapshot> visibleTimeAttackActors(GameHub hub,long room,ClientSession pc){return current.get()==null?hub.visibleTimeAttackActors(room,pc):NativeAreaMaterialAction.timeNpcs(hub,room,pc);}
+ private NativeCancellationBattleAction(){}
 }

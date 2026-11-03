@@ -1,68 +1,34 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito登入器/LiTo381-Launcher/server-patches/repair-041/RuntimeLifecycle.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
+import java.util.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import local.lito381.server.CharacterSummary;
-import local.lito381.server.ClientSession;
-import local.lito381.server.LiveBattleStats;
-import local.lito381.server.ServerConfig;
-
+/** Shared-source runtime ownership boundaries. No database writes or global session cache. */
 final class RuntimeLifecycle {
-    RuntimeLifecycle() {
+    static boolean enabled(ClientSession s) {
+        return ((ServerConfig) LiveBattleStats.get(s,"config")).ephemeralSourceProfiles();
     }
-
-    static boolean enabled(ClientSession clientSession) {
-        return ((ServerConfig)LiveBattleStats.get(clientSession, "config")).ephemeralSourceProfiles();
+    static void reset(ClientSession s, String reason) {
+        if (!enabled(s)) return;
+        // Called after the native economy reset, including its uninitialized path.
+        // The result page has already received its immutable score rows.
+        for (String field : List.of("spellReadyNanos", "itemReadyNanos", "storySkillEffectDeadlines"))
+            ((Map<?,?>) LiveBattleStats.get(s,field)).clear();
+        Object companions = LiveBattleStats.get(s,"tamedCompanions");
+        synchronized (companions) { ((Collection<?>) companions).clear(); }
+        set(s,"lastAttacker",null);
+        set(s,"lastCombatTargetObjectId",0L);
+        set(s,"pendingTournamentShop",null);
+        if ("disconnect".equals(reason))
+            ((Map<?,?>) LiveBattleStats.get(s,"sqlTournamentProfiles")).clear();
     }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void reset(ClientSession clientSession, String string) {
-        Object object;
-        if (!RuntimeLifecycle.enabled(clientSession)) {
-            return;
-        }
-        Object object2 = List.of("spellReadyNanos", "itemReadyNanos", "storySkillEffectDeadlines").iterator();
-        while (object2.hasNext()) {
-            object = object2.next();
-            ((Map)LiveBattleStats.get(clientSession, (String)object)).clear();
-        }
-        object = object2 = LiveBattleStats.get(clientSession, "tamedCompanions");
-        synchronized (object) {
-            ((Collection)object2).clear();
-        }
-        RuntimeLifecycle.set(clientSession, "lastAttacker", null);
-        RuntimeLifecycle.set(clientSession, "lastCombatTargetObjectId", 0L);
-        RuntimeLifecycle.set(clientSession, "pendingTournamentShop", null);
-        if ("disconnect".equals(string)) {
-            ((Map)LiveBattleStats.get(clientSession, "sqlTournamentProfiles")).clear();
-        }
+    static void loaded(ClientSession s) {
+        if (!enabled(s)) return;
+        Set<Long> owned = new HashSet<>();
+        for (CharacterSummary c : (List<CharacterSummary>) LiveBattleStats.get(s,"characters")) owned.add(c.objectId());
+        ((Map<?,?>) LiveBattleStats.get(s,"sqlTournamentProfiles")).keySet().retainAll(owned);
     }
-
-    static void loaded(ClientSession clientSession) {
-        if (!RuntimeLifecycle.enabled(clientSession)) {
-            return;
-        }
-        HashSet<Long> hashSet = new HashSet<Long>();
-        for (CharacterSummary characterSummary : (List)LiveBattleStats.get(clientSession, "characters")) {
-            hashSet.add(characterSummary.objectId());
-        }
-        ((Map)LiveBattleStats.get(clientSession, "sqlTournamentProfiles")).keySet().retainAll(hashSet);
-    }
-
-    static void set(Object object, String string, Object object2) {
-        try {
-            LiveBattleStats.field(object.getClass(), string).set(object, object2);
-        }
-        catch (ReflectiveOperationException reflectiveOperationException) {
-            throw new IllegalStateException("Runtime lifecycle field " + string, reflectiveOperationException);
-        }
+    static void set(Object object, String name, Object value) {
+        try { LiveBattleStats.field(object.getClass(),name).set(object,value); }
+        catch (ReflectiveOperationException e) { throw new IllegalStateException("Runtime lifecycle field " + name,e); }
     }
 }

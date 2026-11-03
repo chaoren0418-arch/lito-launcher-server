@@ -1,83 +1,34 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/resurrection-lifetime/NativeResurrectionAnswerLife.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.Protocol;
-
+/** One lease per pending question; no global actor map, timer or worker. */
 final class NativeResurrectionAnswerLife {
-    static void capture(ClientSession clientSession, Object object) {
-        clientSession.nativeResurrectionAnswerLease = object == null ? null : new Lease(clientSession, object);
-    }
-
-    private static Object pending(ClientSession clientSession) {
-        return CombatAccess.field(clientSession, "pendingResurrection");
-    }
-
-    private static void clear(ClientSession clientSession, Object object) throws IOException {
-        NativeLightAction.commitPair(clientSession, clientSession, () -> {
-            if (NativeResurrectionAnswerLife.pending(clientSession) == object) {
-                clientSession.nativeRejectResurrectionQuestion();
-            }
-        });
-    }
-
-    static void answer(ClientSession clientSession, Protocol.AskAnswer askAnswer) throws IOException {
-        Object object = NativeResurrectionAnswerLife.pending(clientSession);
-        Lease lease = clientSession.nativeResurrectionAnswerLease;
-        if (object == null) {
-            NativeLightAction.commitPair(clientSession, clientSession, () -> {
-                if (NativeResurrectionAnswerLife.pending(clientSession) == null) {
-                    clientSession.nativeResurrectionAnswerBody(askAnswer);
-                }
-            });
-            return;
-        }
-        if (lease == null || lease.pending != object || !lease.valid(clientSession)) {
-            NativeResurrectionAnswerLife.clear(clientSession, object);
-            return;
-        }
-        boolean[] blArray = new boolean[]{false};
-        NativeLightAction.commitPair(clientSession, lease.caster, () -> {
-            blArray[0] = true;
-            if (NativeResurrectionAnswerLife.pending(clientSession) != object) {
-                return;
-            }
-            if (!lease.valid(clientSession)) {
-                clientSession.nativeRejectResurrectionQuestion();
-                return;
-            }
-            clientSession.nativeResurrectionAnswerBody(askAnswer);
-        });
-        if (!blArray[0]) {
-            NativeResurrectionAnswerLife.clear(clientSession, object);
-        }
-    }
-
-    private NativeResurrectionAnswerLife() {
-    }
-
-    static final class Lease {
-        final Object pending;
-        final ClientSession caster;
-        final NativePlayerCommit.Binding casterBinding;
-        final NativePlayerCommit.Binding targetBinding;
-
-        Lease(ClientSession clientSession, Object object) {
-            this.pending = object;
-            this.caster = (ClientSession)CombatAccess.field(object, "caster");
-            this.casterBinding = NativePlayerCommit.Binding.capture(this.caster);
-            this.targetBinding = NativePlayerCommit.Binding.capture(clientSession);
-        }
-
-        boolean valid(ClientSession clientSession) {
-            return this.casterBinding.matches(this.caster) && this.targetBinding.matches(clientSession) && (Boolean)CombatAccess.field(this.caster, "sourceItemDisconnected") == false && (Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected") == false;
-        }
-    }
+ static final class Lease {
+  final Object pending;final ClientSession caster;
+  final NativePlayerCommit.Binding casterBinding,targetBinding;
+  Lease(ClientSession target,Object pending){this.pending=pending;caster=(ClientSession)CombatAccess.field(pending,"caster");casterBinding=NativePlayerCommit.Binding.capture(caster);targetBinding=NativePlayerCommit.Binding.capture(target);}
+  boolean valid(ClientSession target){return casterBinding.matches(caster)&&targetBinding.matches(target)&&!(boolean)CombatAccess.field(caster,NativeDeItemApplication.DISCONNECTED)&&!(boolean)CombatAccess.field(target,NativeDeItemApplication.DISCONNECTED);}
+ }
+ /** Executed immediately before every original volatile pendingResurrection store. */
+ static void capture(ClientSession target,Object pending){target.nativeResurrectionAnswerLease=pending==null?null:new Lease(target,pending);}
+ private static Object pending(ClientSession pc){return CombatAccess.field(pc,"pendingResurrection");}
+ private static void clear(ClientSession pc,Object expected)throws IOException{
+  NativeLightAction.commitPair(pc,pc,()->{if(pending(pc)==expected)pc.nativeRejectResurrectionQuestion();});
+ }
+ static void answer(ClientSession pc,Protocol.AskAnswer answer)throws IOException{
+  Object expected=pending(pc);var lease=pc.nativeResurrectionAnswerLease;
+  if(expected==null){NativeLightAction.commitPair(pc,pc,()->{if(pending(pc)==null)pc.nativeResurrectionAnswerBody(answer);});return;}
+  if(lease==null||lease.pending!=expected||!lease.valid(pc)){clear(pc,expected);return;}
+  boolean[] entered={false};
+  NativeLightAction.commitPair(pc,lease.caster,()->{
+   entered[0]=true;
+   if(pending(pc)!=expected)return;
+   if(!lease.valid(pc)){pc.nativeRejectResurrectionQuestion();return;}
+   pc.nativeResurrectionAnswerBody(answer);
+  });
+  // A caster can retire/disconnect while the answer waits for its pair lock.
+  // Clear only this question, under the receiver's current live receipt.
+  if(!entered[0])clear(pc,expected);
+ }
+ private NativeResurrectionAnswerLife(){}
 }

@@ -1,52 +1,9 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/armor-state/NativeArmorState.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import local.lito381.server.ClientSession;
-import local.lito381.server.NativeLightAction;
-
+/** Armor Break's canonical WORLD state uses the same action lock as its paired producer. */
 final class NativeArmorState {
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean activate(ClientSession clientSession, long l, int n) {
-        NativeLightAction.enterState(clientSession);
-        try {
-            boolean bl = clientSession.nativeArmorStateActivate(l, n);
-            return bl;
-        }
-        finally {
-            NativeLightAction.exitState(clientSession);
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean active(ClientSession clientSession, long l) {
-        NativeLightAction.enterState(clientSession);
-        try {
-            boolean bl = clientSession.nativeArmorStateActive(l);
-            return bl;
-        }
-        finally {
-            NativeLightAction.exitState(clientSession);
-        }
-    }
-
-    static boolean cancel(ClientSession clientSession) {
-        NativeLightAction.enterState(clientSession);
-        try {
-            boolean bl = clientSession.nativeArmorStateCancel();
-            return bl;
-        }
-        finally {
-            NativeLightAction.exitState(clientSession);
-        }
-    }
-
-    private NativeArmorState() {
-    }
+ static boolean activate(ClientSession pc,long now,int seconds){NativeLightAction.enterState(pc);try{return pc.nativeArmorStateActivate(now,seconds);}finally{NativeLightAction.exitState(pc);}}
+ static boolean active(ClientSession pc,long now){NativeLightAction.enterState(pc);try{return pc.nativeArmorStateActive(now);}finally{NativeLightAction.exitState(pc);}}
+ static boolean cancel(ClientSession pc){NativeLightAction.enterState(pc);try{return pc.nativeArmorStateCancel();}finally{NativeLightAction.exitState(pc);}}
+ private NativeArmorState(){}
 }

@@ -1,50 +1,26 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/armor-material/NativeArmorMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatNpcDebuffs;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeCastMaterial;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.Protocol;
-import local.lito381.server.RuntimeInventory;
-
+/** Preserve selector-only targeting and Source PC-only eligibility before ordered material admission. */
 final class NativeArmorMaterialAction {
-    static void cast(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.ArmorBreakSpell armorBreakSpell) throws IOException {
-        Protocol.selectorOnlySpellRequest(byArray);
-        Object object = CombatAccess.field(clientSession, "phase");
-        String string = String.valueOf(object);
-        ClientSession clientSession2 = null;
-        if (string.equals("BATTLE") || string.equals("WORLD")) {
-            GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-            long l = ((Number)CombatAccess.field(clientSession, "currentRoomId")).longValue();
-            int n = string.equals("WORLD") ? ((Integer)CombatAccess.field(clientSession, "classicWorldMapId")).intValue() : gameHub.battleMapId(l, clientSession);
-            Object object2 = CombatAccess.call(clientSession, "resolveArmorBreakTarget", "(Llocal/lito381/server/ClientSession$Phase;JIIII)Llocal/lito381/server/ClientSession$ArmorBreakTarget;", object, l, n, (Integer)CombatAccess.field(clientSession, "classicWorldInstanceId"), (Integer)CombatAccess.field(clientSession, "positionX"), (Integer)CombatAccess.field(clientSession, "positionY"));
-            if ((object2 = CombatNpcDebuffs.armorTarget(object2, clientSession)) != null) {
-                clientSession2 = (ClientSession)CombatAccess.get(object2, "player");
-            }
-        }
-        NativeLightAction.commitPair(clientSession, clientSession2 == null ? clientSession : clientSession2, () -> clientSession.nativeMaterialArmorBreakBody(byArray, armorBreakSpell));
-    }
-
-    static boolean admit(ClientSession clientSession, Object object, BattleSpellCatalog.ArmorBreakSpell armorBreakSpell) {
-        if (armorBreakSpell.skillId() != 112) {
-            throw new IllegalStateException("unreviewed Armor Break material skill");
-        }
-        ClientSession clientSession2 = (ClientSession)CombatAccess.get(object, "player");
-        return NativeLightAction.admitPair(clientSession, clientSession2 == null ? clientSession : clientSession2, armorBreakSpell.skillId(), armorBreakSpell.actionId(), armorBreakSpell.reuseDelayMillis());
-    }
-
-    static RuntimeInventory previous(ClientSession clientSession) {
-        return NativeLightAction.currentMaterial(clientSession) == null ? (RuntimeInventory)CombatAccess.field(clientSession, "inventory") : NativeCastMaterial.previous(clientSession);
-    }
-
-    private NativeArmorMaterialAction() {
-    }
+ static void cast(ClientSession pc,byte[] packet,BattleSpellCatalog.ArmorBreakSpell spell)throws IOException {
+  Protocol.selectorOnlySpellRequest(packet);
+  Object phase=CombatAccess.field(pc,"phase");String name=String.valueOf(phase);ClientSession player=null;
+  if(name.equals("BATTLE")||name.equals("WORLD")){
+   var hub=(GameHub)CombatAccess.field(pc,"hub");long room=((Number)CombatAccess.field(pc,"currentRoomId")).longValue();
+   int map=name.equals("WORLD")?(int)CombatAccess.field(pc,"classicWorldMapId"):hub.battleMapId(room,pc);
+   Object target=CombatAccess.call(pc,"resolveArmorBreakTarget","(Llocal/lito381/server/ClientSession$Phase;JIIII)Llocal/lito381/server/ClientSession$ArmorBreakTarget;",phase,room,map,(int)CombatAccess.field(pc,"classicWorldInstanceId"),(int)CombatAccess.field(pc,"positionX"),(int)CombatAccess.field(pc,"positionY"));
+   target=CombatNpcDebuffs.armorTarget(target,pc);if(target!=null)player=(ClientSession)CombatAccess.get(target,"player");
+  }
+  NativeLightAction.commitPair(pc,player==null?pc:player,()->pc.nativeMaterialArmorBreakBody(packet,spell));
+ }
+ static boolean admit(ClientSession pc,Object target,BattleSpellCatalog.ArmorBreakSpell spell){
+  if(spell.skillId()!=112)throw new IllegalStateException("unreviewed Armor Break material skill");
+  var player=(ClientSession)CombatAccess.get(target,"player");
+  return NativeLightAction.admitPair(pc,player==null?pc:player,spell.skillId(),spell.actionId(),spell.reuseDelayMillis());
+ }
+ static RuntimeInventory previous(ClientSession pc){
+  return NativeLightAction.currentMaterial(pc)==null?(RuntimeInventory)CombatAccess.field(pc,"inventory"):NativeCastMaterial.previous(pc);
+ }
+ private NativeArmorMaterialAction(){}
 }

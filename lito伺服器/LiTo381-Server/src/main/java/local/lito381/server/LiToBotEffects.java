@@ -1,167 +1,20 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito登入器/LiTo381-Launcher/server-patches/repair-032/LiToBotEffects.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.Map;
-import java.util.WeakHashMap;
-import local.lito381.server.BattleRules;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.GameHub;
-
+import java.lang.reflect.*;import java.util.*;
+/** Status lifetime follows the actual room generation, never the reusable wire id 2. */
 final class LiToBotEffects {
-    private static final Map<Object, State> states = Collections.synchronizedMap(new WeakHashMap());
-    private static final Field ROOMS;
-
-    LiToBotEffects() {
-    }
-
-    static Object field(Object object, String string) {
-        try {
-            Field field = object.getClass().getDeclaredField(string);
-            field.setAccessible(true);
-            return field.get(object);
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException(exception);
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static State state(GameHub gameHub, long l) {
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            try {
-                Object v = ((Map)ROOMS.get(gameHub)).get(l);
-                if (v == null || !((Boolean)LiToBotEffects.field(v, "battleStarted")).booleanValue() || (Integer)LiToBotEffects.field(v, "botHp") <= 0) {
-                    return null;
-                }
-                long l2 = ((Number)LiToBotEffects.field(v, "battleGeneration")).longValue();
-                Map<Object, State> map = states;
-                synchronized (map) {
-                    State state = states.get(v);
-                    if (state == null || state.generation != l2) {
-                        state = new State(l2);
-                        states.put(v, state);
-                    }
-                    return state;
-                }
-            }
-            catch (IllegalAccessException illegalAccessException) {
-                throw new IllegalStateException(illegalAccessException);
-            }
-        }
-    }
-
-    static boolean eligible(GameHub gameHub, long l) {
-        BattleRules.Mode mode = gameHub.roomRules(l).mode();
-        return gameHub.roomCombatantCount(l) == 1 && mode != BattleRules.Mode.PET_RACE && mode != BattleRules.Mode.QUEST_BATTLE && mode != BattleRules.Mode.TIME_ATTACK && LiToBotEffects.state(gameHub, l) != null;
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean apply(GameHub gameHub, long l, int n, long l2, int n2) {
-        State state = LiToBotEffects.state(gameHub, l);
-        if (state == null) {
-            return false;
-        }
-        long l3 = Math.addExact(l2, Math.multiplyExact((long)n2, 1000000000L));
-        State state2 = state;
-        synchronized (state2) {
-            if (n == 47) {
-                state.weakness = l3;
-            } else if (n == 56) {
-                state.disease = l3;
-            } else {
-                state.blind = l3;
-            }
-        }
-        return true;
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean blind(GameHub gameHub, long l, long l2) {
-        State state = LiToBotEffects.state(gameHub, l);
-        if (state == null) {
-            return false;
-        }
-        State state2 = state;
-        synchronized (state2) {
-            return l2 < state.blind;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static int damageModifier(GameHub gameHub, long l, long l2) {
-        State state = LiToBotEffects.state(gameHub, l);
-        if (state == null) {
-            return 0;
-        }
-        State state2 = state;
-        synchronized (state2) {
-            return (l2 < state.weakness ? BattleSpellCatalog.weaknessSpell(47).meleeDamageModifier() : 0) + (l2 < state.disease ? BattleSpellCatalog.weaknessSpell(56).meleeDamageModifier() : 0);
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static int mp(GameHub gameHub, long l) {
-        State state = LiToBotEffects.state(gameHub, l);
-        if (state == null) {
-            return 0;
-        }
-        State state2 = state;
-        synchronized (state2) {
-            return state.mp;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static int drain(GameHub gameHub, long l, int n) {
-        State state = LiToBotEffects.state(gameHub, l);
-        if (state == null) {
-            return 0;
-        }
-        State state2 = state;
-        synchronized (state2) {
-            int n2 = Math.min(state.mp, Math.max(0, n));
-            state.mp -= n2;
-            return n2;
-        }
-    }
-
-    static {
-        try {
-            ROOMS = GameHub.class.getDeclaredField("rooms");
-            ROOMS.setAccessible(true);
-        }
-        catch (Exception exception) {
-            throw new ExceptionInInitializerError(exception);
-        }
-    }
-
-    static final class State {
-        long generation;
-        long blind;
-        long weakness;
-        long disease;
-        int mp = 100;
-
-        State(long l) {
-            this.generation = l;
-        }
-    }
+ private static final Map<Object,State> states=Collections.synchronizedMap(new WeakHashMap<>());
+ private static final Field ROOMS;
+ static {try{ROOMS=GameHub.class.getDeclaredField("rooms");ROOMS.setAccessible(true);}catch(Exception e){throw new ExceptionInInitializerError(e);}}
+ static final class State {long generation,blind,weakness,disease;int mp=100;State(long g){generation=g;}}
+ static Object field(Object o,String n){try{Field f=o.getClass().getDeclaredField(n);f.setAccessible(true);return f.get(o);}catch(Exception e){throw new IllegalStateException(e);}}
+ static State state(GameHub h,long id){synchronized(h){try{Object room=((Map<?,?>)ROOMS.get(h)).get(id);if(room==null || !(boolean)field(room,"battleStarted") || (int)field(room,"botHp")<=0)return null;
+ long g=((Number)field(room,"battleGeneration")).longValue();synchronized(states){State old=states.get(room);if(old==null||old.generation!=g){old=new State(g);states.put(room,old);}return old;}
+ }catch(IllegalAccessException e){throw new IllegalStateException(e);}}}
+ static boolean eligible(GameHub h,long room){var mode=h.roomRules(room).mode();return h.roomCombatantCount(room)==1 && mode!=BattleRules.Mode.PET_RACE && mode!=BattleRules.Mode.QUEST_BATTLE && mode!=BattleRules.Mode.TIME_ATTACK && state(h,room)!=null;}
+ static boolean apply(GameHub h,long room,int skill,long now,int seconds){State s=state(h,room);if(s==null)return false;long until=Math.addExact(now,Math.multiplyExact(seconds,1_000_000_000L));synchronized(s){if(skill==BattleSpellCatalog.WEAKNESS)s.weakness=until;else if(skill==BattleSpellCatalog.DISEASE)s.disease=until;else s.blind=until;}return true;}
+ static boolean blind(GameHub h,long room,long now){State s=state(h,room);if(s==null)return false;synchronized(s){return now<s.blind;}}
+ static int damageModifier(GameHub h,long room,long now){State s=state(h,room);if(s==null)return 0;synchronized(s){return (now<s.weakness?BattleSpellCatalog.weaknessSpell(BattleSpellCatalog.WEAKNESS).meleeDamageModifier():0)+(now<s.disease?BattleSpellCatalog.weaknessSpell(BattleSpellCatalog.DISEASE).meleeDamageModifier():0);}}
+ static int mp(GameHub h,long room){State s=state(h,room);if(s==null)return 0;synchronized(s){return s.mp;}}
+ static int drain(GameHub h,long room,int amount){State s=state(h,room);if(s==null)return 0;synchronized(s){int n=Math.min(s.mp,Math.max(0,amount));s.mp-=n;return n;}}
 }

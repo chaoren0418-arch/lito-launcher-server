@@ -1,26 +1,11 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/invisibility-control/CombatInvisibilityRules.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatRules;
-import local.lito381.server.RuntimeInventory;
-
+/** Source ConfigSkill flag; isolated legacy fixtures retain their old behavior. */
 final class CombatInvisibilityRules {
-    CombatInvisibilityRules() {
-    }
-
-    static boolean breakOnCast() {
-        return CombatRules.number("INVIS_CAST_BREAK", 1.0) != 0.0;
-    }
-
-    static boolean toggle(boolean bl, ClientSession clientSession) {
-        if (!bl || !CombatInvisibilityRules.breakOnCast()) {
-            return false;
-        }
-        RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(0);
-        return !runtimeInventory.hasEquippedCatalog(20077L) && !runtimeInventory.hasEquippedCatalog(120077L) && !runtimeInventory.hasEquippedCatalog(20062L);
-    }
+ static boolean breakOnCast(){return CombatRules.number("INVIS_CAST_BREAK",1)!=0;}
+ static boolean toggle(boolean sameSpell,ClientSession pc){
+  if(!sameSpell||!breakOnCast())return false;
+  var inv=pc.nativeDeInventory(0);
+  return !inv.hasEquippedCatalog(20077)&&!inv.hasEquippedCatalog(120077)&&!inv.hasEquippedCatalog(20062);
+ }
 }

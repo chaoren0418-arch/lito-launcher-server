@@ -1,155 +1,48 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/mass-teleport-lifetime/NativeMassTeleportAnswerLife.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.concurrent.locks.ReentrantLock;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.NativeRolePublication;
-import local.lito381.server.Protocol;
-
+/** Bounded per-question lease. No global player map, repeating timer or database write. */
 final class NativeMassTeleportAnswerLife {
-    static Object token(ClientSession clientSession) {
-        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
-        reentrantLock.lock();
-        try {
-            if (clientSession.nativeMassTeleportRoleToken == null) {
-                clientSession.nativeMassTeleportRoleToken = new Object();
-            }
-            Object object = clientSession.nativeMassTeleportRoleToken;
-            return object;
-        }
-        finally {
-            reentrantLock.unlock();
-        }
-    }
-
-    static void retireRole(ClientSession clientSession) {
-        clientSession.nativeMassTeleportRoleToken = new Object();
-        clientSession.nativeRejectMassTeleportQuestion();
-    }
-
-    static void capture(ClientSession clientSession, Object object) {
-        clientSession.nativeMassTeleportAnswerLease = object == null ? null : new Lease(clientSession, object);
-    }
-
-    private static Object pending(ClientSession clientSession) {
-        return CombatAccess.field(clientSession, "pendingMassTeleport");
-    }
-
-    private static void clear(ClientSession clientSession, Object object) {
-        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
-        reentrantLock.lock();
-        try {
-            if (NativeMassTeleportAnswerLife.pending(clientSession) == object) {
-                clientSession.nativeRejectMassTeleportQuestion();
-            }
-        }
-        finally {
-            reentrantLock.unlock();
-        }
-    }
-
-    static void answer(ClientSession clientSession, Protocol.AskAnswer askAnswer) throws IOException {
-        Object object = NativeMassTeleportAnswerLife.pending(clientSession);
-        Lease lease = clientSession.nativeMassTeleportAnswerLease;
-        if (object == null) {
-            NativeLightAction.commitPair(clientSession, clientSession, () -> {
-                if (NativeMassTeleportAnswerLife.pending(clientSession) == null) {
-                    clientSession.nativeMassTeleportAnswerBody(askAnswer);
-                }
-            });
-            return;
-        }
-        if (lease == null || lease.pending != object || !lease.valid(clientSession)) {
-            NativeMassTeleportAnswerLife.clear(clientSession, object);
-            return;
-        }
-        boolean[] blArray = new boolean[]{false};
-        NativeLightAction.commitPair(clientSession, lease.caster, () -> {
-            blArray[0] = true;
-            if (NativeMassTeleportAnswerLife.pending(clientSession) != object) {
-                return;
-            }
-            if (!lease.valid(clientSession)) {
-                clientSession.nativeRejectMassTeleportQuestion();
-                return;
-            }
-            clientSession.nativeMassTeleportAnswerBody(askAnswer);
-        });
-        if (!blArray[0]) {
-            NativeMassTeleportAnswerLife.clear(clientSession, object);
-        }
-    }
-
-    static void publish(ClientSession clientSession, byte[] byArray, String string) {
-        NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(clientSession);
-        byte[] byArray2 = (byte[])byArray.clone();
-        NativeLightAction.finishScoped((bl, throwable) -> {
-            try {
-                NativeLightAction.commitPair(clientSession, clientSession, () -> {
-                    if (!binding.matches(clientSession)) {
-                        return;
-                    }
-                    Runnable runnable = NativeRolePublication.completion(clientSession, () -> {
-                        if (binding.matches(clientSession)) {
-                            try {
-                                clientSession.nativeSelfOriginalSend(byArray2, string);
-                            }
-                            catch (IOException iOException) {
-                                throw new UncheckedIOException(iOException);
-                            }
-                        }
-                    });
-                    NativeLightAction.finishScoped((bl, throwable) -> runnable.run());
-                });
-            }
-            catch (IOException iOException) {
-                throw new UncheckedIOException(iOException);
-            }
-        });
-    }
-
-    private NativeMassTeleportAnswerLife() {
-    }
-
-    static final class Lease {
-        final Object pending;
-        final Object casterRole;
-        final Object targetRole;
-        final ClientSession caster;
-        final NativePlayerCommit.Binding casterBinding;
-        final NativePlayerCommit.Binding targetBinding;
-
-        Lease(ClientSession clientSession, Object object) {
-            this.pending = object;
-            this.caster = (ClientSession)CombatAccess.field(object, "caster");
-            this.casterRole = NativeMassTeleportAnswerLife.token(this.caster);
-            this.targetRole = NativeMassTeleportAnswerLife.token(clientSession);
-            this.casterBinding = NativePlayerCommit.Binding.capture(this.caster);
-            this.targetBinding = NativePlayerCommit.Binding.capture(clientSession);
-        }
-
-        boolean valid(ClientSession clientSession) {
-            boolean bl;
-            if (this.casterRole != this.caster.nativeMassTeleportRoleToken || this.targetRole != clientSession.nativeMassTeleportRoleToken || !this.targetBinding.matches(clientSession) || ((Boolean)CombatAccess.field(this.caster, "sourceItemDisconnected")).booleanValue() || ((Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected")).booleanValue()) {
-                return false;
-            }
-            if (!String.valueOf(CombatAccess.field(this.pending, "originPhase")).equals("WORLD")) {
-                return this.casterBinding.matches(this.caster);
-            }
-            NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(this.caster);
-            Protocol.PortalDestination portalDestination = (Protocol.PortalDestination)CombatAccess.field(this.pending, "destination");
-            boolean bl2 = binding.object() == this.casterBinding.object() && binding.source().equals(this.casterBinding.source()) && binding.account().equals(this.casterBinding.account()) && binding.selected().equals(this.casterBinding.selected()) && binding.phase().equals("WORLD") && binding.room() == this.casterBinding.room();
-            boolean bl3 = bl = binding.map() == this.casterBinding.map() && binding.instance() == this.casterBinding.instance();
-            boolean bl4 = portalDestination != null && binding.map() == portalDestination.mapId() && binding.instance() == (portalDestination.mapId() == this.casterBinding.map() ? this.casterBinding.instance() : -1);
-            return bl2 && (bl || bl4);
-        }
-    }
+ static Object token(ClientSession pc){var lock=pc.nativePlayerActionLock();lock.lock();try{if(pc.nativeMassTeleportRoleToken==null)pc.nativeMassTeleportRoleToken=new Object();return pc.nativeMassTeleportRoleToken;}finally{lock.unlock();}}
+ static void retireRole(ClientSession pc){pc.nativeMassTeleportRoleToken=new Object();pc.nativeRejectMassTeleportQuestion();}
+ static final class Lease {
+  final Object pending,casterRole,targetRole;final ClientSession caster;
+  final NativePlayerCommit.Binding casterBinding,targetBinding;
+  Lease(ClientSession target,Object pending){this.pending=pending;caster=(ClientSession)CombatAccess.field(pending,"caster");casterRole=token(caster);targetRole=token(target);casterBinding=NativePlayerCommit.Binding.capture(caster);targetBinding=NativePlayerCommit.Binding.capture(target);}
+  boolean valid(ClientSession target){
+   if(casterRole!=caster.nativeMassTeleportRoleToken||targetRole!=target.nativeMassTeleportRoleToken||!targetBinding.matches(target)||(boolean)CombatAccess.field(caster,NativeDeItemApplication.DISCONNECTED)||(boolean)CombatAccess.field(target,NativeDeItemApplication.DISCONNECTED))return false;
+   if(!String.valueOf(CombatAccess.field(pending,"originPhase")).equals("WORLD"))return casterBinding.matches(caster);
+   var now=NativePlayerCommit.Binding.capture(caster);var destination=(Protocol.PortalDestination)CombatAccess.field(pending,"destination");
+   // A valid caster may already have completed this spell's cross-map portal.
+   boolean identity=now.object()==casterBinding.object()&&now.source().equals(casterBinding.source())&&now.account().equals(casterBinding.account())&&now.selected().equals(casterBinding.selected())&&now.phase().equals("WORLD")&&now.room()==casterBinding.room();
+   boolean origin=now.map()==casterBinding.map()&&now.instance()==casterBinding.instance();
+   boolean arrived=destination!=null&&now.map()==destination.mapId()&&now.instance()==(destination.mapId()==casterBinding.map()?casterBinding.instance():-1);
+   return identity&&(origin||arrived);
+  }
+ }
+ static void capture(ClientSession target,Object pending){target.nativeMassTeleportAnswerLease=pending==null?null:new Lease(target,pending);}
+ private static Object pending(ClientSession pc){return CombatAccess.field(pc,"pendingMassTeleport");}
+ private static void clear(ClientSession pc,Object expected){var lock=pc.nativePlayerActionLock();lock.lock();try{if(pending(pc)==expected)pc.nativeRejectMassTeleportQuestion();}finally{lock.unlock();}}
+ static void answer(ClientSession pc,Protocol.AskAnswer answer)throws IOException{
+  Object expected=pending(pc);var lease=pc.nativeMassTeleportAnswerLease;
+  if(expected==null){NativeLightAction.commitPair(pc,pc,()->{if(pending(pc)==null)pc.nativeMassTeleportAnswerBody(answer);});return;}
+  if(lease==null||lease.pending!=expected||!lease.valid(pc)){clear(pc,expected);return;}
+  boolean[] entered={false};
+  NativeLightAction.commitPair(pc,lease.caster,()->{
+   entered[0]=true;if(pending(pc)!=expected)return;
+   if(!lease.valid(pc)){pc.nativeRejectMassTeleportQuestion();return;}
+   pc.nativeMassTeleportAnswerBody(answer);
+  });
+  if(!entered[0])clear(pc,expected);
+ }
+ static void publish(ClientSession receiver,byte[] data,String note){
+  var binding=NativePlayerCommit.Binding.capture(receiver);byte[] frozen=data.clone();
+  NativeLightAction.finishScoped((accepted,failure)->{try{NativeLightAction.commitPair(receiver,receiver,()->{
+   if(!binding.matches(receiver))return;
+   var output=NativeRolePublication.completion(receiver,()->{if(binding.matches(receiver))try{receiver.nativeSelfOriginalSend(frozen,note);}catch(IOException e){throw new UncheckedIOException(e);}});
+   NativeLightAction.finishScoped((published,publicationFailure)->output.run());
+  });}catch(IOException e){throw new UncheckedIOException(e);}});
+ }
+ private NativeMassTeleportAnswerLife(){}
 }

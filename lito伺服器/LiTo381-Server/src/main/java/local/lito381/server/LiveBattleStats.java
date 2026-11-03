@@ -1,158 +1,58 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito登入器/LiTo381-Launcher/server-patches/repair-040/LiveBattleStats.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.HexFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.WeakHashMap;
-import local.lito381.server.ClientSession;
-import local.lito381.server.GameStateStore;
-import local.lito381.server.Protocol;
-import local.lito381.server.ServerConfig;
-import local.lito381.server.SharedDatabase;
-
+import java.lang.reflect.*;import java.util.*;import java.nio.charset.Charset;import java.io.IOException;
+/** Live presentation over existing source-qualified state; no extra database writes. */
 public final class LiveBattleStats {
-    static final Map<GameStateStore, Boolean> enabled = Collections.synchronizedMap(new WeakHashMap());
-
-    static Field field(Class<?> clazz, String string) {
-        try {
-            Field field = clazz.getDeclaredField(string);
-            field.setAccessible(true);
-            return field;
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException(exception);
-        }
+ static Field field(Class<?> c,String n){try{Field f=c.getDeclaredField(n);f.setAccessible(true);return f;}catch(Exception e){throw new IllegalStateException(e);}}
+ static Object get(Object o,String n){try{return field(o.getClass(),n).get(o);}catch(Exception e){throw new IllegalStateException(e);}}
+ static Object call(Object o,String n,Class<?>[] types,Object...args)throws Exception{var m=o.getClass().getDeclaredMethod(n,types);m.setAccessible(true);try{return m.invoke(o,args);}catch(InvocationTargetException e){if(e.getCause() instanceof Exception x)throw x;throw e;}}
+ static final Map<GameStateStore,Boolean> enabled=Collections.synchronizedMap(new WeakHashMap<>());
+ public static void enable(ClientSession session){
+  try{if(SharedDatabase.enabled((ServerConfig)get(session,"config")))enabled.put((GameStateStore)get(session,"state"),true);}
+  catch(Exception e){throw new IllegalStateException("Cannot enable live results",e);}
+ }
+ public static void beforeSnapshot(GameStateStore state){
+  if(!enabled.containsKey(state))return;
+  try{
+   boolean dirty=false;
+   for(Object p:((Map<?,?>)get(state,"profiles")).values()){
+    for(String n:List.of("wins","losses","rankingPoints","classicServerName","channel","sourceLevel","race","monthlyWins","monthlyLosses","monthlyRankingPoints","monthlyRankingPeriod")){
+     String snapshot="snapshot"+Character.toUpperCase(n.charAt(0))+n.substring(1);
+     if(!Objects.equals(get(p,n),get(p,snapshot))){dirty=true;break;}
     }
-
-    static Object get(Object object, String string) {
-        try {
-            return LiveBattleStats.field(object.getClass(), string).get(object);
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException(exception);
-        }
-    }
-
-    static Object call(Object object, String string, Class<?>[] classArray, Object ... objectArray) throws Exception {
-        Method method = object.getClass().getDeclaredMethod(string, classArray);
-        method.setAccessible(true);
-        try {
-            return method.invoke(object, objectArray);
-        }
-        catch (InvocationTargetException invocationTargetException) {
-            Throwable throwable = invocationTargetException.getCause();
-            if (throwable instanceof Exception) {
-                Exception exception = (Exception)throwable;
-                throw exception;
-            }
-            throw invocationTargetException;
-        }
-    }
-
-    public static void enable(ClientSession clientSession) {
-        try {
-            if (SharedDatabase.enabled((ServerConfig)LiveBattleStats.get(clientSession, "config"))) {
-                enabled.put((GameStateStore)LiveBattleStats.get(clientSession, "state"), true);
-            }
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException("Cannot enable live results", exception);
-        }
-    }
-
-    public static void beforeSnapshot(GameStateStore gameStateStore) {
-        if (!enabled.containsKey(gameStateStore)) {
-            return;
-        }
-        try {
-            boolean bl = false;
-            for (Object object : ((Map)LiveBattleStats.get(gameStateStore, "profiles")).values()) {
-                for (String string : List.of("wins", "losses", "rankingPoints", "classicServerName", "channel", "sourceLevel", "race", "monthlyWins", "monthlyLosses", "monthlyRankingPoints", "monthlyRankingPeriod")) {
-                    String string2 = "snapshot" + Character.toUpperCase(string.charAt(0)) + string.substring(1);
-                    if (Objects.equals(LiveBattleStats.get(object, string), LiveBattleStats.get(object, string2))) continue;
-                    bl = true;
-                    break;
-                }
-                if (!bl) continue;
-                break;
-            }
-            if (bl) {
-                for (String string : List.of("rankingSnapshotBoundaryEpochSeconds", "monthlyRankingSnapshotBoundaryEpochSeconds")) {
-                    Field field = LiveBattleStats.field(GameStateStore.class, string);
-                    long l = field.getLong(gameStateStore);
-                    if (l <= 0L) continue;
-                    field.setLong(gameStateStore, l - 1L);
-                }
-            }
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException("Cannot refresh live rankings", exception);
-        }
-    }
-
-    public static boolean baselineEquals(Object object, Object object2, ClientSession clientSession) {
-        if (enabled.containsKey((GameStateStore)LiveBattleStats.get(clientSession, "state"))) {
-            GameStateStore.TournamentProfileState tournamentProfileState = (GameStateStore.TournamentProfileState)object;
-            GameStateStore.TournamentProfileState tournamentProfileState2 = (GameStateStore.TournamentProfileState)object2;
-            return tournamentProfileState.wins() == tournamentProfileState2.wins() && tournamentProfileState.losses() == tournamentProfileState2.losses() && tournamentProfileState.classicServerName().equals(tournamentProfileState2.classicServerName());
-        }
-        return object.equals(object2);
-    }
-
-    public static void persistRankingRoster(ClientSession clientSession) throws IOException {
-        if (enabled.containsKey((GameStateStore)LiveBattleStats.get(clientSession, "state"))) {
-            return;
-        }
-        try {
-            LiveBattleStats.call(clientSession, "persistSqlTournamentRoster", new Class[0], new Object[0]);
-        }
-        catch (Exception exception) {
-            throw new IOException(exception);
-        }
-    }
-
-    static String hex(String string) {
-        return HexFormat.of().formatHex(string.getBytes(Charset.forName("MS950")));
-    }
-
-    public static byte[] packet(String string, String string2, String string3, GameStateStore.TournamentStatistics tournamentStatistics, Protocol.LitoCharacterRankings litoCharacterRankings) {
-        String string4 = "LITOSTAT1:" + LiveBattleStats.hex(string) + ":" + LiveBattleStats.hex(string2) + ":" + LiveBattleStats.hex(string3) + ":" + tournamentStatistics.winRateDenominator() + "," + tournamentStatistics.wins() + "," + tournamentStatistics.losses() + "," + tournamentStatistics.disconnects() + "," + litoCharacterRankings.overall() + "," + litoCharacterRankings.classicServer() + "," + litoCharacterRankings.channel() + "," + litoCharacterRankings.level() + "," + litoCharacterRankings.race() + "," + litoCharacterRankings.overallMovement() + "," + litoCharacterRankings.classicServerMovement() + "," + litoCharacterRankings.channelMovement() + "," + litoCharacterRankings.levelMovement() + "," + litoCharacterRankings.raceMovement();
-        return new Protocol.Writer().c(15).c(254).s(string4).bytes();
-    }
-
-    public static void lobby(ClientSession clientSession) throws IOException {
-        LiveBattleStats.enable(clientSession);
-        if (!enabled.containsKey((GameStateStore)LiveBattleStats.get(clientSession, "state"))) {
-            return;
-        }
-        if (!LiveBattleStats.get(clientSession, "phase").toString().equals("CHANNEL")) {
-            return;
-        }
-        String string = (String)LiveBattleStats.get(clientSession, "selectedCharacter");
-        if (string.isBlank()) {
-            return;
-        }
-        try {
-            GameStateStore gameStateStore = (GameStateStore)LiveBattleStats.get(clientSession, "state");
-            String string2 = (String)LiveBattleStats.call(clientSession, "stateCharacter", new Class[0], new Object[0]);
-            GameStateStore.TournamentStatistics tournamentStatistics = gameStateStore.tournamentStatistics(string2);
-            Protocol.LitoCharacterRankings litoCharacterRankings = gameStateStore.characterRankings(string2);
-            String string3 = (String)LiveBattleStats.call(clientSession, "litoDisplayName", new Class[0], new Object[0]);
-            LiveBattleStats.call(clientSession, "sendEncrypted", new Class[]{byte[].class, String.class}, LiveBattleStats.packet((String)LiveBattleStats.get(clientSession, "selectedClassicServerName"), string, string3, tournamentStatistics, litoCharacterRankings), "S_LITO_LIVE_STATS player=" + string + " battles=" + tournamentStatistics.winRateDenominator() + " wins=" + tournamentStatistics.wins() + " losses=" + tournamentStatistics.losses());
-        }
-        catch (Exception exception) {
-            throw new IOException("Cannot publish live lobby statistics", exception);
-        }
-    }
+    if(dirty)break;
+   }
+   if(dirty)for(String n:List.of("rankingSnapshotBoundaryEpochSeconds","monthlyRankingSnapshotBoundaryEpochSeconds")){
+    Field f=field(GameStateStore.class,n);long old=f.getLong(state);if(old>0)f.setLong(state,old-1);
+   }
+  }catch(Exception e){throw new IllegalStateException("Cannot refresh live rankings",e);}
+ }
+ public static boolean baselineEquals(Object cached,Object expected,ClientSession session){
+  if(enabled.containsKey((GameStateStore)get(session,"state"))){
+   var a=(GameStateStore.TournamentProfileState)cached;var b=(GameStateStore.TournamentProfileState)expected;
+   return a.wins()==b.wins() && a.losses()==b.losses() && a.classicServerName().equals(b.classicServerName());
+  }
+  return cached.equals(expected);
+ }
+ public static void persistRankingRoster(ClientSession session)throws IOException{
+  if(enabled.containsKey((GameStateStore)get(session,"state")))return; // Ranking reads must not replay stale per-session SQL caches.
+  try{call(session,"persistSqlTournamentRoster",new Class<?>[0]);}catch(Exception e){throw new IOException(e);}
+ }
+ static String hex(String s){return HexFormat.of().formatHex(s.getBytes(Charset.forName("MS950")));}
+ public static byte[] packet(String source,String raw,String display,GameStateStore.TournamentStatistics s,Protocol.LitoCharacterRankings r){
+  String text="LITOSTAT1:"+hex(source)+":"+hex(raw)+":"+hex(display)+":"+s.winRateDenominator()+","+s.wins()+","+s.losses()+","+s.disconnects()+","+r.overall()+","+r.classicServer()+","+r.channel()+","+r.level()+","+r.race()+","+r.overallMovement()+","+r.classicServerMovement()+","+r.channelMovement()+","+r.levelMovement()+","+r.raceMovement();
+  return new Protocol.Writer().c(0x0f).c(254).s(text).bytes();
+ }
+ public static void lobby(ClientSession session)throws IOException{
+  enable(session);if(!enabled.containsKey((GameStateStore)get(session,"state")))return;
+  if(!get(session,"phase").toString().equals("CHANNEL"))return;
+  String raw=(String)get(session,"selectedCharacter");if(raw.isBlank())return;
+  try{
+   GameStateStore state=(GameStateStore)get(session,"state");String identity=(String)call(session,"stateCharacter",new Class<?>[0]);
+   var stats=state.tournamentStatistics(identity);var ranks=state.characterRankings(identity);
+   String display=(String)call(session,"litoDisplayName",new Class<?>[0]);
+   call(session,"sendEncrypted",new Class<?>[]{byte[].class,String.class},packet((String)get(session,"selectedClassicServerName"),raw,display,stats,ranks),
+       "S_LITO_LIVE_STATS player="+raw+" battles="+stats.winRateDenominator()+" wins="+stats.wins()+" losses="+stats.losses());
+  }catch(Exception e){throw new IOException("Cannot publish live lobby statistics",e);}
+ }
 }

@@ -1,156 +1,48 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/return-nature-material/NativeReturnNatureMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
 import java.util.List;
-import local.lito381.server.BattleCompanion;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeCompanionCallbacks;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.NativeSelfCastAction;
-import local.lito381.server.Protocol;
-
+/** Bind Return to Nature before the native dispatcher can wait on a player lock. */
 final class NativeReturnNatureMaterialAction {
-    private static final ThreadLocal<Target> ingress = new ThreadLocal();
-    private static final ThreadLocal<Target> current = new ThreadLocal();
-
-    private static Target target(ClientSession clientSession, byte[] byArray) {
-        Protocol.AttackSpellRequest attackSpellRequest = Protocol.attackSpellRequest(byArray);
-        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        boolean bl = String.valueOf(CombatAccess.field(clientSession, "phase")).equals("WORLD");
-        List list = bl ? (List)CombatAccess.call(clientSession, "classicWorldMembers", "(I)Ljava/util/List;", (int)((Integer)CombatAccess.field(clientSession, "classicWorldMapId"))) : gameHub.roomCombatants((Long)CombatAccess.field(clientSession, "currentRoomId"));
-        for (ClientSession clientSession2 : list) {
-            List<BattleCompanion.Snapshot> list2 = bl ? clientSession2.classicWorldCompanionSnapshots() : clientSession2.controlledCompanionSnapshots();
-            for (BattleCompanion.Snapshot snapshot : list2) {
-                BattleCompanion battleCompanion;
-                if (snapshot.objectId() != attackSpellRequest.targetObjectId() || (battleCompanion = (BattleCompanion)CombatAccess.call(clientSession2, "ownedCompanion", "(J)Llocal/lito381/server/BattleCompanion;", attackSpellRequest.targetObjectId())) == null) continue;
-                return new Target(clientSession, clientSession2, battleCompanion, NativeCompanionCallbacks.capture(NativePlayerCommit.Binding.capture(clientSession2), battleCompanion));
-            }
-        }
-        return new Target(clientSession, clientSession, null, null);
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void dispatch(ClientSession clientSession, byte[] byArray, NativeSelfCastAction.Task task) throws IOException {
-        String string = String.valueOf(CombatAccess.field(clientSession, "phase"));
-        if (Protocol.spellSelector(byArray).skillId() != 145 || !string.equals("BATTLE") && !string.equals("WORLD") || clientSession.selectedCharacterName().isBlank()) {
-            task.run();
-            return;
-        }
-        Target target = ingress.get();
-        ingress.set(NativeReturnNatureMaterialAction.target(clientSession, byArray));
-        try {
-            task.run();
-        }
-        finally {
-            if (target == null) {
-                ingress.remove();
-            } else {
-                ingress.set(target);
-            }
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void cast(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.ReturnToNatureSpell returnToNatureSpell, int n) throws IOException {
-        Target target = ingress.get();
-        Target target2 = target != null && target.caster == clientSession ? target : NativeReturnNatureMaterialAction.target(clientSession, byArray);
-        ingress.remove();
-        try {
-            NativeLightAction.commitPair(clientSession, target2.owner, () -> {
-                if (!target2.valid()) {
-                    return;
-                }
-                Target target2 = current.get();
-                current.set(target2);
-                try {
-                    clientSession.nativeMaterialReturnNatureBody(byArray, returnToNatureSpell, n);
-                }
-                finally {
-                    if (target2 == null) {
-                        current.remove();
-                    } else {
-                        current.set(target2);
-                    }
-                }
-            });
-        }
-        finally {
-            if (target == null) {
-                ingress.remove();
-            } else {
-                ingress.set(target);
-            }
-        }
-    }
-
-    static boolean admit(ClientSession clientSession, ClientSession clientSession2, int n, int n2, int n3) {
-        if (n != 145) {
-            throw new IllegalStateException("unreviewed Return to Nature skill");
-        }
-        Target target = current.get();
-        if (target == null || target.caster != clientSession || target.owner != clientSession2 || !target.valid()) {
-            return false;
-        }
-        return NativeLightAction.admitPair(clientSession, clientSession2, n, n2, n3);
-    }
-
-    static boolean captureOutput(ClientSession clientSession, byte[] byArray, String string) {
-        Target target = current.get();
-        if (target == null) {
-            current.remove();
-            return false;
-        }
-        if (!string.contains("Return-to-Nature") || !string.startsWith("S_EFFECT ") && !string.startsWith("S_REMOVE_OBJECT ") && !string.startsWith("S_PUT_OBJECT ")) {
-            return false;
-        }
-        byte[] byArray2 = (byte[])byArray.clone();
-        NativeLightAction.deferScoped(() -> {
-            if (target.canPublish()) {
-                clientSession.nativeSelfOriginalSend(byArray2, string);
-            }
-        });
-        return true;
-    }
-
-    static ClientSession caster(ClientSession clientSession, BattleCompanion battleCompanion) {
-        Target target = current.get();
-        if (target == null) {
-            current.remove();
-            return null;
-        }
-        return target.owner == clientSession && target.pet == battleCompanion && target.valid() && clientSession.nativePlayerActionLock().isHeldByCurrentThread() && target.caster.nativePlayerActionLock().isHeldByCurrentThread() ? target.caster : null;
-    }
-
-    private NativeReturnNatureMaterialAction() {
-    }
-
-    private record Target(ClientSession caster, ClientSession owner, BattleCompanion pet, NativeCompanionCallbacks.Stamp stamp) {
-        BattleCompanion owned() {
-            return this.pet == null ? null : (BattleCompanion)CombatAccess.call(this.owner, "ownedCompanion", "(J)Llocal/lito381/server/BattleCompanion;", this.stamp.companion);
-        }
-
-        boolean valid() {
-            return this.pet == null || this.stamp.master.matches(this.owner) && (Boolean)CombatAccess.field(this.owner, "sourceItemDisconnected") == false && this.owned() == this.pet && NativeCompanionCallbacks.capture((NativePlayerCommit.Binding)this.stamp.master, (BattleCompanion)this.pet).life == this.stamp.life;
-        }
-
-        boolean canPublish() {
-            if (this.pet == null) {
-                return true;
-            }
-            BattleCompanion battleCompanion = this.owned();
-            return this.stamp.master.matches(this.owner) && (Boolean)CombatAccess.field(this.owner, "sourceItemDisconnected") == false && (battleCompanion == null || battleCompanion == this.pet);
-        }
-    }
+ private record Target(ClientSession caster,ClientSession owner,BattleCompanion pet,NativeCompanionCallbacks.Stamp stamp){
+  BattleCompanion owned(){return pet==null?null:(BattleCompanion)CombatAccess.call(owner,"ownedCompanion","(J)Llocal/lito381/server/BattleCompanion;",stamp.companion);}
+  boolean valid(){return pet==null||stamp.master.matches(owner)&&!(boolean)CombatAccess.field(owner,NativeDeItemApplication.DISCONNECTED)&&owned()==pet&&NativeCompanionCallbacks.capture(stamp.master,pet).life==stamp.life;}
+  // A successful release retires the old actor itself. Permit its removal while
+  // refusing to remove a newly created owned actor reusing that object ID.
+  boolean canPublish(){if(pet==null)return true;var live=owned();return stamp.master.matches(owner)&&!(boolean)CombatAccess.field(owner,NativeDeItemApplication.DISCONNECTED)&&(live==null||live==pet);}
+ }
+ private static final ThreadLocal<Target> ingress=new ThreadLocal<>(),current=new ThreadLocal<>();
+ private static Target target(ClientSession pc,byte[] packet){
+  var request=Protocol.attackSpellRequest(packet);var hub=(GameHub)CombatAccess.field(pc,"hub");boolean world=String.valueOf(CombatAccess.field(pc,"phase")).equals("WORLD");
+  List<ClientSession> players=world?(List<ClientSession>)CombatAccess.call(pc,"classicWorldMembers","(I)Ljava/util/List;",(int)CombatAccess.field(pc,"classicWorldMapId")):hub.roomCombatants((long)CombatAccess.field(pc,"currentRoomId"));
+  for(var owner:players){List<BattleCompanion.Snapshot> snapshots=world?owner.classicWorldCompanionSnapshots():owner.controlledCompanionSnapshots();
+   for(var snapshot:snapshots)if(snapshot.objectId()==request.targetObjectId()){
+    var pet=(BattleCompanion)CombatAccess.call(owner,"ownedCompanion","(J)Llocal/lito381/server/BattleCompanion;",request.targetObjectId());
+    if(pet!=null)return new Target(pc,owner,pet,NativeCompanionCallbacks.capture(NativePlayerCommit.Binding.capture(owner),pet));
+   }
+  }return new Target(pc,pc,null,null);
+ }
+ static void dispatch(ClientSession pc,byte[] packet,NativeSelfCastAction.Task original)throws IOException{
+  String phase=String.valueOf(CombatAccess.field(pc,"phase"));
+  if(Protocol.spellSelector(packet).skillId()!=145||(!phase.equals("BATTLE")&&!phase.equals("WORLD"))||pc.selectedCharacterName().isBlank()){original.run();return;}
+  var prior=ingress.get();ingress.set(target(pc,packet));try{original.run();}finally{if(prior==null)ingress.remove();else ingress.set(prior);}
+ }
+ static void cast(ClientSession pc,byte[] packet,BattleSpellCatalog.ReturnToNatureSpell spell,int roll)throws IOException{
+  var inherited=ingress.get();var target=inherited!=null&&inherited.caster==pc?inherited:target(pc,packet);ingress.remove();
+  try{NativeLightAction.commitPair(pc,target.owner,()->{
+   if(!target.valid())return;var prior=current.get();current.set(target);
+   try{pc.nativeMaterialReturnNatureBody(packet,spell,roll);}finally{if(prior==null)current.remove();else current.set(prior);}
+  });}finally{if(inherited==null)ingress.remove();else ingress.set(inherited);}
+ }
+ static boolean admit(ClientSession pc,ClientSession owner,int skill,int action,int reuse){
+  if(skill!=145)throw new IllegalStateException("unreviewed Return to Nature skill");var target=current.get();
+  if(target==null||target.caster!=pc||target.owner!=owner||!target.valid())return false;
+  return NativeLightAction.admitPair(pc,owner,skill,action,reuse);
+ }
+ static boolean captureOutput(ClientSession receiver,byte[] plain,String note){
+  var target=current.get();if(target==null){current.remove();return false;}
+  if(!note.contains("Return-to-Nature")||!(note.startsWith("S_EFFECT ")||note.startsWith("S_REMOVE_OBJECT ")||note.startsWith("S_PUT_OBJECT ")))return false;
+  byte[] snapshot=plain.clone();NativeLightAction.deferScoped(()->{if(target.canPublish())receiver.nativeSelfOriginalSend(snapshot,note);});return true;
+ }
+ private NativeReturnNatureMaterialAction(){}
 }

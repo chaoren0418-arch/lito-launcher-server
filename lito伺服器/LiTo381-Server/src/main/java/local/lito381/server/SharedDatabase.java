@@ -1,411 +1,209 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/shared-database/SharedDatabase.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.Set;
-import java.util.WeakHashMap;
-import local.lito381.server.AccountRepository;
-import local.lito381.server.DurableBattleSettlement;
-import local.lito381.server.GameStateStore;
-import local.lito381.server.LegacyMySqlRepository;
-import local.lito381.server.RepositoryTournamentMutation;
-import local.lito381.server.RepositoryTournamentMutationStatus;
-import local.lito381.server.RepositoryTournamentProfile;
-import local.lito381.server.RepositoryTournamentRoster;
-import local.lito381.server.ServerConfig;
-import local.lito381.server.SourceRoutedAccountRepository;
-import local.lito381.server.UnifiedConfiguration;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.sql.*;
+import java.util.*;
 
+/** Shared Lineage inputs are immutable; only character_lito contains durable LiTo state. */
 final class SharedDatabase {
-    private static final ThreadLocal<Boolean> SETTLEMENT = new ThreadLocal();
-    static final String POLICY = "source-readonly-stats-only";
-    static final Set<String> TABLES = Set.of("lito_battle_rule", "lito_battle_object", "lito_battle_spawn", "lito_battle_player_spawn", "lito_tournament_shop", "commands");
-    static final Map<LegacyMySqlRepository, Route> ROUTES = Collections.synchronizedMap(new WeakHashMap());
-
-    SharedDatabase() {
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static RepositoryTournamentMutation commitResult(AccountRepository accountRepository, long l, String string, RepositoryTournamentProfile repositoryTournamentProfile, GameStateStore.TournamentProfileState tournamentProfileState) throws Exception {
-        Boolean bl = SETTLEMENT.get();
+    // Only the settlement call site may open this narrow write capability.
+    private static final ThreadLocal<Boolean> SETTLEMENT = new ThreadLocal<>();
+    static RepositoryTournamentMutation commitResult(AccountRepository repository, long id, String name,
+            RepositoryTournamentProfile expected, GameStateStore.TournamentProfileState replacement) throws Exception {
+        Boolean previous = SETTLEMENT.get();
         SETTLEMENT.set(Boolean.TRUE);
-        try {
-            RepositoryTournamentMutation repositoryTournamentMutation = accountRepository.persistTournamentProfile(l, string, repositoryTournamentProfile, tournamentProfileState);
-            return repositoryTournamentMutation;
-        }
-        finally {
-            if (bl == null) {
-                SETTLEMENT.remove();
-            } else {
-                SETTLEMENT.set(bl);
-            }
-        }
+        try { return repository.persistTournamentProfile(id, name, expected, replacement); }
+        finally { if (previous == null) SETTLEMENT.remove(); else SETTLEMENT.set(previous); }
+    }
+    static final String POLICY = "source-readonly-stats-only";
+    static final Set<String> TABLES = Set.of("lito_battle_rule", "lito_battle_object",
+            "lito_battle_spawn", "lito_battle_player_spawn", "lito_tournament_shop", "commands");
+    static final Map<LegacyMySqlRepository, Route> ROUTES =
+            Collections.synchronizedMap(new WeakHashMap<>());
+    static Properties properties(Path file) throws Exception {
+        return UnifiedConfiguration.read(file);
     }
 
-    static Properties properties(Path path) throws Exception {
-        return UnifiedConfiguration.read(path);
+    static boolean enabled(ServerConfig config) throws Exception {
+        String policy = properties(config.source()).getProperty("database.persistence.policy", "");
+        if (!policy.isBlank() && !POLICY.equals(policy)) throw new IllegalArgumentException("Unknown persistence policy");
+        return POLICY.equals(policy);
     }
-
-    static boolean enabled(ServerConfig serverConfig) throws Exception {
-        String string = SharedDatabase.properties(serverConfig.source()).getProperty("database.persistence.policy", "");
-        if (!string.isBlank() && !POLICY.equals(string)) {
-            throw new IllegalArgumentException("Unknown persistence policy");
-        }
-        return POLICY.equals(string);
+    static String identifier(String value) {
+        if (value == null || !value.matches("[A-Za-z0-9_]+")) throw new IllegalArgumentException("Invalid database identifier");
+        return value;
     }
-
-    static String identifier(String string) {
-        if (string == null || !string.matches("[A-Za-z0-9_]+")) {
-            throw new IllegalArgumentException("Invalid database identifier");
-        }
-        return string;
-    }
-
-    static AccountRepository open(ServerConfig serverConfig) throws Exception {
-        if (!serverConfig.databaseReadOnly() || serverConfig.statePersistenceEnabled() || serverConfig.classicWorldCompatibilityEnabled()) {
+    static AccountRepository open(ServerConfig config) throws Exception {
+        if (!config.databaseReadOnly() || config.statePersistenceEnabled() || config.classicWorldCompatibilityEnabled())
             throw new IllegalArgumentException("Shared sources require read-only, memory state and arena mode");
-        }
-        Properties properties = SharedDatabase.properties(serverConfig.source());
-        Properties properties2 = SharedDatabase.properties(serverConfig.legacySqlProperties());
-        String string = SharedDatabase.identifier(properties.getProperty("database.lito.database"));
-        if (!"character_lito".equals(properties.getProperty("database.lito.character.table"))) {
+        Properties settings = properties(config.source()), credentials = properties(config.legacySqlProperties());
+        String controls = identifier(settings.getProperty("database.lito.database"));
+        if (!"character_lito".equals(settings.getProperty("database.lito.character.table")))
             throw new IllegalArgumentException("Only character_lito writes are supported");
-        }
-        LinkedHashMap<String, AccountRepository> linkedHashMap = new LinkedHashMap<String, AccountRepository>();
+        Map<String, AccountRepository> sources = new LinkedHashMap<>();
         try {
-            for (int i = 0; i < serverConfig.classicServerNames().size(); ++i) {
-                String string2 = serverConfig.classicServerNames().get(i);
-                String string3 = SharedDatabase.identifier(serverConfig.legacySourceDatabases().get(i));
-                LegacyMySqlRepository legacyMySqlRepository = new LegacyMySqlRepository(serverConfig.legacySqlProperties(), string2, serverConfig.classicServerIds().get(i), string3, serverConfig.legacySourceResourceDatabases().get(i), serverConfig.legacySourceWeightRates().get(i), true, "legacy_mysql");
-                ROUTES.put(legacyMySqlRepository, new Route(string2, string3, string, properties2));
-                linkedHashMap.put(string2, legacyMySqlRepository);
+            for (int i = 0; i < config.classicServerNames().size(); i++) {
+                String name = config.classicServerNames().get(i), db = identifier(config.legacySourceDatabases().get(i));
+                // legacy_mysql suppresses every LiTo extension join and all source mutations.
+                LegacyMySqlRepository repository = new LegacyMySqlRepository(config.legacySqlProperties(), name,
+                        config.classicServerIds().get(i), db, config.legacySourceResourceDatabases().get(i),
+                        config.legacySourceWeightRates().get(i), true, "legacy_mysql");
+                ROUTES.put(repository, new Route(name, db, controls, credentials));
+                sources.put(name, repository);
             }
-            DurableBattleSettlement.open(serverConfig);
-            return linkedHashMap.size() == 1 ? (AccountRepository)linkedHashMap.values().iterator().next() : new SourceRoutedAccountRepository(linkedHashMap);
-        }
-        catch (Exception exception) {
-            for (AccountRepository accountRepository : linkedHashMap.values()) {
-                accountRepository.close();
-            }
-            throw exception;
+            DurableBattleSettlement.open(config);
+            return sources.size()==1 ? sources.values().iterator().next() : new SourceRoutedAccountRepository(sources);
+        } catch (Exception e) {
+            for (AccountRepository repository : sources.values()) repository.close();
+            throw e;
         }
     }
-
-    static boolean registered(LegacyMySqlRepository legacyMySqlRepository) {
-        return ROUTES.containsKey(legacyMySqlRepository);
+    static boolean registered(LegacyMySqlRepository repository) { return ROUTES.containsKey(repository); }
+    static String resourceTable(LegacyMySqlRepository repository, String table, String ordinary) {
+        identifier(table);
+        Route route = ROUTES.get(repository);
+        return "`" + (route != null && TABLES.contains(table) ? route.controls : identifier(ordinary)) + "`.`" + table + "`";
     }
-
-    static String resourceTable(LegacyMySqlRepository legacyMySqlRepository, String string, String string2) {
-        SharedDatabase.identifier(string);
-        Route route = ROUTES.get(legacyMySqlRepository);
-        return "`" + (route != null && TABLES.contains(string) ? route.controls : SharedDatabase.identifier(string2)) + "`.`" + string + "`";
-    }
-
-    static void check(LegacyMySqlRepository legacyMySqlRepository) throws Exception {
-        Route route = ROUTES.get(legacyMySqlRepository);
-        if (route == null) {
-            return;
-        }
-        try (Connection connection = route.connection();
-             Statement statement = connection.createStatement();){
-            connection.setReadOnly(true);
-            ResultSet resultSet = statement.executeQuery("SELECT char_obj_id,char_name,wins,losses,version,updated_at FROM character_lito LIMIT 0");
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            resultSet = statement.executeQuery("SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='character_lito'");
-            try {
-                if (!resultSet.next() || !"InnoDB".equalsIgnoreCase(resultSet.getString(1)) && !"MyISAM".equalsIgnoreCase(resultSet.getString(1))) {
+    static void check(LegacyMySqlRepository repository) throws Exception {
+        Route route = ROUTES.get(repository);
+        if (route == null) return;
+        try (Connection c = route.connection(); Statement s = c.createStatement()) {
+            c.setReadOnly(true);
+            try (ResultSet r = s.executeQuery("SELECT char_obj_id,char_name,wins,losses,version,updated_at FROM character_lito LIMIT 0")) {}
+            try (ResultSet r = s.executeQuery("SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='character_lito'")) {
+                if (!r.next() || !("InnoDB".equalsIgnoreCase(r.getString(1)) || "MyISAM".equalsIgnoreCase(r.getString(1))))
                     throw new SQLException("character_lito requires InnoDB or MyISAM");
-                }
-            }
-            finally {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
             }
         }
         System.out.println("[LiTo] shared-source=" + route.database + " controls=" + route.controls + " source-read-only=true write-table=character_lito");
     }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static RepositoryTournamentRoster profiles(LegacyMySqlRepository legacyMySqlRepository) throws Exception {
-        Route route;
-        Route route2 = route = ROUTES.get(legacyMySqlRepository);
-        synchronized (route2) {
-            ArrayList<RepositoryTournamentProfile> arrayList = new ArrayList<RepositoryTournamentProfile>();
-            try (Object object = route.connection();
-                 Statement statement = object.createStatement();){
-                object.setReadOnly(true);
-                try (ResultSet object2 = statement.executeQuery("SELECT c.objid,c.char_name,t.wins,t.losses,t.version FROM characters c LEFT JOIN character_lito t ON t.char_obj_id=c.objid WHERE c.Banned=0 ORDER BY c.objid");){
-                    while (object2.next()) {
-                        arrayList.add(route.profile(object2.getLong(1), object2.getString(2), object2.getInt(3), object2.getInt(4), object2.getLong(5)));
-                    }
+    static RepositoryTournamentRoster profiles(LegacyMySqlRepository repository) throws Exception {
+        Route route = ROUTES.get(repository);
+        synchronized (route) {
+            List<RepositoryTournamentProfile> rows = new ArrayList<>();
+            try (Connection c = route.connection(); Statement s = c.createStatement()) {
+                c.setReadOnly(true);
+                try (ResultSet r = s.executeQuery("SELECT c.objid,c.char_name,t.wins,t.losses,t.version FROM characters c LEFT JOIN character_lito t ON t.char_obj_id=c.objid WHERE c.Banned=0 ORDER BY c.objid")) {
+                    while (r.next()) rows.add(route.profile(r.getLong(1), r.getString(2), r.getInt(3), r.getInt(4), r.getLong(5)));
                 }
             }
-            object = new HashSet();
-            for (RepositoryTournamentProfile repositoryTournamentProfile : arrayList) {
-                object.add(repositoryTournamentProfile.characterObjectId());
-            }
-            route.runtime.keySet().retainAll((Collection<?>)object);
-            return new RepositoryTournamentRoster(true, arrayList);
+            Set<Long> liveIds = new HashSet<>();
+            for (var row : rows) liveIds.add(row.characterObjectId());
+            route.runtime.keySet().retainAll(liveIds);
+            return new RepositoryTournamentRoster(true, rows);
         }
     }
-
-    /*
-     * Enabled aggressive block sorting
-     * Enabled unnecessary exception pruning
-     * Enabled aggressive exception aggregation
-     */
-    static RepositoryTournamentMutation persist(LegacyMySqlRepository legacyMySqlRepository, long l, String string, RepositoryTournamentProfile repositoryTournamentProfile, GameStateStore.TournamentProfileState tournamentProfileState) throws Exception {
-        Route route = ROUTES.get(legacyMySqlRepository);
-        if (!Boolean.TRUE.equals(SETTLEMENT.get())) {
+    static RepositoryTournamentMutation persist(LegacyMySqlRepository repository, long id, String name,
+            RepositoryTournamentProfile expected, GameStateStore.TournamentProfileState replacement) throws Exception {
+        Route route = ROUTES.get(repository);
+        if (!Boolean.TRUE.equals(SETTLEMENT.get()))
             throw new IllegalStateException("character_lito writes require battle settlement");
-        }
-        Route route2 = route;
-        synchronized (route2) {
-            boolean bl;
-            Object object;
-            Connection connection;
-            block58: {
-                if (l <= 0L) throw new IllegalArgumentException("Invalid source-qualified result");
-                if (tournamentProfileState == null) throw new IllegalArgumentException("Invalid source-qualified result");
-                if (!route.name.equals(tournamentProfileState.classicServerName())) throw new IllegalArgumentException("Invalid source-qualified result");
-                if (repositoryTournamentProfile != null) {
-                    if (repositoryTournamentProfile.characterObjectId() != l) throw new IllegalArgumentException("Invalid source-qualified result");
-                    if (!repositoryTournamentProfile.characterName().equals(string)) {
-                        throw new IllegalArgumentException("Invalid source-qualified result");
-                    }
-                }
-                connection = route.connection();
-                connection.setAutoCommit(false);
+        synchronized (route) {
+            if (id <= 0 || replacement == null || !route.name.equals(replacement.classicServerName())
+                    || expected != null && (expected.characterObjectId() != id || !expected.characterName().equals(name)))
+                throw new IllegalArgumentException("Invalid source-qualified result");
+            try (Connection c = route.connection()) {
+                c.setAutoCommit(false);
                 try {
-                    String string2;
-                    object = connection.prepareStatement("SELECT char_name FROM characters WHERE objid=? AND Banned=0");
-                    try {
-                        object.setLong(1, l);
-                        try (ResultSet resultSet = object.executeQuery();){
-                            string2 = resultSet.next() ? resultSet.getString(1) : null;
+                    String canonical;
+                    try (PreparedStatement p = c.prepareStatement("SELECT char_name FROM characters WHERE objid=? AND Banned=0")) {
+                        p.setLong(1,id); try (ResultSet r=p.executeQuery()) { canonical=r.next()?r.getString(1):null; }
+                    }
+                    if (!Objects.equals(canonical,name)) { c.rollback(); return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.NOT_FOUND,null); }
+                    RepositoryTournamentProfile current;
+                    boolean exists;
+                    try (PreparedStatement p=c.prepareStatement("SELECT wins,losses,version FROM character_lito WHERE char_obj_id=?")) {
+                        p.setLong(1,id); try(ResultSet r=p.executeQuery()) {
+                            exists=r.next();
+                            current=exists?route.profile(id,name,r.getInt(1),r.getInt(2),r.getLong(3)):route.profile(id,name,0,0,0);
                         }
                     }
-                    finally {
-                        if (object != null) {
-                            object.close();
-                        }
+                    if (expected == null ? current.snapshotVersion()!=0 :
+                            expected.snapshotVersion()!=current.snapshotVersion()
+                            || expected.state().wins()!=current.state().wins()
+                            || expected.state().losses()!=current.state().losses()) {
+                        c.rollback(); return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT,current);
                     }
-                    if (Objects.equals(string2, string)) break block58;
-                    connection.rollback();
-                    object = new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.NOT_FOUND, null);
-                }
-                catch (Exception exception) {
-                    connection.rollback();
-                    throw exception;
-                }
-                return object;
-            }
-            try (Object object2 = connection.prepareStatement("SELECT wins,losses,version FROM character_lito WHERE char_obj_id=?");){
-                object2.setLong(1, l);
-                try (ResultSet resultSet = object2.executeQuery();){
-                    bl = resultSet.next();
-                    object = bl ? route.profile(l, string, resultSet.getInt(1), resultSet.getInt(2), resultSet.getLong(3)) : route.profile(l, string, 0, 0, 0L);
-                }
-            }
-            if (repositoryTournamentProfile == null ? ((RepositoryTournamentProfile)object).snapshotVersion() != 0L : repositoryTournamentProfile.snapshotVersion() != ((RepositoryTournamentProfile)object).snapshotVersion() || repositoryTournamentProfile.state().wins() != ((RepositoryTournamentProfile)object).state().wins() || repositoryTournamentProfile.state().losses() != ((RepositoryTournamentProfile)object).state().losses()) {
-                connection.rollback();
-                object2 = new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT, (RepositoryTournamentProfile)object);
-                return object2;
-            }
-            boolean bl2 = ((RepositoryTournamentProfile)object).state().wins() != tournamentProfileState.wins() || ((RepositoryTournamentProfile)object).state().losses() != tournamentProfileState.losses();
-            long l2 = ((RepositoryTournamentProfile)object).snapshotVersion();
-            if (bl2) {
-                PreparedStatement preparedStatement;
-                block60: {
-                    RepositoryTournamentMutation repositoryTournamentMutation;
-                    long l3 = (long)tournamentProfileState.wins() - (long)((RepositoryTournamentProfile)object).state().wins();
-                    long l4 = (long)tournamentProfileState.losses() - (long)((RepositoryTournamentProfile)object).state().losses();
-                    if (l3 != 1L || l4 != 0L) {
-                        if (l3 != 0L) throw new SQLException("Settlement must add exactly one win or loss");
-                        if (l4 != 1L) {
+                    boolean changed=current.state().wins()!=replacement.wins() || current.state().losses()!=replacement.losses();
+                    long version=current.snapshotVersion();
+                    if (changed) {
+                        long winsDelta = (long) replacement.wins() - current.state().wins();
+                        long lossesDelta = (long) replacement.losses() - current.state().losses();
+                        if (!((winsDelta == 1 && lossesDelta == 0) || (winsDelta == 0 && lossesDelta == 1)))
                             throw new SQLException("Settlement must add exactly one win or loss");
+                        version=Math.addExact(version,1);
+                        if(version>0xFFFF_FFFFL)throw new SQLException("Result version exhausted");
+                        String sql=!exists
+                            ? "INSERT INTO character_lito(char_obj_id,char_name,wins,losses,version) VALUES(?,?,?,?,?)"
+                            : "UPDATE character_lito SET char_name=?,wins=?,losses=?,version=? WHERE char_obj_id=? AND version=? AND wins=? AND losses=?";
+                        try (PreparedStatement p=c.prepareStatement(sql)) {
+                            if(!exists){p.setLong(1,id);p.setString(2,name);p.setInt(3,replacement.wins());p.setInt(4,replacement.losses());p.setLong(5,version);}
+                            else{p.setString(1,name);p.setInt(2,replacement.wins());p.setInt(3,replacement.losses());p.setLong(4,version);p.setLong(5,id);p.setLong(6,current.snapshotVersion());p.setInt(7,current.state().wins());p.setInt(8,current.state().losses());}
+                            // Exactly one atomic write, including on MyISAM. Never depend on rollback to undo a partial result.
+                            if(p.executeUpdate()!=1){c.rollback();return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT,current);}
+                        } catch(SQLException race) {
+                            if(!exists && race.getErrorCode()==1062){c.rollback();return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT,current);}
+                            throw race;
                         }
                     }
-                    if ((l2 = Math.addExact(l2, 1L)) > 0xFFFFFFFFL) {
-                        throw new SQLException("Result version exhausted");
-                    }
-                    String string3 = !bl ? "INSERT INTO character_lito(char_obj_id,char_name,wins,losses,version) VALUES(?,?,?,?,?)" : "UPDATE character_lito SET char_name=?,wins=?,losses=?,version=? WHERE char_obj_id=? AND version=? AND wins=? AND losses=?";
-                    try {
-                        preparedStatement = connection.prepareStatement(string3);
-                        try {
-                            if (!bl) {
-                                preparedStatement.setLong(1, l);
-                                preparedStatement.setString(2, string);
-                                preparedStatement.setInt(3, tournamentProfileState.wins());
-                                preparedStatement.setInt(4, tournamentProfileState.losses());
-                                preparedStatement.setLong(5, l2);
-                            } else {
-                                preparedStatement.setString(1, string);
-                                preparedStatement.setInt(2, tournamentProfileState.wins());
-                                preparedStatement.setInt(3, tournamentProfileState.losses());
-                                preparedStatement.setLong(4, l2);
-                                preparedStatement.setLong(5, l);
-                                preparedStatement.setLong(6, ((RepositoryTournamentProfile)object).snapshotVersion());
-                                preparedStatement.setInt(7, ((RepositoryTournamentProfile)object).state().wins());
-                                preparedStatement.setInt(8, ((RepositoryTournamentProfile)object).state().losses());
-                            }
-                            if (preparedStatement.executeUpdate() == 1) break block60;
-                            connection.rollback();
-                            repositoryTournamentMutation = new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT, (RepositoryTournamentProfile)object);
-                            if (preparedStatement == null) return repositoryTournamentMutation;
-                        }
-                        catch (Throwable throwable) {
-                            if (preparedStatement == null) throw throwable;
-                            try {
-                                preparedStatement.close();
-                                throw throwable;
-                            }
-                            catch (Throwable throwable2) {
-                                throwable.addSuppressed(throwable2);
-                            }
-                            throw throwable;
-                        }
-                        preparedStatement.close();
-                    }
-                    catch (SQLException sQLException) {
-                        if (bl) throw sQLException;
-                        if (sQLException.getErrorCode() != 1062) throw sQLException;
-                        connection.rollback();
-                        RepositoryTournamentMutation repositoryTournamentMutation2 = new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.CONFLICT, (RepositoryTournamentProfile)object);
-                        if (connection == null) return repositoryTournamentMutation2;
-                        connection.close();
-                        return repositoryTournamentMutation2;
-                    }
-                    return repositoryTournamentMutation;
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            }
-            connection.commit();
-            RepositoryTournamentProfile repositoryTournamentProfile2 = new RepositoryTournamentProfile(l, string, l2, tournamentProfileState);
-            route.runtime.put(l, repositoryTournamentProfile2);
-            return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.SUCCESS, repositoryTournamentProfile2);
-            finally {
-                if (connection != null) {
-                    connection.close();
-                }
+                    c.commit();
+                    RepositoryTournamentProfile result=new RepositoryTournamentProfile(id,name,version,replacement);
+                    route.runtime.put(id,result);
+                    return new RepositoryTournamentMutation(RepositoryTournamentMutationStatus.SUCCESS,result);
+                } catch(Exception failure) { c.rollback(); throw failure; }
             }
         }
     }
-
-    static boolean applySources(Properties properties, Path path) throws Exception {
-        if (properties.containsKey("database.jdbc.base.url") || properties.containsKey("configuration.base.file")) {
-            UnifiedConfiguration.apply(properties, path);
-            return true;
-        }
-        String string = properties.getProperty("source.servers.file", "");
-        if (string.isBlank()) {
-            return false;
-        }
-        Path path2 = path.resolve(string).normalize();
-        if (!Files.isRegularFile(path2, new LinkOption[0])) {
-            return false;
-        }
-        Properties properties2 = SharedDatabase.properties(path2);
-        if (!properties2.containsKey("source.slots")) {
-            return false;
-        }
-        int n = Integer.parseInt(properties2.getProperty("source.slots"));
-        if (n < 1 || n > 8) {
-            throw new IllegalArgumentException("source.slots must be 1..8");
-        }
-        ArrayList<String> arrayList = new ArrayList<String>();
-        ArrayList<String> arrayList2 = new ArrayList<String>();
-        ArrayList<String> arrayList3 = new ArrayList<String>();
-        ArrayList<String> arrayList4 = new ArrayList<String>();
-        for (int i = 1; i <= n; ++i) {
-            String string2 = "source." + i + ".";
-            String string3 = properties2.getProperty(string2 + "enabled", "false");
-            if (!Set.of("true", "false").contains(string3)) {
-                throw new IllegalArgumentException("Invalid source enabled flag");
-            }
-            if (!Boolean.parseBoolean(string3)) continue;
-            String string4 = properties2.getProperty(string2 + "name", "").trim();
-            String string5 = properties2.getProperty(string2 + "id", "").trim();
-            if (string4.isEmpty() || string4.contains(",") || !string5.matches("[1-8]")) {
-                throw new IllegalArgumentException("Invalid source name/id");
-            }
-            arrayList.add(string4);
-            arrayList2.add(string5);
-            arrayList3.add(SharedDatabase.identifier(properties2.getProperty(string2 + "database", "")));
-            arrayList4.add(properties2.getProperty(string2 + "weight.rate", "100.0"));
-        }
-        if (arrayList.isEmpty() || new HashSet(arrayList).size() != arrayList.size() || new HashSet(arrayList2).size() != arrayList2.size() || new HashSet(arrayList3).size() != arrayList3.size()) {
-            throw new IllegalArgumentException("Sources must be nonempty and unique");
-        }
-        properties.setProperty("login.classic.server.names", String.join((CharSequence)",", arrayList));
-        properties.setProperty("login.classic.server.ids", String.join((CharSequence)",", arrayList2));
-        properties.setProperty("database.dynamic.databases", String.join((CharSequence)",", arrayList3));
-        properties.setProperty("database.source.weight.rates", String.join((CharSequence)",", arrayList4));
-        return true;
-    }
-
     static final class Route {
-        final String name;
-        final String database;
-        final String controls;
-        final String url;
-        final String user;
-        final String password;
-        final Map<Long, RepositoryTournamentProfile> runtime = new HashMap<Long, RepositoryTournamentProfile>();
-
-        Route(String string, String string2, String string3, Properties properties) {
-            this.name = string;
-            this.database = string2;
-            this.controls = string3;
-            this.url = properties.getProperty("URL1_LOGIN") + string2 + properties.getProperty("URL3_LOGIN", "");
-            this.user = properties.getProperty("Login_LOGIN", properties.getProperty("Login"));
-            this.password = properties.getProperty("Password_LOGIN", properties.getProperty("Password", ""));
+        final String name,database,controls,url,user,password;
+        final Map<Long,RepositoryTournamentProfile> runtime=new HashMap<>();
+        Route(String name,String database,String controls,Properties p) {
+            this.name=name;this.database=database;this.controls=controls;
+            url=p.getProperty("URL1_LOGIN")+database+p.getProperty("URL3_LOGIN","");
+            user=p.getProperty("Login_LOGIN",p.getProperty("Login"));
+            password=p.getProperty("Password_LOGIN",p.getProperty("Password",""));
         }
-
-        Connection connection() throws SQLException {
-            return DriverManager.getConnection(this.url, this.user, this.password);
+        Connection connection() throws SQLException { return DriverManager.getConnection(url,user,password); }
+        RepositoryTournamentProfile profile(long id,String character,int wins,int losses,long version) {
+            RepositoryTournamentProfile cached=runtime.get(id);
+            if(cached!=null && cached.characterName().equals(character) && cached.snapshotVersion()==version
+                    && cached.state().wins()==wins && cached.state().losses()==losses)return cached;
+            var state=new GameStateStore.TournamentProfileState(0,wins,losses,0,0,0,0,0,
+                    Collections.nCopies(12,0),Collections.nCopies(5,0),false,name,-1,-1,-1,false,
+                    0,0,0,"",-1,-1,-1,false,0,0,0,0,0,0,0,0,0,0,0,1,0,0);
+            var result=new RepositoryTournamentProfile(id,character,version,state);
+            // Do not cache every source character on SELECT. Only committed
+            // compact ranking records survive sessions; no inventory/actor data.
+            if (cached != null) runtime.put(id,result);
+            return result;
         }
-
-        RepositoryTournamentProfile profile(long l, String string, int n, int n2, long l2) {
-            RepositoryTournamentProfile repositoryTournamentProfile = this.runtime.get(l);
-            if (repositoryTournamentProfile != null && repositoryTournamentProfile.characterName().equals(string) && repositoryTournamentProfile.snapshotVersion() == l2 && repositoryTournamentProfile.state().wins() == n && repositoryTournamentProfile.state().losses() == n2) {
-                return repositoryTournamentProfile;
-            }
-            GameStateStore.TournamentProfileState tournamentProfileState = new GameStateStore.TournamentProfileState(0L, n, n2, 0, 0, 0L, 0, 0, Collections.nCopies(12, 0), Collections.nCopies(5, 0), false, this.name, -1, -1, -1, false, 0L, 0, 0, "", -1, -1, -1, false, 0, 0L, 0, 0, 0, 0, 0, 0, 0, 0, 0L, 1, 0L, 0L);
-            RepositoryTournamentProfile repositoryTournamentProfile2 = new RepositoryTournamentProfile(l, string, l2, tournamentProfileState);
-            if (repositoryTournamentProfile != null) {
-                this.runtime.put(l, repositoryTournamentProfile2);
-            }
-            return repositoryTournamentProfile2;
+    }
+    /** Eight stable slots, with independent enable switches; IDs never renumber. */
+    static boolean applySources(Properties target,Path base) throws Exception {
+        if (target.containsKey("database.jdbc.base.url") || target.containsKey("configuration.base.file")) { UnifiedConfiguration.apply(target,base); return true; }
+        String file=target.getProperty("source.servers.file","");
+        if(file.isBlank())return false;
+        Path path=base.resolve(file).normalize();
+        if(!Files.isRegularFile(path))return false;
+        Properties sources=properties(path);
+        if(!sources.containsKey("source.slots"))return false;
+        int slots=Integer.parseInt(sources.getProperty("source.slots"));
+        if(slots<1||slots>8)throw new IllegalArgumentException("source.slots must be 1..8");
+        List<String> names=new ArrayList<>(),ids=new ArrayList<>(),dbs=new ArrayList<>(),rates=new ArrayList<>();
+        for(int i=1;i<=slots;i++) {
+            String prefix="source."+i+".",enabled=sources.getProperty(prefix+"enabled", "false");
+            if(!Set.of("true","false").contains(enabled))throw new IllegalArgumentException("Invalid source enabled flag");
+            if(!Boolean.parseBoolean(enabled))continue;
+            String name=sources.getProperty(prefix+"name","").trim(),id=sources.getProperty(prefix+"id","").trim();
+            if(name.isEmpty()||name.contains(",")||!id.matches("[1-8]"))throw new IllegalArgumentException("Invalid source name/id");
+            names.add(name);ids.add(id);dbs.add(identifier(sources.getProperty(prefix+"database","")));rates.add(sources.getProperty(prefix+"weight.rate","100.0"));
         }
+        if(names.isEmpty()||new HashSet<>(names).size()!=names.size()||new HashSet<>(ids).size()!=ids.size()||new HashSet<>(dbs).size()!=dbs.size())
+            throw new IllegalArgumentException("Sources must be nonempty and unique");
+        target.setProperty("login.classic.server.names",String.join(",",names));target.setProperty("login.classic.server.ids",String.join(",",ids));
+        target.setProperty("database.dynamic.databases",String.join(",",dbs));target.setProperty("database.source.weight.rates",String.join(",",rates));
+        return true;
     }
 }

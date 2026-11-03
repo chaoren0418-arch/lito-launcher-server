@@ -1,26 +1,14 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/summon-material/NativeSummonCastAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.NativeLightAction;
-
+/** Preserve both native elemental outcomes; acquire material/action admission at the original debit. */
 final class NativeSummonCastAction {
-    static void cast(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.SummonSpell summonSpell) throws IOException {
-        NativeLightAction.commitSelf(clientSession, () -> clientSession.nativeMaterialSummonBody(byArray, summonSpell));
-    }
-
-    static boolean admit(ClientSession clientSession, BattleSpellCatalog.SummonSpell summonSpell) {
-        if (summonSpell.skillId() != 51) {
-            throw new IllegalStateException("unreviewed elemental skill");
-        }
-        return NativeLightAction.admitSelf(clientSession, summonSpell.skillId(), summonSpell.actionId(), summonSpell.reuseDelayMillis());
-    }
-
-    private NativeSummonCastAction() {
-    }
+ static void cast(ClientSession pc,byte[] packet,BattleSpellCatalog.SummonSpell spell)throws IOException {
+  NativeLightAction.commitSelf(pc,()->pc.nativeMaterialSummonBody(packet,spell));
+ }
+ static boolean admit(ClientSession pc,BattleSpellCatalog.SummonSpell spell){
+  if(spell.skillId()!=51)throw new IllegalStateException("unreviewed elemental skill");
+  return NativeLightAction.admitSelf(pc,spell.skillId(),spell.actionId(),spell.reuseDelayMillis());
+ }
+ private NativeSummonCastAction(){}
 }

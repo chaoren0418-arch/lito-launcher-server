@@ -1,254 +1,97 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito登入器/LiTo381-Launcher/server-patches/repair-034/LiToGmCommands.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.lang.reflect.*;
+import java.sql.*;
+import java.util.*;
 import java.util.function.LongSupplier;
 import javax.sql.DataSource;
-import local.lito381.server.AccountRepository;
-import local.lito381.server.ClientSession;
-import local.lito381.server.GameStateStore;
-import local.lito381.server.GmCommandDefinition;
-import local.lito381.server.InventoryCatalog;
-import local.lito381.server.LiToGmNpcs;
-import local.lito381.server.RuntimeInventory;
-import local.lito381.server.SourceAdministration;
 
+/** Native chat commands. Only these two source executors are executable. */
 final class LiToGmCommands {
-    LiToGmCommands() {
+    static Object get(Object o,String n) throws Exception {Field f=o.getClass().getDeclaredField(n);f.setAccessible(true);return f.get(o);}
+    static void set(Object o,String n,Object v) throws Exception {Field f=o.getClass().getDeclaredField(n);f.setAccessible(true);f.set(o,v);}
+    static Object call(Object o,String n,Class<?>[] t,Object...v) throws Exception {
+        Method m=o.getClass().getDeclaredMethod(n,t);m.setAccessible(true);
+        try{return m.invoke(o,v);}catch(InvocationTargetException e){if(e.getCause() instanceof Exception x)throw x;throw e;}
     }
-
-    static Object get(Object object, String string) throws Exception {
-        Field field = object.getClass().getDeclaredField(string);
-        field.setAccessible(true);
-        return field.get(object);
-    }
-
-    static void set(Object object, String string, Object object2) throws Exception {
-        Field field = object.getClass().getDeclaredField(string);
-        field.setAccessible(true);
-        field.set(object, object2);
-    }
-
-    static Object call(Object object, String string, Class<?>[] classArray, Object ... objectArray) throws Exception {
-        Method method = object.getClass().getDeclaredMethod(string, classArray);
-        method.setAccessible(true);
+    static void reply(ClientSession s,String text) throws Exception {call(s,"sendGmCommandMessage",new Class[]{String.class},text);}
+    static boolean handle(ClientSession s,String text) throws IOException {
+        String[] a=(text==null?"":text.trim()).split("\\s+");
+        String command=a[0].toLowerCase(Locale.ROOT);
+        if(!command.equals(".item")&&!command.equals(".spawn"))return false;
         try {
-            return method.invoke(object, objectArray);
-        }
-        catch (InvocationTargetException invocationTargetException) {
-            Throwable throwable = invocationTargetException.getCause();
-            if (throwable instanceof Exception) {
-                Exception exception = (Exception)throwable;
-                throw exception;
+            AccountRepository repo=(AccountRepository)call(s,"selectedSourceAccounts",new Class[]{});
+            GmCommandDefinition policy=repo.gmCommand(command.substring(1));
+            String executor=command.equals(".item")?"L1CreateItem":"L1SpawnCmd";
+            if(policy==null||!command.substring(1).equals(policy.name())||policy.systemCommand()||!executor.equals(policy.executor())){
+                reply(s,"資料庫未啟用 "+command+"，或執行器設定不符。");return true;
             }
-            throw invocationTargetException;
-        }
-    }
-
-    static void reply(ClientSession clientSession, String string) throws Exception {
-        LiToGmCommands.call(clientSession, "sendGmCommandMessage", new Class[]{String.class}, string);
-    }
-
-    static boolean handle(ClientSession clientSession, String string) throws IOException {
-        String[] stringArray = (string == null ? "" : string.trim()).split("\\s+");
-        String string2 = stringArray[0].toLowerCase(Locale.ROOT);
-        if (!string2.equals(".item") && !string2.equals(".spawn")) {
-            return false;
-        }
-        try {
-            String string3;
-            AccountRepository accountRepository = (AccountRepository)LiToGmCommands.call(clientSession, "selectedSourceAccounts", new Class[0], new Object[0]);
-            GmCommandDefinition gmCommandDefinition = accountRepository.gmCommand(string2.substring(1));
-            String string4 = string3 = string2.equals(".item") ? "L1CreateItem" : "L1SpawnCmd";
-            if (gmCommandDefinition == null || !string2.substring(1).equals(gmCommandDefinition.name()) || gmCommandDefinition.systemCommand() || !string3.equals(gmCommandDefinition.executor())) {
-                LiToGmCommands.reply(clientSession, "\u8cc7\u6599\u5eab\u672a\u555f\u7528 " + string2 + "\uff0c\u6216\u57f7\u884c\u5668\u8a2d\u5b9a\u4e0d\u7b26\u3002");
-                return true;
+            String account=(String)call(s,"accountName",new Class[]{});
+            int access=repo.accessLevel(account);
+            // A configuration administrator is not a replacement for source GM authority.
+            if(access<=0||access<policy.requiredAccessLevel()){
+                reply(s,"GM 權限不足：需要 access_level "+Math.max(1,policy.requiredAccessLevel())+"。");return true;
             }
-            String string5 = (String)LiToGmCommands.call(clientSession, "accountName", new Class[0], new Object[0]);
-            int n = SourceAdministration.accessLevel(accountRepository, string5, clientSession);
-            if (n <= 0 || n < gmCommandDefinition.requiredAccessLevel()) {
-                LiToGmCommands.reply(clientSession, "GM \u6b0a\u9650\u4e0d\u8db3\uff1a\u9700\u8981 access_level " + Math.max(1, gmCommandDefinition.requiredAccessLevel()) + "\u3002");
-                return true;
+            if(a.length<2||a.length>4){usage(s,command);return true;}
+            int count=a.length>2?positive(a[2]):1;
+            int last=a.length>3?integer(a[3]):0;
+            String phase=get(s,"phase").toString();
+            if(!Set.of("CHANNEL","ROOM","BATTLE","WORLD").contains(phase)||((String)get(s,"selectedCharacter")).isBlank()){
+                reply(s,"請先選擇角色並進入大廳或遊戲世界。");return true;
             }
-            if (stringArray.length < 2 || stringArray.length > 4) {
-                LiToGmCommands.usage(clientSession, string2);
-                return true;
-            }
-            int n2 = stringArray.length > 2 ? LiToGmCommands.positive(stringArray[2]) : 1;
-            int n3 = stringArray.length > 3 ? LiToGmCommands.integer(stringArray[3]) : 0;
-            String string6 = LiToGmCommands.get(clientSession, "phase").toString();
-            if (!Set.of("CHANNEL", "ROOM", "BATTLE", "WORLD").contains(string6) || ((String)LiToGmCommands.get(clientSession, "selectedCharacter")).isBlank()) {
-                LiToGmCommands.reply(clientSession, "\u8acb\u5148\u9078\u64c7\u89d2\u8272\u4e26\u9032\u5165\u5927\u5ef3\u6216\u904a\u6232\u4e16\u754c\u3002");
-                return true;
-            }
-            if (string2.equals(".item")) {
-                LiToGmCommands.createItem(clientSession, accountRepository, stringArray[1], n2, n3);
-            } else {
-                LiToGmNpcs.spawn(clientSession, accountRepository, stringArray[1], n2, n3);
-            }
-        }
-        catch (NumberFormatException numberFormatException) {
-            try {
-                LiToGmCommands.usage(clientSession, string2);
-            }
-            catch (Exception exception) {
-                throw new IOException(exception);
-            }
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            try {
-                LiToGmCommands.reply(clientSession, illegalArgumentException.getMessage());
-            }
-            catch (Exception exception) {
-                throw new IOException(exception);
-            }
-        }
-        catch (Exception exception) {
-            System.err.println("[LiTo] GM " + string2 + " failed: " + exception.getClass().getSimpleName());
-            try {
-                LiToGmCommands.reply(clientSession, "GM \u6307\u4ee4\u672a\u5b8c\u6210\uff0c\u8acb\u67e5\u770b\u4f3a\u670d\u5668\u7d00\u9304\uff1b\u8acb\u52ff\u9023\u7e8c\u91cd\u9001\u3002");
-            }
-            catch (Exception exception2) {
-                throw new IOException(exception2);
-            }
-            exception.printStackTrace(System.err);
+            if(command.equals(".item"))createItem(s,repo,a[1],count,last);
+            else LiToGmNpcs.spawn(s,repo,a[1],count,last);
+        }catch(NumberFormatException e){try{usage(s,command);}catch(Exception send){throw new IOException(send);}}
+        catch(IllegalArgumentException e){try{reply(s,e.getMessage());}catch(Exception send){throw new IOException(send);}}
+        catch(Exception e){
+            System.err.println("[LiTo] GM "+command+" failed: "+e.getClass().getSimpleName());
+            try{reply(s,"GM 指令未完成，請查看伺服器紀錄；請勿連續重送。");}catch(Exception send){throw new IOException(send);}
+            e.printStackTrace(System.err);
         }
         return true;
     }
-
-    static int integer(String string) {
-        if (!string.matches("-?[0-9]{1,10}")) {
-            throw new NumberFormatException();
-        }
-        return Integer.parseInt(string);
+    static int integer(String value){if(!value.matches("-?[0-9]{1,10}"))throw new NumberFormatException();return Integer.parseInt(value);}
+    static int positive(String value){int n=integer(value);if(n<=0)throw new NumberFormatException();return n;}
+    static void usage(ClientSession s,String c)throws Exception{reply(s,c.equals(".item")?"用法：.item 道具ID或名稱 [數量=1] [強化值=0]；非堆疊最多10個，強化 -128～127。":"用法：.spawn NPC_ID或名稱 [數量=1] [範圍=0]；數量1～100，範圍0～20。");}
+    static Connection connection(AccountRepository r)throws Exception{
+        if(!r.getClass().getSimpleName().equals("LegacyMySqlRepository"))throw new IllegalArgumentException("GM 建立指令需要正式 SQL 來源。");
+        Connection c=((DataSource)get(r,"dataSource")).getConnection();c.setReadOnly(true);return c;
     }
-
-    static int positive(String string) {
-        int n = LiToGmCommands.integer(string);
-        if (n <= 0) {
-            throw new NumberFormatException();
-        }
-        return n;
+    static String table(AccountRepository r,String name)throws Exception{
+        String db=(String)get(r,"resourceDatabase");if(!db.matches("[A-Za-z0-9_]+"))throw new SQLException("invalid schema");return "`"+db+"`.`"+name+"`";
     }
-
-    static void usage(ClientSession clientSession, String string) throws Exception {
-        LiToGmCommands.reply(clientSession, string.equals(".item") ? "\u7528\u6cd5\uff1a.item \u9053\u5177ID\u6216\u540d\u7a31 [\u6578\u91cf=1] [\u5f37\u5316\u503c=0]\uff1b\u975e\u5806\u758a\u6700\u591a10\u500b\uff0c\u5f37\u5316 -128\uff5e127\u3002" : "\u7528\u6cd5\uff1a.spawn NPC_ID\u6216\u540d\u7a31 [\u6578\u91cf=1] [\u7bc4\u570d=0]\uff1b\u6578\u91cf1\uff5e100\uff0c\u7bc4\u570d0\uff5e20\u3002");
-    }
-
-    static Connection connection(AccountRepository accountRepository) throws Exception {
-        if (!accountRepository.getClass().getSimpleName().equals("LegacyMySqlRepository")) {
-            throw new IllegalArgumentException("GM \u5efa\u7acb\u6307\u4ee4\u9700\u8981\u6b63\u5f0f SQL \u4f86\u6e90\u3002");
-        }
-        Connection connection = ((DataSource)LiToGmCommands.get(accountRepository, "dataSource")).getConnection();
-        connection.setReadOnly(true);
-        return connection;
-    }
-
-    static String table(AccountRepository accountRepository, String string) throws Exception {
-        String string2 = (String)LiToGmCommands.get(accountRepository, "resourceDatabase");
-        if (!string2.matches("[A-Za-z0-9_]+")) {
-            throw new SQLException("invalid schema");
-        }
-        return "`" + string2 + "`.`" + string + "`";
-    }
-
-    static int resolve(AccountRepository accountRepository, Connection connection, String string, boolean bl) throws Exception {
-        if (string.matches("[0-9]+")) {
-            return LiToGmCommands.positive(string);
-        }
-        LinkedHashSet<Integer> linkedHashSet = new LinkedHashSet<Integer>();
-        String string2 = bl ? "npcid" : "item_id";
-        for (String string3 : bl ? List.of("npc") : List.of("weapon", "armor", "etcitem")) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT " + string2 + " FROM " + LiToGmCommands.table(accountRepository, string3) + " WHERE REPLACE(name,' ','')=? LIMIT 2");
-            try {
-                preparedStatement.setString(1, string);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                try {
-                    while (resultSet.next()) {
-                        linkedHashSet.add(resultSet.getInt(1));
-                    }
-                }
-                finally {
-                    if (resultSet == null) continue;
-                    resultSet.close();
-                }
-            }
-            finally {
-                if (preparedStatement == null) continue;
-                preparedStatement.close();
+    static int resolve(AccountRepository r,Connection c,String token,boolean npc)throws Exception{
+        if(token.matches("[0-9]+"))return positive(token);
+        Set<Integer> ids=new LinkedHashSet<>();String id=npc?"npcid":"item_id";
+        for(String t:npc?List.of("npc"):List.of("weapon","armor","etcitem")){
+            try(var q=c.prepareStatement("SELECT "+id+" FROM "+table(r,t)+" WHERE REPLACE(name,' ','')=? LIMIT 2")){
+                q.setString(1,token);try(var rows=q.executeQuery()){while(rows.next())ids.add(rows.getInt(1));}
             }
         }
-        if (linkedHashSet.size() != 1) {
-            throw new IllegalArgumentException(linkedHashSet.isEmpty() ? "\u627e\u4e0d\u5230\u6307\u5b9a\u540d\u7a31\uff0c\u8acb\u6539\u7528\u8cc7\u6599\u8868 ID\u3002" : "\u540d\u7a31\u91cd\u8907\uff0c\u8acb\u6539\u7528\u8cc7\u6599\u8868 ID\u3002");
-        }
-        return (Integer)linkedHashSet.iterator().next();
+        if(ids.size()!=1)throw new IllegalArgumentException(ids.isEmpty()?"找不到指定名稱，請改用資料表 ID。":"名稱重複，請改用資料表 ID。");return ids.iterator().next();
     }
-
-    static void createItem(ClientSession clientSession, AccountRepository accountRepository, String string, int n, int n2) throws Exception {
-        LongSupplier longSupplier;
-        InventoryCatalog.Definition definition;
-        if (n2 < -128 || n2 > 127) {
-            throw new IllegalArgumentException("\u5f37\u5316\u503c\u5fc5\u9808\u4ecb\u65bc -128\uff5e127\uff0c\u907f\u514d\u539f\u751f\u5c01\u5305\u6ea2\u4f4d\u3002");
-        }
-        try (Object object = LiToGmCommands.connection(accountRepository);){
-            int n3 = LiToGmCommands.resolve(accountRepository, (Connection)object, string, false);
-            definition = (InventoryCatalog.Definition)LiToGmCommands.call(accountRepository, "rewardItemDefinition", new Class[]{Connection.class, Integer.TYPE}, object, n3);
-        }
-        if (definition == null) {
-            throw new IllegalArgumentException("\u9053\u5177\u4e0d\u5b58\u5728\u6216\u8cc7\u6599\u8868\u5b9a\u7fa9\u4e0d\u5b8c\u6574\u3002");
-        }
-        if (!definition.stackable() && n > 10) {
-            throw new IllegalArgumentException("\u975e\u5806\u758a\u9053\u5177\u6bcf\u6b21\u6700\u591a\u5efa\u7acb10\u500b\u3002");
-        }
-        if (definition.stackable()) {
-            n2 = 0;
-        }
-        if (n2 != 0 && !definition.weapon() && !definition.armor()) {
-            throw new IllegalArgumentException("\u9019\u500b\u9053\u5177\u4e0d\u652f\u63f4\u5f37\u5316\u503c\u3002");
-        }
-        object = (RuntimeInventory)LiToGmCommands.get(clientSession, "inventory");
-        RuntimeInventory runtimeInventory = ((RuntimeInventory)object).copy();
-        if (!((Boolean)LiToGmCommands.call(clientSession, "permitsInventoryAddition", new Class[]{RuntimeInventory.class, InventoryCatalog.Definition.class, Long.TYPE}, object, definition, n)).booleanValue()) {
-            throw new IllegalArgumentException("\u80cc\u5305\u8ca0\u91cd\u4e0d\u8db3\uff0c\u6c92\u6709\u5efa\u7acb\u9053\u5177\u3002");
-        }
-        RuntimeInventory.PersistentItem persistentItem = new RuntimeInventory.PersistentItem(0L, n, n2, 0, true, definition.blessing(), false, true, false, definition, definition.initialChargeCount(), 0L, false, false);
-        if (!((Boolean)LiToGmCommands.call(runtimeInventory, "addState", new Class[]{InventoryCatalog.Definition.class, RuntimeInventory.PersistentItem.class, LongSupplier.class}, definition, persistentItem, longSupplier = () -> {
-            try {
-                return (Long)LiToGmCommands.callStatic(RuntimeInventory.class, "nextObjectId", new Class[0], new Object[0]);
-            }
-            catch (Exception exception) {
-                throw new IllegalStateException(exception);
-            }
-        })).booleanValue()) {
-            throw new IllegalArgumentException("\u80cc\u5305\u7a7a\u9593\u6216\u5806\u758a\u6578\u91cf\u5df2\u9054\u4e0a\u9650\uff0c\u6c92\u6709\u5efa\u7acb\u9053\u5177\u3002");
-        }
-        LiToGmCommands.call(clientSession, "persistSqlTournamentRewards", new Class[]{RuntimeInventory.class}, runtimeInventory);
-        GameStateStore gameStateStore = (GameStateStore)LiToGmCommands.get(clientSession, "state");
-        String string2 = (String)LiToGmCommands.call(clientSession, "stateCharacter", new Class[0], new Object[0]);
-        gameStateStore.saveEconomyState(string2, (Long)LiToGmCommands.get(clientSession, "shopPoints"), runtimeInventory.catalogCounts(), runtimeInventory.catalogItemStates());
-        LiToGmCommands.set(clientSession, "inventory", runtimeInventory);
-        LiToGmCommands.call(clientSession, "sendInventoryDelta", new Class[]{RuntimeInventory.class, RuntimeInventory.class}, object, runtimeInventory);
-        LiToGmCommands.reply(clientSession, "\u5df2\u5efa\u7acb " + definition.name() + " \u00d7" + n + (String)(n2 == 0 ? "" : "\uff08\u5f37\u5316 " + n2 + "\uff09") + "\uff0c\u5df2\u52a0\u5165\u80cc\u5305\u4e26\u4fdd\u5b58\u3002");
-        System.out.println("[LiTo] GM item character=" + string2 + " item=" + definition.catalogId() + " count=" + n + " enchant=" + n2);
+    static void createItem(ClientSession s,AccountRepository r,String token,int count,int enchant)throws Exception{
+        if(enchant< -128||enchant>127)throw new IllegalArgumentException("強化值必須介於 -128～127，避免原生封包溢位。");
+        InventoryCatalog.Definition d;
+        try(Connection c=connection(r)){int id=resolve(r,c,token,false);d=(InventoryCatalog.Definition)call(r,"rewardItemDefinition",new Class[]{Connection.class,int.class},c,id);}
+        if(d==null)throw new IllegalArgumentException("道具不存在或資料表定義不完整。");
+        if(!d.stackable()&&count>10)throw new IllegalArgumentException("非堆疊道具每次最多建立10個。");
+        if(d.stackable())enchant=0;
+        if(enchant!=0&&!d.weapon()&&!d.armor())throw new IllegalArgumentException("這個道具不支援強化值。");
+        RuntimeInventory before=(RuntimeInventory)get(s,"inventory"),next=before.copy();
+        if(!(boolean)call(s,"permitsInventoryAddition",new Class[]{RuntimeInventory.class,InventoryCatalog.Definition.class,long.class},before,d,(long)count))throw new IllegalArgumentException("背包負重不足，沒有建立道具。");
+        // Durable grant provenance is deliberately distinct from tournament shop purchases.
+        var state=new RuntimeInventory.PersistentItem(0,count,enchant,0,true,d.blessing(),false,true,false,d,d.initialChargeCount(),0L,false,false);
+        LongSupplier allocator=()->{try{return (long)callStatic(RuntimeInventory.class,"nextObjectId",new Class[]{});}catch(Exception e){throw new IllegalStateException(e);}};
+        if(!(boolean)call(next,"addState",new Class[]{InventoryCatalog.Definition.class,RuntimeInventory.PersistentItem.class,LongSupplier.class},d,state,allocator))throw new IllegalArgumentException("背包空間或堆疊數量已達上限，沒有建立道具。");
+        call(s,"persistSqlTournamentRewards",new Class[]{RuntimeInventory.class},next);
+        GameStateStore store=(GameStateStore)get(s,"state");String character=(String)call(s,"stateCharacter",new Class[]{});
+        store.saveEconomyState(character,(long)get(s,"shopPoints"),next.catalogCounts(),next.catalogItemStates());
+        set(s,"inventory",next);call(s,"sendInventoryDelta",new Class[]{RuntimeInventory.class,RuntimeInventory.class},before,next);
+        reply(s,"已建立 "+d.name()+" ×"+count+(enchant==0?"":"（強化 "+enchant+"）")+"，已加入背包並保存。");
+        System.out.println("[LiTo] GM item character="+character+" item="+d.catalogId()+" count="+count+" enchant="+enchant);
     }
-
-    static Object callStatic(Class<?> clazz, String string, Class<?>[] classArray, Object ... objectArray) throws Exception {
-        Method method = clazz.getDeclaredMethod(string, classArray);
-        method.setAccessible(true);
-        return method.invoke(null, objectArray);
-    }
+    static Object callStatic(Class<?> c,String n,Class<?>[] t,Object...v)throws Exception{Method m=c.getDeclaredMethod(n,t);m.setAccessible(true);return m.invoke(null,v);}
 }

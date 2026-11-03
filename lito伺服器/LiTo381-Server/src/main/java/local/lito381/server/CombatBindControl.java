@@ -1,43 +1,16 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/bind-control/CombatBindControl.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import local.lito381.server.BattleTimedStatus;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatRules;
-import local.lito381.server.Protocol;
-
+/** PCs remain able to act while Thunder Grab binds movement; NPC paralysis is unchanged. */
 final class CombatBindControl {
-    CombatBindControl() {
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean actionLocked(BattleTimedStatus battleTimedStatus, long l) {
-        if (!CombatRules.loaded()) {
-            return battleTimedStatus.actionLocked(l);
-        }
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            return battleTimedStatus.sleepActive(l) || battleTimedStatus.freezeVisualLockActive(l) || battleTimedStatus.paralysisActive(l) || battleTimedStatus.shockStunActive(l) || battleTimedStatus.boneBreakActive(l);
-        }
-    }
-
-    static boolean blocked(ClientSession clientSession) {
-        return CombatRules.number("SLAY_BREAK_NOT_TELEPORT", 1.0) != 0.0 && ((BattleTimedStatus)CombatAccess.field(clientSession, "timedStatus")).thunderGrabActive(System.nanoTime());
-    }
-
-    static void rejected(ClientSession clientSession) {
-        CombatBindControl.send(clientSession, Protocol.manaPoint((Integer)CombatAccess.field(clientSession, "playerMp"), (Integer)CombatAccess.field(clientSession, "playerMaxMp")), "S_MANA_POINT Thunder-Grab accepted teleport cost");
-        CombatBindControl.send(clientSession, Protocol.systemMessage(0, "\\fY\u8eab\u4e0a\u6709\u596a\u547d\u4e4b\u96f7\u7684\u6548\u679c\u7121\u6cd5\u77ac\u79fb"), "S_MESSAGE Thunder-Grab teleport disabled");
-        CombatBindControl.send(clientSession, Protocol.paralysis(Protocol.ParalysisMode.TELEPORT_UNLOCK), "S_PARALYSE Thunder-Grab teleport unlock");
-    }
-
-    private static void send(ClientSession clientSession, byte[] byArray, String string) {
-        CombatAccess.call(clientSession, "sendEncrypted", "([BLjava/lang/String;)V", byArray, string);
-    }
+ static boolean actionLocked(BattleTimedStatus state,long now){
+  if(!CombatRules.loaded())return state.actionLocked(now);
+  synchronized(state){return state.sleepActive(now)||state.freezeVisualLockActive(now)||state.paralysisActive(now)||state.shockStunActive(now)||state.boneBreakActive(now);}
+ }
+ static boolean blocked(ClientSession pc){return CombatRules.number("SLAY_BREAK_NOT_TELEPORT",1)!=0&&((BattleTimedStatus)CombatAccess.field(pc,"timedStatus")).thunderGrabActive(System.nanoTime());}
+ static void rejected(ClientSession pc){
+  send(pc,Protocol.manaPoint((int)CombatAccess.field(pc,"playerMp"),(int)CombatAccess.field(pc,"playerMaxMp")),"S_MANA_POINT Thunder-Grab accepted teleport cost");
+  send(pc,Protocol.systemMessage(0,"\\fY身上有奪命之雷的效果無法瞬移"),"S_MESSAGE Thunder-Grab teleport disabled");
+  send(pc,Protocol.paralysis(Protocol.ParalysisMode.TELEPORT_UNLOCK),"S_PARALYSE Thunder-Grab teleport unlock");
+ }
+ private static void send(ClientSession pc,byte[] data,String note){CombatAccess.call(pc,"sendEncrypted","([BLjava/lang/String;)V",data,note);}
 }

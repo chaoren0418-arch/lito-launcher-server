@@ -1,160 +1,58 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/ground-material/NativeGroundMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import local.lito381.server.ArenaMapCatalog;
-import local.lito381.server.BattleGroundEffects;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClassicWorldGroundEffects;
-import local.lito381.server.ClassicWorldMapCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeCastMaterialPolicy;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativeReuseLog;
-import local.lito381.server.Protocol;
 
+/** Ground placement is planned without a live lease; materials commit before the live effect. */
 final class NativeGroundMaterialAction {
-    static void battle(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.GroundSpell groundSpell) throws IOException {
-        NativeLightAction.commitSelf(clientSession, () -> clientSession.nativeMaterialGroundBody(byArray, groundSpell));
-    }
-
-    static void world(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.GroundSpell groundSpell) throws IOException {
-        NativeLightAction.commitSelf(clientSession, () -> clientSession.nativeMaterialWorldGroundBody(byArray, groundSpell));
-    }
-
-    static void admit(ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell) {
-        if (groundSpell.skillId() != 58 && groundSpell.skillId() != 63) {
-            throw new IllegalStateException("unreviewed ground skill");
-        }
-        if (!NativeLightAction.admitSelf(clientSession, groundSpell.skillId(), groundSpell.actionId(), groundSpell.reuseDelayMillis())) {
-            throw new Rejected();
-        }
-    }
-
-    static boolean prepare(ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell) {
-        if (!clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
-            throw new IllegalStateException("ground requires player action lock");
-        }
-        try {
-            if (groundSpell.itemConsumeId() != 0L) {
-                NativeCastMaterialPolicy.gm(clientSession);
-            }
-            return true;
-        }
-        catch (IOException iOException) {
-            NativeReuseLog.getLogger(NativeGroundMaterialAction.class).error("ground material policy read failed", iOException);
-            NativeLightAction.materialOutput(clientSession, Protocol.messageCode(299, new String[0]), "S_MESSAGE_CODE ground-material-policy=299");
-            return false;
-        }
-    }
-
-    static BattleGroundEffects.CastResult placeBattle(GameHub gameHub, long l, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n, int n2, int n3, int n4, long l2, Runnable runnable) {
-        if (!NativeGroundMaterialAction.prepare(clientSession, groundSpell)) {
-            return BattleGroundEffects.CastResult.rejected();
-        }
-        return gameHub.nativeMaterialPlaceGroundSpell(l, clientSession, groundSpell, n, n2, n3, n4, System.nanoTime(), runnable);
-    }
-
-    static ClassicWorldGroundEffects.CastResult placeWorld(GameHub gameHub, int n, int n2, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n3, int n4, int n5, int n6, long l, Runnable runnable) {
-        if (!NativeGroundMaterialAction.prepare(clientSession, groundSpell)) {
-            return ClassicWorldGroundEffects.CastResult.rejected();
-        }
-        return gameHub.nativeMaterialPlaceWorldGroundSpell(n, n2, clientSession, groundSpell, n3, n4, n5, n6, System.nanoTime(), runnable);
-    }
-
-    static List<Object> leases(Object object) {
-        return (List)CombatAccess.field(object, "leases");
-    }
-
-    static BattleGroundEffects battleCopy(BattleGroundEffects battleGroundEffects) {
-        BattleGroundEffects battleGroundEffects2 = new BattleGroundEffects();
-        NativeGroundMaterialAction.leases(battleGroundEffects2).addAll(NativeGroundMaterialAction.leases(battleGroundEffects));
-        return battleGroundEffects2;
-    }
-
-    static ClassicWorldGroundEffects worldCopy(ClassicWorldGroundEffects classicWorldGroundEffects) {
-        ClassicWorldGroundEffects classicWorldGroundEffects2 = new ClassicWorldGroundEffects();
-        NativeGroundMaterialAction.leases(classicWorldGroundEffects2).addAll(NativeGroundMaterialAction.leases(classicWorldGroundEffects));
-        return classicWorldGroundEffects2;
-    }
-
-    static void install(Object object, Object object2) {
-        List<Object> list = NativeGroundMaterialAction.leases(object);
-        list.clear();
-        list.addAll(NativeGroundMaterialAction.leases(object2));
-    }
-
-    static BattleGroundEffects.CastResult castBattle(BattleGroundEffects battleGroundEffects, BattleSpellCatalog.GroundSpell groundSpell, long l, int n, int n2, int n3, int n4, ArenaMapCatalog.Arena arena, long l2, GameHub gameHub, Runnable runnable) {
-        if (!Thread.holdsLock(gameHub)) {
-            throw new IllegalStateException("ground placement requires original hub monitor");
-        }
-        BattleGroundEffects battleGroundEffects2 = NativeGroundMaterialAction.battleCopy(battleGroundEffects);
-        BattleGroundEffects.CastResult castResult = battleGroundEffects2.cast(groundSpell, l, n, n2, n3, n4, arena, System.nanoTime());
-        if (!castResult.accepted()) {
-            return castResult;
-        }
-        try {
-            runnable.run();
-        }
-        catch (Rejected rejected) {
-            return BattleGroundEffects.CastResult.rejected();
-        }
-        battleGroundEffects2 = NativeGroundMaterialAction.battleCopy(battleGroundEffects);
-        BattleGroundEffects.CastResult castResult2 = battleGroundEffects2.cast(groundSpell, l, n, n2, n3, n4, arena, System.nanoTime());
-        if (!castResult2.accepted()) {
-            throw new IllegalStateException("ground eligibility changed under hub monitor");
-        }
-        NativeGroundMaterialAction.install(battleGroundEffects, battleGroundEffects2);
-        return castResult2;
-    }
-
-    static ClassicWorldGroundEffects.CastResult castWorld(ClassicWorldGroundEffects classicWorldGroundEffects, BattleSpellCatalog.GroundSpell groundSpell, long l, int n, int n2, int n3, int n4, ClassicWorldMapCatalog.ClassicMap classicMap, long l2, GameHub gameHub, Object object, Runnable runnable) {
-        if (!Thread.holdsLock(gameHub)) {
-            throw new IllegalStateException("world ground placement requires original hub monitor");
-        }
-        ClassicWorldGroundEffects classicWorldGroundEffects2 = NativeGroundMaterialAction.worldCopy(classicWorldGroundEffects);
-        ClassicWorldGroundEffects.CastResult castResult = classicWorldGroundEffects2.cast(groundSpell, l, n, n2, n3, n4, classicMap, System.nanoTime());
-        if (!castResult.accepted()) {
-            NativeGroundMaterialAction.install(classicWorldGroundEffects, classicWorldGroundEffects2);
-            NativeGroundMaterialAction.removeEmptyWorld(gameHub, object, classicWorldGroundEffects);
-            return castResult;
-        }
-        try {
-            runnable.run();
-        }
-        catch (Rejected rejected) {
-            NativeGroundMaterialAction.removeEmptyWorld(gameHub, object, classicWorldGroundEffects);
-            return ClassicWorldGroundEffects.CastResult.rejected();
-        }
-        classicWorldGroundEffects2 = NativeGroundMaterialAction.worldCopy(classicWorldGroundEffects);
-        ClassicWorldGroundEffects.CastResult castResult2 = classicWorldGroundEffects2.cast(groundSpell, l, n, n2, n3, n4, classicMap, System.nanoTime());
-        if (!castResult2.accepted()) {
-            throw new IllegalStateException("world ground eligibility changed under hub monitor");
-        }
-        NativeGroundMaterialAction.install(classicWorldGroundEffects, classicWorldGroundEffects2);
-        return castResult2;
-    }
-
-    static void removeEmptyWorld(GameHub gameHub, Object object, ClassicWorldGroundEffects classicWorldGroundEffects) {
-        if (NativeGroundMaterialAction.leases(classicWorldGroundEffects).isEmpty()) {
-            ((Map)CombatAccess.field(gameHub, "classicWorldGroundEffects")).remove(object, classicWorldGroundEffects);
-        }
-    }
-
-    private NativeGroundMaterialAction() {
-    }
-
-    static final class Rejected
-    extends RuntimeException {
-        Rejected() {
-            super(null, null, false, false);
-        }
-    }
+ static final class Rejected extends RuntimeException {Rejected(){super(null,null,false,false);}}
+ static void battle(ClientSession pc,byte[] packet,BattleSpellCatalog.GroundSpell spell)throws IOException{
+  NativeLightAction.commitSelf(pc,()->pc.nativeMaterialGroundBody(packet,spell));
+ }
+ static void world(ClientSession pc,byte[] packet,BattleSpellCatalog.GroundSpell spell)throws IOException{
+  NativeLightAction.commitSelf(pc,()->pc.nativeMaterialWorldGroundBody(packet,spell));
+ }
+ static void admit(ClientSession pc,BattleSpellCatalog.GroundSpell spell){
+  if(spell.skillId()!=58&&spell.skillId()!=63)throw new IllegalStateException("unreviewed ground skill");
+  if(!NativeLightAction.admitSelf(pc,spell.skillId(),spell.actionId(),spell.reuseDelayMillis()))throw new Rejected();
+ }
+ static boolean prepare(ClientSession pc,BattleSpellCatalog.GroundSpell spell){
+  if(!pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("ground requires player action lock");
+  try{if(spell.itemConsumeId()!=0)NativeCastMaterialPolicy.gm(pc);return true;}
+  catch(IOException failure){NativeReuseLog.getLogger(NativeGroundMaterialAction.class).error("ground material policy read failed",failure);NativeLightAction.materialOutput(pc,Protocol.messageCode(299),"S_MESSAGE_CODE ground-material-policy=299");return false;}
+ }
+ static BattleGroundEffects.CastResult placeBattle(GameHub hub,long room,ClientSession pc,BattleSpellCatalog.GroundSpell spell,int sx,int sy,int x,int y,long ignored,Runnable commit){
+  if(!prepare(pc,spell))return BattleGroundEffects.CastResult.rejected();
+  return hub.nativeMaterialPlaceGroundSpell(room,pc,spell,sx,sy,x,y,System.nanoTime(),commit);
+ }
+ static ClassicWorldGroundEffects.CastResult placeWorld(GameHub hub,int map,int instance,ClientSession pc,BattleSpellCatalog.GroundSpell spell,int sx,int sy,int x,int y,long ignored,Runnable commit){
+  if(!prepare(pc,spell))return ClassicWorldGroundEffects.CastResult.rejected();
+  return hub.nativeMaterialPlaceWorldGroundSpell(map,instance,pc,spell,sx,sy,x,y,System.nanoTime(),commit);
+ }
+ @SuppressWarnings("unchecked") static List<Object> leases(Object effects){return (List<Object>)CombatAccess.field(effects,"leases");}
+ static BattleGroundEffects battleCopy(BattleGroundEffects live){var copy=new BattleGroundEffects();leases(copy).addAll(leases(live));return copy;}
+ static ClassicWorldGroundEffects worldCopy(ClassicWorldGroundEffects live){var copy=new ClassicWorldGroundEffects();leases(copy).addAll(leases(live));return copy;}
+ static void install(Object live,Object planned){var target=leases(live);target.clear();target.addAll(leases(planned));}
+ static BattleGroundEffects.CastResult castBattle(BattleGroundEffects live,BattleSpellCatalog.GroundSpell spell,long caster,int sx,int sy,int x,int y,ArenaMapCatalog.Arena map,long ignored,GameHub hub,Runnable commit){
+  if(!Thread.holdsLock(hub))throw new IllegalStateException("ground placement requires original hub monitor");
+  var plan=battleCopy(live);var proposed=plan.cast(spell,caster,sx,sy,x,y,map,System.nanoTime());
+  if(!proposed.accepted())return proposed;
+  try{commit.run();}catch(Rejected rejected){return BattleGroundEffects.CastResult.rejected();}
+  plan=battleCopy(live);var result=plan.cast(spell,caster,sx,sy,x,y,map,System.nanoTime());
+  if(!result.accepted())throw new IllegalStateException("ground eligibility changed under hub monitor");
+  install(live,plan);return result;
+ }
+ static ClassicWorldGroundEffects.CastResult castWorld(ClassicWorldGroundEffects live,BattleSpellCatalog.GroundSpell spell,long caster,int sx,int sy,int x,int y,ClassicWorldMapCatalog.ClassicMap map,long ignored,GameHub hub,Object key,Runnable commit){
+  if(!Thread.holdsLock(hub))throw new IllegalStateException("world ground placement requires original hub monitor");
+  var plan=worldCopy(live);var proposed=plan.cast(spell,caster,sx,sy,x,y,map,System.nanoTime());
+  if(!proposed.accepted()){install(live,plan);removeEmptyWorld(hub,key,live);return proposed;}
+  try{commit.run();}catch(Rejected rejected){removeEmptyWorld(hub,key,live);return ClassicWorldGroundEffects.CastResult.rejected();}
+  plan=worldCopy(live);var result=plan.cast(spell,caster,sx,sy,x,y,map,System.nanoTime());
+  if(!result.accepted())throw new IllegalStateException("world ground eligibility changed under hub monitor");
+  install(live,plan);return result;
+ }
+ @SuppressWarnings("unchecked") static void removeEmptyWorld(GameHub hub,Object key,ClassicWorldGroundEffects live){
+  if(leases(live).isEmpty())((java.util.Map<Object,ClassicWorldGroundEffects>)CombatAccess.field(hub,"classicWorldGroundEffects")).remove(key,live);
+ }
+ private NativeGroundMaterialAction(){}
 }

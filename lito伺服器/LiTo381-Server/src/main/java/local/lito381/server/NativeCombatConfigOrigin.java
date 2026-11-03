@@ -1,37 +1,14 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/combat-config-origin/build-repro/inputs/NativeCombatConfigOrigin.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Properties;
-import local.lito381.server.ServerConfig;
-import local.lito381.server.UnifiedConfiguration;
-
+import java.io.IOException;import java.nio.file.Path;import java.util.Properties;
+/** Reuse the existing single-base configuration contract; no SQL or fallback search. */
 final class NativeCombatConfigOrigin {
-    static Path entry(ServerConfig serverConfig) throws IOException {
-        return NativeCombatConfigOrigin.entry(serverConfig.source());
-    }
-
-    static Path entry(Path path) throws IOException {
-        Properties properties;
-        Path path2 = path.toAbsolutePath().normalize();
-        try {
-            properties = UnifiedConfiguration.read(path2);
-        }
-        catch (IOException iOException) {
-            throw iOException;
-        }
-        catch (Exception exception) {
-            throw new IOException("Cannot resolve combat configuration origin: " + String.valueOf(path2), exception);
-        }
-        String string = properties.getProperty("configuration.base.file");
-        Path path3 = string == null ? path2 : path2.getParent().resolve(string).normalize();
-        return path3.getParent().resolve("combat.properties");
-    }
-
-    private NativeCombatConfigOrigin() {
-    }
+ static Path entry(ServerConfig config)throws IOException{return entry(config.source());}
+ static Path entry(Path source)throws IOException{
+  Path supplied=source.toAbsolutePath().normalize();final Properties properties;
+  try{properties=UnifiedConfiguration.read(supplied);}catch(IOException error){throw error;}catch(Exception error){throw new IOException("Cannot resolve combat configuration origin: "+supplied,error);}
+  String base=properties.getProperty("configuration.base.file");Path owner=base==null?supplied:supplied.getParent().resolve(base).normalize();
+  return owner.getParent().resolve("combat.properties");
+ }
+ private NativeCombatConfigOrigin(){}
 }

@@ -1,114 +1,37 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/npc-physical-source/NativeNpcPhysicalSource.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import local.lito381.server.ServerConfig;
-import local.lito381.server.SourceNpcPhysicalStats;
-
+import java.sql.*;import java.util.*;
+/** One immutable shared-static snapshot. No connection, timer or growing per-cast cache. */
 final class NativeNpcPhysicalSource {
-    private static volatile Snapshot current;
-
-    static Snapshot read(Connection connection, ServerConfig serverConfig) throws SQLException {
-        String string = connection.getCatalog();
-        for (String string2 : serverConfig.legacySourceResourceDatabases()) {
-            if (Objects.equals(string, string2)) continue;
-            throw new SQLException("NPC snapshot requires the configured common static database: " + string2);
-        }
-        return NativeNpcPhysicalSource.read(connection);
-    }
-
-    static Snapshot read(Connection connection) throws SQLException {
-        HashSet<Integer> hashSet;
-        HashMap<Integer, SourceNpcPhysicalStats> hashMap;
-        String string;
-        block18: {
-            string = connection.getCatalog();
-            if (string == null || !string.matches("[A-Za-z0-9_]+")) {
-                throw new SQLException("NPC snapshot has no qualified static catalog");
-            }
-            hashMap = new HashMap<Integer, SourceNpcPhysicalStats>();
-            hashSet = new HashSet<Integer>();
-            String string2 = "SELECT npcid,ac,size,damage_reduction,hard,undead,weakAttr,mr,IsTU,IsErase,lawful,tamable,boss,mp,str,dex,ranged,bowActId,poison_atk,paralysis_atk FROM npc";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(string2);){
-                ResultSet resultSet = preparedStatement.executeQuery();
-                block12: while (true) {
-                    while (resultSet.next()) {
-                        int n = resultSet.getInt("npcid");
-                        if (hashMap.containsKey(n) || hashSet.contains(n)) {
-                            throw new SQLException("duplicate source NPC physical row: " + n);
-                        }
-                        try {
-                            hashMap.put(n, SourceNpcPhysicalStats.fromSourceRow(n, resultSet.getInt("ac"), NativeNpcPhysicalSource.physicalSize(resultSet.getString("size")), resultSet.getInt("damage_reduction"), resultSet.getBoolean("hard"), resultSet.getInt("undead"), resultSet.getInt("weakAttr"), resultSet.getInt("mr"), resultSet.getBoolean("IsTU"), resultSet.getInt("lawful"), resultSet.getBoolean("tamable"), resultSet.getBoolean("boss"), resultSet.getInt("mp"), resultSet.getInt("str"), resultSet.getInt("dex"), resultSet.getBoolean("IsErase"), resultSet.getInt("ranged"), resultSet.getInt("bowActId"), resultSet.getInt("poison_atk"), resultSet.getInt("paralysis_atk")));
-                            continue block12;
-                        }
-                        catch (IllegalArgumentException illegalArgumentException) {
-                            hashSet.add(n);
-                        }
-                    }
-                    break block18;
-                    {
-                        continue block12;
-                        break;
-                    }
-                    break;
-                }
-                finally {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                }
-            }
-        }
-        return new Snapshot(string + ".npc", hashMap, hashSet);
-    }
-
-    static void publish(Snapshot snapshot) {
-        current = Objects.requireNonNull(snapshot);
-    }
-
-    static SourceNpcPhysicalStats lookup(String string, int n) throws SQLException {
-        if (n <= 0) {
-            throw new IllegalArgumentException("invalid source NPC id");
-        }
-        Snapshot snapshot = current;
-        if (snapshot == null) {
-            return null;
-        }
-        if (!snapshot.table.equals(string) && !("`" + snapshot.table.replace(".", "`.`") + "`").equals(string)) {
-            throw new SQLException("NPC snapshot static source mismatch: " + string);
-        }
-        if (snapshot.invalid.contains(n)) {
-            throw new SQLException("invalid source NPC physical row: " + n, new IllegalArgumentException("invalid source NPC physical snapshot"));
-        }
-        SourceNpcPhysicalStats sourceNpcPhysicalStats = snapshot.rows.get(n);
-        if (sourceNpcPhysicalStats == null) {
-            throw new SQLException("source NPC physical row was not found: " + n);
-        }
-        return sourceNpcPhysicalStats;
-    }
-
-    static String physicalSize(String string) {
-        return "".equals(string) ? "small" : string;
-    }
-
-    private NativeNpcPhysicalSource() {
-    }
-
-    record Snapshot(String table, Map<Integer, SourceNpcPhysicalStats> rows, Set<Integer> invalid) {
-        Snapshot {
-            map = Map.copyOf(map);
-            set = Set.copyOf(set);
-        }
-    }
+ record Snapshot(String table,Map<Integer,SourceNpcPhysicalStats> rows,Set<Integer> invalid){
+  Snapshot{rows=Map.copyOf(rows);invalid=Set.copyOf(invalid);}
+ }
+ private static volatile Snapshot current;
+ static Snapshot read(Connection connection,ServerConfig config)throws SQLException{
+  String database=connection.getCatalog();
+  for(String source:config.legacySourceResourceDatabases())if(!Objects.equals(database,source))throw new SQLException("NPC snapshot requires the configured common static database: "+source);
+  return read(connection);
+ }
+ static Snapshot read(Connection connection)throws SQLException{
+  String database=connection.getCatalog();if(database==null||!database.matches("[A-Za-z0-9_]+"))throw new SQLException("NPC snapshot has no qualified static catalog");
+  var rows=new HashMap<Integer,SourceNpcPhysicalStats>();var invalid=new HashSet<Integer>();
+  String sql="SELECT npcid,ac,size,damage_reduction,hard,undead,weakAttr,mr,IsTU,IsErase,lawful,tamable,boss,mp,str,dex,ranged,bowActId,poison_atk,paralysis_atk FROM npc";
+  try(var statement=connection.prepareStatement(sql);var row=statement.executeQuery()){
+   while(row.next()){
+    int id=row.getInt("npcid");if(rows.containsKey(id)||invalid.contains(id))throw new SQLException("duplicate source NPC physical row: "+id);
+    try{rows.put(id,SourceNpcPhysicalStats.fromSourceRow(id,row.getInt("ac"),row.getString("size"),row.getInt("damage_reduction"),row.getBoolean("hard"),row.getInt("undead"),row.getInt("weakAttr"),row.getInt("mr"),row.getBoolean("IsTU"),row.getInt("lawful"),row.getBoolean("tamable"),row.getBoolean("boss"),row.getInt("mp"),row.getInt("str"),row.getInt("dex"),row.getBoolean("IsErase"),row.getInt("ranged"),row.getInt("bowActId"),row.getInt("poison_atk"),row.getInt("paralysis_atk")));}
+    catch(IllegalArgumentException invalidRow){invalid.add(id);}
+   }
+  }
+  return new Snapshot(database+".npc",rows,invalid);
+ }
+ static void publish(Snapshot prepared){current=Objects.requireNonNull(prepared);}
+ static SourceNpcPhysicalStats lookup(String table,int id)throws SQLException{
+  if(id<=0)throw new IllegalArgumentException("invalid source NPC id");
+  var snapshot=current;if(snapshot==null)return null;
+  if(!snapshot.table.equals(table)&&!("`"+snapshot.table.replace(".","`.`")+"`").equals(table))throw new SQLException("NPC snapshot static source mismatch: "+table);
+  if(snapshot.invalid.contains(id))throw new SQLException("invalid source NPC physical row: "+id,new IllegalArgumentException("invalid source NPC physical snapshot"));
+  var result=snapshot.rows.get(id);if(result==null)throw new SQLException("source NPC physical row was not found: "+id);return result;
+ }
+ private NativeNpcPhysicalSource(){}
 }

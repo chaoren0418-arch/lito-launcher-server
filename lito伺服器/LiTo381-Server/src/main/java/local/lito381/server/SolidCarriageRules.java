@@ -1,31 +1,19 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/solid-control/SolidCarriageRules.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import local.lito381.server.CombatRules;
-import local.lito381.server.InventoryCatalog;
-import local.lito381.server.RuntimeInventory;
-
+/** Source SOLID_CARRIAGE: type 7 always; type 13 only for mode 1. */
 final class SolidCarriageRules {
-    SolidCarriageRules() {
-    }
-
-    static boolean equipment(boolean bl, boolean bl2) {
-        return bl || (int)CombatRules.number("SOLID_CARRIAGE_MODE", 1.0) == 1 && bl2;
-    }
-
-    static boolean runtime(RuntimeInventory runtimeInventory) {
-        for (RuntimeInventory.Item item : runtimeInventory.items()) {
-            if (!item.equipped()) continue;
-            InventoryCatalog.NativeArmorStatus nativeArmorStatus = item.definition().sourceArmorStatus();
-            if (nativeArmorStatus != null && SolidCarriageRules.equipment(nativeArmorStatus.armorType() == 7, nativeArmorStatus.armorType() == 13)) {
-                return true;
-            }
-            if (CombatRules.loaded() || nativeArmorStatus != null || item.definition().useType() != 25) continue;
-            return true;
-        }
-        return false;
-    }
+ static boolean equipment(boolean shield,boolean guarder) {
+  return shield || ((int)CombatRules.number("SOLID_CARRIAGE_MODE",1)==1 && guarder);
+ }
+ static boolean runtime(RuntimeInventory inventory) {
+  for(var item:inventory.items()) {
+   if(!item.equipped())continue;
+   var armor=item.definition().sourceArmorStatus();
+   if(armor!=null && equipment(armor.armorType()==7,armor.armorType()==13))return true;
+   // Only old isolated fixtures may lack Source armor identity. In production,
+   // UI useType 25 alone cannot distinguish a shield from a guarder.
+   if(!CombatRules.loaded() && armor==null && item.definition().useType()==25)return true;
+  }
+  return false;
+ }
 }

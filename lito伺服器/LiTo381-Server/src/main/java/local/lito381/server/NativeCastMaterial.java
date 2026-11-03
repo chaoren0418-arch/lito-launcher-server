@@ -1,390 +1,81 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/build-repro/inputs/original/NativeCastMaterial.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.CombatDatabase;
-import local.lito381.server.GameStateStore;
-import local.lito381.server.NativeCastMaterialPolicy;
-import local.lito381.server.NativeCubeCastAction;
-import local.lito381.server.NativeDeItemApplication;
-import local.lito381.server.NativeDeItemInventory;
-import local.lito381.server.NativeDeItemTransaction;
-import local.lito381.server.NativeDeWorldKinds;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativeMaterialItem;
-import local.lito381.server.NativePlayerLifetime;
-import local.lito381.server.NativeReuseLog;
-import local.lito381.server.NativeSourceMaterialPlan;
-import local.lito381.server.Protocol;
-import local.lito381.server.RuntimeInventory;
-
+import java.io.*;import java.util.*;
+/** Source material ordering through the actual native memory/item transaction authority. */
 final class NativeCastMaterial {
-    static boolean retained(ClientSession clientSession, NativePlayerLifetime nativePlayerLifetime) {
-        return Thread.holdsLock(nativePlayerLifetime.admission) && clientSession.nativePlayerActionLock().isHeldByCurrentThread() && NativeLightAction.retainedMaterial(clientSession);
-    }
+ static final class Cast {final int skill;boolean resolved,consumed,bypass,transaction,placement,placementBlocked;RuntimeInventory before,after,live,staged;NativeDeItemApplication.Owner owner;NativeDeItemTransaction.Operation<?> operation;Cast(int skill){this.skill=skill;}}
+ static boolean retained(ClientSession pc,NativePlayerLifetime life){return Thread.holdsLock(life.admission)&&pc.nativePlayerActionLock().isHeldByCurrentThread()&&NativeLightAction.retainedMaterial(pc);}
+ static boolean active(ClientSession pc,Cast cast){return cast!=null&&cast.transaction&&cast.operation!=null&&retained(pc,NativePlayerLifetime.of(pc))&&cast.owner!=null&&cast.owner.active&&cast.owner.matches(pc)&&CombatAccess.field(pc,NativeDeItemApplication.OWNER)==cast.owner&&(pc.nativeDeInventory(0)==cast.live||pc.nativeDeInventory(0)==cast.staged);}
+ static boolean ownerLifetime(NativePlayerLifetime life,NativeDeItemApplication app,ClientSession pc){if(life.admits())return true;var cast=NativeLightAction.currentMaterial(pc);return active(pc,cast)&&cast.owner.application.get()==app&&app.life==life&&!app.closed;}
+ static boolean adoptLifetime(NativePlayerLifetime life,NativeDeItemApplication.Owner owner,RuntimeInventory inventory){if(life.admits())return true;var pc=owner.session.get();if(pc==null)return false;var cast=NativeLightAction.currentMaterial(pc);return active(pc,cast)&&cast.owner==owner&&cast.staged==inventory&&NativePlayerLifetime.of(pc)==life;}
+ static void enterTransaction(ClientSession pc,NativeDeItemTransaction.Operation<?> operation)throws IOException{var cast=NativeLightAction.currentMaterial(pc);if(cast==null)return;if(cast.transaction)throw new IOException("nested item transaction cannot inherit material cast authority");if(cast.operation==operation){if(!retained(pc,NativePlayerLifetime.of(pc)))throw new IOException("material cast receipt retired");cast.transaction=true;}}
+ static void exitTransaction(ClientSession pc,NativeDeItemTransaction.Operation<?> operation){var cast=NativeLightAction.currentMaterial(pc);if(cast!=null&&cast.operation==operation)cast.transaction=false;}
+ private record ItemView(RuntimeInventory.Item view,NativeDeWorldKinds.Item source,int owner) implements NativeMaterialItem {
+  public Object getItem(){return source==null?view.definition():source.getItem();}
+  public int getItemId(){return source==null?(int)view.definition().catalogId():source.getItemId();}
+  public int get_char_objid(){return source==null?owner:source.get_char_objid();}
+  public boolean isEquipped(){return source==null?view.equipped():source.isEquipped();}
+  public boolean isSealed(){return source==null?view.sealed():source.isSealed();}
+  public long getCount(){return source==null?view.quantity():source.getCount();}
+  public boolean isStackable(){return source==null?view.definition().stackable():source.isStackable();}
+  public int getEnchantLevel(){return source==null?view.enchantLevel():source.getEnchantLevel();}
+  public int getId(){return source==null?(int)view.objectId():source.getId();}
+ }
+ static boolean commit(ClientSession pc,int skill){
+  var cast=NativeLightAction.material(pc,skill);int item=CombatDatabase.value(0,skill,"NativeCastMaterial","itemConsumeId"),count=CombatDatabase.value(0,skill,"NativeCastMaterial","itemConsumeCount");
+  if(cast.resolved)return item==0||cast.bypass||cast.consumed;
+  try{
+   if(item==0||NativeCastMaterialPolicy.gm(pc)){cast.resolved=true;cast.bypass=true;var wire=NativeDeItemTransaction.wireCopy(pc.nativeDeInventory(0));cast.before=wire;cast.after=wire;return true;}
+   if(count<=0)return reject(pc);
+   if(cast.placement){if(!active(pc,cast)||!Thread.holdsLock(CombatAccess.field(pc,"state")))throw new IOException("cube material lost its exact original operation");return consumeLocked(pc,cast,item,count)||reject(pc);}
+   var life=NativePlayerLifetime.of(pc);
+   synchronized(life.admission){
+    if(!life.admits()&&!retained(pc,life))return reject(pc);
+    cast.live=pc.nativeDeInventory(0);cast.owner=NativeDeItemApplication.publicationOwner(pc);
+    NativeDeItemTransaction.Operation<Boolean> operation=()->consumeLocked(pc,cast,item,count);cast.operation=operation;boolean committed;
+    try{committed=NativeDeItemTransaction.call(pc,operation);}finally{cast.operation=null;cast.live=null;cast.staged=null;cast.owner=null;cast.transaction=false;}
+    return committed||reject(pc);
+   }
+  }catch(IOException failure){NativeReuseLog.getLogger(NativeCastMaterial.class).error("material memory transaction failed",failure);return reject(pc);}
+ }
+ static boolean reject(ClientSession pc){
+  NativeLightAction.materialOutput(pc,Protocol.messageCode(299),"S_MESSAGE_CODE Source-required-material-rejected=299");return false;
+ }
+ static RuntimeInventory previous(ClientSession pc){var cast=NativeLightAction.currentMaterial(pc);if(cast==null||!cast.resolved||!pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("material not committed");return cast.before;}
+ static RuntimeInventory next(ClientSession pc){var cast=NativeLightAction.currentMaterial(pc);if(cast==null||!cast.resolved||!pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("material not committed");return cast.after;}
 
-    static boolean active(ClientSession clientSession, Cast cast) {
-        return cast != null && cast.transaction && cast.operation != null && NativeCastMaterial.retained(clientSession, NativePlayerLifetime.of(clientSession)) && cast.owner != null && cast.owner.active && cast.owner.matches(clientSession) && CombatAccess.field(clientSession, "sourceItemOwner") == cast.owner && (clientSession.nativeDeInventory(0) == cast.live || clientSession.nativeDeInventory(0) == cast.staged);
-    }
+ static boolean rejectPlacement(ClientSession pc,Cast cast){cast.placementBlocked=true;return reject(pc);}
+ static <T>T withPlacement(ClientSession pc,int skill,NativeDeItemTransaction.Operation<T> placement,T rejected)throws IOException{
+  if(!NativeCubeCastAction.supported(skill)||!pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("unreviewed cube placement scope");
+  var cast=NativeLightAction.material(pc,skill);if(cast.transaction||cast.resolved)throw new IOException("cube placement cannot inherit another material transaction");
+  try{
+   // The first character-policy read and its complete JDBC cleanup happen before all placement/item/lifetime monitors.
+   NativeCastMaterialPolicy.gm(pc);
+   var life=NativePlayerLifetime.of(pc);synchronized(life.admission){
+    if(!life.admits()&&!retained(pc,life)){rejectPlacement(pc,cast);return rejected;}
+    cast.live=pc.nativeDeInventory(0);cast.owner=NativeDeItemApplication.publicationOwner(pc);
+    NativeDeItemTransaction.Operation<T> operation=()->{
+     if(!active(pc,cast))throw new IOException("cube canonical owner retired before original placement");
+     var state=(GameStateStore)CombatAccess.field(pc,"state");synchronized(state){cast.placement=true;try{return placement.call();}finally{cast.placement=false;}}
+    };cast.operation=operation;
+    try{return NativeDeItemTransaction.call(pc,operation);}finally{cast.operation=null;cast.live=null;cast.staged=null;cast.owner=null;cast.transaction=false;cast.placement=false;}
+   }
+  }catch(IOException failure){NativeReuseLog.getLogger(NativeCastMaterial.class).error("cube placement memory transaction failed",failure);rejectPlacement(pc,cast);return rejected;}
+ }
+ static boolean consumeLocked(ClientSession pc,Cast cast,int item,int count)throws IOException{
+     if(!active(pc,cast))throw new IOException("material canonical owner retired before transaction");
+     var live=pc.nativeDeInventory(0);var views=new ArrayList<NativeMaterialItem>();var source=live.nativeDeItems();
+     for(var value:live.items()){NativeDeWorldKinds.Item actor=source instanceof NativeDeItemInventory inventory?inventory.actor(value.objectId()):null;views.add(new ItemView(value,actor,(int)pc.playerObjectId()));}
+     var plan=NativeSourceMaterialPlan.plan(views,(int)pc.playerObjectId(),item,count);if(!plan.allowed())return false;
+     var next=live.copy();cast.staged=next;for(var debit:plan.debits()){var value=next.item(debit.objectId());if(value==null||value.quantity()!=debit.oldCount()||!next.remove(debit.objectId(),debit.count()))throw new IOException("material canonical plan changed");}
+     if(next.nativeDeItems() instanceof NativeDeItemInventory inventory){try{inventory.validateReplacement(live);}catch(IllegalStateException stale){throw new IOException("material inventory copy is stale",stale);}}
+     var previousWire=NativeDeItemTransaction.wireCopy(live);var nextWire=NativeDeItemTransaction.wireCopy(next);var state=(GameStateStore)CombatAccess.field(pc,"state");var key=(String)CombatAccess.call(pc,"stateCharacter","()Ljava/lang/String;");long points=((Number)CombatAccess.field(pc,"shopPoints")).longValue();
+     synchronized(state){
+      var before=state.economy(key);state.saveEconomyState(key,points,next.catalogCounts(),next.catalogItemStates());
+      try{NativeDeItemApplication.replace(pc,next,0);}catch(RuntimeException|Error failure){try{state.saveEconomyState(key,before.points(),before.inventory(),before.itemStates());}catch(Throwable rollback){failure.addSuppressed(rollback);}throw failure;}
+     }
+     cast.before=previousWire;cast.after=nextWire;cast.consumed=true;cast.resolved=true;return true;
 
-    static boolean ownerLifetime(NativePlayerLifetime nativePlayerLifetime, NativeDeItemApplication nativeDeItemApplication, ClientSession clientSession) {
-        if (nativePlayerLifetime.admits()) {
-            return true;
-        }
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        return NativeCastMaterial.active(clientSession, cast) && cast.owner.application.get() == nativeDeItemApplication && nativeDeItemApplication.life == nativePlayerLifetime && !nativeDeItemApplication.closed;
-    }
-
-    static boolean adoptLifetime(NativePlayerLifetime nativePlayerLifetime, NativeDeItemApplication.Owner owner, RuntimeInventory runtimeInventory) {
-        if (nativePlayerLifetime.admits()) {
-            return true;
-        }
-        ClientSession clientSession = (ClientSession)owner.session.get();
-        if (clientSession == null) {
-            return false;
-        }
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        return NativeCastMaterial.active(clientSession, cast) && cast.owner == owner && cast.staged == runtimeInventory && NativePlayerLifetime.of(clientSession) == nativePlayerLifetime;
-    }
-
-    static void enterTransaction(ClientSession clientSession, NativeDeItemTransaction.Operation<?> operation) throws IOException {
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        if (cast == null) {
-            return;
-        }
-        if (cast.transaction) {
-            throw new IOException("nested item transaction cannot inherit material cast authority");
-        }
-        if (cast.operation == operation) {
-            if (!NativeCastMaterial.retained(clientSession, NativePlayerLifetime.of(clientSession))) {
-                throw new IOException("material cast receipt retired");
-            }
-            cast.transaction = true;
-        }
-    }
-
-    static void exitTransaction(ClientSession clientSession, NativeDeItemTransaction.Operation<?> operation) {
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        if (cast != null && cast.operation == operation) {
-            cast.transaction = false;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean commit(ClientSession clientSession, int n) {
-        Cast cast = NativeLightAction.material(clientSession, n);
-        int n2 = CombatDatabase.value(0, n, "NativeCastMaterial", "itemConsumeId");
-        int n3 = CombatDatabase.value(0, n, "NativeCastMaterial", "itemConsumeCount");
-        if (cast.resolved) {
-            return n2 == 0 || cast.bypass || cast.consumed;
-        }
-        try {
-            if (n2 == 0 || NativeCastMaterialPolicy.gm(clientSession)) {
-                cast.bypass = true;
-                if (cast.effect == null) {
-                    RuntimeInventory runtimeInventory;
-                    cast.resolved = true;
-                    cast.before = runtimeInventory = NativeDeItemTransaction.wireCopy(clientSession.nativeDeInventory(0));
-                    cast.after = runtimeInventory;
-                    return true;
-                }
-            }
-            if (!cast.bypass && n3 <= 0) {
-                return NativeCastMaterial.reject(clientSession);
-            }
-            if (cast.placement) {
-                if (!NativeCastMaterial.active(clientSession, cast) || !Thread.holdsLock(CombatAccess.field(clientSession, "state"))) {
-                    throw new IOException("cube material lost its exact original operation");
-                }
-                return NativeCastMaterial.consumeLocked(clientSession, cast, n2, n3) || NativeCastMaterial.reject(clientSession);
-            }
-            NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(clientSession);
-            Object object = nativePlayerLifetime.admission;
-            synchronized (object) {
-                boolean bl;
-                if (!nativePlayerLifetime.admits() && !NativeCastMaterial.retained(clientSession, nativePlayerLifetime)) {
-                    return NativeCastMaterial.reject(clientSession);
-                }
-                cast.live = clientSession.nativeDeInventory(0);
-                cast.owner = NativeDeItemApplication.publicationOwner(clientSession);
-                NativeDeItemTransaction.Operation<Boolean> operation = () -> NativeCastMaterial.consumeLocked(clientSession, cast, n2, n3);
-                cast.operation = operation;
-                try {
-                    bl = NativeDeItemTransaction.call(clientSession, operation);
-                }
-                finally {
-                    cast.operation = null;
-                    cast.live = null;
-                    cast.staged = null;
-                    cast.owner = null;
-                    cast.transaction = false;
-                }
-                return bl || NativeCastMaterial.reject(clientSession);
-            }
-        }
-        catch (IOException iOException) {
-            NativeReuseLog.getLogger(NativeCastMaterial.class).error("material memory transaction failed", iOException);
-            return NativeCastMaterial.reject(clientSession);
-        }
-    }
-
-    static boolean reject(ClientSession clientSession) {
-        NativeLightAction.materialOutput(clientSession, Protocol.messageCode(299, new String[0]), "S_MESSAGE_CODE Source-required-material-rejected=299");
-        return false;
-    }
-
-    static RuntimeInventory previous(ClientSession clientSession) {
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        if (cast == null || !cast.resolved || !clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
-            throw new IllegalStateException("material not committed");
-        }
-        return cast.before;
-    }
-
-    static RuntimeInventory next(ClientSession clientSession) {
-        Cast cast = NativeLightAction.currentMaterial(clientSession);
-        if (cast == null || !cast.resolved || !clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
-            throw new IllegalStateException("material not committed");
-        }
-        return cast.after;
-    }
-
-    static boolean rejectPlacement(ClientSession clientSession, Cast cast) {
-        cast.placementBlocked = true;
-        return NativeCastMaterial.reject(clientSession);
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * Enabled aggressive block sorting
-     * Enabled unnecessary exception pruning
-     * Enabled aggressive exception aggregation
-     */
-    static <T> T withPlacement(ClientSession clientSession, int n, NativeDeItemTransaction.Operation<T> operation, T t) throws IOException {
-        if (!NativeCubeCastAction.supported(n) || !clientSession.nativePlayerActionLock().isHeldByCurrentThread()) {
-            throw new IllegalStateException("unreviewed cube placement scope");
-        }
-        Cast cast = NativeLightAction.material(clientSession, n);
-        if (cast.transaction || cast.resolved) {
-            throw new IOException("cube placement cannot inherit another material transaction");
-        }
-        try {
-            NativeCastMaterialPolicy.gm(clientSession);
-            NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(clientSession);
-            Object object = nativePlayerLifetime.admission;
-            synchronized (object) {
-                if (!nativePlayerLifetime.admits() && !NativeCastMaterial.retained(clientSession, nativePlayerLifetime)) {
-                    NativeCastMaterial.rejectPlacement(clientSession, cast);
-                    return t;
-                }
-                cast.live = clientSession.nativeDeInventory(0);
-                cast.owner = NativeDeItemApplication.publicationOwner(clientSession);
-                NativeDeItemTransaction.Operation<Object> operation2 = () -> {
-                    GameStateStore gameStateStore;
-                    if (!NativeCastMaterial.active(clientSession, cast)) {
-                        throw new IOException("cube canonical owner retired before original placement");
-                    }
-                    GameStateStore gameStateStore2 = gameStateStore = (GameStateStore)CombatAccess.field(clientSession, "state");
-                    synchronized (gameStateStore2) {
-                        Object t;
-                        cast.placement = true;
-                        try {
-                            t = operation.call();
-                            cast.placement = false;
-                        }
-                        catch (Throwable throwable) {
-                            cast.placement = false;
-                            throw throwable;
-                        }
-                        return t;
-                    }
-                };
-                cast.operation = operation2;
-                Object object2 = NativeDeItemTransaction.call(clientSession, operation2);
-                return (T)object2;
-                finally {
-                    cast.operation = null;
-                    cast.live = null;
-                    cast.staged = null;
-                    cast.owner = null;
-                    cast.transaction = false;
-                    cast.placement = false;
-                }
-            }
-        }
-        catch (IOException iOException) {
-            NativeReuseLog.getLogger(NativeCastMaterial.class).error("cube placement memory transaction failed", iOException);
-            NativeCastMaterial.rejectPlacement(clientSession, cast);
-            return t;
-        }
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static boolean consumeLocked(ClientSession clientSession, Cast cast, int n, int n2) throws IOException {
-        Object object;
-        Iterator<NativeSourceMaterialPlan.Debit> iterator;
-        Object object2;
-        Object object3;
-        if (!NativeCastMaterial.active(clientSession, cast)) {
-            throw new IOException("material canonical owner retired before transaction");
-        }
-        RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(0);
-        ArrayList<NativeMaterialItem> arrayList = new ArrayList<NativeMaterialItem>();
-        Map map = runtimeInventory.nativeDeItems();
-        Object object4 = runtimeInventory.items().iterator();
-        while (object4.hasNext()) {
-            NativeDeWorldKinds.Item item;
-            object3 = object4.next();
-            if (map instanceof NativeDeItemInventory) {
-                object2 = (NativeDeItemInventory)map;
-                item = ((NativeDeItemInventory)object2).actor(((RuntimeInventory.Item)object3).objectId());
-            } else {
-                item = null;
-            }
-            iterator = item;
-            arrayList.add(new ItemView((RuntimeInventory.Item)object3, (NativeDeWorldKinds.Item)((Object)iterator), (int)clientSession.playerObjectId()));
-        }
-        cast.staged = object4 = runtimeInventory.copy();
-        if (!cast.bypass) {
-            object3 = NativeSourceMaterialPlan.plan(arrayList, (int)clientSession.playerObjectId(), n, n2);
-            if (!((NativeSourceMaterialPlan.Result)object3).allowed()) {
-                return false;
-            }
-            iterator = ((NativeSourceMaterialPlan.Result)object3).debits().iterator();
-            while (iterator.hasNext()) {
-                object2 = iterator.next();
-                object = ((RuntimeInventory)object4).item(((NativeSourceMaterialPlan.Debit)object2).objectId());
-                if (object != null && (long)((RuntimeInventory.Item)object).quantity() == ((NativeSourceMaterialPlan.Debit)object2).oldCount() && ((RuntimeInventory)object4).remove(((NativeSourceMaterialPlan.Debit)object2).objectId(), ((NativeSourceMaterialPlan.Debit)object2).count())) continue;
-                throw new IOException("material canonical plan changed");
-            }
-        }
-        if (cast.effect != null) {
-            cast.effectResult = cast.effect.apply((RuntimeInventory)object4);
-        }
-        if ((iterator = ((RuntimeInventory)object4).nativeDeItems()) instanceof NativeDeItemInventory) {
-            object3 = (NativeDeItemInventory)((Object)iterator);
-            try {
-                ((NativeDeItemInventory)object3).validateReplacement(runtimeInventory);
-            }
-            catch (IllegalStateException illegalStateException) {
-                throw new IOException("material inventory copy is stale", illegalStateException);
-            }
-        }
-        object3 = NativeDeItemTransaction.wireCopy(runtimeInventory);
-        iterator = NativeDeItemTransaction.wireCopy((RuntimeInventory)object4);
-        object2 = (GameStateStore)CombatAccess.field(clientSession, "state");
-        object = (String)CombatAccess.call(clientSession, "stateCharacter", "()Ljava/lang/String;", new Object[0]);
-        long l = ((Number)CombatAccess.field(clientSession, "shopPoints")).longValue();
-        Object object5 = object2;
-        synchronized (object5) {
-            GameStateStore.Economy economy = ((GameStateStore)object2).economy((String)object);
-            ((GameStateStore)object2).saveEconomyState((String)object, l, ((RuntimeInventory)object4).catalogCounts(), ((RuntimeInventory)object4).catalogItemStates());
-            try {
-                NativeDeItemApplication.replace(clientSession, (RuntimeInventory)object4, 0);
-            }
-            catch (Error | RuntimeException throwable) {
-                try {
-                    ((GameStateStore)object2).saveEconomyState((String)object, economy.points(), economy.inventory(), economy.itemStates());
-                }
-                catch (Throwable throwable2) {
-                    throwable.addSuppressed(throwable2);
-                }
-                throw throwable;
-            }
-        }
-        cast.before = object3;
-        cast.after = iterator;
-        cast.consumed = true;
-        cast.resolved = true;
-        return true;
-    }
-
-    private NativeCastMaterial() {
-    }
-
-    static final class Cast {
-        Effect effect;
-        boolean effectResult;
-        final int skill;
-        boolean resolved;
-        boolean consumed;
-        boolean bypass;
-        boolean transaction;
-        boolean placement;
-        boolean placementBlocked;
-        RuntimeInventory before;
-        RuntimeInventory after;
-        RuntimeInventory live;
-        RuntimeInventory staged;
-        NativeDeItemApplication.Owner owner;
-        NativeDeItemTransaction.Operation<?> operation;
-
-        Cast(int n) {
-            this.skill = n;
-        }
-    }
-
-    static interface Effect {
-        public boolean apply(RuntimeInventory var1) throws IOException;
-    }
-
-    private record ItemView(RuntimeInventory.Item view, NativeDeWorldKinds.Item source, int owner) implements NativeMaterialItem
-    {
-        @Override
-        public Object getItem() {
-            return this.source == null ? this.view.definition() : this.source.getItem();
-        }
-
-        @Override
-        public int getItemId() {
-            return this.source == null ? (int)this.view.definition().catalogId() : this.source.getItemId();
-        }
-
-        @Override
-        public int get_char_objid() {
-            return this.source == null ? this.owner : this.source.get_char_objid();
-        }
-
-        @Override
-        public boolean isEquipped() {
-            return this.source == null ? this.view.equipped() : this.source.isEquipped();
-        }
-
-        @Override
-        public boolean isSealed() {
-            return this.source == null ? this.view.sealed() : this.source.isSealed();
-        }
-
-        @Override
-        public long getCount() {
-            return this.source == null ? (long)this.view.quantity() : this.source.getCount();
-        }
-
-        @Override
-        public boolean isStackable() {
-            return this.source == null ? this.view.definition().stackable() : this.source.isStackable();
-        }
-
-        @Override
-        public int getEnchantLevel() {
-            return this.source == null ? this.view.enchantLevel() : this.source.getEnchantLevel();
-        }
-
-        @Override
-        public int getId() {
-            return this.source == null ? (int)this.view.objectId() : this.source.getId();
-        }
-    }
+ }
+ private NativeCastMaterial(){}
 }

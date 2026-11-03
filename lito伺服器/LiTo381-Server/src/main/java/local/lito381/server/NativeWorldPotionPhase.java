@@ -1,27 +1,11 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/world-potion/NativeWorldPotionPhase.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.GameHub;
-
+/** The original HEAL consumer admits battle and a currently registered WORLD scene. */
 final class NativeWorldPotionPhase {
-    static boolean allowed(ClientSession clientSession) {
-        String string = String.valueOf(CombatAccess.field(clientSession, "phase"));
-        if (string.equals("BATTLE")) {
-            return true;
-        }
-        if (!string.equals("WORLD")) {
-            return false;
-        }
-        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        GameHub.ClassicWorldLocation classicWorldLocation = gameHub.classicWorldLocation(clientSession);
-        return classicWorldLocation != null && classicWorldLocation.mapId() == ((Integer)CombatAccess.field(clientSession, "classicWorldMapId")).intValue() && classicWorldLocation.instanceId() == ((Integer)CombatAccess.field(clientSession, "classicWorldInstanceId")).intValue();
-    }
-
-    private NativeWorldPotionPhase() {
-    }
+ static boolean allowed(ClientSession pc){
+  String phase=String.valueOf(CombatAccess.field(pc,"phase"));if(phase.equals("BATTLE"))return true;if(!phase.equals("WORLD"))return false;
+  var hub=(GameHub)CombatAccess.field(pc,"hub");var location=hub.classicWorldLocation(pc);
+  return location!=null&&location.mapId()==(int)CombatAccess.field(pc,"classicWorldMapId")&&location.instanceId()==(int)CombatAccess.field(pc,"classicWorldInstanceId");
+ }
+ private NativeWorldPotionPhase(){}
 }

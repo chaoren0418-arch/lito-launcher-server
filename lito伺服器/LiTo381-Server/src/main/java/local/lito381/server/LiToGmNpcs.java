@@ -1,202 +1,86 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito登入器/LiTo381-Launcher/server-patches/repair-034/LiToGmNpcs.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
-import local.lito381.server.AccountRepository;
-import local.lito381.server.ArenaMapCatalog;
-import local.lito381.server.BattleAnimationCatalog;
-import local.lito381.server.BattleRules;
-import local.lito381.server.BattleTimeAttackEncounter;
-import local.lito381.server.ClientSession;
-import local.lito381.server.GameHub;
-import local.lito381.server.LiToGmCommands;
-import local.lito381.server.Protocol;
+import java.sql.*;
+import java.util.*;
+import java.lang.reflect.*;
+import static local.lito381.server.LiToGmCommands.*;
 
+/** GM monsters reuse the complete authoritative NPC combat/status/AI engine. */
 final class LiToGmNpcs {
-    private static final Map<BattleTimeAttackEncounter, BattleRules.RuleSet> GM = Collections.synchronizedMap(new WeakHashMap());
-
-    LiToGmNpcs() {
+    private static final Map<BattleTimeAttackEncounter,BattleRules.RuleSet> GM=Collections.synchronizedMap(new WeakHashMap<>());
+    static boolean active(BattleTimeAttackEncounter e){return GM.containsKey(e);}
+    static void clear(BattleTimeAttackEncounter e){GM.remove(e);}
+    static BattleRules.Mode combatMode(BattleRules.RuleSet rules){
+        synchronized(GM){for(var r:GM.values())if(r==rules)return BattleRules.Mode.TIME_ATTACK;}
+        return rules.mode();
     }
-
-    static boolean active(BattleTimeAttackEncounter battleTimeAttackEncounter) {
-        return GM.containsKey(battleTimeAttackEncounter);
-    }
-
-    static void clear(BattleTimeAttackEncounter battleTimeAttackEncounter) {
-        GM.remove(battleTimeAttackEncounter);
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static BattleRules.Mode combatMode(BattleRules.RuleSet ruleSet) {
-        Map<BattleTimeAttackEncounter, BattleRules.RuleSet> map = GM;
-        synchronized (map) {
-            for (BattleRules.RuleSet ruleSet2 : GM.values()) {
-                if (ruleSet2 != ruleSet) continue;
-                return BattleRules.Mode.TIME_ATTACK;
-            }
-        }
-        return ruleSet.mode();
-    }
-
-    static int number(Map<String, String> map, String string, int n) {
-        String string2 = map.get(string);
-        return string2 == null || string2.isBlank() ? n : Integer.parseInt(string2);
-    }
-
-    /*
-     * Exception decompiling
-     */
-    static Map<String, String> npc(AccountRepository var0, String var1_1) throws Exception {
-        /*
-         * This method has failed to decompile.  When submitting a bug report, please provide this stack trace, and (if you hold appropriate legal rights) the relevant class file.
-         * 
-         * org.benf.cfr.reader.util.ConfusedCFRException: Started 2 blocks at once
-         *     at org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.getStartingBlocks(Op04StructuredStatement.java:412)
-         *     at org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.buildNestedBlocks(Op04StructuredStatement.java:487)
-         *     at org.benf.cfr.reader.bytecode.analysis.opgraph.Op03SimpleStatement.createInitialStructuredBlock(Op03SimpleStatement.java:736)
-         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisInner(CodeAnalyser.java:850)
-         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisOrWrapFail(CodeAnalyser.java:278)
-         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysis(CodeAnalyser.java:201)
-         *     at org.benf.cfr.reader.entities.attributes.AttributeCode.analyse(AttributeCode.java:94)
-         *     at org.benf.cfr.reader.entities.Method.analyse(Method.java:531)
-         *     at org.benf.cfr.reader.entities.ClassFile.analyseMid(ClassFile.java:1055)
-         *     at org.benf.cfr.reader.entities.ClassFile.analyseTop(ClassFile.java:942)
-         *     at org.benf.cfr.reader.Driver.doClass(Driver.java:84)
-         *     at org.benf.cfr.reader.CfrDriverImpl.analyse(CfrDriverImpl.java:78)
-         *     at org.benf.cfr.reader.Main.main(Main.java:54)
-         */
-        throw new IllegalStateException("Decompilation failed");
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static void spawn(ClientSession clientSession, AccountRepository accountRepository, String string, int n, int n2) throws Exception {
-        List<ClientSession> list;
-        if (n > 100 || n2 < 0 || n2 > 20) {
-            throw new IllegalArgumentException("NPC \u6578\u91cf1\uff5e100\uff0c\u7bc4\u570d0\uff5e20\uff1b\u6bcf\u623f\u6700\u591a100\u500b GM NPC\u3002");
-        }
-        if (!LiToGmCommands.get(clientSession, "phase").toString().equals("BATTLE") || ((Boolean)LiToGmCommands.get(clientSession, "observer")).booleanValue() || (Integer)LiToGmCommands.get(clientSession, "playerHp") <= 0) {
-            throw new IllegalArgumentException(".spawn \u8acb\u5728\u9032\u5165\u6230\u9b25\u5730\u5716\u5f8c\u4f7f\u7528\uff0c\u89c0\u6230\u6216\u6b7b\u4ea1\u72c0\u614b\u7121\u6cd5\u5efa\u7acb\u3002");
-        }
-        GameHub gameHub = (GameHub)LiToGmCommands.get(clientSession, "hub");
-        long l = (Long)LiToGmCommands.get(clientSession, "currentRoomId");
-        Map<String, String> map = LiToGmNpcs.npc(accountRepository, string);
-        String string2 = map.getOrDefault("impl", "");
-        if (!string2.equals("L1Monster")) {
-            throw new IllegalArgumentException("\u76ee\u524d .spawn \u652f\u63f4\u6230\u9b25\u602a\u7269\uff08L1Monster\uff09\uff1b\u5546\u4eba\u3001\u5b88\u885b\u53ca\u7279\u6b8a\u529f\u80fd NPC \u5c1a\u672a\u958b\u653e\u3002");
-        }
-        int n3 = LiToGmNpcs.number(map, "npcid", 0);
-        int n4 = LiToGmNpcs.number(map, "gfxid", 0);
-        BattleAnimationCatalog.get().requireBattleCapableSprite(n4, 0);
-        BattleAnimationCatalog.get().requireTimedAction(n4, 1);
-        BattleTimeAttackEncounter.Template template = new BattleTimeAttackEncounter.Template(n3, n4, map.getOrDefault("nameid", map.getOrDefault("name", "NPC")), LiToGmNpcs.number(map, "lvl", 1), LiToGmNpcs.number(map, "hp", 1), LiToGmNpcs.number(map, "mp", 0), LiToGmNpcs.number(map, "int", 10));
-        ArrayList<BattleTimeAttackEncounter.Snapshot> arrayList = new ArrayList<BattleTimeAttackEncounter.Snapshot>();
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            Object object = ((Map)LiToGmCommands.get(gameHub, "rooms")).get(l);
-            if (object == null || !((Boolean)LiToGmCommands.get(object, "battleStarted")).booleanValue()) {
-                throw new IllegalArgumentException("\u6230\u9b25\u5df2\u7d50\u675f\uff0c\u6c92\u6709\u5efa\u7acb NPC\u3002");
-            }
-            BattleRules.RuleSet ruleSet = gameHub.roomRules(l);
-            if (ruleSet.mode() == BattleRules.Mode.TIME_ATTACK || ruleSet.mode() == BattleRules.Mode.QUEST_BATTLE || ruleSet.mode() == BattleRules.Mode.PET_RACE) {
-                throw new IllegalArgumentException("\u8acb\u5728\u4e00\u822c\u6230\u9b25\u6a21\u5f0f\u4f7f\u7528 .spawn\uff1b\u7af6\u901f\uff0f\u95d6\u95dc\uff0f\u5bf5\u7269\u8cfd\u7684\u56fa\u5b9a\u6ce2\u6b21\u4e0d\u63a5\u53d7\u984d\u5916 NPC\u3002");
-            }
-            BattleTimeAttackEncounter battleTimeAttackEncounter = (BattleTimeAttackEncounter)LiToGmCommands.get(object, "timeAttackEncounter");
-            List list2 = (List)LiToGmCommands.get(battleTimeAttackEncounter, "actors");
-            if (list2.size() + n > 100) {
-                throw new IllegalArgumentException("\u672c\u5834 GM NPC \u5df2\u9054100\u500b\u4e0a\u9650\uff08\u542b\u5c4d\u9ad4\uff09\u3002");
-            }
-            ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(ruleSet.mapId());
-            int n5 = (Integer)LiToGmCommands.get(clientSession, "positionX");
-            int n6 = (Integer)LiToGmCommands.get(clientSession, "positionY");
-            ArrayList<ArenaMapCatalog.Point> arrayList2 = new ArrayList<ArenaMapCatalog.Point>();
-            int n7 = n2 == 0 ? 3 : n2;
-            for (int i = n6 - n7; i <= n6 + n7; ++i) {
-                for (int j = n5 - n7; j <= n5 + n7; ++j) {
-                    if (!arena.nativeStandingFloor(j, i) || battleTimeAttackEncounter.blocks(j, i) || j == n5 && i == n6) continue;
-                    boolean bl = false;
-                    for (ClientSession clientSession2 : gameHub.roomMembers(l)) {
-                        if (clientSession2.battleX() != j || clientSession2.battleY() != i) continue;
-                        bl = true;
-                        break;
-                    }
-                    if (bl) continue;
-                    arrayList2.add(new ArenaMapCatalog.Point(j, i));
+    static int number(Map<String,String> row,String key,int fallback){String v=row.get(key);return v==null||v.isBlank()?fallback:Integer.parseInt(v);}
+    static Map<String,String> npc(AccountRepository r,String token)throws Exception{
+        try(Connection c=connection(r)){int id=resolve(r,c,token,true);
+            try(var q=c.prepareStatement("SELECT * FROM "+table(r,"npc")+" WHERE npcid=?")){
+                q.setInt(1,id);try(var rows=q.executeQuery()){
+                    if(!rows.next())throw new IllegalArgumentException("找不到 NPC ID "+id+"。");
+                    Map<String,String> result=new HashMap<>();var md=rows.getMetaData();for(int i=1;i<=md.getColumnCount();i++){String v=rows.getString(i);if(v!=null)result.put(md.getColumnLabel(i).toLowerCase(Locale.ROOT),v);}return result;
                 }
             }
-            if (arrayList2.isEmpty()) {
-                throw new IllegalArgumentException("\u9644\u8fd1\u6c92\u6709\u53ef\u653e\u7f6e NPC \u7684\u7a7a\u5730\u3002");
-            }
-            Collections.shuffle(arrayList2);
-            Class<?> clazz = Class.forName("local.lito381.server.BattleTimeAttackEncounter$Monster");
-            Constructor<?> constructor = clazz.getDeclaredConstructor(BattleTimeAttackEncounter.Template.class, Integer.TYPE, Integer.TYPE, String.class, String.class);
-            constructor.setAccessible(true);
-            ArrayList arrayList3 = new ArrayList();
-            for (int i = 0; i < Math.min(n, arrayList2.size()); ++i) {
-                ArenaMapCatalog.Point point = (ArenaMapCatalog.Point)arrayList2.get(i);
-                Object obj = constructor.newInstance(template, point.x(), point.y(), "selected-source-npc GM", "GM one-shot, no wave progression");
-                arrayList3.add(obj);
-                arrayList.add((BattleTimeAttackEncounter.Snapshot)LiToGmCommands.call(obj, "snapshot", new Class[0], new Object[0]));
-            }
-            LiToGmCommands.set(battleTimeAttackEncounter, "arena", arena);
-            LiToGmCommands.set(battleTimeAttackEncounter, "phase", (Object)BattleTimeAttackEncounter.Phase.FINAL_BOSSES);
-            GM.put(battleTimeAttackEncounter, ruleSet);
-            list2.addAll(arrayList3);
-            LiToGmCommands.set(object, "pveAiPublishAfterNanos", System.nanoTime() + 2000000000L);
-            list = gameHub.roomMembers(l);
-        }
-        for (ClientSession clientSession3 : list) {
-            for (BattleTimeAttackEncounter.Snapshot snapshot : arrayList) {
-                LiToGmCommands.call(clientSession3, "sendEncrypted", new Class[]{byte[].class, String.class}, Protocol.timeAttackActor(snapshot), "GM NPC spawn=" + snapshot.objectId());
-            }
-        }
-        LiToGmCommands.reply(clientSession, "\u5df2\u5efa\u7acb NPC " + map.getOrDefault("name", string) + "\uff08" + n3 + "\uff09\u00d7" + arrayList.size() + (arrayList.size() < n ? "\uff1b\u9644\u8fd1\u7a7a\u5730\u4e0d\u8db3\uff0c\u5df2\u4f9d\u53ef\u7528\u4f4d\u7f6e\u6e1b\u5c11\u6578\u91cf\u3002" : "\u3002"));
-        System.out.println("[LiTo] GM spawn room=" + l + " npc=" + n3 + " count=" + arrayList.size());
-    }
-
-    static BattleTimeAttackEncounter.Hit damage(BattleTimeAttackEncounter battleTimeAttackEncounter, Object object, int n, boolean bl) {
-        try {
-            BattleTimeAttackEncounter.Damage damage = (BattleTimeAttackEncounter.Damage)LiToGmCommands.call(object, bl ? "poisonDamage" : "damage", new Class[]{Integer.TYPE}, n);
-            if (damage != null && damage.diedNow()) {
-                LiToGmCommands.call(battleTimeAttackEncounter, "rememberCorpse", new Class[]{BattleTimeAttackEncounter.Snapshot.class, Long.TYPE}, damage.after(), System.nanoTime());
-            }
-            return new BattleTimeAttackEncounter.Hit(damage, false, battleTimeAttackEncounter.snapshots().size(), List.of());
-        }
-        catch (Exception exception) {
-            throw new IllegalStateException(exception);
         }
     }
-
-    static BattleTimeAttackEncounter.Capture capture(BattleTimeAttackEncounter battleTimeAttackEncounter, long l) {
-        try {
-            BattleTimeAttackEncounter.Snapshot snapshot = battleTimeAttackEncounter.find(l);
-            if (snapshot == null) {
-                return null;
+    static void spawn(ClientSession s,AccountRepository r,String token,int count,int range)throws Exception{
+        if(count>100||range<0||range>20)throw new IllegalArgumentException("NPC 數量1～100，範圍0～20；每房最多100個 GM NPC。");
+        if(!get(s,"phase").toString().equals("BATTLE")||(boolean)get(s,"observer")||(int)get(s,"playerHp")<=0)
+            throw new IllegalArgumentException(".spawn 請在進入戰鬥地圖後使用，觀戰或死亡狀態無法建立。");
+        GameHub hub=(GameHub)get(s,"hub");long roomId=(long)get(s,"currentRoomId");
+        Map<String,String> row=npc(r,token);String impl=row.getOrDefault("impl","");
+        if(!impl.equals("L1Monster"))throw new IllegalArgumentException("目前 .spawn 支援戰鬥怪物（L1Monster）；商人、守衛及特殊功能 NPC 尚未開放。");
+        int npc=number(row,"npcid",0),gfx=number(row,"gfxid",0);
+        BattleAnimationCatalog.get().requireBattleCapableSprite(gfx,BattleActionCodes.WALK);
+        BattleAnimationCatalog.get().requireTimedAction(gfx,BattleActionCodes.ATTACK);
+        var template=new BattleTimeAttackEncounter.Template(npc,gfx,row.getOrDefault("nameid",row.getOrDefault("name","NPC")),number(row,"lvl",1),number(row,"hp",1),number(row,"mp",0),number(row,"int",10));
+        List<BattleTimeAttackEncounter.Snapshot> created=new ArrayList<>();List<ClientSession> members;
+        synchronized(hub){
+            Object room=((Map<?,?>)get(hub,"rooms")).get(roomId);
+            if(room==null||!(boolean)get(room,"battleStarted"))throw new IllegalArgumentException("戰鬥已結束，沒有建立 NPC。");
+            BattleRules.RuleSet rules=hub.roomRules(roomId);
+            if(rules.mode()==BattleRules.Mode.TIME_ATTACK||rules.mode()==BattleRules.Mode.QUEST_BATTLE||rules.mode()==BattleRules.Mode.PET_RACE)
+                throw new IllegalArgumentException("請在一般戰鬥模式使用 .spawn；競速／闖關／寵物賽的固定波次不接受額外 NPC。");
+            BattleTimeAttackEncounter encounter=(BattleTimeAttackEncounter)get(room,"timeAttackEncounter");
+            List<Object> actors=(List<Object>)get(encounter,"actors");
+            if(actors.size()+count>100)throw new IllegalArgumentException("本場 GM NPC 已達100個上限（含屍體）。");
+            ArenaMapCatalog.Arena arena=ArenaMapCatalog.forMap(rules.mapId());
+            int px=(int)get(s,"positionX"),py=(int)get(s,"positionY");
+            List<ArenaMapCatalog.Point> cells=new ArrayList<>();int radius=range==0?3:range;
+            for(int y=py-radius;y<=py+radius;y++)for(int x=px-radius;x<=px+radius;x++){
+                if(!arena.nativeStandingFloor(x,y)||encounter.blocks(x,y)||x==px&&y==py)continue;
+                boolean occupied=false;for(ClientSession p:hub.roomMembers(roomId))if(p.battleX()==x&&p.battleY()==y){occupied=true;break;}
+                if(!occupied)cells.add(new ArenaMapCatalog.Point(x,y));
             }
-            List list = (List)LiToGmCommands.get(battleTimeAttackEncounter, "actors");
-            list.removeIf(object -> {
-                try {
-                    return (Long)LiToGmCommands.get(object, "objectId") == l;
-                }
-                catch (Exception exception) {
-                    throw new IllegalStateException(exception);
-                }
-            });
-            return new BattleTimeAttackEncounter.Capture(snapshot, battleTimeAttackEncounter.snapshots().size(), List.of());
+            if(cells.isEmpty())throw new IllegalArgumentException("附近沒有可放置 NPC 的空地。");
+            Collections.shuffle(cells);
+            Class<?> mc=Class.forName("local.lito381.server.BattleTimeAttackEncounter$Monster");
+            Constructor<?> ctor=mc.getDeclaredConstructor(BattleTimeAttackEncounter.Template.class,int.class,int.class,String.class,String.class);ctor.setAccessible(true);
+            List<Object> pending=new ArrayList<>();for(int i=0;i<Math.min(count,cells.size());i++){
+                var p=cells.get(i);Object actor=ctor.newInstance(template,p.x(),p.y(),"selected-source-npc GM","GM one-shot, no wave progression");pending.add(actor);created.add((BattleTimeAttackEncounter.Snapshot)call(actor,"snapshot",new Class[]{}));
+            }
+            set(encounter,"arena",arena);set(encounter,"phase",BattleTimeAttackEncounter.Phase.FINAL_BOSSES);
+            GM.put(encounter,rules);actors.addAll(pending);set(room,"pveAiPublishAfterNanos",System.nanoTime()+2_000_000_000L);
+            members=hub.roomMembers(roomId);
         }
-        catch (Exception exception) {
-            throw new IllegalStateException(exception);
-        }
+        // Publish once, through the same packet and target type used by ordinary NPCs.
+        for(ClientSession p:members)for(var actor:created)call(p,"sendEncrypted",new Class[]{byte[].class,String.class},Protocol.timeAttackActor(actor),"GM NPC spawn="+actor.objectId());
+        reply(s,"已建立 NPC "+row.getOrDefault("name",token)+"（"+npc+"）×"+created.size()+(created.size()<count?"；附近空地不足，已依可用位置減少數量。":"。"));
+        System.out.println("[LiTo] GM spawn room="+roomId+" npc="+npc+" count="+created.size());
+    }
+    // A GM monster's death/capture must never complete a Time Attack match or spawn waves.
+    static BattleTimeAttackEncounter.Hit damage(BattleTimeAttackEncounter e,Object actor,int amount,boolean poison){
+        try{
+            var d=(BattleTimeAttackEncounter.Damage)call(actor,poison?"poisonDamage":"damage",new Class[]{int.class},amount);
+            if(d!=null&&d.diedNow())call(e,"rememberCorpse",new Class[]{BattleTimeAttackEncounter.Snapshot.class,long.class},d.after(),System.nanoTime());
+            return new BattleTimeAttackEncounter.Hit(d,false,e.snapshots().size(),List.of());
+        }catch(Exception ex){throw new IllegalStateException(ex);}
+    }
+    static BattleTimeAttackEncounter.Capture capture(BattleTimeAttackEncounter e,long id){
+        try{var snapshot=e.find(id);if(snapshot==null)return null;List<Object> actors=(List<Object>)get(e,"actors");actors.removeIf(o->{try{return (long)get(o,"objectId")==id;}catch(Exception ex){throw new IllegalStateException(ex);}});return new BattleTimeAttackEncounter.Capture(snapshot,e.snapshots().size(),List.of());}
+        catch(Exception ex){throw new IllegalStateException(ex);}
     }
 }

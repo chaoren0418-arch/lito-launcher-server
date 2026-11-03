@@ -1,45 +1,23 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/weapon-break-lifetime/build-repro/inputs/original/NativeWeaponBreakMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
 import java.util.List;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.GameHub;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.Protocol;
-
+/** Preserve both existing roots and their target checks under ordered player locks. */
 final class NativeWeaponBreakMaterialAction {
-    private static ClientSession target(ClientSession clientSession2, byte[] byArray, boolean bl) {
-        Protocol.AttackSpellRequest attackSpellRequest = Protocol.attackSpellRequest(byArray);
-        GameHub gameHub = (GameHub)CombatAccess.field(clientSession2, "hub");
-        List list = bl ? (List)CombatAccess.call(clientSession2, "classicWorldMembers", "(I)Ljava/util/List;", (int)((Integer)CombatAccess.field(clientSession2, "classicWorldMapId"))) : gameHub.roomCombatants((Long)CombatAccess.field(clientSession2, "currentRoomId"));
-        return list.stream().filter(clientSession -> clientSession.playerObjectId() == attackSpellRequest.targetObjectId()).findFirst().orElse(clientSession2);
-    }
-
-    static void battle(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.WeaponBreakSpell weaponBreakSpell) throws IOException {
-        if (String.valueOf(CombatAccess.field(clientSession, "phase")).equals("WORLD")) {
-            NativeWeaponBreakMaterialAction.world(clientSession, byArray, weaponBreakSpell);
-            return;
-        }
-        NativeLightAction.commitPair(clientSession, NativeWeaponBreakMaterialAction.target(clientSession, byArray, false), () -> clientSession.nativeMaterialWeaponBreakBody(byArray, weaponBreakSpell));
-    }
-
-    static void world(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.WeaponBreakSpell weaponBreakSpell) throws IOException {
-        NativeLightAction.commitPair(clientSession, NativeWeaponBreakMaterialAction.target(clientSession, byArray, true), () -> clientSession.nativeMaterialWorldWeaponBreakBody(byArray, weaponBreakSpell));
-    }
-
-    static boolean admit(ClientSession clientSession, ClientSession clientSession2, int n, int n2, int n3) {
-        if (n != 27) {
-            throw new IllegalStateException("unreviewed Weapon Break material skill");
-        }
-        return NativeLightAction.admitPair(clientSession, clientSession2 == null ? clientSession : clientSession2, n, n2, n3);
-    }
-
-    private NativeWeaponBreakMaterialAction() {
-    }
+ private static ClientSession target(ClientSession pc,byte[] packet,boolean world){
+  var request=Protocol.attackSpellRequest(packet);var hub=(GameHub)CombatAccess.field(pc,"hub");
+  List<ClientSession> players=world?(List<ClientSession>)CombatAccess.call(pc,"classicWorldMembers","(I)Ljava/util/List;",(int)CombatAccess.field(pc,"classicWorldMapId")):hub.roomCombatants((long)CombatAccess.field(pc,"currentRoomId"));
+  return players.stream().filter(p->p.playerObjectId()==request.targetObjectId()).findFirst().orElse(pc);
+ }
+ static void battle(ClientSession pc,byte[] packet,BattleSpellCatalog.WeaponBreakSpell spell)throws IOException{
+  NativeLightAction.commitPair(pc,target(pc,packet,false),()->pc.nativeMaterialWeaponBreakBody(packet,spell));
+ }
+ static void world(ClientSession pc,byte[] packet,BattleSpellCatalog.WeaponBreakSpell spell)throws IOException{
+  NativeLightAction.commitPair(pc,target(pc,packet,true),()->pc.nativeMaterialWorldWeaponBreakBody(packet,spell));
+ }
+ static boolean admit(ClientSession pc,ClientSession target,int skill,int action,int reuse){
+  if(skill!=27)throw new IllegalStateException("unreviewed Weapon Break material skill");
+  return NativeLightAction.admitPair(pc,target==null?pc:target,skill,action,reuse);
+ }
+ private NativeWeaponBreakMaterialAction(){}
 }

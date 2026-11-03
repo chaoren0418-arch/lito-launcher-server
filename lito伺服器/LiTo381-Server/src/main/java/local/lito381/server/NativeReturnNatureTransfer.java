@@ -1,261 +1,89 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/return-nature-transfer/NativeReturnNatureTransfer.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import local.lito381.server.BattleCompanion;
-import local.lito381.server.BattleGroundItems;
-import local.lito381.server.ClientSession;
-import local.lito381.server.CombatAccess;
-import local.lito381.server.DurableCommit;
-import local.lito381.server.GameHub;
-import local.lito381.server.GameStateStore;
-import local.lito381.server.NativeCastMaterial;
-import local.lito381.server.NativeDeItemApplication;
-import local.lito381.server.NativeDeItemInventory;
-import local.lito381.server.NativeDeItemTransaction;
-import local.lito381.server.NativeLightAction;
-import local.lito381.server.NativePlayerCommit;
-import local.lito381.server.NativePlayerLifetime;
-import local.lito381.server.NativeReturnNatureMaterialAction;
-import local.lito381.server.NativeReuseLog;
-import local.lito381.server.RuntimeInventory;
-
+import java.io.*;import java.util.*;
+/** Skill145's already-admitted SUMMON return; never authorizes a new producer. */
 final class NativeReturnNatureTransfer {
-    private static final ThreadLocal<Scope> current = new ThreadLocal();
-
-    static NativeCastMaterial.Cast material(ClientSession clientSession) {
-        Scope scope = current.get();
-        if (scope == null) {
-            current.remove();
-            return null;
-        }
-        return scope.owner == clientSession ? scope.cast : null;
-    }
-
-    static boolean retained(ClientSession clientSession) {
-        Scope scope = current.get();
-        if (scope == null) {
-            current.remove();
-            return false;
-        }
-        return scope.owner == clientSession && scope.caster != clientSession && scope.binding.matches(clientSession) && clientSession.nativePlayerActionLock().isHeldByCurrentThread() && scope.caster.nativePlayerActionLock().isHeldByCurrentThread() && NativeReturnNatureMaterialAction.caster(clientSession, scope.pet) == scope.caster && scope.cast.operation != null && NativeLightAction.retainedMaterial(scope.caster);
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * Loose catch block
-     * Enabled aggressive exception aggregation
-     */
-    static boolean release(ClientSession clientSession, BattleCompanion battleCompanion, BattleCompanion.Snapshot snapshot, int n) throws IOException {
-        if (battleCompanion == null || snapshot == null) {
-            return false;
-        }
-        ClientSession clientSession2 = NativeReturnNatureMaterialAction.caster(clientSession, battleCompanion);
-        if (clientSession2 == null) {
-            return false;
-        }
-        if (snapshot.kind() != BattleCompanion.Kind.SUMMON || battleCompanion.carriedItems().isEmpty()) {
-            return NativeReturnNatureTransfer.original(clientSession, battleCompanion, snapshot, n);
-        }
-        NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(clientSession);
-        Object object = nativePlayerLifetime.admission;
-        synchronized (object) {
-            if (!NativeLightAction.retainedMaterial(clientSession2)) {
-                return false;
-            }
-            NativeCastMaterial.Cast cast = new NativeCastMaterial.Cast(145);
-            Scope scope = new Scope(clientSession2, clientSession, battleCompanion, NativePlayerCommit.Binding.capture(clientSession), cast);
-            Scope scope2 = current.get();
-            current.set(scope);
-            try {
-                boolean bl;
-                cast.live = clientSession.nativeDeInventory(0);
-                cast.owner = NativeDeItemApplication.publicationOwner(clientSession);
-                NativeDeItemTransaction.Operation<Boolean> operation = () -> {
-                    if (!NativeCastMaterial.active(clientSession, cast) || !scope.binding.matches(clientSession)) {
-                        throw new IOException("companion return owner retired");
-                    }
-                    BattleCompanion battleCompanion2 = battleCompanion;
-                    synchronized (battleCompanion2) {
-                        if (NativeReturnNatureMaterialAction.caster(clientSession, battleCompanion) != clientSession2 || !battleCompanion.snapshot().active()) {
-                            return false;
-                        }
-                        NativeReturnNatureTransfer.transfer(clientSession, battleCompanion, cast);
-                        return NativeReturnNatureTransfer.original(clientSession, battleCompanion, snapshot, n);
-                    }
-                };
-                cast.operation = operation;
-                try {
-                    bl = NativeDeItemTransaction.call(clientSession, operation);
-                    cast.operation = null;
-                    cast.transaction = false;
-                    cast.live = null;
-                    cast.staged = null;
-                    cast.owner = null;
-                }
-                catch (IOException iOException) {
-                    boolean bl2;
-                    block19: {
-                        NativeReuseLog.getLogger(NativeReturnNatureTransfer.class).error("Return to Nature owner transfer failed; summon retained", iOException);
-                        bl2 = false;
-                        cast.operation = null;
-                        cast.transaction = false;
-                        cast.live = null;
-                        cast.staged = null;
-                        cast.owner = null;
-                        if (scope2 == null) {
-                            current.remove();
-                            break block19;
-                        }
-                        current.set(scope2);
-                    }
-                    return bl2;
-                    {
-                        catch (Throwable throwable) {
-                            cast.operation = null;
-                            cast.transaction = false;
-                            cast.live = null;
-                            cast.staged = null;
-                            cast.owner = null;
-                            throw throwable;
-                        }
-                    }
-                }
-                return bl;
-            }
-            finally {
-                if (scope2 == null) {
-                    current.remove();
-                } else {
-                    current.set(scope2);
-                }
-            }
-        }
-    }
-
-    private static boolean original(ClientSession clientSession, BattleCompanion battleCompanion, BattleCompanion.Snapshot snapshot, int n) throws IOException {
-        try {
-            return (Boolean)CombatAccess.call(clientSession, "releaseCompanionToNature", "(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;I)Z", battleCompanion, snapshot, n);
-        }
-        catch (RuntimeException runtimeException) {
-            Throwable throwable = runtimeException;
-            while (throwable.getCause() != null) {
-                throwable = throwable.getCause();
-            }
-            if (throwable instanceof IOException) {
-                IOException iOException = (IOException)throwable;
-                throw iOException;
-            }
-            throw runtimeException;
-        }
-    }
-
-    private static void transfer(ClientSession clientSession, BattleCompanion battleCompanion, NativeCastMaterial.Cast cast) throws IOException {
-        Object object;
-        Object object2;
-        RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(0);
-        Object object4 = runtimeInventory.copy();
-        cast.staged = object4;
-        List<RuntimeInventory.Item> list = battleCompanion.carriedItems();
-        ArrayList<Overflow> arrayList = new ArrayList<Overflow>();
-        boolean bl = false;
-        for (RuntimeInventory.Item object32 : list) {
-            boolean bl2;
-            object2 = ((RuntimeInventory)object4).copy();
-            cast.staged = object2;
-            boolean bl3 = ((RuntimeInventory)object2).add(object32, (long)object32.quantity());
-            boolean bl4 = bl2 = bl3 && (Boolean)CombatAccess.call(clientSession, "permitsInventoryAddition", "(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/InventoryCatalog$Definition;J)Z", object4, object32.definition(), object32.quantity()) != false;
-            if (bl3 && bl2) {
-                object4 = object2;
-                bl = true;
-            } else {
-                arrayList.add(new Overflow(object32, bl3));
-            }
-            cast.staged = object4;
-        }
-        Map map = ((RuntimeInventory)object4).nativeDeItems();
-        if (map instanceof NativeDeItemInventory) {
-            object = (NativeDeItemInventory)map;
-            ((NativeDeItemInventory)object).validateReplacement(runtimeInventory);
-        }
-        object = NativeDeItemTransaction.wireCopy(runtimeInventory);
-        RuntimeInventory runtimeInventory2 = NativeDeItemTransaction.wireCopy((RuntimeInventory)object4);
-        object2 = (GameStateStore)CombatAccess.field(clientSession, "state");
-        String string = (String)CombatAccess.call(clientSession, "stateCharacter", "()Ljava/lang/String;", new Object[0]);
-        long l = ((Number)CombatAccess.field(clientSession, "shopPoints")).longValue();
-        Object object3 = object4;
-        boolean bl5 = bl;
-        Object[] objectArray = new Object[arrayList.size()];
-        DurableCommit durableCommit = () -> NativeReturnNatureTransfer.lambda$transfer$1((GameStateStore)object2, string, bl5, l, (RuntimeInventory)object3, clientSession, list, battleCompanion);
-        NativeReturnNatureTransfer.reserveGround(clientSession, battleCompanion.snapshot(), arrayList, objectArray, 0, durableCommit);
-        CombatAccess.call(clientSession, "sendInventoryDelta", "(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/RuntimeInventory;)V", object, runtimeInventory2);
-        boolean bl6 = String.valueOf(CombatAccess.field(clientSession, "phase")).equals("WORLD");
-        for (int i = 0; i < arrayList.size(); ++i) {
-            String string2 = bl6 ? "classic-world-pet-collect" : "companion-collect";
-            CombatAccess.call(clientSession, arrayList.get((int)i).capacity ? "sendInventoryWeightOver" : "sendInventoryCapacityOver", "(Ljava/lang/String;)V", string2);
-            CombatAccess.call(clientSession, bl6 ? "broadcastClassicWorldGroundItem" : "broadcastGroundItem", bl6 ? "(Llocal/lito381/server/ClassicWorldGroundItems$Item;Ljava/lang/String;)V" : "(Llocal/lito381/server/BattleGroundItems$Item;Ljava/lang/String;)V", objectArray[i], bl6 ? "classic-world-pet-collect-overflow" : "companion-getitem-overflow");
-        }
-    }
-
-    private static void reserveGround(ClientSession clientSession, BattleCompanion.Snapshot snapshot, List<Overflow> list, Object[] objectArray, int n, DurableCommit durableCommit) throws IOException {
-        BattleGroundItems.Item item;
-        if (n == list.size()) {
-            durableCommit.commit();
-            return;
-        }
-        GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        RuntimeInventory.Item item2 = list.get((int)n).item;
-        DurableCommit durableCommit2 = () -> NativeReturnNatureTransfer.reserveGround(clientSession, snapshot, list, objectArray, n + 1, durableCommit);
-        Record record = item = String.valueOf(CombatAccess.field(clientSession, "phase")).equals("WORLD") ? gameHub.putClassicWorldGroundItemPersisted((Integer)CombatAccess.field(clientSession, "classicWorldMapId"), (Integer)CombatAccess.field(clientSession, "classicWorldInstanceId"), item2, item2.quantity(), snapshot.x(), snapshot.y(), snapshot.npcId(), durableCommit2) : gameHub.putGroundItemPersisted((Long)CombatAccess.field(clientSession, "currentRoomId"), clientSession, item2, item2.quantity(), snapshot.x(), snapshot.y(), durableCommit2);
-        if (item == null) {
-            throw new IOException("companion return ground reservation rejected");
-        }
-        objectArray[n] = item;
-    }
-
-    private NativeReturnNatureTransfer() {
-    }
-
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    private static /* synthetic */ void lambda$transfer$1(GameStateStore gameStateStore, String string, boolean bl, long l, RuntimeInventory runtimeInventory, ClientSession clientSession, List list, BattleCompanion battleCompanion) throws IOException {
-        GameStateStore gameStateStore2 = gameStateStore;
-        synchronized (gameStateStore2) {
-            GameStateStore.Economy economy = gameStateStore.economy(string);
-            if (bl) {
-                gameStateStore.saveEconomyState(string, l, runtimeInventory.catalogCounts(), runtimeInventory.catalogItemStates());
-            }
-            try {
-                NativeDeItemApplication.replace(clientSession, runtimeInventory, 0);
-            }
-            catch (Error | RuntimeException throwable) {
-                if (bl) {
-                    try {
-                        gameStateStore.saveEconomyState(string, economy.points(), economy.inventory(), economy.itemStates());
-                    }
-                    catch (Throwable throwable2) {
-                        throwable.addSuppressed(throwable2);
-                    }
-                }
-                throw throwable;
-            }
-            for (RuntimeInventory.Item item : list) {
-                if (battleCompanion.removeCarriedItem(item.objectId(), item.quantity())) continue;
-                throw new IllegalStateException("validated companion bag changed under its monitor");
-            }
-        }
-    }
-
-    private record Scope(ClientSession caster, ClientSession owner, BattleCompanion pet, NativePlayerCommit.Binding binding, NativeCastMaterial.Cast cast) {
-    }
-
-    private record Overflow(RuntimeInventory.Item item, boolean capacity) {
-    }
+ private record Scope(ClientSession caster,ClientSession owner,BattleCompanion pet,
+                      NativePlayerCommit.Binding binding,NativeCastMaterial.Cast cast){}
+ private static final ThreadLocal<Scope> current=new ThreadLocal<>();
+ static NativeCastMaterial.Cast material(ClientSession pc){var s=current.get();if(s==null){current.remove();return null;}return s.owner==pc?s.cast:null;}
+ static boolean retained(ClientSession pc){
+  var s=current.get();if(s==null){current.remove();return false;}
+  return s.owner==pc&&s.caster!=pc&&s.binding.matches(pc)&&pc.nativePlayerActionLock().isHeldByCurrentThread()
+   &&s.caster.nativePlayerActionLock().isHeldByCurrentThread()&&NativeReturnNatureMaterialAction.caster(pc,s.pet)==s.caster
+   &&s.cast.operation!=null&&NativeLightAction.retainedMaterial(s.caster);
+ }
+ static boolean release(ClientSession owner,BattleCompanion pet,BattleCompanion.Snapshot expected,int effect)throws IOException{
+  if(pet==null||expected==null)return false;
+  var caster=NativeReturnNatureMaterialAction.caster(owner,pet);if(caster==null)return false;
+  // TAMED encounter releases have a different origin/ground transaction contract.
+  // Preserve those paths here; they remain explicitly outside this SUMMON fix.
+  if(expected.kind()!=BattleCompanion.Kind.SUMMON||pet.carriedItems().isEmpty())return original(owner,pet,expected,effect);
+  var life=NativePlayerLifetime.of(owner);
+  synchronized(life.admission){
+   if(!NativeLightAction.retainedMaterial(caster))return false;
+   var cast=new NativeCastMaterial.Cast(145);var scope=new Scope(caster,owner,pet,NativePlayerCommit.Binding.capture(owner),cast);
+   var previous=current.get();current.set(scope);
+   try{
+    cast.live=owner.nativeDeInventory(0);cast.owner=NativeDeItemApplication.publicationOwner(owner);
+    NativeDeItemTransaction.Operation<Boolean> operation=()->{
+     if(!NativeCastMaterial.active(owner,cast)||!scope.binding.matches(owner))throw new IOException("companion return owner retired");
+     synchronized(pet){
+      if(NativeReturnNatureMaterialAction.caster(owner,pet)!=caster||!pet.snapshot().active())return false;
+      transfer(owner,pet,cast);
+      return original(owner,pet,expected,effect);
+     }
+    };cast.operation=operation;
+    try{return NativeDeItemTransaction.call(owner,operation);}
+    catch(IOException failure){NativeReuseLog.getLogger(NativeReturnNatureTransfer.class).error("Return to Nature owner transfer failed; summon retained",failure);return false;}
+    finally{cast.operation=null;cast.transaction=false;cast.live=null;cast.staged=null;cast.owner=null;}
+   }finally{if(previous==null)current.remove();else current.set(previous);}
+  }
+ }
+ private static boolean original(ClientSession owner,BattleCompanion pet,BattleCompanion.Snapshot expected,int effect)throws IOException{
+  try{return (boolean)CombatAccess.call(owner,"releaseCompanionToNature","(Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/BattleCompanion$Snapshot;I)Z",pet,expected,effect);}
+  catch(RuntimeException failure){Throwable root=failure;while(root.getCause()!=null)root=root.getCause();if(root instanceof IOException io)throw io;throw failure;}
+ }
+ private record Overflow(RuntimeInventory.Item item,boolean capacity){}
+ private static void transfer(ClientSession owner,BattleCompanion pet,NativeCastMaterial.Cast cast)throws IOException{
+  var live=owner.nativeDeInventory(0);var next=live.copy();cast.staged=next;
+  var carried=pet.carriedItems();var overflow=new ArrayList<Overflow>();boolean added=false;
+  for(var item:carried){
+   var admitted=next.copy();cast.staged=admitted;boolean capacity=admitted.add(item,item.quantity());
+   boolean weight=capacity&&(boolean)CombatAccess.call(owner,"permitsInventoryAddition","(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/InventoryCatalog$Definition;J)Z",next,item.definition(),(long)item.quantity());
+   if(capacity&&weight){next=admitted;added=true;}else overflow.add(new Overflow(item,capacity));
+   cast.staged=next;
+  }
+  if(next.nativeDeItems() instanceof NativeDeItemInventory inventory)inventory.validateReplacement(live);
+  var beforeWire=NativeDeItemTransaction.wireCopy(live);var afterWire=NativeDeItemTransaction.wireCopy(next);
+  var state=(GameStateStore)CombatAccess.field(owner,"state");var key=(String)CombatAccess.call(owner,"stateCharacter","()Ljava/lang/String;");long points=((Number)CombatAccess.field(owner,"shopPoints")).longValue();
+  var finalNext=next;boolean hasAdded=added;var grounds=new Object[overflow.size()];
+  // Each ground reservation rolls back if a nested reservation or memory commit fails.
+  // Ground stores keep their own monitor until this callback completes.
+  DurableCommit commit=()->{synchronized(state){
+   var old=state.economy(key);
+   if(hasAdded)state.saveEconomyState(key,points,finalNext.catalogCounts(),finalNext.catalogItemStates());
+   try{NativeDeItemApplication.replace(owner,finalNext,0);}
+   catch(RuntimeException|Error failure){if(hasAdded)try{state.saveEconomyState(key,old.points(),old.inventory(),old.itemStates());}catch(Throwable rollback){failure.addSuppressed(rollback);}throw failure;}
+   for(var item:carried)if(!pet.removeCarriedItem(item.objectId(),item.quantity()))throw new IllegalStateException("validated companion bag changed under its monitor");
+  }};
+  reserveGround(owner,pet.snapshot(),overflow,grounds,0,commit);
+  CombatAccess.call(owner,"sendInventoryDelta","(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/RuntimeInventory;)V",beforeWire,afterWire);
+  boolean world=String.valueOf(CombatAccess.field(owner,"phase")).equals("WORLD");
+  for(int i=0;i<overflow.size();i++){
+   var reason=world?"classic-world-pet-collect":"companion-collect";
+   CombatAccess.call(owner,overflow.get(i).capacity?"sendInventoryWeightOver":"sendInventoryCapacityOver","(Ljava/lang/String;)V",reason);
+   CombatAccess.call(owner,world?"broadcastClassicWorldGroundItem":"broadcastGroundItem",world?"(Llocal/lito381/server/ClassicWorldGroundItems$Item;Ljava/lang/String;)V":"(Llocal/lito381/server/BattleGroundItems$Item;Ljava/lang/String;)V",grounds[i],world?"classic-world-pet-collect-overflow":"companion-getitem-overflow");
+  }
+ }
+ private static void reserveGround(ClientSession owner,BattleCompanion.Snapshot pet,List<Overflow> overflow,Object[] grounds,int index,DurableCommit commit)throws IOException{
+  if(index==overflow.size()){commit.commit();return;}
+  var hub=(GameHub)CombatAccess.field(owner,"hub");var item=overflow.get(index).item;
+  DurableCommit rest=()->reserveGround(owner,pet,overflow,grounds,index+1,commit);
+  Object ground=String.valueOf(CombatAccess.field(owner,"phase")).equals("WORLD")
+   ?hub.putClassicWorldGroundItemPersisted((int)CombatAccess.field(owner,"classicWorldMapId"),(int)CombatAccess.field(owner,"classicWorldInstanceId"),item,item.quantity(),pet.x(),pet.y(),pet.npcId(),rest)
+   :hub.putGroundItemPersisted((long)CombatAccess.field(owner,"currentRoomId"),owner,item,item.quantity(),pet.x(),pet.y(),rest);
+  if(ground==null)throw new IOException("companion return ground reservation rejected");grounds[index]=ground;
+ }
+ private NativeReturnNatureTransfer(){}
 }

@@ -1,26 +1,14 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/elemental-material/NativeElementalCastAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
 import java.io.IOException;
-import local.lito381.server.BattleSpellCatalog;
-import local.lito381.server.ClientSession;
-import local.lito381.server.NativeLightAction;
-
+/** Preserve both native elemental outcomes; acquire material/action admission at the original debit. */
 final class NativeElementalCastAction {
-    static void cast(ClientSession clientSession, byte[] byArray, BattleSpellCatalog.ElementalSummonSpell elementalSummonSpell) throws IOException {
-        NativeLightAction.commitSelf(clientSession, () -> clientSession.nativeMaterialElementalSummonBody(byArray, elementalSummonSpell));
-    }
-
-    static boolean admit(ClientSession clientSession, BattleSpellCatalog.ElementalSummonSpell elementalSummonSpell) {
-        if (elementalSummonSpell.skillId() != 154 && elementalSummonSpell.skillId() != 162) {
-            throw new IllegalStateException("unreviewed elemental skill");
-        }
-        return NativeLightAction.admitSelf(clientSession, elementalSummonSpell.skillId(), elementalSummonSpell.actionId(), elementalSummonSpell.reuseDelayMillis());
-    }
-
-    private NativeElementalCastAction() {
-    }
+ static void cast(ClientSession pc,byte[] packet,BattleSpellCatalog.ElementalSummonSpell spell)throws IOException {
+  NativeLightAction.commitSelf(pc,()->pc.nativeMaterialElementalSummonBody(packet,spell));
+ }
+ static boolean admit(ClientSession pc,BattleSpellCatalog.ElementalSummonSpell spell){
+  if(spell.skillId()!=154&&spell.skillId()!=162)throw new IllegalStateException("unreviewed elemental skill");
+  return NativeLightAction.admitSelf(pc,spell.skillId(),spell.actionId(),spell.reuseDelayMillis());
+ }
+ private NativeElementalCastAction(){}
 }
