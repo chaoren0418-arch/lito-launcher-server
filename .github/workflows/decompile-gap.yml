@@ -2,6 +2,9 @@ name: decompile-gap
 # T002 輔助：把正式 JAR 中、src/main 沒有來源的類別用 CFR 反編譯成 artifact，供整併審查。
 on:
   workflow_dispatch:
+  push:
+    branches: [feat/T002-server-source]
+    paths: ['.github/workflows/decompile-gap.yml']
 
 jobs:
   cfr:
