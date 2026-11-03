@@ -1,0 +1,61 @@
+// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+/*
+ * Decompiled with CFR 0.152.
+ */
+package local.lito381.server;
+
+import local.lito381.server.NativeDeChatAccess;
+import local.lito381.server.NativeDeChatWire;
+import local.lito381.server.NativeDeDeletionPorts;
+import local.lito381.server.NativeDeNpcConstructionState;
+import local.lito381.server.NativeDeVisibilityPacket;
+
+public class NativeDeChatChat
+extends NativeDeVisibilityPacket {
+    private byte[] _byte = null;
+    final NativeDeDeletionPorts.ObjectRef nativeSubject;
+
+    public NativeDeChatChat(NativeDeNpcConstructionState nativeDeNpcConstructionState, String string) {
+        this.writeC(161);
+        this.writeC(0);
+        this.writeD(NativeDeChatAccess.L1NpcInstance$getId(nativeDeNpcConstructionState));
+        this.writeS(NativeDeChatAccess.L1NpcInstance$getNameId(nativeDeNpcConstructionState) + ": " + string);
+        this.debugPacket();
+        this.nativeSubject = nativeDeNpcConstructionState;
+    }
+
+    public NativeDeChatChat(NativeDeNpcConstructionState nativeDeNpcConstructionState, String string, boolean bl) {
+        this.writeC(161);
+        this.writeC(0);
+        this.writeD(NativeDeChatAccess.L1NpcInstance$getId(nativeDeNpcConstructionState));
+        this.writeS((String)(bl ? NativeDeChatAccess.L1NpcInstance$getNameId(nativeDeNpcConstructionState) + ": " : "") + string);
+        this.debugPacket();
+        this.nativeSubject = nativeDeNpcConstructionState;
+    }
+
+    public NativeDeChatChat(NativeDeDeletionPorts.Viewer viewer, String string) {
+        this.writeC(161);
+        this.writeC(0);
+        this.writeD(NativeDeChatAccess.L1PcInstance$getId(viewer));
+        this.writeS(NativeDeChatAccess.L1PcInstance$getName(viewer) + ": " + string);
+        this.debugPacket();
+        this.nativeSubject = viewer;
+    }
+
+    private byte[] sourceChat$getContent() {
+        if (this._byte == null) {
+            this._byte = this.getBytes();
+        }
+        return this._byte;
+    }
+
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public byte[] getContent() {
+        return NativeDeChatWire.content(this, this.nativeSubject);
+    }
+}

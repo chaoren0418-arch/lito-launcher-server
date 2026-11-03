@@ -1,0 +1,39 @@
+// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+/*
+ * Decompiled with CFR 0.152.
+ */
+package local.lito381.server;
+
+import local.lito381.server.NativeDePerceptionOpcodes;
+import local.lito381.server.NativeDePerceptionPacket;
+
+public class NativeDePerceptionFishing
+extends NativeDePerceptionPacket {
+    private byte[] _byte = null;
+
+    public NativeDePerceptionFishing(int objectId, int motionNum, int x, int y) {
+        this.buildPacket(objectId, motionNum, x, y);
+        this.debugPacket();
+    }
+
+    private void buildPacket(int objectId, int motionNum, int x, int y) {
+        this.writeC(NativeDePerceptionOpcodes.S_Fishing());
+        this.writeD(objectId);
+        this.writeC(motionNum);
+        this.writeH(x);
+        this.writeH(y);
+    }
+
+    @Override
+    public byte[] getContent() {
+        if (this._byte == null) {
+            this._byte = this.getBytes();
+        }
+        return this._byte;
+    }
+
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+}
