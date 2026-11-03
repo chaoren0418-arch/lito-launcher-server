@@ -39,7 +39,7 @@ DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integr
 
 ## M1 正式版實機回歸
 
-### T010 | todo | Claude | `docs/acceptance/CHECKLIST.md`（新建）
+### T010 | done | Claude | `docs/acceptance/CHECKLIST.md`（新建）
 實機核對表：伺服器 `--check` / `--smoke` 輸出預期、登入器登入→大廳→進房→戰鬥→結算→退出 每步截圖與 DB 核對 SQL（`SELECT ... FROM character_lito WHERE ...`）。
 
 ### T011 | blocked(T002,T003,T010) | 使用者 | `docs/acceptance/0.6.71.md`
