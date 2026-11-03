@@ -6,6 +6,9 @@ on:
     branches: [feat/T002-server-source]
     paths: ['.github/workflows/decompile-gap.yml']
 
+permissions:
+  contents: write
+
 jobs:
   cfr:
     runs-on: ubuntu-latest
@@ -40,3 +43,21 @@ jobs:
         with:
           name: decompiled-gap
           path: /tmp/out
+      - name: Commit decompiled sources to branch bot/T002-decompiled
+        working-directory: ${{ github.workspace }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B bot/T002-decompiled
+          dst="lito伺服器/LiTo381-Server/src/main/java/local/lito381/server"
+          n=0
+          for f in $(find /tmp/out/local/lito381/server -maxdepth 1 -name '*.java'); do
+            b=$(basename "$f")
+            [ -e "$dst/$b" ] && continue
+            { echo "// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)"; cat "$f"; } > "$dst/$b"
+            n=$((n+1))
+          done
+          echo "added $n files"
+          git add "$dst"
+          git commit -m "T002: 以 CFR 反編譯補入正式 JAR 中 src/main 缺少的 $n 個類別（待以原始碼替換）" -m "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>" || echo "nothing to commit"
+          git push -f origin bot/T002-decompiled
