@@ -9,12 +9,18 @@ Cursor 接任務時只改「範圍」列出的路徑；PR 標題用 `ID: 摘要`
 CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製進 `src/main`）+ 登入器 `dotnet build`。
 驗收：main 分支兩個 job 綠燈。
 
-### T002 | todo | Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/SharedDatabase.java`
-讓 `mvn -DskipTests package` 直接產出正式伺服器 JAR：
-1. `SharedDatabase.java` 搬進 `src/main/java/local/lito381/server/`（tools 內保留 symlink 或刪除並更新 `tools/shared-database/build.py`）。
-2. 盤點 `tools/gm-polyme/build.py`、`tools/room-rules/build.py`、`tools/resource-database/build.py` 等對 `inputs/base-0.6.70.jar` 做了哪些 class 替換，把對應來源併回 `src/main`（每個工具一個 commit，commit 訊息寫清楚來源）。
-3. `pom.xml` 版本改 `0.6.71`，`maven-jar-plugin` 設 Main-Class。
-驗收：`mvn -DskipTests package` 產出的 JAR，用 `jar tf` 比對與 `lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar` 的 class 清單一致；差異寫進 PR 描述。
+### T002 | todo | Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
+**現況**：`src/main` 只有 610 個檔，不是完整伺服器來源。正式 JAR = 二進位 `base-0.6.35/0.6.70.jar` + `tools/*/build.py` 逐層以 ASM patch 疊上去；缺的類別來源散在：
+- `tools/shared-database/{SharedDatabase,UnifiedConfiguration,SourceLogin}.java`
+- `lito登入器/LiTo381-Launcher/server-patches/repair-034/{LiToGmCommands,LiToGmNpcs,EnableCommands}.java` 等
+- 各 `tools/<feature>/` 下的 `*.java`
+目標：讓 `mvn -DskipTests package` 直接產出等價 JAR。步驟：
+1. 用 `jar tf` 列出正式 JAR（`lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`）全部 class；對照 `src/main` 找出缺的類別清單，寫進 PR。
+2. 每個缺的類別：在 repo 內找到 `.java` 來源就搬進 `src/main/java/local/lito381/server/`；找不到來源的，用 CFR／Fernflower 反編譯 base JAR 取得並標注 `// decompiled from base-0.6.70.jar, TODO review`。
+3. `tools/*/build.py` 改成只負責「驗證 mvn 產物 SHA 與正式 JAR 類別清單一致」，不再 patch。
+4. `pom.xml` 版本改 `0.6.71`，設 Main-Class；CI 移除 `continue-on-error`。
+驗收：CI Server job 綠；`jar tf` 類別清單與正式 JAR 一致（差異列在 PR）；`1.啟動伺服器.bat --check` 用 mvn 產物通過。
+每個步驟一個 commit；反編譯的檔案另開 commit 以便審查。
 
 ### T003 | todo | Cursor | `lito登入器/LiTo381-Launcher/Build.ps1`, `tools/build_current.py`, `tools/verify_current.py`
 去硬編路徑：Python 改用 `py -3.12` 或 PATH 中的 `python`；dotnet 改用 PATH；伺服器 `deployment/release-inputs.json` 路徑改相對 repo 根。
