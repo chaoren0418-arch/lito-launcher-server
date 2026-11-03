@@ -1,0 +1,39 @@
+{
+  "before_readable_logical_bytes": 2968546159,
+  "after_readable_logical_bytes": 1892189752,
+  "projects_bytes": {
+    "lito登入器": 1504951741,
+    "lito伺服器": 387238011
+  },
+  "projects_files": {
+    "lito登入器": 8694,
+    "lito伺服器": 3527
+  },
+  "net_removed_files": 40194,
+  "protected_backup_cache_restored": 1,
+  "all_nonprotected_planned_files_absent": true,
+  "baseline_zip_unchanged": true,
+  "all_protected_backups_and_settlement_journal_unchanged": true,
+  "reparse_links_unchanged": true,
+  "full_baseline_and_release_verification": "passed",
+  "archive_restore_test": "passed",
+  "cleanup_verify_only": "passed",
+  "maintenance_supplement_verification": "passed",
+  "unreadable": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\.pytest_cache",
+      "reason": "[WinError 5] 存取被拒。: 'D:\\\\lineage開發\\\\3-lito開發\\\\lito登入器\\\\舊版分析與驗收\\\\.pytest_cache'"
+    }
+  ],
+  "retained_exceptions": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\.pytest_cache",
+      "reason": "Windows denied directory listing, ACL reading and nonrecursive empty-directory removal; current token is not elevated; no recursive ownership/ACL changes attempted."
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\baseline-0.6.66-hygiene-restore-check\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\org\\apache\\mina\\core\\buffer\\AbstractIoBuffer.java",
+      "reason": "Restored single-file validation sample; content verified. Automatic approval review rejected its deletion with blocked by policy and no further reason."
+    }
+  ],
+  "reduced_logical_bytes": 1076356407
+}

@@ -1,0 +1,55 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build\\candidate-invisibility-leases.jar",
+    "sha256": "d4bc643fca4ab18ea4b6b84e9f685bbc80bd26d806b98970a6a0d98d28ae3a81"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\candidate-elemental-material.jar",
+    "sha256": "b750acfc32e43963e163366e7f00cd1afcac817785f124625b012c468ea38c59"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeElementalCastAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\build.py",
+      "sha256": "5bfeb22f8be9943e9b7c9cdc53bf16bc512511a6c282ebabef8f8bcea2ef0695"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\ElementalMethods.java",
+      "sha256": "bdd9c3071657163434089bf29d14aeeaefee55dd59be6d91cdbd8c29a47fedb8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "8c8957cc22923b26ed6fd618f569542ce135a240c2e30a2c491296ae02af7e36"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\source-reference\\GREATER_ELEMENTAL.java",
+      "sha256": "d41bb46952cc425e714fe1beb561cde5e17e402bacae5b5effe8f888adfb5f2c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\source-reference\\LESSER_ELEMENTAL.java",
+      "sha256": "71f2d5ec07969153798a01949bf484ce085ef26771a3a09ebeb36816d2ca04da"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\sources\\NativeElementalCastAction.java",
+      "sha256": "7a31a09f75720b52e3a83ed5e4420f7e1202806514f807dee1eb61891e15d9a1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "d7f8049e6c2bc96eb1bebae18d4e83dc67d407d1a8598480bbdaa9bdcb113995"
+    }
+  ]
+}

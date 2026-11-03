@@ -1,0 +1,51 @@
+{"time":"2026-10-22T19:02:08.240755800Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 52 BE DC 0C","note":"S_KEY"}
+{"time":"2026-10-22T19:02:08.245744800Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 6A 5D DE 92","note":"S_KEY"}
+{"time":"2026-10-22T19:02:08.261701400Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 58 8B 0D 47","note":"S_KEY"}
+{"time":"2026-10-22T19:02:27.821121900Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 63 06 AC 41","note":"S_KEY"}
+{"time":"2026-10-22T19:02:27.821121900Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:02:28.622465600Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}
+{"time":"2026-10-22T19:14:48.633290600Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 A3 7D 3E 9E","note":"S_KEY"}
+{"time":"2026-10-22T19:14:48.634287900Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:14:49.399584900Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}
+{"time":"2026-10-22T19:14:51.216850Z","direction":"client_to_server","opcode":"0x01","wire_length":17,"plain":"MASKED_C_LOGIN","note":"C_LOGIN sensitive fields masked"}
+{"time":"2026-10-22T19:14:51.246494400Z","direction":"server_to_client","opcode":"0x00","wire_length":31,"plain":"00 00 10 0E 00 00 4C 69 54 6F 20 53 74 61 6E 64 61 72 64 20 41 72 65 6E 61 00 00 00 00","note":"S_LOGIN_CHECK accepted"}
+{"time":"2026-10-22T19:14:51.502362600Z","direction":"server_to_client","opcode":"0x3B","wire_length":15,"plain":"3B 01 A4 BD A4 FB 00 7F 00 00 02 01 7D","note":"S_SERVER_LIST count=1 first=公牛"}
+{"time":"2026-10-22T19:14:51.765376Z","direction":"server_to_client","opcode":"0xFB","wire_length":45,"plain":"FB 00 00 00 00 01 00 00 00 4C 69 54 6F 20 53 74 61 6E 64 61 72 64 20 41 72 65 6E 61 00 7F 00 00 02 01 7D 00 00 00 00 64 00 00 00","note":"S_LITO_SERVER_LIST rooms=0 VS-servers=1 users=0 capacity=100"}
+{"time":"2026-10-22T19:14:51.765376Z","direction":"server_to_client","opcode":"0xF3","wire_length":8,"plain":"F3 01 00 00 00 00","note":"S_LITO_VS_SERVER_STATUS count=1 status=available"}
+{"time":"2026-10-22T19:14:51.768367800Z","direction":"client_to_server","opcode":"0xC8","wire_length":8,"plain":"C8 A4 BD A4 FB 00","note":"C opcode 0xC8"}
+{"time":"2026-10-22T19:14:51.769365200Z","direction":"server_to_client","opcode":"0xF4","wire_length":10,"plain":"F4 00 7F 00 00 02 01 7D","note":"S_LITO_VS_SERVER_IP C_C8 selected-source=公牛"}
+{"time":"2026-10-22T19:14:51.769365200Z","direction":"client_to_server","opcode":"0xD9","wire_length":3,"plain":"D9","note":"C opcode 0xD9"}
+{"time":"2026-10-22T19:14:51.771509800Z","direction":"client_to_server","opcode":"0x0F","wire_length":3,"plain":"0F","note":"C opcode 0x0F"}
+{"time":"2026-10-22T19:14:51.777522600Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 72 04 D8 B1","note":"S_KEY"}
+{"time":"2026-10-22T19:14:51.793773500Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:14:52.557919500Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}
+{"time":"2026-10-22T19:14:52.557919500Z","direction":"client_to_server","opcode":"0x01","wire_length":17,"plain":"MASKED_C_LOGIN","note":"C_LOGIN sensitive fields masked"}
+{"time":"2026-10-22T19:14:52.563903700Z","direction":"server_to_client","opcode":"0xE6","wire_length":3,"plain":"E6","note":"S_LITO_NEWS bootstrap readiness trigger awaits C_E2"}
+{"time":"2026-10-22T19:14:52.655206100Z","direction":"client_to_server","opcode":"0xE2","wire_length":3,"plain":"E2","note":"C opcode 0xE2"}
+{"time":"2026-10-22T19:14:52.716550500Z","direction":"server_to_client","opcode":"0x03","wire_length":4,"plain":"03 01","note":"S_NUM_CHARACTER count=1"}
+{"time":"2026-10-22T19:14:52.741483600Z","direction":"server_to_client","opcode":"0xCB","wire_length":94,"plain":"CB 32 32 32 32 28 A4 BD A4 FB 29 00 00 05 00 00 00 0F 00 04 00 0A 01 0F 0B 11 0D 08 0B 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 1A","note":"S_LITO_CHARACTER_INFO directory-row name=2222(公牛) source-character=5888 classic-source=公牛 battles=0 wins=0 losses=0 disconnects=0"}
+{"time":"2026-10-22T19:14:54.499411900Z","direction":"client_to_server","opcode":"0xC9","wire_length":14,"plain":"C9 32 32 32 32 28 A4 BD A4 FB 29 00","note":"C opcode 0xC9"}
+{"time":"2026-10-22T19:14:54.565178400Z","direction":"server_to_client","opcode":"0xC8","wire_length":4,"plain":"C8 00","note":"S_LITO_SELCHAR_RESULT accepted"}
+{"time":"2026-10-22T19:14:54.679462400Z","direction":"server_to_client","opcode":"0x7C","wire_length":4,"plain":"7C 00","note":"S_ADD_INVENTORY_BATCH items=0 source-defensive=false transfer-stone-probe=false"}
+{"time":"2026-10-22T19:14:54.679462400Z","direction":"server_to_client","opcode":"0x1E","wire_length":4,"plain":"1E 00","note":"S_ADD_SPELL selected-character"}
+{"time":"2026-10-22T19:14:55.416963400Z","direction":"client_to_server","opcode":"0xCA","wire_length":4,"plain":"CA 00","note":"C opcode 0xCA"}
+{"time":"2026-10-22T19:14:55.417932200Z","direction":"server_to_client","opcode":"0xC9","wire_length":5,"plain":"C9 0A 00","note":"S_LITO_ENTER_CHANNEL_RESULT character-level-restricted channel=0 level=1"}
+{"time":"2026-10-22T19:14:57.265205800Z","direction":"client_to_server","opcode":"0xCA","wire_length":4,"plain":"CA 01","note":"C opcode 0xCA"}
+{"time":"2026-10-22T19:14:57.266203700Z","direction":"server_to_client","opcode":"0xC9","wire_length":5,"plain":"C9 0A 01","note":"S_LITO_ENTER_CHANNEL_RESULT character-level-restricted channel=1 level=1"}
+{"time":"2026-10-22T19:14:58.521029200Z","direction":"client_to_server","opcode":"0xCB","wire_length":3,"plain":"CB","note":"C opcode 0xCB"}
+{"time":"2026-10-22T19:14:58.521029200Z","direction":"client_to_server","opcode":"0xCA","wire_length":4,"plain":"CA 64","note":"C opcode 0xCA"}
+{"time":"2026-10-22T19:14:58.521029200Z","direction":"server_to_client","opcode":"0xF5","wire_length":3,"plain":"F5","note":"S_LITO_VS_SERVER_ALLOW_JOIN channel-return source-refresh"}
+{"time":"2026-10-22T19:14:58.538343600Z","direction":"client_to_server","opcode":"0xC8","wire_length":8,"plain":"C8 A4 BD A4 FB 00","note":"C opcode 0xC8"}
+{"time":"2026-10-22T19:14:58.544330600Z","direction":"server_to_client","opcode":"0x03","wire_length":4,"plain":"03 01","note":"S_NUM_CHARACTER count=1"}
+{"time":"2026-10-22T19:14:58.545328200Z","direction":"server_to_client","opcode":"0xCB","wire_length":94,"plain":"CB 32 32 32 32 28 A4 BD A4 FB 29 00 00 05 00 00 00 0F 00 04 00 0A 01 0F 0B 11 0D 08 0B 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 1A","note":"S_LITO_CHARACTER_INFO directory-row name=2222(公牛) source-character=5888 classic-source=公牛 battles=0 wins=0 losses=0 disconnects=0"}
+{"time":"2026-10-22T19:15:03.893032600Z","direction":"client_to_server","opcode":"0xC9","wire_length":14,"plain":"C9 32 32 32 32 28 A4 BD A4 FB 29 00","note":"C opcode 0xC9"}
+{"time":"2026-10-22T19:15:03.899016600Z","direction":"server_to_client","opcode":"0xC8","wire_length":4,"plain":"C8 00","note":"S_LITO_SELCHAR_RESULT accepted"}
+{"time":"2026-10-22T19:15:15.428497600Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 EA D5 85 AD","note":"S_KEY"}
+{"time":"2026-10-22T19:15:15.428497600Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:15:16.185788700Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}
+{"time":"2026-10-22T19:15:16.185788700Z","direction":"client_to_server","opcode":"0x01","wire_length":17,"plain":"MASKED_C_LOGIN","note":"C_LOGIN sensitive fields masked"}
+{"time":"2026-10-22T19:15:16.187784Z","direction":"server_to_client","opcode":"0xE6","wire_length":3,"plain":"E6","note":"S_LITO_NEWS bootstrap readiness trigger awaits C_E2"}
+{"time":"2026-10-22T19:15:16.187784Z","direction":"client_to_server","opcode":"0xE2","wire_length":3,"plain":"E2","note":"C opcode 0xE2"}
+{"time":"2026-10-22T19:15:16.189778400Z","direction":"server_to_client","opcode":"0x03","wire_length":4,"plain":"03 01","note":"S_NUM_CHARACTER count=1"}
+{"time":"2026-10-22T19:15:16.190776Z","direction":"server_to_client","opcode":"0xCB","wire_length":94,"plain":"CB 32 32 32 32 28 A4 BD A4 FB 29 00 00 05 00 00 00 0F 00 04 00 0A 01 0F 0B 11 0D 08 0B 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 1A","note":"S_LITO_CHARACTER_INFO directory-row name=2222(公牛) source-character=5888 classic-source=公牛 battles=0 wins=0 losses=0 disconnects=0"}
+{"time":"2026-10-22T19:15:17.432191600Z","direction":"client_to_server","opcode":"0x0F","wire_length":3,"plain":"0F","note":"C opcode 0x0F"}

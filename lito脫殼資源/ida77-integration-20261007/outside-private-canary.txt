@@ -1,0 +1,1 @@
+BIN-owned medium-integrity sentinel; no private SID access

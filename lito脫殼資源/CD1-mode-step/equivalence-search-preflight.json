@@ -1,0 +1,19 @@
+{
+  "existingNative_mode_input_sender": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound-contract.json",
+    "bytes": 28800,
+    "sha256": "9A2BA5AB692E92088E5B9BCA3C45A449EB04D7B3D2AD7AACB88EE7AAF43D598D"
+  },
+  "sender_serializer_replayed": false,
+  "fixedASM_callbackpointer_hits": 3,
+  "finite_callers_selected": 2,
+  "thirdcontrol2_menu_candidate_notexpanded": true,
+  "existingJava_step_semantics_references_available": true,
+  "broadcaller_UI_census": false,
+  "existingC7_network_attached_without_replay": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-map-network.json",
+    "bytes": 11112,
+    "sha256": "3BBAA920A2B379B7562A38C3FF2CADC8842B98F7033C3A5C103174F4A28A8545"
+  },
+  "priorreport_mutated": false
+}

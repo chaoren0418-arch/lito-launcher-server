@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "runtime": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": {
+    "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "bytes": 104952,
+    "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+  },
+  "method": "compile in memory only; no execution by compile, no pyc",
+  "sources": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+        "bytes": 1425,
+        "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+      },
+      "in_memory_compile": "PASS",
+      "code_object_sha256": "DEFF1CC19E7BCF12C5906375119E6DE9BBB5469ED3CD8FC6C9120409BFE3A9F8"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\owned_process.py",
+        "bytes": 31683,
+        "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+      },
+      "in_memory_compile": "PASS",
+      "code_object_sha256": "850F1AD7F7085920B1215D41A2BFA20421F061B36DB0B77441D7F3835409D722"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\prepare_successor.py",
+        "bytes": 3311,
+        "sha256": "A4616562E87273CDE3307ABA9AF2AB1020BBA2D7803A3186402B21D948B387F7"
+      },
+      "in_memory_compile": "PASS",
+      "code_object_sha256": "9B4B9AFCF8784A2523B182F2C989D4936E8ABD886D349F383F43BD0629984D9A"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\publish_error_paths.py",
+        "bytes": 15666,
+        "sha256": "7C0AE64514FDE2AECAE2C2F99AA402E90F85C684F993D7EF1BCEE836C9954FDE"
+      },
+      "in_memory_compile": "PASS",
+      "code_object_sha256": "DDF686E6E9E50F69F7A9A3B9D824116A889E18FE828CC0E8DB8097080301E52F"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\test_error_paths.py",
+        "bytes": 10977,
+        "sha256": "3AA8656B9306273123119D8909E614D2B114FB476D24E0CCE36FED37A48CF955"
+      },
+      "in_memory_compile": "PASS",
+      "code_object_sha256": "D836A10C6DBF3663EF7163993BF7517DFD33EB8FC8208B3002EECE4B235C1062"
+    }
+  ]
+}

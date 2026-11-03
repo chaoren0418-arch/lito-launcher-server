@@ -1,0 +1,111 @@
+374693: sub_4B37C0 proc near                    ; CODE XREF: sub_4C6B30:loc_4C7062↓p
+374694: mov     eax, dword_7607A4
+374695: mov     ecx, dword_7607AC
+374696: mov     edx, dword_8343E8
+374697: push    0
+374698: push    eax
+374699: push    ecx
+374700: push    edx
+374701: call    sub_4EFE62
+374702: 
+374703: test    eax, eax
+374704: jle     locret_4B38C2
+374705: 
+374706: push    ebx
+374707: mov     bl, 1
+374708: 
+374709: 
+374710: loc_4B37E6:                             ; CODE XREF: sub_4B37C0+FB↓j
+374711: mov     edx, dword_7607AC
+374712: mov     ecx, dword_7607A4
+374713: add     edx, eax
+374714: sub     ecx, eax
+374715: mov     dword_7607AC, edx
+374716: mov     dword_7607A4, ecx
+374717: jnz     loc_4B389E
+374718: 
+374719: mov     al, byte_7607A8
+374720: test    al, al
+374721: jz      short loc_4B386F
+374722: 
+374723: mov     al, byte_8317B8
+374724: mov     byte_7607A8, 0
+374725: test    al, al
+374726: mov     dword_7607A4, 2
+374727: jnz     short loc_4B3833
+374728: 
+374729: cmp     byte ptr dword_7607B0, bl
+374730: jz      short loc_4B3863
+374731: 
+374732: 
+374733: loc_4B3833:                             ; CODE XREF: sub_4B37C0+69↑j
+374734: mov     edx, dword_760750
+374735: mov     ecx, offset dword_7607B0
+374736: call    sub_4C66C0
+374737: 
+374738: mov     eax, dword_760750
+374739: mov     ecx, dword_8317C0
+374740: cdq
+374741: add     ecx, eax
+374742: mov     eax, dword_8317C4
+374743: adc     eax, edx
+374744: mov     dword_8317C0, ecx
+374745: mov     dword_8317C4, eax
+374746: 
+374747: 
+374748: loc_4B3863:                             ; CODE XREF: sub_4B37C0+71↑j
+374749: mov     ecx, offset dword_7607B0
+374750: call    sub_4B2970
+374751: 
+374752: jmp     short loc_4B3894
+374753: 
+374754: ; ---------------------------------------------------------------------------
+374755: 
+374756: loc_4B386F:                             ; CODE XREF: sub_4B37C0+4F↑j
+374757: mov     eax, dword_7607B0
+374758: xor     ecx, ecx
+374759: mov     cl, ah
+374760: mov     byte_7607A8, bl
+374761: shl     ecx, 8
+374762: and     eax, 0FFh
+374763: lea     eax, [ecx+eax-2]
+374764: mov     dword_7607A4, eax
+374765: mov     dword_760750, eax
+374766: 
+374767: 
+374768: loc_4B3894:                             ; CODE XREF: sub_4B37C0+AD↑j
+374769: mov     dword_7607AC, offset dword_7607B0
+374770: 
+374771: 
+374772: loc_4B389E:                             ; CODE XREF: sub_4B37C0+42↑j
+374773: mov     edx, dword_7607A4
+374774: mov     eax, dword_7607AC
+374775: mov     ecx, dword_8343E8
+374776: push    0
+374777: push    edx
+374778: push    eax
+374779: push    ecx
+374780: call    sub_4EFE62
+374781: 
+374782: test    eax, eax
+374783: jg      loc_4B37E6
+374784: 
+374785: pop     ebx
+374786: 
+374787: 
+374788: locret_4B38C2:                          ; CODE XREF: sub_4B37C0+1D↑j
+374789: retn
+374790: 
+374791: sub_4B37C0 endp
+374792: 
+374793: ; ---------------------------------------------------------------------------
+374794: align 10h
+374795: 
+374796: ; =============== S U B R O U T I N E =======================================
+374797: 
+374798: 
+374799: sub_4B38D0 proc near                    ; CODE XREF: ___:0047C8C3↑p
+374800: mov     dword_7607AC, offset dword_7607B0
+374801: mov     byte_7607A8, 0
+374802: mov     dword_7607A4, 2
+374803: retn

@@ -1,0 +1,480 @@
+  private void useMagicalWeaponSpell(byte[], local.lito381.server.BattleSpellCatalog$MagicalWeaponSpell) throws java.io.IOException;
+    Code:
+       0: aload_1
+       1: invokestatic  #28654              // Method local/lito381/server/Protocol.objectSpellRequest:([B)Llocal/lito381/server/Protocol$ObjectSpellRequest;
+       4: astore_3
+       5: aload_0
+       6: getfield      #3501               // Field phase:Llocal/lito381/server/ClientSession$Phase;
+       9: astore        4
+      11: aload_3
+      12: invokevirtual #28664              // Method local/lito381/server/Protocol$ObjectSpellRequest.skillId:()I
+      15: aload_2
+      16: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+      19: if_icmpeq     46
+      22: getstatic     #4306               // Field java/lang/System.out:Ljava/io/PrintStream;
+      25: aload_0
+      26: invokevirtual #5579               // Method playerName:()Ljava/lang/String;
+      29: aload_3
+      30: invokevirtual #28664              // Method local/lito381/server/Protocol$ObjectSpellRequest.skillId:()I
+      33: aload_2
+      34: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+      37: invokedynamic #35192,  0          // InvokeDynamic #2967:makeConcatWithConstants:(Ljava/lang/String;II)Ljava/lang/String;
+      42: invokevirtual #4319               // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      45: return
+      46: aload         4
+      48: getstatic     #3504               // Field local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
+      51: if_acmpne     73
+      54: aload_0
+      55: aload_2
+      56: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+      59: aload_2
+      60: invokevirtual #35193              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.actionId:()I
+      63: ldc_w         #35195              // String Create-Magical-Weapon
+      66: invokevirtual #28772              // Method admitClassicWorldSpellFamily:(IILjava/lang/String;)Z
+      69: ifne          73
+      72: return
+      73: aload         4
+      75: getstatic     #4073               // Field local/lito381/server/ClientSession$Phase.BATTLE:Llocal/lito381/server/ClientSession$Phase;
+      78: if_acmpeq     89
+      81: aload         4
+      83: getstatic     #3504               // Field local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
+      86: if_acmpne     106
+      89: invokestatic  #8393               // Method local/lito381/server/BattleAnimationCatalog.get:()Llocal/lito381/server/BattleAnimationCatalog;
+      92: aload_0
+      93: invokevirtual #5871               // Method battleGfx:()I
+      96: aload_2
+      97: invokevirtual #35193              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.actionId:()I
+     100: invokevirtual #26318              // Method local/lito381/server/BattleAnimationCatalog.supportsTimedAction:(II)Z
+     103: ifne          135
+     106: getstatic     #4306               // Field java/lang/System.out:Ljava/io/PrintStream;
+     109: aload_0
+     110: invokevirtual #5579               // Method playerName:()Ljava/lang/String;
+     113: aload         4
+     115: invokestatic  #4309               // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+     118: aload_0
+     119: invokevirtual #5871               // Method battleGfx:()I
+     122: aload_2
+     123: invokevirtual #35193              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.actionId:()I
+     126: invokedynamic #35198,  0          // InvokeDynamic #2968:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;II)Ljava/lang/String;
+     131: invokevirtual #4319               // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     134: return
+     135: aload_0
+     136: getfield      #4387               // Field currentRoomId:J
+     139: lstore        5
+     141: aload_0
+     142: getfield      #3506               // Field classicWorldMapId:I
+     145: istore        7
+     147: aload_0
+     148: getfield      #3508               // Field classicWorldInstanceId:I
+     151: istore        8
+     153: aload_0
+     154: getfield      #3510               // Field positionX:I
+     157: istore        9
+     159: aload_0
+     160: getfield      #3512               // Field positionY:I
+     163: istore        10
+     165: aload_0
+     166: invokevirtual #4628               // Method selectedCharacterSummary:()Llocal/lito381/server/CharacterSummary;
+     169: astore        11
+     171: aload_0
+     172: invokevirtual #12352              // Method requiredEquipmentMagicStats:()Llocal/lito381/server/SourceEquipmentMagicStats;
+     175: astore        12
+     177: aload         12
+     179: aload_0
+     180: invokevirtual #28674              // Method baseIntelligence:()I
+     183: invokevirtual #15042              // Method local/lito381/server/SourceEquipmentMagicStats.effectiveIntelligence:(I)I
+     186: istore        13
+     188: aload         11
+     190: ifnonnull     197
+     193: iconst_0
+     194: goto          202
+     197: aload         11
+     199: invokevirtual #5865               // Method local/lito381/server/CharacterSummary.type:()I
+     202: aload         11
+     204: ifnonnull     211
+     207: iconst_0
+     208: goto          220
+     211: iconst_0
+     212: aload         11
+     214: invokevirtual #28677              // Method local/lito381/server/CharacterSummary.originalIntelligence:()I
+     217: invokestatic  #13450              // Method java/lang/Math.max:(II)I
+     220: invokestatic  #28680              // Method local/lito381/server/BattleSpellCatalog.originalMagicConsumeReduction:(II)I
+     223: istore        14
+     225: aload_2
+     226: iload         13
+     228: iload         14
+     230: invokestatic  #35202              // Method local/lito381/server/NativeSkillConsumptionBridges.MagicalWeaponSpell_effectiveMpCost_III:(Llocal/lito381/server/BattleSpellCatalog$MagicalWeaponSpell;II)I
+     233: istore        15
+     235: aload_0
+     236: dup
+     237: astore        23
+     239: monitorenter
+     240: invokestatic  #3473               // Method java/lang/System.nanoTime:()J
+     243: lstore        21
+     245: aload_0
+     246: getfield      #3817               // Field spellReadyNanos:Ljava/util/Map;
+     249: aload_2
+     250: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+     253: invokestatic  #3672               // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     256: lconst_0
+     257: invokestatic  #4651               // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+     260: invokeinterface #7935,  3         // InterfaceMethod java/util/Map.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     265: checkcast     #4584               // class java/lang/Long
+     268: invokevirtual #4587               // Method java/lang/Long.longValue:()J
+     271: lstore        24
+     273: lload         21
+     275: lload         24
+     277: lcmp
+     278: iflt          313
+     281: aload_0
+     282: getfield      #3659               // Field playerMp:I
+     285: iload         15
+     287: if_icmplt     313
+     290: aload_0
+     291: getfield      #3655               // Field playerHp:I
+     294: ifle          313
+     297: aload_0
+     298: getfield      #3501               // Field phase:Llocal/lito381/server/ClientSession$Phase;
+     301: aload         4
+     303: if_acmpne     313
+     306: aload_0
+     307: getfield      #5555               // Field observer:Z
+     310: ifeq          347
+     313: getstatic     #4306               // Field java/lang/System.out:Ljava/io/PrintStream;
+     316: aload_0
+     317: invokevirtual #5579               // Method playerName:()Ljava/lang/String;
+     320: aload_0
+     321: getfield      #3659               // Field playerMp:I
+     324: iload         15
+     326: lconst_0
+     327: lload         24
+     329: lload         21
+     331: lsub
+     332: invokestatic  #7938               // Method java/lang/Math.max:(JJ)J
+     335: invokedynamic #35205,  0          // InvokeDynamic #2969:makeConcatWithConstants:(Ljava/lang/String;IIJ)Ljava/lang/String;
+     340: invokevirtual #4319               // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     343: aload         23
+     345: monitorexit
+     346: return
+     347: aload_0
+     348: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     351: invokevirtual #6771               // Method local/lito381/server/RuntimeInventory.copy:()Llocal/lito381/server/RuntimeInventory;
+     354: astore        26
+     356: aload         26
+     358: aload_2
+     359: invokevirtual #35206              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.itemConsumeId:()J
+     362: aload_2
+     363: invokevirtual #35207              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.itemConsumeCount:()I
+     366: i2l
+     367: invokestatic  #28704              // Method local/lito381/server/CombatDatabase.consumeMaterial:(Llocal/lito381/server/RuntimeInventory;JJ)Z
+     370: ifne          413
+     373: aload_0
+     374: sipush        299
+     377: iconst_0
+     378: anewarray     #3483               // class java/lang/String
+     381: invokestatic  #6434               // Method local/lito381/server/Protocol.messageCode:(I[Ljava/lang/String;)[B
+     384: ldc_w         #35209              // String S_MESSAGE_CODE Create-Magical-Weapon-missing-reagent=299
+     387: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     390: getstatic     #4306               // Field java/lang/System.out:Ljava/io/PrintStream;
+     393: aload_2
+     394: invokevirtual #35206              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.itemConsumeId:()J
+     397: aload_2
+     398: invokevirtual #35207              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.itemConsumeCount:()I
+     401: invokedynamic #35212,  0          // InvokeDynamic #2970:makeConcatWithConstants:(JI)Ljava/lang/String;
+     406: invokevirtual #4319               // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     409: aload         23
+     411: monitorexit
+     412: return
+     413: aload_0
+     414: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     417: aload_3
+     418: invokevirtual #28667              // Method local/lito381/server/Protocol$ObjectSpellRequest.targetObjectId:()J
+     421: invokevirtual #4659               // Method local/lito381/server/RuntimeInventory.item:(J)Llocal/lito381/server/RuntimeInventory$Item;
+     424: astore        17
+     426: aload         26
+     428: aload_3
+     429: invokevirtual #28667              // Method local/lito381/server/Protocol$ObjectSpellRequest.targetObjectId:()J
+     432: invokevirtual #35215              // Method local/lito381/server/RuntimeInventory.createMagicalWeapon:(J)Z
+     435: istore        20
+     437: aload         26
+     439: aload_3
+     440: invokevirtual #28667              // Method local/lito381/server/Protocol$ObjectSpellRequest.targetObjectId:()J
+     443: invokevirtual #4659               // Method local/lito381/server/RuntimeInventory.item:(J)Llocal/lito381/server/RuntimeInventory$Item;
+     446: astore        18
+     448: aload_0
+     449: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     452: astore        16
+     454: aload_0
+     455: aload         26
+     457: iconst_0
+     458: invokestatic  #3721               // Method local/lito381/server/NativeDeItemApplication.replace:(Llocal/lito381/server/ClientSession;Llocal/lito381/server/RuntimeInventory;I)V
+     461: aload_0
+     462: aload_2
+     463: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+     466: invokedynamic #28729,  0          // InvokeDynamic #2088:makeConcatWithConstants:(I)Ljava/lang/String;
+     471: invokevirtual #18566              // Method cancelMeditation:(Ljava/lang/String;)V
+     474: aload_0
+     475: dup
+     476: getfield      #3659               // Field playerMp:I
+     479: iload         15
+     481: isub
+     482: dup2
+     483: invokestatic  #28715              // Method local/lito381/server/NativeSkillConsumption.boundMp:(Llocal/lito381/server/ClientSession;I)I
+     486: swap
+     487: pop
+     488: putfield      #3659               // Field playerMp:I
+     491: aload_0
+     492: getfield      #3659               // Field playerMp:I
+     495: istore        19
+     497: aload_0
+     498: aload_2
+     499: invokevirtual #35189              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.skillId:()I
+     502: lload         21
+     504: aload_2
+     505: invokevirtual #35216              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.reuseDelayMillis:()I
+     508: i2l
+     509: ldc2_w        #8734               // long 1000000l
+     512: lmul
+     513: ladd
+     514: invokevirtual #28824              // Method commitSpellReady:(IJ)V
+     517: aload         23
+     519: monitorexit
+     520: goto          531
+     523: astore        27
+     525: aload         23
+     527: monitorexit
+     528: aload         27
+     530: athrow
+     531: aload_0
+     532: getfield      #4031               // Field state:Llocal/lito381/server/GameStateStore;
+     535: aload_0
+     536: invokevirtual #4557               // Method stateCharacter:()Ljava/lang/String;
+     539: aload_0
+     540: getfield      #3714               // Field shopPoints:J
+     543: aload_0
+     544: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     547: invokevirtual #5877               // Method local/lito381/server/RuntimeInventory.catalogCounts:()Ljava/util/Map;
+     550: aload_0
+     551: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     554: invokevirtual #6607               // Method local/lito381/server/RuntimeInventory.catalogItemStates:()Ljava/util/Map;
+     557: invokevirtual #6827               // Method local/lito381/server/GameStateStore.saveEconomyState:(Ljava/lang/String;JLjava/util/Map;Ljava/util/Map;)V
+     560: iload         20
+     562: ifeq          650
+     565: aload         17
+     567: ifnull        650
+     570: aload         17
+     572: invokevirtual #4707               // Method local/lito381/server/RuntimeInventory$Item.identified:()Z
+     575: ifeq          594
+     578: aload         17
+     580: invokevirtual #4679               // Method local/lito381/server/RuntimeInventory$Item.definition:()Llocal/lito381/server/InventoryCatalog$Definition;
+     583: invokevirtual #8144               // Method local/lito381/server/InventoryCatalog$Definition.name:()Ljava/lang/String;
+     586: invokedynamic #35219,  0          // InvokeDynamic #2971:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     591: goto          602
+     594: aload         17
+     596: invokevirtual #4679               // Method local/lito381/server/RuntimeInventory$Item.definition:()Llocal/lito381/server/InventoryCatalog$Definition;
+     599: invokevirtual #8144               // Method local/lito381/server/InventoryCatalog$Definition.name:()Ljava/lang/String;
+     602: astore        23
+     604: aload_0
+     605: aload_2
+     606: invokevirtual #35220              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.successMessage:()I
+     609: iconst_3
+     610: anewarray     #3483               // class java/lang/String
+     613: dup
+     614: iconst_0
+     615: aload         23
+     617: aastore
+     618: dup
+     619: iconst_1
+     620: ldc_w         #7419               // String $245
+     623: aastore
+     624: dup
+     625: iconst_2
+     626: ldc_w         #7421               // String $247
+     629: aastore
+     630: invokestatic  #6434               // Method local/lito381/server/Protocol.messageCode:(I[Ljava/lang/String;)[B
+     633: aload_2
+     634: invokevirtual #35220              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.successMessage:()I
+     637: aload         23
+     639: invokedynamic #35223,  0          // InvokeDynamic #2972:makeConcatWithConstants:(ILjava/lang/String;)Ljava/lang/String;
+     644: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     647: goto          674
+     650: aload_0
+     651: aload_2
+     652: invokevirtual #35224              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.failureMessage:()I
+     655: iconst_0
+     656: anewarray     #3483               // class java/lang/String
+     659: invokestatic  #6434               // Method local/lito381/server/Protocol.messageCode:(I[Ljava/lang/String;)[B
+     662: aload_2
+     663: invokevirtual #35224              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.failureMessage:()I
+     666: invokedynamic #35227,  0          // InvokeDynamic #2973:makeConcatWithConstants:(I)Ljava/lang/String;
+     671: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     674: iload         20
+     676: ifeq          741
+     679: aload         18
+     681: ifnull        741
+     684: aload_0
+     685: aload         18
+     687: invokevirtual #4727               // Method local/lito381/server/RuntimeInventory$Item.objectId:()J
+     690: aload         18
+     692: invokevirtual #6629               // Method local/lito381/server/RuntimeInventory$Item.nativeViewName:()Ljava/lang/String;
+     695: aload         18
+     697: invokevirtual #4695               // Method local/lito381/server/RuntimeInventory$Item.quantity:()I
+     700: i2l
+     701: aload         18
+     703: invokevirtual #4707               // Method local/lito381/server/RuntimeInventory$Item.identified:()Z
+     706: ifeq          717
+     709: aload         18
+     711: invokevirtual #20038              // Method local/lito381/server/RuntimeInventory$Item.nativeStatusDetail:()[B
+     714: goto          720
+     717: iconst_0
+     718: newarray       byte
+     720: invokestatic  #20042              // Method local/lito381/server/Protocol.changeInventoryDescriptionExtended:(JLjava/lang/String;J[B)[B
+     723: aload         18
+     725: invokevirtual #4727               // Method local/lito381/server/RuntimeInventory$Item.objectId:()J
+     728: aload         18
+     730: invokevirtual #4704               // Method local/lito381/server/RuntimeInventory$Item.enchantLevel:()I
+     733: invokedynamic #35230,  0          // InvokeDynamic #2974:makeConcatWithConstants:(JI)Ljava/lang/String;
+     738: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     741: aload_0
+     742: aload_0
+     743: invokevirtual #6325               // Method ownCharacterAttrDef:()[B
+     746: aload_0
+     747: invokevirtual #6328               // Method battleArmorClass:()I
+     750: invokedynamic #35233,  0          // InvokeDynamic #2975:makeConcatWithConstants:(I)Ljava/lang/String;
+     755: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     758: aload_0
+     759: lload         21
+     761: ldc_w         #35235              // String create-magical-weapon
+     764: invokevirtual #6336               // Method sendNativeBattleStatus:(JLjava/lang/String;)V
+     767: aload_0
+     768: aload_2
+     769: invokevirtual #35236              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.happenMessage:()I
+     772: iconst_0
+     773: anewarray     #3483               // class java/lang/String
+     776: invokestatic  #6434               // Method local/lito381/server/Protocol.messageCode:(I[Ljava/lang/String;)[B
+     779: aload_2
+     780: invokevirtual #35236              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.happenMessage:()I
+     783: invokedynamic #35239,  0          // InvokeDynamic #2976:makeConcatWithConstants:(I)Ljava/lang/String;
+     788: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     791: aload_0
+     792: iload         19
+     794: aload_0
+     795: getfield      #3661               // Field playerMaxMp:I
+     798: invokestatic  #6319               // Method local/lito381/server/Protocol.manaPoint:(II)[B
+     801: iload         19
+     803: aload_0
+     804: getfield      #3661               // Field playerMaxMp:I
+     807: invokedynamic #35242,  0          // InvokeDynamic #2977:makeConcatWithConstants:(II)Ljava/lang/String;
+     812: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+     815: aload_0
+     816: aload         16
+     818: aload_0
+     819: getfield      #4635               // Field inventory:Llocal/lito381/server/RuntimeInventory;
+     822: iconst_0
+     823: invokevirtual #9024               // Method sendInventoryDelta:(Llocal/lito381/server/RuntimeInventory;Llocal/lito381/server/RuntimeInventory;Z)V
+     826: aload_0
+     827: invokevirtual #3440               // Method playerObjectId:()J
+     830: aload_2
+     831: invokevirtual #35193              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.actionId:()I
+     834: invokestatic  #7427               // Method local/lito381/server/Protocol.objectAction:(JI)[B
+     837: astore        23
+     839: aload_0
+     840: invokevirtual #3440               // Method playerObjectId:()J
+     843: aload_2
+     844: invokevirtual #35243              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.effectGfx:()I
+     847: invokestatic  #4253               // Method local/lito381/server/Protocol.effectObject:(JI)[B
+     850: astore        24
+     852: aload         4
+     854: getstatic     #3504               // Field local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
+     857: if_acmpne     869
+     860: aload_0
+     861: iload         7
+     863: invokevirtual #4256               // Method classicWorldMembers:(I)Ljava/util/List;
+     866: goto          878
+     869: aload_0
+     870: getfield      #3436               // Field hub:Llocal/lito381/server/GameHub;
+     873: lload         5
+     875: invokevirtual #10194              // Method local/lito381/server/GameHub.roomMembers:(J)Ljava/util/List;
+     878: astore        25
+     880: aload         25
+     882: invokeinterface #3454,  1         // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     887: astore        26
+     889: aload         26
+     891: invokeinterface #3460,  1         // InterfaceMethod java/util/Iterator.hasNext:()Z
+     896: ifeq          1035
+     899: aload         26
+     901: invokeinterface #3464,  1         // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     906: checkcast     #2                  // class local/lito381/server/ClientSession
+     909: astore        27
+     911: aload         4
+     913: getstatic     #3504               // Field local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
+     916: if_acmpne     979
+     919: aload         27
+     921: getfield      #3501               // Field phase:Llocal/lito381/server/ClientSession$Phase;
+     924: getstatic     #3504               // Field local/lito381/server/ClientSession$Phase.WORLD:Llocal/lito381/server/ClientSession$Phase;
+     927: if_acmpne     889
+     930: aload         27
+     932: getfield      #3506               // Field classicWorldMapId:I
+     935: iload         7
+     937: if_icmpne     889
+     940: aload         27
+     942: getfield      #3508               // Field classicWorldInstanceId:I
+     945: iload         8
+     947: if_icmpne     889
+     950: aload         27
+     952: aload_0
+     953: if_acmpeq     979
+     956: iload         9
+     958: iload         10
+     960: aload         27
+     962: getfield      #3510               // Field positionX:I
+     965: aload         27
+     967: getfield      #3512               // Field positionY:I
+     970: invokestatic  #3516               // Method local/lito381/server/BattleSpellCatalog.isInNativeScreen:(IIII)Z
+     973: ifne          979
+     976: goto          889
+     979: aload_0
+     980: getfield      #10313              // Field invisible:Z
+     983: ifeq          992
+     986: aload         27
+     988: aload_0
+     989: if_acmpne     1012
+     992: aload         27
+     994: aload         23
+     996: aload_0
+     997: invokevirtual #3440               // Method playerObjectId:()J
+    1000: aload_2
+    1001: invokevirtual #35193              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.actionId:()I
+    1004: invokedynamic #35246,  0          // InvokeDynamic #2978:makeConcatWithConstants:(JI)Ljava/lang/String;
+    1009: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+    1012: aload         27
+    1014: aload         24
+    1016: aload_0
+    1017: invokevirtual #3440               // Method playerObjectId:()J
+    1020: aload_2
+    1021: invokevirtual #35243              // Method local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell.effectGfx:()I
+    1024: invokedynamic #35249,  0          // InvokeDynamic #2979:makeConcatWithConstants:(JI)Ljava/lang/String;
+    1029: invokevirtual #3541               // Method sendEncrypted:([BLjava/lang/String;)V
+    1032: goto          889
+    1035: getstatic     #4306               // Field java/lang/System.out:Ljava/io/PrintStream;
+    1038: aload_0
+    1039: invokevirtual #5579               // Method playerName:()Ljava/lang/String;
+    1042: aload_3
+    1043: invokevirtual #28667              // Method local/lito381/server/Protocol$ObjectSpellRequest.targetObjectId:()J
+    1046: aload         4
+    1048: invokestatic  #4309               // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+    1051: iload         20
+    1053: iload         15
+    1055: iload         19
+    1057: aload_0
+    1058: getfield      #3661               // Field playerMaxMp:I
+    1061: invokedynamic #35254,  0          // InvokeDynamic #2980:makeConcatWithConstants:(Ljava/lang/String;JLjava/lang/String;ZIII)Ljava/lang/String;
+    1066: invokevirtual #4319               // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+    1069: return
+    Exception table:
+       from    to  target type
+         240   346   523   any
+         347   412   523   any
+         413   520   523   any
+         523   528   523   any
+

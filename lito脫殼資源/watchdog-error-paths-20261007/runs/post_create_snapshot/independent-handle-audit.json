@@ -1,0 +1,23 @@
+{
+  "case": "post_create_snapshot",
+  "observer": "Noninherited process-handle duplicates held by test only; no duplicated job handle",
+  "members": [
+    {
+      "pid": 20860,
+      "creation_filetime_100ns": 134358259435026382,
+      "creation_time_utc": "2026-10-07T05:52:23.502638+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    }
+  ],
+  "module_owned_job_empty": true,
+  "no_cleanup_performed_by_observer": true,
+  "candidate_unknown_does_not_become_true_from_observer": true,
+  "passed": true
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.6.65",
+  "status": "deployed-startup-verified",
+  "previous_sha256": "5d4b8ad4469143f824b8f6599d1951e535274f7152385cae0b427c720622cd15",
+  "candidate_sha256": "d3da8ca77a54e5cf072152d6356d4aba7fb8abb0bdb9cafe8d09181737428dab",
+  "changed_entries": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/EquipmentTransitions.class"
+  ],
+  "regression_pass": [
+    "EquipmentRegression",
+    "ResourceRegression",
+    "RoomRulesRegression",
+    "FlowRegression",
+    "NativeDirectoryRegression"
+  ],
+  "source_database_mutations": false,
+  "manual_visual_test": "pending",
+  "old_failure_log": "build/equipment-toggle/test-1791971877295965700.log",
+  "fixed_pass_log": "build/equipment-toggle/test-1791972072748507000.log",
+  "startup_run": "equipment-toggle-065-smoke",
+  "runtime_pins_verified": true
+}

@@ -1,0 +1,110 @@
+{
+  "blocks": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 266473,
+      "line_end": 266582,
+      "purpose": "47C8A0 worker; raw code in IDA dd block includes64AD74 destination",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-266473-266582.txt",
+        "bytes": 4245,
+        "sha256": "CD96B49858C1CEA79398F90EE1E77AC14F83B0681236D6434FDA4411E2958692"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 266592,
+      "line_end": 266647,
+      "purpose": "47CAD0 worker dispatch",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-266592-266647.txt",
+        "bytes": 1409,
+        "sha256": "34B485BD67FEBE5AAC78EEB509C15A806EB1287290503544F9FA129D81D9ED1A"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 274190,
+      "line_end": 274337,
+      "purpose": "ClientApplication_Run and positional host override",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-274190-274337.txt",
+        "bytes": 5312,
+        "sha256": "8BEC7B8F139A331BD2FFEAB0314F291CEEE619D118A2E29CE3821C1D3CBAAAB9"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 309590,
+      "line_end": 309705,
+      "purpose": "selected record alias copy",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-309590-309705.txt",
+        "bytes": 3433,
+        "sha256": "D2803DC7B8C9BB48ECB5EF5A055F2E6F0CE9B08BFE9D831BB7AE25FF2B0CC632"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 349916,
+      "line_end": 349981,
+      "purpose": "AFBC/AFBD alternate203 alias use",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-349916-349981.txt",
+        "bytes": 1985,
+        "sha256": "5B12739F8850EBB25E66BBB03D9968F1B3279804D77A25AD3FF810DEC5A24CC3"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 559666,
+      "line_end": 559691,
+      "purpose": "buffer definitions",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-559666-559691.txt",
+        "bytes": 1780,
+        "sha256": "70BBECAC7E15F7BB92B5A3E696301D560CA981AA5280159EA047CE171A9302FD"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+      },
+      "line_start": 560600,
+      "line_end": 560615,
+      "purpose": "ASM recovered initialized host literal",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ASM-560600-560615.txt",
+        "bytes": 980,
+        "sha256": "4B0C5911B1F96684AF1602663ACD545720C72075386DB9B6382D44E1BBFC3808"
+      }
+    }
+  ],
+  "warning": "ASM was exported from different PE. Fixed PE byte checks take precedence for current snapshot state."
+}

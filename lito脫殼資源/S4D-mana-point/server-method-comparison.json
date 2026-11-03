@@ -1,0 +1,85 @@
+{
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+      "bytes": 400833,
+      "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\NumericBreakthrough.java",
+      "bytes": 5104,
+      "sha256": "143E912AFBEFDFA854B3CE556242C2C105C3683174169255F02B7376157AB28B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+      "bytes": 4711656,
+      "sha256": "013ADEF1613C627243ACB352DCA186E0668EFABFADA17FF597380E9B65DECEC9"
+    }
+  ],
+  "read_only_excerpts": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 293,
+      "last_line": 307,
+      "text": "293:     static final int S_SOUND_EFFECT = 0x4A;\n294:     static final int S_NOTICE = 0x4B;\n295:     static final int S_TAX = 0x45;\n296:     static final int S_WITHDRAW = 0x46;\n297:     static final int S_CASTLE_OWNER = 0x47;\n298:     static final int S_DEPOSIT = 0x4C;\n299:     static final int S_MANA_POINT = 0x4D;\n300:     static final int S_MASTER = 0x4F;\n301:     static final int S_SELECTABLE_TIME_LIST = 0x54;\n302:     static final int S_MAGIC_STATUS = 0x56;\n303:     static final int S_MAGE_STRENGTH = 0x6B;\n304:     static final int S_MAGE_DEXTERITY = 0x6C;\n305:     static final int S_MAGE_SHIELD = 0x6D;\n306:     static final int S_ABILITY_SCORES = 0x50;\n307:     static final int S_EXP = 0x51;"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 1024,
+      "last_line": 1044,
+      "text": "1024: \n1025:     static final class Writer {\n1026:         private final ByteArrayOutputStream out = new ByteArrayOutputStream();\n1027:         private int wideVitalFieldsRemaining;\n1028: \n1029:         Writer c(int value) {\n1030:             out.write(value & 0xFF);\n1031:             if (out.size() == 1 && NumericBreakthrough.enabled()\n1032:                     && (value == S_HIT_POINT || value == S_MANA_POINT)) {\n1033:                 wideVitalFieldsRemaining = 2;\n1034:             }\n1035:             return this;\n1036:         }\n1037:         Writer h(int value) {\n1038:             if (wideVitalFieldsRemaining > 0) {\n1039:                 wideVitalFieldsRemaining--;\n1040:                 return d(Integer.toUnsignedLong(value));\n1041:             }\n1042:             c(value); c(value >>> 8); return this;\n1043:         }\n1044:         Writer d(long value) { c((int) value); c((int) (value >>> 8)); c((int) (value >>> 16)); c((int) (value >>> 24)); return this; }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 5340,
+      "last_line": 5348,
+      "text": "5340:     /** Native sub_4AEFB0 reads current/max MP directly as two little-endian words. */\n5341:     static byte[] manaPoint(int current, int maximum) {\n5342:         int maximumAllowed = NumericBreakthrough.enabled()\n5343:                 ? NumericBreakthrough.MAX_VITAL : 0x7FFF;\n5344:         if (current < 0 || maximum <= 0 || current > maximum || maximum > maximumAllowed) {\n5345:             throw new IllegalArgumentException(\"invalid native S_MANA_POINT values\");\n5346:         }\n5347:         return new Writer().c(S_MANA_POINT).h(current).h(maximum).bytes();\n5348:     }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\NumericBreakthrough.java",
+        "bytes": 5104,
+        "sha256": "143E912AFBEFDFA854B3CE556242C2C105C3683174169255F02B7376157AB28B"
+      },
+      "first_line": 1,
+      "last_line": 40,
+      "text": "1: package local.lito381.server;\n2: \n3: /** Shared opt-in contract for the LiTo launcher/runtime 32-bit stat patches. */\n4: final class NumericBreakthrough {\n5:     static final int VITAL_ARMOR_SCHEMA_VERSION = 1;\n6:     static final int LEVEL_ABILITY_SCHEMA_VERSION = 2;\n7:     static final int MAGIC_MODIFIER_SCHEMA_VERSION = 3;\n8:     static final int ELEMENTAL_RESISTANCE_SCHEMA_VERSION = 4;\n9:     static final int MAX_VITAL = 999_999;\n10:     static final int MIN_ARMOR_CLASS = -999_999;\n11:     static final int MAX_ARMOR_CLASS = 999_999;\n12:     static final int MAX_LEVEL = 999_999;\n13:     static final int MAX_ABILITY = 999_999;\n14:     static final int MIN_ABILITY_MODIFIER = -999_999;\n15:     static final int MAX_ABILITY_MODIFIER = 999_999;\n16:     static final int MIN_MAGIC_MODIFIER = -999_999;\n17:     static final int MAX_MAGIC_MODIFIER = 999_999;\n18:     static final int MIN_ELEMENTAL_RESISTANCE = -999_999;\n19:     static final int MAX_ELEMENTAL_RESISTANCE = 999_999;\n20:     private static final String ENVIRONMENT = \"LITO_NUMERIC_BREAKTHROUGH\";\n21:     private static final String PROPERTY = \"lito.numeric.breakthrough\";\n22: \n23:     private NumericBreakthrough() {}\n24: \n25:     static int schemaVersion() {\n26:         String property = System.getProperty(PROPERTY);\n27:         String value = property != null ? property : System.getenv(ENVIRONMENT);\n28:         if (value == null) return 0;\n29:         try {\n30:             int parsed = Integer.parseInt(value);\n31:             return parsed >= VITAL_ARMOR_SCHEMA_VERSION\n32:                     && parsed <= ELEMENTAL_RESISTANCE_SCHEMA_VERSION ? parsed : 0;\n33:         } catch (NumberFormatException ignored) {\n34:             return 0;\n35:         }\n36:     }\n37: \n38:     static boolean enabled() {\n39:         return schemaVersion() >= VITAL_ARMOR_SCHEMA_VERSION;\n40:     }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+        "bytes": 4711656,
+        "sha256": "013ADEF1613C627243ACB352DCA186E0668EFABFADA17FF597380E9B65DECEC9"
+      },
+      "first_line": 12291,
+      "last_line": 12298,
+      "text": "12291:         sendEncrypted(new Protocol.Writer().c(Protocol.S_HIT_POINT)\n12292:                         .h(playerHp).h(playerMaxHp).bytes(),\n12293:                 \"S_HIT_POINT player=\" + playerName() + \" hp=\" + playerHp\n12294:                         + \"/\" + playerMaxHp + \" reason=\" + reason);\n12295:         sendNativeBattleStatus(now, reason);\n12296:         sendEncrypted(Protocol.manaPoint(playerMp, playerMaxMp),\n12297:                 \"S_MANA_POINT player=\" + playerName() + \" mp=\" + playerMp\n12298:                         + \"/\" + playerMaxMp + \" reason=\" + reason);"
+    }
+  ],
+  "native_baseline": "ExistingmanaPoint opcode4D,h(current),h(maximum) exactly matches5-byte baseline shape. Validators require0<=current<=maximum,1<=maximum<=32767 when numeric disabled.",
+  "native_domain_vs_provider": "Fixed native current sign-extends all16bit patterns including negatives; maximum copied as raw16bits, no positivity/order validation. Provider restricts gameplay domain; synthetic high-bit native examples are not new real wire differences.",
+  "patched_profile": "Writer opcode S_HIT_POINT orS_MANA_POINT with NumericBreakthrough.enabled (schema>=1) widens nexttwoh to LE dwords; resultingS4D body9, patched receiver required. Outside this fixed-native5 contract; no current environment setting inferred.",
+  "source_sequence": "ExistingClientSession fragment calls sendNativeBattleStatus thenmanaPoint. Sealedrecords lines43/44 and73/74 corroborate current sequence for those captures only.",
+  "classification": "KNOWN_CONTRACT_CORROBORATION",
+  "new_wire_differences": 0,
+  "new_opcodes": 0,
+  "server_product_change_required_by_this_batch": false,
+  "Java_SQL_or_old_PASS_executed": false,
+  "server_origin_context": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-skill-publication-origin-comparison.json",
+    "bytes": 6144,
+    "sha256": "A16B1FA66350D50056B78CF5B62F8ABECBC6D399D048B3409A66779C565B6963"
+  }
+}

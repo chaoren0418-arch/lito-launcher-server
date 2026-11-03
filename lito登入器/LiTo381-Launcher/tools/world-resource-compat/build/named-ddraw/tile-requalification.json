@@ -1,0 +1,41 @@
+{
+  "status": "requalified",
+  "tile_entries": 5411,
+  "all_member_bounds_valid": true,
+  "prior_index_sha256": "4c44333587bb76288a7080b8053061382755ea3d9fd339a6b83092fe0ec7088f",
+  "current_index_sha256": "d35a7e3b5b9d4bb432e7b8db3ff5d9b0a79eb638672c5e025b900f9de53b0be6",
+  "encoded_effectlist_unchanged": true,
+  "decoded_effectlist_unchanged": true,
+  "compiled_catalog_identical": true,
+  "sprite_indices": 17,
+  "icons": 161,
+  "native_payloads": 219,
+  "native_conversion": "passed",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Tile.idx",
+      "sha256": "d35a7e3b5b9d4bb432e7b8db3ff5d9b0a79eb638672c5e025b900f9de53b0be6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\inputs\\effectlist2.xml.extraction.json",
+      "sha256": "12f86969ad93c69e13af0a0a871ce655b9f82ae1fa403f5387be053b22716ad0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\inputs\\effectlist2.xml",
+      "sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\shared_status.bin",
+      "sha256": "ba91b436034ce04c5a77bc626af1355ede8766dd72a353b0ad0ec5aaf069b198"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\icon-assets.json",
+      "sha256": "bbfe020cef51b190e0b0cf996320640bedb86ee06c28308a84543c501bc17889"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native-icon-conversion.json",
+      "sha256": "dcb07d5ce1d35aead44ca29005b10d96e69a33877e9d9e8daaa82926827c8b4c"
+    }
+  ],
+  "source_resources_modified": false
+}

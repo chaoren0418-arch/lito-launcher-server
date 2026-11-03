@@ -1,0 +1,202 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_events.rs",
+    "bytes": 26872,
+    "sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE"
+  },
+  "captured_content_sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_events.rs",
+    "bytes": 26872,
+    "sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:54:46.687990+08:00",
+  "ranges": [
+    [
+      449,
+      492
+    ]
+  ],
+  "line_count": 648,
+  "implementation_lines": [
+    {
+      "line": 449,
+      "text": "        self.spawn_owned_player_fixture(profile,epoch)?;"
+    },
+    {
+      "line": 450,
+      "text": "        self.status=\"頻道切換連線中，等待伺服器回覆…\".into();Ok(())"
+    },
+    {
+      "line": 451,
+      "text": "    }"
+    },
+    {
+      "line": 452,
+      "text": "    /// Explicit fresh GAME adapter resume after cooperative old-worker join."
+    },
+    {
+      "line": 453,
+      "text": "    /// New authentication and NEWS are required; no automatic credential replay."
+    },
+    {
+      "line": 454,
+      "text": "    pub fn resume_java_return_fixture(&mut self)->Result<()> {"
+    },
+    {
+      "line": 455,
+      "text": "        ensure!(self.bootstrap_adapter.is_some()&&self.java_return.key.phase==super::java_return::Phase::Retained&&self.java_return.unexpired(),\"retained AD368 return unavailable or expired\");"
+    },
+    {
+      "line": 456,
+      "text": "        let late=self.login_events.reap();self.stale_results_rejected+=late as u64;"
+    },
+    {
+      "line": 457,
+      "text": "        ensure!(self.login_events.idle()&&self.source_connection_epoch().is_none(),\"old socket worker must join before fresh GAME\");"
+    },
+    {
+      "line": 458,
+      "text": "        let mut profile=self.login_events.profile.as_ref().context(\"configured fixture absent\")?.clone();"
+    },
+    {
+      "line": 459,
+      "text": "        profile.endpoint=SocketAddr::V4(self.java_return.endpoint.context(\"retained GAME address absent\")?);"
+    },
+    {
+      "line": 460,
+      "text": "        let mut retained=std::mem::take(&mut self.java_return);"
+    },
+    {
+      "line": 461,
+      "text": "        let epoch=self.begin_source_connection_candidate()?;"
+    },
+    {
+      "line": 462,
+      "text": "        retained.key.phase=super::java_return::Phase::Authenticating;"
+    },
+    {
+      "line": 463,
+      "text": "        self.login_bootstrap.key.selected_name=retained.key.source.clone();self.java_return=retained;"
+    },
+    {
+      "line": 464,
+      "text": "        self.spawn_owned_player_fixture(profile,epoch)?;self.open_source_login_form()?;"
+    },
+    {
+      "line": 465,
+      "text": "        self.status=\"重新輸入同一測試帳號，驗證返回資料\".into();Ok(())"
+    },
+    {
+      "line": 466,
+      "text": "    }"
+    },
+    {
+      "line": 467,
+      "text": "    pub(crate) fn request_player_fixture_submit(&mut self) {"
+    },
+    {
+      "line": 468,
+      "text": "        if self.login_events.active.is_some() {"
+    },
+    {
+      "line": 469,
+      "text": "            self.login_events.submit = self.source_login_control();"
+    },
+    {
+      "line": 470,
+      "text": "            self.status = \"合成資料已準備，等待連線與版本回包\".into();"
+    },
+    {
+      "line": 471,
+      "text": "        }"
+    },
+    {
+      "line": 472,
+      "text": "    }"
+    },
+    {
+      "line": 473,
+      "text": "    pub(crate) fn reconnect_login_bootstrap_fixture(&mut self,target:std::net::SocketAddrV4)->Result<()> {"
+    },
+    {
+      "line": 474,
+      "text": "        ensure!(self.bootstrap_adapter.is_some()&&target.ip().is_loopback()&&target.port()!=0&&self.login_events.active.is_some(),\"owned AD368 GAME redirect required\");"
+    },
+    {
+      "line": 475,
+      "text": "        let late=self.login_events.reap();self.stale_results_rejected+=late as u64;"
+    },
+    {
+      "line": 476,
+      "text": "        ensure!(self.login_events.retiring.len()<4,\"bootstrap retirement budget reached\");"
+    },
+    {
+      "line": 477,
+      "text": "        let mut profile=self.login_events.profile.as_ref().context(\"fixture profile absent\")?.clone();profile.endpoint=SocketAddr::V4(target);"
+    },
+    {
+      "line": 478,
+      "text": "        let mut bootstrap=std::mem::take(&mut self.login_bootstrap);"
+    },
+    {
+      "line": 479,
+      "text": "        ensure!(bootstrap.credentials.is_some(),\"GAME credential lease absent\");"
+    },
+    {
+      "line": 480,
+      "text": "        let epoch=self.begin_source_connection_candidate()?;"
+    },
+    {
+      "line": 481,
+      "text": "        bootstrap.key.stage=super::login_bootstrap::Stage::GameConnecting;bootstrap.key.write_serial=None;"
+    },
+    {
+      "line": 482,
+      "text": "        self.login_bootstrap=bootstrap;"
+    },
+    {
+      "line": 483,
+      "text": "        self.spawn_owned_player_fixture(profile,epoch)?;self.entry_transfer.key.current_address=Some(target);"
+    },
+    {
+      "line": 484,
+      "text": "        self.status=\"來源已選擇，正在連線 GAME\".into();Ok(())"
+    },
+    {
+      "line": 485,
+      "text": "    }"
+    },
+    {
+      "line": 486,
+      "text": "    pub(crate) fn request_player_fixture_reopen(&mut self) {"
+    },
+    {
+      "line": 487,
+      "text": "        if self.login_events.active.is_some() {"
+    },
+    {
+      "line": 488,
+      "text": "            self.login_events.reopen_after_back = true;"
+    },
+    {
+      "line": 489,
+      "text": "        }"
+    },
+    {
+      "line": 490,
+      "text": "    }"
+    },
+    {
+      "line": 491,
+      "text": "    fn drive_player_fixture_write(&mut self) -> Result<()> {"
+    },
+    {
+      "line": 492,
+      "text": "        let Some(epoch) = self.login_events.active.as_ref().map(|h| h.epoch.clone()) else {"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

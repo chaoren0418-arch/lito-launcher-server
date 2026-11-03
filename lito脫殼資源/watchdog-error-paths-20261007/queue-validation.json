@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "C:\\Users\\CHAOREN\\.codex\\skills\\lito-supervisor\\scripts\\supervise.py",
+    "validate",
+    "--queue",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"valid\": true, \"errors\": [], \"task_count\": 14}\n",
+  "stderr": "",
+  "queue_at_validation": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+    "bytes": 76270,
+    "sha256": "4970CE4A3BC92EFFD4EE644B2F657257C7851CCDB6B4EECFCE8F0781EDE07C6C"
+  },
+  "metadata_validation_only": true,
+  "fixture_or_old_PASS_replay": false
+}

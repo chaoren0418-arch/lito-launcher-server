@@ -1,0 +1,52 @@
+LiTo 開發資料分類（2026-10-03）
+
+1. lito登入器
+   LiTo381-Launcher：舊 LiTo 專用登入器原始碼與成品。
+   LiTo381-Compat：原生客戶端相容層。
+   舊版分析與驗收：原 LiTo381-開發的逆向、協定、工具、資源和 runtime。
+   歷史暫存證據：原 .codex_tmp 的 LiTo 登入器／視窗／原生資源驗證。
+
+2. lito伺服器
+   LiTo381-Server：LiTo 伺服器專案，包括供現代客戶端使用的 Modern Main。
+   LiTo381-Server-publish：原發布資料，完整保留。
+   工作區發布備份：原 D:\lineage開發\publish\LiTo381-Server.jar，未覆寫其他 JAR。
+   歷史暫存證據：模式、地圖、SQL、協定與相關原始資料驗證。
+
+3. lito重建版
+   LiTo381-Modern：現代引擎與獨立客戶端原始碼、各版固定 EXE、報告及建置產物。
+   歷史暫存證據：R 系列監控、圖像與驗收紀錄。
+   整理紀錄：本次移動計畫、逐筆紀錄、關鍵檔案雜湊及連結檢查。
+
+範圍與驗證
+本次完成 286 筆既有資料移動，沒有合併同名目錄、刪除版本或清理歷史檔案。
+R405、R408、LiTo381Launcher.exe、Server pom.xml、Compat 原始碼的雜湊核對一致。
+1-伺服器、2-登入器、0-客戶端、客戶端xml、通用工具及 TW/LHZ 資料仍在原位。
+共享客戶端內的 LiTo.bin 與共同遊戲資源屬於執行所需資源，不從共享資源目錄抽走。
+歷史證據內的舊絕對路徑保留原文；執行歷史指令前須依專案路徑.json換算。
+此整理不代表任何版本新增通過遊戲驗收，也沒有啟動遊戲、伺服器或 SQL。
+
+相對路徑相容
+舊版分析與驗收內的 LiTo381-Launcher、LiTo381-Compat、LiTo381-Server、
+LiTo381-Server-publish 是指向分類後實體目錄的 Junction，沒有重複複製專案。
+現代版 tools/start-dev-showcase.ps1 已更新分類後的 Server 與工作區共享資源路徑；
+已檢查 PowerShell 語法與依賴路徑存在，未執行啟動或重新編譯。
+
+已知待處理
+舊版分析與驗收/runtime/client-result-r9 下有 11 個既存失效 Junction，仍指向
+D:\lineage開發\LiTo381-開發\runtime\client-full 下的目錄。
+移除並重建這些 Junction 的命令被自動安全審核以 blocked by policy 阻擋，未執行；
+因此保留原連結。完整清單見 lito重建版/整理紀錄/整理後連結檢查.json。
+不應把該歷史測試 runtime 當成已修好的可啟動環境。
+
+
+2026-10-07 新主控入口核實
+唯一導覽沿用「專案路徑.json」；唯一新版任務板改為本開發根目錄「總控任務板.md」。
+四個正式原始碼入口及基線／候選分離、內容雜湊、工具版本、待處理項目：
+lito重建版/整理紀錄/20261007新主控入口核實.json。
+Modern 三個目前使用的建置腳本已把不存在的 D:/lito-dev-runtime 暫存引用改為自身 target/build-scratch；各語法檢查一次通過，未執行建置。
+根目錄 LiTo381-Modern 已核實只有五個空測試目錄；共移除七個空目錄、零檔案，逐項見同目錄清理記錄。
+lito-dev-runtime 保留；SQL 雙份與同雜湊基線保留，未清理不確定快取、未移動歷史證據。
+舊 runtime 路徑依「專案路徑.json」對照，讀取時先核 SHA；封存成品內的舊路徑不得直接替換。
+原十一個歷史失效 Junction 與原拒絕範圍仍保留。舊 heartbeat lito/lito-bin 已核實 PAUSED，未恢復。
+Server 可核實建置定義為正式 pom.xml，使用已存在 Maven 3.9.16 + JDK17；Build-Server.cmd 的 PATH 工具解析／覆寫基線缺口列為首批修正，驗收前不得執行原 wrapper。
+上述整理不是遊戲、SQL、伺服器或 GUI 驗收；歷史 PASS 不提升為目前產品完成。

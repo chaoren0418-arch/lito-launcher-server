@@ -1,0 +1,304 @@
+{
+  "task_id": "bin_resources-caption-message-boundary-20261007",
+  "state": "review",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007-contract.json",
+    "bytes": 12469,
+    "sha256": "FAC6C5B151561F2E646CD98373A74FBAA3D8939D477409E07C9661DFE9812FF9"
+  },
+  "created_files": [
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\asm-navigation.json",
+      "bytes": 14270,
+      "sha256": "2C80116BDACE86A1DB10167C3D3214BA32E166199CE4F5547A418BB6C68FA656"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\baseline.json",
+      "bytes": 2018,
+      "sha256": "1CB0718A8692BB0D4BB74F73FCB6A5C415BB2A38EC2A0DD67BD709C489A281BA"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\documentation-references.json",
+      "bytes": 1600,
+      "sha256": "03725994F425720010008BD6EC28F3453DBC0F33F9875438AA4DDE0E1BE3B00B"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\exploration-corrections.json",
+      "bytes": 1297,
+      "sha256": "F5A23A337E0FA39D73D45A8CE670D7D1B9ACEFF980030E350DA0A126C2847CC6"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\finite-branch-verification.json",
+      "bytes": 24172,
+      "sha256": "2E46961B6C2B0D319F8640B59021FEF0F78F926A038474B95541D53B862D1729"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\independent-review.json",
+      "bytes": 3479,
+      "sha256": "6FF001762F679AD8458D83FCED2437F52D7E79E25E31F47C6C6CAA8138E256B2"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\navigation-repair-receipt.json",
+      "bytes": 606,
+      "sha256": "11FF8D1042AB808AD056B872AC523AFC198D76A16F7BEB3FE88E6F3DAD85EE5C"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\owned-metadata-changes.json",
+      "bytes": 1931,
+      "sha256": "A5E6E6DCA76597D03740E2E0804F1D40014E214CC06863D287480B4DDAB5A842"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\package_handoff.py",
+      "bytes": 18215,
+      "sha256": "3157BB968D2611F5A56383D4A632A3B1A8D3F4E1B3610B1D83169B807F6C01E7"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualification.stdout.txt",
+      "bytes": 259,
+      "sha256": "925C5545C239861401F7DA05773D7D6860E2F6FDCB39085561B4358E9C5CADC6"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualify_fixed_bytes.executed.txt",
+      "bytes": 11461,
+      "sha256": "B02413E6B19E880BD920851FA7E7AD6CC59094D20E50D1686FCE1EB142642EE0"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualify_fixed_bytes.py",
+      "bytes": 11461,
+      "sha256": "252367BB8AECEFDA9EC9FE545B29CD209F0A00A7EA9E41650A1FE1C04C494359"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\class_and_caption_strings-VA-0062CE50.bin",
+      "bytes": 40,
+      "sha256": "05D2FB0E84AA6D8876F18BDDD9A1358ABF4964E6B1E209BD55E676B6F612EE07"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\default_helper_gate-VA-0047FFA8.bin",
+      "bytes": 36,
+      "sha256": "F8142AB44BA808A91FCC0C0AB597872D1F7E74B17EEF62F0AC53551CD128B780"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\early_helper_flag-VA-0064AFA2.bin",
+      "bytes": 1,
+      "sha256": "6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\entry-VA-0047F340.bin",
+      "bytes": 80,
+      "sha256": "0E84FD34F133FC5D800CE759B2EC2D40373A1D2FD38AD16845FB1A039E91DA69"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\external_fallback-VA-0047FFE4.bin",
+      "bytes": 22,
+      "sha256": "1A0B1F2A5856D01DA93E93C77B6DC8EAE9049E67E0F21265AE4593C36F674BAE"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\helper_filter-VA-004C6B30.bin",
+      "bytes": 34,
+      "sha256": "CF369BE32068BC7630797FC7FA4407CE5222E1B60F3CCE8F8430F44A7CCA5D00"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\helper_nonmatching_return-VA-004C6C4D.bin",
+      "bytes": 11,
+      "sha256": "E9E29C8242C6F4AECDE2299EFC482638933C212ABC146725B234C5CD8A1CC8B4"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\hwnd_and_reset_cells-VA-0064BBE0.bin",
+      "bytes": 16,
+      "sha256": "374708FFF7719DD5979EC875D56CD2286F6D3CF7EC317A3B25632AAB28EC37BB"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\low_selector_table-VA-00480014.bin",
+      "bytes": 15,
+      "sha256": "44B7E96AC0F5C308C50D6DB3407D7C79BB02095597040D7F8D311666AA5902BF"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\low_target_table-VA-0047FFFC.bin",
+      "bytes": 24,
+      "sha256": "24506A5CB73F8A786AFE89E895C3EDAB1D1BF922BBEF2C77D2CE53B262C97ABE"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\modal_router-VA-0047FE4A.bin",
+      "bytes": 33,
+      "sha256": "613ABA170B1809E62E136938C8906CF46C1CFD8A5801D799FAEA9B2DF428BBE4"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\move_size-VA-0047F390.bin",
+      "bytes": 42,
+      "sha256": "D6F61C21ECFD1F082246A4D91979ED1AD61781A22BD4653C17023DE4CEC445B3"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\paint-VA-0047F3BA.bin",
+      "bytes": 100,
+      "sha256": "AB70FE152D781DA7F2DDEED6348C52C94875861343EED4383642A04ED9EA08EE"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\paint_object_cell-VA-006476DC.bin",
+      "bytes": 4,
+      "sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\position_router-VA-0047F470.bin",
+      "bytes": 65,
+      "sha256": "FE4A8AE66AAE1E295AA953E0E9F1FA26CDC6BC28413B69153DAEDBC6563C4632"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\position_selector_table-VA-0048003C.bin",
+      "bytes": 233,
+      "sha256": "FD4CB8B445C4AB914BA17C622C08219E2E4DE126D1798744F0859C758CD1564E"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\position_target_table-VA-00480024.bin",
+      "bytes": 24,
+      "sha256": "F9B08D0FF4DE1BF2F806529382BC2E7BE44B9A6EC46DDEA1893A6081D04DFA5D"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\registration_shaped_body-VA-00480290.bin",
+      "bytes": 124,
+      "sha256": "918EEC71B4942AF7EB36CF813CA4786C756DCB4A4B33647383EC4970B49DF249"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\state_cell-VA-0064BBD4.bin",
+      "bytes": 4,
+      "sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\state_dispatch_body-VA-0047CC90.bin",
+      "bytes": 176,
+      "sha256": "8D383A5E9F62BB6940ED9ECC840D233132008976340FC4264EE87AE17A887D7B"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\state_dispatch_table-VA-0047CD40.bin",
+      "bytes": 44,
+      "sha256": "22F5BC5D29E352C85CD2900B19A11EAE43F47EC3A32C7C84B80992D898C60863"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\syscommand_filter-VA-0047FA7A.bin",
+      "bytes": 73,
+      "sha256": "DCFD1DD9A3FF9D90D502569363F5FC3D9411BF47E9E090DB35C1A5335A44A3D0"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\syscommand_router-VA-0047FA32.bin",
+      "bytes": 32,
+      "sha256": "DD0FEA3F337109463581C4E5CA7B98943242031B831EC66DE20FD94662960C33"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\syscommand_selector_entry-VA-0048013C.bin",
+      "bytes": 1,
+      "sha256": "6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw\\syscommand_target_entry-VA-00480128.bin",
+      "bytes": 4,
+      "sha256": "6D961FC24B03F341982E08992E65DB836D4C1E23D0E7067EE8575B23CBDD839B"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw-witnesses.json",
+      "bytes": 79381,
+      "sha256": "04B9E816D120A77F8F28D026B5FD49F23243A1A3444D038F17227FA8D38A408B"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\test-receipts.json",
+      "bytes": 2701,
+      "sha256": "F2A3E1930365825B27FC1C2A72CE5CDFA8540DA4FC45EC8F112B72A1D589997C"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\工作佇列.json.before",
+      "bytes": 81558,
+      "sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\監製進度.json.before",
+      "bytes": 169948,
+      "sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907"
+    },
+    {
+      "before_sha256": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007-contract.json",
+      "bytes": 12469,
+      "sha256": "FAC6C5B151561F2E646CD98373A74FBAA3D8939D477409E07C9661DFE9812FF9"
+    }
+  ],
+  "changed_existing_files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "before_sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+        "bytes": 175950,
+        "sha256": "4E748BF2448DD6B32951D3B33206E50B6304F1946E09285E36728DF4302343D3"
+      },
+      "before_snapshot": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\監製進度.json.before",
+        "bytes": 169948,
+        "sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907"
+      },
+      "historical_json_preserved": true,
+      "modified_fields": [
+        "caption_message_boundary_20261007"
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "before_sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+        "bytes": 87254,
+        "sha256": "A020110DB86A5A96DCADE849D0E1DC801CB9455EDE1A0B26D88B33DCB214A64D"
+      },
+      "before_snapshot": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\工作佇列.json.before",
+        "bytes": 81558,
+        "sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48"
+      },
+      "historical_json_preserved": true,
+      "modified_fields": [
+        "caption_message_boundary_20261007",
+        "items[append task_id=bin_resources-caption-message-boundary-20261007]"
+      ]
+    }
+  ],
+  "manifest_self_hash": "Provided by final handoff; self-reference excluded.",
+  "forbidden_actions_performed": false
+}

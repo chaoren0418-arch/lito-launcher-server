@@ -1,0 +1,39 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build\\candidate-resurrection-material.jar",
+    "sha256": "39f6129de5c1571c8a8c31413908f883636f737dec3b099af1235c5ba00dce59"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\build-repro\\candidate-resurrection-lifetime.jar",
+    "sha256": "9042d4237407fbdc35a22fb6bd751e1b60ec0d43db3949be3ebc89432dd87a42"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeResurrectionAnswerLife$Lease.class",
+    "local/lito381/server/NativeResurrectionAnswerLife.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\build-repro\\inputs\\build.py",
+      "sha256": "04c853c3e3e5956dd7d349aa57762fca9063d5cd8a3e6a7d98281599de2eea03"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\build-repro\\inputs\\NativeResurrectionAnswerLife.java",
+      "sha256": "34d5c905c32e7e02327645d3cf017d14b32f422cab084bac22d27d01767ed445"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\build-repro\\inputs\\ResurrectionAnswerLifeMethods.java",
+      "sha256": "554a21b5afe0f6d5a1bbdb2820d594065626f4380580ae83ca1a5fc7e57f9f2a"
+    }
+  ],
+  "original_PC_inverse_verified": true
+}

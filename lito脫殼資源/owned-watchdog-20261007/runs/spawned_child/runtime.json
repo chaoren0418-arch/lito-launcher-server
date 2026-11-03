@@ -1,0 +1,361 @@
+{
+  "schema": "owned-process-runtime-v1",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "tree"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child",
+  "controller_pid": 23296,
+  "start_monotonic": 418458.546,
+  "deadline_monotonic": 418460.546,
+  "timeout_seconds": 2,
+  "child_resumed": true,
+  "status": "TIMEOUT",
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+  },
+  "containment": {
+    "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+    "limit_flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_allowed": false,
+    "job_handle_inheritable": false,
+    "active_process_limit": 16,
+    "hidden_window": true,
+    "only_explicit_stdio_handles_inherited": true
+  },
+  "primary_identity": {
+    "pid": 13804,
+    "creation_filetime_100ns": 134358245000790686,
+    "creation_time_utc": "2026-10-07T05:28:20.079069+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "resume_monotonic": 418458.546,
+  "trigger": [
+    {
+      "reason": "WALL_DEADLINE",
+      "trigger_monotonic": 418460.546,
+      "deadline_overshoot_seconds": 0.0
+    }
+  ],
+  "pre_cleanup_members": [
+    {
+      "pid": 13804,
+      "creation_filetime_100ns": 134358245000790686,
+      "creation_time_utc": "2026-10-07T05:28:20.079069+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.546,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 20104,
+      "creation_filetime_100ns": 134358245000858815,
+      "creation_time_utc": "2026-10-07T05:28:20.085881+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.562,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19776,
+      "creation_filetime_100ns": 134358245001771515,
+      "creation_time_utc": "2026-10-07T05:28:20.177151+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.656,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 15748,
+      "creation_filetime_100ns": 134358245001829981,
+      "creation_time_utc": "2026-10-07T05:28:20.182998+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.656,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    }
+  ],
+  "cleanup_required_active_PIDs": [],
+  "cleanup_method": "No active members; close owned handles",
+  "owned_job_empty": true,
+  "post_exit_members": [
+    {
+      "pid": 13804,
+      "creation_filetime_100ns": 134358245000790686,
+      "creation_time_utc": "2026-10-07T05:28:20.079069+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.546,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 20104,
+      "creation_filetime_100ns": 134358245000858815,
+      "creation_time_utc": "2026-10-07T05:28:20.085881+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.562,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19776,
+      "creation_filetime_100ns": 134358245001771515,
+      "creation_time_utc": "2026-10-07T05:28:20.177151+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.656,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 15748,
+      "creation_filetime_100ns": 134358245001829981,
+      "creation_time_utc": "2026-10-07T05:28:20.182998+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418458.656,
+      "exit": {
+        "signaled": false,
+        "wait_result": 258,
+        "exit_code": 3758096385
+      }
+    }
+  ],
+  "capture": {
+    "stdout": {
+      "observed_bytes": 0,
+      "retained_bytes": 0,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\stdout.bin",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    "stderr": {
+      "observed_bytes": 0,
+      "retained_bytes": 0,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\stderr.bin",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  },
+  "disk_monitor": {
+    "samples": [
+      {
+        "scan_start_monotonic": 418458.546,
+        "scan_end_monotonic": 418458.546,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 418458.609,
+        "scan_end_monotonic": 418458.609,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 418458.671,
+        "scan_end_monotonic": 418458.671,
+        "bytes": 890
+      },
+      {
+        "scan_start_monotonic": 418458.734,
+        "scan_end_monotonic": 418458.734,
+        "bytes": 890
+      },
+      {
+        "scan_start_monotonic": 418458.796,
+        "scan_end_monotonic": 418458.796,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418458.859,
+        "scan_end_monotonic": 418458.859,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418458.921,
+        "scan_end_monotonic": 418458.921,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418458.984,
+        "scan_end_monotonic": 418458.984,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.046,
+        "scan_end_monotonic": 418459.046,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.109,
+        "scan_end_monotonic": 418459.109,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.171,
+        "scan_end_monotonic": 418459.171,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.234,
+        "scan_end_monotonic": 418459.234,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.296,
+        "scan_end_monotonic": 418459.296,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.359,
+        "scan_end_monotonic": 418459.359,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.421,
+        "scan_end_monotonic": 418459.421,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.484,
+        "scan_end_monotonic": 418459.484,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.546,
+        "scan_end_monotonic": 418459.546,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.609,
+        "scan_end_monotonic": 418459.609,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.671,
+        "scan_end_monotonic": 418459.671,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.734,
+        "scan_end_monotonic": 418459.734,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.796,
+        "scan_end_monotonic": 418459.796,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.859,
+        "scan_end_monotonic": 418459.859,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.921,
+        "scan_end_monotonic": 418459.921,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418459.984,
+        "scan_end_monotonic": 418459.984,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.046,
+        "scan_end_monotonic": 418460.046,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.109,
+        "scan_end_monotonic": 418460.109,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.171,
+        "scan_end_monotonic": 418460.171,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.234,
+        "scan_end_monotonic": 418460.234,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.296,
+        "scan_end_monotonic": 418460.296,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.359,
+        "scan_end_monotonic": 418460.359,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.421,
+        "scan_end_monotonic": 418460.421,
+        "bytes": 1519
+      },
+      {
+        "scan_start_monotonic": 418460.484,
+        "scan_end_monotonic": 418460.484,
+        "bytes": 1519
+      }
+    ],
+    "requested_poll_seconds": 0.05,
+    "max_observed_sample_gap_seconds": 0.06300000002374873,
+    "final_bytes_before_receipt": 1519,
+    "threshold_bytes": 1048576,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "finished_monotonic": 418460.546,
+  "elapsed_seconds": 2.0
+}

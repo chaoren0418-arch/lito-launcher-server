@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build\\candidate-protection-material.jar",
+    "sha256": "aa8b7c64a9f0adc07f1b32a216445c6d9686f017c2142418b7d86ea87ff729ba"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\candidate-armor-material.jar",
+    "sha256": "0d8296a15858f06287c088454f1988c89f43e402e85a30adf0d94c4a97cec30d"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeArmorMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\ArmorMaterialMethods.java",
+      "sha256": "08a185f09ffba786b376f63c1ae879b091dbe36727706a30a8ef36414f998f5d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\build.py",
+      "sha256": "055dd6327ee8c89d2ed003e8dbc2dd1036da28a1350ebe7a70ceb60317dcb2e8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "acd825ed4e286b8c05cdb4e5c97d2078aebd4d7c911b819faad2f4f0a39878ca"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\sources\\NativeArmorMaterialAction.java",
+      "sha256": "dff26c522a7496ffcacd37c1c68ab2b7f3f0e8ef324b17c398d383de7ba47b48"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "c6d1260720b7c0437ff750fde780e7d9a98560bf47026432b6ae6365281bcfdc"
+    }
+  ]
+}

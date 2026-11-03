@@ -1,0 +1,43 @@
+{
+  "task_id": "bin_resources-caption-message-boundary-20261007",
+  "changes": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "before_sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+        "bytes": 175950,
+        "sha256": "4E748BF2448DD6B32951D3B33206E50B6304F1946E09285E36728DF4302343D3"
+      },
+      "before_snapshot": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\監製進度.json.before",
+        "bytes": 169948,
+        "sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907"
+      },
+      "historical_json_preserved": true,
+      "modified_fields": [
+        "caption_message_boundary_20261007"
+      ]
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "before_sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+        "bytes": 87254,
+        "sha256": "A020110DB86A5A96DCADE849D0E1DC801CB9455EDE1A0B26D88B33DCB214A64D"
+      },
+      "before_snapshot": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\工作佇列.json.before",
+        "bytes": 81558,
+        "sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48"
+      },
+      "historical_json_preserved": true,
+      "modified_fields": [
+        "caption_message_boundary_20261007",
+        "items[append task_id=bin_resources-caption-message-boundary-20261007]"
+      ]
+    }
+  ],
+  "rule": "No pre-existing field, history entry or queue item changed; only task-specific additions."
+}

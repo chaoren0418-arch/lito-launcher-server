@@ -1,0 +1,44 @@
+{
+  "status": "qualified",
+  "jar": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+    "sha256": "75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371"
+  },
+  "native": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9"
+  },
+  "bindings": [
+    {
+      "skill": 3,
+      "selector": 5,
+      "packet": "6d580205",
+      "original_slot": 7,
+      "required_slot": 4,
+      "conflict": true
+    },
+    {
+      "skill": 99,
+      "selector": 3,
+      "packet": "6d580203",
+      "original_slot": 5,
+      "required_slot": 5,
+      "conflict": false
+    },
+    {
+      "skill": 151,
+      "selector": 6,
+      "packet": "6d580206",
+      "original_slot": 4,
+      "required_slot": 6,
+      "conflict": true
+    }
+  ],
+  "limitations": [
+    "Native packet decoder stubbed to documented hc layout.",
+    "Status consumer intercepted; no timer or UI executed.",
+    "Selectors 7/10 are not emitted by this JAR probe; no new binding added for them."
+  ],
+  "database_modified": false,
+  "server_started": false
+}

@@ -1,0 +1,90 @@
+{
+  "qualification": "computedonly/nocapture/noexecution",
+  "examples": [
+    {
+      "subtype": 4,
+      "input_BYTE": 255,
+      "destination_VA": "0064ACCC",
+      "interval_VA": [
+        "0064ACC9",
+        "0064ACE0 exclusive"
+      ],
+      "before_hex": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "after_hex": "a0a1a2ffa4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "computed_body_hex": "d50401000000ff",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedbytefootprint/layoutonly; noNative/server/GUI/deliverywitness"
+    },
+    {
+      "subtype": 6,
+      "input_BYTE": 128,
+      "destination_VA": "0064ACD0",
+      "interval_VA": [
+        "0064ACC9",
+        "0064ACE0 exclusive"
+      ],
+      "before_hex": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "after_hex": "a0a1a2a3a4a5a680a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "computed_body_hex": "d5060100000080",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedbytefootprint/layoutonly; noNative/server/GUI/deliverywitness"
+    },
+    {
+      "subtype": 7,
+      "input_BYTE": 1,
+      "destination_VA": "0064ACD1",
+      "interval_VA": [
+        "0064ACC9",
+        "0064ACE0 exclusive"
+      ],
+      "before_hex": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "after_hex": "a0a1a2a3a4a5a6a701a9aaabacadaeafb0b1b2b3b4b5b6",
+      "computed_body_hex": "d5070100000001",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedbytefootprint/layoutonly; noNative/server/GUI/deliverywitness"
+    },
+    {
+      "subtype": 8,
+      "input_BYTE": 0,
+      "destination_VA": "0064ACD2",
+      "interval_VA": [
+        "0064ACC9",
+        "0064ACE0 exclusive"
+      ],
+      "before_hex": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "after_hex": "a0a1a2a3a4a5a6a7a800aaabacadaeafb0b1b2b3b4b5b6",
+      "computed_body_hex": "d5080100000000",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedbytefootprint/layoutonly; noNative/server/GUI/deliverywitness"
+    },
+    {
+      "subtype": 9,
+      "input_BYTE": 7,
+      "destination_VA": "0064ACD3",
+      "interval_VA": [
+        "0064ACC9",
+        "0064ACE0 exclusive"
+      ],
+      "before_hex": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6",
+      "after_hex": "a0a1a2a3a4a5a6a7a8a907abacadaeafb0b1b2b3b4b5b6",
+      "computed_body_hex": "d5090100000007",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedbytefootprint/layoutonly; noNative/server/GUI/deliverywitness"
+    }
+  ]
+}

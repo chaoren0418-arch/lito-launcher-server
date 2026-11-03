@@ -1,0 +1,243 @@
+{
+  "status": "versioned-only-explicit167-metadata-and-Source-class-failure",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowStateProbe.java",
+        "sha256": "faf0ac6fc9bb77de5c5e9a7bb8630efa2a396c0bd9f9ba2970d228cb12c3173a"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindStateProbe.java",
+        "sha256": "2fefc67180f298b6a06313ec9d60e10ba5e906c874ea886564820fbaf14ec24e"
+      },
+      "changes": [
+        [
+          "SourceMassSlowStateProbe",
+          "SourceWindStateProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "BattleSpellCatalog.massSlowSpell",
+          "BattleSpellCatalog.windShackleSpell"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          ".c(9).c(3)",
+          ".c(20).c(6)"
+        ],
+        [
+          "x+12",
+          "x+6"
+        ],
+        [
+          "metadata.area()==3",
+          "metadata.area()==0"
+        ],
+        [
+          "boolean changed=pet.snapshot().moveSpeed()!=BattleTimedStatus.HASTE;",
+          "boolean changed=pet.snapshot().moveSpeed()!=BattleTimedStatus.HASTE||NativeCompanionWindState.active(pet,System.nanoTime());"
+        ],
+        [
+          "need(pet.captureEraseMagic(System.nanoTime()).equals(erase)&&timed.sleepActive(System.nanoTime())==sleep&&timed.counterMagicActive(System.nanoTime())==counter,",
+          "if(!before)need(pet.captureEraseMagic(System.nanoTime()).equals(erase)&&timed.sleepActive(System.nanoTime())==sleep&&timed.counterMagicActive(System.nanoTime())==counter,"
+        ],
+        [
+          "if(changed)mutationGaps++;",
+          "if(changed||!pet.captureEraseMagic(System.nanoTime()).equals(erase)||timed.sleepActive(System.nanoTime())!=sleep||timed.counterMagicActive(System.nanoTime())!=counter)mutationGaps++;"
+        ],
+        [
+          "(before?admissionGaps>0&&mutationGaps>0:admissionGaps==0&&mutationGaps==0)",
+          "(before?mutationGaps>0:admissionGaps==0&&mutationGaps==0)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowBoundaryProbe.java",
+        "sha256": "a9fd05551420dcc490bc9470db06a34f8542576d53249de28a2c379322eae69d"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindBoundaryProbe.java",
+        "sha256": "aa00fc9ee4aedda283eac6f87494e1247723d4655a46c0a6056f77796b01e476"
+      },
+      "changes": [
+        [
+          "SourceMassSlowBoundaryProbe",
+          "SourceWindBoundaryProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "\"type\",selectedSkill==29?2:3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "SourceMaterialRangeProbe.selected(selectedSkill)",
+          "BattleSpellCatalog.windShackleSpell(selectedSkill)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowPlayerBoundaryProbe.java",
+        "sha256": "739359d97e84117ad856b9a8622d21b0bba3e2b4b44a7d6b06b67df77de7dd44"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindPlayerBoundaryProbe.java",
+        "sha256": "edaa69b5b7ba2138750e2497fad316c30081226278d8ee8adbbe479c08985d21"
+      },
+      "changes": [
+        [
+          "SourceMassSlowPlayerBoundaryProbe",
+          "SourceWindPlayerBoundaryProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "\"type\",selectedSkill==29?2:3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "SourceMaterialRangeProbe.selected(selectedSkill)",
+          "BattleSpellCatalog.windShackleSpell(selectedSkill)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowIoProbe.java",
+        "sha256": "81aba338b61ead6ec007756930fac51c895915b536f39d0c0e3614bce16dbdd3"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindIoProbe.java",
+        "sha256": "b0eb6d2bf49ba0d12e9d12286fecdeecac9cfc88a8b287b00d88f65820e63179"
+      },
+      "changes": [
+        [
+          "SourceMassSlowIoProbe",
+          "SourceWindIoProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "BattleSpellCatalog.massSlowSpell",
+          "BattleSpellCatalog.windShackleSpell"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          ".c(9).c(3)",
+          ".c(20).c(6)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowPlayerIoProbe.java",
+        "sha256": "eaad2cdc23271cdef53d8843b0a9620e9fea60315e961427ff7fb9810c651b9c"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindPlayerIoProbe.java",
+        "sha256": "729c60cf61c6830b11b3cb47e835fa16e9f91aec9be7e5732db6abbe726d50ce"
+      },
+      "changes": [
+        [
+          "SourceMassSlowPlayerIoProbe",
+          "SourceWindPlayerIoProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "BattleSpellCatalog.massSlowSpell",
+          "BattleSpellCatalog.windShackleSpell"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          ".c(9).c(3)",
+          ".c(20).c(6)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowFaultProbe.java",
+        "sha256": "c54dd6a446289933543d4d77efa8301d8c101f2e7bbe50f52862a259e38b5a2f"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindFaultProbe.java",
+        "sha256": "e0144e99f1a206ed9a932a6aa5e1f91d853d102cbb97bccb7cb878eab9719f70"
+      },
+      "changes": [
+        [
+          "SourceMassSlowFaultProbe",
+          "SourceWindFaultProbe"
+        ],
+        [
+          "76",
+          "167"
+        ],
+        [
+          "BattleSpellCatalog.massSlowSpell",
+          "BattleSpellCatalog.windShackleSpell"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          ".c(9).c(3)",
+          ".c(20).c(6)"
+        ],
+        [
+          "return actor.snapshot().moveSpeed()!=BattleTimedStatus.HASTE;",
+          "return NativeCompanionWindState.active(actor,System.nanoTime());"
+        ]
+      ]
+    }
+  ],
+  "native_cases": 0,
+  "all_target_intent_policy_qualified": false
+}

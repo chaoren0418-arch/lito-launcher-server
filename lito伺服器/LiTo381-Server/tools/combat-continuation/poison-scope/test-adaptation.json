@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\PoisonScopeMaterialProbe.java",
+      "sha256": "6f8d862b99c3dd1aab041a1b49365c22a7f9b82f62d93d77562a8919d2eb347d"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\PoisonScopeFaultProbe.java",
+      "sha256": "90cf4735b523518c94199e5ac6b040eb225d6c5bfa85f691dfe298bbb5eb7f31"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\PoisonScopeLifecycleProbe.java",
+      "sha256": "86b23bfe798a6546d4e3f75338d5cd3e4a44fa1cada69231b84da0b624f38cb9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\PoisonScopeWorldNpcProbe.java",
+      "sha256": "6d96240f58f2a1fc460abf9ca57ce8af3e3788cb44a462cbb8c083f8958854a2"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\PoisonScopeClockProbe.java",
+      "sha256": "a32e74298aa2d8b8ab2126c1b99f2134450967958450048a6efd497741810516"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\test.py",
+      "sha256": "e1124429b80658479842175da76a01d2164f02594b53fa990024f182028d1393"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\test_boundaries.py",
+      "sha256": "ac7f54fc23f35550521eb67c63dc36b2cd50d1058014d2b4cc340ca66a43fb5c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\test_world_npcs.py",
+      "sha256": "2fa55d6d93e14975484618c297c873ae1e69ccfe9cb6ab1d2459408bbb2e1f8b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\test_clock_audit.py",
+      "sha256": "e6c969c4b8990b5f76603bcedd7252f5ccbc4df72729e4dcd13e92429ce5ca02"
+    }
+  ],
+  "scope": "Parent already has material fix. Clock 8->0. Socket-failure oracle follows original Source scope failed/abort behavior, not generic blind spell retention. No behavioral production overlays."
+}

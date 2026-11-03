@@ -1,0 +1,1826 @@
+{
+  "updated_at": "2026-10-05T21:19:44.375456+08:00",
+  "images": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+        "bytes": 1941568,
+        "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+      },
+      "image_base": "00400000",
+      "entrypoint": {
+        "va": "0083B014",
+        "rva": "0043B014",
+        "section": "Themida ",
+        "file_offset": "0009C014",
+        "raw_backed": true
+      },
+      "size_of_image": 7094272,
+      "machine": "014C",
+      "sections": [
+        {
+          "name": "   \u0000    ",
+          "rva": "00001000",
+          "virtual_size": 4415488,
+          "raw_offset": 4096,
+          "raw_size": 622592,
+          "raw_available": 622592,
+          "sha256": "64899E2F0CFBCFF5884C9C407A61514A6C3F7A961BD2F294D340D2F020070073",
+          "entropy": 7.992785691704696,
+          "characteristics": "E0000040"
+        },
+        {
+          "name": ".rsrc",
+          "rva": "00437000",
+          "virtual_size": 10440,
+          "raw_offset": 626688,
+          "raw_size": 8192,
+          "raw_available": 8192,
+          "sha256": "562231F6FD6F23B84E2003808CEDBBBD2D966410E2BAF30865A28E463B686D3D",
+          "entropy": 4.794136223369426,
+          "characteristics": "C0000040"
+        },
+        {
+          "name": ".idata  ",
+          "rva": "0043A000",
+          "virtual_size": 4096,
+          "raw_offset": 634880,
+          "raw_size": 4096,
+          "raw_available": 4096,
+          "sha256": "ABB6CE1F2EFB2BE14B9DF3C0CE7F1D4740C0A9E939C00BAF3D6370BF3514AAC2",
+          "entropy": 0.24032477524689774,
+          "characteristics": "C0000040"
+        },
+        {
+          "name": "Themida ",
+          "rva": "0043B000",
+          "virtual_size": 2658304,
+          "raw_offset": 638976,
+          "raw_size": 1302528,
+          "raw_available": 1302528,
+          "sha256": "4E512CC153AAD42F43FB3743887B4258D01E2BA89E38F7FF639F7B8D8227F4F4",
+          "entropy": 7.779446544152284,
+          "characteristics": "C0000040"
+        }
+      ],
+      "directories": [
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_EXPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_IMPORT",
+          "rva": "0043A014",
+          "size": 60
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_RESOURCE",
+          "rva": "00437000",
+          "size": 10440
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_EXCEPTION",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_SECURITY",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_BASERELOC",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_DEBUG",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_COPYRIGHT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_GLOBALPTR",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_TLS",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_IAT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_RESERVED",
+          "rva": "00000000",
+          "size": 0
+        }
+      ],
+      "imports": [
+        {
+          "dll": "KERNEL32.dll",
+          "functions": [
+            {
+              "name": "CreateFileA",
+              "ordinal": null,
+              "iat_va": "0083A000"
+            },
+            {
+              "name": "ExitProcess",
+              "ordinal": null,
+              "iat_va": "0083A004"
+            }
+          ]
+        },
+        {
+          "dll": "COMCTL32.dll",
+          "functions": [
+            {
+              "name": "InitCommonControls",
+              "ordinal": null,
+              "iat_va": "0083A00C"
+            }
+          ]
+        }
+      ],
+      "relocation_blocks": 0,
+      "resources": [
+        {
+          "resource_path": [
+            "1",
+            "1",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008378A8",
+          "rva": "004378A8",
+          "section": ".rsrc",
+          "file_offset": "000998A8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_1_1033.bin",
+            "bytes": 308,
+            "sha256": "A0677BE8EFA9B73A76648648E29E3B52DCD12EABC03C2185EC8A80F3A2F3D97C"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "2",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008379F8",
+          "rva": "004379F8",
+          "section": ".rsrc",
+          "file_offset": "000999F8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_2_1033.bin",
+            "bytes": 308,
+            "sha256": "D8847A81F39978F7CBA16CD036C9554C0C8BCF3334E6BEC255834CE63F5C289E"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "3",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837B48",
+          "rva": "00437B48",
+          "section": ".rsrc",
+          "file_offset": "00099B48",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_3_1033.bin",
+            "bytes": 308,
+            "sha256": "33C5288AC5DC902ADC3BAC6752231AB815A68D56B77C54A15685E79B505301A2"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "4",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837C98",
+          "rva": "00437C98",
+          "section": ".rsrc",
+          "file_offset": "00099C98",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_4_1033.bin",
+            "bytes": 308,
+            "sha256": "FD1367675D06679A25696E3505F92EFDCADD12808CF12254E22298D65C9B814E"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "5",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837DE8",
+          "rva": "00437DE8",
+          "section": ".rsrc",
+          "file_offset": "00099DE8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_5_1033.bin",
+            "bytes": 308,
+            "sha256": "A7DED7D995304A3B659332FE1CDF0733578A46445C4F46FC2A3CB39621E5F81A"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "6",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837F38",
+          "rva": "00437F38",
+          "section": ".rsrc",
+          "file_offset": "00099F38",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_6_1033.bin",
+            "bytes": 308,
+            "sha256": "7C5492C40AC75454567098F4E414D0DA33D2A477F3A7594D049A43D6C6056510"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "7",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838088",
+          "rva": "00438088",
+          "section": ".rsrc",
+          "file_offset": "0009A088",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_7_1033.bin",
+            "bytes": 308,
+            "sha256": "54C6B699385404F99839AA1697D8D7C61C0E0B13472D44D6C088AF37351EF2CD"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "8",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008381D8",
+          "rva": "004381D8",
+          "section": ".rsrc",
+          "file_offset": "0009A1D8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_8_1033.bin",
+            "bytes": 308,
+            "sha256": "4ABF32A94C849E9BB0174531CE7C9D065BD8AD3B296DC96F521C0261E7F89777"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "9",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838328",
+          "rva": "00438328",
+          "section": ".rsrc",
+          "file_offset": "0009A328",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_9_1033.bin",
+            "bytes": 308,
+            "sha256": "FF19ECC3BCE2B9E8247C32DB2D956168513996D500A01DA638568A197601F572"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "10",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838478",
+          "rva": "00438478",
+          "section": ".rsrc",
+          "file_offset": "0009A478",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_10_1033.bin",
+            "bytes": 308,
+            "sha256": "4654BA9DF5B9CE1F044BCC6E57344C25DE21E99072E30583CB8AE8D29C77860F"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "11",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008385C8",
+          "rva": "004385C8",
+          "section": ".rsrc",
+          "file_offset": "0009A5C8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_11_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "12",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838718",
+          "rva": "00438718",
+          "section": ".rsrc",
+          "file_offset": "0009A718",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_12_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "13",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838868",
+          "rva": "00438868",
+          "section": ".rsrc",
+          "file_offset": "0009A868",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_13_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "14",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008389B8",
+          "rva": "004389B8",
+          "section": ".rsrc",
+          "file_offset": "0009A9B8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_14_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "15",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838B08",
+          "rva": "00438B08",
+          "section": ".rsrc",
+          "file_offset": "0009AB08",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_15_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "16",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838C58",
+          "rva": "00438C58",
+          "section": ".rsrc",
+          "file_offset": "0009AC58",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\1_16_1033.bin",
+            "bytes": 308,
+            "sha256": "9575B2125169377B2ADE7B401EA36C81228331D971F49664D9648D4F255D4868"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "3",
+            "17",
+            "1033"
+          ],
+          "size_declared": 2216,
+          "code_page": 0,
+          "va": "00977953",
+          "rva": "00577953",
+          "section": "Themida ",
+          "file_offset": "001D8953",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\3_17_1033.bin",
+            "bytes": 2216,
+            "sha256": "2A3BCAA1CBDB483FF2683F546EBA5C6F3C4A27B4E6C343487AE11EE76F6F749B"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "5",
+            "134",
+            "1033"
+          ],
+          "size_declared": 54,
+          "code_page": 0,
+          "va": "00837870",
+          "rva": "00437870",
+          "section": ".rsrc",
+          "file_offset": "00099870",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\5_134_1033.bin",
+            "bytes": 54,
+            "sha256": "4D6E21D5363B1FF6D332138486B1D1261D7EB951AE35C2BF990D14688204547A"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "5",
+            "146",
+            "1042"
+          ],
+          "size_declared": 222,
+          "code_page": 0,
+          "va": "00837790",
+          "rva": "00437790",
+          "section": ".rsrc",
+          "file_offset": "00099790",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\5_146_1042.bin",
+            "bytes": 222,
+            "sha256": "0A4A761D1037CFEF52B19AA12388891AFF8364762A30526DB8F5F5E362B0375D"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "105",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837B30",
+          "rva": "00437B30",
+          "section": ".rsrc",
+          "file_offset": "00099B30",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_105_1033.bin",
+            "bytes": 20,
+            "sha256": "C72F652F8BCD395B91633E72221FC28B7C4ADEB7EF236D141FB6BDD27DAB6310"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "127",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008379E0",
+          "rva": "004379E0",
+          "section": ".rsrc",
+          "file_offset": "000999E0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_127_1033.bin",
+            "bytes": 20,
+            "sha256": "AACA300E5F3DE7C753C4D44842DECF80EE29B24C02611107923514289FAE7AFA"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "130",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837C80",
+          "rva": "00437C80",
+          "section": ".rsrc",
+          "file_offset": "00099C80",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_130_1033.bin",
+            "bytes": 20,
+            "sha256": "B3F079BC86E05709C73EFBF19215CCB4A7FA46DBEFC13AB0D726631221E3CDFE"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "131",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837DD0",
+          "rva": "00437DD0",
+          "section": ".rsrc",
+          "file_offset": "00099DD0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_131_1033.bin",
+            "bytes": 20,
+            "sha256": "ED143D2413DE2D2FB54FEF88611A1E4FD4F8956F54E7E884D1BDD786A81C15AB"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "132",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837F20",
+          "rva": "00437F20",
+          "section": ".rsrc",
+          "file_offset": "00099F20",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_132_1033.bin",
+            "bytes": 20,
+            "sha256": "26E75B0A898C6D224C723ED2D05F86FBAAF57D3F99703669128477ED09D2783F"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "133",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838070",
+          "rva": "00438070",
+          "section": ".rsrc",
+          "file_offset": "0009A070",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_133_1033.bin",
+            "bytes": 20,
+            "sha256": "1D55DEE9BFCA68CF808C8560AB5618E7641FFB4D70248F9693AA5C10821F0DD1"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "135",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008381C0",
+          "rva": "004381C0",
+          "section": ".rsrc",
+          "file_offset": "0009A1C0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_135_1033.bin",
+            "bytes": 20,
+            "sha256": "74A435E938B0B97844013AFF69A8D1A152A1E329CF3503FB013B096F204E67CC"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "136",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838310",
+          "rva": "00438310",
+          "section": ".rsrc",
+          "file_offset": "0009A310",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_136_1033.bin",
+            "bytes": 20,
+            "sha256": "752B2651EA942C5C5C82937D758FE4C230582B13CF52CB7F4DDA62205F5B8E2C"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "138",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838460",
+          "rva": "00438460",
+          "section": ".rsrc",
+          "file_offset": "0009A460",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_138_1033.bin",
+            "bytes": 20,
+            "sha256": "E2711BABFFCBC30D8AFA472EBB431EE616990FC052994EC218763C276609F236"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "139",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008385B0",
+          "rva": "004385B0",
+          "section": ".rsrc",
+          "file_offset": "0009A5B0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_139_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "140",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838700",
+          "rva": "00438700",
+          "section": ".rsrc",
+          "file_offset": "0009A700",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_140_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "141",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838850",
+          "rva": "00438850",
+          "section": ".rsrc",
+          "file_offset": "0009A850",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_141_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "142",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008389A0",
+          "rva": "004389A0",
+          "section": ".rsrc",
+          "file_offset": "0009A9A0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_142_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "143",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838AF0",
+          "rva": "00438AF0",
+          "section": ".rsrc",
+          "file_offset": "0009AAF0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_143_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "144",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838C40",
+          "rva": "00438C40",
+          "section": ".rsrc",
+          "file_offset": "0009AC40",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_144_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "145",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838D90",
+          "rva": "00438D90",
+          "section": ".rsrc",
+          "file_offset": "0009AD90",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\12_145_1033.bin",
+            "bytes": 20,
+            "sha256": "DE47C9B27EB8D300DBB5F2C353E632C393262CF06340C4FA7F1B40C4CBD36F90"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "14",
+            "123",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "009781FB",
+          "rva": "005781FB",
+          "section": "Themida ",
+          "file_offset": "001D91FB",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\14_123_1033.bin",
+            "bytes": 20,
+            "sha256": "AA1F4914D5FC2A13A74119C2E819A25072D6727BFBDEB97E359E0015ED5B3BB8"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "24",
+            "1",
+            "1033"
+          ],
+          "size_declared": 605,
+          "code_page": 0,
+          "va": "0097820F",
+          "rva": "0057820F",
+          "section": "Themida ",
+          "file_offset": "001D920F",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.bin\\24_1_1033.bin",
+            "bytes": 605,
+            "sha256": "AE8345E5D45B01756E23D30517E2194023B08E50F9C050AF7B0A5FF58FDDF6F5"
+          },
+          "exact_size": true
+        }
+      ],
+      "overlay": {
+        "offset": 1941504,
+        "bytes": 64
+      },
+      "parser_warnings": [
+        "Suspicious flags set for section 0. Both IMAGE_SCN_MEM_WRITE and IMAGE_SCN_MEM_EXECUTE are set. This might indicate a packed executable."
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "image_base": "00400000",
+      "entrypoint": {
+        "va": "004F162A",
+        "rva": "000F162A",
+        "section": "   \u0000    ",
+        "file_offset": "000F162A",
+        "raw_backed": true
+      },
+      "size_of_image": 7094272,
+      "machine": "014C",
+      "sections": [
+        {
+          "name": "   \u0000    ",
+          "rva": "00001000",
+          "virtual_size": 4415488,
+          "raw_offset": 4096,
+          "raw_size": 4415488,
+          "raw_available": 4415488,
+          "sha256": "E6F3B6BF16726FA7D46D1B349ED7B9541D498BFCAC64B05C13FC097F62A2FEB8",
+          "entropy": 3.7874535978832435,
+          "characteristics": "E0000060"
+        },
+        {
+          "name": ".rsrc",
+          "rva": "00437000",
+          "virtual_size": 10440,
+          "raw_offset": 4419584,
+          "raw_size": 12288,
+          "raw_available": 12288,
+          "sha256": "138C90A8F3B2B3F35BCC24EAC593E7700398BA14743BD3041537ED633B77DD79",
+          "entropy": 3.6125365936782448,
+          "characteristics": "C0000040"
+        },
+        {
+          "name": ".idata  ",
+          "rva": "0043A000",
+          "virtual_size": 4096,
+          "raw_offset": 4431872,
+          "raw_size": 4096,
+          "raw_available": 4096,
+          "sha256": "B166E515BB17C60156235DB578D10ACAC20E2A6ECC26CB4FD990320F749F00C2",
+          "entropy": 0.2540000598384762,
+          "characteristics": "C0000040"
+        },
+        {
+          "name": "Themida ",
+          "rva": "0043B000",
+          "virtual_size": 2658304,
+          "raw_offset": 4435968,
+          "raw_size": 2658304,
+          "raw_available": 2658304,
+          "sha256": "340C6A53B62E6F3C718F9EB57E9CDB96FA3233FA102FDE7FA17BA3B657B2346F",
+          "entropy": 7.715491000533112,
+          "characteristics": "C0000040"
+        }
+      ],
+      "directories": [
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_EXPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_IMPORT",
+          "rva": "0043A014",
+          "size": 60
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_RESOURCE",
+          "rva": "00437000",
+          "size": 10440
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_EXCEPTION",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_SECURITY",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_BASERELOC",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_DEBUG",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_COPYRIGHT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_GLOBALPTR",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_TLS",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_IAT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR",
+          "rva": "00000000",
+          "size": 0
+        },
+        {
+          "name": "IMAGE_DIRECTORY_ENTRY_RESERVED",
+          "rva": "00000000",
+          "size": 0
+        }
+      ],
+      "imports": [],
+      "relocation_blocks": 0,
+      "resources": [
+        {
+          "resource_path": [
+            "1",
+            "1",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008378A8",
+          "rva": "004378A8",
+          "section": ".rsrc",
+          "file_offset": "004378A8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_1_1033.bin",
+            "bytes": 308,
+            "sha256": "130753C362F9EE3B512372F5D914EB41B3786CDFE86E8FF9C217730D8CBA72C8"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "2",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008379F8",
+          "rva": "004379F8",
+          "section": ".rsrc",
+          "file_offset": "004379F8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_2_1033.bin",
+            "bytes": 308,
+            "sha256": "D6BD437985A37546FCD33928F8F1AE4CEE3673773107E6879FB2F51C0CD8520C"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "3",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837B48",
+          "rva": "00437B48",
+          "section": ".rsrc",
+          "file_offset": "00437B48",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_3_1033.bin",
+            "bytes": 308,
+            "sha256": "CD3950C2BF20D97293EE927E2CBA7E2FB7885C8FD9029C25866EF5DD4442F2D4"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "4",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837C98",
+          "rva": "00437C98",
+          "section": ".rsrc",
+          "file_offset": "00437C98",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_4_1033.bin",
+            "bytes": 308,
+            "sha256": "A99E0E148F5FD4D417B9A7DA1F69158FBC72F5CF3BB74D8D871CE73AE11022D7"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "5",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837DE8",
+          "rva": "00437DE8",
+          "section": ".rsrc",
+          "file_offset": "00437DE8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_5_1033.bin",
+            "bytes": 308,
+            "sha256": "3226D4FB12326C2CD3F5178F85FE26CEE17D68FB9197CAC6E06CC633829208F1"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "6",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00837F38",
+          "rva": "00437F38",
+          "section": ".rsrc",
+          "file_offset": "00437F38",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_6_1033.bin",
+            "bytes": 308,
+            "sha256": "F737B27B6957902D279D298DAAE5CA09171008610CB2FA8516D75685BADDFD75"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "7",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838088",
+          "rva": "00438088",
+          "section": ".rsrc",
+          "file_offset": "00438088",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_7_1033.bin",
+            "bytes": 308,
+            "sha256": "151E76ED0947571A29F4D99DCACC46C98DB0CB9C437FEC42844D68CF970863AA"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "8",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008381D8",
+          "rva": "004381D8",
+          "section": ".rsrc",
+          "file_offset": "004381D8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_8_1033.bin",
+            "bytes": 308,
+            "sha256": "8242D7E47420126ECB63C77C6F0B952DAF547E52493865D7006F8A6744A66A84"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "9",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838328",
+          "rva": "00438328",
+          "section": ".rsrc",
+          "file_offset": "00438328",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_9_1033.bin",
+            "bytes": 308,
+            "sha256": "C932ED71219C3F7260DFE4570FB3581D889621B9578F1495A92689CAC3485239"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "10",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838478",
+          "rva": "00438478",
+          "section": ".rsrc",
+          "file_offset": "00438478",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_10_1033.bin",
+            "bytes": 308,
+            "sha256": "F1FFC68E724D4EDF52251BBDB2CBD556F1F5F5517377DF04BE3895CB0385850C"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "11",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008385C8",
+          "rva": "004385C8",
+          "section": ".rsrc",
+          "file_offset": "004385C8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_11_1033.bin",
+            "bytes": 308,
+            "sha256": "65DAE199FF1CDF8784A6DDB0AE0C1C15AF87FAFFE9A5E14058E5ED3315545D75"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "12",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838718",
+          "rva": "00438718",
+          "section": ".rsrc",
+          "file_offset": "00438718",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_12_1033.bin",
+            "bytes": 308,
+            "sha256": "80FB4C1EEB8D29A785160CFA9E59D2E92F195404D28695868EB8EBE27F18F809"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "13",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838868",
+          "rva": "00438868",
+          "section": ".rsrc",
+          "file_offset": "00438868",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_13_1033.bin",
+            "bytes": 308,
+            "sha256": "D683249C90098C3E41F1AF39C083E18D82CB3102C894AC4E12ED313EFB96325B"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "14",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "008389B8",
+          "rva": "004389B8",
+          "section": ".rsrc",
+          "file_offset": "004389B8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_14_1033.bin",
+            "bytes": 308,
+            "sha256": "C835588A175D0656FCBA2D5801A786FA84C01E637C14A4BCC5CCEC1E8A3F70FA"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "15",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838B08",
+          "rva": "00438B08",
+          "section": ".rsrc",
+          "file_offset": "00438B08",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_15_1033.bin",
+            "bytes": 308,
+            "sha256": "8FC5AD55F35991B1810821380916A7DAA70F54B77224846C6B87F8FB741D6E23"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "1",
+            "16",
+            "1033"
+          ],
+          "size_declared": 308,
+          "code_page": 0,
+          "va": "00838C58",
+          "rva": "00438C58",
+          "section": ".rsrc",
+          "file_offset": "00438C58",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\1_16_1033.bin",
+            "bytes": 308,
+            "sha256": "AC297DD0A306F9C566A3C9C13E77D784ECD1991820B0FDB8B298C6D80882916F"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "3",
+            "17",
+            "1033"
+          ],
+          "size_declared": 2216,
+          "code_page": 0,
+          "va": "00838DA8",
+          "rva": "00438DA8",
+          "section": ".rsrc",
+          "file_offset": "00438DA8",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\3_17_1033.bin",
+            "bytes": 2216,
+            "sha256": "2A3BCAA1CBDB483FF2683F546EBA5C6F3C4A27B4E6C343487AE11EE76F6F749B"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "5",
+            "134",
+            "1033"
+          ],
+          "size_declared": 54,
+          "code_page": 0,
+          "va": "00837870",
+          "rva": "00437870",
+          "section": ".rsrc",
+          "file_offset": "00437870",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\5_134_1033.bin",
+            "bytes": 54,
+            "sha256": "641709325090E5F02501C7045955048120C46772BADA1B185DB0A4D032EAD4D1"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "5",
+            "146",
+            "1042"
+          ],
+          "size_declared": 222,
+          "code_page": 0,
+          "va": "00837790",
+          "rva": "00437790",
+          "section": ".rsrc",
+          "file_offset": "00437790",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\5_146_1042.bin",
+            "bytes": 222,
+            "sha256": "A0BF193757BE52D9BF08C77CABB4080364C10867D1219CCC58C6CE166131F5D7"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "105",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837B30",
+          "rva": "00437B30",
+          "section": ".rsrc",
+          "file_offset": "00437B30",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_105_1033.bin",
+            "bytes": 20,
+            "sha256": "B07E022F8EF0A8E5FD3F56986B2E5BF06DF07054E9EA9177996B0A6C27D74D7C"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "127",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008379E0",
+          "rva": "004379E0",
+          "section": ".rsrc",
+          "file_offset": "004379E0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_127_1033.bin",
+            "bytes": 20,
+            "sha256": "C53EFA8085835BA129C1909BEAFF8A67B45F50837707F22DFFF0F24D8CD26710"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "130",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837C80",
+          "rva": "00437C80",
+          "section": ".rsrc",
+          "file_offset": "00437C80",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_130_1033.bin",
+            "bytes": 20,
+            "sha256": "43F40DD5140804309A4C901EC3C85B54481316E67A6FE18BEB9D5C0CE3A42C3A"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "131",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837DD0",
+          "rva": "00437DD0",
+          "section": ".rsrc",
+          "file_offset": "00437DD0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_131_1033.bin",
+            "bytes": 20,
+            "sha256": "FF47A48C11C234903A7D625CB8B62101909F735AD84266C98DD4834549452C39"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "132",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00837F20",
+          "rva": "00437F20",
+          "section": ".rsrc",
+          "file_offset": "00437F20",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_132_1033.bin",
+            "bytes": 20,
+            "sha256": "A0ADCEDB82B57089F64E2857F97CEFD6CF25F4D27EEFC6648BDA83FD5FEF66BB"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "133",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838070",
+          "rva": "00438070",
+          "section": ".rsrc",
+          "file_offset": "00438070",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_133_1033.bin",
+            "bytes": 20,
+            "sha256": "6E1E7738A1B6373D8829F817915822EF415A1727BB5BB7CFE809E31B3C143AC5"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "135",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008381C0",
+          "rva": "004381C0",
+          "section": ".rsrc",
+          "file_offset": "004381C0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_135_1033.bin",
+            "bytes": 20,
+            "sha256": "326C048595BBC72E3F989CB3B95FBF09DC83739CED3CB13EB6F03336F95D74F1"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "136",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838310",
+          "rva": "00438310",
+          "section": ".rsrc",
+          "file_offset": "00438310",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_136_1033.bin",
+            "bytes": 20,
+            "sha256": "EC26C438D10E3E84EC855C47F07A176E6C11BBFAE1557D526490711B80F087FE"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "138",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838460",
+          "rva": "00438460",
+          "section": ".rsrc",
+          "file_offset": "00438460",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_138_1033.bin",
+            "bytes": 20,
+            "sha256": "9C17B4621412D6DED24A76AED74D4425AE61F86B6D4092CA1E28CA66B7C71399"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "139",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008385B0",
+          "rva": "004385B0",
+          "section": ".rsrc",
+          "file_offset": "004385B0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_139_1033.bin",
+            "bytes": 20,
+            "sha256": "A92F60B25322592E7DDD13D88E4006C097666F4D87C8CB0C21FFDCCD53B31D78"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "140",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838700",
+          "rva": "00438700",
+          "section": ".rsrc",
+          "file_offset": "00438700",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_140_1033.bin",
+            "bytes": 20,
+            "sha256": "28B8110695851E5280FF55CB78507B03E8B74DD370B8E122179C82B56F7E5F37"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "141",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838850",
+          "rva": "00438850",
+          "section": ".rsrc",
+          "file_offset": "00438850",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_141_1033.bin",
+            "bytes": 20,
+            "sha256": "8A495F17BC472BFC5E6923D9EFA687848FAC027AD60694F9C3F10A4F7B194924"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "142",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "008389A0",
+          "rva": "004389A0",
+          "section": ".rsrc",
+          "file_offset": "004389A0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_142_1033.bin",
+            "bytes": 20,
+            "sha256": "A2F0549CCA7170AE03BA042464EFE62365FBA38C20049E439871C9E5CE0F914F"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "143",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838AF0",
+          "rva": "00438AF0",
+          "section": ".rsrc",
+          "file_offset": "00438AF0",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_143_1033.bin",
+            "bytes": 20,
+            "sha256": "EF309B720F166673CAD840A88E7636E9161AD91415CC7C176010CEBBA07757E5"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "144",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838C40",
+          "rva": "00438C40",
+          "section": ".rsrc",
+          "file_offset": "00438C40",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_144_1033.bin",
+            "bytes": 20,
+            "sha256": "4ECC7F2578FD7B137C04F85FFCBD67D6EAB0BC8B1DF4246CEBD2A2AA517F3C60"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "12",
+            "145",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00838D90",
+          "rva": "00438D90",
+          "section": ".rsrc",
+          "file_offset": "00438D90",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\12_145_1033.bin",
+            "bytes": 20,
+            "sha256": "12A5B9052DD16BED260343BC4352D436167C991C54497C5AF441304646549386"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "14",
+            "123",
+            "1033"
+          ],
+          "size_declared": 20,
+          "code_page": 0,
+          "va": "00839650",
+          "rva": "00439650",
+          "section": ".rsrc",
+          "file_offset": "00439650",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\14_123_1033.bin",
+            "bytes": 20,
+            "sha256": "AA1F4914D5FC2A13A74119C2E819A25072D6727BFBDEB97E359E0015ED5B3BB8"
+          },
+          "exact_size": true
+        },
+        {
+          "resource_path": [
+            "24",
+            "1",
+            "1033"
+          ],
+          "size_declared": 605,
+          "code_page": 0,
+          "va": "00839668",
+          "rva": "00439668",
+          "section": ".rsrc",
+          "file_offset": "00439668",
+          "raw_backed": true,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\embedded\\LiTo.unpacked-oep-current.exe\\24_1_1033.bin",
+            "bytes": 605,
+            "sha256": "AE8345E5D45B01756E23D30517E2194023B08E50F9C050AF7B0A5FF58FDDF6F5"
+          },
+          "exact_size": true
+        }
+      ],
+      "overlay": {
+        "offset": 7094272,
+        "bytes": 0
+      },
+      "parser_warnings": [
+        "Suspicious flags set for section 0. Both IMAGE_SCN_MEM_WRITE and IMAGE_SCN_MEM_EXECUTE are set. This might indicate a packed executable.",
+        "Error parsing the import directory. Invalid Import data at RVA: 0x43a028 (Invalid entries, aborting parsing.)",
+        "Error parsing the import directory. Invalid Import data at RVA: 0x43a03c (Invalid entries, aborting parsing.)"
+      ]
+    }
+  ],
+  "limitations": "Parsed PE is not proof of complete unpacking, loader-valid IAT, executed initialization, or original behavior."
+}

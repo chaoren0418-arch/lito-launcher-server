@@ -1,0 +1,68 @@
+第十六批：原版 S_D0 成員移除／自身離房接收有限契約
+
+主入口 ../SD0-receive-contract.json。有限靜態證據已封存；comparison table／UI／場景回呼／普通self-exit動態與server postcommit仍未閉合，guard保留。
+只寫本組資源目錄。Java producer/postcommit由伺服器組負責，本批沒有接管。無native啟動、GUI輸入、SQL、provider、capture、舊矩陣重跑；不展開整個battle/results/ready，不改述受攔截工作。
+
+來源與核對
+先讀server-room-D0-consumer-routing-supplement.json SHA7BF90D85A297E8AAA9D90D3BD4AF11DFD13992D685FF7211CBD1A9433CA898E6，route-boundary.json SHA CB5AA1542DF31E242DD45BDAA3134AF58BE52073825DD8177527CB76BA9C8A72。
+固定PE SHA4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9；BIN CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292；ASM只導航，不凌駕fixed raw。
+5新code＋7新data＝12 ranges：完整D0 handler1216bytes、shareddispatch12、UIremove191、selectedpreviewhelper132、mode1scenebranch506；兩map/jump、ds/cd literals與格式化functionpointer。
+20份既有raw逐byte對fixedPE並boundeddecode：reader與selector、scene prefix/jump表、直接UIflaghelpers、listreset、packetwriter等。Batch15 comparison完整93bytes與初始化資格直接沿用1C2519F9封存主契約，不重抽、不用disk zero表。
+75固定expected指令斷言。Independent readback另核對完整coverage、45個內部分支aligned落點、literal/未使用extraargument、3sealedframes與17immutablepriorpins。沒有執行原版handler或新增runtime測試。
+
+Dispatcher
+Primary mode64BBD4==4且signedphase64AF98>=3，otherwise fallback，selectors沿用已有raw。
+S_D0=208/D0：primary4B3540=76hex slot118，jump4B33E0；fallback4B3784=32hex slot50，jump4B3638。兩者→4B2F2B；4B2F2D ECX=ESI packetbody call4A9090。
+
+Known wire：仍是 ds，不是新packet或更正
+Body d0＋DWORD little-endian room context＋NUL terminated8-bit alias，body6+A/frame8+A；A不含NUL。不是physical/source ID，沒有self/peer flag、kind、success、epoch、generation、requestID、roster終止符。
+Handler跳opcode後reader4A2A50，DWORD→EBP-0C，alias→EBP-7C，capacity100包含NUL。Reader s外部copy/seek、native inputlength/全body exact-end檢查仍未知。Java MS950屬另一producer證據；Native這段沒有固定codec declaration，不能用ASCII equality代替動態表authority。
+Signed63D54C門檻78B9：低版4A90D5與高版4A90BA都push同一634370 literal ds。高版額外push EBP-14 pointer，但format只含ds，reader遇NUL停止，不消費第三variadicfield。
+完整handler只見三處lea引用EBP-14，沒有可見local寫入；phase4/5後續傳給opaquecollectionhelpers的來源未閉合。不能虛構dsd、額外nodeID或把未使用argument當wirefield。這是內部資料資格缺口，不是wire correction。
+
+Phase與room/name gates
+64AF98==1或6跳4A9472預覽分支，incomingroom DWORD須0；不是所有phase都比對64ABF4。
+其他所有數值phase走commonbranch，沒有此處2/3/6 whitelist：先incomingDWORD對64ABF4，不同→4A9549return；相同才比較64ABF8與incomingalias via4D3A80。
+Native self比較zero不要求名單內有列，也不檢查pending C_D0或requestnonce。64ABF8是selected/member displayglobal，亦可被S_CD在其roomgate前覆寫，不能當獨立physical/source/player/owner identity授權。
+
+Common peer removal
+Nonzero selfcompare→掃combatant begin64AB64/end64AB68，然後other begin64AB54/end64AB58；record stride8C/140，以4D3A80(incomingalias,record+4)==0找各分類第一match。
+D0沒有kind欄位，兩個vector都掃；同名跨分類時可能各刪一列，不能概括成只刪全域第一match。
+每個match呼叫465370，參數是stored record+4原始名字；再把後續140byte records向前copy35DWORD，end減140，capacity不變。Common roster compaction沒有allocator/free call。執行仍要求vector coherent/initialized與table已有效。
+兩個vector均無match時在phase4/5其他效果前return；沒有列可刪是no-op，不是自身返回。普通peer match也不呼叫469CA0(1)。
+Phase4/5且確實有刪除才進formatting／opaque collection分支。只記完整handler的直接callsite與未知，止於4B4B00/4B4A10/46F7E0/46F7A0/46F380等，不重建world或results。
+
+UI removal直接helper
+465370完整191bytes，item+10 text和傳入storedrecord名作逐byte NUL exact comparison，這裡沒有4D3A80。
+匹配時virtual[edx](1)、external77409100移動pointerarray，count+2C減一，selection+28調整；刪除後重查同一index，因此會刪所有matching UIitems。
+不能將此helper的raw comparison推广成Native self/roster comparison；incoming經動態表匹配後，傳UI的是既有record原始名字。UIruntime object/vtable與memorycopy actualprovider/body未知，沒有GUI consumption acceptance。
+
+Native self分支及場景邊界
+4A911D先call469CA0(1)，返回後才450B90查64A958 selectedrow；index>=0再查一次，row+4 WORD傳46A540，無選列傳0。Scene callbacks可能先改UIselection，不能假設取到原選列或owned列。
+469CA0若62C21C==0只將signedWORD1存64AF98並return。若非零，jump表mode1→469CC9。
+Mode1先virtual+50，再寫phase1，走UIvisibility/selectionhelpers；把62C9B8/BC/C0設46D640/46D8A0/46D630，458830 reset、protected8316B0/B4/B8條件notification、4687B0(0)、46A520、virtual+4C、49BB40(0)，75A998/9C清零。
+46A520是已知C_CE room-list request。動態回呼可再改global，不能宣稱phase/callback最終不變或atomic transition。
+46A540完整132bytes：先450230(UI64A954)，再預覽vectorclear。Local copy loop source==oldend因此跳過；64ACF8=64ACF4；4687B0接WORDarg。SI非0才送既有C_CD=205，format cd，DWORD是WORD zeroextension；SI0不送。
+C_CE/C_CD是已知helper呼叫補證，不是新增wire、D0 ack、leave Confirm或servercommit證明。
+virtual/private、4687B0、49BB40、UItype/lifetime、protecteddata、格式化pointer actualprovider与opaquephase4/5collection止於精確unknown。
+
+Phase1/6預覽分支
+incomingroom須0，再以4D3A80掃64ACF4/F8 previewrecords，刪第一match，UI64A954走465370、compact140bytes，4B3B80 RET8後64ACF8減140。沒有self比較或導航。
+Room1 ArenaBot若實際Nativephase6會在room0gate被拒絕；5ED/49A沒有Native實際phase證據，不能把adapter ROOM直接等同某個Native phase。
+
+封存frames：沒有普通self-exit往返
+5ED frames SHA A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F：1based69 Host-GAME ArenaBot body14/frame16，在所有同epochCD前；137 Guest-GAME BattleHost(BattleMoon) body28/frame30。
+49A frames SHA283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004：1based70 Host-GAME ArenaBot body14/frame16，在所有同epochCD前。
+全部roomDWORD1、NUL/exactbody對sealed資料consume0remaining；trace沒有C_D0，沒有ordinary own C_D0/self-D0 dynamic acceptance。Guest收到另一人名字不能改寫成自己返回。來源索引同時列0based與1based，不從R514數字猜trace來源。
+
+最小consumer交接
+Explicit AD368 adapter在owned epoch/CE-established room1可consume ArenaBot：有列刪除、無列no-op，維持ROOM與self/source/skills identity，繼續後續CD。不要求先有bot CD，不合成roster completion/tombstone/leave intent。
+Knownpeer只刪roomlocal row/projection；ownself通知須獨立qualified ownrawalias及同context已實際emit一次ordinary C_D0意圖，consume一次；adapter localCHANNELpolicy不等於原版comparison或serveratomicpostcommit。
+Native自身分支沒有pendingintentcheck，這不給adapter免除自己的freshness/intent檢查。CE owneralias也不是一般self proof。
+D0沒有epoch/joingeneration/nonce；用transportepoch＋localjoingeneration綁事件，舊intent/removal不跨join，sameepoch重用roomID仍有ambiguity。Native phase split與private tables guard保持。
+比較表沿用Batch15：startup與S_3A可reinit，private05010B41與externalfold773B2A40 actualoutputs/locale/lifecycle缺失；diskzero或ASCII/casefold不是authority，不新增tableinjection API。
+Java原本指出selfsend先於membership/CHANNELcommit；本組不接管其producer/postcommit資格，不以C_CE/C_CD/peerD0補成commit。
+
+封存範圍
+newwire0/newopcode0/wirecorrection0；server-packet-delta B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C保持；17priorpins含Batch15 1C2519F9保持。
+有限Native接收契約完成，overall/native UI/physical/source/player/owner ready皆false。本批到此停止，後續runtime或private provider資格須另有授權與證據。

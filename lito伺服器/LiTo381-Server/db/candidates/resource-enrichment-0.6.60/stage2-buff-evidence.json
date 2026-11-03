@@ -1,0 +1,37 @@
+{
+  "package_status": "未匯入、未接線",
+  "native_receiver": {
+    "virtual_address": "0x004AFF30",
+    "asm_start_line": 367148,
+    "native_table_va": "0x006328D8",
+    "source_id": 541
+  },
+  "extension_source_sha256": "6e4bbf450fe7c7552665a1c10f2cfb69b706f44d1da949d5d4391e8b9f72b8b8",
+  "extension_matches_retained_0_6_50_pin": true,
+  "semantic_conflicts": [
+    {
+      "skill_id": 3,
+      "packet_selector": 5,
+      "native_slot": 7,
+      "consumed_icon": 725,
+      "resource_named_icon": 485
+    },
+    {
+      "skill_id": 151,
+      "packet_selector": 6,
+      "native_slot": 4,
+      "consumed_icon": 485,
+      "resource_named_icon": 763
+    }
+  ],
+  "illusion_sync_consumer": [
+    "133: invokestatic  #51                 // Method patience:(Llocal/lito381/server/ClientSession;Ljava/lang/String;)J",
+    "202: lconst_0",
+    "221: lconst_0",
+    "230: ldc2_w        #64                 // long 32767l",
+    "237: ldc2_w        #66                 // long 999999999l",
+    "260: invokestatic  #76                 // Method local/lito381/server/Protocol.mageShield:(II)[B",
+    "276: invokestatic  #86                 // Method send:(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)V"
+  ],
+  "duration_note": "XML DragonSkin1800 differs from deployed lease1200; packet authoritative remaining seconds; clear0; no XML-duration override"
+}

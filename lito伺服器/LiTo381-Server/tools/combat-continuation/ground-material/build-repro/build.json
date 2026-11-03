@@ -1,0 +1,53 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build\\candidate-weakness-material.jar",
+    "sha256": "9654d951236b38a68261f2efd6d6e839a52e86c0a3b7e598709cb256c702395e"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\candidate-ground-material.jar",
+    "sha256": "9c5e60af1702d4e99d6a25da0fad1ce4ad66b1eeeb62db6637423b8145d7572d"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeGroundMaterialAction$Rejected.class",
+    "local/lito381/server/NativeGroundMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\build.py",
+      "sha256": "bc15b2d58830f4e6d7cfc2c96ec886ee21455d72ab9f55290b294e22c4624014"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\GroundMaterialMethods.java",
+      "sha256": "739f16fb808f7fe3d78b39c5500e23f448749017d98cd3296995aca6277c449c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "8cbf1be2d636dda2aad646ef44fb1851e4808509b76255e17a7b07994c7eeb3c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\sources\\NativeGroundMaterialAction.java",
+      "sha256": "5a0ca55d966d336138b136eb175ccfa30be5d4d5289ba3c53837cd64b2a6b910"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "faa9d252554acfefb0ec09ff7b04d744276dae84cf8936263a17bc426fed5d1c"
+    }
+  ]
+}

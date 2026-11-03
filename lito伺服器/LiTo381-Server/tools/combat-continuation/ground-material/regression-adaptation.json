@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative_regression.py",
+      "sha256": "3773fe76ea70f4093fce5015daac743f29212ab194953b8a9a9cc516a6a13ef6"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\census.py",
+      "sha256": "9c62983e8358360268f0ed8803275a6c348a914ef0e400baa3e2ab346c6af600"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\prepare_regression.py",
+      "sha256": "f489966dbac1ba09495975be5f26d090ac49f47898a16c2d204d342982ed2374"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground_regression.py",
+      "sha256": "c966cb1fdf43b86c1954ba69c9eb05c23f3cff9cc754e6574f2437f3382bd016"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\census.py",
+      "sha256": "5f8976fc04eabb65080f15d1f0ac370fd5b3bf3e6845455ffd5186661ddedb06"
+    }
+  ],
+  "scope": "full regression destination and candidate only; census removes exactly the two ground roots"
+}

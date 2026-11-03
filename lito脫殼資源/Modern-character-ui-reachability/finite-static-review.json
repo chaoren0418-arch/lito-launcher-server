@@ -1,0 +1,875 @@
+{
+  "updated_at": "2026-10-06T09:29:00.899711+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability-contract.json",
+    "bytes": 72940,
+    "sha256": "FC83ED02485F28661AC5550A8C6D8DB0F4ABA3EE06FB6B68EB26ED38CE4BDC9B"
+  },
+  "all_match": true,
+  "check_count": 215,
+  "anchor_count": 47,
+  "checks": [
+    {
+      "name": "owned output character-flow-findings.json",
+      "match": true
+    },
+    {
+      "name": "owned output count-slot-route-matrix.json",
+      "match": true
+    },
+    {
+      "name": "owned output finite-call-chains.json",
+      "match": true
+    },
+    {
+      "name": "owned output Lineage-existing-selection-asset-metadata.json",
+      "match": true
+    },
+    {
+      "name": "owned output minimal-original-UI-adoption-proposal.json",
+      "match": true
+    },
+    {
+      "name": "owned output Native-existing-asset-metadata.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_character_selection.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_city_presentation.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_city_runtime.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_city_window.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_city_window.rs@pointer.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_city_window.rs@render.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_mode_menu_skin.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_player_entry_commands.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_source_identity.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output native_source_send.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output production-main.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output R525-candidate-entry.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "owned output R525-existing-entry-reference.json",
+      "match": true
+    },
+    {
+      "name": "owned output read-provenance-catalog.json",
+      "match": true
+    },
+    {
+      "name": "owned read capture 0",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 0",
+      "match": true
+    },
+    {
+      "name": "owned read capture 1",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 1",
+      "match": true
+    },
+    {
+      "name": "owned read capture 2",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 2",
+      "match": true
+    },
+    {
+      "name": "owned read capture 3",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 3",
+      "match": true
+    },
+    {
+      "name": "owned read capture 4",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 4",
+      "match": true
+    },
+    {
+      "name": "owned read capture 5",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 5",
+      "match": true
+    },
+    {
+      "name": "owned read capture 6",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 6",
+      "match": true
+    },
+    {
+      "name": "owned read capture 7",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 7",
+      "match": true
+    },
+    {
+      "name": "owned read capture 8",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 8",
+      "match": true
+    },
+    {
+      "name": "owned read capture 9",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 9",
+      "match": true
+    },
+    {
+      "name": "owned read capture 10",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 10",
+      "match": true
+    },
+    {
+      "name": "owned read capture 11",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 11",
+      "match": true
+    },
+    {
+      "name": "owned read capture 12",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 12",
+      "match": true
+    },
+    {
+      "name": "owned read capture 13",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 13",
+      "match": true
+    },
+    {
+      "name": "owned read capture 14",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 14",
+      "match": true
+    },
+    {
+      "name": "owned read capture 15",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 15",
+      "match": true
+    },
+    {
+      "name": "owned read capture 16",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 16",
+      "match": true
+    },
+    {
+      "name": "owned read capture 17",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 17",
+      "match": true
+    },
+    {
+      "name": "owned read capture 18",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 18",
+      "match": true
+    },
+    {
+      "name": "owned read capture 19",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 19",
+      "match": true
+    },
+    {
+      "name": "owned read capture 20",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 20",
+      "match": true
+    },
+    {
+      "name": "owned read capture 21",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 21",
+      "match": true
+    },
+    {
+      "name": "owned read capture 22",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 22",
+      "match": true
+    },
+    {
+      "name": "owned read capture 23",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 23",
+      "match": true
+    },
+    {
+      "name": "owned read capture 24",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 24",
+      "match": true
+    },
+    {
+      "name": "owned read capture 25",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 25",
+      "match": true
+    },
+    {
+      "name": "owned read capture 26",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 26",
+      "match": true
+    },
+    {
+      "name": "owned read capture 27",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 27",
+      "match": true
+    },
+    {
+      "name": "owned read capture 28",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 28",
+      "match": true
+    },
+    {
+      "name": "owned read capture 29",
+      "match": true
+    },
+    {
+      "name": "stable before/content/after 29",
+      "match": true
+    },
+    {
+      "name": "qualified finding U01",
+      "match": true
+    },
+    {
+      "name": "U01 route:37",
+      "match": true
+    },
+    {
+      "name": "U01 run:94",
+      "match": true
+    },
+    {
+      "name": "U01 candidate_java_entry:193",
+      "match": true
+    },
+    {
+      "name": "U01 run_synthetic_java_bootstrap:146",
+      "match": true
+    },
+    {
+      "name": "U01 run_inner adapter configuration:157",
+      "match": true
+    },
+    {
+      "name": "qualified finding U02",
+      "match": true
+    },
+    {
+      "name": "U02 JAVA_ROW_BOUND:8",
+      "match": true
+    },
+    {
+      "name": "U02 consume_source_identity_event:148",
+      "match": true
+    },
+    {
+      "name": "U02 State directory controls:14",
+      "match": true
+    },
+    {
+      "name": "U02 refresh roster eligibility:35",
+      "match": true
+    },
+    {
+      "name": "U02 refresh directory:47",
+      "match": true
+    },
+    {
+      "name": "U02 refresh controls:51",
+      "match": true
+    },
+    {
+      "name": "U02 refresh visibility:63",
+      "match": true
+    },
+    {
+      "name": "U02 run_inner control creation:155",
+      "match": true
+    },
+    {
+      "name": "qualified finding U03",
+      "match": true
+    },
+    {
+      "name": "U03 proc CBN_SELCHANGE directory:130",
+      "match": true
+    },
+    {
+      "name": "U03 handle_player_entry_command ChooseCharacter:58",
+      "match": true
+    },
+    {
+      "name": "U03 source_character_control_enabled:171",
+      "match": true
+    },
+    {
+      "name": "U03 choose_source_character_control:176",
+      "match": true
+    },
+    {
+      "name": "U03 Scene::select:18",
+      "match": true
+    },
+    {
+      "name": "U03 refresh selected details:54",
+      "match": true
+    },
+    {
+      "name": "U03 proc SubmitCharacter:127",
+      "match": true
+    },
+    {
+      "name": "U03 source_character_submit:182",
+      "match": true
+    },
+    {
+      "name": "U03 prepare_source_send_candidate:214",
+      "match": true
+    },
+    {
+      "name": "U03 Sender::prepare_character:30",
+      "match": true
+    },
+    {
+      "name": "qualified finding U04",
+      "match": true
+    },
+    {
+      "name": "U04 source_character_command_slot:46",
+      "match": true
+    },
+    {
+      "name": "U04 slot:10",
+      "match": true
+    },
+    {
+      "name": "U04 refresh fixed controls:34",
+      "match": true
+    },
+    {
+      "name": "U04 refresh fixed button visibility:63",
+      "match": true
+    },
+    {
+      "name": "U04 proc direct button commands:126",
+      "match": true
+    },
+    {
+      "name": "U04 draw_character_button:115",
+      "match": true
+    },
+    {
+      "name": "U04 Skin::load character_buttons:36",
+      "match": true
+    },
+    {
+      "name": "qualified finding G01",
+      "match": true
+    },
+    {
+      "name": "G01 run_inner child styles:155",
+      "match": true
+    },
+    {
+      "name": "G01 proc WM_DRAWITEM:123",
+      "match": true
+    },
+    {
+      "name": "G01 paint:111",
+      "match": true
+    },
+    {
+      "name": "G01 paint_channel:107",
+      "match": true
+    },
+    {
+      "name": "G01 paint_source_entry:109",
+      "match": true
+    },
+    {
+      "name": "G01 Skin fields:30",
+      "match": true
+    },
+    {
+      "name": "qualified finding D01",
+      "match": true
+    },
+    {
+      "name": "D01 route default:31",
+      "match": true
+    },
+    {
+      "name": "D01 route allowed flags/fallback:67",
+      "match": true
+    },
+    {
+      "name": "D01 run profile entry:133",
+      "match": true
+    },
+    {
+      "name": "D01 route explicit candidate:37",
+      "match": true
+    },
+    {
+      "name": "qualified finding D02",
+      "match": true
+    },
+    {
+      "name": "D02 resize:71",
+      "match": true
+    },
+    {
+      "name": "D02 run_inner message loop:159",
+      "match": true
+    },
+    {
+      "name": "D02 choose_source_character_control status:179",
+      "match": true
+    },
+    {
+      "name": "D02 proc directory choice:130",
+      "match": true
+    },
+    {
+      "name": "qualified finding D03",
+      "match": true
+    },
+    {
+      "name": "D03 SUBMIT and BACK:7",
+      "match": true
+    },
+    {
+      "name": "D03 Skin::load Native asset family:34",
+      "match": true
+    },
+    {
+      "name": "D03 resize original button geometry use:71",
+      "match": true
+    },
+    {
+      "name": "nine count cases",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 0",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 1",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 2",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 3",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 4",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 5",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 6",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 7",
+      "match": true
+    },
+    {
+      "name": "full owned count/list 8",
+      "match": true
+    },
+    {
+      "name": "exact four Native images",
+      "match": true
+    },
+    {
+      "name": "original Native51x23 6201.img",
+      "match": true
+    },
+    {
+      "name": "original Native51x23 6202.img",
+      "match": true
+    },
+    {
+      "name": "original Native51x23 6303.img",
+      "match": true
+    },
+    {
+      "name": "original Native51x23 6304.img",
+      "match": true
+    },
+    {
+      "name": "R498 unchanged metadata r498-character-resource-mapping.json",
+      "match": true
+    },
+    {
+      "name": "R498 unchanged metadata r498-native-menu-skin-binding.json",
+      "match": true
+    },
+    {
+      "name": "79/80 absence only selected exact index",
+      "match": true
+    },
+    {
+      "name": "exact five Classic existing PNGs",
+      "match": true
+    },
+    {
+      "name": "Classic dimensions/crop Bg_CharacterSelect.png",
+      "match": true
+    },
+    {
+      "name": "Classic dimensions/crop Tx_CC_Ok_N.png",
+      "match": true
+    },
+    {
+      "name": "Classic dimensions/crop Tx_CC_Ok_C.png",
+      "match": true
+    },
+    {
+      "name": "Classic dimensions/crop Tx_CC_Cancel_N.png",
+      "match": true
+    },
+    {
+      "name": "Classic dimensions/crop Tx_CC_Cancel_C.png",
+      "match": true
+    },
+    {
+      "name": "candidate and normal entry accepted source pins",
+      "match": true
+    },
+    {
+      "name": "candidate existing four buttons match raw assets",
+      "match": true
+    },
+    {
+      "name": "immutable prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior ranges.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "immutable prior Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin archive-manifest.json",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin LTsurf.csv",
+      "match": true
+    },
+    {
+      "name": "fixed/owned accepted pin scope-write-correction.json",
+      "match": true
+    },
+    {
+      "name": "classification4/1/3",
+      "match": true
+    },
+    {
+      "name": "30reads12snapshots10files47anchors35priors",
+      "match": true
+    },
+    {
+      "name": "three window reads same captured source",
+      "match": true
+    },
+    {
+      "name": "no invented5..8 functional gap",
+      "match": true
+    },
+    {
+      "name": "R526 active unaffected and nonatomic",
+      "match": true
+    },
+    {
+      "name": "zero new actions and wire",
+      "match": true
+    },
+    {
+      "name": "packet unchanged",
+      "match": true
+    },
+    {
+      "name": "incident retained open",
+      "match": true
+    },
+    {
+      "name": "no server notification",
+      "match": true
+    }
+  ],
+  "scope": "Only owned captures, exact source token/line anchors, descriptive count policies and accepted immutable hashes. External mutable Modern source is not reread/frozen. No function/model/test/build/GUI execution.",
+  "runtime_acceptance": false
+}

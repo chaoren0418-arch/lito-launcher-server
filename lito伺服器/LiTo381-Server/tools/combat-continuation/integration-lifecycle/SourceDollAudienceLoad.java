@@ -1,0 +1,7 @@
+import java.nio.file.*;import java.net.*;import java.util.*;import java.lang.reflect.*;
+public final class SourceDollAudienceLoad {
+ public static void main(String[]a)throws Exception{SourceDollDetachedOutputLoad.main(a);var jar=Path.of(a[0]).toRealPath();var urls=new ArrayList<URL>();urls.add(jar.toUri().toURL());try(var files=Files.list(Path.of(a[1]))){for(var p:files.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var loader=new URLClassLoader(urls.toArray(URL[]::new),ClassLoader.getPlatformClassLoader())){
+  for(var suffix:List.of("","$Life","$Audience")){var c=Class.forName("local.lito381.server.NativeSourceDollAudience"+suffix,false,loader);if(!Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar))throw new AssertionError("actual candidate helper");c.getDeclaredFields();c.getDeclaredMethods();c.getDeclaredConstructors();}
+  var r=Class.forName("local.lito381.server.NativeSourceDollOutput$Receiver",false,loader);var field=r.getDeclaredField("nativeSourceDollAudienceProof");if(!Modifier.isFinal(field.getModifiers())||!Modifier.isTransient(field.getModifiers())||r.getRecordComponents().length!=2)throw new AssertionError("same original record schema with final transient proof");
+ }System.out.println("PASS344 candidate no-init classes with original record schema and detached first-audience values");}
+}

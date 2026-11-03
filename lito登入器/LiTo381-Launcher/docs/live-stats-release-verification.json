@@ -1,0 +1,17 @@
+{
+  "native_live_stats": true,
+  "before_wins": 10,
+  "after_wins": 11,
+  "same_window": true,
+  "no_sql_writes": true,
+  "run": "same-window-fixture-1791773379123261200",
+  "release": "0.6.40",
+  "dll_sha256": "eafbe17c3d23879d312e61071e9d68fd3b077f2685bea2e1c84206742083153f",
+  "server_sha256": "8b9f0319c410fcddae594619c081259c823bdcdbda8c5eac946c55eee0ccb019",
+  "ranking_regression": true,
+  "packet_mapping_regression": true,
+  "item_ui_regression": true,
+  "production_startup": true,
+  "minimum_ranked_matches": 20,
+  "sql_write_policy": "character_lito wins/losses only"
+}

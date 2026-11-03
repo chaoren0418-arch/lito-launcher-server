@@ -1,0 +1,52 @@
+{
+  "task_id": "bin_resources-modern-map534-canonical-qualification-20261008",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008-contract.json",
+    "bytes": 9002,
+    "sha256": "6ED0109CDE4ABAA8963FE69A6A57D82D4DEEDA0C0C74EF77E015A3AC26D417E2"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\canonical.bin",
+      "bytes": 66391,
+      "sha256": "7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\derive.py",
+      "bytes": 5652,
+      "sha256": "DBC606660E0F50077CE7C58154B24D3DC286175B15D20A8AB16D3B4A31BA53A9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\inputs.json",
+      "bytes": 5601,
+      "sha256": "88CDD23D79A2D04898AD397953327E657396B849353CD8525F28A0491C171DBA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\package.py",
+      "bytes": 5115,
+      "sha256": "9835EB166A773DBBA858F79C0B2968F7CA13AB8EB4BE2CD4CD58169F55E09E13"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\raw.stdout.txt",
+      "bytes": 2245,
+      "sha256": "D9BA1ED92C180DF21B01F03D3ACFEA172B52065529699FFEB9B7EBB210E9388B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\result.json",
+      "bytes": 2938,
+      "sha256": "5A6D3CA4EC4186D4D703D7DBFB8B44B6AAC1314229B9E57EC5DC35D8E3114B8D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\sector-directions.json",
+      "bytes": 20837,
+      "sha256": "BD4DCBFC7D4177B13BB511DEB0A1AF589C8412EABCD5CC660AB448C5584F43EB"
+    }
+  ],
+  "state": "review",
+  "self_accepted": false
+}

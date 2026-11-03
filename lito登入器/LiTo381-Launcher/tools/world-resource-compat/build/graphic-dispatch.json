@@ -1,0 +1,2002 @@
+{
+  "status": "audited",
+  "binary_sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c",
+  "xml_sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130",
+  "rows": [
+    {
+      "graphic": 8977,
+      "status_calls": [
+        [
+          960,
+          5,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        5,
+        5
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 5,
+      "effect": 5,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2249,
+      "status_calls": [],
+      "lookups": [
+        6
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 6,
+      "effect": 6,
+      "xml_duration": 0,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2287,
+      "status_calls": [],
+      "lookups": [
+        7
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 7,
+      "effect": 7,
+      "xml_duration": 0,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2252,
+      "status_calls": [],
+      "lookups": [
+        8
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 8,
+      "effect": 8,
+      "xml_duration": 0,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2165,
+      "status_calls": [
+        [
+          1200,
+          12,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        12
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 12,
+      "effect": 12,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            600,
+            12
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2176,
+      "status_calls": [
+        [
+          1200,
+          13,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        13
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 13,
+      "effect": 13,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1800,
+            13
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2186,
+      "status_calls": [
+        [
+          3600,
+          14,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        14
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 14,
+      "effect": 14,
+      "xml_duration": 3600,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            3600,
+            14
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2184,
+      "status_calls": [
+        [
+          1200,
+          15,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        15
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 15,
+      "effect": 15,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1200,
+            15
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2285,
+      "status_calls": [
+        [
+          64,
+          16,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        16
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 16,
+      "effect": 16,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            64,
+            16
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2180,
+      "status_calls": [
+        [
+          1200,
+          17,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        17
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 17,
+      "effect": 17,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1200,
+            17
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2182,
+      "status_calls": [],
+      "lookups": [
+        18
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 18,
+      "effect": 18,
+      "xml_duration": 0,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2286,
+      "status_calls": [],
+      "lookups": [
+        19
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 19,
+      "effect": 19,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2242,
+      "status_calls": [],
+      "lookups": [
+        20
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 20,
+      "effect": 20,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2246,
+      "status_calls": [],
+      "lookups": [
+        21
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 21,
+      "effect": 21,
+      "xml_duration": 0,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2288,
+      "status_calls": [],
+      "lookups": [
+        22
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 22,
+      "effect": 22,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2248,
+      "status_calls": [],
+      "lookups": [
+        23
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 23,
+      "effect": 23,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2247,
+      "status_calls": [],
+      "lookups": [
+        24
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 24,
+      "effect": 24,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2277,
+      "status_calls": [
+        [
+          0,
+          25,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        25,
+        25
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 25,
+      "effect": 25,
+      "xml_duration": 0,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3941,
+      "status_calls": [
+        [
+          0,
+          26,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        26,
+        26
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 26,
+      "effect": 26,
+      "xml_duration": 0,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3942,
+      "status_calls": [
+        [
+          0,
+          27,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        27,
+        27
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 27,
+      "effect": 27,
+      "xml_duration": 0,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2942,
+      "status_calls": [
+        [
+          320,
+          29,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        29
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 29,
+      "effect": 29,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            180,
+            29
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2946,
+      "status_calls": [
+        [
+          320,
+          30,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        30
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 30,
+      "effect": 30,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            300,
+            30
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2949,
+      "status_calls": [
+        [
+          192,
+          31,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        31
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 31,
+      "effect": 31,
+      "xml_duration": 192,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            180,
+            31
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2950,
+      "status_calls": [
+        [
+          192,
+          32,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        32
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 32,
+      "effect": 32,
+      "xml_duration": 192,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            304,
+            32
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2948,
+      "status_calls": [
+        [
+          320,
+          33,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        33
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 33,
+      "effect": 33,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            304,
+            33
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3909,
+      "status_calls": [
+        [
+          960,
+          34,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        34,
+        34
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 34,
+      "effect": 34,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3910,
+      "status_calls": [
+        [
+          960,
+          35,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        35,
+        35
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 35,
+      "effect": 35,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3911,
+      "status_calls": [
+        [
+          32,
+          36,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        36
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 36,
+      "effect": 36,
+      "xml_duration": 32,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            32,
+            36
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2945,
+      "status_calls": [],
+      "lookups": [
+        37
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 37,
+      "effect": 37,
+      "xml_duration": 960,
+      "qualified_generic": false,
+      "qualified_no_status": true,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3943,
+      "status_calls": [
+        [
+          320,
+          40,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        40
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 40,
+      "effect": 40,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            300,
+            40
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 228,
+      "status_calls": [
+        [
+          32,
+          41,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        41
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 41,
+      "effect": 41,
+      "xml_duration": 32,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            60,
+            41
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3936,
+      "status_calls": [
+        [
+          64,
+          42,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        42,
+        42
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 42,
+      "effect": 42,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2234,
+      "status_calls": [
+        [
+          12,
+          43,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        43
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 43,
+      "effect": 43,
+      "xml_duration": 12,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            10,
+            43
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 3935,
+      "status_calls": [
+        [
+          1200,
+          44,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        44
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 44,
+      "effect": 44,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1800,
+            44
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2173,
+      "status_calls": [
+        [
+          640,
+          45,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        45
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 45,
+      "effect": 45,
+      "xml_duration": 640,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            600,
+            45
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2243,
+      "status_calls": [
+        [
+          320,
+          46,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        46
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 46,
+      "effect": 46,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            300,
+            46
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2170,
+      "status_calls": [
+        [
+          1800,
+          47,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        47
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 47,
+      "effect": 47,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1800,
+            47
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2232,
+      "status_calls": [
+        [
+          16,
+          48,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        48
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 48,
+      "effect": 48,
+      "xml_duration": 16,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            12,
+            48
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2177,
+      "status_calls": [
+        [
+          16,
+          49,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        49
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 49,
+      "effect": 49,
+      "xml_duration": 16,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            12,
+            49
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2230,
+      "status_calls": [
+        [
+          64,
+          50,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        50
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 50,
+      "effect": 50,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            12,
+            50
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 2228,
+      "status_calls": [
+        [
+          64,
+          51,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        51
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 51,
+      "effect": 51,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            31,
+            51
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 1799,
+      "status_calls": [
+        [
+          16,
+          52,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        52,
+        52
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 52,
+      "effect": 52,
+      "xml_duration": 16,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4396,
+      "status_calls": [
+        [
+          64,
+          53,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        53
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 53,
+      "effect": 53,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            30,
+            53
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4395,
+      "status_calls": [
+        [
+          16,
+          54,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        54,
+        54
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 54,
+      "effect": 54,
+      "xml_duration": 16,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 10706,
+      "status_calls": [
+        [
+          32,
+          55,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        55
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 55,
+      "effect": 55,
+      "xml_duration": 32,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4400,
+      "status_calls": [
+        [
+          960,
+          56,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        56
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 56,
+      "effect": 56,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            960,
+            56
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4401,
+      "status_calls": [
+        [
+          64,
+          57,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        57
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 57,
+      "effect": 57,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4402,
+      "status_calls": [
+        [
+          320,
+          58,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        58
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 58,
+      "effect": 58,
+      "xml_duration": 320,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            192,
+            58
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 4824,
+      "status_calls": [
+        [
+          192,
+          64,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        64
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 64,
+      "effect": 64,
+      "xml_duration": 192,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            32,
+            64
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 8989,
+      "status_calls": [
+        [
+          64,
+          65,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        65,
+        65
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 65,
+      "effect": 65,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 5825,
+      "status_calls": [
+        [
+          960,
+          66,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        66
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 66,
+      "effect": 66,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            100,
+            66
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 5826,
+      "status_calls": [
+        [
+          64,
+          67,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        67
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 67,
+      "effect": 67,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            3000,
+            67
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 5829,
+      "status_calls": [
+        [
+          960,
+          68,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        68
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 68,
+      "effect": 68,
+      "xml_duration": 960,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            600,
+            68
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 5830,
+      "status_calls": [
+        [
+          64,
+          69,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        69
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 69,
+      "effect": 69,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            1000,
+            69
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 5831,
+      "status_calls": [
+        [
+          64,
+          70,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        70
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 70,
+      "effect": 70,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [
+          [
+            "apply",
+            3000,
+            70
+          ]
+        ],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 10709,
+      "status_calls": [
+        [
+          64,
+          71,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        71,
+        71
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 71,
+      "effect": 71,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6531,
+      "status_calls": [
+        [
+          1800,
+          107,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        107
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 77,
+      "effect": 107,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6813,
+      "status_calls": [
+        [
+          1200,
+          116,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        116
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 78,
+      "effect": 116,
+      "xml_duration": 1200,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6578,
+      "status_calls": [
+        [
+          64,
+          118,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        118
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 79,
+      "effect": 118,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6527,
+      "status_calls": [
+        [
+          600,
+          120,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        120
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 80,
+      "effect": 120,
+      "xml_duration": 600,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6577,
+      "status_calls": [
+        [
+          64,
+          121,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        121
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 81,
+      "effect": 121,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6507,
+      "status_calls": [
+        [
+          600,
+          123,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        123
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 82,
+      "effect": 123,
+      "xml_duration": 600,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6576,
+      "status_calls": [
+        [
+          64,
+          126,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        126
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 83,
+      "effect": 126,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6505,
+      "status_calls": [
+        [
+          600,
+          128,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        128
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 84,
+      "effect": 128,
+      "xml_duration": 600,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6506,
+      "status_calls": [
+        [
+          64,
+          129,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        129
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 85,
+      "effect": 129,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 6575,
+      "status_calls": [
+        [
+          64,
+          130,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        130
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 86,
+      "effect": 130,
+      "xml_duration": 64,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 512,
+      "status_calls": [
+        [
+          1800,
+          512,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        512,
+        512
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 89,
+      "effect": 512,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 513,
+      "status_calls": [
+        [
+          1800,
+          513,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        513,
+        513
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 90,
+      "effect": 513,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 514,
+      "status_calls": [
+        [
+          1800,
+          514,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        514,
+        514
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 91,
+      "effect": 514,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 515,
+      "status_calls": [
+        [
+          1800,
+          515,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        515,
+        515
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 92,
+      "effect": 515,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    },
+    {
+      "graphic": 516,
+      "status_calls": [
+        [
+          1800,
+          516,
+          0,
+          4294967295
+        ]
+      ],
+      "lookups": [
+        516,
+        516
+      ],
+      "unqualified_calls": [],
+      "completed": true,
+      "slot": 93,
+      "effect": 516,
+      "xml_duration": 1800,
+      "qualified_generic": true,
+      "qualified_no_status": false,
+      "lito_original": {
+        "calls": [],
+        "unknown": [],
+        "completed": true
+      }
+    }
+  ],
+  "qualified_generic": 60,
+  "lito_own_object_guard": [
+    {
+      "own_object": false,
+      "status_call_reached": false,
+      "stop": "0x4adf21"
+    },
+    {
+      "own_object": true,
+      "status_call_reached": true,
+      "stop": "0x4aded3"
+    }
+  ],
+  "limits": [
+    "Actual graphic lookup/vector accessor executed against XML-derived table; state consumer/message display intercepted.",
+    "Special-case calls excluded; no visual animation or server started.",
+    "Only source own-object caller 0x531BDA invokes this dispatcher; never apply to other objects."
+  ]
+}

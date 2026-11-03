@@ -1,0 +1,64 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\candidate-combat-buff.jar",
+    "sha256": "97b1318aa4ab310c367ace9c3a5e5f197a899ce5875caf451e2bfa3010f50dfe"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\candidate-solid-control.jar",
+    "sha256": "c02e9d1e716b08bb27c21184d11a72c2fc8e66be7581165ec99c08b82b20d99c"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/CombatRules.class",
+    "local/lito381/server/SourceEquipmentPhysicalStats.class"
+  ],
+  "added": [
+    "local/lito381/server/SolidCarriageRules.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\build.py",
+      "sha256": "cd06514a9deec763745f6b32e6a23444d5ea8d3dcb7f26ca38ddf81c748f3939"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\SolidCarriageRules.java",
+      "sha256": "720a4220fcc21f94b2fad53e9c640810f5cd0e418beda57d1fbc53df17c62f3e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\SolidMethods.java",
+      "sha256": "9023918068f95597719927c798b68e98957c511ecc69d2057081bf61213727e6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\original\\CombatRules.java",
+      "sha256": "40074ef5af88ae7aa0a33fe5d9fa2fcb89a1e6df09dbe930905924e59f9bb8d2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\source-reference\\ConfigSkill.java",
+      "sha256": "ffc81f59cdd57d18371538b92ab0d6b591009fbb37355be86737adbc414e7d7e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\source-reference\\SOLID_CARRIAGE.java",
+      "sha256": "56675b9adaa7e3f72df8df9331d353551b5b98c433dfc46fea820cb30bbd5d89"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\source-reference\\SourceSolidReference.java",
+      "sha256": "96032570674e5c968e15732f7876a1d2f251bf99b7f6c6a2f4f646b33f1a1448"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\sources\\CombatRules.java",
+      "sha256": "1d1b356695574b2628f42be5f6fc0637448c4b37d0afce36c3dbb2c97efd2fd1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\inputs\\sources\\SolidCarriageRules.java",
+      "sha256": "720a4220fcc21f94b2fad53e9c640810f5cd0e418beda57d1fbc53df17c62f3e"
+    }
+  ]
+}

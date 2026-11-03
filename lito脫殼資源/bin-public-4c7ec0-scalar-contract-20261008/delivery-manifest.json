@@ -1,0 +1,104 @@
+{
+  "TASK_ID": "bin-public-4c7ec0-scalar-contract-20261008",
+  "sealed_at": "2026-10-08T13:17:17.863486+00:00",
+  "extract_receipt": "0bd2ec",
+  "extract_exit": 0,
+  "contract_receipt": "b07b26",
+  "contract_exit": 0,
+  "preseal_correction_receipt": "094413",
+  "preseal_correction_exit": 0,
+  "preseal_correction": "Pseudocode scalar load placed after first helper call, matching already qualified raw004C7EC7/004C7ECC; no raw/body/caller replay. Earlier contract.stdout preseal SHA precedes this text correction.",
+  "all_captured_logs_closed_before_first_final_manifest": true,
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\004C7EC0-31.bin",
+      "bytes": 49,
+      "sha256": "A4E7712484C12F198802660732FCF420736B4C93AE6228DD67D52F91A3B491F7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\actual-goal-status.json",
+      "bytes": 1377,
+      "sha256": "E00489C2C60FB543B48038A4A6028D4B75C96E4BD1E42B99527153CF6C3A3CB6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\asm-navigation.json",
+      "bytes": 1548,
+      "sha256": "6355136A7E6E7B47F93290213BD869B404D11E8F614C78AE818C1E016BBFBC55"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\caller-contract-input.json",
+      "bytes": 2466,
+      "sha256": "4C6DA55366109E8DC5474265A320569ABC7DF9DB0C378767435CE8FA702980E6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\contract.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\contract.stdout.txt",
+      "bytes": 775,
+      "sha256": "3CEC7A6A5EE44590A81BF11B5040ECB0974508DA440E1527FAEC36F05C2A2DF5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\control-flow.json",
+      "bytes": 3869,
+      "sha256": "80BE5C6A52A24AED72DC71A0D6BC948A8142D8C695F47EF13C97B7A8AED474BB"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\derive-contract.py",
+      "bytes": 12768,
+      "sha256": "E7DF09CC8979E247ED999669D167FC3932907E6D82CB719091D6A73D9C3481D0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\disassembly.txt",
+      "bytes": 1195,
+      "sha256": "26D332DF4E09DF7077800AEFE83F13B59B136B7B542AE67D79DE024781EDAEEB"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\extract.py",
+      "bytes": 4947,
+      "sha256": "28FCEA36EB47AF3E5144752BAA067EAB39FE0CE6AC6F750B48E38049B66D8676"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\extract.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\extract.stdout.txt",
+      "bytes": 2074,
+      "sha256": "5139A67D1F6382F3F869AAA79C34BFA3503CBC7454B46FBE89B791F5DDA4F6DD"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\handoff.json",
+      "bytes": 24055,
+      "sha256": "332FB3DED3AB73E1129632737E8977C00C139C103EFFDD850D3A8CD4716DD533"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\prior-runtime-review-input.json",
+      "bytes": 577,
+      "sha256": "6E8E0DF9C6466803712535BD95145F2F64868C4F3A8AD6B60CD786795F536A17"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\raw-evidence.json",
+      "bytes": 8872,
+      "sha256": "35284AE60BDA53E59B5CED0058AC9F9812B00162251011EBC1C7EEAB3E019FBA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\seal.py",
+      "bytes": 2966,
+      "sha256": "79BCF8BA658EC1643EE421F8447DACB03EB41AFF8719AD6E36C95E3CD6075659"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\stack-and-scalar-flow.json",
+      "bytes": 1744,
+      "sha256": "A20CCA79CC4437F127F074B3247B17C921955614EC159B1E6836558CD6D97D9C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\verification.json",
+      "bytes": 453,
+      "sha256": "76BB0FD83BBF435625A971CA7FBAD5B13595119DA807DDF5F578A7AF8AC74783"
+    }
+  ]
+}

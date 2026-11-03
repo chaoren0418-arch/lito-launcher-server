@@ -1,0 +1,395 @@
+{
+  "schema": "ida77-isolated-export-integration-v1",
+  "task_id": "bin_resources-ida77-isolated-export-integration-20261007",
+  "owner": "bin_resources",
+  "created_at": "2026-10-07T15:10:17.518117+08:00",
+  "decision": "BLOCKED_PLATFORM_NATIVE_LPAC_CREATION",
+  "supervisor_review_required": true,
+  "summary": "已實際接上 byte-pinned accepted watchdog 並嘗試未註冊私人 SID 的 LPAC probe；native CreateProcessW 回傳 2，未建立 probe／IDA。隔離資格未通過，未偽造反組譯或 pseudocode。",
+  "task_at_read": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\task-at-read.json",
+    "bytes": 4170,
+    "sha256": "8D643B04946194302EF64934B9491E61AE6BEFEE657EB88C68DC94037015531E"
+  },
+  "accepted_component": {
+    "source_sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B",
+    "reuse": "Exact accepted bytes copied and imported, no framework modification",
+    "sources": [
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\owned_process.py",
+        "bytes": 31683,
+        "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\appcontainer_launcher.py",
+        "bytes": 7308,
+        "sha256": "C2D13B5C522DF84FAD58007CCED3B06D0CA886BEBF5D8836F220ED139106DB09"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private_profile.py",
+        "bytes": 5442,
+        "sha256": "17EBABFBD7D7B9FAE761594A6C274CD06092AB6EEA03B7ABB8E14C53F58CD445"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\run_integration.py",
+        "bytes": 2297,
+        "sha256": "28F826D83ECA708EE926DD6D5CEC341C0B3C0EED1F7D651CB01CB8F7D86466C7"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\platform_diagnostic.py",
+        "bytes": 2978,
+        "sha256": "5A0850599E76D7CC8AAE09230BE73A05313B189985A44EDE6147249CD42E6726"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\ida77_export_draft.py",
+        "bytes": 7325,
+        "sha256": "26419AAF7AEC24305560B4C3C5CBA09ABA8B3219AA1F06C160F94365374E6B4A"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\ida77_request.py",
+        "bytes": 7516,
+        "sha256": "90904C006A1060C891277D1DADB04630EE76FFBC6CB261ED5F1F64E1E9B5AC40"
+      }
+    ]
+  },
+  "private_runtime": {
+    "candidate": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-profile-candidate.json",
+      "bytes": 5756,
+      "sha256": "736FE49E12137A4E40BB31EC1618DBD4CF6330F8F642285558351659F3E20A04"
+    },
+    "probe_only": true,
+    "private_directory_and_12_dependencies_created": true,
+    "private_IDA_allowlist_built": false,
+    "IDA_loaded_modules_observed": false,
+    "IDA_startup_plugin_configuration_observed": false,
+    "IDA_configuration_readiness": "Not qualified; stopped before copying or starting IDA. No claim based on IDAUSR/plugins.cfg.",
+    "original_IDA_or_Python_entrypoint_executed": false,
+    "original_auto_AI_Keypatch_or_unknown_plugin_executed": false,
+    "AppContainer_registered": false,
+    "existing_security_settings_modified": false,
+    "firewall_modified": false,
+    "requested_new_private_directory_SD_at_creation": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+      "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FRFX;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+      "app_sid_writable": false,
+      "existing_security_descriptor_modified": false
+    },
+    "readonly_diagnosis": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\platform-diagnostic.json",
+      "bytes": 8182,
+      "sha256": "9CEDA0609526CEA403E246C3B477B35A83DE9B4CC1CF3D8E84C0C40770458819"
+    },
+    "isolation_qualification": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\isolation-qualification.json",
+      "bytes": 1476,
+      "sha256": "B05AB74723AE61CBD08301A1DE1A7A05E0BC3342CC10046FC23F5098CDB48A2A"
+    }
+  },
+  "blocker": {
+    "id": "private-unregistered-LPAC-native-createprocess-winerror2",
+    "stage": "CreateProcessW_private_LPAC_suspended",
+    "actual_winerror": 2,
+    "winerror_name": "ERROR_FILE_NOT_FOUND",
+    "native_probe_process_created": false,
+    "native_probe_resumed": false,
+    "IDA_process_created": false,
+    "request": "New derived SID, zero capabilities, ALL_APPLICATION_PACKAGES_OPT_OUT, explicit stdio handles, suspended native launch under accepted owned Job",
+    "direct_evidence": [
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\native-launch.json",
+        "bytes": 4555,
+        "sha256": "48CDF64B00CE636CA88E9D13D7641250B995DDE7F2C7540173F8E835182982CF"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\platform-diagnostic.json",
+        "bytes": 8182,
+        "sha256": "9CEDA0609526CEA403E246C3B477B35A83DE9B4CC1CF3D8E84C0C40770458819"
+      }
+    ],
+    "known": "Private Python executable exists as PE x64; all 12 copied dependencies match. Attribute-list setup succeeded. Native CreateProcessW rejected the LPAC launch. Own SID folder lookup separately returns 0x80070002; selected registration/package entries stay absent.",
+    "unknown": "Internal missing object responsible for CreateProcessW error 2 is not identified. No actual child token was obtained. Do not claim that missing profile registration is a proven sole cause.",
+    "restriction": "A standard registered AppContainer profile uses user/global package and registry state outside the authorized BIN directory. Registration, existing profile reuse, global ACL/firewall edits and unisolated fallback were not attempted.",
+    "resume_when": "Supervisor supplies or authorizes a qualified isolation path whose persistent writes remain within the task ownership boundary; continue from this failed native creation stage without replaying accepted watchdog suites."
+  },
+  "actual_new_execution": {
+    "trusted_launcher_run_count": 1,
+    "native_probe_launch_attempt_count": 1,
+    "native_probe_run_count": 0,
+    "IDA_run_count": 0,
+    "runtime_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\runtime.json",
+      "bytes": 8630,
+      "sha256": "7C8F1A9EA73FACFA1AAD4243AF786D14DA2260619E7393090C6E6503C5EE1B67"
+    },
+    "native_creation_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\native-launch.json",
+      "bytes": 4555,
+      "sha256": "48CDF64B00CE636CA88E9D13D7641250B995DDE7F2C7540173F8E835182982CF"
+    },
+    "launcher_identity": {
+      "pid": 18464,
+      "creation_filetime_100ns": 134358304105042790,
+      "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+    },
+    "launcher_exit_code": 81,
+    "owned_job_member_cleanup": {
+      "status": "AUDITED",
+      "method": "Owned unnamed job only; unconditional close in finally",
+      "owned_job_empty": true,
+      "pre_snapshot": {
+        "status": "OBSERVED",
+        "value": [
+          {
+            "pid": 18464,
+            "creation_filetime_100ns": 134358304105042790,
+            "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "membership_verified": true,
+            "first_seen_monotonic": 424368.984,
+            "exit": {
+              "signaled": true,
+              "wait_result": 0,
+              "exit_code": 81
+            }
+          },
+          {
+            "pid": 16992,
+            "creation_filetime_100ns": 134358304105116540,
+            "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+            "image_path": "C:\\Windows\\System32\\conhost.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "membership_verified": true,
+            "first_seen_monotonic": 424368.984,
+            "exit": {
+              "signaled": false,
+              "wait_result": 258,
+              "exit_code": 0
+            }
+          }
+        ]
+      },
+      "member_observation": {
+        "status": "OBSERVED",
+        "value": []
+      },
+      "termination": {
+        "status": "OBSERVED",
+        "value": null
+      },
+      "exit_audit": {
+        "status": "OBSERVED",
+        "value": {
+          "owned_job_empty": true,
+          "active_job_PIDs": [],
+          "job_query_error": null,
+          "retained_handle_waits": [
+            {
+              "pid": 18464,
+              "creation_filetime_100ns": 134358304105042790,
+              "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+              "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "identity_status": "KNOWN",
+              "primary": true,
+              "handle_origin": "retained CreateProcess result",
+              "wait_result": 0,
+              "signaled": true,
+              "exit_code": 81
+            },
+            {
+              "pid": 16992,
+              "creation_filetime_100ns": 134358304105116540,
+              "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+              "image_path": "C:\\Windows\\System32\\conhost.exe",
+              "identity_status": "KNOWN",
+              "primary": false,
+              "handle_origin": "verified owned job member",
+              "wait_result": 0,
+              "signaled": true,
+              "exit_code": 0
+            }
+          ],
+          "deadline_monotonic": 424371.14,
+          "elapsed_seconds": 0.0,
+          "exit_evidence_status": "CONFIRMED"
+        }
+      },
+      "post_snapshot": {
+        "status": "OBSERVED",
+        "value": [
+          {
+            "pid": 18464,
+            "creation_filetime_100ns": 134358304105042790,
+            "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "membership_verified": true,
+            "first_seen_monotonic": 424368.984,
+            "exit": {
+              "signaled": true,
+              "wait_result": 0,
+              "exit_code": 81
+            }
+          },
+          {
+            "pid": 16992,
+            "creation_filetime_100ns": 134358304105116540,
+            "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+            "image_path": "C:\\Windows\\System32\\conhost.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "membership_verified": true,
+            "first_seen_monotonic": 424368.984,
+            "exit": {
+              "signaled": true,
+              "wait_result": 0,
+              "exit_code": 0
+            }
+          }
+        ]
+      },
+      "close": [
+        {
+          "kind": "sole_noninherited_job",
+          "status": "OBSERVED",
+          "value": true
+        },
+        {
+          "kind": "retained_process",
+          "status": "OBSERVED",
+          "value": true
+        },
+        {
+          "kind": "retained_process",
+          "status": "OBSERVED",
+          "value": true
+        }
+      ]
+    },
+    "all_captures_EOF": true,
+    "deadline_seconds": 30,
+    "elapsed_seconds": 0.1720000000204891,
+    "deadline_triggered": false,
+    "disk_observation": {
+      "samples": [
+        {
+          "scan_start_monotonic": 424368.984,
+          "scan_end_monotonic": 424368.984,
+          "bytes": 0
+        },
+        {
+          "scan_start_monotonic": 424369.046,
+          "scan_end_monotonic": 424369.046,
+          "bytes": 0
+        },
+        {
+          "scan_start_monotonic": 424369.109,
+          "scan_end_monotonic": 424369.109,
+          "bytes": 0
+        }
+      ],
+      "requested_poll_seconds": 0.05,
+      "sample_count_total": 3,
+      "retained_sample_cap": 512,
+      "final_scan": {
+        "status": "OBSERVED",
+        "value": 4894
+      },
+      "max_observed_sample_gap_seconds": 0.06300000002374873,
+      "final_bytes_before_receipt": 4894,
+      "threshold_bytes": 16777216,
+      "final_overshoot_bytes": 0,
+      "post_cleanup_capture_bytes_included": true,
+      "hard_quota": false,
+      "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+    },
+    "disk_hard_quota": false,
+    "disk_scope": "All private probe output, IDAUSR/TEMP/HOME candidate paths lie in the accepted monitored job. Stable private runtime copies are outside monitored job and were never native-executed.",
+    "egress": "No native probe or IDA ran; own trusted launcher opened one local listener, no upload/client payload and no external AI call. Network denial remains untested.",
+    "outside_private_sentinel_unchanged": true,
+    "sentinel_result_is_not_file_isolation_proof": true
+  },
+  "required_fixture": {
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+      "bytes": 1025,
+      "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+    },
+    "image_base": "0x00400000",
+    "functions": [
+      {
+        "va_start": "0x00401000",
+        "va_end_exclusive": "0x0040100D",
+        "rva_start": "0x1000",
+        "rva_end_exclusive": "0x100D"
+      },
+      {
+        "va_start": "0x00401010",
+        "va_end_exclusive": "0x00401019",
+        "rva_start": "0x1010",
+        "rva_end_exclusive": "0x1019"
+      }
+    ],
+    "fixture_executed": false,
+    "loaded_byte_fingerprints": null,
+    "real_IDA_disassembly": null,
+    "real_IDA_direct_xrefs": null,
+    "real_IDA_pseudocode": null,
+    "exporter_integration_status": "Draft bytes preserved; not connected/executed because native isolation failed first."
+  },
+  "new_consumer_required_static_LITO_request": {
+    "proposal": "none",
+    "count": 0,
+    "reason": "Current finite task supplies only inert fixture/environment scope, no independent unfulfilled consumer question with an authorized source SHA/range. S4F/sub_4AEFD0 d+s and actor-owner deliveries are not duplicated.",
+    "LITO_target_analysis_performed": false,
+    "preserved_stops": [
+      "42E550",
+      "42E6D0",
+      "42EA50",
+      "050104CD next layer",
+      "495520 constructor",
+      "unknown owner",
+      "private backing/provider/SQL/shared BIN/TW/LHZ"
+    ]
+  },
+  "verification": {
+    "finite_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\finite-verification.json",
+      "bytes": 1809,
+      "sha256": "A89826DA0102621ADEEEEE4256BE8E8EACF375731C415C65279AD84A17A4425B"
+    },
+    "syntax_only": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\syntax-verification.json",
+      "bytes": 2715,
+      "sha256": "33046034C79125C6172E4D92068EEE2472FB1934D938FC3E4DB55EBF1372479B"
+    },
+    "prelaunch_authoring_failures": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\prelaunch-authoring-failures.json",
+      "bytes": 732,
+      "sha256": "F391F6BE04B5929328D070225F29A9227D63604480465A1F1155375FFE74900A"
+    },
+    "old_immutable_pins_verified": 491,
+    "no_old_PASS_suite_replay": true,
+    "no_original_unsafe_route_or_alternative_analyzer": true,
+    "queue_validation": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\queue-validation.json",
+      "bytes": 144,
+      "sha256": "6180F0B577615A43AFDACF0BA6476D219135EADD45CD6966A8972D51D3971EC0"
+    }
+  },
+  "primary_documentation": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer",
+      "use": "Profile creation writes a user package location; capability/LPAC launch API reference, not proof of successful isolation."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/userenv/nf-userenv-getappcontainerfolderpath",
+      "use": "Read-only folder path API signature; observed HRESULT retained separately."
+    }
+  ]
+}

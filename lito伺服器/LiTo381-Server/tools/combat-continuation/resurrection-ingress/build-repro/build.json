@@ -1,0 +1,46 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\build\\candidate-resurrection-companion.jar",
+    "sha256": "960b994d92a54ec1bdef2313a9a387229d2bf6ec170a828a459189bc935fb657"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\candidate-resurrection-ingress.jar",
+    "sha256": "f1ebfa0c00b3ef38b68a92f5f9a54af5e5186a98072cccd6e5525cd47315f949"
+  },
+  "changed": [
+    "local/lito381/server/NativeLightAction.class",
+    "local/lito381/server/NativeResurrectionMaterialAction.class"
+  ],
+  "added": [],
+  "C0_byte_equal": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\build.py",
+      "sha256": "963a723f91020d1adec40f9651ee3d97ff1638c79b0bde4d696a9b52965c1b90"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\NativeLightAction.java",
+      "sha256": "8dfd178211a6033f342c4c5304ac487a11e0ea2b02df85c32aec558a38fe4da0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\NativeResurrectionMaterialAction.java",
+      "sha256": "681c367ad19e559e8922b6b8f8c0db44e15386603e6e44b1796c4fd459e5c111"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\prepare.py",
+      "sha256": "f258acfa4cd328c46a7fa52538121bf3ffc9ad18fbc31199a8e9f732ceafa57a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "2532b3ba1ae1a1de08258d6c51dc0e190131a12ef50c67b4d73fa37506a9888e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build-repro\\inputs\\original\\NativeResurrectionMaterialAction.java",
+      "sha256": "b58875328e217d1bf14f708728ace790238ce55baba053e5d525b1ae7b7ee1cb"
+    }
+  ]
+}

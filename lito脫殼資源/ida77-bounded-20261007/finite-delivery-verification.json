@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "task_id": "bin_resources-ida77-bounded-export-adapter-20261007",
+  "validation_level": "finite new artifact pins and syntax only",
+  "new_preflight_test_checks": 15,
+  "artifact_pins_verified": 20,
+  "selected_installation_sources_unchanged": 3,
+  "qualification_pin_unchanged": true,
+  "IDA_export_acceptance": false,
+  "old_ROOT_PASS_matrix_replayed": false,
+  "new_DB_or_pyc_in_owned_tool_directory": false
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Onlycatalogpartialrows nojoinedsettings/UI/workflow expansion",
+  "subtypes": [
+    {
+      "subtype": 1,
+      "schema": "ds",
+      "effect": "matchingrowname via465B00 virtual+0C; fullDWORDkey; allmatches, absentnoappend"
+    },
+    {
+      "subtype": 2,
+      "schema": "dc",
+      "effect": "icon/attributes/lowflags matchingrows via465AC0/465C10/465CD0/465C90; getterfirst+78 returnsinputroomIDifabsent, nofallbackrowcreation"
+    },
+    {
+      "subtype": 3,
+      "schema": "dh if>=9EA8 else dc",
+      "effect": "matchingcapacity+70 via465B80/463D50"
+    },
+    {
+      "subtype": 4,
+      "schema": "dh if>=9EA8 else dc",
+      "effect": "matchingdisplayusers+6C via465B40/463D40"
+    },
+    {
+      "subtype": 5,
+      "schema": "dhc",
+      "effect": "matchingmapBYTE+74 andmodeflags+78 via465C50/465CD0/465C90; absentnoappend"
+    }
+  ],
+  "not_full_snapshot": "Noend/count/clear ofmissingrows; fullrowsareincrementalappend/dedupNative, partialsnotfullreplacement. RepeatednumericID/staleepoch ambiguity remains.",
+  "no_deltas_adopted_as_actions": "NoJavachange/extrauserroomsettingsaction qualification; partialbranchesonlycloseddirectcatalogdataflow, runtimeUIunknown."
+}

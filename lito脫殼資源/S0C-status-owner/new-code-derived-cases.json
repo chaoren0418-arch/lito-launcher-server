@@ -1,0 +1,214 @@
+{
+  "checks": [
+    {
+      "case": "all_fields_sentinel",
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\cases\\sentinel-all-fields.plain.bin",
+        "bytes": 37,
+        "sha256": "B27D4857EA594CACA52B3C284ECC8EE25689D181CB68ABEE8B43F2ECC133AC41"
+      },
+      "decode": [
+        {
+          "name": "object_id",
+          "body_offset": 1,
+          "raw_hex": "98badcfe",
+          "unsigned_bits": 4275878552,
+          "server_semantic_value": 4275878552,
+          "native_destination": "75AA48"
+        },
+        {
+          "name": "level",
+          "body_offset": 5,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "local ebp-0D→8348CA"
+        },
+        {
+          "name": "experience",
+          "body_offset": 6,
+          "raw_hex": "98badcfe",
+          "unsigned_bits": 4275878552,
+          "server_semantic_value": 4275878552,
+          "native_destination": "8348C4"
+        },
+        {
+          "name": "strength",
+          "body_offset": 10,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B0"
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 11,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B1"
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 12,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B2"
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 13,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B3"
+        },
+        {
+          "name": "constitution",
+          "body_offset": 14,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B4"
+        },
+        {
+          "name": "charisma",
+          "body_offset": 15,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348B5"
+        },
+        {
+          "name": "current_hp",
+          "body_offset": 16,
+          "raw_hex": "0180",
+          "unsigned_bits": 32769,
+          "server_semantic_value": 32769,
+          "native_destination": "local ebp-14→protected8315F0"
+        },
+        {
+          "name": "maximum_hp",
+          "body_offset": 18,
+          "raw_hex": "0180",
+          "unsigned_bits": 32769,
+          "server_semantic_value": 32769,
+          "native_destination": "8348BC"
+        },
+        {
+          "name": "current_mp",
+          "body_offset": 20,
+          "raw_hex": "0180",
+          "unsigned_bits": 32769,
+          "server_semantic_value": 32769,
+          "native_destination": "local ebp-18→protected8315E0"
+        },
+        {
+          "name": "maximum_mp",
+          "body_offset": 22,
+          "raw_hex": "0180",
+          "unsigned_bits": 32769,
+          "server_semantic_value": 32769,
+          "native_destination": "8348BA"
+        },
+        {
+          "name": "armor_class",
+          "body_offset": 24,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": -1,
+          "native_destination": "8348B6"
+        },
+        {
+          "name": "game_time",
+          "body_offset": 25,
+          "raw_hex": "98badcfe",
+          "unsigned_bits": 4275878552,
+          "server_semantic_value": 4275878552,
+          "native_destination": "8348AC"
+        },
+        {
+          "name": "food_gauge",
+          "body_offset": 29,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348CC lowbyte only"
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 30,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": 255,
+          "native_destination": "8348CB"
+        },
+        {
+          "name": "lawful",
+          "body_offset": 31,
+          "raw_hex": "0180",
+          "unsigned_bits": 32769,
+          "server_semantic_value": -32767,
+          "native_destination": "8348B8"
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 33,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": -1,
+          "native_destination": "8348C1"
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 34,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": -1,
+          "native_destination": "8348C0"
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 35,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": -1,
+          "native_destination": "8348BF"
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 36,
+          "raw_hex": "ff",
+          "unsigned_bits": 255,
+          "server_semantic_value": -1,
+          "native_destination": "8348BE"
+        }
+      ],
+      "match": true
+    },
+    {
+      "case": "truncated_36",
+      "audit_rejection": "Audit strict length: wanted37 actual36; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "trailing_38",
+      "audit_rejection": "Audit strict length: wanted37 actual38; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "wrong_opcode",
+      "audit_rejection": "Audit opcode mismatch; native handler assumes dispatcher",
+      "native_rejection_not_claimed": true,
+      "match": true
+    }
+  ],
+  "status": "STATIC_FIELD_MODELS_ONLY",
+  "actual_frames_decoded": 2,
+  "new_synthetic_checks": 4,
+  "new_Java_native_or_producer_PASS_runs": 0,
+  "ready_owner_inference": false
+}

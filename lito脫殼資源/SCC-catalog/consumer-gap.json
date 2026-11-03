@@ -1,0 +1,6 @@
+{
+  "catalog": "ExplicitAD368 fullCC0 row upsert/replace currentchannel+transportepoch catalog byu32ID, preservingjoinedcontext; defineprojectionpolicyseparatefromNative duplicateignore. Unknownpartialidsnoimplicitrow unlessseparatelyqualified.",
+  "reset": "Owner/member/ready/currentjoinedstate absentfromCC. ResetpeerCC79/selflist80 samedata, rolescontextonly; nofixedrowcount/terminator/ownleaveACK. MissingrowsnotdeletedbyCCfullrow.",
+  "delete": "KnownCF2 removesonlycatalog2 currentchannel/epoch, keepGuest joinedroom1; sameIDreusegenerationunknown. Nativeprimaryprivatepath notadapterauthority.",
+  "guard": "KeepUI/private/currentcontext/source/physical/ownerguards; nozero/ASCIIcomparison orNativeUIinjection, noJavawirechange demanded."
+}

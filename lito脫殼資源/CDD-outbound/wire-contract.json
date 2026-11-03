@@ -1,0 +1,147 @@
+{
+  "classification": "KNOWN_SERVER_CDD_LAYOUT_NEW_NATIVE_CONDITIONAL_CALLSITE_SERIALIZER_CORROBORATION",
+  "direction": "client-to-server",
+  "opcode_hex": "DD",
+  "opcode_decimal": 221,
+  "room_id_on_wire": false,
+  "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+  "fields": [
+    {
+      "order": 0,
+      "type": "u8",
+      "bytes": 1,
+      "semantic": "C_DD opcodeDD"
+    },
+    {
+      "order": 1,
+      "type": "NUL8bitstring",
+      "bytes": "N+1",
+      "semantic": "room_name candidate",
+      "source": "EBP-70 orEBP-90"
+    },
+    {
+      "order": 2,
+      "type": "u8",
+      "bytes": 1,
+      "semantic": "attributes candidate",
+      "source": "BL orBYTEEBP-2"
+    },
+    {
+      "order": 3,
+      "type": "NUL8bitstring",
+      "bytes": "P+1",
+      "semantic": "password candidate",
+      "source": "EBP-14 orEBP-24"
+    },
+    {
+      "order": 4,
+      "type": "u16LE",
+      "bytes": 2,
+      "semantic": "capacity candidate",
+      "source": "EDI lowWORD"
+    }
+  ],
+  "extended_fields": [
+    {
+      "type": "fouru8",
+      "bytes": 4,
+      "semantic": "options1..4"
+    },
+    {
+      "type": "u8",
+      "bytes": 1,
+      "semantic": "K selectioncount"
+    },
+    {
+      "type": "Krawbytes",
+      "bytes": "K",
+      "semantic": "nonzero selections in Native8slotcompaction"
+    }
+  ],
+  "encoding": "Native raw8bitNULstrings no codecdeclared; AD368 MS950roundtrip/controlbounds qualification separate.",
+  "endianness": "h lowWORDlittleendian, cBYTE, frameu16LE; no requestroomDWORD",
+  "callsites": [
+    {
+      "id": "compact",
+      "call_VA": "00461236",
+      "call_RVA": "00061236",
+      "format": "cscsh",
+      "opcode_source_VA": "004611C5",
+      "condition": "Conditionalisland only: object[ESI+8]!=0 and runtimeXORdecoded!=1; no currentUI/phase/owner proof.",
+      "args": [
+        "DD",
+        "pointerEBP-70",
+        "signextendBL (serializedlowBYTE)",
+        "pointerEBP-14",
+        "EDI (serializedlowWORDLE)"
+      ],
+      "body_bytes": "6+N+P",
+      "frame_bytes": "8+N+P"
+    },
+    {
+      "id": "legacy_zero_options",
+      "call_VA": "004611A2",
+      "call_RVA": "000611A2",
+      "format": "cscshccccc",
+      "opcode_source_VA": "00461198",
+      "condition": "Conditionalisland: object[ESI+8]!=0 andruntimeXORdecoded==1, notqualifiedversionselector.",
+      "args": [
+        "DD",
+        "pointerEBP-70",
+        "signextendBL (lowBYTE)",
+        "pointerEBP-14",
+        "EDI (lowWORDLE)",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0(K)"
+      ],
+      "body_bytes": "11+N+P",
+      "frame_bytes": "13+N+P"
+    },
+    {
+      "id": "options_and_selection",
+      "call_VA": "004628D5",
+      "call_RVA": "000628D5",
+      "format": "cscshcccccb",
+      "opcode_source_VA": "004628C4",
+      "condition": "Conditionalisland object[EBX+4C]!=0→DD, zero→CC (counteropcode only, noC_CCtaskexpansion).",
+      "args": [
+        "DD",
+        "pointerEBP-90",
+        "signextendBYTEEBP-2 (lowBYTE)",
+        "pointerEBP-24",
+        "EDI (lowWORDLE)",
+        "signextendBYTEEBP-3",
+        "signextendBYTEEBP-4",
+        "signextendBYTEEBP-5",
+        "signextendBYTEEBP-1",
+        "K(c BYTE)",
+        "K(b DWORDbytecount)",
+        "pointerEBP-2C"
+      ],
+      "selection": "Scan8localsEBP-14..-D, compactnonzeroBYTEsinorder→EBP-2C, K0..8; duplicateKforwirec andbcopylength.",
+      "body_bytes": "11+N+P+K",
+      "frame_bytes": "13+N+P+K"
+    }
+  ],
+  "trigger_state": "UIentry firstvirtualSTOP; onlyconditionalobjectflag/runtimeXORislands. Actualsubmit/phase/owner/ready/authinputsunknown.",
+  "evidence_level": "FixedPE staticrawtypedserializer/callsites + twoexistingservertest-clientcompactASCIIframes; zeroNativeoutbound/dynamicextendedqualification",
+  "unknowns": [
+    "461050jmp461060; knownchildlookup41B410 index8 fromobject+0C, firstunknownvirtual46107B FF5254 STOP.",
+    "462910jmp462620; knownchildlookup41B410 index4 fromobject+08, firstunknownvirtual462648 FF5254 STOP.",
+    "No complete UI-submit→send qualification. Laterargs/capacity/selectionislands areconditional independentstatic evidence; unknownvirtualgetters/converters/contexts notbridged.",
+    "NativeactualUIstrings/BL/localoptionbytes/EDI comeafterunknownvirtual/externalinputs. Onlystackpointer/registersourcesqualified; fieldnamesbasedonservergrammar, notactualgettersemantics/codec.",
+    "461153/46286F call4C8790→4C85E0 bodyunqualified STOP. No helpercompletion orsideeffectclaim.",
+    "ObjectBYTE choosesDDvsCC; runtime8316B0/B4/B8 XORindex decode==1 chooseslegacyzerooptionlayout. Not63D54C wireversion,64AF98phase orowner/sessionidentity qualification.",
+    "Visibleconditionalnumericislands require signedEDI>1 and<=200; rejectedbranchescallunknownvirtual+70 STOP. Numericconversion/output/runtimeadmissionunknown; serverordinary2..100 distinct.",
+    "4C6AE0 callsnewlyqualifiednoexternalstackprobe4F11A0 then4C68D0. Onlyformatsc/s/h/b neededbytheseislandsqualified; unusedwideS/private/externalbranchesnotexpanded.",
+    "writeslowBYTE ofDWORDvararg; h writeslowWORDLE; signedpushesdo notchangeoriginallowBYTE.",
+    "Raw8bit NULscan/REPcopyincludesNUL; noencodingconversion. SourceNUL/bufferavailabilityunknown; NativecodecnotMS950byassumption.",
+    "DWORDbytecount+pointer, rawbytecopywithoutterminator. Destinationguardused+K>=0x13FE returns0 (strictlessthanlimit); no sourceboundsqualification.",
+    "Nonzeroformatterlength+2 writtenu16LE atstackEBP-1400, call4C6770(...,1). Formatter0skipssend; actualresult/bounds/inputunknown.",
+    "Inherited4C6770prefixguard8317D0/positivecount,flag1callsfixedencodeleaf4C6700; then4C67D0→4EFEA4 E9F7594175→fixedexternal759058A0 STOP. NotactualruntimeIAT/API/socket/delivery/ACK.",
+    "No provenphase/ownergate/callertrigger beforeUISTOP; no extraidentity/ready/source/physical/sessionauthority. D5sub0/1independentandidenticalsuccess/rejectbodies fromBatch23notACK."
+  ]
+}

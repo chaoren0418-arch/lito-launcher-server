@@ -1,0 +1,62 @@
+{
+  "status": "native-icon-pixels-and-hooks-verified",
+  "run": "class-icons-20261023-04",
+  "pid": 28580,
+  "count": 243,
+  "rgb565_conversion": true,
+  "assets": [
+    {
+      "id": 233,
+      "pointer": 334897808,
+      "pixel_sha256": "382c4a125ef847c9762b7e662ee09c8e45369ba5bf9c45f76bf60fea8247b7d4"
+    },
+    {
+      "id": 234,
+      "pointer": 334898024,
+      "pixel_sha256": "bf81b885aebca07255ba3d2533364a152973d7f4e3a9eb66696e0153001cfb1b"
+    },
+    {
+      "id": 235,
+      "pointer": 334898240,
+      "pixel_sha256": "83d37698c1efd3bec81cdbb269c71f84314b891a4fbf04d7a30474e8f7cdb3ec"
+    },
+    {
+      "id": 236,
+      "pointer": 334898456,
+      "pixel_sha256": "9d5ebbaea08c059d69340b362128ebc9ef6b436d3af9485f15c382f886d231ed"
+    },
+    {
+      "id": 237,
+      "pointer": 334898672,
+      "pixel_sha256": "20d3962dfae326c9f625547280a103117cdd7ed93b737bbae77d2699013a881d"
+    },
+    {
+      "id": 238,
+      "pointer": 321813192,
+      "pixel_sha256": "33c8deca82ad025e11b637c3181f91eba7eb99068d51d1f6329182aa8d27406b"
+    },
+    {
+      "id": 239,
+      "pointer": 321810592,
+      "pixel_sha256": "b548d11cba56728b18650a22da662a297f08bf86e6086af2b6b9a188a2a16066"
+    },
+    {
+      "id": 240,
+      "pointer": 321810792,
+      "pixel_sha256": "ee5a44e17df48e3cced347475b30eb53f2166bbdb6f88eb0d50053e7cf5193e8"
+    },
+    {
+      "id": 241,
+      "pointer": 321811992,
+      "pixel_sha256": "c2e63b1ab6b28cc830b1ec7cb1658c098cbe06f8335f944e7b2f2ab5b20ae303"
+    },
+    {
+      "id": 242,
+      "pointer": 321807592,
+      "pixel_sha256": "29981df02f2706a49ca94f25908cb9aa884cd0d66eefeb6a9d680c4c00cec506"
+    }
+  ],
+  "archive_path": "..\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\LTicon",
+  "formal_updated": false,
+  "onscreen_roster_verified": false
+}

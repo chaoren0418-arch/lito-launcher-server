@@ -1,0 +1,54 @@
+{
+  "version": "0.6.47",
+  "baseline_server_sha256": "e35cb91c43a18a690cc304df8e5a9b2ba15014822261651616ae9420fa8cc5a2",
+  "published_sha256": "ae063385dcdf3898aeb003137f807e6c3365073aece62b8531fb7e86886dcd06",
+  "native_dll_sha256": "b77ba005e05d55a652ad61bddd2babc577849d9ec58b4b04a6e933fa00071c2a",
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "97b2cdf4d291cddfc3be0d9ec1556c35aa6b95570654097b4b1d84976a9d1890",
+    "src/main/java/local/lito381/server/BattleDragonSkinStatus.java": "5bd2916675c343630dcfbc9a1d63ad2e56fb8cc7faa3c6705c67ba869467e7a9",
+    "src/main/java/local/lito381/server/BattleSpellCatalog.java": "b1940d31a3be3156fa66584c4ea6e55ba20d25cfadb2a99a03815fa8b77215fb"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "8c148fbf11aa87086481d85e9ac38094a8351f7bfb6cb679b4097d4b80c7c3ca",
+    "src/main/java/local/lito381/server/BattleDragonSkinStatus.java": "8c21cb39cfbd7e50c3aa01f42645fa0dca658924eb523bb75e658040c126e724",
+    "src/main/java/local/lito381/server/BattleSpellCatalog.java": "03b9c48e7f48028b7a53035187ed4a4e0920bbc526ca01a21888ae65c700baa0"
+  },
+  "added_sources": {
+    "src/main/java/local/lito381/server/DragonCombat.java": "4a73f5f7c48d488c1091e1c6a9b0d3e8abe7470198496e062522957f51f73e11"
+  },
+  "rollback_archive": "backups/before-dragon-combat-0.6.46.zip",
+  "rollback_archive_sha256": "87ae9d33bae367e441b49de636ba376b8ea5fbc359953076676cda2a374e72a8",
+  "changed_classes": [
+    "local/lito381/server/BattleDragonSkinStatus$Snapshot.class",
+    "local/lito381/server/BattleDragonSkinStatus.class",
+    "local/lito381/server/BattleSpellCatalog$FoeSlayerSpell.class",
+    "local/lito381/server/BattleSpellCatalog.class",
+    "local/lito381/server/ClientSession.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/DragonCombat.class"
+  ],
+  "server_regression_passed": true,
+  "server_regression_log": "runtime/dragon-combat-regression.log",
+  "native_fixture_run": "class-lobby-fixture-1791796475663836800",
+  "native_fixture_passed": true,
+  "native_fixture_details": [
+    "actual status packet receiver: original shield and Dragon Skin coexist",
+    "native draw3079 and Chinese hover name",
+    "1200sec refresh without duplicates; zero duration removes",
+    "existing skill target picker and same-window character/account return"
+  ],
+  "native_status_slot": 77,
+  "native_status_wire": "6D h(seconds) c(181)",
+  "no_player_sql_writes": true,
+  "manual_test_pending": true,
+  "limitations": [
+    "Dragon Skin status icon added; other new-class buff icons not certified",
+    "Native wield fallback is spear-family24 when source sprite lacks chainsword83; item type18 and combat stats remain unchanged",
+    "Summon Foe Slayer target extension applies to LiTo BATTLE rooms; legacy WORLD mode unchanged"
+  ],
+  "formal_smoke_run": "cleanup-smoke-1791796719262233500",
+  "formal_smoke_passed": true,
+  "deployment_pins_verified": true,
+  "project_layout_verified": true
+}

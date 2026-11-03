@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-12",
+  "version": "0.6.42",
+  "bat_check": true,
+  "bat_sql_smoke": true,
+  "launcher_build": true,
+  "native_after_legacy_removal": {
+    "pins": true,
+    "server_release_verified": true,
+    "footer_removed": true,
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791777467994855000"
+  },
+  "memory_run": "runtime/memory-checks/layout-20261012-memory/result.json",
+  "memory_accepted": true,
+  "rollback_server_inputs_verified": 11,
+  "interactive_gameplay_retested": false,
+  "sql_or_gameplay_code_changed": false,
+  "rollback_full_recipe": {
+    "backup_files": 344,
+    "client_recipe_files": 14699,
+    "verified": true,
+    "restored": false
+  },
+  "documentation_links_verified": true,
+  "removed_files": 1474,
+  "changed_python_syntax_verified": true,
+  "layout": {
+    "verified": true,
+    "source_files_unchanged": 3093,
+    "sql_files_unchanged": 8,
+    "archive_entries_hash_verified": 1460,
+    "removed_files": 1474,
+    "formal_release_verified": true,
+    "memory_entry_pinned": true,
+    "files_after": 3251,
+    "bytes_after": 313248970,
+    "bytes_reduced": 55879633
+  }
+}

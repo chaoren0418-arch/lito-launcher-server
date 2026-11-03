@@ -1,0 +1,183 @@
+{
+  "status": "native-expiry-and-layout-qualified",
+  "binary": {
+    "path": "D:\\lineage開發\\經典版UI資源\\證據原檔\\TW13081901.memory.bin",
+    "sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c"
+  },
+  "anchors": {
+    "offIcon_name": {
+      "va": "0x44a715",
+      "bytes": "6854d58c00"
+    },
+    "offIcon_store": {
+      "va": "0x44a737",
+      "bytes": "8945d8"
+    },
+    "priority_store": {
+      "va": "0x44a761",
+      "bytes": "8945e0"
+    },
+    "graphic_store": {
+      "va": "0x44a612",
+      "bytes": "8955d0"
+    },
+    "group_store": {
+      "va": "0x44a523",
+      "bytes": "8945c0"
+    },
+    "copy_row": {
+      "va": "0x44a873",
+      "bytes": "b90f0000008d75b8f3a5"
+    }
+  },
+  "TW_row_offsets": {
+    "group": 8,
+    "startMsg": 12,
+    "endMsg": 16,
+    "graphic": 24,
+    "offIcon": 32,
+    "priority": 40
+  },
+  "expiry_replays": [
+    {
+      "off_icon": 0,
+      "option": 0,
+      "after_expiry": {
+        "visible": 0,
+        "active": 0,
+        "calls": [
+          [
+            "remove",
+            38
+          ]
+        ]
+      },
+      "after_optional_callback": [
+        [
+          "remove",
+          38
+        ]
+      ]
+    },
+    {
+      "off_icon": 0,
+      "option": 1,
+      "after_expiry": {
+        "visible": 0,
+        "active": 0,
+        "calls": [
+          [
+            "remove",
+            38
+          ]
+        ]
+      },
+      "after_optional_callback": [
+        [
+          "remove",
+          38
+        ]
+      ]
+    },
+    {
+      "off_icon": 5400,
+      "option": 0,
+      "after_expiry": {
+        "visible": 0,
+        "active": 0,
+        "calls": [
+          [
+            "remove",
+            38
+          ]
+        ]
+      },
+      "after_optional_callback": [
+        [
+          "remove",
+          38
+        ]
+      ]
+    },
+    {
+      "off_icon": 5400,
+      "option": 1,
+      "after_expiry": {
+        "visible": 0,
+        "active": 1,
+        "calls": [
+          [
+            "schedule",
+            10000,
+            5169712,
+            38
+          ]
+        ]
+      },
+      "after_optional_callback": [
+        [
+          "schedule",
+          10000,
+          5169712,
+          38
+        ],
+        [
+          "remove",
+          38
+        ]
+      ]
+    }
+  ],
+  "group_differences": [
+    {
+      "slot": 3,
+      "native_group": 3,
+      "xml_group": 35,
+      "name": "POTION_PRUDENCE_S"
+    },
+    {
+      "slot": 5,
+      "native_group": 5,
+      "xml_group": 0,
+      "name": "OLD_SHADOW_ARMOR"
+    },
+    {
+      "slot": 26,
+      "native_group": 2,
+      "xml_group": 0,
+      "name": "SHINING_AURA_S"
+    },
+    {
+      "slot": 27,
+      "native_group": 0,
+      "xml_group": 33,
+      "name": "BRAVE_AURA_S"
+    },
+    {
+      "slot": 44,
+      "native_group": 0,
+      "xml_group": 31,
+      "name": "ADVANCE_SPIRIT_S"
+    },
+    {
+      "slot": 46,
+      "native_group": 0,
+      "xml_group": 32,
+      "name": "NATURES_TOUCH_S"
+    }
+  ],
+  "implementation_status": "audit-only; not applied to candidate",
+  "findings": [
+    "offIcon requires expiry mode AND client option 0x9661D8, retaining a status entry for 10 seconds.",
+    "LiTo 0x4875A0 immediately clears active and removes entry; swapping icon alone cannot reproduce offIcon.",
+    "TW group replacement calls full state cleanup; LiTo 0x49F9F0 removes matching UI entries. Do not copy changed groups until cleanup is ported.",
+    "TW effect row +0x0C is startMsg, not graphic. The 0x4EE600 use of +0x0C must not be treated as an SPR trigger.",
+    "Priority/render-graphic consumers remain to be qualified."
+  ],
+  "limits": [
+    "Scheduler and UI removal intercepted; no game or live timer.",
+    "Parser field stores anchored; full XML parser not executed."
+  ],
+  "database_modified": false,
+  "formal_updated": false
+}

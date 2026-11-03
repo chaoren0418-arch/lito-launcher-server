@@ -1,0 +1,58 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build\\candidate-return-nature-material.jar",
+    "sha256": "280dcb25f32f6bc6dc53b31d374946fe6f3dfdc525fabcc9543d1e3e1d2e564b"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\candidate-return-nature-transfer.jar",
+    "sha256": "54a781b55528a43e037508561b422ca4376f06dee0777493050a0decf9ca158c"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class",
+    "local/lito381/server/NativeReturnNatureMaterialAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeReturnNatureTransfer$Overflow.class",
+    "local/lito381/server/NativeReturnNatureTransfer$Scope.class",
+    "local/lito381/server/NativeReturnNatureTransfer.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\build.py",
+      "sha256": "e14429ef28ece6720455e8ca13feb68d22330703da23a85150dfb248cf408abf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\ReturnNatureTransferMethods.java",
+      "sha256": "e9f8a070f36f5d6e77bb983c975db56f3431d57c9a61862528953226029bf456"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "50ca58390fc06e3e76c90629a4a5ac47b11ba1698895bf551b24d402e6334382"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\original\\NativeReturnNatureMaterialAction.java",
+      "sha256": "652eb4e58c686d7a4a3bc7827ab7b71587f19afe4ff9797c7a791f56e23e6c4c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "d2e3ce29facc9055fbff7b47d26e3c771a5899d6bb9569695597f6a7eb042597"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\sources\\NativeReturnNatureMaterialAction.java",
+      "sha256": "a1dfb1687f1369689f8387d3ad827beb8395e19840d1a989c7dc756cd14c8df0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build-repro\\inputs\\sources\\NativeReturnNatureTransfer.java",
+      "sha256": "2c62a8cca5574c912ba9b03b4044aab710701e3fc843ec2f63b1d89719ea3cd6"
+    }
+  ]
+}

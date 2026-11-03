@@ -1,0 +1,699 @@
+{
+  "captures": [
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 74,
+      "frame_1based": 75,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d1426174746c65477565737428426174746c654d6f6f6e290001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 24,
+          "raw_hex": "426174746c65477565737428426174746c654d6f6f6e29",
+          "ASCII_capture_label": "BattleGuest(BattleMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 76,
+      "frame_1based": 77,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d1426174746c65477565737428426174746c654d6f6f6e290001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 24,
+          "raw_hex": "426174746c65477565737428426174746c654d6f6f6e29",
+          "ASCII_capture_label": "BattleGuest(BattleMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 77,
+      "frame_1based": 78,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d1426174746c65486f737428426174746c654d6f6f6e290001",
+      "body_bytes": 25,
+      "frame_bytes": 27,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 23,
+          "raw_hex": "426174746c65486f737428426174746c654d6f6f6e29",
+          "ASCII_capture_label": "BattleHost(BattleMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 24,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 25,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 78,
+      "frame_1based": 79,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 3
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 79,
+      "frame_1based": 80,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e102",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 2
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 80,
+      "frame_1based": 81,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e101",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 93,
+      "frame_1based": 94,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d1426174746c65486f737428426174746c654d6f6f6e290001",
+      "body_bytes": 25,
+      "frame_bytes": 27,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 23,
+          "raw_hex": "426174746c65486f737428426174746c654d6f6f6e29",
+          "ASCII_capture_label": "BattleHost(BattleMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 24,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 25,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 94,
+      "frame_1based": 95,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 3
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 95,
+      "frame_1based": 96,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e102",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 2
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 96,
+      "frame_1based": 97,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e101",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 75,
+      "frame_1based": 76,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d152657475726e47756573742852657475726e4d6f6f6e290001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 24,
+          "raw_hex": "52657475726e47756573742852657475726e4d6f6f6e29",
+          "ASCII_capture_label": "ReturnGuest(ReturnMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 77,
+      "frame_1based": 78,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d152657475726e47756573742852657475726e4d6f6f6e290001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 24,
+          "raw_hex": "52657475726e47756573742852657475726e4d6f6f6e29",
+          "ASCII_capture_label": "ReturnGuest(ReturnMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 78,
+      "frame_1based": 79,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d152657475726e486f73742852657475726e4d6f6f6e290001",
+      "body_bytes": 25,
+      "frame_bytes": 27,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 23,
+          "raw_hex": "52657475726e486f73742852657475726e4d6f6f6e29",
+          "ASCII_capture_label": "ReturnHost(ReturnMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 24,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 25,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 79,
+      "frame_1based": 80,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 3
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 80,
+      "frame_1based": 81,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e102",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 2
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 81,
+      "frame_1based": 82,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e101",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 84,
+      "frame_1based": 85,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 209,
+      "body_hex": "d152657475726e486f73742852657475726e4d6f6f6e290001",
+      "body_bytes": 25,
+      "frame_bytes": 27,
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL terminated8bit alias",
+          "body_offset": 1,
+          "bytes": 23,
+          "raw_hex": "52657475726e486f73742852657475726e4d6f6f6e29",
+          "ASCII_capture_label": "ReturnHost(ReturnMoon)"
+        },
+        {
+          "index": 2,
+          "type": "c/u8state",
+          "body_offset": 24,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 25,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 85,
+      "frame_1based": 86,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 3
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 86,
+      "frame_1based": 87,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e102",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 2
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 87,
+      "frame_1based": 88,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 225,
+      "body_hex": "e101",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "fields": [
+        {
+          "index": 1,
+          "type": "c/u8count",
+          "body_offset": 1,
+          "bytes": 1,
+          "value": 1
+        }
+      ],
+      "consumed": 2,
+      "remaining": 0,
+      "classification": "Known sealed wire corroboration; not new runtime/native phase/comparison/GUI acceptance"
+    }
+  ],
+  "per_peer_order": [
+    {
+      "capture": "5ED",
+      "epoch": "Host-GAME",
+      "D1_E1_ordinals": [
+        77,
+        78,
+        79,
+        80,
+        81
+      ],
+      "E1_values": [
+        3,
+        2,
+        1
+      ],
+      "ordering": "Per-peer receipt order only; no Native phase or Java atomic transition proof"
+    },
+    {
+      "capture": "5ED",
+      "epoch": "Guest-GAME",
+      "D1_E1_ordinals": [
+        75,
+        94,
+        95,
+        96,
+        97
+      ],
+      "E1_values": [
+        3,
+        2,
+        1
+      ],
+      "ordering": "Per-peer receipt order only; no Native phase or Java atomic transition proof"
+    },
+    {
+      "capture": "49A",
+      "epoch": "Host-GAME",
+      "D1_E1_ordinals": [
+        78,
+        79,
+        80,
+        81,
+        82
+      ],
+      "E1_values": [
+        3,
+        2,
+        1
+      ],
+      "ordering": "Per-peer receipt order only; no Native phase or Java atomic transition proof"
+    },
+    {
+      "capture": "49A",
+      "epoch": "Guest-GAME",
+      "D1_E1_ordinals": [
+        76,
+        85,
+        86,
+        87,
+        88
+      ],
+      "E1_values": [
+        3,
+        2,
+        1
+      ],
+      "ordering": "Per-peer receipt order only; no Native phase or Java atomic transition proof"
+    }
+  ],
+  "cancellation_repeat_partial_native_qualified": false
+}

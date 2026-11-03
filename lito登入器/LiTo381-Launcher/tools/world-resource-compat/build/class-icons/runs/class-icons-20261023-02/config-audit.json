@@ -1,0 +1,88 @@
+{
+  "service_mode": "standard",
+  "base_config": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\config\\server.properties",
+    "bytes": 3572,
+    "sha256": "0BF3C6D9C9574EFF309954E48DF2B17A778E784FBB58DC5D4478EC49C532B357"
+  },
+  "runtime_changes": [
+    "capture.directory",
+    "absolute paths"
+  ],
+  "database_mode": "lito_mysql",
+  "database_read_only": true,
+  "dynamic_databases": [
+    "380_ac_1",
+    "380_ac_2"
+  ],
+  "instances": [
+    {
+      "role": "standard",
+      "config": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\runs\\class-icons-20261023-02\\config\\server.dev.standard.properties",
+        "bytes": 281,
+        "sha256": "DAE9B6834DCFBBEDBD020069B98E8C9F3C7C954B92623B4C4A28468486A33962"
+      },
+      "outputs": {
+        "state.file": "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/runtime/shared-database-memory/server.state"
+      },
+      "login": "127.0.0.1",
+      "game": "127.0.0.2",
+      "port": 32000,
+      "persistence_enabled": "false",
+      "effective": {
+        "advertised.host": "127.0.0.2",
+        "advertised.port": "32000",
+        "battle.ai.enabled": "false",
+        "battle.compatibility.service.actors.enabled": "false",
+        "battle.natural.mp.regen.enabled": "true",
+        "battle.physical.hit.enabled": "true",
+        "bind": "127.0.0.1",
+        "capture.directory": "D:/lineage開發/3-lito開發/lito登入器/LiTo381-Launcher/tools/world-resource-compat/build/class-icons/runs/class-icons-20261023-02/outputs/captures",
+        "classic.world.compatibility.enabled": "false",
+        "classic.world.monster.ai.enabled": "false",
+        "configuration.base.file": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\config\\server.properties",
+        "cpu.limit": "4",
+        "database.connection.properties": "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/config/server.properties",
+        "database.dynamic.databases": "380_ac_1,380_ac_2",
+        "database.lito.character.table": "character_lito",
+        "database.lito.database": "380_lito",
+        "database.mode": "lito_mysql",
+        "database.persistence.policy": "source-readonly-stats-only",
+        "database.read.only": "true",
+        "database.source.weight.rates": "100.0,100.0",
+        "database.static.database": "380_db",
+        "game.bind": "127.0.0.2",
+        "lito.rental.teleport.routes": "",
+        "lito.rental.town.directory.enabled": "false",
+        "lobby.character.list.enabled": "true",
+        "lobby.enter.channel.response.delay.ms": "0",
+        "lobby.server.select.response.delay.ms": "0",
+        "login.bootstrap.sequence": "login_check,classic_server_list,lito_server_list",
+        "login.bootstrap.step.delay.ms": "250",
+        "login.classic.server.ids": "1,2",
+        "login.classic.server.names": "公牛,天使",
+        "login.source.port.base": "32000",
+        "logs.directory": "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/loginfo",
+        "memory.initial": "512m",
+        "memory.maximum": "2048m",
+        "native.siege.roster.enforced": "true",
+        "native.tournament.allowance": "20000",
+        "native.tournament.economy.enabled": "true",
+        "origin.source.id": "lito-shared",
+        "origin.source.name": "LiTo Standard Arena",
+        "port": "32000",
+        "server.name": "LiTo Standard Arena",
+        "startup.timeout.seconds": "30",
+        "state.file": "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/runtime/shared-database-memory/server.state",
+        "state.persistence.enabled": "false",
+        "weight.rate": "100.0"
+      },
+      "jvm_options": [
+        "-Xms512m",
+        "-Xmx2048m",
+        "-XX:ActiveProcessorCount=4"
+      ]
+    }
+  ]
+}

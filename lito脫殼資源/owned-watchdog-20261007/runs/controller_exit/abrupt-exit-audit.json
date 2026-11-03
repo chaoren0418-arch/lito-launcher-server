@@ -1,0 +1,206 @@
+{
+  "schema": "owned-controller-abrupt-exit-v1",
+  "controller_identity": {
+    "pid": 2836,
+    "creation_filetime_100ns": 134358245025887653,
+    "creation_time_utc": "2026-10-07T05:28:22.588765+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "controller_exit": {
+    "signaled": true,
+    "wait_result": 0,
+    "exit_code": 73
+  },
+  "checkpoint": {
+    "controller_pid": 2836,
+    "exit_code_planned": 73,
+    "inner_policy": {
+      "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+      "limit_flags": 8200,
+      "kill_on_last_handle_close": true,
+      "breakaway_allowed": false,
+      "job_handle_inheritable": false,
+      "active_process_limit": 16,
+      "hidden_window": true,
+      "only_explicit_stdio_handles_inherited": true
+    },
+    "inner_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+      "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+    },
+    "inner_members": [
+      {
+        "pid": 500,
+        "creation_filetime_100ns": 134358245026828953,
+        "creation_time_utc": "2026-10-07T05:28:22.682895+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 418461.156,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      {
+        "pid": 15108,
+        "creation_filetime_100ns": 134358245026898441,
+        "creation_time_utc": "2026-10-07T05:28:22.689844+00:00",
+        "image_path": "C:\\Windows\\System32\\conhost.exe",
+        "primary": false,
+        "membership_verified": true,
+        "first_seen_monotonic": 418461.171,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      {
+        "pid": 508,
+        "creation_filetime_100ns": 134358245029371081,
+        "creation_time_utc": "2026-10-07T05:28:22.937108+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "primary": false,
+        "membership_verified": true,
+        "first_seen_monotonic": 418461.421,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      {
+        "pid": 19020,
+        "creation_filetime_100ns": 134358245029462663,
+        "creation_time_utc": "2026-10-07T05:28:22.946266+00:00",
+        "image_path": "C:\\Windows\\System32\\conhost.exe",
+        "primary": false,
+        "membership_verified": true,
+        "first_seen_monotonic": 418461.437,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      }
+    ],
+    "checkpoint_monotonic": 418461.515,
+    "cleanup_function_called": false
+  },
+  "observed_members_before_outer_cleanup": [
+    {
+      "pid": 2836,
+      "creation_filetime_100ns": 134358245025887653,
+      "creation_time_utc": "2026-10-07T05:28:22.588765+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.062,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 73
+      }
+    },
+    {
+      "pid": 22544,
+      "creation_filetime_100ns": 134358245025964256,
+      "creation_time_utc": "2026-10-07T05:28:22.596426+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.078,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 500,
+      "creation_filetime_100ns": 134358245026828953,
+      "creation_time_utc": "2026-10-07T05:28:22.682895+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.156,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15108,
+      "creation_filetime_100ns": 134358245026898441,
+      "creation_time_utc": "2026-10-07T05:28:22.689844+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.171,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 508,
+      "creation_filetime_100ns": 134358245029371081,
+      "creation_time_utc": "2026-10-07T05:28:22.937108+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.421,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 19020,
+      "creation_filetime_100ns": 134358245029462663,
+      "creation_time_utc": "2026-10-07T05:28:22.946266+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.421,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    }
+  ],
+  "outer_job_handle_still_open": true,
+  "outer_cleanup_before_exit_audit": false,
+  "inner_identities_matched": true,
+  "all_job_members_exited_before_outer_cleanup": true,
+  "passed": true,
+  "fallback_outer_cleanup_needed": false,
+  "capture": {
+    "stdout": {
+      "observed_bytes": 0,
+      "retained_bytes": 0,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\stdout.bin",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    "stderr": {
+      "observed_bytes": 0,
+      "retained_bytes": 0,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\stderr.bin",
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  }
+}

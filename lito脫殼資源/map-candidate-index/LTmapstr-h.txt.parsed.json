@@ -1,0 +1,1047 @@
+{
+  "schema": "LTmapstr-byte-candidate-index-v1",
+  "candidate": "LTmapstr-h.txt",
+  "provenance": {
+    "namespace": "native",
+    "archive": "LTtext",
+    "row": 243,
+    "offset": 188641,
+    "bytes": 396,
+    "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+    "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00243-LTmapstr-h.txt",
+      "bytes": 396,
+      "sha256": "0EF0CF1CE87D16B3A8A0F8D74F4D62E11F97537989CA1DD50B60A1272B68F3D1"
+    },
+    "decoded": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00243-LTmapstr-h.txt",
+      "bytes": 396,
+      "sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3"
+    },
+    "existing_resource_encoding_marker": "L1",
+    "marker_is_text_codec_qualification": false,
+    "qualified_text_codec": null,
+    "existing_display_reference": {
+      "assumed_code_page": 950,
+      "status": "strict decode failed; raw decoded bytes preserved"
+    },
+    "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+  },
+  "policy": {
+    "encoding": "bytes authoritative; printable ASCII view only; no codec inference or non-ASCII decode",
+    "physical_lines": "CRLF, standalone CR, standalone LF only; retain terminator; terminal EOL creates no phantom row",
+    "tokens": "literal byte 23 (#), retain every empty/trailing token and whitespace; no escape grammar inferred",
+    "header": "first nonblank physical line, standalone unsigned ASCII decimal after SP/HT trim; observed count declaration only",
+    "comment": "first non-SP/HT byte is 3B (;); preserve whole content; other semicolons retained without inline truncation",
+    "file_key": "non-header non-comment hash row, first token SP/HT-trimmed signed ASCII decimal; arbitrary precision; no width coercion",
+    "commented_key": "separate inactive declaration after exactly one leading comment marker; never active file key",
+    "placeholder": "token SP/HT-trimmed equals exact lowercase ASCII no exist or no exsist; marker flag, not deleted",
+    "label_metadata": "all tokens returned with positions and bytes; no canonical title column or fallback key",
+    "duplicate_keys": "all matching physical rows in source order; no first/last winner"
+  },
+  "authority_guard": "Candidate bytes only. File key, physical line, header count and token position do not qualify runtime table index, locale, label codec or map/resource ID. No cross-candidate alignment or title-column inference.",
+  "source_byte_length": 396,
+  "source_sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3",
+  "header_declared_count": 32,
+  "header_physical_line_1based": 1,
+  "counts": {
+    "physical_rows": 33,
+    "header_rows": 1,
+    "physical_rows_after_header": 32,
+    "nonblank_rows_after_header": 32,
+    "comment_rows_after_header": 0,
+    "noncomment_nonblank_rows_after_header": 32,
+    "hash_rows_after_header_including_comments": 0,
+    "noncomment_hash_rows_after_header": 0,
+    "noncomment_plain_rows_after_header": 32,
+    "explicit_numeric_key_rows": 0,
+    "commented_numeric_key_rows": 0,
+    "placeholder_rows_including_comments": 0,
+    "noncomment_placeholder_rows": 0,
+    "hash_delimiters": 0,
+    "tokens": 33
+  },
+  "count_minus_header": {
+    "physical_rows_after_header": 0,
+    "nonblank_rows_after_header": 0,
+    "noncomment_nonblank_rows_after_header": 0,
+    "noncomment_hash_rows_after_header": -32
+  },
+  "terminal_eol": true,
+  "eol_counts": {
+    "CRLF": 33,
+    "CR": 0,
+    "LF": 0,
+    "NONE": 0
+  },
+  "duplicate_explicit_file_keys": {},
+  "coverage": {
+    "reconstructed_source_sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3",
+    "all_source_bytes_preserved": true,
+    "all_token_bytes_preserved": true,
+    "byte_interval": [
+      0,
+      396
+    ]
+  },
+  "rows": [
+    {
+      "physical_line_1based": 1,
+      "byte_offset": 0,
+      "content_byte_length": 2,
+      "full_byte_length": 4,
+      "raw_bytes_hex": "33320d0a",
+      "content_hex": "3332",
+      "content_sha256": "E29C9C180C6279B0B02ABD6A1801C7C04082CF486EC027AA13515E4F3884BB6B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "header_count",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 0,
+          "byte_length": 2,
+          "raw_hex": "3332",
+          "printable_ascii": "32"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 2,
+      "byte_offset": 4,
+      "content_byte_length": 10,
+      "full_byte_length": 12,
+      "raw_bytes_hex": "d6f2cca8bebabcbcb3a10d0a",
+      "content_hex": "d6f2cca8bebabcbcb3a1",
+      "content_sha256": "AA50160E47AD69D2D2BCF78FEC18A28B9D7ED27BD2A9BF8EB4F77232093BEE58",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 4,
+          "byte_length": 10,
+          "raw_hex": "d6f2cca8bebabcbcb3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 3,
+      "byte_offset": 16,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "d1aac8bebdd7ccdd0d0a",
+      "content_hex": "d1aac8bebdd7ccdd",
+      "content_sha256": "D6E57BCC12974FA42A64EAED73B038CFC411B6078A58509F9CC3AA189C337CD7",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 16,
+          "byte_length": 8,
+          "raw_hex": "d1aac8bebdd7ccdd",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 4,
+      "byte_offset": 26,
+      "content_byte_length": 10,
+      "full_byte_length": 12,
+      "raw_bytes_hex": "d4b2d0cebebabcbcb3a10d0a",
+      "content_hex": "d4b2d0cebebabcbcb3a1",
+      "content_sha256": "7EF637D3098CB3EA80F08DFC83B0F02049C7A875514BB454DFC84369E3A36168",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 26,
+          "byte_length": 10,
+          "raw_hex": "d4b2d0cebebabcbcb3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 5,
+      "byte_offset": 38,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "c5b7d6debba8d4b00d0a",
+      "content_hex": "c5b7d6debba8d4b0",
+      "content_sha256": "6C4366214C8DF537F5902962AFDE8B0E04A329335C40806926130709B9F6D80D",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 38,
+          "byte_length": 8,
+          "raw_hex": "c5b7d6debba8d4b0",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 6,
+      "byte_offset": 48,
+      "content_byte_length": 10,
+      "full_byte_length": 12,
+      "raw_bytes_hex": "c3fcd4cbcaaed7d6c2b70d0a",
+      "content_hex": "c3fcd4cbcaaed7d6c2b7",
+      "content_sha256": "3449BBA18EE3C6041F1DC2C91198815B2996AC2608E16DE7F61E531E8F29C445",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 48,
+          "byte_length": 10,
+          "raw_hex": "c3fcd4cbcaaed7d6c2b7",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 7,
+      "byte_offset": 60,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "d1fdc4a7bcc0ccb30d0a",
+      "content_hex": "d1fdc4a7bcc0ccb3",
+      "content_sha256": "97C9FDC0436BC1063A8125A62A65AF729FC183ECDE3ADACD5C94F2B3A3C577A2",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 60,
+          "byte_length": 8,
+          "raw_hex": "d1fdc4a7bcc0ccb3",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 8,
+      "byte_offset": 70,
+      "content_byte_length": 10,
+      "full_byte_length": 12,
+      "raw_bytes_hex": "b1a3bba4d5dfd6aecbfe0d0a",
+      "content_hex": "b1a3bba4d5dfd6aecbfe",
+      "content_sha256": "06A671864DB5EC5173B123426C2D082C08E1184C40947913E3D1C334A500CC52",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 70,
+          "byte_length": 10,
+          "raw_hex": "b1a3bba4d5dfd6aecbfe",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 9,
+      "byte_offset": 82,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbc0cdf6cfdddae50d0a",
+      "content_hex": "cbc0cdf6cfdddae5",
+      "content_sha256": "9FA5E54749F7476A65AE1BD8D3C04D6223AEB360CE087FA2A07A5432FC24B944",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 82,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6cfdddae5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 10,
+      "byte_offset": 92,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbc0cdf6d6aeb5d80d0a",
+      "content_hex": "cbc0cdf6d6aeb5d8",
+      "content_sha256": "5B9A3D20FB93ABDEBB7F63D351EC295A36D3AF525E52A49470A14236F485113C",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 92,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6d6aeb5d8",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 11,
+      "byte_offset": 102,
+      "content_byte_length": 10,
+      "full_byte_length": 12,
+      "raw_bytes_hex": "c8d9d2abbebabcbcb3a10d0a",
+      "content_hex": "c8d9d2abbebabcbcb3a1",
+      "content_sha256": "FF851605A0D0D57677679A2481269D545184C015D101AB9D499EFC0CA640CA7A",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 102,
+          "byte_length": 10,
+          "raw_hex": "c8d9d2abbebabcbcb3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 12,
+      "byte_offset": 114,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbc0cdf6cda8b5c00d0a",
+      "content_hex": "cbc0cdf6cda8b5c0",
+      "content_sha256": "656345B1BCD300874B4C0B6BC8AE8CDA38FC6C5BC8F424672D1F059EBC41C2F9",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 114,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6cda8b5c0",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 13,
+      "byte_offset": 124,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbaed6aee1a1c4bb0d0a",
+      "content_hex": "cbaed6aee1a1c4bb",
+      "content_sha256": "346781C7F2B70967B62B17E28845E26579DB2964285B0B9260121771ECB81D0A",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 124,
+          "byte_length": 8,
+          "raw_hex": "cbaed6aee1a1c4bb",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 14,
+      "byte_offset": 134,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "b5d8d3fcd6aec3c50d0a",
+      "content_hex": "b5d8d3fcd6aec3c5",
+      "content_sha256": "9E4FB8B8C60218FE741F6FAE68C1C6390F6E4DFBE150D6166A93B56058C2DBAC",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 134,
+          "byte_length": 8,
+          "raw_hex": "b5d8d3fcd6aec3c5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 15,
+      "byte_offset": 144,
+      "content_byte_length": 4,
+      "full_byte_length": 6,
+      "raw_bytes_hex": "caa5b5ee0d0a",
+      "content_hex": "caa5b5ee",
+      "content_sha256": "A2DCFB2B418A88E2861BF0D8C64CB428B358B7DD33B4C8A4D55FB7089BD0871B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 144,
+          "byte_length": 4,
+          "raw_hex": "caa5b5ee",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 16,
+      "byte_offset": 150,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbc0cdf6d2c7cabd0d0a",
+      "content_hex": "cbc0cdf6d2c7cabd",
+      "content_sha256": "900C5843776450A4CCE6DC11F053906D7235D6604EC0C04EC256B9385B35AEDE",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 150,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6d2c7cabd",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 17,
+      "byte_offset": 160,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "b9eedadcd6aeb7bf0d0a",
+      "content_hex": "b9eedadcd6aeb7bf",
+      "content_sha256": "AE812DB49B94EEA38650CC9654D14D6835C4AD31B8EA0DE900F14D2D533734BB",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 160,
+          "byte_length": 8,
+          "raw_hex": "b9eedadcd6aeb7bf",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 18,
+      "byte_offset": 170,
+      "content_byte_length": 6,
+      "full_byte_length": 8,
+      "raw_bytes_hex": "c9f1d6aebbf00d0a",
+      "content_hex": "c9f1d6aebbf0",
+      "content_sha256": "932EFD7318691DA35251A14D13FAD3515360AA5FE2E87C78E85F5E8A4E9A2A6D",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 170,
+          "byte_length": 6,
+          "raw_hex": "c9f1d6aebbf0",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 19,
+      "byte_offset": 178,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b1a3a90d0a",
+      "content_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b1a3a9",
+      "content_sha256": "55C0FBF47DC9DE42758EBF9285741DBA2B215A69AA58243457C4271559B3CEFB",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 178,
+          "byte_length": 20,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b1a3a9",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 20,
+      "byte_offset": 200,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b2a3a90d0a",
+      "content_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b2a3a9",
+      "content_sha256": "93E9E333C0FAC214FC9BAF8BDF59D0FD079BCB563AA87B804146DA52676E82C2",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 200,
+          "byte_length": 20,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b2a3a9",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 21,
+      "byte_offset": 222,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b3a3a90d0a",
+      "content_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b3a3a9",
+      "content_sha256": "2592283F0D75ED158D1CFCA0A8756DA9FC74E5ECA4254EE3DE8E593B7C0D8F47",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 222,
+          "byte_length": 20,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b3a3a9",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 22,
+      "byte_offset": 244,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b4a3a90d0a",
+      "content_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b4a3a9",
+      "content_sha256": "C8FF19B0ADDA62ED2B91181AABD03B795AF5F8905C53A7790D25DCF99AD02F2D",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 244,
+          "byte_length": 20,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b4a3a9",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 23,
+      "byte_offset": 266,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b5a3a90d0a",
+      "content_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b5a3a9",
+      "content_sha256": "DC4FF8AE790D21B85BE68844625F9C88DB38AC233FF0BA5D9E1B16EC64BE9E99",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 266,
+          "byte_length": 20,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1a3a8a3cca3f6a3b5a3a9",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 24,
+      "byte_offset": 288,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "d2ecb6c8bfd5bce40d0a",
+      "content_hex": "d2ecb6c8bfd5bce4",
+      "content_sha256": "71C936DFAAEE58CA2FD4D96DEB89D59043D8BE8F7D8936E34F035C9637E8F6D3",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 288,
+          "byte_length": 8,
+          "raw_hex": "d2ecb6c8bfd5bce4",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 25,
+      "byte_offset": 298,
+      "content_byte_length": 4,
+      "full_byte_length": 6,
+      "raw_bytes_hex": "caa5b5ee0d0a",
+      "content_hex": "caa5b5ee",
+      "content_sha256": "A2DCFB2B418A88E2861BF0D8C64CB428B358B7DD33B4C8A4D55FB7089BD0871B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 298,
+          "byte_length": 4,
+          "raw_hex": "caa5b5ee",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 26,
+      "byte_offset": 304,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cad4d1e9d6aec3c50d0a",
+      "content_hex": "cad4d1e9d6aec3c5",
+      "content_sha256": "8B381EBE0653400EEBE2A75FA11CAE19C50F36F2C857800C8CA3A4F386BECFF7",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 304,
+          "byte_length": 8,
+          "raw_hex": "cad4d1e9d6aec3c5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 27,
+      "byte_offset": 314,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "b7bdd0ceb9e3b3a10d0a",
+      "content_hex": "b7bdd0ceb9e3b3a1",
+      "content_sha256": "D75B77286BF5C77CD084D782F46808A33AE91837B95A28B2861B52869F4D2ADF",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 314,
+          "byte_length": 8,
+          "raw_hex": "b7bdd0ceb9e3b3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 28,
+      "byte_offset": 324,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "b2fcc0f5c8cecef10d0a",
+      "content_hex": "b2fcc0f5c8cecef1",
+      "content_sha256": "824D1DDE1DFFC52BC17CB6944A72B806E815A8AE5A173FCAF0F3AF2CCF2A6F62",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 324,
+          "byte_length": 8,
+          "raw_hex": "b2fcc0f5c8cecef1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 29,
+      "byte_offset": 334,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "c8d9d3fed6aec3c50d0a",
+      "content_hex": "c8d9d3fed6aec3c5",
+      "content_sha256": "1F9F550DFAF6CB86232669E17FB173C1C8BDFA826A5E4D74D7F9E09E13377B26",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 334,
+          "byte_length": 8,
+          "raw_hex": "c8d9d3fed6aec3c5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 30,
+      "byte_offset": 344,
+      "content_byte_length": 14,
+      "full_byte_length": 16,
+      "raw_bytes_hex": "b8a3b6fbc4a6c9afd6aecbc0b6b70d0a",
+      "content_hex": "b8a3b6fbc4a6c9afd6aecbc0b6b7",
+      "content_sha256": "EFA8F4BE05AAA273AB29B8C7F09EAFB33CB4CA916C03BAEEE2572F9C80BCFE85",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 344,
+          "byte_length": 14,
+          "raw_hex": "b8a3b6fbc4a6c9afd6aecbc0b6b7",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 31,
+      "byte_offset": 360,
+      "content_byte_length": 14,
+      "full_byte_length": 16,
+      "raw_bytes_hex": "b8a3b6fbc4a6c9afd6aec8d9d2ab0d0a",
+      "content_hex": "b8a3b6fbc4a6c9afd6aec8d9d2ab",
+      "content_sha256": "818A1F8D3DA87BF1D4BC63E15E9E149D732E5C23AA44AA529DDF056970A7786A",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 360,
+          "byte_length": 14,
+          "raw_hex": "b8a3b6fbc4a6c9afd6aec8d9d2ab",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 32,
+      "byte_offset": 376,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "cbc0cdf6b5d8d3fc0d0a",
+      "content_hex": "cbc0cdf6b5d8d3fc",
+      "content_sha256": "4F91ED0A5B690E1D5795F23431155C4C7DA79BABDCB1EFBDC40479EFB9124819",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 376,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6b5d8d3fc",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 33,
+      "byte_offset": 386,
+      "content_byte_length": 8,
+      "full_byte_length": 10,
+      "raw_bytes_hex": "bef8b6d4c8d9d2ab0d0a",
+      "content_hex": "bef8b6d4c8d9d2ab",
+      "content_sha256": "B954C13C946F9FB6C2F04A3F2A8A071F5F180971B5941A02F01C0CF897C83C96",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "plain_bytes",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 386,
+          "byte_length": 8,
+          "raw_hex": "bef8b6d4c8d9d2ab",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    }
+  ]
+}

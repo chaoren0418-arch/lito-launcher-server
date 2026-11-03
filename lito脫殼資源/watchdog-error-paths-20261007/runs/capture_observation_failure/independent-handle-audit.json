@@ -1,0 +1,62 @@
+{
+  "case": "capture_observation_failure",
+  "observer": "Noninherited process-handle duplicates held by test only; no duplicated job handle",
+  "members": [
+    {
+      "pid": 10720,
+      "creation_filetime_100ns": 134358259475043720,
+      "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 22972,
+      "creation_filetime_100ns": 134358259475076925,
+      "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 12236,
+      "creation_filetime_100ns": 134358259476295534,
+      "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19948,
+      "creation_filetime_100ns": 134358259476352689,
+      "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    }
+  ],
+  "module_owned_job_empty": true,
+  "no_cleanup_performed_by_observer": true,
+  "candidate_unknown_does_not_become_true_from_observer": true,
+  "passed": true
+}

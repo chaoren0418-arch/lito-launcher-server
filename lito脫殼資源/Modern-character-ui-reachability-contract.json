@@ -1,0 +1,1412 @@
+{
+  "updated_at": "2026-10-06T09:27:15.580809+08:00",
+  "batch": 34,
+  "qualification": "Finite source-level candidate UI reachability and existing asset metadata only. All reads individually pinned; cross-file R526 compatibility unverified, no GUI/Native/build/runtime acceptance. Original art parity and default main entry adoption are separate from eight-row routing.",
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    }
+  ],
+  "prior_primary_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "bytes": 86352,
+      "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "expected_sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "expected_sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "bytes": 136990,
+      "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "expected_sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "bytes": 26692,
+      "sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "expected_sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "bytes": 13337,
+      "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "expected_sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "bytes": 6519,
+      "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "expected_sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "bytes": 64567,
+      "sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "expected_sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "bytes": 36402,
+      "sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "expected_sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "expected_sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "bytes": 37544,
+      "sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "expected_sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+      "bytes": 102995,
+      "sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "expected_sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "bytes": 85927,
+      "sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "expected_sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "bytes": 30490,
+      "sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "expected_sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56-contract.json",
+      "bytes": 94064,
+      "sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "expected_sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "bytes": 44293,
+      "sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "expected_sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "bytes": 61645,
+      "sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "expected_sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "bytes": 98702,
+      "sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "expected_sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "bytes": 80727,
+      "sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "expected_sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "bytes": 59865,
+      "sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "expected_sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "bytes": 41881,
+      "sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "expected_sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "bytes": 64295,
+      "sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "expected_sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+      "bytes": 24893,
+      "sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367",
+      "expected_sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "bytes": 35225,
+      "sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2",
+      "expected_sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "bytes": 23714,
+      "sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307",
+      "expected_sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "bytes": 28849,
+      "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8",
+      "expected_sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "bytes": 29565,
+      "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE",
+      "expected_sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive-contract.json",
+      "bytes": 34490,
+      "sha256": "4BBBEEB521ECF20E6B27D78F03B25F503A5766412DA9E3FBEE3DC11A7C389BAA",
+      "expected_sha256": "4BBBEEB521ECF20E6B27D78F03B25F503A5766412DA9E3FBEE3DC11A7C389BAA",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+      "bytes": 31932,
+      "sha256": "7E09849B4F0D442E04457AEE7E6DBEEB3D106437D9689AE8060323CE36FCB59E",
+      "expected_sha256": "7E09849B4F0D442E04457AEE7E6DBEEB3D106437D9689AE8060323CE36FCB59E",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound-contract.json",
+      "bytes": 28800,
+      "sha256": "9A2BA5AB692E92088E5B9BCA3C45A449EB04D7B3D2AD7AACB88EE7AAF43D598D",
+      "expected_sha256": "9A2BA5AB692E92088E5B9BCA3C45A449EB04D7B3D2AD7AACB88EE7AAF43D598D",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step-contract.json",
+      "bytes": 36362,
+      "sha256": "1BB37D61C8E25EC195EA2084941EFDC89D2E6F2760119583357A088A04C3EC8F",
+      "expected_sha256": "1BB37D61C8E25EC195EA2084941EFDC89D2E6F2760119583357A088A04C3EC8F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "bytes": 36083,
+      "sha256": "F3867EC1B86DA3DF66A7493E92CD239E40AEC59B658EC0B588F463EFF13A2667",
+      "expected_sha256": "F3867EC1B86DA3DF66A7493E92CD239E40AEC59B658EC0B588F463EFF13A2667",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "bytes": 30762,
+      "sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2",
+      "expected_sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source-contract.json",
+      "bytes": 42233,
+      "sha256": "9238357B9079A14F91132143E2FDED79B0F6F0733DAC716A6925AD7C44F19EF7",
+      "expected_sha256": "9238357B9079A14F91132143E2FDED79B0F6F0733DAC716A6925AD7C44F19EF7",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-directory-index-storage-contract.json",
+      "bytes": 30993,
+      "sha256": "02B15800508F5608AAB3BF9B04600717E02B3D5042EF7389D31B8F00AE09929D",
+      "expected_sha256": "02B15800508F5608AAB3BF9B04600717E02B3D5042EF7389D31B8F00AE09929D",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption-contract.json",
+      "bytes": 120669,
+      "sha256": "B746EF77645DD5BE45B005C6C1F808B0DB83963D36F019CB8368548EC088A88E",
+      "expected_sha256": "B746EF77645DD5BE45B005C6C1F808B0DB83963D36F019CB8368548EC088A88E",
+      "match": true
+    }
+  ],
+  "existing_evidence": {
+    "Batch33": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption-contract.json",
+      "bytes": 120669,
+      "sha256": "B746EF77645DD5BE45B005C6C1F808B0DB83963D36F019CB8368548EC088A88E"
+    },
+    "Batch32": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-directory-index-storage-contract.json",
+      "bytes": 30993,
+      "sha256": "02B15800508F5608AAB3BF9B04600717E02B3D5042EF7389D31B8F00AE09929D"
+    },
+    "Batch31": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source-contract.json",
+      "bytes": 42233,
+      "sha256": "9238357B9079A14F91132143E2FDED79B0F6F0733DAC716A6925AD7C44F19EF7"
+    },
+    "Batch30": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "bytes": 30762,
+      "sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2"
+    },
+    "owned_archive_manifest": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+      "bytes": 760029,
+      "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+    },
+    "owned_LTsurf_index": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+      "bytes": 45989,
+      "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+    },
+    "scope_write_correction": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "bytes": 1454,
+      "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+    }
+  },
+  "read_catalog": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\read-provenance-catalog.json",
+    "bytes": 36256,
+    "sha256": "3BB455388E5396EC060B0CD418F77E4FD2117AA05EFCA6455A3E26E4DB0FFF0B"
+  },
+  "findings": [
+    {
+      "id": "U01",
+      "status": "already_reachable_source_only",
+      "concern": "Explicit candidate adapter entry is wired, not merely an unused window name",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+            "bytes": 23652,
+            "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+            "bytes": 7425,
+            "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+          },
+          "function": "route",
+          "start_line": 37,
+          "end_line": 37,
+          "required_start_token": "--candidate-java-bootstrap",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+            "bytes": 23652,
+            "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+            "bytes": 7425,
+            "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+          },
+          "function": "run",
+          "start_line": 94,
+          "end_line": 94,
+          "required_start_token": "candidate_java_entry",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+            "bytes": 23652,
+            "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+            "bytes": 7425,
+            "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+          },
+          "function": "candidate_java_entry",
+          "start_line": 193,
+          "end_line": 193,
+          "required_start_token": "run_synthetic_java_bootstrap",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "run_synthetic_java_bootstrap",
+          "start_line": 146,
+          "end_line": 147,
+          "required_start_token": "run_inner",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "run_inner adapter configuration",
+          "start_line": 157,
+          "end_line": 157,
+          "required_start_token": "configure_login_producer_fixture(adapter)",
+          "adopted": true
+        }
+      ],
+      "trigger": "Explicit candidate flag with valid absolute fixture/adapter files and owned resource bindings, then valid GAME S03/exactN CB continuation.",
+      "source_proven_behavior": "R525 candidate route calls candidate_java_entry -> run_synthetic_java_bootstrap -> run_inner with adapter; Runtime adapter configuration precedes the owned window loop.",
+      "qualification_limit": "Source call-chain only; R525 source entry matches existing pinned entry reference. No candidate/library/GUI execution; current R526 active source does not become an accepted compiled version.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "U02",
+      "status": "already_reachable_source_only",
+      "concern": "Adapted directory displays and controls every validated row including indices4..7",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+            "bytes": 6119,
+            "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_identity.rs.snapshot.json",
+            "bytes": 6217,
+            "sha256": "79B4349B347C61C413609F00DE9D030045835E45B260E596783DD02C062E3019"
+          },
+          "function": "JAVA_ROW_BOUND",
+          "start_line": 8,
+          "end_line": 8,
+          "required_start_token": "JAVA_ROW_BOUND:usize=8",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "consume_source_identity_event",
+          "start_line": 148,
+          "end_line": 149,
+          "required_start_token": "Stage::Directory",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "State directory controls",
+          "start_line": 14,
+          "end_line": 14,
+          "required_start_token": "directory_controls:RefCell<Vec",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh roster eligibility",
+          "start_line": 35,
+          "end_line": 35,
+          "required_start_token": "source_identity().complete()",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh directory",
+          "start_line": 47,
+          "end_line": 54,
+          "required_start_token": "Stage::Directory",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh controls",
+          "start_line": 51,
+          "end_line": 52,
+          "required_start_token": "0..rows.len()",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh visibility",
+          "start_line": 63,
+          "end_line": 63,
+          "required_start_token": "CHARACTER_DIRECTORY|CHARACTER_DETAILS=>entry&&directory",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "run_inner control creation",
+          "start_line": 155,
+          "end_line": 156,
+          "required_start_token": "i==CHARACTER_DIRECTORY",
+          "adopted": true
+        }
+      ],
+      "trigger": "Complete current adapted directory count1..8 in Entry/Directory with current selectable rows and no pending navigation/write.",
+      "source_proven_behavior": "CHARACTER_DIRECTORY is a scrollable/tab-stop CBS_DROPDOWNLIST (ID FIRST+36=8036); it inserts every row display name, builds controls over0..rows.len(), shows selected raw row detail. There is no four-row truncation in this list path.",
+      "qualification_limit": "Valid count0 remains complete empty with no selectable row; empty/missing/pending/stale are deliberately unavailable. OS creation/string insertion return behavior, clipping or actual visible8 rows are not tested.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "U03",
+      "status": "already_reachable_source_only",
+      "concern": "Dropdown selection -> shared choose -> explicit submit -> exact received name",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "proc CBN_SELCHANGE directory",
+          "start_line": 130,
+          "end_line": 130,
+          "required_start_token": "CB_GETCURSEL",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_player_entry_commands.rs",
+            "bytes": 3517,
+            "sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_player_entry_commands.rs.snapshot.json",
+            "bytes": 7671,
+            "sha256": "DB0E5F6808ABE0ECF4C36FF330B1D5F9DDF97E2C0AD1AF810EBE5294FCFC0297"
+          },
+          "function": "handle_player_entry_command ChooseCharacter",
+          "start_line": 58,
+          "end_line": 62,
+          "required_start_token": "Command::ChooseCharacter",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "source_character_control_enabled",
+          "start_line": 171,
+          "end_line": 173,
+          "required_start_token": "source_identity::JAVA_ROW_BOUND",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "choose_source_character_control",
+          "start_line": 176,
+          "end_line": 180,
+          "required_start_token": "choose_source_character_control",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+            "bytes": 2353,
+            "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_character_selection.rs.snapshot.json",
+            "bytes": 4327,
+            "sha256": "1A67C28771689CDDACB767244E8E5DA6DA8866F85E172A1D4C6B48DD61D4044C"
+          },
+          "function": "Scene::select",
+          "start_line": 18,
+          "end_line": 18,
+          "required_start_token": "self.key.selected=Some(slot)",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh selected details",
+          "start_line": 54,
+          "end_line": 54,
+          "required_start_token": "rows.get(slot)",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "proc SubmitCharacter",
+          "start_line": 127,
+          "end_line": 127,
+          "required_start_token": "EntryCommand::SubmitCharacter",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "source_character_submit",
+          "start_line": 182,
+          "end_line": 183,
+          "required_start_token": "selection_revision",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "prepare_source_send_candidate",
+          "start_line": 214,
+          "end_line": 218,
+          "required_start_token": "prepare_select_bounded",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+            "bytes": 7863,
+            "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_send.rs.snapshot.json",
+            "bytes": 1314,
+            "sha256": "15FDD1BBCD90699AEECDFF2E7A724759FCAD4C7448031C21B6F7013E353A96F5"
+          },
+          "function": "Sender::prepare_character",
+          "start_line": 30,
+          "end_line": 30,
+          "required_start_token": "body.extend_from_slice(name)",
+          "adopted": true
+        }
+      ],
+      "trigger": "Directory CBN_SELCHANGE chooses absolute row index4..7, refresh publishes selected details/submit token, then user clicks Enter Character.",
+      "source_proven_behavior": "CB_GETCURSEL -> checked usize -> directory_controls.get -> shared ChooseCharacter(double_click:false) -> epoch/revision/bounded8 checks -> Scene::select(any qualified usize). Submit revalidates selection+scene+roster+epoch and uses bounded row raw name in C9. No four-anchor lookup on this chain.",
+      "qualification_limit": "This proves conditional source reachability/reservation, not physical send/server acceptance or GUI pass; zero/missing rows never default to row0; no ObjectId/sourceId derived from index/name.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "U04",
+      "status": "already_reachable_source_only",
+      "concern": "Four direct buttons and original Enter/Back assets have separate scopes",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "source_character_command_slot",
+          "start_line": 46,
+          "end_line": 46,
+          "required_start_token": "SOURCE_CHARACTER_COMMAND_FIRST+4",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+            "bytes": 2353,
+            "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_character_selection.rs.snapshot.json",
+            "bytes": 4327,
+            "sha256": "1A67C28771689CDDACB767244E8E5DA6DA8866F85E172A1D4C6B48DD61D4044C"
+          },
+          "function": "slot",
+          "start_line": 10,
+          "end_line": 10,
+          "required_start_token": "index<4",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh fixed controls",
+          "start_line": 34,
+          "end_line": 35,
+          "required_start_token": "std::array::from_fn",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "refresh fixed button visibility",
+          "start_line": 63,
+          "end_line": 64,
+          "required_start_token": "CHARACTER_FIRST..=16=>entry&&roster&&!directory",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "proc direct button commands",
+          "start_line": 126,
+          "end_line": 126,
+          "required_start_token": "SOURCE_CHARACTER_COMMAND_FIRST)+4",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "draw_character_button",
+          "start_line": 115,
+          "end_line": 117,
+          "required_start_token": "skin.character_buttons.get",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+            "bytes": 10536,
+            "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_mode_menu_skin.rs.snapshot.json",
+            "bytes": 6643,
+            "sha256": "CC14D45CB6B2DFEF6615CBAD7D6C5914D414BF56C80A5F1DCA4E65E30F2E249A"
+          },
+          "function": "Skin::load character_buttons",
+          "start_line": 36,
+          "end_line": 36,
+          "required_start_token": "[6303,6304,6201,6202]",
+          "adopted": true
+        }
+      ],
+      "trigger": "Legacy non-Directory four buttons versus adapted Directory list; Enter/Back owner draw with valid original skin binding.",
+      "source_proven_behavior": "Command0x4960..4963/slots0..3 and four anchor metadata only limit the direct-button path, hidden during adapted Directory. Candidate skin binding includes original LTsurf6303/6304 Enter and6201/6202 Back, all51x23; owner draw selects normal/pressed pair and falls back to text when art unavailable.",
+      "qualification_limit": "Does not prove Native record storage capacity4 or8. Current Modern four buttons use a2x2 layout, not Native four horizontal anchors. Conditional source art path is not a rendered GUI screenshot.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "G01",
+      "status": "source_proven_gap",
+      "concern": "Original portrait/animation/selection backdrop parity is not implemented in inspected render closure",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "run_inner child styles",
+          "start_line": 155,
+          "end_line": 156,
+          "required_start_token": "CBS_DROPDOWNLIST",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+            "bytes": 11028,
+            "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+          },
+          "function": "proc WM_DRAWITEM",
+          "start_line": 123,
+          "end_line": 123,
+          "required_start_token": "FIRST+CHARACTER_SUBMIT",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+            "bytes": 11028,
+            "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+          },
+          "function": "paint",
+          "start_line": 111,
+          "end_line": 111,
+          "required_start_token": "paint_menu(hwnd,s,dc);paint_channel",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+            "bytes": 11028,
+            "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+          },
+          "function": "paint_channel",
+          "start_line": 107,
+          "end_line": 107,
+          "required_start_token": "NavigationScene::Channel",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+            "bytes": 11028,
+            "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+          },
+          "function": "paint_source_entry",
+          "start_line": 109,
+          "end_line": 109,
+          "required_start_token": "biWidth:11,biHeight:-11",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+            "bytes": 10536,
+            "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_mode_menu_skin.rs.snapshot.json",
+            "bytes": 6643,
+            "sha256": "CC14D45CB6B2DFEF6615CBAD7D6C5914D414BF56C80A5F1DCA4E65E30F2E249A"
+          },
+          "function": "Skin fields",
+          "start_line": 30,
+          "end_line": 30,
+          "required_start_token": "character_buttons:Vec<Img>",
+          "adopted": true
+        }
+      ],
+      "trigger": "Entry/Directory wants original character portraits, selected/hover animation and selection scene background.",
+      "source_proven_behavior": "Inspected parent paint fills system background; menu/frame paint is Maps-only, channel art is Channel-only, source entry art is an11x11 icon. Child Directory is standard text combo/details; four character buttons are standard text BS_NOTIFY. WM_DRAWITEM routes Enter/Back/channel buttons only. Skin has four button images, not loaded character portrait/selection backdrop fields.",
+      "qualification_limit": "Exact scoped source render closure gap, not a5..8 functional selection defect or global GUI absence claim. Existing R498 reported unresolved79/80/animation assets and lifecycle remain metadata; no unknown Native callee opened and no new art generated.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "D01",
+      "status": "needs_GUI_or_design_decision",
+      "concern": "Default production entry adoption is separate from candidate source reachability",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+            "bytes": 17805,
+            "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\production-main.snapshot.json",
+            "bytes": 10686,
+            "sha256": "B58332FB34D774F3146F6884D339A7EE243B55E62005DAB22D59B01C60886035"
+          },
+          "function": "route default",
+          "start_line": 31,
+          "end_line": 31,
+          "required_start_token": "Route::Pick",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+            "bytes": 17805,
+            "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\production-main.snapshot.json",
+            "bytes": 10686,
+            "sha256": "B58332FB34D774F3146F6884D339A7EE243B55E62005DAB22D59B01C60886035"
+          },
+          "function": "route allowed flags/fallback",
+          "start_line": 67,
+          "end_line": 78,
+          "required_start_token": "Some(x)",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+            "bytes": 17805,
+            "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\production-main.snapshot.json",
+            "bytes": 10686,
+            "sha256": "B58332FB34D774F3146F6884D339A7EE243B55E62005DAB22D59B01C60886035"
+          },
+          "function": "run profile entry",
+          "start_line": 133,
+          "end_line": 145,
+          "required_start_token": "Route::Pick =>",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+            "bytes": 23652,
+            "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+            "bytes": 7425,
+            "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+          },
+          "function": "route explicit candidate",
+          "start_line": 37,
+          "end_line": 37,
+          "required_start_token": "--candidate-java-bootstrap",
+          "adopted": true
+        }
+      ],
+      "trigger": "User launches default production executable with no explicit candidate flag versus candidate adapter source.",
+      "source_proven_behavior": "src/main route lacks CandidateJavaBootstrap and its default/profile branch calls login_window::run with SessionController. Native adapted selection chain is exposed by explicit R525 candidate entry, not promoted into this main source.",
+      "qualification_limit": "Do not infer deployed executable or alternative TLS character UI is broken. Whether/when to expose this Native adapter in normal player entry is a separate authorized product/adoption decision after R526.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "D02",
+      "status": "needs_GUI_or_design_decision",
+      "concern": "Real GUI geometry/keyboard/render acceptance and adapted interaction wording",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "resize",
+          "start_line": 71,
+          "end_line": 71,
+          "required_start_token": "CHARACTER_DIRECTORY",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "run_inner message loop",
+          "start_line": 159,
+          "end_line": 159,
+          "required_start_token": "IsDialogMessageW",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+            "bytes": 57230,
+            "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+            "bytes": 10301,
+            "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+          },
+          "function": "choose_source_character_control status",
+          "start_line": 179,
+          "end_line": 180,
+          "required_start_token": "可按進入角色或雙擊",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "proc directory choice",
+          "start_line": 130,
+          "end_line": 130,
+          "required_start_token": "double_click:false",
+          "adopted": true
+        }
+      ],
+      "trigger": "Real DPI/window size, dropdown opening, keyboard focus, eight names and details clipping; double-click hint in adapted Directory.",
+      "source_proven_behavior": "Source sizes dropdown400x280 at DPI-scaled margin24,y120, details y164;height90; submit/back use Native constants plus Modern vertical232 offset. Tab-stop/message loop exists. Adapted choice explicitly uses double_click:false; only direct fixed buttons have explicit BN_DOUBLECLICKED submission path.",
+      "qualification_limit": "Actual native control behavior/visibility/accessibility/doubleclick expectations are untested. The shared hint should be confirmed or tailored if restyling; explicit choose+submit already supplies all8 rows. No new tests authored or executed.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    },
+    {
+      "id": "D03",
+      "status": "needs_GUI_or_design_decision",
+      "concern": "Choose one existing original UI asset family and mapping; preserve all8 data",
+      "anchors": [
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+            "bytes": 2353,
+            "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_character_selection.rs.snapshot.json",
+            "bytes": 4327,
+            "sha256": "1A67C28771689CDDACB767244E8E5DA6DA8866F85E172A1D4C6B48DD61D4044C"
+          },
+          "function": "SUBMIT and BACK",
+          "start_line": 7,
+          "end_line": 10,
+          "required_start_token": "pub const SUBMIT",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+            "bytes": 10536,
+            "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_mode_menu_skin.rs.snapshot.json",
+            "bytes": 6643,
+            "sha256": "CC14D45CB6B2DFEF6615CBAD7D6C5914D414BF56C80A5F1DCA4E65E30F2E249A"
+          },
+          "function": "Skin::load Native asset family",
+          "start_line": 34,
+          "end_line": 36,
+          "required_start_token": "LTsurf_index",
+          "adopted": true
+        },
+        {
+          "source": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+            "bytes": 46520,
+            "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+            "bytes": 33106,
+            "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+          },
+          "function": "resize original button geometry use",
+          "start_line": 71,
+          "end_line": 71,
+          "required_start_token": "character_selection::SUBMIT",
+          "adopted": true
+        }
+      ],
+      "trigger": "Future original-look presentation reuses Native LiTo assets or existing0429Classic Lineage selection exports.",
+      "source_proven_behavior": "Four Native51x23 button files are already bound. Five verified existing Classic PNGs provide1280x960 selection backdrop,110x38 OK normal/pressed and192x35 Cancel normal/pressed; existing CSB JSON supplies local layout/ListView/button geometry and OutGames.plist supplies crops/rotation.",
+      "qualification_limit": "Classic family is a separate version/design corpus, not proof Native LiTo79/80 recovered. No class/sex portrait mapping from filenames, no mixed coordinate systems, no original hit/owner/physical identity inferred. Scaling/glyphs/portrait mapping need design and eventual GUI acceptance.",
+      "GUI_test_build_execution": false,
+      "adopted": true
+    }
+  ],
+  "call_chains": [
+    {
+      "name": "Explicit adapter entry and directory publication",
+      "ordered_edges": [
+        "R525 route37 -> run94 -> candidate_java_entry193",
+        "window146 -> run_inner157 configures adapter; normal owned GAME continuation",
+        "Runtime148/149 -> Stage Directory + exactNcomplete -> character_scene.enter",
+        "window refresh35/47 -> rows50 -> full controls51/full names52 -> details54/visible63",
+        "CreateWindow155/156 -> COMBOBOX FIRST+36 with WS_VSCROLL/CBS_DROPDOWNLIST"
+      ]
+    },
+    {
+      "name": "Absolute dropdown selection through typed raw-name reservation",
+      "ordered_edges": [
+        "window proc130 CB_GETCURSEL -> checked usize -> directory_controls.get",
+        "player_entry_commands58..62 -> Runtime.choose_source_character_control176..180",
+        "Runtime171..173 bounded8 + epoch/roster/scene -> Scene.select18; no slot(index) lookup",
+        "refresh33/54/63 -> submit token/details/enabled; proc127 -> SubmitCharacter",
+        "Runtime182/183 -> handle_source_character_control173 -> prepare214/215/218",
+        "Sender30 -> bodyC9 + exact raw received name + NUL; only local reservation qualification"
+      ]
+    },
+    {
+      "name": "Scoped render closure and original button reuse",
+      "ordered_edges": [
+        "window WM_PAINT138 -> paint111 -> system background + Maps/menu/frame + Channel background + source11x11 icon",
+        "WM_DRAWITEM123 -> draw_character_button115..117 -> original Enter/Back pairs or text fallback",
+        "Directory/Details use standard COMBOBOX/STATIC; direct four character BUTTON controls use BS_NOTIFY, not portrait owner draw",
+        "Skin30/34/36 binds LTsurf index/pak and four character action buttons only; no decoded Classic selection backdrop or portrait fields"
+      ]
+    }
+  ],
+  "minimal_original_UI_adoption_proposal": {
+    "functional_change_needed_for_adapted_rows5_to8": false,
+    "default_recommendation": "Keep current full0..8 owned directory + checked absolute index controls + exact raw-name C9 pipeline. Keep existing dropdown/details as complete fallback and existing original Native Enter/Back button rendering. Do not create a new eight-row protocol, duplicate selection guards, lower producer count, force four rows or repurpose native record index as identity.",
+    "smallest_original_UI_followup_if_requested": [
+      "Use already-bound LTsurf6303/6304 and6201/6202 original51x23 action assets; preserve their declared button identity and current opaque Submit/Back controls. Retain fullN names/details and no automatic row0 for count0.",
+      "If a Classic Lineage look is chosen, reuse the five verified pre-extracted PNGs and existing1280x960 CSB layout/ListView metadata as one asset family. Render allN<=8 text rows or keep dropdown fallback, with absolute owned indices; scroll/clipping only affects presentation, never data count.",
+      "Bind existing ChooseCharacter/SubmitCharacter command path to presentation selection; no new backend roster/handle implementation. Preserve raw bytes for commands and use decoded display text only for labels.",
+      "Leave exact Native portrait/animation parity open until matching qualified assets/lifecycle exist; do not synthesize replacements or assume Classic portraits map to Native class/sex.",
+      "Treat DPI/coordinate conversion, glyph/keyboard accessibility, visual layering and default player-entry promotion as later design/GUI acceptance after activeR526; no new task/branch/test is started here."
+    ],
+    "existing_geometry_not_interchangeable": {
+      "Native_action_rects": "SUBMIT(497,404,51,23),BACK(552,404,51,23) in current source; Modern resize adds vertical232 and applies DPI scale. Native historical slot anchorsx19/176/333/490,y0 belong only to four local control descriptors, not storage capacity.",
+      "Classic_scene": "Existing CSB export1280x960, CharacterSelectLayout center640,480; ListView local(-545,-55),1100x534; OK local(478,-339),110x38; Cancel local(478,-374),192x35. Local anchor/scale preserved in metadata; no inferred modern hit coordinates."
+    },
+    "supervisor_status": "M09/M10 already delegated as R526; do not interrupt or expand it. Supervisor says M13 handled by later corrected ready handoff SHA3F31E26FF006B132C4531BA53811597D3D8EF8581531AD04E8599B0C2B170947. This is a message-time note only; that report is not read/promoted in Batch34 and Batch33 stays immutable.",
+    "new_wire_delta": {
+      "count": 0,
+      "direction_opcode_field_trigger_VA_evidence_corrections": [],
+      "server_notification": false
+    },
+    "scope": "Proposal only, no new art/Modern edit/GUI/test/build/branch. Existing complete route is reported honestly, not a invented5..8 gap."
+  },
+  "outputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\character-flow-findings.json",
+      "bytes": 46388,
+      "sha256": "DECF169855DAAE16C17F01088C5E897EF3F2F852CFAD8C4D1482F3EBB70E4F0F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\count-slot-route-matrix.json",
+      "bytes": 4440,
+      "sha256": "04ADB97619044C1ED4A45F24036C378ACA731E9EA82CBDA29EF70204C42B5323"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\finite-call-chains.json",
+      "bytes": 2146,
+      "sha256": "BB45F5B708C51DE5DF39A5389DF43734CB5710489F4014715D564D93039C8DCA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+      "bytes": 22127,
+      "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\minimal-original-UI-adoption-proposal.json",
+      "bytes": 2864,
+      "sha256": "249CA7C83EF16DA978C4C04A246D30550BFE15F79977111BDD3C9BA2801265D7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+      "bytes": 21844,
+      "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_character_selection.rs.snapshot.json",
+      "bytes": 4327,
+      "sha256": "1A67C28771689CDDACB767244E8E5DA6DA8866F85E172A1D4C6B48DD61D4044C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_presentation.rs.snapshot.json",
+      "bytes": 3876,
+      "sha256": "D7934B84236E592A09B0FB4F2FFCC4E95BE0BB602979B117FD574F3D51DD1609"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+      "bytes": 10301,
+      "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+      "bytes": 33106,
+      "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@pointer.snapshot.json",
+      "bytes": 4922,
+      "sha256": "9C8C78A8A99A77861BC35835E804C19ABF82359AC0B1911C274D4CF8C3F4C4CF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+      "bytes": 11028,
+      "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_mode_menu_skin.rs.snapshot.json",
+      "bytes": 6643,
+      "sha256": "CC14D45CB6B2DFEF6615CBAD7D6C5914D414BF56C80A5F1DCA4E65E30F2E249A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_player_entry_commands.rs.snapshot.json",
+      "bytes": 7671,
+      "sha256": "DB0E5F6808ABE0ECF4C36FF330B1D5F9DDF97E2C0AD1AF810EBE5294FCFC0297"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_identity.rs.snapshot.json",
+      "bytes": 6217,
+      "sha256": "79B4349B347C61C413609F00DE9D030045835E45B260E596783DD02C062E3019"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_send.rs.snapshot.json",
+      "bytes": 1314,
+      "sha256": "15FDD1BBCD90699AEECDFF2E7A724759FCAD4C7448031C21B6F7013E353A96F5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\production-main.snapshot.json",
+      "bytes": 10686,
+      "sha256": "B58332FB34D774F3146F6884D339A7EE243B55E62005DAB22D59B01C60886035"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+      "bytes": 7425,
+      "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-existing-entry-reference.json",
+      "bytes": 4540,
+      "sha256": "4E1DD04A472CC67FB831FAC35C50D623ED5CD5467921A02F1A8937CFC67D0775"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\read-provenance-catalog.json",
+      "bytes": 36256,
+      "sha256": "3BB455388E5396EC060B0CD418F77E4FD2117AA05EFCA6455A3E26E4DB0FFF0B"
+    }
+  ],
+  "verification": {
+    "source_read_snapshots": 12,
+    "unique_source_files": 10,
+    "all_read_pins": 30,
+    "stable_during_read": 30,
+    "tentative_unadopted": 0,
+    "findings": 8,
+    "status_counts": {
+      "already_reachable_source_only": 4,
+      "source_proven_gap": 1,
+      "needs_GUI_or_design_decision": 3
+    },
+    "static_count_policy_rows": 9,
+    "finite_call_chains": 3,
+    "source_anchor_count": 47,
+    "Native_existing_button_assets": 4,
+    "Lineage_existing_PNG_assets": 5,
+    "new_art_assets": 0,
+    "new_code_ranges": 0,
+    "new_data_ranges": 0,
+    "new_raw_extractions": 0,
+    "instruction_assertions": 0,
+    "new_capture_frames": 0,
+    "new_frame_rows_adopted": 0,
+    "new_wire_differences": 0,
+    "new_opcodes": 0,
+    "wire_corrections": 0,
+    "Modern_code_edits": 0,
+    "new_branches_or_tests": 0,
+    "tests_builds_compiles_or_GUI_runtime_runs": 0,
+    "external_helper_imports": 0,
+    "unknown_callee_bodies_expanded": 0,
+    "prior_primary_pins_preserved": 35,
+    "server_packet_unchanged": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "scope_write_correction": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "bytes": 1454,
+      "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+    },
+    "cache_cleanup_completed": false,
+    "functional_rows5_to8_gap_found": false,
+    "R526_not_interrupted": true,
+    "non_atomic_source_snapshot_limit": true
+  }
+}

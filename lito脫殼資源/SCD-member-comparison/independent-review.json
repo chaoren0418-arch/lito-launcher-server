@@ -1,0 +1,21 @@
+{
+  "scope": "Independent fixedPE raw/decodedwitness/completebytecoverage andmanualframeoffsetreadback; no previousruntime tests",
+  "raw_new_ranges": 26,
+  "inherited_raw_ranges": 12,
+  "instruction_witnesses": 81,
+  "complete_S_CD_byte_coverage": 3131,
+  "complete_comparator_byte_coverage": 93,
+  "sealed_CD_frames": 8,
+  "firstDWORD_room1_all_members_confirmed": true,
+  "Ready_string_not_numericstate_confirmed": true,
+  "duplicate_calls_branch_to_return": true,
+  "table_runtime_authority_unqualified": true,
+  "prior_primary_pins": 16,
+  "Modern_frozen_only": true,
+  "all_match": true,
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+    "bytes": 98702,
+    "sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192"
+  }
+}

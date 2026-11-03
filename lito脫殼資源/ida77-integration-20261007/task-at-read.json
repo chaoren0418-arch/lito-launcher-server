@@ -1,0 +1,46 @@
+{
+  "index_at_read": {
+    "path": "D:\\lineage開發\\3-lito開發\\LITO-監製索引.json",
+    "bytes": 1277086,
+    "sha256": "5D43EE931D2F4B51B5CD10860F10DFCF4B7791B22808B3B0FC68F99D8B4EED08"
+  },
+  "task": {
+    "id": "bin_resources-ida77-isolated-export-integration-20261007",
+    "owner": "bin_resources",
+    "title": "Complete isolated IDA77 runtime and execute bounded exporter integration",
+    "priority": 0,
+    "state": "running",
+    "dependencies": [
+      "bin_resources-watchdog-error-paths-20261007"
+    ],
+    "gates": [],
+    "blockers": [],
+    "policy_blocked": false,
+    "continuation_of": "bin_resources-ida77-bounded-export-adapter-20261007",
+    "next_deliverable": "D:/lineage開發/3-lito開發/lito脫殼資源/IDA77-Isolated-Export-Integration-20261007.json; runnable isolated profile, connected accepted watchdog/exporter, actual bounded IDA disassembly/pseudocode receipts on pinned inert fixture, or one precise proven platform blocker.",
+    "acceptance": "Qualify a private, explicitly allowlisted runtime/profile without modifying original IDA installation or global/user settings. Exclude auto AI/Keypatch/unknown startup plugins and demonstrate actual loaded/startup configuration, paths and any egress/write controls with evidence. Do not equate IDAUSR or an empty plugins.cfg with isolation. Integrate accepted watchdog by pinned reuse, not a rewritten framework. Execute the draft exporter on the existing inert PE only as a NEW integration check: exact two allowed functions, real instructions/direct xrefs/pseudocode, loaded-byte fingerprints, process identity/exit/cleanup and time/disk observations. Record remaining limitations honestly; disk polling is not hard quota and hard quota is not an added prerequisite here. No repeat of 15 preflight or 11 watchdog PASS suites. Include at most one proposed, nonduplicated consumer-required static LITO analysis request with exact source SHA/ranges/question, independently outside existing stop boundaries; none if not evidenced.",
+    "boundary": "Write only fresh BIN-owned directory or original authorized BIN ASCII namespace. Read original D:/IDA_Pro_7.7 as dependency; scoped private copy/config allowed, original installation/profile and user/global settings unchanged. No network upload/external AI, unsafe MCP startup/install/downloaded watchdog, security/firewall/globalconfig edits, native GUI/game/process attach/memory read, provider/SQL/shared BIN/TW/LHZ actions. Preserve old denied private backing, 42E550/42E6D0/42EA50/050104CD next layer and 495520 constructor/unknown owner exclusions. No actual LITO target analysis in this environment-qualification task.",
+    "resume_when": "Accepted owned-watchdog/error-path component now exists; current human explicitly requests original BIN owner resume concrete work. IDA environment work is independent of active server cleanup.",
+    "evidence": [
+      {
+        "path": "D:/lineage開發/3-lito開發/監製工作流/bin_resources-watchdog-error-paths-20261007-assessment.json",
+        "sha256": "7DFE5D518123C14879C88EFD402F2E3657E02DB3682CB7246C24D5003C35ABB7"
+      },
+      {
+        "path": "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Watchdog-Error-Paths-20261007.json",
+        "sha256": "348FCE0B60DAD6F5CCE26DA0F677B82F4738DAA9C086FCCD96FD9BF5EAE23354"
+      },
+      {
+        "path": "D:/lineage開發/3-lito開發/lito脫殼資源/IDA77-Bounded-Export-Adapter-20261007.json",
+        "sha256": "A1133472ED1C0CA9C80EC84AD7573D41C3EC7D9EAEE74D9CFB3EA8D0673AA21A"
+      }
+    ],
+    "handoff_to": [
+      "supervisor"
+    ],
+    "stop_condition": "Deliver actual new integration evidence for supervisor review before any real LITO export; or stop at precise original unresolved platform restriction. No fake reverse output, repeated backlog rewrite, extra unrelated framework, or alternative tool to bypass refusal.",
+    "dispatch_receipt": "D:/lineage開發/3-lito開發/監製工作流/bin_resources-ida77-isolated-export-integration-20261007-send-receipt.json",
+    "execution_observed_at": "2026-10-07T06:48:07.745Z",
+    "execution_turn_id": "01a1151d-d789-7c62-a4de-25110e7b9af1"
+  }
+}

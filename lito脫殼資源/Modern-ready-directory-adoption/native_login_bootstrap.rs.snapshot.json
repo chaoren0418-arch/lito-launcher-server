@@ -1,0 +1,386 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_bootstrap.rs",
+    "bytes": 12503,
+    "sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085"
+  },
+  "captured_content_sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_bootstrap.rs",
+    "bytes": 12503,
+    "sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:54:11.285466+08:00",
+  "ranges": [
+    [
+      60,
+      170
+    ]
+  ],
+  "line_count": 149,
+  "implementation_lines": [
+    {
+      "line": 60,
+      "text": "pub enum Stage { #[default] Idle, AwaitLoginCheck, AwaitDirectory, SourceChoice, SendingSource, AwaitRedirect, GameConnecting, SendingGameLogin, AwaitNews, NewsChoice, SendingNews, AwaitRoster, Roster }"
+    },
+    {
+      "line": 61,
+      "text": "#[derive(Clone, Debug, Default, PartialEq, Eq)]"
+    },
+    {
+      "line": 62,
+      "text": "pub struct Key { pub stage: Stage, pub revision: u64, pub check: Option<LoginCheck>, pub sources: Vec<SourceRow>, pub source_count: usize, pub selected_name: Option<Vec<u8>>, pub write_serial: Option<u64>, pub credentials_pending: bool, pub roster_count: Option<u8> }"
+    },
+    {
+      "line": 63,
+      "text": "pub(crate) struct Credentials { pub(crate) account: Zeroizing<Vec<u8>>, pub(crate) password: Zeroizing<Vec<u8>> }"
+    },
+    {
+      "line": 64,
+      "text": "#[derive(Default)]"
+    },
+    {
+      "line": 65,
+      "text": "pub(crate) struct State { pub(crate) key: Key, pub(crate) credentials: Option<Credentials> }"
+    },
+    {
+      "line": 66,
+      "text": "impl State {"
+    },
+    {
+      "line": 67,
+      "text": "    pub(crate) fn retire(&mut self) { self.credentials=None; self.key=Key::default(); }"
+    },
+    {
+      "line": 68,
+      "text": "    fn revise(&mut self) -> Result<()> { self.key.revision=self.key.revision.checked_add(1).context(\"bootstrap revision exhausted\")?; Ok(()) }"
+    },
+    {
+      "line": 69,
+      "text": "    pub(crate) fn written(&mut self, serial: u64) {"
+    },
+    {
+      "line": 70,
+      "text": "        if self.key.write_serial!=Some(serial) {return;}"
+    },
+    {
+      "line": 71,
+      "text": "        if self.key.stage==Stage::SendingGameLogin {self.credentials=None;self.key.credentials_pending=false;}"
+    },
+    {
+      "line": 72,
+      "text": "        self.key.stage=match self.key.stage {Stage::SendingSource=>Stage::AwaitRedirect,Stage::SendingGameLogin=>Stage::AwaitNews,Stage::SendingNews=>Stage::AwaitRoster,s=>s};"
+    },
+    {
+      "line": 73,
+      "text": "        self.key.write_serial=None;"
+    },
+    {
+      "line": 74,
+      "text": "    }"
+    },
+    {
+      "line": 75,
+      "text": "}"
+    },
+    {
+      "line": 76,
+      "text": "#[derive(Clone)]"
+    },
+    {
+      "line": 77,
+      "text": "pub struct SourceControl { epoch: SourceEpoch, revision: u64, slot: usize }"
+    },
+    {
+      "line": 78,
+      "text": "#[derive(Clone)]"
+    },
+    {
+      "line": 79,
+      "text": "pub struct NewsControl { epoch: SourceEpoch, revision: u64 }"
+    },
+    {
+      "line": 80,
+      "text": "impl SourceControl { pub fn slot(&self)->usize {self.slot} }"
+    },
+    {
+      "line": 81,
+      "text": "#[derive(Clone, Debug)]"
+    },
+    {
+      "line": 82,
+      "text": "pub enum Change { Checked{result:i8,java_without_native_extension:bool}, Directory{count:usize}, NewsPending, GameRedirect{target:std::net::SocketAddrV4} }"
+    },
+    {
+      "line": 83,
+      "text": "impl Runtime {"
+    },
+    {
+      "line": 84,
+      "text": "    pub fn configure_login_producer_fixture(&mut self, adapter: JavaFixtureAdapter)->Result<()> {"
+    },
+    {
+      "line": 85,
+      "text": "        ensure!(self.synthetic_player_fixture_configured() && self.source_connection_epoch().is_none() && matches!(self.page,UiPage::Booting|UiPage::Menu) && self.bootstrap_adapter.is_none(),\"bootstrap fixture configuration unavailable\");"
+    },
+    {
+      "line": 86,
+      "text": "        self.bootstrap_adapter=Some(adapter); Ok(())"
+    },
+    {
+      "line": 87,
+      "text": "    }"
+    },
+    {
+      "line": 88,
+      "text": "    pub fn source_bootstrap_snapshot(&self)->Key {self.login_bootstrap.key.clone()}"
+    },
+    {
+      "line": 89,
+      "text": "    pub fn source_choice_control(&self,slot:usize)->Option<SourceControl> {"
+    },
+    {
+      "line": 90,
+      "text": "        if self.page!=UiPage::Menu || self.login_bootstrap.key.stage!=Stage::SourceChoice || self.source_send.snapshot().pending.is_some() {return None;}"
+    },
+    {
+      "line": 91,
+      "text": "        if slot>=self.login_bootstrap.key.source_count {return None;}"
+    },
+    {
+      "line": 92,
+      "text": "        let row=self.login_bootstrap.key.sources.get(slot)?; if row.name.is_empty(){return None;}"
+    },
+    {
+      "line": 93,
+      "text": "        Some(SourceControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.login_bootstrap.key.revision,slot})"
+    },
+    {
+      "line": 94,
+      "text": "    }"
+    },
+    {
+      "line": 95,
+      "text": "    pub fn handle_source_choice(&mut self,c:&SourceControl)->Result<()> {"
+    },
+    {
+      "line": 96,
+      "text": "        self.source_scope.admit_epoch(&c.epoch)?;"
+    },
+    {
+      "line": 97,
+      "text": "        ensure!(c.revision==self.login_bootstrap.key.revision && self.source_choice_control(c.slot).is_some(),\"retired or foreign source choice\");"
+    },
+    {
+      "line": 98,
+      "text": "        let name=self.login_bootstrap.key.sources[c.slot].name.clone();"
+    },
+    {
+      "line": 99,
+      "text": "        let prepared=self.source_send.prepare_source_choice(&name)?; let serial=prepared.reservation.ticket.serial();"
+    },
+    {
+      "line": 100,
+      "text": "        self.login_bootstrap.revise()?; self.login_bootstrap.key.selected_name=Some(name); self.login_bootstrap.key.write_serial=Some(serial); self.login_bootstrap.key.stage=Stage::SendingSource;"
+    },
+    {
+      "line": 101,
+      "text": "        self.source_send.commit(prepared); self.status=\"來源選擇等待傳送\".into(); Ok(())"
+    },
+    {
+      "line": 102,
+      "text": "    }"
+    },
+    {
+      "line": 103,
+      "text": "    pub fn source_news_control(&self)->Option<NewsControl> {"
+    },
+    {
+      "line": 104,
+      "text": "        if self.page!=UiPage::Menu || self.bootstrap_adapter.is_none() || self.login_bootstrap.key.stage!=Stage::NewsChoice || self.source_send.snapshot().pending.is_some() {return None;}"
+    },
+    {
+      "line": 105,
+      "text": "        Some(NewsControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.login_bootstrap.key.revision})"
+    },
+    {
+      "line": 106,
+      "text": "    }"
+    },
+    {
+      "line": 107,
+      "text": "    pub fn handle_source_news_continue(&mut self,c:&NewsControl)->Result<()> {"
+    },
+    {
+      "line": 108,
+      "text": "        self.source_scope.admit_epoch(&c.epoch)?; ensure!(c.revision==self.login_bootstrap.key.revision && self.source_news_control().is_some(),\"retired or duplicate NEWS continuation\");"
+    },
+    {
+      "line": 109,
+      "text": "        let prepared=self.source_send.prepare_news_continue()?; let serial=prepared.reservation.ticket.serial(); self.login_bootstrap.revise()?;"
+    },
+    {
+      "line": 110,
+      "text": "        if self.java_return.key.phase==super::java_return::Phase::Authenticating {ensure!(self.java_return.unexpired(),\"retained return expired before NEWS\");self.java_return.key.phase=super::java_return::Phase::ResumeRoster;}"
+    },
+    {
+      "line": 111,
+      "text": "        self.login_bootstrap.key.stage=Stage::SendingNews;self.login_bootstrap.key.write_serial=Some(serial);self.source_send.commit(prepared);self.status=\"等待角色名單\".into();Ok(())"
+    },
+    {
+      "line": 112,
+      "text": "    }"
+    },
+    {
+      "line": 113,
+      "text": "    pub fn consume_source_bootstrap_event(&mut self,event:&SourceDecodedPacket)->Result<Change> {"
+    },
+    {
+      "line": 114,
+      "text": "        self.source_scope.admit(event)?; ensure!(self.page==UiPage::Menu,\"bootstrap unavailable\");"
+    },
+    {
+      "line": 115,
+      "text": "        match decode(event.body())? {"
+    },
+    {
+      "line": 116,
+      "text": "            Packet::Check(check)=>{"
+    },
+    {
+      "line": 117,
+      "text": "                ensure!(self.login_form.snapshot().stage==super::login_form::Stage::AwaitingReply,\"LOGIN_CHECK requires completed login write\");"
+    },
+    {
+      "line": 118,
+      "text": "                ensure!(!self.entry_transfer.roster_alternate(),\"Native alternate LOGIN_CHECK suppression unimplemented\");"
+    },
+    {
+      "line": 119,
+      "text": "                let version=self.source_actor.snapshot().version.context(\"LOGIN_CHECK requires current version\")?.value();let adapted=self.bootstrap_adapter.is_some(); validate_check_version(&check,version,adapted)?;"
+    },
+    {
+      "line": 120,
+      "text": "                if adapted {ensure!(self.login_bootstrap.key.stage==Stage::AwaitLoginCheck,\"duplicate or GAME LOGIN_CHECK\");}"
+    },
+    {
+      "line": 121,
+      "text": "                let result=check.result;"
+    },
+    {
+      "line": 122,
+      "text": "                // Error dialogs and private locale/time-limit globals stay unqualified."
+    },
+    {
+      "line": 123,
+      "text": "                ensure!(result==0,\"LOGIN_CHECK refused: Native modal error effects unqualified\");"
+    },
+    {
+      "line": 124,
+      "text": "                self.login_bootstrap.revise()?;self.login_bootstrap.key.check=Some(check);self.login_bootstrap.key.stage=Stage::AwaitDirectory;"
+    },
+    {
+      "line": 125,
+      "text": "                Ok(Change::Checked{result,java_without_native_extension:adapted&&version>=0x5226})"
+    },
+    {
+      "line": 126,
+      "text": "            },"
+    },
+    {
+      "line": 127,
+      "text": "            Packet::Directory(rows)=>{"
+    },
+    {
+      "line": 128,
+      "text": "                ensure!(matches!(self.login_bootstrap.key.stage,Stage::AwaitDirectory|Stage::SourceChoice),\"source directory requires accepted LOGIN_CHECK\");"
+    },
+    {
+      "line": 129,
+      "text": "                ensure!(!self.entry_transfer.roster_alternate(),\"Native cached alternate source directory branch unqualified\");"
+    },
+    {
+      "line": 130,
+      "text": "                let count=rows.len();"
+    },
+    {
+      "line": 131,
+      "text": "                self.login_bootstrap.revise()?;self.login_bootstrap.key.source_count=count;"
+    },
+    {
+      "line": 132,
+      "text": "                // Native zero count returns before replacing rows or opening UI."
+    },
+    {
+      "line": 133,
+      "text": "                if count!=0 {self.login_bootstrap.key.sources=rows;self.login_bootstrap.key.stage=Stage::SourceChoice;self.login_form.retire()?;self.status=\"請選擇登入來源\".into();}else{self.status=\"目前沒有可選擇的登入來源\".into();}"
+    },
+    {
+      "line": 134,
+      "text": "                Ok(Change::Directory{count})"
+    },
+    {
+      "line": 135,
+      "text": "            },"
+    },
+    {
+      "line": 136,
+      "text": "            Packet::News=>{"
+    },
+    {
+      "line": 137,
+      "text": "                ensure!(self.bootstrap_adapter.is_some() && self.login_bootstrap.key.stage==Stage::AwaitNews,\"NEWS requires fresh GAME version and completed reauthentication\");"
+    },
+    {
+      "line": 138,
+      "text": "                self.login_form.retire()?;self.login_bootstrap.revise()?;self.login_bootstrap.key.stage=Stage::NewsChoice;self.status=\"按繼續取得角色名單\".into();Ok(Change::NewsPending)"
+    },
+    {
+      "line": 139,
+      "text": "            },"
+    },
+    {
+      "line": 140,
+      "text": "        }"
+    },
+    {
+      "line": 141,
+      "text": "    }"
+    },
+    {
+      "line": 142,
+      "text": "    pub(crate) fn redirect_login_bootstrap(&mut self,slot:usize,address_word:u32,port_word:u16)->Result<Change> {"
+    },
+    {
+      "line": 143,
+      "text": "        ensure!(self.bootstrap_adapter.is_some() && self.login_bootstrap.key.stage==Stage::AwaitRedirect && self.source_send.snapshot().pending.is_none(),\"GAME redirect requires completed source choice\");"
+    },
+    {
+      "line": 144,
+      "text": "        ensure!(self.entry_transfer.key.table[slot]!=u32::MAX,\"source GAME slot unavailable\");"
+    },
+    {
+      "line": 145,
+      "text": "        let target=std::net::SocketAddrV4::new(super::entry_transfer::address_from_word(address_word),port_word);"
+    },
+    {
+      "line": 146,
+      "text": "        ensure!(target.ip().is_loopback() && target.port()!=0,\"bootstrap GAME requires owned loopback target\");"
+    },
+    {
+      "line": 147,
+      "text": "        self.reconnect_login_bootstrap_fixture(target)?;Ok(Change::GameRedirect{target})"
+    },
+    {
+      "line": 148,
+      "text": "    }"
+    },
+    {
+      "line": 149,
+      "text": "}"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

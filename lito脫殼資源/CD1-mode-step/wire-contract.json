@@ -1,0 +1,78 @@
+{
+  "direction": "C",
+  "opcode": 209,
+  "subtype": 2,
+  "fields": [
+    {
+      "offset": 0,
+      "type": "u8",
+      "value": 209
+    },
+    {
+      "offset": 1,
+      "type": "u8",
+      "value": 2
+    },
+    {
+      "offset": 2,
+      "type": "u8",
+      "domain": [
+        1,
+        2
+      ],
+      "meaning": "1NEXT/2PREVIOUS relative server permutation; noabsolute mode value."
+    }
+  ],
+  "format": "ccc",
+  "format_VA": "005028CC",
+  "format_RVA": "001028CC",
+  "call_VA": "0046B9F4",
+  "call_RVA": "0006B9F4",
+  "body_bytes": 3,
+  "frame_bytes": 5,
+  "prefix": "u16LE total5 inheritedsender",
+  "encoding": "NumericBYTE only, no string/codec/roomID",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "trigger": "Native input0/1 staticbranch, conditionalcallercontrol0/1; actualeventchainblockedbeforeconstructor414910.",
+  "server_evidence": "Exact AD368/C7 selectedclass-method code andCPsymbol match, frozenCSsource/archivedIL, supportingclasses readasdata only.",
+  "receive_dependencies": {
+    "D5sub2": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "bytes": 29565,
+      "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE"
+    },
+    "D5sub0_1": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "bytes": 28849,
+      "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8"
+    }
+  },
+  "known_response_layouts": {
+    "D5sub2": "S D5,u8sub2,u32LEroom,u8absoluteMode body7/frame9",
+    "D5sub3": "S D5,u8sub3,u32LEroom,u16LEmap body8/frame10",
+    "D5sub0_1": "ExistingBatch23 summary/config independent records, versionpinned; noresponsecorrelation/ACK."
+  },
+  "qualification": "NewfiniteNativecallers/Java mode semanticcorroboration; existingwire unchanged; C7 dynamicmap supplement only.",
+  "unknowns": {
+    "conditional_callers": "46D09E/46D0EC prepare4154E0 stack[sprite187F/1881,x1A7/246,yF2,callback46B7D0,control0/1,0]. Independentpostallocationislands, notactualcontrolcreation/click.",
+    "first_upstream_unknown": "46D088 and46D0D6 call4F118C allocationSTOP; no allocationbody/success bridge.",
+    "constructor": "4154E0 forwards callbackargEBP+14/controlEBP+18 along6args to4154FE call414910 firstunknownSTOP. No callbackstorage/virtualinvocation or ECX delivery proved. Onlyargumentroles/positions, noleft/right sprite interpretation.",
+    "insertion": "46D0CF/46D11D call41B3F0 withparent64AD04,index0/1,conditionalobjectEAX, firstdirecthelperunknownSTOP; noinsertbody/runtimeparent/ownership qualification.",
+    "mode_request_path": "AcceptedBatch27 handlerinputECX0→step2;input1→step1;46B9F4 ccc D1/subtype2/step. Bounded0/1branches contain noNative phase64AF98/owner/versionread orunknownpre-sendercall. Upstreamcaller/click unknown, notglobalabsence ofauthoritychecks.",
+    "serializer_transport": "AcceptedBatch26/27 sender,c serializer/frame onlyreferences; nooldPASS. Cbody3/frame5 u16LEprefix5; no roomID/absoluteMode/string onrequest. External759058A0 deliveryboundary retained.",
+    "Java_parser": "ActualProtocol method:opcodeD1/sub2/exactremaining1, directionfromWire1NEXT/2PREVIOUS; otherbytesincluding0/3 rejected, malformed beforeROOMguard. Mode currentvalue notcarried.",
+    "relative_step": "ActualBattleRules.Mode.stepNative guard0..5; presentationorder0,1,5,2,4,3; NEXT+1,PREVIOUS-1 floorMod6→fromWire. BoundedsyntheticSwitchMapdirection segment proves enum-to-delta mapping. Town6 excluded byordinarygate, notmappedtoabsolute request2.",
+    "ordinary_gate": "ActualCS gameInfo parse first; phaseROOM/currentRoomId!=0 thenexcludeRentalbranch; mode request.direction→changeRoomMode. Currentoption0&7F→Mode; !isBattleScene selfsnapshot0/1 return.",
+    "update_guard": "ActualupdateSettings missingroom/exactowner/battleStarted/capacity guard; replacement retainsname/password/cap/options1..4/selections, setsmode andEQUAL_SIDESbit32 bymode.teamBased. NoNativeowner authority from thisserverguard.",
+    "success_publication": "AfterupdateSettings true→resetreadyhelper→litoRoomModeD5/2absoluteBYTE→decode(replacement)map→litoRoomMapD5/3WORD; perpeer2then3. No D5/0/1 in this boundednormal prefix. Laterbot/matchmaking continuation notexpanded/qualified.",
+    "reject_publication": "NonbattleTown/currentmode orupdateSettingsfalse→selfsendGameInfoSnapshot summary0/config1. Eachpacket/getter/send independent; noACK/result/atomicpair/allpeer guarantee.",
+    "failure_order": "updateSettings writes settings/selectedmap/ready beforedecode/reconfigure; known failure/races/partialsend remainopen. C7map-specificupdateMaprepair doesnotautomatically repairmode/updateSettings ornetworkqualifymode failures.",
+    "receive": "ReuseBatch24D5sub2 writesonly64ACCA lowBYTE preserves64ACCB/map64ACC9,noUI;sub3independentWORD→BYTEprojection. Batch23sub0/1independentmixedsnapshot effects; noaggregate ACK/owner/ready inferred.",
+    "C7_version": "C7savedmapnetwork hasrealD1sub3/D5sub3 witnesses; priorAD368restore564 and7capturehits0 areoldscope only. NoNative ormode-step dynamicwitness supplied; do not generalize currentmap qualification.",
+    "handoff_gap": "For dynamicmode qualifications needversionpinned server C_D1/2 NEXT/PREVIOUS and before/aftercurrentmode/map,readyperpeer thenD5/2/3;Town/nonowner/rejection0/1/failedgate distinctions. This is exact missing evidence for supervisor, notrequest tolaunch/newJava packet orSQL."
+  }
+}

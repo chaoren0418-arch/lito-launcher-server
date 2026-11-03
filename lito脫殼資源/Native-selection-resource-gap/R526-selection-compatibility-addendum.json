@@ -1,0 +1,449 @@
+{
+  "Batch34_primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability-contract.json",
+    "bytes": 72940,
+    "sha256": "FC83ED02485F28661AC5550A8C6D8DB0F4ABA3EE06FB6B68EB26ED38CE4BDC9B"
+  },
+  "R526_frozen_manifest_read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r526-production-source-snapshot.json",
+      "bytes": 267285,
+      "sha256": "514D978CAABECF04F20BDB03F941274E90274803FBEDFD32026E1C529C6FC82C"
+    },
+    "content_sha256": "514D978CAABECF04F20BDB03F941274E90274803FBEDFD32026E1C529C6FC82C",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r526-production-source-snapshot.json",
+      "bytes": 267285,
+      "sha256": "514D978CAABECF04F20BDB03F941274E90274803FBEDFD32026E1C529C6FC82C"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T09:43:13.659767+08:00"
+  },
+  "selected_source_references": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+      "bytes": 57955,
+      "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+      "bytes": 8026,
+      "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_source_send.rs"
+    }
+  ],
+  "reads": [
+    {
+      "name": "native_city_runtime.rs",
+      "frozen_read": {
+        "before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57955,
+          "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287"
+        },
+        "content_sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57955,
+          "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287"
+        },
+        "stable": true,
+        "read_at": "2026-10-06T09:43:13.682763+08:00"
+      },
+      "live_read": {
+        "before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57955,
+          "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287"
+        },
+        "content_sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57955,
+          "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287"
+        },
+        "stable": true,
+        "read_at": "2026-10-06T09:43:13.683762+08:00"
+      },
+      "live_matches_frozen": true
+    },
+    {
+      "name": "native_source_send.rs",
+      "frozen_read": {
+        "before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_source_send.rs",
+          "bytes": 8026,
+          "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+        },
+        "content_sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D",
+        "after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_source_send.rs",
+          "bytes": 8026,
+          "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+        },
+        "stable": true,
+        "read_at": "2026-10-06T09:43:13.691846+08:00"
+      },
+      "live_read": {
+        "before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+          "bytes": 8026,
+          "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+        },
+        "content_sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D",
+        "after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+          "bytes": 8026,
+          "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+        },
+        "stable": true,
+        "read_at": "2026-10-06T09:43:13.691846+08:00"
+      },
+      "live_matches_frozen": true
+    }
+  ],
+  "anchor_comparisons": [
+    {
+      "finding": "U02",
+      "function": "consume_source_identity_event",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "consume_source_identity_event",
+        "start_line": 148,
+        "end_line": 149,
+        "required_start_token": "Stage::Directory",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 149,
+      "frozen_end_line": 150,
+      "required_start_token": "Stage::Directory",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        "  if self.bootstrap_adapter.is_some()&&event.body().first()==Some(&3){ensure!(matches!(self.login_bootstrap.key.stage,login_bootstrap::Stage::AwaitRoster|login_bootstrap::Stage::Roster),\"GAME roster requires completed NEWS continuation\");self.login_bootstrap.credentials=None;self.login_bootstrap.key.credentials_pending=false;self.login_bootstrap.key.stage=login_bootstrap::Stage::Roster;self.login_bootstrap.key.roster_count=Some(event.body()[1]);self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::Directory,..Default::default()};}",
+        "  let revision=self.source_roster_revision.checked_add(1).context(\"source roster control revision exhausted\")?;let(next,change)=self.source_identity.prepare_packet(event.body())?;self.login_form.retire()?;self.character_scene.retire()?;if self.bootstrap_adapter.is_some(){for r in next.records(){r.fields().validate_java_projection()?;ensure!(!r.name().is_empty(),\"AD368 empty character name\");r.display_name()?;source_identity::fields::display_ms950(r.clan_name())?;}}self.source_identity=next;self.source_roster_revision=revision;if matches!(change,source_identity::Change::Started{..}){self.java_self.retire();}if matches!(change,source_identity::Change::Started{..}){self.awaiting_source_roster=false;}if self.source_identity.complete()&&!self.awaiting_source_roster{self.character_scene.enter();}self.finish_java_return_roster()?;Ok(change)"
+      ],
+      "frozen_lines": [
+        "  if self.bootstrap_adapter.is_some()&&event.body().first()==Some(&3){ensure!(matches!(self.login_bootstrap.key.stage,login_bootstrap::Stage::AwaitRoster|login_bootstrap::Stage::Roster),\"GAME roster requires completed NEWS continuation\");self.login_bootstrap.credentials=None;self.login_bootstrap.key.credentials_pending=false;self.login_bootstrap.key.stage=login_bootstrap::Stage::Roster;self.login_bootstrap.key.roster_count=Some(event.body()[1]);self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::Directory,..Default::default()};}",
+        "  let revision=self.source_roster_revision.checked_add(1).context(\"source roster control revision exhausted\")?;let(next,change)=self.source_identity.prepare_packet(event.body())?;self.login_form.retire()?;self.character_scene.retire()?;if self.bootstrap_adapter.is_some(){for r in next.records(){r.fields().validate_java_projection()?;ensure!(!r.name().is_empty(),\"AD368 empty character name\");r.display_name()?;source_identity::fields::display_ms950(r.clan_name())?;}}self.source_identity=next;self.source_roster_revision=revision;if matches!(change,source_identity::Change::Started{..}){self.java_self.retire();}if matches!(change,source_identity::Change::Started{..}){self.awaiting_source_roster=false;}if self.source_identity.complete()&&!self.awaiting_source_roster{self.character_scene.enter();}self.finish_java_return_roster()?;Ok(change)"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U03",
+      "function": "source_character_control_enabled",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "source_character_control_enabled",
+        "start_line": 171,
+        "end_line": 173,
+        "required_start_token": "source_identity::JAVA_ROW_BOUND",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 172,
+      "frozen_end_line": 174,
+      "required_start_token": "source_identity::JAVA_ROW_BOUND",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        " pub fn source_character_control_enabled(&self,slot:usize)->bool{!self.entry_navigation.active()&&!self.awaiting_source_roster&&self.character_scene.key().active&&self.page==UiPage::Menu&&self.source_scope.active_serial().is_some()&&self.source_send.snapshot().counter.is_some()&&self.source_send.snapshot().pending.is_none()&&self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT}).is_ok()}",
+        " pub fn source_character_control(&self,slot:usize)->Option<SourceCharacterControl>{if !self.source_character_control_enabled(slot){return None;}Some(SourceCharacterControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.source_roster_revision,scene_revision:self.character_scene.key().scene_revision,slot})}",
+        " pub fn handle_source_character_control(&mut self,control:&SourceCharacterControl)->Result<()>{self.source_scope.admit_epoch(&control.epoch)?;ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired source character control\");self.prepare_source_send_candidate(&control.epoch,source_send::Intent::SelectCharacter{slot:control.slot})?;self.status=\"角色已選取，等待傳送\".into();Ok(())}"
+      ],
+      "frozen_lines": [
+        " pub fn source_character_control_enabled(&self,slot:usize)->bool{!self.entry_navigation.active()&&!self.awaiting_source_roster&&self.character_scene.key().active&&self.page==UiPage::Menu&&self.source_scope.active_serial().is_some()&&self.source_send.snapshot().counter.is_some()&&self.source_send.snapshot().pending.is_none()&&self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT}).is_ok()}",
+        " pub fn source_character_control(&self,slot:usize)->Option<SourceCharacterControl>{if !self.source_character_control_enabled(slot){return None;}Some(SourceCharacterControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.source_roster_revision,scene_revision:self.character_scene.key().scene_revision,slot})}",
+        " pub fn handle_source_character_control(&mut self,control:&SourceCharacterControl)->Result<()>{self.source_scope.admit_epoch(&control.epoch)?;ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired source character control\");self.prepare_source_send_candidate(&control.epoch,source_send::Intent::SelectCharacter{slot:control.slot})?;self.status=\"角色已選取，等待傳送\".into();Ok(())}"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U03",
+      "function": "choose_source_character_control",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "choose_source_character_control",
+        "start_line": 176,
+        "end_line": 180,
+        "required_start_token": "choose_source_character_control",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 177,
+      "frozen_end_line": 181,
+      "required_start_token": "choose_source_character_control",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        " pub fn choose_source_character_control(&mut self,control:&SourceCharacterControl,double_click:bool)->Result<()>{",
+        "  self.source_scope.admit_epoch(&control.epoch)?;",
+        "  ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired character selection callback\");",
+        "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();",
+        "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+      ],
+      "frozen_lines": [
+        " pub fn choose_source_character_control(&mut self,control:&SourceCharacterControl,double_click:bool)->Result<()>{",
+        "  self.source_scope.admit_epoch(&control.epoch)?;",
+        "  ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired character selection callback\");",
+        "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();",
+        "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U03",
+      "function": "source_character_submit",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "source_character_submit",
+        "start_line": 182,
+        "end_line": 183,
+        "required_start_token": "selection_revision",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 183,
+      "frozen_end_line": 184,
+      "required_start_token": "selection_revision",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        " pub fn source_character_submit(&self)->Option<SourceCharacterSubmit>{let key=self.character_scene.key();Some(SourceCharacterSubmit{control:self.source_character_control(key.selected?)?,selection_revision:key.selection_revision})}",
+        " pub fn handle_source_character_submit(&mut self,submit:&SourceCharacterSubmit)->Result<()>{let key=self.character_scene.key();ensure!(submit.selection_revision==key.selection_revision&&key.selected==Some(submit.control.slot),\"retired selected character submit\");self.handle_source_character_control(&submit.control)}"
+      ],
+      "frozen_lines": [
+        " pub fn source_character_submit(&self)->Option<SourceCharacterSubmit>{let key=self.character_scene.key();Some(SourceCharacterSubmit{control:self.source_character_control(key.selected?)?,selection_revision:key.selection_revision})}",
+        " pub fn handle_source_character_submit(&mut self,submit:&SourceCharacterSubmit)->Result<()>{let key=self.character_scene.key();ensure!(submit.selection_revision==key.selection_revision&&key.selected==Some(submit.control.slot),\"retired selected character submit\");self.handle_source_character_control(&submit.control)}"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U03",
+      "function": "prepare_source_send_candidate",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "prepare_source_send_candidate",
+        "start_line": 214,
+        "end_line": 218,
+        "required_start_token": "prepare_select_bounded",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 215,
+      "frozen_end_line": 219,
+      "required_start_token": "prepare_select_bounded",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        "  let next=self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT})?;",
+        "  let prepared=self.source_send.prepare_character(next.selected().unwrap().actor_alias())?;",
+        "  let serial=prepared.reservation.ticket.serial();let mut navigation=self.entry_navigation.clone();navigation.await_character(serial)?;let mut scene=self.character_scene.clone();scene.retire()?;",
+        "  if self.bootstrap_adapter.is_some(){ensure!(self.java_character.key.stage==java_character_flow::Stage::Directory,\"AD368 directory not available for C9\");self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::AwaitCharacterResult,selected_name:Some(next.selected().unwrap().actor_alias().to_vec()),..Default::default()};}",
+        "  let reservation=self.source_send.commit(prepared);self.java_self.selection_requested(serial);self.source_identity=next;self.entry_navigation=navigation;self.character_scene=scene;Ok(reservation)"
+      ],
+      "frozen_lines": [
+        "  let next=self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT})?;",
+        "  let prepared=self.source_send.prepare_character(next.selected().unwrap().actor_alias())?;",
+        "  let serial=prepared.reservation.ticket.serial();let mut navigation=self.entry_navigation.clone();navigation.await_character(serial)?;let mut scene=self.character_scene.clone();scene.retire()?;",
+        "  if self.bootstrap_adapter.is_some(){ensure!(self.java_character.key.stage==java_character_flow::Stage::Directory,\"AD368 directory not available for C9\");self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::AwaitCharacterResult,selected_name:Some(next.selected().unwrap().actor_alias().to_vec()),..Default::default()};}",
+        "  let reservation=self.source_send.commit(prepared);self.java_self.selection_requested(serial);self.source_identity=next;self.entry_navigation=navigation;self.character_scene=scene;Ok(reservation)"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U04",
+      "function": "source_character_command_slot",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "source_character_command_slot",
+        "start_line": 46,
+        "end_line": 46,
+        "required_start_token": "SOURCE_CHARACTER_COMMAND_FIRST+4",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 47,
+      "frozen_end_line": 47,
+      "required_start_token": "SOURCE_CHARACTER_COMMAND_FIRST+4",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        "pub fn source_character_command_slot(command:u16)->Option<usize>{(SOURCE_CHARACTER_COMMAND_FIRST..SOURCE_CHARACTER_COMMAND_FIRST+4).contains(&command).then(||usize::from(command-SOURCE_CHARACTER_COMMAND_FIRST))}"
+      ],
+      "frozen_lines": [
+        "pub fn source_character_command_slot(command:u16)->Option<usize>{(SOURCE_CHARACTER_COMMAND_FIRST..SOURCE_CHARACTER_COMMAND_FIRST+4).contains(&command).then(||usize::from(command-SOURCE_CHARACTER_COMMAND_FIRST))}"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "D02",
+      "function": "choose_source_character_control status",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+          "bytes": 57230,
+          "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+          "bytes": 10301,
+          "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+        },
+        "function": "choose_source_character_control status",
+        "start_line": 179,
+        "end_line": 180,
+        "required_start_token": "可按進入角色或雙擊",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57955,
+        "sha256": "A3BE905AECC0A8F62682D5C05E3969A87BAACE63D3811393EB8F2C7391476287",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_city_runtime.rs"
+      },
+      "frozen_start_line": 180,
+      "frozen_end_line": 181,
+      "required_start_token": "可按進入角色或雙擊",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();",
+        "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+      ],
+      "frozen_lines": [
+        "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();",
+        "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    },
+    {
+      "finding": "U03",
+      "function": "Sender::prepare_character",
+      "historical_anchor": {
+        "source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+          "bytes": 7863,
+          "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+        },
+        "owned_capture": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_send.rs.snapshot.json",
+          "bytes": 1314,
+          "sha256": "15FDD1BBCD90699AEECDFF2E7A724759FCAD4C7448031C21B6F7013E353A96F5"
+        },
+        "function": "Sender::prepare_character",
+        "start_line": 30,
+        "end_line": 30,
+        "required_start_token": "body.extend_from_slice(name)",
+        "adopted": true
+      },
+      "frozen_source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+        "bytes": 8026,
+        "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D",
+        "snapshot": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r526-production-source\\src\\modern_lito\\native_source_send.rs"
+      },
+      "frozen_start_line": 30,
+      "frozen_end_line": 30,
+      "required_start_token": "body.extend_from_slice(name)",
+      "start_text_unchanged": true,
+      "full_anchored_span_unchanged": true,
+      "old_lines": [
+        "  ensure!(name.len()<28&&!name.contains(&0),\"selected source name exceeds NativeNUL capacity\");let mut body=Vec::with_capacity(name.len()+2);body.push(201);body.extend_from_slice(name);body.push(0);self.prepare_body(body)"
+      ],
+      "frozen_lines": [
+        "  ensure!(name.len()<28&&!name.contains(&0),\"selected source name exceeds NativeNUL capacity\");let mut body=Vec::with_capacity(name.len()+2);body.push(201);body.extend_from_slice(name);body.push(0);self.prepare_body(body)"
+      ],
+      "qualified": "Selected existing character call-chain only; no ready/backend/compiled/GUI qualification."
+    }
+  ],
+  "conclusion": "The selected Batch34 character selection anchors remain in the pinned R526 two-file source. Scope is existing roster publication, bounded8 controls, opaque selection/submit checks and exact raw-name C9 construction. No whole R526/R527 compile, production backend wiring or GUI acceptance inferred; Batch34 historical originals unchanged.",
+  "all_selected_spans_unchanged": true,
+  "R527_uninterrupted": true
+}

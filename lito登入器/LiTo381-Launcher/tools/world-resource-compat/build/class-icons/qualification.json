@@ -1,0 +1,117 @@
+{
+  "status": "class-icons-candidate-qualified-native-ui-pending",
+  "dll": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\candidate\\litoddraw.dll",
+    "sha256": "e47bd6c6ec9979c8747a523e4457133802d19f673c8dc1e67707abfa96216a8a"
+  },
+  "jar": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807"
+  },
+  "parent_dll": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\candidate\\ddraw.dll",
+    "sha256": "c17d4ca0728f2a0d92ddc471952f4f6d89bcf78a700a77838ac78cdaeea99116"
+  },
+  "parent_jar": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "920a53a265691e9c9997e1527fd0157a2496651aa33f8bd203354b6403f4a9f5"
+  },
+  "resources": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources.json",
+    "sha256": "0abccb974e8ececea132e8ca3cab6973090f25f2f76341f1da25f0de0cf68e67"
+  },
+  "dependencies": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\mysql-connector-j-8.0.33.jar",
+      "sha256": "e2a3b2fc726a1ac64e998585db86b30fa8bf3f706195b78bb77c5f99bf877bd9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\protobuf-java-3.21.9.jar",
+      "sha256": "1b78b4a76a71512debfdff8f8fc5aef6bfd459f65758fecf7aff245e6e6301e4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\HikariCP-5.1.0.jar",
+      "sha256": "a47a6ee62379694ee52c30036f0931b72f9aee2a801d590341ed82bd839e2134"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\slf4j-api-1.7.36.jar",
+      "sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0"
+    }
+  ],
+  "tests": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\native-accept.log",
+      "sha256": "a327fa4fee396c883f02fa5a347ccac6ac34878dab8144d06ab4767aa0116470"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\native-reject.log",
+      "sha256": "d68fe526e1aad967fb5ef314ac9748e652ec5184f1779d05e6c6b9a20a65b9d0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\native-reject-option.log",
+      "sha256": "d68fe526e1aad967fb5ef314ac9748e652ec5184f1779d05e6c6b9a20a65b9d0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\server-test.log",
+      "sha256": "7dd3855a2d278cd6a6519c10a5ff2fa000a4090f7f260d1cf626be480801406f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\class-icons-20261023-02-live.json",
+      "sha256": "9e7af363d4f64deb215a0152ecb318d03668c002f44d53e33d60b08be25b2240"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\class-icons-20261023-02\\terminal.json",
+      "sha256": "fa391a7e28710f1823caf80737f91e06de02b6d2e0c096df582843245b8b02f0"
+    }
+  ],
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_class_icons.py",
+      "sha256": "d2be3d653d32468c06986b4ee1b6d77535dc5917c90114895c74acfa5367a86b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_class_icon_native.py",
+      "sha256": "50ef84679d4004d44ca19f06027d4b594635a6c042350bd387a1d5e79a3bac21"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\class_icons.inc",
+      "sha256": "8563f5ac2a4761f006cb5fb1fdea64064439c13cd310e66e2d37dccefa22afd5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\class_icons_fixture.inc",
+      "sha256": "7ff49f0749ccad9b3505f77f78e5edd8b45b7256e7b4ee729e660ed6671bf317"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\ClassIconServerPatch.java",
+      "sha256": "7b977aaf2defe9b8bf2fda7ecb69345681df109c2c12f61768e0b9329ab29915"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\ClassIconWireProbe.java",
+      "sha256": "d2cd19d146e15665f0a23f935db71fbb18ce9cf9a9d3447ef9f8c3a3ae56b52b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_class_icon_server.py",
+      "sha256": "d08541666040df3a557af6584312d348f1b562231824521dc2d5811a3c0b3cc1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\class_icon_bootstrap.py",
+      "sha256": "345e9194a25aa2237d878cc1feebfa4ae5c123caaca960c6dc909ff8592133d7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\class_icon_startup.py",
+      "sha256": "b9433231e3631f0d67f4a56b66f6faccc44be365e2cf8d63cf52424acc222f7a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\class_icon_server_entry.py",
+      "sha256": "655ec78deb844c60e75f7e9717b72d85161f5ff6e3aa43959b9786718919e93f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_class_icon_live.py",
+      "sha256": "11f2d6a83b7e94affd81817d2ee034fa747d14938e72ecc9ac441e327e581712"
+    }
+  ],
+  "formal_updated": false,
+  "source_database_modified": false,
+  "original_archives_modified": false,
+  "onscreen_roster_verified": false
+}

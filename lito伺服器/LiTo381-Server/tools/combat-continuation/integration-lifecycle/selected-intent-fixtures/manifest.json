@@ -1,0 +1,41 @@
+{
+  "status": "versioned-only-explicit-selected-enemy-PC-intent-Source-and-other-assertions-retained",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindPlayerBoundaryProbe.java",
+        "sha256": "edaa69b5b7ba2138750e2497fad316c30081226278d8ee8adbbe479c08985d21"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\selected-intent-fixtures\\SourceWindPlayerBoundaryProbe.java",
+        "sha256": "d639b87fdaf54696bf024b3de9addfc601c4bf636df6d7de0292df2bd3eb332d"
+      },
+      "changes": [
+        [
+          "boolean accepted=mode==0&&(world||relation!=1||ctrl==1);",
+          "boolean accepted=mode==0&&(world||ctrl==1);"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source167-fixtures\\SourceWindPlayerIoProbe.java",
+        "sha256": "729c60cf61c6830b11b3cb47e835fa16e9f91aec9be7e5732db6abbe726d50ce"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\selected-intent-fixtures\\SourceWindPlayerIoProbe.java",
+        "sha256": "4893e3d882885a5b7ee595b547adf176729a15a2aa67a832a83ed2bcbdb27a01"
+      },
+      "changes": [
+        [
+          "for(mode=0;mode<6;mode++){selectedSkill",
+          "for(mode=0;mode<6;mode++){if(!phase&&ctrl==0)continue;selectedSkill"
+        ],
+        [
+          "cases==48&&waits==48",
+          "cases==36&&waits==36"
+        ]
+      ]
+    }
+  ]
+}

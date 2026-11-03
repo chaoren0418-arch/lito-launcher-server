@@ -1,0 +1,278 @@
+{
+  "schema": "owned-process-error-safe-runtime-v2",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\appcontainer_launcher.py",
+    "probe",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe",
+  "controller_pid": 476,
+  "start_monotonic": 424368.968,
+  "deadline_monotonic": 424398.968,
+  "timeout_seconds": 30,
+  "child_resumed": true,
+  "process_created": true,
+  "status": "PRIMARY_EXITED",
+  "owned_job_empty": true,
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "failure": null,
+  "observation_failures": [],
+  "fault_plan_declared": {},
+  "creation_call_returned_success": true,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\appcontainer_launcher.py",
+    "sha256": "C2D13B5C522DF84FAD58007CCED3B06D0CA886BEBF5D8836F220ED139106DB09"
+  },
+  "containment": {
+    "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+    "limit_flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_allowed": false,
+    "job_handle_inheritable": false,
+    "active_process_limit": 16,
+    "hidden_window": true,
+    "only_explicit_stdio_handles_inherited": true
+  },
+  "primary_identity": {
+    "pid": 18464,
+    "creation_filetime_100ns": 134358304105042790,
+    "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "resume_monotonic": 424368.984,
+  "watcher_join": {
+    "status": "OBSERVED",
+    "value": null
+  },
+  "watcher_stopped": true,
+  "trigger": [],
+  "cleanup": {
+    "status": "AUDITED",
+    "method": "Owned unnamed job only; unconditional close in finally",
+    "owned_job_empty": true,
+    "pre_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 18464,
+          "creation_filetime_100ns": 134358304105042790,
+          "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 424368.984,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 81
+          }
+        },
+        {
+          "pid": 16992,
+          "creation_filetime_100ns": 134358304105116540,
+          "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 424368.984,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 0
+          }
+        }
+      ]
+    },
+    "member_observation": {
+      "status": "OBSERVED",
+      "value": []
+    },
+    "termination": {
+      "status": "OBSERVED",
+      "value": null
+    },
+    "exit_audit": {
+      "status": "OBSERVED",
+      "value": {
+        "owned_job_empty": true,
+        "active_job_PIDs": [],
+        "job_query_error": null,
+        "retained_handle_waits": [
+          {
+            "pid": 18464,
+            "creation_filetime_100ns": 134358304105042790,
+            "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "handle_origin": "retained CreateProcess result",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 81
+          },
+          {
+            "pid": 16992,
+            "creation_filetime_100ns": 134358304105116540,
+            "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+            "image_path": "C:\\Windows\\System32\\conhost.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "handle_origin": "verified owned job member",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 0
+          }
+        ],
+        "deadline_monotonic": 424371.14,
+        "elapsed_seconds": 0.0,
+        "exit_evidence_status": "CONFIRMED"
+      }
+    },
+    "post_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 18464,
+          "creation_filetime_100ns": 134358304105042790,
+          "creation_time_utc": "2026-10-07T07:06:50.504279+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 424368.984,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 81
+          }
+        },
+        {
+          "pid": 16992,
+          "creation_filetime_100ns": 134358304105116540,
+          "creation_time_utc": "2026-10-07T07:06:50.511654+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 424368.984,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 0
+          }
+        }
+      ]
+    },
+    "close": [
+      {
+        "kind": "sole_noninherited_job",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      }
+    ]
+  },
+  "close": [
+    {
+      "kind": "sole_noninherited_job",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    }
+  ],
+  "capture": {
+    "stdout": {
+      "status": "OBSERVED",
+      "value": {
+        "observed_bytes": 339,
+        "retained_bytes": 339,
+        "discarded_bytes": 0,
+        "cap_bytes": 8192,
+        "EOF_observed": true,
+        "reader_error": null,
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\stdout.bin",
+        "sha256": "FF3B928FC08199064E67CD9A0BFFB90A6580743415381F669759F6ADAD9BBD61",
+        "persisted": true
+      }
+    },
+    "stderr": {
+      "status": "OBSERVED",
+      "value": {
+        "observed_bytes": 0,
+        "retained_bytes": 0,
+        "discarded_bytes": 0,
+        "cap_bytes": 8192,
+        "EOF_observed": true,
+        "reader_error": null,
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\stderr.bin",
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "persisted": true
+      }
+    }
+  },
+  "disk_monitor": {
+    "samples": [
+      {
+        "scan_start_monotonic": 424368.984,
+        "scan_end_monotonic": 424368.984,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 424369.046,
+        "scan_end_monotonic": 424369.046,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 424369.109,
+        "scan_end_monotonic": 424369.109,
+        "bytes": 0
+      }
+    ],
+    "requested_poll_seconds": 0.05,
+    "sample_count_total": 3,
+    "retained_sample_cap": 512,
+    "final_scan": {
+      "status": "OBSERVED",
+      "value": 4894
+    },
+    "max_observed_sample_gap_seconds": 0.06300000002374873,
+    "final_bytes_before_receipt": 4894,
+    "threshold_bytes": 16777216,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "fault_events": [],
+  "evidence_state": "OBSERVED",
+  "finished_monotonic": 424369.14,
+  "elapsed_seconds": 0.1720000000204891,
+  "receipt_persistence": {
+    "status": "WRITTEN",
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\runtime.json",
+    "flush_and_fsync": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "logical_index": 91,
+  "namespace": "shared Sprite TBT",
+  "filename": "91.tbt",
+  "cache_pointer_va": "00648EC8",
+  "count_va": "00648ECC",
+  "hash_shard": "Sprite02",
+  "shard_candidate_found": false,
+  "indexed_candidates": [
+    {
+      "archive": "Sprite",
+      "row": 90223,
+      "name": "91.tbt",
+      "offset": 903342224,
+      "bytes": 403,
+      "source_index": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+      },
+      "decoded_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Sprite.raw.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+      },
+      "source_pak": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+        "bytes": 1904012586,
+        "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62"
+      },
+      "pin_status": "inherited previously verified container/index pins; no full archive rehash or member read this batch"
+    }
+  ],
+  "prior_S1E_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+    "bytes": 8570,
+    "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC"
+  },
+  "row_vtable_render_va": "004C8EA0",
+  "known_LTicon_91_is_not_a_substitute": true,
+  "previously_extracted_shared_91_sample_found": false,
+  "raw_decoded_vector_available": true,
+  "single_member_supplemental_authorization": "Supervisor supplemental scope: necessary single Sprite/91.tbt extraction allowed;5 actual samples total. No other archive member read or extracted.",
+  "extraction": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\fallback91-extraction.json",
+    "bytes": 2001,
+    "sha256": "9723F4B6087B0E4F534948DDB33763E86CC930BAFEFC572E8C39AB376C67BBFB"
+  },
+  "actual_vector": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\vector.json",
+    "bytes": 22431,
+    "sha256": "BEFA644252EAAE58137912E9B7C350F0BBDBA56E0E884061287CDC819295CED8"
+  },
+  "source_payload": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\graphics-fallback91\\Sprite\\row90223-91.tbt",
+    "bytes": 403,
+    "sha256": "A88333B37CF5D6F51960375509A0EB34EA856361A4BF906593737D04201699FB"
+  },
+  "route": "Sprite12 member absence -> base Sprite row90223; original asset bytes, no pixel fabrication"
+}

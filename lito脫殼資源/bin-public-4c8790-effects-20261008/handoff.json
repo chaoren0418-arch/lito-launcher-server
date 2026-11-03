@@ -1,0 +1,509 @@
+{
+  "schema": "lito.bounded-public-4c8790-effects.v1",
+  "task_id": "bin-public-4c8790-effects-20261008",
+  "owner": "LITO BIN Analysis",
+  "thread_id": "01a11705-96c0-74a0-b56d-ed486c318c95",
+  "state": "review",
+  "generated_at": "2026-10-08T16:42:14.745271+08:00",
+  "question": "What observable direct effects and direct call boundary does public skill-toolbar callback tail target VA004C8790 have in the pinned fixed PE?",
+  "new_gap": "Previous activation contract explicitly stopped at004EBECF->004C8790. This task qualifies that public thunk and its immediate public tail target only; previous action19/packet population analysis is not replayed.",
+  "input_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008-contract.json",
+      "bytes": 34931,
+      "sha256": "8D133F72AA4F9E05175B1F463E962EFD0495C9A23AB966A8CEC8C25E485D5229"
+    }
+  ],
+  "source_version_applicability": "Exact fixed PE SHA4271D92F... at imagebase00400000; VA/RVA mapping from its parsed section headers. Same source snapshot hashed and decoded. Other versions and live memory unqualified.",
+  "ASM_navigation_boundary": "ASM file SHA2A3A6E10... has header input SHA AEB05C78FE029EA6D3F2EF349245669E47E1E83B1C005E32D4663C780627B5A6. It suggests function bounds only; all instruction conclusions derive from fixed-PE raw bytes.",
+  "raw_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\raw-evidence.json",
+    "bytes": 11190,
+    "sha256": "DAA93AD2A1D3B624E682B0049898D4E45A8D81A20F1DC06F8379BB3E755DFCD2"
+  },
+  "ranges": [
+    {
+      "label": "public_tail_thunk",
+      "va": "004C8790",
+      "rva": "000C8790",
+      "end_exclusive": "004C8795",
+      "file_offset": "000C8790",
+      "section_index": 0,
+      "bytes": 5,
+      "artifact": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\004C8790-5.bin",
+        "bytes": 5,
+        "sha256": "B49C630CBB3C702C10BC0098F8B76E778A1B55177C62831F868B84EB59E98E23"
+      }
+    },
+    {
+      "label": "public_direct_tail_target_body",
+      "va": "004C85E0",
+      "rva": "000C85E0",
+      "end_exclusive": "004C8625",
+      "file_offset": "000C85E0",
+      "section_index": 0,
+      "bytes": 69,
+      "artifact": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\004C85E0-45.bin",
+        "bytes": 69,
+        "sha256": "16C0D613E0F7D076BC64870CFA69D2C9B44D24A59C75535D65F4D23FCFA01296"
+      }
+    }
+  ],
+  "instruction_boundaries": "004C8790 decodes as one5-byteE9 with raw target004C85E0. The immediate target decodes sequentially from its public entry through its shared popESI/ret ending004C8625; all internal short branches land on decoded instruction004C8623. No arbitrary byte-pattern scan or unknown target body expansion.",
+  "findings": [
+    {
+      "id": "F1",
+      "conclusion": "004C8790 is a pure direct tail jump to004C85E0: no local memory write, stack change or packet assembly in the5-byte thunk. The immediate body is included to make the tail effect meaningful.",
+      "witnesses": [
+        {
+          "va": "004C8790",
+          "rva": "000C8790",
+          "file_offset": "000C8790",
+          "size": 5,
+          "raw_hex": "e94bfeffff",
+          "mnemonic": "jmp",
+          "operands": "0x4c85e0",
+          "direct_target": "004C85E0"
+        }
+      ],
+      "falsified_by": "Different source bytes or runtime patch at this thunk."
+    },
+    {
+      "id": "F2",
+      "conclusion": "004C85E0 saves incomingECX inEAX, savesESI on the stack and loadsECX from global008343EC. Zero008343EC returns via004C8623. With nonzeroECX it loadsEDX from00635630; zeroEDX also returns. If both are nonzero, it pushes saved incomingECX and directly calls004C7EC0 withECX still008343EC.",
+      "witnesses": [
+        {
+          "va": "004C85E0",
+          "rva": "000C85E0",
+          "file_offset": "000C85E0",
+          "size": 2,
+          "raw_hex": "8bc1",
+          "mnemonic": "mov",
+          "operands": "eax, ecx"
+        },
+        {
+          "va": "004C85E3",
+          "rva": "000C85E3",
+          "file_offset": "000C85E3",
+          "size": 6,
+          "raw_hex": "8b0dec438300",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x8343ec]"
+        },
+        {
+          "va": "004C85E9",
+          "rva": "000C85E9",
+          "file_offset": "000C85E9",
+          "size": 2,
+          "raw_hex": "85c9",
+          "mnemonic": "test",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "004C85EB",
+          "rva": "000C85EB",
+          "file_offset": "000C85EB",
+          "size": 2,
+          "raw_hex": "7436",
+          "mnemonic": "je",
+          "operands": "0x4c8623"
+        },
+        {
+          "va": "004C85ED",
+          "rva": "000C85ED",
+          "file_offset": "000C85ED",
+          "size": 6,
+          "raw_hex": "8b1530566300",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x635630]"
+        },
+        {
+          "va": "004C85F3",
+          "rva": "000C85F3",
+          "file_offset": "000C85F3",
+          "size": 2,
+          "raw_hex": "85d2",
+          "mnemonic": "test",
+          "operands": "edx, edx"
+        },
+        {
+          "va": "004C85F5",
+          "rva": "000C85F5",
+          "file_offset": "000C85F5",
+          "size": 2,
+          "raw_hex": "742c",
+          "mnemonic": "je",
+          "operands": "0x4c8623"
+        },
+        {
+          "va": "004C85F7",
+          "rva": "000C85F7",
+          "file_offset": "000C85F7",
+          "size": 1,
+          "raw_hex": "50",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "va": "004C85F8",
+          "rva": "000C85F8",
+          "file_offset": "000C85F8",
+          "size": 5,
+          "raw_hex": "e8c3f8ffff",
+          "mnemonic": "call",
+          "operands": "0x4c7ec0",
+          "direct_target": "004C7EC0"
+        }
+      ],
+      "unknown": "Global field semantics, initialized/live pointers and004C7EC0 resource/object lookup meaning are not qualified. Stack argument presence is proved; its callee encoding/ABI is not independently expanded.",
+      "falsified_by": "Zero guards, different live values/callee ABI, modified version or call failing/throwing."
+    },
+    {
+      "id": "F3",
+      "conclusion": "004C7EC0 resultEAX becomesESI; NULL returns. Otherwise the body reads[ESI+8] intoECX and calls004C83A0. If returnedAL is nonzero it returns. WithAL zero it reads[ESI+8] again, pushes0x7F and calls004C8240, then reads[ESI+8] again, pushes1 and calls004C83F0, finally restoresESI and returns.",
+      "witnesses": [
+        {
+          "va": "004C85FD",
+          "rva": "000C85FD",
+          "file_offset": "000C85FD",
+          "size": 2,
+          "raw_hex": "8bf0",
+          "mnemonic": "mov",
+          "operands": "esi, eax"
+        },
+        {
+          "va": "004C85FF",
+          "rva": "000C85FF",
+          "file_offset": "000C85FF",
+          "size": 2,
+          "raw_hex": "85f6",
+          "mnemonic": "test",
+          "operands": "esi, esi"
+        },
+        {
+          "va": "004C8601",
+          "rva": "000C8601",
+          "file_offset": "000C8601",
+          "size": 2,
+          "raw_hex": "7420",
+          "mnemonic": "je",
+          "operands": "0x4c8623"
+        },
+        {
+          "va": "004C8603",
+          "rva": "000C8603",
+          "file_offset": "000C8603",
+          "size": 3,
+          "raw_hex": "8b4e08",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [esi + 8]"
+        },
+        {
+          "va": "004C8606",
+          "rva": "000C8606",
+          "file_offset": "000C8606",
+          "size": 5,
+          "raw_hex": "e895fdffff",
+          "mnemonic": "call",
+          "operands": "0x4c83a0",
+          "direct_target": "004C83A0"
+        },
+        {
+          "va": "004C860B",
+          "rva": "000C860B",
+          "file_offset": "000C860B",
+          "size": 2,
+          "raw_hex": "84c0",
+          "mnemonic": "test",
+          "operands": "al, al"
+        },
+        {
+          "va": "004C860D",
+          "rva": "000C860D",
+          "file_offset": "000C860D",
+          "size": 2,
+          "raw_hex": "7514",
+          "mnemonic": "jne",
+          "operands": "0x4c8623"
+        },
+        {
+          "va": "004C860F",
+          "rva": "000C860F",
+          "file_offset": "000C860F",
+          "size": 3,
+          "raw_hex": "8b4e08",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [esi + 8]"
+        },
+        {
+          "va": "004C8612",
+          "rva": "000C8612",
+          "file_offset": "000C8612",
+          "size": 2,
+          "raw_hex": "6a7f",
+          "mnemonic": "push",
+          "operands": "0x7f"
+        },
+        {
+          "va": "004C8614",
+          "rva": "000C8614",
+          "file_offset": "000C8614",
+          "size": 5,
+          "raw_hex": "e827fcffff",
+          "mnemonic": "call",
+          "operands": "0x4c8240",
+          "direct_target": "004C8240"
+        },
+        {
+          "va": "004C8619",
+          "rva": "000C8619",
+          "file_offset": "000C8619",
+          "size": 3,
+          "raw_hex": "8b4e08",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [esi + 8]"
+        },
+        {
+          "va": "004C861C",
+          "rva": "000C861C",
+          "file_offset": "000C861C",
+          "size": 2,
+          "raw_hex": "6a01",
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "va": "004C861E",
+          "rva": "000C861E",
+          "file_offset": "000C861E",
+          "size": 5,
+          "raw_hex": "e8cdfdffff",
+          "mnemonic": "call",
+          "operands": "0x4c83f0",
+          "direct_target": "004C83F0"
+        },
+        {
+          "va": "004C8623",
+          "rva": "000C8623",
+          "file_offset": "000C8623",
+          "size": 1,
+          "raw_hex": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004C8624",
+          "rva": "000C8624",
+          "file_offset": "000C8624",
+          "size": 1,
+          "raw_hex": "c3",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "conditional_effects": "Normal return and valid object backing assumed. Four direct helper invocations are observable code effects; their transitive writes, virtual/API calls and runtime success remain unresolved. No helper expansion.",
+      "falsified_by": "NULL lookup result, nonzeroAL guard, invalid or mutated[ESI+8], exception/nonreturn/reentry or changed helper semantics."
+    },
+    {
+      "id": "F4",
+      "conclusion": "For the prior toolbar callback inputECX=0xED andEDX=0x7F, the body passes saved0xED to004C7EC0 when both global guards succeed. IncomingEDX is not read before being overwritten from00635630. The later pushed0x7F is an immediate constant in004C85E0, not data propagated from incomingEDX.",
+      "context_source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008-contract.json",
+        "bytes": 34931,
+        "sha256": "8D133F72AA4F9E05175B1F463E962EFD0495C9A23AB966A8CEC8C25E485D5229"
+      },
+      "witnesses": [
+        {
+          "va": "004C85E0",
+          "rva": "000C85E0",
+          "file_offset": "000C85E0",
+          "size": 2,
+          "raw_hex": "8bc1",
+          "mnemonic": "mov",
+          "operands": "eax, ecx"
+        },
+        {
+          "va": "004C85ED",
+          "rva": "000C85ED",
+          "file_offset": "000C85ED",
+          "size": 6,
+          "raw_hex": "8b1530566300",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x635630]"
+        },
+        {
+          "va": "004C85F7",
+          "rva": "000C85F7",
+          "file_offset": "000C85F7",
+          "size": 1,
+          "raw_hex": "50",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "va": "004C8612",
+          "rva": "000C8612",
+          "file_offset": "000C8612",
+          "size": 2,
+          "raw_hex": "6a7f",
+          "mnemonic": "push",
+          "operands": "0x7f"
+        }
+      ],
+      "unknown": "0xED/0x7F/1 and these globals are not proved packet opcodes, skills IDs, sound/resource IDs, volume values or scene states. No guessed naming is supplied.",
+      "falsified_by": "Different callback inputs/version, guards preventing calls or independently qualified callee semantics requiring a revised interpretation."
+    },
+    {
+      "id": "F5",
+      "conclusion": "Neither the thunk nor complete immediate target contains an explicit global/object memory store, direct packet formatter/send call to004C6AE0/004C6770, or an indirect call instruction. Stack pushes/call/return are present. All call-out boundaries in this scope are direct public addresses.",
+      "witnesses": [
+        {
+          "va": "004C8790",
+          "rva": "000C8790",
+          "file_offset": "000C8790",
+          "size": 5,
+          "raw_hex": "e94bfeffff",
+          "mnemonic": "jmp",
+          "operands": "0x4c85e0",
+          "direct_target": "004C85E0",
+          "range_label": "public_tail_thunk"
+        },
+        {
+          "va": "004C85F8",
+          "rva": "000C85F8",
+          "file_offset": "000C85F8",
+          "size": 5,
+          "raw_hex": "e8c3f8ffff",
+          "mnemonic": "call",
+          "operands": "0x4c7ec0",
+          "direct_target": "004C7EC0",
+          "range_label": "public_direct_tail_target_body"
+        },
+        {
+          "va": "004C8606",
+          "rva": "000C8606",
+          "file_offset": "000C8606",
+          "size": 5,
+          "raw_hex": "e895fdffff",
+          "mnemonic": "call",
+          "operands": "0x4c83a0",
+          "direct_target": "004C83A0",
+          "range_label": "public_direct_tail_target_body"
+        },
+        {
+          "va": "004C8614",
+          "rva": "000C8614",
+          "file_offset": "000C8614",
+          "size": 5,
+          "raw_hex": "e827fcffff",
+          "mnemonic": "call",
+          "operands": "0x4c8240",
+          "direct_target": "004C8240",
+          "range_label": "public_direct_tail_target_body"
+        },
+        {
+          "va": "004C861E",
+          "rva": "000C861E",
+          "file_offset": "000C861E",
+          "size": 5,
+          "raw_hex": "e8cdfdffff",
+          "mnemonic": "call",
+          "operands": "0x4c83f0",
+          "direct_target": "004C83F0",
+          "range_label": "public_direct_tail_target_body"
+        }
+      ],
+      "qualification": "This is a local instruction observation, not proof of no external/network effects. Helpers may have transitive effects, including unknown virtual targets; no such bodies were inspected here. No packet obligation or wire direction/fields/encoding is established.",
+      "falsified_by": "Different raw instructions or independently qualified helper evidence identifying transitive network behavior."
+    }
+  ],
+  "direct_call_boundary": {
+    "tail_target": "004C85E0",
+    "helper_targets": [
+      "004C7EC0",
+      "004C83A0",
+      "004C8240",
+      "004C83F0"
+    ],
+    "expanded_helper_targets": [],
+    "private_or_refused_targets_followed": [],
+    "direct_send_found": false,
+    "no_transitive_send_proved": false,
+    "actual_wire_obligation_proved": false,
+    "direction": null,
+    "opcode": null,
+    "fields": null,
+    "encoding": null,
+    "trigger_state": null,
+    "null_wire_fields_mean": "Unqualified, not whole-program absence."
+  },
+  "consumer_adoption_action": {
+    "consumer": "Launcher through Root review",
+    "action": "Refine the skill-toolbar evidence model: registry toggle is followed by this guarded helper chain, with lookup input0xED and immediate arguments0x7F/1. Do not interpret incomingEDX=0x7F as packet content or add an on-open skills request. Continue distinguishing local activation from same-session skill population/reset and visible draw.",
+    "implementation_change": "No concrete native repair or packet change is justified by these local bytes.",
+    "first_lobby_joined_room_WORLD": "None of the guarded globals, result objects or constants is assigned a login/room/WORLD meaning; first-lobby reachability and actual pane contents remain separate."
+  },
+  "unknowns_and_blockers": {
+    "unknown": "Direct helper implementations and any transitive virtual effects; global00635630/008343EC semantics/live state; object[ESI+8] backing/epoch; actual first-lobby/room/WORLD execution and skill pane population/draw.",
+    "supplier": "Root-qualified public fixed-PE task for a specific helper semantics question, or fresh Launcher same-session evidence with exact instance/session provenance.",
+    "resume": "A new bounded input-complete public question outside retained stops, or Root notification of a genuinely fresh qualified runtime instance. Generic process name or exited fresh2 evidence cannot authorize attachment.",
+    "next_input_complete_task": null
+  },
+  "runtime_and_authorization": {
+    "new_human_automation_authorization_recorded": true,
+    "former_manual_G_Start_prerequisite_not_assumed": true,
+    "human_click_or_human_ready_fabricated": false,
+    "fresh_instance_received": false,
+    "attached_or_monitoring": false,
+    "process_started": false,
+    "runtime_evidence_collected": false,
+    "native_tool_restrictions_preserved": true,
+    "PID_creation_READY_nonce_claim_lease_cleanup_preserved": true
+  },
+  "goal_status": {
+    "actual_native_status": "blocked",
+    "actual_get_goal_observation": "This turn returnedblocked, updatedAt1791409406; new task execution does not invent an active Goal.",
+    "exact_full_product_objective_retained": true,
+    "product_complete": false
+  },
+  "validation": {
+    "supplied_input_SHA_match": true,
+    "all_ranges_raw_backed": true,
+    "all_code_bytes_decoded": true,
+    "exact_direct_transfer_sequence_asserted": true,
+    "bounded_raw_artifacts_match_source": true,
+    "old_PASS_replays": 0,
+    "product_accepted": false,
+    "supervisor_review_pending": true,
+    "consumer_adopted": false
+  },
+  "preserved_stops": [
+    "No private backing/next layer",
+    "No0042E550/0042E6D0/0042EA50 expansion",
+    "No ServerT291/T27/refund/rebid/castle route",
+    "No refusal bypass/rephrase/tool substitution/owner transfer",
+    "No cross-owner writes or Root index/workflow writes"
+  ],
+  "commands": {
+    "workdir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "execution": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B bin-public-4c8790-effects-20261008/derive.py",
+    "exit_report": "Exit code comes from original shell tool receipt; no old tests executed.",
+    "tools": {
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+      "capstone": "5.0.6"
+    }
+  },
+  "owned_files": "This task namespace and only new bin_public_4c8790_effects_20261008 fields in existing owned progress/queue."
+}

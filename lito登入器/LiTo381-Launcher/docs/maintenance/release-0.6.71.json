@@ -1,0 +1,166 @@
+{
+  "version": "0.6.71",
+  "status": "published-and-verified",
+  "at": "2026-10-23T04:02:05.628262+08:00",
+  "feature": "L1PolyMe / .polyme gfx / 7200 seconds",
+  "runtime_and_evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\LiTo381Launcher.exe",
+      "bytes": 132096,
+      "sha256": "0bf5ddf2e479ef0b38f3416ff47cff981af5a6f4b5095719e24dc3ba9f624280"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\LiTo381Launcher.dll",
+      "bytes": 407552,
+      "sha256": "4bb23b335656096860832e5aded6e556dcf4eb495bdb997e9b47c3ace2dec84e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\development_startup.py",
+      "bytes": 29572,
+      "sha256": "adff1edc784b6f54803a050d32e3d6d3ee06eb9242da0af1b4b227dcb3eac9cd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "bytes": 20054975,
+      "sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\Start-Shared-World.py",
+      "bytes": 29817,
+      "sha256": "971a99971f52bdfaa7e7bb916ab325ea8500e79c8f5f03c237e171f5a8bbe3c5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\litoddraw.dll",
+      "bytes": 269824,
+      "sha256": "e47bd6c6ec9979c8747a523e4457133802d19f673c8dc1e67707abfa96216a8a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runtime-pins.json",
+      "bytes": 5705,
+      "sha256": "a6f605362df0ec223e89500510044511959c3c78524a33dc5f08f21152b8bbb7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\deployment\\release-inputs.json",
+      "bytes": 387,
+      "sha256": "dc5fdc0ce314d3bdcf733af69c104b889cd8e992658b08d9f2d810546b4eb7dd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\inputs\\base-0.6.70.jar",
+      "bytes": 20049056,
+      "sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\build\\PolyMeRegression.log",
+      "bytes": 2617,
+      "sha256": "db9266d3c0a9e3143d978d46a2fa0ff968bfd39c0ae5adb22d10892e35b6d071"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\build\\TravelRegression.log",
+      "bytes": 2600,
+      "sha256": "2eac3e1fd5cbcd40f934512196d685253fcf4e63b7eedd7b3c262e148c1a5138"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\lito_gm_polyme.sql",
+      "bytes": 441,
+      "sha256": "d19bc517084b15dbfd1f8bc868bc7f3ffa00d5f85505d1296eac34609952325b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\GmPolyMe.java",
+      "bytes": 7698,
+      "sha256": "880bdd7c6c5ce55c2c1636751c6e4910b2438208575ab4fd9ba68a9d7401afa0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\GmTravel.java",
+      "bytes": 8693,
+      "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+      "bytes": 4826582,
+      "sha256": "6ce00b818e73bf509152a460dab4831fd5eefc29e6344e7081c4948d40046f8b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\build.py",
+      "bytes": 2420,
+      "sha256": "5710ab18159ceb29e586dba7a5a7d4d4e0334e560cd67e1bf7663a675033724a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\Patch.java",
+      "bytes": 2150,
+      "sha256": "22061a44ccb6d09ecefbffd0bdf7f0491f5d9109cd03a62db357b8d58e2211f8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\gm-polyme\\PolyMeRegression.java",
+      "bytes": 8321,
+      "sha256": "cc4b8a76706144cd7f13dd72b99eee03d5813bc19d20c52a4e882de261abb24e"
+    }
+  ],
+  "build": {
+    "base_sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807",
+    "candidate_sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498",
+    "changed_entries": [
+      "local/lito381/server/ClientSession.class",
+      "local/lito381/server/GmTravel.class",
+      "local/lito381/server/GmPolyMe$Forms.class",
+      "local/lito381/server/GmPolyMe.class"
+    ],
+    "source_sha256": "880bdd7c6c5ce55c2c1636751c6e4910b2438208575ab4fd9ba68a9d7401afa0"
+  },
+  "native_startup": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true,
+      "forced_combat_send_hook": "0x6fd433a0"
+    },
+    "class_icons": {
+      "count": 243,
+      "exact_new_icon_pixels": 10,
+      "render_hooks": 3,
+      "formal_archive": true,
+      "no_generic_client_ddraw": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1792699200066100000"
+  },
+  "bat_sql_preflight": true,
+  "database_change": {
+    "database": "380_lito",
+    "table": "commands",
+    "inserted_rows": 1,
+    "name": "polyme",
+    "class_name": "L1PolyMe",
+    "access_level": 200,
+    "system": 0
+  },
+  "source_database_modified": false,
+  "client_dll_changed": false,
+  "client_bin_modified": false,
+  "baseline_retained": "0.6.66",
+  "shortcut": "C:\\Users\\CHAOREN\\Desktop\\LiTo 0.6.71 正式啟動器.lnk",
+  "backup": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\pre-0.6.71-changed-files.zip",
+  "tests": [
+    "34 GM polymorph checks",
+    "existing loc/move/Storm_Walk regression",
+    "native start/owned stop and cleanup"
+  ],
+  "limits": [
+    "Actual in-game GM morph appearance awaits user testing.",
+    "GM morph does not add Source plugin polymorph bonus abilities.",
+    "Not a completion claim for all combat skill work."
+  ]
+}

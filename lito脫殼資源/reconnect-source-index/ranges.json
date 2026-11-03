@@ -1,0 +1,313 @@
+{
+  "new_code_ranges": 0,
+  "new_data_ranges": 1,
+  "new_data": {
+    "label": "ExistingC9format",
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    "va": "00502498",
+    "rva": "00102498",
+    "section": "   \u0000    ",
+    "file_offset": "00102498",
+    "raw_backed": true,
+    "raw_hex": "637300",
+    "output": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index\\C9-format-00502498.bin",
+      "bytes": 3,
+      "sha256": "B80C9344EA73A7672EADF2AE55C7F5A6CF2AC6FBCE11BB2C867C9E08D7B49933"
+    }
+  },
+  "inherited_ranges": [
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+        "bytes": 533,
+        "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+      },
+      "va": "0047C8A0",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047CAD0.bin",
+        "bytes": 142,
+        "sha256": "C3F792C87F730EE6259865D1BAD380FC5BB90BB6C7D0EC682A18F9D5B257E25B"
+      },
+      "va": "0047CAD0",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00480A60.bin",
+        "bytes": 631,
+        "sha256": "EB9864D8467A5E4B44D02AE593B362586A2984A38F6A986D9E2D066B7B52F4B1"
+      },
+      "va": "00480A60",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00481831.bin",
+        "bytes": 70,
+        "sha256": "E416B71BB2C098B3F6FAAFB36B7F54214E7E14A37C34627891F33E2B7F3AFC12"
+      },
+      "va": "00481831",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00481DC7.bin",
+        "bytes": 38,
+        "sha256": "3BB013D5DB0AC254E806C91FC8968DFB091F6C2B41827E5FF5F38A722B40D259"
+      },
+      "va": "00481DC7",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00492F07.bin",
+        "bytes": 103,
+        "sha256": "6ABCCAE108DAFF4B8E288A897BC17CE0DB5731A94A3E778E2B74F83EBFDF834A"
+      },
+      "va": "00492F07",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0064AD2C.bin",
+        "bytes": 584,
+        "sha256": "62EC1707572AC5078D31A687A5D23DE0C6D2A58D3462EFB7039957548A7986CC"
+      },
+      "va": "0064AD2C",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\ranges.json",
+        "bytes": 235988,
+        "sha256": "0C8E89738385FE07A0041F7130E2E22B9DE65A73ACA1FF948F81CC9580DF26CB"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0064B7E4.bin",
+        "bytes": 256,
+        "sha256": "5341E6B2646979A70E57653007A1F310169421EC9BDD9F1A5648F75ADE005AF1"
+      },
+      "va": "0064B7E4",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+        "bytes": 531377,
+        "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004928C0.bin",
+        "bytes": 1746,
+        "sha256": "C2E6FE5A8C6CFD8F437BEB0D35204035AB71710DED24E68312120426DD237810"
+      },
+      "va": "004928C0",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+        "bytes": 531377,
+        "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004A7550.bin",
+        "bytes": 371,
+        "sha256": "620C25295EFE8F75C78D9B177674E8D7AD651B0952DF060F6F763F2A374A3F2B"
+      },
+      "va": "004A7550",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+        "bytes": 531377,
+        "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6AE0.bin",
+        "bytes": 80,
+        "sha256": "BACECE7FD826746CE8EE33303EFF586B2284F9D54A8E20FE05EAF1F40E8CD223"
+      },
+      "va": "004C6AE0",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+        "bytes": 531377,
+        "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-00480620.bin",
+        "bytes": 335,
+        "sha256": "856AB2861C9EE5C5C15E7829ED1F9A2B0F9824CBC078434F803C25604F0FAAEE"
+      },
+      "va": "00480620",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+        "bytes": 531377,
+        "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6B30.bin",
+        "bytes": 1614,
+        "sha256": "A0439837221DE9F9605190A254D8224ABDA0B63E8EC90FC60C0495DF1CAEAFFB"
+      },
+      "va": "004C6B30",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-ranges.json",
+        "bytes": 132597,
+        "sha256": "7571F69C3B93117FEB4ADAA4469DC45261EFC2CD4E5788514461A262DCB81B26"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-00469B10.bin",
+        "bytes": 304,
+        "sha256": "20E4398A85360CA48F3BC8F0A2CA5F9656AC36602FA071D8833A367D6528380F"
+      },
+      "va": "00469B10",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-ranges.json",
+        "bytes": 132597,
+        "sha256": "7571F69C3B93117FEB4ADAA4469DC45261EFC2CD4E5788514461A262DCB81B26"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-0046ED50.bin",
+        "bytes": 704,
+        "sha256": "9F14E1FA1CE72FE7D1421B4190B8E3EF30B1AAFE2F9924FE5F2B6263ADA2FFE3"
+      },
+      "va": "0046ED50",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+        "bytes": 146704,
+        "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00469BD0.bin",
+        "bytes": 189,
+        "sha256": "9F3BF8593BF5029CED3C686B6EA468DF44F0F2BE42DD2F079C43EABE679B4C4C"
+      },
+      "va": "00469BD0",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+        "bytes": 146704,
+        "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+        "bytes": 551,
+        "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+      },
+      "va": "0046F010",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    },
+    {
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+        "bytes": 146704,
+        "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570"
+      },
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+        "bytes": 608,
+        "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+      },
+      "va": "00475F40",
+      "raw_matches_fixed_PE": true,
+      "scope": "Reuse established bounded raw; not a new fullCFG/runtime execution claim",
+      "old_case_or_producer_replayed": false
+    }
+  ]
+}

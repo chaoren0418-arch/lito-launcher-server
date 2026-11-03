@@ -1,0 +1,270 @@
+{
+  "status": "versioned-only-three-Source-probability-skills-and-guaranteed-controlled-failure",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowStateProbe.java",
+        "sha256": "faf0ac6fc9bb77de5c5e9a7bb8630efa2a396c0bd9f9ba2970d228cb12c3173a"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureStateProbe.java",
+        "sha256": "d7d15df44ac140f09059c93e90cd9537e7cfa97709520f4dc79a45ffa8494996"
+      },
+      "changes": [
+        [
+          "SourceMassSlowStateProbe",
+          "SourceNegativeFailureStateProbe"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "new int[]{76}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "Set.of(76)",
+          "Set.of(selectedSkill)"
+        ],
+        [
+          "x+12",
+          "x+6"
+        ],
+        [
+          "var spell=BattleSpellCatalog.massSlowSpell(76);",
+          "Object spell=selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill);"
+        ],
+        [
+          "NativeSkillTargetMetadata.row(76)",
+          "NativeSkillTargetMetadata.row(selectedSkill)"
+        ],
+        [
+          "metadata.area()==3",
+          "metadata.area()==0"
+        ],
+        [
+          "metadata.ranged()==-1",
+          "metadata.ranged()==(selectedSkill==152?10:-1)"
+        ],
+        [
+          "probabilities.put(76,new SourceSkillControls.Probability(76,",
+          "probabilities.put(selectedSkill,new SourceSkillControls.Probability(selectedSkill,"
+        ],
+        [
+          "data.skills().get(76)",
+          "data.skills().get(selectedSkill)"
+        ],
+        [
+          ".c(9).c(3)",
+          ".c((selectedSkill-1)>>3).c((selectedSkill-1)&7)"
+        ],
+        [
+          "cost(pc,76,spell)",
+          "cost(pc,selectedSkill,spell)"
+        ],
+        [
+          "spell.effectGfx()",
+          "value(spell,\"effectGfx\")"
+        ],
+        [
+          "need(pet.captureEraseMagic(System.nanoTime()).equals(erase)&&timed.sleepActive(System.nanoTime())==sleep&&timed.counterMagicActive(System.nanoTime())==counter,",
+          "if(!before)need(pet.captureEraseMagic(System.nanoTime()).equals(erase)&&timed.sleepActive(System.nanoTime())==sleep&&timed.counterMagicActive(System.nanoTime())==counter,"
+        ],
+        [
+          "if(changed)mutationGaps++;",
+          "if(changed||!pet.captureEraseMagic(System.nanoTime()).equals(erase)||timed.sleepActive(System.nanoTime())!=sleep||timed.counterMagicActive(System.nanoTime())!=counter)mutationGaps++;"
+        ],
+        [
+          "cases==72&&(before?admissionGaps>0&&mutationGaps>0:admissionGaps==0&&mutationGaps==0)",
+          "cases==216&&(before?admissionGaps>0||mutationGaps>0:admissionGaps==0&&mutationGaps==0)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowBoundaryProbe.java",
+        "sha256": "a9fd05551420dcc490bc9470db06a34f8542576d53249de28a2c379322eae69d"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureBoundaryProbe.java",
+        "sha256": "a1e16e6f5ff637c52ed3aba8716a36a29333778d9703ceb7adc320a7d7d81415"
+      },
+      "changes": [
+        [
+          "SourceMassSlowBoundaryProbe",
+          "SourceNegativeFailureBoundaryProbe"
+        ],
+        [
+          "\"type\",selectedSkill==29?2:3",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "new int[]{76}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "mode==1?18:12",
+          "mode==1?18:6"
+        ],
+        [
+          "NativeSkillTargetMetadata.row(selectedSkill).ranged()==-1",
+          "NativeSkillTargetMetadata.row(selectedSkill).ranged()==(selectedSkill==152?10:-1)"
+        ],
+        [
+          "boolean eligible=selectedSkill!=29||SourceNpcPhysicalStats.memoryFixture(pet.snapshot().npcId()).eraseEligible();",
+          "boolean eligible=true;"
+        ],
+        [
+          "SourceMaterialRangeProbe.selected(selectedSkill)",
+          "(selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill))"
+        ],
+        [
+          "cases==696&&waits==336",
+          "cases==1044&&waits==504"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowIoProbe.java",
+        "sha256": "81aba338b61ead6ec007756930fac51c895915b536f39d0c0e3614bce16dbdd3"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureIoProbe.java",
+        "sha256": "3e9bf4195529fe00b00f8d3ac8f0c06829da2133c3ee09aaa827688d0dfa27b0"
+      },
+      "changes": [
+        [
+          "SourceMassSlowIoProbe",
+          "SourceNegativeFailureIoProbe"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "new int[]{76}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "Set.of(76)",
+          "Set.of(selectedSkill)"
+        ],
+        [
+          "x+12",
+          "x+6"
+        ],
+        [
+          "x+13",
+          "x+7"
+        ],
+        [
+          "var spell=BattleSpellCatalog.massSlowSpell(76);",
+          "Object spell=selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill);"
+        ],
+        [
+          ".c(9).c(3)",
+          ".c((selectedSkill-1)>>3).c((selectedSkill-1)&7)"
+        ],
+        [
+          "cost(pc,76,spell)",
+          "cost(pc,selectedSkill,spell)"
+        ],
+        [
+          "spell.itemConsumeId()",
+          "value(spell,\"itemConsumeId\")"
+        ],
+        [
+          "spell.itemConsumeCount()",
+          "value(spell,\"itemConsumeCount\")"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "new int[]{29,152,153}",
+          "new int[]{29,152}"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowFaultProbe.java",
+        "sha256": "c54dd6a446289933543d4d77efa8301d8c101f2e7bbe50f52862a259e38b5a2f"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureFaultProbe.java",
+        "sha256": "2d38382713c87fc7f203d9c10af474532809a637a4ac0b4c6afa9f0af7102f14"
+      },
+      "changes": [
+        [
+          "SourceMassSlowFaultProbe",
+          "SourceNegativeFailureFaultProbe"
+        ],
+        [
+          "\"type\",3",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "new int[]{76}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "Set.of(76)",
+          "Set.of(selectedSkill)"
+        ],
+        [
+          "var spell=BattleSpellCatalog.massSlowSpell(76);",
+          "Object spell=selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill);"
+        ],
+        [
+          ".c(9).c(3)",
+          ".c((selectedSkill-1)>>3).c((selectedSkill-1)&7)"
+        ],
+        [
+          "spell.itemConsumeId()",
+          "value(spell,\"itemConsumeId\")"
+        ],
+        [
+          "spell.itemConsumeCount()",
+          "value(spell,\"itemConsumeCount\")"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "return actor.snapshot().moveSpeed()!=BattleTimedStatus.HASTE;",
+          "return actor.snapshot().moveSpeed()!=BattleTimedStatus.HASTE||actor.captureEraseMagic(System.nanoTime()).present();"
+        ],
+        [
+          "faultCases==48&&faults==48",
+          "faultCases==72&&faults==72"
+        ]
+      ]
+    }
+  ],
+  "native_cases": 0
+}

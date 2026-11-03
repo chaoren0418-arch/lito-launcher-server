@@ -1,0 +1,1950 @@
+{
+  "captures": [
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "frame_1based": 70,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 84,
+      "body_hex": "cd01000000426174746c65486f737428426174746c654d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 23,
+          "value": "426174746c65486f737428426174746c654d6f6f6e29",
+          "wire_hex": "426174746c65486f737428426174746c654d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 28,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 31,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 35,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 39,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 43,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 46,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 52,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 56,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 58,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 62,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 63,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 79,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 84,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "frame_1based": 71,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 85,
+      "body_hex": "cd01000000426174746c65477565737428426174746c654d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 24,
+          "value": "426174746c65477565737428426174746c654d6f6f6e29",
+          "wire_hex": "426174746c65477565737428426174746c654d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 31,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 32,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 36,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 40,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 46,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 47,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 53,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 58,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 59,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 63,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 79,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 80,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 85,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "frame_1based": 72,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 84,
+      "body_hex": "cd01000000426174746c65486f737428426174746c654d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 23,
+          "value": "426174746c65486f737428426174746c654d6f6f6e29",
+          "wire_hex": "426174746c65486f737428426174746c654d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 28,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 31,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 35,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 39,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 43,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 46,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 52,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 56,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 58,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 62,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 63,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 79,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 84,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "frame_1based": 73,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 85,
+      "body_hex": "cd01000000426174746c65477565737428426174746c654d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 24,
+          "value": "426174746c65477565737428426174746c654d6f6f6e29",
+          "wire_hex": "426174746c65477565737428426174746c654d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 31,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 32,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 36,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 40,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 46,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 47,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 53,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 58,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 59,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 63,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 79,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 80,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 85,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "frame_1based": 71,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 84,
+      "body_hex": "cd0100000052657475726e486f73742852657475726e4d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 23,
+          "value": "52657475726e486f73742852657475726e4d6f6f6e29",
+          "wire_hex": "52657475726e486f73742852657475726e4d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 28,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 31,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 35,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 39,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 43,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 46,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 52,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 56,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 58,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 62,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 63,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 79,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 84,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "frame_1based": 72,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 85,
+      "body_hex": "cd0100000052657475726e47756573742852657475726e4d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 24,
+          "value": "52657475726e47756573742852657475726e4d6f6f6e29",
+          "wire_hex": "52657475726e47756573742852657475726e4d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 31,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 32,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 36,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 40,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 46,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 47,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 53,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 58,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 59,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 63,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 79,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 80,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 85,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "frame_1based": 73,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 84,
+      "body_hex": "cd0100000052657475726e486f73742852657475726e4d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 23,
+          "value": "52657475726e486f73742852657475726e4d6f6f6e29",
+          "wire_hex": "52657475726e486f73742852657475726e4d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 28,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 31,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 35,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 39,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 43,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 46,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 52,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 56,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 58,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 62,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 63,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 79,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 84,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "frame_1based": 74,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": "CD",
+      "body_bytes": 85,
+      "body_hex": "cd0100000052657475726e47756573742852657475726e4d6f6f6e29000001000000000000000000000000000000005265616479000000000000000000000000000000000000000000000000000000000000000000",
+      "source58_version": 120913203,
+      "fields": [
+        {
+          "index": 1,
+          "format": "d",
+          "body_offset": 1,
+          "wire_bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "format": "s",
+          "body_offset": 5,
+          "wire_bytes": 24,
+          "value": "52657475726e47756573742852657475726e4d6f6f6e29",
+          "wire_hex": "52657475726e47756573742852657475726e4d6f6f6e2900"
+        },
+        {
+          "index": 3,
+          "format": "c",
+          "body_offset": 29,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "format": "c",
+          "body_offset": 30,
+          "wire_bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        },
+        {
+          "index": 5,
+          "format": "c",
+          "body_offset": 31,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 6,
+          "format": "d",
+          "body_offset": 32,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 7,
+          "format": "d",
+          "body_offset": 36,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 8,
+          "format": "d",
+          "body_offset": 40,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 9,
+          "format": "c",
+          "body_offset": 44,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 10,
+          "format": "s",
+          "body_offset": 45,
+          "wire_bytes": 1,
+          "value": "",
+          "wire_hex": "00"
+        },
+        {
+          "index": 11,
+          "format": "c",
+          "body_offset": 46,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 12,
+          "format": "s",
+          "body_offset": 47,
+          "wire_bytes": 6,
+          "value": "5265616479",
+          "wire_hex": "526561647900"
+        },
+        {
+          "index": 13,
+          "format": "d",
+          "body_offset": 53,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 14,
+          "format": "c",
+          "body_offset": 57,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 15,
+          "format": "c",
+          "body_offset": 58,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 16,
+          "format": "d",
+          "body_offset": 59,
+          "wire_bytes": 4,
+          "value": 0,
+          "wire_hex": "00000000"
+        },
+        {
+          "index": 17,
+          "format": "c",
+          "body_offset": 63,
+          "wire_bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "tail_c_index": 0,
+          "body_offset": 64,
+          "value": 0
+        },
+        {
+          "tail_c_index": 1,
+          "body_offset": 65,
+          "value": 0
+        },
+        {
+          "tail_c_index": 2,
+          "body_offset": 66,
+          "value": 0
+        },
+        {
+          "tail_c_index": 3,
+          "body_offset": 67,
+          "value": 0
+        },
+        {
+          "tail_c_index": 4,
+          "body_offset": 68,
+          "value": 0
+        },
+        {
+          "tail_c_index": 5,
+          "body_offset": 69,
+          "value": 0
+        },
+        {
+          "tail_c_index": 6,
+          "body_offset": 70,
+          "value": 0
+        },
+        {
+          "tail_c_index": 7,
+          "body_offset": 71,
+          "value": 0
+        },
+        {
+          "tail_c_index": 8,
+          "body_offset": 72,
+          "value": 0
+        },
+        {
+          "tail_c_index": 9,
+          "body_offset": 73,
+          "value": 0
+        },
+        {
+          "tail_c_index": 10,
+          "body_offset": 74,
+          "value": 0
+        },
+        {
+          "tail_c_index": 11,
+          "body_offset": 75,
+          "value": 0
+        },
+        {
+          "tail_c_index": 12,
+          "body_offset": 76,
+          "value": 0
+        },
+        {
+          "tail_c_index": 13,
+          "body_offset": 77,
+          "value": 0
+        },
+        {
+          "tail_c_index": 14,
+          "body_offset": 78,
+          "value": 0
+        },
+        {
+          "tail_c_index": 15,
+          "body_offset": 79,
+          "value": 0
+        },
+        {
+          "tail_c_index": 16,
+          "body_offset": 80,
+          "value": 0
+        }
+      ],
+      "tail_dword": 0,
+      "consumed": 85,
+      "remaining": 0,
+      "native_dispatch_or_table_execution_observed": false,
+      "same_dword_all_members": 1,
+      "classification": "Known S_CD frozen wire corroboration; not new producer run"
+    }
+  ],
+  "new_capture": false,
+  "S_D0_countdown_results_expanded": false
+}

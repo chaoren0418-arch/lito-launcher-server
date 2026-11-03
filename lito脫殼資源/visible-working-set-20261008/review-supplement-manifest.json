@@ -1,0 +1,17 @@
+{
+  "published_delivery_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\delivery-manifest.json",
+    "bytes": 3460,
+    "sha256": "2107C297191C2790E6A76CD8A9CA1336F139CE216E9594924F48D818891A8F3B"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\independent-review.json",
+      "bytes": 1175,
+      "sha256": "1690AF26C5B286B72391823433DE83AE064231B4D552A487D98D64150201E0AE"
+    }
+  ],
+  "consumer_candidate_adopted": false,
+  "supervisor_reviewed": false,
+  "original_delivery_unchanged": true
+}

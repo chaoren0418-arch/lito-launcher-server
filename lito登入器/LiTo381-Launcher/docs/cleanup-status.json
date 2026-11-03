@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "deletion_completed": true,
+  "blocker": null,
+  "new_release": "release/current",
+  "old_0_6_33_exists": false,
+  "old_0_6_34_exists": false,
+  "rollback26_backup_files_verified": 344,
+  "rollback26_client_files_hash_compared": 14699,
+  "rollback26_shared_files": 14693
+}

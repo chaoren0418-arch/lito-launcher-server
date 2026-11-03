@@ -1,0 +1,24 @@
+package local.lito381.server;
+import java.nio.file.*;import java.util.*;import java.util.concurrent.*;
+/** Configured zero/one/max MP through real ground packets; source tables untouched. */
+public final class GroundNumericProbe extends GroundMaterialProbe {
+ static void exercise(ClientSession pc,ClientSession peer,GameHub hub,boolean world,int mode)throws Exception{
+  setup(pc,peer,hub,world);int skill=selectedSkill;var field=CombatDatabase.class.getDeclaredField("current");field.setAccessible(true);var original=(CombatDatabase.Snapshot)field.get(null);var skills=new HashMap<>(original.skills());var old=skills.get(skill);int base=new int[]{0,1,65535}[mode/2],initial=mode%2==0?1000:0;skills.put(skill,old.withBasics(base,old.hp(),old.reuse(),old.duration()));field.set(null,original.withSkills(skills));
+  try{var row=BattleSpellCatalog.groundSpell(skill);need(row.mpCost()==base,"actual catalog consumes isolated configured MP");set(pc,"playerMp",initial);int cost=cost(pc,skill,row);boolean accept=initial>=cost;int item=Math.toIntExact(row.itemConsumeId()),count=row.itemConsumeCount();if(item!=0)NativeDeItemPublication.grant(pc,item,count+3);
+   try(var wire=new SourceActionPairProbe.Wire(pc,peer);var other=new SourceActionPairProbe.Wire(peer,pc)){
+    cast(pc,skill,row);int expected=accept?Math.max(0,Math.min(1000,initial-cost)):initial;need((int)get(pc,"playerMp")==expected,"source signed consumption bounded by actual max MP");need((active(pc,hub,world)>0)==accept,"configured affordability gates actual ground effect");if(item!=0)need(pc.nativeDeInventory(0).countCatalog(item)==count+3-(accept?count:0),"numeric rejection does not consume material");need(((Map<?,?>)get(pc,"spellReadyNanos")).containsKey(skill)==accept,"numeric rejection does not commit reuse");collect(wire);collect(other);need(wire.locked+other.locked==0&&NativePlayerVitalCompletions.pending(NativePlayerLifetime.of(pc))==0,"numeric output unlocked and receipt released");
+   }
+  }finally{field.set(null,original);}cases++;
+ }
+ public static void main(String[]args)throws Exception{
+  var jar=Path.of(args[3]).toRealPath();for(var type:List.of(ClientSession.class,GameHub.class,BattleGroundEffects.class,ClassicWorldGroundEffects.class))need(Path.of(type.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar),"actual native producer and effect classes");
+  var base=ServerConfig.load(Path.of(args[0]),"standard");ResourceDatabase.load(base);var templates=new NativeDeItemTemplatesResources.Owner().reload(base);var definitions=new NativeDeItemDefinitionsResources.Owner().reload(base);var root=Path.of(args[1]);Throwable primary=null;
+  try{for(boolean flag:new boolean[]{true})for(boolean world:new boolean[]{false,true})for(boolean app:new boolean[]{false,true})for(int skill:SKILLS)for(int mode=0;mode<6;mode++){selectedSkill=skill;selectedMode=0;
+   var r=root.resolve(flag+"-"+world+"-"+app+"-"+skill+"-"+mode);Files.createDirectories(r);var cfg=copy(base,Map.of("battleNaturalHpRegenEnabled",false,"battleNaturalMpRegenEnabled",false,"statePersistenceEnabled",flag,"stateFile",r.resolve("must-not-write.properties")));var state=new GameStateStore(r.resolve("must-not-write.properties"),false,true);var accounts=new MemoryAccountRepository("fixture","fixture","",0,1,40,52);
+   try(var capture=new CaptureLog(r.resolve("capture"));var hub=new GameHub(cfg,state,accounts);var f=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var p=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var m=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var o=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME)){
+    var clock=(ScheduledExecutorService)get(hub,"battleClock");clock.shutdownNow();need(clock.awaitTermination(2,TimeUnit.SECONDS),"unrelated clock stopped");var fixtures=List.of(f,p,m,o);init(fixtures,cfg);FlowRegression.setup(hub,f.session,p.session,m.session,o.session);if(world)world(fixtures,hub);if(app)NativeDeItemApplication.install(hub,templates,definitions);exercise(p.session,m.session,hub,world,mode);
+   }need(!Files.exists(r.resolve("must-not-write.properties")),"both flags memory-only");
+  }}catch(Throwable e){primary=e;throw e;}finally{try{NativePlayerCommit.closeFixture();}catch(Throwable e){if(primary!=null)primary.addSuppressed(e);else throw e;}}
+  need(NativePlayerLifetime.allIdle(),"all lifetimes idle");String result="{\"cases\":"+cases+",\"checks\":"+ownChecks+",\"actual_frames\":"+frames+",\"locked_write_calls\":"+lockedWrites+",\"full_goal_achieved\":false}";Files.writeString(Path.of(args[2]),result+"\n");System.out.println(result);
+ }
+}

@@ -1,0 +1,15 @@
+package local.lito381.server;
+import java.util.*;import java.util.concurrent.*;import java.util.concurrent.atomic.*;
+/** Once-only accepted metadata and requested-heal contracts; no Hub/PC/socket/SQL/game fixture. */
+public final class SourceSingleNpcPlan {
+ static int cases;static void check(boolean b,String why){if(!b)throw new AssertionError(why);cases++;}
+ public static void main(String[]a)throws Exception{
+  var plan=new NativeSourceSingleNpc.Single(null,null,3,4,25);check(!NativeSourceSingleNpc.claim(plan,false)&&!plan.applied().get(),"rejected HP never claims a target side effect/heal");check(NativeSourceSingleNpc.claim(plan,true),"first accepted HP claims fixed results");check(!NativeSourceSingleNpc.claim(plan,true),"duplicate accepted completion cannot heal or reapply status");check(!NativeSourceSingleNpc.claim(null,true),"missing metadata grants no accepted mutation");
+  check(NativeSourceSingleNpc.requestedHeal(false,25)==0,"non-drain magic never grants healing");check(NativeSourceSingleNpc.requestedHeal(true,0)==0&&NativeSourceSingleNpc.requestedHeal(true,-1)==0,"nonpositive damage cannot invent drain heal");check(NativeSourceSingleNpc.requestedHeal(true,25)==25,"Source requested heal is calculated damage, independent of remaining target HP");check(NativeSourceSingleNpc.requestedHeal(true,Integer.MAX_VALUE)==Integer.MAX_VALUE,"requested heal does not overflow before original long capped mutation");
+  var frozen=new NativeSourceSingleNpc.Single(null,null,-1,-2,-3);check(frozen.confusionSeconds()==0&&frozen.thunderSeconds()==0&&frozen.heal()==0,"negative target mutation inputs cannot create timers or healing");check(plan.confusionSeconds()==3&&plan.thunderSeconds()==4&&plan.heal()==25,"acceptance does not reroll or rewrite captured inputs");
+  var racing=new NativeSourceSingleNpc.Single(null,null,1,2,7);var start=new CountDownLatch(1);var count=new AtomicInteger();var failures=new AtomicReference<Throwable>();var threads=new ArrayList<Thread>();for(int i=0;i<8;i++){var thread=new Thread(()->{try{start.await();for(int n=0;n<128;n++)if(NativeSourceSingleNpc.claim(racing,true))count.incrementAndGet();}catch(Throwable failure){failures.compareAndSet(null,failure);}},"pure-accepted-claim-"+i);threads.add(thread);thread.start();}start.countDown();for(var thread:threads)thread.join(10000);check(failures.get()==null&&threads.stream().noneMatch(Thread::isAlive),"bounded pure claim threads settle");check(count.get()==1,"concurrent duplicate completion claims exactly once");
+  var status=new BattleEraseMagicStatus();long now=System.nanoTime();var old=status.activate(now,10);var newer=status.activate(now,10);check(!status.consume(old)&&status.consume(newer),"accepted old lease cannot delete newer recast");
+  check(new NativeSourceSingleNpc.Single(null,null,0,0,0).applied().get()==false,"non-HP/direct side-effect metadata is not fabricated acceptance");
+  if(cases!=14)throw new AssertionError(cases);System.out.println("PASS14 fixed requested-heal/target-input/once-only accepted-CAS and actual erase-recast contracts; no bound HP/Main/game/SQL qualification");
+ }
+}

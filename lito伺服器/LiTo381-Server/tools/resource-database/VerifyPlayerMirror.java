@@ -1,0 +1,27 @@
+import java.util.*;
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+import static org.objectweb.asm.Opcodes.*;
+
+/** Strict independent inverse of source-PC decision/packet adapters, not NPC reflection. */
+final class VerifyPlayerMirror{
+ static final String P="local/lito381/server/",C=P+"ClientSession",H=P+"CombatPlayerMirror",OLD=P+"BattleCounterMirrorStatus$Decision",D=H+"$Decision",A=P+"CombatMagicDamage$Attempt";
+ static AbstractInsnNode before(AbstractInsnNode n){return VerifyCombatPreservation.prior(n);}static AbstractInsnNode after(AbstractInsnNode n){return VerifyCombatPreservation.following(n);}
+ static void require(boolean b,String why){if(!b)throw new AssertionError("PC mirror "+why);}
+ static MethodNode copy(MethodNode original){var m=new MethodNode(original.access,original.name,original.desc,original.signature,original.exceptions.toArray(String[]::new));original.accept(m);return m;}
+ static void restoreTypes(MethodNode m){for(var n:m.instructions)if(n instanceof FrameNode f){replace(f.local);replace(f.stack);}if(m.localVariables!=null)for(var l:m.localVariables)if(l.desc.equals("L"+D+";"))l.desc="L"+OLD+";";}
+ static void replace(List<Object> values){if(values!=null)for(int i=0;i<values.size();i++)if(D.equals(values.get(i)))values.set(i,OLD);}
+ static MethodNode normalize(MethodNode original){var m=copy(original);int decisions=0,publishers=0;
+  for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode c){
+   if(c.owner.equals(H)){require(c.name.equals("decide")&&c.getOpcode()==INVOKESTATIC&&c.desc.equals("(L"+C+";IZIJL"+A+";)L"+D+";"),"exact native decision bridge");var context=before(c);var value=after(c);var captured=after(value);require(context instanceof VarInsnNode load&&load.getOpcode()==ALOAD&&captured instanceof VarInsnNode a&&a.getOpcode()==ALOAD&&a.var==load.var&&value.getOpcode()==ILOAD,"same native source attempt as post-mirror class/MR finish");m.instructions.remove(context);m.instructions.set(c,new MethodInsnNode(INVOKEVIRTUAL,C,"counterMirrorDecision","(IZIJ)L"+OLD+";",false));decisions++;}
+   else if(c.owner.equals(D)){require(Set.of("active","eligible","triggered","wisdom","roll","reflectedDamage").contains(c.name),"original scalar accessor");c.owner=OLD;}
+   else if(c.owner.equals(C)&&c.name.equals("publishSourcePlayerCounterMirrorTrigger")){require(c.desc.equals("(L"+C+";L"+D+";Ljava/lang/String;)V"),"native PC publisher identity");c.name="publishPlayerCounterMirrorTrigger";c.desc=c.desc.replace(D,OLD);publishers++;}
+  }
+  if(decisions>0||publishers>0){var expected=Map.ofEntries(Map.entry("useLineAttackSpell",1),Map.entry("useAreaAttackSpell",1),Map.entry("useCenteredAreaAttackSpell",1),Map.entry("useCenteredFreezeAttackSpell",1),Map.entry("useFreezeAttackSpell",1),Map.entry("useClassicWorldFreezeAttackSpell",1),Map.entry("useAttackSpell",3),Map.entry("useClassicWorldAttackSpell",3),Map.entry("useClassicWorldLineAttackSpell",1),Map.entry("useClassicWorldLineFreezeAttackSpell",1),Map.entry("useClassicWorldCenteredFreezeAttackSpell",1),Map.entry("useClassicWorldCenteredAreaAttackSpell",1),Map.entry("useClassicWorldAreaAttackSpell",1));require(expected.getOrDefault(m.name,0)==decisions&&decisions==publishers,"exact native per-method decision/publisher counts="+m.name);restoreTypes(m);}return m;
+ }
+ static MethodNode avatar(MethodNode original,String owner){var m=copy(original);if(!owner.equals(P+"BattleAbilityStatus$IllusionAvatar"))return m;int count=0;for(var node:m.instructions.toArray())if(node instanceof MethodInsnNode call&&call.owner.equals(P+"CombatRules")&&call.name.equals("avatarIncomingRate")){var remaining=before(call);var receiver=before(remaining);var prior=before(receiver);require(remaining instanceof MethodInsnNode timer&&timer.owner.equals(owner)&&timer.name.equals("remainingSeconds")&&timer.desc.equals("()I")&&receiver instanceof VarInsnNode load&&load.getOpcode()==ALOAD&&load.var==0&&call.getOpcode()==INVOKESTATIC&&call.desc.equals("(DI)D")&&prior instanceof FieldInsnNode f&&f.getOpcode()==GETFIELD&&f.owner.equals(owner)&&f.name.equals("incomingDamageRate")&&f.desc.equals("D")&&Set.of("incomingDamageRate","applyIncomingDamage").contains(m.name),"source Avatar exact existing double scalar operand");m.instructions.remove(remaining);m.instructions.remove(receiver);m.instructions.remove(call);count++;}require(count==(Set.of("incomingDamageRate","applyIncomingDamage").contains(m.name)?1:0),"source Avatar exact per-method scalar count");return m;}
+ static void cloneOnly(MethodNode original,MethodNode source){var m=copy(source);require(m.name.equals("publishSourcePlayerCounterMirrorTrigger")&&m.desc.equals(original.desc.replace(OLD,D)),"typed private publisher clone");m.name=original.name;m.desc=original.desc;int world=0,battle=0;
+  for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode c){if(c.owner.equals(D))c.owner=OLD;else if(c.owner.equals(H)){require(c.getOpcode()==INVOKESTATIC&&c.desc.equals("(L"+C+";IL"+C+";Z)V")&&Set.of("receiveWorld","receiveBattle").contains(c.name),"only original HP commit adapters");boolean w=c.name.equals("receiveWorld");m.instructions.set(c,new MethodInsnNode(INVOKEVIRTUAL,C,w?"takeClassicWorldPlayerDamage":"takePlayerDamage","(IL"+C+";Z)V",false));if(w)world++;else battle++;}}
+  restoreTypes(m);require(world==1&&battle==1&&VerifyCombatPreservation.semantic(original).equals(VerifyCombatPreservation.semantic(m)),"native null/trigger guard, recipients, graphic4395, reaction, logging and positive HP branches exact");
+ }
+}

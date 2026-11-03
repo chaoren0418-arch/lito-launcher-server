@@ -1,0 +1,11 @@
+{
+  "run": "native-order-1791771035705109200",
+  "native_source_first": true,
+  "blank_login_after_source": true,
+  "cleanup_verified": true,
+  "native_pid": 35444,
+  "process_count": 1,
+  "release": "0.6.38",
+  "compat_sha256": "70954ed90f18f37039132ad77720f48e2ad13354bc6229a69a37f80fd9e96cc2",
+  "test_driver_absent_in_release": true
+}

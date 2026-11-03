@@ -1,0 +1,56 @@
+"""Seal the controlled NPC167 increment; retain the full Source/material objective."""
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,shutil
+R=Path(__file__).resolve().parent;S=R.parents[2];D=R/'build';continuation=R.parent/'continuation-current.json'
+read=lambda p:json.loads(p.read_text('utf-8'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();pin=lambda p:dict(path=str(p.resolve()),sha256=sha(p))
+write=lambda p,v:p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n','utf-8')
+def verify(v):
+ if isinstance(v,dict):
+  if 'path'in v and 'sha256'in v:assert sha(Path(v['path']))==v['sha256'],v['path']
+  for x in v.values():verify(x)
+ elif isinstance(v,list):
+  for x in v:verify(x)
+proof=read(D/'Source-lifecycle-progress-verified-current.json');audit=read(D/'source-summon-lifetime-audit-current.json');integrated=read(R/'current.json');ih=sha(R/'current.json');previous=read(continuation)
+for key in ['protected','live_helpers','experimental_live_helpers','docs']:verify(proof[key])
+names=['companion-wind-build','companion-wind-reproduction','companion-wind-before','companion-wind-after','companion-wind-lifecycle-after','companion-wind-clock','companion-wind-conditions','companion-wind-publication-after','companion-wind-area-regressions','companion-wind-gates','on-companion-wind-Source-player-after','on-companion-wind-Source-NPC-after'];indices={};manifests={}
+for name in names:
+ i=read(D/(name+'-current.json'));assert i['status'].startswith(('built','passed','observed')),(name,i['status']);verify(i);m=read(Path(i['manifest']['path']));verify(m);indices[name]=i;manifests[name]=m
+runtime=indices[names[0]]['runtime'];build=manifests[names[0]];assert runtime['sha256']=='f158a61a3da75f35684a315c728fd97eb31d546ab3eec823558076d7b2329206'
+assert build['base']['sha256']=='4627ff770917d480b3e6c73f02f3c126be79cef0126e550450d41c43eb68848e'
+for name in names:assert indices[name]['runtime']==(build['base'] if name.endswith('-before') else runtime),name
+for ref in build['inputs']:assert sha(R/Path(ref['path']).name)==ref['sha256']
+assert build['changed']==['local/lito381/server/BattleCompanion.class','local/lito381/server/ClientSession.class','local/lito381/server/NativeAreaMaterialAction.class'] and build['fresh']==['local/lito381/server/NativeCompanionWindAction.class','local/lito381/server/NativeCompanionWindState.class']
+obs=lambda name:manifests[name]['observations']
+before=obs('companion-wind-before');raw=obs('companion-wind-after');life=obs('companion-wind-lifecycle-after');clock=obs('companion-wind-clock');conditions=obs('companion-wind-conditions');publication=obs('companion-wind-publication-after');player=obs('on-companion-wind-Source-player-after');npc=obs('on-companion-wind-Source-NPC-after');gates=manifests['companion-wind-gates'];regressions=manifests['companion-wind-area-regressions']
+assert before['scenarios']==before['old_missing_targets']==72 and raw['scenarios']==72 and raw['old_missing_targets']==0 and raw['actual_kinds']==3
+assert raw['cases']==raw['scenarios']+raw['unapplied_raw_attempts']
+assert life['scenarios']==32 and life['actual_waiting_casts']>=24 and life['old_scene_unresolved_targets']==life['new_scene_ghost_hits']==0
+assert clock['cases']==9 and clock['actual_kinds']==3 and clock['source_speed_compositions']==3
+assert conditions['cases']==33 and conditions['actual_kinds']==3 and publication['scenarios']==16
+assert player['scenarios']==28 and player['secondary_player_status_hits']==0 and npc['scenarios']==8 and npc['secondary_actor_status_hits']==0
+assert gates['cases']==352 and regressions['cases']==232
+for row in gates['results']:
+ m=read(Path(row['manifest']['path']));verify(m);assert m['runtime']==runtime
+ if 'gates-regressions' in row['manifest']['path']:
+  for child in m['results']:verify(read(Path(child['manifest']['path'])))
+sourceReview=read(D/'on-companion-wind-area-gates-source-drift-review-current.json');verify(sourceReview);sourceManifest=read(Path(sourceReview['manifest']['path']));verify(sourceManifest);inventory=next(r for r in sourceManifest['Source_inputs'] if Path(r['original']['path']).name=='L1PcInventory.java');assert inventory['original']['sha256']=='220b001573ec6766dcdd16370c4e1cbd522721367e00c127c90bc2d3779926e4'
+counted=[raw,life,clock,conditions,publication,player,npc];count=sum(o['cases'] for o in counted)+gates['cases']+regressions['cases'];checks=sum(o['checks'] for o in counted)+gates['known_checks']+regressions['checks']
+run=D/'companion-wind-progress'/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ');run.mkdir(parents=True);refs={}
+for name in names:
+ target=run/(name+'-current.json');shutil.copyfile(D/target.name,target);refs[name]=pin(target)
+shutil.copyfile(D/'on-companion-wind-area-gates-source-drift-review-current.json',run/'current-Source-review.json')
+doc=S/'docs/maintenance/combat-integration-lifecycle.zh-TW.md';doc2=S/'docs/maintenance/combat-continuation-current.zh-TW.md'
+for source,name in [(Path(__file__),Path(__file__).name),(D/'Source-lifecycle-progress-verified-current.json','previous-proof.json'),(D/'source-summon-lifetime-audit-current.json','previous-audit.json'),(continuation,'previous-continuation.json'),(doc,'previous-lifecycle.md'),(doc2,'previous-continuation.md')]:shutil.copyfile(source,run/name)
+remaining=list(audit['companion_placement_remaining'])+['On f158a61a, real controlled PET/SUMMON/TAMED skill167 target selection, actor-owned lazy status, original melee/ranged beginStrike clock extension, normal/Ctrl Source buff target relations, failed-portal owner/actor separation, paired retirement/STOPPED and deferred-publication guards are scoped-qualified. Source duplicate/no-refresh, immunity-aware raw44 removal, counter/erase/barrier gates and real death/deactivation/dismiss reset consumers pass. Seven original synchronized timed-status resets have exact lease-clear ports; not every give/evolve/resurrection factory branch is independently qualified. Full NPC spell AI/status producers and spell-action interval consumers, complete factories/target shapes/class/material/control matrices, cleanup and final same-SHA full regression remain open. No checkpoint promotion; other SHA scopes are not summed.']
+v=dict(status='passed-scoped-controlled-NPC167-target-state-clock-and-pair-lifecycle-Source-coverage-open',runtime=runtime,parent=build['base'],integrated_runtime=integrated['runtime'],receipts=refs,current_Source_review=pin(run/'current-Source-review.json'),qualified_scope=dict(cases=count,known_checks=checks,check_count_complete=False),observations=dict(raw_before=before,raw_after=raw,queued_lifecycle=life,Source_clock_oracle=clock,conditions=conditions,deferred_publication=publication),Source_oracle_scope='Actual current ActionIntervalCalculator and L1SkillId are compiled unchanged. An abstract L1Character link-only stub is isolated in a child loader with platform parent; no Source actor is created, and these classes are absent from the native fixture classpath. Tests call the actual Source pure calculator for the final wind multiplier composed after the original native speed interval; this does not qualify all Source NPC AI/spell/SPR rules.',Source_drift_scope='Exactly two timed-item hour-to-seconds overflow guards independently invert to prior6583, then the original dark auxiliary failure block inverts to445a. Full-file equality proves material/selector/role methods unchanged. Original Java fixtures and goldens remain immutable; only the new Source review is selected by the frozen gate adapter.',remaining=remaining,full_goal_achieved=False,same_SHA_full_regression_passed=False,all_NPC_spell_AI_consumers_wired=False,all_reset_factories_verified=False,formal_deployment_changed=False,Source_or_player_SQL_or_WAL_written=False);write(run/'manifest.json',v)
+text='\n\n受控NPC技能167續作 `'+runtime['sha256'][:12]+'…` 同SHA **'+str(count)+'案／已計數'+format(checks,',')+'項檢查**。舊候選72情境均無法選中真正受控NPC；新候選72情境81次原始正常／Ctrl施法均可選定與施加狀態，9次原生機率未中逐次保留且各只扣一次材料／MP。真正PET／SUMMON／TAMED、WORLD／競技、自己／隊友／敵方依現有buff目標政策驗證，非選定人物狀態保持不變。\n\n失敗傳送後主人新圖／物件原圖的32案含24次實際等待另一角色Source鎖；角色／NPC世代／pose／同ID替換／缺材料／MP與STOPPED拒絕均通過。提交後16情境17次施法驗證退役特效不外漏。9案原生beginStrike／移動時鐘與隔離載入的實際Source ActionIntervalCalculator比對，wind於既有速度計算後乘1.25、移動不變、期限邊界回復原間隔；只使用原nextActionNanos時鐘。33案原167／原始44入口驗證重複不刷新、相消免疫、反制／外控豁免、魔消、束縛、屏障、機率失敗與死亡／離場／dismiss清理。\n\n只新增一個NPC自有延遲配置狀態欄位、兩個無持有者helper；保留原選定檢查、材料／MP／機率與輸出本體，原機率橋逐位元複製。七個原有同步重置入口接清理；所有玩家欄位、Context、攻擊權限函式及其餘JAR保留。精確逆向稽核及凍結重建同SHA。232案原材料／NPC／生命週期、352案Ref／成對／範圍／Main68及73，以及Source單體人物／普通NPC原始封包回歸通過。\n\n目前Source L1PcInventory新增兩處物品時數轉秒防溢位檢查；新唯讀審查以全檔逆向精確還原至6583，再還原既有dark輔助儲存失敗傳播至445a，材料／角色方法未變，未改原測試與golden。Source時鐘參考的連結stub只在platform-parent隔離loader，未建Source角色、不混入原生classpath。\n\n此為限定NPC167物理時鐘／成對生命週期驗證，不等於完整Source：NPC施法AI及其施法間隔、全部進化／贈物／復活工廠分支、其餘材料／職業／目標外控與最終同SHA全回歸仍開放。整合檢查點維持3bda9d5d／1,206案，不與其他SHA混加；保留競技、記憶體、131停用與超容量馴服整筆拒絕。未部署、未啟動遊戲，Source／玩家SQL／WAL寫入0。[限定收據](../../tools/combat-continuation/integration-lifecycle/build/companion-wind-progress-current.json)。\n'
+doc.write_text(doc.read_text('utf-8')+text,'utf-8');lines=doc2.read_text('utf-8').splitlines();at=next(i for i,l in enumerate(lines) if l.startswith('| 技能167 Source單體目標修正 |'));lines.insert(at+1,'| 受控NPC167狀態／時鐘／成對生命週期 | **`'+runtime['sha256'][:12]+'…`** 同SHA **'+str(count)+'案**；真實三型別正常／Ctrl、32案含24次跨角色等待、提交後退役、實際Source時鐘參考與33條件矩陣，含Main68／73。NPC施法AI與完整Source仍開放。[收據](../../tools/combat-continuation/integration-lifecycle/build/companion-wind-progress-current.json)。 |');doc2.write_text('\n'.join(lines)+'\n','utf-8')
+write(D/'companion-wind-progress-current.json',dict(status=v['status'],runtime=runtime,integrated_runtime=integrated['runtime'],manifest=pin(run/'manifest.json'),full_goal_achieved=False))
+audit.update(previous=pin(run/'previous-audit.json'),pending_companion_wind=pin(run/'manifest.json'),companion_placement_remaining=remaining);write(D/'source-summon-lifetime-audit-current.json',audit)
+proof.update(status='passed-integrated-1206-unchanged-plus-separate-'+str(count)+'-controlled-NPC167-scope',previous_progress=pin(run/'previous-proof.json'),pending_companion_wind=pin(run/'manifest.json'),audit=pin(D/'source-summon-lifetime-audit-current.json'),current_audit=pin(D/'source-summon-lifetime-audit-current.json'),docs=[pin(doc),pin(doc2)],experimental_live_helpers=proof['experimental_live_helpers']+[pin(R/n) for n in ['NativeCompanionWindState.java','NativeCompanionWindAction.java','CompanionWindMethods.java','CompanionWindDelta.java','review_companion_wind_source.py']]);write(D/'Source-lifecycle-progress-verified-current.json',proof)
+following=dict(previous);following['companion_wind_progress']=pin(D/'companion-wind-progress-current.json');write(continuation,following);assert sha(R/'current.json')==ih
+for key in ['protected','live_helpers','experimental_live_helpers','docs']:verify(proof[key])
+assert {k:v for k,v in read(continuation).items() if k!='companion_wind_progress'}==previous
+write(D/'companion-wind-wip-current.json',dict(status='sealed-scoped-all-native-fixtures-terminal',runtime=runtime,progress=pin(D/'companion-wind-progress-current.json'),remaining=remaining,full_goal_achieved=False))
+print(json.dumps(dict(status=v['status'],cases=count,known_checks=checks,integrated_checkpoint_promoted=False,full_goal_achieved=False)))

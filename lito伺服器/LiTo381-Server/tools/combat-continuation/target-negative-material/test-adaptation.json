@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeMaterialProbe.java",
+      "sha256": "579722411d1491dd3619e19c9e941a294c9be84cd4001d6c357cd3ecd0fb769e"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeWorldNpcProbe.java",
+      "sha256": "736c556994c6ff72a36414a160c7c7f3f2d991f6c1aa104ca5cb7b970212a8f4"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessFaultProbe.java",
+      "sha256": "f87c2fd4e1c276f6652bba531d533a615ffde2887aa9c1f499efe3919575d638"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessLifecycleProbe.java",
+      "sha256": "a8a357831a8353583f55a703654cc5e1be5cf4204bb33732ac91e959a1437a9c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\1-\u4f3a\u670d\u5668\\src\\com\\lineage\\data\\item_etcitem\\hp\\UserAddHp.java",
+      "sha256": "346191128586d8cc404b2f15013b06e9355c9d0b1cb8bb050ecb9f43f3810cf3"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\1-\u4f3a\u670d\u5668\\src\\com\\lineage\\server\\model\\L1AttackPc.java",
+      "sha256": "3fdc94cedc6c3ec803e731be238093bd7fe55c432cf84be6822a079a1627ddfc"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\prepare_tests.py",
+      "sha256": "a802376e88ddd4f3b1c8d716f8c294d7d0c7c91f1c745ee0df5b636d3b15dd9c"
+    }
+  ],
+  "scope": "real native packet for mode12 retains original random effect outcome and proves resource/admission only; original typed enum root with deterministic roll for other cases, including actual potion half-recovery and Source weapon-category configured ranged helper consumer in mode13; complete native attack path remains separate; initial wrong weapon-category and impossible 100-percent fixture evidence retained"
+}

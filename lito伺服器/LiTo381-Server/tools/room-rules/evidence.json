@@ -1,0 +1,26 @@
+{
+  "version": "0.6.61",
+  "baseline": "0.6.60",
+  "server_sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac",
+  "changed_jar_entries": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/DurableBattleSettlement$Context.class",
+    "local/lito381/server/DurableBattleSettlement.class",
+    "local/lito381/server/NativeRoomRules$Policy.class",
+    "local/lito381/server/NativeRoomRules.class"
+  ],
+  "database": {
+    "table": "380_lito.lito_room_policy",
+    "test_room_enabled": 1,
+    "test_bot_enabled": 1,
+    "source_character_rows_modified": false
+  },
+  "tests": [
+    "room-rules encrypted socket regression",
+    "0.6.60 durable settlement flow regression",
+    "formal SQL startup/READY/endpoint/owned cleanup"
+  ],
+  "native_ui_manual_test": "pending",
+  "startup_result": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\runs\\room-policy-061-smoke\\result.json"
+}

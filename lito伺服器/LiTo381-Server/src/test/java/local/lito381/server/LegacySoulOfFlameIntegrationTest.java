@@ -1,0 +1,118 @@
+package local.lito381.server;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.lang.reflect.Field;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
+/** Read-only live-schema proof for retained Soul of Flame skill175. */
+final class LegacySoulOfFlameIntegrationTest {
+    @Test
+    @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
+    void everyRoutedSourcePinsSkill175SelfBuffContract() throws Exception {
+        String configPath = System.getProperty("lito.legacy.config",
+                "src/test/resources/server-config/config/server.source-router-legacy-probe.properties");
+        ServerConfig config = ServerConfig.load(Path.of(configPath));
+        try (AccountRepository routed = AccountRepository.open(config)) {
+            routed.healthCheck();
+            int verified = 0;
+            for (String source : config.classicServerNames()) {
+                AccountRepository repository =
+                        routed.repositoryForClassicSource(source);
+                String database = stringField(repository, "resourceDatabase");
+                assertTrue(database.matches("[A-Za-z0-9_]+"));
+                boolean primary = database.equals("380_db");
+                boolean effectSkillId = hasColumn(
+                        repository, database, "skills", "effect_skill_id");
+                assertEquals(primary ? 300 : 0,
+                        repository.skillReuseDelays().get(175));
+                try (Connection connection = connection(repository);
+                     PreparedStatement statement = connection.prepareStatement(
+                             "SELECT * FROM " + database
+                                     + ".`skills` WHERE skill_id=175");
+                     ResultSet row = statement.executeQuery()) {
+                    assertTrue(row.next(), "missing exact skill175 row");
+                    assertEquals("烈焰之魂", row.getString("name"));
+                    assertEquals(22, row.getInt("skill_level"));
+                    assertEquals(6, row.getInt("skill_number"));
+                    assertEquals(30, row.getInt("mpConsume"));
+                    assertEquals(40319, row.getInt("itemConsumeId"));
+                    assertEquals(3, row.getInt("itemConsumeCount"));
+                    assertEquals(primary ? 300 : 0, row.getInt("reuseDelay"));
+                    assertEquals(64, row.getInt("buffDuration"));
+                    assertEquals("none", row.getString("target"));
+                    assertEquals(0, row.getInt("target_to"));
+                    assertEquals(2, row.getInt("attr"));
+                    assertEquals(2, row.getInt("type"));
+                    assertEquals(0, row.getInt("ranged"));
+                    assertEquals(0, row.getInt("area"));
+                    assertEquals(64, row.getInt("id"));
+                    assertEquals(19, row.getInt("action_id"));
+                    assertEquals(5833, row.getInt("castgfx"));
+                    assertEquals(0, row.getInt("sysmsgID_fail"));
+                    if (effectSkillId) assertEquals(0, row.getInt("effect_skill_id"));
+                    assertFalse(row.next(), "duplicate skill175 row");
+                }
+                assertEquals(1, count(repository, database,
+                        "skills_item", "skill_id=175 AND itemids IS NULL"
+                                + " AND counts IS NULL"));
+                assertEquals(0, count(repository, database,
+                        "skills_負面技能控制", "skill_id=175"));
+                verified++;
+            }
+            assertEquals(config.classicServerNames().size(), verified);
+        }
+    }
+
+    private static int count(AccountRepository repository, String database,
+                             String table, String where) throws Exception {
+        try (Connection connection = connection(repository);
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT COUNT(*) FROM " + database + ".`" + table
+                             + "` WHERE " + where);
+             ResultSet row = statement.executeQuery()) {
+            assertTrue(row.next());
+            return row.getInt(1);
+        }
+    }
+
+    private static boolean hasColumn(AccountRepository repository, String database,
+                                     String table, String column) throws Exception {
+        try (Connection connection = connection(repository);
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS"
+                             + " WHERE TABLE_SCHEMA=? AND TABLE_NAME=?"
+                             + " AND COLUMN_NAME=?")) {
+            statement.setString(1, database);
+            statement.setString(2, table);
+            statement.setString(3, column);
+            try (ResultSet row = statement.executeQuery()) {
+                return row.next() && row.getInt(1) == 1;
+            }
+        }
+    }
+
+    private static Connection connection(AccountRepository repository)
+            throws Exception {
+        Connection connection = DriverManager.getConnection(
+                stringField(repository, "accountUrl"),
+                stringField(repository, "accountLogin"),
+                stringField(repository, "accountPassword"));
+        connection.setReadOnly(true);
+        return connection;
+    }
+
+    private static String stringField(Object target, String name) throws Exception {
+        Field field = target.getClass().getDeclaredField(name);
+        field.setAccessible(true);
+        return (String) field.get(target);
+    }
+}

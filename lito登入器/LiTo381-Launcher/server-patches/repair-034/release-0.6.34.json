@@ -1,0 +1,41 @@
+{
+  "version": "0.6.34",
+  "base": "0.6.33",
+  "artifacts": {
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.34\\LiTo381Launcher.exe": "0689980c739ba76141c28e660a93f708529a45c82c77816eac4b1d091dcdbb22",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.34\\development_startup.py": "863afce8bb652e8a5c9ea8e788ec24fde616d8c67ad46bd27e3e66470654085b",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\repair-034\\candidate.jar": "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+  },
+  "changed_classes": [
+    "local/lito381/server/BattleTimeAttackEncounter.class",
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class"
+  ],
+  "new_helpers": [
+    "LiToGmCommands",
+    "LiToGmNpcs"
+  ],
+  "sql_policy": "isolated lito_play_20261011_static.commands; item/spawn access_level=200; original source and account privileges untouched",
+  "tests": {
+    "tests": 201,
+    "passed": 199,
+    "unchanged_baseline_failures": 2,
+    "new_failures": 0
+  },
+  "formal_sql_startup": {
+    "accepted": true,
+    "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\server-gm-034\\runs\\shared-timing-ready-1791749438229044300",
+    "port": 32020,
+    "sql_connected": true,
+    "shared_action_count": 60303,
+    "cleanup_verified": true
+  },
+  "new_regression": "real SQL definitions and GM authorization, native chat entry, encrypted output, exact stack/name/enchant, persistent state reload, lobby provenance, AI, room isolation, NPC healing/haste/damage/death/reset",
+  "manual_game_test": false,
+  "scope_limits": [
+    "spawn: L1Monster in ordinary arena modes only; max100 room actors; range0 uses nearby3 tiles",
+    "Quest/TimeAttack/PetRace scripted encounters and non-monster service NPCs explicitly refused",
+    "NPC combat behavior uses existing LiTo NPC engine, not every Source1 NPC special script",
+    "file reload tested; new GM SQL grant uses existing SQL-first tournament reward path; new-command SQL write roundtrip not separately exercised"
+  ]
+}

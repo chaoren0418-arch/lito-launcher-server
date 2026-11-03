@@ -1,0 +1,50 @@
+{
+  "old_immutable_pin_count": 491,
+  "old_immutable_pins_unchanged": true,
+  "accepted_watchdog_byte_identical": true,
+  "accepted_watchdog_pin": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\owned_process.py",
+    "bytes": 31683,
+    "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+  },
+  "original_selected_core_pins_unchanged": [
+    {
+      "path": "D:\\IDA_Pro_7.7\\idat.exe",
+      "bytes": 1522688,
+      "sha256": "D4345A0E6A6D04A4493D1235E89A63BBA0106C1570C2A4BF4C33B5F7F3F7D243"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\ida.dll",
+      "bytes": 4313600,
+      "sha256": "013235CBB26E7D5131B5C589C895BEAED595052254F094ECE42BC4A77FBC446B"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\plugins\\idapython3.dll",
+      "bytes": 105472,
+      "sha256": "C2171355D16B70D8B91ED737F4071F2F530504FEA475177EC1219C6BC197A150"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\plugins\\hexrays.dll",
+      "bytes": 2835944,
+      "sha256": "855F7013C8E13EB072FD9A5215195554A0BF582E63EE91A989A9649B102949DB"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\loaders\\pe.dll",
+      "bytes": 178176,
+      "sha256": "29EB4107B78391BEF00651058A00076930A04DF473FFFC27F7288FD0A6AE3474"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\procs\\pc.dll",
+      "bytes": 1192464,
+      "sha256": "C74804B33984C39F3CF55510B1BB1739D698EFC3E0BF5B45789D48E576ECC12A"
+    }
+  ],
+  "twelve_original_Python_dependency_pins_unchanged": true,
+  "fixture": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+    "bytes": 1025,
+    "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+  },
+  "fixture_executed": false,
+  "old_15_preflight_or_11_watchdog_suite_replayed": false
+}

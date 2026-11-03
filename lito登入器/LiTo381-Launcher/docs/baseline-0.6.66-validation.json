@@ -1,0 +1,18 @@
+{
+  "version": "0.6.66",
+  "production_files_replaced": false,
+  "rebuild_payload_identical": true,
+  "startup_hash_checks": "passed",
+  "regressions": {
+    "ResourceRegression": "passed",
+    "RoomRulesRegression": "passed",
+    "FlowRegression": "passed",
+    "NativeDirectoryRegression": "passed",
+    "MovementRegression": "passed",
+    "MovementLockRegression": "passed"
+  },
+  "notes": [
+    "Only build input location and maintenance tools/documentation changed.",
+    "Manual gameplay acceptance is not inferred from baseline sealing."
+  ]
+}

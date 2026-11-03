@@ -1,0 +1,38 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+/** Exact isolated companion selectors; preserve the unselected methods and player/BATTLE branches. */
+public final class CompanionAreaMethods {
+ static final String P="local/lito381/server/",PC=P+"ClientSession",A=P+"NativeAreaMaterialAction",C=A+"$Context",H=P+"NativeCompanionArea";
+ static AbstractInsnNode prev(AbstractInsnNode n){do{n=n.getPrevious();}while(n!=null&&n.getOpcode()<0);return n;}
+ static MethodInsnNode call(String name,String desc){return new MethodInsnNode(INVOKESTATIC,H,name,desc,false);}
+ static ClassNode read(JarFile j,String name)throws Exception{var c=new ClassNode();new ClassReader(j.getInputStream(j.getJarEntry(name+".class"))).accept(c,ClassReader.SKIP_DEBUG|ClassReader.EXPAND_FRAMES);return c;}
+ static byte[] bytes(ClassNode c){var w=new ClassWriter(ClassWriter.COMPUTE_MAXS);c.accept(w);return w.toByteArray();}
+ static MethodNode clone(MethodNode m,String name){var out=new MethodNode(m.access,name,m.desc,null,m.exceptions.toArray(String[]::new));m.accept(out);return out;}
+ static VarInsnNode ownerStore(MethodNode m,MethodInsnNode port){if(!(prev(port) instanceof VarInsnNode owner))throw new AssertionError("owner load");for(var n=prev(owner);n!=null;n=prev(n))if(n instanceof VarInsnNode v&&v.getOpcode()==ASTORE&&v.var==owner.var)return v;throw new AssertionError("owner store");}
+ static void owners(MethodNode m,VarInsnNode store){var cast=prev(store);var next=prev(cast);var iteratorLoad=prev(next);if(!(cast instanceof TypeInsnNode t&&t.desc.equals(PC)&&next instanceof MethodInsnNode nextCall&&nextCall.name.equals("next")&&iteratorLoad instanceof VarInsnNode))throw new AssertionError("owner iteration");int index=((VarInsnNode)iteratorLoad).var;for(var n=prev(iteratorLoad);n!=null;n=prev(n))if(n instanceof VarInsnNode v&&v.getOpcode()==ASTORE&&v.var==index){var iter=prev(n);if(!(iter instanceof MethodInsnNode i&&i.name.equals("iterator")))throw new AssertionError("iterator definition");var add=new InsnList();add.add(new VarInsnNode(ALOAD,0));add.add(call("owners","(Ljava/util/List;L"+PC+";)Ljava/util/List;"));m.instructions.insertBefore(iter,add);return;}throw new AssertionError("iterator not found");}
+ static void patch(ClassNode c){
+  if(c.name.equals(A)){
+   int ph=0,root=0;for(var m:new ArrayList<>(c.methods)){
+    if(m.name.equals("phantasms"))for(var n:m.instructions)if(n instanceof LdcInsnNode l&&l.cst.equals("phantasmTargets")){l.cst="nativeCompanionAreaPhantasms";ph++;}
+    if(m.name.equals("run")){root++;var captured=clone(m,"nativeCompanionAreaCapturedRun");captured.desc="(L"+PC+";IL"+P+"NativeSelfCastAction$Task;L"+C+";)V";var active=new ArrayList<AbstractInsnNode>();for(var n:captured.instructions)if(n.getOpcode()>=0)active.add(n);if(!(active.get(0) instanceof TypeInsnNode t&&t.getOpcode()==NEW&&t.desc.equals(C)&&active.get(1).getOpcode()==DUP&&active.get(2) instanceof VarInsnNode v&&v.getOpcode()==ALOAD&&v.var==0&&active.get(3) instanceof MethodInsnNode ctor&&ctor.name.equals("<init>")&&ctor.owner.equals(C)&&active.get(4) instanceof VarInsnNode st&&st.getOpcode()==ASTORE&&st.var==3))throw new AssertionError("captured context port");captured.instructions.insertBefore(active.get(0),new VarInsnNode(ALOAD,3));for(int i=0;i<4;i++)captured.instructions.remove(active.get(i));c.methods.add(captured);m.name="nativeCompanionAreaOriginalRun";var w=new MethodNode(m.access,"run",m.desc,null,m.exceptions.toArray(String[]::new));w.instructions.add(new VarInsnNode(ALOAD,0));w.instructions.add(new VarInsnNode(ILOAD,1));w.instructions.add(new VarInsnNode(ALOAD,2));w.instructions.add(call("run",m.desc));w.instructions.add(new InsnNode(RETURN));c.methods.add(w);}
+   }if(ph!=1||root!=1)throw new AssertionError("area ports "+ph+" "+root);return;
+  }
+  int patience=0,phantasm=0,slow=0,sleep=0;
+  for(var m:new ArrayList<>(c.methods)){
+   if(m.name.equals("patienceTargets")){
+    var q=clone(m,"nativeCompanionAreaPatienceTargets");int loops=0,gates=0;for(var n:q.instructions.toArray())if(n instanceof MethodInsnNode port&&port.owner.equals(PC)&&port.name.equals("classicWorldCompanionSnapshots")){
+     var store=ownerStore(q,port);owners(q,store);for(var x:q.instructions.toArray())if(q.instructions.indexOf(x)>q.instructions.indexOf(store)&&q.instructions.indexOf(x)<q.instructions.indexOf(port)&&x instanceof FieldInsnNode f&&f.getOpcode()==GETFIELD&&f.owner.equals(PC)&&(f.name.equals("classicWorldMapId")||f.name.equals("classicWorldInstanceId"))&&prev(f) instanceof VarInsnNode v&&v.var==store.var){q.instructions.insertBefore(f,new VarInsnNode(ALOAD,0));q.instructions.set(f,call(f.name.equals("classicWorldMapId")?"map":"instance","(L"+PC+";L"+PC+";)I"));gates++;}
+     q.instructions.insertBefore(port,new VarInsnNode(ALOAD,0));q.instructions.set(port,call("snapshots","(L"+PC+";L"+PC+";)Ljava/util/List;"));loops++;
+    }if(loops!=1||gates!=2)throw new AssertionError("patience companion ports "+loops+" "+gates);c.methods.add(q);patience++;
+   }
+   if(m.name.equals("phantasmTargets")){var q=clone(m,"nativeCompanionAreaPhantasms");int count=0;for(var n:q.instructions)if(n instanceof MethodInsnNode v&&v.owner.equals(PC)&&v.name.equals("patienceTargets")){v.name="nativeCompanionAreaPatienceTargets";count++;}if(count!=1)throw new AssertionError("phantasm base");c.methods.add(q);phantasm++;}
+   if(m.name.equals("nativeAreaWorldSlowBody")){
+    int loops=0,same=0;var ownerVars=new HashSet<Integer>();for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode v&&v.owner.equals(A)&&v.name.equals("companions")){var store=ownerStore(m,v);owners(m,store);ownerVars.add(store.var);loops++;}
+    for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode v&&v.owner.equals(PC)&&v.name.equals("sameClassicWorldMap")){var previous=prev(v);if(previous instanceof VarInsnNode owner&&ownerVars.contains(owner.var)||previous instanceof MethodInsnNode getter&&getter.owner.equals(PC+"$MassSlowCompanionTarget")&&getter.name.equals("owner")){m.instructions.set(v,call("same","(L"+PC+";L"+PC+";)Z"));same++;}}
+    if(loops!=2||same!=2)throw new AssertionError("slow ports "+loops+" "+same);slow++;
+   }
+   if(m.name.equals("nativeAreaWorldSleepBody")){int loops=0;for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode v&&v.owner.equals(A)&&v.name.equals("companion")){var idLoad=prev(v);var identity=prev(idLoad);var owner=prev(identity);if(!(owner instanceof VarInsnNode))throw new AssertionError("sleep owner load");int index=((VarInsnNode)owner).var;VarInsnNode store=null;for(var x=prev(owner);x!=null;x=prev(x))if(x instanceof VarInsnNode st&&st.getOpcode()==ASTORE&&st.var==index){store=st;break;}if(store==null)throw new AssertionError("sleep owner store");owners(m,store);loops++;}if(loops!=1)throw new AssertionError("sleep ports "+loops);sleep++;}
+  }
+  if(patience!=1||phantasm!=1||slow!=1||sleep!=1)throw new AssertionError("roots "+patience+" "+phantasm+" "+slow+" "+sleep);
+ }
+ public static void main(String[]args)throws Exception{try(var j=new JarFile(args[1])){for(var name:List.of(PC,A)){var c=read(j,name);patch(c);var expected=bytes(c);if(args[0].equals("splice")){var out=Path.of(args[2]).resolve(name+".class");Files.createDirectories(out.getParent());Files.write(out,expected);}else try(var candidate=new JarFile(args[2])){if(!Arrays.equals(expected,bytes(read(candidate,name))))throw new AssertionError(name);}}}System.out.println("PASS isolated WORLD companion selectors, unchanged original patience/phantasm, captured pre-wait Context and original area lock body");}
+}

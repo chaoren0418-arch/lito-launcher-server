@@ -1,0 +1,436 @@
+{
+  "updated_at": "2026-10-20T11:44:23.056493+00:00",
+  "status": "phase7-shared-world-resource-candidate-qualified",
+  "candidate": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\ddraw.dll",
+    "sha256": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267"
+  },
+  "catalog": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\shared_status.bin",
+    "sha256": "ba91b436034ce04c5a77bc626af1355ede8766dd72a353b0ad0ec5aaf069b198"
+  },
+  "paired_server": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "implemented": [
+    "shared effectlist2 presentation binding for 95 slots, including7 doll states, alternative blue potion and bloodlust",
+    "startup resource revision checks; DLL/catalog isolation",
+    "shared animation compiler recovered unchanged and reproduced",
+    "catalog initialization before native class/status transaction",
+    "blue-potion38/91 identity proved from selected inventory graphic in both binaries; real potion use emits600/700-second icon once",
+    "native CX-only strength/dex duration ABI retained; actual original world receivers tested",
+    "bloodlust mode6 self icon110 and mode0 cleanup added; actor mode and peer behavior preserved",
+    "Bloodlust frame/action duration and chain-sword action83 movement classification match actual TW native calculations",
+    "22 remaining non-icon status packets reach existing native receivers; their gameplay logic retained",
+    "Shield=5 and EarthSkin=6 corrected against real pinned JAR producer",
+    "TBT cache capacity and producer revision checked before candidate launch",
+    "XML offIcon 10-second display grace with refresh/cancel/scene cleanup",
+    "XML groups applied with full old status timer/flag/UI cleanup",
+    "Original native timers and status code executed in bounded fixture",
+    "60 own-effect graphic mappings; explicit server duration takes precedence over XML default",
+    "XML priority/kind sorting with original LiTo spacing and hit rectangles",
+    "Existing shared server profile verified: original heal graphic IDs preserved; no duplicate producer patch",
+    "Presentation packets and shared action durations reconciled against formal/qualified/incremental JARs read-only",
+    "Isolated qualified combat JAR parent: two doll writers and one blue icon-send seam;430 Protocol and2357 ClientSession methods unchanged; clan opcode untouched",
+    "36 actual paired JAR packets execute through original LiTo world dispatcher into candidate lifecycle",
+    "Paired startup retains original READY/ownership/cleanup methods and isolates server run outputs"
+  ],
+  "checks": {
+    "native_catalog": "PASS 7730 checks: transactional parsing, corruption, identities, bounded file load",
+    "actual_installer": [
+      "PASS native strength/dexterity world receivers: CX duration preserved, active/clear and both types\nPASS native brave receiver: bloodlust mode6/zero, own/peer/missing actor; actor mode retained\nPASS 36 actual paired JAR strength/dexterity/breath/speed/brave packets through original world receivers\nPASS 10560 native frame and10560 action calculations match TW: own/peer,22 actions,5 speed,6 brave modes and burst\nPASS blue-potion packet34: native selected-item counterpart, alternative91, ordinary38 and zero no-op\nPASS three original scene-reset blocks clear all 96 owned flag bytes\nPRIORITY_ORDER:52,1,85,69,67,55,53,51,50,49,48,63,62,61,39,0,95,42,37,24,2,73,94,38,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,34,35,36,40,43,44,45,46,47,54,56,57,58,59,60,64,65,66,68,70,71,72,74,75,77,78,79,80,81,82,83,84,86,87,88,89,90,91,92,93,41\nPASS native world packet-box dispatch: generic/custom dolls, refresh/remove, invalid/state guards; clan receiver untouched\nPASS actual paired JAR doll packets: 36 cases through original world dispatcher and compiled receiver\nPASS own graphic XML dispatch: 60 mappings, explicit-duration precedence, legacy no-ops\nPASS original scheduler/cancel/dispatch + candidate lifecycle for 95 slots; UI/clock/import modeled\nPASS actual status installer accept: 28739 checks; game not started",
+      "PASS actual status installer reject: 16 checks; game not started",
+      "PASS actual status installer reject: 16 checks; game not started"
+    ],
+    "animation_actions": 60303,
+    "animation_frames": 493850,
+    "animation_mismatches": 0,
+    "icons": 161,
+    "native_tbt_payloads": 219,
+    "blue_packet_branches": 15,
+    "expiry_branches": 4,
+    "lifecycle": "PASS lifecycle 2766 checks: expiry, refresh, removal, groups, shutdown; scheduler/UI modeled",
+    "graphic_mappings": 60,
+    "native_priority_comparisons": 27075,
+    "presentation_cases_per_jar": 300,
+    "presentation_jar_count": 3,
+    "server_duration_rows_per_jar": 60303,
+    "doll_native_branches": 44,
+    "paired_packet_cases": 150,
+    "paired_startup_rejections": 5,
+    "tw_brave_branches": 144,
+    "real_blue_potion_session_cases": 2,
+    "paired_other_status_packets": 36,
+    "native_frame_rate_cases": 10560,
+    "native_action_rate_cases": 10560,
+    "non_icon_status_routing_cases": 22
+  },
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\status-candidate.json",
+      "sha256": "268355059d3c50d8475ee3c714c8ffd1371634ebcabc025c4a51ac59ef042227"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\animation-rebuild.json",
+      "sha256": "a8f4ea2dd0d131e42efbeafd30e81b53d406ea4e5f02af04215dead8526b6fb8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native-animation.json",
+      "sha256": "8331b1f41260d85a31c0a17c1ef5019a9d9ac5056c4e48687fb7a3abf20718b8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\icon-assets.json",
+      "sha256": "4251f2df5304f6ef39f8fa86d38636d3ea846b66070dee2a0ed36a64c2e15732"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native-icon-conversion.json",
+      "sha256": "dcb07d5ce1d35aead44ca29005b10d96e69a33877e9d9e8daaa82926827c8b4c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\reproducibility.json",
+      "sha256": "135883442729faab6fc9edde47dec806d58f1473f849b445d3d6c6fffe974f95"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native-test.log",
+      "sha256": "4121aed964e77e836cb956763a85dfa8d9e2b0be9396c8e92dde827d82304fa9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\installer-accept.log",
+      "sha256": "c2949e5a33358abb0fe96bcfa6918467c647f15db371b598e39de9993d3cfb6f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\installer-reject.log",
+      "sha256": "d68fe526e1aad967fb5ef314ac9748e652ec5184f1779d05e6c6b9a20a65b9d0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\blue-potion-identity.json",
+      "sha256": "b5b2b0108191b5ada19a7ca50bac9de21216cc57f08e60c7c742c4cad1ebe77e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\shield-wire.json",
+      "sha256": "f8e7eb5f585448fb9e54000274a162225ff3492acc104e5ee2e2bfbd73240823"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\status-semantics.json",
+      "sha256": "5fe7797e611e4ba0786a3e7fc681f4d35e09b65a1a18b775def3955d04c641b0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\lifecycle-test.log",
+      "sha256": "1433c865d2b4bfc401783a8f2b1542ad3607e2b2aee0d7bd368be422f085c89f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\installer-reject-option.log",
+      "sha256": "d68fe526e1aad967fb5ef314ac9748e652ec5184f1779d05e6c6b9a20a65b9d0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native\\shared_status_behavior.h",
+      "sha256": "a1ccfc773e8998ec58bd9e6e3e202e2ea2c41460dbb029591af0437ce0cbe4c8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\graphic-dispatch.json",
+      "sha256": "36b4051d311c83456c9e824ff446e5acf2b113a3763847917d08be603fb0e586"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\status-priority.json",
+      "sha256": "53de17b3147bc3333e8c8e4b57d31f61e80bb71e0e697af94a2bc88debc4d0b7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\presentation-contract.json",
+      "sha256": "c01f65b8e786eb69fc7ae1968eb838fe5ae2df8414be048a6fee08767d828379"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\server-durations.json",
+      "sha256": "bc7747ea3cb01f8628dd529dba81a46ae383f239cb4b9ed9e32a877bb9198d0c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\doll-wire.json",
+      "sha256": "0a6c4f80953484a58b51f627ceb5a2dae305282a0d0ff4d5c696d320424944e0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\presentation-server.json",
+      "sha256": "a5616b28ee332181fb58af73f5bb839324879d30e236fc22cf58a5e20bff3737"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\paired-startup.json",
+      "sha256": "d103b6480983ce29060439c04ad3207a2a59e98e208b5ad1c4a71d5a7b7d09aa"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\native\\shared_doll_wire_fixture.h",
+      "sha256": "b21a9688966aa1067668b1ca60765348889a9eaabccd900bde76c2429bde3055"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\brave-receiver.json",
+      "sha256": "f2b8b8623c5a45afd4bb5fb1f860082c014cb4975de7781cf32db04a8474c8bc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\blue-session.log",
+      "sha256": "3beb1b6453ffdf30a3af54afd8efbd26197dc6933e3920e6f19a231ad7139d7f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\frame-rate.json",
+      "sha256": "1c83c7233ac6b64bb617efd48427b934c2770e3d6b5f3d41dcfca2b70e86c430"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\shared_frame_fixture.h",
+      "sha256": "d8312a928a3713f20825d457e5dd8124541374cac1a564520173d12cfa03a2cc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\status-family-coverage.json",
+      "sha256": "a801dab93b316718b09cadadb09e59a37d9ef3a21c3412d68c3c1c3ce5a424fb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\formal-preservation.json",
+      "sha256": "616ccc42d0b313e7bc8908bdf20add54a4621e155328e049691e4f6f27179437"
+    }
+  ],
+  "tools": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\BluePotionPresentationPatch.java",
+      "sha256": "a73d1d2166989ad5e8557cd95ef2bc44c2b67e01e2f03f27ffe439f8c840c39f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\BluePotionSessionProbe.java",
+      "sha256": "8430c3e5ee60163736ade14ebdfd1b42b9e94dc0fe9a1dabc823c50c5d42f270"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_candidate.py",
+      "sha256": "1e70b9e382aeae49868728b95b08aa292e389d67427f16a6fd8f7633d1d4f673"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_presentation_server.py",
+      "sha256": "bf4f1e94d36a4f42b20ddb5a9841e02f1b7d2d933c98ed0709699eb052266dc5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\candidate_server_entry.py",
+      "sha256": "8dd77ab336c723d6ffefff157647a0c25e9d495a7e3f49e9624eebf060b24e94"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\candidate_startup.py",
+      "sha256": "5a34c69a3e604dda1052a3043103d7831854e5a747b0a79eea0d09bcf7d3ae5f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\catalog.py",
+      "sha256": "5f91157f995a5388410b84e4201950bc54dc9600fedd0ffed0cb586df49a8d21"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\PacketBoxProducerPatch.java",
+      "sha256": "215bc2b263b3a0b469b3a776cb249cf330bc1f33263ecf1900d002c703289c84"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\PresentationWireProbe.java",
+      "sha256": "eeac56dd2d44d33ef2eeecd12228d4eba1b30f3f0a5b37353901b4895360eeb3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\rebuild_animation.py",
+      "sha256": "8c9ec9d9939eebfb10b3eb29e0effbe3b64bb05fe1d211d8581d27367b7a1e50"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\seal_candidate.py",
+      "sha256": "7737d092717c0184ffc36c7cf349e6dc2fd72edc1fc1e0b2105f24b3ff033c9a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_frame_rate.inc",
+      "sha256": "bb8e4e0de3252cb31af80bf04c5a859cbf699fa854c40a86ff0b9280893e7bac"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_packetbox.inc",
+      "sha256": "7ed7a31e2b37f43faf6e20b0e4f9ac527ecd8085331f7db3a96fbd999594d351"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_status_catalog.h",
+      "sha256": "8226823b96f01ff53a43dc491e436f7b94847102b1a6d4407f0a8954ff0f93c8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_status_lifecycle.h",
+      "sha256": "2d51273f1906f80905a3eee37078dee90ff1f26ca01c45d24e4342a802cfe355"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_status_lifecycle.inc",
+      "sha256": "55b70399c8cd0b1901a43c865449cbea4cf09ba9ab781e3218c5b4c2163e5426"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\shared_status_order.inc",
+      "sha256": "961947728f46c3bf01b64b6be36c8e5e13322405e7bd7407c04672c92097a1dd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SharedDurationProbe.java",
+      "sha256": "b55cd129bcde189926a01cfa3233950191b173f407d5f3ccebbd6662ac40b128"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SharedPresentationPackets.java",
+      "sha256": "f0b68b093e58824ffdc1873f4bd8ecbc0353000251326737385bad3a55f8d600"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\ShieldWireProbe.java",
+      "sha256": "30694a1354a4e58db31c4fe1b79fc49539afb112d946165de62bae4e9d4b1f61"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\status_catalog_test.cpp",
+      "sha256": "d7eb9fb79e34cab83647f20a664f65487e378fb11980455d050107032121596e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\status_install_test.cpp",
+      "sha256": "0ed63976c1ce03d4d6dfae2ca31573961f1f1bb94a92cccfd8058de4336afa0f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\status_lifecycle_test.cpp",
+      "sha256": "7a6ca138cce87413c51f28e4dd60d320e219b08312894d975261250cd6bdf0f2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\StatusFamilyProbe.java",
+      "sha256": "bf00f7e0b2b55dcbd459e8e2d32337685a96490aaa4d30e931a2731b38a02786"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\test_catalog.py",
+      "sha256": "0487f3b35d8545f77cd52b733e15cdf227bb63f277ee2a9e9a1f3ae1198ee1cf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_assets.py",
+      "sha256": "3f7697d445eb9b3e1971877a6c6b2193c8beb2fa5a54944ac6b572c024cb3de5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_blue_identity.py",
+      "sha256": "d2e40ddecd76c54b28f9d480183e04c03c439a9aee2f1caef2ed5197885d76a8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_brave_receiver.py",
+      "sha256": "4246f274bc22b4b3d6a86b36b63249b69441b0f1682ebb08279c1fbb3754ffec"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_doll_wire.py",
+      "sha256": "d6c02529bd8a880d46a339d8f564c52add03458d5d9d54011ec446d1c12cf282"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_frame_rate.py",
+      "sha256": "59af1a5fcd2185d2cd5dc6969f88fb7a6c84a711606d1e90c3485f2a94a09bb0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_graphic_dispatch.py",
+      "sha256": "b8fa7fa7c5655a29eaf7d6c6aa1e11d02efd1bd943a1516ce43cac87513008cc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_native_animation.py",
+      "sha256": "c79f24522c6ad166be709778f816abd8e8e28b94d223af890382c24c18fa3c9f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_native_icons.py",
+      "sha256": "467369bc6e2f092713cb7316241c2ffa19d485f26001defff3a8c18162573c43"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_paired_startup.py",
+      "sha256": "17f25f3526eb8f654bedabf0eac777e1bf74edef6695efadb48f30032f8b7737"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_presentation_contract.py",
+      "sha256": "96fc5715249782cb22b89a981fd7a0b2c88e4c952c1a32c0389f25bdc1e0de02"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_rebuild.py",
+      "sha256": "43e08011fbaae5698a529112c7e245ead3a8c766c4ea6fa6f3de30744b013558"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_server_durations.py",
+      "sha256": "efb654915e66e90352ec01ba497eb0ef964137aff4103c18253dcb7bdf80de2f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_shield_wire.py",
+      "sha256": "4ea3113268bf75ca892d9c849494c127f5d355807178521d20ae49e8c7deaad1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_status_expiry.py",
+      "sha256": "1eb76a839042009e35e298a4e184cb178e29db4f79a2ea487a9246f01fc10f8d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_status_families.py",
+      "sha256": "1658c45cafd33eaa88802a456d13ca7807fdea165a53621ff8f505a98fe5da48"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\verify_status_priority.py",
+      "sha256": "c52bc318e7e84d64c1180aafed713de7eb205bceaea6f0d455c3d8809194d6b5"
+    }
+  ],
+  "remaining": [
+    {
+      "id": "native-ui",
+      "state": "deferred-user-batch-test",
+      "scope": "Login/lobby/room/world; actual icon visibility, lifetime, removal, movement/attack rhythm at 100%/200%; user currently absent."
+    }
+  ],
+  "qualification_limits": [
+    "Resource and presentation candidate only; does not claim completion of the separate combat/skill project.",
+    "Frame/action rate comparisons cover emitted ordinary speed/brave modes and retained burst; optional TW-only entity flags/polymorph exemptions are not newly implemented.",
+    "Actual on-screen rendering and full native login/battle session remain explicitly deferred."
+  ],
+  "completion_audit": [
+    {
+      "requirement": "shared world action/frame resources",
+      "evidence": [
+        "animation-rebuild.json",
+        "native-animation.json",
+        "server-durations.json",
+        "frame-rate.json",
+        "installer-accept.log"
+      ],
+      "result": "passed: source rebuild, original parser, actual server lookup and compiled candidate rate arithmetic"
+    },
+    {
+      "requirement": "shared status resource settings and necessary packet mapping",
+      "evidence": [
+        "status-candidate.json",
+        "native-icon-conversion.json",
+        "graphic-dispatch.json",
+        "status-priority.json",
+        "brave-receiver.json",
+        "blue-session.log",
+        "status-family-coverage.json",
+        "installer-accept.log"
+      ],
+      "result": "passed within documented presentation scope; actual screen rendering deferred"
+    },
+    {
+      "requirement": "retain original launch/lobby/room and reuse qualified work",
+      "evidence": [
+        "animation-rebuild.json",
+        "presentation-server.json",
+        "paired-startup.json"
+      ],
+      "result": "285 LiTo resource rows and original ownership flow retained; existing qualified combat parent reused; no UI asset replacement"
+    },
+    {
+      "requirement": "fixed reproducible candidate and concise handoff",
+      "evidence": [
+        "reproducibility.json",
+        "paired-startup.json",
+        "current.json",
+        "docs/maintenance/world-resource-compat-current.zh-TW.md"
+      ],
+      "result": "paired DLL/JAR/catalog pinned; preflight rejects changed identities; batch manual checklist documented"
+    },
+    {
+      "requirement": "no source database, source server, formal release or baseline overwrite",
+      "evidence": [
+        "formal-preservation.json",
+        "presentation-server.json",
+        "status-candidate.json"
+      ],
+      "result": "isolated candidate tools/build only; source DB not accessed by new test fixtures; formal gates pass"
+    },
+    {
+      "requirement": "user absent; no immediate manual testing",
+      "evidence": [
+        "remaining",
+        "qualification_limits"
+      ],
+      "result": "automated qualification finished; on-screen/manual acceptance explicitly deferred, not claimed"
+    }
+  ],
+  "formal_pins_rechecked": true,
+  "formal_updated": false,
+  "source_database_modified": false,
+  "game_started": false,
+  "server_started": false,
+  "native_ui_verified": false,
+  "candidate_ready_for_manual_test": true,
+  "full_goal_complete": true
+}

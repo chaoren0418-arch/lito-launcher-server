@@ -1,0 +1,68 @@
+{
+  "mode": "probe",
+  "created": false,
+  "resumed": false,
+  "source_watchdog_sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B",
+  "fresh_profile_directory": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output",
+  "app_profile_registration_called": false,
+  "new_directories": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output",
+      "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FA;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+      "app_sid_writable": true,
+      "existing_security_descriptor_modified": false
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\usr",
+      "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FA;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+      "app_sid_writable": true,
+      "existing_security_descriptor_modified": false
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\temp",
+      "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FA;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+      "app_sid_writable": true,
+      "existing_security_descriptor_modified": false
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\home",
+      "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FA;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+      "app_sid_writable": true,
+      "existing_security_descriptor_modified": false
+    }
+  ],
+  "environment": {
+    "SYSTEMROOT": "C:\\WINDOWS",
+    "WINDIR": "C:\\WINDOWS",
+    "PATH": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime;C:\\WINDOWS\\System32",
+    "IDADIR": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+    "IDAUSR": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\usr",
+    "PYTHONHOME": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "IDA_NO_HISTORY": "1",
+    "APPDATA": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\home",
+    "LOCALAPPDATA": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\home",
+    "USERPROFILE": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\home",
+    "HOME": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\home",
+    "TMP": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\temp",
+    "TEMP": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\temp",
+    "LITO_IDA_JOB": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output",
+    "LITO_RUNTIME": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+    "LITO_APP_SID": "S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035",
+    "LITO_CANARY": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\outside-private-canary.txt",
+    "LITO_LOCAL_PORT": "49443"
+  },
+  "argv": [
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python.exe",
+    "-B",
+    "isolation_probe.py"
+  ],
+  "error": {
+    "stage": "CreateProcessW_private_LPAC_suspended",
+    "exception_stage": "CreateProcessW_private_LPAC_suspended",
+    "type": "ControlError",
+    "message": "CreateProcessW_private_LPAC_suspended: winerror=2",
+    "winerror": 2,
+    "origin": "actual_exception_or_refusal"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "powershell_version": "5.1.19041.6456",
+  "scripts_parsed": 6,
+  "utf8_bom": true,
+  "explicit_utf8_data_reads": true,
+  "cleanup_plan_targets": 854,
+  "backup_and_delta_preflight_pass": true,
+  "current_startup_pins_pass": true,
+  "files_deleted": false
+}

@@ -1,0 +1,4 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+public final class InspectArmorState {
+ public static void main(String[]args)throws Exception{try(var j=new JarFile(args[0])){var c=new ClassNode();new ClassReader(j.getInputStream(j.getJarEntry("local/lito381/server/ClientSession.class"))).accept(c,ClassReader.SKIP_DEBUG|ClassReader.SKIP_FRAMES);for(var m:c.methods)if(m.name.toLowerCase().contains("armorbreak")){System.out.println(m.name+m.desc+" synchronized="+((m.access&Opcodes.ACC_SYNCHRONIZED)!=0));for(var n:m.instructions)if(n instanceof MethodInsnNode v&&v.owner.endsWith("ClientSession")&&(v.name.toLowerCase().contains("armor")||v.name.toLowerCase().contains("status")))System.out.println(" -> "+v.name+v.desc);}}}
+}

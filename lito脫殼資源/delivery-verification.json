@@ -1,0 +1,94 @@
+{
+  "updated_at": "2026-10-06T14:57:29.832013+08:00",
+  "manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\artifact-manifest.json",
+    "bytes": 760789,
+    "sha256": "B888016BE18C9D0C0D861D74455B0951E3E1EB570BE4D4ECF40AC7E4A0D7EDAD"
+  },
+  "sealed_files": 3224,
+  "all_match": true,
+  "scope": "Inherited prior full verification plus current finite evidence delta. No broad re-extraction or test replay.",
+  "prior_full_verification": {
+    "manifest_sha256": "C7E3894E0966EC8F46090DC02835D3E1DF3F3433ED733F57A15C9945FB473D0D",
+    "verification_sha256": "193EAF65ADF3F6F32C5C488EFA8F3F72AE992CDAE46A5C0FE460A3D2C145359B",
+    "sealed_files": 1989,
+    "all_match": true
+  },
+  "prior_delivery_verification_sha256": "875E563CC59C1D333FEFD7FB4FB9DFBFE828859F2D50F893C2B53459BFEE08B4",
+  "changed_files_checked": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene-contract.json",
+      "bytes": 9015,
+      "sha256": "DDD86F5D197D53987A46DFBBBB879E8FBE0C77C1AE3B68C296EF4F62325056A7",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\ASM-navigation.json",
+      "bytes": 10511,
+      "sha256": "D75DCD57994FA6F7B9E4EC4E6970BBDD2661007CFD00436431CD332AFE609D7A",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\finite-verification.json",
+      "bytes": 6192,
+      "sha256": "4B8B66E493BFFE7D64955CB6A9801E5A7650AC541D0E77E67309FC2491952D6F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\fixed-source-evidence.json",
+      "bytes": 29120,
+      "sha256": "ED9137FCA5A15B4D418F0DD12C54064D39CC108A858CA966BDA629BC4087C61D",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\handoff.md",
+      "bytes": 1882,
+      "sha256": "D81EBBC8821F7322D10F75D5D96A993D6F85E1503744C9DDA5A376272DF46853",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\background_scene_boundary.py",
+      "bytes": 18869,
+      "sha256": "B038B399FB8A21A72ECFA914AEE203E29DBA2183E4D95CCB136D1B66722B8038",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\completeness-audit.json",
+      "bytes": 54516,
+      "sha256": "4F31E2D2A7CF1E86A6DBA2A16CC6507481298A05820C29E5821E853D91DBDCFC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\handoff.json",
+      "bytes": 377853,
+      "sha256": "22B394E7BED2F85B374B4CB628323C8FBCBE9CB05FD3A24D07F30C6DB861ADB0",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+      "bytes": 8284,
+      "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.md",
+      "bytes": 5519,
+      "sha256": "ECF434822548A287E315246E6507DDF73B6CA54258CF4F5A2A4D42FA4669ED4A",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\seal_delta.py",
+      "bytes": 2586,
+      "sha256": "BF0A2B2D6B6A31E000CCFE866C906955D691B6C60091B0F9618885C542ABD69F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\閱讀入口.md",
+      "bytes": 27063,
+      "sha256": "BD1EC9B4F28398AFF54D84B3D7F0864679B2FCE28D85C6C214B09B3582BFDBEA",
+      "match": true
+    }
+  ],
+  "original_game_launched": false,
+  "GUI_accepted": false
+}

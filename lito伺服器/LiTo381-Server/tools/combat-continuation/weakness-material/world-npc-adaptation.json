@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeWorldNpcProbe.java",
+      "sha256": "736c556994c6ff72a36414a160c7c7f3f2d991f6c1aa104ca5cb7b970212a8f4"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\test_world_npcs.py",
+      "sha256": "33145702e40faff3fa43a7ea33c17485a2de1defcf7a8fe79d3544670c20ee4f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\prepare_world_npcs.py",
+      "sha256": "27dbdc55383cf44bff6b6c412dd3e445b5c31c0fd1853e5c52d454a29a8c630a"
+    }
+  ],
+  "scope": "actual WORLD population, native Weakness/Disease packets and existing percentile fixture control; no companion or Quest/Time Attack qualification"
+}

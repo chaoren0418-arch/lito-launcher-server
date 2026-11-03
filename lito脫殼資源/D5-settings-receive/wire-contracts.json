@@ -1,0 +1,168 @@
+{
+  "known_contracts": [
+    {
+      "classification": "KNOWN_LAYOUT_CORROBORATION_NEW_NATIVE_STORE_QUALIFICATION_NO_WIRE_DIFFERENCE",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "subtype": 0,
+      "VA": "004A9EAB",
+      "RVA": "000A9EAB",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "schema": "cd + schcscccc",
+      "fields": [
+        {
+          "name": "room_name",
+          "type": "NUL8bit-string",
+          "destination": "0064AB70",
+          "capacity_including_NUL": 90
+        },
+        {
+          "name": "option0/mode candidate byte",
+          "type": "u8",
+          "destination": "0064ACCA",
+          "width": 1,
+          "preserved_adjacent_byte": "0064ACCB"
+        },
+        {
+          "name": "map_word",
+          "type": "u16LE",
+          "destination": "EBP-4",
+          "projection_destination": "0064ACC9",
+          "projection_width": 1
+        },
+        {
+          "name": "summary0",
+          "type": "u8",
+          "destination": "0064ACCC",
+          "width": 1
+        },
+        {
+          "name": "owner_display_alias",
+          "type": "NUL8bit-string",
+          "destination": "0064ABCA",
+          "capacity_including_NUL": 28
+        },
+        {
+          "name": "summary1",
+          "type": "u8",
+          "destination": "0064ACD0",
+          "width": 1
+        },
+        {
+          "name": "summary2",
+          "type": "u8",
+          "destination": "0064ACD1",
+          "width": 1
+        },
+        {
+          "name": "summary3",
+          "type": "u8",
+          "destination": "0064ACD2",
+          "width": 1
+        },
+        {
+          "name": "summary4",
+          "type": "u8",
+          "destination": "0064ACD3",
+          "width": 1
+        }
+      ],
+      "body_bytes": "16+N+O",
+      "frame_bytes": "18+N+O",
+      "conditions": "Inherited Nativephase6assignment /otherphase room-equality; subtypevalid; parser/externalreturns conditional. Server owner/nonowner outcomes separate.",
+      "evidence_level": "FixedPE static operands/completefinitebranch + fourexistingserverASCIIframes; noNativeexecution",
+      "unknown": [
+        "actualepoch/phase/currentroom",
+        "stringbackend/codec/bounds/cursor",
+        "snapshotcoherence/partialsend/concurrency",
+        "NativeGUI/physical/source/owner/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_LAYOUT_CORROBORATION_NEW_NATIVE_STORE_QUALIFICATION_NO_WIRE_DIFFERENCE",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "subtype": 1,
+      "VA": "004A9EF6",
+      "RVA": "000A9EF6",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "schema": "cd + ssccccccc + selections",
+      "fields": [
+        {
+          "name": "room_name",
+          "type": "NUL8bit-string",
+          "destination": "0064AB70",
+          "capacity_including_NUL": 90
+        },
+        {
+          "name": "password",
+          "type": "NUL8bit-string",
+          "destination": "0064ABE8",
+          "capacity_including_NUL": 5
+        },
+        {
+          "name": "attributes",
+          "type": "u8",
+          "destination": "0064ABE6",
+          "width": 1
+        },
+        {
+          "name": "capacity",
+          "type": "u8",
+          "destination": "0064ABF0",
+          "width": 1,
+          "preserved_adjacent_bytes": "0064ABF1..0064ABF3; no DWORD capacity store in this branch"
+        },
+        {
+          "name": "option1",
+          "type": "u8",
+          "destination": "0064ACD4",
+          "width": 1
+        },
+        {
+          "name": "option2",
+          "type": "u8",
+          "destination": "0064ACD5",
+          "width": 1
+        },
+        {
+          "name": "option3",
+          "type": "u8",
+          "destination": "0064ACD6",
+          "width": 1
+        },
+        {
+          "name": "option4",
+          "type": "u8",
+          "destination": "0064ACD7",
+          "width": 1
+        },
+        {
+          "name": "selection_count K",
+          "type": "u8 wire / signed i8 local",
+          "destination": "EBP-2",
+          "persistent_count_store": false
+        },
+        {
+          "name": "selections",
+          "type": "8 BYTE slots",
+          "destination": "0064ACD8..0064ACDF",
+          "reads": "min(8,max(0,signextend_i8(K))); unread slots explicitly zeroed",
+          "exact_end_or_capacity_validation": "none in finite handler; known AD368 producer constraints separate"
+        }
+      ],
+      "body_bytes": "15+N+P+K",
+      "frame_bytes": "17+N+P+K",
+      "conditions": "Inherited Nativephase6assignment /otherphase room-equality; subtypevalid; parser/externalreturns conditional. Server owner/nonowner outcomes separate.",
+      "evidence_level": "FixedPE static operands/completefinitebranch + fourexistingserverASCIIframes; noNativeexecution",
+      "unknown": [
+        "actualepoch/phase/currentroom",
+        "stringbackend/codec/bounds/cursor",
+        "snapshotcoherence/partialsend/concurrency",
+        "NativeGUI/physical/source/owner/sessionauthority"
+      ]
+    }
+  ],
+  "new_wire": [],
+  "wire_corrections": []
+}

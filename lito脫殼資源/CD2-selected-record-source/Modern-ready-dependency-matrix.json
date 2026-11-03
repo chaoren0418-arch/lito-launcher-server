@@ -1,0 +1,60 @@
+{
+  "references": {
+    "Batch29": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "bytes": 36083,
+      "sha256": "F3867EC1B86DA3DF66A7493E92CD239E40AEC59B658EC0B588F463EFF13A2667"
+    },
+    "Batch30": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "bytes": 30762,
+      "sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2"
+    },
+    "Batch31_primary": "../CD2-selected-record-source-contract.json",
+    "D1_E1": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "bytes": 59865,
+      "sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1"
+    }
+  },
+  "rows": [
+    {
+      "stage": "localrecord",
+      "known": "S_CB token16 c→selected180byte record+3E;AD368reservedbyte0 producer;markerresetdoesnotclear3E",
+      "need": "earlierstrings/helpers/currentselectedrow/epoch,otherclancopybounds,recordindex/storage safety",
+      "authority": "none"
+    },
+    {
+      "stage": "localguard",
+      "known": "Batch30 localstartupBYTE64AF9D;selectionrequestsetter0 then+3Enonzero setter1;readyguardflag0 ordecoded0→D201",
+      "need": "validprotectedobject/helperreturns/currentvalue;fieldorflag cannotbeowner/mode/readypermission",
+      "authority": "conditional localbranch only"
+    },
+    {
+      "stage": "userintent",
+      "known": "Batch29 sevenconditionalD2+statecalls;currentopcodeonlycallsiteunknown",
+      "need": "authorizeduserintent/currenttransport/room/join;actualNativeUIeventnotqualified",
+      "authority": "explicituserauthorization independent ofrecord"
+    },
+    {
+      "stage": "servercommit",
+      "known": "AD368readyhandlerchecksandmembershipcommit beforepublish;C_D2states0/1/2 vsownerseparateopcodeonly",
+      "need": "servercurrentepoch/session/room/ownerconditions;485Fsettingsnetworknotready-machinevalidation",
+      "authority": "serverowned,notlocalrecord"
+    },
+    {
+      "stage": "D1_E1_receipts",
+      "known": "D1projectedaliasstate;E1countdown/cancel receipts scopedperpeer;partialsend/racesopen",
+      "need": "currentepoch/room/joingeneration/qualifiedalias;noexpiry→WORLDgrant",
+      "authority": "receipt scope only"
+    },
+    {
+      "stage": "GUI",
+      "known": "noNative/GUIrun;callback/constructor/virtual/privategaps retained",
+      "need": "actualUIevent/controlacceptance separatelyqualified",
+      "authority": "none"
+    }
+  ],
+  "adoption": "Modern mayretainserverrow reservedbyteasmetadata underaccepted AD368 row contract; mustnot derive ready/owner permission orNativeprotectedobject fromit. Batch29/30 SHAunchanged;no runtime/GUIgrant.",
+  "remaining_necessary_work": "Runtime/helper/selectedepoch/index/storage/copycaller boundaries remainopen;no autonomousunknownbody orNative/JavaSQLrun requested. CurrentModernexplicitreadywriter/receipt acceptance belongs toitsownauthorized integration."
+}

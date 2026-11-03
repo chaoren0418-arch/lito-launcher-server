@@ -1,0 +1,86 @@
+309248: mov     al, [ebx+2Dh]
+309249: cmp     al, 2
+309250: mov     byte_75F694, al
+309251: jnz     loc_492B6E
+309252: 
+309253: mov     ecx, offset dword_8345E8
+309254: mov     off_635B84, offset dword_635D08
+309255: mov     off_635B80, ecx
+309256: 
+309257: 
+309258: loc_492AF4:                             ; CODE XREF: sub_4928C0+2C7↓j
+309259:                                         ; sub_4928C0+2E5↓j
+309260:                                         ; sub_4928C0+301↓j
+309261: mov     dword ptr [ecx+20h], 184h
+309262: mov     edx, off_635B80
+309263: mov     dword ptr [edx+24h], 185h
+309264: mov     eax, off_635B80
+309265: mov     dword ptr [eax+28h], 186h
+309266: mov     ecx, off_635B80
+309267: mov     dword ptr [ecx+34h], 2F3h
+309268: mov     edx, off_635B80
+309269: mov     dword ptr [edx+38h], 28Bh
+309270: 
+309271: 
+309272: loc_492B2E:                             ; CODE XREF: sub_4928C0+361↓j
+309273: mov     ecx, dword_648EBC
+309274: test    ecx, ecx
+309275: jz      loc_492C26
+309276: 
+309277: mov     eax, dword_834888
+309278: test    eax, eax
+309279: jz      loc_492C26
+309280: 
+309281: mov     eax, dword_834958
+309282: test    eax, eax
+309283: jz      loc_492C26
+309284: 
+309285: call    sub_450230
+309286: 
+309287: mov     ecx, dword_834888
+309288: call    sub_4CD1C0
+309289: 
+309290: or      esi, 0FFFFFFFFh
+309291: jmp     loc_492E6B
+309292: 
+309293: ; ---------------------------------------------------------------------------
+309294: 
+309295: loc_492B6E:                             ; CODE XREF: sub_4928C0+219↑j
+309296: test    al, al
+309297: jnz     short loc_492B8C
+309298: 
+309299: mov     ecx, offset dword_834774
+309300: mov     off_635B84, offset dword_635E94
+309301: mov     off_635B80, ecx
+309302: jmp     loc_492AF4
+309303: 
+309304: ; ---------------------------------------------------------------------------
+309305: 
+309306: loc_492B8C:                             ; CODE XREF: sub_4928C0+2B0↑j
+309307: cmp     al, 4
+309308: jnz     short loc_492BAA
+309309: 
+309310: mov     ecx, offset dword_834548
+309311: mov     off_635B84, offset dword_635F74
+309312: mov     off_635B80, ecx
+309313: jmp     loc_492AF4
+309314: 
+309315: ; ---------------------------------------------------------------------------
+309316: 
+309317: loc_492BAA:                             ; CODE XREF: sub_4928C0+2CE↑j
+309318: mov     ecx, offset dword_834408
+309319: cmp     al, 1
+309320: mov     off_635B80, ecx
+309321: mov     off_635B84, offset dword_635B88
+309322: jnz     loc_492AF4
+309323: 
+309324: mov     dword_834428, 658h
+309325: mov     dword_83442C, 759h
+309326: mov     dword_834430, 75Fh
+309327: mov     dword_635CE4, 760h
+309328: mov     dword_635CE8, 75Ah
+309329: mov     dword_83443C, 92Dh
+309330: mov     dword_834440, 927h
+309331: mov     dword_635CEC, 92Eh
+309332: mov     dword_635CF0, 928h
+309333: jmp     loc_492B2E

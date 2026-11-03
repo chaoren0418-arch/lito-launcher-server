@@ -1,0 +1,45 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build\\candidate-weapon-break-numeric.jar",
+    "sha256": "a58a6d1f5e547d1a30d54ec562b5ee29472330a8bb2f757f2874231d2eec9eaa"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build-repro\\candidate-npc-physical-source.jar",
+    "sha256": "b6a149aa1c6c467d2f8fd4ad63e950159561c30c939569c61443397e5601f72e"
+  },
+  "changed": [
+    "local/lito381/server/CombatDatabase.class",
+    "local/lito381/server/LegacyMySqlRepository.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeNpcPhysicalSource$Snapshot.class",
+    "local/lito381/server/NativeNpcPhysicalSource.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build-repro\\inputs\\build.py",
+      "sha256": "78b8c6233ceea281d9a7e91ffd45ec751e79affc906e150716deae0990c0dc02"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build-repro\\inputs\\NpcPhysicalSourceMethods.java",
+      "sha256": "54c90b80dc5fc0b9ba254b0f31c0efd65d07e50e2fdd705d11a854690016b8da"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build-repro\\inputs\\sources\\NativeNpcPhysicalSource.java",
+      "sha256": "4e4b3e31330c0bfded62163c72cbd283aedc82f8688b05c9abebc32ac0d6357f"
+    }
+  ],
+  "remaining": [
+    "read-only actual SQL snapshot and failure tests",
+    "repository lookup without per-cast SQL",
+    "source routing and full material regressions",
+    "final SQL shutdown and native UI gates"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "updated_at": "2026-10-05T21:19:43.279762+08:00",
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+      "expected_bytes": 1941568,
+      "expected_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+      "verified": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "expected_bytes": 7094272,
+      "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "verified": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+      "expected_bytes": 41179755,
+      "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+      "verified": true
+    }
+  ],
+  "rules_checked": [
+    "D:\\AGENTS.md",
+    "D:\\lineage開發\\AGENTS.md",
+    "D:\\lineage開發\\3-lito開發\\AGENTS.md",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\AGENTS.md"
+  ],
+  "applicable_AGENTS_found": []
+}

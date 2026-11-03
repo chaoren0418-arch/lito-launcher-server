@@ -1,0 +1,6 @@
+{
+  "capacity_bytes": 3935232,
+  "initial_required_bytes": 3937536,
+  "expected": "Reject visible pixel budget before eviction or decode; resident/cache counters unchanged.",
+  "valid_capacity_bounds": true
+}

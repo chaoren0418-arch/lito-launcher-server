@@ -1,0 +1,309 @@
+--- qualified
++++ current
+@@ -1107,6 +1107,13 @@
+ 			} catch (final RuntimeException paymentFailure) {
+ 				_log.error("Private-shop payment transfer threw buyer={} seller={}",
+ 						ownerId(), sellerInventory.ownerId(), paymentFailure);
++				return quarantineExchange(sellerInventory, "payment transfer outcome unconfirmed");
++			} catch (final Error fatal) {
++				quarantineExchange(sellerInventory, "payment transfer interrupted");
++				throw fatal;
++			}
++			if (isItemMutationQuarantined() || sellerInventory.isItemMutationQuarantined()) {
++				return quarantineExchange(sellerInventory, "payment transfer quarantined an inventory");
+ 			}
+ 			if (!paymentSnapshot.matchesCompletedTransfer(paymentReceipt)) {
+ 				if (!paymentSnapshot.restore(paymentReceipt)) {
+@@ -1134,6 +1141,13 @@
+ 		} catch (final RuntimeException merchandiseFailure) {
+ 			_log.error("Private-shop merchandise transfer threw buyer={} seller={}",
+ 					ownerId(), sellerInventory.ownerId(), merchandiseFailure);
++			return quarantineExchange(sellerInventory, "merchandise transfer outcome unconfirmed");
++		} catch (final Error fatal) {
++			quarantineExchange(sellerInventory, "merchandise transfer interrupted");
++			throw fatal;
++		}
++		if (isItemMutationQuarantined() || sellerInventory.isItemMutationQuarantined()) {
++			return quarantineExchange(sellerInventory, "merchandise transfer quarantined an inventory");
+ 		}
+ 		if (merchandiseSnapshot.matchesCompletedTransfer(receivedItem)) {
+ 			return exchangeResult(PrivateShopExchangeStatus.COMMITTED, receivedItem);
+@@ -1405,10 +1419,23 @@
+ 
+ 		try {
+ 			// 先持久化主列；失敗時必須將例外交回基底層，禁止加入 _items。
+-			CharItemsTable.get().storeItem(this._owner.getId(), item);
++			if (item.get_time() != null) CharItemsTable.get().storeTimedItem(this._owner.getId(), item);
++			else CharItemsTable.get().storeItem(this._owner.getId(), item);
++		} catch (final CharItemsTable.StoredItemInsertUnconfirmedException failure) {
++			// An internal attempt receipt prevents callers from blindly reissuing a possibly inserted row.
++			quarantineItemMutation("item insert/publication unconfirmed:" + item.getId());
++			_log.error("道具主列或發布結果不明 charId={} itemObjId={}", this._owner.getId(), item.getId(), failure);
++			return;
++		} catch (final CharItemsTable.StoredItemTimeUnconfirmedException failure) {
++			// Keep the accepted main-row receipt so a source cannot refund/reinsert it blindly.
++			quarantineItemMutation("stored item deadline/inverse unconfirmed:" + item.getId());
++			_log.error("道具主列曾確認，期限或撤銷結果不明 charId={} itemObjId={}", this._owner.getId(), item.getId(), failure);
+ 		} catch (final Exception e) {
+-			throw new IllegalStateException("道具主列寫入失敗，已拒絕加入背包 charId="
++			throw new IllegalStateException("道具寫入未完成或已確認撤銷，已拒絕加入背包 charId="
+ 					+ this._owner.getId() + " itemObjId=" + item.getId(), e);
++		} catch (final Error fatal) {
++			quarantineItemMutation("item insert/deadline interrupted:" + item.getId());
++			throw fatal;
+ 		}
+ 
+ 		try {
+@@ -1432,8 +1459,9 @@
+ 					this._owner.getId(), item.getId(), e);
+ 		}
+ 
++		if (isItemMutationQuarantined()) return;
+ 		try {
+-			// 只有 DB 成功後才對玩家與能力系統暴露新道具。
++			// Only confirmed main/deadline/auxiliary work may notify or apply inventory abilities.
+ 			this._owner.sendPackets(new S_AddItem(item));
+ 			if (S_ItemStatus.shouldUseLongStatus(item)) {
+ 				this._owner.sendPackets(new S_ItemStatus(item));
+@@ -1462,6 +1490,8 @@
+ 		if (rejectQuarantinedMutation("store-item")) {
+ 			return null;
+ 		}
++		final Timestamp originalTime = item == null ? null : item.get_time();
++		final int originalRemaining = item == null ? 0 : item.getRemainingTime();
+ 		// 道具_物品時間限制：etc 道具存入時若資料庫有設時效，自動帶入剩餘秒數、到期時間並寫入 character_items_time
+ 		// 條件含「getRemainingTime() > 0」：外部已設定剩餘時間時，也需補上 set_time 並寫入 DB
+ 		if (item != null && item.get_time() == null && item.getItem() != null && item.getItem().getType2() == 0) {
+@@ -1482,7 +1512,13 @@
+ 				item.set_time(ts);
+ 			}
+ 		}
++		final Timestamp proposedTime = item == null ? null : item.get_time();
+ 		final L1ItemInstance result = super.storeItem(item);
++		if (result == null && item != null && !isItemMutationQuarantined() && item.get_time() == proposedTime) {
++			item.set_time(originalTime);
++			item.setRemainingTime(originalRemaining);
++		}
++		if (isItemMutationQuarantined()) return result;
+ 		if (result != null) {
+ 			// 堆疊時：背包能力道具需補上新增數量的能力（result != item 表示堆疊至既有道具，insertItem 僅處理新道具）
+ 			if (item.isStackable() && result != item && CheckItemPowerTable.get().checkItem(item.getItemId())
+@@ -1492,10 +1528,8 @@
+ 			if (result.getRemainingTime() > 0) {
+ 				result.startEquipmentTimer(this._owner);
+ 			}
+-			// 新物件（包含部分堆疊切割出的新 objId）必須同步寫入到期時間。
+-			// result == item 排除合併至已有堆疊時的重複 INSERT。
++			// Deadline confirmation now precedes insertItem's first success notification.
+ 			if (result.get_time() != null && result.getId() > 0 && result == item) {
+-				CharItemsTimeTable.get().addTime(result.getId(), result.get_time());
+ 				this._owner.sendPackets(new S_ItemName(result));
+ 			}
+ 			if (this._owner.getQuest() != null) {
+@@ -1512,6 +1546,8 @@
+ 		if (rejectQuarantinedMutation("store-trade-item")) {
+ 			return null;
+ 		}
++		final Timestamp originalTime = item == null ? null : item.get_time();
++		final int originalRemaining = item == null ? 0 : item.getRemainingTime();
+ 		// 計時道具：撿取/交易移入背包時與 storeItem 一致，補上 set_time 並寫入 character_items_time
+ 		// 僅在 get_time()==null 時才重算並 set_time。以下情況計時均「保留」不重設：
+ 		// - 自己丟棄後整件撿取（同一物件）、他人撿取地上物（同一物件）、交易轉移（同一物件）
+@@ -1535,7 +1571,13 @@
+ 				item.set_time(ts);
+ 			}
+ 		}
++		final Timestamp proposedTime = item == null ? null : item.get_time();
+ 		final L1ItemInstance result = super.storeTradeItem(item);
++		if (result == null && item != null && !isItemMutationQuarantined() && item.get_time() == proposedTime) {
++			item.set_time(originalTime);
++			item.setRemainingTime(originalRemaining);
++		}
++		if (isItemMutationQuarantined()) return result;
+ 		if (result != null) {
+ 			if (item.isStackable() && result != item && CheckItemPowerTable.get().checkItem(item.getItemId())
+ 					&& !ItemVIPTable.get().isVipItem(item)) {
+@@ -1545,7 +1587,6 @@
+ 				result.startEquipmentTimer(this._owner);
+ 			}
+ 			if (result.get_time() != null && result.getId() > 0 && result == item) {
+-				CharItemsTimeTable.get().addTime(result.getId(), result.get_time());
+ 				this._owner.sendPackets(new S_ItemName(result));
+ 			}
+ 			if (this._owner.getQuest() != null) {
+@@ -1581,6 +1622,42 @@
+ 	public static final int COL_IS_ID = 2;
+ 
+ 	public static final int COL_DURABILITY = 1;
++
++	/** Only this exact count attempt was confirmed not applied; callers may restore their prior memory count. */
++	static final class CountUpdateRejectedException extends IllegalStateException {
++		private final int owner, id, template;
++		private final long expected, attempted;
++		private CountUpdateRejectedException(int owner, int id, int template, long expected, long attempted) {
++			super("道具數量未提交 charId=" + owner + " itemObjId=" + id);
++			this.owner = owner; this.id = id; this.template = template; this.expected = expected; this.attempted = attempted;
++		}
++		private boolean matches(L1ItemInstance item, long attemptedCount) {
++			return item != null && item.getItem() != null && item.getId() == id && item.getItemId() == template
++					&& item.get_char_objid() == owner && item.getCount() == expected
++					&& item.getLastStatus().count == expected && attemptedCount == attempted;
++		}
++	}
++
++	/** Durable deletion was explicitly rejected before any source cache/ability cleanup. */
++	static final class ItemDeleteRejectedException extends IllegalStateException {
++		private ItemDeleteRejectedException(int owner, int itemId) {
++			super("道具刪除未提交 charId=" + owner + " itemObjId=" + itemId);
++		}
++	}
++
++	/** Caller retains the native PC action/inventory scope; this restores no SQL or LastStatus. */
++	void restoreRejectedCountChange(final L1ItemInstance item, final long oldCount,
++			final long attemptedCount, final CountUpdateRejectedException failure) {
++		if (!_pcInvSerial.isHeldByCurrentThread() || (_owner != null && !_owner.getPlayerActionLock().isHeldByCurrentThread())
++				|| isItemMutationQuarantined() || oldCount <= 0 || !failure.matches(item, attemptedCount) || !_items.contains(item)) {
++			quarantineItemMutation("rejected count snapshot changed");
++			return;
++		}
++		item.setCount(oldCount);
++		_weightMutex.lock();
++		try { _weightDirty = true; } finally { _weightMutex.unlock(); }
++		if (oldCount != item.getLastStatus().count) markInventoryDirtyLocked();
++	}
+ 
+ 	//@Override
+ 	public void updateItem(final L1ItemInstance item) {
+@@ -1623,6 +1700,7 @@
+ 			}
+ 
+ 			final long newCount = item.getCount();
++			final int itemObjId = item.getId(), template = item.getItemId(), countOwner = ownerId();
+ 			if (expectedCount <= 0L || newCount <= 0L) {
+ 				quarantineItemMutation("invalid count persistence snapshot:" + item.getId());
+ 				throw new IllegalStateException("道具數量快照無效 charId=" + ownerId()
+@@ -1630,9 +1708,19 @@
+ 						+ " new=" + newCount);
+ 			}
+ 
+-			final ItemRowMutationResult result = CharacterItemPersistenceService.persistCountChange(
+-					ownerId(), item.getId(), expectedCount, newCount);
++			final ItemRowMutationResult result;
++			try {
++				result = CharacterItemPersistenceService.persistCountChange(countOwner, itemObjId, expectedCount, newCount);
++			} catch (final Error fatal) {
++				quarantineItemMutation("item count persistence interrupted:" + item.getId());
++				throw fatal;
++			}
+ 			if (result == ItemRowMutationResult.NOT_COMMITTED) {
++				if (item.getId() != itemObjId || item.getItemId() != template || item.get_char_objid() != countOwner
++						|| item.getCount() != newCount || item.getLastStatus().count != expectedCount) {
++					quarantineItemMutation("rejected count identity changed:" + itemObjId);
++					throw new IllegalStateException("未提交數量的記憶體身分已變更 itemObjId=" + itemObjId);
++				}
+ 				// DB 證明仍是舊值，可安全將已先變更的記憶體回滾。
+ 				item.setCount(expectedCount);
+ 				_weightMutex.lock();
+@@ -1641,8 +1729,7 @@
+ 				} finally {
+ 					_weightMutex.unlock();
+ 				}
+-				throw new IllegalStateException("道具數量寫入失敗，已回復舊值 charId="
+-						+ ownerId() + " itemObjId=" + item.getId());
++				throw new CountUpdateRejectedException(countOwner, itemObjId, template, expectedCount, newCount);
+ 			}
+ 			if (result == ItemRowMutationResult.UNKNOWN) {
+ 				quarantineItemMutation("item count persistence outcome unknown:" + item.getId());
+@@ -1796,6 +1883,7 @@
+ 	@Override
+ 	public L1ItemInstance tradeItem(final L1ItemInstance item, final long count,
+ 			final L1Inventory inventory) {
++        if (inventory == null) return null;
+         try (MigrationAssetGate.Permit warehouse = inventory == null ? null : inventory.beginWarehouseOperation()) {
+ 
+ 		final L1PcInventory targetPcInv = inventory instanceof L1PcInventory ? (L1PcInventory) inventory : null;
+@@ -1820,10 +1908,15 @@
+ 				}
+ 				return receipt;
+ 			} catch (final RuntimeException failure) {
+-				if (partialPowerAdjusted) {
++				final boolean rejected = failure instanceof CountUpdateRejectedException || failure instanceof ItemDeleteRejectedException;
++				if (!rejected) quarantineItemMutation("inventory-transfer outcome unconfirmed");
++				if (rejected && partialPowerAdjusted && !isItemMutationQuarantined()) {
+ 					restoreRejectedPartialTransferPower(item, count, "inventory-transfer-exception");
+ 				}
+ 				throw failure;
++			} catch (final Error fatal) {
++				quarantineItemMutation("inventory-transfer interrupted");
++				throw fatal;
+ 			} finally {
+ 				endDurableTransferLocked();
+ 			}
+@@ -1835,6 +1928,7 @@
+ 	@Override
+ 	public L1ItemInstance tradeItem(final L1ItemInstance item, final int count, final int showId,
+ 			final com.lineage.server.model.L1GroundInventory inventory) {
++        if (inventory == null) return null;
+ 		return callPlayerInventorySerialized(this, () -> {
+ 			if (rejectQuarantinedMutation("drop-item")) {
+ 				return null;
+@@ -1854,10 +1948,15 @@
+ 				}
+ 				return receipt;
+ 			} catch (final RuntimeException failure) {
+-				if (partialPowerAdjusted) {
++				final boolean rejected = failure instanceof CountUpdateRejectedException || failure instanceof ItemDeleteRejectedException;
++				if (!rejected) quarantineItemMutation("ground-transfer outcome unconfirmed");
++				if (rejected && partialPowerAdjusted && !isItemMutationQuarantined()) {
+ 					restoreRejectedPartialTransferPower(item, count, "ground-transfer-exception");
+ 				}
+ 				throw failure;
++			} catch (final Error fatal) {
++				quarantineItemMutation("ground-transfer interrupted");
++				throw fatal;
+ 			} finally {
+ 				endDurableTransferLocked();
+ 			}
+@@ -2207,9 +2306,10 @@
+ 					Collections.singletonList(new ItemCountDebit(
+ 							item, removal.oldCount, removal.newCount)));
+ 		} catch (final RuntimeException failure) {
++			quarantineItemMutation("exact item committer failed without a confirmed result");
+ 			_log.error("Exact item DB-first committer failed charId={} itemObjId={}",
+ 					ownerId(), item.getId(), failure);
+-			return ItemConsumeCommitResult.PERSISTENCE_FAILED;
++			return ItemConsumeCommitResult.COMPENSATION_FAILED;
+ 		}
+ 		if (persistence == ItemDebitPersistenceResult.COMPENSATION_FAILED) {
+ 			quarantineItemMutation("exact item debit outcome ambiguous");
+@@ -2961,13 +3061,17 @@
+ 				CharItemsTimeTable.get().deleteByItemObjId(item.getId());
+ 			}
+ 		} else {
+-			final long expectedCount = item.getLastStatus().count;
++			final long expectedCount = item.getLastStatus().count, memoryCount = item.getCount();
++			final int deleteOwner = ownerId(), itemObjId = item.getId(), template = item.getItemId();
+ 			final ItemRowMutationResult result =
+-					CharacterItemPersistenceService.deleteItemIfExpectedDurably(
+-							ownerId(), item.getId(), expectedCount);
++					CharacterItemPersistenceService.deleteItemIfExpectedDurably(deleteOwner, itemObjId, expectedCount);
+ 			if (result == ItemRowMutationResult.NOT_COMMITTED) {
+-				throw new IllegalStateException("道具刪除未落庫，記憶體保留 charId="
+-						+ ownerId() + " itemObjId=" + item.getId());
++				if (item.getId() != itemObjId || item.getItemId() != template || item.get_char_objid() != deleteOwner
++						|| item.getCount() != memoryCount || item.getLastStatus().count != expectedCount || !_items.contains(item)) {
++					quarantineItemMutation("rejected delete snapshot changed:" + itemObjId);
++					throw new IllegalStateException("未提交刪除的來源身分已變更 itemObjId=" + itemObjId);
++				}
++				throw new ItemDeleteRejectedException(deleteOwner, itemObjId);
+ 			}
+ 			if (result == ItemRowMutationResult.UNKNOWN) {
+ 				quarantineItemMutation("item delete outcome unknown:" + item.getId());
+@@ -3053,6 +3157,7 @@
+ 					}
+ 				}
+ 
++				if (!this._owner.getEquipSlot().prepareTimedArmor(item)) return;
+ 				if (!loaded) {
+ 					this._owner.sendPackets(new S_EquipmentWindow(item.getId(), index, true));
+ 				}

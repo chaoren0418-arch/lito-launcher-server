@@ -1,0 +1,90 @@
+{
+  "sources": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\inventory_icons.rs",
+        "bytes": 29557,
+        "sha256": "1E6F4521F9A0ECA880972064BEDC3FDDDC9D8C0BE31B017EB0BD9EADD92B5970"
+      },
+      "excerpts": [
+        {
+          "first_line": 280,
+          "last_line": 419,
+          "text": "280:     header_width: u8,\n281:     width: usize,\n282:     height: usize,\n283:     rgb555: Vec<u16>,\n284:     coverage: Vec<bool>,\n285: }\n286: \n287: impl TbtImage {\n288:     pub fn raw_offset(&self) -> [u8; 2] {\n289:         self.offset\n290:     }\n291:     pub fn header_width(&self) -> u8 {\n292:         self.header_width\n293:     }\n294:     pub fn width(&self) -> usize {\n295:         self.width\n296:     }\n297:     pub fn height(&self) -> usize {\n298:         self.height\n299:     }\n300:     pub fn rgb555(&self) -> &[u16] {\n301:         &self.rgb555\n302:     }\n303:     pub fn coverage(&self) -> &[bool] {\n304:         &self.coverage\n305:     }\n306: \n307:     /// PakViewer LoadL1Image's natural-size RGBA8 reference output, including\n308:     /// its RGB555-zero transparency. NOT generic native alpha or UI placement.\n309:     /// Channels use bit replication; there is no grayscale-as-alpha heuristic.\n310:     pub fn reference_rgba(&self) -> Result<Vec<u8>, IconError> {\n311:         let mut rgba = allocated(self.rgb555.len() * 4, 0u8)?;\n312:         for (index, &pixel) in self.rgb555.iter().enumerate() {\n313:             if !self.coverage[index] || pixel == 0 {\n314:                 continue;\n315:             }\n316:             let r = ((pixel >> 10) & 31) as u8;\n317:             let g = ((pixel >> 5) & 31) as u8;\n318:             let b = (pixel & 31) as u8;\n319:             rgba[index * 4..index * 4 + 4].copy_from_slice(&[\n320:                 (r << 3) | (r >> 2),\n321:                 (g << 3) | (g >> 2),\n322:                 (b << 3) | (b >> 2),\n323:                 255,\n324:             ]);\n325:         }\n326:         Ok(rgba)\n327:     }\n328: }\n329: \n330: pub fn decode_tbt(bytes: &[u8]) -> Result<TbtImage, IconError> {\n331:     decode_tbt_cancellable(bytes, &AtomicBool::new(false))\n332: }\n333: \n334: pub fn decode_tbt_cancellable(bytes: &[u8], cancelled: &AtomicBool) -> Result<TbtImage, IconError> {\n335:     check_cancelled(cancelled)?;\n336:     if bytes.len() > MAX_TBT_BYTES {\n337:         return Err(IconError::PayloadTooLarge {\n338:             size: bytes.len() as u64,\n339:             limit: MAX_TBT_BYTES,\n340:         });\n341:     }\n342:     let header = bytes.get(..4).ok_or(IconError::Truncated)?;\n343:     let height = usize::from(header[3]);\n344:     let header_width = header[2];\n345:     if header_width == 0 || height == 0 {\n346:         return Err(IconError::EmptyImage);\n347:     }\n348:     let width = walk_rows(\n349:         bytes,\n350:         height,\n351:         usize::from(header_width),\n352:         cancelled,\n353:         |_, _, _| {},\n354:     )?;\n355:     let pixels = width.checked_mul(height).ok_or(IconError::DimensionLimit)?;\n356:     if pixels > MAX_TBT_PIXELS || height > MAX_TBT_HEIGHT {\n357:         return Err(IconError::DimensionLimit);\n358:     }\n359:     check_cancelled(cancelled)?;\n360:     let mut rgb555 = allocated(pixels, 0u16)?;\n361:     let mut coverage = allocated(pixels, false)?;\n362:     walk_rows(bytes, height, width, cancelled, |y, x, value| {\n363:         rgb555[y * width + x] = value;\n364:         coverage[y * width + x] = true;\n365:     })?;\n366:     check_cancelled(cancelled)?;\n367:     Ok(TbtImage {\n368:         offset: [header[0], header[1]],\n369:         header_width,\n370:         width,\n371:         height,\n372:         rgb555,\n373:         coverage,\n374:     })\n375: }\n376: \n377: fn walk_rows(\n378:     bytes: &[u8],\n379:     height: usize,\n380:     mut width: usize,\n381:     cancelled: &AtomicBool,\n382:     mut pixel: impl FnMut(usize, usize, u16),\n383: ) -> Result<usize, IconError> {\n384:     let mut cursor = 4;\n385:     for y in 0..height {\n386:         check_cancelled(cancelled)?;\n387:         let spans = take_byte(bytes, &mut cursor)?;\n388:         let mut x = 0usize;\n389:         for _ in 0..spans {\n390:             let skip = take_byte(bytes, &mut cursor)?;\n391:             if skip & 1 != 0 {\n392:                 return Err(IconError::OddByteSkip);\n393:             }\n394:             let count = usize::from(take_byte(bytes, &mut cursor)?);\n395:             x = x\n396:                 .checked_add(usize::from(skip / 2))\n397:                 .ok_or(IconError::DimensionLimit)?;\n398:             let end = x.checked_add(count).ok_or(IconError::DimensionLimit)?;\n399:             if end > MAX_TBT_WIDTH {\n400:                 return Err(IconError::DimensionLimit);\n401:             }\n402:             width = width.max(end);\n403:             for column in x..end {\n404:                 let lo = take_byte(bytes, &mut cursor)?;\n405:                 let hi = take_byte(bytes, &mut cursor)?;\n406:                 let value = u16::from_le_bytes([lo, hi]);\n407:                 if value & 0x8000 != 0 {\n408:                     return Err(IconError::UnsupportedPixelHighBit);\n409:                 }\n410:                 pixel(y, column, value);\n411:             }\n412:             x = end;\n413:         }\n414:     }\n415:     if cursor != bytes.len() {\n416:         return Err(IconError::TrailingBytes);\n417:     }\n418:     Ok(width)\n419: }"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_skill_panel.rs",
+        "bytes": 15680,
+        "sha256": "5C62C2197C1DC87E994D892856C38520A96843A43D97EABB7494055679CA5922"
+      },
+      "excerpts": [
+        {
+          "first_line": 5,
+          "last_line": 22,
+          "text": "5: use super::{hotbar::{spell_graphic, spell_icons}, inventory_panel::{blit, dim, Picture}, PixelPoint, Viewport};\n6: use crate::modern_lito::{battle_skillbook::{Choice, Model}, battle_window::Stamp,\n7:     inventory_icons::SharedInventoryIcons, resources::{SharedArchive, SharedArchiveKind}};\n8: use anyhow::{ensure, Context, Result};\n9: use std::{path::{Path, PathBuf}, sync::{atomic::{AtomicBool, Ordering}, mpsc, Arc}, thread};\n10: \n11: const WIDTH: i32 = 800;\n12: const HEIGHT: i32 = 600;\n13: const FRAME_WIDTH: i32 = 193;\n14: const FRAME_HEIGHT: i32 = 282;\n15: const NUM: i32 = 5;\n16: const DEN: i32 = 4;\n17: pub(super) const LEFT: i32 = WIDTH - FRAME_WIDTH * NUM / DEN;\n18: const TOP: i32 = 0;\n19: const GRID_LEFT: i32 = 27;\n20: const GRID_TOP: i32 = 34;\n21: const CELL_WIDTH: i32 = 35;\n22: const CELL_HEIGHT: i32 = 35;"
+        },
+        {
+          "first_line": 89,
+          "last_line": 99,
+          "text": "89:             let mut reader = SharedInventoryIcons::open_cancellable(&root, &cancel)?;\n90:             let mut icons = Vec::with_capacity(8);\n91:             for id in request.ids {\n92:                 if cancel.load(Ordering::Acquire) { anyhow::bail!(\"skill art load cancelled\"); }\n93:                 let icon = id.map(|id| {\n94:                     let graphic = spell_graphic(index, id)?;\n95:                     let icon = reader.load(graphic, &cancel)?;\n96:                     let image = icon.image();\n97:                     Ok::<_, anyhow::Error>(Picture { width: image.width(), height: image.height(),\n98:                         offset: image.raw_offset(), rgba: image.reference_rgba()? })\n99:                 }).transpose().with_context(|| format!(\"shared magic icon {id:?}\"))?;"
+        },
+        {
+          "first_line": 174,
+          "last_line": 194,
+          "text": "174:         let assets = self.ready.as_ref()?;\n175:         if base.len() != (WIDTH * HEIGHT * 4) as usize { return None; }\n176:         let mut output = base.to_vec();\n177:         blit(&mut output, &assets.frame, LEFT, TOP, FRAME_WIDTH * NUM / DEN,\n178:             FRAME_HEIGHT * NUM / DEN, (0, 0, WIDTH, HEIGHT));\n179:         let painted_rows = rows(model);\n180:         for (slot, icon) in assets.icons.iter().enumerate() {\n181:             let Some((id, choice)) = painted_rows[slot] else { continue; };\n182:             let x = LEFT + (GRID_LEFT + (slot % 4) as i32 * CELL_WIDTH) * NUM / DEN;\n183:             let y = TOP + (GRID_TOP + (slot / 4) as i32 * CELL_HEIGHT) * NUM / DEN;\n184:             if let Some(icon) = icon {\n185:                 blit(&mut output, icon,\n186:                     x + i32::from(icon.offset[0]) * NUM / DEN,\n187:                     y + i32::from(icon.offset[1]) * NUM / DEN,\n188:                     (icon.width as i32 * NUM / DEN).max(1),\n189:                     (icon.height as i32 * NUM / DEN).max(1), (x, y, x + 42, y + 42));\n190:             }\n191:             if choice.is_none() { dim(&mut output, x, y, 42, 42); }\n192:             if selected == Some(id) { border(&mut output, x, y, 42, 42); }\n193:         }\n194:         Some(output)"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_inventory_panel.rs",
+        "bytes": 30075,
+        "sha256": "2B283EF81BB5153BE6DDD8B78996F5580FDB67EDA03F250736536F74E78D1DA7"
+      },
+      "excerpts": [
+        {
+          "first_line": 413,
+          "last_line": 450,
+          "text": "413: pub(super) fn blit(\n414:     output: &mut [u8],\n415:     picture: &Picture,\n416:     x: i32,\n417:     y: i32,\n418:     width: i32,\n419:     height: i32,\n420:     clip: (i32, i32, i32, i32),\n421: ) {\n422:     for dy in 0..height {\n423:         let py = y + dy;\n424:         if !(clip.1..clip.3).contains(&py) || !(0..SOURCE_HEIGHT).contains(&py) {\n425:             continue;\n426:         }\n427:         let sy = (dy as usize * picture.height / height as usize).min(picture.height - 1);\n428:         for dx in 0..width {\n429:             let px = x + dx;\n430:             if !(clip.0..clip.2).contains(&px) || !(0..SOURCE_WIDTH).contains(&px) {\n431:                 continue;\n432:             }\n433:             let sx = (dx as usize * picture.width / width as usize).min(picture.width - 1);\n434:             let src = (sy * picture.width + sx) * 4;\n435:             let dst = (py as usize * SOURCE_WIDTH as usize + px as usize) * 4;\n436:             let alpha = u32::from(picture.rgba[src + 3]);\n437:             for (target, source) in [(0, 2), (1, 1), (2, 0)] {\n438:                 output[dst + target] = ((u32::from(picture.rgba[src + source]) * alpha\n439:                     + u32::from(output[dst + target]) * (255 - alpha)\n440:                     + 127)\n441:                     / 255) as u8;\n442:             }\n443:         }\n444:     }\n445: }\n446: fn border(output: &mut [u8], x: i32, y: i32, width: i32, height: i32, bgr: [u8; 3]) {\n447:     for dy in 0..height {\n448:         for dx in 0..width {\n449:             if dx != 0 && dy != 0 && dx != width - 1 && dy != height - 1 {\n450:                 continue;"
+        }
+      ]
+    }
+  ],
+  "Modern_executed": false,
+  "used_as_original_oracle": false,
+  "differences": [
+    {
+      "property": "covered zero",
+      "native": "4BE070/7A copies 0000 like any other covered word; uncovered spans leave destination unchanged",
+      "Modern": "reference_rgba drops covered RGB555 zero via alpha0; world_skill_panel uses this view"
+    },
+    {
+      "property": "offset",
+      "native": "header[0]/[1] sign-extended i8, no scale in bounded 4B9980→4BE000 path",
+      "Modern": "stored u8 and converted to i32; grid scales offsets by5/4"
+    },
+    {
+      "property": "format",
+      "native": "conditional in-place (v+(v&7FE0))&FFFF; flag0 keeps555, flag1 selected onF800/07E0/001F tuple",
+      "Modern": "raw555 retained; reference RGBA bit replication is a PakViewer presentation policy"
+    },
+    {
+      "property": "row stride/width",
+      "native": "compressed row spans variable-length; draw ignores header[2], destination row stride2*(pitch_bytes>>1)",
+      "Modern": "dense width=max(header_width,row_end), independent width-based RGBA buffer"
+    },
+    {
+      "property": "validation",
+      "native": "bounded routines have no EOF/oddskip/highbit/headerwidth checks; height signed; malformed/negative behavior unvalidated",
+      "Modern": "reject oddskip/highbit/trailing/zero dimensions and imposes limits; these are valid safety policies but not native validation evidence"
+    },
+    {
+      "property": "clip/alpha/scale",
+      "native": "no explicit clip rectangle, alpha blend, or scale in selected path; virtual surface/upstream behavior unresolved",
+      "Modern": "nearest sampling at5/4,42x42 grid clip plus surface bounds,RGBA alpha blend in world_inventory_panel::blit"
+    }
+  ]
+}

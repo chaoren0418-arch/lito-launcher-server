@@ -1,0 +1,108 @@
+{
+  "qualification": "offlineconditional/rawbytes only",
+  "serializer_examples": [
+    {
+      "name": "compact_ASCII_savedshape",
+      "format": "cscsh",
+      "body_hex": "dd456469744166746572526f6f6d0028000400",
+      "body_bytes": 19,
+      "frame_total_u16LE_hex": "1500",
+      "frame_bytes": 21,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedrawoperandmodel only; noNativecodec/UI/encoder/send/serveracceptance."
+    },
+    {
+      "name": "legacy_five_zero_tail",
+      "format": "cscshccccc",
+      "body_hex": "dd456469744166746572526f6f6d00280004000000000000",
+      "body_bytes": 24,
+      "frame_total_u16LE_hex": "1a00",
+      "frame_bytes": 26,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedrawoperandmodel only; noNativecodec/UI/encoder/send/serveracceptance."
+    },
+    {
+      "name": "extended_two_selections",
+      "format": "cscshcccccb",
+      "body_hex": "dd436667002800040003020507020107",
+      "body_bytes": 16,
+      "frame_total_u16LE_hex": "1200",
+      "frame_bytes": 18,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedrawoperandmodel only; noNativecodec/UI/encoder/send/serveracceptance."
+    },
+    {
+      "name": "opaque_source_bytes_and_widths",
+      "format": "cscsh",
+      "body_hex": "dd81ff0080005634",
+      "body_bytes": 8,
+      "frame_total_u16LE_hex": "0a00",
+      "frame_bytes": 10,
+      "actual_trace": false,
+      "Native_executed": false,
+      "qualification": "Computedrawoperandmodel only; noNativecodec/UI/encoder/send/serveracceptance."
+    }
+  ],
+  "selection_compaction_examples": [
+    {
+      "inputs8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ordered_nonzero": [],
+      "K": 0,
+      "Native_executed": false
+    },
+    {
+      "inputs8": [
+        1,
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ordered_nonzero": [
+        1,
+        7
+      ],
+      "K": 2,
+      "Native_executed": false
+    },
+    {
+      "inputs8": [
+        255,
+        128,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "ordered_nonzero": [
+        255,
+        128,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "K": 8,
+      "Native_executed": false
+    }
+  ]
+}

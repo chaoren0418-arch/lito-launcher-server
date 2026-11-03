@@ -1,0 +1,14 @@
+{
+  "pending": [],
+  "removed": [
+    {
+      "files": 2,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests",
+      "reason": "obsolete native experiment outputs",
+      "bytes": 746272
+    }
+  ],
+  "files": 2.0,
+  "completed": "2026-10-12T05:11:49.6681635+08:00",
+  "bytes": 746272.0
+}

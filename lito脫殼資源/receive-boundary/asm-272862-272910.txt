@@ -1,0 +1,49 @@
+272862: call    sub_47F000
+272863: 
+272864: jmp     short loc_47FFE4                ; jumptable 0047F389 cases 7,8
+272865: 
+272866: ; ---------------------------------------------------------------------------
+272867: 
+272868: loc_47FF95:                             ; CODE XREF: sub_47F340+B16↑j
+272869: mov     edx, ebx
+272870: mov     ecx, esi
+272871: call    sub_49C100
+272872: 
+272873: jmp     short loc_47FFE4                ; jumptable 0047F389 cases 7,8
+272874: 
+272875: ; ---------------------------------------------------------------------------
+272876: 
+272877: loc_47FFA0:                             ; CODE XREF: sub_47F340+B10↑j
+272878: cmp     edi, 81Dh
+272879: jz      short loc_47FFCC
+272880: 
+272881: 
+272882: def_47F389:                             ; CODE XREF: sub_47F340+3B↑j
+272883:                                         ; sub_47F340+49↑j
+272884:                                         ; sub_47F340+15C↑j
+272885:                                         ; sub_47F340+16A↑j
+272886:                                         ; sub_47F340+6FD↑j
+272887:                                         ; sub_47F340+70B↑j
+272888:                                         ; sub_47F340+B25↑j
+272889:                                         ; DATA XREF: ___:jpt_47F389↓o
+272890:                                         ; ___:jpt_47F4AA↓o
+272891:                                         ; ___:jpt_47FA4B↓o
+272892: mov     al, byte_64AFA2                 ; jumptable 0047F389 default case, cases 4,6,9-14
+272893:                                         ; jumptable 0047F4AA default case, cases 29-255,259
+272894:                                         ; jumptable 0047FA4B default case, cases 276-511
+272895:                                         ; jumptable 0047FE6B default case
+272896: test    al, al
+272897: jnz     short loc_47FFE4                ; jumptable 0047F389 cases 7,8
+272898: 
+272899: mov     ecx, [ebp+arg_0]
+272900: push    ebx
+272901: push    esi
+272902: mov     edx, edi
+272903: call    sub_4C6B30
+272904: 
+272905: test    eax, eax
+272906: jz      short loc_47FFE4                ; jumptable 0047F389 cases 7,8
+272907: 
+272908: 
+272909: loc_47FFC1:                             ; CODE XREF: sub_47F340+50E↑j
+272910:                                         ; sub_47F340+51C↑j

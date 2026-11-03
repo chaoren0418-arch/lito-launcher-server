@@ -1,0 +1,620 @@
+{
+  "source": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+    "bytes": 23508,
+    "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+  },
+  "new_capture": false,
+  "frame_index_convention": "1-based",
+  "request_frame65": {
+    "opcode": 204,
+    "epoch": "Host-GAME",
+    "encrypted_body_hex": "27cf84ea3f3f0eda5a99dfa95a59628863c1ebf352",
+    "direction": "C",
+    "body_hex": "cc426174746c65536b696c6c526f6f6d0008000200",
+    "frame_bytes": 23
+  },
+  "reply_frame66": {
+    "encrypted_body_hex": "45eec5df7e1204e21dc284fb090e33d83fc683f63a562aad248fa7bd1d4513941fb49e84676a4ab95e90f287554d31f41ec19fe92d0c37df3ab8928829451196",
+    "body_hex": "ce0001000000426174746c65536b696c6c526f6f6d002800020002000134020000000000426174746c65486f737428426174746c654d6f6f6e29000000000000",
+    "frame_bytes": 66,
+    "direction": "S",
+    "epoch": "Host-GAME"
+  },
+  "request_decode": {
+    "opcode": 204,
+    "room_name_hex": "426174746c65536b696c6c526f6f6d",
+    "attributes": 8,
+    "password_hex": "",
+    "capacity": 2,
+    "tail": "COMPACT absent option/count tail"
+  },
+  "reply_decoded_fields": [
+    {
+      "index": 0,
+      "name": "result",
+      "format": "c",
+      "native_destination": "local EBP-2",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CD5",
+        "rva": "000A8CD5",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CD5",
+        "raw_backed": true,
+        "raw_hex": "50",
+        "mnemonic": "push",
+        "operands": "eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 1,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 1,
+      "name": "room_id",
+      "format": "d",
+      "native_destination": "0064ABF4",
+      "write_bytes": 4,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CD0",
+        "rva": "000A8CD0",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CD0",
+        "raw_backed": true,
+        "raw_hex": "68f4ab6400",
+        "mnemonic": "push",
+        "operands": "0x64abf4",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 2,
+      "wire_bytes": 4,
+      "value": 1,
+      "wire_hex": "01000000"
+    },
+    {
+      "index": 2,
+      "name": "room_name",
+      "format": "s",
+      "native_destination": "0064AB70",
+      "write_bytes": null,
+      "destination_capacity_bytes": 90,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CC6",
+        "rva": "000A8CC6",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CC6",
+        "raw_backed": true,
+        "raw_hex": "6870ab6400",
+        "mnemonic": "push",
+        "operands": "0x64ab70",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Opaque NUL-terminated bytes; local destination capacity does not prove frame bound or encoding",
+      "body_offset": 6,
+      "wire_bytes": 16,
+      "value": "426174746c65536b696c6c526f6f6d",
+      "wire_hex": "426174746c65536b696c6c526f6f6d00"
+    },
+    {
+      "index": 3,
+      "name": "attributes",
+      "format": "c",
+      "native_destination": "0064ABE6",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CC1",
+        "rva": "000A8CC1",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CC1",
+        "raw_backed": true,
+        "raw_hex": "68e6ab6400",
+        "mnemonic": "push",
+        "operands": "0x64abe6",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 22,
+      "wire_bytes": 1,
+      "value": 40,
+      "wire_hex": "28"
+    },
+    {
+      "index": 4,
+      "name": "password",
+      "format": "s",
+      "native_destination": "0064ABE8",
+      "write_bytes": null,
+      "destination_capacity_bytes": 5,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CBA",
+        "rva": "000A8CBA",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CBA",
+        "raw_backed": true,
+        "raw_hex": "68e8ab6400",
+        "mnemonic": "push",
+        "operands": "0x64abe8",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Opaque NUL-terminated bytes; local destination capacity does not prove frame bound or encoding",
+      "body_offset": 23,
+      "wire_bytes": 1,
+      "value": "",
+      "wire_hex": "00"
+    },
+    {
+      "index": 5,
+      "name": "users",
+      "format": "h",
+      "native_destination": "0064ABEE",
+      "write_bytes": 2,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CB5",
+        "rva": "000A8CB5",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CB5",
+        "raw_backed": true,
+        "raw_hex": "68eeab6400",
+        "mnemonic": "push",
+        "operands": "0x64abee",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 24,
+      "wire_bytes": 2,
+      "value": 2,
+      "wire_hex": "0200"
+    },
+    {
+      "index": 6,
+      "name": "capacity",
+      "format": "h",
+      "native_destination": "0064ABF0",
+      "write_bytes": 2,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CB0",
+        "rva": "000A8CB0",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CB0",
+        "raw_backed": true,
+        "raw_hex": "68f0ab6400",
+        "mnemonic": "push",
+        "operands": "0x64abf0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 26,
+      "wire_bytes": 2,
+      "value": 2,
+      "wire_hex": "0200"
+    },
+    {
+      "index": 7,
+      "name": "mode",
+      "format": "c",
+      "native_destination": "0064ACCA",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CAB",
+        "rva": "000A8CAB",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CAB",
+        "raw_backed": true,
+        "raw_hex": "68caac6400",
+        "mnemonic": "push",
+        "operands": "0x64acca",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 28,
+      "wire_bytes": 1,
+      "value": 1,
+      "wire_hex": "01"
+    },
+    {
+      "index": 8,
+      "name": "map_wire",
+      "format": "h",
+      "native_destination": "local EBP-4",
+      "write_bytes": 2,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CAA",
+        "rva": "000A8CAA",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CAA",
+        "raw_backed": true,
+        "raw_hex": "52",
+        "mnemonic": "push",
+        "operands": "edx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 29,
+      "wire_bytes": 2,
+      "value": 564,
+      "wire_hex": "3402"
+    },
+    {
+      "index": 9,
+      "name": "summary0",
+      "format": "c",
+      "native_destination": "0064ACCC",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CA5",
+        "rva": "000A8CA5",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CA5",
+        "raw_backed": true,
+        "raw_hex": "68ccac6400",
+        "mnemonic": "push",
+        "operands": "0x64accc",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 31,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 10,
+      "name": "summary1",
+      "format": "c",
+      "native_destination": "0064ACD0",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8CA0",
+        "rva": "000A8CA0",
+        "section": "   \u0000    ",
+        "file_offset": "000A8CA0",
+        "raw_backed": true,
+        "raw_hex": "68d0ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 32,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 11,
+      "name": "summary2",
+      "format": "c",
+      "native_destination": "0064ACD3",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C9B",
+        "rva": "000A8C9B",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C9B",
+        "raw_backed": true,
+        "raw_hex": "68d3ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd3",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 33,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 12,
+      "name": "summary3",
+      "format": "c",
+      "native_destination": "0064ACD1",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C96",
+        "rva": "000A8C96",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C96",
+        "raw_backed": true,
+        "raw_hex": "68d1ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd1",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 34,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 13,
+      "name": "summary4",
+      "format": "c",
+      "native_destination": "0064ACD2",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C91",
+        "rva": "000A8C91",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C91",
+        "raw_backed": true,
+        "raw_hex": "68d2ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd2",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 35,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 14,
+      "name": "native_label",
+      "format": "s",
+      "native_destination": "0064ABCA",
+      "write_bytes": null,
+      "destination_capacity_bytes": 28,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C8A",
+        "rva": "000A8C8A",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C8A",
+        "raw_backed": true,
+        "raw_hex": "68caab6400",
+        "mnemonic": "push",
+        "operands": "0x64abca",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Opaque NUL-terminated bytes; local destination capacity does not prove frame bound or encoding",
+      "body_offset": 36,
+      "wire_bytes": 23,
+      "value": "426174746c65486f737428426174746c654d6f6f6e29",
+      "wire_hex": "426174746c65486f737428426174746c654d6f6f6e2900"
+    },
+    {
+      "index": 15,
+      "name": "option1",
+      "format": "c",
+      "native_destination": "0064ACD4",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C85",
+        "rva": "000A8C85",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C85",
+        "raw_backed": true,
+        "raw_hex": "68d4ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd4",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 59,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 16,
+      "name": "option2",
+      "format": "c",
+      "native_destination": "0064ACD5",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C80",
+        "rva": "000A8C80",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C80",
+        "raw_backed": true,
+        "raw_hex": "68d5ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd5",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 60,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 17,
+      "name": "option3",
+      "format": "c",
+      "native_destination": "0064ACD6",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C7B",
+        "rva": "000A8C7B",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C7B",
+        "raw_backed": true,
+        "raw_hex": "68d6ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd6",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 61,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 18,
+      "name": "option4",
+      "format": "c",
+      "native_destination": "0064ACD7",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C76",
+        "rva": "000A8C76",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C76",
+        "raw_backed": true,
+        "raw_hex": "68d7ac6400",
+        "mnemonic": "push",
+        "operands": "0x64acd7",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 62,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    },
+    {
+      "index": 19,
+      "name": "selection_count",
+      "format": "c",
+      "native_destination": "local EBP-1",
+      "write_bytes": 1,
+      "destination_capacity_bytes": null,
+      "argument_witness": {
+        "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A8C75",
+        "rva": "000A8C75",
+        "section": "   \u0000    ",
+        "file_offset": "000A8C75",
+        "raw_backed": true,
+        "raw_hex": "51",
+        "mnemonic": "push",
+        "operands": "ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation\\004A8BA0-43E.bin",
+          "bytes": 1086,
+          "sha256": "5614133C4BAB00571DC3DE0D4E6E2718CB9B73DAB95BDC5A56F0DAB4C173D9DB"
+        }
+      },
+      "interpretation": "Raw bit copy; signed/domain views separate",
+      "body_offset": 63,
+      "wire_bytes": 1,
+      "value": 0,
+      "wire_hex": "00"
+    }
+  ],
+  "reply_body_bytes": 64,
+  "reply_consumed_by_bounded_shape_model": 64,
+  "remaining_bytes": 0,
+  "map_native_low_byte": 64,
+  "identity_boundary": "ABCA is only a native string destination. Frozen capture contains a display label; no owner/player object binding inferred.",
+  "intent_boundary": "This sealed pair witnesses C_CC create intent and S_CE room_id1/name reply. No C_CF frame substituted or claimed in this pair."
+}

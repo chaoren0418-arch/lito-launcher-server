@@ -1,0 +1,243 @@
+{
+  "direction": "C",
+  "opcode": "D2",
+  "actual_fixed_PE_forms": [
+    {
+      "state": 0,
+      "state_push": {
+        "va": "0046ACE8",
+        "rva": "0006ACE8",
+        "section": "   \u0000    ",
+        "file_offset": "0006ACE8",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046ACF4",
+        "rva": "0006ACF4",
+        "section": "   \u0000    ",
+        "file_offset": "0006ACF4",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "signed versionDWORD[63D54C]>=52E0 and phaseDWORD[64AF98]==2; entry bridge after4EBB30 unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 0,
+      "state_push": {
+        "va": "0046B510",
+        "rva": "0006B510",
+        "section": "   \u0000    ",
+        "file_offset": "0006B510",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B51C",
+        "rva": "0006B51C",
+        "section": "   \u0000    ",
+        "file_offset": "0006B51C",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "no local version/phase/mode/owner gate in21byte handler; caller eligibility unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 1,
+      "state_push": {
+        "va": "0046B74A",
+        "rva": "0006B74A",
+        "section": "   \u0000    ",
+        "file_offset": "0006B74A",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B756",
+        "rva": "0006B756",
+        "section": "   \u0000    ",
+        "file_offset": "0006B756",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "BYTE[64AF9D]==0 OR XOR-decoded selector==0; selector ownership/mode provenance unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 1,
+      "state_push": {
+        "va": "0046B796",
+        "rva": "0006B796",
+        "section": "   \u0000    ",
+        "file_offset": "0006B796",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B7A2",
+        "rva": "0006B7A2",
+        "section": "   \u0000    ",
+        "file_offset": "0006B7A2",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "ECX==0 and input BYTE y/Y, or selectorBYTE[64B6DC]==4 and WORD9982/7882; EDX input lifetime/codec unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 2,
+      "state_push": {
+        "va": "00407DEE",
+        "rva": "00007DEE",
+        "section": "   \u0000    ",
+        "file_offset": "00007DEE",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00407DFA",
+        "rva": "00007DFA",
+        "section": "   \u0000    ",
+        "file_offset": "00007DFA",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d202",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "EAX==0 and signed version>=52E0 and phase==2; upstream command input unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 2,
+      "state_push": {
+        "va": "00407E52",
+        "rva": "00007E52",
+        "section": "   \u0000    ",
+        "file_offset": "00007E52",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00407E5E",
+        "rva": "00007E5E",
+        "section": "   \u0000    ",
+        "file_offset": "00007E5E",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d202",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "EAX==0 and signed version>=52E0 and phase==2; upstream command input unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 0,
+      "state_push": {
+        "va": "00476AA8",
+        "rva": "00076AA8",
+        "section": "   \u0000    ",
+        "file_offset": "00076AA8",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00476AB4",
+        "rva": "00076AB4",
+        "section": "   \u0000    ",
+        "file_offset": "00076AB4",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "signed version>=52E0 and phase==2; ECX object/caller unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    }
+  ],
+  "serializer_reference": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+    "bytes": 31932,
+    "sha256": "7E09849B4F0D442E04457AEE7E6DBEEB3D106437D9689AE8060323CE36FCB59E"
+  },
+  "field_lengths": [
+    "opcode1BYTE",
+    "state1BYTE literal0/1/2",
+    "body2bytes",
+    "frame4bytes incl.u16LE total4 prefix0400"
+  ],
+  "opcode_only_reference": "body1/frame3 prefix0300 supported Java/historical only; not fixedPE-callsite proof",
+  "no_fields": [
+    "roomID",
+    "epoch",
+    "ownerID",
+    "name",
+    "requestID",
+    "source",
+    "timestamp"
+  ],
+  "mode_and_owner": "none qualified by current finite Native predicates; server checks separate",
+  "server_ready_reference": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-ready-prestart-consumer-contract.json",
+    "bytes": 6101,
+    "sha256": "57F324FE093C80A8DAE8B7E207A9A8A628AA508E04EBB38AFE17F3C33D6274F8"
+  },
+  "unknowns": {
+    "local_intent": "seven fixedPE c,c argument calls provide D200/D201/D202 conditional outbound intent; not execution/send/delivery/ACK",
+    "opcode_only": "Java AD368 parser accepts owner form and exact saved test-client row79 is D2. Older Native physical-click reference is version-scoped. No opcode-only callsite qualified in finite currentPE inventory; cannot infer it from parser.",
+    "UI": "46CDD5/46CE23 allocation4F118C firstunknown; conditional args then4154FE→414910 firstunknown; no callbackstorage/click/control→ECX qualification. 46ACB6→4EBB30 stops entry; later41byte send island independent.",
+    "state1": "64AF9D BYTE and XOR-decoded selector are unnamed runtime predicates; not proof of owner/mode. 46B726→458BB0 unknown; laterregistration46B746 virtual+64 STOP; callback46B760 input y/Y or selector4 WORD9982/7882 is separate conditional island; no codec/inputpointer provenance.",
+    "state2": "407DD5/407E39 EAX==0, signedversion>=52E0 and phaseDWORD==2. Upstream commandstring/input producer unknown; do not expand dispatcher other commands.",
+    "other_tails": "46ACFE→4EBEC0,46B7AA→458CA0,476ABF→4EBEB0 private STOP; no helper body inspection. ASM476A20 label not actual send entry476A90.",
+    "D1": "server ownalias projected ready receipt, distinct from local intent/GH membership/allready/owner authority. Native alias/table/private gates and numeric phases2/3/6 remain as accepted D1-E1 contract.",
+    "E1": "server countdown receipt3/2/1 and exact cancelled0; no local expiry→WORLD grant. CSROOM/GHWAITING-or-COUNTDOWN/Nativephase independent. No room/generation fields; bind independently qualified current epoch/room/join and alias.",
+    "WORLD": "accepted prestart contract stops at world/preparation entries. No new WORLD/render/combat/bot/matching acceptance.",
+    "transport": "accepted Batch26 c lowBYTE,frameu16LE total length and conditional4C6AE0 reused; downstreamexternal759058A0 STOP, no retry/ACK/physical authority qualification.",
+    "partial_and_race": "state commits precede sequential sends; D1 failure can prevent later recipients/E1; queued tick vs cancel and inherited no generation publication barrier remain unknown.",
+    "cache_cleanup": "Batch28 external pyc remains; exact cleanup auto-review rejected blocked by policy. No retry/reframe/alternative/delegation. This batch uses -B and dont_write_bytecode."
+  }
+}

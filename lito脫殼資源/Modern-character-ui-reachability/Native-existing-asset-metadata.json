@@ -1,0 +1,547 @@
+{
+  "archive_manifest_read": {
+    "source_before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+      "bytes": 760029,
+      "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+    },
+    "captured_content_sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB",
+    "source_after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+      "bytes": 760029,
+      "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+    },
+    "stable_during_read": true,
+    "read_at": "2026-10-06T09:14:16.720130+08:00",
+    "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+  },
+  "LTsurf_index_read": {
+    "source_before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+      "bytes": 45989,
+      "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+    },
+    "captured_content_sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269",
+    "source_after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+      "bytes": 45989,
+      "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+    },
+    "stable_during_read": true,
+    "read_at": "2026-10-06T09:14:16.821831+08:00",
+    "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+  },
+  "selected_index_rows": [
+    {
+      "row": "891",
+      "name": "6201.img",
+      "offset": "49038213",
+      "bytes": "2354"
+    },
+    {
+      "row": "894",
+      "name": "6202.img",
+      "offset": "49045275",
+      "bytes": "2354"
+    },
+    {
+      "row": "999",
+      "name": "6303.img",
+      "offset": "51718555",
+      "bytes": "2354"
+    },
+    {
+      "row": "1002",
+      "name": "6304.img",
+      "offset": "51725617",
+      "bytes": "2354"
+    }
+  ],
+  "selected_native_assets": [
+    {
+      "member": {
+        "namespace": "native",
+        "archive": "LTsurf",
+        "row": 891,
+        "name": "6201.img",
+        "offset": 49038213,
+        "bytes": 2354,
+        "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+        "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+          "bytes": 2354,
+          "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+        },
+        "encoding": "plain",
+        "selection_reason": "existing source-qualified consumer subset",
+        "ambiguous_name": false,
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+          "bytes": 2354,
+          "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+        },
+        "preview": {
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\previews\\LTsurf\\row00891-6201.img.png",
+            "bytes": 1326,
+            "sha256": "C6B5516B857A148BF80E46D142D6A774FC1468ADFB3BD4BE1E4334475822FFDB"
+          },
+          "width": 51,
+          "height": 23,
+          "flag": 1,
+          "key": 992,
+          "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+          "mode": "color_key",
+          "rgba_sha256": "5EB1EAAD55513564B232F5C7BBD5933B16E73466DAA722D464924C6256594BF1",
+          "native_render_parity": false
+        }
+      },
+      "raw_read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+          "bytes": 2354,
+          "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+        },
+        "captured_content_sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+          "bytes": 2354,
+          "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.757217+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_manifest_pin": true,
+      "header_words": [
+        51,
+        23,
+        1,
+        992
+      ],
+      "dimensions_from_existing_IMG_header": {
+        "width": 51,
+        "height": 23
+      },
+      "new_decode_or_image_created": false
+    },
+    {
+      "member": {
+        "namespace": "native",
+        "archive": "LTsurf",
+        "row": 894,
+        "name": "6202.img",
+        "offset": 49045275,
+        "bytes": 2354,
+        "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+        "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+          "bytes": 2354,
+          "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+        },
+        "encoding": "plain",
+        "selection_reason": "existing source-qualified consumer subset",
+        "ambiguous_name": false,
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+          "bytes": 2354,
+          "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+        },
+        "preview": {
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\previews\\LTsurf\\row00894-6202.img.png",
+            "bytes": 1333,
+            "sha256": "A16BA1BD071F2CDB476DB272F3C81457ECB5F482B28C43795093A509C8BEE73F"
+          },
+          "width": 51,
+          "height": 23,
+          "flag": 1,
+          "key": 992,
+          "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+          "mode": "color_key",
+          "rgba_sha256": "73A8C5177110531A090DA49D543DDA6A7AE288FD97BA07AC51532DCE8520DEEB",
+          "native_render_parity": false
+        }
+      },
+      "raw_read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+          "bytes": 2354,
+          "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+        },
+        "captured_content_sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+          "bytes": 2354,
+          "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.791227+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_manifest_pin": true,
+      "header_words": [
+        51,
+        23,
+        1,
+        992
+      ],
+      "dimensions_from_existing_IMG_header": {
+        "width": 51,
+        "height": 23
+      },
+      "new_decode_or_image_created": false
+    },
+    {
+      "member": {
+        "namespace": "native",
+        "archive": "LTsurf",
+        "row": 999,
+        "name": "6303.img",
+        "offset": 51718555,
+        "bytes": 2354,
+        "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+        "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+          "bytes": 2354,
+          "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+        },
+        "encoding": "plain",
+        "selection_reason": "existing source-qualified consumer subset",
+        "ambiguous_name": false,
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+          "bytes": 2354,
+          "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+        },
+        "preview": {
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\previews\\LTsurf\\row00999-6303.img.png",
+            "bytes": 1291,
+            "sha256": "92E601C7EF2BFBFC6886B2E43AE678CC95B8E244F77B34C2A057F829F73F1A3A"
+          },
+          "width": 51,
+          "height": 23,
+          "flag": 1,
+          "key": 992,
+          "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+          "mode": "color_key",
+          "rgba_sha256": "0E35436B302D3A291A0C20FD7E07F5C53C68D4CFB2943D95D55089DB85777389",
+          "native_render_parity": false
+        }
+      },
+      "raw_read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+          "bytes": 2354,
+          "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+        },
+        "captured_content_sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+          "bytes": 2354,
+          "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.817632+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_manifest_pin": true,
+      "header_words": [
+        51,
+        23,
+        1,
+        992
+      ],
+      "dimensions_from_existing_IMG_header": {
+        "width": 51,
+        "height": 23
+      },
+      "new_decode_or_image_created": false
+    },
+    {
+      "member": {
+        "namespace": "native",
+        "archive": "LTsurf",
+        "row": 1002,
+        "name": "6304.img",
+        "offset": 51725617,
+        "bytes": 2354,
+        "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+        "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+          "bytes": 2354,
+          "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+        },
+        "encoding": "plain",
+        "selection_reason": "existing source-qualified consumer subset",
+        "ambiguous_name": false,
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+          "bytes": 2354,
+          "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+        },
+        "preview": {
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\previews\\LTsurf\\row01002-6304.img.png",
+            "bytes": 1304,
+            "sha256": "C7D0FFBF129BE864AC5724451B3F342BF43F5877F6CDE9E5814459D49F605DEE"
+          },
+          "width": 51,
+          "height": 23,
+          "flag": 1,
+          "key": 992,
+          "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+          "mode": "color_key",
+          "rgba_sha256": "094289DBB295488E4655BEEC9B9698EB564A01C02AE57A71DA9FA13F44A97327",
+          "native_render_parity": false
+        }
+      },
+      "raw_read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+          "bytes": 2354,
+          "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+        },
+        "captured_content_sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+          "bytes": 2354,
+          "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.821831+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_manifest_pin": true,
+      "header_words": [
+        51,
+        23,
+        1,
+        992
+      ],
+      "dimensions_from_existing_IMG_header": {
+        "width": 51,
+        "height": 23
+      },
+      "new_decode_or_image_created": false
+    }
+  ],
+  "existing_R498_evidence": [
+    {
+      "sealed_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-character-resource-mapping.json",
+        "bytes": 32475,
+        "sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A"
+      },
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-character-resource-mapping.json",
+          "bytes": 32475,
+          "sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A"
+        },
+        "captured_content_sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-character-resource-mapping.json",
+          "bytes": 32475,
+          "sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.838359+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_sealed_pin": true,
+      "selected_existing_metadata": {
+        "slots": [
+          {
+            "slot": 0,
+            "table_va": "0x630df8",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 19,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 0
+          },
+          {
+            "slot": 1,
+            "table_va": "0x630e34",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 176,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 1
+          },
+          {
+            "slot": 2,
+            "table_va": "0x630e70",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 333,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 2
+          },
+          {
+            "slot": 3,
+            "table_va": "0x630eac",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 490,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 3
+          }
+        ],
+        "variant_rule": "494E00 tests EDX !=0; all nonzero variants use variant1 table. class -1 empty; class0..4 explicit; other classes use630190.",
+        "draw_chain": "497150(class@+2D,variant@+2E) ->494E00 ->415D40 ->415D70 state ->415DA0. base_png+frame index via834BD0; draw mode0->4B9F60,mode1->83155C.",
+        "animation_lifecycle_open": "4D65F0 timer ->4159B0 ->496660 prefetch; selected3Dh startup/expiry and draw integration not yet reproduced.",
+        "GUI": 0,
+        "animation_table_reference_summary": [
+          {
+            "class_byte": -1,
+            "variant_nonzero": 0,
+            "table_va": "0x62fd70"
+          },
+          {
+            "class_byte": 0,
+            "variant_nonzero": 0,
+            "table_va": "0x630130"
+          },
+          {
+            "class_byte": 0,
+            "variant_nonzero": 1,
+            "table_va": "0x6300d0"
+          },
+          {
+            "class_byte": 1,
+            "variant_nonzero": 0,
+            "table_va": "0x62ffb0"
+          },
+          {
+            "class_byte": 1,
+            "variant_nonzero": 1,
+            "table_va": "0x62ff50"
+          },
+          {
+            "class_byte": 2,
+            "variant_nonzero": 0,
+            "table_va": "0x62fef0"
+          },
+          {
+            "class_byte": 2,
+            "variant_nonzero": 1,
+            "table_va": "0x62fe90"
+          },
+          {
+            "class_byte": 3,
+            "variant_nonzero": 0,
+            "table_va": "0x630070"
+          },
+          {
+            "class_byte": 3,
+            "variant_nonzero": 1,
+            "table_va": "0x630010"
+          },
+          {
+            "class_byte": 4,
+            "variant_nonzero": 0,
+            "table_va": "0x62fe30"
+          },
+          {
+            "class_byte": 4,
+            "variant_nonzero": 1,
+            "table_va": "0x62fdd0"
+          },
+          {
+            "class_byte": 5,
+            "variant_nonzero": 0,
+            "table_va": "0x630190"
+          }
+        ],
+        "existing_missing_lookup": {
+          "79.img": true,
+          "80.img": true,
+          "scope": "Only the unchanged historical R498 report lookup; not whole asset corpus absence."
+        }
+      },
+      "prior_test_pass_not_replayed": true
+    },
+    {
+      "sealed_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-native-menu-skin-binding.json",
+        "bytes": 25356,
+        "sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD"
+      },
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-native-menu-skin-binding.json",
+          "bytes": 25356,
+          "sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD"
+        },
+        "captured_content_sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD",
+        "source_after": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-native-menu-skin-binding.json",
+          "bytes": 25356,
+          "sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.839359+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "matches_sealed_pin": true,
+      "selected_existing_metadata": {
+        "character_buttons": [
+          {
+            "id": 6303,
+            "bytes": 2354,
+            "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15",
+            "reference": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6303.rgba",
+              "bytes": 4692,
+              "sha256": "0E35436B302D3A291A0C20FD7E07F5C53C68D4CFB2943D95D55089DB85777389"
+            }
+          },
+          {
+            "id": 6304,
+            "bytes": 2354,
+            "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90",
+            "reference": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6304.rgba",
+              "bytes": 4692,
+              "sha256": "094289DBB295488E4655BEEC9B9698EB564A01C02AE57A71DA9FA13F44A97327"
+            }
+          },
+          {
+            "id": 6201,
+            "bytes": 2354,
+            "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737",
+            "reference": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6201.rgba",
+              "bytes": 4692,
+              "sha256": "5EB1EAAD55513564B232F5C7BBD5933B16E73466DAA722D464924C6256594BF1"
+            }
+          },
+          {
+            "id": 6202,
+            "bytes": 2354,
+            "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0",
+            "reference": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6202.rgba",
+              "bytes": 4692,
+              "sha256": "73A8C5177110531A090DA49D543DDA6A7AE288FD97BA07AC51532DCE8520DEEB"
+            }
+          }
+        ],
+        "GUI": 0
+      },
+      "prior_test_pass_not_replayed": true
+    }
+  ],
+  "qualification": "Existing sealed metadata and exact four already-extracted button IMG headers only.79/80 lookup absence limited to this exact LTsurf index/selected members; no claim absent throughout all assets. Historical ASM/navigation/layout report does not add new fixed-PE or GUI evidence."
+}

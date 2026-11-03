@@ -1,0 +1,33 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build\\candidate-cancellation-debuff-immunity.jar",
+    "sha256": "9eb812b8222d3573b4049596d7114230a86d3019b25153bf74ba1cebc11bc211"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "skill14 single material transaction; source-configured zero and nonzero reagent tests required",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build-repro\\candidate-weight-material.jar",
+    "sha256": "f2217019c4cf2ae19cddc590713ac13d7544a515b320b6b1f224eda104a9f36b"
+  },
+  "exact_single_method_inverse": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build-repro\\inputs\\build.py",
+      "sha256": "1186508d9c7d2d4601114a8ffd3ac197b5008a61ae81a2b461ff8526df8c6f8b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build-repro\\inputs\\NativeWeightMaterialAction.java",
+      "sha256": "6d8b1f394b0fd0812960a554fa677e8029c1be537ea79f5f9f2c6da37ead14dd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build-repro\\inputs\\WeightMaterialMethods.java",
+      "sha256": "3c32a6906a29178eac119a8420086e20a45112d72d2cdd63cbf78d6f7e74f605"
+    }
+  ]
+}

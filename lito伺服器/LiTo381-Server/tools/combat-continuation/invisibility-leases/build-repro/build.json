@@ -1,0 +1,65 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build\\candidate-bind-control.jar",
+    "sha256": "29534793beba10c1d1a4d4a922bfaae769cbc0ad9e3500c107f737ca49f38c1f"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\candidate-invisibility-leases.jar",
+    "sha256": "d4bc643fca4ab18ea4b6b84e9f685bbc80bd26d806b98970a6a0d98d28ae3a81"
+  },
+  "changed": [
+    "local/lito381/server/BattleInvisibilityStatus.class",
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeAcceptedState.class"
+  ],
+  "added": [
+    "local/lito381/server/BattleInvisibilityStatus$Lease.class",
+    "local/lito381/server/BattleInvisibilityStatus$Snapshot.class"
+  ],
+  "C0_normalized_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\build.py",
+      "sha256": "8eb920735f915ef95efee902e6b6f169525a98293414ff49f34389b9e63b0d3a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\LeaseMethods.java",
+      "sha256": "028e437b270d91b50ad88539238693a598ddcf1b95800c7a8c0ea8230ae37bbc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\original\\BattleInvisibilityStatus.java",
+      "sha256": "21e091760829bf8df2821fb6b71c3e67d495c88c7ba8f803c21e6ea287395559"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\source-reference\\L1Character.java",
+      "sha256": "56dad7e55d73924d631d28ee04a56413536f3921be13d732607c412f24148c29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\source-reference\\L1PcInstance.java",
+      "sha256": "8c80ae062367aad1a3c32c73142f6964fe8d302c1b758013612cbfc5c92b4a6e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\source-reference\\L1SkillStop.java",
+      "sha256": "1c48b3681aaa4eeea671ba9e25837d3d52ee504ca669516b50418ce62dc0af52"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\source-reference\\L1SkillTimerTimerImpl.java",
+      "sha256": "4f6c703b40616d7e3ce86a00e3c6ae474f5ffb1f0187c08e6c6e4fdfc4e62f0f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-leases\\build-repro\\inputs\\sources\\BattleInvisibilityStatus.java",
+      "sha256": "bb17ee610f8c0adbf5a7b2ee00467b4c04056750129c246d0e207c8596d0e0a4"
+    }
+  ]
+}

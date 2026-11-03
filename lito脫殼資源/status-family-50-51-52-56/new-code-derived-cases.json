@@ -1,0 +1,280 @@
+{
+  "new_static_checks": 16,
+  "checks": [
+    {
+      "case": "S50_nonsymmetric_highbit_fields",
+      "plain_hex": "5080ff7f123456a5",
+      "decode": [
+        {
+          "name": "strength",
+          "body_offset": 1,
+          "raw_hex": "80",
+          "native_raw_bits": 128,
+          "Java_semantic_value": 128,
+          "destination_va": "008348B0",
+          "write_width": 1
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 2,
+          "raw_hex": "ff",
+          "native_raw_bits": 255,
+          "Java_semantic_value": 255,
+          "destination_va": "008348B1",
+          "write_width": 1
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 3,
+          "raw_hex": "7f",
+          "native_raw_bits": 127,
+          "Java_semantic_value": 127,
+          "destination_va": "008348B2",
+          "write_width": 1
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 4,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348B3",
+          "write_width": 1
+        },
+        {
+          "name": "constitution",
+          "body_offset": 5,
+          "raw_hex": "34",
+          "native_raw_bits": 52,
+          "Java_semantic_value": 52,
+          "destination_va": "008348B4",
+          "write_width": 1
+        },
+        {
+          "name": "charisma",
+          "body_offset": 6,
+          "raw_hex": "56",
+          "native_raw_bits": 86,
+          "Java_semantic_value": 86,
+          "destination_va": "008348B5",
+          "write_width": 1
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 7,
+          "raw_hex": "a5",
+          "native_raw_bits": 165,
+          "Java_semantic_value": 165,
+          "destination_va": "008348CB",
+          "write_width": 1
+        }
+      ],
+      "expected_raw_bits": [
+        128,
+        255,
+        127,
+        18,
+        52,
+        86,
+        165
+      ],
+      "synthetic_code_derived_not_real_frame_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "S50_truncated",
+      "audit_rejection": "Audit wanted8 actual7; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S50_trailing",
+      "audit_rejection": "Audit wanted8 actual9; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S50_opcode_outside_scope",
+      "audit_rejection": "Audit opcode outside exactly50/51/52/56; not native dispatch guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S51_nonsymmetric_highbit_fields",
+      "plain_hex": "518098badcfe",
+      "decode": [
+        {
+          "name": "level",
+          "body_offset": 1,
+          "raw_hex": "80",
+          "native_raw_bits": 128,
+          "Java_semantic_value": 128,
+          "destination_va": "008348CA",
+          "write_width": 1
+        },
+        {
+          "name": "experience",
+          "body_offset": 2,
+          "raw_hex": "98badcfe",
+          "native_raw_bits": 4275878552,
+          "Java_semantic_value": 4275878552,
+          "destination_va": "008348C4",
+          "write_width": 4
+        }
+      ],
+      "expected_raw_bits": [
+        128,
+        4275878552
+      ],
+      "synthetic_code_derived_not_real_frame_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "S51_truncated",
+      "audit_rejection": "Audit wanted6 actual5; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S51_trailing",
+      "audit_rejection": "Audit wanted6 actual7; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S51_opcode_outside_scope",
+      "audit_rejection": "Audit opcode outside exactly50/51/52/56; not native dispatch guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S52_nonsymmetric_highbit_fields",
+      "plain_hex": "5280ff7f1234",
+      "decode": [
+        {
+          "name": "armor_class",
+          "body_offset": 1,
+          "raw_hex": "80",
+          "native_raw_bits": 128,
+          "Java_semantic_value": -128,
+          "destination_va": "008348B6",
+          "write_width": 1
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 2,
+          "raw_hex": "ff",
+          "native_raw_bits": 255,
+          "Java_semantic_value": -1,
+          "destination_va": "008348C1",
+          "write_width": 1
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 3,
+          "raw_hex": "7f",
+          "native_raw_bits": 127,
+          "Java_semantic_value": 127,
+          "destination_va": "008348C0",
+          "write_width": 1
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 4,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348BF",
+          "write_width": 1
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 5,
+          "raw_hex": "34",
+          "native_raw_bits": 52,
+          "Java_semantic_value": 52,
+          "destination_va": "008348BE",
+          "write_width": 1
+        }
+      ],
+      "expected_raw_bits": [
+        128,
+        255,
+        127,
+        18,
+        52
+      ],
+      "synthetic_code_derived_not_real_frame_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "S52_truncated",
+      "audit_rejection": "Audit wanted6 actual5; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S52_trailing",
+      "audit_rejection": "Audit wanted6 actual7; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S52_opcode_outside_scope",
+      "audit_rejection": "Audit opcode outside exactly50/51/52/56; not native dispatch guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S56_nonsymmetric_highbit_fields",
+      "plain_hex": "5680ff",
+      "decode": [
+        {
+          "name": "spell_power_modifier",
+          "body_offset": 1,
+          "raw_hex": "80",
+          "native_raw_bits": 128,
+          "Java_semantic_value": -128,
+          "destination_va": "008348DF",
+          "write_width": 1
+        },
+        {
+          "name": "magic_resistance_modifier",
+          "body_offset": 2,
+          "raw_hex": "ff",
+          "native_raw_bits": 255,
+          "Java_semantic_value": -1,
+          "destination_va": "008348E0",
+          "write_width": 1
+        }
+      ],
+      "expected_raw_bits": [
+        128,
+        255
+      ],
+      "synthetic_code_derived_not_real_frame_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "S56_truncated",
+      "audit_rejection": "Audit wanted3 actual2; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S56_trailing",
+      "audit_rejection": "Audit wanted3 actual4; not native guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "S56_opcode_outside_scope",
+      "audit_rejection": "Audit opcode outside exactly50/51/52/56; not native dispatch guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    }
+  ],
+  "runtime_or_producer_runs": 0,
+  "highbit_signed_views": "Signed views are Java-domain annotations; reader onlycopiesraw bits, unlike S4D movsx.",
+  "owner_or_player_or_GUI_qualification": false
+}

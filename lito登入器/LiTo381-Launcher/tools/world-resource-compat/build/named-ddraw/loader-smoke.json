@@ -1,0 +1,886 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-21T16:31:10.865138+08:00",
+  "executable": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+  "executable_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+  "cwd": "D:\\lineage開發\\0-客戶端",
+  "arguments": [],
+  "timeout_seconds": 20.0,
+  "safety": {
+    "started_suspended": true,
+    "kill_on_job_close": true,
+    "debugger_attached": false,
+    "legacy_drivers_loaded_by_probe": false,
+    "connect_redirect_in_memory_only": false,
+    "non_loopback_redirect_allowed": false
+  },
+  "status": "named-loader-only-verified",
+  "processes": [
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "parent_pid": 137936,
+      "name": "LiTo.bin",
+      "threads": 4,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin"
+    }
+  ],
+  "modules": [
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "LiTo.bin",
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "base": "0x00400000",
+      "size": 7094272
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "ntdll.dll",
+      "path": "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+      "base": "0x7FFDA3930000",
+      "size": 2064384
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "wow64.dll",
+      "path": "C:\\WINDOWS\\System32\\wow64.dll",
+      "base": "0x7FFDA2480000",
+      "size": 364544
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "wow64win.dll",
+      "path": "C:\\WINDOWS\\System32\\wow64win.dll",
+      "base": "0x7FFDA1D70000",
+      "size": 536576
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "wow64cpu.dll",
+      "path": "C:\\WINDOWS\\System32\\wow64cpu.dll",
+      "base": "0x772B0000",
+      "size": 40960
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "ntdll.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\ntdll.dll",
+      "base": "0x772C0000",
+      "size": 1720320
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "KERNEL32.DLL",
+      "path": "C:\\WINDOWS\\SysWOW64\\KERNEL32.DLL",
+      "base": "0x75430000",
+      "size": 983040
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "KERNELBASE.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\KERNELBASE.dll",
+      "base": "0x76D90000",
+      "size": 2330624
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "apphelp.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\apphelp.dll",
+      "base": "0x75080000",
+      "size": 671744
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "COMCTL32.dll",
+      "path": "C:\\WINDOWS\\WinSxS\\x86_microsoft.windows.common-controls_6595b64144ccf1df_5.82.19041.6280_none_c0dab36c38bfeda0\\COMCTL32.dll",
+      "base": "0x68EE0000",
+      "size": 577536
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "ADVAPI32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\ADVAPI32.dll",
+      "base": "0x75130000",
+      "size": 512000
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "msvcrt.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\msvcrt.dll",
+      "base": "0x76FD0000",
+      "size": 782336
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "sechost.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\sechost.dll",
+      "base": "0x761D0000",
+      "size": 487424
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "RPCRT4.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\RPCRT4.dll",
+      "base": "0x764F0000",
+      "size": 757760
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "bcrypt.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\bcrypt.dll",
+      "base": "0x75C80000",
+      "size": 102400
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "GDI32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\GDI32.dll",
+      "base": "0x765B0000",
+      "size": 143360
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "win32u.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\win32u.dll",
+      "base": "0x75520000",
+      "size": 98304
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "gdi32full.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\gdi32full.dll",
+      "base": "0x76780000",
+      "size": 946176
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "msvcp_win.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\msvcp_win.dll",
+      "base": "0x763F0000",
+      "size": 503808
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "ucrtbase.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\ucrtbase.dll",
+      "base": "0x76A40000",
+      "size": 1179648
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "USER32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\USER32.dll",
+      "base": "0x765E0000",
+      "size": 1691648
+    },
+    {
+      "first_seen_seconds": 0.0,
+      "pid": 136828,
+      "name": "IMM32.DLL",
+      "path": "C:\\WINDOWS\\SysWOW64\\IMM32.DLL",
+      "base": "0x763C0000",
+      "size": 151552
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "winmm.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\winmm.dll",
+      "base": "0x727F0000",
+      "size": 163840
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "SHELL32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\SHELL32.dll",
+      "base": "0x75660000",
+      "size": 6139904
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "ole32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\ole32.dll",
+      "base": "0x77090000",
+      "size": 929792
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "combase.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\combase.dll",
+      "base": "0x751B0000",
+      "size": 2621440
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "OLEAUT32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\OLEAUT32.dll",
+      "base": "0x76B60000",
+      "size": 614400
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "DDRAW.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DDRAW.dll",
+      "base": "0x68DF0000",
+      "size": 954368
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "kernel.appcore.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\kernel.appcore.dll",
+      "base": "0x71CA0000",
+      "size": 61440
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "dxgi.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\dxgi.dll",
+      "base": "0x728F0000",
+      "size": 806912
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "DCIMAN32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DCIMAN32.dll",
+      "base": "0x71930000",
+      "size": 28672
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "DSOUND.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DSOUND.dll",
+      "base": "0x6FCC0000",
+      "size": 520192
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "powrprof.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\powrprof.dll",
+      "base": "0x6ACF0000",
+      "size": 278528
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "winmmbase.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\winmmbase.dll",
+      "base": "0x702F0000",
+      "size": 118784
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "UMPDC.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\UMPDC.dll",
+      "base": "0x716D0000",
+      "size": 53248
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "WSOCK32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\WSOCK32.dll",
+      "base": "0x697B0000",
+      "size": 32768
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "WS2_32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\WS2_32.dll",
+      "base": "0x75D00000",
+      "size": 405504
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "DINPUT.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DINPUT.dll",
+      "base": "0x6FC90000",
+      "size": 155648
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "inputhost.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\inputhost.dll",
+      "base": "0x6AC00000",
+      "size": 970752
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "shcore.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\shcore.dll",
+      "base": "0x76C60000",
+      "size": 552960
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "CoreMessaging.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\CoreMessaging.dll",
+      "base": "0x6AB60000",
+      "size": 634880
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "wintypes.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\wintypes.dll",
+      "base": "0x6AA80000",
+      "size": 905216
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "PROPSYS.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\PROPSYS.dll",
+      "base": "0x71BE0000",
+      "size": 786432
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "CoreUIComponents.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\CoreUIComponents.dll",
+      "base": "0x6A800000",
+      "size": 2617344
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "bcryptPrimitives.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\bcryptPrimitives.dll",
+      "base": "0x769D0000",
+      "size": 389120
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "ntmarta.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\ntmarta.dll",
+      "base": "0x71B10000",
+      "size": 167936
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "mss32.dll",
+      "path": "D:\\lineage開發\\0-客戶端\\mss32.dll",
+      "base": "0x21100000",
+      "size": 409600
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "libpng13.dll",
+      "path": "D:\\lineage開發\\0-客戶端\\libpng13.dll",
+      "base": "0x67580000",
+      "size": 221184
+    },
+    {
+      "first_seen_seconds": 0.078,
+      "pid": 136828,
+      "name": "zlib1.dll",
+      "path": "D:\\lineage開發\\0-客戶端\\zlib1.dll",
+      "base": "0x10000000",
+      "size": 73728
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "iphlpapi.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\iphlpapi.dll",
+      "base": "0x72A00000",
+      "size": 204800
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "MSVCP60.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\MSVCP60.dll",
+      "base": "0x69740000",
+      "size": 458752
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "mssmp3.asi",
+      "path": "D:\\lineage開發\\0-客戶端\\mssmp3.asi",
+      "base": "0x26F00000",
+      "size": 188416
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "clbcatq.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\clbcatq.dll",
+      "base": "0x76470000",
+      "size": 516096
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "MMDevApi.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\MMDevApi.dll",
+      "base": "0x6A790000",
+      "size": 438272
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "DEVOBJ.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DEVOBJ.dll",
+      "base": "0x702C0000",
+      "size": 167936
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "cfgmgr32.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\cfgmgr32.dll",
+      "base": "0x75C40000",
+      "size": 241664
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "AUDIOSES.DLL",
+      "path": "C:\\WINDOWS\\SysWOW64\\AUDIOSES.DLL",
+      "base": "0x6A650000",
+      "size": 1269760
+    },
+    {
+      "first_seen_seconds": 0.172,
+      "pid": 136828,
+      "name": "resourcepolicyclient.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\resourcepolicyclient.dll",
+      "base": "0x6A640000",
+      "size": 61440
+    }
+  ],
+  "samples": [
+    {
+      "elapsed_seconds": 0.0,
+      "root_metrics": {
+        "cpu_kernel_seconds": 0.015625,
+        "cpu_user_seconds": 0.015625,
+        "cpu_total_seconds": 0.03125,
+        "io": {
+          "read_operations": 0,
+          "write_operations": 0,
+          "other_operations": 98,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "other_bytes": 2020
+        },
+        "handle_count": 80,
+        "memory": {
+          "working_set_bytes": 10665984,
+          "peak_working_set_bytes": 10670080,
+          "private_bytes": 9428992,
+          "page_faults": 2708
+        }
+      },
+      "processes": [
+        {
+          "pid": 136828,
+          "parent_pid": 137936,
+          "name": "LiTo.bin",
+          "threads": 4,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin"
+        }
+      ],
+      "client_telemetry": {
+        "fullscreen_flag": 0,
+        "client_product_version": "0x00000000",
+        "client_build_version": "0x00000000",
+        "client_mode": "0x00000000",
+        "client_phase": "0x00000000",
+        "server_protocol_version": "0x00000000",
+        "current_screen": "0x00000000",
+        "server_list": "0x00000000",
+        "world_scene": "0x00000000",
+        "static_scene": "0x00000000",
+        "arena_start_globals": {
+          "ui_group_primary": "0x00000000",
+          "ui_controller_a": "0x00000000",
+          "ui_controller_b": "0x00000000",
+          "ui_controller_c": "0x00000000",
+          "ui_group_secondary_a": "0x00000000",
+          "ui_group_secondary_b": "0x00000000",
+          "ui_group_secondary_c": "0x00000000",
+          "ui_controller_d": "0x00000000",
+          "ui_controller_e": "0x00000000",
+          "ui_control_array": "0x00000000",
+          "tournament_table": "0x00000000",
+          "tournament_index": "0x00000000",
+          "main_window": "0x00000000",
+          "arena_width": "0x00000000",
+          "arena_height": "0x00000000"
+        },
+        "native_source_modal": {
+          "handlers": {
+            "key": "0x00000000",
+            "mouse": "0x00000000",
+            "render": "0x00000000"
+          },
+          "expected_handlers": {
+            "key": "0x00499A40",
+            "mouse": "0x00498A90",
+            "render": "0x00499A60"
+          },
+          "root": "0x00000000",
+          "selected_index": 0,
+          "source_count": 0
+        },
+        "login_server_flag": 0,
+        "character_server_flag": 0,
+        "character_auto_select_sent": 0,
+        "character_server_mode": 0,
+        "special_channel_mode_a": 0,
+        "special_channel_mode_b": 0,
+        "auto_enter_channel": 0,
+        "game_ui_active": 0,
+        "lito_news_defer": 0,
+        "native_source_cached_select": 0,
+        "native_source_force_selector": 0,
+        "character_directory": {
+          "first_record_present": false,
+          "first_record_name_length": 0,
+          "first_record_name_sha256": null,
+          "first_record_nonzero_bytes": 0,
+          "selection_state_2d": 0,
+          "selection_state_2e": 0,
+          "selection_state_37": 0,
+          "parse_index": 0,
+          "pending_count": 0,
+          "character_name_logged": false
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.078,
+      "root_metrics": {
+        "cpu_kernel_seconds": 0.0625,
+        "cpu_user_seconds": 0.078125,
+        "cpu_total_seconds": 0.140625,
+        "io": {
+          "read_operations": 0,
+          "write_operations": 0,
+          "other_operations": 327,
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "other_bytes": 5060
+        },
+        "handle_count": 239,
+        "memory": {
+          "working_set_bytes": 20664320,
+          "peak_working_set_bytes": 20668416,
+          "private_bytes": 18132992,
+          "page_faults": 5818
+        }
+      },
+      "processes": [
+        {
+          "pid": 136828,
+          "parent_pid": 137936,
+          "name": "LiTo.bin",
+          "threads": 28,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin"
+        }
+      ],
+      "client_telemetry": {
+        "fullscreen_flag": 0,
+        "client_product_version": "0x00000000",
+        "client_build_version": "0x00000000",
+        "client_mode": "0x00000000",
+        "client_phase": "0x00000000",
+        "server_protocol_version": "0x00000000",
+        "current_screen": "0x00000000",
+        "server_list": "0x00000000",
+        "world_scene": "0x00000000",
+        "static_scene": "0x00000000",
+        "arena_start_globals": {
+          "ui_group_primary": "0x00000000",
+          "ui_controller_a": "0x00000000",
+          "ui_controller_b": "0x00000000",
+          "ui_controller_c": "0x00000000",
+          "ui_group_secondary_a": "0x00000000",
+          "ui_group_secondary_b": "0x00000000",
+          "ui_group_secondary_c": "0x00000000",
+          "ui_controller_d": "0x00000000",
+          "ui_controller_e": "0x00000000",
+          "ui_control_array": "0x00000000",
+          "tournament_table": "0x00000000",
+          "tournament_index": "0x00000000",
+          "main_window": "0x00000000",
+          "arena_width": "0x00000000",
+          "arena_height": "0x00000000"
+        },
+        "native_source_modal": {
+          "handlers": {
+            "key": "0x00000000",
+            "mouse": "0x00000000",
+            "render": "0x00000000"
+          },
+          "expected_handlers": {
+            "key": "0x00499A40",
+            "mouse": "0x00498A90",
+            "render": "0x00499A60"
+          },
+          "root": "0x00000000",
+          "selected_index": 0,
+          "source_count": 0
+        },
+        "login_server_flag": 0,
+        "character_server_flag": 0,
+        "character_auto_select_sent": 0,
+        "character_server_mode": 0,
+        "special_channel_mode_a": 0,
+        "special_channel_mode_b": 0,
+        "auto_enter_channel": 0,
+        "game_ui_active": 0,
+        "lito_news_defer": 0,
+        "native_source_cached_select": 0,
+        "native_source_force_selector": 0,
+        "character_directory": {
+          "first_record_present": false,
+          "first_record_name_length": 0,
+          "first_record_name_sha256": null,
+          "first_record_nonzero_bytes": 0,
+          "selection_state_2d": 0,
+          "selection_state_2e": 0,
+          "selection_state_37": 0,
+          "parse_index": 0,
+          "pending_count": 0,
+          "character_name_logged": false
+        }
+      }
+    },
+    {
+      "elapsed_seconds": 0.172,
+      "root_metrics": {
+        "cpu_kernel_seconds": 0.109375,
+        "cpu_user_seconds": 0.09375,
+        "cpu_total_seconds": 0.203125,
+        "io": {
+          "read_operations": 5,
+          "write_operations": 0,
+          "other_operations": 513,
+          "read_bytes": 1205,
+          "write_bytes": 0,
+          "other_bytes": 12810
+        },
+        "handle_count": 308,
+        "memory": {
+          "working_set_bytes": 23023616,
+          "peak_working_set_bytes": 23576576,
+          "private_bytes": 14073856,
+          "page_faults": 7988
+        }
+      },
+      "processes": [
+        {
+          "pid": 136828,
+          "parent_pid": 137936,
+          "name": "LiTo.bin",
+          "threads": 32,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin"
+        }
+      ],
+      "client_telemetry": {
+        "fullscreen_flag": 0,
+        "client_product_version": "0xFFFFFFFF",
+        "client_build_version": "0x000114F8",
+        "client_mode": "0x00000000",
+        "client_phase": "0x00000000",
+        "server_protocol_version": "0x00000000",
+        "current_screen": "0x00000000",
+        "server_list": "0x00000000",
+        "world_scene": "0x00000000",
+        "static_scene": "0x00000000",
+        "arena_start_globals": {
+          "ui_group_primary": "0x00000000",
+          "ui_controller_a": "0x00000000",
+          "ui_controller_b": "0x00000000",
+          "ui_controller_c": "0x00000000",
+          "ui_group_secondary_a": "0x00000000",
+          "ui_group_secondary_b": "0x00000000",
+          "ui_group_secondary_c": "0x00000000",
+          "ui_controller_d": "0x00000000",
+          "ui_controller_e": "0x00000000",
+          "ui_control_array": "0x00000000",
+          "tournament_table": "0x00000000",
+          "tournament_index": "0x00000000",
+          "main_window": "0x00000000",
+          "arena_width": "0x00000000",
+          "arena_height": "0x00000000"
+        },
+        "native_source_modal": {
+          "handlers": {
+            "key": "0x0047B6F0",
+            "mouse": "0x0047B700",
+            "render": "0x0047CC80"
+          },
+          "expected_handlers": {
+            "key": "0x00499A40",
+            "mouse": "0x00498A90",
+            "render": "0x00499A60"
+          },
+          "root": "0x00000000",
+          "selected_index": 0,
+          "source_count": 0
+        },
+        "login_server_flag": 0,
+        "character_server_flag": 0,
+        "character_auto_select_sent": 0,
+        "character_server_mode": 0,
+        "special_channel_mode_a": 0,
+        "special_channel_mode_b": 0,
+        "auto_enter_channel": 0,
+        "game_ui_active": 1,
+        "lito_news_defer": 1,
+        "native_source_cached_select": 0,
+        "native_source_force_selector": 0,
+        "character_directory": {
+          "first_record_present": false,
+          "first_record_name_length": 0,
+          "first_record_name_sha256": null,
+          "first_record_nonzero_bytes": 2,
+          "selection_state_2d": 255,
+          "selection_state_2e": 255,
+          "selection_state_37": 0,
+          "parse_index": 0,
+          "pending_count": 0,
+          "character_name_logged": false
+        }
+      }
+    }
+  ],
+  "selection_flow": {
+    "selected": "compatibility_automatic",
+    "native_server_and_character_selection": false
+  },
+  "display_mode": {
+    "selected": "windowed",
+    "original_source": "GetDeviceCaps(PLANES) * GetDeviceCaps(BITSPIXEL); 16 selects DDSCL_NORMAL, other values select exclusive 640x480x16",
+    "fullscreen_flag_address": "0x006476C8",
+    "patch_in_memory_only": true,
+    "last_observed_fullscreen_flag": 0
+  },
+  "root_pid": 136828,
+  "gap_veh": {
+    "remote_base": "0x001D0000",
+    "handler": "0x001D0000",
+    "stub": "0x001D0400",
+    "result_address": "0x001D0800",
+    "oep_marker_address": "0x001D0804",
+    "context_marker_address": "0x001D0808",
+    "runtime_ready_marker_address": "0x001D0820",
+    "shared_gate_address": "0x001D0B00",
+    "shared_release_address": "0x001D0B80",
+    "access_violation_marker_address": "0x001D0A00",
+    "rtl_add_veh": "0x772EB160",
+    "scan_instruction": "0x00A48614",
+    "fault_eax": "0x754AB920",
+    "repaired_eax": "0x754AFFE8",
+    "handler_size": 248,
+    "stub_size": 50,
+    "system_module_source": "hidden_wow64_helper",
+    "entry_point": "0x0083B014",
+    "entry_original": "B800000000",
+    "entry_hook": "E9E75399FF",
+    "installation_method": "entry_trampoline",
+    "capture_unhandled_av": false
+  },
+  "startup_gate": {
+    "target": "0x00480A60",
+    "armed_before_resume": true,
+    "status": "held",
+    "reached_seconds": 0.234
+  },
+  "compat_layer": "RunAsInvoker DWM8And16BitMitigation HIGHDPIAWARE",
+  "runtime_patches": [
+    {
+      "mode": "conditional",
+      "elapsed_seconds": 0.078,
+      "address": "0x00A4827C",
+      "original": "75F6",
+      "replacement": "9090",
+      "bytes_written": 2
+    },
+    {
+      "mode": "conditional",
+      "elapsed_seconds": 0.234,
+      "address": "0x004233D3",
+      "original": "C605C876640001",
+      "replacement": "C605C876640000",
+      "bytes_written": 7
+    }
+  ],
+  "named_ddraw": {
+    "status": "installed-before-WinMain",
+    "module": {
+      "name": "litoddraw.dll",
+      "path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+      "base": "0x696E0000",
+      "size": 331776
+    },
+    "system_module": {
+      "name": "DDRAW.dll",
+      "path": "C:\\WINDOWS\\SysWOW64\\DDRAW.dll",
+      "base": "0x68DF0000",
+      "size": 954368
+    },
+    "references": [
+      {
+        "kind": "pointer",
+        "address": 5206040,
+        "target": 1759493840,
+        "export": "DirectDrawCreate"
+      },
+      {
+        "kind": "relative",
+        "address": 5176896,
+        "target": 1759493840,
+        "export": "DirectDrawCreate"
+      }
+    ],
+    "dll_sha256": "c17d4ca0728f2a0d92ddc471952f4f6d89bcf78a700a77838ac78cdaeea99116",
+    "executable_modified": false
+  },
+  "finished_at": "2026-10-21T16:31:13.460408+08:00"
+}

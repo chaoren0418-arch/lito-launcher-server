@@ -1,0 +1,83 @@
+{
+  "package_status": "未匯入、未接線",
+  "receiver": {
+    "virtual_address": "0x004AFFB0",
+    "line": 367233,
+    "grammar": "dc",
+    "inventory_object_validated": true,
+    "page_index": "wire_page - 1"
+  },
+  "image_table": {
+    "virtual_address": "0x0062F7BC",
+    "file_offset": 2291644,
+    "values": [
+      6700,
+      6701
+    ],
+    "next_bytes_hex": "25642e616c7000",
+    "asm_line": 551774
+  },
+  "pages": [
+    {
+      "wire_page": 1,
+      "zero_based_index": 0,
+      "image_resource_id": 6700,
+      "display_map_id": 500,
+      "asset": {
+        "namespace": "native-LiTo",
+        "archive": "LTsurf",
+        "member": "6700.img",
+        "index_source_id": 566,
+        "archive_source_id": 567,
+        "row_0based": 1190,
+        "offset": 60123705,
+        "bytes": 2359304,
+        "payload_sha256": "3882842a5b9e9be90cc3b09845c24f1f00aca3b883ddb4e2673d58f5d4f3177d",
+        "header_hex": "000600030100724a724a934e"
+      },
+      "pe_source_id": 541,
+      "table_virtual_address": "0x0062F7BC",
+      "enabled": 0
+    },
+    {
+      "wire_page": 2,
+      "zero_based_index": 1,
+      "image_resource_id": 6701,
+      "display_map_id": 560,
+      "asset": {
+        "namespace": "native-LiTo",
+        "archive": "LTsurf",
+        "member": "6701.img",
+        "index_source_id": 566,
+        "archive_source_id": 567,
+        "row_0based": 1191,
+        "offset": 62483009,
+        "bytes": 2359304,
+        "payload_sha256": "613c7ff394894cdd95d4fcd36d506efe9b7446f80b88f45b9dc074b5194a2e3c",
+        "header_hex": "000600030000925292527152"
+      },
+      "pe_source_id": 541,
+      "table_virtual_address": "0x0062F7C0",
+      "enabled": 0
+    }
+  ],
+  "withheld_pages": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "warning": "page is renderer index; never map ID. Inherited common18-item mapping is not a native18-page table. Original item intent unproven."
+}

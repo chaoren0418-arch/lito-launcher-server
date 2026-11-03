@@ -1,0 +1,146 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_snapshot.rs",
+    "bytes": 5206,
+    "sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9"
+  },
+  "captured_content_sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_snapshot.rs",
+    "bytes": 5206,
+    "sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:53:53.711834+08:00",
+  "ranges": [
+    [
+      31,
+      67
+    ]
+  ],
+  "line_count": 60,
+  "implementation_lines": [
+    {
+      "line": 31,
+      "text": " pub fn decode(packet:&[u8])->Result<Self,SnapshotError>{"
+    },
+    {
+      "line": 32,
+      "text": "  if packet.len()>MAX_PACKET_BYTES{return Err(SnapshotError::PacketLimit{actual:packet.len()});}"
+    },
+    {
+      "line": 33,
+      "text": "  let mut c=Cursor{packet,pos:0,fields:Vec::new()};let opcode=c.take(1,\"opcode\")?[0];"
+    },
+    {
+      "line": 34,
+      "text": "  let kind=match opcode{206=>Kind::State206,213=>Kind::State213,_=>return Err(SnapshotError::Opcode{actual:opcode})};"
+    },
+    {
+      "line": 35,
+      "text": "  let subtype=c.byte(\"subtype\")?;if subtype!=0{return Err(SnapshotError::Subtype{actual:subtype});}"
+    },
+    {
+      "line": 36,
+      "text": "  let identifier=c.dword(\"dword_64ABF4\")?;"
+    },
+    {
+      "line": 37,
+      "text": "  c.string(\"dword_64AB70\",90)?;"
+    },
+    {
+      "line": 38,
+      "text": "  let mode_byte=match kind {"
+    },
+    {
+      "line": 39,
+      "text": "   Kind::State206=>{"
+    },
+    {
+      "line": 40,
+      "text": "    c.byte(\"byte_64ABE6\")?;c.string(\"byte_64ABE8\",5)?;"
+    },
+    {
+      "line": 41,
+      "text": "    c.word(\"word_64ABEE\")?;c.word(\"dword_64ABF0_low16\")?;"
+    },
+    {
+      "line": 42,
+      "text": "    let mode=c.byte(\"word_64ACCA_low8\")?;c.word(\"var_4\")?;"
+    },
+    {
+      "line": 43,
+      "text": "    c.byte(\"dword_64ACCC_low8\")?;c.byte(\"byte_64ACD0\")?;c.byte(\"byte_64ACD3\")?;c.byte(\"byte_64ACD1\")?;c.byte(\"byte_64ACD2\")?;"
+    },
+    {
+      "line": 44,
+      "text": "    c.string(\"word_64ABCA\",28)?;"
+    },
+    {
+      "line": 45,
+      "text": "    c.byte(\"byte_64ACD4\")?;c.byte(\"byte_64ACD5\")?;c.byte(\"byte_64ACD6\")?;c.byte(\"byte_64ACD7\")?;"
+    },
+    {
+      "line": 46,
+      "text": "    let count=c.byte(\"var_1_extension_count\")?;"
+    },
+    {
+      "line": 47,
+      "text": "    // The source copies at most eight bytes using a signed count. Structures"
+    },
+    {
+      "line": 48,
+      "text": "    // with negative or >8 count are deliberately unsupported, not guessed."
+    },
+    {
+      "line": 49,
+      "text": "    if count>8{return Err(SnapshotError::ExtensionCount{actual:count});}"
+    },
+    {
+      "line": 50,
+      "text": "    let offset=c.pos;let bytes=c.take(usize::from(count),\"byte_64ACD8\")?.to_vec();c.fields.push(Field{destination:\"byte_64ACD8\",offset,value:Value::Bytes(bytes)});mode"
+    },
+    {
+      "line": 51,
+      "text": "   },"
+    },
+    {
+      "line": 52,
+      "text": "   Kind::State213=>{"
+    },
+    {
+      "line": 53,
+      "text": "    let mode=c.byte(\"word_64ACCA_low8\")?;c.word(\"var_4\")?;c.byte(\"dword_64ACCC_low8\")?;"
+    },
+    {
+      "line": 54,
+      "text": "    c.string(\"word_64ABCA\",28)?;c.byte(\"byte_64ACD0\")?;c.byte(\"byte_64ACD1\")?;c.byte(\"byte_64ACD2\")?;c.byte(\"byte_64ACD3\")?;mode"
+    },
+    {
+      "line": 55,
+      "text": "   }"
+    },
+    {
+      "line": 56,
+      "text": "  };"
+    },
+    {
+      "line": 57,
+      "text": "  if c.pos!=packet.len(){return Err(SnapshotError::Trailing{offset:c.pos,actual:packet.len()});}"
+    },
+    {
+      "line": 58,
+      "text": "  Ok(Self{kind,identifier,mode_byte,fields:c.fields,raw:packet.to_vec()})"
+    },
+    {
+      "line": 59,
+      "text": " }"
+    },
+    {
+      "line": 60,
+      "text": "}"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

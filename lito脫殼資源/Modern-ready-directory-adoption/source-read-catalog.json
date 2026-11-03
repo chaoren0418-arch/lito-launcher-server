@@ -1,0 +1,591 @@
+{
+  "reads": [
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_character_directory_fields.rs.snapshot.json",
+        "bytes": 5321,
+        "sha256": "55BCBDBB6B7D7212CD009499CCB417BE116CBB25BD2005B059F5CDD2E45D9AF6"
+      },
+      "read_at": "2026-10-06T08:52:10.260257+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_directory_fields.rs",
+        "bytes": 2940,
+        "sha256": "82CDC9CF558920B748494293A41F5AE3DA4354591A9B338842054C33AD219627"
+      },
+      "captured_content_sha256": "82CDC9CF558920B748494293A41F5AE3DA4354591A9B338842054C33AD219627",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_directory_fields.rs",
+        "bytes": 2940,
+        "sha256": "82CDC9CF558920B748494293A41F5AE3DA4354591A9B338842054C33AD219627"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_character_selection.rs.snapshot.json",
+        "bytes": 4331,
+        "sha256": "5293CA10FA0E09B9326AF783431AD3D0CD63EEBD1655AF89CDCDABD58ACC91B7"
+      },
+      "read_at": "2026-10-06T08:53:53.714826+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+        "bytes": 2353,
+        "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+      },
+      "captured_content_sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+        "bytes": 2353,
+        "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_city_runtime.rs.snapshot.json",
+        "bytes": 36382,
+        "sha256": "6D8A13FBBDC8A6E0C42581822B15EECD6BA6DA8407B8A3A0F04280E2CEDABDCF"
+      },
+      "read_at": "2026-10-06T08:52:10.260257+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57230,
+        "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+      },
+      "captured_content_sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57230,
+        "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_entry_navigation.rs.snapshot.json",
+        "bytes": 23840,
+        "sha256": "B53AD1AE04B5F1F732CA785406F9A62D779E828A668CD61ABC1A721BFDFB7F5B"
+      },
+      "read_at": "2026-10-06T08:50:55.608774+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_entry_navigation.rs",
+        "bytes": 14951,
+        "sha256": "68E8C2682A79D7D950C8F2DC662DD16E3C71AD096AB406A756ADABF2CFCA8140"
+      },
+      "captured_content_sha256": "68E8C2682A79D7D950C8F2DC662DD16E3C71AD096AB406A756ADABF2CFCA8140",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_entry_navigation.rs",
+        "bytes": 14951,
+        "sha256": "68E8C2682A79D7D950C8F2DC662DD16E3C71AD096AB406A756ADABF2CFCA8140"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_java_character_flow.rs.snapshot.json",
+        "bytes": 9528,
+        "sha256": "DF979821988B22ECAD2EA6FBB495A3E4E5835B6E1807671DD8B46399DAB9E350"
+      },
+      "read_at": "2026-10-06T08:56:47.417643+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_character_flow.rs",
+        "bytes": 9224,
+        "sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3"
+      },
+      "captured_content_sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_character_flow.rs",
+        "bytes": 9224,
+        "sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_java_room_entry.rs.snapshot.json",
+        "bytes": 22411,
+        "sha256": "F45EA42ED91AB92B5475EE50AD0AD33BB1610C751B5F00A579FB6E21A517BF1B"
+      },
+      "read_at": "2026-10-06T08:53:53.708842+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_entry.rs",
+        "bytes": 13000,
+        "sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5"
+      },
+      "captured_content_sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_entry.rs",
+        "bytes": 13000,
+        "sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_java_room_participants.rs.snapshot.json",
+        "bytes": 28647,
+        "sha256": "88E82CFFF0F1A294F8C96051701013A48A5E73C82E1D5B9D5FEA0364AC4ABA43"
+      },
+      "read_at": "2026-10-06T08:50:55.611766+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_participants.rs",
+        "bytes": 17828,
+        "sha256": "15BFE257BB8B3FFE452C00892BDAFDA2D92675439A8A9A8DE8236B42F9A56051"
+      },
+      "captured_content_sha256": "15BFE257BB8B3FFE452C00892BDAFDA2D92675439A8A9A8DE8236B42F9A56051",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_participants.rs",
+        "bytes": 17828,
+        "sha256": "15BFE257BB8B3FFE452C00892BDAFDA2D92675439A8A9A8DE8236B42F9A56051"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_java_room_self.rs.snapshot.json",
+        "bytes": 18653,
+        "sha256": "97EFAB3A44669D302C78034739A1F3BF4527696B42468D75E98901EE8A90D897"
+      },
+      "read_at": "2026-10-06T08:54:11.285466+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_self.rs",
+        "bytes": 14872,
+        "sha256": "48CBC3A02CD3DA68D5CDCAF3D5154BD5D4EDFDE67B8584AD63DC6BA021E909BF"
+      },
+      "captured_content_sha256": "48CBC3A02CD3DA68D5CDCAF3D5154BD5D4EDFDE67B8584AD63DC6BA021E909BF",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_self.rs",
+        "bytes": 14872,
+        "sha256": "48CBC3A02CD3DA68D5CDCAF3D5154BD5D4EDFDE67B8584AD63DC6BA021E909BF"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": [
+        {
+          "line": 127,
+          "name": "count_or_multirow_cannot_supply_singleton_alias"
+        },
+        {
+          "line": 135,
+          "name": "complete_full_frame_required_once"
+        },
+        {
+          "line": 141,
+          "name": "failed_partial_or_changed_context_cannot_complete"
+        }
+      ]
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_login_bootstrap.rs.snapshot.json",
+        "bytes": 13778,
+        "sha256": "32D0D53F5F11FD99A22BCF5662477AD16A78ABE0026A165EC60E3DC26C2962EC"
+      },
+      "read_at": "2026-10-06T08:54:11.285466+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_bootstrap.rs",
+        "bytes": 12503,
+        "sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085"
+      },
+      "captured_content_sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_bootstrap.rs",
+        "bytes": 12503,
+        "sha256": "AE01E83FD7F085D6238C1608B87469B6DC0DF54E8FE5B9157557DBC72E342085"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_login_events.rs.snapshot.json",
+        "bytes": 6417,
+        "sha256": "EC8CBA671C92BE362BC7ECB0DD2DBD8E105F48B3288767E1FBF309293E4AE62E"
+      },
+      "read_at": "2026-10-06T08:54:46.687990+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_events.rs",
+        "bytes": 26872,
+        "sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE"
+      },
+      "captured_content_sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_login_events.rs",
+        "bytes": 26872,
+        "sha256": "16D89EFBD01140E03F9438E4B9020693283BD56D321F45CFEC5DC1404CF6F2AE"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_mode_snapshot.rs.snapshot.json",
+        "bytes": 4349,
+        "sha256": "95BD942B7EC9D0A045F31B271C28B0323912EB13715D1C9387AA86BDF162DC69"
+      },
+      "read_at": "2026-10-06T08:53:53.711834+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_snapshot.rs",
+        "bytes": 5206,
+        "sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9"
+      },
+      "captured_content_sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_snapshot.rs",
+        "bytes": 5206,
+        "sha256": "3A48A98D6E3F2C52C87F7907E7086FC398EC9D8AA04EB361CD5FBCCF539BBEB9"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_source_connection.rs.snapshot.json",
+        "bytes": 8931,
+        "sha256": "30553F4E3099273B02E8FB1921087CF58A6978A03B6F9EE1D32A46D5DDE11AFA"
+      },
+      "read_at": "2026-10-06T08:52:10.260257+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_connection.rs",
+        "bytes": 5545,
+        "sha256": "785A6FCDF6025F5472958B0B81278848F79DDC91D630DC4ED4300F109D99533F"
+      },
+      "captured_content_sha256": "785A6FCDF6025F5472958B0B81278848F79DDC91D630DC4ED4300F109D99533F",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_connection.rs",
+        "bytes": 5545,
+        "sha256": "785A6FCDF6025F5472958B0B81278848F79DDC91D630DC4ED4300F109D99533F"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_source_identity.rs.snapshot.json",
+        "bytes": 11581,
+        "sha256": "6644DB6C775006ED04BCB6F7F2C2A15A1FB7773096D2CA77233CEBB0858C421A"
+      },
+      "read_at": "2026-10-06T08:50:55.605778+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+        "bytes": 6119,
+        "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+      },
+      "captured_content_sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+        "bytes": 6119,
+        "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\native_source_send.rs.snapshot.json",
+        "bytes": 12301,
+        "sha256": "6AB13F10352DF0FFD8E0FE0A30FB90AD10C28FFB179C933B8066E22311E9648A"
+      },
+      "read_at": "2026-10-06T08:52:10.260257+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+        "bytes": 7863,
+        "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+      },
+      "captured_content_sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+        "bytes": 7863,
+        "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r492-source-connection-consumer.ps1.test-names.json",
+        "bytes": 937,
+        "sha256": "78B092F5ACF3F39A1745989DF6F20D972B3CC043F6EB2E46B09E2BE9088493C0"
+      },
+      "read_at": "2026-10-06T08:55:31.874569+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r492-source-connection-consumer.ps1",
+        "bytes": 4080,
+        "sha256": "893FFFA6A11EF0AF3A1415A5B2D577C1DAEDB74A42CA360076FA88F49776186D"
+      },
+      "captured_content_sha256": "893FFFA6A11EF0AF3A1415A5B2D577C1DAEDB74A42CA360076FA88F49776186D",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r492-source-connection-consumer.ps1",
+        "bytes": 4080,
+        "sha256": "893FFFA6A11EF0AF3A1415A5B2D577C1DAEDB74A42CA360076FA88F49776186D"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r493-source-identity-consumer.ps1.test-names.json",
+        "bytes": 933,
+        "sha256": "685B1FC0699CADD37FF3BA425399EEB6104E7EEA64651D09E530F7379DF16835"
+      },
+      "read_at": "2026-10-06T08:55:31.923909+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r493-source-identity-consumer.ps1",
+        "bytes": 4102,
+        "sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E"
+      },
+      "captured_content_sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r493-source-identity-consumer.ps1",
+        "bytes": 4102,
+        "sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r494-source-stream-consumer.ps1.test-names.json",
+        "bytes": 929,
+        "sha256": "A25A8AA31FC221B5436AEF9C26E0F745005A46B35AB2EB1E57E41145AACA50D0"
+      },
+      "read_at": "2026-10-06T08:55:31.957773+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r494-source-stream-consumer.ps1",
+        "bytes": 4094,
+        "sha256": "84E854AC7A3410B82014E5DF7383D6CF274F6AFA8D34982799155D7BF4D0020C"
+      },
+      "captured_content_sha256": "84E854AC7A3410B82014E5DF7383D6CF274F6AFA8D34982799155D7BF4D0020C",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r494-source-stream-consumer.ps1",
+        "bytes": 4094,
+        "sha256": "84E854AC7A3410B82014E5DF7383D6CF274F6AFA8D34982799155D7BF4D0020C"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r498-character-ui-consumer.ps1.test-names.json",
+        "bytes": 927,
+        "sha256": "18B00514CD944AFD969F185EF88F42CE4E9A202B9DB65858854C57D26603E582"
+      },
+      "read_at": "2026-10-06T08:55:31.990521+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r498-character-ui-consumer.ps1",
+        "bytes": 4264,
+        "sha256": "419557B757EAF0DC53A8C7C4E06CD055C40945BCE97AF24E2E360523AD649F0C"
+      },
+      "captured_content_sha256": "419557B757EAF0DC53A8C7C4E06CD055C40945BCE97AF24E2E360523AD649F0C",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r498-character-ui-consumer.ps1",
+        "bytes": 4264,
+        "sha256": "419557B757EAF0DC53A8C7C4E06CD055C40945BCE97AF24E2E360523AD649F0C"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r513-consumer.ps1.test-names.json",
+        "bytes": 901,
+        "sha256": "7F6C02E3A6C10CD348406A623665D52E15A66CAAA48A8CF3F309687E147429B1"
+      },
+      "read_at": "2026-10-06T08:55:32.008487+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r513-consumer.ps1",
+        "bytes": 2340,
+        "sha256": "DEC13AB3E638B8D93EF1791A70E047539148E7057D1ED2BE2BBB43BF4B17766E"
+      },
+      "captured_content_sha256": "DEC13AB3E638B8D93EF1791A70E047539148E7057D1ED2BE2BBB43BF4B17766E",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r513-consumer.ps1",
+        "bytes": 2340,
+        "sha256": "DEC13AB3E638B8D93EF1791A70E047539148E7057D1ED2BE2BBB43BF4B17766E"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\build-r519-consumer.ps1.test-names.json",
+        "bytes": 901,
+        "sha256": "9F33C1AFE6B2464F86F137C77914ED85303AA324A30D09B67955CADDE0EFDE7F"
+      },
+      "read_at": "2026-10-06T08:55:32.014469+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r519-consumer.ps1",
+        "bytes": 2643,
+        "sha256": "55757C0C68A3A13D68F95EE37D955EBA16572A6C593A9CE30E3C9E8130F90924"
+      },
+      "captured_content_sha256": "55757C0C68A3A13D68F95EE37D955EBA16572A6C593A9CE30E3C9E8130F90924",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r519-consumer.ps1",
+        "bytes": 2643,
+        "sha256": "55757C0C68A3A13D68F95EE37D955EBA16572A6C593A9CE30E3C9E8130F90924"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r492-source-connection-consumer.rs.test-names.json",
+        "bytes": 1698,
+        "sha256": "004EC1CF7BD732E064970F56F84349D478B9C37C607342F26C344E229D3A46E8"
+      },
+      "read_at": "2026-10-06T08:56:20.152176+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r492-source-connection-consumer.rs",
+        "bytes": 10061,
+        "sha256": "54CECFED3651BEEF0E1DF1B9AC081FCB2925BA5445ADC640D3F53305D17BCC21"
+      },
+      "captured_content_sha256": "54CECFED3651BEEF0E1DF1B9AC081FCB2925BA5445ADC640D3F53305D17BCC21",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r492-source-connection-consumer.rs",
+        "bytes": 10061,
+        "sha256": "54CECFED3651BEEF0E1DF1B9AC081FCB2925BA5445ADC640D3F53305D17BCC21"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r493-source-identity-consumer.rs.test-names.json",
+        "bytes": 1405,
+        "sha256": "B911F40AE5A0F2918A5332DE302306F649B1A9A9D4B29C1B14F757D58D4B65C3"
+      },
+      "read_at": "2026-10-06T08:56:20.161171+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r493-source-identity-consumer.rs",
+        "bytes": 9347,
+        "sha256": "2075A857C1B968825927FDFAEDC99F6B103F369CEAEC63C41DA635F87D25EB71"
+      },
+      "captured_content_sha256": "2075A857C1B968825927FDFAEDC99F6B103F369CEAEC63C41DA635F87D25EB71",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r493-source-identity-consumer.rs",
+        "bytes": 9347,
+        "sha256": "2075A857C1B968825927FDFAEDC99F6B103F369CEAEC63C41DA635F87D25EB71"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r494-source-stream-consumer.rs.test-names.json",
+        "bytes": 1575,
+        "sha256": "FC4D25B2198B12734DFC7057C4FCA7CC7D663F9A1A67BDAFBE7BB130C193A565"
+      },
+      "read_at": "2026-10-06T08:56:20.194538+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r494-source-stream-consumer.rs",
+        "bytes": 13622,
+        "sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830"
+      },
+      "captured_content_sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r494-source-stream-consumer.rs",
+        "bytes": 13622,
+        "sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r498-character-ui-consumer.rs.test-names.json",
+        "bytes": 1402,
+        "sha256": "F1BEFC97CB8757B6A6C1D4D13E94B67D6F081B7F51738331492CC422A8404A4C"
+      },
+      "read_at": "2026-10-06T08:56:20.215292+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r498-character-ui-consumer.rs",
+        "bytes": 11120,
+        "sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7"
+      },
+      "captured_content_sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r498-character-ui-consumer.rs",
+        "bytes": 11120,
+        "sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r515-participant-consumer.rs.test-names.json",
+        "bytes": 1676,
+        "sha256": "A5C8C3C7D9E7F5F16FD99965AA7BDEA9485A6EADA734FA6E6F74D074EF5D000E"
+      },
+      "read_at": "2026-10-06T08:56:20.228922+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r515-participant-consumer.rs",
+        "bytes": 14023,
+        "sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471"
+      },
+      "captured_content_sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r515-participant-consumer.rs",
+        "bytes": 14023,
+        "sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption\\r519-self-consumer.rs.test-names.json",
+        "bytes": 1854,
+        "sha256": "71B44A218D448B50D03E4EC480B3B225457FC5CC971DC6039C6B091DC05C55D8"
+      },
+      "read_at": "2026-10-06T08:56:20.246444+08:00",
+      "before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r519-self-consumer.rs",
+        "bytes": 9947,
+        "sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6"
+      },
+      "captured_content_sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6",
+      "after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r519-self-consumer.rs",
+        "bytes": 9947,
+        "sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6"
+      },
+      "stable_during_read": true,
+      "adoption": "source text only",
+      "existing_test_names_only": []
+    }
+  ],
+  "consistency": "Per-file hash before/content/after only. Non-atomic cross-file capture during active R525; no freeze, build, tests or runtime acceptance. Later external edits do not alter these immutable owned captures.",
+  "test_scope": "Only three actual #[test] names found in the selected implementation; other selected consumer files contain function headers, not test pass evidence. No repository-wide absence claim."
+}

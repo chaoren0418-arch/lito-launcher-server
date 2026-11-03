@@ -1,0 +1,81 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r519-self-consumer.rs",
+    "bytes": 9947,
+    "sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6"
+  },
+  "captured_content_sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r519-self-consumer.rs",
+    "bytes": 9947,
+    "sha256": "0745F51E2E1333D064E262603DFAE1FA2C148097CD3BED3E9CEC5BD769C564E6"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:56:20.246444+08:00",
+  "existing_test_names_only": [],
+  "function_names_only_not_test_claim": [
+    {
+      "line": 6,
+      "name": "hex"
+    },
+    {
+      "line": 7,
+      "name": "pin_input"
+    },
+    {
+      "line": 8,
+      "name": "ready"
+    },
+    {
+      "line": 9,
+      "name": "until"
+    },
+    {
+      "line": 10,
+      "name": "close"
+    },
+    {
+      "line": 11,
+      "name": "edit"
+    },
+    {
+      "line": 14,
+      "name": "new"
+    },
+    {
+      "line": 15,
+      "name": "send"
+    },
+    {
+      "line": 16,
+      "name": "recv"
+    },
+    {
+      "line": 17,
+      "name": "expect"
+    },
+    {
+      "line": 18,
+      "name": "authenticate"
+    },
+    {
+      "line": 20,
+      "name": "setup"
+    },
+    {
+      "line": 25,
+      "name": "send_many"
+    },
+    {
+      "line": 33,
+      "name": "fixture"
+    },
+    {
+      "line": 55,
+      "name": "transmit"
+    }
+  ],
+  "literal_case_names_only_not_pass_claim": [],
+  "script_executed_or_imported": false,
+  "scope": "Only existing test annotations, function headers and literal name labels; no body adoption, no claim compiled/current production test pass."
+}

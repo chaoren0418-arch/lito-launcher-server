@@ -1,0 +1,27 @@
+{
+  "failures": [
+    {
+      "source": "private_profile.py",
+      "stage": "Python parse",
+      "error": "raw string ended with a backslash",
+      "native_process_created": false,
+      "fixed": true
+    },
+    {
+      "source": "run_integration.py",
+      "stage": "Python argument binding",
+      "error": "incorrect poll_seconds keyword",
+      "accepted_watchdog_entered": false,
+      "fixed": true
+    },
+    {
+      "source": "run_integration.py",
+      "stage": "Python argument binding",
+      "error": "incorrect poll_interval keyword",
+      "accepted_watchdog_entered": false,
+      "fixed": true
+    }
+  ],
+  "actual_native_probe_launch_attempt_count": 1,
+  "ordinary_or_unisolated_native_launch_attempt_count": 0
+}

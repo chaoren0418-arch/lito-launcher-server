@@ -1,0 +1,78 @@
+{
+  "geometry": [
+    {
+      "resource_id": 933,
+      "qualified_default_candidate_dimensions": [
+        191,
+        274
+      ],
+      "origin_offset_from_child_plus_G": [
+        8,
+        10
+      ],
+      "relative_halfopen_extent": [
+        8,
+        10,
+        199,
+        284
+      ],
+      "conditional_extent_if_child433_0_G0": [
+        441,
+        10,
+        632,
+        284
+      ],
+      "runtime_default_candidate_load_and_epoch_unobserved": true
+    },
+    {
+      "resource_id": 934,
+      "qualified_default_candidate_dimensions": [
+        207,
+        289
+      ],
+      "origin_offset_from_child_plus_G": [
+        0,
+        0
+      ],
+      "relative_halfopen_extent": [
+        0,
+        0,
+        207,
+        289
+      ],
+      "conditional_extent_if_child433_0_G0": [
+        433,
+        0,
+        640,
+        289
+      ],
+      "runtime_default_candidate_load_and_epoch_unobserved": true
+    },
+    {
+      "resource_id": 935,
+      "qualified_default_candidate_dimensions": [
+        203,
+        261
+      ],
+      "origin_offset_from_child_plus_G": [
+        2,
+        10
+      ],
+      "relative_halfopen_extent": [
+        2,
+        10,
+        205,
+        271
+      ],
+      "conditional_extent_if_child433_0_G0": [
+        435,
+        10,
+        638,
+        271
+      ],
+      "runtime_default_candidate_load_and_epoch_unobserved": true
+    }
+  ],
+  "934_dimensions_reused_from_accepted_batch8": true,
+  "native_GUI_oracle": false
+}

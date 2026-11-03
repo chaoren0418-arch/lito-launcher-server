@@ -1,0 +1,363 @@
+{
+  "schema": "owned-process-error-safe-runtime-v2",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+    "hang"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup",
+  "controller_pid": 15524,
+  "start_monotonic": 419902.062,
+  "deadline_monotonic": 419903.562,
+  "timeout_seconds": 1.5,
+  "child_resumed": false,
+  "process_created": true,
+  "status": "CONSTRUCTOR_FAILED",
+  "owned_job_empty": true,
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "failure": {
+    "stage": "capture_setup",
+    "exception_stage": "capture_setup",
+    "type": "InjectedFailure",
+    "message": "Explicit harmless-fixture fault injection: capture_setup/setup-failure",
+    "winerror": null,
+    "origin": "controlled_test_injection"
+  },
+  "observation_failures": [
+    {
+      "path": "constructor_failure_evidence/constructor_error_snapshot",
+      "error": {
+        "stage": "constructor_error_snapshot",
+        "exception_stage": "constructor_error_snapshot",
+        "type": "InjectedFailure",
+        "message": "Explicit harmless-fixture fault injection: constructor_error_snapshot/exception-snapshot-failure",
+        "winerror": null,
+        "origin": "controlled_test_injection"
+      }
+    }
+  ],
+  "fault_plan_declared": {
+    "capture_setup": "setup-failure",
+    "constructor_error_snapshot": "exception-snapshot-failure"
+  },
+  "constructor_failure_evidence": {
+    "process_created": true,
+    "creation_call_returned_success": true,
+    "child_resumed": false,
+    "atomic_containment_requested": true,
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+      "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+    },
+    "containment": {
+      "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+      "limit_flags": 8200,
+      "kill_on_last_handle_close": true,
+      "breakaway_allowed": false,
+      "job_handle_inheritable": false,
+      "active_process_limit": 16,
+      "hidden_window": true,
+      "only_explicit_stdio_handles_inherited": true
+    },
+    "constructor_error_snapshot": {
+      "status": "ERROR",
+      "error": {
+        "stage": "constructor_error_snapshot",
+        "exception_stage": "constructor_error_snapshot",
+        "type": "InjectedFailure",
+        "message": "Explicit harmless-fixture fault injection: constructor_error_snapshot/exception-snapshot-failure",
+        "winerror": null,
+        "origin": "controlled_test_injection"
+      }
+    },
+    "cleanup": {
+      "status": "AUDITED",
+      "method": "Owned unnamed job only; unconditional close in finally",
+      "owned_job_empty": true,
+      "pre_snapshot": {
+        "status": "OBSERVED",
+        "value": [
+          {
+            "pid": 5072,
+            "creation_filetime_100ns": 134358259435976182,
+            "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "membership_verified": true,
+            "first_seen_monotonic": 419902.078,
+            "exit": {
+              "signaled": false,
+              "wait_result": 258,
+              "exit_code": 259
+            }
+          }
+        ]
+      },
+      "member_observation": {
+        "status": "OBSERVED",
+        "value": [
+          5072
+        ]
+      },
+      "termination": {
+        "status": "OBSERVED",
+        "value": null
+      },
+      "exit_audit": {
+        "status": "OBSERVED",
+        "value": {
+          "owned_job_empty": true,
+          "active_job_PIDs": [],
+          "job_query_error": null,
+          "retained_handle_waits": [
+            {
+              "pid": 5072,
+              "creation_filetime_100ns": 134358259435976182,
+              "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+              "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "identity_status": "KNOWN",
+              "primary": true,
+              "handle_origin": "retained CreateProcess result",
+              "wait_result": 0,
+              "signaled": true,
+              "exit_code": 3758096388
+            }
+          ],
+          "deadline_monotonic": 419904.078,
+          "elapsed_seconds": 0.015000000013969839,
+          "exit_evidence_status": "CONFIRMED"
+        }
+      },
+      "post_snapshot": {
+        "status": "OBSERVED",
+        "value": [
+          {
+            "pid": 5072,
+            "creation_filetime_100ns": 134358259435976182,
+            "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "membership_verified": true,
+            "first_seen_monotonic": 419902.078,
+            "exit": {
+              "signaled": true,
+              "wait_result": 0,
+              "exit_code": 3758096388
+            }
+          }
+        ]
+      },
+      "close": [
+        {
+          "kind": "sole_noninherited_job",
+          "status": "OBSERVED",
+          "value": true
+        },
+        {
+          "kind": "primary_thread",
+          "status": "OBSERVED",
+          "value": true
+        },
+        {
+          "kind": "retained_process",
+          "status": "OBSERVED",
+          "value": true
+        }
+      ]
+    },
+    "close": [
+      {
+        "kind": "sole_noninherited_job",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "primary_thread",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      }
+    ],
+    "capture": {}
+  },
+  "creation_call_returned_success": true,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+    "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+  },
+  "containment": {
+    "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+    "limit_flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_allowed": false,
+    "job_handle_inheritable": false,
+    "active_process_limit": 16,
+    "hidden_window": true,
+    "only_explicit_stdio_handles_inherited": true
+  },
+  "trigger": [],
+  "cleanup": {
+    "status": "AUDITED",
+    "method": "Owned unnamed job only; unconditional close in finally",
+    "owned_job_empty": true,
+    "pre_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 5072,
+          "creation_filetime_100ns": 134358259435976182,
+          "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419902.078,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 259
+          }
+        }
+      ]
+    },
+    "member_observation": {
+      "status": "OBSERVED",
+      "value": [
+        5072
+      ]
+    },
+    "termination": {
+      "status": "OBSERVED",
+      "value": null
+    },
+    "exit_audit": {
+      "status": "OBSERVED",
+      "value": {
+        "owned_job_empty": true,
+        "active_job_PIDs": [],
+        "job_query_error": null,
+        "retained_handle_waits": [
+          {
+            "pid": 5072,
+            "creation_filetime_100ns": 134358259435976182,
+            "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "handle_origin": "retained CreateProcess result",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 3758096388
+          }
+        ],
+        "deadline_monotonic": 419904.078,
+        "elapsed_seconds": 0.015000000013969839,
+        "exit_evidence_status": "CONFIRMED"
+      }
+    },
+    "post_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 5072,
+          "creation_filetime_100ns": 134358259435976182,
+          "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419902.078,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 3758096388
+          }
+        }
+      ]
+    },
+    "close": [
+      {
+        "kind": "sole_noninherited_job",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "primary_thread",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      }
+    ]
+  },
+  "close": [
+    {
+      "kind": "sole_noninherited_job",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "primary_thread",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    }
+  ],
+  "capture": {},
+  "disk_monitor": {
+    "samples": [],
+    "requested_poll_seconds": 0.05,
+    "sample_count_total": 0,
+    "retained_sample_cap": 512,
+    "final_scan": {
+      "status": "OBSERVED",
+      "value": 0
+    },
+    "max_observed_sample_gap_seconds": 0,
+    "final_bytes_before_receipt": 0,
+    "threshold_bytes": 1048576,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "fault_events": [
+    {
+      "stage": "capture_setup",
+      "kind": "setup-failure",
+      "monotonic": 419902.078,
+      "origin": "controlled_test_injection",
+      "actual_API_failure_claimed": false
+    },
+    {
+      "stage": "constructor_error_snapshot",
+      "kind": "exception-snapshot-failure",
+      "monotonic": 419902.078,
+      "origin": "controlled_test_injection",
+      "actual_API_failure_claimed": false
+    }
+  ],
+  "evidence_state": "PARTIAL_WITH_ERRORS",
+  "finished_monotonic": 419902.093,
+  "elapsed_seconds": 0.031000000017229468,
+  "receipt_persistence": {
+    "status": "WRITTEN",
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup\\runtime.json",
+    "flush_and_fsync": true
+  }
+}

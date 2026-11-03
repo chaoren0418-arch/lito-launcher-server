@@ -1,0 +1,50 @@
+{
+  "AD368": {
+    "JAR": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "level": "accepted finite ready source/IL and exact existing state2/repeatedready1/cancel test-client network",
+    "Native_current_UI_dynamic": false
+  },
+  "C7": {
+    "JAR_SHA256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A",
+    "level": "accepted prior ordinary WAITING map network; Batch28 old updateSettings writes-before-decode statement remains correct for this version",
+    "ready_dynamic_transferred": false
+  },
+  "485F": {
+    "JAR": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-order-candidate-ea9eb86912ed4d1b9502bcecdc7911ec\\candidate\\C7-ordinary-settings-order-candidate.jar",
+      "bytes": 8906219,
+      "sha256": "485F599DA9BA1A13504CB48DDCA3D53C6CAD91D7BAFDF738D104E65A05E1DFD5"
+    },
+    "report": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-settings-order-candidate.json",
+      "bytes": 10933,
+      "sha256": "8D969CB59FA4ECD3515EEE794397E4C94D58D97328F8A410A4EA0BBA456CCF9E"
+    },
+    "level": "supervisor accepted finite parent12/candidate12 seeded units; network sealing not accepted",
+    "only_changed": "GameHub.updateSettings Code (+remapped debug/StackMap); other1013methods/CP/ClientSession/updateMap preserved per accepted proof",
+    "order": "decode/reconfigure moved BEFORE settings/selectedmap/ready writes",
+    "general_transaction_rollback_or_race_qualification": false,
+    "network_qualification_adopted": false
+  },
+  "historical_owner": {
+    "reference": {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\analysis\\NATIVE-LITO-OWNER-START-EVIDENCE-0.7.664.json",
+        "bytes": 10733,
+        "sha256": "4F4832345A30C330921B329CCCA64F5B892EF22E180D40FD54597AC4F7C8942C"
+      },
+      "first_owner_request_only": {
+        "time": "2026-08-30T05:14:25.720412500Z",
+        "direction": "client_to_server",
+        "plain": "D2",
+        "meaning": "physical native room-owner Start; opcode-only C_D2"
+      },
+      "qualification": "older release Native click reference only; no AD368 GUI/callback/private authority upgrade and no other historical sequence imported"
+    },
+    "level": "older0.7.664 Native owner-click first D2 request only; no fixedPE/current UI authority transfer"
+  }
+}

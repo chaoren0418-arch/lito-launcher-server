@@ -1,0 +1,512 @@
+{
+  "schema": "owned-process-error-safe-runtime-v2",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+    "tree"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure",
+  "controller_pid": 15524,
+  "start_monotonic": 419905.968,
+  "deadline_monotonic": 419907.468,
+  "timeout_seconds": 1.5,
+  "child_resumed": true,
+  "process_created": true,
+  "status": "TIMEOUT",
+  "owned_job_empty": true,
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "failure": null,
+  "observation_failures": [
+    {
+      "path": "capture/stdout",
+      "error": {
+        "stage": "capture_stdout",
+        "exception_stage": "capture_stdout",
+        "type": "InjectedFailure",
+        "message": "Explicit harmless-fixture fault injection: capture_stdout/injected-capture-write-I/O-refusal",
+        "winerror": null,
+        "origin": "controlled_test_injection"
+      }
+    }
+  ],
+  "fault_plan_declared": {
+    "capture_stdout": "injected-capture-write-I/O-refusal"
+  },
+  "creation_call_returned_success": true,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+    "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+  },
+  "containment": {
+    "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+    "limit_flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_allowed": false,
+    "job_handle_inheritable": false,
+    "active_process_limit": 16,
+    "hidden_window": true,
+    "only_explicit_stdio_handles_inherited": true
+  },
+  "primary_identity": {
+    "pid": 10720,
+    "creation_filetime_100ns": 134358259475043720,
+    "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "resume_monotonic": 419905.984,
+  "watcher_join": {
+    "status": "OBSERVED",
+    "value": null
+  },
+  "watcher_stopped": true,
+  "trigger": [
+    {
+      "reason": "WALL_DEADLINE",
+      "trigger_monotonic": 419907.468,
+      "deadline_overshoot_seconds": 0.0
+    }
+  ],
+  "cleanup": {
+    "status": "AUDITED",
+    "method": "Owned unnamed job only; unconditional close in finally",
+    "owned_job_empty": true,
+    "pre_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 10720,
+          "creation_filetime_100ns": 134358259475043720,
+          "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419905.984,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 22972,
+          "creation_filetime_100ns": 134358259475076925,
+          "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419905.984,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 12236,
+          "creation_filetime_100ns": 134358259476295534,
+          "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419906.109,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 19948,
+          "creation_filetime_100ns": 134358259476352689,
+          "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419906.125,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 3758096385
+          }
+        }
+      ]
+    },
+    "member_observation": {
+      "status": "OBSERVED",
+      "value": []
+    },
+    "termination": {
+      "status": "OBSERVED",
+      "value": null
+    },
+    "exit_audit": {
+      "status": "OBSERVED",
+      "value": {
+        "owned_job_empty": true,
+        "active_job_PIDs": [],
+        "job_query_error": null,
+        "retained_handle_waits": [
+          {
+            "pid": 10720,
+            "creation_filetime_100ns": 134358259475043720,
+            "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "handle_origin": "retained CreateProcess result",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 3758096385
+          },
+          {
+            "pid": 22972,
+            "creation_filetime_100ns": 134358259475076925,
+            "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+            "image_path": "C:\\Windows\\System32\\conhost.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "handle_origin": "verified owned job member",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 3758096385
+          },
+          {
+            "pid": 12236,
+            "creation_filetime_100ns": 134358259476295534,
+            "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "handle_origin": "verified owned job member",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 3758096385
+          },
+          {
+            "pid": 19948,
+            "creation_filetime_100ns": 134358259476352689,
+            "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+            "image_path": "C:\\Windows\\System32\\conhost.exe",
+            "identity_status": "KNOWN",
+            "primary": false,
+            "handle_origin": "verified owned job member",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 3758096385
+          }
+        ],
+        "deadline_monotonic": 419909.468,
+        "elapsed_seconds": 0.03200000000651926,
+        "exit_evidence_status": "CONFIRMED"
+      }
+    },
+    "post_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 10720,
+          "creation_filetime_100ns": 134358259475043720,
+          "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419905.984,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 22972,
+          "creation_filetime_100ns": 134358259475076925,
+          "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419905.984,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 12236,
+          "creation_filetime_100ns": 134358259476295534,
+          "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419906.109,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 3758096385
+          }
+        },
+        {
+          "pid": 19948,
+          "creation_filetime_100ns": 134358259476352689,
+          "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "identity_status": "KNOWN",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 419906.125,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 3758096385
+          }
+        }
+      ]
+    },
+    "close": [
+      {
+        "kind": "sole_noninherited_job",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      }
+    ]
+  },
+  "close": [
+    {
+      "kind": "sole_noninherited_job",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    },
+    {
+      "kind": "retained_process",
+      "status": "OBSERVED",
+      "value": true
+    }
+  ],
+  "capture": {
+    "stdout": {
+      "status": "ERROR",
+      "error": {
+        "stage": "capture_stdout",
+        "exception_stage": "capture_stdout",
+        "type": "InjectedFailure",
+        "message": "Explicit harmless-fixture fault injection: capture_stdout/injected-capture-write-I/O-refusal",
+        "winerror": null,
+        "origin": "controlled_test_injection"
+      },
+      "persisted": false,
+      "partial_summary": {
+        "status": "OBSERVED",
+        "value": {
+          "observed_bytes": 28,
+          "retained_bytes": 28,
+          "discarded_bytes": 0,
+          "cap_bytes": 8192,
+          "EOF_observed": true,
+          "reader_error": null
+        }
+      },
+      "reader_join": {
+        "status": "OBSERVED",
+        "value": null
+      }
+    },
+    "stderr": {
+      "status": "OBSERVED",
+      "value": {
+        "observed_bytes": 28,
+        "retained_bytes": 28,
+        "discarded_bytes": 0,
+        "cap_bytes": 8192,
+        "EOF_observed": true,
+        "reader_error": null,
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\stderr.bin",
+        "sha256": "2A145751B98D60712433FC8F4675019E900CFE5B0C523FE7F918E16A9D138FEA",
+        "persisted": true
+      }
+    }
+  },
+  "disk_monitor": {
+    "samples": [
+      {
+        "scan_start_monotonic": 419906.203,
+        "scan_end_monotonic": 419906.203,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.265,
+        "scan_end_monotonic": 419906.265,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.328,
+        "scan_end_monotonic": 419906.328,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.39,
+        "scan_end_monotonic": 419906.39,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.453,
+        "scan_end_monotonic": 419906.453,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.515,
+        "scan_end_monotonic": 419906.515,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.578,
+        "scan_end_monotonic": 419906.578,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.64,
+        "scan_end_monotonic": 419906.64,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.703,
+        "scan_end_monotonic": 419906.703,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.765,
+        "scan_end_monotonic": 419906.765,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.828,
+        "scan_end_monotonic": 419906.828,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.89,
+        "scan_end_monotonic": 419906.89,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419906.953,
+        "scan_end_monotonic": 419906.953,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.015,
+        "scan_end_monotonic": 419907.015,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.078,
+        "scan_end_monotonic": 419907.078,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.14,
+        "scan_end_monotonic": 419907.14,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.203,
+        "scan_end_monotonic": 419907.203,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.265,
+        "scan_end_monotonic": 419907.265,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.328,
+        "scan_end_monotonic": 419907.328,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.39,
+        "scan_end_monotonic": 419907.39,
+        "bytes": 987
+      },
+      {
+        "scan_start_monotonic": 419907.453,
+        "scan_end_monotonic": 419907.453,
+        "bytes": 987
+      }
+    ],
+    "requested_poll_seconds": 0.05,
+    "sample_count_total": 21,
+    "retained_sample_cap": 512,
+    "final_scan": {
+      "status": "OBSERVED",
+      "value": 1015
+    },
+    "max_observed_sample_gap_seconds": 0.06299999996554106,
+    "final_bytes_before_receipt": 1015,
+    "threshold_bytes": 1048576,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "fault_events": [
+    {
+      "stage": "capture_stdout",
+      "kind": "injected-capture-write-I/O-refusal",
+      "monotonic": 419907.5,
+      "origin": "controlled_test_injection",
+      "actual_API_failure_claimed": false
+    }
+  ],
+  "evidence_state": "PARTIAL_WITH_ERRORS",
+  "finished_monotonic": 419907.515,
+  "elapsed_seconds": 1.547000000020489,
+  "receipt_persistence": {
+    "status": "WRITTEN",
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\runtime.json",
+    "flush_and_fsync": true
+  }
+}

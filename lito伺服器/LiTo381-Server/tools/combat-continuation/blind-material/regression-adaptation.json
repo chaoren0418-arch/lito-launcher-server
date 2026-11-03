@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target_negative_regression.py",
+      "sha256": "425b444947754b1ffc865c6be112af154008e8c323d8a67bf2232ded16206eff"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\census.py",
+      "sha256": "e05f8551d6a7d382ca7c34cae340b51d8fd64ac50537590fa53bab6611d5ae18"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\prepare_regression.py",
+      "sha256": "4160da5ac08aeac51a80e3203ad6d1cf4482d2e385396e2854a27770e5e22b4f"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind_regression.py",
+      "sha256": "6058200b7f9b9593a36146458203355f9742a458b35192d7aeb22aa806741950"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\census.py",
+      "sha256": "4fd3547dd815bd859a5fcf81556611e909e9189a350e011db455f83b7802d0b9"
+    }
+  ],
+  "scope": "candidate/evidence destination only; two remaining legacy material roots removed from census; no behavioral assertions or deadlines changed"
+}

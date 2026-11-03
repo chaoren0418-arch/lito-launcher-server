@@ -1,0 +1,528 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+    "bytes": 23714,
+    "sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307"
+  },
+  "all_match": true,
+  "checks": [
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00241-LTmapstr-c.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00241-LTmapstr-c.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00242-LTmapstr-h.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00242-LTmapstr-h.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00243-LTmapstr-h.txt",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00243-LTmapstr-h.txt",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00244-LTmapstr-j.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00244-LTmapstr-j.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00245-LTmapstr-k.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00245-LTmapstr-k.tbl",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00241-LTmapstr-c.tbl.utf8.txt",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00244-LTmapstr-j.tbl.utf8.txt",
+      "match": true
+    },
+    {
+      "check": "source unchanged row00245-LTmapstr-k.tbl.utf8.txt",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin existing-map-resource-candidates.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin archive-manifest.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin catalog.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin equivalence-preflight.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin LTmapstr-c.tbl.parsed.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin LTmapstr-h.tbl.parsed.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin LTmapstr-h.txt.parsed.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin LTmapstr-j.tbl.parsed.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin LTmapstr-k.tbl.parsed.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin query-examples.json",
+      "match": true
+    },
+    {
+      "check": "index/evidence pin map_candidate_index.py",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-c.tbl full physical partition",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-c.tbl raw bytes conservation",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-c.tbl complete nonoverlapping token intervals",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-c.tbl deterministic full parse",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-c.tbl independent counts",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl full physical partition",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl raw bytes conservation",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl complete nonoverlapping token intervals",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl deterministic full parse",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl independent counts",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt full physical partition",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt raw bytes conservation",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt complete nonoverlapping token intervals",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt deterministic full parse",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt independent counts",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl full physical partition",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl raw bytes conservation",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl complete nonoverlapping token intervals",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl deterministic full parse",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl independent counts",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-k.tbl full physical partition",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-k.tbl raw bytes conservation",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-k.tbl complete nonoverlapping token intervals",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-k.tbl deterministic full parse",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-k.tbl independent counts",
+      "match": true
+    },
+    {
+      "check": "five independent candidates",
+      "match": true
+    },
+    {
+      "check": "c 500 explicit line2",
+      "match": true
+    },
+    {
+      "check": "k 500 explicit line2",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.tbl no synthesized numeric keys",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-h.txt no synthesized numeric keys",
+      "match": true
+    },
+    {
+      "check": "LTmapstr-j.tbl no synthesized numeric keys",
+      "match": true
+    },
+    {
+      "check": "c inactive571 retained separately",
+      "match": true
+    },
+    {
+      "check": "h opaque label not decoded",
+      "match": true
+    },
+    {
+      "check": "h.txt plain one opaque token",
+      "match": true
+    },
+    {
+      "check": "j declared57 actual55 after header",
+      "match": true
+    },
+    {
+      "check": "j last row retained unterminated",
+      "match": true
+    },
+    {
+      "check": "opaque token exact query",
+      "match": true
+    },
+    {
+      "check": "label metadata has no qualified title column",
+      "match": true
+    },
+    {
+      "check": "candidate suffix fallback prohibited",
+      "match": true
+    },
+    {
+      "check": "line zero prohibited",
+      "match": true
+    },
+    {
+      "check": "line outside candidate prohibited",
+      "match": true
+    },
+    {
+      "check": "float key prohibited",
+      "match": true
+    },
+    {
+      "check": "bool key prohibited",
+      "match": true
+    },
+    {
+      "check": "Unicode token requires explicit bytes",
+      "match": true
+    },
+    {
+      "check": "synthetic mixed EOL exactly seven lines",
+      "match": true
+    },
+    {
+      "check": "synthetic first nonblank header",
+      "match": true
+    },
+    {
+      "check": "synthetic blank retained",
+      "match": true
+    },
+    {
+      "check": "synthetic empty/trailing tokens retained",
+      "match": true
+    },
+    {
+      "check": "synthetic comment lexical bytes inactive",
+      "match": true
+    },
+    {
+      "check": "synthetic duplicate numeric canonical key preserves lexical forms",
+      "match": true
+    },
+    {
+      "check": "synthetic nonASCII NUL85 not split/replaced",
+      "match": true
+    },
+    {
+      "check": "synthetic inline semicolon preserved",
+      "match": true
+    },
+    {
+      "check": "synthetic both placeholder spellings retained",
+      "match": true
+    },
+    {
+      "check": "synthetic negative key no width coercion",
+      "match": true
+    },
+    {
+      "check": "synthetic complete coverage",
+      "match": true
+    },
+    {
+      "check": "duplicate query returns all ordered matches",
+      "match": true
+    },
+    {
+      "check": "duplicate query comments opt-in only",
+      "match": true
+    },
+    {
+      "check": "empty byte source no phantom row",
+      "match": true
+    },
+    {
+      "check": "terminal EOL no phantom row",
+      "match": true
+    },
+    {
+      "check": "leading numeric plain label no invented key",
+      "match": true
+    },
+    {
+      "check": "nondecimal header stays opaque",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    }
+  ],
+  "check_count": 109,
+  "candidate_coverage": [
+    {
+      "candidate": "LTmapstr-c.tbl",
+      "source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00241-LTmapstr-c.tbl",
+        "bytes": 2458,
+        "sha256": "9DC26DE8BB303B9A2C63CED51EDEAF9E2D6252C450EF8801AC6B21F8B9F949E4"
+      },
+      "physical_rows": 68,
+      "token_bytes": 2110,
+      "hash_delimiter_bytes": 212,
+      "eol_bytes": 136,
+      "covered_bytes": 2458,
+      "all_rows_tokens_intervals_match": true
+    },
+    {
+      "candidate": "LTmapstr-h.tbl",
+      "source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00242-LTmapstr-h.tbl",
+        "bytes": 1377,
+        "sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07"
+      },
+      "physical_rows": 43,
+      "token_bytes": 1199,
+      "hash_delimiter_bytes": 92,
+      "eol_bytes": 86,
+      "covered_bytes": 1377,
+      "all_rows_tokens_intervals_match": true
+    },
+    {
+      "candidate": "LTmapstr-h.txt",
+      "source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00243-LTmapstr-h.txt",
+        "bytes": 396,
+        "sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3"
+      },
+      "physical_rows": 33,
+      "token_bytes": 330,
+      "hash_delimiter_bytes": 0,
+      "eol_bytes": 66,
+      "covered_bytes": 396,
+      "all_rows_tokens_intervals_match": true
+    },
+    {
+      "candidate": "LTmapstr-j.tbl",
+      "source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00244-LTmapstr-j.tbl",
+        "bytes": 1851,
+        "sha256": "70EFB7A2A15A1D2B87D219365A749F42963E54FFDB55F585D8B38E56A8F1F91B"
+      },
+      "physical_rows": 56,
+      "token_bytes": 1621,
+      "hash_delimiter_bytes": 120,
+      "eol_bytes": 110,
+      "covered_bytes": 1851,
+      "all_rows_tokens_intervals_match": true
+    },
+    {
+      "candidate": "LTmapstr-k.tbl",
+      "source_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00245-LTmapstr-k.tbl",
+        "bytes": 2584,
+        "sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+      },
+      "physical_rows": 68,
+      "token_bytes": 2236,
+      "hash_delimiter_bytes": 212,
+      "eol_bytes": 136,
+      "covered_bytes": 2584,
+      "all_rows_tokens_intervals_match": true
+    }
+  ],
+  "total_physical_rows": 268,
+  "total_source_bytes": 8666,
+  "synthetic_fixture_hex": "09200d0a330d2b303035234123230a20093b30303523696e616374697665230d0a303035238500ff23783b790d6e6f206578697374236e6f206578736973740a2d31235a",
+  "synthetic_checks_only_offline": true,
+  "prior_primary_pins_preserved": 23,
+  "raw_decoded_pins_preserved": 10,
+  "archive_reextract_codec_redecode_PE_Native_GUI_provider_SQL": false,
+  "Batch20_Batch21_PASS_replayed": false,
+  "runtime_resource_binding_qualified": false
+}

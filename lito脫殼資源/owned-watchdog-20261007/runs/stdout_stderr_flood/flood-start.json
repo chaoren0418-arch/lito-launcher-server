@@ -1,0 +1,16 @@
+{
+  "mode": "flood",
+  "identity": {
+    "pid": 17784,
+    "creation_filetime_100ns": 134358245020842790,
+    "creation_time_utc": "2026-10-07T05:28:22.084279+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "argv": [
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "flood"
+  ],
+  "source_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+  "source_sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D",
+  "start_monotonic": 418460.656
+}

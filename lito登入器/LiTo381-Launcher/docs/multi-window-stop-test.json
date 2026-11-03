@@ -1,0 +1,124 @@
+{
+  "run": "multi-window-1791858459006518200",
+  "no_player_sql_writes": true,
+  "first_pid": 19492,
+  "second_pid": 29660,
+  "single_server_pid": 18260,
+  "both_resources_ready": true,
+  "repeat_additions": [
+    {
+      "pid": 23992,
+      "resources_ready": true,
+      "closed": true
+    },
+    {
+      "pid": 26972,
+      "resources_ready": true,
+      "closed": true
+    }
+  ],
+  "stop_all_closed_both_clients_and_server": true,
+  "helper_exit": 0,
+  "cleanup_verified": true,
+  "additional_clients": [
+    {
+      "run": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-3",
+      "cleanup_verified": true,
+      "unique_native_mutex": "LiTod8b2282f9e77",
+      "existing_window_guard": "0x480326:7409->EB09",
+      "mutex_guard": "0x480AB3:7407->EB07",
+      "probe_lifetime_identity": {
+        "pid": 9624,
+        "birth_filetime": 134363321082738957,
+        "identity_source": "retained Popen process handle"
+      },
+      "probe_identity": {
+        "pid": 9624,
+        "birth_filetime": 134363321082738957,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+      },
+      "native_identity": {
+        "pid": 23992,
+        "parent_pid": 9624,
+        "path": "D:\\lineage\u958b\u767c\\0-\u5ba2\u6236\u7aef\\LiTo.bin",
+        "filetime": 134363321084998634,
+        "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+      },
+      "shared_resources_ready": {
+        "pid": 23992,
+        "profile": "tw13081901-v1",
+        "base_count": 30000,
+        "total_count": 30285,
+        "native_cleanup_complete": true
+      },
+      "exit_code": 0
+    },
+    {
+      "run": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-4",
+      "cleanup_verified": true,
+      "unique_native_mutex": "LiToe59630d7a87a",
+      "existing_window_guard": "0x480326:7409->EB09",
+      "mutex_guard": "0x480AB3:7407->EB07",
+      "probe_lifetime_identity": {
+        "pid": 3612,
+        "birth_filetime": 134363321315880331,
+        "identity_source": "retained Popen process handle"
+      },
+      "probe_identity": {
+        "pid": 3612,
+        "birth_filetime": 134363321315880331,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+      },
+      "native_identity": {
+        "pid": 26972,
+        "parent_pid": 3612,
+        "path": "D:\\lineage\u958b\u767c\\0-\u5ba2\u6236\u7aef\\LiTo.bin",
+        "filetime": 134363321317757526,
+        "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+      },
+      "shared_resources_ready": {
+        "pid": 26972,
+        "profile": "tw13081901-v1",
+        "base_count": 30000,
+        "total_count": 30285,
+        "native_cleanup_complete": true
+      },
+      "exit_code": 1
+    },
+    {
+      "run": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-2",
+      "cleanup_verified": true,
+      "unique_native_mutex": "LiTo76ed13352d18",
+      "existing_window_guard": "0x480326:7409->EB09",
+      "mutex_guard": "0x480AB3:7407->EB07",
+      "probe_lifetime_identity": {
+        "pid": 27396,
+        "birth_filetime": 134363320844837867,
+        "identity_source": "retained Popen process handle"
+      },
+      "probe_identity": {
+        "pid": 27396,
+        "birth_filetime": 134363320844837867,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+      },
+      "native_identity": {
+        "pid": 29660,
+        "parent_pid": 27396,
+        "path": "D:\\lineage\u958b\u767c\\0-\u5ba2\u6236\u7aef\\LiTo.bin",
+        "filetime": 134363320846670081,
+        "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+      },
+      "shared_resources_ready": {
+        "pid": 29660,
+        "profile": "tw13081901-v1",
+        "base_count": 30000,
+        "total_count": 30285,
+        "native_cleanup_complete": true
+      },
+      "exit_code": 1
+    }
+  ]
+}

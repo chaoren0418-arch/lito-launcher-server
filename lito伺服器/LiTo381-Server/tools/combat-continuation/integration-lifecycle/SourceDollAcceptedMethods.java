@@ -1,0 +1,13 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+public final class SourceDollAcceptedMethods {
+ static final String P="local/lito381/server/",PC=P+"ClientSession",D=P+"NativeSourceDamageDisplay",N=P+"NativeSourceDollAccepted";
+ static final List<String>TARGETS=List.of(PC,D,D+"$Plan");
+ static void patch(ClassNode c){
+  if(c.name.equals(D+"$Plan")){c.fields.add(new FieldNode(ACC_VOLATILE,"nativeSourceDollPending","Ljava/lang/Object;",null,null));return;}
+  if(c.name.equals(D)){var m=c.methods.stream().filter(x->x.name.equals("accepted")).findFirst().orElseThrow();var x=new InsnList();x.add(new VarInsnNode(ALOAD,0));x.add(new MethodInsnNode(INVOKESTATIC,N,"completed","(L"+P+"NativePlayerCommit$Frame;)V",false));m.instructions.insert(x);return;}
+  var m=c.methods.stream().filter(x->x.name.equals("nativeSourceControlledOriginal_attack")).findFirst().orElseThrow();int physical=0,doll=0;
+  for(var node:m.instructions.toArray())if(node instanceof MethodInsnNode call){if(call.owner.equals(D)&&call.name.equals("physical")){m.instructions.insertBefore(call,new VarInsnNode(ALOAD,171));call.owner=N;call.desc=call.desc.substring(0,call.desc.indexOf(')'))+"L"+P+"NativeMagicDollEffects$AttackProc;)V";physical++;}else if(call.owner.equals(P+"NativeSourceKiringkuAdmission")&&call.name.equals("doll")){call.owner=N;call.name="submitted";doll++;}}
+  if(physical!=1||doll!=3)throw new AssertionError("exact BATTLE physical / three following bridges "+physical+"/"+doll);
+ }
+ public static void main(String[]a)throws Exception{var urls=new ArrayList<java.net.URL>();urls.add(Path.of(a[1]).toUri().toURL());try(var files=Files.list(Path.of(a[3]))){for(var p:files.filter(p->p.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var hierarchy=new java.net.URLClassLoader(urls.toArray(java.net.URL[]::new),ClassLoader.getPlatformClassLoader());var base=new JarFile(a[1])){FreezeAcceptedMethods.hierarchy=hierarchy;for(var name:TARGETS){var c=FreezeAcceptedMethods.read(base,name);patch(c);var canonical=new ClassNode();new ClassReader(FreezeAcceptedMethods.bytes(c,true)).accept(canonical,ClassReader.SKIP_DEBUG|ClassReader.EXPAND_FRAMES);var bytes=FreezeAcceptedMethods.bytes(canonical,false);if(a[0].equals("splice")){var p=Path.of(a[2]).resolve(name+".class");Files.createDirectories(p.getParent());Files.write(p,bytes);}else try(var next=new JarFile(a[2])){if(!Arrays.equals(bytes,FreezeAcceptedMethods.bytes(FreezeAcceptedMethods.read(next,name),false)))throw new AssertionError(name);}}}System.out.println("PASS accepted-PC-doll bounded physical/bridge/proof ports");}
+}

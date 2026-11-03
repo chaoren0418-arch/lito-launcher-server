@@ -1,0 +1,21 @@
+{
+  "run": "class-lobby-fixture-1791852053709872400",
+  "picker_ids": 21,
+  "native_target_packet_bytes": 11,
+  "summary_cycles": [
+    {
+      "result": 5,
+      "summary": 2,
+      "native_confirm_lobby": 1,
+      "world": 4
+    },
+    {
+      "result": 5,
+      "summary": 2,
+      "native_confirm_lobby": 1,
+      "world": 4
+    }
+  ],
+  "animation": [],
+  "no_player_sql_writes": true
+}

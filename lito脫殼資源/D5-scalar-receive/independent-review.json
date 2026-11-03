@@ -1,0 +1,1114 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive-contract.json",
+    "bytes": 34490,
+    "sha256": "4BBBEEB521ECF20E6B27D78F03B25F503A5766412DA9E3FBEE3DC11A7C389BAA"
+  },
+  "all_match": true,
+  "check_count": 243,
+  "checks": [
+    {
+      "check": "pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin server-room-D5-CF-consumer-supplement.json",
+      "match": true
+    },
+    {
+      "check": "pin computed-bytefootprint-examples.json",
+      "match": true
+    },
+    {
+      "check": "pin finite-verification.json",
+      "match": true
+    },
+    {
+      "check": "pin instruction-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin scalar-effect-unknown-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin server-builder-caller-boundary.json",
+      "match": true
+    },
+    {
+      "check": "pin wire-contracts.json",
+      "match": true
+    },
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "no newPErange orbin",
+      "match": true
+    },
+    {
+      "check": "source pin inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "index pin inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "raw PE inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "source interval inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "complete alignment inherited_D5_header_gate",
+      "match": true
+    },
+    {
+      "check": "source pin D5_subtype_jump_table",
+      "match": true
+    },
+    {
+      "check": "index pin D5_subtype_jump_table",
+      "match": true
+    },
+    {
+      "check": "raw PE D5_subtype_jump_table",
+      "match": true
+    },
+    {
+      "check": "source interval D5_subtype_jump_table",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset D5_subtype_jump_table",
+      "match": true
+    },
+    {
+      "check": "source pin subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "index pin subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "raw PE subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source interval subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "complete alignment subtype4_entry_destination_and_noUI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source pin subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "index pin subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "raw PE subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source interval subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "complete alignment subtype6_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source pin subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "index pin subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "raw PE subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source interval subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "complete alignment subtype7_entry_destination_and_UI_tail_jump",
+      "match": true
+    },
+    {
+      "check": "source pin subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "index pin subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "raw PE subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "source interval subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "complete alignment subtype8_entry_destination_UI_tail_fallthrough",
+      "match": true
+    },
+    {
+      "check": "source pin shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "index pin shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "raw PE shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "source interval shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "complete alignment shared_6_7_8_c_read_RET_UIedge_and_return",
+      "match": true
+    },
+    {
+      "check": "source pin subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "index pin subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "raw PE subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "source interval subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "complete alignment subtype9_entry_destination_noUI_fallthrough",
+      "match": true
+    },
+    {
+      "check": "source pin shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "index pin shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "raw PE shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "source interval shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "complete alignment shared_4_9_c_read_and_noUI_return",
+      "match": true
+    },
+    {
+      "check": "source pin existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "index pin existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "raw PE existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "source interval existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "complete alignment existing_direct_UIcallee_is_single_RET",
+      "match": true
+    },
+    {
+      "check": "source pin c_literal",
+      "match": true
+    },
+    {
+      "check": "index pin c_literal",
+      "match": true
+    },
+    {
+      "check": "raw PE c_literal",
+      "match": true
+    },
+    {
+      "check": "source interval c_literal",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset c_literal",
+      "match": true
+    },
+    {
+      "check": "source pin existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "index pin existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "raw PE existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "source interval existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "complete alignment existing_reader_dispatch_prefix",
+      "match": true
+    },
+    {
+      "check": "source pin existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "index pin existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "raw PE existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "source interval existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "complete alignment existing_c_BYTEstore",
+      "match": true
+    },
+    {
+      "check": "source pin existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "index pin existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "raw PE existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "source interval existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "complete alignment existing_reader_cursor_return",
+      "match": true
+    },
+    {
+      "check": "source pin reader_jump_targets",
+      "match": true
+    },
+    {
+      "check": "index pin reader_jump_targets",
+      "match": true
+    },
+    {
+      "check": "raw PE reader_jump_targets",
+      "match": true
+    },
+    {
+      "check": "source interval reader_jump_targets",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset reader_jump_targets",
+      "match": true
+    },
+    {
+      "check": "source pin reader_char_map",
+      "match": true
+    },
+    {
+      "check": "index pin reader_char_map",
+      "match": true
+    },
+    {
+      "check": "raw PE reader_char_map",
+      "match": true
+    },
+    {
+      "check": "source interval reader_char_map",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/fileoffset reader_char_map",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E77",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E7F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E8F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E91",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E97",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E9E",
+      "match": true
+    },
+    {
+      "check": "operand 004A9FA5",
+      "match": true
+    },
+    {
+      "check": "operand 004A9FAA",
+      "match": true
+    },
+    {
+      "check": "operand 004AA028",
+      "match": true
+    },
+    {
+      "check": "operand 004AA02D",
+      "match": true
+    },
+    {
+      "check": "operand 004AA02F",
+      "match": true
+    },
+    {
+      "check": "operand 004AA034",
+      "match": true
+    },
+    {
+      "check": "operand 004AA036",
+      "match": true
+    },
+    {
+      "check": "operand 004AA03B",
+      "match": true
+    },
+    {
+      "check": "operand 004AA03E",
+      "match": true
+    },
+    {
+      "check": "operand 004AA043",
+      "match": true
+    },
+    {
+      "check": "operand 004AA044",
+      "match": true
+    },
+    {
+      "check": "operand 004AA049",
+      "match": true
+    },
+    {
+      "check": "operand 004AA04C",
+      "match": true
+    },
+    {
+      "check": "operand 004A9030",
+      "match": true
+    },
+    {
+      "check": "operand 004AA055",
+      "match": true
+    },
+    {
+      "check": "operand 004AA056",
+      "match": true
+    },
+    {
+      "check": "operand 004AA05B",
+      "match": true
+    },
+    {
+      "check": "operand 004AA05E",
+      "match": true
+    },
+    {
+      "check": "operand 004AA063",
+      "match": true
+    },
+    {
+      "check": "operand 004AA064",
+      "match": true
+    },
+    {
+      "check": "operand 004AA069",
+      "match": true
+    },
+    {
+      "check": "operand 004AA070",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A8D",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A92",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A93",
+      "match": true
+    },
+    {
+      "check": "operand 004A2B69",
+      "match": true
+    },
+    {
+      "check": "operand 004A2B70",
+      "match": true
+    },
+    {
+      "check": "branch 004A9E7A",
+      "match": true
+    },
+    {
+      "check": "branch 004A9E84",
+      "match": true
+    },
+    {
+      "check": "branch 004A9E91",
+      "match": true
+    },
+    {
+      "check": "branch 004A9E9E",
+      "match": true
+    },
+    {
+      "check": "branch 004A9FAA",
+      "match": true
+    },
+    {
+      "check": "branch 004AA02D",
+      "match": true
+    },
+    {
+      "check": "branch 004AA034",
+      "match": true
+    },
+    {
+      "check": "fixedUIhelper C3RET",
+      "match": true
+    },
+    {
+      "check": "five dispatchentries",
+      "match": true
+    },
+    {
+      "check": "c format mapsdirectBYTEhandler",
+      "match": true
+    },
+    {
+      "check": "typedc preserveswidth exactlyBYTE",
+      "match": true
+    },
+    {
+      "check": "fullpath bytes subtype4",
+      "match": true
+    },
+    {
+      "check": "calls subtype4",
+      "match": true
+    },
+    {
+      "check": "UI edge subtype4",
+      "match": true
+    },
+    {
+      "check": "return subtype4",
+      "match": true
+    },
+    {
+      "check": "varargs subtype4",
+      "match": true
+    },
+    {
+      "check": "no domainmask orconversion subtype4",
+      "match": true
+    },
+    {
+      "check": "matrix BYTEdestination subtype4",
+      "match": true
+    },
+    {
+      "check": "producer/GUI/ACK unqualified subtype4",
+      "match": true
+    },
+    {
+      "check": "firstunknowncallee none withinknownfinitepaths subtype4",
+      "match": true
+    },
+    {
+      "check": "fullpath bytes subtype6",
+      "match": true
+    },
+    {
+      "check": "calls subtype6",
+      "match": true
+    },
+    {
+      "check": "UI edge subtype6",
+      "match": true
+    },
+    {
+      "check": "return subtype6",
+      "match": true
+    },
+    {
+      "check": "varargs subtype6",
+      "match": true
+    },
+    {
+      "check": "no domainmask orconversion subtype6",
+      "match": true
+    },
+    {
+      "check": "matrix BYTEdestination subtype6",
+      "match": true
+    },
+    {
+      "check": "producer/GUI/ACK unqualified subtype6",
+      "match": true
+    },
+    {
+      "check": "firstunknowncallee none withinknownfinitepaths subtype6",
+      "match": true
+    },
+    {
+      "check": "fullpath bytes subtype7",
+      "match": true
+    },
+    {
+      "check": "calls subtype7",
+      "match": true
+    },
+    {
+      "check": "UI edge subtype7",
+      "match": true
+    },
+    {
+      "check": "return subtype7",
+      "match": true
+    },
+    {
+      "check": "varargs subtype7",
+      "match": true
+    },
+    {
+      "check": "no domainmask orconversion subtype7",
+      "match": true
+    },
+    {
+      "check": "matrix BYTEdestination subtype7",
+      "match": true
+    },
+    {
+      "check": "producer/GUI/ACK unqualified subtype7",
+      "match": true
+    },
+    {
+      "check": "firstunknowncallee none withinknownfinitepaths subtype7",
+      "match": true
+    },
+    {
+      "check": "fullpath bytes subtype8",
+      "match": true
+    },
+    {
+      "check": "calls subtype8",
+      "match": true
+    },
+    {
+      "check": "UI edge subtype8",
+      "match": true
+    },
+    {
+      "check": "return subtype8",
+      "match": true
+    },
+    {
+      "check": "varargs subtype8",
+      "match": true
+    },
+    {
+      "check": "no domainmask orconversion subtype8",
+      "match": true
+    },
+    {
+      "check": "matrix BYTEdestination subtype8",
+      "match": true
+    },
+    {
+      "check": "producer/GUI/ACK unqualified subtype8",
+      "match": true
+    },
+    {
+      "check": "firstunknowncallee none withinknownfinitepaths subtype8",
+      "match": true
+    },
+    {
+      "check": "fullpath bytes subtype9",
+      "match": true
+    },
+    {
+      "check": "calls subtype9",
+      "match": true
+    },
+    {
+      "check": "UI edge subtype9",
+      "match": true
+    },
+    {
+      "check": "return subtype9",
+      "match": true
+    },
+    {
+      "check": "varargs subtype9",
+      "match": true
+    },
+    {
+      "check": "no domainmask orconversion subtype9",
+      "match": true
+    },
+    {
+      "check": "matrix BYTEdestination subtype9",
+      "match": true
+    },
+    {
+      "check": "producer/GUI/ACK unqualified subtype9",
+      "match": true
+    },
+    {
+      "check": "firstunknowncallee none withinknownfinitepaths subtype9",
+      "match": true
+    },
+    {
+      "check": "only678through3B/4C",
+      "match": true
+    },
+    {
+      "check": "oneBYTE footprint subtype4",
+      "match": true
+    },
+    {
+      "check": "computed7body9frame subtype4",
+      "match": true
+    },
+    {
+      "check": "oneBYTE footprint subtype6",
+      "match": true
+    },
+    {
+      "check": "computed7body9frame subtype6",
+      "match": true
+    },
+    {
+      "check": "oneBYTE footprint subtype7",
+      "match": true
+    },
+    {
+      "check": "computed7body9frame subtype7",
+      "match": true
+    },
+    {
+      "check": "oneBYTE footprint subtype8",
+      "match": true
+    },
+    {
+      "check": "computed7body9frame subtype8",
+      "match": true
+    },
+    {
+      "check": "oneBYTE footprint subtype9",
+      "match": true
+    },
+    {
+      "check": "computed7body9frame subtype9",
+      "match": true
+    },
+    {
+      "check": "sourcebuilderlayout only",
+      "match": true
+    },
+    {
+      "check": "sourcehelper index map",
+      "match": true
+    },
+    {
+      "check": "selectedwire scope not runtimewitness",
+      "match": true
+    },
+    {
+      "check": "wire knownfields subtype4",
+      "match": true
+    },
+    {
+      "check": "wire knownfields subtype6",
+      "match": true
+    },
+    {
+      "check": "wire knownfields subtype7",
+      "match": true
+    },
+    {
+      "check": "wire knownfields subtype8",
+      "match": true
+    },
+    {
+      "check": "wire knownfields subtype9",
+      "match": true
+    },
+    {
+      "check": "no newwire/opcode/correction",
+      "match": true
+    },
+    {
+      "check": "no newJava packetsrequested",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    },
+    {
+      "check": "no dynamicframes output",
+      "match": true
+    }
+  ],
+  "new_PE_ranges": 0,
+  "necessary_reused_raw_slices": 16,
+  "distinct_reused_raw_pins": 7,
+  "instruction_assertions": 33,
+  "aligned_in_slice_branches": 7,
+  "finite_complete_paths": [
+    {
+      "subtype": 4,
+      "instruction_VAs": [
+        "004A9FA5",
+        "004A9FAA",
+        "004AA05B",
+        "004AA05E",
+        "004AA063",
+        "004AA064",
+        "004AA069",
+        "004AA06C",
+        "004AA06D",
+        "004AA06F",
+        "004AA070"
+      ],
+      "path_bytes": 32,
+      "calls": [
+        "004AA064"
+      ],
+      "all_direct_callees_qualified": true
+    },
+    {
+      "subtype": 6,
+      "instruction_VAs": [
+        "004AA028",
+        "004AA02D",
+        "004AA03B",
+        "004AA03E",
+        "004AA043",
+        "004AA044",
+        "004AA049",
+        "004AA04C",
+        "004AA051",
+        "004AA052",
+        "004AA054",
+        "004AA055"
+      ],
+      "path_bytes": 34,
+      "calls": [
+        "004AA044",
+        "004AA04C"
+      ],
+      "all_direct_callees_qualified": true
+    },
+    {
+      "subtype": 7,
+      "instruction_VAs": [
+        "004AA02F",
+        "004AA034",
+        "004AA03B",
+        "004AA03E",
+        "004AA043",
+        "004AA044",
+        "004AA049",
+        "004AA04C",
+        "004AA051",
+        "004AA052",
+        "004AA054",
+        "004AA055"
+      ],
+      "path_bytes": 34,
+      "calls": [
+        "004AA044",
+        "004AA04C"
+      ],
+      "all_direct_callees_qualified": true
+    },
+    {
+      "subtype": 8,
+      "instruction_VAs": [
+        "004AA036",
+        "004AA03B",
+        "004AA03E",
+        "004AA043",
+        "004AA044",
+        "004AA049",
+        "004AA04C",
+        "004AA051",
+        "004AA052",
+        "004AA054",
+        "004AA055"
+      ],
+      "path_bytes": 32,
+      "calls": [
+        "004AA044",
+        "004AA04C"
+      ],
+      "all_direct_callees_qualified": true
+    },
+    {
+      "subtype": 9,
+      "instruction_VAs": [
+        "004AA056",
+        "004AA05B",
+        "004AA05E",
+        "004AA063",
+        "004AA064",
+        "004AA069",
+        "004AA06C",
+        "004AA06D",
+        "004AA06F",
+        "004AA070"
+      ],
+      "path_bytes": 27,
+      "calls": [
+        "004AA064"
+      ],
+      "all_direct_callees_qualified": true
+    }
+  ],
+  "scalar_branches_complete": 5,
+  "direct_RET_UI_edge_subtypes": [
+    6,
+    7,
+    8
+  ],
+  "no_UI_edge_subtypes": [
+    4,
+    9
+  ],
+  "offline_bytefootprint_examples": 5,
+  "dynamic_scalar_witnesses": 0,
+  "prior_primary_pins_preserved": 26,
+  "Native_GUI_provider_SQL_Java_or_old_PASS": false,
+  "producer_ACK_ready_owner_source_GUI_qualified": false
+}

@@ -1,0 +1,36 @@
+第八批：技能面板主 frame 與座標合約
+
+主要入口：../skill-pane-frame-coordinate-contract.json
+固定 PE SHA：4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9。
+新增 57 段 raw：48 code、9 data；81 項指令斷言。每段都有 VA/RVA/raw offset/bytes/SHA，所有 code 段完整 decode 至指令邊界。ASM 僅提供標籤和導航，固定 PE bytes 為權威。第三至第七批主契約與 packet pins 保持不變；未重跑先前 PASS icon/packet 測試。
+
+834BD4 的靜態來源與 +E98 已閉合
+CRT slot 00502194→004D4930，直接 thunk 004D4940 傳入 834BD4。004D496D 申請 0x7B08 bytes，004D497A 發布 table pointer；loop 建立 7874 個 12-byte objects，每項以數字 ID 呼叫 004D4D40，004D49B2 發布 entry。
+Object +0 是 4FA734 vtable，virtual0=4D4D90；+4 初始為 0，之後快取 IMG payload pointer；+8 保存 ID。+E98=4*934，因此不是另一種 layout struct，而是 ID934 的 IMG object。004D49E0 釋放 entries/table 並清零 pointer，004D49D0 註冊 cleanup callback。固定 PE snapshot 的 834BD4 是 0，不能當成 runtime 完成初始化的證據。
+
+主 frame 是 934，附加圖層是 933
+第六批 pane_render raw 內，004CCC3B 讀 +E98，004CCC96 呼叫 4BA220 畫 934，origin 是 child origin+G。前段 +E94 是 933，依 6328C0 條件，以 child origin+G+(8,10) 經 4B9F60 或 [83154C] 繪製。稍後 004CCCBD 另讀 +E9C（935），保留為本批範圍以外的圖層邊界。未抽取 933 或 935，未由檔案大小推算其尺寸。
+
+934 名稱與 namespace
+4D4D90 用 object+8 組成數字 IMG 名稱。64B6DC 的 1/2/3/4/5 對應 934e.img/934.img/934c.img/934j.img/934h.img，其他值用 934.img；variant 失敗再試 default，已快取則不重載。
+沿用第五批 43FFC0 的 ASCII sum&15：934.img 為 523&15=11，先查 Sprite11 IMG handle；現有封存 indices 無此 shard 成員。Base handle 64798C 是 Sprite clone；42EA50 比對此 handle 後，先用 6479A0 的 native LiTo\LTSurf 遞迴讀取，再退回 shared Sprite。這是可見靜態呼叫優先序，實際 I/O、cache、variant 與 load success 未 live 觀測。42EA50 其餘 cipher/API body 不延伸逆向。
+
+本批唯一新抽取資源
+Native LTsurf.idx row1557，934.img，offset91239391，119654 bytes。
+IDX SHA：C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF。
+PAK SHA：42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E。
+Member SHA：1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7。
+Header signed width=207、height=289、flag=1、key=324C；8+207*289*2 恰為完整大小。抽取來源檢查只執行一次；後續 generator 僅讀已抽取的 owned file。Shared Sprite row90927/offset382976642/119654 bytes 僅作 index 候選，未讀取該 pak payload。frame934-source-preview.png 是 RGB555/keyed 資源預覽，不是原生畫面或 GUI oracle。
+
+尺寸與條件座標
+Constructor tail 4CC611..4CC7A2 用 934 header 建立 drag geometry，並以 B=640-width 平移 child origin 與 owner rectangle。若這份 native 934 成功載入且 drag=G=0，B=433，child origin=(433,0)，owner rect=(470,43,607,248)，grid origin=(470,43)，main934 draw=(433,0)，additional933 draw=(441,10)。4CC330 drag callback 同步平移 child origin 與 owner rectangle，不改 G。
+75A998/75A99C 是可變 draw translation。新增 50 個 named direct stores、25 個局部 raw blocks：可見路徑有 reset、暫存先前 globals 後零化再還原、複製 75A9A0/A4、依方向 tuple 加位移。46DFB0 還原的是先前 globals，不是 incoming coordinate arguments。4C22A0 的 ESI source 保留 upstream control-flow 邊界；不列為已證明固定零的 reset。方向來源 834EE4+11、834C68/CA8/CE8/D28/D68 與 saved origins 的 upstream writers 到此停止。
+
+輸入與 registry
+完整 4CCD40 用傳入 x/y 直接比對 child origin..origin+(934 width,height) 的 half-open bounds，並把相同座標轉給 child controls 41B420 或 owner virtual+20=4CD730。完整 pane handler、既有 owner gate/hit helper 均未扣 G；繪圖則會加 G。必要上一層 46D8A0 接受 message ECX、wparam EDX、stack x/y；46DF76 向四個 pane 的 virtual+2C 發送。完整 OS normalization、其他分支中的座標穩定性、render/input G epoch 未閉合。screen=input+G 是條件方程，不能當成已驗收的原生點擊位置。
+836B54..60 為四格 registry；slot0 在最前，WORLD render 3→0，input 0→3 且 handled 即停。4EBB70 只將已存在的 pane 移到 slot0。4EBBD0 以 NULL 清全部；existing pointer 呼叫 virtual+24 並移除壓縮；new pointer 先處理最後一格、shift 後放 slot0，再呼叫新 pane virtual+20。4EBEB0 tailjmp、4EBEC0 直接 caller，以及 pane input 4CCE29/4CCE3A 有 raw witnesses；4EC8E4 teardown 清四格。Live 834884 是否已註冊未觀測；constructor publication 不能證明 registry membership。
+
+交接與仍未驗收
+Modern 目前用 shared Sprite09/2057.img（193x282）、800 寬、5/4 scale、inset27/34、cell35；native 的 main934/sizing/input 與 additional933 是不同角色。modern-comparison.json 提供唯讀 source pin；本組未修改 Modern。
+錯誤分支 4CC660/4CC6A2/4CC73B 呼叫 05AD0986；mapping 顯示不在 fixed PE raw range，明確停在 callsite，未補 private body。Normal resource binding/座標推導依成功載入而成立。
+本批有限靜態契約完成；live initialized table/payload、allocation/I/O success、G epoch、registry membership、OS input、原生 GUI/首大廳/整體脫殼仍未驗收。沒有 native/observer launch、live process、注入、native input 或 native screenshot。沒有其他組檔案修改、S0 policy 工作。新 wire 差異0、新 opcode0。

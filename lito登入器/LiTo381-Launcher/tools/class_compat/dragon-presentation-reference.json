@@ -1,0 +1,15 @@
+{
+  "source": "0-客戶端/Tile.pak/effectlist2.xml",
+  "entry": "<effect id=\"107\" icon=\"3080\" offIcon=\"5302\" duration=\"1800\" group=\"0\" graphic=\"6531\" startMsg=\"1329\" startMsgName=\"DRAGON_SKIN_S\" endMsg=\"2205\" endMsgName=\"DRAGON_SKIN_E\" kind=\"defense\"/>",
+  "raw_entry_sha256": "6de9938c07d28ef8bfc6f8ae61a1aac786d64604574e4e44aa71c84f9395bf55",
+  "decoded_sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130",
+  "reference_bin_sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c",
+  "foe_marker_reference": "0x531931 => entity+0x124=3",
+  "triple_marker_reference": "0x53190B => entity+0x124=4",
+  "duration_reference": "0x5AEA2A => positive counter; actions21,5,12,51,25,84,47; ceil(duration/3)",
+  "native_lito_field": "entity+0x11c",
+  "native_patches": [
+    "0x4ADE03",
+    "0x4E8879"
+  ]
+}

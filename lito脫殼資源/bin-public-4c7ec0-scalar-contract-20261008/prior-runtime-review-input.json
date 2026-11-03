@@ -1,0 +1,12 @@
+{
+  "pin": {
+    "path": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin-automated-native-public-session-20261008-fresh5-assessment.json",
+    "bytes": 2002,
+    "sha256": "7F01DC836E1F3C2330D0183C171A948D09BCCDA22A126CA2DDC4991185D2AA7B"
+  },
+  "decision": "accepted",
+  "scope": "Actual automated Start/preflight/entry and pre-import wrapper contract failure; no native behavior",
+  "actual_native_start_evidenced": false,
+  "native_final_cleanup_accepted": false,
+  "use": "Input closure only; retired fresh5 not polled, runtime evidence not replayed."
+}

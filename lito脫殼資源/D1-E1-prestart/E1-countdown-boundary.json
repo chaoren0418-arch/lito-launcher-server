@@ -1,0 +1,29 @@
+{
+  "dispatch": "Primary mode64BBD4==4/signedphase>=3→4B2F97; fallbackmap50hex→4B3200pureepiloguereturn; unlikeD1 bothmaps handle",
+  "phase3_6": {
+    "sound": "count==1 ECX2776 else2775; EDX7F→4C8790 JMP4C85E0 depthstop",
+    "message": "834B90 signedcount>4C picks*[834B94]+130, else63D618; unsignedcount&FF→458C60 with5034A0 color; external773F6680 format then458BB0 ifresult>0; initializedresource/UI/externalunknown",
+    "phase_write": "noneinE1handler",
+    "timer": "notqueuedwhilephase remains3/6",
+    "post_callback_phase": "re-read64AF98 aftercalls; callbacks couldchangestate to4, thenphase4queuepossible; nofrozenstateassumption"
+  },
+  "phase4": {
+    "count": "n=u8no0..5rangecheck",
+    "number_events": "i=0..n-1:4D65F0(delay=i*1000,callback471E30,param=n-i)",
+    "special_event": "ifn==5 delay5000 callback471E60 param0; else delayn*1000 callback471E80 param0",
+    "final_event": "delay(n+1)*1000 callback471E30 param-1",
+    "n0": "nofirstloop; queues471E80 at0 and471E30(-1)at1000. NoWORLD/start orqueuecancelinstruction.",
+    "callbacks": "471E30 storesCL→62C478, signedCL>0 and64B090==0 sound2777;471E60 storesFE→62C478 sound2778 if64B090==0;471E80 storesFD sound2779if64B090==0. Nonecallsphase/setworld/packetwriter.",
+    "queue_helper": "existingcomplete4D65F0 gets4D69F0time, addsdelay andinserts12byte{due,callback,param}into834C08 withcount834C00/cap834C04, allocating/copyingifneeded. Noqueueclearing/callbackinvocation here.",
+    "queue_unknowns": [
+      "clock4D69F0 existing31byteprefix/private05010863; noactualtimeauthority",
+      "allocator/free/external77409100 outcomes",
+      "initializedqueuecapacity/order/epoch",
+      "timerpump invocation/removal/clearing/cancellation notqualified; noothercallerdecompilation"
+    ],
+    "scope": "OtherNativephase4 presentation schedule classifiedseparately fromroom3/6; notserverCOUNTDOWN orworldstart. NoE0startpacket invented."
+  },
+  "E1_zero": "Java cancellation source/ILmeaning separatefromNative count0; Native3/6 chooses2775/message0, no directphase2reset; phase4n0queuespresentationevents. No real0frame in5ED/49A.",
+  "local_send": "No directpacketwriter inE1handler,these3callbacks,queuehelper,soundthunkorformatwrapper; deeperopaquehelpersnotqualified. Adjacentunreferencedfunctionsnotadopted.",
+  "freshness": "Noepoch/room/nonce/timestamp. Orderedexplicitadapter currentroommetadata; repeats/races maynotbeidentifiedfromwire. No localtimerexpiry syntheticWORLD."
+}

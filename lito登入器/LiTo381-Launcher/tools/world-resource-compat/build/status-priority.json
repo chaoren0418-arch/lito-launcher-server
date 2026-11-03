@@ -1,0 +1,795 @@
+{
+  "status": "passed",
+  "binary_sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c",
+  "xml_sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130",
+  "kind_names": [
+    "slow",
+    "curse",
+    "paralyse",
+    "einhasad",
+    "security",
+    "dragon",
+    "magic doll",
+    "cook",
+    "speed",
+    "attack",
+    "defense",
+    "neutrality",
+    "legacy"
+  ],
+  "keys": [
+    {
+      "slot": 0,
+      "effect": 0,
+      "kind": "speed",
+      "priority": 5,
+      "key": 5
+    },
+    {
+      "slot": 1,
+      "effect": 1,
+      "kind": "slow",
+      "priority": 0,
+      "key": 0
+    },
+    {
+      "slot": 2,
+      "effect": 2,
+      "kind": "cook",
+      "priority": 6,
+      "key": 6
+    },
+    {
+      "slot": 3,
+      "effect": 3,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 4,
+      "effect": 4,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 5,
+      "effect": 5,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 6,
+      "effect": 6,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 7,
+      "effect": 7,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 8,
+      "effect": 8,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 9,
+      "effect": 9,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 10,
+      "effect": 10,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 11,
+      "effect": 11,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 12,
+      "effect": 12,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 13,
+      "effect": 13,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 14,
+      "effect": 14,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 15,
+      "effect": 15,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 16,
+      "effect": 16,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 17,
+      "effect": 17,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 18,
+      "effect": 18,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 19,
+      "effect": 19,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 20,
+      "effect": 20,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 21,
+      "effect": 21,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 22,
+      "effect": 22,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 23,
+      "effect": 23,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 24,
+      "effect": 24,
+      "kind": "speed",
+      "priority": 6,
+      "key": 6
+    },
+    {
+      "slot": 25,
+      "effect": 25,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 26,
+      "effect": 26,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 27,
+      "effect": 27,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 28,
+      "effect": 28,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 29,
+      "effect": 29,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 30,
+      "effect": 30,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 31,
+      "effect": 31,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 32,
+      "effect": 32,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 33,
+      "effect": 33,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 34,
+      "effect": 34,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 35,
+      "effect": 35,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 36,
+      "effect": 36,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 37,
+      "effect": 37,
+      "kind": "speed",
+      "priority": 6,
+      "key": 6
+    },
+    {
+      "slot": 38,
+      "effect": 38,
+      "kind": "cook",
+      "priority": 8,
+      "key": 8
+    },
+    {
+      "slot": 39,
+      "effect": 39,
+      "kind": "cook",
+      "priority": 4,
+      "key": 4
+    },
+    {
+      "slot": 40,
+      "effect": 40,
+      "kind": "neutrality",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 41,
+      "effect": 41,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 42,
+      "effect": 42,
+      "kind": "speed",
+      "priority": 6,
+      "key": 6
+    },
+    {
+      "slot": 43,
+      "effect": 43,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 44,
+      "effect": 44,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 45,
+      "effect": 45,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 46,
+      "effect": 46,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 47,
+      "effect": 47,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 48,
+      "effect": 48,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 49,
+      "effect": 49,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 50,
+      "effect": 50,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 51,
+      "effect": 51,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 52,
+      "effect": 52,
+      "kind": "slow",
+      "priority": 0,
+      "key": 0
+    },
+    {
+      "slot": 53,
+      "effect": 53,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 54,
+      "effect": 54,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 55,
+      "effect": 55,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 56,
+      "effect": 56,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 57,
+      "effect": 57,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 58,
+      "effect": 58,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 59,
+      "effect": 59,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 60,
+      "effect": 60,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 61,
+      "effect": 61,
+      "kind": "paralyse",
+      "priority": 0,
+      "key": 2
+    },
+    {
+      "slot": 62,
+      "effect": 62,
+      "kind": "paralyse",
+      "priority": 0,
+      "key": 2
+    },
+    {
+      "slot": 63,
+      "effect": 63,
+      "kind": "paralyse",
+      "priority": 0,
+      "key": 2
+    },
+    {
+      "slot": 64,
+      "effect": 64,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 65,
+      "effect": 65,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 66,
+      "effect": 66,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 67,
+      "effect": 67,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 68,
+      "effect": 68,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 69,
+      "effect": 69,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 70,
+      "effect": 70,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 71,
+      "effect": 71,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 72,
+      "effect": 72,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 73,
+      "effect": 73,
+      "kind": "speed",
+      "priority": 7,
+      "key": 7
+    },
+    {
+      "slot": 74,
+      "effect": 74,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 75,
+      "effect": 75,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 77,
+      "effect": 107,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 78,
+      "effect": 116,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 79,
+      "effect": 118,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 80,
+      "effect": 120,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 81,
+      "effect": 121,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 82,
+      "effect": 123,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 83,
+      "effect": 126,
+      "kind": "defense",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 84,
+      "effect": 128,
+      "kind": "attack",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 85,
+      "effect": 129,
+      "kind": "curse",
+      "priority": 0,
+      "key": 1
+    },
+    {
+      "slot": 86,
+      "effect": 130,
+      "kind": "neutrality",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 87,
+      "effect": 82,
+      "kind": "magic doll",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 88,
+      "effect": 92,
+      "kind": "magic doll",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 89,
+      "effect": 512,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 90,
+      "effect": 513,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 91,
+      "effect": 514,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 92,
+      "effect": 515,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 93,
+      "effect": 516,
+      "kind": "cook",
+      "priority": 0,
+      "key": 100
+    },
+    {
+      "slot": 94,
+      "effect": 91,
+      "kind": "cook",
+      "priority": 8,
+      "key": 8
+    },
+    {
+      "slot": 95,
+      "effect": 110,
+      "kind": "speed",
+      "priority": 6,
+      "key": 6
+    }
+  ],
+  "comparator_cases": 27075,
+  "consumer": {
+    "key": "0x510CB0",
+    "comparator": "0x510C50",
+    "mode_switch": "0x510BD0"
+  },
+  "mode": "XML priority, then native creation-order comparator; stable ties",
+  "not_ported": "TW user-toggle remaining-time ordering mode; independent optional UI command",
+  "candidate_order_verified": true,
+  "candidate_dll_sha256": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267",
+  "fixture_log_sha256": "c2949e5a33358abb0fe96bcfa6918467c647f15db371b598e39de9993d3cfb6f",
+  "candidate_order": [
+    52,
+    1,
+    85,
+    69,
+    67,
+    55,
+    53,
+    51,
+    50,
+    49,
+    48,
+    63,
+    62,
+    61,
+    39,
+    0,
+    95,
+    42,
+    37,
+    24,
+    2,
+    73,
+    94,
+    38,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    40,
+    43,
+    44,
+    45,
+    46,
+    47,
+    54,
+    56,
+    57,
+    58,
+    59,
+    60,
+    64,
+    65,
+    66,
+    68,
+    70,
+    71,
+    72,
+    74,
+    75,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    41
+  ]
+}

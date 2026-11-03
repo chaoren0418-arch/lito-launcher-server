@@ -1,0 +1,18 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Complete archive and state audit; this candidate adds a stateless helper only. */
+public final class CompanionRefSceneDelta {
+ static final String P="local/lito381/server/";
+ static ClassNode read(JarFile j,String n)throws Exception{var c=new ClassNode();new ClassReader(j.getInputStream(j.getJarEntry(n))).accept(c,ClassReader.SKIP_DEBUG|ClassReader.EXPAND_FRAMES);return c;}
+ static byte[] method(ClassNode c,MethodNode m){var q=new ClassNode();q.version=c.version;q.access=c.access;q.name=c.name;q.superName=c.superName;q.methods.add(m);var w=new ClassWriter(0);q.accept(w);return w.toByteArray();}
+ public static void main(String[] a)throws Exception{try(var before=new JarFile(a[0]);var after=new JarFile(a[1])){
+  var expected=new TreeSet<String>(List.of(P+"NativeCombatAttacker.class",P+"NativePlayerCommit.class"));var changed=new TreeSet<String>();var names=new HashSet<String>();
+  for(var e:Collections.list(before.entries())){names.add(e.getName());var n=after.getJarEntry(e.getName());if(n==null)throw new AssertionError("removed "+e.getName());if(!Arrays.equals(before.getInputStream(e).readAllBytes(),after.getInputStream(n).readAllBytes()))changed.add(e.getName());}
+  var fresh=new TreeSet<String>();for(var e:Collections.list(after.entries()))if(!names.contains(e.getName()))fresh.add(e.getName());if(!changed.equals(expected)||!fresh.equals(Set.of(P+"NativeCompanionRefScene.class")))throw new AssertionError("archive delta "+changed+" "+fresh);
+  for(var name:changed){var b=read(before,name);var c=read(after,name);if(b.fields.size()!=c.fields.size())throw new AssertionError("new field "+name);for(int i=0;i<b.fields.size();i++){var x=b.fields.get(i);var y=c.fields.get(i);if(!x.name.equals(y.name)||!x.desc.equals(y.desc)||!Objects.equals(x.value,y.value)||x.access!=y.access)throw new AssertionError("field schema "+name);}
+   if(name.endsWith("NativePlayerCommit.class"))for(var m:b.methods){var q=c.methods.stream().filter(v->v.name.equals(m.name)&&v.desc.equals(m.desc)).findFirst().orElseThrow();if(!Arrays.equals(method(b,m),method(c,q)))throw new AssertionError("original player commit method changed "+m.name+m.desc);}
+  }
+  var helper=read(after,P+"NativeCompanionRefScene.class");if(!helper.fields.isEmpty())throw new AssertionError("stateless helper");
+  for(var m:helper.methods)for(var n:m.instructions){if(n instanceof TypeInsnNode t&&t.getOpcode()==Opcodes.NEW&&!t.desc.equals(P+"NativeCombatAttacker$Ref")&&!t.desc.equals("java/lang/IllegalStateException"))throw new AssertionError("new retained/execution owner "+t.desc);if(n instanceof MethodInsnNode call&&(call.owner.startsWith("java/sql/")||call.owner.startsWith("javax/sql/")||call.owner.startsWith("java/nio/file/")||call.owner.contains("AccountRepository")||call.owner.endsWith("GameStateStore")||call.name.equals("nativeDeInventory")))throw new AssertionError("new SQL/file/inventory dependency "+call.owner+"."+call.name);}
+  for(var n:List.of("NativeCombatAttacker$Ref","ClientSession","NativePlayerCommit$Binding","NativePairedCastSafety","NativePlayerLifetime")){var path=P+n+".class";if(!Arrays.equals(before.getInputStream(before.getJarEntry(path)).readAllBytes(),after.getInputStream(after.getJarEntry(path)).readAllBytes()))throw new AssertionError("strict player/pair/lifetime/Ref contract changed "+n);}
+ }System.out.println("PASS exact two changed/one fresh classes; stateless helper; unchanged Ref, player, pair and lifetime classes; all original PlayerCommit methods unchanged; no new fields/workers/clocks/TLS/registry/SQL/file/inventory dependency");}
+}

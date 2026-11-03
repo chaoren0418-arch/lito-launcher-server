@@ -1,0 +1,24 @@
+{
+  "cause": "Job membership became empty before retained process handles were signaled; receipts correctly failed their stronger exit assertion",
+  "failed_cases": [
+    "normal",
+    "hang",
+    "spawned_child",
+    "disk_poll",
+    "controller_exception"
+  ],
+  "source_pins_at_first_execution": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+      "sha256": "7D1F6FC55559896EDCBF3AE1EA7F89445C556A6DDFF12F27F6B669D60DC221D4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py",
+      "sha256": "D9316E49FA0327B8C5E214D1221122B5EFD3E96F419FB05585AB94A53FD3CD83"
+    }
+  ],
+  "initial_runtime_exit_code": 1,
+  "initial_cases_passed": 4,
+  "initial_cases_total": 9,
+  "correction": "Wait within one finite cleanup deadline for both empty membership and all retained handles signaled; preserve all original receipts; recheck only affected cases"
+}

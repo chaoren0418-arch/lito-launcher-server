@@ -1,0 +1,27 @@
+{
+  "mode": "D5sub2 writes64ACCA lowBYTE, adjacent64ACCB retained. Batch21 UIselector reads zeroextendedWORD64ACCA conditionally; actual highBYTE value notqualified. Do not normalize BYTEinto an assumedWORDzero.",
+  "wire_map": "D5sub3 u16LE word in packet/local; Modern keepsrawWORD andpacketprovenance independently.",
+  "D5_map_projection": "64ACC9 BYTE via+0C/specialfullWORDtests. NotCC row+74 orpreview+0F store.",
+  "catalog": "Batch20 CC recordindex/legacyprojection endsrow+74; UI64A958 catalogs andwireCCmapWORD context separate. TheseD5branches do not append/reset/rewrite catalogrows.",
+  "preview": "Batch21 selection4658B0→4687D0 row+74→UI64A98C+0F; preview+0C roomWORD separate. NeitherD5sub2/3 directly touches them or calls that path.",
+  "table_resource": "64AFD0/64AFE0 runtimecount/order, LTmapstr numericfilekeys/physicalrows/labels/codecs andactualmap/WORLDresourcebinding remainunknown. No new use or readerlookup here.",
+  "readiness_owner_source": "D5mode/map has no readyreset/owner/result/ACK fields or corresponding finitebranch stores; retain independently qualifiedD1/owner/session/source/physicalstate.",
+  "independence": "Each D5mode/map packet gates/returns separately, no pair/transaction/rollbackflag. Modechanges can retainpreviousprojectedmap; mapchanges retainmode; sourcecoherence notguaranteed.",
+  "guard_sources": {
+    "SCC-catalog-lifecycle-contract.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+      "bytes": 24893,
+      "sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367"
+    },
+    "map-table-source-contract.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "bytes": 35225,
+      "sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2"
+    },
+    "map-candidate-index-contract.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "bytes": 23714,
+      "sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "completed": true,
+  "seconds": 89.89,
+  "count": 30285,
+  "base_count": 30000,
+  "heap_bytes": 76955872,
+  "allocation_guards": 94804,
+  "damaged_guards": [],
+  "table": "0x20968020",
+  "eip": "0x43ec56",
+  "actions": 60303,
+  "frames_checked": 493850,
+  "duration_mismatch_count": 0,
+  "duration_mismatches": [],
+  "original_reader_and_parser": true,
+  "compiled_postparse": true,
+  "native_game_started": false,
+  "renderer_wall_time_verified": false,
+  "source_sha256": "7ebe2b464c8b1ea9c58ac985dd8ff4c823784d8231894262eddcd7691ca94008",
+  "payload_sha256": "b64ed920792805c3380ad0e50b1ae089a8779b4adddec2fbf3780c2fa88a3c01"
+}

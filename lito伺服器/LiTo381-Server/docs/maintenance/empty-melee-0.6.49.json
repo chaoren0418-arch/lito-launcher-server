@@ -1,0 +1,47 @@
+{
+  "version": "0.6.49",
+  "baseline_server_sha256": "9c97f86821738cd4e039f20bf69cae286bb1f095bdda77e3305799a77f5c1a23",
+  "published_sha256": "589733435518d92c05baeeae37a686d384ec3f7b9897e975ad1ef50d67a74aa7",
+  "native_dll_sha256": "039843354097f7f7ff36e4bc977a23c7267918d14127c92f6040133f7aabe43d",
+  "native_dll_changed": false,
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "4467bf0cfea5a8c4a07e81e571a87c7d728776ea8e8d30c64caf986e122d9808",
+    "src/main/java/local/lito381/server/Protocol.java": "77cafdc0fef9946a4e4baf188222116203a8056b495ba1fd2b7ff783b4d2ed5d"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "2b92b4e038723a147fdd47c1b74765cd71c0df22ae218d24c1e5d57a887140fa",
+    "src/main/java/local/lito381/server/Protocol.java": "af955fe8bd4864e768cb366f807064e12b1e8506540aa76002ccee8614040b9a"
+  },
+  "added_sources": {
+    "src/main/java/local/lito381/server/EmptyMelee.java": "b14091549e3ed21c6602fb7d94d44b681e87b6176860d2589202315f46039cba"
+  },
+  "rollback_archive": "backups/before-empty-melee-0.6.48.zip",
+  "rollback_archive_sha256": "7f24f712fe95e365dca8ae6552e72da1408429a8dfb345b94f58933fa39979b3",
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/Protocol.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/EmptyMelee.class"
+  ],
+  "server_regression_passed": true,
+  "server_regression_log": "runtime/empty-melee-regression.log",
+  "dragon_presentation_regression_passed": true,
+  "no_player_sql_writes": true,
+  "manual_test_pending": true,
+  "evidence": {
+    "run": "development-a5847a486cc641f8b6f885a0e5c771f6",
+    "native_empty_attack_packet": "17 00 00 00 00 DE 7F 1D 80",
+    "cause": "Protocol.attackRequest rejected valid target zero; missing no-target melee dispatch"
+  },
+  "behavior": [
+    "Native direction plus zero-target/zero-damage attack; no coordinate auto-target lookup",
+    "Per-session pacing based on sprite and haste/brave/bloodlust; existing wind-shackle gate retained",
+    "Dead, observer, invisible, paralyzed, overweight and invalid-coordinate attacks refused",
+    "Ranged empty shots excluded; nonzero target combat retained; session-only deadline, no global player cache"
+  ],
+  "formal_smoke_run": "cleanup-smoke-1791808218915386800",
+  "formal_smoke_passed": true,
+  "deployment_pins_verified": true,
+  "project_layout_verified": true
+}

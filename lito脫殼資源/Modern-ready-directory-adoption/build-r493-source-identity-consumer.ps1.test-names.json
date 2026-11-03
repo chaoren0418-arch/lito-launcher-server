@@ -1,0 +1,18 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r493-source-identity-consumer.ps1",
+    "bytes": 4102,
+    "sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E"
+  },
+  "captured_content_sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\build-r493-source-identity-consumer.ps1",
+    "bytes": 4102,
+    "sha256": "CE47E4A91C6471FC12A1A69168B5DF8BD2B45F61B177253E4F961C2C03247B0E"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:55:31.923909+08:00",
+  "existing_test_names_only": [],
+  "script_executed_or_imported": false,
+  "scope": "Names in existing generated Rust test harness source embedded in build script; no body adoption, no claim compiled/current production test pass."
+}

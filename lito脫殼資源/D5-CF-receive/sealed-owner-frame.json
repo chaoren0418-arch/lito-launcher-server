@@ -1,0 +1,60 @@
+{
+  "source": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-exit-commit-network-b8e1783fc69d4a57b9863570ffab8037\\evidence\\frames.json",
+    "bytes": 14606,
+    "sha256": "758D2371792B77E876A6AE67D8819FFFD085AC6CED26D96D3CE0AEE4DB5DEDD6"
+  },
+  "array_index_zero_based": 77,
+  "frame_1based": 78,
+  "epoch": "Guest-GAME",
+  "direction": "S",
+  "opcode": 213,
+  "subtype": 5,
+  "body_hex": "d50501000000526f6f6d45786974477565737428526f6f6d457869744d6f6f6e2900",
+  "body_bytes": 34,
+  "frame_bytes": 36,
+  "fields": [
+    {
+      "index": 1,
+      "type": "u8subtype",
+      "body_offset": 1,
+      "bytes": 1,
+      "value": 5
+    },
+    {
+      "index": 2,
+      "type": "u32LEroom",
+      "body_offset": 2,
+      "bytes": 4,
+      "value": 1
+    },
+    {
+      "index": 3,
+      "type": "NUL8bitownerdisplay",
+      "body_offset": 6,
+      "bytes": 28,
+      "raw_hex": "526f6f6d45786974477565737428526f6f6d457869744d6f6f6e29",
+      "ASCII_capture_label": "RoomExitGuest(RoomExitMoon)"
+    }
+  ],
+  "consumed": 34,
+  "remaining": 0,
+  "matched_prior_CD_array_index": 72,
+  "prior_peer_D0_array_index": 75,
+  "S_CF_in_ordinary_exit_range": false,
+  "classification": "Existing ordinaryROOM exit wire corroboration; noNative/UI/session authority or own-exitACK",
+  "C_CF_counterdirection_example": {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-exit-commit-network-b8e1783fc69d4a57b9863570ffab8037\\evidence\\frames.json",
+      "bytes": 14606,
+      "sha256": "758D2371792B77E876A6AE67D8819FFFD085AC6CED26D96D3CE0AEE4DB5DEDD6"
+    },
+    "array_index_zero_based": 66,
+    "frame_1based": 67,
+    "direction": "C",
+    "body_hex": "cf0100000000",
+    "body_bytes": 6,
+    "frame_bytes": 8,
+    "qualification": "Knownsealedjoinempty-password, notdelete"
+  }
+}

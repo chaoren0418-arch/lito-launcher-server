@@ -1,0 +1,507 @@
+{
+  "schema": "owned-process-watchdog-review-v1",
+  "task_id": "bin_resources-owned-process-watchdog-20261007",
+  "created_at": "2026-10-07T13:34:53.773274+08:00",
+  "proposal_state": "review",
+  "component_test_outcome": "NEW_REQUIRED_CASES_HAVE_PASS_EVIDENCE",
+  "full_IDA_export_environment_qualified": false,
+  "overall_product_complete": false,
+  "sources_and_compilation": {
+    "sources": [
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\crash_controller.py",
+        "bytes": 1109,
+        "sha256": "9A6A2BA3325D2EC88DACB4CE1D511B312A8BD604DF1633B71393837AE814FB45"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+        "bytes": 1810,
+        "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+        "bytes": 20925,
+        "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\prepare_task.py",
+        "bytes": 3203,
+        "sha256": "34893F31246EE4B8A963028AE350423525BD235699DC2C9D9EE29546628FCD52"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\publish_watchdog.py",
+        "bytes": 17969,
+        "sha256": "B17CA627C1EBCFD1B3851AFDC033C3EB645939B111296A9F872AE9F62EDF8D66"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py",
+        "bytes": 5434,
+        "sha256": "E321D86D3EF719C0709C0FF0E2BD3D387E52D59C4FD66B8CD2F4936EDE94AD9B"
+      },
+      {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py",
+        "bytes": 9503,
+        "sha256": "D9316E49FA0327B8C5E214D1221122B5EFD3E96F419FB05585AB94A53FD3CD83"
+      }
+    ],
+    "compile_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\compile-receipt-final.json",
+      "bytes": 3795,
+      "sha256": "193ADBC1BDF1970B50983ADE4A06E5AFC168C01444C6911DBBC7571C3BA75EDE"
+    },
+    "Python_version_tested": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "Windows_version_tested": [
+      10,
+      0,
+      19045,
+      2,
+      ""
+    ],
+    "runtime_executable": {
+      "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "bytes": 104952,
+      "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+    },
+    "external_compiler_or_package_installation": false
+  },
+  "task_authority": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\authorized-task-at-read.json",
+    "bytes": 3320,
+    "sha256": "5CEE3217655AB6B7EEE8761FD6AE2558F33917EAD1D26A1E965BA0B825707197"
+  },
+  "runtime_evidence": {
+    "first_execution": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\new-real-process-tests.json",
+      "bytes": 4727,
+      "sha256": "B417A39889364EDC96BCE5CD28F7937A81E7ADE50371FED4D743AA19F10A7F87"
+    },
+    "first_exit_code": 1,
+    "first_execution_status": "FAIL; 4/9 passed, retained unchanged",
+    "affected_case_recheck": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\affected-case-recheck.json",
+      "bytes": 3307,
+      "sha256": "B1155F373B775EF700732C3F0970ABEC3AE2A0DC24E4C0DAAFC21D1443D48292"
+    },
+    "recheck_exit_code": 0,
+    "recheck_checks": "6/6 PASS; five affected cases plus a fresh independent sentinel",
+    "selected_distinct_case_matrix": [
+      {
+        "name": "normal",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\runtime.json",
+          "bytes": 5180,
+          "sha256": "FDD7AD4A85D65DBADF2C9C4C3D302DC2AD05D8FF3FCB0015EA13CCF64F590829"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      },
+      {
+        "name": "hang",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\runtime.json",
+          "bytes": 8912,
+          "sha256": "A923F63059E9C01709CCA470AD6A9F303EE2B506D038B5B23975B62147F251E9"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      },
+      {
+        "name": "spawned_child",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\runtime.json",
+          "bytes": 10607,
+          "sha256": "7127902A67C0E9B2BFCFFCF300412AA6961690AFDB7767CE3C289C7A174F6081"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      },
+      {
+        "name": "stdout_stderr_flood",
+        "passed": true,
+        "expected_status": "PRIMARY_EXITED",
+        "actual_status": "PRIMARY_EXITED",
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\runtime.json",
+          "bytes": 4963,
+          "sha256": "FDA8982413CEB8AE931B1EA86333969686852961A6A37B2A8C25FC3F1043A07D"
+        },
+        "sentinel_outside_target_job": true,
+        "execution_generation": "initial",
+        "module_source_archive": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-owned_process.py.txt",
+          "bytes": 20778,
+          "sha256": "7D1F6FC55559896EDCBF3AE1EA7F89445C556A6DDFF12F27F6B669D60DC221D4"
+        }
+      },
+      {
+        "name": "disk_poll",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\runtime.json",
+          "bytes": 5304,
+          "sha256": "9E65517F3DCC93A290460315889D8347793A2CDE3D01230D4FF555057B47E95E"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      },
+      {
+        "name": "failed_containment",
+        "passed": true,
+        "expected_status": "CONTAINMENT_OR_CONTROL_REFUSED",
+        "actual_status": "CONTAINMENT_OR_CONTROL_REFUSED",
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\failed_containment\\runtime.json",
+          "bytes": 1328,
+          "sha256": "DF536AE47864176BD1A906E37BDFB2C6AF769B6E3F47D503AD8E24F4DE0C5558"
+        },
+        "sentinel_outside_target_job": false,
+        "execution_generation": "initial",
+        "module_source_archive": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-owned_process.py.txt",
+          "bytes": 20778,
+          "sha256": "7D1F6FC55559896EDCBF3AE1EA7F89445C556A6DDFF12F27F6B669D60DC221D4"
+        }
+      },
+      {
+        "name": "controller_exception",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\runtime.json",
+          "bytes": 6637,
+          "sha256": "CACCCAF43D783C6CF0717FFA5A3104F7B65B02CC64D4DC6521F0193C1675F8BA"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      },
+      {
+        "name": "controller_exit",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\abrupt-exit-audit.json",
+          "bytes": 6648,
+          "sha256": "2C34D1142D8053801EA229E3B6A249AA58E0609500E30027869C74913E9B6371"
+        },
+        "execution_generation": "initial",
+        "module_source_archive": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-owned_process.py.txt",
+          "bytes": 20778,
+          "sha256": "7D1F6FC55559896EDCBF3AE1EA7F89445C556A6DDFF12F27F6B669D60DC221D4"
+        }
+      },
+      {
+        "name": "sentinel_not_miskilled",
+        "passed": true,
+        "receipt": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\sentinel-audit.json",
+          "bytes": 7598,
+          "sha256": "9A91E6DD8EBF854D27D35A85A8AF664999C4A700B31A9872C328ECE5E5255C92"
+        },
+        "execution_generation": "affected-case-recheck",
+        "module_source": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+          "bytes": 20925,
+          "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+        }
+      }
+    ],
+    "commands": [
+      [
+        "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py"
+      ],
+      [
+        "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py"
+      ]
+    ],
+    "test_all_pass_on_one_source_version_claimed": false,
+    "version_reason": "Exit-wait and directory entry-count correction affected cleanup audit cases. Capture, prelaunch invalid-limit refusal and abrupt-exit primitive retained their passing first-execution evidence and source archive; they were not rerun."
+  },
+  "implementation_failures": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-01.json",
+      "bytes": 580,
+      "sha256": "AF0BEE2CC5A767CBA9B6B6624FDE793FF2FB7F56BAE16D597ED2924BF3E23B55"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-02.json",
+      "bytes": 992,
+      "sha256": "122A781B3A6AA86FA483A309693FD174E82A74C971972598E24E2259EEC91E38"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-03.json",
+      "bytes": 583,
+      "sha256": "8C9E5442F443BE9627E78717606BFECF1C809D7138578D9A5D0D4336583FA266"
+    }
+  ],
+  "ownership_containment": {
+    "mechanism": "Unnamed Windows Job Object; atomic JOB_LIST in CreateProcessW STARTUPINFOEX",
+    "before_execution": "CREATE_SUSPENDED + job membership and executable-path checks + receipt identity, then ResumeThread",
+    "flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_flags": false,
+    "job_handle_inherited": false,
+    "handle_inheritance": "Only explicit NUL/stdout/stderr handles via HANDLE_LIST",
+    "process_count_limit": 16,
+    "hidden_windows": true,
+    "cleanup": "TerminateJobObject on owned retained handle; no PID scans or process-name termination",
+    "cleanup_fallback_on_controller_exit": "Kernel closes non-inherited sole inner job handle",
+    "cleanup_audit": "Bounded wait for both empty job list and all observed retained process handles signaled",
+    "OS_console_hosts": "Receipts include OS-created conhost.exe members only after explicit membership verification in the owned job."
+  },
+  "deadline": {
+    "clock": "time.monotonic",
+    "external_to_child": true,
+    "watchdog_thread_independent_of_capture_and_disk_scan": true,
+    "watchdog_requested_wakeup_seconds": 0.01,
+    "cleanup_wait_seconds": 2,
+    "test_timeout_seconds": 2,
+    "hang_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\runtime.json",
+      "bytes": 8912,
+      "sha256": "A923F63059E9C01709CCA470AD6A9F303EE2B506D038B5B23975B62147F251E9"
+    },
+    "tree_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\runtime.json",
+      "bytes": 10607,
+      "sha256": "7127902A67C0E9B2BFCFFCF300412AA6961690AFDB7767CE3C289C7A174F6081"
+    },
+    "hang_trigger_overshoot_seconds": 0.0,
+    "tree_trigger_overshoot_seconds": 0.0,
+    "hang_total_elapsed_seconds_including_cleanup": 2.0160000000032596,
+    "tree_total_elapsed_seconds_including_cleanup": 2.030999999959022,
+    "limit": "OS scheduling, API calls and teardown can add latency; no real-time zero-overshoot guarantee or CPU-time-only limit is claimed."
+  },
+  "bounded_capture": {
+    "cap_bytes_per_stream": 8192,
+    "always_drain_after_cap": true,
+    "flood_fixture_bytes_per_stream": 2097152,
+    "actual_stdout": {
+      "observed_bytes": 2097152,
+      "retained_bytes": 8192,
+      "discarded_bytes": 2088960,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\stdout.bin",
+      "sha256": "7013E4844519851CF185FDD8F387B9F159AAC71A21CFF909FA1FD7BECD3392D8"
+    },
+    "actual_stderr": {
+      "observed_bytes": 2097152,
+      "retained_bytes": 8192,
+      "discarded_bytes": 2088960,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\stderr.bin",
+      "sha256": "496B508798A75FA4B21D59630074D38C88F84C3DF14E0DF3303F08F19333A316"
+    },
+    "memory_buffer": "One fixed 8192-byte read buffer and at most cap bytes retained per stream",
+    "reader_join_limit_seconds_per_stream": 1
+  },
+  "abrupt_controller_exit": {
+    "controller_exit_code": 73,
+    "checkpoint": {
+      "controller_pid": 2836,
+      "exit_code_planned": 73,
+      "inner_policy": {
+        "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+        "limit_flags": 8200,
+        "kill_on_last_handle_close": true,
+        "breakaway_allowed": false,
+        "job_handle_inheritable": false,
+        "active_process_limit": 16,
+        "hidden_window": true,
+        "only_explicit_stdio_handles_inherited": true
+      },
+      "inner_source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+        "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+      },
+      "inner_members": [
+        {
+          "pid": 500,
+          "creation_filetime_100ns": 134358245026828953,
+          "creation_time_utc": "2026-10-07T05:28:22.682895+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 418461.156,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 259
+          }
+        },
+        {
+          "pid": 15108,
+          "creation_filetime_100ns": 134358245026898441,
+          "creation_time_utc": "2026-10-07T05:28:22.689844+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 418461.171,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 259
+          }
+        },
+        {
+          "pid": 508,
+          "creation_filetime_100ns": 134358245029371081,
+          "creation_time_utc": "2026-10-07T05:28:22.937108+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 418461.421,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 259
+          }
+        },
+        {
+          "pid": 19020,
+          "creation_filetime_100ns": 134358245029462663,
+          "creation_time_utc": "2026-10-07T05:28:22.946266+00:00",
+          "image_path": "C:\\Windows\\System32\\conhost.exe",
+          "primary": false,
+          "membership_verified": true,
+          "first_seen_monotonic": 418461.437,
+          "exit": {
+            "signaled": false,
+            "wait_result": 258,
+            "exit_code": 259
+          }
+        }
+      ],
+      "checkpoint_monotonic": 418461.515,
+      "cleanup_function_called": false
+    },
+    "outer_job_handle_held_open_until_audit": true,
+    "outer_cleanup_before_inner_exit": false,
+    "all_inner_identities_matched_exited": true,
+    "fallback_outer_cleanup_needed": false,
+    "receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\abrupt-exit-audit.json",
+      "bytes": 6648,
+      "sha256": "2C34D1142D8053801EA229E3B6A249AA58E0609500E30027869C74913E9B6371"
+    }
+  },
+  "containment_failure_test": {
+    "real_API_rejection": "SetInformationJobObject with deliberately invalid size 1 before CreateProcessW",
+    "winerror": 24,
+    "process_created": false,
+    "child_resumed": false,
+    "receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\failed_containment\\runtime.json",
+      "bytes": 1328,
+      "sha256": "DF536AE47864176BD1A906E37BDFB2C6AF769B6E3F47D503AD8E24F4DE0C5558"
+    },
+    "no_downgrade_or_fallback": true
+  },
+  "disk_monitor": {
+    "requested_poll_seconds": 0.05,
+    "actual_max_sample_gap_seconds": 0.06299999996554106,
+    "logical_size_threshold_bytes": 65536,
+    "observed_bytes_at_detection": 361078,
+    "observed_detection_overshoot_bytes": 295542,
+    "final_bytes_before_runtime_receipt": 361078,
+    "receipt_and_controller_metadata_written_after_monitor_not_quota_enforced": true,
+    "scan_entry_cap": 256,
+    "reparse_points_refused": true,
+    "hard_disk_quota": false,
+    "precise_gap": "Polling cannot cap writes between checks, during scan/termination, after runtime exit or outside this job directory. Logical file length is measured, not physical allocated/compressed space. No accepted hard storage containment exists."
+  },
+  "post_exit_audit": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\post-exit-audit-final.json",
+    "bytes": 11240,
+    "sha256": "B95246FBFF5DA70808B6B467DF481FBA65E58E66060691E8864AA6EC4A011E63"
+  },
+  "sentinel": {
+    "target_job_membership": false,
+    "identity_preserved_and_running_during_other_cases": true,
+    "normal_shutdown_exit_code": 0,
+    "forced_cleanup_needed": false,
+    "initial_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\sentinel-audit.json",
+      "bytes": 10197,
+      "sha256": "C04119E7B0BC4E57B29CCF42B3657F30FABF13FA38923962C796B5098F242361"
+    },
+    "recheck_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\sentinel-audit.json",
+      "bytes": 7598,
+      "sha256": "9A91E6DD8EBF854D27D35A85A8AF664999C4A700B31A9872C328ECE5E5255C92"
+    }
+  },
+  "prior_adapter_preservation": {
+    "baseline_receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\immutable-prior-adapter-pins.json",
+      "bytes": 8101,
+      "sha256": "55B214979E2D476AFF969C621FBD9D47D29366E70F5A9D873A22957BDB6E557F"
+    },
+    "immutable_files_verified": 33,
+    "all_preserved": true,
+    "old_PASS_or_IDA_qualification_replayed": false
+  },
+  "remaining_qualification_gaps": [
+    "Hard disk containment/quota absent; polling is detection plus tree termination only.",
+    "Plugin/egress/owned-write isolation is still unqualified; original IDA refusal remains sealed and active.",
+    "This module is runtime-tested only with harmless owned Python fixtures; no IDA/native export execution was attempted.",
+    "Job objects cover associated CreateProcess descendants, not hostile privileged/broker-created external work; not a security sandbox."
+  ],
+  "scope": {
+    "write_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "runtime_tree_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007",
+    "external_ASCII_runtime_created": false,
+    "IDA_launches": 0,
+    "game_launches": 0,
+    "installation_plugins_global_config_or_security_settings_changed": false,
+    "external_AI_or_network_payload_calls": false,
+    "other_owner_processes_targeted": false,
+    "private_backing_next_layer_and_old_automatic_review_stops_preserved": true,
+    "shared_BIN_TW_LHZ_provider_SQL_GUI_MCP_memory_touched": false,
+    "old_cache_cleanup_retried": false
+  },
+  "documentation": [
+    {
+      "title": "Microsoft Job Objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects"
+    },
+    {
+      "title": "Microsoft atomic job creation",
+      "url": "https://devblogs.microsoft.com/oldnewthing/20230209-00/?p=107812/"
+    },
+    {
+      "title": "UpdateProcThreadAttribute",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute"
+    }
+  ],
+  "handoff": "Review this process-control component and the explicitly absent disk/security controls separately; it cannot qualify the IDA environment or unlock any LITO analysis."
+}

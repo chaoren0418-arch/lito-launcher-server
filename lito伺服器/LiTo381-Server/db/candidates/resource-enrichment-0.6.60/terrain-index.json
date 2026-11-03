@@ -1,0 +1,3470 @@
+{
+  "package_status": "未匯入、未接線",
+  "rows": [
+    {
+      "map_id": 500,
+      "sector": "7ffe7fff",
+      "source_id": 14,
+      "layer3_offset": 81346,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7ffe8000",
+      "source_id": 15,
+      "layer3_offset": 80674,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7ffe8001",
+      "source_id": 16,
+      "layer3_offset": 79378,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7ffe8002",
+      "source_id": 17,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7fff7ffe",
+      "source_id": 18,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7fff7fff",
+      "source_id": 19,
+      "layer3_offset": 42874,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "7fff8000",
+      "source_id": 20,
+      "layer3_offset": 64798,
+      "portal_count": 3
+    },
+    {
+      "map_id": 500,
+      "sector": "7fff8001",
+      "source_id": 21,
+      "layer3_offset": 58510,
+      "portal_count": 3
+    },
+    {
+      "map_id": 500,
+      "sector": "7fff8002",
+      "source_id": 22,
+      "layer3_offset": 81490,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80007ffe",
+      "source_id": 23,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80007fff",
+      "source_id": 24,
+      "layer3_offset": 44746,
+      "portal_count": 12
+    },
+    {
+      "map_id": 500,
+      "sector": "80008000",
+      "source_id": 25,
+      "layer3_offset": 65362,
+      "portal_count": 3
+    },
+    {
+      "map_id": 500,
+      "sector": "80008001",
+      "source_id": 26,
+      "layer3_offset": 60454,
+      "portal_count": 3
+    },
+    {
+      "map_id": 500,
+      "sector": "80008002",
+      "source_id": 27,
+      "layer3_offset": 81562,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80017fff",
+      "source_id": 28,
+      "layer3_offset": 80350,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80018000",
+      "source_id": 29,
+      "layer3_offset": 80410,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80018001",
+      "source_id": 30,
+      "layer3_offset": 77710,
+      "portal_count": 0
+    },
+    {
+      "map_id": 500,
+      "sector": "80018002",
+      "source_id": 31,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 501,
+      "sector": "80008000",
+      "source_id": 32,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 502,
+      "sector": "80008000",
+      "source_id": 33,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 503,
+      "sector": "80008000",
+      "source_id": 34,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "7fff8000",
+      "source_id": 35,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80007fff",
+      "source_id": 36,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80008000",
+      "source_id": 37,
+      "layer3_offset": 57190,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80008001",
+      "source_id": 38,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80017fff",
+      "source_id": 39,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80018000",
+      "source_id": 40,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 504,
+      "sector": "80018001",
+      "source_id": 41,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 505,
+      "sector": "80008000",
+      "source_id": 42,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "7fff7fff",
+      "source_id": 43,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "80007fff",
+      "source_id": 44,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "80008000",
+      "source_id": 45,
+      "layer3_offset": 58510,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "80008001",
+      "source_id": 46,
+      "layer3_offset": 81730,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "80018000",
+      "source_id": 47,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 506,
+      "sector": "80018001",
+      "source_id": 48,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 507,
+      "sector": "80008000",
+      "source_id": 49,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 508,
+      "sector": "80008000",
+      "source_id": 50,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 509,
+      "sector": "80008000",
+      "source_id": 51,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "7fff7fff",
+      "source_id": 52,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "7fff8000",
+      "source_id": 53,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "7fff8001",
+      "source_id": 54,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80007fff",
+      "source_id": 55,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80008000",
+      "source_id": 56,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80008001",
+      "source_id": 57,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80017fff",
+      "source_id": 58,
+      "layer3_offset": 33094,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80018000",
+      "source_id": 59,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 510,
+      "sector": "80018001",
+      "source_id": 60,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "7fff7fff",
+      "source_id": 61,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "7fff8000",
+      "source_id": 62,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "7fff8001",
+      "source_id": 63,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80007fff",
+      "source_id": 64,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80008000",
+      "source_id": 65,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80008001",
+      "source_id": 66,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80017fff",
+      "source_id": 67,
+      "layer3_offset": 33094,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80018000",
+      "source_id": 68,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 512,
+      "sector": "80018001",
+      "source_id": 69,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "7fff7fff",
+      "source_id": 70,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "7fff8000",
+      "source_id": 71,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "7fff8001",
+      "source_id": 72,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80007ffe",
+      "source_id": 73,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80007fff",
+      "source_id": 74,
+      "layer3_offset": 78286,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80008000",
+      "source_id": 75,
+      "layer3_offset": 65794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80008001",
+      "source_id": 76,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80017ffe",
+      "source_id": 77,
+      "layer3_offset": 72514,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80017fff",
+      "source_id": 78,
+      "layer3_offset": 65290,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80018000",
+      "source_id": 79,
+      "layer3_offset": 78178,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80018001",
+      "source_id": 80,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80027ffe",
+      "source_id": 81,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80027fff",
+      "source_id": 82,
+      "layer3_offset": 72514,
+      "portal_count": 0
+    },
+    {
+      "map_id": 513,
+      "sector": "80028000",
+      "source_id": 83,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 514,
+      "sector": "80008000",
+      "source_id": 84,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 516,
+      "sector": "80008000",
+      "source_id": 85,
+      "layer3_offset": 63334,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7ffe7fff",
+      "source_id": 86,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7ffe8000",
+      "source_id": 87,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7ffe8001",
+      "source_id": 88,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7fff7fff",
+      "source_id": 89,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7fff8000",
+      "source_id": 90,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "7fff8001",
+      "source_id": 91,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "80007fff",
+      "source_id": 92,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "80008000",
+      "source_id": 93,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 517,
+      "sector": "80008001",
+      "source_id": 94,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "7ffe7ffd",
+      "source_id": 95,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "7fff7ffd",
+      "source_id": 96,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "7fff7ffe",
+      "source_id": 97,
+      "layer3_offset": 67822,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "7fff7fff",
+      "source_id": 98,
+      "layer3_offset": 64438,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "7fff8000",
+      "source_id": 99,
+      "layer3_offset": 71794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "80007ffd",
+      "source_id": 100,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "80007ffe",
+      "source_id": 101,
+      "layer3_offset": 64486,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "80007fff",
+      "source_id": 102,
+      "layer3_offset": 65242,
+      "portal_count": 0
+    },
+    {
+      "map_id": 518,
+      "sector": "80008000",
+      "source_id": 103,
+      "layer3_offset": 72478,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "7fff7ffd",
+      "source_id": 104,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "7fff7ffe",
+      "source_id": 105,
+      "layer3_offset": 67822,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "7fff7fff",
+      "source_id": 106,
+      "layer3_offset": 64438,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "7fff8000",
+      "source_id": 107,
+      "layer3_offset": 71794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "80007ffd",
+      "source_id": 108,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "80007ffe",
+      "source_id": 109,
+      "layer3_offset": 64486,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "80007fff",
+      "source_id": 110,
+      "layer3_offset": 65242,
+      "portal_count": 0
+    },
+    {
+      "map_id": 519,
+      "sector": "80008000",
+      "source_id": 111,
+      "layer3_offset": 72478,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "7fff7ffd",
+      "source_id": 112,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "7fff7ffe",
+      "source_id": 113,
+      "layer3_offset": 67822,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "7fff7fff",
+      "source_id": 114,
+      "layer3_offset": 64438,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "7fff8000",
+      "source_id": 115,
+      "layer3_offset": 71794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "80007ffd",
+      "source_id": 116,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "80007ffe",
+      "source_id": 117,
+      "layer3_offset": 64486,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "80007fff",
+      "source_id": 118,
+      "layer3_offset": 65242,
+      "portal_count": 0
+    },
+    {
+      "map_id": 520,
+      "sector": "80008000",
+      "source_id": 119,
+      "layer3_offset": 72478,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80008000",
+      "source_id": 120,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80008001",
+      "source_id": 121,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80018000",
+      "source_id": 122,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80018001",
+      "source_id": 123,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80028000",
+      "source_id": 124,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 521,
+      "sector": "80028001",
+      "source_id": 125,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80008000",
+      "source_id": 126,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80008001",
+      "source_id": 127,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80018000",
+      "source_id": 128,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80018001",
+      "source_id": 129,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80028000",
+      "source_id": 130,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 522,
+      "sector": "80028001",
+      "source_id": 131,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "7fff7fff",
+      "source_id": 132,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "7fff8000",
+      "source_id": 133,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "7fff8001",
+      "source_id": 134,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "80007fff",
+      "source_id": 135,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "80008000",
+      "source_id": 136,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "80008001",
+      "source_id": 137,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "80018000",
+      "source_id": 138,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 524,
+      "sector": "80018001",
+      "source_id": 139,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7ffe8001",
+      "source_id": 140,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7ffe8002",
+      "source_id": 141,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7ffe8003",
+      "source_id": 142,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7fff8000",
+      "source_id": 143,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7fff8001",
+      "source_id": 144,
+      "layer3_offset": 81250,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "7fff8002",
+      "source_id": 145,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 525,
+      "sector": "7fff8003",
+      "source_id": 146,
+      "layer3_offset": 81922,
+      "portal_count": 2
+    },
+    {
+      "map_id": 525,
+      "sector": "80007fff",
+      "source_id": 147,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "80008000",
+      "source_id": 148,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 525,
+      "sector": "80008001",
+      "source_id": 149,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 525,
+      "sector": "80018000",
+      "source_id": 150,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 526,
+      "sector": "7fff8000",
+      "source_id": 151,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 526,
+      "sector": "80007fff",
+      "source_id": 152,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 526,
+      "sector": "80008000",
+      "source_id": 153,
+      "layer3_offset": 34918,
+      "portal_count": 0
+    },
+    {
+      "map_id": 526,
+      "sector": "80018000",
+      "source_id": 154,
+      "layer3_offset": 33490,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "7fff7fff",
+      "source_id": 155,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "7fff8000",
+      "source_id": 156,
+      "layer3_offset": 80482,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "7fff8001",
+      "source_id": 157,
+      "layer3_offset": 81850,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80007fff",
+      "source_id": 158,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80008000",
+      "source_id": 159,
+      "layer3_offset": 64810,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80008001",
+      "source_id": 160,
+      "layer3_offset": 79618,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80017fff",
+      "source_id": 161,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80018000",
+      "source_id": 162,
+      "layer3_offset": 63670,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80018001",
+      "source_id": 163,
+      "layer3_offset": 81058,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80027fff",
+      "source_id": 164,
+      "layer3_offset": 81826,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80028000",
+      "source_id": 165,
+      "layer3_offset": 47770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80028001",
+      "source_id": 166,
+      "layer3_offset": 81562,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80037fff",
+      "source_id": 167,
+      "layer3_offset": 80650,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80038000",
+      "source_id": 168,
+      "layer3_offset": 64930,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80038001",
+      "source_id": 169,
+      "layer3_offset": 79978,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80047fff",
+      "source_id": 170,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80048000",
+      "source_id": 171,
+      "layer3_offset": 72802,
+      "portal_count": 0
+    },
+    {
+      "map_id": 527,
+      "sector": "80048001",
+      "source_id": 172,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 528,
+      "sector": "7fff7fff",
+      "source_id": 173,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 528,
+      "sector": "7fff8000",
+      "source_id": 174,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 528,
+      "sector": "7fff8001",
+      "source_id": 175,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 528,
+      "sector": "80007fff",
+      "source_id": 176,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 528,
+      "sector": "80008000",
+      "source_id": 177,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 529,
+      "sector": "7fff8000",
+      "source_id": 178,
+      "layer3_offset": 34066,
+      "portal_count": 0
+    },
+    {
+      "map_id": 529,
+      "sector": "7fff8001",
+      "source_id": 179,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 529,
+      "sector": "80008000",
+      "source_id": 180,
+      "layer3_offset": 34102,
+      "portal_count": 0
+    },
+    {
+      "map_id": 529,
+      "sector": "80008001",
+      "source_id": 181,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7ffe7fff",
+      "source_id": 182,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7ffe8000",
+      "source_id": 183,
+      "layer3_offset": 37810,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7ffe8001",
+      "source_id": 184,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7fff7fff",
+      "source_id": 185,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7fff8000",
+      "source_id": 186,
+      "layer3_offset": 36118,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "7fff8001",
+      "source_id": 187,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "80007fff",
+      "source_id": 188,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "80008000",
+      "source_id": 189,
+      "layer3_offset": 37006,
+      "portal_count": 0
+    },
+    {
+      "map_id": 530,
+      "sector": "80008001",
+      "source_id": 190,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 531,
+      "sector": "7ffe8000",
+      "source_id": 191,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 531,
+      "sector": "7fff7fff",
+      "source_id": 192,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 531,
+      "sector": "7fff8000",
+      "source_id": 193,
+      "layer3_offset": 32794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 531,
+      "sector": "7fff8001",
+      "source_id": 194,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 531,
+      "sector": "80008000",
+      "source_id": 195,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "7ffe8000",
+      "source_id": 196,
+      "layer3_offset": 38050,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "7ffe8001",
+      "source_id": 197,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "7fff7fff",
+      "source_id": 198,
+      "layer3_offset": 51202,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "7fff8000",
+      "source_id": 199,
+      "layer3_offset": 61618,
+      "portal_count": 1
+    },
+    {
+      "map_id": 532,
+      "sector": "7fff8001",
+      "source_id": 200,
+      "layer3_offset": 71806,
+      "portal_count": 1
+    },
+    {
+      "map_id": 532,
+      "sector": "7fff8002",
+      "source_id": 201,
+      "layer3_offset": 37858,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80007fff",
+      "source_id": 202,
+      "layer3_offset": 37378,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80008000",
+      "source_id": 203,
+      "layer3_offset": 66082,
+      "portal_count": 2
+    },
+    {
+      "map_id": 532,
+      "sector": "80008001",
+      "source_id": 204,
+      "layer3_offset": 63118,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80008002",
+      "source_id": 205,
+      "layer3_offset": 38914,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80018000",
+      "source_id": 206,
+      "layer3_offset": 42922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80018001",
+      "source_id": 207,
+      "layer3_offset": 50434,
+      "portal_count": 0
+    },
+    {
+      "map_id": 532,
+      "sector": "80018002",
+      "source_id": 208,
+      "layer3_offset": 33058,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7ffe7fff",
+      "source_id": 209,
+      "layer3_offset": 81346,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7ffe8000",
+      "source_id": 210,
+      "layer3_offset": 80734,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7ffe8001",
+      "source_id": 211,
+      "layer3_offset": 79486,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7ffe8002",
+      "source_id": 212,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7fff7fff",
+      "source_id": 213,
+      "layer3_offset": 76162,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7fff8000",
+      "source_id": 214,
+      "layer3_offset": 63526,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7fff8001",
+      "source_id": 215,
+      "layer3_offset": 59962,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "7fff8002",
+      "source_id": 216,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80007fff",
+      "source_id": 217,
+      "layer3_offset": 75418,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80008000",
+      "source_id": 218,
+      "layer3_offset": 64942,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80008001",
+      "source_id": 219,
+      "layer3_offset": 59206,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80008002",
+      "source_id": 220,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80017fff",
+      "source_id": 221,
+      "layer3_offset": 80350,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80018000",
+      "source_id": 222,
+      "layer3_offset": 80470,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80018001",
+      "source_id": 223,
+      "layer3_offset": 77794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 534,
+      "sector": "80018002",
+      "source_id": 224,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffd8000",
+      "source_id": 225,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffd8001",
+      "source_id": 226,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffd8002",
+      "source_id": 227,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffd8003",
+      "source_id": 228,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffd8004",
+      "source_id": 229,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffe8000",
+      "source_id": 230,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffe8001",
+      "source_id": 231,
+      "layer3_offset": 69682,
+      "portal_count": 2
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffe8002",
+      "source_id": 232,
+      "layer3_offset": 52474,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffe8003",
+      "source_id": 233,
+      "layer3_offset": 68866,
+      "portal_count": 1
+    },
+    {
+      "map_id": 535,
+      "sector": "7ffe8004",
+      "source_id": 234,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7fff8000",
+      "source_id": 235,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7fff8001",
+      "source_id": 236,
+      "layer3_offset": 61018,
+      "portal_count": 1
+    },
+    {
+      "map_id": 535,
+      "sector": "7fff8002",
+      "source_id": 237,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "7fff8003",
+      "source_id": 238,
+      "layer3_offset": 60634,
+      "portal_count": 2
+    },
+    {
+      "map_id": 535,
+      "sector": "7fff8004",
+      "source_id": 239,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80008000",
+      "source_id": 240,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80008001",
+      "source_id": 241,
+      "layer3_offset": 68818,
+      "portal_count": 1
+    },
+    {
+      "map_id": 535,
+      "sector": "80008002",
+      "source_id": 242,
+      "layer3_offset": 51502,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80008003",
+      "source_id": 243,
+      "layer3_offset": 70066,
+      "portal_count": 1
+    },
+    {
+      "map_id": 535,
+      "sector": "80008004",
+      "source_id": 244,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80018000",
+      "source_id": 245,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80018001",
+      "source_id": 246,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80018002",
+      "source_id": 247,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80018003",
+      "source_id": 248,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 535,
+      "sector": "80018004",
+      "source_id": 249,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7ffe7fff",
+      "source_id": 250,
+      "layer3_offset": 78430,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7ffe8000",
+      "source_id": 251,
+      "layer3_offset": 73726,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7ffe8001",
+      "source_id": 252,
+      "layer3_offset": 71266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7fff7fff",
+      "source_id": 253,
+      "layer3_offset": 72070,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7fff8000",
+      "source_id": 254,
+      "layer3_offset": 38266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "7fff8001",
+      "source_id": 255,
+      "layer3_offset": 44374,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80007ffe",
+      "source_id": 256,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80007fff",
+      "source_id": 257,
+      "layer3_offset": 51622,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80008000",
+      "source_id": 258,
+      "layer3_offset": 48658,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80008001",
+      "source_id": 259,
+      "layer3_offset": 37858,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80017ffe",
+      "source_id": 260,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80017fff",
+      "source_id": 261,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 540,
+      "sector": "80018000",
+      "source_id": 262,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7ffe7fff",
+      "source_id": 263,
+      "layer3_offset": 78430,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7ffe8000",
+      "source_id": 264,
+      "layer3_offset": 73726,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7ffe8001",
+      "source_id": 265,
+      "layer3_offset": 71266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7fff7fff",
+      "source_id": 266,
+      "layer3_offset": 72070,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7fff8000",
+      "source_id": 267,
+      "layer3_offset": 38266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "7fff8001",
+      "source_id": 268,
+      "layer3_offset": 44374,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80007ffe",
+      "source_id": 269,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80007fff",
+      "source_id": 270,
+      "layer3_offset": 51622,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80008000",
+      "source_id": 271,
+      "layer3_offset": 48658,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80008001",
+      "source_id": 272,
+      "layer3_offset": 37858,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80017ffe",
+      "source_id": 273,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80017fff",
+      "source_id": 274,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 541,
+      "sector": "80018000",
+      "source_id": 275,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7ffe7fff",
+      "source_id": 276,
+      "layer3_offset": 78430,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7ffe8000",
+      "source_id": 277,
+      "layer3_offset": 73726,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7ffe8001",
+      "source_id": 278,
+      "layer3_offset": 71266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7fff7fff",
+      "source_id": 279,
+      "layer3_offset": 72070,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7fff8000",
+      "source_id": 280,
+      "layer3_offset": 38266,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "7fff8001",
+      "source_id": 281,
+      "layer3_offset": 44374,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80007ffe",
+      "source_id": 282,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80007fff",
+      "source_id": 283,
+      "layer3_offset": 51622,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80008000",
+      "source_id": 284,
+      "layer3_offset": 48658,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80008001",
+      "source_id": 285,
+      "layer3_offset": 37858,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80017ffe",
+      "source_id": 286,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80017fff",
+      "source_id": 287,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 542,
+      "sector": "80018000",
+      "source_id": 288,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "7fff7fff",
+      "source_id": 289,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "7fff8000",
+      "source_id": 290,
+      "layer3_offset": 44074,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "7fff8001",
+      "source_id": 291,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "80007fff",
+      "source_id": 292,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "80008000",
+      "source_id": 293,
+      "layer3_offset": 46954,
+      "portal_count": 0
+    },
+    {
+      "map_id": 543,
+      "sector": "80008001",
+      "source_id": 294,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffd7fff",
+      "source_id": 295,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffd8000",
+      "source_id": 296,
+      "layer3_offset": 78946,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffd8001",
+      "source_id": 297,
+      "layer3_offset": 77698,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffd8002",
+      "source_id": 298,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffe7fff",
+      "source_id": 299,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffe8000",
+      "source_id": 300,
+      "layer3_offset": 53710,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffe8001",
+      "source_id": 301,
+      "layer3_offset": 51322,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7ffe8002",
+      "source_id": 302,
+      "layer3_offset": 80482,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7fff7fff",
+      "source_id": 303,
+      "layer3_offset": 80818,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7fff8000",
+      "source_id": 304,
+      "layer3_offset": 65494,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7fff8001",
+      "source_id": 305,
+      "layer3_offset": 53548,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7fff8002",
+      "source_id": 306,
+      "layer3_offset": 79474,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "7fff8003",
+      "source_id": 307,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80007fff",
+      "source_id": 308,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80008000",
+      "source_id": 309,
+      "layer3_offset": 80650,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80008001",
+      "source_id": 310,
+      "layer3_offset": 81298,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80008002",
+      "source_id": 311,
+      "layer3_offset": 81826,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80008003",
+      "source_id": 312,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80018000",
+      "source_id": 313,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80018001",
+      "source_id": 314,
+      "layer3_offset": 46390,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80018002",
+      "source_id": 315,
+      "layer3_offset": 32794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80018003",
+      "source_id": 316,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80028000",
+      "source_id": 317,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80028001",
+      "source_id": 318,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 545,
+      "sector": "80028002",
+      "source_id": 319,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffd7fff",
+      "source_id": 320,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffd8000",
+      "source_id": 321,
+      "layer3_offset": 78946,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffd8001",
+      "source_id": 322,
+      "layer3_offset": 77698,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffd8002",
+      "source_id": 323,
+      "layer3_offset": 81922,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffe7fff",
+      "source_id": 324,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffe8000",
+      "source_id": 325,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffe8001",
+      "source_id": 326,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7ffe8002",
+      "source_id": 327,
+      "layer3_offset": 80482,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7fff7fff",
+      "source_id": 328,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7fff8000",
+      "source_id": 329,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7fff8001",
+      "source_id": 330,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7fff8002",
+      "source_id": 331,
+      "layer3_offset": 79474,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "7fff8003",
+      "source_id": 332,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80007fff",
+      "source_id": 333,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80008000",
+      "source_id": 334,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80008001",
+      "source_id": 335,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80008002",
+      "source_id": 336,
+      "layer3_offset": 81826,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80008003",
+      "source_id": 337,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80018000",
+      "source_id": 338,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80018001",
+      "source_id": 339,
+      "layer3_offset": 46390,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80018002",
+      "source_id": 340,
+      "layer3_offset": 32794,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80018003",
+      "source_id": 341,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80028000",
+      "source_id": 342,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 546,
+      "sector": "80028001",
+      "source_id": 343,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffd7fff",
+      "source_id": 344,
+      "layer3_offset": 81838,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffd8000",
+      "source_id": 345,
+      "layer3_offset": 74938,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffd8001",
+      "source_id": 346,
+      "layer3_offset": 80734,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffe7fff",
+      "source_id": 347,
+      "layer3_offset": 59422,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffe8000",
+      "source_id": 348,
+      "layer3_offset": 33250,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7ffe8001",
+      "source_id": 349,
+      "layer3_offset": 50182,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7fff7fff",
+      "source_id": 350,
+      "layer3_offset": 39190,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "7fff8000",
+      "source_id": 351,
+      "layer3_offset": 44482,
+      "portal_count": 8
+    },
+    {
+      "map_id": 547,
+      "sector": "7fff8001",
+      "source_id": 352,
+      "layer3_offset": 35254,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "80007fff",
+      "source_id": 353,
+      "layer3_offset": 34894,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "80008000",
+      "source_id": 354,
+      "layer3_offset": 38086,
+      "portal_count": 0
+    },
+    {
+      "map_id": 547,
+      "sector": "80008001",
+      "source_id": 355,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7ffd8001",
+      "source_id": 356,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7ffe7fff",
+      "source_id": 357,
+      "layer3_offset": 34414,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7ffe8000",
+      "source_id": 358,
+      "layer3_offset": 38566,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7ffe8001",
+      "source_id": 359,
+      "layer3_offset": 49942,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7ffe8002",
+      "source_id": 360,
+      "layer3_offset": 80530,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7fff7fff",
+      "source_id": 361,
+      "layer3_offset": 37582,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7fff8000",
+      "source_id": 362,
+      "layer3_offset": 46162,
+      "portal_count": 8
+    },
+    {
+      "map_id": 548,
+      "sector": "7fff8001",
+      "source_id": 363,
+      "layer3_offset": 34918,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "7fff8002",
+      "source_id": 364,
+      "layer3_offset": 78550,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "80007fff",
+      "source_id": 365,
+      "layer3_offset": 35146,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "80008000",
+      "source_id": 366,
+      "layer3_offset": 40834,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "80008001",
+      "source_id": 367,
+      "layer3_offset": 60622,
+      "portal_count": 0
+    },
+    {
+      "map_id": 548,
+      "sector": "80008002",
+      "source_id": 368,
+      "layer3_offset": 80842,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "7ffe8001",
+      "source_id": 369,
+      "layer3_offset": 32986,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "7ffe8002",
+      "source_id": 370,
+      "layer3_offset": 48886,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "7ffe8003",
+      "source_id": 371,
+      "layer3_offset": 50530,
+      "portal_count": 2
+    },
+    {
+      "map_id": 549,
+      "sector": "7ffe8004",
+      "source_id": 372,
+      "layer3_offset": 64654,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "7fff8001",
+      "source_id": 373,
+      "layer3_offset": 35818,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "7fff8002",
+      "source_id": 374,
+      "layer3_offset": 38794,
+      "portal_count": 8
+    },
+    {
+      "map_id": 549,
+      "sector": "7fff8003",
+      "source_id": 375,
+      "layer3_offset": 35110,
+      "portal_count": 8
+    },
+    {
+      "map_id": 549,
+      "sector": "7fff8004",
+      "source_id": 376,
+      "layer3_offset": 55762,
+      "portal_count": 2
+    },
+    {
+      "map_id": 549,
+      "sector": "80008001",
+      "source_id": 377,
+      "layer3_offset": 38230,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "80008002",
+      "source_id": 378,
+      "layer3_offset": 46762,
+      "portal_count": 4
+    },
+    {
+      "map_id": 549,
+      "sector": "80008003",
+      "source_id": 379,
+      "layer3_offset": 38446,
+      "portal_count": 8
+    },
+    {
+      "map_id": 549,
+      "sector": "80008004",
+      "source_id": 380,
+      "layer3_offset": 66046,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "80018001",
+      "source_id": 381,
+      "layer3_offset": 43498,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "80018002",
+      "source_id": 382,
+      "layer3_offset": 38230,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "80018003",
+      "source_id": 383,
+      "layer3_offset": 35422,
+      "portal_count": 0
+    },
+    {
+      "map_id": 549,
+      "sector": "80018004",
+      "source_id": 384,
+      "layer3_offset": 37210,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "7ffe8001",
+      "source_id": 385,
+      "layer3_offset": 32986,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "7ffe8002",
+      "source_id": 386,
+      "layer3_offset": 48886,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "7ffe8003",
+      "source_id": 387,
+      "layer3_offset": 50530,
+      "portal_count": 2
+    },
+    {
+      "map_id": 550,
+      "sector": "7ffe8004",
+      "source_id": 388,
+      "layer3_offset": 64654,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "7fff8001",
+      "source_id": 389,
+      "layer3_offset": 35818,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "7fff8002",
+      "source_id": 390,
+      "layer3_offset": 38794,
+      "portal_count": 8
+    },
+    {
+      "map_id": 550,
+      "sector": "7fff8003",
+      "source_id": 391,
+      "layer3_offset": 35110,
+      "portal_count": 8
+    },
+    {
+      "map_id": 550,
+      "sector": "7fff8004",
+      "source_id": 392,
+      "layer3_offset": 55762,
+      "portal_count": 2
+    },
+    {
+      "map_id": 550,
+      "sector": "80008001",
+      "source_id": 393,
+      "layer3_offset": 38230,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "80008002",
+      "source_id": 394,
+      "layer3_offset": 46762,
+      "portal_count": 4
+    },
+    {
+      "map_id": 550,
+      "sector": "80008003",
+      "source_id": 395,
+      "layer3_offset": 38446,
+      "portal_count": 8
+    },
+    {
+      "map_id": 550,
+      "sector": "80008004",
+      "source_id": 396,
+      "layer3_offset": 66046,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "80018001",
+      "source_id": 397,
+      "layer3_offset": 43498,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "80018002",
+      "source_id": 398,
+      "layer3_offset": 38230,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "80018003",
+      "source_id": 399,
+      "layer3_offset": 35422,
+      "portal_count": 0
+    },
+    {
+      "map_id": 550,
+      "sector": "80018004",
+      "source_id": 400,
+      "layer3_offset": 37210,
+      "portal_count": 0
+    },
+    {
+      "map_id": 551,
+      "sector": "7fff7fff",
+      "source_id": 401,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 551,
+      "sector": "7fff8000",
+      "source_id": 402,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 551,
+      "sector": "80008000",
+      "source_id": 403,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 552,
+      "sector": "7fff7fff",
+      "source_id": 404,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 552,
+      "sector": "7fff8000",
+      "source_id": 405,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 552,
+      "sector": "80007fff",
+      "source_id": 406,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 552,
+      "sector": "80008000",
+      "source_id": 407,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "7fff7ffc",
+      "source_id": 408,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "7fff7ffd",
+      "source_id": 409,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "7fff7ffe",
+      "source_id": 410,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "7fff7fff",
+      "source_id": 411,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "7fff8000",
+      "source_id": 412,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80007ffc",
+      "source_id": 413,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80007ffd",
+      "source_id": 414,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80007ffe",
+      "source_id": 415,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80007fff",
+      "source_id": 416,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80008000",
+      "source_id": 417,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80017ffc",
+      "source_id": 418,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80017ffd",
+      "source_id": 419,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80017ffe",
+      "source_id": 420,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80017fff",
+      "source_id": 421,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 553,
+      "sector": "80018000",
+      "source_id": 422,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 554,
+      "sector": "7fff8000",
+      "source_id": 423,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 554,
+      "sector": "7fff8001",
+      "source_id": 424,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 554,
+      "sector": "7fff8002",
+      "source_id": 425,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    },
+    {
+      "map_id": 554,
+      "sector": "80008000",
+      "source_id": 426,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 554,
+      "sector": "80008001",
+      "source_id": 427,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 554,
+      "sector": "80008002",
+      "source_id": 428,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    },
+    {
+      "map_id": 555,
+      "sector": "7fff8000",
+      "source_id": 429,
+      "layer3_offset": 80002,
+      "portal_count": 2
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff67fff",
+      "source_id": 430,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff68000",
+      "source_id": 431,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff77fff",
+      "source_id": 432,
+      "layer3_offset": 32770,
+      "portal_count": 8
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff78000",
+      "source_id": 433,
+      "layer3_offset": 32770,
+      "portal_count": 8
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff87fff",
+      "source_id": 434,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff88000",
+      "source_id": 435,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff97ffe",
+      "source_id": 436,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff97fff",
+      "source_id": 437,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 560,
+      "sector": "7ff98000",
+      "source_id": 438,
+      "layer3_offset": 32770,
+      "portal_count": 4
+    },
+    {
+      "map_id": 560,
+      "sector": "7ffa7fff",
+      "source_id": 439,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 560,
+      "sector": "7ffa8000",
+      "source_id": 440,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffd8001",
+      "source_id": 441,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffd8002",
+      "source_id": 442,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffd8003",
+      "source_id": 443,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffe8000",
+      "source_id": 444,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffe8001",
+      "source_id": 445,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffe8002",
+      "source_id": 446,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7ffe8003",
+      "source_id": 447,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7fff8000",
+      "source_id": 448,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7fff8001",
+      "source_id": 449,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "7fff8002",
+      "source_id": 450,
+      "layer3_offset": 32770,
+      "portal_count": 3
+    },
+    {
+      "map_id": 562,
+      "sector": "7fff8003",
+      "source_id": 451,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "80008000",
+      "source_id": 452,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "80008001",
+      "source_id": 453,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 562,
+      "sector": "80008002",
+      "source_id": 454,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 562,
+      "sector": "80008003",
+      "source_id": 455,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 562,
+      "sector": "80018000",
+      "source_id": 456,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "80018001",
+      "source_id": 457,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "80018002",
+      "source_id": 458,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 562,
+      "sector": "80018003",
+      "source_id": 459,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffd8001",
+      "source_id": 460,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffd8002",
+      "source_id": 461,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffd8003",
+      "source_id": 462,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffe8000",
+      "source_id": 463,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffe8001",
+      "source_id": 464,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffe8002",
+      "source_id": 465,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7ffe8003",
+      "source_id": 466,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7fff8000",
+      "source_id": 467,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7fff8001",
+      "source_id": 468,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "7fff8002",
+      "source_id": 469,
+      "layer3_offset": 32770,
+      "portal_count": 3
+    },
+    {
+      "map_id": 563,
+      "sector": "7fff8003",
+      "source_id": 470,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "80008000",
+      "source_id": 471,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "80008001",
+      "source_id": 472,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 563,
+      "sector": "80008002",
+      "source_id": 473,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 563,
+      "sector": "80008003",
+      "source_id": 474,
+      "layer3_offset": 32770,
+      "portal_count": 1
+    },
+    {
+      "map_id": 563,
+      "sector": "80018000",
+      "source_id": 475,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "80018001",
+      "source_id": 476,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "80018002",
+      "source_id": 477,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 563,
+      "sector": "80018003",
+      "source_id": 478,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 564,
+      "sector": "7fff8000",
+      "source_id": 479,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 565,
+      "sector": "7fff8000",
+      "source_id": 480,
+      "layer3_offset": 35014,
+      "portal_count": 0
+    },
+    {
+      "map_id": 565,
+      "sector": "7fff8001",
+      "source_id": 481,
+      "layer3_offset": 35014,
+      "portal_count": 0
+    },
+    {
+      "map_id": 565,
+      "sector": "80008000",
+      "source_id": 482,
+      "layer3_offset": 35038,
+      "portal_count": 0
+    },
+    {
+      "map_id": 565,
+      "sector": "80008001",
+      "source_id": 483,
+      "layer3_offset": 35218,
+      "portal_count": 0
+    },
+    {
+      "map_id": 566,
+      "sector": "7ffe8000",
+      "source_id": 484,
+      "layer3_offset": 55438,
+      "portal_count": 0
+    },
+    {
+      "map_id": 566,
+      "sector": "7ffe8001",
+      "source_id": 485,
+      "layer3_offset": 53206,
+      "portal_count": 0
+    },
+    {
+      "map_id": 566,
+      "sector": "7fff8000",
+      "source_id": 486,
+      "layer3_offset": 49642,
+      "portal_count": 0
+    },
+    {
+      "map_id": 566,
+      "sector": "7fff8001",
+      "source_id": 487,
+      "layer3_offset": 55570,
+      "portal_count": 0
+    },
+    {
+      "map_id": 567,
+      "sector": "7fff8000",
+      "source_id": 488,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 568,
+      "sector": "7fff8000",
+      "source_id": 489,
+      "layer3_offset": 56662,
+      "portal_count": 0
+    },
+    {
+      "map_id": 569,
+      "sector": "7fff8000",
+      "source_id": 490,
+      "layer3_offset": 71014,
+      "portal_count": 0
+    },
+    {
+      "map_id": 569,
+      "sector": "7fff8001",
+      "source_id": 491,
+      "layer3_offset": 71434,
+      "portal_count": 0
+    },
+    {
+      "map_id": 569,
+      "sector": "80008000",
+      "source_id": 492,
+      "layer3_offset": 71338,
+      "portal_count": 0
+    },
+    {
+      "map_id": 569,
+      "sector": "80008001",
+      "source_id": 493,
+      "layer3_offset": 71530,
+      "portal_count": 0
+    },
+    {
+      "map_id": 570,
+      "sector": "7ffe8000",
+      "source_id": 494,
+      "layer3_offset": 55438,
+      "portal_count": 0
+    },
+    {
+      "map_id": 570,
+      "sector": "7ffe8001",
+      "source_id": 495,
+      "layer3_offset": 53206,
+      "portal_count": 0
+    },
+    {
+      "map_id": 570,
+      "sector": "7fff8000",
+      "source_id": 496,
+      "layer3_offset": 49642,
+      "portal_count": 0
+    },
+    {
+      "map_id": 570,
+      "sector": "7fff8001",
+      "source_id": 497,
+      "layer3_offset": 55570,
+      "portal_count": 0
+    },
+    {
+      "map_id": 573,
+      "sector": "7fff8000",
+      "source_id": 498,
+      "layer3_offset": 35110,
+      "portal_count": 2
+    },
+    {
+      "map_id": 573,
+      "sector": "7fff8001",
+      "source_id": 499,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 573,
+      "sector": "80008000",
+      "source_id": 500,
+      "layer3_offset": 54394,
+      "portal_count": 0
+    },
+    {
+      "map_id": 573,
+      "sector": "80008001",
+      "source_id": 501,
+      "layer3_offset": 33790,
+      "portal_count": 0
+    },
+    {
+      "map_id": 574,
+      "sector": "7fff8000",
+      "source_id": 502,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    },
+    {
+      "map_id": 574,
+      "sector": "7fff8001",
+      "source_id": 503,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 574,
+      "sector": "80008000",
+      "source_id": 504,
+      "layer3_offset": 32770,
+      "portal_count": 0
+    },
+    {
+      "map_id": 574,
+      "sector": "80008001",
+      "source_id": 505,
+      "layer3_offset": 33790,
+      "portal_count": 0
+    },
+    {
+      "map_id": 16384,
+      "sector": "80008000",
+      "source_id": 506,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    },
+    {
+      "map_id": 16896,
+      "sector": "80008000",
+      "source_id": 507,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    },
+    {
+      "map_id": 17408,
+      "sector": "80008000",
+      "source_id": 508,
+      "layer3_offset": 32770,
+      "portal_count": 2
+    }
+  ]
+}

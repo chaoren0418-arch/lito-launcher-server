@@ -1,0 +1,321 @@
+{
+  "schema": 1,
+  "updated_at": "2026-10-05T22:09:27.426983+08:00",
+  "task": "Independent static BIN F3/F4 contract adoption and pure offline serialization comparison",
+  "status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE",
+  "evidence_root": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c",
+  "incoming_packet_delta": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+    "bytes": 14457,
+    "sha256": "A60D0CC4B356C882203E21A7280A2A66A4B30E5274C765A41711CE3977544CC5",
+    "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\server-packet-delta.json"
+  },
+  "incoming_summary": {
+    "new_opcodes": 0,
+    "corrected_wire_contracts": 0,
+    "known_contracts_corroborated": 2,
+    "no_established_new_packet_delta": true,
+    "meaning": "本批新增 opcode 0，已證實線上格式更正 0；F3/F4/CDH 為既知契約補證。尚未比較 Java，待伺服器組核對後決定同步候選。"
+  },
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\handoff.json",
+      "bytes": 6206,
+      "sha256": "E72067981E63A36615CCF74620BE2E8CC197042D9449560DD862B72FA7EB1DFB",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\handoff.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-F4-contract.json",
+      "bytes": 2573,
+      "sha256": "82EC141E5FCACA2A6D09F1AFBE1D3BC9A3A1116BF165C02F31BE5F1BA5510CA6",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\modern-F4-contract.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+      "bytes": 146704,
+      "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\priority-complete-tails.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 8095,
+      "sha256": "74F9DB577C4F745B6FED6B2C877A58E1FD0487D20930D03E8666CE61355E4134",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\監製進度.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 14457,
+      "sha256": "A60D0CC4B356C882203E21A7280A2A66A4B30E5274C765A41711CE3977544CC5",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\server-packet-delta.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\ranges.json",
+      "bytes": 14489,
+      "sha256": "9942F2833F50ABBB7D37EA79F25E4B5CAD9DEC076C0D35FEBC7DC86CFCD2A89C",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\server-packet-evidence\\ranges.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+      "bytes": 8125,
+      "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\host-alias-lifecycle.json"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+      "bytes": 6507,
+      "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\bin-contracts\\priority-api-resolution.json"
+    }
+  ],
+  "verified_referents": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\ranges.json",
+      "bytes": 14489,
+      "sha256": "9942F2833F50ABBB7D37EA79F25E4B5CAD9DEC076C0D35FEBC7DC86CFCD2A89C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+      "bytes": 8125,
+      "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-F4-contract.json",
+      "bytes": 2573,
+      "sha256": "82EC141E5FCACA2A6D09F1AFBE1D3BC9A3A1116BF165C02F31BE5F1BA5510CA6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+      "bytes": 146704,
+      "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+      "bytes": 6507,
+      "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004AC520.bin",
+      "bytes": 72,
+      "sha256": "843D0260975F12AB6B3FEEA4DC28C111912F37C7A9649D2326B83B4161E8CD51"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004B304B.bin",
+      "bytes": 24,
+      "sha256": "35E07878C7B2B54AE0F031051140B7536E924D0E02438A6490CBC2329DB30632"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004A2A8A.bin",
+      "bytes": 93,
+      "sha256": "4279F626946C95CF56DB641FD496E48B8A6777C33F28CCD0A866135E0E498541"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-005025A8.bin",
+      "bytes": 2,
+      "sha256": "EC49F17F2C205644D3A0D242EB5A82EC222ED01FBD8FD6B55D0F2F6EF651E484"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-0063424C.bin",
+      "bytes": 2,
+      "sha256": "4658D6ABBBAF7748C172ED5A3E003CDB8997648F88724834E41F75E54520E142"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-004AC570.bin",
+      "bytes": 102,
+      "sha256": "3580DDB395F17A51F5115C1926DAF5F61327332F44A0A05FFA02B76D3E301AE9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-004B3057.bin",
+      "bytes": 20,
+      "sha256": "EAB04868311CADA68594EABFE7E5EE790FB94FA623F24C125D857B65C44BDA47"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046EB30.bin",
+      "bytes": 544,
+      "sha256": "126AC93293009DAA016B176CE2DBB56E7F158906135680915819B86116DBD3D3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00469BD0.bin",
+      "bytes": 189,
+      "sha256": "9F3BF8593BF5029CED3C686B6EA468DF44F0F2BE42DD2F079C43EABE679B4C4C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+      "bytes": 551,
+      "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+      "bytes": 608,
+      "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-004A2A50.bin",
+      "bytes": 864,
+      "sha256": "AAE7185089F4595FF4D4836C19C14C636F91A0AF038DAE00D573BD6838888315"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0064AD74.bin",
+      "bytes": 256,
+      "sha256": "5341E6B2646979A70E57653007A1F310169421EC9BDD9F1A5648F75ADE005AF1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0064A9C4.bin",
+      "bytes": 256,
+      "sha256": "5341E6B2646979A70E57653007A1F310169421EC9BDD9F1A5648F75ADE005AF1"
+    }
+  ],
+  "Java_sources": {
+    "Protocol.java": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+      "bytes": 400833,
+      "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\java-source\\Protocol.java"
+    },
+    "ClientSession.java": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+      "bytes": 4711656,
+      "sha256": "013ADEF1613C627243ACB352DCA186E0668EFABFADA17FF597380E9B65DECEC9",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\java-source\\ClientSession.java"
+    },
+    "NativeLitoRentalTeleportEndpointCatalog.java": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\NativeLitoRentalTeleportEndpointCatalog.java",
+      "bytes": 6177,
+      "sha256": "F67F718480A4F4D3833348FDCA0DF028B7DE790EF05AE1F24FC1F28382FF1EFD",
+      "snapshot": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\java-source\\NativeLitoRentalTeleportEndpointCatalog.java"
+    },
+    "accepted_ClientSession.java": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\native-player-wireid-frozen-09e7fec151fb45b99dd952aec6077896\\product-source\\ClientSession.java",
+      "bytes": 4814202,
+      "sha256": "CB717EFF324A9D7F679D5DAB8588BAE5FCED06F4F09B503E6780B3CDB6F72B2D"
+    },
+    "offline_harness": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-warehouse-compatibility\\PacketAdoptionGoldenMain.java",
+      "bytes": 2950,
+      "sha256": "5FF8EFF82F5171B70AE50A804863C397316F42D3E1D5FC16B724E14B93AA710C"
+    }
+  },
+  "accepted_candidate": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\native-player-wireid-frozen-09e7fec151fb45b99dd952aec6077896\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+    "bytes": 8906941,
+    "sha256": "79A7DDBEA67AB8C5FB896E4AE83D9CBB88630897207C00D256C68A550DE386E0"
+  },
+  "comparison": [
+    {
+      "opcode": 243,
+      "direction": "S server->client",
+      "status": "CONSISTENT_IMPLEMENTED",
+      "length": "2+4*n for emitted n in0..10",
+      "fields": [
+        "offset0 opcodeF3 u8",
+        "offset1 count c: native signed int8; producer emits0..10",
+        "offset2+4*i DWORD little endian, opaque32 bits"
+      ],
+      "semantics": "Native signed_count<=0 writes no entries; positive count replaces prefix and retains suffix. Java emits AVAILABLE0 and UNAVAILABLEFFFFFFFF only; native F4 regards all other DWORDs as available.",
+      "producer_constraint": "MAX10 is server compatibility guard based on ten DWORD allocation; no native handler count clamp is asserted."
+    },
+    {
+      "opcode": 244,
+      "direction": "S server->client",
+      "status": "CONSISTENT_IMPLEMENTED",
+      "length": 8,
+      "fields": [
+        "offset0 opcodeF4",
+        "offset1 c: native sign-extends index; producer emits0..9",
+        "offset2 d: LE x86 IPv4 integer, wire bytes remain network octets",
+        "offset6 h: unsigned16 wire bits, LE port; producer emits1..65535"
+      ],
+      "semantics": "Native table[index]==FFFFFFFF returns. Otherwise IPv4 equal fixed127.0.0.1 uses46EB30; different uses46ED50, inet_ntoa host copy and low16 port, arms469B10. Java sends F3 AVAILABLE before F4 for initial/channel route and qualifying rental prefix before rental F4.",
+      "API_identity": "Corroboration of existing inet_addr/inet_ntoa identities; no new opcode or GUI remedy established."
+    }
+  ],
+  "call_site_evidence": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\source-excerpts-and-call-sites.json",
+  "trigger_state_comparison": {
+    "scope": "static source only; client transition not executed",
+    "initial_LOGIN": "sendClassicServerList publishes F3 available; enterLobby guards LOGIN/AUTHENTICATED, builds F4 index0 before LOBBY assignment. Classic C35 additionally gates LOGIN/AUTHENTICATED.",
+    "channel_redirect": "selected character and nonblank account; hub.stageChannelPortHandoff must succeed; source handoff staged then F3 AVAILABLE and F4 index0 with configured GAME bind/channelport.",
+    "rental_redirect": "validated resource/action and configured endpoint; hub.stageRentalBattleHandoff succeeds; status prefix marks configured destination available before F4 index. Native malformed signed indexes not emitted."
+  },
+  "offline_validation": {
+    "executions": 2,
+    "positive_golden_vectors_per_execution": 24,
+    "producer_guard_vectors_per_execution": 10,
+    "outputs_identical": true,
+    "relevant_method_IL_equal": true,
+    "artifact_only_Protocol_codeSource": "file:/D:/lito-dev-runtime/20261003-supervision/server/native-player-wireid-frozen-09e7fec151fb45b99dd952aec6077896/candidate/LiTo381-Server-letter-auth-wire-candidate.jar",
+    "current_source_Protocol_codeSource": "file:/D:/lineage%e9%96%8b%e7%99%bc/3-lito%e9%96%8b%e7%99%bc/lito%e4%bc%ba%e6%9c%8d%e5%99%a8/LiTo381-Server/runtime/server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c/compiled-source/",
+    "output_files": [
+      "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\golden-accepted79A7.stdout.log",
+      "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\golden-current-source.stdout.log"
+    ]
+  },
+  "product_changes": [],
+  "SQL_or_network_used": false,
+  "native_or_provider_started": false,
+  "previous_T27_replayed": false,
+  "root_deployment_candidates_preserved": true,
+  "remaining_limits": [
+    "No new F3/F4 live capture, native GUI transition or T73 receipt proof.",
+    "Original receive framing, truncation and trailing validation remain unclosed.",
+    "F3 arbitrary non-sentinel DWORD production is unnecessary for current two proven semantic classes.",
+    "Only the two relevant Protocol methods and golden vectors are compared; whole Protocol outer byte equality is not asserted."
+  ],
+  "legacy_stopped_work": {
+    "task": "T291/T27 refund rebid and castle replacement",
+    "status": "STOPPED_PER_ROOT_INSTRUCTION",
+    "system_flag_detail": "ROOT reported system flag; exact new platform refusal not available in this turn; no inferred confirmed cybersecurity incident.",
+    "existing_result_preserved": "QUALIFIED_T27_MAPPED_REFUNDED_HOUSE_BIDDER_VALID_REBID_SQL_INVENTORY_CHANGED",
+    "prior_owned_runtime": "D:/lito-dev-runtime/20261003-supervision/server/nw-46de3ebc22054e84bab50713195dbe70",
+    "no_retry_stage_patch_or_castle_run_in_this_independent_task": true
+  },
+  "preserved_product_files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\LiTo381-Server.jar",
+      "bytes": 5765902,
+      "sha256": "3025E3DF1C28F55019E79D5F21F9C1587B7268FB6417D6A75A591B6AECACB4B4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server-publish\\LiTo381-Server.jar",
+      "bytes": 5765902,
+      "sha256": "3025E3DF1C28F55019E79D5F21F9C1587B7268FB6417D6A75A591B6AECACB4B4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\target\\LiTo381-Server.jar",
+      "bytes": 8684787,
+      "sha256": "3725E81C3D1599E6D773B65D52A09136A835A2E9FD67B21BD31B62643E01C721"
+    }
+  ],
+  "audit_tool": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\Audit-ServerPacketAdoption.py",
+    "bytes": 12004,
+    "sha256": "0FB9164F36B9830134DF80D27981B00FBBC63C2914805914C9D7E275E9697595"
+  },
+  "read_only_verifier": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\Verify-ServerPacketAdoption.py",
+    "bytes": 1780,
+    "sha256": "CB32B42BE2CB48553DAF15E3C6DFD396CFBB377AD1F44BE77F7F05E02648F007"
+  },
+  "source_annotations": {
+    "F3_count_signedness": "Existing Java comment says one byte. Native signed MOVSX/JLE semantics are explicitly adopted in this handoff; producer valid0..10 domain makes signed/unsigned serialization identical. No native count clamp is claimed.",
+    "F4_port_domain": "Wire h is16bit LE, existing Java permits1..65535 as configured endpoint constraint. Native only stores low16 and some consumers signed-read; compatibility constraint is not native rejection proof."
+  },
+  "evidence_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\manifest.json",
+    "bytes": 39204,
+    "sha256": "55A6B64E19CB76F76D1F00566CA724C9B56928A19A48A5524BDC5B18068C649D"
+  }
+}

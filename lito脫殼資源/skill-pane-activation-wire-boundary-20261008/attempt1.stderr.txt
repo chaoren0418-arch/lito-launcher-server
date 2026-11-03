@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\skill-pane-activation-wire-boundary-20261008\derive.py", line 54, in <module>
+    ('toolbar_toggle_callback',0x4EBEC0,0x14)]:take(*spec)
+                                               ^^^^^^^^^^^
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\skill-pane-activation-wire-boundary-20261008\derive.py", line 42, in take
+    assert sum(len(bytes.fromhex(x['raw_hex'])) for x in ins)==n,(label,'partial decode')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('toolbar_skill_control_construction', 'partial decode')

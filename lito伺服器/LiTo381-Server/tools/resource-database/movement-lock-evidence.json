@@ -1,0 +1,19 @@
+{
+  "version": "0.6.66",
+  "status": "deployed-startup-verified",
+  "candidate_sha256": "6928a147df1e784304b9080632c56121b173bf60b172023ebd263e82fd448628",
+  "previous_sha256": "d3da8ca77a54e5cf072152d6356d4aba7fb8abb0bdb9cafe8d09181737428dab",
+  "tests_passed": [
+    "ResourceRegression",
+    "RoomRulesRegression",
+    "FlowRegression",
+    "NativeDirectoryRegression",
+    "MovementRegression",
+    "MovementLockRegression"
+  ],
+  "native_release_mode": 17,
+  "source_database_mutations": false,
+  "manual_visual_test": "pending",
+  "startup_run": "movement-lock-066-smoke",
+  "runtime_pins_verified": true
+}

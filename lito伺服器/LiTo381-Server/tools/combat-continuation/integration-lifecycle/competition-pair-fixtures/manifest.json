@@ -1,0 +1,55 @@
+{
+  "status": "whole-file-inverse-actual-room-friend-projection",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\NativePairMaterialProbe.java",
+        "sha256": "a1da2ee2bea349691b1b7eb9b674da58f647201926a7c288d550642241227455"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\competition-pair-fixtures\\NativePairMaterialProbe.java",
+        "sha256": "9702b37767377c7b7a175cc3c2e83097922f7d2f42032662158258c6f40d3c9b"
+      },
+      "changes": [
+        [
+          "exercise(p.session,m.session,hub,state,world,mode)",
+          "exercise(p.session,o.session,hub,state,world,mode)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\NativePairMaterialBoundaryProbe.java",
+        "sha256": "5bbb3fb35c125c8804d519876707809f2823cc6c7e59e11e147a3fcce617834c"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\competition-pair-fixtures\\NativePairMaterialBoundaryProbe.java",
+        "sha256": "1aec6f5ffaa2f92d95ecf1b476a4a1c98fe3ea3d46ec2cddddcab69d28cdd93e"
+      },
+      "changes": [
+        [
+          "exerciseBoundary(p.session,m.session,f.session,hub,memory,world,app,mode)",
+          "exerciseBoundary(p.session,o.session,f.session,hub,memory,world,app,mode)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\NativePairMaterialMainProbe.java",
+        "sha256": "4d8ddf1d2b3ac65caab158d617d0eb032824be3e892bd75aff4d957b1c36f19c"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\competition-pair-fixtures\\NativePairMaterialMainProbe.java",
+        "sha256": "1ce997572fca53a793367b03f7c5586d75a057eb0441f7f2d5e95443c0c7adef"
+      },
+      "changes": [
+        [
+          "var peer=m.session;",
+          "var peer=o.session;"
+        ]
+      ]
+    }
+  ],
+  "semantic_change": "Select the existing same-team fourth session instead of opposing third session. Source clan, normal/Ctrl packets, lifecycle, costs, wire and all assertions remain. Independent intent probe retains opposing-team rejection cases.",
+  "originals_modified": false
+}

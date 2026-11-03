@@ -1,0 +1,16 @@
+{
+  "first_dword": "Wire d isroom_id in these room-phase frames: everymemberhas1, notphysicalactor/object/source identifier. Preserve context ofoldR496 actoridentifier label; no wiretype change.",
+  "global_match_order": "Beforephase/roomgate, incomingname compares64ABF8; zero copies140byteslocalrecord→64ABF4 includingfirstdword/name. This canreplace64ABF4 before laterroomguard; no global-readiness claim.",
+  "phase1": "Selected64A958 row via450B90; incomingfirstd mustmatchselectedrow+4, withoriginalsentinel empty-name path. Incrementalpreview64ACF4/F8 stride8C, duplicatecompareentry+4 returnswithoutadd. UI/list prerequisites remainunknown.",
+  "room_phases": "Only64AF98 2/3/6 admitted; then firstd vs64ABF4; kindc3=0 routes64AB60 begin64AB64/end64AB68/cap64AB6C;kind1 routes64AB50 begin64AB54/end64AB58/cap64AB5C;kind2notificationonly; otherreturn.",
+  "identity_key": "Currentroomcontext + selectedkindvector + comparator(name,existingrecord+4)==0. Firstd sameforallmembers in capture; string notphysical/source ID. No member GUID/owned epoch/opaque revision in nativebody.",
+  "duplicate_S_CD": "Bothkindvectors scanbeforeappend; comparatorzero returns4A8B94. Existingrecord andUIinitialready NOTupdated by repeatedS_CD. Exception: matchingselectednameglobal140bytecopy occurred earlier, so cannot claim allglobalsunchanged.",
+  "new_S_CD": "Append140-byte record ifnonduplicate; inlinecapacity/growth branchuses4F118C allocator and4F103C free withunqualifiedexternalbodies;4B4C90/4B4660/4B46A0 local140bytecopies;then4651B0 UI append depthboundary.",
+  "ready_record": "S_CD field9 c goeslocalrecord+44;field15 previewUIstate separate. Existingparticipantstate0/1/2 includesSHOP_LIST2 (not boolean-ready1).",
+  "record_representation": "140bytes isinternalstride/copysize, notnetworkbodylength. Strings copiedthroughNUL andsomepadding/tails mayretainuninitializedstackbytes; do notserializeinternals aswire orclaimall140bytes arevalidownedstate. CapturedASCII Ready isfield12string, distinctfromfield9numericinitialstate0.",
+  "later_ready": "Existing S_D1 sc handler4A9550; onlymembertail4A966D..4A9760 added here. Comparatorzero writesrecord+44 forfirstmatchingcombatant thenreturn, otherwisefirstmatchotherkind. 465530 scansallmatchingUItext item+10 and463BD0 writesDWORD item+6C withMOVSXstatus. Self-name earlierphase/world/callback effects remainunqualified andnotexpanded.",
+  "ready_helper_boundary": "S_D1 selfmatchescaninvokephase/world effectsbeforemembertail; minimalmembertail isnotfullS_D1 admission qualification. No countdown S_D0/results examined.",
+  "Modern_minimum_gap": "A structural AD368 roomadapter may retainopaque roommembers/displaynamebytes independently. Exactnativeidentity/dedup/statuseffects requirequalifiedtables+initializedvector/UI/currentroomstate. Require ownedepoch/revision androommatch BEFORE publication; do not emulate nativepre-gate globaloverwrite as authorization.",
+  "physical_source_owner_player_ready": false,
+  "runtime_object_vectors_or_callbacks_accepted": false
+}

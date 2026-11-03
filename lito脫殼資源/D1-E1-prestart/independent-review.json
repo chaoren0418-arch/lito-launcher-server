@@ -1,0 +1,23 @@
+{
+  "scope": "Only newstaticcoverage/branches/frames/pins, nooldmatrix/runtime orworlddescendants",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+    "bytes": 59865,
+    "sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1"
+  },
+  "all_match": true,
+  "new_ranges": 20,
+  "inherited_raw_ranges": 23,
+  "instruction_assertions": 81,
+  "aligned_internal_branches": 32,
+  "complete_D1_bytes": 529,
+  "complete_E1_bytes": 272,
+  "sealed_D1_frames": 8,
+  "sealed_E1_frames": 12,
+  "prior_immutable_pins": 18,
+  "E1_no_direct_phase_write_or_packetwriter": true,
+  "E1_phase4_callbacks_no_world_start_or_phase_write_or_packetwriter": true,
+  "D1_opaque_preparation_entry_stopped": true,
+  "actual_native_tables_UI_world_qualified": false,
+  "E1_zero_cancel_wire_qualified": false
+}

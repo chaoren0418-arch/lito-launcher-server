@@ -1,0 +1,25 @@
+{
+  "read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+      "bytes": 8026,
+      "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+    },
+    "content_sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+      "bytes": 8026,
+      "sha256": "51095E688463FC829049922364695D3566B42BD5ABF0C78916AB76630A7E3C5D"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T09:43:13.691846+08:00"
+  },
+  "matches_frozen_at_read": true,
+  "lines": [
+    {
+      "line": 30,
+      "text": "  ensure!(name.len()<28&&!name.contains(&0),\"selected source name exceeds NativeNUL capacity\");let mut body=Vec::with_capacity(name.len()+2);body.push(201);body.extend_from_slice(name);body.push(0);self.prepare_body(body)"
+    }
+  ],
+  "adoption": "Read-time observation only; mutable R527 source can subsequently change."
+}

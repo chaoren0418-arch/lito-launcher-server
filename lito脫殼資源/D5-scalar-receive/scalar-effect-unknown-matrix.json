@@ -1,0 +1,242 @@
+{
+  "gate": {
+    "inherited_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "bytes": 29565,
+      "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE"
+    },
+    "header": "Existingcd subtypeBYTE localEBP-1 /roomDWORD localEBP-8; payloadbody+6. Existingprimary/fallbackdispatchunchanged.",
+    "phase6": "4A9E7F roomDWORD→64ABF4 before subtype validity; no priorroom equality.",
+    "other_phases": "Incomingroom!=64ABF4→4AA06Creturn; match maydispatch without furtherphasewhitelist.",
+    "subtype": "MOVSX i8 thenunsignedJA>9 allows0..9, eachscalarpacketindependentlygated.",
+    "additional_gates": "No explicitversion/owner/self/ready/sourcecheck in these finitepaths. Upstream/runtime inputs remainconditional.",
+    "Modern": "Validateownedepoch/currentCEroom beforepublish; noNativephase6room/sourceauthority."
+  },
+  "rows": [
+    {
+      "subtype": 4,
+      "summary_index_candidate": 0,
+      "entry_VA": "004A9FA5",
+      "entry_RVA": "000A9FA5",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACCC",
+      "destination_width": 1,
+      "common_tail_VA": "004AA05B",
+      "complete_path_bytes": 32,
+      "reader_call_VA": "004AA064",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": null,
+      "direct_UI_callee_VA": null,
+      "direct_UI_callee_effect": "NoUIcalleeedge in thispath",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA070",
+      "adjacent_bytes_retained": [
+        "0064ACCB",
+        "0064ACCD"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 6,
+      "summary_index_candidate": 1,
+      "entry_VA": "004AA028",
+      "entry_RVA": "000AA028",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD0",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 34,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACCF",
+        "0064ACD1"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD1",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 7,
+      "summary_index_candidate": 2,
+      "entry_VA": "004AA02F",
+      "entry_RVA": "000AA02F",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD1",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 34,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACD0",
+        "0064ACD2"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 8,
+      "summary_index_candidate": 3,
+      "entry_VA": "004AA036",
+      "entry_RVA": "000AA036",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD2",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 32,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACD1",
+        "0064ACD3"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 9,
+      "summary_index_candidate": 4,
+      "entry_VA": "004AA056",
+      "entry_RVA": "000AA056",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD3",
+      "destination_width": 1,
+      "common_tail_VA": "004AA05B",
+      "complete_path_bytes": 27,
+      "reader_call_VA": "004AA064",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": null,
+      "direct_UI_callee_VA": null,
+      "direct_UI_callee_effect": "NoUIcalleeedge in thispath",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA070",
+      "adjacent_bytes_retained": [
+        "0064ACD2",
+        "0064ACD4"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD2"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    }
+  ],
+  "retained_fields": {
+    "mode_map": "No64ACCA modeBYTE/64ACCB highBYTE/64ACC9 mapprojectionstore, no rawmapWORD/table/resource lookup.",
+    "configuration": "No64ACD4..D7 options or64ACD8..DF selectionsstore; attributes64ABE6/password64ABE8/capacity64ABF0 unchanged byfinitepaths.",
+    "name_owner": "No64AB70 roomname/64ABCA ownerstring write; noalias/member/selflink.",
+    "catalog_preview": "NoUI64A958 catalogrow/row+74 orUI64A98C previewWORD+0C/BYTE+0F directstore/callpath.",
+    "adjacent_gap": "Sub4only64ACCC;64ACCD..CF remainwithoutexplicitstores. Sub6..9one64ACD0..D3BYTE each; siblings andnextoption64ACD4retained.",
+    "ready_authority": "NoD1/ready/phase/member/owner/source/physical/sessionauthority writes; inheritedphase6roomDWORDgate remains distinct.",
+    "event_granularity": "EachscalarwritesonesummaryBYTE andreturns; no whole-summary replacement, atomicpair/generation/requestresult/rollbackqualified. Noautomatic0/1/2/3/5followup.",
+    "scope": "Noexplicitdestination in finitepaths, notwholeimageabsence oractualruntimeGUIacceptance."
+  }
+}

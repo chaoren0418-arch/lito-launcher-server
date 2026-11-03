@@ -1,0 +1,42 @@
+349943: 
+349944: mov     eax, dword_76079C
+349945: inc     eax
+349946: mov     ecx, dword_7607A0
+349947: mov     dword_76079C, eax
+349948: cmp     eax, ecx
+349949: pop     esi
+349950: jl      short loc_4A76C1
+349951: 
+349952: mov     ecx, 1
+349953: mov     dword_7607A0, 0
+349954: mov     dword_76079C, 0
+349955: call    sub_49A510
+349956: 
+349957: mov     off_62C9BC, offset sub_4962B0
+349958: mov     off_62C9B8, offset sub_496200
+349959: pop     edi
+349960: jmp     sub_497010
+349961: 
+349962: ; ---------------------------------------------------------------------------
+349963: 
+349964: loc_4A769A:                             ; CODE XREF: sub_4A7550+A↑j
+349965:                                         ; sub_4A7550+17↑j
+349966: mov     al, byte_64AFBE
+349967: test    al, al
+349968: jnz     short loc_4A76C1
+349969: 
+349970: push    offset dword_64AD54
+349971: push    0C9h
+349972: push    offset aCs                      ; "cs"
+349973: call    sub_4C6AE0
+349974: 
+349975: add     esp, 0Ch
+349976: mov     byte_64AFBE, 1
+349977: 
+349978: 
+349979: loc_4A76C1:                             ; CODE XREF: sub_4A7550+110↑j
+349980:                                         ; sub_4A7550+151↑j
+349981: pop     edi
+349982: retn
+349983: 
+349984: sub_4A7550 endp

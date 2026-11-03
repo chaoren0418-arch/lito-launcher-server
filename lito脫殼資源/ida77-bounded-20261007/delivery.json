@@ -1,0 +1,193 @@
+{
+  "schema": "ida77-finite-delivery-v1",
+  "task_id": "bin_resources-ida77-bounded-export-adapter-20261007",
+  "proposal_state": "review",
+  "execution_state": "blocked",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\IDA77-Bounded-Export-Adapter-20261007.json",
+    "bytes": 19003,
+    "sha256": "A1133472ED1C0CA9C80EC84AD7573D41C3EC7D9EAEE74D9CFB3EA8D0673AA21A"
+  },
+  "owned_tool_files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\environment-audit.json",
+      "bytes": 10017,
+      "sha256": "65E620DCCAC707316BFA4FF7922631D68EB8CE29B39CA08D6D5C9B20E3D9D75C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\finite-delivery-verification.json",
+      "bytes": 436,
+      "sha256": "27FFE4422D006E560FABA3955FED3BC67328D9EBF369FD98DEC37DDBE0ADC82D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+      "bytes": 1025,
+      "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_export.py",
+      "bytes": 7325,
+      "sha256": "26419AAF7AEC24305560B4C3C5CBA09ABA8B3219AA1F06C160F94365374E6B4A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_request.py",
+      "bytes": 7516,
+      "sha256": "90904C006A1060C891277D1DADB04630EE76FFBC6CB261ED5F1F64E1E9B5AC40"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+      "bytes": 3388,
+      "sha256": "9CBE862C49BA8726FF92E9AFB0A1CC8E95673E8F89179BD2FAA411DF0486CF3A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\new-tests.json",
+      "bytes": 12772,
+      "sha256": "EC1B33081BD81C0F738D259ED47C5744E0510E5C3BD7249A1915F61F57685FC1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\prepare_and_test.py",
+      "bytes": 9779,
+      "sha256": "B37788317981C3F9C5BD9882B858F535106B7C8E477109F3176FA8973BDB96C9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\publish_review.py",
+      "bytes": 14577,
+      "sha256": "9BEDDBA33B82B764C2F513730C5BC546BE58E120D3398FC5D0539A4BC6A5F9A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\empty_allowlist.json",
+      "bytes": 300,
+      "sha256": "F3938AC3AE450B182CA3757600C641B0CDE4217E3A30BAB27ABB9ACBA3BA5F6B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\excess_time_budget.json",
+      "bytes": 274,
+      "sha256": "D3B1B00F71429DDE051BF78620383C78488D3DA9FDE5187D3A3A5BF2AC3367E5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\non_code_range.json",
+      "bytes": 307,
+      "sha256": "E687F52E7F8D8A5C56BE8A58EE8F080726D703E16D79D71314465E6183EAA467"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\out_of_range.json",
+      "bytes": 285,
+      "sha256": "B7B8452C91814C0FF3246B5FAF0B9A285114A89392126AB1CF5F477A90A9DB8F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\overlap.json",
+      "bytes": 297,
+      "sha256": "8225F469C832519D8C5A74F85D550725B6956B06A7313259D0C328AA612AD757"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_execute_gate.json",
+      "bytes": 6361,
+      "sha256": "58D9859B0C6058D551BDB1C0F97DDB62BC0596536489735F4DD38EF4BD24AAD7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_input.json",
+      "bytes": 6233,
+      "sha256": "4BA657EAA97AA96936F18864D459A6230ACF9EA39481C437D7412293B8051D01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\unauthorized_scope.json",
+      "bytes": 315,
+      "sha256": "864C1801545DACF9D4C82671E31D8A455B58467B479934DEFCA427BD8C98D330"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_base.json",
+      "bytes": 300,
+      "sha256": "BB0AC545AB6C0336F149539EAC072ECF06D4FE7F81E18589C2D5ECBEF41BC47B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_sha.json",
+      "bytes": 308,
+      "sha256": "03CF63A67119DC44D4B66752424B83951AA01772260906F64E45BD84AFED23F8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\request.schema.json",
+      "bytes": 2482,
+      "sha256": "E316051C27D75AD0853F9266EDE5AF94A1BCFFE38046351DC4387712E125E4DF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\empty_allowlist.json",
+      "bytes": 625,
+      "sha256": "09D6DD07EB5457A32D4C70FA9C0D9CD6CA6C5D692B2E3B241835C1B7F0F812C8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\excess_time_budget.json",
+      "bytes": 735,
+      "sha256": "8DE0A5E152A2481A1E83B6DA6FD7A691918BEB85214C935A94AD918844D4A2A9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\non_code_range.json",
+      "bytes": 679,
+      "sha256": "C34F824B6F6F7A5A5BE3C9E650812455BD5A1350976D1195F96BBBD482370464"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\out_of_range.json",
+      "bytes": 682,
+      "sha256": "4DEBEE69DE149D0EE6B27C66299270E52B9F31B05F21C492938D45094C26576E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\overlap.json",
+      "bytes": 735,
+      "sha256": "96AB963A7B5559BE30B0CD580304D4DBAD77AB6F839D6C2CEBD0DC4CFC181D12"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_execute_gate.json",
+      "bytes": 735,
+      "sha256": "0E0B243C161E6C921E9FED8D4E7A53AAB385C499579FCA8963FCB8B4040B276C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_input.json",
+      "bytes": 735,
+      "sha256": "0E0B243C161E6C921E9FED8D4E7A53AAB385C499579FCA8963FCB8B4040B276C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\unauthorized_scope.json",
+      "bytes": 712,
+      "sha256": "8A15FCF668E3500A12EAAE94D9AB96AD2CBA511879D21D6BF7E4F69B1B57ABA6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_base.json",
+      "bytes": 735,
+      "sha256": "5BF89B95E17828917FF2CC1D8697E6DF05EE2BC7D7628CB9764EC1EB3040D866"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_sha.json",
+      "bytes": 735,
+      "sha256": "1984EEAAA5499AC08AB889E6A49EAC7B2BF525AEC978DC707A10A5DD5D919881"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\result.schema.json",
+      "bytes": 9296,
+      "sha256": "F0BC2BDB5EB532FBE979A38B7F75068FDAD90E7B89D4428DB9613A3F1956C75F"
+    }
+  ],
+  "progress_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+    "bytes": 156991,
+    "sha256": "822E760D9FAF1FFC5FF3D641462D9BE4015B6C6518F027B29D95BE4F2AAD7131"
+  },
+  "progress_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+    "bytes": 160056,
+    "sha256": "7BB602EA880E1A87AFC64F323D892F3B8D47D6749EE13E6626C409E30A619B80"
+  },
+  "validation": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\finite-delivery-verification.json",
+    "bytes": 436,
+    "sha256": "27FFE4422D006E560FABA3955FED3BC67328D9EBF369FD98DEC37DDBE0ADC82D"
+  },
+  "actual_IDA_launches": 0,
+  "qualified_for_IDA_export": false,
+  "old_seal_or_matrix_replayed": false,
+  "external_runtime_or_installation_writes_by_this_tool_route": 0,
+  "scope_write_correction_retained": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+    "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4",
+    "prior_automatic_cleanup_rejection": "blocked by policy",
+    "retry_or_external_cache_access": false
+  }
+}

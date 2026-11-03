@@ -1,0 +1,24 @@
+{
+  "failed_qualification_runs": 0,
+  "explained_navigation_or_output_failures": [
+    {
+      "receipt": "6110f7",
+      "result": "Navigation script StopIteration after several available functions because requested named proc was absent/collapsed. No missing WndProc body or failed byte test; no dependent body inferred from this absence."
+    },
+    {
+      "receipt": "fa5695",
+      "result": "Read-only metadata print failed on cp950 encoding of historical U+2264; rerun e85968 configured UTF-8. Evidence outputs were already written and unchanged."
+    }
+  ],
+  "discarded_exploratory_computations": [
+    {
+      "receipt": "3694e5",
+      "result": "Exploratory nonrequested sys/high table guesses used wrong selector bases. They are not evidence; actual syscommand router uses 48013C and modal route uses comparisons, not guessed table entries."
+    },
+    {
+      "reviewer_receipt": "bdab2c",
+      "result": "Reviewer first low-route computation incorrectly used base480000; corrected receipt15cc70 uses raw jmp base47FFFC. Final formal finite route test independently uses Capstone memory operands."
+    }
+  ],
+  "all_accepted_local_claims": "Qualified only by final raw-witnesses and finite verification; no stale PASS or erroneous computed line adopted."
+}

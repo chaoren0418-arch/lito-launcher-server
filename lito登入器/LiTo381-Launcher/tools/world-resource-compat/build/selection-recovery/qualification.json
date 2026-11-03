@@ -1,0 +1,136 @@
+{
+  "status": "selection-recovery-candidate-qualified-native-ui-pending",
+  "parent_jar": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "parent_dll": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\ddraw.dll",
+    "sha256": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267"
+  },
+  "jar": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "920a53a265691e9c9997e1527fd0157a2496651aa33f8bd203354b6403f4a9f5"
+  },
+  "dll": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\candidate\\ddraw.dll",
+    "sha256": "c17d4ca0728f2a0d92ddc471952f4f6d89bcf78a700a77838ac78cdaeea99116"
+  },
+  "dependencies": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\lib\\mysql-connector-j-8.0.33.jar",
+      "sha256": "e2a3b2fc726a1ac64e998585db86b30fa8bf3f706195b78bb77c5f99bf877bd9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\lib\\protobuf-java-3.21.9.jar",
+      "sha256": "1b78b4a76a71512debfdff8f8fc5aef6bfd459f65758fecf7aff245e6e6301e4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\lib\\HikariCP-5.1.0.jar",
+      "sha256": "a47a6ee62379694ee52c30036f0931b72f9aee2a801d590341ed82bd839e2134"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\lib\\slf4j-api-1.7.36.jar",
+      "sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0"
+    }
+  ],
+  "tests": {
+    "armor-boundaries": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\armor-boundaries.log",
+      "sha256": "9ee7527360a420f681ba4c0e4089daca237a4c2f38a6b8a3a3ff815802ca6f9d"
+    },
+    "normal-disconnect": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\normal-disconnect.log",
+      "sha256": "4c9af0024ad43820404facf5d367ac0daa4dd31ef0e2f2b295f57f1672e0dd6a"
+    },
+    "fault-parent-reproduced": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\fault-parent-reproduced.log",
+      "sha256": "08ffc5d57c644f735ec353b82ca95f0e12f4959687f153458d0ba2e5a6c46c01"
+    },
+    "fault-disconnect": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\fault-disconnect.log",
+      "sha256": "a2b7df9e199d0a88812854b15d259d8e509245396d2168d2628f7cf63bbbef83"
+    },
+    "source-read": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\source-read.log",
+      "sha256": "8c47f450bb2a803d949e09a0aba0eef8afc9f85c7327f674b60fc645ea4fa9ab"
+    },
+    "blue-potion": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\blue-potion.log",
+      "sha256": "3beb1b6453ffdf30a3af54afd8efbd26197dc6933e3920e6f19a231ad7139d7f"
+    },
+    "wire": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\wire.log",
+      "sha256": "81e7c34a6b57b848bd1979a1bd519866720227a34d77663356334c180d92847a"
+    },
+    "duration": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\duration.log",
+      "sha256": "a4ffe7e60547a7f2fb555be558f1cc6fb967baca855a085f089f7bd37ad8f183"
+    },
+    "native": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\native-build.json",
+      "sha256": "2c3f02148a09b7cb39567085347f72bdb3004dcc808904712ca87bc20910e0eb"
+    }
+  },
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SourceSelectionReadProbe.java",
+      "sha256": "3d74f3f70797502cb27f80a9d403144146d4cd01f4abf659ec89f608d05df9b3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SelectionCleanupProbe.java",
+      "sha256": "91f74b49816a507370e7b47d938a5bdf83412d8bc8279596c14813c9c0a9fe5b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\ArmorBoundaryProbe.java",
+      "sha256": "1a0a11f8f4644ee1721ca61ba0da5ff8ba06a373c725bc06f37bf8a6ac68ef5c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\BluePotionSessionProbe.java",
+      "sha256": "8430c3e5ee60163736ade14ebdfd1b42b9e94dc0fe9a1dabc823c50c5d42f270"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\PresentationWireProbe.java",
+      "sha256": "eeac56dd2d44d33ef2eeecd12228d4eba1b30f3f0a5b37353901b4895360eeb3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SharedDurationProbe.java",
+      "sha256": "b55cd129bcde189926a01cfa3233950191b173f407d5f3ccebbd6662ac40b128"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SelectionRecovery.java",
+      "sha256": "0f3784dd2cca38a79730cbe3ea353370c95813678c029aa86777aeb57b111b1e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SelectionRecoveryPatch.java",
+      "sha256": "f6dc78607ed5c3d3775694efc9c509ddaf514a0cd2cc74b05c08cafe3ecc1406"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\selection_login_recovery.inc",
+      "sha256": "aa17b277fe1aa3ca6d51921f1bfb4c08a85f25c57105961519b30b67cd5d60cd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\selection_login_fixture.inc",
+      "sha256": "f29a963141b7d5068ef7602fcd4c70f3d853ba5a40cd0946a8c2064dcde62870"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_selection_recovery.py",
+      "sha256": "be1b0c85f3e55bbd91d0fa76ccc432dda775a28e0befecb385c8804fc8bd7944"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_selection_native.py",
+      "sha256": "0d52a3bbfe6d0fe87e9e4a7a8c1e9ea86499279992f2a43f81e86e239e9fb00b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\test_selection_recovery.py",
+      "sha256": "3dd8868de81018843a7ec8b26d481c81b9ec352d8ce6228d2c805f9435c334fc"
+    }
+  ],
+  "formal_updated": false,
+  "source_database_modified": false,
+  "limitations": [
+    "User who-is-who selection has no matching successful selection log in the failed run; retest distinct names.",
+    "The original disconnect failure cause was not logged; injected cleanup exception proves final ownership release.",
+    "Actual blank-login UI awaits user test; original receiver and callback were executed in native fixture."
+  ]
+}

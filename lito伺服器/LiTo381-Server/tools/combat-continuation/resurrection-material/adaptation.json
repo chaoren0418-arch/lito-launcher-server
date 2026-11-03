@@ -1,0 +1,25 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build.py",
+      "sha256": "837f9ea527c8f4e86cf69b3f10f4d689e439c683b0eb534af40a6a17250f8668"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\NativeBlindMaterialAction.java",
+      "sha256": "8451e73e3e71c5ed9a08a8129e9728ed9f281451a735652c599dfc8d4923ac9c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\build\\resurrection-material-audit\\inputs.json",
+      "sha256": "1770bc9dc887cce03743e087580b5c9c5153f650214962befc6d9bb9c1b46a18"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionMaterialMethods.java",
+      "sha256": "822f2175682893647952929d9d0c0ba20ba3fd5bb3fcea91dfafc678005cf356"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\prepare.py",
+      "sha256": "92710dc5ea64843f5d6aa4305c3b3ca69d4ef0681b810e7da8d18bf660ae9955"
+    }
+  ],
+  "scope": "resource boundary for skill61/75 only; original resurrection ask/answer and target rules retained; behavioral qualification pending"
+}

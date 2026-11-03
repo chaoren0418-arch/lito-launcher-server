@@ -1,0 +1,14 @@
+[
+  {
+    "name": "DDRAW.dll",
+    "path": "C:\\WINDOWS\\SysWOW64\\DDRAW.dll",
+    "base": "0x6ED30000",
+    "size": 954368
+  },
+  {
+    "name": "litoddraw.dll",
+    "path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+    "base": "0x6B4D0000",
+    "size": 331776
+  }
+]

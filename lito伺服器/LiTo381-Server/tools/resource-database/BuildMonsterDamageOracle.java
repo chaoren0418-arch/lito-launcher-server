@@ -1,0 +1,87 @@
+import java.nio.file.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
+import java.util.function.*;
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+import static org.objectweb.asm.Opcodes.*;
+
+/** Executes actual source damage-poison bodies; actor, logger and scheduler edges are typed stubs. */
+public class BuildMonsterDamageOracle {
+ static final String P="local/lito381/server/",S="com/lineage/server/",T=P+"SourceMonsterDamageLeaseTarget",A=P+"SourceMonsterDamageLeasePoison",O=P+"SourceMonsterDamageOracle",M=P+"SourceMonsterDamageMob",PC=P+"SourceMonsterDamagePc",GP=P+"SourceMonsterDamagePool",LOG=P+"SourceMonsterDamageLog";
+ static int checks,scenarios;
+ static void need(boolean b,String why){checks++;if(!b)throw new AssertionError("actual NPC damage poison: "+why);}
+ static String map(String s){if(s==null)return null;return s.replace(S+"model/poison/L1DamagePoison",O).replace(S+"model/poison/L1Poison",A).replace(S+"model/Instance/L1MonsterInstance",M).replace(S+"model/Instance/L1PcInstance",PC).replace(S+"model/L1Character",T).replace(S+"thread/GeneralThreadPool",GP).replace("org/apache/logging/log4j/Logger",LOG).replace(P+"SourceLease",P+"SourceMonsterDamageLease");}
+ static Handle handle(Handle h){return new Handle(h.getTag(),map(h.getOwner()),h.getName(),map(h.getDesc()),h.isInterface());}
+ static void write(Path out,ClassNode c)throws Exception{
+  c.name=map(c.name);c.superName=map(c.superName);c.signature=map(c.signature);c.nestHostClass=map(c.nestHostClass);if(c.nestMembers!=null)c.nestMembers=c.nestMembers.stream().map(BuildMonsterDamageOracle::map).toList();c.innerClasses.clear();
+  for(var f:c.fields){f.desc=map(f.desc);f.signature=map(f.signature);}
+  for(var m:c.methods){m.desc=map(m.desc);m.signature=map(m.signature);if(m.localVariables!=null)for(var v:m.localVariables){v.desc=map(v.desc);v.signature=map(v.signature);}for(var n:m.instructions){
+   if(n instanceof MethodInsnNode x){boolean logger=x.owner.equals("org/apache/logging/log4j/Logger");x.owner=map(x.owner);x.desc=map(x.desc);if(logger){x.setOpcode(INVOKEVIRTUAL);x.itf=false;}if(x.owner.startsWith(S)||x.owner.startsWith("org/apache/"))throw new AssertionError("source boot/dependency excluded: "+x.owner);}
+   else if(n instanceof FieldInsnNode x){x.owner=map(x.owner);x.desc=map(x.desc);if(x.owner.startsWith(S))throw new AssertionError("source actor field dependency excluded");}
+   else if(n instanceof TypeInsnNode x)x.desc=map(x.desc);
+   else if(n instanceof LdcInsnNode x&&x.cst instanceof Type t)x.cst=Type.getType(map(t.getDescriptor()));
+   else if(n instanceof FrameNode x){if(x.local!=null)for(int i=0;i<x.local.size();i++)if(x.local.get(i) instanceof String v)x.local.set(i,map(v));if(x.stack!=null)for(int i=0;i<x.stack.size();i++)if(x.stack.get(i) instanceof String v)x.stack.set(i,map(v));}
+   else if(n instanceof InvokeDynamicInsnNode x){x.desc=map(x.desc);x.bsm=handle(x.bsm);for(int i=0;i<x.bsmArgs.length;i++){if(x.bsmArgs[i] instanceof Handle h)x.bsmArgs[i]=handle(h);else if(x.bsmArgs[i] instanceof Type t)x.bsmArgs[i]=Type.getType(map(t.getDescriptor()));}}
+  }}
+  var w=new ClassWriter(ClassWriter.COMPUTE_MAXS);c.accept(w);var path=out.resolve(c.name+".class");Files.createDirectories(path.getParent());Files.write(path,w.toByteArray());
+ }
+ static void simple(ClassNode c,String n,String d,int flags,Consumer<MethodVisitor> body){BuildPoisonLeaseOracle.simple(c,n,d,flags,body);}
+ static ClassNode type(String name,String parent){var c=new ClassNode();c.version=V17;c.access=ACC_PUBLIC;c.name=name;c.superName=parent;simple(c,"<init>","()V",ACC_PUBLIC,m->{m.visitVarInsn(ALOAD,0);m.visitMethodInsn(INVOKESPECIAL,parent,"<init>","()V",false);m.visitInsn(RETURN);});return c;}
+ static void bridge(ClassNode c,String name,String desc,boolean stat){
+  simple(c,name,desc,ACC_PUBLIC|(stat?ACC_STATIC:0),m->{if(!stat)m.visitVarInsn(ALOAD,0);m.visitFieldInsn(stat?GETSTATIC:GETFIELD,c.name,"calls","Ljava/util/function/BiFunction;");m.visitLdcInsn(name+desc);var args=Type.getArgumentTypes(desc);m.visitLdcInsn(args.length);m.visitTypeInsn(ANEWARRAY,"java/lang/Object");int local=stat?0:1;
+   for(int i=0;i<args.length;i++){m.visitInsn(DUP);m.visitLdcInsn(i);var a=args[i];m.visitVarInsn(a.getOpcode(ILOAD),local);local+=a.getSize();switch(a.getSort()){case Type.BOOLEAN->m.visitMethodInsn(INVOKESTATIC,"java/lang/Boolean","valueOf","(Z)Ljava/lang/Boolean;",false);case Type.INT->m.visitMethodInsn(INVOKESTATIC,"java/lang/Integer","valueOf","(I)Ljava/lang/Integer;",false);case Type.DOUBLE->m.visitMethodInsn(INVOKESTATIC,"java/lang/Double","valueOf","(D)Ljava/lang/Double;",false);case Type.LONG->m.visitMethodInsn(INVOKESTATIC,"java/lang/Long","valueOf","(J)Ljava/lang/Long;",false);default->{}}m.visitInsn(AASTORE);}
+   m.visitMethodInsn(INVOKEINTERFACE,"java/util/function/BiFunction","apply","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",true);var result=Type.getReturnType(desc);switch(result.getSort()){case Type.VOID->{m.visitInsn(POP);m.visitInsn(RETURN);}case Type.BOOLEAN->{m.visitTypeInsn(CHECKCAST,"java/lang/Boolean");m.visitMethodInsn(INVOKEVIRTUAL,"java/lang/Boolean","booleanValue","()Z",false);m.visitInsn(IRETURN);}case Type.INT->{m.visitTypeInsn(CHECKCAST,"java/lang/Integer");m.visitMethodInsn(INVOKEVIRTUAL,"java/lang/Integer","intValue","()I",false);m.visitInsn(IRETURN);}default->{m.visitTypeInsn(CHECKCAST,result.getInternalName());m.visitInsn(ARETURN);}}});
+ }
+ static Object invoke(Object o,String name,Object...args)throws Exception{return BuildPoisonLeaseOracle.invoke(o,name,args);}
+ static void await(CountDownLatch latch){try{if(!latch.await(4,TimeUnit.SECONDS))throw new AssertionError("source damage barrier timeout");}catch(InterruptedException e){throw new AssertionError(e);}}
+ static final class State implements BiFunction<String,Object[],Object> {
+  final List<String> events=new CopyOnWriteArrayList<>();long clock=10000,expiry,colorDelay=700,scheduledAt,delay,period;boolean status,dead,reject;int damage;Object attacker;Runnable task;Consumer<String> hook=e->{};ScheduledFuture<?> future;
+  void event(String value){events.add(value);hook.accept(value);}
+  public Object apply(String key,Object[] args){String name=key.substring(0,key.indexOf('('));switch(name){
+   case "setSkillEffect"->{status=true;expiry=clock+((Integer)args[1]);event("SET:"+args[0]+":"+args[1]);}
+   case "killSkillEffectTimer"->{status=false;event("KILL:"+args[0]);}
+   case "setPoisonEffect"->{event("COLOR:"+args[0]);clock+=colorDelay;}
+   case "hasSkillEffect"->{return status&&clock<expiry;}
+   case "isDead"->{return dead;}
+   case "getId"->{return 77;}
+   case "receiveDamage"->{attacker=args[0];damage+=((Number)args[1]).intValue();event("DAMAGE:"+((Number)args[1]).intValue()+":"+(args.length==2?"NPC":"PC:"+args[2]+":"+args[3]));}
+   case "aiScheduleAtFixedRate","pcScheduleAtFixedRate"->{task=(Runnable)args[0];scheduledAt=clock;delay=(Long)args[1];period=(Long)args[2];event(name.startsWith("ai")?"AI-SCHEDULE":"PC-SCHEDULE");if(reject)throw new RejectedExecutionException("fixture");return future;}
+   case "cancel"->{((ScheduledFuture<?>)args[0]).cancel((Boolean)args[1]);}
+   default->event("LOG:"+name);
+  }return null;}
+ }
+ static Object newActor(Class<?> type,State state)throws Exception{Object o=type.getConstructor().newInstance();type.getField("calls").set(o,state);return o;}
+ static boolean install(Class<?> base,Object target,Object lease)throws Exception{return BuildPoisonLeaseOracle.install(base,target,lease,()->{try{return (boolean)invoke(lease,"beginInfection");}catch(Exception e){throw new IllegalStateException(e);}});}
+ public static void main(String[] args)throws Exception{
+  var source=Path.of(args[0]);var out=Path.of(args[1]);for(var suffix:List.of("Target$PoisonTransition","Target$ParalysisTransition","Poison","Poison$CleanupPlan","Paralysis","Paralysis$CleanupPlan","PoisonFixture","ParalysisFixture"))write(out,BuildPoisonLeaseOracle.read(out,P+"SourceLease"+suffix));
+  var t=BuildPoisonLeaseOracle.read(out,P+"SourceLeaseTarget");t.name=T;t.fields.add(new FieldNode(ACC_PUBLIC,"calls","Ljava/util/function/BiFunction;",null,null));for(var pair:List.of(new String[]{"setSkillEffect","(II)V"},new String[]{"killSkillEffectTimer","(I)V"},new String[]{"setPoisonEffect","(I)V"},new String[]{"hasSkillEffect","(I)Z"},new String[]{"isDead","()Z"},new String[]{"getId","()I"},new String[]{"receiveDamage","(L"+T+";I)V"},new String[]{"receiveDamage","(L"+T+";DZZ)V"}))bridge(t,pair[0],pair[1],false);write(out,t);write(out,type(M,T));write(out,type(PC,T));
+  var pool=type(GP,"java/lang/Object");pool.fields.add(new FieldNode(ACC_PUBLIC|ACC_STATIC,"calls","Ljava/util/function/BiFunction;",null,null));simple(pool,"get","()L"+GP+";",ACC_PUBLIC|ACC_STATIC,m->{m.visitTypeInsn(NEW,GP);m.visitInsn(DUP);m.visitMethodInsn(INVOKESPECIAL,GP,"<init>","()V",false);m.visitInsn(ARETURN);});for(var n:List.of("aiScheduleAtFixedRate","pcScheduleAtFixedRate"))bridge(pool,n,"(Ljava/lang/Runnable;JJ)Ljava/util/concurrent/ScheduledFuture;",true);
+  // Source invokes instance pool methods, so retain that receiver while forwarding to a static stub field.
+  for(var m:pool.methods)if(m.name.endsWith("ScheduleAtFixedRate")){m.access&=~ACC_STATIC;for(var n:m.instructions)if(n instanceof VarInsnNode v)v.var++;m.maxLocals++;}
+  bridge(pool,"cancel","(Ljava/util/concurrent/ScheduledFuture;Z)V",true);var cancel=pool.methods.stream().filter(m->m.name.equals("cancel")).findFirst().orElseThrow();cancel.access&=~ACC_STATIC;for(var n:cancel.instructions)if(n instanceof VarInsnNode v)v.var++;cancel.maxLocals++;write(out,pool);
+  var src=BuildPoisonLeaseOracle.read(source,S+"model/poison/L1DamagePoison");var log=type(LOG,"java/lang/Object");log.fields.add(new FieldNode(ACC_PUBLIC|ACC_STATIC,"calls","Ljava/util/function/BiFunction;",null,null));var signatures=new HashSet<String>();for(var m:src.methods)for(var n:m.instructions)if(n instanceof MethodInsnNode x&&x.owner.equals("org/apache/logging/log4j/Logger")&&signatures.add(x.name+x.desc)){bridge(log,x.name,x.desc,true);var added=log.methods.get(log.methods.size()-1);added.access&=~ACC_STATIC;for(var q:added.instructions)if(q instanceof VarInsnNode v)v.var++;added.maxLocals++;}write(out,log);
+  var oracle=new ClassNode();oracle.version=V17;oracle.access=ACC_PUBLIC;oracle.name=O;oracle.superName=A;oracle.fields.addAll(src.fields);for(var m:src.methods)if(!Set.of("<clinit>","doInfection","getMonitorLine").contains(m.name)){if(m.name.equals("<init>"))m.access=ACC_PUBLIC;oracle.methods.add(m);}need(oracle.methods.size()==12,"twelve actual constructor/start/schedule/tick/cure bodies");
+  simple(oracle,"<clinit>","()V",ACC_STATIC,m->{for(var f:oracle.fields)if((f.access&ACC_STATIC)!=0){if(f.desc.equals("Ljava/util/concurrent/atomic/AtomicLong;")){m.visitTypeInsn(NEW,"java/util/concurrent/atomic/AtomicLong");m.visitInsn(DUP);m.visitMethodInsn(INVOKESPECIAL,"java/util/concurrent/atomic/AtomicLong","<init>","()V",false);}else{need(f.name.equals("_log"),"only known source monitor fields");m.visitTypeInsn(NEW,LOG);m.visitInsn(DUP);m.visitMethodInsn(INVOKESPECIAL,LOG,"<init>","()V",false);}m.visitFieldInsn(PUTSTATIC,O,f.name,map(f.desc));}m.visitInsn(RETURN);});write(out,oracle);
+  try(var loader=new URLClassLoader(new URL[]{out.toUri().toURL()},ClassLoader.getPlatformClassLoader())){
+   var target=loader.loadClass(T.replace('/','.'));var mob=loader.loadClass(M.replace('/','.'));var pc=loader.loadClass(PC.replace('/','.'));var klass=loader.loadClass(O.replace('/','.'));var base=loader.loadClass(A.replace('/','.'));var gp=loader.loadClass(GP.replace('/','.'));var logger=loader.loadClass(LOG.replace('/','.'));
+   for(int mode=0;mode<7;mode++){
+    var state=new State();Object actor=newActor(mode==6?pc:mob,state),attacker=newActor(target,new State());state.future=(ScheduledFuture<?>)java.lang.reflect.Proxy.newProxyInstance(loader,new Class[]{ScheduledFuture.class},(p,m,a)->{if(m.getName().equals("cancel")){state.event("CANCEL:"+a[0]);return true;}if(m.getReturnType()==boolean.class)return false;if(m.getReturnType()==int.class)return 0;if(m.getReturnType()==long.class)return 0L;return null;});gp.getField("calls").set(null,state);logger.getField("calls").set(null,state);if(mode==1)state.future=null;if(mode==2)state.reject=true;if(mode==3)state.colorDelay=35000;
+    Object lease=klass.getConstructor(target,target,int.class,int.class).newInstance(attacker,actor,3000,5);boolean accepted=install(base,actor,lease);need(state.expiry==40000&&state.scheduledAt==10000+state.colorDelay&&state.delay==3000&&state.period==3000,"status starts before green; first fixed-rate delay and period start after publication");need(state.events.get(0).endsWith(":30000")&&state.events.get(1).equals("COLOR:1")&&state.events.contains(mode==6?"PC-SCHEDULE":"AI-SCHEDULE"),"actual initial order and NPC AI scheduler branch");
+    if(mode==1||mode==2){need(!accepted&&!state.status&&!(boolean)invoke(actor,"isCurrentPoison",lease),"null/rejected timer rolls back exact source lease");}
+    else{need(accepted,"actual source producer admitted");state.clock=state.scheduledAt+3000;if(mode==4)state.hook=e->{if(e.startsWith("DAMAGE:"))throw new IllegalArgumentException("fixture damage callback failure");};if(mode==5)state.dead=true;boolean failed=false;try{state.task.run();}catch(IllegalArgumentException e){failed=true;}need(failed==(mode==4),"actual schedule wrapper propagates damage failure after cleanup");need(state.damage==(mode==3?0:5),"one admitted callback has one damage input, and elapsed status gets none");if(mode!=3){need(state.attacker==attacker,"source tick uses exact final original attacker reference");need(state.events.contains(mode==6?"DAMAGE:5:PC:false:true":"DAMAGE:5:NPC"),"actual non-PC monster damage overload differs from PC");}
+     if(mode>=3&&mode<=5)need(!state.status&&!(boolean)invoke(actor,"isCurrentPoison",lease),"elapsed, dead or throwing callback retires exact lease");else{state.clock=state.expiry;int damage=state.damage;state.task.run();need(state.damage==damage&&!state.status,"expiry callback does no late damage and cures");}
+    }
+    int before=state.damage;invoke(lease,"cure");if(state.task!=null)state.task.run();need(state.damage==before,"stale scheduled callback cannot damage");scenarios++;
+   }
+   for(String stop:List.of("COLOR:1","DAMAGE:5:NPC","COLOR:0")){
+    var state=new State();Object actor=newActor(mob,state),attacker=newActor(target,new State());state.future=(ScheduledFuture<?>)java.lang.reflect.Proxy.newProxyInstance(loader,new Class[]{ScheduledFuture.class},(p,m,a)->{if(m.getName().equals("cancel")){state.event("CANCEL:"+a[0]);return true;}if(m.getReturnType()==boolean.class)return false;if(m.getReturnType()==int.class)return 0;if(m.getReturnType()==long.class)return 0L;return null;});gp.getField("calls").set(null,state);logger.getField("calls").set(null,state);Object lease=klass.getConstructor(target,target,int.class,int.class).newInstance(attacker,actor,3000,5);
+    boolean initial=stop.equals("COLOR:1"),terminal=stop.equals("COLOR:0");if(!initial)need(install(base,actor,lease),"barrier setup installs source poison");var entered=new CountDownLatch(1);var release=new CountDownLatch(1);var error=new AtomicReference<Throwable>();state.hook=e->{need(!Thread.holdsLock(actor)&&!Thread.holdsLock(lease),"source target and lease monitors not held across callbacks");if(e.equals(stop)){entered.countDown();await(release);}};
+    var thread=new Thread(()->{try{if(initial)install(base,actor,lease);else if(terminal)invoke(lease,"cure");else{state.clock=13700;state.task.run();}}catch(Throwable e){error.set(e);entered.countDown();}},"source-damage-barrier");thread.start();try{await(entered);need(error.get()==null,"real source body reaches publication/damage barrier");if(!terminal)invoke(lease,"cure");Object next=klass.getConstructor(target,target,int.class,int.class).newInstance(attacker,actor,3000,5);need(!install(base,actor,next),"initial, HP and terminal closing each block replacement");if(!terminal)need(state.events.stream().noneMatch(e->e.startsWith("KILL:")),"cure does not overtake admitted callback");}finally{release.countDown();thread.join(4000);}need(!thread.isAlive()&&error.get()==null&&!state.status&&!(boolean)invoke(actor,"isCurrentPoison",lease),"last callback retires exact transition after own work");need(state.events.indexOf("COLOR:0")>state.events.indexOf("COLOR:1"),"source terminal clear follows admitted initial green");scenarios++;
+   }
+  }
+  Files.writeString(Path.of(args[2]),"{\"source_actual_NPC_damage_initial_scheduler_tick_cure_bodies_executed\":true,\"source_actual_CAS_callback_bases_used\":true,\"source_NPC_target_distinct_from_PC\":true,\"source_PC_positive_control\":true,\"source_status_30s_before_green_and_fixed_rate_3s_after_green\":true,\"source_one_damage_per_callback_and_expired_status_no_damage\":true,\"source_final_attacker_reference_used_by_NPC_callback\":true,\"source_initial_HP_terminal_closing_and_failure_finally_verified\":true,\"source_callback_body_count\":12,\"source_execution_scenarios\":"+scenarios+",\"checks\":"+checks+",\"source_boot_SQL_or_real_scheduler_executed\":false}\n");System.out.println("PASS actual source NPC damage callbacks; scenarios="+scenarios+"; checks="+checks);
+ }
+}

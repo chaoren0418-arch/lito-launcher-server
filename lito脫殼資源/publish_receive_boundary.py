@@ -1,0 +1,74 @@
+"""Publish and incrementally seal the receive/selection evidence only."""
+from audit import *
+from seal_delta import seal
+
+def load(n):return json.loads((ROOT/n).read_text(encoding='utf-8'))
+
+def main():
+    report=load('S1E-receive-selection-boundary.json');verification=load('receive-boundary/new-evidence-verification.json')
+    assert verification['range_output_hashes_and_fixed_PE_bytes_match']
+    assert verification['accepted_batch3_primary_pins_and_snapshot_manifest_unchanged']
+    ranges=load('receive-boundary/ranges.json')['ranges']
+    assert all(r['kind']=='data' or r['bytes']==r['decoded_bytes']for r in ranges)
+    (ROOT/'receive-boundary/READ-ME.txt').write_text('''第四批：S1E 接收與選角邊界（有限靜態證據）
+
+結論：完整封包到齊後，4B37C0 會直接呼叫 4B2970 分派，不會等待技能 owner 就緒。一般選角能證明 class/order → owner 建立或重設 → C_C9 呼叫的程式順序；伺服器僅看任意 C_C9，尚不足以建立普遍安全的 S1E 送出邊界。實際 thread、同 epoch 狀態與重入尚未證明。
+
+1. 接收來源
+47F340 的 47F365/47FFB8 呼叫 4C6B30。視窗訊息 0x401、lParam 高 16 位錯誤為零、低 16 位事件為 1 時，原始 switch bytes 指向 4C7062，直接呼叫 4B37C0。後者先累積兩位元組 LE 封包總長，再累積 body；完整 body 經 4C66C0 解碼或略過該解碼後，於 4B3868 呼叫 4B2970，並繼續 recv 迴圈。這是封包半段累積，不是 owner readiness 佇列；同一次 pump 可分派多個完整 frame。
+
+2. 執行緒與 UI 路徑
+4EFE6E 的固定 PE 目標 759060C0 與已知 WS2_32 base 758F0000 加目前 x86 DLL WSAAsyncSelect RVA160C0 相符。連線完成註冊事件 mask23h、訊息401h、視窗/socket。47F340 的視窗 class-like 註冊資料與主迴圈 MSG-like 呼叫形式亦已保留；其私有目標 05AE0922/05AE0000/05AF04D8/05AF0194/05AF0000 本體未還原，不冒認為確定的 Windows API 實作。
+選角 UI 的 type2/type3 node 將 callback/param 經 constructor 存到 +24/+28，滑鼠 virtual dispatch 最後由 414C40/415C90 呼叫 callback；630F34 保存4928C0，630E08/44/80/BC 保存4934A0。若這些註冊/vtable 是當次 live 值，網路與選角都可走同一個 WndProc stack。此條件式程式路徑不等於已觀測 OS thread ID，亦不排除間接或受保護 caller。
+
+3. C_C9 邊界
+一般新 owner：492AD4 寫 class；class4 的492B9F 選 order；492D80 constructor →492D91 發布834888；之後才在492F02 呼叫 sender。owner allocation failure 分支會發布NULL，但未證明其後能走到C9，後續可能中止或 fault；不能把發布指令本身當成功證據。
+一般重用 owner：648EBC/834888/834958 皆非零才走492B61 reset，492B69 跳到492E6B，再走492F02。非零指標仍不能代替同 epoch/table 有效性。
+快捷選角：4934A0 在条件成立時由4934E9 tailjump 到完整4928C0，沒有本地跳過 class/owner 的捷徑。
+返回保存名稱：4A7550 的64AFBC/64AFBD 分支可直接在4A76B2 送 C9(64AD54)，該分支沒有走4928C0，也沒有本地 owner 建立/重設/readiness check。需另證返回前的 inherited owner/class/order/reset 狀態。
+
+4. 重入的證據界線
+4C6AE0/4C6770 內沒有直接呼叫 receive pump；4C66C0/4C6700 為無 call-out 的 leaf。4F7314 實際為 sprintf，不是 MessageBox。socket error/close 的轉接路徑與私有目標仍未全部閉合；沒有實測巢狀 S1E，也沒有證明所有外部/間接路徑皆不重入。4D65F0 是存 timer deadline/callback/context，沒有直接執行該 callback。sleep 或 timer 時長不能代替排序證據。
+一般選角的64AD54 保存名稱複製在C9呼叫之後；返回64AFBE one-shot 旗標亦在sender返回後才設1。只有真的發生重入時才有讀到舊值或重複送出的可能，本批未證實此情形發生。
+
+5. 最小動態需求（本批未啟動採樣）
+在同 PID+creation FILETIME、connection、角色/owner epoch 記錄：網路與選角/返回 path 的 OS thread ID、HWND、單調序號；492AD4、492B61、492D91、492F02/4A76B2、4AEEF3/4C9220 的class/order/owner/count/table與reset順序；S1E原始count/bitmap/長度、metadata/icon/fallback、duplicate/icon match、rows前後，以及S1F/SDA或巢狀stack。藉此區分提早送達、返回沿用、失敗建立、去重/無匹配與填入後重設。伺服器需獨立比對 admission/return/duplicate 路徑；本組不修改 Java/SQL。
+
+來源與查核入口
+../S1E-receive-selection-boundary.json：結論、條件、最小動態欄位。
+ranges.json：43段 VA/RVA/raw offset/原始bin/SHA與解碼指令。
+api-identities.json：固定 PE branch、目前 DLL export/hash、歷史 base 支持與未證明事項。
+asm-excerpts.json：輔助 ASM 行號；該 ASM 的 recovered PE fingerprint不同，固定 PE 原始 bytes 優先。
+new-evidence-verification.json：21項指令斷言、event switch、callback pointers與43段byte/hash比對。
+../sealed-batch3/accepted-20261005/snapshot-manifest.json：第三批50個穩定副本；原始path是歷史身份，依manifest map解析保存檔。
+
+第三批 S1E-initialization-gates、class4-slot-provenance、skill-gates/ranges 的 accepted SHA維持不變。class4八個未閉合slot不補值；本批未重跑32格producer或資源解碼。F3/F4既有採用仍確認；本批新增opcode0、wire更正0。整體脫殼、原生首大廳、GUI均未驗收。本批所有寫入限於lito脫殼資源。
+''',encoding='utf-8')
+    delta=load('server-packet-delta.json');packet=next(p for p in delta['packets']if p['opcode_decimal']==30)
+    newpin=record(ROOT/'S1E-receive-selection-boundary.json')
+    packet['static_evidence']=[x for x in packet['static_evidence']if x['path']!=newpin['path']]+[newpin]
+    packet['receive_selection_boundary']={'evidence':newpin,'immediate_complete_frame_dispatch':True,'ordinary_C9_program_order_supported':True,'return_saved_alias_C9_skips_ordinary_local_init':True,'unconditional_server_send_boundary_established':False,'actual_same_thread_or_no_reentry_proven':False,'dynamic_requirements':report['minimal_dynamic_requirements'],'status':'KNOWN_CONTRACT_BOUNDARY_CORROBORATION_FOR_INDEPENDENT_SERVER_TIMING_COMPARISON'}
+    packet['consumer_adoption_status']='PENDING_SERVER_S1E_TIMING_COMPARISON'
+    delta['updated_at']=stamp();delta['summary']['receive_selection_boundary_corroboration']=1
+    delta['summary']['meaning']='F3/F4採用已確認。S1E新增接收／選角邊界：完整frame直接分派，一般C9在owner處理之後，返回保存名稱C9分支無本地初始化。source-only普遍安全送出邊界未建立；新增opcode0、wire更正0。'
+    assert delta['consumer_status']['adoption_scope_opcodes']==[243,244]
+    assert delta['consumer_status']['handoff_status']=='DELIVERED_CONFIRMED'
+    write('server-packet-delta.json',delta)
+    complete=load('completeness-audit.json');complete['receive_selection_boundary_batch']={'evidence':newpin,'finite_static_audit_complete':True,'owner_readiness_queue_found':False,'ordinary_C9_order_proven_conditionally':True,'unconditional_server_send_boundary_established':False,'actual_same_thread_or_no_reentry_proven':False,'runtime_complete':False};write('completeness-audit.json',complete)
+    reader=ROOT/'閱讀入口.md';t=reader.read_text(encoding='utf-8').split('\n第四批接收／選角邊界：')[0]
+    reader.write_text(t+'\n第四批接收／選角邊界：S1E-receive-selection-boundary.json 與 receive-boundary/READ-ME.txt。43段 raw bytes／21項指令斷言確認：完整 frame 在4B3868立即分派，沒有等待owner的本地佇列；一般新建／重用選角在owner建立／reset之後才送C9，快捷選角回到完整4928C0；返回4A7550可直接送保存名稱C9，須另證沿用owner狀態。OS thread、私有message API本體、實際重入與同epochreadiness未閉合，因此任意C9／startBattle名稱／sleep尚不足以建立普遍安全S1E送出邊界。第三批accepted三個主要SHA與sealed-batch3/accepted-20261005/snapshot-manifest保持不變。F3/F4採用維持確認，本批新增opcode0、wire更正0。\n',encoding='utf-8')
+    handoff=load('handoff.json');handoff.update(updated_at=stamp(),phase='BATCH4_RECEIVE_SELECTION_BOUNDARY_STATIC_SEALED',entrypoint=record(reader),batch3_stable_snapshot=record(ROOT/'sealed-batch3/accepted-20261005/snapshot-manifest.json'),receive_boundary=newpin,finite_receive_selection_audit_complete=True)
+    added=['S1E-receive-selection-boundary.json','receive-boundary/ranges.json','receive-boundary/api-identities.json','receive-boundary/new-evidence-verification.json','receive-boundary/READ-ME.txt']
+    bypath={x['path']:x for x in handoff['launcher']};bypath.update({str(ROOT/n):record(ROOT/n)for n in added});handoff['launcher']=[bypath[k]for k in sorted(bypath)]
+    handoff['shared']=[record(ROOT/'completeness-audit.json')if x['path']==str(ROOT/'completeness-audit.json')else x for x in handoff['shared']]
+    handoff['server']['packet_delta']=record(ROOT/'server-packet-delta.json');handoff['server']['consumer_status']=delta['consumer_status']
+    handoff['next_steps']=['Supervisor consumes receive/selection boundary and preserved batch3 snapshot','Server independently correlates admission/return/duplicate C9 provenance with S1E sender timing','Any future dynamic observation belongs to authorized launcher work: same epoch/thread/class/order/owner/reset/payload','Private message API and indirect/hooked caller bodies remain unclosed; no sleep-based or synthetic readiness claim'];write('handoff.json',handoff)
+    progress=load('監製進度.json');progress.update(updated_at=stamp(),phase=handoff['phase'],current_task='Receive/selection finite static audit sealed; unconditional server send boundary and same-epoch runtime readiness remain unclosed.',server=delta['consumer_status'],packet_delta_summary=delta['summary'],receive_boundary_summary={'raw_ranges':43,'instruction_assertions':21,'immediate_complete_frame_dispatch':True,'ordinary_C9_after_owner_program_order':True,'return_C9_without_local_owner_init':True,'same_thread_proven':False,'actual_reentry_proven':False,'unconditional_send_boundary_established':False,'batch3_pins_preserved':True})
+    progress['handoffs']['launcher']='S1E-receive-selection-boundary.json + receive-boundary/*; stable accepted batch3 snapshot'
+    progress['handoffs']['server']='F3/F4 adopted; S1E boundary corroboration available through supervisor; independent timing comparison pending'
+    progress['next_steps']=handoff['next_steps'];write('監製進度.json',progress)
+    names=['receive_boundary_audit.py','receive_boundary_probe.py','publish_receive_boundary.py','S1E-receive-selection-boundary.json','server-packet-delta.json','completeness-audit.json','handoff.json','閱讀入口.md']+[str(p.relative_to(ROOT))for p in(ROOT/'receive-boundary').iterdir()if p.is_file()]
+    count=seal(names,Path(__file__))
+    print(json.dumps({'report':record(ROOT/'S1E-receive-selection-boundary.json'),'new_ranges':43,'delta_files_checked':count,'server_F3_F4_adoption_retained':True,'batch3_snapshot_manifest':handoff['batch3_stable_snapshot'],'delivery':record(ROOT/'delivery-verification.json'),'overall_complete':False,'runtime_complete':False},ensure_ascii=False))
+
+if __name__=='__main__':main()

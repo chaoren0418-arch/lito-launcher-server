@@ -1,0 +1,979 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source-contract.json",
+    "bytes": 42233,
+    "sha256": "9238357B9079A14F91132143E2FDED79B0F6F0733DAC716A6925AD7C44F19EF7"
+  },
+  "checks": [
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\analysis\\NATIVE-S-DISPATCH.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\server-character-directory-consumer-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\character-directory-consumer-contract-efd038f10a874fe597e462e2b2c9bc94\\S_CB-fields.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\character-directory-consumer-contract-efd038f10a874fe597e462e2b2c9bc94\\source-slices\\Protocol-fields-reference.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\character-directory-consumer-contract-efd038f10a874fe597e462e2b2c9bc94\\finite-bytecode-comparison.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\00492394-18.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004940D0-C.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004940DC-1E.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\00497150-1D.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\00497600-AA.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004A7450-52.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004B3093-7.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004B3175-7.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\005025A8-2.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\0062FACD-2.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\0062FADE-1.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\006343B4-22.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\direct-table-xrefs.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\known-evidence-delta.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\Modern-ready-dependency-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\producer-copy-clear-and-field-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "raw file 004B3093",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004B3093",
+      "match": true
+    },
+    {
+      "check": "aligned 004B3093",
+      "match": true
+    },
+    {
+      "check": "raw file 004B3175",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004B3175",
+      "match": true
+    },
+    {
+      "check": "aligned 004B3175",
+      "match": true
+    },
+    {
+      "check": "raw file 004A7450",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A7450",
+      "match": true
+    },
+    {
+      "check": "aligned 004A7450",
+      "match": true
+    },
+    {
+      "check": "raw file 00492394",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00492394",
+      "match": true
+    },
+    {
+      "check": "aligned 00492394",
+      "match": true
+    },
+    {
+      "check": "raw file 004940D0",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004940D0",
+      "match": true
+    },
+    {
+      "check": "aligned 004940D0",
+      "match": true
+    },
+    {
+      "check": "raw file 004940DC",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004940DC",
+      "match": true
+    },
+    {
+      "check": "aligned 004940DC",
+      "match": true
+    },
+    {
+      "check": "raw file 00497150",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00497150",
+      "match": true
+    },
+    {
+      "check": "aligned 00497150",
+      "match": true
+    },
+    {
+      "check": "raw file 00497600",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00497600",
+      "match": true
+    },
+    {
+      "check": "aligned 00497600",
+      "match": true
+    },
+    {
+      "check": "raw file 006343B4",
+      "match": true
+    },
+    {
+      "check": "fixedPE 006343B4",
+      "match": true
+    },
+    {
+      "check": "raw file 005025A8",
+      "match": true
+    },
+    {
+      "check": "fixedPE 005025A8",
+      "match": true
+    },
+    {
+      "check": "raw file 0062FACD",
+      "match": true
+    },
+    {
+      "check": "fixedPE 0062FACD",
+      "match": true
+    },
+    {
+      "check": "raw file 0062FADE",
+      "match": true
+    },
+    {
+      "check": "fixedPE 0062FADE",
+      "match": true
+    },
+    {
+      "check": "reuse 004A7550",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A7550",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A7550",
+      "match": true
+    },
+    {
+      "check": "aligned 004A7550",
+      "match": true
+    },
+    {
+      "check": "reuse 004A7577",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A7577",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A7577",
+      "match": true
+    },
+    {
+      "check": "aligned 004A7577",
+      "match": true
+    },
+    {
+      "check": "reuse 004A758C",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A758C",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A758C",
+      "match": true
+    },
+    {
+      "check": "aligned 004A758C",
+      "match": true
+    },
+    {
+      "check": "reuse 004A2A50",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A2A50",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A2A50",
+      "match": true
+    },
+    {
+      "check": "aligned 004A2A50",
+      "match": true
+    },
+    {
+      "check": "reuse 004A2A8A",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A2A8A",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A2A8A",
+      "match": true
+    },
+    {
+      "check": "aligned 004A2A8A",
+      "match": true
+    },
+    {
+      "check": "reuse 004A2AE7",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A2AE7",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A2AE7",
+      "match": true
+    },
+    {
+      "check": "aligned 004A2AE7",
+      "match": true
+    },
+    {
+      "check": "reuse 004A2B7C",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A2B7C",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A2B7C",
+      "match": true
+    },
+    {
+      "check": "reuse 004A2BA0",
+      "match": true
+    },
+    {
+      "check": "slice hash 004A2BA0",
+      "match": true
+    },
+    {
+      "check": "fixedPE 004A2BA0",
+      "match": true
+    },
+    {
+      "check": "reuse 00492919",
+      "match": true
+    },
+    {
+      "check": "slice hash 00492919",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00492919",
+      "match": true
+    },
+    {
+      "check": "aligned 00492919",
+      "match": true
+    },
+    {
+      "check": "reuse 00492E6B",
+      "match": true
+    },
+    {
+      "check": "slice hash 00492E6B",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00492E6B",
+      "match": true
+    },
+    {
+      "check": "aligned 00492E6B",
+      "match": true
+    },
+    {
+      "check": "reuse 00492E85",
+      "match": true
+    },
+    {
+      "check": "slice hash 00492E85",
+      "match": true
+    },
+    {
+      "check": "fixedPE 00492E85",
+      "match": true
+    },
+    {
+      "check": "aligned 00492E85",
+      "match": true
+    },
+    {
+      "check": "operand 004B3095",
+      "match": true
+    },
+    {
+      "check": "operand 004B3177",
+      "match": true
+    },
+    {
+      "check": "operand 004A745F",
+      "match": true
+    },
+    {
+      "check": "operand 004A7464",
+      "match": true
+    },
+    {
+      "check": "operand 004A746B",
+      "match": true
+    },
+    {
+      "check": "operand 004A7471",
+      "match": true
+    },
+    {
+      "check": "operand 004A747B",
+      "match": true
+    },
+    {
+      "check": "operand 004A7483",
+      "match": true
+    },
+    {
+      "check": "operand 004A7486",
+      "match": true
+    },
+    {
+      "check": "operand 004A7488",
+      "match": true
+    },
+    {
+      "check": "operand 004A748D",
+      "match": true
+    },
+    {
+      "check": "operand 004A749D",
+      "match": true
+    },
+    {
+      "check": "operand 00492394",
+      "match": true
+    },
+    {
+      "check": "operand 00492399",
+      "match": true
+    },
+    {
+      "check": "operand 0049239D",
+      "match": true
+    },
+    {
+      "check": "operand 004923A0",
+      "match": true
+    },
+    {
+      "check": "operand 004923A5",
+      "match": true
+    },
+    {
+      "check": "operand 004940D7",
+      "match": true
+    },
+    {
+      "check": "operand 004940EA",
+      "match": true
+    },
+    {
+      "check": "operand 004940F8",
+      "match": true
+    },
+    {
+      "check": "operand 00497168",
+      "match": true
+    },
+    {
+      "check": "operand 00497612",
+      "match": true
+    },
+    {
+      "check": "operand 0049761A",
+      "match": true
+    },
+    {
+      "check": "operand 00497648",
+      "match": true
+    },
+    {
+      "check": "operand 00497654",
+      "match": true
+    },
+    {
+      "check": "operand 00497666",
+      "match": true
+    },
+    {
+      "check": "operand 00497671",
+      "match": true
+    },
+    {
+      "check": "operand 00497677",
+      "match": true
+    },
+    {
+      "check": "operand 0049767E",
+      "match": true
+    },
+    {
+      "check": "operand 00497685",
+      "match": true
+    },
+    {
+      "check": "operand 00497688",
+      "match": true
+    },
+    {
+      "check": "operand 0049768C",
+      "match": true
+    },
+    {
+      "check": "operand 0049768F",
+      "match": true
+    },
+    {
+      "check": "operand 00497695",
+      "match": true
+    },
+    {
+      "check": "operand 004976A7",
+      "match": true
+    },
+    {
+      "check": "operand 004A7572",
+      "match": true
+    },
+    {
+      "check": "operand 004A7584",
+      "match": true
+    },
+    {
+      "check": "operand 004A7587",
+      "match": true
+    },
+    {
+      "check": "operand 004A758C",
+      "match": true
+    },
+    {
+      "check": "operand 004A7591",
+      "match": true
+    },
+    {
+      "check": "operand 004A7594",
+      "match": true
+    },
+    {
+      "check": "operand 004A75E9",
+      "match": true
+    },
+    {
+      "check": "operand 004A75F0",
+      "match": true
+    },
+    {
+      "check": "operand 004A7626",
+      "match": true
+    },
+    {
+      "check": "operand 004A7629",
+      "match": true
+    },
+    {
+      "check": "operand 004A762B",
+      "match": true
+    },
+    {
+      "check": "operand 004A7631",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A83",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A8D",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A93",
+      "match": true
+    },
+    {
+      "check": "operand 004A2AF9",
+      "match": true
+    },
+    {
+      "check": "operand 00492931",
+      "match": true
+    },
+    {
+      "check": "operand 00492E85",
+      "match": true
+    },
+    {
+      "check": "operand 00492E8E",
+      "match": true
+    },
+    {
+      "check": "operand 00492E9E",
+      "match": true
+    },
+    {
+      "check": "record field16 stack",
+      "match": true
+    },
+    {
+      "check": "field16 is BYTE3E",
+      "match": true
+    },
+    {
+      "check": "c dispatch",
+      "match": true
+    },
+    {
+      "check": "accepted reserved field",
+      "match": true
+    },
+    {
+      "check": "exact producer excerpt",
+      "match": true
+    },
+    {
+      "check": "adopted archivedIL equality only",
+      "match": true
+    },
+    {
+      "check": "known row length 1/0",
+      "match": true
+    },
+    {
+      "check": "known row length 27/16",
+      "match": true
+    },
+    {
+      "check": "known row length 5/3",
+      "match": true
+    },
+    {
+      "check": "four markerpair addresses",
+      "match": true
+    },
+    {
+      "check": "marker reset excludes3E",
+      "match": true
+    },
+    {
+      "check": "count projection 0",
+      "match": true
+    },
+    {
+      "check": "count projection 1",
+      "match": true
+    },
+    {
+      "check": "count projection 8",
+      "match": true
+    },
+    {
+      "check": "count projection 255",
+      "match": true
+    },
+    {
+      "check": "clan copy reach 0",
+      "match": true
+    },
+    {
+      "check": "clan copy reach 16",
+      "match": true
+    },
+    {
+      "check": "clan copy reach 33",
+      "match": true
+    },
+    {
+      "check": "clan copy reach 34",
+      "match": true
+    },
+    {
+      "check": "clan copy reach 35",
+      "match": true
+    },
+    {
+      "check": "copybody no calls",
+      "match": true
+    },
+    {
+      "check": "scalar spans stop37",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 004B3093",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 004B3175",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 004A7450",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 00492394",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 004940D0",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 004940DC",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 00497150",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 00497600",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 006343B4",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 005025A8",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 0062FACD",
+      "match": true
+    },
+    {
+      "check": "unknowncallee notcaptured 0062FADE",
+      "match": true
+    },
+    {
+      "check": "exact navigation 62FAA0",
+      "match": true
+    },
+    {
+      "check": "exact navigation byte_62FACD",
+      "match": true
+    },
+    {
+      "check": "exact navigation word_62FACE",
+      "match": true
+    },
+    {
+      "check": "exact navigation dword_62FAD0",
+      "match": true
+    },
+    {
+      "check": "snapshot notruntime",
+      "match": true
+    },
+    {
+      "check": "dependency stages distinct",
+      "match": true
+    },
+    {
+      "check": "Batch29 immutable",
+      "match": true
+    },
+    {
+      "check": "Batch30 immutable",
+      "match": true
+    },
+    {
+      "check": "cleanup rejection remainsopen",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    },
+    {
+      "check": "finite counts",
+      "match": true
+    }
+  ],
+  "check_count": 239,
+  "all_match": true,
+  "decoded_instruction_rows": 275,
+  "model_count": 13,
+  "models": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\computed-layout-copy-and-marker-models.json",
+    "bytes": 4713,
+    "sha256": "66FDD79B15A4713C2E467394C855D168C027C574F1F6111393442FBA2A17C8CB"
+  },
+  "scope_write_correction": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+    "bytes": 1454,
+    "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+  }
+}

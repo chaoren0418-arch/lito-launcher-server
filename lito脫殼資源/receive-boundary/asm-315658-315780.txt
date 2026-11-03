@@ -1,0 +1,123 @@
+315658: sub_4962B0 proc near                    ; CODE XREF: sub_46B670+57↑p
+315659:                                         ; sub_47F340+915↑p
+315660:                                         ; sub_47F340+A8E↑p
+315661:                                         ; sub_4C22A0+273↓p
+315662:                                         ; DATA XREF: sub_4903D0+12↑o
+315663:                                         ; sub_4966A0+73↓o
+315664:                                         ; sub_496A00+34↓o
+315665:                                         ; sub_4A7450+57↓o
+315666:                                         ; sub_4A7550+130↓o
+315667:                                         ; sub_4A76D0+FC↓o
+315668:                                         ; sub_4A76D0+135↓o
+315669: 
+315670: arg_0= dword ptr  8
+315671: arg_4= dword ptr  0Ch
+315672: 
+315673: push    ebp
+315674: mov     ebp, esp
+315675: push    ebx
+315676: push    esi
+315677: mov     esi, ecx
+315678: mov     ebx, edx
+315679: mov     ecx, dword_834F28
+315680: test    ecx, ecx
+315681: jz      short loc_4962DA
+315682: 
+315683: mov     edx, [ebp+arg_4]
+315684: mov     eax, [ecx]
+315685: push    edx
+315686: mov     edx, [ebp+arg_0]
+315687: push    edx
+315688: push    ebx
+315689: push    esi
+315690: call    dword ptr [eax+2Ch]
+315691: 
+315692: test    al, al
+315693: jnz     loc_49635A
+315694: 
+315695: 
+315696: loc_4962DA:                             ; CODE XREF: sub_4962B0+11↑j
+315697: mov     ecx, dword_75F6E8
+315698: test    ecx, ecx
+315699: jz      short loc_496330
+315700: 
+315701: mov     eax, [ecx+0Ch]
+315702: test    eax, eax
+315703: jz      short loc_496330
+315704: 
+315705: cmp     eax, 8
+315706: jnz     short loc_496330
+315707: 
+315708: push    edi
+315709: mov     edi, 1
+315710: 
+315711: 
+315712: loc_4962F6:                             ; CODE XREF: sub_4962B0+7D↓j
+315713: push    edi
+315714: call    sub_41B410
+315715: 
+315716: mov     ecx, [ebp+arg_4]
+315717: mov     edx, [eax]
+315718: push    ecx
+315719: mov     ecx, [ebp+arg_0]
+315720: push    ecx
+315721: push    ebx
+315722: push    esi
+315723: mov     ecx, eax
+315724: call    dword ptr [edx+20h]
+315725: 
+315726: test    al, al
+315727: jz      short loc_496320
+315728: 
+315729: cmp     esi, 201h
+315730: jnz     short loc_496320
+315731: 
+315732: mov     ecx, edi
+315733: call    sub_49BB40
+315734: 
+315735: 
+315736: loc_496320:                             ; CODE XREF: sub_4962B0+5F↑j
+315737:                                         ; sub_4962B0+67↑j
+315738: mov     ecx, dword_75F6E8
+315739: inc     edi
+315740: lea     edx, [edi-1]
+315741: cmp     edx, 5
+315742: jl      short loc_4962F6
+315743: 
+315744: pop     edi
+315745: 
+315746: 
+315747: loc_496330:                             ; CODE XREF: sub_4962B0+32↑j
+315748:                                         ; sub_4962B0+39↑j
+315749:                                         ; sub_4962B0+3E↑j
+315750: mov     al, byte_75F6E5
+315751: test    al, al
+315752: jz      short loc_49635A
+315753: 
+315754: test    ecx, ecx
+315755: jz      short loc_496350
+315756: 
+315757: mov     eax, [ebp+arg_4]
+315758: mov     edx, [ebp+arg_0]
+315759: push    eax
+315760: push    edx
+315761: push    ebx
+315762: push    esi
+315763: call    sub_41B420
+315764: 
+315765: test    al, al
+315766: jnz     short loc_49635A
+315767: 
+315768: 
+315769: loc_496350:                             ; CODE XREF: sub_4962B0+8B↑j
+315770: mov     ecx, 1
+315771: call    sub_49A510
+315772: 
+315773: 
+315774: loc_49635A:                             ; CODE XREF: sub_4962B0+24↑j
+315775:                                         ; sub_4962B0+87↑j
+315776:                                         ; sub_4962B0+9E↑j
+315777: pop     esi
+315778: pop     ebx
+315779: pop     ebp
+315780: retn    8

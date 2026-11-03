@@ -1,0 +1,26 @@
+import java.util.*;
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.analysis.*;
+final class NpcPlayerPhysicalPatch implements Opcodes{
+ static final String P="local/lito381/server/",C=P+"ClientSession",H=P+"CombatNpcPlayerDamage",A=H+"$Attempt";
+ static int guard(MethodNode method,AbstractInsnNode anchor){var order=new IdentityHashMap<AbstractInsnNode,Integer>();int at=0;for(var n:method.instructions)order.put(n,at++);for(var n=anchor.getPrevious();n!=null;n=n.getPrevious())if(n instanceof JumpInsnNode j&&j.getOpcode()==IFEQ&&DragonPatch.prior(j) instanceof VarInsnNode v&&v.getOpcode()==ILOAD&&order.get(j.label)>order.get(anchor))return v.var;throw new IllegalStateException("missing native player-target guard");}
+ static void apply(ClassNode c,Map<String,Integer> hooks)throws AnalyzerException{int prepared=0,finished=0,committed=0;
+  for(var m:new ArrayList<>(c.methods))if((m.name.equals("serverCompanionTick")&&m.desc.equals("(L"+P+"BattleCompanion;JJ)V"))||(m.name.equals("serverClassicWorldCompanionTick")&&m.desc.equals("(L"+P+"BattleCompanion;IJ)V"))){
+   var original=m.instructions.toArray();var frames=new Analyzer<>(new SourceInterpreter()).analyze(c.name,m);int pc=-1,player=-1,ranged=-1;boolean battle=m.name.equals("serverCompanionTick");
+   for(int at=0;at<original.length;at++)if(original[at] instanceof MethodInsnNode call){if(call.owner.equals(C)&&call.name.equals("combatPhysicalDamageAfterArmorAndCooking")&&call.desc.equals("(ILjava/lang/String;)I")){pc=MagicDamagePatch.load(frames[at].getStack(frames[at].getStackSize()-3),ALOAD).var;if(battle)player=guard(m,call);}if(!battle&&call.owner.equals(P+"BattleStrikerGale")&&call.name.equals("damageAfterStatus")&&call.desc.equals("(IZZ)I"))ranged=MagicDamagePatch.load(frames[at].getStack(frames[at].getStackSize()-1),ILOAD).var;}
+   if(pc<0)throw new IllegalStateException("missing native companion PC receiver");
+   if(battle?player<0:ranged<0)throw new IllegalStateException("missing native NPC target/ranged snapshot");
+   int slot=MagicDamagePatch.appendLocal(c,m,A),clock=m.name.equals("serverCompanionTick")?4:3;
+   for(var n:original)if(n instanceof MethodInsnNode hp&&hp.owner.equals(C)&&hp.name.equals(battle?"takePlayerDamage":"takeClassicWorldCompanionDamage")&&hp.desc.equals(battle?"(IL"+C+";)V":"(IL"+C+";L"+P+"BattleCompanion;)V")){
+    var damage=MagicDamagePatch.load(frames[Arrays.asList(original).indexOf(n)].getStack(frames[Arrays.asList(original).indexOf(n)].getStackSize()-(battle?2:3)),ILOAD);
+    JumpInsnNode guard=null;for(var before=n.getPrevious();before!=null;before=before.getPrevious())if(before instanceof JumpInsnNode j&&j.getOpcode()==IFNE&&DragonPatch.next(j).getOpcode()==RETURN&&DragonPatch.prior(j) instanceof VarInsnNode load&&load.getOpcode()==ILOAD){guard=j;break;}
+    if(guard==null)throw new IllegalStateException("missing native post-action NPC PC hit gate");int hit=((VarInsnNode)DragonPatch.prior(guard)).var;
+    var args=new InsnList();args.add(new VarInsnNode(ILOAD,damage.var));args.add(new VarInsnNode(ILOAD,hit));args.add(new VarInsnNode(ALOAD,slot));args.add(new VarInsnNode(ALOAD,pc));args.add(new VarInsnNode(ALOAD,0));args.add(new MethodInsnNode(INVOKESTATIC,H,"commit","(IZL"+A+";L"+C+";L"+C+";)L"+H+"$Commit;",false));args.add(new InsnNode(DUP));args.add(new MethodInsnNode(INVOKEVIRTUAL,H+"$Commit","value","()I",false));args.add(new VarInsnNode(ISTORE,damage.var));args.add(new MethodInsnNode(INVOKEVIRTUAL,H+"$Commit","hit","()Z",false));args.add(new VarInsnNode(ISTORE,hit));m.instructions.insertBefore(DragonPatch.prior(guard),args);committed++;
+   }
+   for(var n:original)if(n instanceof MethodInsnNode call){if(call.owner.equals(C)&&call.name.equals("companionPhysicalDamage")&&call.desc.equals("(IIIIIII)I")){var args=new InsnList();args.add(new VarInsnNode(ALOAD,0));args.add(new VarInsnNode(ALOAD,1));args.add(new VarInsnNode(ALOAD,pc));args.add(new VarInsnNode(LLOAD,clock));args.add(battle?new VarInsnNode(ILOAD,player):new InsnNode(ICONST_1));args.add(battle?new InsnNode(ICONST_0):new VarInsnNode(ILOAD,ranged));m.instructions.insertBefore(call,args);var bridge=new MethodInsnNode(INVOKESTATIC,H,"prepare","(IIIIIIIL"+C+";L"+P+"BattleCompanion;L"+C+";JZZ)L"+A+";",false);m.instructions.set(call,bridge);var capture=new InsnList();capture.add(new InsnNode(DUP));capture.add(new VarInsnNode(ASTORE,slot));capture.add(new MethodInsnNode(INVOKEVIRTUAL,A,"value","()I",false));m.instructions.insert(bridge,capture);prepared++;}
+    else if(call.owner.equals(C)&&call.name.equals("combatPhysicalDamageAfterArmorAndCooking")&&call.desc.equals("(ILjava/lang/String;)I")){var args=new InsnList();args.add(new VarInsnNode(ALOAD,slot));args.add(new VarInsnNode(LLOAD,clock));args.add(new VarInsnNode(ALOAD,0));m.instructions.insertBefore(call,args);m.instructions.set(call,new MethodInsnNode(INVOKESTATIC,H,"finish","(L"+C+";ILjava/lang/String;L"+A+";JL"+C+";)I",false));finished++;}}
+  }
+  CombatPatch.require(prepared,2,"owned NPC PC raw preparation");CombatPatch.require(finished,2,"owned NPC PC post-flat multiplier");CombatPatch.require(committed,2,"owned NPC PC post-action signed commit");hooks.put("source-npc-player-physical",prepared+finished);hooks.put("source-npc-player-action-commit",committed);
+ }
+}

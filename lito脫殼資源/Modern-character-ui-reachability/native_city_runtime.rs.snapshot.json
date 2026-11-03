@@ -1,0 +1,197 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+    "bytes": 57230,
+    "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+  },
+  "captured_content_sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+    "bytes": 57230,
+    "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:11:34.558081+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      45,
+      50
+    ],
+    [
+      142,
+      150
+    ],
+    [
+      171,
+      183
+    ],
+    [
+      207,
+      218
+    ]
+  ],
+  "line_count": 369,
+  "implementation_lines": [
+    {
+      "line": 45,
+      "text": "pub const SOURCE_CHARACTER_COMMAND_FIRST:u16=0x4960;"
+    },
+    {
+      "line": 46,
+      "text": "pub fn source_character_command_slot(command:u16)->Option<usize>{(SOURCE_CHARACTER_COMMAND_FIRST..SOURCE_CHARACTER_COMMAND_FIRST+4).contains(&command).then(||usize::from(command-SOURCE_CHARACTER_COMMAND_FIRST))}"
+    },
+    {
+      "line": 47,
+      "text": "pub fn player_command_action(command:u16)->Option<Action>{match command{SOURCE_MENU_COMMAND_ID=>Some(Action::OpenSourceMenu),_=>None}}"
+    },
+    {
+      "line": 48,
+      "text": "#[derive(Clone)]pub struct SourceCharacterControl {epoch:SourceEpoch,revision:u64,scene_revision:u64,slot:usize}"
+    },
+    {
+      "line": 49,
+      "text": "#[derive(Clone)]pub struct SourceCharacterBack {epoch:SourceEpoch,revision:u64,scene_revision:u64}"
+    },
+    {
+      "line": 50,
+      "text": "#[derive(Clone)]pub struct SourceCharacterSubmit {control:SourceCharacterControl,selection_revision:u64}"
+    },
+    {
+      "line": 142,
+      "text": " pub fn consume_source_identity_event(&mut self,event:&SourceDecodedPacket)->Result<source_identity::Change>{"
+    },
+    {
+      "line": 143,
+      "text": "  self.source_scope.admit(event)?;"
+    },
+    {
+      "line": 144,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source identity unavailable\");"
+    },
+    {
+      "line": 145,
+      "text": "  ensure!(!self.entry_navigation.active(),\"roster replacement during navigation requires source retirement\");"
+    },
+    {
+      "line": 146,
+      "text": "  ensure!(event.body().first()!=Some(&3)||self.source_send.snapshot().pending.is_none(),\"roster replacement while selected write pending;retire source epoch\");"
+    },
+    {
+      "line": 147,
+      "text": "  if event.body().first()==Some(&3)&&self.bootstrap_adapter.is_none(){ensure!(usize::from(event.body()[1])<=source_identity::SLOT_COUNT,\"strict Native four-row UI boundary\");}"
+    },
+    {
+      "line": 148,
+      "text": "  if self.bootstrap_adapter.is_some()&&event.body().first()==Some(&3){ensure!(matches!(self.login_bootstrap.key.stage,login_bootstrap::Stage::AwaitRoster|login_bootstrap::Stage::Roster),\"GAME roster requires completed NEWS continuation\");self.login_bootstrap.credentials=None;self.login_bootstrap.key.credentials_pending=false;self.login_bootstrap.key.stage=login_bootstrap::Stage::Roster;self.login_bootstrap.key.roster_count=Some(event.body()[1]);self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::Directory,..Default::default()};}"
+    },
+    {
+      "line": 149,
+      "text": "  let revision=self.source_roster_revision.checked_add(1).context(\"source roster control revision exhausted\")?;let(next,change)=self.source_identity.prepare_packet(event.body())?;self.login_form.retire()?;self.character_scene.retire()?;if self.bootstrap_adapter.is_some(){for r in next.records(){r.fields().validate_java_projection()?;ensure!(!r.name().is_empty(),\"AD368 empty character name\");r.display_name()?;source_identity::fields::display_ms950(r.clan_name())?;}}self.source_identity=next;self.source_roster_revision=revision;if matches!(change,source_identity::Change::Started{..}){self.java_self.retire();}if matches!(change,source_identity::Change::Started{..}){self.awaiting_source_roster=false;}if self.source_identity.complete()&&!self.awaiting_source_roster{self.character_scene.enter();}self.finish_java_return_roster()?;Ok(change)"
+    },
+    {
+      "line": 150,
+      "text": " }"
+    },
+    {
+      "line": 171,
+      "text": " pub fn source_character_control_enabled(&self,slot:usize)->bool{!self.entry_navigation.active()&&!self.awaiting_source_roster&&self.character_scene.key().active&&self.page==UiPage::Menu&&self.source_scope.active_serial().is_some()&&self.source_send.snapshot().counter.is_some()&&self.source_send.snapshot().pending.is_none()&&self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT}).is_ok()}"
+    },
+    {
+      "line": 172,
+      "text": " pub fn source_character_control(&self,slot:usize)->Option<SourceCharacterControl>{if !self.source_character_control_enabled(slot){return None;}Some(SourceCharacterControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.source_roster_revision,scene_revision:self.character_scene.key().scene_revision,slot})}"
+    },
+    {
+      "line": 173,
+      "text": " pub fn handle_source_character_control(&mut self,control:&SourceCharacterControl)->Result<()>{self.source_scope.admit_epoch(&control.epoch)?;ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired source character control\");self.prepare_source_send_candidate(&control.epoch,source_send::Intent::SelectCharacter{slot:control.slot})?;self.status=\"角色已選取，等待傳送\".into();Ok(())}"
+    },
+    {
+      "line": 174,
+      "text": " ///415C40(+34) normal release ->4934A0:select only;414A80 WM203"
+    },
+    {
+      "line": 175,
+      "text": " /// increments +18 and415C90(+40)->4934A0->4928C0 for double click."
+    },
+    {
+      "line": 176,
+      "text": " pub fn choose_source_character_control(&mut self,control:&SourceCharacterControl,double_click:bool)->Result<()>{"
+    },
+    {
+      "line": 177,
+      "text": "  self.source_scope.admit_epoch(&control.epoch)?;"
+    },
+    {
+      "line": 178,
+      "text": "  ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired character selection callback\");"
+    },
+    {
+      "line": 179,
+      "text": "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();"
+    },
+    {
+      "line": 180,
+      "text": "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+    },
+    {
+      "line": 181,
+      "text": " }"
+    },
+    {
+      "line": 182,
+      "text": " pub fn source_character_submit(&self)->Option<SourceCharacterSubmit>{let key=self.character_scene.key();Some(SourceCharacterSubmit{control:self.source_character_control(key.selected?)?,selection_revision:key.selection_revision})}"
+    },
+    {
+      "line": 183,
+      "text": " pub fn handle_source_character_submit(&mut self,submit:&SourceCharacterSubmit)->Result<()>{let key=self.character_scene.key();ensure!(submit.selection_revision==key.selection_revision&&key.selected==Some(submit.control.slot),\"retired selected character submit\");self.handle_source_character_control(&submit.control)}"
+    },
+    {
+      "line": 207,
+      "text": " pub fn prepare_source_send_candidate(&mut self,epoch:&SourceEpoch,intent:source_send::Intent)->Result<source_send::Reservation>{"
+    },
+    {
+      "line": 208,
+      "text": "  self.source_scope.admit_epoch(epoch)?;"
+    },
+    {
+      "line": 209,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source send unavailable\");"
+    },
+    {
+      "line": 210,
+      "text": "  ensure!(!matches!(intent,source_send::Intent::ReturnLogin),\"ReturnLogin requirescurrentopaqueBack control\");"
+    },
+    {
+      "line": 211,
+      "text": "  ensure!(!self.entry_navigation.active(),\"source navigation reply pending or lobby active\");"
+    },
+    {
+      "line": 212,
+      "text": "  ensure!(!self.awaiting_source_roster,\"new source roster required after Back\");"
+    },
+    {
+      "line": 213,
+      "text": "  let source_send::Intent::SelectCharacter{slot}=intent else{anyhow::bail!(\"Native480560 FromCD/version/registry/auth sideeffects unqualified\");};"
+    },
+    {
+      "line": 214,
+      "text": "  let next=self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT})?;"
+    },
+    {
+      "line": 215,
+      "text": "  let prepared=self.source_send.prepare_character(next.selected().unwrap().actor_alias())?;"
+    },
+    {
+      "line": 216,
+      "text": "  let serial=prepared.reservation.ticket.serial();let mut navigation=self.entry_navigation.clone();navigation.await_character(serial)?;let mut scene=self.character_scene.clone();scene.retire()?;"
+    },
+    {
+      "line": 217,
+      "text": "  if self.bootstrap_adapter.is_some(){ensure!(self.java_character.key.stage==java_character_flow::Stage::Directory,\"AD368 directory not available for C9\");self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::AwaitCharacterResult,selected_name:Some(next.selected().unwrap().actor_alias().to_vec()),..Default::default()};}"
+    },
+    {
+      "line": 218,
+      "text": "  let reservation=self.source_send.commit(prepared);self.java_self.selection_requested(serial);self.source_identity=next;self.entry_navigation=navigation;self.character_scene=scene;Ok(reservation)"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "before_bytes": 179341943325,
+  "after_bytes": 2278131363,
+  "removed_logical_bytes": 177063811962,
+  "after_files": 48294,
+  "by_top_level": {
+    "README.md": [
+      1214,
+      1
+    ],
+    "TOTAL": [
+      2278131363,
+      48294
+    ],
+    "workflow_v2.py": [
+      17759,
+      1
+    ],
+    "工作佇列.json": [
+      417459,
+      1
+    ],
+    "工作流交接.json": [
+      1685,
+      1
+    ],
+    "工作流驗證.json": [
+      49,
+      1
+    ],
+    "監製進度.json": [
+      490575,
+      1
+    ],
+    "docs": [
+      54754447,
+      1
+    ],
+    "LiTo381-Compat": [
+      2712864,
+      31
+    ],
+    "LiTo381-Launcher": [
+      350944411,
+      857
+    ],
+    "工作流採證": [
+      41698,
+      11
+    ],
+    "舊版分析與驗收": [
+      1868749202,
+      47388
+    ]
+  },
+  "measurement": "logical bytes, no reparse traversal, not physical disk reclaimed"
+}

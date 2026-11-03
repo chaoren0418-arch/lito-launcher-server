@@ -1,0 +1,698 @@
+{
+  "reads": [
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_character_selection.rs.snapshot.json",
+        "bytes": 4327,
+        "sha256": "1A67C28771689CDDACB767244E8E5DA6DA8866F85E172A1D4C6B48DD61D4044C"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+        "bytes": 2353,
+        "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+      },
+      "captured_content_sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+        "bytes": 2353,
+        "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:10:45.850264+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_presentation.rs.snapshot.json",
+        "bytes": 3876,
+        "sha256": "D7934B84236E592A09B0FB4F2FFCC4E95BE0BB602979B117FD574F3D51DD1609"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_presentation.rs",
+        "bytes": 1813,
+        "sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101"
+      },
+      "captured_content_sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_presentation.rs",
+        "bytes": 1813,
+        "sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:12:19.058886+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_runtime.rs.snapshot.json",
+        "bytes": 10301,
+        "sha256": "76B867C610079EE1E9DDE8780FBA1E52C26873805C1AF54084B56F392D28D3FE"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57230,
+        "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+      },
+      "captured_content_sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+        "bytes": 57230,
+        "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:11:34.558081+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs.snapshot.json",
+        "bytes": 33106,
+        "sha256": "C6F05AE1B94F9FB24851025382417AEEA614F433E18D67825EB103C506E70824"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "captured_content_sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:10:45.845302+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@pointer.snapshot.json",
+        "bytes": 4922,
+        "sha256": "9C8C78A8A99A77861BC35835E804C19ABF82359AC0B1911C274D4CF8C3F4C4CF"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "captured_content_sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:15:31.291529+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_city_window.rs@render.snapshot.json",
+        "bytes": 11028,
+        "sha256": "3C6675603ECE9D58BF2F7E69C35129FA8F49B18E6CBBAF768A59CDFF21E3D563"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "captured_content_sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+        "bytes": 46520,
+        "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:11:34.555389+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_mode_menu_skin.rs.snapshot.json",
+        "bytes": 6643,
+        "sha256": "CC14D45CB6B2DFEF6615CBAD7D6C5914D414BF56C80A5F1DCA4E65E30F2E249A"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+        "bytes": 10536,
+        "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+      },
+      "captured_content_sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+        "bytes": 10536,
+        "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:10:45.849272+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_player_entry_commands.rs.snapshot.json",
+        "bytes": 7671,
+        "sha256": "DB0E5F6808ABE0ECF4C36FF330B1D5F9DDF97E2C0AD1AF810EBE5294FCFC0297"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_player_entry_commands.rs",
+        "bytes": 3517,
+        "sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5"
+      },
+      "captured_content_sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_player_entry_commands.rs",
+        "bytes": 3517,
+        "sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:10:45.847272+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_identity.rs.snapshot.json",
+        "bytes": 6217,
+        "sha256": "79B4349B347C61C413609F00DE9D030045835E45B260E596783DD02C062E3019"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+        "bytes": 6119,
+        "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+      },
+      "captured_content_sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+        "bytes": 6119,
+        "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:11:34.558583+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\native_source_send.rs.snapshot.json",
+        "bytes": 1314,
+        "sha256": "15FDD1BBCD90699AEECDFF2E7A724759FCAD4C7448031C21B6F7013E353A96F5"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+        "bytes": 7863,
+        "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+      },
+      "captured_content_sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+        "bytes": 7863,
+        "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:11:34.558583+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\production-main.snapshot.json",
+        "bytes": 10686,
+        "sha256": "B58332FB34D774F3146F6884D339A7EE243B55E62005DAB22D59B01C60886035"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+        "bytes": 17805,
+        "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+      },
+      "captured_content_sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+        "bytes": 17805,
+        "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:17:30.850433+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-candidate-entry.snapshot.json",
+        "bytes": 7425,
+        "sha256": "DB34251FDC63661707462D2A427B98678B4B7EFB668AF8CDB7A1C3AB32508470"
+      },
+      "kind": "source",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+        "bytes": 23652,
+        "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+      },
+      "captured_content_sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+        "bytes": 23652,
+        "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:17:30.850433+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+        "bytes": 760029,
+        "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+      },
+      "captured_content_sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+        "bytes": 760029,
+        "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.720130+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+        "bytes": 45989,
+        "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+      },
+      "captured_content_sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+        "bytes": 45989,
+        "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.821831+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+        "bytes": 2354,
+        "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+      },
+      "captured_content_sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+        "bytes": 2354,
+        "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.757217+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+        "bytes": 2354,
+        "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+      },
+      "captured_content_sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+        "bytes": 2354,
+        "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.791227+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+        "bytes": 2354,
+        "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+      },
+      "captured_content_sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+        "bytes": 2354,
+        "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.817632+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+        "bytes": 2354,
+        "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+      },
+      "captured_content_sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+        "bytes": 2354,
+        "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.821831+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-character-resource-mapping.json",
+        "bytes": 32475,
+        "sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A"
+      },
+      "captured_content_sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-character-resource-mapping.json",
+        "bytes": 32475,
+        "sha256": "BE3C77EE8148521C694CC5FAA3076944C8BDB7CF5114F31F08E45D98F6B2EA6A"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.838359+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Native-existing-asset-metadata.json",
+        "bytes": 21844,
+        "sha256": "C2209236A400B42C0D9DE2CC75D55EECFAE20B0D50AA562E843D1A5C5998947E"
+      },
+      "kind": "existing Native metadata/asset header",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-native-menu-skin-binding.json",
+        "bytes": 25356,
+        "sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD"
+      },
+      "captured_content_sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r498-native-menu-skin-binding.json",
+        "bytes": 25356,
+        "sha256": "5E63D82EFF0D524E02443172D46CD1207EB8BC7FA3D7EE4595D97B59C55E9DCD"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.839359+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelectScene.json",
+        "bytes": 5308,
+        "sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329"
+      },
+      "captured_content_sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelectScene.json",
+        "bytes": 5308,
+        "sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.852869+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelect\\CharacterSelectLayout.json",
+        "bytes": 1098997,
+        "sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46"
+      },
+      "captured_content_sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelect\\CharacterSelectLayout.json",
+        "bytes": 1098997,
+        "sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.853368+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\0429經典服UI\\UI_Resource\\OutGames.plist",
+        "bytes": 154746,
+        "sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A"
+      },
+      "captured_content_sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\0429經典服UI\\UI_Resource\\OutGames.plist",
+        "bytes": 154746,
+        "sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.886710+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Bg_CharacterSelect.png",
+        "bytes": 71670,
+        "sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2"
+      },
+      "captured_content_sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Bg_CharacterSelect.png",
+        "bytes": 71670,
+        "sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:16.969939+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+        "bytes": 1049,
+        "sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B"
+      },
+      "captured_content_sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+        "bytes": 1049,
+        "sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:17.045979+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_C.png",
+        "bytes": 1730,
+        "sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE"
+      },
+      "captured_content_sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_C.png",
+        "bytes": 1730,
+        "sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:17.054321+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+        "bytes": 2040,
+        "sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698"
+      },
+      "captured_content_sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+        "bytes": 2040,
+        "sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:17.653805+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\Lineage-existing-selection-asset-metadata.json",
+        "bytes": 22127,
+        "sha256": "25204632EB4F04A4B5FC3157B93450159D59B2D5F301D3EF09FB9831E631E759"
+      },
+      "kind": "existing Lineage design/asset metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_C.png",
+        "bytes": 2800,
+        "sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663"
+      },
+      "captured_content_sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663",
+      "source_after": {
+        "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_C.png",
+        "bytes": 2800,
+        "sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:14:17.675024+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-existing-entry-reference.json",
+        "bytes": 4540,
+        "sha256": "4E1DD04A472CC67FB831FAC35C50D623ED5CD5467921A02F1A8937CFC67D0775"
+      },
+      "kind": "existing candidate source entry/skin metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r525-entry-source-contract.json",
+        "bytes": 6633,
+        "sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8"
+      },
+      "captured_content_sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r525-entry-source-contract.json",
+        "bytes": 6633,
+        "sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:18:23.254117+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    },
+    {
+      "owned_capture": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability\\R525-existing-entry-reference.json",
+        "bytes": 4540,
+        "sha256": "4E1DD04A472CC67FB831FAC35C50D623ED5CD5467921A02F1A8937CFC67D0775"
+      },
+      "kind": "existing candidate source entry/skin metadata",
+      "source_before": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r506-native-menu-skin-binding.json",
+        "bytes": 37911,
+        "sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379"
+      },
+      "captured_content_sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379",
+      "source_after": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r506-native-menu-skin-binding.json",
+        "bytes": 37911,
+        "sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379"
+      },
+      "stable_during_read": true,
+      "read_at": "2026-10-06T09:18:23.254117+08:00",
+      "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+      "adopted": true
+    }
+  ],
+  "same_window_hash_across_three_slices": true,
+  "source_consistency": "Each read before/content/after hash; not an atomic R526 build revision. Presentation source already contains a new ready field while earlier Runtime capture is its earlier read-time source. No cross-file compile compatibility or runtime GUI acceptance inferred, no freeze/recapture-for-pass requested.",
+  "later_external_edits": "Owned immutable snapshots are handoff dependencies; external mutable source need not stay frozen.",
+  "R526_not_interrupted": true
+}

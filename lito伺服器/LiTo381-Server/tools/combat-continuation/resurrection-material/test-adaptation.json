@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionMaterialProbe.java",
+      "sha256": "607e834a89dc73966bae3210b0992134df7210b11c90e128816b703d3d3d0311"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test.py",
+      "sha256": "8b986c3138deb3c7b0d067f170d2b832fad86549e18ffe42b675a622e31e7af9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionFaultProbe.java",
+      "sha256": "3dba36b4519383edd86311d7c6edfaad01142ed7ae95e85a5317e779d1e1c017"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionLifecycleProbe.java",
+      "sha256": "c68a9aeae68b3511c461dc7684a7946ad31a28530de4dd440d9db246550d3dac"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test_boundaries.py",
+      "sha256": "e4703be43737e1dddc06ef6540f239e8b474cb561a7091f2bedfe475c4db31b0"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\1-\u4f3a\u670d\u5668\\src\\com\\lineage\\server\\clientpackets\\C_Attr.java",
+      "sha256": "ee336820d8aefca775a19543088df67f141a87d5f72a1127b7b34e2cb7c5b43b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\prepare_tests.py",
+      "sha256": "a0218afea39076f3fa08f9db6fe4dbb52bc4a9aff7ec3ccf5ecfd9729e8545a0"
+    }
+  ],
+  "scope": "256 native player cast/reply cases; 61 non-material control,75 material; 8 material faults/48 lifetime cases for75; no impossible simultaneous casting by two dead players; NPC/companion and stale answer lifecycle not yet qualified"
+}

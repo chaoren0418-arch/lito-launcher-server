@@ -1,0 +1,5 @@
+import java.util.*;import java.util.jar.*;
+public final class SourceIcons1Delta {
+ static void need(boolean b,String s){if(!b)throw new AssertionError(s);}
+ public static void main(String[]a)throws Exception{try(var old=new JarFile(a[0]);var jar=new JarFile(a[1])){var entries=new HashSet<String>();int retained=0;for(var e:Collections.list(old.entries())){entries.add(e.getName());var now=jar.getJarEntry(e.getName());need(now!=null&&Arrays.equals(old.getInputStream(e).readAllBytes(),jar.getInputStream(now).readAllBytes()),"all original bytes retained "+e.getName());retained++;}var fresh=new HashSet<String>();for(var e:Collections.list(jar.entries()))if(!entries.contains(e.getName()))fresh.add(e.getName());String p="local/lito381/server/NativeSourceIcons1";need(fresh.equals(Set.of(p+".class",p+"$Snapshot.class",p+"$Rule.class")),"one pure encoder and two scalar value classes only");System.out.println("PASS independent Source ICONS1 archive inverse: "+retained+" original entries byte-identical,3 new scalar encoder classes,0 original ports/fields/methods changed");}}
+}

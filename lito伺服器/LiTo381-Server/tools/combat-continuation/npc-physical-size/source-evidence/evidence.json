@@ -1,0 +1,15 @@
+{
+  "source_inputs": [
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\L1AttackPc.java",
+      "sha256": "3fdc94cedc6c3ec803e731be238093bd7fe55c432cf84be6822a079a1627ddfc"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\templates\\L1Npc.java",
+      "sha256": "4d892336ebc74bc6cf3b127862753630941cf077f11726e6a579d15247de3900"
+    }
+  ],
+  "physical_only": true,
+  "source_database_mutated": false,
+  "reason": "Empty size gives isSmall=false and isLarge=false. L1AttackPc melee falls back to small; projectile chooses non-large. Native physical record encodes only large."
+}

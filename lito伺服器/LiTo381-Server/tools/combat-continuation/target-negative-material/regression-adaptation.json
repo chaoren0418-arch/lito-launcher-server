@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\world_potion_regression.py",
+      "sha256": "8cc0ed0a20bba52525e978ea71cac69920146554a4d47b7d309eb165a01d386a"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\census.py",
+      "sha256": "e72d458fa39761d0795fe2d43129f317a48396c67ebd32b2ff524d9d168be71f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\prepare_regression.py",
+      "sha256": "602a01e7ed37b46124736cfad56fa44ff1c1dc9f76ecf2ad34f4ed21a7274824"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target_negative_regression.py",
+      "sha256": "425b444947754b1ffc865c6be112af154008e8c323d8a67bf2232ded16206eff"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\census.py",
+      "sha256": "e05f8551d6a7d382ca7c34cae340b51d8fd64ac50537590fa53bab6611d5ae18"
+    }
+  ],
+  "scope": "candidate and evidence destination only; removes one shared material root in census"
+}

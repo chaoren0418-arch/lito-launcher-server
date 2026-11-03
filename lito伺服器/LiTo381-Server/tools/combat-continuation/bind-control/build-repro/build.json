@@ -1,0 +1,79 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build\\candidate-triple-control.jar",
+    "sha256": "2fad5a7454e0369600ee97c09dd35fb03d53199835a261dc0fe758b170db62ac"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\candidate-bind-control.jar",
+    "sha256": "29534793beba10c1d1a4d4a922bfaae769cbc0ad9e3500c107f737ca49f38c1f"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/CombatRules.class"
+  ],
+  "added": [
+    "local/lito381/server/CombatBindControl.class"
+  ],
+  "C0_main_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\BindMethods.java",
+      "sha256": "3a010c63b7a2092b42364f69ad8e4bdf3c6c8f1daf4fdae182aee31a890cc4f5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\build.py",
+      "sha256": "e9c50a1ada65b1922203382987ca0618335056fb8d08038ca4b02bb756a3a39d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\CombatBindControl.java",
+      "sha256": "f95256226c125b3892f2a65c77c98fad92c0b78b80fecf379708feb7b8336d57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\SolidMethods.java",
+      "sha256": "9023918068f95597719927c798b68e98957c511ecc69d2057081bf61213727e6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\original\\CombatRules.java",
+      "sha256": "7801d179055fc63bc4520f0893882dc5527667f342899b35d86cb783ae567090"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\ConfigSkill.java",
+      "sha256": "ffc81f59cdd57d18371538b92ab0d6b591009fbb37355be86737adbc414e7d7e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\L1AttackPc.java",
+      "sha256": "3fdc94cedc6c3ec803e731be238093bd7fe55c432cf84be6822a079a1627ddfc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\SourceBindReference.java",
+      "sha256": "f7c0e7a3d1e6e1c81b6c35597fe12facfc71201c8c616a9ac51845cfedbefcfa"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\TELEPORT.java",
+      "sha256": "953a425baa071d8349df80f00a4fae13e56c4f4019dba78b5821764a41acd171"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\source-reference\\TELEPORT_TO_MATHER.java",
+      "sha256": "05d09cffc3037e433095d3226a343c421340af1326aed93679bb012a9a95315a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\sources\\CombatBindControl.java",
+      "sha256": "f95256226c125b3892f2a65c77c98fad92c0b78b80fecf379708feb7b8336d57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\inputs\\sources\\CombatRules.java",
+      "sha256": "40187092fa968fd2c53978ab311c89ced83bb1ebb0cd186932bfb2caa11bc933"
+    }
+  ]
+}

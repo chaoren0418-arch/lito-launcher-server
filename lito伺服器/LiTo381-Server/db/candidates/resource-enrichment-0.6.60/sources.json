@@ -1,0 +1,5458 @@
+{
+  "package_status": "未匯入、未接線",
+  "rows": [
+    {
+      "source_id": 1,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": null,
+      "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+      "bytes": 6290590,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60 / archived input after formal drift",
+      "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "restored_archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "restored_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "source_id": 2,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "member": null,
+      "sha256": "ce6ee68ada8fd37e6c096b1a27e46cb6888f1179f85defb5007ac60287360292",
+      "bytes": 1941568,
+      "kind": "native-code",
+      "version": "LiTo-3.81C-selected"
+    },
+    {
+      "source_id": 3,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\docs\\maintenance\\data-sources-0.6.60.json",
+      "member": null,
+      "sha256": "d40f40085e17bfcdf7c5fa3847dd37bc4bffdd79b8f09f45deb0777dbba1c298",
+      "bytes": 46316,
+      "kind": "server-policy",
+      "version": "audit-2026-10-13"
+    },
+    {
+      "source_id": 4,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\docs\\DATA-SOURCES.zh-TW.md",
+      "member": null,
+      "sha256": "6bb9dbae0eaec68de14690c5bc671592d38f6707e69fbb172947b2905f70e1fe",
+      "bytes": 12445,
+      "kind": "server-policy",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 5,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\SQL-PERSISTENCE-GATES.zh-TW.md",
+      "member": null,
+      "sha256": "db4a32f0c0ca12fee93132da9f1dc9fcce8650f3db93b0d3fe5dc7a1e5846aa9",
+      "bytes": 5396,
+      "kind": "server-policy",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 6,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\static-reference-select.json",
+      "member": null,
+      "sha256": "cb4f019d984088f22e21ee899ff80de0fe291df15eca8c05a36dba64e80416fc",
+      "bytes": 121126,
+      "kind": "shared-db",
+      "version": "SELECT-snapshot-2026-10-13"
+    },
+    {
+      "source_id": 7,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\ReadOnlyCatalog.java",
+      "member": null,
+      "sha256": "b99a50d22693cf1ce6bc8f4605dac45641748a237d28822defdc6dcb282d5fe8",
+      "bytes": 4660,
+      "kind": "resource-derived",
+      "version": "candidate-tool-v1",
+      "previous_tool_sha256": "b99a50d22693cf1ce6bc8f4605dac45641748a237d28822defdc6dcb282d5fe8"
+    },
+    {
+      "source_id": 8,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\380_lito_seed_example.sql",
+      "member": null,
+      "sha256": "e430136f5f62c165986f54995cab3499799f3f2d7d4ca3b667bfb68061d47510",
+      "bytes": 26570,
+      "kind": "server-policy",
+      "version": "0.6.60-seed"
+    },
+    {
+      "source_id": 9,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTtext.idx",
+      "member": null,
+      "sha256": "b8c0bb8c43affe59a90ebd2d26182269b6d60af388c80963eaaeedc8d8ae23c8",
+      "bytes": 9888,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 10,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTtext.pak",
+      "member": null,
+      "sha256": "517d853e3fe91b504953ff4b9b2eed682a3612d063f2d18e75e39fd5580f342d",
+      "bytes": 292553,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 11,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTtext.decoded.idx",
+      "member": null,
+      "sha256": "65916060a87be0c04885a2ba8813cdc773cca605a489ddeecd641ca1a3ffb1da",
+      "bytes": 9888,
+      "kind": "resource-derived",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 12,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\codec\\l1_decode.exe",
+      "member": null,
+      "sha256": "94ac1f9c265d8ec1b22ea04cf682e15db052895ea25fe7c59a6d8c550f441323",
+      "bytes": 229376,
+      "kind": "resource-derived",
+      "version": "existing-pinned-codec"
+    },
+    {
+      "source_id": 13,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00241-LTmapstr-c.tbl",
+      "member": null,
+      "sha256": "9dc26de8bb303b9a2c63ced51edeaf9e2d6252c450ef8801ac6b21f8b9f949e4",
+      "bytes": 2458,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 14,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "cfe688cd1def80d6afde6035ad47fccec7040cdc6242200a6bede420f010d184",
+      "bytes": 109148,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 15,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7ffe8000.s32",
+      "member": null,
+      "sha256": "85edd93a38ac9a63f73d31cd8c2d5c8c191705fa4bff15203cf38753ae2357f7",
+      "bytes": 153538,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 16,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7ffe8001.s32",
+      "member": null,
+      "sha256": "5dd3d1f53f2a3ac204913356f4b0040cdaecba921f91de6b8aed4ddeb9032975",
+      "bytes": 142113,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 17,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7ffe8002.s32",
+      "member": null,
+      "sha256": "07ee47b18027a62ee099f79ba79fb1d2e4152e3a7521193d7bc48f5e45abf882",
+      "bytes": 101752,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 18,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7fff7ffe.s32",
+      "member": null,
+      "sha256": "436cec074a7f171d1dac62a39f1598a87ff6ab6d70c206efab496348044c016c",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 19,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7fff7fff.s32",
+      "member": null,
+      "sha256": "cafb7c5fcdee4df615d8fe17712fb390fd35189aa83305be93e71612bec07eba",
+      "bytes": 107642,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 20,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7fff8000.s32",
+      "member": null,
+      "sha256": "92855779382474cc61c747406a2808b8bcf3de4c7232d77bd77e9876cd61eca1",
+      "bytes": 187167,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 21,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7fff8001.s32",
+      "member": null,
+      "sha256": "5206bcc33f6bcab0a9d1ada32d9a3e269ee5f40d7bf9b156eeade3a2f4f4d1ff",
+      "bytes": 178016,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 22,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\7fff8002.s32",
+      "member": null,
+      "sha256": "6123e8723a8daa2335164b8f95456431c65c38581252bc457253c8268f8a4994",
+      "bytes": 120146,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 23,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80007ffe.s32",
+      "member": null,
+      "sha256": "436cec074a7f171d1dac62a39f1598a87ff6ab6d70c206efab496348044c016c",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 24,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80007fff.s32",
+      "member": null,
+      "sha256": "edb845ddb16566d7d4147920f31c8e8e5fce6915a68c685c78fe6bd62130e3e6",
+      "bytes": 118768,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 25,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80008000.s32",
+      "member": null,
+      "sha256": "7fa0964933996a712a5d41dfab1811fa6611f7b92a3a13056498030737b1bb13",
+      "bytes": 194560,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 26,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80008001.s32",
+      "member": null,
+      "sha256": "60e6350a7e5811f71ab70cc06c14c6f861137acacd0f75564dac166aa0e8d86f",
+      "bytes": 201146,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 27,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80008002.s32",
+      "member": null,
+      "sha256": "9d210728da8cce163e4d90decde9ba697ce0d9851fb8e459b08d19dd81151632",
+      "bytes": 113485,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 28,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80017fff.s32",
+      "member": null,
+      "sha256": "c0b823703fbbab0e854686aa9a0ffec3e76951f09b18c2967e3b61bffea560e2",
+      "bytes": 109086,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 29,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80018000.s32",
+      "member": null,
+      "sha256": "e1f14a9c3f8106763ca2e2c5f28fd696acfbde3a9aeded3c72bd732b72df1ed8",
+      "bytes": 128951,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 30,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80018001.s32",
+      "member": null,
+      "sha256": "226a531f772a1672f7f10dc2532aa504a2e7f50ac798dcf17ffc103f1cefffcb",
+      "bytes": 126027,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 31,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\500\\80018002.s32",
+      "member": null,
+      "sha256": "063ef6c544636900f9faaf089bb688b9bee88a3dfbd5dae18c3d85ed004a6b77",
+      "bytes": 99232,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 32,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\501\\80008000.s32",
+      "member": null,
+      "sha256": "bb07bb6b75eb14665d8d905a96118bd7779dcb9bfc7c21d8e11a7a80e7cfd918",
+      "bytes": 61595,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 33,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\502\\80008000.s32",
+      "member": null,
+      "sha256": "fcd6855ecd1bf1e5d500537e9cf1d4ff67e6adeda270dfbc79bdaf77fc73035a",
+      "bytes": 60893,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 34,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\503\\80008000.s32",
+      "member": null,
+      "sha256": "d5fb0e003a6812319d09bca37eca31754e24db75994f18f5ca8c3a05bc9bae7d",
+      "bytes": 64418,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 35,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\7fff8000.s32",
+      "member": null,
+      "sha256": "50ce0b4c44630e8b2f09478e36049ebe595d92fe0cfc053b3652aff62f39b579",
+      "bytes": 114637,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 36,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80007fff.s32",
+      "member": null,
+      "sha256": "856a812b5c0d072a37fa027f0a985fa974b5b3bc2d135f64150ab70b9a1fd4bd",
+      "bytes": 111591,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 37,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80008000.s32",
+      "member": null,
+      "sha256": "184fc5019badc17444711bfd66594505415d090e23fbf759a0cd15131f80aedf",
+      "bytes": 187630,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 38,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80008001.s32",
+      "member": null,
+      "sha256": "03b894ce5e95a7153acacc1d274da0c508638bdb8d13dce8c627146e5f69ba74",
+      "bytes": 98598,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 39,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80017fff.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 40,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80018000.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 41,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\504\\80018001.s32",
+      "member": null,
+      "sha256": "5c36cb0d3b13c3cfa72274ba8deb51c66c017dd0662a658d6efb1789a1887e8f",
+      "bytes": 71177,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 42,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\505\\80008000.s32",
+      "member": null,
+      "sha256": "ae1a3a830c07b651767a082959b7baa39972967e31d8bb3caf27eb72c9bd9d82",
+      "bytes": 71870,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 43,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\7fff7fff.s32",
+      "member": null,
+      "sha256": "5c18caf48509cd4e6f47c8bd5eba57c1d2095331fd7577dddf437f875559a505",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 44,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\80007fff.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 45,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\80008000.s32",
+      "member": null,
+      "sha256": "ef6491dda48763780fe2792f6e538901cf2e1739a6b5d7086d21d52bb13621ba",
+      "bytes": 132054,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 46,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\80008001.s32",
+      "member": null,
+      "sha256": "3f01d1767a337048d6576c571bf9af977d0894ace91d5a3b5f981c717e6886cb",
+      "bytes": 98142,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 47,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\80018000.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 48,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\506\\80018001.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 49,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\507\\80008000.s32",
+      "member": null,
+      "sha256": "710cbfaf0ce6feb6dd2407123d63caa15dccad01b37f30a4227180de5167463f",
+      "bytes": 66846,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 50,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\508\\80008000.s32",
+      "member": null,
+      "sha256": "e25ff85d9565b739c5520c0edabb78615eedb1815af994234604e63810be9254",
+      "bytes": 87415,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 51,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\509\\80008000.s32",
+      "member": null,
+      "sha256": "49607b0fa823106bc50146cfc6a74474a2dcf422cee3e071a1658cb2a653efc1",
+      "bytes": 86253,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 52,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\7fff7fff.s32",
+      "member": null,
+      "sha256": "7f0217f1bc0ca4f02f7c3bfdf1dc6774361c539a83416f570bd20d032b63d27b",
+      "bytes": 69652,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 53,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\7fff8000.s32",
+      "member": null,
+      "sha256": "6676a96344e71e913c47619410ed5882df0dafded13fb512e18b1b536f4c0e46",
+      "bytes": 107007,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 54,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\7fff8001.s32",
+      "member": null,
+      "sha256": "bfd5ea923323fe90593478f0397fa63d19cd90e86abac199f381ddc2e64d9095",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 55,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80007fff.s32",
+      "member": null,
+      "sha256": "8af3089b57b2176dc399f2b416f41dcafd68c4d6791aafc3ee18d84963cca781",
+      "bytes": 107068,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 56,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80008000.s32",
+      "member": null,
+      "sha256": "2d3a7ebe8e550b08811258bc943593e330eea4ba9fd0d63649f89db847776cd1",
+      "bytes": 148188,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 57,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80008001.s32",
+      "member": null,
+      "sha256": "f1d45e3d2cd42a0c84b6bba65360bdd4396fe6f0a0e51cf5c1edceafa740c68a",
+      "bytes": 96510,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 58,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80017fff.s32",
+      "member": null,
+      "sha256": "05535bd668f426aa10755f025be126631c92f5979b87285ffd8e26cdd87a4216",
+      "bytes": 59526,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 59,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80018000.s32",
+      "member": null,
+      "sha256": "3bcc960505f43a2289547c090db734375d4d6e4aeb29c0c7317db26c39755ed0",
+      "bytes": 87585,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 60,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\510\\80018001.s32",
+      "member": null,
+      "sha256": "cc2a60fb8922c24b75ee8b2c5a7b06643961170229bd1c25469075c7cda0f3b4",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 61,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\7fff7fff.s32",
+      "member": null,
+      "sha256": "145a20adbee095ff4814c6709fd9da8f78bcf56f0237783b08255a5f2c6b8ffc",
+      "bytes": 72952,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 62,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\7fff8000.s32",
+      "member": null,
+      "sha256": "ec7f25a0f5786bda067c007723bfb5889c7b5b90260a8b0d325949eb59df750a",
+      "bytes": 110259,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 63,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\7fff8001.s32",
+      "member": null,
+      "sha256": "bfd5ea923323fe90593478f0397fa63d19cd90e86abac199f381ddc2e64d9095",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 64,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80007fff.s32",
+      "member": null,
+      "sha256": "ddf11028c5e5d88c6919448a08b7db9e86f8778ae14268bc56da7b166321ab18",
+      "bytes": 107608,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 65,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80008000.s32",
+      "member": null,
+      "sha256": "063ad912f920168d5db1e664714a8e7bda30728e552594496d59f2e00edcaef3",
+      "bytes": 140332,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 66,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80008001.s32",
+      "member": null,
+      "sha256": "895213737e1b850ace34766403406af685b0185a0b13096ba3a80d88aa2f847d",
+      "bytes": 108075,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 67,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80017fff.s32",
+      "member": null,
+      "sha256": "05535bd668f426aa10755f025be126631c92f5979b87285ffd8e26cdd87a4216",
+      "bytes": 59526,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 68,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80018000.s32",
+      "member": null,
+      "sha256": "44f39425c1e4bf5a1a7ebb8f29bb17c14feb8b018b9348f540161bbb9fcd78b9",
+      "bytes": 98203,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 69,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\512\\80018001.s32",
+      "member": null,
+      "sha256": "34991739f49378254b4dcb246dc34da1a05f1a71b8195e5eacec19ea4ec99eac",
+      "bytes": 50848,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 70,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\7fff7fff.s32",
+      "member": null,
+      "sha256": "145a20adbee095ff4814c6709fd9da8f78bcf56f0237783b08255a5f2c6b8ffc",
+      "bytes": 72952,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 71,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\7fff8000.s32",
+      "member": null,
+      "sha256": "ec7f25a0f5786bda067c007723bfb5889c7b5b90260a8b0d325949eb59df750a",
+      "bytes": 110259,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 72,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\7fff8001.s32",
+      "member": null,
+      "sha256": "bfd5ea923323fe90593478f0397fa63d19cd90e86abac199f381ddc2e64d9095",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 73,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80007ffe.s32",
+      "member": null,
+      "sha256": "c4f00a364b5dbf94e4f8376dfffc95337a4407ea1321b324d3cf3c295dc4c2c9",
+      "bytes": 98338,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 74,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80007fff.s32",
+      "member": null,
+      "sha256": "fb6d09011e420b7a56f7707406bd064a40f6493327ca3153ef49b8e80559e1b2",
+      "bytes": 150928,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 75,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80008000.s32",
+      "member": null,
+      "sha256": "2d70c80ffa98fa65def7bd2b47489b9732666918ddc87e0a97589f78c55de179",
+      "bytes": 136256,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 76,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80008001.s32",
+      "member": null,
+      "sha256": "895213737e1b850ace34766403406af685b0185a0b13096ba3a80d88aa2f847d",
+      "bytes": 108075,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 77,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80017ffe.s32",
+      "member": null,
+      "sha256": "c37d7035142386e36d6f81c2e119d7e9315c11d439db93780a58573da04ada8a",
+      "bytes": 145263,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 78,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80017fff.s32",
+      "member": null,
+      "sha256": "2e9776750f8ddf2040e8965041d9332ca2f1ee964f360886ff2f566741fe345a",
+      "bytes": 135482,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 79,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80018000.s32",
+      "member": null,
+      "sha256": "1ba0f668664924fb74934c57c9b7cd787febc8e97d901eaa9d3766e4c537c40e",
+      "bytes": 147959,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 80,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80018001.s32",
+      "member": null,
+      "sha256": "34991739f49378254b4dcb246dc34da1a05f1a71b8195e5eacec19ea4ec99eac",
+      "bytes": 50848,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 81,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80027ffe.s32",
+      "member": null,
+      "sha256": "8c7a64812f97252c01fed7f20857e758c14ae48d9d09a7bcf9a01fbf214fb897",
+      "bytes": 129652,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 82,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80027fff.s32",
+      "member": null,
+      "sha256": "3ff00b025ea9a5abf1a76148d09922a82e738e1bcce397c037edbbf81cd55dc5",
+      "bytes": 143069,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 83,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\513\\80028000.s32",
+      "member": null,
+      "sha256": "c4f00a364b5dbf94e4f8376dfffc95337a4407ea1321b324d3cf3c295dc4c2c9",
+      "bytes": 98338,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 84,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\514\\80008000.s32",
+      "member": null,
+      "sha256": "ff436a94cf2f5775b210c60f3714d9213912c48c226973bea52321f7c5caad4f",
+      "bytes": 76380,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 85,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\516\\80008000.s32",
+      "member": null,
+      "sha256": "a1a41f022e430f862b0a4ba0149d26b2ffdda7282e51944279d92f627b587f46",
+      "bytes": 134052,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 86,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "1c4e27d138c2f0b0f4686e7d66ac0a139b502234ad83ba602f2de7f9ae70ea49",
+      "bytes": 55599,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 87,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7ffe8000.s32",
+      "member": null,
+      "sha256": "95ecddc683bcd32e8f4476526ee55001165d7763f0b9f87089f3f23a613cda15",
+      "bytes": 80154,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 88,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7ffe8001.s32",
+      "member": null,
+      "sha256": "82a661371b3cdc2fd33eec59c97eb1786f4e23d2c1e2d75ff90b8068bc3d10ac",
+      "bytes": 49190,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 89,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7fff7fff.s32",
+      "member": null,
+      "sha256": "d1ce058f762ecec7523ea11194858294e7e0b1132e9fd8f405f8eabb404979d3",
+      "bytes": 66838,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 90,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7fff8000.s32",
+      "member": null,
+      "sha256": "8b4c664b0dd1318a77a92e2cd1ab39916b05b8499fe6f94bbca5b5b81ba7e9c5",
+      "bytes": 134366,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 91,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\7fff8001.s32",
+      "member": null,
+      "sha256": "4021cbd17a4f606f1717e249a90b33a7e2c52158bd107b75c91158bd6206c7a8",
+      "bytes": 66939,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 92,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\80007fff.s32",
+      "member": null,
+      "sha256": "8aa1e627827542f7ab426f67b7f58e88236c73a2917b3282af6502ccd4abad99",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 93,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\80008000.s32",
+      "member": null,
+      "sha256": "dc57ffd3c1c84f165abfec2a155d3e9d23c1ba84cefe81fabd3b08b4e650b578",
+      "bytes": 57661,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 94,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\517\\80008001.s32",
+      "member": null,
+      "sha256": "8aa1e627827542f7ab426f67b7f58e88236c73a2917b3282af6502ccd4abad99",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 95,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\7ffe7ffd.s32",
+      "member": null,
+      "sha256": "5c18caf48509cd4e6f47c8bd5eba57c1d2095331fd7577dddf437f875559a505",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 96,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\7fff7ffd.s32",
+      "member": null,
+      "sha256": "67a65a1e230713bb7c5373813e255d8b0d61e23d57bcb6ad7bda089e7e431d44",
+      "bytes": 118368,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 97,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\7fff7ffe.s32",
+      "member": null,
+      "sha256": "aa4563ef30417fcf5312d41ee8b1d7f96bc00f270fe66caf6ae18d9f87c994eb",
+      "bytes": 145202,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 98,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\7fff7fff.s32",
+      "member": null,
+      "sha256": "44ea0a743e968856075ee1118fd92bf39c8ebf51c0374ef0e99e4ceac1060e16",
+      "bytes": 141436,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 99,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\7fff8000.s32",
+      "member": null,
+      "sha256": "30a47a3668146bf70ebc60dd7a314634a07bc5bc1b8b3c421edae1a91f80a611",
+      "bytes": 132265,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 100,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\80007ffd.s32",
+      "member": null,
+      "sha256": "14cfe7415d109c422888fba9c3bc3d233f73b37b3d9a6b6eaf9db5ad0acd6ef5",
+      "bytes": 113523,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 101,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\80007ffe.s32",
+      "member": null,
+      "sha256": "b7bb3d16a87feeca81463d74793b7a34d01690c631d66b05ca6b5459d0fe1f5f",
+      "bytes": 132448,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 102,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\80007fff.s32",
+      "member": null,
+      "sha256": "72e3e40928fac071b4e66099be55f6527d31c56d33591e9a11d2978e91a932b3",
+      "bytes": 136947,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 103,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\518\\80008000.s32",
+      "member": null,
+      "sha256": "32d2f1154d15fa3b73c278777b1bf984c7eca84444c102633bfe763414e4ecbe",
+      "bytes": 123438,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 104,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\7fff7ffd.s32",
+      "member": null,
+      "sha256": "67a65a1e230713bb7c5373813e255d8b0d61e23d57bcb6ad7bda089e7e431d44",
+      "bytes": 118368,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 105,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\7fff7ffe.s32",
+      "member": null,
+      "sha256": "aa4563ef30417fcf5312d41ee8b1d7f96bc00f270fe66caf6ae18d9f87c994eb",
+      "bytes": 145202,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 106,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\7fff7fff.s32",
+      "member": null,
+      "sha256": "59db340b217db0170d955f4d676dfa0a301688a62f834d91d256e4e8bd60cffc",
+      "bytes": 141436,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 107,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\7fff8000.s32",
+      "member": null,
+      "sha256": "4d6927715a9e77d38df7d7158f8c2af6defb56583f846ac37bcbfb50a0de46d2",
+      "bytes": 132265,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 108,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\80007ffd.s32",
+      "member": null,
+      "sha256": "14cfe7415d109c422888fba9c3bc3d233f73b37b3d9a6b6eaf9db5ad0acd6ef5",
+      "bytes": 113523,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 109,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\80007ffe.s32",
+      "member": null,
+      "sha256": "b7bb3d16a87feeca81463d74793b7a34d01690c631d66b05ca6b5459d0fe1f5f",
+      "bytes": 132448,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 110,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\80007fff.s32",
+      "member": null,
+      "sha256": "b936fabf07a3bbe079576cb1a2ae96b8c53cf475a844ea358a5468f07869c51a",
+      "bytes": 136947,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 111,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\519\\80008000.s32",
+      "member": null,
+      "sha256": "24c6b41432ded5dca81f45b657155d0c0a043ba348426e03ec95817a82ee382a",
+      "bytes": 123438,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 112,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\7fff7ffd.s32",
+      "member": null,
+      "sha256": "67a65a1e230713bb7c5373813e255d8b0d61e23d57bcb6ad7bda089e7e431d44",
+      "bytes": 118368,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 113,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\7fff7ffe.s32",
+      "member": null,
+      "sha256": "aa4563ef30417fcf5312d41ee8b1d7f96bc00f270fe66caf6ae18d9f87c994eb",
+      "bytes": 145202,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 114,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\7fff7fff.s32",
+      "member": null,
+      "sha256": "59db340b217db0170d955f4d676dfa0a301688a62f834d91d256e4e8bd60cffc",
+      "bytes": 141436,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 115,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\7fff8000.s32",
+      "member": null,
+      "sha256": "4d6927715a9e77d38df7d7158f8c2af6defb56583f846ac37bcbfb50a0de46d2",
+      "bytes": 132265,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 116,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\80007ffd.s32",
+      "member": null,
+      "sha256": "14cfe7415d109c422888fba9c3bc3d233f73b37b3d9a6b6eaf9db5ad0acd6ef5",
+      "bytes": 113523,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 117,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\80007ffe.s32",
+      "member": null,
+      "sha256": "b7bb3d16a87feeca81463d74793b7a34d01690c631d66b05ca6b5459d0fe1f5f",
+      "bytes": 132448,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 118,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\80007fff.s32",
+      "member": null,
+      "sha256": "b936fabf07a3bbe079576cb1a2ae96b8c53cf475a844ea358a5468f07869c51a",
+      "bytes": 136947,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 119,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\520\\80008000.s32",
+      "member": null,
+      "sha256": "24c6b41432ded5dca81f45b657155d0c0a043ba348426e03ec95817a82ee382a",
+      "bytes": 123438,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 120,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80008000.s32",
+      "member": null,
+      "sha256": "8b100c1e6be239dc5632a5cc37141f85b63a6f38dbfa6f66cc48a136bd92c86c",
+      "bytes": 83449,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 121,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80008001.s32",
+      "member": null,
+      "sha256": "e8ac9701ab637adf64305b474da00d44d31035ef6d1c4635ba67d323f2a91e55",
+      "bytes": 72059,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 122,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80018000.s32",
+      "member": null,
+      "sha256": "f50c52e815861d51bd5b6cff1c7aba4863047a32956f6a3d369ef1884b6fc3e3",
+      "bytes": 92903,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 123,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80018001.s32",
+      "member": null,
+      "sha256": "94ea2b62d825b39dbaeaf3aeeffb8e480f488ad8759a053d7231e1dafea599f8",
+      "bytes": 79917,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 124,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80028000.s32",
+      "member": null,
+      "sha256": "ee1bc21a36241cc6a3c89f8c3b9776d8eb3c6c07baa03e56b6e353d455ed8d8d",
+      "bytes": 84725,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 125,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\521\\80028001.s32",
+      "member": null,
+      "sha256": "500694aa9e8116baee15ab1cab5aa17ad805b0280b0b1a1f8915b74b27cd8e34",
+      "bytes": 73425,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 126,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80008000.s32",
+      "member": null,
+      "sha256": "8b100c1e6be239dc5632a5cc37141f85b63a6f38dbfa6f66cc48a136bd92c86c",
+      "bytes": 83449,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 127,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80008001.s32",
+      "member": null,
+      "sha256": "e8ac9701ab637adf64305b474da00d44d31035ef6d1c4635ba67d323f2a91e55",
+      "bytes": 72059,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 128,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80018000.s32",
+      "member": null,
+      "sha256": "33d106490405e86b27526af82ccc1588dce7584a0d809205651719eacb45fa5d",
+      "bytes": 92917,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 129,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80018001.s32",
+      "member": null,
+      "sha256": "b438dcc80aa186a8bc6ecfa20f8220ec0739f40d231e7a0461284c3d1d18be0f",
+      "bytes": 79931,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 130,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80028000.s32",
+      "member": null,
+      "sha256": "ee1bc21a36241cc6a3c89f8c3b9776d8eb3c6c07baa03e56b6e353d455ed8d8d",
+      "bytes": 84725,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 131,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\522\\80028001.s32",
+      "member": null,
+      "sha256": "500694aa9e8116baee15ab1cab5aa17ad805b0280b0b1a1f8915b74b27cd8e34",
+      "bytes": 73425,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 132,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\7fff7fff.s32",
+      "member": null,
+      "sha256": "dc716e664836f6016ddad07a852b6bd1ca3a1c9a9d40e526d06e8bbb90f2f218",
+      "bytes": 49182,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 133,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\7fff8000.s32",
+      "member": null,
+      "sha256": "e439f511b8edc91cdbb3c7fae0e399d4e8d273a01d0b4f0cd564cad817f8ecc6",
+      "bytes": 60285,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 134,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\7fff8001.s32",
+      "member": null,
+      "sha256": "909f04d52f4011c15d7eabf3b4ce513c2d0248f4eeb96afafd3a077d5ecdc258",
+      "bytes": 49616,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 135,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\80007fff.s32",
+      "member": null,
+      "sha256": "bed390cca7ff922d3da15785f014a49872b497d4a752ab7a88fa54a1768f4ac1",
+      "bytes": 51625,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 136,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\80008000.s32",
+      "member": null,
+      "sha256": "df7e62139e6a1a4c6673ec551c25395d39e6eae2710c543f2797ac1d44a77bf8",
+      "bytes": 119535,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 137,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\80008001.s32",
+      "member": null,
+      "sha256": "df39e798adcb1cb1673b47529e668f8385c1d29ab15ca32d7f826e6860a3274c",
+      "bytes": 55290,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 138,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\80018000.s32",
+      "member": null,
+      "sha256": "29383a7551e4fcd0f00bbb528b2ac1aca597917328c90cb37544a4a2a05bddf4",
+      "bytes": 50046,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 139,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\524\\80018001.s32",
+      "member": null,
+      "sha256": "dc716e664836f6016ddad07a852b6bd1ca3a1c9a9d40e526d06e8bbb90f2f218",
+      "bytes": 49182,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 140,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7ffe8001.s32",
+      "member": null,
+      "sha256": "cb5605a7cad23afb279f9430774e4bcf96542051a4fe45476421fb015c13d7d8",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 141,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7ffe8002.s32",
+      "member": null,
+      "sha256": "169c96f97a071d9c480134759b05ae2eb1863c1d445c708b9f211288e5db031e",
+      "bytes": 112611,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 142,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7ffe8003.s32",
+      "member": null,
+      "sha256": "3f9c43c81cf54dd26fba4d5444f135628d6df8f12397aed0da2e4e4252c131b5",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 143,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7fff8000.s32",
+      "member": null,
+      "sha256": "cc098d233f0a39b0a41be3f46924a802934b922e5d78778d62d98c7b2003e9be",
+      "bytes": 49609,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 144,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7fff8001.s32",
+      "member": null,
+      "sha256": "867cb04eff3fb0f8a0363d3c55683197ae4798abb3492c27f61fb2c5839683a8",
+      "bytes": 118544,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 145,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7fff8002.s32",
+      "member": null,
+      "sha256": "e4f29080c0f0358cf79f059939b7736f45d3a32c1d11a9675eb37a6e950c960f",
+      "bytes": 76676,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 146,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\7fff8003.s32",
+      "member": null,
+      "sha256": "da75dbe9fbdfbbc8fcad84652da336a60bcb9b744c1195dc29b58af790768860",
+      "bytes": 98360,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 147,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\80007fff.s32",
+      "member": null,
+      "sha256": "c690806e2a3a7c8c934a2c75f60bec1c204f6110ac20aaab664956913f57b7a1",
+      "bytes": 50610,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 148,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\80008000.s32",
+      "member": null,
+      "sha256": "973f9c0722dd2882f5321d3e32db869716235fe7211c43d6a87ad51dc17917cf",
+      "bytes": 105246,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 149,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\80008001.s32",
+      "member": null,
+      "sha256": "dc716e664836f6016ddad07a852b6bd1ca3a1c9a9d40e526d06e8bbb90f2f218",
+      "bytes": 49182,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 150,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\525\\80018000.s32",
+      "member": null,
+      "sha256": "dc716e664836f6016ddad07a852b6bd1ca3a1c9a9d40e526d06e8bbb90f2f218",
+      "bytes": 49182,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 151,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\526\\7fff8000.s32",
+      "member": null,
+      "sha256": "cf6786366bf2f1cf19128c889511329fbdac642e3f4c91a5f28e3eb2632f074c",
+      "bytes": 50064,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 152,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\526\\80007fff.s32",
+      "member": null,
+      "sha256": "f5c68e94ef63d27f980f24ed90334b95a80459c0af40ab3c0c916167bcb72b30",
+      "bytes": 59622,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 153,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\526\\80008000.s32",
+      "member": null,
+      "sha256": "6bd106c1f5dbe926d01afad2db1a473f6755c2d423b9a355843a468c90d7aab7",
+      "bytes": 116007,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 154,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\526\\80018000.s32",
+      "member": null,
+      "sha256": "aa3543980face91731575f8ea17e596caed3b161fb9188566847f465c9f90844",
+      "bytes": 55465,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 155,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\7fff7fff.s32",
+      "member": null,
+      "sha256": "eee26da65e91d6e96a60c744006ce8a41872b0c83285cd17288c41ddea81f248",
+      "bytes": 104449,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 156,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\7fff8000.s32",
+      "member": null,
+      "sha256": "7ebddf45e74c57295835288e08ab26307dc4f3f9b6eb1bbd0ad96afea6ea7693",
+      "bytes": 125682,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 157,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\7fff8001.s32",
+      "member": null,
+      "sha256": "9899bb49b2d4a9ee9d82c3a7c5e9f1ff73e0afd83d6c8409fd1b57885e0b3968",
+      "bytes": 103241,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 158,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80007fff.s32",
+      "member": null,
+      "sha256": "8d6d1c8e472a024bb7e526bee7e125b9363531490217df03acfb118c0763399d",
+      "bytes": 123477,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 159,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80008000.s32",
+      "member": null,
+      "sha256": "9547709b2a61a33499397a8676e8ae74c8f744a5c5fd78ca0b048e8a8136051c",
+      "bytes": 161093,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 160,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80008001.s32",
+      "member": null,
+      "sha256": "a01aa3c0c083fa4f012181ff045ba2b26c938b055373e38d50d63b93d9b6b07d",
+      "bytes": 121024,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 161,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80017fff.s32",
+      "member": null,
+      "sha256": "25bea7624658a777ba2df3081e67613f79ddc9b9ff9e13ff222ff94d03e3532a",
+      "bytes": 123577,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 162,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80018000.s32",
+      "member": null,
+      "sha256": "29779e6965b84f1ca452340d0b247fe82ef41c78ef47cf76cf65d6054e282acd",
+      "bytes": 158646,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 163,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80018001.s32",
+      "member": null,
+      "sha256": "b076f062fa6604cd0be8563d179dcd5855a661b9c9e4fc17dd3e543966339e1a",
+      "bytes": 121352,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 164,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80027fff.s32",
+      "member": null,
+      "sha256": "c210626a3aef5e34a78615949c8fff77910f34243e3c5d09b59611d31b2aefd1",
+      "bytes": 124203,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 165,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80028000.s32",
+      "member": null,
+      "sha256": "138f00235bc080c53408d52951e4623058bcc9b587c1b86341bf196a36678a53",
+      "bytes": 154685,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 166,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80028001.s32",
+      "member": null,
+      "sha256": "e2193ce3c9086ccbd108dcfef33eef39f6275512876fd5d00775e13e153f0744",
+      "bytes": 113736,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 167,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80037fff.s32",
+      "member": null,
+      "sha256": "214741d3e6912979b9d7fdbbcbea6f8fbb10dcb3f36819f1355f80854c61bb5e",
+      "bytes": 123993,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 168,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80038000.s32",
+      "member": null,
+      "sha256": "5dd3562eb8f1cddce76a1bcb1f823930700d14b51164e6872c252acaf871406f",
+      "bytes": 160694,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 169,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80038001.s32",
+      "member": null,
+      "sha256": "0a3fc10900d87876771cc5f84215da79e18bc57e3ebfde95c0c82fa23c4f78ea",
+      "bytes": 120998,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 170,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80047fff.s32",
+      "member": null,
+      "sha256": "6aae8d02de5caea121322153e599f7924e5d7669f1af56e03b2189be453d2312",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 171,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80048000.s32",
+      "member": null,
+      "sha256": "9c9b36c11e081aa534d5fe6a95cdacc599051dd518f0dbf357a5c40d79cba994",
+      "bytes": 149944,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 172,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\527\\80048001.s32",
+      "member": null,
+      "sha256": "a1dfcfb6a5e0f196c2ded1055fbbac7faad5c8fb9fdfd808f335135a7379eb7f",
+      "bytes": 98334,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 173,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\528\\7fff7fff.s32",
+      "member": null,
+      "sha256": "d66fa69165583708a2ffbb44415e60cc3e35b87fe9f94ae054e83e0ffaf3109b",
+      "bytes": 53436,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 174,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\528\\7fff8000.s32",
+      "member": null,
+      "sha256": "bf62326873d97c85432b1d1de7681b8bb42af88d8e6beb7429d12d81fd50ad05",
+      "bytes": 122138,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 175,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\528\\7fff8001.s32",
+      "member": null,
+      "sha256": "7bb5892d483583e583eeedcc82c7d7430c37dc2600364ed1ac4fb3d4bc26398c",
+      "bytes": 50051,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 176,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\528\\80007fff.s32",
+      "member": null,
+      "sha256": "f888d649628c4f547389b57fbfacae284fdc13dd1be84263513bed0332f97323",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 177,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\528\\80008000.s32",
+      "member": null,
+      "sha256": "27e02a2420b03e20e2a3607ccd01e743f3f7c75fe2d0fdb8d4d4f3bb06b1f729",
+      "bytes": 49618,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 178,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\529\\7fff8000.s32",
+      "member": null,
+      "sha256": "5490f30ad215d79cb051934b4c53e4d9e881f48e67be59b75036805ca3705192",
+      "bytes": 102515,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 179,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\529\\7fff8001.s32",
+      "member": null,
+      "sha256": "7dbda84479c840caa37698202eb9cbe368e338ae41658e84c96b3b004aaf4201",
+      "bytes": 49727,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 180,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\529\\80008000.s32",
+      "member": null,
+      "sha256": "79e4ec915f079cc5f6ab0f5ed0c134122fc6da5ada29fa25eb01a3ec94b37201",
+      "bytes": 85808,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 181,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\529\\80008001.s32",
+      "member": null,
+      "sha256": "e51a01389e5da52a7e955604910449a010e55d339ab2abc05ea1c63f7fe5d699",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 182,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "f2944819d610ee511f69177cfd2b5af4a2f5d9b80c735417e85072a87c8e9c08",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 183,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7ffe8000.s32",
+      "member": null,
+      "sha256": "2aad58a6bd034e4dfb39c12cd3b39fa277ee4c718a1607aa2f313975f42173ed",
+      "bytes": 62823,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 184,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7ffe8001.s32",
+      "member": null,
+      "sha256": "558b3dd4baf681dc8fad120cba6d2b407aec812c1418432f7c677223ceec68e2",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 185,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7fff7fff.s32",
+      "member": null,
+      "sha256": "d6356a1be74d8a476501db8d11e340f2740961ddfa4040eedd159e734bbd0b5f",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 186,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7fff8000.s32",
+      "member": null,
+      "sha256": "cfff88b2135dd9c27087f6bb7afe1392d32439db2d4f95c911ef3d91dc752a55",
+      "bytes": 165156,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 187,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\7fff8001.s32",
+      "member": null,
+      "sha256": "0aced4501474d101cfd392ae85d5d3350230ee32b110f295419fd97e57117241",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 188,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\80007fff.s32",
+      "member": null,
+      "sha256": "3549b8d9559337ae27fc1523d933cda2df53c2e4a4899f4047065aaa01acf16b",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 189,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\80008000.s32",
+      "member": null,
+      "sha256": "622d2ea58c1ec4a0e299250112c81f83cbd46fb82e37707405311123049d5406",
+      "bytes": 55059,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 190,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\530\\80008001.s32",
+      "member": null,
+      "sha256": "20132b3bd8af937493d2e7a36b5ac384c804f64b4d6278e9cb78d3be19abd236",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 191,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\531\\7ffe8000.s32",
+      "member": null,
+      "sha256": "d8fc81a860f885ee101d8bc0b3d311f45cdf4db19f48fc140e20f2ccf1a77fc7",
+      "bytes": 49786,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 192,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\531\\7fff7fff.s32",
+      "member": null,
+      "sha256": "7661a18b8042de8d42171413e46ab0986c6b16f6a3fc16430ab04a1230ed4686",
+      "bytes": 49740,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 193,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\531\\7fff8000.s32",
+      "member": null,
+      "sha256": "bb6538d40c84262c24902b7b95de26e38d4a7b67c536f7772594e12c5cf1c62b",
+      "bytes": 101125,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 194,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\531\\7fff8001.s32",
+      "member": null,
+      "sha256": "0ac7beb528fd2c786744a884b7d661324c3dae16a8a6c65023ac5d797eaf72ef",
+      "bytes": 49182,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 195,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\531\\80008000.s32",
+      "member": null,
+      "sha256": "f73297a373744ddac7bed1d943daff3d1697cf0e39874f7a76b1afb6b649a03e",
+      "bytes": 55272,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 196,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7ffe8000.s32",
+      "member": null,
+      "sha256": "54f414a62b9624b5ed54464c75629061930b6a328af328079c806360fdffa4d0",
+      "bytes": 76779,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 197,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7ffe8001.s32",
+      "member": null,
+      "sha256": "733a64c312652a21aec8e17ff0373f7348cc704ab74ca8e5d2c29a731bdf1bda",
+      "bytes": 55446,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 198,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7fff7fff.s32",
+      "member": null,
+      "sha256": "9833e1633564a0ad02f8f37cf3cd4ac61084f3ba34d3bfaf787bb11f7680eadd",
+      "bytes": 124776,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 199,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7fff8000.s32",
+      "member": null,
+      "sha256": "e0ff72d9a4300ec735ceee05c6fcbc571a3ef5fa789fc42f4c56b3091ec27125",
+      "bytes": 163578,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 200,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7fff8001.s32",
+      "member": null,
+      "sha256": "7e2a71f32afbd1e74f6a035f05ce0072020bf96155fe1766fbef4755f000c047",
+      "bytes": 197939,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 201,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\7fff8002.s32",
+      "member": null,
+      "sha256": "6ef6dbc7c15923afa5c0dfe349f154719abf38d5c6512095e94990e3ab3f0db8",
+      "bytes": 54266,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 202,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80007fff.s32",
+      "member": null,
+      "sha256": "0071f2d3680c775fa171e6407c7777d427628ef34d9b2044245b98e6e68917e6",
+      "bytes": 76534,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 203,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80008000.s32",
+      "member": null,
+      "sha256": "88a9befdb5423ff1dccda4b98adba76196c1097fee1c53889277313e5117b951",
+      "bytes": 198291,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 204,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80008001.s32",
+      "member": null,
+      "sha256": "265f7b18ed76ec77f63cffbfb58f4e0cf2fff47061338f34e1ad4b28b9ff6445",
+      "bytes": 186555,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 205,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80008002.s32",
+      "member": null,
+      "sha256": "45767bd945f99f304852e9684b83055c735f5c2d54cb0e099c84b1fc3141d7e7",
+      "bytes": 55322,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 206,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80018000.s32",
+      "member": null,
+      "sha256": "df8e5860429ec75836a41e898c31016345c903c4ea497361920280f25be0aef4",
+      "bytes": 77330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 207,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80018001.s32",
+      "member": null,
+      "sha256": "e52a20d8bb826c15a2a9ad803df4a89666c130d89441333a5c046ae9ab3c7b72",
+      "bytes": 97931,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 208,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\532\\80018002.s32",
+      "member": null,
+      "sha256": "5884f8e686ceba9f5f340fa69a230d303a9378cea696f4576ef9c1df0ef1e386",
+      "bytes": 49466,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 209,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "ac84db3783fa1b25358198c71d589245e314bc8e834a42e6b33ba330deb8a618",
+      "bytes": 109148,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 210,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7ffe8000.s32",
+      "member": null,
+      "sha256": "3e4bec3875f702b51929f1110c29828223437962c80a19209199daa6080368d0",
+      "bytes": 155424,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 211,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7ffe8001.s32",
+      "member": null,
+      "sha256": "99d6d5545b4bdb8781d379d1663333c010bb7f48ab3117b2467e75efd296d08d",
+      "bytes": 148169,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 212,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7ffe8002.s32",
+      "member": null,
+      "sha256": "ae8e851f1b6aee31057afc40ec0ac23ceb5d1cf14724a8aee95a3250130da9e1",
+      "bytes": 101496,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 213,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7fff7fff.s32",
+      "member": null,
+      "sha256": "05c940aceafd30969545e18abe317ec56696757f1cd0a03f6993edd011eb627b",
+      "bytes": 131866,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 214,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7fff8000.s32",
+      "member": null,
+      "sha256": "e9c27d71199f06690deba601d77b5c3bfcb324b3aadc7e15e049e640a3ab4a87",
+      "bytes": 188697,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 215,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7fff8001.s32",
+      "member": null,
+      "sha256": "4c284795d39439a454d7fedfb8738d32d2027056949104f9226caf28972df98c",
+      "bytes": 193623,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 216,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\7fff8002.s32",
+      "member": null,
+      "sha256": "c19a47155d6d4e42f7b2b4d82c21aa3740f8e1b9f2382e5fecd436908ebdcefa",
+      "bytes": 120864,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 217,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80007fff.s32",
+      "member": null,
+      "sha256": "0415c65955783161d03f8f1194a47a109071d5a93b4284437d1e3b4c28fad996",
+      "bytes": 134266,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 218,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80008000.s32",
+      "member": null,
+      "sha256": "d731a274923ae27f0782c4fdbd9a8e4ff1314df1f093bf4b2c43706ba8b90303",
+      "bytes": 191747,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 219,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80008001.s32",
+      "member": null,
+      "sha256": "6ec276177c4886e87aa97e681c8153e8bb1387fe419aa973a507c67c4cb2ff87",
+      "bytes": 214412,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 220,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80008002.s32",
+      "member": null,
+      "sha256": "542a94a0704ac0fea434ee2bcd6b09e00772f1c1e85fff834ca8984d9e2bc3ca",
+      "bytes": 113627,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 221,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80017fff.s32",
+      "member": null,
+      "sha256": "0893b985bf34504e0177481fab33d9208ee77ca3fc03ca1ac5d0766457087868",
+      "bytes": 109086,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 222,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80018000.s32",
+      "member": null,
+      "sha256": "7ab78eb7caae40567bc2c2cd109fc0aac7b2e45f4e8f3a53e05b684ecf98094c",
+      "bytes": 129275,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 223,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80018001.s32",
+      "member": null,
+      "sha256": "d782caa3cd9557da5ea52ae10905faa9c6273b4920fdf1a1d41c91452623142d",
+      "bytes": 124891,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 224,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\534\\80018002.s32",
+      "member": null,
+      "sha256": "69563ea46f9558a230fa89f9817eed4bcbe034df4c312d76fedbfabba3e6976b",
+      "bytes": 99232,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 225,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffd8000.s32",
+      "member": null,
+      "sha256": "8318e701eb881dcc33f6636892e4eec8ece5f18480690621a81d350f8c8f93bb",
+      "bytes": 109796,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 226,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffd8001.s32",
+      "member": null,
+      "sha256": "fcfe1003fed2bf54b9ff101c6724c3df5b7a1ba2a38d9f2449a63a5197358cf0",
+      "bytes": 146355,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 227,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffd8002.s32",
+      "member": null,
+      "sha256": "2f7b5ff8e1fc597a28c27400a54dc1ebaf83a6589344af805fde30a6e9dea722",
+      "bytes": 141292,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 228,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffd8003.s32",
+      "member": null,
+      "sha256": "6842c4e0668a4a295fdde3a2e9097a5abf1ec75a84711594ccbdca6b4c1fa2ec",
+      "bytes": 148009,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 229,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffd8004.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 230,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffe8000.s32",
+      "member": null,
+      "sha256": "929b68b3119d278b7a18fcd18f5f61a63f19c95ba44c421e8f81e5f46cd7425b",
+      "bytes": 127313,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 231,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffe8001.s32",
+      "member": null,
+      "sha256": "688b2b7a979683de295c73112d21fb9ead0ed0818383512b66519026ea02df68",
+      "bytes": 211409,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 232,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffe8002.s32",
+      "member": null,
+      "sha256": "08dae3feae97b355e5f1ff22efc3765c1a6bf6c076c8d58b114db2c63038abc5",
+      "bytes": 181669,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 233,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffe8003.s32",
+      "member": null,
+      "sha256": "a232a6d2539fff3bf9c430ec679cfc13cb9a5a9c4f816a828b45a48a97f27652",
+      "bytes": 206293,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 234,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7ffe8004.s32",
+      "member": null,
+      "sha256": "de3d4d31ad87da8b64623796acea57a56118c79426b344a24fe446ee6293d926",
+      "bytes": 106561,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 235,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7fff8000.s32",
+      "member": null,
+      "sha256": "535d5a8041d727e42ed473a228e82233747da78fe31a967bf19a00da9c7d3973",
+      "bytes": 119746,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 236,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7fff8001.s32",
+      "member": null,
+      "sha256": "f0160a1596481d41e633aa39053387b976b252b794b96684fe71c181f2621647",
+      "bytes": 190721,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 237,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7fff8002.s32",
+      "member": null,
+      "sha256": "bdf46ccc51260c04c656f9ee2519fb014c5338eb45a774ccb5f366d546c14b70",
+      "bytes": 123155,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 238,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7fff8003.s32",
+      "member": null,
+      "sha256": "ef2840b389ab76808eaed464b64fc3e6a35d843bdecd2986c96ebcd55134af1c",
+      "bytes": 200736,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 239,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\7fff8004.s32",
+      "member": null,
+      "sha256": "77a0869287d10443ee1e4689b3edcc7313abbd4842ac4ae9ef8db97337b035dd",
+      "bytes": 105269,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 240,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80008000.s32",
+      "member": null,
+      "sha256": "6c082b0066acf1f6c3cb36ce147f89f3194e13af25be47087c6687abd7333d7f",
+      "bytes": 124645,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 241,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80008001.s32",
+      "member": null,
+      "sha256": "23c641f0ab4a4e334c85de2be3eb7ead8f03f67f712521b6d044ee9543d0c114",
+      "bytes": 215406,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 242,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80008002.s32",
+      "member": null,
+      "sha256": "0c3fe74d9115e98d45894915b9801c78be763f7c1ed810ba4e17678e18d59e84",
+      "bytes": 177383,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 243,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80008003.s32",
+      "member": null,
+      "sha256": "ae6a71dd70f20191fbe7524383d3af280b0fc55b78ffca15c99bcdf9f512a13b",
+      "bytes": 214793,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 244,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80008004.s32",
+      "member": null,
+      "sha256": "077fc6811489764e9c0da98f61f7c0d713dd684b069b6baa877183bbe704a49d",
+      "bytes": 102526,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 245,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80018000.s32",
+      "member": null,
+      "sha256": "5aa5515d8ff2e0c6fd32f3cb7da6c170525c351ba40ba231bfa8ab00f0077481",
+      "bytes": 99992,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 246,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80018001.s32",
+      "member": null,
+      "sha256": "5d2705792925ac496e2cbf4dea15c7852452c81bebc584811dd8cfb583f59c8e",
+      "bytes": 135494,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 247,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80018002.s32",
+      "member": null,
+      "sha256": "05c849ac42d1ecf035e0738314a383ce233ceb937549a5ab5d5fd9d6f21adc40",
+      "bytes": 140004,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 248,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80018003.s32",
+      "member": null,
+      "sha256": "a23c8961eeaba65f4c2c177aa502e57582918520555ad890d447b9d2bf274079",
+      "bytes": 130870,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 249,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\535\\80018004.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 250,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "3a5415db8acd410d2608968e502815d52c47ac875f270f4a758fe11032f2644c",
+      "bytes": 104940,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 251,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7ffe8000.s32",
+      "member": null,
+      "sha256": "750c910693446cf41ad039d7e83d777e5cce08a8490fefbbe20452f83eff6824",
+      "bytes": 114893,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 252,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7ffe8001.s32",
+      "member": null,
+      "sha256": "df8fef00d816c81a02f2de34deafad80496f9aac88c98da6c06d869731b2b04a",
+      "bytes": 92938,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 253,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7fff7fff.s32",
+      "member": null,
+      "sha256": "37a0da6e9d6ddf484a501db5527d5e271f93a1458a0848f41d5bae959eaca1db",
+      "bytes": 118867,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 254,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7fff8000.s32",
+      "member": null,
+      "sha256": "f967296ddefda849126d27497ad6c1078963cde3ec9027cdeb4ec0ffb5e56d66",
+      "bytes": 100020,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 255,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\7fff8001.s32",
+      "member": null,
+      "sha256": "0cdc1bcb98539246f318a4d83449fce7afc3f3d378c9882e53b1cdfa97a6ea52",
+      "bytes": 78775,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 256,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80007ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 257,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80007fff.s32",
+      "member": null,
+      "sha256": "5aff8117cd9a61f541e1498a2bcb5fba4bdb4479c7d8a02653a23c843f1d1ad0",
+      "bytes": 71455,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 258,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80008000.s32",
+      "member": null,
+      "sha256": "0f05205336d8a5e7f7f37700be9bcfa4f95fd77099c0602f1e18b0d518187c9b",
+      "bytes": 85351,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 259,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80008001.s32",
+      "member": null,
+      "sha256": "4ad00f37707e63b14a7ff1d24f29de35aa1cea9c16d02b408ba395cee23a0d6b",
+      "bytes": 54958,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 260,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80017ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 261,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80017fff.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 262,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\540\\80018000.s32",
+      "member": null,
+      "sha256": "9c1212d87d01406a02a3c81fef0d457be0ab7b93d922fdd4822ec807bdf16722",
+      "bytes": 98338,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 263,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "3a5415db8acd410d2608968e502815d52c47ac875f270f4a758fe11032f2644c",
+      "bytes": 104940,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 264,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7ffe8000.s32",
+      "member": null,
+      "sha256": "750c910693446cf41ad039d7e83d777e5cce08a8490fefbbe20452f83eff6824",
+      "bytes": 114893,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 265,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7ffe8001.s32",
+      "member": null,
+      "sha256": "df8fef00d816c81a02f2de34deafad80496f9aac88c98da6c06d869731b2b04a",
+      "bytes": 92938,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 266,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7fff7fff.s32",
+      "member": null,
+      "sha256": "37a0da6e9d6ddf484a501db5527d5e271f93a1458a0848f41d5bae959eaca1db",
+      "bytes": 118867,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 267,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7fff8000.s32",
+      "member": null,
+      "sha256": "f967296ddefda849126d27497ad6c1078963cde3ec9027cdeb4ec0ffb5e56d66",
+      "bytes": 100020,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 268,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\7fff8001.s32",
+      "member": null,
+      "sha256": "0cdc1bcb98539246f318a4d83449fce7afc3f3d378c9882e53b1cdfa97a6ea52",
+      "bytes": 78775,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 269,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80007ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 270,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80007fff.s32",
+      "member": null,
+      "sha256": "5aff8117cd9a61f541e1498a2bcb5fba4bdb4479c7d8a02653a23c843f1d1ad0",
+      "bytes": 71455,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 271,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80008000.s32",
+      "member": null,
+      "sha256": "0f05205336d8a5e7f7f37700be9bcfa4f95fd77099c0602f1e18b0d518187c9b",
+      "bytes": 85351,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 272,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80008001.s32",
+      "member": null,
+      "sha256": "4ad00f37707e63b14a7ff1d24f29de35aa1cea9c16d02b408ba395cee23a0d6b",
+      "bytes": 54958,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 273,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80017ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 274,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80017fff.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 275,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\541\\80018000.s32",
+      "member": null,
+      "sha256": "9c1212d87d01406a02a3c81fef0d457be0ab7b93d922fdd4822ec807bdf16722",
+      "bytes": 98338,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 276,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "3a5415db8acd410d2608968e502815d52c47ac875f270f4a758fe11032f2644c",
+      "bytes": 104940,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 277,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7ffe8000.s32",
+      "member": null,
+      "sha256": "750c910693446cf41ad039d7e83d777e5cce08a8490fefbbe20452f83eff6824",
+      "bytes": 114893,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 278,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7ffe8001.s32",
+      "member": null,
+      "sha256": "df8fef00d816c81a02f2de34deafad80496f9aac88c98da6c06d869731b2b04a",
+      "bytes": 92938,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 279,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7fff7fff.s32",
+      "member": null,
+      "sha256": "37a0da6e9d6ddf484a501db5527d5e271f93a1458a0848f41d5bae959eaca1db",
+      "bytes": 118867,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 280,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7fff8000.s32",
+      "member": null,
+      "sha256": "f967296ddefda849126d27497ad6c1078963cde3ec9027cdeb4ec0ffb5e56d66",
+      "bytes": 100020,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 281,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\7fff8001.s32",
+      "member": null,
+      "sha256": "0cdc1bcb98539246f318a4d83449fce7afc3f3d378c9882e53b1cdfa97a6ea52",
+      "bytes": 78775,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 282,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80007ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 283,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80007fff.s32",
+      "member": null,
+      "sha256": "5aff8117cd9a61f541e1498a2bcb5fba4bdb4479c7d8a02653a23c843f1d1ad0",
+      "bytes": 71455,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 284,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80008000.s32",
+      "member": null,
+      "sha256": "0f05205336d8a5e7f7f37700be9bcfa4f95fd77099c0602f1e18b0d518187c9b",
+      "bytes": 85351,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 285,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80008001.s32",
+      "member": null,
+      "sha256": "4ad00f37707e63b14a7ff1d24f29de35aa1cea9c16d02b408ba395cee23a0d6b",
+      "bytes": 54958,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 286,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80017ffe.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 287,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80017fff.s32",
+      "member": null,
+      "sha256": "68d771e033b2be6b621291f7be48f8d982fe239eb37271cb41c14aec8c9d6f8b",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 288,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\542\\80018000.s32",
+      "member": null,
+      "sha256": "9c1212d87d01406a02a3c81fef0d457be0ab7b93d922fdd4822ec807bdf16722",
+      "bytes": 98338,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 289,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\7fff7fff.s32",
+      "member": null,
+      "sha256": "436cec074a7f171d1dac62a39f1598a87ff6ab6d70c206efab496348044c016c",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 290,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\7fff8000.s32",
+      "member": null,
+      "sha256": "074aab9ef19c74e203a5fe1524bd3273d72ab32e6eb5675c79a256ef50eca0d7",
+      "bytes": 99513,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 291,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\7fff8001.s32",
+      "member": null,
+      "sha256": "dec37558d62e3f24a35c0ab9fa230bbf70bcc147495219540fdb4425f171ffdb",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 292,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\80007fff.s32",
+      "member": null,
+      "sha256": "436cec074a7f171d1dac62a39f1598a87ff6ab6d70c206efab496348044c016c",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 293,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\80008000.s32",
+      "member": null,
+      "sha256": "3eeca5d634b7d0c6d6d6b86b15bcae12c71ac16f43ea3e13ea049946d857ff4b",
+      "bytes": 97512,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 294,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\543\\80008001.s32",
+      "member": null,
+      "sha256": "436cec074a7f171d1dac62a39f1598a87ff6ab6d70c206efab496348044c016c",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 295,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffd7fff.s32",
+      "member": null,
+      "sha256": "86ef9801f18b90eb7ffe80eca73e057fe594d1f303c85bfbd352ef58df71b530",
+      "bytes": 111647,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 296,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffd8000.s32",
+      "member": null,
+      "sha256": "c3f1aab401134b9865d0ea82f13f0d5bef03b4c6ff492557119dc76a85a03aa1",
+      "bytes": 129030,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 297,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffd8001.s32",
+      "member": null,
+      "sha256": "7cc1dd529fcdfaf8603774148d2a4060945ba6c5989732df86247c5248cb8ef7",
+      "bytes": 127403,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 298,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffd8002.s32",
+      "member": null,
+      "sha256": "2ac4898629ec97fed455555f559f8d63d6d8dc8379d7837e40d50a420d5dac10",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 299,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "cd256eb031f6f3b46d57722f4d165991e6f996480821bc86ccc449bf2f88d9b2",
+      "bytes": 154140,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 300,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffe8000.s32",
+      "member": null,
+      "sha256": "0b16c7d9a6cfb6b4abd795e1a13954ee4e6d7eedc254d8eb5574d399297552eb",
+      "bytes": 170202,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 301,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffe8001.s32",
+      "member": null,
+      "sha256": "99dde558612dc84885c4a7782b2e108d182a30e746b828c1c51d31de7de59989",
+      "bytes": 164496,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 302,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7ffe8002.s32",
+      "member": null,
+      "sha256": "49559131633d89dd40ec2bbb5ba1994641d8189176c7e6c632a9b8e45203d132",
+      "bytes": 112402,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 303,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7fff7fff.s32",
+      "member": null,
+      "sha256": "d5df875763c57a7dbf5b7c7c0d42e37fab044bcae5ae1ff6a2bac02b429059cc",
+      "bytes": 125818,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 304,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7fff8000.s32",
+      "member": null,
+      "sha256": "92350bea75066ee2910dcd23ce22f077d78924bffd7965de6aed2028470f42b1",
+      "bytes": 243286,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 305,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7fff8001.s32",
+      "member": null,
+      "sha256": "fa388086b6f7d53821d0df93745fac831d793e9843393fe75498e6e59dba61cc",
+      "bytes": 193685,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 306,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7fff8002.s32",
+      "member": null,
+      "sha256": "29d206351634d26da8d2f84d2ac70fdcdd97fb31b8f22219e822b28d99ea8954",
+      "bytes": 118548,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 307,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\7fff8003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 308,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80007fff.s32",
+      "member": null,
+      "sha256": "17fd6b37dfe72e7ee889378c85ae4a676314b39f329b5f0cd65953c4f06a886a",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 309,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80008000.s32",
+      "member": null,
+      "sha256": "4b4fc0dab5705a24072e872afd99ed1cecb5ff487ab377ba53f17f1a841d1ba9",
+      "bytes": 115621,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 310,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80008001.s32",
+      "member": null,
+      "sha256": "09510035e635529ea4525f4257521a12363bc77972712efcb6a2ef876f93e0b1",
+      "bytes": 125123,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 311,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80008002.s32",
+      "member": null,
+      "sha256": "cb5b22e8fabea84e19695eab550d214c14f88c9c7b9bcd7b8bab1f87ba038047",
+      "bytes": 98454,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 312,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80008003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 313,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80018000.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 314,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80018001.s32",
+      "member": null,
+      "sha256": "5b4a2e22159500e0d33a5bc72afdddc0f11fc3eb106751ed79c1928498f2f5eb",
+      "bytes": 62806,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 315,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80018002.s32",
+      "member": null,
+      "sha256": "68f0696185daae75d3a7c425bf47c9e4ca3428cda9027c5d80a7a80ea1d74116",
+      "bytes": 49210,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 316,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80018003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 317,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80028000.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 318,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80028001.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 319,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\545\\80028002.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 320,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffd7fff.s32",
+      "member": null,
+      "sha256": "86ef9801f18b90eb7ffe80eca73e057fe594d1f303c85bfbd352ef58df71b530",
+      "bytes": 111647,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 321,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffd8000.s32",
+      "member": null,
+      "sha256": "c3f1aab401134b9865d0ea82f13f0d5bef03b4c6ff492557119dc76a85a03aa1",
+      "bytes": 129030,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 322,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffd8001.s32",
+      "member": null,
+      "sha256": "7cc1dd529fcdfaf8603774148d2a4060945ba6c5989732df86247c5248cb8ef7",
+      "bytes": 127403,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 323,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffd8002.s32",
+      "member": null,
+      "sha256": "2ac4898629ec97fed455555f559f8d63d6d8dc8379d7837e40d50a420d5dac10",
+      "bytes": 98330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 324,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "b722e76d13153434c12488ce5d350f4992fa9669f9366edbe6d5e63e9385ea0e",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 325,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffe8000.s32",
+      "member": null,
+      "sha256": "ef0da2d395699b147dc9925dbf22f7a11fb916f4fb4fd57b66eb6f76fc253741",
+      "bytes": 75551,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 326,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffe8001.s32",
+      "member": null,
+      "sha256": "f870e6a27ced951a06a31c62fe478f58acb98957046e371185922a91f4045869",
+      "bytes": 52002,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 327,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7ffe8002.s32",
+      "member": null,
+      "sha256": "49559131633d89dd40ec2bbb5ba1994641d8189176c7e6c632a9b8e45203d132",
+      "bytes": 112402,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 328,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7fff7fff.s32",
+      "member": null,
+      "sha256": "99594ce130342eed0da85a5da3ef6c0a0b5d0fc662d7302dfd6ab28534d9a11a",
+      "bytes": 74962,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 329,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7fff8000.s32",
+      "member": null,
+      "sha256": "6fa08eaba5a8856a112a53283dd0da783d8806dbe4383d38471baf568938a396",
+      "bytes": 141473,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 330,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7fff8001.s32",
+      "member": null,
+      "sha256": "67cae417e2381ea5bd40eb60b0cdfe6db43578c473644ff0d26f9beecf2ca45e",
+      "bytes": 56634,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 331,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7fff8002.s32",
+      "member": null,
+      "sha256": "29d206351634d26da8d2f84d2ac70fdcdd97fb31b8f22219e822b28d99ea8954",
+      "bytes": 118548,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 332,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\7fff8003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 333,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80007fff.s32",
+      "member": null,
+      "sha256": "02fbe649de15c640eaefab978748ef669decb917a0515a12912e709e0afac3db",
+      "bytes": 54503,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 334,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80008000.s32",
+      "member": null,
+      "sha256": "ff31486e29ed41e19004e43682d5b11740edd29e6b4cc53078fac250457048db",
+      "bytes": 66541,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 335,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80008001.s32",
+      "member": null,
+      "sha256": "b722e76d13153434c12488ce5d350f4992fa9669f9366edbe6d5e63e9385ea0e",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 336,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80008002.s32",
+      "member": null,
+      "sha256": "cb5b22e8fabea84e19695eab550d214c14f88c9c7b9bcd7b8bab1f87ba038047",
+      "bytes": 98454,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 337,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80008003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 338,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80018000.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 339,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80018001.s32",
+      "member": null,
+      "sha256": "5b4a2e22159500e0d33a5bc72afdddc0f11fc3eb106751ed79c1928498f2f5eb",
+      "bytes": 62806,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 340,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80018002.s32",
+      "member": null,
+      "sha256": "68f0696185daae75d3a7c425bf47c9e4ca3428cda9027c5d80a7a80ea1d74116",
+      "bytes": 49210,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 341,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80018003.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 342,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80028000.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 343,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\546\\80028001.s32",
+      "member": null,
+      "sha256": "4d81f1186d38082e2727678d96e66fc901cfbbc0dacd9275b0bfcf3a5f9db279",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 344,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffd7fff.s32",
+      "member": null,
+      "sha256": "78f832233ad70a4fe3942c6609c7aaa11d75200e6f618006151b9a0eb5660532",
+      "bytes": 190927,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 345,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffd8000.s32",
+      "member": null,
+      "sha256": "d579d8d074523335cc24cba28953a170ad363321141516947d57e161f08c282f",
+      "bytes": 182249,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 346,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffd8001.s32",
+      "member": null,
+      "sha256": "095a13d5af4d39837de979fcb6c19dca9972feddc15d37095a561a1b70e5b8e9",
+      "bytes": 171196,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 347,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "e09ae88ee02c12ae8e5339f92c7ed585a1b97e2876085ee8d0c4922ffd805593",
+      "bytes": 136691,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 348,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffe8000.s32",
+      "member": null,
+      "sha256": "5a8a90d05f1a1ec9acb44ff0a8248b151a347de2e8b3473bd5cc61193be5b241",
+      "bytes": 92537,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 349,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7ffe8001.s32",
+      "member": null,
+      "sha256": "527d3a5c68e46e9c64ef15ec79572d458a40fe18fcb92a69bb63d177097c943a",
+      "bytes": 110307,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 350,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7fff7fff.s32",
+      "member": null,
+      "sha256": "8f449fd24e59d770c22feaa526cb32a22907eb45bd4423d126f8f249e1e6a86e",
+      "bytes": 100107,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 351,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7fff8000.s32",
+      "member": null,
+      "sha256": "a57a400cc7e4f259737ccd1568fc97aca7571adbc5f545d762460ebc60e676a7",
+      "bytes": 177918,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 352,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\7fff8001.s32",
+      "member": null,
+      "sha256": "bedfd29c4ac852ea178c56c38e5638be00d16765938de8bd252bc7bd82ec2a7d",
+      "bytes": 59826,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 353,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\80007fff.s32",
+      "member": null,
+      "sha256": "555874951793c02fa7557bbf20b7ccf0d3a25f3ac8e72f2d118fa8493b219928",
+      "bytes": 67518,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 354,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\80008000.s32",
+      "member": null,
+      "sha256": "dcf1a2988ca00ea68adf8d0a22e99e27e68a561efe4c36b6ca4f31fcfdde4c14",
+      "bytes": 97564,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 355,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\547\\80008001.s32",
+      "member": null,
+      "sha256": "d0ac5bb537400f6ba18ba0736acddb636783f5fd4187d224282153f9249ef182",
+      "bytes": 51002,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 356,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7ffd8001.s32",
+      "member": null,
+      "sha256": "4545bffa30104d4a7704c6dd8e4b23b02bd1edc357d5b48b523de8590ac03e2d",
+      "bytes": 50836,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 357,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7ffe7fff.s32",
+      "member": null,
+      "sha256": "d270382095d0bcaebf30815e35ebe09f16e9c56a1be6591c5a89d5bf1e1b3315",
+      "bytes": 62703,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 358,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7ffe8000.s32",
+      "member": null,
+      "sha256": "7c0181356abf6aae09f45c06a053f293bb032555127964095c810c313cedc568",
+      "bytes": 78065,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 359,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7ffe8001.s32",
+      "member": null,
+      "sha256": "dfc5857619b5a0040e44fe785d223391806a0fa259137d40c2bf135254e79b33",
+      "bytes": 124474,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 360,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7ffe8002.s32",
+      "member": null,
+      "sha256": "f1c8500f36e43a4339da91ec77892733d79faa8c9a5f6dd8ce8ee87728679154",
+      "bytes": 177441,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 361,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7fff7fff.s32",
+      "member": null,
+      "sha256": "e8e81b3a71f7cefe6389789ae928b102fd9fad87a9dc13c2a59f5d672c78e410",
+      "bytes": 112280,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 362,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7fff8000.s32",
+      "member": null,
+      "sha256": "fba0b8b8d52216eceeed0d3337e2d56a419f091af2077b531b126b34ebe77faf",
+      "bytes": 163466,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 363,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7fff8001.s32",
+      "member": null,
+      "sha256": "f1fd2da46c0b40fa5ddcb9eeb9ab3c90946881d2d50c75ec8fe883f2d17e8710",
+      "bytes": 107659,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 364,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\7fff8002.s32",
+      "member": null,
+      "sha256": "83321c09f3e7a6bc4fb9db3b3b4af77eb33f76a899591196b2efe3d0ab7d5038",
+      "bytes": 192042,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 365,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\80007fff.s32",
+      "member": null,
+      "sha256": "1699a8628b35039f0ae4a9edc6f3ec6d310ff56cfdea4635b659c3767e4e7d0c",
+      "bytes": 63661,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 366,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\80008000.s32",
+      "member": null,
+      "sha256": "572d64628195cce0a1479cb49e6458cc7182e2dc55527c167d6dc1273fdb646b",
+      "bytes": 84477,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 367,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\80008001.s32",
+      "member": null,
+      "sha256": "938130acb2f07ae87d7ee71a1edf16d15b716c4e9ff7c14e2c1cb1d900ce8872",
+      "bytes": 158587,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 368,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\548\\80008002.s32",
+      "member": null,
+      "sha256": "a11e91a1ff01790baa5635c160d30af9b249289413afe3e32804f2962ac3edc0",
+      "bytes": 156444,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 369,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7ffe8001.s32",
+      "member": null,
+      "sha256": "066fe6fc2b46c51d55fffacf7aa1b6b64efcaa74fb1178bc68fea65aa4465fb8",
+      "bytes": 57170,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 370,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7ffe8002.s32",
+      "member": null,
+      "sha256": "ac3b8da0022699452e4f0b56433617a618a497a7e1428f3fffab7928da71d31b",
+      "bytes": 141606,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 371,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7ffe8003.s32",
+      "member": null,
+      "sha256": "78b2f89f4d8f4d3fde8e7c0c6abfbc9fab47e91400f056c5749e05438179d635",
+      "bytes": 135831,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 372,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7ffe8004.s32",
+      "member": null,
+      "sha256": "4fbe2288721f5f9a6cc096028570ca3e3d5007ad47bfe10120e9bcc9830edb19",
+      "bytes": 167509,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 373,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7fff8001.s32",
+      "member": null,
+      "sha256": "8f839bda5799bc7d5164ced203ab96f166a9ef0de3f6e48dd6ad5bc311672850",
+      "bytes": 99507,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 374,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7fff8002.s32",
+      "member": null,
+      "sha256": "234b2202ba8de1e4c5f93c1752d4d554a482b859f13a98125d23ebee7cdbb121",
+      "bytes": 129921,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 375,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7fff8003.s32",
+      "member": null,
+      "sha256": "3b39c4dd96d215989237301235326aec2f7767e0887a7a8f39e09f5544d78d54",
+      "bytes": 105513,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 376,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\7fff8004.s32",
+      "member": null,
+      "sha256": "7aceda5ee0a4b5124b846831a08405c28f67e91f8e55c1c20de904ca199c50dc",
+      "bytes": 157146,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 377,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80008001.s32",
+      "member": null,
+      "sha256": "2fdd8f80f3de3648092fc0c8fb2bff0ecd1d1cb3d7111ad1600c81a71afd08c8",
+      "bytes": 134407,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 378,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80008002.s32",
+      "member": null,
+      "sha256": "0cbbbc220704c274a0ac92b5fa0f46f3cb1593d0bade9d58aca270e0b5fa29d5",
+      "bytes": 173559,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 379,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80008003.s32",
+      "member": null,
+      "sha256": "4b74ec24a7b2abbe331dc43fc9930c540888953a8b441e5dfb8f7ee7fdefa87c",
+      "bytes": 104926,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 380,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80008004.s32",
+      "member": null,
+      "sha256": "2e22ca135dd4eee31ab216b37c27ee1c0216b4d30a0c19b6553ba6704c301080",
+      "bytes": 187555,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 381,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80018001.s32",
+      "member": null,
+      "sha256": "3e1fef9cb0c6590a98146adabb33e22f210392c0d137d7015d5b2a9f2d6ff8fe",
+      "bytes": 123905,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 382,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80018002.s32",
+      "member": null,
+      "sha256": "7ed8c57ce67a60fea9931f78fb2d075a0d7e79a4ca352e5195247389806b10ba",
+      "bytes": 134452,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 383,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80018003.s32",
+      "member": null,
+      "sha256": "2bfba8e61ec025599b74d24bb77e3f98b924c5712edbe77e96b4496ff817d2dc",
+      "bytes": 81330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 384,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\549\\80018004.s32",
+      "member": null,
+      "sha256": "8c90c68a483268459c8761c330ac2b52e344338986dc885bfe67331b21828efa",
+      "bytes": 73175,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 385,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7ffe8001.s32",
+      "member": null,
+      "sha256": "066fe6fc2b46c51d55fffacf7aa1b6b64efcaa74fb1178bc68fea65aa4465fb8",
+      "bytes": 57170,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 386,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7ffe8002.s32",
+      "member": null,
+      "sha256": "ae35213392efbdc2398805f4f401560e368442c4f6d0a1f0e0e49c2904950f3d",
+      "bytes": 141606,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 387,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7ffe8003.s32",
+      "member": null,
+      "sha256": "0b6b2b11c6bbb3ef4f0e877d058116e8aa9943f667802b68fd027ea36f3ee869",
+      "bytes": 135657,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 388,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7ffe8004.s32",
+      "member": null,
+      "sha256": "4fbe2288721f5f9a6cc096028570ca3e3d5007ad47bfe10120e9bcc9830edb19",
+      "bytes": 167509,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 389,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7fff8001.s32",
+      "member": null,
+      "sha256": "8f839bda5799bc7d5164ced203ab96f166a9ef0de3f6e48dd6ad5bc311672850",
+      "bytes": 99507,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 390,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7fff8002.s32",
+      "member": null,
+      "sha256": "15a1a8f6a2668566fd63afa39eefd3a3be85e06f111d4a5a34d47c7b34fb4062",
+      "bytes": 122760,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 391,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7fff8003.s32",
+      "member": null,
+      "sha256": "670af47a6c068c55f0c0e96891a8227467fc502d2f138987666eff87ad1eee51",
+      "bytes": 104986,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 392,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\7fff8004.s32",
+      "member": null,
+      "sha256": "2de0c4f1b2e192e698669cedb80f05e6f57eb603ba75464eb37726e62af2f358",
+      "bytes": 157268,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 393,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80008001.s32",
+      "member": null,
+      "sha256": "2fdd8f80f3de3648092fc0c8fb2bff0ecd1d1cb3d7111ad1600c81a71afd08c8",
+      "bytes": 134407,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 394,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80008002.s32",
+      "member": null,
+      "sha256": "3192ac6d4584e909cd7a594f94896f4fa1c10deddc2df0344badab7f85ac2da0",
+      "bytes": 173559,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 395,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80008003.s32",
+      "member": null,
+      "sha256": "3ca53592029e14515371559837bf25e47502024d493b77eeb2e52ef741a40205",
+      "bytes": 104406,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 396,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80008004.s32",
+      "member": null,
+      "sha256": "2e22ca135dd4eee31ab216b37c27ee1c0216b4d30a0c19b6553ba6704c301080",
+      "bytes": 187555,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 397,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80018001.s32",
+      "member": null,
+      "sha256": "3e1fef9cb0c6590a98146adabb33e22f210392c0d137d7015d5b2a9f2d6ff8fe",
+      "bytes": 123905,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 398,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80018002.s32",
+      "member": null,
+      "sha256": "7ed8c57ce67a60fea9931f78fb2d075a0d7e79a4ca352e5195247389806b10ba",
+      "bytes": 134452,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 399,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80018003.s32",
+      "member": null,
+      "sha256": "db3a97adbcb7cd33beebfcafb755394a7eafc605bc7c37d6a78ded8a7f8c6395",
+      "bytes": 81330,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 400,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\550\\80018004.s32",
+      "member": null,
+      "sha256": "8c90c68a483268459c8761c330ac2b52e344338986dc885bfe67331b21828efa",
+      "bytes": 73175,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 401,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\551\\7fff7fff.s32",
+      "member": null,
+      "sha256": "7a8597e92d37f4ff786222dcc526ca324f3fdfbd7fb2237524b9f4a0ee26fb5f",
+      "bytes": 50839,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 402,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\551\\7fff8000.s32",
+      "member": null,
+      "sha256": "205b16f32596cfe0938886a5b86755b2280e0b41d030dd0a0f250746ac20cef7",
+      "bytes": 107595,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 403,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\551\\80008000.s32",
+      "member": null,
+      "sha256": "5af6be905dc13b9335b58ee02acdb3e97150eaba36d59db0487f4cff8e13935b",
+      "bytes": 50285,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 404,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\552\\7fff7fff.s32",
+      "member": null,
+      "sha256": "2f5cddbfd7d2a28ca0472b2c281e2aac7d97bd93779d1f8bbf16e6eeee7dafb3",
+      "bytes": 72599,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 405,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\552\\7fff8000.s32",
+      "member": null,
+      "sha256": "5be25f71e2cb9f3b84d91695190b53afabe816463cfd1e3a1223a1fc97bbaa3c",
+      "bytes": 83656,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 406,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\552\\80007fff.s32",
+      "member": null,
+      "sha256": "1730670b95b0b44ece98c4c9c4ae7761de7321c210017c0dcdf05de9e1beed24",
+      "bytes": 66205,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 407,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\552\\80008000.s32",
+      "member": null,
+      "sha256": "75ce16945ea73999cd613a4d40d7b4b31c9d6d40c23ebc4ba4cff54ce62ce12b",
+      "bytes": 72057,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 408,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\7fff7ffc.s32",
+      "member": null,
+      "sha256": "143df46789212495827ecb10d5b6fcd7984cbd23085c98ef4be124c6c5fea984",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 409,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\7fff7ffd.s32",
+      "member": null,
+      "sha256": "99c5c1c7eae7220f764d64c2de7be58a1448992068d6ffcd2d3f2a7379a9df45",
+      "bytes": 58605,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 410,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\7fff7ffe.s32",
+      "member": null,
+      "sha256": "13bce9efaff53416bc655221c73df5c0b6d47915913c9b1964cf01e0fe928cd5",
+      "bytes": 75203,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 411,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\7fff7fff.s32",
+      "member": null,
+      "sha256": "cc59265a1008ac48f4fb4c7afe30cd46a0a5b5a4a86fc177682e8763675c74e1",
+      "bytes": 89485,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 412,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\7fff8000.s32",
+      "member": null,
+      "sha256": "192698afe1b1df0f874c55bb5e9d06fedc8a055006adbbcdff86855da03da228",
+      "bytes": 61406,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 413,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80007ffc.s32",
+      "member": null,
+      "sha256": "888150a0119a10e659b3a8ef3f242a2ec5516cc92edc9b4fd5d337f5c11dce6a",
+      "bytes": 57002,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 414,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80007ffd.s32",
+      "member": null,
+      "sha256": "a2cf32829d2ff72848e22ae43ee6c1f839674d4d813ed6d7882d3e9f3745a516",
+      "bytes": 120639,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 415,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80007ffe.s32",
+      "member": null,
+      "sha256": "2646641ae03e4c1d41babb1ced0fb90a942945bb5cbab30eee32c60b78387702",
+      "bytes": 138988,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 416,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80007fff.s32",
+      "member": null,
+      "sha256": "afe2286de98d0771c5a1ebf484ef028464f2da1905bb90419bd4806d8cab1fa8",
+      "bytes": 65036,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 417,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80008000.s32",
+      "member": null,
+      "sha256": "1a8fc1f5290dd11fdaa6281db870979a909a60aab86f976357ec5c28ba8c1dfe",
+      "bytes": 80908,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 418,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80017ffc.s32",
+      "member": null,
+      "sha256": "143df46789212495827ecb10d5b6fcd7984cbd23085c98ef4be124c6c5fea984",
+      "bytes": 49178,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 419,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80017ffd.s32",
+      "member": null,
+      "sha256": "c3f1adbc16458695dd53f8d99517c5e9be7c27db93f96f9c94610288728b2b2f",
+      "bytes": 55408,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 420,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80017ffe.s32",
+      "member": null,
+      "sha256": "5ac43ac2f2be922a97f106d59f36988e70b7ad61e8266c3be708c4997bbc3ebc",
+      "bytes": 70926,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 421,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80017fff.s32",
+      "member": null,
+      "sha256": "6f84cd9e7f2b02306b0edc6b87d5dc7fdaeb4130368631bc8651cf72cabaf9b1",
+      "bytes": 85136,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 422,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\553\\80018000.s32",
+      "member": null,
+      "sha256": "f190af945d8d06c3a6847cad6330b3a4b1af4b9f24fc731d19712771bf3006de",
+      "bytes": 58451,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 423,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\7fff8000.s32",
+      "member": null,
+      "sha256": "c475994737f81e705cb8b48e46d41504bed4336b053cdfed3aab75850ef0f36c",
+      "bytes": 139876,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 424,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\7fff8001.s32",
+      "member": null,
+      "sha256": "6bd52ba9bd9e7a3d4c5f778389b1ed0adcb7e07e90e1e887c88312d8c7f105b6",
+      "bytes": 177440,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 425,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\7fff8002.s32",
+      "member": null,
+      "sha256": "f36bcfa394c90436d28c3ed6c794d29e985214cc8f52f89af97e406700e22fa1",
+      "bytes": 89947,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 426,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\80008000.s32",
+      "member": null,
+      "sha256": "651152fd4c926f31415a61b70ede5d9c92651eea5ed92b1d9aab19068b761760",
+      "bytes": 135587,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 427,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\80008001.s32",
+      "member": null,
+      "sha256": "cd93bab1a1afbeaeccdea811b18ce4b32dc927b57b6e1499dd3091fc14cbe6ec",
+      "bytes": 160989,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 428,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\554\\80008002.s32",
+      "member": null,
+      "sha256": "bd3c6827312b3676eec561d431b0cdcfe42aa57e5b4c1033f10e3d617bf516e7",
+      "bytes": 77678,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 429,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\555\\7fff8000.s32",
+      "member": null,
+      "sha256": "99b97a5bf7f393c776395b638713cb97e89231b935f200841c2982328192954b",
+      "bytes": 101356,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 430,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff67fff.s32",
+      "member": null,
+      "sha256": "b417fe989e7a1b5442dc160730f30b999811d1e640ff13e6f1229fc2a72947e8",
+      "bytes": 55576,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 431,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff68000.s32",
+      "member": null,
+      "sha256": "24645cfe42f9577bc23d4bdada44fa73d89744a5b4f2516f4af0258f043501d7",
+      "bytes": 54602,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 432,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff77fff.s32",
+      "member": null,
+      "sha256": "01e5b58b25683c6097d617c78f9923aaba3d604bec66e0be9fcc7ec965a4b6d4",
+      "bytes": 97072,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 433,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff78000.s32",
+      "member": null,
+      "sha256": "8cdacdb6d85cbe2f518de63019d7b49deeaa8b6c94f32241c071ec02f1f470c0",
+      "bytes": 90273,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 434,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff87fff.s32",
+      "member": null,
+      "sha256": "2e3a8a0cdf035e2473cd10ccaca8da36a1429b4233a3191ee586f15f91bc3ab6",
+      "bytes": 146092,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 435,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff88000.s32",
+      "member": null,
+      "sha256": "16a3ae7da7ff5213b77aedfea9e2cb08db3213589673d1b76b08213992386b69",
+      "bytes": 136727,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 436,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff97ffe.s32",
+      "member": null,
+      "sha256": "119bf0419b09a138d6592b56d11a4e6bca3baa84d2b62d454341c7a8379fd9a9",
+      "bytes": 49174,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 437,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff97fff.s32",
+      "member": null,
+      "sha256": "9f3ed392f1f00771d4d86490dea6d422aee4734d174ada22229e9830b7f11a46",
+      "bytes": 128230,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 438,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ff98000.s32",
+      "member": null,
+      "sha256": "c661de22d1cd8e7992d2600ebd02699bed1119ae94be4be82708601aa9c73ab7",
+      "bytes": 124088,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 439,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ffa7fff.s32",
+      "member": null,
+      "sha256": "78ad97d5c4b01cd80d71392facfd9834cb59871ddd0eff12e9c70de36fa55647",
+      "bytes": 61985,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 440,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\560\\7ffa8000.s32",
+      "member": null,
+      "sha256": "6743b64dfcd8f7cfd7137a61853af599f61b6cf9145959a73f81a665fc4f41a1",
+      "bytes": 59761,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 441,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffd8001.s32",
+      "member": null,
+      "sha256": "a0acca8eda529b09771883aa633f6b058a5c37807c783d2595ff6cb2327f1529",
+      "bytes": 98464,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 442,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffd8002.s32",
+      "member": null,
+      "sha256": "6b91dbd3c9a94c680a21fd3dd4385a53b1eccfdd5c007f20ef4b38bf4c73c288",
+      "bytes": 98339,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 443,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffd8003.s32",
+      "member": null,
+      "sha256": "dc35073365615b89b8e54670eebd83f2189ad08fba1c4a9f0a8c9ffe43cade2e",
+      "bytes": 52594,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 444,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffe8000.s32",
+      "member": null,
+      "sha256": "120af92e6ad8bd1720f642484565f4da7bea0b5ba0d92d66fa17042cbdf4c6c1",
+      "bytes": 63248,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 445,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffe8001.s32",
+      "member": null,
+      "sha256": "2df7857b88a0009da3a65ded5c1d4a6e9dbbef2af44729b6b589b0700988587e",
+      "bytes": 134091,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 446,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffe8002.s32",
+      "member": null,
+      "sha256": "6d7e57c4331c75206189708e15bf3b4cad6f57d5dd0606c0fb6b949ed1aeb934",
+      "bytes": 146465,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 447,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7ffe8003.s32",
+      "member": null,
+      "sha256": "aa88387f6fb6884591addba79a3957cabf548b7ca22a1061f2268a775b62ed99",
+      "bytes": 87104,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 448,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7fff8000.s32",
+      "member": null,
+      "sha256": "ac0779d472eca26bec001f2d8eac7c652b9dad4cb43f7630d7f66dc4e3cd6b3c",
+      "bytes": 86533,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 449,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7fff8001.s32",
+      "member": null,
+      "sha256": "a3250a5a1ba6fafa3f7c6f2a0eefa8fa7b3076cdaa1aada41351df1276acfe89",
+      "bytes": 163944,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 450,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7fff8002.s32",
+      "member": null,
+      "sha256": "cb7811aa5ae9cfeebf60ad02a575e35d6f760fff1332a2b62efd2491cc7d207f",
+      "bytes": 136086,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 451,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\7fff8003.s32",
+      "member": null,
+      "sha256": "0b051e09086aed3f699e1230aef0fd560e2f32aa904b60d7e923021e9d09f75b",
+      "bytes": 104350,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 452,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80008000.s32",
+      "member": null,
+      "sha256": "111f166482e249f93340ac67af82bdea1b42576a58fa61f3a96d1914f69609e7",
+      "bytes": 84335,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 453,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80008001.s32",
+      "member": null,
+      "sha256": "1652b5a6313cbccd838f35749ee5fac2ba6cd85095220c81718295903bc6a852",
+      "bytes": 147028,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 454,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80008002.s32",
+      "member": null,
+      "sha256": "80af6266dd4d15a1e9cce1b692cdf519052fe967c0cff8a1a7444cf046a4ff6d",
+      "bytes": 147674,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 455,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80008003.s32",
+      "member": null,
+      "sha256": "4b7f942211a5489b0881b2939804d04509e5477390b224814fab5e89cdb14d04",
+      "bytes": 96880,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 456,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80018000.s32",
+      "member": null,
+      "sha256": "094c54ab9482114ae7b408efdc5286b16e6b053b954cfa517b520529c90004cd",
+      "bytes": 64739,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 457,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80018001.s32",
+      "member": null,
+      "sha256": "30006460cd7f0f58fb471835b06ce18b2f1e7236ed32a1b5b73f53d42b89da6c",
+      "bytes": 108742,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 458,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80018002.s32",
+      "member": null,
+      "sha256": "8e7df5d71f176e82ecfe0cac31e4e1c0a45099cf377af4d59081b2d27b0ed4c7",
+      "bytes": 98634,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 459,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\562\\80018003.s32",
+      "member": null,
+      "sha256": "0229adec378745b76748d0634747f317139f5e386243225aed2101e0c172437b",
+      "bytes": 50817,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 460,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffd8001.s32",
+      "member": null,
+      "sha256": "a0acca8eda529b09771883aa633f6b058a5c37807c783d2595ff6cb2327f1529",
+      "bytes": 98464,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 461,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffd8002.s32",
+      "member": null,
+      "sha256": "6b91dbd3c9a94c680a21fd3dd4385a53b1eccfdd5c007f20ef4b38bf4c73c288",
+      "bytes": 98339,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 462,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffd8003.s32",
+      "member": null,
+      "sha256": "dc35073365615b89b8e54670eebd83f2189ad08fba1c4a9f0a8c9ffe43cade2e",
+      "bytes": 52594,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 463,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffe8000.s32",
+      "member": null,
+      "sha256": "120af92e6ad8bd1720f642484565f4da7bea0b5ba0d92d66fa17042cbdf4c6c1",
+      "bytes": 63248,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 464,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffe8001.s32",
+      "member": null,
+      "sha256": "2df7857b88a0009da3a65ded5c1d4a6e9dbbef2af44729b6b589b0700988587e",
+      "bytes": 134091,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 465,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffe8002.s32",
+      "member": null,
+      "sha256": "6d7e57c4331c75206189708e15bf3b4cad6f57d5dd0606c0fb6b949ed1aeb934",
+      "bytes": 146465,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 466,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7ffe8003.s32",
+      "member": null,
+      "sha256": "aa88387f6fb6884591addba79a3957cabf548b7ca22a1061f2268a775b62ed99",
+      "bytes": 87104,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 467,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7fff8000.s32",
+      "member": null,
+      "sha256": "ac0779d472eca26bec001f2d8eac7c652b9dad4cb43f7630d7f66dc4e3cd6b3c",
+      "bytes": 86533,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 468,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7fff8001.s32",
+      "member": null,
+      "sha256": "a3250a5a1ba6fafa3f7c6f2a0eefa8fa7b3076cdaa1aada41351df1276acfe89",
+      "bytes": 163944,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 469,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7fff8002.s32",
+      "member": null,
+      "sha256": "e255876a40db276280dbaf344f401b4acc5360d437949a7d44f7d71318c9e6c3",
+      "bytes": 136086,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 470,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\7fff8003.s32",
+      "member": null,
+      "sha256": "0b051e09086aed3f699e1230aef0fd560e2f32aa904b60d7e923021e9d09f75b",
+      "bytes": 104350,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 471,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80008000.s32",
+      "member": null,
+      "sha256": "111f166482e249f93340ac67af82bdea1b42576a58fa61f3a96d1914f69609e7",
+      "bytes": 84335,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 472,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80008001.s32",
+      "member": null,
+      "sha256": "842dee4595713f1f265ce8f724dc36cac973cd4c31f8389101749f9a63942ab6",
+      "bytes": 147028,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 473,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80008002.s32",
+      "member": null,
+      "sha256": "ebc26033d13035cd0e7fda3871cc2d74648f2e521b0f68c100d89006bac464dc",
+      "bytes": 147674,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 474,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80008003.s32",
+      "member": null,
+      "sha256": "c6a0f07e6b9725d8528ad21f5c283bbc9f0bb4780721de69a4de36d4faaea13a",
+      "bytes": 96880,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 475,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80018000.s32",
+      "member": null,
+      "sha256": "094c54ab9482114ae7b408efdc5286b16e6b053b954cfa517b520529c90004cd",
+      "bytes": 64739,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 476,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80018001.s32",
+      "member": null,
+      "sha256": "30006460cd7f0f58fb471835b06ce18b2f1e7236ed32a1b5b73f53d42b89da6c",
+      "bytes": 108742,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 477,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80018002.s32",
+      "member": null,
+      "sha256": "8e7df5d71f176e82ecfe0cac31e4e1c0a45099cf377af4d59081b2d27b0ed4c7",
+      "bytes": 98634,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 478,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\563\\80018003.s32",
+      "member": null,
+      "sha256": "0229adec378745b76748d0634747f317139f5e386243225aed2101e0c172437b",
+      "bytes": 50817,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 479,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\564\\7fff8000.s32",
+      "member": null,
+      "sha256": "b68ee758f17448316c70ed5d49ad65eb6432af483f0591a5f8aa7987f9af6865",
+      "bytes": 128028,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 480,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\565\\7fff8000.s32",
+      "member": null,
+      "sha256": "d9795467f61bea5071efa8fe286cfe519bc48f4b871806d68c13c3fc70e96d29",
+      "bytes": 153601,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 481,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\565\\7fff8001.s32",
+      "member": null,
+      "sha256": "5892f291ed06197e561ca7481128f74c9435d752292c52df428e7a8908c25392",
+      "bytes": 140044,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 482,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\565\\80008000.s32",
+      "member": null,
+      "sha256": "3479226819b9c87e1df9b1456808fb27059be6a4cefb138dee2ea27f8764aabc",
+      "bytes": 140200,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 483,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\565\\80008001.s32",
+      "member": null,
+      "sha256": "40d53fc21474186d666ca753a10fd02524646b36779618c182fd10b491c596b3",
+      "bytes": 121212,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 484,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\566\\7ffe8000.s32",
+      "member": null,
+      "sha256": "89a662821b6bb6f677d3cdf06de896678bf0825a8df78cd099d937f6dd86eb89",
+      "bytes": 176546,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 485,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\566\\7ffe8001.s32",
+      "member": null,
+      "sha256": "1a79cb26a88b7431caef1521ab88694f3ea0796ab923b6e01049ea5c06d4dcbe",
+      "bytes": 155111,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 486,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\566\\7fff8000.s32",
+      "member": null,
+      "sha256": "2a9e2139fd4d66b5dafd7f0ff3eb2bc07651d703756ca7bceafe03dc3e4a50e1",
+      "bytes": 154683,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 487,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\566\\7fff8001.s32",
+      "member": null,
+      "sha256": "d4885bee8e7fc709ed201882396b99de55566ffbfceb6e8c929544fd0cf937f0",
+      "bytes": 138947,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 488,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\567\\7fff8000.s32",
+      "member": null,
+      "sha256": "068692ce3e5611a6f5a27c9c2e8d345eb553d9094c983e4e6c07bfec9afc6234",
+      "bytes": 108958,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 489,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\568\\7fff8000.s32",
+      "member": null,
+      "sha256": "cc47731cb743c8b82136ca7b6f84355481c5467e9b50542f4bb7e536648dc445",
+      "bytes": 104948,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 490,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\569\\7fff8000.s32",
+      "member": null,
+      "sha256": "348ce5eb4178152d8abf6e576136091be16a4ba0b032963fe3a6921e3d4d4390",
+      "bytes": 161557,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 491,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\569\\7fff8001.s32",
+      "member": null,
+      "sha256": "de904f74ab5775a9bb994b1140c6f129441754ab642617b20414e463f889678d",
+      "bytes": 171116,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 492,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\569\\80008000.s32",
+      "member": null,
+      "sha256": "3c59a5106c43db8f758126c5f2c9b2af0cd880c182e43cfaa7b4fb90627ee045",
+      "bytes": 154252,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 493,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\569\\80008001.s32",
+      "member": null,
+      "sha256": "d259c5bbe06c1fe5b2299a47436b74aab868e9a0722d7f8bd3bf334dedbc2b3a",
+      "bytes": 151927,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 494,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\570\\7ffe8000.s32",
+      "member": null,
+      "sha256": "2a1c267858a635eb9da9a35ed5fdf860d92ad42fc50aedfd6424fd4a1c3b2e07",
+      "bytes": 178387,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 495,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\570\\7ffe8001.s32",
+      "member": null,
+      "sha256": "113286a53b8b900b9212504c985685b077670d6c00885dcb1bc286962b4a0d8a",
+      "bytes": 154925,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 496,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\570\\7fff8000.s32",
+      "member": null,
+      "sha256": "b9d44146fb68122d34fb71597a8de4314a279aa60b48a45b3a0bc56efabf1786",
+      "bytes": 154795,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 497,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\570\\7fff8001.s32",
+      "member": null,
+      "sha256": "124ece1a7c72025f22f3463234743726d05f9fb4aecfe73095a0e1faf1af38b7",
+      "bytes": 139703,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 498,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\573\\7fff8000.s32",
+      "member": null,
+      "sha256": "d639f36de259777a0cbe42218ca0f0525ce0dd45a34d105cd167a09bfe7dece6",
+      "bytes": 170669,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 499,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\573\\7fff8001.s32",
+      "member": null,
+      "sha256": "e56ef3f495a3d6b1f032b04fd0365e19220fd68fd535312d6e6e14b169d128d7",
+      "bytes": 137997,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 500,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\573\\80008000.s32",
+      "member": null,
+      "sha256": "540d2949ebf740d4ce18d4b45eda584c84d939d4a224f52004065f71d1b412c8",
+      "bytes": 203622,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 501,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\573\\80008001.s32",
+      "member": null,
+      "sha256": "6f982cc1e1860f807b243a56c5c8c8dc292cce86ab8965fac727769785fe1e9e",
+      "bytes": 143235,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 502,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\574\\7fff8000.s32",
+      "member": null,
+      "sha256": "a161cef29697fd263c12521603544b210d3c6a9f05335280fa8d7c00558bd2b7",
+      "bytes": 168331,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 503,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\574\\7fff8001.s32",
+      "member": null,
+      "sha256": "c534c603e493730dda3a86dab3a89bd387e1a0e21a1bf4865d34a8268d8d2a63",
+      "bytes": 137997,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 504,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\574\\80008000.s32",
+      "member": null,
+      "sha256": "e33309fb9935134741f9ef465da99db28e71774c9eaeaf82277ad8800e037b16",
+      "bytes": 181992,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 505,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\574\\80008001.s32",
+      "member": null,
+      "sha256": "6f982cc1e1860f807b243a56c5c8c8dc292cce86ab8965fac727769785fe1e9e",
+      "bytes": 143235,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 506,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\16384\\80008000.s32",
+      "member": null,
+      "sha256": "19cc996f6879a6d708e7e5cfcdbee02df1657cd50a94ff59d36e414ce7e844f0",
+      "bytes": 59284,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 507,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\16896\\80008000.s32",
+      "member": null,
+      "sha256": "9c25b22ea7ddedf535c37a12683f524a6e70582cddf731fec603d54c86736857",
+      "bytes": 62728,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 508,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTmap\\17408\\80008000.s32",
+      "member": null,
+      "sha256": "5c0964b3f5777118680c0c766c9bd3bb1e766eb38f47b1175d6506c8d706ab6d",
+      "bytes": 56469,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 509,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ArenaPortalCatalog.java",
+      "member": null,
+      "sha256": "221e9b614b724f10a083f678a8a855098811c6942cf6864e3648e7264d0c1e2f",
+      "bytes": 8609,
+      "kind": "server-policy",
+      "version": "working-source"
+    },
+    {
+      "source_id": 510,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/BattleSpellCatalog.class",
+      "sha256": "2bd685d0320b2e3efee7f7ff12f05d79070078438558db2400bfeadb9630ff71",
+      "bytes": 80866,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60 / archived input after formal drift",
+      "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "restored_archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "restored_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "source_id": 511,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "battle/spr-action-tw13081901.csv",
+      "sha256": "781991acb930bb3f1d831bed003b343080661b4492c9941437f7d6fd4be4f2bc",
+      "bytes": 897992,
+      "kind": "generated-resource",
+      "version": "TW13081901 + LiTo LTlist.spr / archived input after formal drift",
+      "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "restored_archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "restored_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "source_id": 512,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\class_compat\\shared-effectlist2.decoded.xml",
+      "member": null,
+      "sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130",
+      "bytes": 92814,
+      "kind": "native-resource",
+      "version": "shared-TW13081901-effectlist2"
+    },
+    {
+      "source_id": 513,
+      "path": "D:\\lineage開發\\0-客戶端\\Tile.idx",
+      "member": null,
+      "sha256": "4c44333587bb76288a7080b8053061382755ea3d9fd339a6b83092fe0ec7088f",
+      "bytes": 151512,
+      "kind": "native-resource",
+      "version": "shared-TW13081901"
+    },
+    {
+      "source_id": 514,
+      "path": "D:\\lineage開發\\0-客戶端\\Tile.pak",
+      "member": null,
+      "sha256": "b58d179602b3acc4b1c8904ac03006ee75eefe60c00a61ca575f51d0e2275aa1",
+      "bytes": 589667772,
+      "kind": "native-resource",
+      "version": "shared-TW13081901"
+    },
+    {
+      "source_id": 515,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\docs\\maintenance\\dragon-presentation-0.6.48.json",
+      "member": null,
+      "sha256": "669f2176984cdb699aa8a0eb31b236143ec91a80a849939d837b73cb6083865d",
+      "bytes": 2441,
+      "kind": "runtime-adjusted",
+      "version": "0.6.48-retained-test"
+    },
+    {
+      "source_id": 516,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_skills.inc",
+      "member": null,
+      "sha256": "9110c8909d1d411c83d9ee2ee44346ad25358484016072d6d6e44e54a3d72fc3",
+      "bytes": 7352,
+      "kind": "client-extension",
+      "version": "working-source/0.6.51-contract"
+    },
+    {
+      "source_id": 517,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00291-LTzone-c.tbl",
+      "member": null,
+      "sha256": "7da1b04c1291a1220e1d8b1e30c3d8a578da65b78b61a70850187f2be0d0ad65",
+      "bytes": 125,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 518,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/NativeMapItemCatalog.class",
+      "sha256": "1a5d4f301c7cc344baa51b00754522173acb2371ffb5b5fbd6ae8249a2461bd3",
+      "bytes": 3456,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60 / archived input after formal drift",
+      "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "restored_archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "restored_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "source_id": 519,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "rental/retained-lito-rental-merchant-2010.tsv",
+      "sha256": "d1944b0b62c35f3abc59b8b10489ac90711db9010b1bb7b6f8275664b4bf0eb9",
+      "bytes": 7940,
+      "kind": "retained-server",
+      "version": "2010-L1J-compatibility / archived input after formal drift",
+      "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "restored_archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "restored_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "source_id": 520,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00176-LTdesc-c.tbl",
+      "member": null,
+      "sha256": "73243064a856fade75de110c5d25f6b1f19ed51c3ba7b1219bbe44ed7e84006b",
+      "bytes": 2053,
+      "kind": "native-resource",
+      "version": "LiTo-3.81C-selected/0.6.60"
+    },
+    {
+      "source_id": 521,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\extract_validate.py",
+      "member": null,
+      "sha256": "2eb54d09d997c7fa2f9f1561bde113d7d290228310781949684ad5ddfd61b80d",
+      "bytes": 38686,
+      "kind": "server-policy",
+      "version": "candidate-extraction-v1",
+      "previous_tool_sha256": "e3d5e493b2b76e40de4f60428aa61c259096601b90c2ee736b602da24510348e"
+    },
+    {
+      "source_id": 522,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "member": null,
+      "sha256": "12d76285cc907373a9cbb4d19c88add58ab997536e5238004321f83233b803c2",
+      "bytes": 35225,
+      "kind": "native-code",
+      "version": "retained-static-contract"
+    },
+    {
+      "source_id": 523,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "member": null,
+      "sha256": "04ebeca473ff0bd0fc6a0eedde36af8819ec2fe59f037d08367bf7ef38b36307",
+      "bytes": 23714,
+      "kind": "native-code",
+      "version": "retained-static-contract"
+    },
+    {
+      "source_id": 524,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "member": null,
+      "sha256": "45ebded431f925a0f38066702e67f0ad79e9139939d793e201a96eebd15e681f",
+      "bytes": 64567,
+      "kind": "native-code",
+      "version": "retained-static-contract"
+    },
+    {
+      "source_id": 525,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\resolve_baseline.py",
+      "member": null,
+      "sha256": "74a632d2fb74a87cae21b60e985faf3dafdadd6b0b9a10795dd3ed00e4d3f07d",
+      "bytes": 3898,
+      "kind": "server-policy",
+      "version": "exact-pinned-input resolver",
+      "stage": 2
+    },
+    {
+      "source_id": 526,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\enrich_stage2.py",
+      "member": null,
+      "sha256": "032dd64e608ce13cb2d25f7ee386a9d778254744fe1663574c9ad80cfc71f710",
+      "bytes": 38173,
+      "kind": "server-policy",
+      "version": "stage2-extraction-tool",
+      "stage": 2
+    },
+    {
+      "source_id": 527,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\ReadOnlyStage2.java",
+      "member": null,
+      "sha256": "98c60696af0b678d2d3bb2484815b2e8c621e4062c27fc65f1856795cbded21f",
+      "bytes": 9999,
+      "kind": "resource-derived",
+      "version": "pure reflection / SELECT helper",
+      "stage": 2
+    },
+    {
+      "source_id": 528,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pure-presentation-lito-legacy.json",
+      "member": null,
+      "sha256": "2e26b7d810669abda35567cc1e16664e1c220f4dfdd38d92114464a1d47081ae",
+      "bytes": 33181,
+      "kind": "resource-derived",
+      "version": "pure-functions/lito-legacy",
+      "stage": 2
+    },
+    {
+      "source_id": 529,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pure-presentation-tw13081901-v1.json",
+      "member": null,
+      "sha256": "b7a51d7a955042bee71449deb74cacfbcc31a2682d76e8d56cde8c5ae2dcf566",
+      "bytes": 33183,
+      "kind": "resource-derived",
+      "version": "pure-functions/tw13081901-v1",
+      "stage": 2
+    },
+    {
+      "source_id": 530,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/Protocol.class",
+      "sha256": "e76ade059ad61d5e95adfb3ffb6e65d098f669851c0c7c6753882c433e37c7da",
+      "bytes": 210440,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60",
+      "stage": 2
+    },
+    {
+      "source_id": 531,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/ClientSession.class",
+      "sha256": "64a4e735e2f3043a91ab6ff84ffe4aa7ed9abbe7ea82f3088ebd2272e0b74a55",
+      "bytes": 2626040,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60",
+      "stage": 2
+    },
+    {
+      "source_id": 532,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/SharedClientResources.class",
+      "sha256": "30ee07e57c92583169c48c53e7b100b888687dd9dff9f8adec46c51b39cb38fd",
+      "bytes": 5693,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60",
+      "stage": 2
+    },
+    {
+      "source_id": 533,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+      "member": null,
+      "sha256": "7f512b93b5bb54273515ed831a44ceea4ce570c77336b64a1ea06bc8a90de4f0",
+      "bytes": 419241,
+      "kind": "server-policy",
+      "version": "working-source; differs from deployed bytecode",
+      "stage": 2
+    },
+    {
+      "source_id": 534,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+      "member": null,
+      "sha256": "f3ac2d43f85025ce1dd40fcbb4df9f2445a8ba8fcd9a98276572373f8504eb20",
+      "bytes": 4825244,
+      "kind": "server-policy",
+      "version": "working-source; activation not inferred",
+      "stage": 2
+    },
+    {
+      "source_id": 535,
+      "path": "D:\\lineage開發\\0-客戶端\\TW13081901.txt",
+      "member": null,
+      "sha256": "7ebe2b464c8b1ea9c58ac985dd8ff4c823784d8231894262eddcd7691ca94008",
+      "bytes": 5974928,
+      "kind": "native-resource",
+      "version": "shared-TW13081901",
+      "stage": 2
+    },
+    {
+      "source_id": 536,
+      "path": "D:\\lineage開發\\0-客戶端\\Text.idx",
+      "member": null,
+      "sha256": "039f01b53ee2a1a470798444be78a106b63a8faa2dafe32a03c7069203675871",
+      "bytes": 1049920,
+      "kind": "native-resource",
+      "version": "Text selected-client archive",
+      "stage": 2
+    },
+    {
+      "source_id": 537,
+      "path": "D:\\lineage開發\\0-客戶端\\Text.pak",
+      "member": null,
+      "sha256": "19bfe9d44c55f697d55ca23292509aea56dbbc1f534427afc740522081b7448c",
+      "bytes": 26266994,
+      "kind": "native-resource",
+      "version": "Text selected-client archive",
+      "stage": 2
+    },
+    {
+      "source_id": 538,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Text.decoded.idx",
+      "member": null,
+      "sha256": "73f747feae5eed4a2bda78ab033d34f07b1fc3acae6e526176488e40ae7e7d43",
+      "bytes": 1049892,
+      "kind": "resource-derived",
+      "version": "existing-pinned-index",
+      "stage": 2
+    },
+    {
+      "source_id": 539,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\Text\\row15937-list.spr",
+      "member": null,
+      "sha256": "523c61ad5cc362a56a36f58b262c84efa8b4435f017e7074d35b5834e8b9f127",
+      "bytes": 4067417,
+      "kind": "native-resource",
+      "version": "Text decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 540,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00240-LTlist.spr",
+      "member": null,
+      "sha256": "f55779aeb5c3982d8b366068cdbe4003d802619074e54388f26ee87368f42603",
+      "bytes": 39135,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 541,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "member": null,
+      "sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9",
+      "bytes": 7094272,
+      "kind": "native-code",
+      "version": "selected-unpacked-PE; VA mapping",
+      "stage": 2
+    },
+    {
+      "source_id": 542,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "member": null,
+      "sha256": "2a3a6e1026ee65288c07eff00990bdddbefa5acec9eed551f528a0cc0a7dea9a",
+      "bytes": 41179755,
+      "kind": "native-code",
+      "version": "selected-unpacked-ASM",
+      "stage": 2
+    },
+    {
+      "source_id": 543,
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\dragon_status.inc",
+      "member": null,
+      "sha256": "6e4bbf450fe7c7552665a1c10f2cfb69b706f44d1da949d5d4391e8b9f72b8b8",
+      "bytes": 7652,
+      "kind": "client-extension",
+      "version": "0.6.50 retained source / current file",
+      "stage": 2
+    },
+    {
+      "source_id": 544,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/IllusionStatusIcons.class",
+      "sha256": "a2e2f0ba341b5c108b3d79159e70ab6aad28bfab21ddf37bb7db1aff05b815f9",
+      "bytes": 5139,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60",
+      "stage": 2
+    },
+    {
+      "source_id": 545,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\docs\\maintenance\\illusion-presentation-0.6.50.json",
+      "member": null,
+      "sha256": "cee85efeab962c4563e5e414d7af7c100c7e1424c159a104c5aceafd3fa7ac81",
+      "bytes": 5715,
+      "kind": "runtime-adjusted",
+      "version": "retained-0.6.50-fixture",
+      "stage": 2
+    },
+    {
+      "source_id": 546,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite03.idx",
+      "member": null,
+      "sha256": "e567386258f5fc3660088f056d45dd528722979cfde0e5910185f4f2f8b28e89",
+      "bytes": 289272,
+      "kind": "native-resource",
+      "version": "Sprite03 index",
+      "stage": 2
+    },
+    {
+      "source_id": 547,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite03.pak",
+      "member": null,
+      "sha256": "6d32eeffa19004af3fc46f017528b222422f02cdc706e8e82366b244d91436d9",
+      "bytes": 420778348,
+      "kind": "native-resource",
+      "version": "Sprite03 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 548,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite01.idx",
+      "member": null,
+      "sha256": "93893c98801e5d22c08478725a37e7605d38d6d56ef0776a9ac9104e9c0335ec",
+      "bytes": 283084,
+      "kind": "native-resource",
+      "version": "Sprite01 index",
+      "stage": 2
+    },
+    {
+      "source_id": 549,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite01.pak",
+      "member": null,
+      "sha256": "751a799439995923952adfbf3d19d26f1b9624cb8f11eedaf235cf53177ccead",
+      "bytes": 421029739,
+      "kind": "native-resource",
+      "version": "Sprite01 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 550,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite04.idx",
+      "member": null,
+      "sha256": "f8553a30fc988f2b5cf2f6055653b2676a2e2b7f9b6d244a5fd1e2dd8e3e3811",
+      "bytes": 292744,
+      "kind": "native-resource",
+      "version": "Sprite04 index",
+      "stage": 2
+    },
+    {
+      "source_id": 551,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite04.pak",
+      "member": null,
+      "sha256": "d32c3e55a26118ad9b91b1e325f6ce64ef7a45eeb325223acaec9ebe57d40167",
+      "bytes": 394671128,
+      "kind": "native-resource",
+      "version": "Sprite04 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 552,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite11.idx",
+      "member": null,
+      "sha256": "336714d435d878e1a362b608d84399420707c46e90876a5ac9f28b1446c62600",
+      "bytes": 294284,
+      "kind": "native-resource",
+      "version": "Sprite11 index",
+      "stage": 2
+    },
+    {
+      "source_id": 553,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite11.pak",
+      "member": null,
+      "sha256": "344817dd99ef8006ccaef981bd20aa6c5318fdca79f6270cce04d875299ce75f",
+      "bytes": 406526850,
+      "kind": "native-resource",
+      "version": "Sprite11 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 554,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite02.idx",
+      "member": null,
+      "sha256": "fbf7f48481578c3e54e43cb02fa0ec98f522d7443f56c627ffe07f0fd0ea25ba",
+      "bytes": 285716,
+      "kind": "native-resource",
+      "version": "Sprite02 index",
+      "stage": 2
+    },
+    {
+      "source_id": 555,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite02.pak",
+      "member": null,
+      "sha256": "1ff26d6308bef9b5487e46f561c6235f41be0b534d09374341e6e46a3545efcd",
+      "bytes": 411983777,
+      "kind": "native-resource",
+      "version": "Sprite02 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 556,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite05.idx",
+      "member": null,
+      "sha256": "3935772e190d955a1233c0e8385b67b975880d8cade87c69fc9f2f2409b1615a",
+      "bytes": 295264,
+      "kind": "native-resource",
+      "version": "Sprite05 index",
+      "stage": 2
+    },
+    {
+      "source_id": 557,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite05.pak",
+      "member": null,
+      "sha256": "ad6c017fdd53319eb7f421c8c1b41e8e6bf1bc2d52ba62ad098c5ca82e203ff8",
+      "bytes": 369362085,
+      "kind": "native-resource",
+      "version": "Sprite05 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 558,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite00.idx",
+      "member": null,
+      "sha256": "42cb9f5ab9d7fbfa4fd961c38ee0a3634b84c9ac4e2fdff36676996f4937b9b5",
+      "bytes": 282272,
+      "kind": "native-resource",
+      "version": "Sprite00 index",
+      "stage": 2
+    },
+    {
+      "source_id": 559,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite00.pak",
+      "member": null,
+      "sha256": "1237202df0a661e1e0c1c54769e8e86dce52c862db2eba47931734e0e63319de",
+      "bytes": 449414105,
+      "kind": "native-resource",
+      "version": "Sprite00 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 560,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite06.idx",
+      "member": null,
+      "sha256": "3abbee13d2dbee606ec2963a83d4530a9a97c24d5d414910059224a124c21ea9",
+      "bytes": 298820,
+      "kind": "native-resource",
+      "version": "Sprite06 index",
+      "stage": 2
+    },
+    {
+      "source_id": 561,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite06.pak",
+      "member": null,
+      "sha256": "d68e79c4135bfc5cd5627be5ad2cf5adebc13d56f2fd0a29afdb6205c31b0605",
+      "bytes": 398125733,
+      "kind": "native-resource",
+      "version": "Sprite06 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 562,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite14.idx",
+      "member": null,
+      "sha256": "9a3630edb66e894162ff7ac87f7f9a8664104487dddd15cb6707b2e6dc37751d",
+      "bytes": 282804,
+      "kind": "native-resource",
+      "version": "Sprite14 index",
+      "stage": 2
+    },
+    {
+      "source_id": 563,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite14.pak",
+      "member": null,
+      "sha256": "db3acf207b8e986836aa3ca62f32a06cf78dd66f2683ccf27c434609d01cedbc",
+      "bytes": 441571809,
+      "kind": "native-resource",
+      "version": "Sprite14 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 564,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite09.idx",
+      "member": null,
+      "sha256": "bb69b91211a2b6f5ab7dacf33cf71d98298b30d6325543d8891b1d571c3d39ff",
+      "bytes": 301256,
+      "kind": "native-resource",
+      "version": "Sprite09 index",
+      "stage": 2
+    },
+    {
+      "source_id": 565,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+      "member": null,
+      "sha256": "1f2d35c6d7b60dba151cd6f2cce46d3573f533d814cd2910a10fa296f5cea9d7",
+      "bytes": 407758144,
+      "kind": "native-resource",
+      "version": "Sprite09 archive",
+      "stage": 2
+    },
+    {
+      "source_id": 566,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+      "member": null,
+      "sha256": "c699ccf22c5f59eb37e8936d939d2632c15ac381980a6fe3f26f2565185193bf",
+      "bytes": 45448,
+      "kind": "native-resource",
+      "version": "LTsurf index",
+      "stage": 2
+    },
+    {
+      "source_id": 567,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+      "member": null,
+      "sha256": "42e676c255b248c295a71097a53b1b67bf73a0c2c3dc0fe11d12bdb9ee79621e",
+      "bytes": 92788879,
+      "kind": "native-resource",
+      "version": "LTsurf archive",
+      "stage": 2
+    },
+    {
+      "source_id": 568,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\configuration-reference-select.json",
+      "member": null,
+      "sha256": "ea2fcbe3febe43620e3b412a045faeb8a806b89446c056d1951a5757d246df30",
+      "bytes": 80291,
+      "kind": "shared-db",
+      "version": "SELECT-snapshot-2026-10-14",
+      "stage": 2
+    },
+    {
+      "source_id": 569,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.idx",
+      "member": null,
+      "sha256": "2ea2e48a61c246a5d4cb2820c4c3431f487705c67459290a998d9dbe9017baa7",
+      "bytes": 6360,
+      "kind": "native-resource",
+      "version": "LTicon index",
+      "stage": 2
+    },
+    {
+      "source_id": 570,
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.pak",
+      "member": null,
+      "sha256": "52fec7b547b63b75be1178d66e4c0e17ea5b48f089b47e1836edd120c79c015d",
+      "bytes": 274258,
+      "kind": "native-resource",
+      "version": "LTicon archive",
+      "stage": 2
+    },
+    {
+      "source_id": 571,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\enrich_remaining.py",
+      "member": null,
+      "sha256": "4d66b0fb6b81786f4d492fca7d72f126e864438fdbe2440ddb850222073c90cb",
+      "bytes": 28592,
+      "kind": "server-policy",
+      "version": "remaining-domain-extraction/2026-10-14",
+      "stage": 2
+    },
+    {
+      "source_id": 572,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\consolidate_sql.py",
+      "member": null,
+      "sha256": "af58352b5cc3e1b852f13905c686c244c4bc683358934679c9f01807b1b8085f",
+      "bytes": 9128,
+      "kind": "server-policy",
+      "version": "candidate-schema-consolidation",
+      "stage": 2
+    },
+    {
+      "source_id": 573,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+      "member": null,
+      "sha256": "327c06372d87f6cf6d5176da51da5ef1f94dbf388d1588b735c5965b96b6a52b",
+      "bytes": 2585972,
+      "kind": "native-resource",
+      "version": "Sprite index",
+      "stage": 2
+    },
+    {
+      "source_id": 574,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+      "member": null,
+      "sha256": "4dd4e5348fbad2e69bae9cc388be23d7becebe8423ad9f79f393c1457a69ee62",
+      "bytes": 1904012586,
+      "kind": "native-resource",
+      "version": "Sprite archive",
+      "stage": 2
+    },
+    {
+      "source_id": 575,
+      "path": "D:\\lineage開發\\1-伺服器\\db\\380_lito.sql",
+      "member": null,
+      "sha256": "262460f3ca09abd5b58f3c6a4b5ac13bcf5704d67dbe8535e43540cf50515ef8",
+      "bytes": 57600,
+      "kind": "retained-server",
+      "version": "other-server/current shared reference; not native LiTo original",
+      "stage": 2
+    },
+    {
+      "source_id": 576,
+      "path": "D:\\lineage開發\\1-伺服器\\db\\380_db.sql",
+      "member": null,
+      "sha256": "90f864fe08e8a48ad80a64080aaf7a20a42fad15532c841a100711f38831862a",
+      "bytes": 9547139,
+      "kind": "shared-db",
+      "version": "other-server/current shared reference; not native LiTo original",
+      "stage": 2
+    },
+    {
+      "source_id": 577,
+      "path": "D:\\lineage開發\\1-伺服器\\docs\\icon狀態圖示.md",
+      "member": null,
+      "sha256": "348eeded94d212e4b756d22151cdd1370c9cbc3b1b730f8a4c782d0ddad23244",
+      "bytes": 43989,
+      "kind": "retained-server",
+      "version": "other-server/current shared reference; not native LiTo original",
+      "stage": 2
+    },
+    {
+      "source_id": 578,
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "member": "local/lito381/server/NativeLitoRentalTownNpcCatalog.class",
+      "sha256": "c4252ce09114bc4bf18402449ae263cea4d182777b8aabd0a0bcebadade47236",
+      "bytes": 9343,
+      "kind": "server-policy",
+      "version": "deployed-0.6.60",
+      "stage": 2
+    },
+    {
+      "source_id": 579,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00322-Phan_Start-c.html",
+      "member": null,
+      "sha256": "be1c9432fdf4a6544bf8930126d795baae497d413afd4a44cf1a6ef7d6222ec4",
+      "bytes": 405,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 580,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00315-Phan_End_k-c.html",
+      "member": null,
+      "sha256": "584d6b861517542d83001fefa13a757c060f15576b57584b167f43edff1fc5c4",
+      "bytes": 305,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 581,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00335-Soul_Start-c.html",
+      "member": null,
+      "sha256": "30c7c69a2b78da3262a83b438e6207f95d3e1af7fe42945098d6acd3661cf395",
+      "bytes": 286,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 582,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00330-Soul_End-c.html",
+      "member": null,
+      "sha256": "ecce46b983062b66c02f539e0ca43572eb59799466cf1ed6117d260ebfa04121",
+      "bytes": 220,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 583,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00301-Maya_Start-c.html",
+      "member": null,
+      "sha256": "ee26bea164baa1f4a7c84ed3de29af169100b1b99ee100533ffb2c8405a5756f",
+      "bytes": 562,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 584,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00297-Maya_End-c.html",
+      "member": null,
+      "sha256": "c6544033f6e0a244845166e46e838e693e4f4cdd4012ad7c04ce07f8bb02b6c7",
+      "bytes": 301,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 585,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00054-Ezee_Start-c.html",
+      "member": null,
+      "sha256": "674cb0da4ecda953b33d8cde888e03b4566c32d8ce7b33107b1d0b9db95d5e2b",
+      "bytes": 442,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 586,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00050-Ezee_End-c.html",
+      "member": null,
+      "sha256": "b2f9fac8a02ee4b5f9f1ccd19a9a235183fabe3b7b69364aea12562f8295b82d",
+      "bytes": 363,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 587,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00010-Aria_Start-c.html",
+      "member": null,
+      "sha256": "29082b4f5ecc102be34955de5cd2ee3563f0d40cf8caa92d4cc94ca03e6b7d0f",
+      "bytes": 433,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 588,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00004-Aria_End-c.html",
+      "member": null,
+      "sha256": "0070438113818817c97863c88d54c040749664f3e6236ddd4b5840210b99e705",
+      "bytes": 365,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 589,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00310-Paper_start-c.html",
+      "member": null,
+      "sha256": "66a148ee590ee87a8e439e21db6a623f71b73644fc3a50fca3e919abaa7e48ee",
+      "bytes": 365,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 590,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00034-Click_Start-c.html",
+      "member": null,
+      "sha256": "6d4a84cbfe96e8cefbf12ce7362c4bc05c0ab9b6c8e7897109c8a86afbd8dab8",
+      "bytes": 337,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 591,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00154-Love_Start-c.html",
+      "member": null,
+      "sha256": "0f9474a07c2cc15b067305f459c7b7d08a19d0307d13bdb40213ade955a45a43",
+      "bytes": 339,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 592,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00066-inn-c.html",
+      "member": null,
+      "sha256": "641e3946cb69fa90cea1840d961084d9680f57b89b313c8530b1997ef6af6975",
+      "bytes": 271,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 593,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00343-TeleportMe-c.html",
+      "member": null,
+      "sha256": "9411d45b8157f36871c2fa6048493acdf1e8c94559b5ee305e30da01f457383f",
+      "bytes": 323,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 594,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00306-NoRent-c.html",
+      "member": null,
+      "sha256": "8b3c8e38b5e2a17e44e6a3ff74fdcec1c5df6e0e887fa468020b6acf5d6449b5",
+      "bytes": 80,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 595,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00345-TeleportMe_C-c.html",
+      "member": null,
+      "sha256": "83cf9c4d503880ba1a4c49a56b0f6c1e1bf771819bcea81311be5e037ffacb00",
+      "bytes": 348,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    },
+    {
+      "source_id": 596,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00347-TeleportMe_L-c.html",
+      "member": null,
+      "sha256": "43a75e5118a68884fd140fcd9ac2b4ccdc1d39d08715a3918a134c41614637fc",
+      "bytes": 217,
+      "kind": "native-resource",
+      "version": "LTtext decrypted selected-client resource",
+      "stage": 2
+    }
+  ]
+}

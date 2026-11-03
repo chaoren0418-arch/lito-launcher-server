@@ -1,0 +1,32 @@
+[
+  {
+    "bridge": "LiToItemGridBridge",
+    "handled": false,
+    "registers_stack_and_native_continuation": true
+  },
+  {
+    "bridge": "LiToItemGridBridge",
+    "handled": true,
+    "registers_stack_and_native_continuation": true
+  },
+  {
+    "bridge": "LiToItemFixedBridge",
+    "handled": false,
+    "registers_stack_and_native_continuation": true
+  },
+  {
+    "bridge": "LiToItemFixedBridge",
+    "handled": true,
+    "registers_stack_and_native_continuation": true
+  },
+  {
+    "bridge": "LiToItemEquipmentBridge",
+    "handled": false,
+    "registers_stack_and_native_continuation": true
+  },
+  {
+    "bridge": "LiToItemEquipmentBridge",
+    "handled": true,
+    "registers_stack_and_native_continuation": true
+  }
+]

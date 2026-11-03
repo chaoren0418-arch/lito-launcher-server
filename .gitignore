@@ -1,0 +1,83 @@
+﻿# ===== 不屬於本 repo =====
+lito重建版/
+lito-dev-runtime/
+監製工作流/
+LITO-監製索引.json
+launcher-cleanup-before.json
+專案路徑.json
+
+# ===== 巨型狀態檔（停用） =====
+工作佇列.json
+監製進度.json
+工作流交接.json
+工作流驗證.json
+**/工作流採證/
+
+# ===== 登入器 =====
+lito登入器/LiTo381-Launcher/backups/
+lito登入器/LiTo381-Launcher/release/
+lito登入器/LiTo381-Launcher/runtime/
+lito登入器/舊版分析與驗收/
+lito登入器/docs/history/*.zip
+
+# ===== 伺服器 =====
+lito伺服器/LiTo381-Server/backups/
+lito伺服器/LiTo381-Server/runtime/
+lito伺服器/LiTo381-Server/loginfo/
+lito伺服器/LiTo381-Server/deployment/
+lito伺服器/LiTo381-Server/lib/
+lito伺服器/LiTo381-Server/db/**/*.sql.gz
+lito伺服器/LiTo381-Server/hs_err_pid*.log
+lito伺服器/LiTo381-Server/replay_pid*.log
+lito伺服器/LiTo381-Server/tools/**/build/
+lito伺服器/LiTo381-Server-publish/
+
+# ===== 脫殼資源：只追蹤腳本與文件 =====
+lito脫殼資源/resources/
+lito脫殼資源/runtime/
+lito脫殼資源/embedded/
+lito脫殼資源/sealed-batch3/
+lito脫殼資源/artifact-manifest.json
+lito脫殼資源/handoff.json
+lito脫殼資源/priority-*.json
+
+# ===== 建置產物 =====
+**/bin/
+**/obj/
+**/target/
+**/.vs/
+**/__pycache__/
+*.user
+*.suo
+*.pyc
+*.class
+
+# ===== 暫存 =====
+scratch/
+tmp/
+*.log
+*.tmp
+*.dmp
+
+# ===== 二進位 =====
+*.exe
+*.dll
+*.pdb
+*.jar
+*.pak
+*.idx
+*.spr
+*.til
+*.zip
+*.7z
+*.rar
+*.zst
+*.sqlite
+
+# ===== OS / IDE =====
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+.cursor/*
+!.cursor/rules/

@@ -1,0 +1,437 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+    "bytes": 17805,
+    "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+  },
+  "captured_content_sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+    "bytes": 17805,
+    "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:17:30.850433+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      10,
+      27
+    ],
+    [
+      28,
+      78
+    ],
+    [
+      79,
+      92
+    ],
+    [
+      133,
+      149
+    ]
+  ],
+  "line_count": 439,
+  "implementation_lines": [
+    {
+      "line": 10,
+      "text": "enum Route {"
+    },
+    {
+      "line": 11,
+      "text": "    Pick,"
+    },
+    {
+      "line": 12,
+      "text": "    Profile(PathBuf),"
+    },
+    {
+      "line": 13,
+      "text": "    ProbeProfile(PathBuf),"
+    },
+    {
+      "line": 14,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 15,
+      "text": "    CanonicalProfile(PathBuf),"
+    },
+    {
+      "line": 16,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 17,
+      "text": "    TargetHasteProfile(PathBuf),"
+    },
+    {
+      "line": 18,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 19,
+      "text": "    CooperativeHasteProfile(PathBuf),"
+    },
+    {
+      "line": 20,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 21,
+      "text": "    SlowProfile(PathBuf),"
+    },
+    {
+      "line": 22,
+      "text": "    Help,"
+    },
+    {
+      "line": 23,
+      "text": "    Version,"
+    },
+    {
+      "line": 24,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 25,
+      "text": "    Preview,"
+    },
+    {
+      "line": 26,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 27,
+      "text": "    Scene,"
+    },
+    {
+      "line": 28,
+      "text": "}"
+    },
+    {
+      "line": 29,
+      "text": "fn route(args: &[OsString]) -> Result<Route> {"
+    },
+    {
+      "line": 30,
+      "text": "    match args.get(1).map(OsString::as_os_str) {"
+    },
+    {
+      "line": 31,
+      "text": "        None => Ok(Route::Pick),"
+    },
+    {
+      "line": 32,
+      "text": "        Some(x) if x == OsStr::new(\"--help\") && args.len() == 2 => Ok(Route::Help),"
+    },
+    {
+      "line": 33,
+      "text": "        Some(x) if x == OsStr::new(\"--version\") && args.len() == 2 => Ok(Route::Version),"
+    },
+    {
+      "line": 34,
+      "text": "        Some(x) if x == OsStr::new(\"--probe-profile\") && args.len() == 3 => {"
+    },
+    {
+      "line": 35,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 36,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 37,
+      "text": "            Ok(Route::ProbeProfile(path))"
+    },
+    {
+      "line": 38,
+      "text": "        }"
+    },
+    {
+      "line": 39,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 40,
+      "text": "        Some(x) if x == OsStr::new(\"--lito-preview\") => Ok(Route::Preview),"
+    },
+    {
+      "line": 41,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 42,
+      "text": "        Some(x) if x == OsStr::new(\"--lito-scene\") => Ok(Route::Scene),"
+    },
+    {
+      "line": 43,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 44,
+      "text": "        Some(x) if x == OsStr::new(\"--canonical-profile\") && args.len() == 3 => {"
+    },
+    {
+      "line": 45,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 46,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 47,
+      "text": "            Ok(Route::CanonicalProfile(path))"
+    },
+    {
+      "line": 48,
+      "text": "        }"
+    },
+    {
+      "line": 49,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 50,
+      "text": "        Some(x) if x == OsStr::new(\"--target-haste-profile\") && args.len() == 3 => {"
+    },
+    {
+      "line": 51,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 52,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 53,
+      "text": "            Ok(Route::TargetHasteProfile(path))"
+    },
+    {
+      "line": 54,
+      "text": "        }"
+    },
+    {
+      "line": 55,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 56,
+      "text": "        Some(x) if x == OsStr::new(\"--cooperative-haste-profile\") && args.len() == 3 => {"
+    },
+    {
+      "line": 57,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 58,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 59,
+      "text": "            Ok(Route::CooperativeHasteProfile(path))"
+    },
+    {
+      "line": 60,
+      "text": "        }"
+    },
+    {
+      "line": 61,
+      "text": "        #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 62,
+      "text": "        Some(x) if x == OsStr::new(\"--slow-profile\") && args.len() == 3 => {"
+    },
+    {
+      "line": 63,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 64,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 65,
+      "text": "            Ok(Route::SlowProfile(path))"
+    },
+    {
+      "line": 66,
+      "text": "        }"
+    },
+    {
+      "line": 67,
+      "text": "        Some(x)"
+    },
+    {
+      "line": 68,
+      "text": "            if (x == OsStr::new(\"--lito\") || x == OsStr::new(\"--profile\")) && args.len() == 3 =>"
+    },
+    {
+      "line": 69,
+      "text": "        {"
+    },
+    {
+      "line": 70,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 71,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 72,
+      "text": "            Ok(Route::Profile(path))"
+    },
+    {
+      "line": 73,
+      "text": "        }"
+    },
+    {
+      "line": 74,
+      "text": "        _ => anyhow::bail!("
+    },
+    {
+      "line": 75,
+      "text": "            \"僅支援 LiToModern.exe [--profile <設定檔絕對路徑>]；TW 請使用獨立 LHZ 登入器\""
+    },
+    {
+      "line": 76,
+      "text": "        ),"
+    },
+    {
+      "line": 77,
+      "text": "    }"
+    },
+    {
+      "line": 78,
+      "text": "}"
+    },
+    {
+      "line": 79,
+      "text": "fn run() -> Result<i32> {"
+    },
+    {
+      "line": 80,
+      "text": "    let args = std::env::args_os().collect::<Vec<_>>();"
+    },
+    {
+      "line": 81,
+      "text": "    let selected = match route(&args)? {"
+    },
+    {
+      "line": 82,
+      "text": "        Route::Version => {"
+    },
+    {
+      "line": 83,
+      "text": "            // A read-only, bounded diagnostic: no profile selection, resources,"
+    },
+    {
+      "line": 84,
+      "text": "            // credentials, network, settings writes or native windows."
+    },
+    {
+      "line": 85,
+      "text": "            println!(\"{}\", version_document());"
+    },
+    {
+      "line": 86,
+      "text": "            return Ok(0);"
+    },
+    {
+      "line": 87,
+      "text": "        }"
+    },
+    {
+      "line": 88,
+      "text": "        Route::ProbeProfile(path) => {"
+    },
+    {
+      "line": 89,
+      "text": "            let report = modern_lito::session::profile_probe::run(&path);"
+    },
+    {
+      "line": 90,
+      "text": "            let code = if report[\"success\"] == true { 0 } else { 2 };"
+    },
+    {
+      "line": 91,
+      "text": "            println!(\"{report}\");"
+    },
+    {
+      "line": 92,
+      "text": "            return Ok(code);"
+    },
+    {
+      "line": 133,
+      "text": "        Route::Pick => modern_lito::choose_profile_path()?,"
+    },
+    {
+      "line": 134,
+      "text": "        Route::Profile(path) => Some(path),"
+    },
+    {
+      "line": 135,
+      "text": "        Route::Help => {"
+    },
+    {
+      "line": 136,
+      "text": "            message(\"直接開啟會選擇 LiTo 設定檔。亦可使用 --profile <絕對路徑>。\\n設定格式決定協定：schema1 沿用 v37；schema2 必須明確選用 modern_v47，並連線至相容伺服器。\\n--version 提供不連線的版本資訊。\\n--probe-profile <絕對路徑> 檢查 TLS／協定後關閉，不登入、不查資料庫或資源；輸出 JSON，成功 exit 0，失敗 exit 2。\\n此程式不啟動 TW、原生 LiTo.bin 或 LHZ。\", false);"
+    },
+    {
+      "line": 137,
+      "text": "            None"
+    },
+    {
+      "line": 138,
+      "text": "        }"
+    },
+    {
+      "line": 139,
+      "text": "    };"
+    },
+    {
+      "line": 140,
+      "text": "    if let Some(path) = selected {"
+    },
+    {
+      "line": 141,
+      "text": "        let profile = ModernProfile::load(&path)?;"
+    },
+    {
+      "line": 142,
+      "text": "        // The validated profile selects the contract in Debug and Release."
+    },
+    {
+      "line": 143,
+      "text": "        // Old schema1 stays on v37; schema2 is an explicit, non-fallback v47."
+    },
+    {
+      "line": 144,
+      "text": "        let controller = modern_lito::session::SessionController::new(profile.clone());"
+    },
+    {
+      "line": 145,
+      "text": "        modern_lito::login_window::run(&profile, Box::new(controller))?;"
+    },
+    {
+      "line": 146,
+      "text": "    }"
+    },
+    {
+      "line": 147,
+      "text": "    Ok(0)"
+    },
+    {
+      "line": 148,
+      "text": "}"
+    },
+    {
+      "line": 149,
+      "text": "fn version_document() -> serde_json::Value {"
+    }
+  ]
+}

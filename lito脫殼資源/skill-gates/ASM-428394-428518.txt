@@ -1,0 +1,125 @@
+428394: sub_4CD050 proc near                    ; CODE XREF: sub_4C9220+36↑p
+428395: 
+428396: var_10= dword ptr -10h
+428397: var_C= dword ptr -0Ch
+428398: var_4= dword ptr -4
+428399: arg_0= dword ptr  8
+428400: arg_4= dword ptr  0Ch
+428401: arg_8= dword ptr  10h
+428402: 
+428403: push    ebp
+428404: mov     ebp, esp
+428405: push    0FFFFFFFFh
+428406: push    offset byte_4F5CDB
+428407: mov     eax, large fs:0
+428408: push    eax
+428409: mov     large fs:0, esp
+428410: push    ecx
+428411: mov     al, byte_75F694
+428412: push    ebx
+428413: cmp     al, 2
+428414: push    esi
+428415: mov     ebx, ecx
+428416: mov     [ebp+var_10], 50h ; 'P'
+428417: jnz     short loc_4CD086
+428418: 
+428419: mov     [ebp+var_10], 63h ; 'c'
+428420: jmp     short loc_4CD09E
+428421: 
+428422: ; ---------------------------------------------------------------------------
+428423: 
+428424: loc_4CD086:                             ; CODE XREF: sub_4CD050+2B↑j
+428425: test    al, al
+428426: jnz     short loc_4CD093
+428427: 
+428428: mov     [ebp+var_10], 38h ; '8'
+428429: jmp     short loc_4CD09E
+428430: 
+428431: ; ---------------------------------------------------------------------------
+428432: 
+428433: loc_4CD093:                             ; CODE XREF: sub_4CD050+38↑j
+428434: cmp     al, 4
+428435: jnz     short loc_4CD09E
+428436: 
+428437: mov     [ebp+var_10], 28h ; '('
+428438: 
+428439: 
+428440: loc_4CD09E:                             ; CODE XREF: sub_4CD050+34↑j
+428441:                                         ; sub_4CD050+41↑j
+428442:                                         ; sub_4CD050+45↑j
+428443: mov     eax, [ebp+var_10]
+428444: xor     esi, esi
+428445: test    eax, eax
+428446: jle     short loc_4CD107
+428447: 
+428448: push    edi
+428449: mov     edi, [ebp+arg_4]
+428450: 
+428451: 
+428452: loc_4CD0AB:                             ; CODE XREF: sub_4CD050+B4↓j
+428453: mov     eax, off_635B80
+428454: cmp     [eax+esi*4], edi
+428455: jnz     short loc_4CD0FE
+428456: 
+428457: mov     ecx, [ebx+58h]
+428458: mov     ecx, [ecx+esi*4]
+428459: test    ecx, ecx
+428460: jz      short loc_4CD0C5
+428461: 
+428462: mov     edx, [ecx]
+428463: push    1
+428464: call    dword ptr [edx]
+428465: 
+428466: 
+428467: loc_4CD0C5:                             ; CODE XREF: sub_4CD050+6D↑j
+428468: push    70h ; 'p'
+428469: call    sub_4F118C
+428470: 
+428471: ; ---------------------------------------------------------------------------
+428472: add     esp, 4
+428473: mov     [ebp+arg_4], eax
+428474: test    eax, eax
+428475: mov     [ebp+var_4], 0
+428476: jz      short loc_4CD0EF
+428477: 
+428478: mov     ecx, [ebp+arg_8]
+428479: mov     edx, [ebp+arg_0]
+428480: push    ecx
+428481: push    edi
+428482: push    edx
+428483: mov     ecx, eax
+428484: call    sub_4C8DE0
+428485: 
+428486: jmp     short loc_4CD0F1
+428487: 
+428488: ; ---------------------------------------------------------------------------
+428489: 
+428490: loc_4CD0EF:                             ; CODE XREF: sub_4CD050+8B↑j
+428491: xor     eax, eax
+428492: 
+428493: 
+428494: loc_4CD0F1:                             ; CODE XREF: sub_4CD050+9D↑j
+428495: mov     ecx, [ebx+58h]
+428496: mov     [ebp+var_4], 0FFFFFFFFh
+428497: mov     [ecx+esi*4], eax
+428498: 
+428499: 
+428500: loc_4CD0FE:                             ; CODE XREF: sub_4CD050+63↑j
+428501: mov     eax, [ebp+var_10]
+428502: inc     esi
+428503: cmp     esi, eax
+428504: jl      short loc_4CD0AB
+428505: 
+428506: pop     edi
+428507: 
+428508: 
+428509: loc_4CD107:                             ; CODE XREF: sub_4CD050+55↑j
+428510: mov     ecx, [ebp+var_C]
+428511: pop     esi
+428512: pop     ebx
+428513: mov     large fs:0, ecx
+428514: mov     esp, ebp
+428515: pop     ebp
+428516: retn    0Ch
+428517: 
+428518: sub_4CD050 endp

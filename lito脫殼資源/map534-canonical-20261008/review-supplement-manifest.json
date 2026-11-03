@@ -1,0 +1,17 @@
+{
+  "published_delivery_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\delivery-manifest.json",
+    "bytes": 2230,
+    "sha256": "87608B529EB5EF83EB4D3CBF500E0E6ABE5DA80EB0D9A2D986786A73AEA28ACD"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-canonical-20261008\\independent-review.json",
+      "bytes": 914,
+      "sha256": "7A59F40B628EA78EF758D7B36B55DB3E719772F24E2C64BC9109E1197F5F072B"
+    }
+  ],
+  "consumer_candidate_adopted": false,
+  "supervisor_reviewed": false,
+  "original_delivery_unchanged": true
+}

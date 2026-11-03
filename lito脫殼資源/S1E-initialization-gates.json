@@ -1,0 +1,171 @@
+{
+  "updated_at": "2026-10-05T22:38:34.268286+08:00",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "expected_bytes": 7094272,
+    "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "verified": true
+  },
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "expected_bytes": 41179755,
+    "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "verified": true
+  },
+  "ranges": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+    "bytes": 136990,
+    "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C"
+  },
+  "class4_provenance": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+    "bytes": 86352,
+    "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8"
+  },
+  "dispatch": [
+    {
+      "branch": "mode4_phase>=3",
+      "opcode_map": {
+        "va": "004B348E",
+        "rva": "000B348E",
+        "section": "   \u0000    ",
+        "file_offset": "000B348E",
+        "raw_backed": true
+      },
+      "map_byte": "16",
+      "jump_entry": {
+        "va": "004B3260",
+        "rva": "000B3260",
+        "section": "   \u0000    ",
+        "file_offset": "000B3260",
+        "raw_backed": true
+      },
+      "jump_bytes": "d32a4b00",
+      "target_VA": "004B2AD3"
+    },
+    {
+      "branch": "fallback",
+      "opcode_map": {
+        "va": "004B36D2",
+        "rva": "000B36D2",
+        "section": "   \u0000    ",
+        "file_offset": "000B36D2",
+        "raw_backed": true
+      },
+      "map_byte": "11",
+      "jump_entry": {
+        "va": "004B35B4",
+        "rva": "000B35B4",
+        "section": "   \u0000    ",
+        "file_offset": "000B35B4",
+        "raw_backed": true
+      },
+      "jump_bytes": "d32a4b00",
+      "target_VA": "004B2AD3"
+    }
+  ],
+  "finding": "Both audited dispatch branches admit S1E, with no explicit first-lobby/owner-readiness gate or queue in this hierarchy. Safe population depends on a live consistent owner/table and current selected class/order. Metadata absence is fallback, not a local drop. Actual upstream delivery timing is not established.",
+  "stages": [
+    {
+      "stage": "dispatch",
+      "VA": "004B29DB /004B313F ->004B2AD3",
+      "condition": "mode64BBD4==4 and phase64AF98>=3 choosesprimary; other cases choosefallback; both raw maps route1E to samehandler",
+      "effect": "No lobby/owner/class gating for this opcode in either map"
+    },
+    {
+      "stage": "bitmap",
+      "VA": "004AEE70..004AEEB5",
+      "condition": "unsigned byte countN>0, each set bit amongN bytes LSB-first",
+      "effect": "index=group*8+bit; unset bits/count0 do not clear skills"
+    },
+    {
+      "stage": "metadata",
+      "VA": "004AEEC7..004AEEF3",
+      "condition": "647E24 pointer nonzero, index<647E20 count, indexed stringpointer nonzero",
+      "effect": "Use signed WORD508648[index] and metadata text; otherwise still calls nextstage with icon91 and unknownspell. Metadata147rows are not147populated skill rows."
+    },
+    {
+      "stage": "owner",
+      "VA": "004AEEF3..004C9235",
+      "condition": "834888 must point to live owner; handler does not testit;4C9220 immediately reads[ECX+2C] and later[ECX+58]",
+      "effect": "An early S1E is not buffered/delayed here. Invalid owner can dereference invalid memory; no specific historical crash asserted."
+    },
+    {
+      "stage": "dedup/capacity",
+      "VA": "004C9235..004C925B",
+      "condition": "No existing row hassame index and owner count<256",
+      "effect": "Same index is ignored even ifnewicon/text differs; placeholders index-1 do not match nonnegativeindex"
+    },
+    {
+      "stage": "class-order replacement",
+      "VA": "004CD050..004CD107",
+      "condition": "75F694 determines count:class2=99,class0=56,class4=40,default80;635B80 pointer and owner+58 table mustbe valid/consistent; signed icon equalsorder[slot]",
+      "effect": "Replace every matching slot with4C8DE0(index,icon,text), destructoroldrow andnewrowpointer publish. No append, no scene/metadata/owner validity guard, no earlybreak; no match means no replacement."
+    }
+  ],
+  "normal_selection_order": [
+    "492AD4 storesselectedclass;492B9F publishesclass4order;492AF4 commonoverride block",
+    "New path492D80->4C9190->4CCED0->450090 initializescapacity256/table and class-count placeholders, then publishesowner492D91/pane492DC6",
+    "Existing path492B61->4CD1C0 reconstructs placeholders; prerequisites648EBC/834888/834958 all nonzero",
+    "C_C9 producer492F02 is later in ordinary4928C0 callback than these initialization paths. Completion/order in actual session or modified bridge remains unproved"
+  ],
+  "before_after_lobby": [
+    {
+      "position": "Before native selectedclass/owner initialization",
+      "static_result": "Dispatch admits1E; validity ofglobalowner/class/order is not protected here; no pending bitmap/replay buffer found in these bodies"
+    },
+    {
+      "position": "After successful selection but before first lobby view",
+      "static_result": "Can populate ifowner/table current, metadata/icon resolved orfallbackmatch, class-order match andnotduplicate; viewcreation is not a handler gate"
+    },
+    {
+      "position": "In/after lobby",
+      "static_result": "Same dependencies; owner/table maypersist while S1F/SDA clear placeholders. Lobby label alone doesnot provepopulation or preservation"
+    }
+  ],
+  "S1F_SDA_distinction": {
+    "S1F": "4AEF30->4CD120 finds matchingindex and replaces (-1,-1,emptytext) placeholder, retaining count/table",
+    "SDA": "4AA8B0 unconditionaljump46A260->4CD1C0 destroys/reconstructs class-count (-1,-1,emptytext) placeholders;4CD1C0 doesnot read635B80 toinitializeicons",
+    "rebuild_and_constructor": "Placeholder count usesclassbyte; class-order values areconsulted onlylaterin4CD050",
+    "important": "Same owner/table/count is notproof skills stayed populated; reset createsplaceholders. No server resend or callbackexecution proven."
+  },
+  "archived_dynamic_evidence": {
+    "V9_timeline": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\launcher\\observability-20261003-225704\\ui-native-hookup-20261004-051000\\t69_skill_evidence\\V9-S1E-timeline.json",
+      "bytes": 11128,
+      "sha256": "C4AD64373E3B838A645C99846BAC671137198C798DB44C820C53046701C7CD4F"
+    },
+    "pid": 16684,
+    "filetime": "134356500167557627",
+    "S1E": {
+      "time": "2026-10-05T05:07:31.572775400Z",
+      "direction": "server_to_client",
+      "opcode": "0x1E",
+      "version_accepted": false
+    },
+    "interpretation": "One S1E occurs immediately after S_D2 near phase 3->4 WORLD transition; no later S1E in this archive. Sampling is not a decoder/reset execution trace.",
+    "payload_available": false,
+    "selected_class_observed": false,
+    "skill_owner_epoch_observed": false,
+    "version_accepted_flag": "Archive flagfalse is not a native decoder-return observation; no newruntimeacceptanceclaim",
+    "T73": "Existing142frames containnoS1E andno typedskillowner; cannot close first-lobby gate execution"
+  },
+  "minimal_dynamic_requirements": [
+    "SamePID/FILETIME/owner epoch:8class4DWORDs after43F6 table block and4928 classselection",
+    "For actualS1E:payloadN/bitmap/index, mode/phase,75F694,635B80,647E20/24 pointerandindexedmetadata,834888 owner/count/table/rows atdispatch andafter4CD050",
+    "Orderrelative toownerpublication/resetS1F/SDA; actual receivedframe mustnotbe equatedwithdecodercompletion",
+    "Upstream receive pump/queue may affect when a frame reaches dispatcher; no first-lobby execution timing closure here",
+    "If rowsfilled butGUIempty, separately observebinding/render; resourceexistencealone doesnot answerit"
+  ],
+  "static_task_complete": true,
+  "runtime_gates_closed": false,
+  "GUI_accepted": false,
+  "native_started": false,
+  "process_opened": false,
+  "resource_extraction_rerun": false,
+  "old_tests_rerun": false
+}

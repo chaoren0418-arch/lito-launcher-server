@@ -1,0 +1,48 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_skill_panel.rs",
+    "bytes": 15680,
+    "sha256": "5C62C2197C1DC87E994D892856C38520A96843A43D97EABB7494055679CA5922"
+  },
+  "excerpts": [
+    {
+      "first_line": 11,
+      "last_line": 28,
+      "text": "11: const WIDTH: i32 = 800;\n12: const HEIGHT: i32 = 600;\n13: const FRAME_WIDTH: i32 = 193;\n14: const FRAME_HEIGHT: i32 = 282;\n15: const NUM: i32 = 5;\n16: const DEN: i32 = 4;\n17: pub(super) const LEFT: i32 = WIDTH - FRAME_WIDTH * NUM / DEN;\n18: const TOP: i32 = 0;\n19: const GRID_LEFT: i32 = 27;\n20: const GRID_TOP: i32 = 34;\n21: const CELL_WIDTH: i32 = 35;\n22: const CELL_HEIGHT: i32 = 35;\n23: const SUPPORTED: [u32; 8] = [1, 4, 5, 29, 43, 54, 70, 77];\n24: \n25: fn rows(model: &Model) -> [Option<(u32, Option<Choice>)>; 8] {\n26:     std::array::from_fn(|slot| model.rows.iter().find(|row| row.id == SUPPORTED[slot])\n27:         .map(|row| (row.id, row.choice)))\n28: }"
+    },
+    {
+      "first_line": 174,
+      "last_line": 195,
+      "text": "174:         let assets = self.ready.as_ref()?;\n175:         if base.len() != (WIDTH * HEIGHT * 4) as usize { return None; }\n176:         let mut output = base.to_vec();\n177:         blit(&mut output, &assets.frame, LEFT, TOP, FRAME_WIDTH * NUM / DEN,\n178:             FRAME_HEIGHT * NUM / DEN, (0, 0, WIDTH, HEIGHT));\n179:         let painted_rows = rows(model);\n180:         for (slot, icon) in assets.icons.iter().enumerate() {\n181:             let Some((id, choice)) = painted_rows[slot] else { continue; };\n182:             let x = LEFT + (GRID_LEFT + (slot % 4) as i32 * CELL_WIDTH) * NUM / DEN;\n183:             let y = TOP + (GRID_TOP + (slot / 4) as i32 * CELL_HEIGHT) * NUM / DEN;\n184:             if let Some(icon) = icon {\n185:                 blit(&mut output, icon,\n186:                     x + i32::from(icon.offset[0]) * NUM / DEN,\n187:                     y + i32::from(icon.offset[1]) * NUM / DEN,\n188:                     (icon.width as i32 * NUM / DEN).max(1),\n189:                     (icon.height as i32 * NUM / DEN).max(1), (x, y, x + 42, y + 42));\n190:             }\n191:             if choice.is_none() { dim(&mut output, x, y, 42, 42); }\n192:             if selected == Some(id) { border(&mut output, x, y, 42, 42); }\n193:         }\n194:         Some(output)\n195:     }"
+    }
+  ],
+  "differences": [
+    {
+      "field": "grid geometry",
+      "native": "relative pane frame origin(37,43),34x34 step,4 columns/6 visible rows",
+      "Modern": "GRID_LEFT27,GRID_TOP34,CELL35x35;5/4 scale"
+    },
+    {
+      "field": "row membership/scroll",
+      "native": "slot indices S..min(N,S+24)-1, placeholders consume slots but ID=-1 skips row draw; +/-4 and page +/-36 controls",
+      "Modern": "8 fixed supported skill IDs,2 rows,learned filtering; no native slot-order/scroll geometry in this module"
+    },
+    {
+      "field": "clip",
+      "native": "row-bottom check before draw; no per-cell pixel clip in grid loop, normal blit contract has none",
+      "Modern": "42x42 explicit cell clip plus surface bounds; this is a Modern presentation policy"
+    },
+    {
+      "field": "state rendering",
+      "native": "marked row+0C invokes separate LUT rectangle; row+8 uses time-dependent alternate target8300E4 or normalcopy; hover+4C positions text separately",
+      "Modern": "choice.is_none =>dim42px rectangle, selected ID=>border42px; unsupported/unavailable UI policy is not proved equivalent to native mark/timer behavior"
+    },
+    {
+      "field": "scale and bitmap offset",
+      "native": "unscaled caller x/y plus signed bitmap offset in normal4B9980→4BE000; alternatebody unknown",
+      "Modern": "both coordinates and stored u8 bitmap offsets are scaled5/4; no native5/4 transform in captured path"
+    }
+  ],
+  "Modern_modified_or_executed": false,
+  "used_as_original_oracle": false
+}

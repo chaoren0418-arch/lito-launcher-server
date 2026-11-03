@@ -1,0 +1,37 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionMaterialProbe.java",
+      "sha256": "607e834a89dc73966bae3210b0992134df7210b11c90e128816b703d3d3d0311"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionFaultProbe.java",
+      "sha256": "3dba36b4519383edd86311d7c6edfaad01142ed7ae95e85a5317e779d1e1c017"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionLifecycleProbe.java",
+      "sha256": "c68a9aeae68b3511c461dc7684a7946ad31a28530de4dd440d9db246550d3dac"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionWorldNpcProbe.java",
+      "sha256": "a09c1dd99974dd12d1e168c4639a159a1d8d305bc68697428f72f5b35f35b339"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test.py",
+      "sha256": "8b986c3138deb3c7b0d067f170d2b832fad86549e18ffe42b675a622e31e7af9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test_boundaries.py",
+      "sha256": "e4703be43737e1dddc06ef6540f239e8b474cb561a7091f2bedfe475c4db31b0"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test_world_npcs.py",
+      "sha256": "adc79bcd9108d47a0331d8e29170bc3fc94fc91a8add01a516030b9d25e12275"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\prepare_tests.py",
+      "sha256": "e3053665f0dcc4bed3eaca1f4e2da45df47721ae73e68975a23bdd63d6fac905"
+    }
+  ],
+  "scope": "both native Blind skills; original deterministic percentile fixture; actual blind packet and stored expiry; no SQL writes"
+}

@@ -1,0 +1,1 @@
+{"task_id": "bin_resources-caption-message-boundary-20261007", "result": "PASS finite static qualification", "source_hashes_verified": 3, "raw_ranges": 25, "message_routes": 11, "game_executed": false, "process_attached": false, "product_acceptance": false}

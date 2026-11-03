@@ -1,0 +1,309 @@
+{
+  "status": "passed",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9"
+    },
+    {
+      "path": "D:\\lineage開發\\經典版UI資源\\證據原檔\\TW13081901.memory.bin",
+      "sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\serverpackets\\S_PacketBox.java",
+      "sha256": "817ba5fd5b8ada480c6cef6d0529b9cb8ac8c6a33d84af550f8479a31fcce977"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\data\\item_etcitem\\mp\\UserMprBlue.java",
+      "sha256": "4a76750e09a779c247f82ae3ae74cd098e74759aca1bb7d37b98f0df152c0381"
+    }
+  ],
+  "subcode": 34,
+  "native_slot": 38,
+  "shared_effect": 38,
+  "LiTo_branch": "0x4b1b39",
+  "TW_branch": "0x53acff",
+  "LiTo_branch_bytes": "0fbf0e85c90f849d090000ba26000000e8b25afdff",
+  "TW_branch_bytes": "8d4d0851e8e88cfeff83c4040fbfd0899568f3ffff83bd68f3ffff007438813d98919a00a109000075176aff6a006a5b8b8568f3ffff50e8c536fbff83c410eb156aff6a006a268b8d68f3ffff51e8ae36fbff83c410e93c680000",
+  "effect": {
+    "id": "38",
+    "icon": "5399",
+    "offIcon": "5400",
+    "duration": "600",
+    "group": "0",
+    "startMsg": "3121",
+    "startMsgName": "POTION_OF_MANA1_S",
+    "endMsg": "2177",
+    "endMsgName": "POTION_OF_MANA1_E",
+    "kind": "cook",
+    "priority": "8"
+  },
+  "replays": [
+    {
+      "client": "LiTo",
+      "seconds": 0,
+      "conditional_global": null,
+      "calls": []
+    },
+    {
+      "client": "TW",
+      "seconds": 0,
+      "conditional_global": 0,
+      "calls": []
+    },
+    {
+      "client": "TW",
+      "seconds": 0,
+      "conditional_global": 2465,
+      "calls": []
+    },
+    {
+      "client": "LiTo",
+      "seconds": 1,
+      "conditional_global": null,
+      "calls": [
+        [
+          1,
+          38
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 1,
+      "conditional_global": 0,
+      "calls": [
+        [
+          1,
+          38,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 1,
+      "conditional_global": 2465,
+      "calls": [
+        [
+          1,
+          91,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "LiTo",
+      "seconds": 10,
+      "conditional_global": null,
+      "calls": [
+        [
+          10,
+          38
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 10,
+      "conditional_global": 0,
+      "calls": [
+        [
+          10,
+          38,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 10,
+      "conditional_global": 2465,
+      "calls": [
+        [
+          10,
+          91,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "LiTo",
+      "seconds": 600,
+      "conditional_global": null,
+      "calls": [
+        [
+          600,
+          38
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 600,
+      "conditional_global": 0,
+      "calls": [
+        [
+          600,
+          38,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 600,
+      "conditional_global": 2465,
+      "calls": [
+        [
+          600,
+          91,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "LiTo",
+      "seconds": 32767,
+      "conditional_global": null,
+      "calls": [
+        [
+          32767,
+          38
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 32767,
+      "conditional_global": 0,
+      "calls": [
+        [
+          32767,
+          38,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "client": "TW",
+      "seconds": 32767,
+      "conditional_global": 2465,
+      "calls": [
+        [
+          32767,
+          91,
+          0,
+          4294967295
+        ]
+      ]
+    }
+  ],
+  "selected_item_identity_replays": [
+    {
+      "client": "LiTo",
+      "graphic": 0,
+      "selected_value": 0,
+      "constructor": "0x442889",
+      "selection": "0x40ba1b",
+      "item_graphic_field": "0x6e",
+      "selected_graphic_global": "0x647ec0"
+    },
+    {
+      "client": "LiTo",
+      "graphic": 2464,
+      "selected_value": 2464,
+      "constructor": "0x442889",
+      "selection": "0x40ba1b",
+      "item_graphic_field": "0x6e",
+      "selected_graphic_global": "0x647ec0"
+    },
+    {
+      "client": "LiTo",
+      "graphic": 2465,
+      "selected_value": 2465,
+      "constructor": "0x442889",
+      "selection": "0x40ba1b",
+      "item_graphic_field": "0x6e",
+      "selected_graphic_global": "0x647ec0"
+    },
+    {
+      "client": "LiTo",
+      "graphic": 2466,
+      "selected_value": 2466,
+      "constructor": "0x442889",
+      "selection": "0x40ba1b",
+      "item_graphic_field": "0x6e",
+      "selected_graphic_global": "0x647ec0"
+    },
+    {
+      "client": "LiTo",
+      "graphic": 65535,
+      "selected_value": -1,
+      "constructor": "0x442889",
+      "selection": "0x40ba1b",
+      "item_graphic_field": "0x6e",
+      "selected_graphic_global": "0x647ec0"
+    },
+    {
+      "client": "TW",
+      "graphic": 0,
+      "selected_value": 0,
+      "constructor": "0x4adee8",
+      "selection": "0x417300",
+      "item_graphic_field": "0x9a",
+      "selected_graphic_global": "0x9a9198"
+    },
+    {
+      "client": "TW",
+      "graphic": 2464,
+      "selected_value": 2464,
+      "constructor": "0x4adee8",
+      "selection": "0x417300",
+      "item_graphic_field": "0x9a",
+      "selected_graphic_global": "0x9a9198"
+    },
+    {
+      "client": "TW",
+      "graphic": 2465,
+      "selected_value": 2465,
+      "constructor": "0x4adee8",
+      "selection": "0x417300",
+      "item_graphic_field": "0x9a",
+      "selected_graphic_global": "0x9a9198"
+    },
+    {
+      "client": "TW",
+      "graphic": 2466,
+      "selected_value": 2466,
+      "constructor": "0x4adee8",
+      "selection": "0x417300",
+      "item_graphic_field": "0x9a",
+      "selected_graphic_global": "0x9a9198"
+    },
+    {
+      "client": "TW",
+      "graphic": 65535,
+      "selected_value": -1,
+      "constructor": "0x4adee8",
+      "selection": "0x417300",
+      "item_graphic_field": "0x9a",
+      "selected_graphic_global": "0x9a9198"
+    }
+  ],
+  "condition_identity": "Last selected inventory graphic, copied from item constructor fourth argument; LiTo0x647EC0 corresponds to TW0x9A9198.",
+  "limits": [
+    "Status consumers intercepted; no UI rendered.",
+    "TW selected inventory graphic2465 selects effect91; candidate receiver must use proved LiTo counterpart.",
+    "Both branches ignore zero duration; removal behavior unchanged."
+  ],
+  "source_database_modified": false,
+  "game_started": false
+}

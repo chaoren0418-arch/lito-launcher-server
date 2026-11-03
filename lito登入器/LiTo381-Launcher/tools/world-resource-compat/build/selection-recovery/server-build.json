@@ -1,0 +1,17 @@
+{
+  "status": "built-not-yet-qualified",
+  "parent": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "candidate": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "920a53a265691e9c9997e1527fd0157a2496651aa33f8bd203354b6403f4a9f5"
+  },
+  "changed_entries": [
+    "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+    "local/lito381/server/ClientSession.class"
+  ],
+  "formal_updated": false,
+  "source_database_modified": false
+}

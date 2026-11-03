@@ -1,0 +1,92 @@
+{
+  "status": "scoped-motion-implemented-and-tested-full-Source-routing-and-factories-open",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-motion-builds\\20261020T130707483082Z\\candidate-integrated-static-motion-unqualified.jar",
+    "sha256": "0c3a5758b964abb4f8944f82b22e8306a1217a557813dff5d8df952aadb16322"
+  },
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\Instance\\L1QuestInstance.java",
+      "sha256": "c510ae474ae8a1c773276130ed61942bdd2e1660b25105ee2a620043124c44aa"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\Instance\\L1NpcInstance.java",
+      "sha256": "d910b4c2b30295f742c09d0f8c90e72729e44c89c408ad2e8319d1ddb28d1475"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\Instance\\NpcMove.java",
+      "sha256": "2b01acb7f7bde1be8019901966f3a103ea004e8e6c1d491e47f914df4e7743b7"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\Instance\\NpcMoveExecutor.java",
+      "sha256": "ff1be6d6c61f50776038f383e1dfebfdbc7202433c333b1b96bb85ffac00005c"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\timecontroller\\npc\\NpcRestTimer.java",
+      "sha256": "db310260e8a5705771cf3f83f3626e57e3eaeb4f24f46f29e7b17e0fa6785f38"
+    }
+  ],
+  "audit": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-movement-audit-current.json",
+    "sha256": "50143f85aa7675374977ea1b39037e06217e4f285c86a03d59c7ae041de0254e"
+  },
+  "decisions": [
+    "Reuse NativeStaticNpcScene.State/Actor and GameHub companionTickSafely existing 50ms clock; no per-NPC tasks, PC fields or new ThreadLocals.",
+    "Canonical StaticNpc records must remain original references for identity gates. Prefer explicit PC/hub/instance coordinate getters at runtime consumers; inScreen filters dynamic positions but returns canonical records. Only static occupancy lambdas may need local projected records; audit each.",
+    "NPC motion, collision and target gates share map+instance+ID, canonical scene ownership and close/prune. Bind population to hub via weak owner/instance if its nine catalog occupancy consumers lack scene context.",
+    "Immutable volatile per-scene pose snapshots allow output reconciliation without taking the hub while holding the existing ClientSession output monitor. Observe actual successful static-NPC frames inside that same monitor; weak viewer keys, value-only roles/poses, no strong PC values. Inspect actual runtime methods before instrumentation.",
+    "Native sendEncryptedFrame is synchronized on ClientSession; nativeSelfOriginalSend is not. Eligible NPC packets do not enter LITO timer/start-game hub-query branches. Preserve all other output paths.",
+    "Raw packet offsets: PUT has x/y at1/3 and ID5; MOVE ID1 sourceX5/sourceY7/heading9 and destination is source+heading delta; REMOVE ID1. Derive other opcode/heading offsets from Protocol before coding.",
+    "First deferred PUT and tick must reconcile under the existing output monitor to avoid duplicate PUT or MOVE-before-PUT. Re-read immutable current pose/role generation there, no hub/status-lock acquisition inside it; role advance clears weak viewer knowledge with no output-lock wait.",
+    "Player move check and position commit currently have a static-NPC race. Inspect actual moveClassicWorld tail for portal/map transitions before adding an atomic hub region and output boundary; preserve all existing movement/role semantics.",
+    "Source noTarget: no visible PC within20 teleports to nonzero home and stops AI. With PC nearby: random distance1..3, random direction0..39, direction<8 routes toward home (at home retains heading), checkObject offsets0,-1,+1,+2,-2,-3,+3,+4, then closed-door check. Quest movementDistance does not impose guard radius.",
+    "Talk uses stop_time10 and rest=true; shared NpcRestTimer every5 seconds subtracts5, so actual rest lasts5..10 seconds depending server timer phase. Do not mistake REST_MILLISEC10 for a ten-ms timeout.",
+    "Coherent verification must cover public/private scenes, source no-AI, speed/name/gfx cancellation, current packet coordinates, first perception, range/interaction/occupancy, reciprocal movement races, lifecycle/output delay/IO/close, current regression evidence. Audit static catalog identity-only consumers as metadata (not runtime positions).",
+    "Implemented idle sleep: default300ms; successful ordinary move uses current passispeed milliseconds. Source four no-AI IDs and Source startAI currentHp<=0 gate are both retained. Current zero-HP80133..80136 stay immobile even with positive speed. Positive-HP zero-speed actors are tracked at perception so a later speed change does not duplicate first PUT.",
+    "World player and companion move commits recheck static footprint under hub ownership. All nine actual population occupancy consumers use an immutable pose view through a weak population binding; two PC moveOneTile callsites route WORLD only and preserve the original BATTLE call. Fixed follower map400 has only Source no-AI Quest rows; static follower occupancy calls remain valid there.",
+    "First actual successful PUT/position/shape/name changes are reconciled under the pre-existing session output monitor. Viewer keys are weak; values hold no PC. Role advance invalidates epochs, last-member pruning clears scenes, a hub close marker prevents late frames/ticks from recreating state. No hub/status acquisition occurs inside the output monitor.",
+    "A single hub long preserves the shared five-second rest phase across scene pruning/re-entry. No per-NPC task or new worker is created.",
+    "Latest adjustment changes only GameHub (one additional long) and NativeStaticNpcMotion(state/tick/restPhase plus one constant); all archive entries and1051 other methods compared exactly to the764-case candidate. The later candidate separately passed32 motion cases and18 Main cases on one SHA."
+  ],
+  "full_goal_achieved": false,
+  "formal_deployment_changed": false,
+  "Source_SQL_written": false,
+  "build": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-motion-build-current.json",
+    "sha256": "695ff71b9aac1b05c83bf10d06c71993b2e3bd3de183c0a6afd02e5900117171"
+  },
+  "latest_phase_and_Main_tests": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-motion-phase-suite-current.json",
+    "sha256": "6c492e3bd6e77f986436c7ee750a8470552d418e868637b3a80c8a5b88ae88ae"
+  },
+  "previous_764_case_suite": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-motion-suite-current.json",
+    "sha256": "8342dd97cbc5465b195609c5d01ec742b645adad51c6044c16df4c1fb494d10f"
+  },
+  "exact_rest_delta": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\static-motion-rest-delta-current.json",
+    "sha256": "6d8091b78ad46557bcaaca7f1d3954dabbc982e1159828c8516405dfe742972b"
+  },
+  "new_PC_fields": 0,
+  "new_workers_or_ThreadLocals_or_schedulers": 0,
+  "new_Hub_fields": [
+    "nativeStaticMotionClosed:volatile boolean",
+    "nativeStaticMotionRestTick:long"
+  ],
+  "new_scene_fields": [
+    "NativeStaticNpcScene.State.nativeStaticMotion:volatile Object"
+  ],
+  "new_population_fields": [
+    "nativeStaticMotionHub:volatile WeakReference<GameHub>",
+    "nativeStaticMotionInstance:volatile int"
+  ],
+  "latest_same_SHA_cases": 50,
+  "latest_same_SHA_kernel_cases": 294917,
+  "previous_candidate_same_SHA_cases": 764,
+  "same_SHA_full_regression_passed": false,
+  "remaining": [
+    "Exact Source obstacle-home routing and path/LOS fallback tie choices: current native Source-aware pathfinder adapter is not a complete port of NpcMove.moveDirection",
+    "Broader spawn/forced relocation/teleport and NPC subtype/factory footprint semantics",
+    "Full skill/class/target/Ctrl/area/lifetime coverage and final same-SHA regression; movement receipt is scoped only"
+  ]
+}

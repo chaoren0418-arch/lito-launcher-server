@@ -1,0 +1,19 @@
+{
+  "return_button_blank_login": true,
+  "return_preserves_source": true,
+  "selected_source_after_relogin": 2,
+  "run": "same-window-fixture-1791771503349738400",
+  "pid": 30908,
+  "hwnd": 16585510,
+  "same_window": true,
+  "blank_login": true,
+  "native_login_callback": true,
+  "test_only_ui_driver": true,
+  "character_server_logout": true,
+  "account_lock_released": true,
+  "relogin": true,
+  "no_sql_writes": true,
+  "release": "0.6.39",
+  "production_compat_sha256": "28e7a5462bfc3112ab9811cc90a82cbfc86aa1393be6b29b3daba9319d69b9b6",
+  "test_driver_absent_in_release": true
+}

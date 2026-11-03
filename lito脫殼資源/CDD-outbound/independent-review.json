@@ -1,0 +1,988 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+    "bytes": 31932,
+    "sha256": "7E09849B4F0D442E04457AEE7E6DBEEB3D106437D9689AE8060323CE36FCB59E"
+  },
+  "all_match": true,
+  "check_count": 241,
+  "checks": [
+    {
+      "check": "pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin server-ordinary-room-DD-edit-network.json",
+      "match": true
+    },
+    {
+      "check": "pin static-edit-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin frames.json",
+      "match": true
+    },
+    {
+      "check": "pin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin 00461050-5.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461060-1E.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461119-30.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461149-F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461158-29.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461181-26.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004611B8-14.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00461231-A.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00462620-2B.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00462835-30.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00462865-F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00462874-66.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00462910-5.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C68D0-46.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6916-1A.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6930-21.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6989-4D.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C69D6-2F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6A3F-35.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6A74-1C.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C6A90-21.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004C8790-5.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004EFEA4-5.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004F11A0-2F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0062BF90-6.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0062BF98-B.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0062BFA4-C.bin",
+      "match": true
+    },
+    {
+      "check": "pin conditional-callsite-and-source-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin equivalence-search-preflight.json",
+      "match": true
+    },
+    {
+      "check": "pin finite-verification.json",
+      "match": true
+    },
+    {
+      "check": "pin instruction-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin saved-compact-field-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin server-comparison.json",
+      "match": true
+    },
+    {
+      "check": "pin wire-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461050",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461050",
+      "match": true
+    },
+    {
+      "check": "alignment 00461050",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461060",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461060",
+      "match": true
+    },
+    {
+      "check": "alignment 00461060",
+      "match": true
+    },
+    {
+      "check": "source/raw 00462910",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00462910",
+      "match": true
+    },
+    {
+      "check": "alignment 00462910",
+      "match": true
+    },
+    {
+      "check": "source/raw 00462620",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00462620",
+      "match": true
+    },
+    {
+      "check": "alignment 00462620",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461158",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461158",
+      "match": true
+    },
+    {
+      "check": "alignment 00461158",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461181",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461181",
+      "match": true
+    },
+    {
+      "check": "alignment 00461181",
+      "match": true
+    },
+    {
+      "check": "source/raw 004611B8",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004611B8",
+      "match": true
+    },
+    {
+      "check": "alignment 004611B8",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461231",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461231",
+      "match": true
+    },
+    {
+      "check": "alignment 00461231",
+      "match": true
+    },
+    {
+      "check": "source/raw 00462874",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00462874",
+      "match": true
+    },
+    {
+      "check": "alignment 00462874",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461119",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461119",
+      "match": true
+    },
+    {
+      "check": "alignment 00461119",
+      "match": true
+    },
+    {
+      "check": "source/raw 00462835",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00462835",
+      "match": true
+    },
+    {
+      "check": "alignment 00462835",
+      "match": true
+    },
+    {
+      "check": "source/raw 00461149",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00461149",
+      "match": true
+    },
+    {
+      "check": "alignment 00461149",
+      "match": true
+    },
+    {
+      "check": "source/raw 00462865",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 00462865",
+      "match": true
+    },
+    {
+      "check": "alignment 00462865",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C8790",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C8790",
+      "match": true
+    },
+    {
+      "check": "alignment 004C8790",
+      "match": true
+    },
+    {
+      "check": "source/raw 004F11A0",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004F11A0",
+      "match": true
+    },
+    {
+      "check": "alignment 004F11A0",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C68D0",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C68D0",
+      "match": true
+    },
+    {
+      "check": "alignment 004C68D0",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6916",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6916",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6916",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6930",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6930",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6930",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6989",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6989",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6989",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C69D6",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C69D6",
+      "match": true
+    },
+    {
+      "check": "alignment 004C69D6",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6A3F",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6A3F",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6A3F",
+      "match": true
+    },
+    {
+      "check": "source/raw 004EFEA4",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004EFEA4",
+      "match": true
+    },
+    {
+      "check": "alignment 004EFEA4",
+      "match": true
+    },
+    {
+      "check": "source/raw 0062BF90",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0062BF90",
+      "match": true
+    },
+    {
+      "check": "source/raw 0062BF98",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0062BF98",
+      "match": true
+    },
+    {
+      "check": "source/raw 0062BFA4",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0062BFA4",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6A74",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6A74",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6A90",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6A90",
+      "match": true
+    },
+    {
+      "check": "source/raw 0041B410",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0041B410",
+      "match": true
+    },
+    {
+      "check": "alignment 0041B410",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6770",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6770",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6770",
+      "match": true
+    },
+    {
+      "check": "source/raw 004C6700",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004C6700",
+      "match": true
+    },
+    {
+      "check": "alignment 004C6700",
+      "match": true
+    },
+    {
+      "check": "operand 00461050",
+      "match": true
+    },
+    {
+      "check": "operand 00462910",
+      "match": true
+    },
+    {
+      "check": "operand 00461072",
+      "match": true
+    },
+    {
+      "check": "operand 0046107B",
+      "match": true
+    },
+    {
+      "check": "operand 0046263F",
+      "match": true
+    },
+    {
+      "check": "operand 00462648",
+      "match": true
+    },
+    {
+      "check": "operand 00461158",
+      "match": true
+    },
+    {
+      "check": "operand 0046116B",
+      "match": true
+    },
+    {
+      "check": "operand 0046117C",
+      "match": true
+    },
+    {
+      "check": "operand 00461189",
+      "match": true
+    },
+    {
+      "check": "operand 00461198",
+      "match": true
+    },
+    {
+      "check": "operand 0046119D",
+      "match": true
+    },
+    {
+      "check": "operand 004611A2",
+      "match": true
+    },
+    {
+      "check": "operand 004611C5",
+      "match": true
+    },
+    {
+      "check": "operand 004611CA",
+      "match": true
+    },
+    {
+      "check": "operand 00461231",
+      "match": true
+    },
+    {
+      "check": "operand 00461236",
+      "match": true
+    },
+    {
+      "check": "operand 00462878",
+      "match": true
+    },
+    {
+      "check": "operand 00462885",
+      "match": true
+    },
+    {
+      "check": "operand 0046288A",
+      "match": true
+    },
+    {
+      "check": "operand 0046288F",
+      "match": true
+    },
+    {
+      "check": "operand 0046289F",
+      "match": true
+    },
+    {
+      "check": "operand 004628A4",
+      "match": true
+    },
+    {
+      "check": "operand 004628C4",
+      "match": true
+    },
+    {
+      "check": "operand 004628CB",
+      "match": true
+    },
+    {
+      "check": "operand 004628D0",
+      "match": true
+    },
+    {
+      "check": "operand 004628D5",
+      "match": true
+    },
+    {
+      "check": "operand 0046111E",
+      "match": true
+    },
+    {
+      "check": "operand 00461132",
+      "match": true
+    },
+    {
+      "check": "operand 0046283A",
+      "match": true
+    },
+    {
+      "check": "operand 0046284E",
+      "match": true
+    },
+    {
+      "check": "operand 00461153",
+      "match": true
+    },
+    {
+      "check": "operand 0046286F",
+      "match": true
+    },
+    {
+      "check": "operand 004C8790",
+      "match": true
+    },
+    {
+      "check": "operand 004C6AE8",
+      "match": true
+    },
+    {
+      "check": "operand 004F11CE",
+      "match": true
+    },
+    {
+      "check": "operand 004C6B00",
+      "match": true
+    },
+    {
+      "check": "operand 004C6928",
+      "match": true
+    },
+    {
+      "check": "operand 004C6943",
+      "match": true
+    },
+    {
+      "check": "operand 004C6949",
+      "match": true
+    },
+    {
+      "check": "operand 004C699B",
+      "match": true
+    },
+    {
+      "check": "operand 004C69CB",
+      "match": true
+    },
+    {
+      "check": "operand 004C69E6",
+      "match": true
+    },
+    {
+      "check": "operand 004C69ED",
+      "match": true
+    },
+    {
+      "check": "operand 004C69FA",
+      "match": true
+    },
+    {
+      "check": "operand 004C6B19",
+      "match": true
+    },
+    {
+      "check": "operand 004C6B21",
+      "match": true
+    },
+    {
+      "check": "operand 004C6B27",
+      "match": true
+    },
+    {
+      "check": "operand 004C679E",
+      "match": true
+    },
+    {
+      "check": "operand 004C67D0",
+      "match": true
+    },
+    {
+      "check": "operand 004EFEA4",
+      "match": true
+    },
+    {
+      "check": "first UI STOP1 virtual raw",
+      "match": true
+    },
+    {
+      "check": "first UI STOP2 virtual raw",
+      "match": true
+    },
+    {
+      "check": "unqualifiedhelper STOP target",
+      "match": true
+    },
+    {
+      "check": "transport STOP fixedexternal raw",
+      "match": true
+    },
+    {
+      "check": "stackprobe no calls",
+      "match": true
+    },
+    {
+      "check": "serializer c/s/h/b dispatch",
+      "match": true
+    },
+    {
+      "check": "c path no private/external/virtualcalls",
+      "match": true
+    },
+    {
+      "check": "h path no private/external/virtualcalls",
+      "match": true
+    },
+    {
+      "check": "s path no private/external/virtualcalls",
+      "match": true
+    },
+    {
+      "check": "b path no private/external/virtualcalls",
+      "match": true
+    },
+    {
+      "check": "compact six stackargs",
+      "match": true
+    },
+    {
+      "check": "zeroextended eleven stackargs",
+      "match": true
+    },
+    {
+      "check": "extended thirteen stackargs",
+      "match": true
+    },
+    {
+      "check": "K repeated for ccount and bcopy",
+      "match": true
+    },
+    {
+      "check": "Native conditional capacity2..200",
+      "match": true
+    },
+    {
+      "check": "serializer model compact_ASCII_savedshape",
+      "match": true
+    },
+    {
+      "check": "serializer model legacy_five_zero_tail",
+      "match": true
+    },
+    {
+      "check": "serializer model extended_two_selections",
+      "match": true
+    },
+    {
+      "check": "serializer model opaque_source_bytes_and_widths",
+      "match": true
+    },
+    {
+      "check": "formatter c limit exactly1",
+      "match": true
+    },
+    {
+      "check": "formatter h limit exactly2",
+      "match": true
+    },
+    {
+      "check": "formatter s includesNUL",
+      "match": true
+    },
+    {
+      "check": "formatter b strictlimit fails at1",
+      "match": true
+    },
+    {
+      "check": "formatter b strictlimit passes at2",
+      "match": true
+    },
+    {
+      "check": "selection compaction [0, 0, 0, 0, 0, 0, 0, 0]",
+      "match": true
+    },
+    {
+      "check": "selection compaction [1, 0, 7, 0, 0, 0, 0, 0]",
+      "match": true
+    },
+    {
+      "check": "selection compaction [255, 128, 1, 2, 3, 4, 5, 6]",
+      "match": true
+    },
+    {
+      "check": "savedcompact conservation 76",
+      "match": true
+    },
+    {
+      "check": "savedcompact conservation 83",
+      "match": true
+    },
+    {
+      "check": "frameheader high/low stores proven",
+      "match": true
+    },
+    {
+      "check": "no complete UI/phase/owner/codec qualification",
+      "match": true
+    },
+    {
+      "check": "newwire/opcode/correction empty",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    }
+  ],
+  "new_code_ranges": 22,
+  "new_data_ranges": 5,
+  "necessary_reused_raw_ranges": 4,
+  "instruction_assertions": 51,
+  "conditional_CDD_callsites": 3,
+  "reconstructed_callsite_varargs": 3,
+  "serializer_models": 4,
+  "selection_compaction_models": 3,
+  "saved_compact_field_witnesses": 2,
+  "Native_or_extended_dynamic_witnesses": 0,
+  "prior_primary_pins_preserved": 27,
+  "Native_SQL_provider_GUI_Java_or_old_PASS": false,
+  "UI_submit_phase_owner_codec_delivery_ACK_qualified": false
+}

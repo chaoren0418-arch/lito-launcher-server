@@ -1,0 +1,84 @@
+{
+  "qualification": "Computed layout/operand examples only, not captured/network/Native/runtime/hubrollback witnesses.",
+  "mode_effect_cases": [
+    {
+      "input_mode_BYTE": 2,
+      "before64ACC9..CC_hex": "4001a5cc",
+      "after64ACC9..CC_hex": "4002a5cc",
+      "mapBYTE_preserved": true,
+      "highmodeBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    },
+    {
+      "input_mode_BYTE": 128,
+      "before64ACC9..CC_hex": "4001a5cc",
+      "after64ACC9..CC_hex": "4080a5cc",
+      "mapBYTE_preserved": true,
+      "highmodeBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    },
+    {
+      "input_mode_BYTE": 255,
+      "before64ACC9..CC_hex": "4001a5cc",
+      "after64ACC9..CC_hex": "40ffa5cc",
+      "mapBYTE_preserved": true,
+      "highmodeBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    }
+  ],
+  "map_effect_cases": [
+    {
+      "input_map_WORD": 514,
+      "wordLE_hex": "0202",
+      "before64ACC9..CC_hex": "4002a5cc",
+      "after64ACC9..CC_hex": "0e02a5cc",
+      "modeBYTE_and_highBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    },
+    {
+      "input_map_WORD": 564,
+      "wordLE_hex": "3402",
+      "before64ACC9..CC_hex": "4002a5cc",
+      "after64ACC9..CC_hex": "4002a5cc",
+      "modeBYTE_and_highBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    },
+    {
+      "input_map_WORD": 65436,
+      "wordLE_hex": "9cff",
+      "before64ACC9..CC_hex": "4002a5cc",
+      "after64ACC9..CC_hex": "9c02a5cc",
+      "modeBYTE_and_highBYTE_preserved": true,
+      "summary0_preserved": true,
+      "Native_executed": false
+    }
+  ],
+  "subtype2_computed_room1_mode2": {
+    "body_hex": "d5020100000002",
+    "body_bytes": 7,
+    "frame_bytes": 9,
+    "actual_trace": false
+  },
+  "subtype3_current514_computed": {
+    "body_hex": "d503010000000202",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "mapWORD": 514,
+    "projectedBYTE": 14,
+    "actual_trace": false
+  },
+  "subtype3_restore564_computed": {
+    "body_hex": "d503010000003402",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "mapWORD": 564,
+    "projectedBYTE": 64,
+    "actual_trace": false,
+    "source_of_value": "Serverexistingconditionalcounterexample only; does notproveNative/serverexecution orhubrollback."
+  }
+}

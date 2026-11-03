@@ -1,0 +1,64 @@
+{
+  "task_id": "bin-public-toolbar-constructor-fields-20261008",
+  "sealed_at": "2026-10-08T16:54:40.574330+08:00",
+  "immutable_after_seal": true,
+  "derivation_receipt": "5bfe8b",
+  "command_exit": 0,
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049CD70-94.bin",
+      "bytes": 148,
+      "sha256": "8DE816BDB988DD2C9014815B5C64A70DD91A9B549A3BC486C287EF2DAD79FDA6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049E110-41.bin",
+      "bytes": 65,
+      "sha256": "D3003337B16CB668333D464CC130389227A15101649FFF55676E188EA48B04B8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049E570-47.bin",
+      "bytes": 71,
+      "sha256": "0A1EF3896E5878AC32CEF8BCDD3691722D27A1ED140E5972DB17A3063ED5AE30"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\asm-navigation.json",
+      "bytes": 3662,
+      "sha256": "4E8F039009AAC89E3F4CCA87DC00C8B6806F41C4EBA26D0453580A21BE5C690F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\command.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\command.stdout.txt",
+      "bytes": 6801,
+      "sha256": "65BBD2C197F9A52865C2441DB406A5BE5C79CBC283773ADC9B5F19B68108C767"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\derive.py",
+      "bytes": 11460,
+      "sha256": "1EFB4DABBD6156C3015C7F8A0996645BE281341BECB052B51BFFE7A37CC819AD"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\disassembly.txt",
+      "bytes": 6493,
+      "sha256": "134DA1BB812716494154A987ED703405AE23196D499903030DE3DCC91267CF5B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\handoff.json",
+      "bytes": 20487,
+      "sha256": "BD76F2F6C65583E6DBCABCD4013D5E2500887A29B0D0C6B544678A7D787A9AC2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\raw-evidence.json",
+      "bytes": 29372,
+      "sha256": "276779247539645EB14FB33CB56FEFBB15238CFE92CE1BD3DBD7E4FC1B0BE75B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\seal.py",
+      "bytes": 2272,
+      "sha256": "C628925AF74973C2EC70746E2C20C0C1029370FF0931A0D7A360D1246D851755"
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "gate": {
+    "inheritance": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "bytes": 41881,
+      "sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C"
+    },
+    "dispatch_qualification": "Batch18 mode4/signed phase>=3 primary and fallback D5 dispatch→4B2F67→4A9E50 retained; no whole-dispatch replay.",
+    "header": "cd from body+1; subtype localEBP-1, roomDWORD localEBP-8; payload body+6",
+    "phase6": "At4A9E7F incoming room overwrites64ABF4 before subtype validity; no prior room equality.",
+    "other_phases": "At4A9E8F compare incoming room to64ABF4; mismatch returns4AA06C, match may dispatch without further phase whitelist.",
+    "subtype": "MOVSX i8, unsigned JA >9; valid0..9, negative bytes rejected after possible phase6 room overwrite.",
+    "version_gate": "No63D54C or version predicate in header/subtype0/subtype1/projection/stub; actual upstream/runtime version still unknown.",
+    "owner_gate": "No owner/self/member identity check in these finite paths; server admission outcome not encoded by D5."
+  },
+  "effects": {
+    "subtype0": {
+      "entry_VA": "004A9EAB",
+      "entry_RVA": "000A9EAB",
+      "fields": [
+        {
+          "name": "room_name",
+          "type": "NUL8bit-string",
+          "destination": "0064AB70",
+          "capacity_including_NUL": 90
+        },
+        {
+          "name": "option0/mode candidate byte",
+          "type": "u8",
+          "destination": "0064ACCA",
+          "width": 1,
+          "preserved_adjacent_byte": "0064ACCB"
+        },
+        {
+          "name": "map_word",
+          "type": "u16LE",
+          "destination": "EBP-4",
+          "projection_destination": "0064ACC9",
+          "projection_width": 1
+        },
+        {
+          "name": "summary0",
+          "type": "u8",
+          "destination": "0064ACCC",
+          "width": 1
+        },
+        {
+          "name": "owner_display_alias",
+          "type": "NUL8bit-string",
+          "destination": "0064ABCA",
+          "capacity_including_NUL": 28
+        },
+        {
+          "name": "summary1",
+          "type": "u8",
+          "destination": "0064ACD0",
+          "width": 1
+        },
+        {
+          "name": "summary2",
+          "type": "u8",
+          "destination": "0064ACD1",
+          "width": 1
+        },
+        {
+          "name": "summary3",
+          "type": "u8",
+          "destination": "0064ACD2",
+          "width": 1
+        },
+        {
+          "name": "summary4",
+          "type": "u8",
+          "destination": "0064ACD3",
+          "width": 1
+        }
+      ],
+      "order": "4A9EE4 parser(schcscccc) → 4A9EEC call4A9030(RET) → 4A9EF1 jump4A9F89 → 4A9F9B mapBYTE store → return4A9FA4",
+      "map_projection": "Full WORD compared exactlyFFFF/FF9C; these preserve lowBYTE FF/9C. Every other WORD adds0C to AL modulo256. No lookup/table/count/locale/version/mode subtraction.",
+      "raw_map_WORD_persistence": "LocalEBP-4 only in this path; no global rawWORD copy. Projected64ACC9 not runtime index/map resource ID.",
+      "retained_known_fields": [
+        "64ABE6 attributes",
+        "64ABE8 password buffer",
+        "64ABF0 capacity",
+        "64ACD4..64ACD7 options",
+        "64ACD8..64ACDF selections",
+        "64ACCB adjacent mode highBYTE"
+      ],
+      "UI_effect": "Only direct4A9030, fixedPE single RET. No redraw/catalog mutation/ready clear/phase change qualified by this branch.",
+      "qualification": "Stores and ordering conditional on existing parser/external string operations returning; actual runtime string copy/cursor/bounds and UI state unknown."
+    },
+    "subtype1": {
+      "entry_VA": "004A9EF6",
+      "entry_RVA": "000A9EF6",
+      "fields": [
+        {
+          "name": "room_name",
+          "type": "NUL8bit-string",
+          "destination": "0064AB70",
+          "capacity_including_NUL": 90
+        },
+        {
+          "name": "password",
+          "type": "NUL8bit-string",
+          "destination": "0064ABE8",
+          "capacity_including_NUL": 5
+        },
+        {
+          "name": "attributes",
+          "type": "u8",
+          "destination": "0064ABE6",
+          "width": 1
+        },
+        {
+          "name": "capacity",
+          "type": "u8",
+          "destination": "0064ABF0",
+          "width": 1,
+          "preserved_adjacent_bytes": "0064ABF1..0064ABF3; no DWORD capacity store in this branch"
+        },
+        {
+          "name": "option1",
+          "type": "u8",
+          "destination": "0064ACD4",
+          "width": 1
+        },
+        {
+          "name": "option2",
+          "type": "u8",
+          "destination": "0064ACD5",
+          "width": 1
+        },
+        {
+          "name": "option3",
+          "type": "u8",
+          "destination": "0064ACD6",
+          "width": 1
+        },
+        {
+          "name": "option4",
+          "type": "u8",
+          "destination": "0064ACD7",
+          "width": 1
+        },
+        {
+          "name": "selection_count K",
+          "type": "u8 wire / signed i8 local",
+          "destination": "EBP-2",
+          "persistent_count_store": false
+        },
+        {
+          "name": "selections",
+          "type": "8 BYTE slots",
+          "destination": "0064ACD8..0064ACDF",
+          "reads": "min(8,max(0,signextend_i8(K))); unread slots explicitly zeroed",
+          "exact_end_or_capacity_validation": "none in finite handler; known AD368 producer constraints separate"
+        }
+      ],
+      "order": "4A9F2F parser(ssccccccc) → fixed8-iteration signedK loop → own return4A9F69",
+      "count_effect": "K is stack BYTE only, not count64AFD0 or persistent selection count. K80..FF signednegative consumes0/zeros8; K09..7F consumes8 and leaves excess sourcebytes unknown/unvalidated.",
+      "retained_known_fields": [
+        "64ABCA owner display",
+        "64ACCA mode BYTE",
+        "64ACC9 projected map BYTE",
+        "64ACCC summary0",
+        "64ACD0..64ACD3 summaries",
+        "64ACCB mode highBYTE",
+        "64ABF1..64ABF3 capacity highbytes"
+      ],
+      "UI_effect": "No4A9030 call or other directUI call in this complete branch; only typed reader calls and directzero writes. No ready clear/phase change/ACK qualified.",
+      "qualification": "No attribute/capacity clamp or exact-end check in finite path; server u8producer/capacity policy separate. Actual buffers/runtime validity unknown."
+    },
+    "preserved_scope": "Retained means no explicit destination in these finite handler paths, excluding unknown string backend effects; not a whole-image writer-absence claim."
+  },
+  "boundaries": {
+    "reader_inheritance": "Existing4A2A50 typed c/h/d direct stores and EAX cursor return reused. No body expansion for other format types.",
+    "strings": "s receives capacity/destination args; first unknown external call4A2AF9→77409B70 STOP. Conditional continuation4A2B04 writes dest+capacity-1=0, then4A2B09→774095E0 STOP; no inferred strcpy/strchr names/codec or actual copied-byte count.",
+    "direct_UI": "4A9EEC→4A9030 complete1byteRET reused; no unknown virtual/private callee on this UI edge.",
+    "no_execution": "No Native process/GUI/input/provider/SQL/new capture; no actual phase/global/string/UI result qualified.",
+    "last_direct_stores": [
+      "4A9E7F roomDWORD (gate)",
+      "4A2A93 typed BYTE",
+      "4A2AB1 local mapWORD",
+      "4A9F9B projectedBYTE",
+      "4A9F58 unread selectionBYTE zero"
+    ]
+  }
+}

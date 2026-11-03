@@ -1,0 +1,4858 @@
+{
+  "package_status": "未匯入、未接線",
+  "observed_at_utc": "2026-10-14T00:13:05.193208700Z",
+  "seed_comparisons": {
+    "lito_battle_rule": {
+      "seed_count": 40,
+      "current_count": 40,
+      "changed_or_extra_keys": [],
+      "missing_seed_keys": [],
+      "exact_in_seed_columns": true
+    },
+    "lito_battle_object": {
+      "seed_count": 26,
+      "current_count": 26,
+      "changed_or_extra_keys": [],
+      "missing_seed_keys": [],
+      "exact_in_seed_columns": true
+    },
+    "lito_battle_spawn": {
+      "seed_count": 25,
+      "current_count": 25,
+      "changed_or_extra_keys": [],
+      "missing_seed_keys": [],
+      "exact_in_seed_columns": true
+    },
+    "lito_battle_player_spawn": {
+      "seed_count": 380,
+      "current_count": 380,
+      "changed_or_extra_keys": [],
+      "missing_seed_keys": [],
+      "exact_in_seed_columns": true
+    },
+    "lito_tournament_shop": {
+      "seed_count": 16,
+      "current_count": 16,
+      "changed_or_extra_keys": [],
+      "missing_seed_keys": [],
+      "exact_in_seed_columns": true
+    }
+  },
+  "table_counts": {
+    "lito_battle_rule": 40,
+    "lito_battle_object": 26,
+    "lito_battle_spawn": 25,
+    "lito_battle_player_spawn": 380,
+    "lito_tournament_shop": 16,
+    "commands": 3,
+    "lito_source_server": 8
+  },
+  "validation": [
+    {
+      "table": "lito_battle_rule",
+      "key": "0|565",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "0|566",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "0|569",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "0|570",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|504",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|505",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|506",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|508",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|509",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|514",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|516",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|525",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|526",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|529",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|531",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|534",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|551",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|552",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "1|564",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|513",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|518",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|519",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|520",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|521",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|522",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|527",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|553",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "2|554",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "3|547",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "3|563",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "3|573",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "4|540",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|510",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|512",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|517",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|524",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|528",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|530",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|532",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_rule",
+      "key": "5|535",
+      "checks": {
+        "native_map_registered": true,
+        "mode_category_matches": true
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|547|siege-inner",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|547|siege-outer-left",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|547|siege-outer-right",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|563|siege-inner",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|563|siege-outer-left",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|563|siege-outer-right",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|573|siege-inner",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|573|siege-outer-left",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "3|573|siege-outer-right",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "4|540|time-start",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|510|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|510|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|512|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|512|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|517|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|517|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|524|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|524|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|528|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|528|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|530|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|530|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|532|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|532|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|535|honor-blue",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_object",
+      "key": "5|535|honor-red",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_hp_recovered": false,
+        "hp_origin": "current project setting; no native value recovered"
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|1|0",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|1|1",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|0",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|1",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|2",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|3",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|4",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|5",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|2|6",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|0",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|1",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|2",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|3",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|4",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|5",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|6",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|7",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|3|8",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|0",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|1",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|2",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|3",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|4",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|5",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_spawn",
+      "key": "2|0|4|6",
+      "checks": {
+        "native_map_registered": null,
+        "shared_npc_id_exists": true,
+        "map_specific_spawn_recovered": false
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|8",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|565|9",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|8",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|566|9",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|8",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|569|9",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|8",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "0|570|9",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|504|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|505|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|506|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|508|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|509|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|514|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|516|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|525|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|526|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|529|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|531|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|534|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|551|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|552|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "1|564|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|513|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|518|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|519|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|520|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|521|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|522|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|527|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|553|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "2|554|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|547|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|563|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "3|573|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|10",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|11",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|12",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|13",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|14",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|15",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|16",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|17",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|18",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|19",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|20",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|21",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|22",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|23",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|24",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|25",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|26",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|27",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|28",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|29",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|30",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|31",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|32",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|33",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|34",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|35",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|36",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|37",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|38",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|39",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|40",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|41",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|42",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|43",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|44",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|45",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|46",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|47",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|48",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|49",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|50",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|51",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|52",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|53",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|54",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|55",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|56",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|57",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|58",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|59",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|8",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "4|540|9",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|510|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|512|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|517|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|524|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|528|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|530|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|532|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|0",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|1",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|2",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|3",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|4",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|5",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|6",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_battle_player_spawn",
+      "key": "5|535|7",
+      "checks": {
+        "native_map_registered": true,
+        "standing_resource_geometry": true,
+        "original_spawn_coordinate_recovered": false,
+        "note_qualification": "native default note means compatible derived/runtime-adjusted deployment, not original server coords"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40007",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40010",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40011",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40012",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40013",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40014",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40015",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40016",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40017",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40068",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40088",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40317",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40318",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40319",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40744",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "lito_tournament_shop",
+      "key": "40746",
+      "checks": {
+        "item_in_shared_namespace": true,
+        "price_origin": "retained2003-series project setting, not bin table"
+      }
+    },
+    {
+      "table": "commands",
+      "key": "de",
+      "checks": {}
+    },
+    {
+      "table": "commands",
+      "key": "item",
+      "checks": {}
+    },
+    {
+      "table": "commands",
+      "key": "spawn",
+      "checks": {}
+    },
+    {
+      "table": "lito_source_server",
+      "key": "1",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "2",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "3",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "4",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "5",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "6",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "7",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    },
+    {
+      "table": "lito_source_server",
+      "key": "8",
+      "checks": {
+        "fixed_source_namespace": true
+      }
+    }
+  ],
+  "settlement_count_only": 0,
+  "player_contents_exported": false
+}

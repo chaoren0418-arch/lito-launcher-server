@@ -1,0 +1,68 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-control\\build\\candidate-invisibility-control.jar",
+    "sha256": "c7f2ad7ad7d527e5f2e6f86efbf3f42d48a4828e29543d9216d09ddec9f56729"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\candidate-triple-control.jar",
+    "sha256": "2fad5a7454e0369600ee97c09dd35fb03d53199835a261dc0fe758b170db62ac"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/CombatRules.class"
+  ],
+  "added": [
+    "local/lito381/server/CombatTripleArrow$Scope.class",
+    "local/lito381/server/CombatTripleArrow.class"
+  ],
+  "C0_main_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\build.py",
+      "sha256": "e9b8392909201266e94983cb786825bfcc80cae248d217fb9811d490b124817b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\CombatTripleArrow.java",
+      "sha256": "7568dda3f367838c2c760665596468fb0815fc572f363af4fa036b9d65ec027e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\SolidMethods.java",
+      "sha256": "9023918068f95597719927c798b68e98957c511ecc69d2057081bf61213727e6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\TripleMethods.java",
+      "sha256": "89068dc0f44b92bbe1bf64c5e75d4c921ce0e3d7dea0bf70ffa97224d7b7a5d9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\original\\CombatRules.java",
+      "sha256": "648920410e1e463519feea35b95b32f7c7b076ea2688721b6d82dadc747e89ca"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\source-reference\\ConfigSkill.java",
+      "sha256": "ffc81f59cdd57d18371538b92ab0d6b591009fbb37355be86737adbc414e7d7e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\source-reference\\L1AttackPc.java",
+      "sha256": "3fdc94cedc6c3ec803e731be238093bd7fe55c432cf84be6822a079a1627ddfc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\source-reference\\SourceTripleReference.java",
+      "sha256": "3ca267f4c63396f7994fbb08232e9e3f33b5629a1c0ac37bfba75d1684a44a81"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\sources\\CombatRules.java",
+      "sha256": "7801d179055fc63bc4520f0893882dc5527667f342899b35d86cb783ae567090"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\inputs\\sources\\CombatTripleArrow.java",
+      "sha256": "7568dda3f367838c2c760665596468fb0815fc572f363af4fa036b9d65ec027e"
+    }
+  ]
+}

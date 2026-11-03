@@ -1,0 +1,62 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\de-native-item-skill-material-development\\builds\\20261018T052807601508Z\\candidate-NATIVE-ITEM-WEAPON-MATERIAL-unqualified.jar",
+    "sha256": "df9464f06c41821f3abf7c29ccc5876abe1ead66e570a40308f1274e90521a37"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\candidate-magical-weapon.jar",
+    "sha256": "97810b95445df4b5cdaf2cb7077a4423819e0a7cf94db389976b66ae8c9b55a8"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeCastMaterial$Cast.class",
+    "local/lito381/server/NativeCastMaterial.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "fresh": [
+    "local/lito381/server/NativeCastMaterial$Effect.class",
+    "local/lito381/server/NativeMagicalWeaponAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\build.py",
+      "sha256": "2cac5761092951681a11295917ab9b7b880ef68574a23f8e2203797ea3349aeb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\MagicalWeaponMethods.java",
+      "sha256": "a6012e5436d7758e73239a5a36a15a109b7c3c48eb7ac3f1a99eb94e0cae1bc7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\NativeMagicalWeaponAction.java",
+      "sha256": "228ae1d6943e25753468f6a5505207993a7d3689f1efb6fc89cb3f61107cd55d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\original\\NativeCastMaterial.java",
+      "sha256": "4fffc3507270e2ad1f31bfa56107d2a7e3347db3b30b9beb2e383bdc5c8e8451"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "626dd83f395a183085413cf6275c141033627a8d6d10817d64dd60ca27ec8377"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\sources\\NativeCastMaterial.java",
+      "sha256": "2fa9bd4e6bdc57d8fccb54131d47c3d8c82dfa2c13d08b6dc532deccfcef9026"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "8c8957cc22923b26ed6fd618f569542ce135a240c2e30a2c491296ae02af7e36"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build-repro\\inputs\\sources\\NativeMagicalWeaponAction.java",
+      "sha256": "228ae1d6943e25753468f6a5505207993a7d3689f1efb6fc89cb3f61107cd55d"
+    }
+  ]
+}

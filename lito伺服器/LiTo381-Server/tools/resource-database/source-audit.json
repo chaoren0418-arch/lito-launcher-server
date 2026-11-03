@@ -1,0 +1,22 @@
+{
+  "source_count": 596,
+  "changed_sources": [
+    {
+      "source_id": 564,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite09.idx",
+      "expected": "bb69b91211a2b6f5ab7dacf33cf71d98298b30d6325543d8891b1d571c3d39ff",
+      "actual": "ae22ef63f9048abd57453d155b33f522c5bdde0798fbeede0a080d6bdb604df9",
+      "bytes": 301284
+    },
+    {
+      "source_id": 565,
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+      "expected": "1f2d35c6d7b60dba151cd6f2cce46d3573f533d814cd2910a10fa296f5cea9d7",
+      "actual": "baa8f984dcb17d5ec8fcf55e913f30e49ae2c06d3a80f3467bd240c060bb6188",
+      "bytes": 407758832
+    }
+  ],
+  "assets_checked": 196,
+  "failed_assets": [],
+  "qualification": "Historic package preserved; selected currently indexed assets must independently match payload hash"
+}

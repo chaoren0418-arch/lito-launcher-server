@@ -1,0 +1,159 @@
+{
+  "updated_at": "2026-10-05T22:38:35.068888+08:00",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "expected_bytes": 7094272,
+    "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "verified": true
+  },
+  "range_checks": [
+    {
+      "VA": "0043F6C0",
+      "SHA": "E8AAE0F390DFB06E4F2D797F7DFC0289A2C15636B4AE7926B824DD5AC5A1D8BD",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00492ACF",
+      "SHA": "E34F3C6B483355196AA152190A53588A83ABA5CB4CDCFD6B53D23CB9C9D7C91B",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00492D3A",
+      "SHA": "6ADE789EF6AC154623AED4019D09FF0B6C5841ECE6801656D15285BBF5A355FC",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00492EDA",
+      "SHA": "DE8A9DB034CA48A2BF7573AFFB9172F696E87EC35321F716B1D23D96F931DF96",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004AEE70",
+      "SHA": "15D6F35EE1F50997609BF6405619C2A3DF5101DF57BD48B4B56C440C222D4819",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004C9220",
+      "SHA": "EAE486915926179FC1C8CC2080CD464ED320D053AB7E20D214DA9257D7957E30",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004CD050",
+      "SHA": "49C554FDACFABFE0262239E59411C9C52BF3763866E2BF537DACA83FC65084BD",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004C9190",
+      "SHA": "323436A80EAE65CDF2507392FB87182386AF059DFDD1F5C9F9AC14F470A8298A",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004CCED0",
+      "SHA": "79DA532C69A9EFBF6CDFEAEE5530D9D1E284ABF554131ADD748CC1A5A4798C34",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00450090",
+      "SHA": "9D1255AD8BAC1FF8C80600E91C7022EF37818EA2FF268CCA302BEED82034C493",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004CD1C0",
+      "SHA": "1AE72F3308A14643AB5E025963FB481D58C36CB4D40C4FA6005CC14F3C8758E3",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004CD120",
+      "SHA": "E62FFCFDB8403D4B6E5C19F0C4182FA687805EE02DD7589B891465D19ADC621F",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004AEF30",
+      "SHA": "2D52570C840DD96D5A9D9783AA27871E80AB2E12E027F4124F66C15F522F446D",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004AA8B0",
+      "SHA": "739D91FCF8DE46BE362DF4DC36C33FF5F6501E63DEEE9971C5F34CCEE76FAAAB",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "0046A260",
+      "SHA": "6FF097912E5E889E7D7317695FA9FA3B3F27880EECB5560E96607060335075B6",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B29DB",
+      "SHA": "6BB96775FD137D624E9A0EDAE8B5E4F6ACFDA9BBB80FD902768D600972019BA3",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B313F",
+      "SHA": "79BDE3790B3F5950F408128994FBCD2DF6B7EFE1D980ECBB85517413AC677F03",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B2AD3",
+      "SHA": "F6D463C6C8E1346EB4ACFEA0E2E1A825228B7E2D4564C12EF8226F765EBE89D2",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B3260",
+      "SHA": "29A87AF13B1C709F401703F5933549A82882C19BF3AD746E1100348745B2C3D6",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B35B4",
+      "SHA": "29A87AF13B1C709F401703F5933549A82882C19BF3AD746E1100348745B2C3D6",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B348E",
+      "SHA": "9685B267886E548ABF58B64A83556CA6584D3C227D457497452263DC045DEB8F",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "004B36D2",
+      "SHA": "C979D5F872609B04C5D8F05F95A4BD0694A914BC3D84231FF2D79F8FA6EA3AD4",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00834548",
+      "SHA": "B393978842A0FA3D3E1470196F098F473F9678E72463CB65EC4AB5581856C2E4",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00635B80",
+      "SHA": "27E04A2A3BDE1DB9085AF54BB1746592FDA92E9A205F5B96A37F6D23F767DAEC",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "0075F694",
+      "SHA": "6E340B9CFFB37A989CA544E6BB780A2C78901D3FB33738768511A30617AFA01D",
+      "matches_fixed_PE": true
+    },
+    {
+      "VA": "00634580",
+      "SHA": "6CC1C20787A57380BDD0B43FDE920383ECC410A257B870B373586CB93802DE6D",
+      "matches_fixed_PE": true
+    }
+  ],
+  "unknown_spell_literal_bytes": "756e6b6e6f776e207370656c6c00",
+  "unknown_spell_literal_sha256": "6CC1C20787A57380BDD0B43FDE920383ECC410A257B870B373586CB93802DE6D",
+  "explicit_slots": 32,
+  "runtime_unknown_slots": [
+    21,
+    22,
+    23,
+    29,
+    30,
+    37,
+    38,
+    39
+  ],
+  "old_tests_rerun": false,
+  "resources_reextracted": false,
+  "scope": "New bounded evidence checks only; no runtime success asserted."
+}

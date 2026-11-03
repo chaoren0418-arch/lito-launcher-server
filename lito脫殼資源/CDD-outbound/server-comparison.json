@@ -1,0 +1,20 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-DD-edit-network.json",
+    "bytes": 10460,
+    "sha256": "A13ECBFE9DC9BFCBA1D32649C829FB960DA995591C59C8613BB403FA4D62C168"
+  },
+  "static_contract": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\static-edit-contract.json",
+    "bytes": 23401,
+    "sha256": "623A955A7BC07897A56B4C753230E1A4E0688A483A0D4B62A3D0E8140115D970"
+  },
+  "grammar": "C_DD opcode + zMS950 name + u8 attrs + zMS950 password + u16LE capacity; compact6+N+P body/8+N+P frame. Extended +fouru8 options +u8count +K nonzero bytes:11+N+P+K body/13+N+P+K frame. N1..89/P0..4; exact end/byte roundtrip/control check. attrs only0x3c and password-present bit matches nonempty password; parser capacity2..200, ordinary edit2..100.",
+  "guards": "Parse before phase guard; ordinary ROOM only, currentRoomId implied/no request roomID. updateSettings requires existing room, requester owner, !battleStarted, combatants<=new combatant capacity. Compact preserves option0/four options/selections; extended replaces four options/list but mode still preserved. Known all-zero extended tail accepted separately.",
+  "publication": "Accepted updateSettings commit precedes resetRoomReadyAfterSettingsChange then room-member D5summary0/config1; no explicit edit ACK/CC/CF. Invalid capacity/nonowner/battle/capacity failure -> self D5 snapshot when reaching ordinary rejection branch; invalid phase silent return; malformed input throws before these paths. Source-only guards not automatically dynamic.",
+  "Native_match": "Threeconditionalislands serializeknowncompact/extended shapes; legacynativefivezeroBYTES equalsserverall-zerooptionsK0 acceptedtail. No newlayout/opcode correction.",
+  "source_only_domain": "name1..89/password0..4 MS950roundtrip/nocontrol; attrs&~3C=0 andpasswordbit4matchesnonempty; parsercap2..200/ordinary2..100; K0..8/exacttail/nonzero; allzerooptiontailallowed elseoptionsdomains7/2/1..127/31.",
+  "Native_limits": "Observedconditionalcapacity2..200 only, notserverordinary2..100. UpstreamUIvirtualreturns/stringbounds/optionsdomainunknown; do notturnthemintoNativevalidatedsourceauthority.",
+  "ACK": "InheritedBatch23D5success/rejectidenticalsnapshot bodies areindependentreceives, no editACK. Sendattempt doesnotprovehubcommit/readyreset/broadcast/delivery.",
+  "actualNative_or_extended_test": false
+}

@@ -1,0 +1,86 @@
+{
+  "qualification": "Existing accepted registry index helper evidence only; no new target expansion",
+  "manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges.json",
+    "bytes": 220872,
+    "sha256": "0F20732D197F85B790D8BA93FA0E2A03186DA08BBE760A75A71D30F2D0985D20"
+  },
+  "range": {
+    "va": "004EBB50",
+    "rva": "000EBB50",
+    "section": "   \u0000    ",
+    "file_offset": "000EBB50",
+    "raw_backed": true,
+    "label": "registry_find_index",
+    "kind": "code",
+    "bytes": 27,
+    "output": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004EBB50-1B.bin",
+      "bytes": 27,
+      "sha256": "9E284279358FA313F06C1E2C756EAA9A4CD52419D14AA8A49E6AC7EC1D8BDC9A"
+    },
+    "decoded_bytes": 27,
+    "instructions": [
+      {
+        "va": "004EBB50",
+        "raw_hex": "33c0",
+        "mnemonic": "xor",
+        "operands": "eax, eax"
+      },
+      {
+        "va": "004EBB52",
+        "raw_hex": "ba546b8300",
+        "mnemonic": "mov",
+        "operands": "edx, 0x836b54"
+      },
+      {
+        "va": "004EBB57",
+        "raw_hex": "390a",
+        "mnemonic": "cmp",
+        "operands": "dword ptr [edx], ecx"
+      },
+      {
+        "va": "004EBB59",
+        "raw_hex": "740f",
+        "mnemonic": "je",
+        "operands": "0x4ebb6a"
+      },
+      {
+        "va": "004EBB5B",
+        "raw_hex": "83c204",
+        "mnemonic": "add",
+        "operands": "edx, 4"
+      },
+      {
+        "va": "004EBB5E",
+        "raw_hex": "40",
+        "mnemonic": "inc",
+        "operands": "eax"
+      },
+      {
+        "va": "004EBB5F",
+        "raw_hex": "81fa646b8300",
+        "mnemonic": "cmp",
+        "operands": "edx, 0x836b64"
+      },
+      {
+        "va": "004EBB65",
+        "raw_hex": "7cf0",
+        "mnemonic": "jl",
+        "operands": "0x4ebb57"
+      },
+      {
+        "va": "004EBB67",
+        "raw_hex": "83c8ff",
+        "mnemonic": "or",
+        "operands": "eax, 0xffffffff"
+      },
+      {
+        "va": "004EBB6A",
+        "raw_hex": "c3",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ]
+  }
+}

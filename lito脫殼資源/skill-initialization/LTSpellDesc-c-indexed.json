@@ -1,0 +1,805 @@
+{
+  "source": {
+    "namespace": "native",
+    "archive": "LTtext",
+    "row": 282,
+    "name": "LTSpellDesc-c.tbl",
+    "offset": 221972,
+    "bytes": 3095,
+    "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+    "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00282-LTSpellDesc-c.tbl",
+      "bytes": 3095,
+      "sha256": "37D7254C37FEC36BD092B1F74C13868B9D2B770398D8900691526F279D56AEB9"
+    },
+    "encoding": "L1",
+    "selection_reason": "complete LTtext/LTicon corpus",
+    "ambiguous_name": false,
+    "decoded": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00282-LTSpellDesc-c.tbl",
+      "bytes": 3095,
+      "sha256": "6C8BBA0B5BFAC1696ED52C90346C1F405EBBF37FA7C636D990F0865ED6C54DFC"
+    },
+    "text_view": {
+      "assumed_code_page": 950,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\text-view\\LTtext\\row00282-LTSpellDesc-c.tbl.utf8.txt",
+        "bytes": 3822,
+        "sha256": "B293C76026A44AB828F30F7B98FED4A45D73A39A7A397B71F7CC7A02CAB96B02"
+      },
+      "binary_authoritative": true
+    }
+  },
+  "declared_count": 176,
+  "nonempty_rows": 147,
+  "rows": [
+    {
+      "index": 0,
+      "text_bytes_hex": "aaecafc5aa76c2a1b34e2028342f3029",
+      "cp950_text": "初級治癒術 (4/0)"
+    },
+    {
+      "index": 1,
+      "text_bytes_hex": "a4e9a5fab34e2028342f3029",
+      "cp950_text": "日光術 (4/0)"
+    },
+    {
+      "index": 2,
+      "text_bytes_hex": "ab4fc540b86e2028382f3029",
+      "cp950_text": "保護罩 (8/0)"
+    },
+    {
+      "index": 3,
+      "text_bytes_hex": "a5fabd622028332f3029",
+      "cp950_text": "光箭 (3/0)"
+    },
+    {
+      "index": 4,
+      "text_bytes_hex": "abfca977b6c7b065202831302f3029",
+      "cp950_text": "指定傳送 (10/0)"
+    },
+    {
+      "index": 5,
+      "text_bytes_hex": "a642bd622028342f3029",
+      "cp950_text": "冰箭 (4/0)"
+    },
+    {
+      "index": 6,
+      "text_bytes_hex": "adb7a4622028342f3029",
+      "cp950_text": "風刃 (4/0)"
+    },
+    {
+      "index": 7,
+      "text_bytes_hex": "afabb874aa5abeb9202831302f3029",
+      "cp950_text": "神聖武器 (10/0)"
+    },
+    {
+      "index": 8,
+      "text_bytes_hex": "b8d1ac72b34e202831352f3029",
+      "cp950_text": "解毒術 (15/0)"
+    },
+    {
+      "index": 9,
+      "text_bytes_hex": "b448a74ebed4b758202831302f3029",
+      "cp950_text": "寒冷戰慄 (10/0)"
+    },
+    {
+      "index": 10,
+      "text_bytes_hex": "ac72a947202831302f31302f3129",
+      "cp950_text": "毒咒 (10/10/1)"
+    },
+    {
+      "index": 11,
+      "text_bytes_hex": "c0c0a6fcc55daa6baa5abeb9c6f9202831352f3029",
+      "cp950_text": "擬似魔法武器ア (15/0)"
+    },
+    {
+      "index": 12,
+      "text_bytes_hex": "b54ca9d2b950a7ceb34e202831352f3029",
+      "cp950_text": "無所遁形術 (15/0)"
+    },
+    {
+      "index": 13,
+      "text_bytes_hex": "ad74adabb16aa4c6202831302f353029",
+      "cp950_text": "負重強化 (10/50)"
+    },
+    {
+      "index": 14,
+      "text_bytes_hex": "a4f5bd622028382f3029",
+      "cp950_text": "火箭 (8/0)"
+    },
+    {
+      "index": 15,
+      "text_bytes_hex": "a661babba4a7a4fa2028382f3029",
+      "cp950_text": "地獄之牙 (8/0)"
+    },
+    {
+      "index": 16,
+      "text_bytes_hex": "b7a5a5fab970b971202832302f3029",
+      "cp950_text": "極光雷電 (20/0)"
+    },
+    {
+      "index": 17,
+      "text_bytes_hex": "b05fa6baa65ea5cdb34e202832302f3029",
+      "cp950_text": "起死回生術 (20/0)"
+    },
+    {
+      "index": 18,
+      "text_bytes_hex": "a4a4afc5aa76c2a1b34e202831352f3029",
+      "cp950_text": "中級治癒術 (15/0)"
+    },
+    {
+      "index": 19,
+      "text_bytes_hex": "eeeeaabca947b34e202832302f3029",
+      "cp950_text": "闇盲咒術 (20/0)"
+    },
+    {
+      "index": 20,
+      "text_bytes_hex": "f15aa5d2c540abf9202832302f3029",
+      "cp950_text": "鎧甲護持 (20/0)"
+    },
+    {
+      "index": 21,
+      "text_bytes_hex": "b448a642aef0aea7202832302f3029",
+      "cp950_text": "寒冰氣息 (20/0)"
+    },
+    {
+      "index": 22,
+      "text_bytes_hex": "afe0b671b750b4fa2028382f3029",
+      "cp950_text": "能量感測 (8/0)"
+    },
+    {
+      "index": 24,
+      "text_bytes_hex": "bf55bf4eaabaa4f5b279202832302f3029",
+      "cp950_text": "燃燒的火球 (20/0)"
+    },
+    {
+      "index": 25,
+      "text_bytes_hex": "b371ba5aaef0afdfb34e202835302f3029",
+      "cp950_text": "通暢氣脈術 (50/0)"
+    },
+    {
+      "index": 26,
+      "text_bytes_hex": "c361aaabb34e202833322f302f3129",
+      "cp950_text": "壞物術 (32/0/1)"
+    },
+    {
+      "index": 27,
+      "text_bytes_hex": "a76ca6e5b0ada4a7a76b202831352f3029",
+      "cp950_text": "吸血鬼之吻 (15/0)"
+    },
+    {
+      "index": 28,
+      "text_bytes_hex": "bd77b374b34e202832302f302f3129",
+      "cp950_text": "緩速術 (20/0/1)"
+    },
+    {
+      "index": 29,
+      "text_bytes_hex": "a9a5a863202832342f3029",
+      "cp950_text": "岩牢 (24/0)"
+    },
+    {
+      "index": 30,
+      "text_bytes_hex": "c55daa6babccbbd9202832302f302f3129",
+      "cp950_text": "魔法屏障 (20/0/1)"
+    },
+    {
+      "index": 31,
+      "text_bytes_hex": "addfb751b34e2028352f333029",
+      "cp950_text": "冥想術 (5/30)"
+    },
+    {
+      "index": 32,
+      "text_bytes_hex": "a4eca444a5ecaabab641a947202838302f302f3229",
+      "cp950_text": "木乃伊的詛咒 (80/0/2)"
+    },
+    {
+      "index": 33,
+      "text_bytes_hex": "b7a5b944b8a8b970202832342f3029",
+      "cp950_text": "極道落雷 (24/0)"
+    },
+    {
+      "index": 34,
+      "text_bytes_hex": "b0aaafc5aa76c2a1b34e202832302f3029",
+      "cp950_text": "高級治癒術 (20/0)"
+    },
+    {
+      "index": 35,
+      "text_bytes_hex": "b067be79b34e202833302f32302f3129",
+      "cp950_text": "迷魅術 (30/20/1)"
+    },
+    {
+      "index": 36,
+      "text_bytes_hex": "b874bce4a4a7a5fa202832302f3029",
+      "cp950_text": "聖潔之光 (20/0)"
+    },
+    {
+      "index": 37,
+      "text_bytes_hex": "a642c040202832342f3029",
+      "cp950_text": "冰錐 (24/0)"
+    },
+    {
+      "index": 38,
+      "text_bytes_hex": "c55da44fb9dca8fa2028312f353029",
+      "cp950_text": "魔力奪取 (1/50)"
+    },
+    {
+      "index": 39,
+      "text_bytes_hex": "b6c2eeeea4a7bc76202831352f302f3129",
+      "cp950_text": "黑闇之影 (15/0/1)"
+    },
+    {
+      "index": 40,
+      "text_bytes_hex": "b379abcdb34e2028352f38302f3129",
+      "cp950_text": "造屍術 (5/80/1)"
+    },
+    {
+      "index": 41,
+      "text_bytes_hex": "c5e9be7ab16ab0b7b34e202835302f3029",
+      "cp950_text": "體魄強健術 (50/0)"
+    },
+    {
+      "index": 42,
+      "text_bytes_hex": "a55bb374b34e202834302f3029",
+      "cp950_text": "加速術 (40/0)"
+    },
+    {
+      "index": 43,
+      "text_bytes_hex": "c55daa6bacdbaef8b34e202834302f302f3229",
+      "cp950_text": "魔法相消術 (40/0/2)"
+    },
+    {
+      "index": 44,
+      "text_bytes_hex": "a661b5f5b34e202833322f3029",
+      "cp950_text": "地裂術 (32/0)"
+    },
+    {
+      "index": 45,
+      "text_bytes_hex": "af50aaa2b34e202833322f3029",
+      "cp950_text": "烈炎術 (32/0)"
+    },
+    {
+      "index": 46,
+      "text_bytes_hex": "ae7aa4c6b34e202832302f302f3129",
+      "cp950_text": "弱化術 (20/0/1)"
+    },
+    {
+      "index": 47,
+      "text_bytes_hex": "afacbad6c55daa6baa5abeb9202833302f3029",
+      "cp950_text": "祝福魔法武器 (30/0)"
+    },
+    {
+      "index": 48,
+      "text_bytes_hex": "c5e9a44fa65eb45fb34e202835302f333029",
+      "cp950_text": "體力回復術 (50/30)"
+    },
+    {
+      "index": 49,
+      "text_bytes_hex": "a642a5d9b3f2c658202833362f3029",
+      "cp950_text": "冰矛圍籬 (36/0)"
+    },
+    {
+      "index": 50,
+      "text_bytes_hex": "a56cb3eab34e2833302f33302f3329",
+      "cp950_text": "召喚術(30/30/3)"
+    },
+    {
+      "index": 51,
+      "text_bytes_hex": "afabb874af65a8ab202831352f3029",
+      "cp950_text": "神聖疾走 (15/0)"
+    },
+    {
+      "index": 52,
+      "text_bytes_hex": "c073b1b2adb7202834302f3029",
+      "cp950_text": "龍捲風 (40/0)"
+    },
+    {
+      "index": 53,
+      "text_bytes_hex": "b16aa44fa55bb374b34e202836302f3029",
+      "cp950_text": "強力加速術 (60/0)"
+    },
+    {
+      "index": 54,
+      "text_bytes_hex": "a867bcc9b34e202834302f3029",
+      "cp950_text": "狂暴術 (40/0)"
+    },
+    {
+      "index": 55,
+      "text_bytes_hex": "af65af66b34e202832302f302f3129",
+      "cp950_text": "疾病術 (20/0/1)"
+    },
+    {
+      "index": 56,
+      "text_bytes_hex": "a5feb3a1aa76c2a1b34e202834382f3029",
+      "cp950_text": "全部治癒術 (48/0)"
+    },
+    {
+      "index": 57,
+      "text_bytes_hex": "a4f5a863202836302f3029",
+      "cp950_text": "火牢 (60/0)"
+    },
+    {
+      "index": 58,
+      "text_bytes_hex": "a642b3b7bcc9202836302f313029",
+      "cp950_text": "冰雪暴 (60/10)"
+    },
+    {
+      "index": 59,
+      "text_bytes_hex": "c1f4a8adb34e202831352f302f3129",
+      "cp950_text": "隱身術 (15/0/1)"
+    },
+    {
+      "index": 60,
+      "text_bytes_hex": "aaf0a5cdb34e202835302f3029",
+      "cp950_text": "返生術 (50/0)"
+    },
+    {
+      "index": 61,
+      "text_bytes_hex": "be5fb5f5b34e202834302f3029",
+      "cp950_text": "震裂術 (40/0)"
+    },
+    {
+      "index": 62,
+      "text_bytes_hex": "aa76c2a1afe0b671adb7bcc9202833322f302f3129",
+      "cp950_text": "治癒能量風暴 (32/0/1)"
+    },
+    {
+      "index": 63,
+      "text_bytes_hex": "c55daa6babcaa64c202833302f302f3129",
+      "cp950_text": "魔法封印 (30/0/1)"
+    },
+    {
+      "index": 64,
+      "text_bytes_hex": "b970be5eadb7bcc9202835322f3029",
+      "cp950_text": "雷霆風暴 (52/0)"
+    },
+    {
+      "index": 65,
+      "text_bytes_hex": "a849bacea4a7c3fa202835302f352f3129",
+      "cp950_text": "沉睡之霧 (50/5/1)"
+    },
+    {
+      "index": 66,
+      "text_bytes_hex": "c5dca7ceb34e202838302f302f3129",
+      "cp950_text": "變形術 (80/0/1)"
+    },
+    {
+      "index": 67,
+      "text_bytes_hex": "b874b5b2acc9202833302f302f3229",
+      "cp950_text": "聖結界 (30/0/2)"
+    },
+    {
+      "index": 68,
+      "text_bytes_hex": "b6b0c5e9b6c7b065b34e202838302f302f3129",
+      "cp950_text": "集體傳送術 (80/0/1)"
+    },
+    {
+      "index": 69,
+      "text_bytes_hex": "a4f5adb7bcc9202835322f3029",
+      "cp950_text": "火風暴 (52/0)"
+    },
+    {
+      "index": 70,
+      "text_bytes_hex": "c3c4a4f4c1f7a4c6b34e202833302f302f3229",
+      "cp950_text": "藥水霜化術 (30/0/2)"
+    },
+    {
+      "index": 71,
+      "text_bytes_hex": "b16aa44fb54ca9d2b950a7ceb34e202833302f3029",
+      "cp950_text": "強力無所遁形術 (30/0)"
+    },
+    {
+      "index": 72,
+      "text_bytes_hex": "b3d0b379c55daa6baa5abeb920283230302f302f313029",
+      "cp950_text": "創造魔法武器 (200/0/10)"
+    },
+    {
+      "index": 73,
+      "text_bytes_hex": "ac79ac50ab42202838302f3029",
+      "cp950_text": "流星雨 (80/0)"
+    },
+    {
+      "index": 74,
+      "text_bytes_hex": "b2d7b7a5aaf0a5cdb34e20283130302f302f3129",
+      "cp950_text": "終極返生術 (100/0/1)"
+    },
+    {
+      "index": 75,
+      "text_bytes_hex": "b6b0c5e9bd77b374b34e202833302f302f3129",
+      "cp950_text": "集體緩速術 (30/0/1)"
+    },
+    {
+      "index": 76,
+      "text_bytes_hex": "a873b7a5a5fab5f5b34e20283132352f353029",
+      "cp950_text": "究極光裂術 (125/50)"
+    },
+    {
+      "index": 77,
+      "text_bytes_hex": "b5b4b9efabccbbd9202833302f302f3229",
+      "cp950_text": "絕對屏障 (30/0/2)"
+    },
+    {
+      "index": 78,
+      "text_bytes_hex": "c646bbeeaa40b5d8202834302f3029",
+      "cp950_text": "靈魂昇華 (40/0)"
+    },
+    {
+      "index": 79,
+      "text_bytes_hex": "a642b3b7c1fcadb7202838302f3029",
+      "cp950_text": "冰雪颶風 (80/0)"
+    },
+    {
+      "index": 86,
+      "text_bytes_hex": "bdc4c0bba4a7b777202831352f3029",
+      "cp950_text": "衝擊之暈 (15/0)"
+    },
+    {
+      "index": 87,
+      "text_bytes_hex": "bc57b454a8bebf6d202831302f3029",
+      "cp950_text": "增幅防禦 (10/0)"
+    },
+    {
+      "index": 88,
+      "text_bytes_hex": "a679a8ebb2afa5d2202831302f3029",
+      "cp950_text": "尖刺盔甲 (10/0)"
+    },
+    {
+      "index": 89,
+      "text_bytes_hex": "b0eda954a8bec540202831302f31303029",
+      "cp950_text": "堅固防護 (10/100)"
+    },
+    {
+      "index": 90,
+      "text_bytes_hex": "a4cfc0bbabccbbd9202831302f31303029",
+      "cp950_text": "反擊屏障 (10/100)"
+    },
+    {
+      "index": 96,
+      "text_bytes_hex": "b774c1f4b34e202831352f3029",
+      "cp950_text": "暗隱術 (15/0)"
+    },
+    {
+      "index": 97,
+      "text_bytes_hex": "aafea55bbc40ac72202831302f312f3129",
+      "cp950_text": "附加劇毒 (10/1/1)"
+    },
+    {
+      "index": 98,
+      "text_bytes_hex": "bc76a4a7a8bec540202831352f3029",
+      "cp950_text": "影之防護 (15/0)"
+    },
+    {
+      "index": 99,
+      "text_bytes_hex": "b4a3b7d2c55da5db2028352f3029",
+      "cp950_text": "提煉魔石 (5/0)"
+    },
+    {
+      "index": 100,
+      "text_bytes_hex": "a6e6a8aba55bb374202832302f3029",
+      "cp950_text": "行走加速 (20/0)"
+    },
+    {
+      "index": 101,
+      "text_bytes_hex": "bf55bf4eb0aba7d3202832302f3529",
+      "cp950_text": "燃燒鬥志 (20/5)"
+    },
+    {
+      "index": 102,
+      "text_bytes_hex": "b774b6c2aabca947202832302f3029",
+      "cp950_text": "暗黑盲咒 (20/0)"
+    },
+    {
+      "index": 103,
+      "text_bytes_hex": "ac72a9caa9e8a7dc202832302f343029",
+      "cp950_text": "毒性抵抗 (20/40)"
+    },
+    {
+      "index": 104,
+      "text_bytes_hex": "c2f9adabaf7dc361202833302f302f3129",
+      "cp950_text": "雙重破壞 (30/0/1)"
+    },
+    {
+      "index": 105,
+      "text_bytes_hex": "b774bc76b07bc1d7202833302f3029",
+      "cp950_text": "暗影閃避 (30/0)"
+    },
+    {
+      "index": 106,
+      "text_bytes_hex": "b774bc76a4a7a4fa202833302f302f3229",
+      "cp950_text": "暗影之牙 (30/0/2)"
+    },
+    {
+      "index": 107,
+      "text_bytes_hex": "b77ca4dfa440c0bb202848502d312f4d502d3129",
+      "cp950_text": "會心一擊 (HP-1/MP-1)"
+    },
+    {
+      "index": 108,
+      "text_bytes_hex": "a44fb671b4a3a4c9202831352f3029",
+      "cp950_text": "力量提升 (15/0)"
+    },
+    {
+      "index": 109,
+      "text_bytes_hex": "b1d3b1b6b4a3a4c9202831302f3029",
+      "cp950_text": "敏捷提升 (10/0)"
+    },
+    {
+      "index": 110,
+      "text_bytes_hex": "b07bc1d7b4a3a4c9202832302f3029",
+      "cp950_text": "閃避提升 (20/0)"
+    },
+    {
+      "index": 112,
+      "text_bytes_hex": "baebb7c7a5d8bcd02028312f3029",
+      "cp950_text": "精準目標 (1/0)"
+    },
+    {
+      "index": 113,
+      "text_bytes_hex": "bf45c079a468aef0202834302f3029",
+      "cp950_text": "激勵士氣 (40/0)"
+    },
+    {
+      "index": 114,
+      "text_bytes_hex": "bffbc54ba468aef0202834302f3029",
+      "cp950_text": "鋼鐵士氣 (40/0)"
+    },
+    {
+      "index": 115,
+      "text_bytes_hex": "a949b3eab7f9a4cd202833302f3029",
+      "cp950_text": "呼喚盟友 (30/0)"
+    },
+    {
+      "index": 116,
+      "text_bytes_hex": "bdc4c0bba468aef0202834302f3029",
+      "cp950_text": "衝擊士氣 (40/0)"
+    },
+    {
+      "index": 117,
+      "text_bytes_hex": "b4a9c540b7f9a4cd202833302f3029",
+      "cp950_text": "援護盟友 (30/0)"
+    },
+    {
+      "index": 118,
+      "text_bytes_hex": "446976696e65205361637269666963652028312f3029",
+      "cp950_text": "Divine Sacrifice (1/0)"
+    },
+    {
+      "index": 119,
+      "text_bytes_hex": "6176617461723f2028302f3029",
+      "cp950_text": "avatar? (0/0)"
+    },
+    {
+      "index": 128,
+      "text_bytes_hex": "c55daa6ba8bebf6d202831302f302f3129",
+      "cp950_text": "魔法防禦 (10/0/1)"
+    },
+    {
+      "index": 129,
+      "text_bytes_hex": "a4dfc646c2e0b4ab2028302f3829",
+      "cp950_text": "心靈轉換 (0/8)"
+    },
+    {
+      "index": 130,
+      "text_bytes_hex": "a540acc9bef0aabaa949b3ea202831302f3029",
+      "cp950_text": "世界樹的呼喚 (10/0)"
+    },
+    {
+      "index": 131,
+      "text_bytes_hex": "a454adaba5da2831352f3029",
+      "cp950_text": "三重矢(15/0)"
+    },
+    {
+      "index": 132,
+      "text_bytes_hex": "ae7aa4c6c4dda9ca2831352f3029",
+      "cp950_text": "弱化屬性(15/0)"
+    },
+    {
+      "index": 133,
+      "text_bytes_hex": "c3e8a4cfae672831352f302f3129",
+      "cp950_text": "鏡反射(15/0/1)"
+    },
+    {
+      "index": 136,
+      "text_bytes_hex": "b262a4c6baebafab202831302f302f3129",
+      "cp950_text": "淨化精神 (10/0/1)"
+    },
+    {
+      "index": 137,
+      "text_bytes_hex": "c4dda9caa8bebf6d202832302f302f3129",
+      "cp950_text": "屬性防禦 (20/0/1)"
+    },
+    {
+      "index": 144,
+      "text_bytes_hex": "c4c0a9f1a4b8afc0202835302f302f3229",
+      "cp950_text": "釋放元素 (50/0/2)"
+    },
+    {
+      "index": 145,
+      "text_bytes_hex": "bbeec5e9c2e0b4ab2028302f343029",
+      "cp950_text": "魂體轉換 (0/40)"
+    },
+    {
+      "index": 146,
+      "text_bytes_hex": "b3e6c4dda9caa8bebf6d202833302f302f3129",
+      "cp950_text": "單屬性防禦 (30/0/1)"
+    },
+    {
+      "index": 147,
+      "text_bytes_hex": "a4f5b54baa5abeb9202831352f3029",
+      "cp950_text": "火焰武器 (15/0)"
+    },
+    {
+      "index": 148,
+      "text_bytes_hex": "adb7a4a7afabae67202831352f3029",
+      "cp950_text": "風之神射 (15/0)"
+    },
+    {
+      "index": 149,
+      "text_bytes_hex": "adb7a4a7af65a8ab202831352f3029",
+      "cp950_text": "風之疾走 (15/0)"
+    },
+    {
+      "index": 150,
+      "text_bytes_hex": "a46aa661a8bec540202831352f3029",
+      "cp950_text": "大地防護 (15/0)"
+    },
+    {
+      "index": 151,
+      "text_bytes_hex": "a661adb1bbd9c3aa202832302f302f3129",
+      "cp950_text": "地面障礙 (20/0/1)"
+    },
+    {
+      "index": 152,
+      "text_bytes_hex": "c55daa6baef8b0a3202831302f302f3129",
+      "cp950_text": "魔法消除 (10/0/1)"
+    },
+    {
+      "index": 153,
+      "text_bytes_hex": "a56cb3eac4dda9cabaebc646202833302f302f3229",
+      "cp950_text": "召喚屬性精靈 (30/0/2)"
+    },
+    {
+      "index": 154,
+      "text_bytes_hex": "af50aaa2aef0aea7202834302f3029",
+      "cp950_text": "烈炎氣息 (40/0)"
+    },
+    {
+      "index": 155,
+      "text_bytes_hex": "bcc9adb7a4a7b2b4202834302f3029",
+      "cp950_text": "暴風之眼 (40/0)"
+    },
+    {
+      "index": 156,
+      "text_bytes_hex": "a46aa661abccbbd9202832352f302f3229",
+      "cp950_text": "大地屏障 (25/0/2)"
+    },
+    {
+      "index": 157,
+      "text_bytes_hex": "a5cda952a4a7ac75202832302f3029",
+      "cp950_text": "生命之泉 (20/0)"
+    },
+    {
+      "index": 158,
+      "text_bytes_hex": "a46aa661aabaafacbad6202835302f3029",
+      "cp950_text": "大地的祝福 (50/0)"
+    },
+    {
+      "index": 159,
+      "text_bytes_hex": "a4f4a4a7a8bec540202833302f3029",
+      "cp950_text": "水之防護 (30/0)"
+    },
+    {
+      "index": 160,
+      "text_bytes_hex": "abcaa64cb854a661202838302f302f3329",
+      "cp950_text": "封印禁地 (80/0/3)"
+    },
+    {
+      "index": 161,
+      "text_bytes_hex": "a56cb3eab16aa44fc4dda9cabaebc646202838302f302f3229",
+      "cp950_text": "召喚強力屬性精靈 (80/0/2)"
+    },
+    {
+      "index": 162,
+      "text_bytes_hex": "af50aaa2aa5abeb9202833302f3029",
+      "cp950_text": "烈炎武器 (30/0)"
+    },
+    {
+      "index": 163,
+      "text_bytes_hex": "a5cda952aabaafacbad6202833302f3029",
+      "cp950_text": "生命的祝福 (30/0)"
+    },
+    {
+      "index": 164,
+      "text_bytes_hex": "a5cda952a949b3ea202835302f302f3129",
+      "cp950_text": "生命呼喚 (50/0/1)"
+    },
+    {
+      "index": 165,
+      "text_bytes_hex": "bcc9adb7afabae67202833302f3029",
+      "cp950_text": "暴風神射 (30/0)"
+    },
+    {
+      "index": 166,
+      "text_bytes_hex": "adb7a4a7cf45c2ea202832302f302f3129",
+      "cp950_text": "風之枷鎖 (20/0/1)"
+    },
+    {
+      "index": 167,
+      "text_bytes_hex": "bffbc54ba8bec540202833302f3029",
+      "cp950_text": "鋼鐵防護 (30/0)"
+    },
+    {
+      "index": 168,
+      "text_bytes_hex": "c5e9afe0bf45b56f202833302f3029",
+      "cp950_text": "體能激發 (30/0)"
+    },
+    {
+      "index": 169,
+      "text_bytes_hex": "a4f4a4a7a4b8aef02028322f302f3129",
+      "cp950_text": "水之元氣 (2/0/1)"
+    },
+    {
+      "index": 170,
+      "text_bytes_hex": "c4dda9caa4a7a4f5202832302f302f3129",
+      "cp950_text": "屬性之火 (20/0/1)"
+    },
+    {
+      "index": 171,
+      "text_bytes_hex": "bcc9adb7af65a8ab202833302f3029",
+      "cp950_text": "暴風疾走 (30/0)"
+    },
+    {
+      "index": 172,
+      "text_bytes_hex": "a6c3bf42a4a7a4f4202832302f302f3129",
+      "cp950_text": "污濁之水 (20/0/1)"
+    },
+    {
+      "index": 173,
+      "text_bytes_hex": "baebb7c7ae67c0bb202831302f302f3529",
+      "cp950_text": "精準射擊 (10/0/5)"
+    },
+    {
+      "index": 174,
+      "text_bytes_hex": "af50b54ba4a7bbee202833302f302f3329",
+      "cp950_text": "烈焰之魂 (30/0/3)"
+    },
+    {
+      "index": 175,
+      "text_bytes_hex": "afe0b671bf45b56f202833302f302f3129",
+      "cp950_text": "能量激發 (30/0/1)"
+    }
+  ],
+  "null_indices": [
+    23,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    91,
+    92,
+    93,
+    94,
+    95,
+    111,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    134,
+    135,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143
+  ],
+  "meaning": "Native440910 allocates count4byte pointers thenzeroes; onlypresentindexedrows getstringallocation. Missingrows remainNULL; no synthesizedmetadata. Duplicate row replacement semantics not triggered by thisfile."
+}

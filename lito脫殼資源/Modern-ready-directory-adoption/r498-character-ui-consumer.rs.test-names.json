@@ -1,0 +1,49 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r498-character-ui-consumer.rs",
+    "bytes": 11120,
+    "sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7"
+  },
+  "captured_content_sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r498-character-ui-consumer.rs",
+    "bytes": 11120,
+    "sha256": "EE131F073190BF5648BA2945AF860B2588396DCEF28F6694FFFFCB2115955CF7"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:56:20.215292+08:00",
+  "existing_test_names_only": [],
+  "function_names_only_not_test_claim": [
+    {
+      "line": 4,
+      "name": "inputs"
+    },
+    {
+      "line": 5,
+      "name": "wait"
+    },
+    {
+      "line": 6,
+      "name": "bytes"
+    },
+    {
+      "line": 7,
+      "name": "ready"
+    },
+    {
+      "line": 8,
+      "name": "changed"
+    },
+    {
+      "line": 9,
+      "name": "record"
+    },
+    {
+      "line": 10,
+      "name": "main"
+    }
+  ],
+  "literal_case_names_only_not_pass_claim": [],
+  "script_executed_or_imported": false,
+  "scope": "Only existing test annotations, function headers and literal name labels; no body adoption, no claim compiled/current production test pass."
+}

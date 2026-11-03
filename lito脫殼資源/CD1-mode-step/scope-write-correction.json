@@ -1,0 +1,30 @@
+{
+  "updated_at": "2026-10-06T07:13:41.814181+08:00",
+  "unintended_external_python_cache": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-selection-contract-65877892a76c4333a56190888c47d6fc\\source\\__pycache__\\ClassFileReadOnly.cpython-312.pyc",
+    "bytes": 11746,
+    "sha256": "8EB4232591F5E9BE4317A4BAD91A7B3DB3C2FC584F19E8FA39DB98E2E0E15CE6"
+  },
+  "creation_time_local": "2026-10-06T07:03:44.7889212+08:00",
+  "cause": "importlib loading readonly ClassFileReadOnly.py generated Python bytecode cache during Batch28",
+  "source_file_modified": false,
+  "other_group_product_source_modified": false,
+  "cleanup_completed": false,
+  "automatic_approval_review_rejected_cleanup": true,
+  "rejection_reason": "blocked by policy",
+  "no_alternative_cleanup_attempted": true,
+  "bytecode_writes_disabled": true,
+  "owned_scripts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1_mode_step_audit.py",
+      "bytes": 19289,
+      "sha256": "E903ECC5FFBF5D84E4902D520200FD39B25E0674297AA5E41515A3AF312FBFD0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\review_CD1_mode_step.py",
+      "bytes": 14953,
+      "sha256": "7EDA2ADFB7B4F6E6E71CDB7BF4BBF7891E0E6574D00C71EE95215D6F786A9207"
+    }
+  ],
+  "remaining_action": "External cache remains; no authorized cleanup executed. This does not close UI/Java runtime/SQL/provider gaps."
+}

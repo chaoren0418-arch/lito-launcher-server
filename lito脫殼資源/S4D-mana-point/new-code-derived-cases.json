@@ -1,0 +1,124 @@
+{
+  "checks": [
+    {
+      "case": "zero_current",
+      "plain_hex": "4d00000100",
+      "decoded": {
+        "current_mp_raw_u16": 0,
+        "current_mp_native_i32": 0,
+        "current_mp_setter_argument_hex": "00000000",
+        "maximum_mp_raw_u16": 1,
+        "maximum_mp_native_store_hex": "0100",
+        "maximum_mp_downstream_signedness": "not established by this handler",
+        "fields_consumed_structurally": 4,
+        "body_bytes_required_structurally": 5,
+        "native_protected_storage_success_proven": false
+      },
+      "expected_native_current_i32": 0,
+      "expected_maximum_raw_u16": 1,
+      "synthetic_code_derived_not_real_wire_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "baseline_signed_ceiling",
+      "plain_hex": "4dff7fff7f",
+      "decoded": {
+        "current_mp_raw_u16": 32767,
+        "current_mp_native_i32": 32767,
+        "current_mp_setter_argument_hex": "00007FFF",
+        "maximum_mp_raw_u16": 32767,
+        "maximum_mp_native_store_hex": "ff7f",
+        "maximum_mp_downstream_signedness": "not established by this handler",
+        "fields_consumed_structurally": 4,
+        "body_bytes_required_structurally": 5,
+        "native_protected_storage_success_proven": false
+      },
+      "expected_native_current_i32": 32767,
+      "expected_maximum_raw_u16": 32767,
+      "synthetic_code_derived_not_real_wire_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "sign_bit_set",
+      "plain_hex": "4d0080ffff",
+      "decoded": {
+        "current_mp_raw_u16": 32768,
+        "current_mp_native_i32": -32768,
+        "current_mp_setter_argument_hex": "FFFF8000",
+        "maximum_mp_raw_u16": 65535,
+        "maximum_mp_native_store_hex": "ffff",
+        "maximum_mp_downstream_signedness": "not established by this handler",
+        "fields_consumed_structurally": 4,
+        "body_bytes_required_structurally": 5,
+        "native_protected_storage_success_proven": false
+      },
+      "expected_native_current_i32": -32768,
+      "expected_maximum_raw_u16": 65535,
+      "synthetic_code_derived_not_real_wire_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "negative_one",
+      "plain_hex": "4dffff0080",
+      "decoded": {
+        "current_mp_raw_u16": 65535,
+        "current_mp_native_i32": -1,
+        "current_mp_setter_argument_hex": "FFFFFFFF",
+        "maximum_mp_raw_u16": 32768,
+        "maximum_mp_native_store_hex": "0080",
+        "maximum_mp_downstream_signedness": "not established by this handler",
+        "fields_consumed_structurally": 4,
+        "body_bytes_required_structurally": 5,
+        "native_protected_storage_success_proven": false
+      },
+      "expected_native_current_i32": -1,
+      "expected_maximum_raw_u16": 32768,
+      "synthetic_code_derived_not_real_wire_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "nonsymmetric_endian_order",
+      "plain_hex": "4d3412cdab",
+      "decoded": {
+        "current_mp_raw_u16": 4660,
+        "current_mp_native_i32": 4660,
+        "current_mp_setter_argument_hex": "00001234",
+        "maximum_mp_raw_u16": 43981,
+        "maximum_mp_native_store_hex": "cdab",
+        "maximum_mp_downstream_signedness": "not established by this handler",
+        "fields_consumed_structurally": 4,
+        "body_bytes_required_structurally": 5,
+        "native_protected_storage_success_proven": false
+      },
+      "expected_native_current_i32": 4660,
+      "expected_maximum_raw_u16": 43981,
+      "synthetic_code_derived_not_real_wire_or_native_execution": true,
+      "match": true
+    },
+    {
+      "case": "truncated4",
+      "plain_hex": "4d640064",
+      "audit_rejection": "Audit exact5 required, actual4; not native length guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "trailing6",
+      "plain_hex": "4d6400640000",
+      "audit_rejection": "Audit exact5 required, actual6; not native length guard",
+      "native_rejection_not_claimed": true,
+      "match": true
+    },
+    {
+      "case": "wrong_opcode",
+      "plain_hex": "4c64006400",
+      "audit_rejection": "Audit opcode mismatch; native body assumes dispatcher",
+      "native_rejection_not_claimed": true,
+      "match": true
+    }
+  ],
+  "new_static_checks": 8,
+  "new_native_Java_or_producer_runs": 0,
+  "high_bit_values_not_claimed_as_real_AD368_frames": true,
+  "GUI_or_owner_qualification": false
+}

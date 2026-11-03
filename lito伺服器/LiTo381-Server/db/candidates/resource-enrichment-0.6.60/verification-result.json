@@ -1,0 +1,17 @@
+{
+  "package_status": "未匯入、未接線",
+  "status": "PASS (offline only)",
+  "sql_insert_rows": 35700,
+  "sql_literal_values_checked": 321201,
+  "sql_roundtrip": true,
+  "integer_and_varchar_ranges": true,
+  "all_sql_field_provenance_covered": true,
+  "unique_keys": true,
+  "native_terrain_references": true,
+  "all_source_hashes_match": true,
+  "pure_packet_fixtures_independently_decoded": 96,
+  "all_asset_source_references_resolve": true,
+  "unknown_actor_fields_not_invented": true,
+  "sql_executed": false,
+  "production_wired": false
+}

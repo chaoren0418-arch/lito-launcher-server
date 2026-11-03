@@ -1,0 +1,2858 @@
+{
+  "ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "references": [
+    {
+      "line": 226843,
+      "text": "mov     dword_75A998, ebx",
+      "global_va": "75A998",
+      "register": "ebx",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "nearest_label": {
+        "va": "469E91",
+        "line": 226829,
+        "name": "loc_469E91:"
+      },
+      "ASM_context": "mov     eax, [ecx]\ncall    dword ptr [eax+4Ch]\n\nxor     ecx, ecx\ncall    sub_49BB40\n\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\npop     esi",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00469EB4",
+        "rva": "00069EB4",
+        "section": "   \u0000    ",
+        "file_offset": "00069EB4",
+        "raw_backed": true,
+        "raw_hex": "891d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469E91-2F.bin",
+          "bytes": 47,
+          "sha256": "4F9FBA7135FDB0EAE97F8DDBDD72EBA19AAC4FFC38C4F6137086DCDB40319CC6"
+        }
+      }
+    },
+    {
+      "line": 226844,
+      "text": "mov     dword_75A99C, ebx",
+      "global_va": "75A99C",
+      "register": "ebx",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "nearest_label": {
+        "va": "469E91",
+        "line": 226829,
+        "name": "loc_469E91:"
+      },
+      "ASM_context": "call    dword ptr [eax+4Ch]\n\nxor     ecx, ecx\ncall    sub_49BB40\n\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\npop     esi\npop     ebx",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00469EBA",
+        "rva": "00069EBA",
+        "section": "   \u0000    ",
+        "file_offset": "00069EBA",
+        "raw_backed": true,
+        "raw_hex": "891d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469E91-2F.bin",
+          "bytes": 47,
+          "sha256": "4F9FBA7135FDB0EAE97F8DDBDD72EBA19AAC4FFC38C4F6137086DCDB40319CC6"
+        }
+      }
+    },
+    {
+      "line": 226934,
+      "text": "mov     dword_75A998, ebx",
+      "global_va": "75A998",
+      "register": "ebx",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "nearest_label": {
+        "va": "469F3D",
+        "line": 226893,
+        "name": "loc_469F3D:"
+      },
+      "ASM_context": "mov     off_62C9B8, offset sub_46D640\nmov     off_62C9BC, offset sub_46D8A0\nmov     off_62C9C0, offset sub_46D630\nmov     edx, [ecx]\ncall    dword ptr [edx+4Ch]\n\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\npop     esi",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00469FBC",
+        "rva": "00069FBC",
+        "section": "   \u0000    ",
+        "file_offset": "00069FBC",
+        "raw_backed": true,
+        "raw_hex": "891d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469F3D-8B.bin",
+          "bytes": 139,
+          "sha256": "D2ED0833C980210F92438168880AF6D2DEC2A8FA10349E0421D0566FC89B4391"
+        }
+      }
+    },
+    {
+      "line": 226935,
+      "text": "mov     dword_75A99C, ebx",
+      "global_va": "75A99C",
+      "register": "ebx",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "nearest_label": {
+        "va": "469F3D",
+        "line": 226893,
+        "name": "loc_469F3D:"
+      },
+      "ASM_context": "mov     off_62C9BC, offset sub_46D8A0\nmov     off_62C9C0, offset sub_46D630\nmov     edx, [ecx]\ncall    dword ptr [edx+4Ch]\n\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\npop     esi\npop     ebx",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00469FC2",
+        "rva": "00069FC2",
+        "section": "   \u0000    ",
+        "file_offset": "00069FC2",
+        "raw_backed": true,
+        "raw_hex": "891d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469F3D-8B.bin",
+          "bytes": 139,
+          "sha256": "D2ED0833C980210F92438168880AF6D2DEC2A8FA10349E0421D0566FC89B4391"
+        }
+      }
+    },
+    {
+      "line": 229547,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "46B670",
+        "line": 229536,
+        "name": "sub_46B670"
+      },
+      "nearest_label": {
+        "va": "46B670",
+        "line": 229536,
+        "name": "sub_46B670"
+      },
+      "ASM_context": "add     esp, 8\nmov     dword_62C9C4, 2\ncall    sub_46D2E0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046B695",
+        "rva": "0006B695",
+        "section": "   \u0000    ",
+        "file_offset": "0006B695",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046B670-2F.bin",
+          "bytes": 47,
+          "sha256": "E4A1B118C7B1909D95EC73343ECA3779296158A23187C9AF00AC60314698D465"
+        }
+      }
+    },
+    {
+      "line": 229548,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "46B670",
+        "line": 229536,
+        "name": "sub_46B670"
+      },
+      "nearest_label": {
+        "va": "46B670",
+        "line": 229536,
+        "name": "sub_46B670"
+      },
+      "ASM_context": "mov     dword_62C9C4, 2\ncall    sub_46D2E0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046B69A",
+        "rva": "0006B69A",
+        "section": "   \u0000    ",
+        "file_offset": "0006B69A",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046B670-2F.bin",
+          "bytes": 47,
+          "sha256": "E4A1B118C7B1909D95EC73343ECA3779296158A23187C9AF00AC60314698D465"
+        }
+      }
+    },
+    {
+      "line": 234734,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "nearest_label": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "ASM_context": "push    esi\npush    edi\nmov     [ebp+var_C], ecx\nmov     ecx, dword_64A900\nxor     edi, edi\nmov     [ebp+var_10], eax\nmov     dword_75A998, edi\nmov     dword_75A99C, edi\nmov     [ebp+var_20], edi",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046DFD5",
+        "rva": "0006DFD5",
+        "section": "   \u0000    ",
+        "file_offset": "0006DFD5",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046DFB0-31.bin",
+          "bytes": 49,
+          "sha256": "6F7DD3ED95D1379B999CA21C0B9BE00C77D99BEC2DD7E6023787C959A3000A92"
+        }
+      }
+    },
+    {
+      "line": 234735,
+      "text": "mov     dword_75A99C, edi",
+      "global_va": "75A99C",
+      "register": "edi",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "nearest_label": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "ASM_context": "push    edi\nmov     [ebp+var_C], ecx\nmov     ecx, dword_64A900\nxor     edi, edi\nmov     [ebp+var_10], eax\nmov     dword_75A998, edi\nmov     dword_75A99C, edi\nmov     [ebp+var_20], edi\nmov     [ebp+var_1C], edi",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046DFDB",
+        "rva": "0006DFDB",
+        "section": "   \u0000    ",
+        "file_offset": "0006DFDB",
+        "raw_backed": true,
+        "raw_hex": "893d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046DFB0-31.bin",
+          "bytes": 49,
+          "sha256": "6F7DD3ED95D1379B999CA21C0B9BE00C77D99BEC2DD7E6023787C959A3000A92"
+        }
+      }
+    },
+    {
+      "line": 235972,
+      "text": "mov     dword_75A998, edx",
+      "global_va": "75A998",
+      "register": "edx",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "nearest_label": {
+        "va": "46E9A0",
+        "line": 235942,
+        "name": "loc_46E9A0:"
+      },
+      "ASM_context": "push    ecx\npush    eax\ncall    dword ptr [edx+1Ch]\n\nmov     edx, [ebp+var_10]\nmov     eax, [ebp+var_C]\nmov     dword_75A998, edx\nmov     dword_75A99C, eax\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046E9EA",
+        "rva": "0006E9EA",
+        "section": "   \u0000    ",
+        "file_offset": "0006E9EA",
+        "raw_backed": true,
+        "raw_hex": "891598a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046E9A0-55.bin",
+          "bytes": 85,
+          "sha256": "605B7E971EBC881EE03DD0D0DBBB11D3D3C2D5269E175AC193F08EC2640178E2"
+        }
+      }
+    },
+    {
+      "line": 235973,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "nearest_label": {
+        "va": "46E9A0",
+        "line": 235942,
+        "name": "loc_46E9A0:"
+      },
+      "ASM_context": "push    eax\ncall    dword ptr [edx+1Ch]\n\nmov     edx, [ebp+var_10]\nmov     eax, [ebp+var_C]\nmov     dword_75A998, edx\nmov     dword_75A99C, eax\n\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0046E9F0",
+        "rva": "0006E9F0",
+        "section": "   \u0000    ",
+        "file_offset": "0006E9F0",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046E9A0-55.bin",
+          "bytes": 85,
+          "sha256": "605B7E971EBC881EE03DD0D0DBBB11D3D3C2D5269E175AC193F08EC2640178E2"
+        }
+      }
+    },
+    {
+      "line": 269273,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "47E360",
+        "line": 269268,
+        "name": "sub_47E360"
+      },
+      "nearest_label": {
+        "va": "47E360",
+        "line": 269268,
+        "name": "sub_47E360"
+      },
+      "ASM_context": "\nsub_47E360 proc near                    ; CODE XREF: sub_4A9550+81↓p\nmov     eax, dword_75A9A0\nmov     ecx, dword_75A9A4\npush    ebx\npush    edi\nmov     dword_75A998, eax\nmov     dword_75A99C, ecx\nmov     ecx, 13h",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047E36D",
+        "rva": "0007E36D",
+        "section": "   \u0000    ",
+        "file_offset": "0007E36D",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047E360-18.bin",
+          "bytes": 24,
+          "sha256": "A207BE8DEEF487A4A5DB38C311844DFE415C92D19769508014ADB489A0068B7C"
+        }
+      }
+    },
+    {
+      "line": 269274,
+      "text": "mov     dword_75A99C, ecx",
+      "global_va": "75A99C",
+      "register": "ecx",
+      "function": {
+        "va": "47E360",
+        "line": 269268,
+        "name": "sub_47E360"
+      },
+      "nearest_label": {
+        "va": "47E360",
+        "line": 269268,
+        "name": "sub_47E360"
+      },
+      "ASM_context": "sub_47E360 proc near                    ; CODE XREF: sub_4A9550+81↓p\nmov     eax, dword_75A9A0\nmov     ecx, dword_75A9A4\npush    ebx\npush    edi\nmov     dword_75A998, eax\nmov     dword_75A99C, ecx\nmov     ecx, 13h\nxor     eax, eax",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047E372",
+        "rva": "0007E372",
+        "section": "   \u0000    ",
+        "file_offset": "0007E372",
+        "raw_backed": true,
+        "raw_hex": "890d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047E360-18.bin",
+          "bytes": 24,
+          "sha256": "A207BE8DEEF487A4A5DB38C311844DFE415C92D19769508014ADB489A0068B7C"
+        }
+      }
+    },
+    {
+      "line": 272387,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FAC3",
+        "line": 272369,
+        "name": "loc_47FAC3:"
+      },
+      "ASM_context": "\nadd     esp, 8\ncall    sub_47E4B0\n\nxor     eax, eax\nxor     cl, cl\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_4966A0",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FAEC",
+        "rva": "0007FAEC",
+        "section": "   \u0000    ",
+        "file_offset": "0007FAEC",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FAC3-33.bin",
+          "bytes": 51,
+          "sha256": "D300E217C07E9F0921215A7E800EEF80DD4F4DBE0B1B47BBE9D2595B27F340BB"
+        }
+      }
+    },
+    {
+      "line": 272388,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FAC3",
+        "line": 272369,
+        "name": "loc_47FAC3:"
+      },
+      "ASM_context": "add     esp, 8\ncall    sub_47E4B0\n\nxor     eax, eax\nxor     cl, cl\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_4966A0\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FAF1",
+        "rva": "0007FAF1",
+        "section": "   \u0000    ",
+        "file_offset": "0007FAF1",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FAC3-33.bin",
+          "bytes": 51,
+          "sha256": "D300E217C07E9F0921215A7E800EEF80DD4F4DBE0B1B47BBE9D2595B27F340BB"
+        }
+      }
+    },
+    {
+      "line": 272513,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FC07",
+        "line": 272505,
+        "name": "loc_47FC07:"
+      },
+      "ASM_context": "\nmov     dword_62C9C4, 2\ncall    sub_47E4B0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FC22",
+        "rva": "0007FC22",
+        "section": "   \u0000    ",
+        "file_offset": "0007FC22",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FC07-25.bin",
+          "bytes": 37,
+          "sha256": "1E2FD1E367DCAAEEBFDB8BB7836420859A45B653B87EA1DD3656053007C76EE7"
+        }
+      }
+    },
+    {
+      "line": 272514,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FC07",
+        "line": 272505,
+        "name": "loc_47FC07:"
+      },
+      "ASM_context": "mov     dword_62C9C4, 2\ncall    sub_47E4B0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FC27",
+        "rva": "0007FC27",
+        "section": "   \u0000    ",
+        "file_offset": "0007FC27",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FC07-25.bin",
+          "bytes": 37,
+          "sha256": "1E2FD1E367DCAAEEBFDB8BB7836420859A45B653B87EA1DD3656053007C76EE7"
+        }
+      }
+    },
+    {
+      "line": 272654,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FD81",
+        "line": 272646,
+        "name": "loc_47FD81:"
+      },
+      "ASM_context": "\nmov     dword_62C9C4, 2\ncall    sub_47E4B0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FD9C",
+        "rva": "0007FD9C",
+        "section": "   \u0000    ",
+        "file_offset": "0007FD9C",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FD81-25.bin",
+          "bytes": 37,
+          "sha256": "35B02303483C54E26BB5515F32AE3FA0BA25C9A7D0039C9DB60DD6135D91EF8E"
+        }
+      }
+    },
+    {
+      "line": 272655,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "nearest_label": {
+        "va": "47FD81",
+        "line": 272646,
+        "name": "loc_47FD81:"
+      },
+      "ASM_context": "mov     dword_62C9C4, 2\ncall    sub_47E4B0\n\nxor     eax, eax\nmov     ecx, 1\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\ncall    sub_49A510\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047FDA1",
+        "rva": "0007FDA1",
+        "section": "   \u0000    ",
+        "file_offset": "0007FDA1",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FD81-25.bin",
+          "bytes": 37,
+          "sha256": "35B02303483C54E26BB5515F32AE3FA0BA25C9A7D0039C9DB60DD6135D91EF8E"
+        }
+      }
+    },
+    {
+      "line": 278509,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "482C60",
+        "line": 278507,
+        "name": "sub_482C60"
+      },
+      "nearest_label": {
+        "va": "482C60",
+        "line": 278507,
+        "name": "sub_482C60"
+      },
+      "ASM_context": "\n; =============== S U B R O U T I N E =======================================\n\n\nsub_482C60 proc near                    ; CODE XREF: sub_482C50↑j\nxor     eax, eax\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\nretn",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00482C62",
+        "rva": "00082C62",
+        "section": "   \u0000    ",
+        "file_offset": "00082C62",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00482C60-C.bin",
+          "bytes": 12,
+          "sha256": "7E5969EDAA5219FFAF8B497E63B0B32ABCB9694031916A0DDAB19594FF2488FC"
+        }
+      }
+    },
+    {
+      "line": 278510,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "482C60",
+        "line": 278507,
+        "name": "sub_482C60"
+      },
+      "nearest_label": {
+        "va": "482C60",
+        "line": 278507,
+        "name": "sub_482C60"
+      },
+      "ASM_context": "; =============== S U B R O U T I N E =======================================\n\n\nsub_482C60 proc near                    ; CODE XREF: sub_482C50↑j\nxor     eax, eax\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\nretn\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00482C67",
+        "rva": "00082C67",
+        "section": "   \u0000    ",
+        "file_offset": "00082C67",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00482C60-C.bin",
+          "bytes": 12,
+          "sha256": "7E5969EDAA5219FFAF8B497E63B0B32ABCB9694031916A0DDAB19594FF2488FC"
+        }
+      }
+    },
+    {
+      "line": 279498,
+      "text": "mov     dword_75A998, edx",
+      "global_va": "75A998",
+      "register": "edx",
+      "function": {
+        "va": "483400",
+        "line": 279451,
+        "name": "sub_483400"
+      },
+      "nearest_label": {
+        "va": "483476",
+        "line": 279488,
+        "name": "loc_483476:"
+      },
+      "ASM_context": "\ncall    nullsub_6\n\nmov     edx, dword_75A9A0\nmov     eax, dword_75A9A4\nmov     ecx, offset off_834E78\nmov     dword_75A998, edx\nmov     dword_75A99C, eax\ncall    sub_4C4090",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00483495",
+        "rva": "00083495",
+        "section": "   \u0000    ",
+        "file_offset": "00083495",
+        "raw_backed": true,
+        "raw_hex": "891598a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00483476-2A.bin",
+          "bytes": 42,
+          "sha256": "5F243F44E7AD12AC77034096690F65AF98B3CE01D154B61CD811A41A0B8E7505"
+        }
+      }
+    },
+    {
+      "line": 279499,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "483400",
+        "line": 279451,
+        "name": "sub_483400"
+      },
+      "nearest_label": {
+        "va": "483476",
+        "line": 279488,
+        "name": "loc_483476:"
+      },
+      "ASM_context": "call    nullsub_6\n\nmov     edx, dword_75A9A0\nmov     eax, dword_75A9A4\nmov     ecx, offset off_834E78\nmov     dword_75A998, edx\nmov     dword_75A99C, eax\ncall    sub_4C4090\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0048349B",
+        "rva": "0008349B",
+        "section": "   \u0000    ",
+        "file_offset": "0008349B",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00483476-2A.bin",
+          "bytes": 42,
+          "sha256": "5F243F44E7AD12AC77034096690F65AF98B3CE01D154B61CD811A41A0B8E7505"
+        }
+      }
+    },
+    {
+      "line": 316367,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "496A00",
+        "line": 316360,
+        "name": "sub_496A00"
+      },
+      "nearest_label": {
+        "va": "496A00",
+        "line": 316360,
+        "name": "sub_496A00"
+      },
+      "ASM_context": "xor     eax, eax\nmov     dword_64BBD4, 2\nmov     dword_6414A4, eax\nmov     dword_6414A0, eax\nmov     dword_64149C, eax\nmov     byte_75F6E5, al\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\nmov     off_62C9B8, offset sub_496200",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00496A20",
+        "rva": "00096A20",
+        "section": "   \u0000    ",
+        "file_offset": "00096A20",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00496A00-2A.bin",
+          "bytes": 42,
+          "sha256": "876461AF813359DAC03F5B2FEFE0AE2640FEF2D80B2514D335C61FAC270EE5CA"
+        }
+      }
+    },
+    {
+      "line": 316368,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "496A00",
+        "line": 316360,
+        "name": "sub_496A00"
+      },
+      "nearest_label": {
+        "va": "496A00",
+        "line": 316360,
+        "name": "sub_496A00"
+      },
+      "ASM_context": "mov     dword_64BBD4, 2\nmov     dword_6414A4, eax\nmov     dword_6414A0, eax\nmov     dword_64149C, eax\nmov     byte_75F6E5, al\nmov     dword_75A998, eax\nmov     dword_75A99C, eax\nmov     off_62C9B8, offset sub_496200\nmov     off_62C9BC, offset sub_4962B0",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00496A25",
+        "rva": "00096A25",
+        "section": "   \u0000    ",
+        "file_offset": "00096A25",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00496A00-2A.bin",
+          "bytes": 42,
+          "sha256": "876461AF813359DAC03F5B2FEFE0AE2640FEF2D80B2514D335C61FAC270EE5CA"
+        }
+      }
+    },
+    {
+      "line": 354014,
+      "text": "mov     dword_75A998, ebx",
+      "global_va": "75A998",
+      "register": "ebx",
+      "function": {
+        "va": "4A9770",
+        "line": 353992,
+        "name": "sub_4A9770"
+      },
+      "nearest_label": {
+        "va": "4A9770",
+        "line": 353992,
+        "name": "sub_4A9770"
+      },
+      "ASM_context": "call    sub_446A70\n\nmov     ecx, 3\ncall    sub_469CA0\n\nmov     ecx, offset sub_4E2150\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\nmov     dword_64BBD4, 2",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A97B4",
+        "rva": "000A97B4",
+        "section": "   \u0000    ",
+        "file_offset": "000A97B4",
+        "raw_backed": true,
+        "raw_hex": "891d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004A9770-50.bin",
+          "bytes": 80,
+          "sha256": "4053101D6B98FB5C903D596B3994D9BE0616E2D16D850D24F02B99FA91EDCE9F"
+        }
+      }
+    },
+    {
+      "line": 354015,
+      "text": "mov     dword_75A99C, ebx",
+      "global_va": "75A99C",
+      "register": "ebx",
+      "function": {
+        "va": "4A9770",
+        "line": 353992,
+        "name": "sub_4A9770"
+      },
+      "nearest_label": {
+        "va": "4A9770",
+        "line": 353992,
+        "name": "sub_4A9770"
+      },
+      "ASM_context": "\nmov     ecx, 3\ncall    sub_469CA0\n\nmov     ecx, offset sub_4E2150\nmov     dword_75A998, ebx\nmov     dword_75A99C, ebx\nmov     dword_64BBD4, 2\nmov     off_62C9B8, offset nullsub_24",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A97BA",
+        "rva": "000A97BA",
+        "section": "   \u0000    ",
+        "file_offset": "000A97BA",
+        "raw_backed": true,
+        "raw_hex": "891d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], ebx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004A9770-50.bin",
+          "bytes": 80,
+          "sha256": "4053101D6B98FB5C903D596B3994D9BE0616E2D16D850D24F02B99FA91EDCE9F"
+        }
+      }
+    },
+    {
+      "line": 406172,
+      "text": "mov     dword_75A998, esi",
+      "global_va": "75A998",
+      "register": "esi",
+      "function": {
+        "va": "4C22A0",
+        "line": 405928,
+        "name": "sub_4C22A0"
+      },
+      "nearest_label": {
+        "va": "4C24BC",
+        "line": 406161,
+        "name": "loc_4C24BC:"
+      },
+      "ASM_context": "call    sub_4C6AE0\n\nadd     esp, 8\ncall    sub_46D2E0\n\nmov     ecx, 1\nmov     dword_75A998, esi\nmov     dword_75A99C, esi\ncall    sub_49A510",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C24DF",
+        "rva": "000C24DF",
+        "section": "   \u0000    ",
+        "file_offset": "000C24DF",
+        "raw_backed": true,
+        "raw_hex": "893598a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004C24BC-2F.bin",
+          "bytes": 47,
+          "sha256": "1DE4AD78E878FF4DB978FFC8F0708156B491B2AE599714CA3E33009274AC951D"
+        }
+      }
+    },
+    {
+      "line": 406173,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4C22A0",
+        "line": 405928,
+        "name": "sub_4C22A0"
+      },
+      "nearest_label": {
+        "va": "4C24BC",
+        "line": 406161,
+        "name": "loc_4C24BC:"
+      },
+      "ASM_context": "\nadd     esp, 8\ncall    sub_46D2E0\n\nmov     ecx, 1\nmov     dword_75A998, esi\nmov     dword_75A99C, esi\ncall    sub_49A510\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C24E5",
+        "rva": "000C24E5",
+        "section": "   \u0000    ",
+        "file_offset": "000C24E5",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004C24BC-2F.bin",
+          "bytes": 47,
+          "sha256": "1DE4AD78E878FF4DB978FFC8F0708156B491B2AE599714CA3E33009274AC951D"
+        }
+      }
+    },
+    {
+      "line": 474125,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "ASM_context": "mov     edi, dword_75A998\nmov     esi, dword_75A99C\nmovsx   eax, byte ptr [ecx+11h]\nmov     edx, dword_834D28[eax*8]\nlea     eax, ds:834D28h[eax*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2258",
+        "rva": "000E2258",
+        "section": "   \u0000    ",
+        "file_offset": "000E2258",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2150-119.bin",
+          "bytes": 281,
+          "sha256": "B2E6D90F47CA402F7CC0D7ABE36D6087CA2DAA585486E0F7538A627D2CC1F36C"
+        }
+      }
+    },
+    {
+      "line": 474128,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "ASM_context": "mov     edx, dword_834D28[eax*8]\nlea     eax, ds:834D28h[eax*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax\nmov     dword_75A99C, esi\nmovsx   eax, byte ptr [ecx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2263",
+        "rva": "000E2263",
+        "section": "   \u0000    ",
+        "file_offset": "000E2263",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2150-119.bin",
+          "bytes": 281,
+          "sha256": "B2E6D90F47CA402F7CC0D7ABE36D6087CA2DAA585486E0F7538A627D2CC1F36C"
+        }
+      }
+    },
+    {
+      "line": 474155,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E228A",
+        "line": 474141,
+        "name": "loc_4E228A:"
+      },
+      "ASM_context": "movsx   ecx, byte ptr [eax+11h]\nmov     edx, dword_834CA8[ecx*8]\nmov     edi, dword_75A998\nlea     ecx, ds:834CA8h[ecx*8]\nmov     esi, dword_75A99C\nadd     edi, edx\nmov     dword_75A998, edi\nmov     ecx, [ecx+4]\nadd     esi, ecx",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E22BE",
+        "rva": "000E22BE",
+        "section": "   \u0000    ",
+        "file_offset": "000E22BE",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E228A-45.bin",
+          "bytes": 69,
+          "sha256": "198F4B56CEDE8D4362A86D44CF31AC0FFEA182116C7623013B7A002AE3332112"
+        }
+      }
+    },
+    {
+      "line": 474158,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E228A",
+        "line": 474141,
+        "name": "loc_4E228A:"
+      },
+      "ASM_context": "lea     ecx, ds:834CA8h[ecx*8]\nmov     esi, dword_75A99C\nadd     edi, edx\nmov     dword_75A998, edi\nmov     ecx, [ecx+4]\nadd     esi, ecx\nmov     dword_75A99C, esi\nmovsx   eax, byte ptr [eax+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E22C9",
+        "rva": "000E22C9",
+        "section": "   \u0000    ",
+        "file_offset": "000E22C9",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E228A-45.bin",
+          "bytes": 69,
+          "sha256": "198F4B56CEDE8D4362A86D44CF31AC0FFEA182116C7623013B7A002AE3332112"
+        }
+      }
+    },
+    {
+      "line": 474178,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E22F0",
+        "line": 474171,
+        "name": "loc_4E22F0:"
+      },
+      "ASM_context": "movsx   edx, byte ptr [eax+11h]\nmov     edi, dword_75A998\nmov     esi, dword_75A99C\nlea     ecx, ds:834C68h[edx*8]\nmov     edx, dword_834C68[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     ecx, [ecx+4]\nadd     esi, ecx",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2310",
+        "rva": "000E2310",
+        "section": "   \u0000    ",
+        "file_offset": "000E2310",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E22F0-31.bin",
+          "bytes": 49,
+          "sha256": "B901B01E428F1BACE0CE59BBA0A87E9E3C66BC83CF76013FCBADB3CB56AA4C10"
+        }
+      }
+    },
+    {
+      "line": 474181,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E22F0",
+        "line": 474171,
+        "name": "loc_4E22F0:"
+      },
+      "ASM_context": "lea     ecx, ds:834C68h[edx*8]\nmov     edx, dword_834C68[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     ecx, [ecx+4]\nadd     esi, ecx\nmov     dword_75A99C, esi\nmovsx   eax, byte ptr [eax+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E231B",
+        "rva": "000E231B",
+        "section": "   \u0000    ",
+        "file_offset": "000E231B",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E22F0-31.bin",
+          "bytes": 49,
+          "sha256": "B901B01E428F1BACE0CE59BBA0A87E9E3C66BC83CF76013FCBADB3CB56AA4C10"
+        }
+      }
+    },
+    {
+      "line": 474205,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2342",
+        "line": 474194,
+        "name": "loc_4E2342:"
+      },
+      "ASM_context": "mov     edi, dword_75A998\nmov     esi, dword_75A99C\nmovsx   edx, byte ptr [ecx+11h]\nlea     eax, ds:834CE8h[edx*8]\nmov     edx, dword_834CE8[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E236D",
+        "rva": "000E236D",
+        "section": "   \u0000    ",
+        "file_offset": "000E236D",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2342-3C.bin",
+          "bytes": 60,
+          "sha256": "253C0E92FF886A5C9F0DE21FDCADA3A68A84E15361BA345DD6506C1B4C7E0758"
+        }
+      }
+    },
+    {
+      "line": 474208,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2342",
+        "line": 474194,
+        "name": "loc_4E2342:"
+      },
+      "ASM_context": "lea     eax, ds:834CE8h[edx*8]\nmov     edx, dword_834CE8[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax\nmov     dword_75A99C, esi\nmovsx   eax, byte ptr [ecx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2378",
+        "rva": "000E2378",
+        "section": "   \u0000    ",
+        "file_offset": "000E2378",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2342-3C.bin",
+          "bytes": 60,
+          "sha256": "253C0E92FF886A5C9F0DE21FDCADA3A68A84E15361BA345DD6506C1B4C7E0758"
+        }
+      }
+    },
+    {
+      "line": 474241,
+      "text": "mov     dword_75A998, edi",
+      "global_va": "75A998",
+      "register": "edi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E23BD",
+        "line": 474234,
+        "name": "loc_4E23BD:"
+      },
+      "ASM_context": "movsx   edx, byte ptr [ecx+11h]\nmov     edi, dword_75A998\nmov     esi, dword_75A99C\nlea     eax, ds:834D68h[edx*8]\nmov     edx, dword_834D68[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E23DD",
+        "rva": "000E23DD",
+        "section": "   \u0000    ",
+        "file_offset": "000E23DD",
+        "raw_backed": true,
+        "raw_hex": "893d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], edi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E23BD-31.bin",
+          "bytes": 49,
+          "sha256": "85B5342338B0512439CCFD5E7A131B255DE48150D725A29677EAAC89A4609E6F"
+        }
+      }
+    },
+    {
+      "line": 474244,
+      "text": "mov     dword_75A99C, esi",
+      "global_va": "75A99C",
+      "register": "esi",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E23BD",
+        "line": 474234,
+        "name": "loc_4E23BD:"
+      },
+      "ASM_context": "lea     eax, ds:834D68h[edx*8]\nmov     edx, dword_834D68[edx*8]\nadd     edi, edx\nmov     dword_75A998, edi\nmov     eax, [eax+4]\nadd     esi, eax\nmov     dword_75A99C, esi\nmovsx   eax, byte ptr [ecx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E23E8",
+        "rva": "000E23E8",
+        "section": "   \u0000    ",
+        "file_offset": "000E23E8",
+        "raw_backed": true,
+        "raw_hex": "89359ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], esi",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E23BD-31.bin",
+          "bytes": 49,
+          "sha256": "85B5342338B0512439CCFD5E7A131B255DE48150D725A29677EAAC89A4609E6F"
+        }
+      }
+    },
+    {
+      "line": 474774,
+      "text": "mov     dword_75A998, ecx",
+      "global_va": "75A998",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E28E6",
+        "line": 474743,
+        "name": "loc_4E28E6:"
+      },
+      "ASM_context": "movsx   eax, byte ptr [edx+11h]\nlea     ecx, ds:834D28h[eax*8]\nmov     eax, dword_834D2C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2957",
+        "rva": "000E2957",
+        "section": "   \u0000    ",
+        "file_offset": "000E2957",
+        "raw_backed": true,
+        "raw_hex": "890d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E28E6-7C.bin",
+          "bytes": 124,
+          "sha256": "0D493C045FCCDF58929C7D593D9FF2C35FF19F9F14A8DE77EADCAC8C4C549B7F"
+        }
+      }
+    },
+    {
+      "line": 474775,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E28E6",
+        "line": 474743,
+        "name": "loc_4E28E6:"
+      },
+      "ASM_context": "lea     ecx, ds:834D28h[eax*8]\nmov     eax, dword_834D2C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E295D",
+        "rva": "000E295D",
+        "section": "   \u0000    ",
+        "file_offset": "000E295D",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E28E6-7C.bin",
+          "bytes": 124,
+          "sha256": "0D493C045FCCDF58929C7D593D9FF2C35FF19F9F14A8DE77EADCAC8C4C549B7F"
+        }
+      }
+    },
+    {
+      "line": 474823,
+      "text": "mov     dword_75A998, ecx",
+      "global_va": "75A998",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E29C2",
+        "line": 474804,
+        "name": "loc_4E29C2:"
+      },
+      "ASM_context": "mov     esi, dword_75A998\nlea     ecx, ds:834CE8h[eax*8]\nmov     eax, dword_834CEC[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2A07",
+        "rva": "000E2A07",
+        "section": "   \u0000    ",
+        "file_offset": "000E2A07",
+        "raw_backed": true,
+        "raw_hex": "890d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E29C2-50.bin",
+          "bytes": 80,
+          "sha256": "A6D422B368C30081147891CB1CB18C4B90131665187D000A1A5EDC116917DE69"
+        }
+      }
+    },
+    {
+      "line": 474824,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E29C2",
+        "line": 474804,
+        "name": "loc_4E29C2:"
+      },
+      "ASM_context": "lea     ecx, ds:834CE8h[eax*8]\nmov     eax, dword_834CEC[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2A0D",
+        "rva": "000E2A0D",
+        "section": "   \u0000    ",
+        "file_offset": "000E2A0D",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E29C2-50.bin",
+          "bytes": 80,
+          "sha256": "A6D422B368C30081147891CB1CB18C4B90131665187D000A1A5EDC116917DE69"
+        }
+      }
+    },
+    {
+      "line": 474861,
+      "text": "mov     dword_75A998, ecx",
+      "global_va": "75A998",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2A72",
+        "line": 474853,
+        "name": "loc_4E2A72:"
+      },
+      "ASM_context": "mov     esi, dword_75A998\nlea     ecx, ds:834D68h[eax*8]\nmov     eax, dword_834D6C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2A92",
+        "rva": "000E2A92",
+        "section": "   \u0000    ",
+        "file_offset": "000E2A92",
+        "raw_backed": true,
+        "raw_hex": "890d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2A72-2B.bin",
+          "bytes": 43,
+          "sha256": "FCA3C830FFFCE9D1E552E4723619D67619B67516DEF0673DA07C934C15872676"
+        }
+      }
+    },
+    {
+      "line": 474862,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2A72",
+        "line": 474853,
+        "name": "loc_4E2A72:"
+      },
+      "ASM_context": "lea     ecx, ds:834D68h[eax*8]\nmov     eax, dword_834D6C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2A98",
+        "rva": "000E2A98",
+        "section": "   \u0000    ",
+        "file_offset": "000E2A98",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2A72-2B.bin",
+          "bytes": 43,
+          "sha256": "FCA3C830FFFCE9D1E552E4723619D67619B67516DEF0673DA07C934C15872676"
+        }
+      }
+    },
+    {
+      "line": 474902,
+      "text": "mov     dword_75A998, ecx",
+      "global_va": "75A998",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2AFD",
+        "line": 474891,
+        "name": "loc_4E2AFD:"
+      },
+      "ASM_context": "movsx   eax, byte ptr [edx+11h]\nlea     ecx, ds:834C68h[eax*8]\nmov     eax, dword_834C6C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2B27",
+        "rva": "000E2B27",
+        "section": "   \u0000    ",
+        "file_offset": "000E2B27",
+        "raw_backed": true,
+        "raw_hex": "890d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2AFD-35.bin",
+          "bytes": 53,
+          "sha256": "3132FC65FE32BDC898423620523B9050552331B69EF7D27E218FFB69879B52D1"
+        }
+      }
+    },
+    {
+      "line": 474903,
+      "text": "mov     dword_75A99C, eax",
+      "global_va": "75A99C",
+      "register": "eax",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2AFD",
+        "line": 474891,
+        "name": "loc_4E2AFD:"
+      },
+      "ASM_context": "lea     ecx, ds:834C68h[eax*8]\nmov     eax, dword_834C6C[eax*8]\nmov     ecx, [ecx]\nadd     eax, edi\nadd     ecx, esi\nmov     dword_75A998, ecx\nmov     dword_75A99C, eax\nmovsx   eax, byte ptr [edx+11h]\nshl     eax, 3",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2B2D",
+        "rva": "000E2B2D",
+        "section": "   \u0000    ",
+        "file_offset": "000E2B2D",
+        "raw_backed": true,
+        "raw_hex": "a39ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2AFD-35.bin",
+          "bytes": 53,
+          "sha256": "3132FC65FE32BDC898423620523B9050552331B69EF7D27E218FFB69879B52D1"
+        }
+      }
+    },
+    {
+      "line": 474946,
+      "text": "mov     dword_75A998, ecx",
+      "global_va": "75A998",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2B7D",
+        "line": 474929,
+        "name": "loc_4E2B7D:"
+      },
+      "ASM_context": "                                        ; sub_4E2150+9A8↑j\n                                        ; sub_4E2150+A0B↑j\n                                        ; sub_4E2150+A1B↑j\n                                        ; sub_4E2150+A23↑j\nmov     ecx, dword_75A9A0\nmov     edx, dword_75A9A4\nmov     dword_75A998, ecx\nmov     dword_75A99C, edx\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2B89",
+        "rva": "000E2B89",
+        "section": "   \u0000    ",
+        "file_offset": "000E2B89",
+        "raw_backed": true,
+        "raw_hex": "890d98a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2B7D-18.bin",
+          "bytes": 24,
+          "sha256": "E68E3FA879D10584E03D03CA36C2E9E206D9A40FD48A1AD0E385C0F34037009D"
+        }
+      }
+    },
+    {
+      "line": 474947,
+      "text": "mov     dword_75A99C, edx",
+      "global_va": "75A99C",
+      "register": "edx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2B7D",
+        "line": 474929,
+        "name": "loc_4E2B7D:"
+      },
+      "ASM_context": "                                        ; sub_4E2150+A0B↑j\n                                        ; sub_4E2150+A1B↑j\n                                        ; sub_4E2150+A23↑j\nmov     ecx, dword_75A9A0\nmov     edx, dword_75A9A4\nmov     dword_75A998, ecx\nmov     dword_75A99C, edx\n\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2B8F",
+        "rva": "000E2B8F",
+        "section": "   \u0000    ",
+        "file_offset": "000E2B8F",
+        "raw_backed": true,
+        "raw_hex": "89159ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], edx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2B7D-18.bin",
+          "bytes": 24,
+          "sha256": "E68E3FA879D10584E03D03CA36C2E9E206D9A40FD48A1AD0E385C0F34037009D"
+        }
+      }
+    },
+    {
+      "line": 475338,
+      "text": "mov     dword_75A998, eax",
+      "global_va": "75A998",
+      "register": "eax",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2E93",
+        "line": 475287,
+        "name": "loc_4E2E93:"
+      },
+      "ASM_context": "call    sub_4ED480\n\nmov     eax, dword_75A9A0\nmov     ecx, dword_75A9A4\npush    edi\npush    esi\nmov     dword_75A998, eax\nmov     dword_75A99C, ecx\ncall    sub_48AFC0",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2F24",
+        "rva": "000E2F24",
+        "section": "   \u0000    ",
+        "file_offset": "000E2F24",
+        "raw_backed": true,
+        "raw_hex": "a398a97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a998], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2E93-9C.bin",
+          "bytes": 156,
+          "sha256": "7E92AB0EF95343EA0748896C4FBDB69E3B7F78CACB9E254CE38224A715A0191A"
+        }
+      }
+    },
+    {
+      "line": 475339,
+      "text": "mov     dword_75A99C, ecx",
+      "global_va": "75A99C",
+      "register": "ecx",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "nearest_label": {
+        "va": "4E2E93",
+        "line": 475287,
+        "name": "loc_4E2E93:"
+      },
+      "ASM_context": "\nmov     eax, dword_75A9A0\nmov     ecx, dword_75A9A4\npush    edi\npush    esi\nmov     dword_75A998, eax\nmov     dword_75A99C, ecx\ncall    sub_48AFC0\n",
+      "raw_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004E2F29",
+        "rva": "000E2F29",
+        "section": "   \u0000    ",
+        "file_offset": "000E2F29",
+        "raw_backed": true,
+        "raw_hex": "890d9ca97500",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x75a99c], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2E93-9C.bin",
+          "bytes": 156,
+          "sha256": "7E92AB0EF95343EA0748896C4FBDB69E3B7F78CACB9E254CE38224A715A0191A"
+        }
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "start": "00469E91",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469EB4",
+          "rva": "00069EB4",
+          "section": "   \u0000    ",
+          "file_offset": "00069EB4",
+          "raw_backed": true,
+          "raw_hex": "891d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469E91-2F.bin",
+            "bytes": 47,
+            "sha256": "4F9FBA7135FDB0EAE97F8DDBDD72EBA19AAC4FFC38C4F6137086DCDB40319CC6"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469EBA",
+          "rva": "00069EBA",
+          "section": "   \u0000    ",
+          "file_offset": "00069EBA",
+          "raw_backed": true,
+          "raw_hex": "891d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469E91-2F.bin",
+            "bytes": 47,
+            "sha256": "4F9FBA7135FDB0EAE97F8DDBDD72EBA19AAC4FFC38C4F6137086DCDB40319CC6"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469E91-2F.bin",
+        "bytes": 47,
+        "sha256": "4F9FBA7135FDB0EAE97F8DDBDD72EBA19AAC4FFC38C4F6137086DCDB40319CC6"
+      }
+    },
+    {
+      "start": "00469F3D",
+      "function": {
+        "va": "469CA0",
+        "line": 226627,
+        "name": "sub_469CA0"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469FBC",
+          "rva": "00069FBC",
+          "section": "   \u0000    ",
+          "file_offset": "00069FBC",
+          "raw_backed": true,
+          "raw_hex": "891d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469F3D-8B.bin",
+            "bytes": 139,
+            "sha256": "D2ED0833C980210F92438168880AF6D2DEC2A8FA10349E0421D0566FC89B4391"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469FC2",
+          "rva": "00069FC2",
+          "section": "   \u0000    ",
+          "file_offset": "00069FC2",
+          "raw_backed": true,
+          "raw_hex": "891d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469F3D-8B.bin",
+            "bytes": 139,
+            "sha256": "D2ED0833C980210F92438168880AF6D2DEC2A8FA10349E0421D0566FC89B4391"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00469F3D-8B.bin",
+        "bytes": 139,
+        "sha256": "D2ED0833C980210F92438168880AF6D2DEC2A8FA10349E0421D0566FC89B4391"
+      }
+    },
+    {
+      "start": "0046B670",
+      "function": {
+        "va": "46B670",
+        "line": 229536,
+        "name": "sub_46B670"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046B695",
+          "rva": "0006B695",
+          "section": "   \u0000    ",
+          "file_offset": "0006B695",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046B670-2F.bin",
+            "bytes": 47,
+            "sha256": "E4A1B118C7B1909D95EC73343ECA3779296158A23187C9AF00AC60314698D465"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046B69A",
+          "rva": "0006B69A",
+          "section": "   \u0000    ",
+          "file_offset": "0006B69A",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046B670-2F.bin",
+            "bytes": 47,
+            "sha256": "E4A1B118C7B1909D95EC73343ECA3779296158A23187C9AF00AC60314698D465"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046B670-2F.bin",
+        "bytes": 47,
+        "sha256": "E4A1B118C7B1909D95EC73343ECA3779296158A23187C9AF00AC60314698D465"
+      }
+    },
+    {
+      "start": "0046DFB0",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046DFD5",
+          "rva": "0006DFD5",
+          "section": "   \u0000    ",
+          "file_offset": "0006DFD5",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046DFB0-31.bin",
+            "bytes": 49,
+            "sha256": "6F7DD3ED95D1379B999CA21C0B9BE00C77D99BEC2DD7E6023787C959A3000A92"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046DFDB",
+          "rva": "0006DFDB",
+          "section": "   \u0000    ",
+          "file_offset": "0006DFDB",
+          "raw_backed": true,
+          "raw_hex": "893d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046DFB0-31.bin",
+            "bytes": 49,
+            "sha256": "6F7DD3ED95D1379B999CA21C0B9BE00C77D99BEC2DD7E6023787C959A3000A92"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046DFB0-31.bin",
+        "bytes": 49,
+        "sha256": "6F7DD3ED95D1379B999CA21C0B9BE00C77D99BEC2DD7E6023787C959A3000A92"
+      }
+    },
+    {
+      "start": "0046E9A0",
+      "function": {
+        "va": "46DFB0",
+        "line": 234710,
+        "name": "sub_46DFB0"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046E9EA",
+          "rva": "0006E9EA",
+          "section": "   \u0000    ",
+          "file_offset": "0006E9EA",
+          "raw_backed": true,
+          "raw_hex": "891598a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046E9A0-55.bin",
+            "bytes": 85,
+            "sha256": "605B7E971EBC881EE03DD0D0DBBB11D3D3C2D5269E175AC193F08EC2640178E2"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046E9F0",
+          "rva": "0006E9F0",
+          "section": "   \u0000    ",
+          "file_offset": "0006E9F0",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046E9A0-55.bin",
+            "bytes": 85,
+            "sha256": "605B7E971EBC881EE03DD0D0DBBB11D3D3C2D5269E175AC193F08EC2640178E2"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0046E9A0-55.bin",
+        "bytes": 85,
+        "sha256": "605B7E971EBC881EE03DD0D0DBBB11D3D3C2D5269E175AC193F08EC2640178E2"
+      }
+    },
+    {
+      "start": "0047E360",
+      "function": {
+        "va": "47E360",
+        "line": 269268,
+        "name": "sub_47E360"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047E36D",
+          "rva": "0007E36D",
+          "section": "   \u0000    ",
+          "file_offset": "0007E36D",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047E360-18.bin",
+            "bytes": 24,
+            "sha256": "A207BE8DEEF487A4A5DB38C311844DFE415C92D19769508014ADB489A0068B7C"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047E372",
+          "rva": "0007E372",
+          "section": "   \u0000    ",
+          "file_offset": "0007E372",
+          "raw_backed": true,
+          "raw_hex": "890d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047E360-18.bin",
+            "bytes": 24,
+            "sha256": "A207BE8DEEF487A4A5DB38C311844DFE415C92D19769508014ADB489A0068B7C"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047E360-18.bin",
+        "bytes": 24,
+        "sha256": "A207BE8DEEF487A4A5DB38C311844DFE415C92D19769508014ADB489A0068B7C"
+      }
+    },
+    {
+      "start": "0047FAC3",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FAEC",
+          "rva": "0007FAEC",
+          "section": "   \u0000    ",
+          "file_offset": "0007FAEC",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FAC3-33.bin",
+            "bytes": 51,
+            "sha256": "D300E217C07E9F0921215A7E800EEF80DD4F4DBE0B1B47BBE9D2595B27F340BB"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FAF1",
+          "rva": "0007FAF1",
+          "section": "   \u0000    ",
+          "file_offset": "0007FAF1",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FAC3-33.bin",
+            "bytes": 51,
+            "sha256": "D300E217C07E9F0921215A7E800EEF80DD4F4DBE0B1B47BBE9D2595B27F340BB"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FAC3-33.bin",
+        "bytes": 51,
+        "sha256": "D300E217C07E9F0921215A7E800EEF80DD4F4DBE0B1B47BBE9D2595B27F340BB"
+      }
+    },
+    {
+      "start": "0047FC07",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FC22",
+          "rva": "0007FC22",
+          "section": "   \u0000    ",
+          "file_offset": "0007FC22",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FC07-25.bin",
+            "bytes": 37,
+            "sha256": "1E2FD1E367DCAAEEBFDB8BB7836420859A45B653B87EA1DD3656053007C76EE7"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FC27",
+          "rva": "0007FC27",
+          "section": "   \u0000    ",
+          "file_offset": "0007FC27",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FC07-25.bin",
+            "bytes": 37,
+            "sha256": "1E2FD1E367DCAAEEBFDB8BB7836420859A45B653B87EA1DD3656053007C76EE7"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FC07-25.bin",
+        "bytes": 37,
+        "sha256": "1E2FD1E367DCAAEEBFDB8BB7836420859A45B653B87EA1DD3656053007C76EE7"
+      }
+    },
+    {
+      "start": "0047FD81",
+      "function": {
+        "va": "47F340",
+        "line": 271364,
+        "name": "sub_47F340"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FD9C",
+          "rva": "0007FD9C",
+          "section": "   \u0000    ",
+          "file_offset": "0007FD9C",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FD81-25.bin",
+            "bytes": 37,
+            "sha256": "35B02303483C54E26BB5515F32AE3FA0BA25C9A7D0039C9DB60DD6135D91EF8E"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047FDA1",
+          "rva": "0007FDA1",
+          "section": "   \u0000    ",
+          "file_offset": "0007FDA1",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FD81-25.bin",
+            "bytes": 37,
+            "sha256": "35B02303483C54E26BB5515F32AE3FA0BA25C9A7D0039C9DB60DD6135D91EF8E"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0047FD81-25.bin",
+        "bytes": 37,
+        "sha256": "35B02303483C54E26BB5515F32AE3FA0BA25C9A7D0039C9DB60DD6135D91EF8E"
+      }
+    },
+    {
+      "start": "00482C60",
+      "function": {
+        "va": "482C60",
+        "line": 278507,
+        "name": "sub_482C60"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00482C62",
+          "rva": "00082C62",
+          "section": "   \u0000    ",
+          "file_offset": "00082C62",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00482C60-C.bin",
+            "bytes": 12,
+            "sha256": "7E5969EDAA5219FFAF8B497E63B0B32ABCB9694031916A0DDAB19594FF2488FC"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00482C67",
+          "rva": "00082C67",
+          "section": "   \u0000    ",
+          "file_offset": "00082C67",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00482C60-C.bin",
+            "bytes": 12,
+            "sha256": "7E5969EDAA5219FFAF8B497E63B0B32ABCB9694031916A0DDAB19594FF2488FC"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00482C60-C.bin",
+        "bytes": 12,
+        "sha256": "7E5969EDAA5219FFAF8B497E63B0B32ABCB9694031916A0DDAB19594FF2488FC"
+      }
+    },
+    {
+      "start": "00483476",
+      "function": {
+        "va": "483400",
+        "line": 279451,
+        "name": "sub_483400"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00483495",
+          "rva": "00083495",
+          "section": "   \u0000    ",
+          "file_offset": "00083495",
+          "raw_backed": true,
+          "raw_hex": "891598a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00483476-2A.bin",
+            "bytes": 42,
+            "sha256": "5F243F44E7AD12AC77034096690F65AF98B3CE01D154B61CD811A41A0B8E7505"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0048349B",
+          "rva": "0008349B",
+          "section": "   \u0000    ",
+          "file_offset": "0008349B",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00483476-2A.bin",
+            "bytes": 42,
+            "sha256": "5F243F44E7AD12AC77034096690F65AF98B3CE01D154B61CD811A41A0B8E7505"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00483476-2A.bin",
+        "bytes": 42,
+        "sha256": "5F243F44E7AD12AC77034096690F65AF98B3CE01D154B61CD811A41A0B8E7505"
+      }
+    },
+    {
+      "start": "00496A00",
+      "function": {
+        "va": "496A00",
+        "line": 316360,
+        "name": "sub_496A00"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00496A20",
+          "rva": "00096A20",
+          "section": "   \u0000    ",
+          "file_offset": "00096A20",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00496A00-2A.bin",
+            "bytes": 42,
+            "sha256": "876461AF813359DAC03F5B2FEFE0AE2640FEF2D80B2514D335C61FAC270EE5CA"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00496A25",
+          "rva": "00096A25",
+          "section": "   \u0000    ",
+          "file_offset": "00096A25",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00496A00-2A.bin",
+            "bytes": 42,
+            "sha256": "876461AF813359DAC03F5B2FEFE0AE2640FEF2D80B2514D335C61FAC270EE5CA"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\00496A00-2A.bin",
+        "bytes": 42,
+        "sha256": "876461AF813359DAC03F5B2FEFE0AE2640FEF2D80B2514D335C61FAC270EE5CA"
+      }
+    },
+    {
+      "start": "004A9770",
+      "function": {
+        "va": "4A9770",
+        "line": 353992,
+        "name": "sub_4A9770"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A97B4",
+          "rva": "000A97B4",
+          "section": "   \u0000    ",
+          "file_offset": "000A97B4",
+          "raw_backed": true,
+          "raw_hex": "891d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004A9770-50.bin",
+            "bytes": 80,
+            "sha256": "4053101D6B98FB5C903D596B3994D9BE0616E2D16D850D24F02B99FA91EDCE9F"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A97BA",
+          "rva": "000A97BA",
+          "section": "   \u0000    ",
+          "file_offset": "000A97BA",
+          "raw_backed": true,
+          "raw_hex": "891d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], ebx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004A9770-50.bin",
+            "bytes": 80,
+            "sha256": "4053101D6B98FB5C903D596B3994D9BE0616E2D16D850D24F02B99FA91EDCE9F"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004A9770-50.bin",
+        "bytes": 80,
+        "sha256": "4053101D6B98FB5C903D596B3994D9BE0616E2D16D850D24F02B99FA91EDCE9F"
+      }
+    },
+    {
+      "start": "004C24BC",
+      "function": {
+        "va": "4C22A0",
+        "line": 405928,
+        "name": "sub_4C22A0"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004C24DF",
+          "rva": "000C24DF",
+          "section": "   \u0000    ",
+          "file_offset": "000C24DF",
+          "raw_backed": true,
+          "raw_hex": "893598a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004C24BC-2F.bin",
+            "bytes": 47,
+            "sha256": "1DE4AD78E878FF4DB978FFC8F0708156B491B2AE599714CA3E33009274AC951D"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004C24E5",
+          "rva": "000C24E5",
+          "section": "   \u0000    ",
+          "file_offset": "000C24E5",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004C24BC-2F.bin",
+            "bytes": 47,
+            "sha256": "1DE4AD78E878FF4DB978FFC8F0708156B491B2AE599714CA3E33009274AC951D"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004C24BC-2F.bin",
+        "bytes": 47,
+        "sha256": "1DE4AD78E878FF4DB978FFC8F0708156B491B2AE599714CA3E33009274AC951D"
+      }
+    },
+    {
+      "start": "004E2150",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2258",
+          "rva": "000E2258",
+          "section": "   \u0000    ",
+          "file_offset": "000E2258",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2150-119.bin",
+            "bytes": 281,
+            "sha256": "B2E6D90F47CA402F7CC0D7ABE36D6087CA2DAA585486E0F7538A627D2CC1F36C"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2263",
+          "rva": "000E2263",
+          "section": "   \u0000    ",
+          "file_offset": "000E2263",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2150-119.bin",
+            "bytes": 281,
+            "sha256": "B2E6D90F47CA402F7CC0D7ABE36D6087CA2DAA585486E0F7538A627D2CC1F36C"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2150-119.bin",
+        "bytes": 281,
+        "sha256": "B2E6D90F47CA402F7CC0D7ABE36D6087CA2DAA585486E0F7538A627D2CC1F36C"
+      }
+    },
+    {
+      "start": "004E228A",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E22BE",
+          "rva": "000E22BE",
+          "section": "   \u0000    ",
+          "file_offset": "000E22BE",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E228A-45.bin",
+            "bytes": 69,
+            "sha256": "198F4B56CEDE8D4362A86D44CF31AC0FFEA182116C7623013B7A002AE3332112"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E22C9",
+          "rva": "000E22C9",
+          "section": "   \u0000    ",
+          "file_offset": "000E22C9",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E228A-45.bin",
+            "bytes": 69,
+            "sha256": "198F4B56CEDE8D4362A86D44CF31AC0FFEA182116C7623013B7A002AE3332112"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E228A-45.bin",
+        "bytes": 69,
+        "sha256": "198F4B56CEDE8D4362A86D44CF31AC0FFEA182116C7623013B7A002AE3332112"
+      }
+    },
+    {
+      "start": "004E22F0",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2310",
+          "rva": "000E2310",
+          "section": "   \u0000    ",
+          "file_offset": "000E2310",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E22F0-31.bin",
+            "bytes": 49,
+            "sha256": "B901B01E428F1BACE0CE59BBA0A87E9E3C66BC83CF76013FCBADB3CB56AA4C10"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E231B",
+          "rva": "000E231B",
+          "section": "   \u0000    ",
+          "file_offset": "000E231B",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E22F0-31.bin",
+            "bytes": 49,
+            "sha256": "B901B01E428F1BACE0CE59BBA0A87E9E3C66BC83CF76013FCBADB3CB56AA4C10"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E22F0-31.bin",
+        "bytes": 49,
+        "sha256": "B901B01E428F1BACE0CE59BBA0A87E9E3C66BC83CF76013FCBADB3CB56AA4C10"
+      }
+    },
+    {
+      "start": "004E2342",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E236D",
+          "rva": "000E236D",
+          "section": "   \u0000    ",
+          "file_offset": "000E236D",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2342-3C.bin",
+            "bytes": 60,
+            "sha256": "253C0E92FF886A5C9F0DE21FDCADA3A68A84E15361BA345DD6506C1B4C7E0758"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2378",
+          "rva": "000E2378",
+          "section": "   \u0000    ",
+          "file_offset": "000E2378",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2342-3C.bin",
+            "bytes": 60,
+            "sha256": "253C0E92FF886A5C9F0DE21FDCADA3A68A84E15361BA345DD6506C1B4C7E0758"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2342-3C.bin",
+        "bytes": 60,
+        "sha256": "253C0E92FF886A5C9F0DE21FDCADA3A68A84E15361BA345DD6506C1B4C7E0758"
+      }
+    },
+    {
+      "start": "004E23BD",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E23DD",
+          "rva": "000E23DD",
+          "section": "   \u0000    ",
+          "file_offset": "000E23DD",
+          "raw_backed": true,
+          "raw_hex": "893d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], edi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E23BD-31.bin",
+            "bytes": 49,
+            "sha256": "85B5342338B0512439CCFD5E7A131B255DE48150D725A29677EAAC89A4609E6F"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E23E8",
+          "rva": "000E23E8",
+          "section": "   \u0000    ",
+          "file_offset": "000E23E8",
+          "raw_backed": true,
+          "raw_hex": "89359ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], esi",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E23BD-31.bin",
+            "bytes": 49,
+            "sha256": "85B5342338B0512439CCFD5E7A131B255DE48150D725A29677EAAC89A4609E6F"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E23BD-31.bin",
+        "bytes": 49,
+        "sha256": "85B5342338B0512439CCFD5E7A131B255DE48150D725A29677EAAC89A4609E6F"
+      }
+    },
+    {
+      "start": "004E28E6",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2957",
+          "rva": "000E2957",
+          "section": "   \u0000    ",
+          "file_offset": "000E2957",
+          "raw_backed": true,
+          "raw_hex": "890d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E28E6-7C.bin",
+            "bytes": 124,
+            "sha256": "0D493C045FCCDF58929C7D593D9FF2C35FF19F9F14A8DE77EADCAC8C4C549B7F"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E295D",
+          "rva": "000E295D",
+          "section": "   \u0000    ",
+          "file_offset": "000E295D",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E28E6-7C.bin",
+            "bytes": 124,
+            "sha256": "0D493C045FCCDF58929C7D593D9FF2C35FF19F9F14A8DE77EADCAC8C4C549B7F"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E28E6-7C.bin",
+        "bytes": 124,
+        "sha256": "0D493C045FCCDF58929C7D593D9FF2C35FF19F9F14A8DE77EADCAC8C4C549B7F"
+      }
+    },
+    {
+      "start": "004E29C2",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2A07",
+          "rva": "000E2A07",
+          "section": "   \u0000    ",
+          "file_offset": "000E2A07",
+          "raw_backed": true,
+          "raw_hex": "890d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E29C2-50.bin",
+            "bytes": 80,
+            "sha256": "A6D422B368C30081147891CB1CB18C4B90131665187D000A1A5EDC116917DE69"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2A0D",
+          "rva": "000E2A0D",
+          "section": "   \u0000    ",
+          "file_offset": "000E2A0D",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E29C2-50.bin",
+            "bytes": 80,
+            "sha256": "A6D422B368C30081147891CB1CB18C4B90131665187D000A1A5EDC116917DE69"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E29C2-50.bin",
+        "bytes": 80,
+        "sha256": "A6D422B368C30081147891CB1CB18C4B90131665187D000A1A5EDC116917DE69"
+      }
+    },
+    {
+      "start": "004E2A72",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2A92",
+          "rva": "000E2A92",
+          "section": "   \u0000    ",
+          "file_offset": "000E2A92",
+          "raw_backed": true,
+          "raw_hex": "890d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2A72-2B.bin",
+            "bytes": 43,
+            "sha256": "FCA3C830FFFCE9D1E552E4723619D67619B67516DEF0673DA07C934C15872676"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2A98",
+          "rva": "000E2A98",
+          "section": "   \u0000    ",
+          "file_offset": "000E2A98",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2A72-2B.bin",
+            "bytes": 43,
+            "sha256": "FCA3C830FFFCE9D1E552E4723619D67619B67516DEF0673DA07C934C15872676"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2A72-2B.bin",
+        "bytes": 43,
+        "sha256": "FCA3C830FFFCE9D1E552E4723619D67619B67516DEF0673DA07C934C15872676"
+      }
+    },
+    {
+      "start": "004E2AFD",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2B27",
+          "rva": "000E2B27",
+          "section": "   \u0000    ",
+          "file_offset": "000E2B27",
+          "raw_backed": true,
+          "raw_hex": "890d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2AFD-35.bin",
+            "bytes": 53,
+            "sha256": "3132FC65FE32BDC898423620523B9050552331B69EF7D27E218FFB69879B52D1"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2B2D",
+          "rva": "000E2B2D",
+          "section": "   \u0000    ",
+          "file_offset": "000E2B2D",
+          "raw_backed": true,
+          "raw_hex": "a39ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2AFD-35.bin",
+            "bytes": 53,
+            "sha256": "3132FC65FE32BDC898423620523B9050552331B69EF7D27E218FFB69879B52D1"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2AFD-35.bin",
+        "bytes": 53,
+        "sha256": "3132FC65FE32BDC898423620523B9050552331B69EF7D27E218FFB69879B52D1"
+      }
+    },
+    {
+      "start": "004E2B7D",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2B89",
+          "rva": "000E2B89",
+          "section": "   \u0000    ",
+          "file_offset": "000E2B89",
+          "raw_backed": true,
+          "raw_hex": "890d98a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2B7D-18.bin",
+            "bytes": 24,
+            "sha256": "E68E3FA879D10584E03D03CA36C2E9E206D9A40FD48A1AD0E385C0F34037009D"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2B8F",
+          "rva": "000E2B8F",
+          "section": "   \u0000    ",
+          "file_offset": "000E2B8F",
+          "raw_backed": true,
+          "raw_hex": "89159ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], edx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2B7D-18.bin",
+            "bytes": 24,
+            "sha256": "E68E3FA879D10584E03D03CA36C2E9E206D9A40FD48A1AD0E385C0F34037009D"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2B7D-18.bin",
+        "bytes": 24,
+        "sha256": "E68E3FA879D10584E03D03CA36C2E9E206D9A40FD48A1AD0E385C0F34037009D"
+      }
+    },
+    {
+      "start": "004E2E93",
+      "function": {
+        "va": "4E2150",
+        "line": 474025,
+        "name": "sub_4E2150"
+      },
+      "writes": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2F24",
+          "rva": "000E2F24",
+          "section": "   \u0000    ",
+          "file_offset": "000E2F24",
+          "raw_backed": true,
+          "raw_hex": "a398a97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a998], eax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2E93-9C.bin",
+            "bytes": 156,
+            "sha256": "7E92AB0EF95343EA0748896C4FBDB69E3B7F78CACB9E254CE38224A715A0191A"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004E2F29",
+          "rva": "000E2F29",
+          "section": "   \u0000    ",
+          "file_offset": "000E2F29",
+          "raw_backed": true,
+          "raw_hex": "890d9ca97500",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a99c], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2E93-9C.bin",
+            "bytes": 156,
+            "sha256": "7E92AB0EF95343EA0748896C4FBDB69E3B7F78CACB9E254CE38224A715A0191A"
+          }
+        }
+      ],
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004E2E93-9C.bin",
+        "bytes": 156,
+        "sha256": "7E92AB0EF95343EA0748896C4FBDB69E3B7F78CACB9E254CE38224A715A0191A"
+      }
+    }
+  ],
+  "named_store_count": 50,
+  "block_count": 25,
+  "scope": "Visible named mov writers only, exact local raw blocks. Does not prove arbitrary alias stores/private code absent.",
+  "classification": {
+    "reset_paths": [
+      "469CA0",
+      "46B670",
+      "46DFB0 prefix",
+      "47F340 branches",
+      "482C60",
+      "496A00",
+      "4A9770"
+    ],
+    "temporary_restore": "46DFB0 reads75A998/75A99C into savedlocals, writes0 atentry, then restores those savedglobals after draw. These arepreviousG,notincomingcoordinatearguments; nopermanentorigin0 imposed.",
+    "branch_local_value_boundary": "4C22A0 directstore source isESI; itslocalwriterblock isqualified butfullupstreamregister/controlflow notclosed bythis finiteinventory.",
+    "saved_origin_copies": [
+      "47E360",
+      "483400",
+      "4E2150 at4E2B7D and4E2E93 blocks"
+    ],
+    "movement_deltas": "4E2150 reads currenttranslation and adds signed-indexed direction tuple from834C68/834CA8/834CE8/834D28/834D68, selected byobjectkind andflags. Boundary at source834EE4+11 signed direction; upstream direction/table writers not expanded."
+  }
+}

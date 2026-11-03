@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build\\candidate-pet-controls.jar",
+    "sha256": "4319a8e7f5c9dff541c263b9d85fbfafc03fe963dd3007677b54b181f0c9253e"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\candidate-polymorph-material.jar",
+    "sha256": "a1b7d3390f04262f240364fbd6ef0ad7f6009ff27cc80bab170985ba151948e4"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePolymorphMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\build.py",
+      "sha256": "78d88fdb4b4f263dbcc01eb173972d2a7ee6cb056ed18d5adb2c3dfef1926809"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\PolymorphMaterialMethods.java",
+      "sha256": "1a1071c98e8ab49d024ba62461bffa3378620f4b68ae5e64a13ea3341410cf0d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "59ec00efe774985412f4ab17bde693310e5e1ce9ca374e18cf82801b144eabe3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "7924a0736ad4562d6882d81f7259e2cab5750c281f096f7b7e5c1eb07f9033bf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build-repro\\inputs\\sources\\NativePolymorphMaterialAction.java",
+      "sha256": "fa90b2f5f42f24d92d071173cca63f6a42f66d4122d5fb2671ebf287366ba70f"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+    "bytes": 2353,
+    "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+  },
+  "captured_content_sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_character_selection.rs",
+    "bytes": 2353,
+    "sha256": "F72002E0C31B014C784CED5CD5AA4E3CBFDF1236F71BE0C81087A5EECA38F427"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:53:53.714826+08:00",
+  "ranges": [
+    [
+      1,
+      22
+    ]
+  ],
+  "line_count": 22,
+  "implementation_lines": [
+    {
+      "line": 1,
+      "text": "//! Closed selection/callback subset:630DF8 stride60 ->415A30 vtable4F7C68."
+    },
+    {
+      "line": 2,
+      "text": "//! Slot IMG79/80 and PNG animation members are absent from qualified assets."
+    },
+    {
+      "line": 3,
+      "text": "//! Slot anchors are authoritative; their width/height and Native art stay open."
+    },
+    {
+      "line": 4,
+      "text": "use anyhow::{Context,Result};"
+    },
+    {
+      "line": 5,
+      "text": "#[derive(Clone,Copy,Debug,PartialEq,Eq)]pub struct Rect{pub x:i32,pub y:i32,pub width:i32,pub height:i32}"
+    },
+    {
+      "line": 6,
+      "text": "impl Rect{pub fn contains(self,x:i32,y:i32)->bool{let(x,y)=(i64::from(x)-i64::from(self.x),i64::from(y)-i64::from(self.y));x>=0&&y>=0&&x<i64::from(self.width)&&y<i64::from(self.height)}}"
+    },
+    {
+      "line": 7,
+      "text": "pub const SUBMIT:Rect=Rect{x:497,y:404,width:51,height:23};"
+    },
+    {
+      "line": 8,
+      "text": "pub const BACK:Rect=Rect{x:552,y:404,width:51,height:23};"
+    },
+    {
+      "line": 9,
+      "text": "#[derive(Clone,Copy,Debug,PartialEq,Eq)]pub struct Slot{pub index:usize,pub x:i32,pub y:i32,pub image_id:u32,pub callback:u32,pub width:Option<i32>,pub height:Option<i32>}"
+    },
+    {
+      "line": 10,
+      "text": "pub fn slot(index:usize)->Option<Slot>{(index<4).then(||Slot{index,x:19+157*index as i32,y:0,image_id:79,callback:0x4934A0,width:None,height:None})}"
+    },
+    {
+      "line": 11,
+      "text": "///494E00 signed class switch; variants branch on nonzero, not variant==1."
+    },
+    {
+      "line": 12,
+      "text": "pub fn animation_table(class:u8,variant:u8)->u32{let nonzero=variant!=0;match class as i8{-1=>0x62FD70,0=>if nonzero{0x6300D0}else{0x630130},1=>if nonzero{0x62FF50}else{0x62FFB0},2=>if nonzero{0x62FE90}else{0x62FEF0},3=>if nonzero{0x630010}else{0x630070},4=>if nonzero{0x62FDD0}else{0x62FE30},_=>0x630190}}"
+    },
+    {
+      "line": 13,
+      "text": "#[derive(Clone,Copy,Debug,Default,PartialEq,Eq)]pub struct Key{pub active:bool,pub scene_revision:u64,pub selection_revision:u64,pub selected:Option<usize>,pub pressed:Option<usize>}"
+    },
+    {
+      "line": 14,
+      "text": "#[derive(Clone,Default)]pub(crate) struct Scene{key:Key}"
+    },
+    {
+      "line": 15,
+      "text": "impl Scene{"
+    },
+    {
+      "line": 16,
+      "text": " pub fn key(&self)->Key{self.key}"
+    },
+    {
+      "line": 17,
+      "text": " pub fn enter(&mut self){self.key.active=true;}"
+    },
+    {
+      "line": 18,
+      "text": " pub fn select(&mut self,slot:usize)->Result<()>{let revision=self.key.selection_revision.checked_add(1).context(\"selection revision exhausted\")?;self.key.selected=Some(slot);self.key.pressed=None;self.key.selection_revision=revision;Ok(())}"
+    },
+    {
+      "line": 19,
+      "text": " pub fn press(&mut self,slot:usize){self.key.pressed=Some(slot);}"
+    },
+    {
+      "line": 20,
+      "text": " pub fn cancel_press(&mut self){self.key.pressed=None;}"
+    },
+    {
+      "line": 21,
+      "text": " pub fn retire(&mut self)->Result<()>{let revision=self.key.scene_revision.checked_add(1).context(\"character scene revision exhausted\")?;self.key=Key{active:false,scene_revision:revision,..self.key};self.key.selected=None;self.key.pressed=None;Ok(())}"
+    },
+    {
+      "line": 22,
+      "text": "}"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

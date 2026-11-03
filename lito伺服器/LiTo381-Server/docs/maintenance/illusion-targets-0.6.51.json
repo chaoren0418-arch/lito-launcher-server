@@ -1,0 +1,84 @@
+{
+  "version": "0.6.51",
+  "baseline_server_sha256": "db2ef1343a85a7dc830cbc42311a43ab66e2521bf623f115894f90fd36344511",
+  "published_sha256": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0",
+  "native_dll_sha256": "03534ce362e10c2a29994d98319149e80d3a87651019132d2ca7b592231e0a8e",
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "054ee5c337ebebaea340c3f21569c8190656d89a31b21c6bc85562f13fbc32f2",
+    "src/main/java/local/lito381/server/DragonSkillRequests.java": "6da61a6e9055192497dd5d876fc84499b044cbd21e67ac6ca6713210b94cb2ab"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "c01c62786eaae20257291d4552ba847cb5607236df21f60968c5bcd7a0c1ba9f",
+    "src/main/java/local/lito381/server/DragonSkillRequests.java": "2ddfcc11bdb95bb0612331bc3ce54aace4ee1145088609e5731a08311e6f0e0c"
+  },
+  "added_sources": {
+    "src/main/java/local/lito381/server/IllusionSkillRequests.java": "8451d5771eab48c43439b3bcf6b56f495081e99db49824aa1cea29c35047bf02"
+  },
+  "rollback_archive": "backups/before-illusion-targets-0.6.50.zip",
+  "rollback_archive_sha256": "ddef6fe1808e190bfce73c461df53361bbc61843e78cac9408a3376b1a8dab21",
+  "native_sources": {
+    "native/class_skills.inc": "9110c8909d1d411c83d9ee2ee44346ad25358484016072d6d6e44e54a3d72fc3",
+    "native/ddraw_proxy.cpp": "83ce36a406195ed9b41ab7541ced3ac7e84dae2762b8d8668db28d9975159466"
+  },
+  "server_regression_passed": true,
+  "dragon_presentation_regression_passed": true,
+  "status_and_empty_melee_regression_passed": true,
+  "native_test": {
+    "run": "class-lobby-fixture-1791851198916008200",
+    "picker_ids": 21,
+    "native_target_packet_bytes": 11,
+    "summary_cycles": [
+      {
+        "result": 5,
+        "summary": 2,
+        "native_confirm_lobby": 1,
+        "world": 4
+      },
+      {
+        "result": 5,
+        "summary": 2,
+        "native_confirm_lobby": 1,
+        "world": 4
+      }
+    ],
+    "animation": [],
+    "no_player_sql_writes": true
+  },
+  "no_player_sql_writes": true,
+  "manual_test_pending": true,
+  "evidence_run": "development-7cd8a04ebd784461a733565c09ac3d29",
+  "changes": [
+    "14 illusion target skills use native object picker and cccdhh packet",
+    "Server validates explicit selected object; missing/unknown/dead/far targets never fall back to self or nearby actors",
+    "Existing skill target types, range, costs and effects retained; request ThreadLocal cleared in finally"
+  ],
+  "lobby_observation": "User confirmed battle/result screen after live capture; no persistent lobby freeze reproduced. Two owned-native result/summary/Confirm/lobby/world cycles tested without changing summary logic.",
+  "formal_startup_test": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791851282128879000"
+  },
+  "native_animation_evidence_run": "class-lobby-fixture-1791851022635202000",
+  "validation_notes": [
+    "The initial native run verified empty attack frames then hit a capture parser assertion; fixed the fixture parser before the successful target/transition run.",
+    "An additional animation sampling run observed only one attack frame; target-mode verification excludes this unrelated timing-sensitive resample. Production empty-melee logic was unchanged."
+  ]
+}

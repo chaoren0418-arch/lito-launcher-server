@@ -1,0 +1,2250 @@
+{
+  "updated_at": "2026-10-06T10:13:11.470718+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary-contract.json",
+    "bytes": 18180,
+    "sha256": "DC16D6396C2DAAE64404E5D85A053B89FE71731CB168EB66BC3C1092544619A8"
+  },
+  "all_match": true,
+  "check_count": 559,
+  "checks": [
+    {
+      "name": "own newoutput 79-source-qualified-suffix-lookup.json",
+      "match": true
+    },
+    {
+      "name": "own newoutput bank-boundary-handoff.md",
+      "match": true
+    },
+    {
+      "name": "own newoutput direct-bank-source-facts.json",
+      "match": true
+    },
+    {
+      "name": "own newoutput existing-ASM-boundary-navigation.json",
+      "match": true
+    },
+    {
+      "name": "own newoutput fixed-PE-bank-boundaries.json",
+      "match": true
+    },
+    {
+      "name": "own newoutput minimum-missing-resource-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixedPE authoritativeSHA",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode IMGbank_initializer",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4940",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4945",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D494F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4950",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4951",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4953",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4955",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D495A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4960",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4961",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4968",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4969",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D496A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D496B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D496D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4972",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4977",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D497A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D497C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D497E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4980",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4985",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4988",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D498B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D498D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4994",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4996",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4997",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4999",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D499E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49A0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49A2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49A4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49A5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49AB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49B2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49B6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49B8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49BB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49BD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49BE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49BF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49C6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49C8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49C9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D49CF",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNGbank_initializer",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A50",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A55",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A5F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A60",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A61",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A63",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A65",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A6A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A70",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A71",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A78",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A79",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A7A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A7B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A7D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A82",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A87",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A8A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A8C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A8E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A90",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A95",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A98",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A9B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A9D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AA4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AA6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AA7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AA9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AAE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AB0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AB2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AB4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AB5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ABB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AC2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AC6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AC8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ACB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ACD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ACE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ACF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AD6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AD8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4AD9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ADF",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode IMGentry_constructor",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D40",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D41",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D43",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D45",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D48",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D4E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D55",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D58",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D59",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNGentry_constructor",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5220",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5221",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5223",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5226",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5227",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5229",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D522A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D522F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5235",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5237",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5238",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5239",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode slot_image_consumer",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414960",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414963",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414965",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041496A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041496D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041496F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414975",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414977",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414979",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041497C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041497E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414983",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414988",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414989",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041498E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041498F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414992",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414994",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414996",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00414998",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0041499A",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode numeric_frame_prefix",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DA8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DAA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DAB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DAE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DB0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DB6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DBB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DBE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DC1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DC4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DC7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DCA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DCC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DCE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415DD0",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNGbank_mode1_consumer",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E4C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E52",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E54",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E59",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E5B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E5D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E60",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E62",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E63",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E66",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E6B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E6C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E6D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E72",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E75",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E78",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E7D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E7F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E80",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E85",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E87",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E8A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E90",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E92",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E94",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E96",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415E98",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNGbank_mode0_consumer",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EB9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EBF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EC1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EC6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EC8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ECA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ECD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ECF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ED0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ED3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ED8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415ED9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EDA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EDF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EE2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EE5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EEA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EEC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EED",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EF2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EF4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EF7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EFD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415EFF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F01",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F03",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F05",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F07",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F0A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F0C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F0E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F11",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F12",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F13",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F14",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F15",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F1A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F1D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F1E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F1F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F20",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F22",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00415F23",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode IMGformat_provider_boundary",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D90",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D91",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D93",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4D99",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DA0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DA1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DA2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DA3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DA9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DAC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DAE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DB4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DBB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DBE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DBF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DC4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DCA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DCB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DCD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DD0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DD6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DDB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DE2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DE4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DE6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DE8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DEB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DEC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DF1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DF3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DF6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DFC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4DFD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E02",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E03",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E05",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E08",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E0E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E13",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E1A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E1C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E1E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E21",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E23",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E29",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E2A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E2B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E30",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E33",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E36",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E38",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E3E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E40",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E43",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E49",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E4A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E4F",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E50",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E52",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E55",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E5B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E60",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E67",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E69",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E6B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E6E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E70",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E76",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E77",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E78",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E7D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E80",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E83",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E85",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E8B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E8E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E90",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E96",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E97",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E9D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4E9E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EA3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EA6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EA9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EAB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EAD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EB0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EB6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EB7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EBC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EBD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EBF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EC2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EC8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ECD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ED4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ED6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4ED8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EDB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EDD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EE3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EE4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EE5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EEA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EED",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EF0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EF2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EF4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EF7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EF9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4EFF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4F00",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4F06",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4F07",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4F0C",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNGformat_provider_boundary",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5270",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5271",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5273",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5279",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D527A",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D527B",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D527C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D527E",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5280",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5283",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5285",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5287",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5288",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D528D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5290",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5293",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D5296",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D529C",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D529D",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52A2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52A3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52A4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52A9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52AC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52B2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52B7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52BE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52C0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52C2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52C5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52C6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52CC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52CD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52CE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52D3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52D5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52D7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52DA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52DC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52DF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52E0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52E6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52E7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52ED",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52EE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52F3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52F5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52F7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D52FA",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode PNG_global_clear",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4B39",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode IMG_global_clear",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 004D4A29",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata banks_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata entry_vtables",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata default_provider_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata first_routed_provider_bucket_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata IMG_selector_byte_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata IMG_formatter_pointer_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata IMG_selector_jump_table",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %d.img",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %de.img",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %dj.img",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %dh.img",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %dc.img",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata %d.png",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4A50",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4A7D",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4A8A",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4AA9",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4AB5",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4AC2",
+      "match": true
+    },
+    {
+      "name": "factanchor B01 004D4B39",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D4940",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D496D",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D497A",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D4999",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D49A5",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D49B2",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 004D4A29",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 0041496F",
+      "match": true
+    },
+    {
+      "name": "factanchor B02 00414979",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 004D4D48",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 004D4D4E",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 004D4D55",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 004D522A",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 004D522F",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 0041498F",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 0041499A",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 00415E87",
+      "match": true
+    },
+    {
+      "name": "factanchor B03 00415E98",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415DBB",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415DC1",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415DCA",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415DD0",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415E54",
+      "match": true
+    },
+    {
+      "name": "factanchor B04 00415E5D",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D5293",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D529D",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D52B2",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D52B7",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D52CE",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D52E7",
+      "match": true
+    },
+    {
+      "name": "factanchor B05 004D52EE",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4D99",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4DB4",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4DDB",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4EAD",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4EB7",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4EC8",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4ECD",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4EE5",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4F00",
+      "match": true
+    },
+    {
+      "name": "factanchor B06 004D4F07",
+      "match": true
+    },
+    {
+      "name": "two bank globals rawzero",
+      "match": true
+    },
+    {
+      "name": "two static vtable targets",
+      "match": true
+    },
+    {
+      "name": "firstbucket/defaultonly diskzero",
+      "match": true
+    },
+    {
+      "name": "IMGswitchjumptable literalroute",
+      "match": true
+    },
+    {
+      "name": "six fixedfilenameformats",
+      "match": true
+    },
+    {
+      "name": "fournewIMGsuffixqueriesonly",
+      "match": true
+    },
+    {
+      "name": "stablebefore/content/after PE",
+      "match": true
+    },
+    {
+      "name": "stablebefore/content/after ASM",
+      "match": true
+    },
+    {
+      "name": "stablebefore/content/after single_index",
+      "match": true
+    },
+    {
+      "name": "staticrequest810and7874",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved minimal-Native-binding-handoff.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved Native-animation-and-slot-data.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved Native-background-branch-reference.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved Native-existing-resource-inventory.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved Native-resource-handoff.md",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved Native-source-container-offset-check.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved native_city_runtime.rs.frozen-slices.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved native_city_runtime.rs.live-slices.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved native_source_send.rs.frozen-slices.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved native_source_send.rs.live-slices.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved R526-selection-compatibility-addendum.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved resource-gap-classification.json",
+      "match": true
+    },
+    {
+      "name": "Batch35outputpreserved retained-read-provenance.json",
+      "match": true
+    },
+    {
+      "name": "priorpin class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "priorpin ranges.json",
+      "match": true
+    },
+    {
+      "name": "priorpin snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "priorpin native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-character-ui-reachability-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-selection-resource-gap-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "finiteboundary/noassetcontract",
+      "match": true
+    },
+    {
+      "name": "counts1280bytes410rows37priors",
+      "match": true
+    },
+    {
+      "name": "zeroactions",
+      "match": true
+    },
+    {
+      "name": "GUI/background/R527qualifications",
+      "match": true
+    },
+    {
+      "name": "packetimmutable",
+      "match": true
+    },
+    {
+      "name": "incidentimmutable/open",
+      "match": true
+    }
+  ],
+  "scope": "Only new fixedPEboundedbytes/ownedsourcefacts/knownformatjumpdata and immutablepins. No Native/Modern function/model/test/build/GUI or oldPASS execution.",
+  "runtime_acceptance": false
+}

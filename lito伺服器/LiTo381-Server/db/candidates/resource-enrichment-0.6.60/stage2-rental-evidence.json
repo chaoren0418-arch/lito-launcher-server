@@ -1,0 +1,27 @@
+{
+  "package_status": "未匯入、未接線",
+  "metadata_links": {
+    "index_source_id": 9,
+    "archive_source_id": 10,
+    "member": "LTdesc-c.tbl",
+    "row_0based": 176,
+    "offset": 110328,
+    "bytes": 2053,
+    "raw_payload_sha256": "1310c13daad930876690a336bd202c5a57ec9f777a76233a449b639b6132a9c7",
+    "decoded_sha256": "73243064a856fade75de110c5d25f6b1f19ed51c3ba7b1219bbe44ed7e84006b"
+  },
+  "description_header_declared_count": 173,
+  "observed_nonblank_noncomment_descriptions": 171,
+  "header_is_not_index_bound": true,
+  "native_resource_range": "LTdesc13..90 match all78 retained names; paired icon namespace20000+index is a renderer identity, not shared item ID",
+  "same_name_item_count": 25,
+  "same_name_candidate_count": 25,
+  "proven_shared_mappings": 0,
+  "currency": {
+    "native_description": "光之寶石",
+    "native_index": 5,
+    "retained_id": 49358,
+    "shared_same_name_candidates": []
+  },
+  "template_comparison": "type/groundgfx/weight/enchant/damage equality flags and SHA only; no full shared equipment template copied"
+}

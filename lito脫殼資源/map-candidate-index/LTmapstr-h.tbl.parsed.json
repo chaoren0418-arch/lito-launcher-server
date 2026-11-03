@@ -1,0 +1,2173 @@
+{
+  "schema": "LTmapstr-byte-candidate-index-v1",
+  "candidate": "LTmapstr-h.tbl",
+  "provenance": {
+    "namespace": "native",
+    "archive": "LTtext",
+    "row": 242,
+    "offset": 187264,
+    "bytes": 1377,
+    "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+    "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00242-LTmapstr-h.tbl",
+      "bytes": 1377,
+      "sha256": "57D700E3709A8513E45F8F2E6D9485FB107547645D4A762BA0D928D4F47CB088"
+    },
+    "decoded": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00242-LTmapstr-h.tbl",
+      "bytes": 1377,
+      "sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07"
+    },
+    "existing_resource_encoding_marker": "L1",
+    "marker_is_text_codec_qualification": false,
+    "qualified_text_codec": null,
+    "existing_display_reference": {
+      "assumed_code_page": 950,
+      "status": "strict decode failed; raw decoded bytes preserved"
+    },
+    "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+  },
+  "policy": {
+    "encoding": "bytes authoritative; printable ASCII view only; no codec inference or non-ASCII decode",
+    "physical_lines": "CRLF, standalone CR, standalone LF only; retain terminator; terminal EOL creates no phantom row",
+    "tokens": "literal byte 23 (#), retain every empty/trailing token and whitespace; no escape grammar inferred",
+    "header": "first nonblank physical line, standalone unsigned ASCII decimal after SP/HT trim; observed count declaration only",
+    "comment": "first non-SP/HT byte is 3B (;); preserve whole content; other semicolons retained without inline truncation",
+    "file_key": "non-header non-comment hash row, first token SP/HT-trimmed signed ASCII decimal; arbitrary precision; no width coercion",
+    "commented_key": "separate inactive declaration after exactly one leading comment marker; never active file key",
+    "placeholder": "token SP/HT-trimmed equals exact lowercase ASCII no exist or no exsist; marker flag, not deleted",
+    "label_metadata": "all tokens returned with positions and bytes; no canonical title column or fallback key",
+    "duplicate_keys": "all matching physical rows in source order; no first/last winner"
+  },
+  "authority_guard": "Candidate bytes only. File key, physical line, header count and token position do not qualify runtime table index, locale, label codec or map/resource ID. No cross-candidate alignment or title-column inference.",
+  "source_byte_length": 1377,
+  "source_sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07",
+  "header_declared_count": 42,
+  "header_physical_line_1based": 1,
+  "counts": {
+    "physical_rows": 43,
+    "header_rows": 1,
+    "physical_rows_after_header": 42,
+    "nonblank_rows_after_header": 42,
+    "comment_rows_after_header": 4,
+    "noncomment_nonblank_rows_after_header": 38,
+    "hash_rows_after_header_including_comments": 42,
+    "noncomment_hash_rows_after_header": 38,
+    "noncomment_plain_rows_after_header": 0,
+    "explicit_numeric_key_rows": 0,
+    "commented_numeric_key_rows": 0,
+    "placeholder_rows_including_comments": 6,
+    "noncomment_placeholder_rows": 6,
+    "hash_delimiters": 92,
+    "tokens": 135
+  },
+  "count_minus_header": {
+    "physical_rows_after_header": 0,
+    "nonblank_rows_after_header": 0,
+    "noncomment_nonblank_rows_after_header": -4,
+    "noncomment_hash_rows_after_header": -4
+  },
+  "terminal_eol": true,
+  "eol_counts": {
+    "CRLF": 43,
+    "CR": 0,
+    "LF": 0,
+    "NONE": 0
+  },
+  "duplicate_explicit_file_keys": {},
+  "coverage": {
+    "reconstructed_source_sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07",
+    "all_source_bytes_preserved": true,
+    "all_token_bytes_preserved": true,
+    "byte_interval": [
+      0,
+      1377
+    ]
+  },
+  "rows": [
+    {
+      "physical_line_1based": 1,
+      "byte_offset": 0,
+      "content_byte_length": 2,
+      "full_byte_length": 4,
+      "raw_bytes_hex": "34320d0a",
+      "content_hex": "3432",
+      "content_sha256": "73475CB40A568E8DA8A045CED110137E159F890AC4DA883B6B17DC651B3A8049",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "header_count",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 0,
+          "byte_length": 2,
+          "raw_hex": "3432",
+          "printable_ascii": "42"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 2,
+      "byte_offset": 4,
+      "content_byte_length": 22,
+      "full_byte_length": 24,
+      "raw_bytes_hex": "64656174686d6174636823d6f2cca8bebabcbcb3a1200d0a",
+      "content_hex": "64656174686d6174636823d6f2cca8bebabcbcb3a120",
+      "content_sha256": "142EA2A5EAA07FBB40AFDA91A9A0FBC8DCAA82B9E6FC553A9DE2A62328520ADE",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        14
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 4,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 15,
+          "byte_length": 11,
+          "raw_hex": "d6f2cca8bebabcbcb3a120",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 3,
+      "byte_offset": 28,
+      "content_byte_length": 22,
+      "full_byte_length": 24,
+      "raw_bytes_hex": "3b64656174686d6174636823d1aac8bebdd7ccdd20200d0a",
+      "content_hex": "3b64656174686d6174636823d1aac8bebdd7ccdd2020",
+      "content_sha256": "2A7142792BF2DD8131688ECD464C243E77EDE8F87787F815AFC89CD26108CBFA",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        39
+      ],
+      "semicolon_byte_offsets": [
+        28
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 28,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 40,
+          "byte_length": 10,
+          "raw_hex": "d1aac8bebdd7ccdd2020",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 28,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 4,
+      "byte_offset": 52,
+      "content_byte_length": 22,
+      "full_byte_length": 24,
+      "raw_bytes_hex": "3b64656174686d6174636823d4b2d0cebebabcbcb3a10d0a",
+      "content_hex": "3b64656174686d6174636823d4b2d0cebebabcbcb3a1",
+      "content_sha256": "207C7FC377E7C098C14AFFC2440FA3C072FB83501ABE3EB26A74D4FDC59EFCEB",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        63
+      ],
+      "semicolon_byte_offsets": [
+        52
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 52,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 64,
+          "byte_length": 10,
+          "raw_hex": "d4b2d0cebebabcbcb3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 52,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 5,
+      "byte_offset": 76,
+      "content_byte_length": 59,
+      "full_byte_length": 61,
+      "raw_bytes_hex": "64656174686d6174636823c5b7d6debba8d4b0236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "64656174686d6174636823c5b7d6debba8d4b0236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "864753246B380B21B317D1BD78C0A1FAD17B21AA2F940DD7CD0E139B8729A45F",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        86,
+        95,
+        103,
+        109,
+        115,
+        125
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 76,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 87,
+          "byte_length": 8,
+          "raw_hex": "c5b7d6debba8d4b0",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 96,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 104,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 110,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 116,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 126,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 6,
+      "byte_offset": 137,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "64656174686d6174636823c3fcd4cbcaaed7d6c2b70d0a",
+      "content_hex": "64656174686d6174636823c3fcd4cbcaaed7d6c2b7",
+      "content_sha256": "D2BBBEB6D81A211B551E2737B1613E5CB79C5FA1C6CB168CD7C71339557233DC",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        147
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 137,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 148,
+          "byte_length": 10,
+          "raw_hex": "c3fcd4cbcaaed7d6c2b7",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 7,
+      "byte_offset": 160,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823d1fdc4a7bcc0ccb30d0a",
+      "content_hex": "64656174686d6174636823d1fdc4a7bcc0ccb3",
+      "content_sha256": "69226DA287940435A5C137A6584BFEF115052BD84238D07D6B5ABD2964E9C5F2",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        170
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 160,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 171,
+          "byte_length": 8,
+          "raw_hex": "d1fdc4a7bcc0ccb3",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 8,
+      "byte_offset": 181,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "64656174686d6174636823b1a3bba4d5dfd6aecbfe0d0a",
+      "content_hex": "64656174686d6174636823b1a3bba4d5dfd6aecbfe",
+      "content_sha256": "22F4C60DA7914BA99F893EBDD0224CA13C72F06AC4C6AD6A414675C2D38CCF4E",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        191
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 181,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 192,
+          "byte_length": 10,
+          "raw_hex": "b1a3bba4d5dfd6aecbfe",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 9,
+      "byte_offset": 204,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823cbc0cdf6cfdddae50d0a",
+      "content_hex": "64656174686d6174636823cbc0cdf6cfdddae5",
+      "content_sha256": "5F16BCDB24132FDD8D3AE5A00B433D91FCE75CD491D620C5E5A17F643D1AFE9A",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        214
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 204,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 215,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6cfdddae5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 10,
+      "byte_offset": 225,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823cbc0cdf6d6aeb5d80d0a",
+      "content_hex": "64656174686d6174636823cbc0cdf6d6aeb5d8",
+      "content_sha256": "E4B5E9EB6E38AA243194644EF44071B5FF57F2A17A927BD10BE18F662A296DD2",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        235
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 225,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 236,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6d6aeb5d8",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 11,
+      "byte_offset": 246,
+      "content_byte_length": 61,
+      "full_byte_length": 63,
+      "raw_bytes_hex": "686f6e6f726d6174636823c8d9d2abbebabcbcb3a1236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823c8d9d2abbebabcbcb3a1236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "2F724D01CB0B268167A076EDEE974B8054F59EDA0B330841ADC2397FD7AEF1BC",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        256,
+        267,
+        275,
+        281,
+        287,
+        297
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 246,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 257,
+          "byte_length": 10,
+          "raw_hex": "c8d9d2abbebabcbcb3a1",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 268,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 276,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 282,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 288,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 298,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 12,
+      "byte_offset": 309,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "3b7175657374626174746c6523cbc0cdf6cda8b5c00d0a",
+      "content_hex": "3b7175657374626174746c6523cbc0cdf6cda8b5c0",
+      "content_sha256": "40A5EF8DE13BF6B074EA1A6AB238F682B4B2615D2AC5EF88185BA39672015D45",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        321
+      ],
+      "semicolon_byte_offsets": [
+        309
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 309,
+          "byte_length": 12,
+          "raw_hex": "3b7175657374626174746c65",
+          "printable_ascii": ";questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 322,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6cda8b5c0",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 309,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 13,
+      "byte_offset": 332,
+      "content_byte_length": 59,
+      "full_byte_length": 61,
+      "raw_bytes_hex": "686f6e6f726d6174636823cbaed6aee1a1c4bb236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823cbaed6aee1a1c4bb236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "5D90A40E93A2171E8828494AECB0701C9E57EF56A8F544136BED3BDE2FF9FB2B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        342,
+        351,
+        359,
+        365,
+        371,
+        381
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 332,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 343,
+          "byte_length": 8,
+          "raw_hex": "cbaed6aee1a1c4bb",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 352,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 360,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 366,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 372,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 382,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 14,
+      "byte_offset": 393,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "7175657374626174746c6523b5d8d3fcd6aec3c50d0a",
+      "content_hex": "7175657374626174746c6523b5d8d3fcd6aec3c5",
+      "content_sha256": "509E94F6B457EF2570F2AB004EFD556D415CAE0EB92E408619A6342F9B6473B5",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        404
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 393,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 405,
+          "byte_length": 8,
+          "raw_hex": "b5d8d3fcd6aec3c5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 15,
+      "byte_offset": 415,
+      "content_byte_length": 15,
+      "full_byte_length": 17,
+      "raw_bytes_hex": "64656174686d6174636823caa5b5ee0d0a",
+      "content_hex": "64656174686d6174636823caa5b5ee",
+      "content_sha256": "2AF9FC31E192574095BB79E91414EE3F604BF72209A01D8F27671471FC610768",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        425
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 415,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 426,
+          "byte_length": 4,
+          "raw_hex": "caa5b5ee",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 16,
+      "byte_offset": 432,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "3b686f6e6f726d6174636823cbc0cdf6d2c7cabd0d0a",
+      "content_hex": "3b686f6e6f726d6174636823cbc0cdf6d2c7cabd",
+      "content_sha256": "7F238AB649CFD587E89DEE3E6E67F28100C986984CAAFB29846AADC21EE72EDB",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        443
+      ],
+      "semicolon_byte_offsets": [
+        432
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 432,
+          "byte_length": 11,
+          "raw_hex": "3b686f6e6f726d61746368",
+          "printable_ascii": ";honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 444,
+          "byte_length": 8,
+          "raw_hex": "cbc0cdf6d2c7cabd",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 432,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 17,
+      "byte_offset": 454,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823b9eedadcd6aeb7bf0d0a",
+      "content_hex": "64656174686d6174636823b9eedadcd6aeb7bf",
+      "content_sha256": "C94A3A1D707D007FA069B3A102DF46DA89CEAA97C09520B8710481696F556EAC",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        464
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 454,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 465,
+          "byte_length": 8,
+          "raw_hex": "b9eedadcd6aeb7bf",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 18,
+      "byte_offset": 475,
+      "content_byte_length": 17,
+      "full_byte_length": 19,
+      "raw_bytes_hex": "686f6e6f726d6174636823c9f1d6aebbf00d0a",
+      "content_hex": "686f6e6f726d6174636823c9f1d6aebbf0",
+      "content_sha256": "C6166FECBBC7D51E97CA0BE7ABF3E5050FEB0604755200DE0EFAD6DE4F5977F9",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        485
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 475,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 486,
+          "byte_length": 6,
+          "raw_hex": "c9f1d6aebbf0",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 19,
+      "byte_offset": 494,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c7631290d0a",
+      "content_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c763129",
+      "content_sha256": "814FF10165DCE1AC4924415939AE2C2FAC00C7D27A506533D67A68598107E0DF",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        505
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 494,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 506,
+          "byte_length": 15,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1284c763129",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 20,
+      "byte_offset": 523,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c7632290d0a",
+      "content_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c763229",
+      "content_sha256": "93905B650FA6E0E75E64297B217AFFB8C25A193D6134B8125B5504F69A97E2A8",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        534
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 523,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 535,
+          "byte_length": 15,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1284c763229",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 21,
+      "byte_offset": 552,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c7633290d0a",
+      "content_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c763329",
+      "content_sha256": "EF11C74A215C1CCBDCBCC036DEBB176707CD11C861FDB6CF3D2F70E1AB5A6A03",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        563
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 552,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 564,
+          "byte_length": 15,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1284c763329",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 22,
+      "byte_offset": 581,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c7634290d0a",
+      "content_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c763429",
+      "content_sha256": "4C0FF129897578F9B5AC60993086A2150521463E32D9AE4F4398FEBA207C64A3",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        592
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 581,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 593,
+          "byte_length": 15,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1284c763429",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 23,
+      "byte_offset": 610,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c7635290d0a",
+      "content_hex": "7175657374626174746c6523ccf4d5bdbebabcbcb3a1284c763529",
+      "content_sha256": "5648A87C00FF62A290DABDB4FA4EA356C8233BF3EBFC5A38E64D2BFC92B3DB6B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        621
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 610,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 622,
+          "byte_length": 15,
+          "raw_hex": "ccf4d5bdbebabcbcb3a1284c763529",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 24,
+      "byte_offset": 639,
+      "content_byte_length": 17,
+      "full_byte_length": 19,
+      "raw_bytes_hex": "6e6f20657869737423d2ecb6c8bfd5bce40d0a",
+      "content_hex": "6e6f20657869737423d2ecb6c8bfd5bce4",
+      "content_sha256": "B466BB2F72EC6B621D0185DD143F2C58D9AAB51C881421D789AC7E6866DFD68B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        647
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 639,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 648,
+          "byte_length": 8,
+          "raw_hex": "d2ecb6c8bfd5bce4",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 25,
+      "byte_offset": 658,
+      "content_byte_length": 55,
+      "full_byte_length": 57,
+      "raw_bytes_hex": "686f6e6f726d6174636823caa5b5ee236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823caa5b5ee236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "A2FBE916F075ABEA18D41037351001599927B8FA3FD0650633F2EF83A0B80614",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        668,
+        673,
+        681,
+        687,
+        693,
+        703
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 658,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 669,
+          "byte_length": 4,
+          "raw_hex": "caa5b5ee",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 674,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 682,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 688,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 694,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 704,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 26,
+      "byte_offset": 715,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823cad4d1e9d6aec3c50d0a",
+      "content_hex": "64656174686d6174636823cad4d1e9d6aec3c5",
+      "content_sha256": "338E03B4E3715AD0B652C4760D2DE9860425FAF079822DDBF8B4A9A6285BB67B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        725
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 715,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 726,
+          "byte_length": 8,
+          "raw_hex": "cad4d1e9d6aec3c5",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 27,
+      "byte_offset": 736,
+      "content_byte_length": 19,
+      "full_byte_length": 21,
+      "raw_bytes_hex": "64656174686d6174636823b7bdd0ceb9e3b3a10d0a",
+      "content_hex": "64656174686d6174636823b7bdd0ceb9e3b3a1",
+      "content_sha256": "D4E53E2E48E7B65423FCCD288AA6A085409212D4DB4210AC969F1C1F6814F628",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        746
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 736,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 747,
+          "byte_length": 8,
+          "raw_hex": "b7bdd0ceb9e3b3a1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 28,
+      "byte_offset": 757,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "7175657374626174746c6523b2fcc0f5c8cecef10d0a",
+      "content_hex": "7175657374626174746c6523b2fcc0f5c8cecef1",
+      "content_sha256": "304A83A7875D1AC7604111EBA57E1F14CD82BA50B1B575809CC08965AFD8BC67",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        768
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 757,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 769,
+          "byte_length": 8,
+          "raw_hex": "b2fcc0f5c8cecef1",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 29,
+      "byte_offset": 779,
+      "content_byte_length": 59,
+      "full_byte_length": 61,
+      "raw_bytes_hex": "686f6e6f726d6174636823c8d9d3fed6aec3c5236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823c8d9d3fed6aec3c5236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "28A7CC3E8AA9ACD0A56689E14B0553C1B1C8887D10D6CAB105D1750965BF1D25",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        789,
+        798,
+        806,
+        812,
+        818,
+        828
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 779,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 790,
+          "byte_length": 8,
+          "raw_hex": "c8d9d3fed6aec3c5",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 799,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 807,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 813,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 819,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 829,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 30,
+      "byte_offset": 840,
+      "content_byte_length": 25,
+      "full_byte_length": 27,
+      "raw_bytes_hex": "64656174686d6174636823b8a3b6fbc4a6c9afd6aecbc0b6b70d0a",
+      "content_hex": "64656174686d6174636823b8a3b6fbc4a6c9afd6aecbc0b6b7",
+      "content_sha256": "128911A9640E187E909B81C3FE39813AEDE9EACDB63BD54E7F90880E1BA88E11",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        850
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 840,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 851,
+          "byte_length": 14,
+          "raw_hex": "b8a3b6fbc4a6c9afd6aecbc0b6b7",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 31,
+      "byte_offset": 867,
+      "content_byte_length": 65,
+      "full_byte_length": 67,
+      "raw_bytes_hex": "686f6e6f726d6174636823b8a3b6fbc4a6c9afd6aec8d9d2ab236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823b8a3b6fbc4a6c9afd6aec8d9d2ab236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "71F3BF4ECC3BBAD2FCF02C3ACE22B51F93733E13649188E1D005078734319929",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        877,
+        892,
+        900,
+        906,
+        912,
+        922
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 867,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 878,
+          "byte_length": 14,
+          "raw_hex": "b8a3b6fbc4a6c9afd6aec8d9d2ab",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 893,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 901,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 907,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 913,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 923,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 32,
+      "byte_offset": 934,
+      "content_byte_length": 55,
+      "full_byte_length": 57,
+      "raw_bytes_hex": "64656174686d6174636823cbdec3fc236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "64656174686d6174636823cbdec3fc236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "848B59778CA8F5B902D9AC233B334EFA55BC4FEDCE6268B87099BF1BE1753BDE",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        944,
+        949,
+        957,
+        963,
+        969,
+        979
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 934,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 945,
+          "byte_length": 4,
+          "raw_hex": "cbdec3fc",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 950,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 958,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 964,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 970,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 980,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 33,
+      "byte_offset": 991,
+      "content_byte_length": 59,
+      "full_byte_length": 61,
+      "raw_bytes_hex": "686f6e6f726d6174636823d0b0b6f1c9f1b5ee236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "686f6e6f726d6174636823d0b0b6f1c9f1b5ee236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "AC707C4C88006DE2EBC9399AFBA125051D2A6ED61DF10D0DD89E5CF540C98FD3",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1001,
+        1010,
+        1018,
+        1024,
+        1030,
+        1040
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 991,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1002,
+          "byte_length": 8,
+          "raw_hex": "d0b0b6f1c9f1b5ee",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1011,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1019,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1025,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1031,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1041,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 34,
+      "byte_offset": 1052,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1060
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1052,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1061,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 35,
+      "byte_offset": 1072,
+      "content_byte_length": 70,
+      "full_byte_length": 72,
+      "raw_bytes_hex": "64656174686d6174636823c1fab5cfb3c7cad02028cbc0b6b7c4a3cabd29236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "64656174686d6174636823c1fab5cfb3c7cad02028cbc0b6b7c4a3cabd29236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "41438B6B59D2D4FA96318FD86E35165BB9F65049429202D40B5838FD6FC1F085",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1082,
+        1102,
+        1110,
+        1116,
+        1122,
+        1132
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1072,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1083,
+          "byte_length": 19,
+          "raw_hex": "c1fab5cfb3c7cad02028cbc0b6b7c4a3cabd29",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1103,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1111,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1117,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1123,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1133,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 36,
+      "byte_offset": 1144,
+      "content_byte_length": 70,
+      "full_byte_length": 72,
+      "raw_bytes_hex": "686f6e6f726d6174636823c1fab5cfb3c7cad02028c7c0c6ecc4a3cabd29236d696e696d61702378736567332379736567332378506f7333323833312379506f7333323833320d0a",
+      "content_hex": "686f6e6f726d6174636823c1fab5cfb3c7cad02028c7c0c6ecc4a3cabd29236d696e696d61702378736567332379736567332378506f7333323833312379506f733332383332",
+      "content_sha256": "7CD939A6BDF0067751C8DD90B69ACF64C9418E1A8FA59B92293403BB802EA1DA",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1154,
+        1174,
+        1182,
+        1188,
+        1194,
+        1204
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1144,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1155,
+          "byte_length": 19,
+          "raw_hex": "c1fab5cfb3c7cad02028c7c0c6ecc4a3cabd29",
+          "printable_ascii": null
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1175,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1183,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1189,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1195,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1205,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 37,
+      "byte_offset": 1216,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1224
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1216,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1225,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 38,
+      "byte_offset": 1236,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1244
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1236,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1245,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 39,
+      "byte_offset": 1256,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1264
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1256,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1265,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 40,
+      "byte_offset": 1276,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1284
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1276,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1285,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 41,
+      "byte_offset": 1296,
+      "content_byte_length": 25,
+      "full_byte_length": 27,
+      "raw_bytes_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c7631290d0a",
+      "content_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c763129",
+      "content_sha256": "DD1AA829E3109FB0A9A86E0550E5C9309F21CFE44A17882DF047671545F9019D",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1306
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1296,
+          "byte_length": 10,
+          "raw_hex": "74696d6561747461636b",
+          "printable_ascii": "timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1307,
+          "byte_length": 14,
+          "raw_hex": "cbc0cdf6c7f8d3f220284c763129",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 42,
+      "byte_offset": 1323,
+      "content_byte_length": 25,
+      "full_byte_length": 27,
+      "raw_bytes_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c7632290d0a",
+      "content_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c763229",
+      "content_sha256": "34969A4AAAE110C3413BE5EE2C40D9BF08B168CCF12093A1BE7BF371CA3BCB70",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1333
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1323,
+          "byte_length": 10,
+          "raw_hex": "74696d6561747461636b",
+          "printable_ascii": "timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1334,
+          "byte_length": 14,
+          "raw_hex": "cbc0cdf6c7f8d3f220284c763229",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 43,
+      "byte_offset": 1350,
+      "content_byte_length": 25,
+      "full_byte_length": 27,
+      "raw_bytes_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c7633290d0a",
+      "content_hex": "74696d6561747461636b23cbc0cdf6c7f8d3f220284c763329",
+      "content_sha256": "095AA939C517386A3F1CAD2F85FB9D9565ECB090C67D7E941A87AD274636F9BD",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1360
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1350,
+          "byte_length": 10,
+          "raw_hex": "74696d6561747461636b",
+          "printable_ascii": "timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1361,
+          "byte_length": 14,
+          "raw_hex": "cbc0cdf6c7f8d3f220284c763329",
+          "printable_ascii": null
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    }
+  ]
+}

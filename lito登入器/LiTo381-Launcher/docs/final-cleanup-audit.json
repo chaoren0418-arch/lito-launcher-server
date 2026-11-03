@@ -1,0 +1,25 @@
+{
+  "all_planned_targets_removed": true,
+  "planned_targets": 854,
+  "remaining_targets": [],
+  "previous_locked_files": [
+    {
+      "error": "Access to the path 'D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_resources\\Mss32.dll' is denied.",
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_resources\\Mss32.dll",
+      "resolved": true
+    },
+    {
+      "error": "Access to the path 'D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_mss\\Mss32.dll' is denied.",
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_mss\\Mss32.dll",
+      "resolved": true
+    }
+  ],
+  "shared_mss_still_present": true,
+  "shared_font_still_present": true,
+  "current_launcher_version": "0.6.35",
+  "empty_legacy_containers": [
+    "歷史暫存證據"
+  ],
+  "note": "All obsolete files removed. Historical reports consolidated under docs. One empty legacy container has no retained payload.",
+  "historical_reports": "docs/legacy-launcher-runtime (11 documents)"
+}

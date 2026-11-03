@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/dispatch_locator",
+  "authority": "Independent read-only subagent review authorized in current dispatch; this is a preserved peer report, not supervisor acceptance.",
+  "reported_tool_receipt": "ee02df",
+  "reported_exit_code": 0,
+  "exact_inline_review_command_preserved": false,
+  "raw_json_reported_by_peer": {"canonical_geometry_recomputed": false, "checked_input_and_source_pins": 28, "checked_members": 96, "checked_raw_references": 347528, "checked_raw_slot_ranges_and_hashes": 14150, "derived_checks": {"encoded_source_bytes_validated": 10597587, "maximum_resident_slot_bytes": 16775424, "maximum_resident_slots": 7281, "non_floor_references": 216456, "qualified_slots": 14150, "required_members": 96, "selected_alias_slots": 0, "source_references": 347528, "whole_required_decoded_bytes": 32601600}, "errors": []},
+  "reviewed_derive_sha256": "4CEB845C0412BBE8C0764CA62EC850859E6EE91AD22AAF2A31826212EB07918F",
+  "conclusion": "No substantive derivation error found; conditional Some16MiB/default64MiB source predicate discrepancy, raw offsets/hashes and dedup checked.",
+  "limits": ["Canonical declared only in this reviewed first task; qualified by separate successor.", "No current caller execution, allocator overhead, real residency, frames, runtime or GUI proof."],
+  "supervisor_reviewed": false,
+  "product_accepted": false
+}

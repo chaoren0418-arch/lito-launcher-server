@@ -1,0 +1,59 @@
+{
+  "evidence": {
+    "Batch29": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "bytes": 36083,
+      "sha256": "F3867EC1B86DA3DF66A7493E92CD239E40AEC59B658EC0B588F463EFF13A2667"
+    },
+    "Batch30": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+      "bytes": 30762,
+      "sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2"
+    },
+    "Batch31": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source-contract.json",
+      "bytes": 42233,
+      "sha256": "9238357B9079A14F91132143E2FDED79B0F6F0733DAC716A6925AD7C44F19EF7"
+    },
+    "server_AD368": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-character-directory-consumer-contract.json",
+      "bytes": 13072,
+      "sha256": "412748DE715782AEC88D00251DEE791A472EF7C180F905EDF43AA3A36B9464C7"
+    }
+  },
+  "qualification": "ProposedModernstrictadaptation table, notimplemented/testedModern orprooforiginalNativebehavior.",
+  "rows": [
+    {
+      "concern": "count decode",
+      "Modern_rule": "Decodewireu8;validate0..8 underpinnedAD368producerpolicy;boundedownedlist allocation. PreserveexpectedCount independently ofNative signedglobals/completionzero. No reducingserverpolicy basedonfourmarkers.",
+      "Native_limit": "MOVSXsignedcount/no local0..8 check;runtime/storagecapacityunknown"
+    },
+    {
+      "concern": "row consistency",
+      "Modern_rule": "AcceptCBonlywithactivecurrentdirectorybuilder andsame transport/source/directorygeneration;parseboundedCStrings/exact79bytesuffix/exactbodyend,commitrowonlyaftersuccess;require received<expectedCount.",
+      "Native_limit": "private/externalstrings/UIhelpers;partialstorespossible;globalcursorrereadafterunknownhelper"
+    },
+    {
+      "concern": "completion",
+      "Modern_rule": "CompleteexactlyNvalidatedrows;N0emptycomplete/no defaultrow0;extraCB refuse asout-of-sequence;missingrows remainincomplete. No guessedS04/S05endmarker orlocaltimercompletion.",
+      "Native_limit": "count/cursorclearedafterincrement,notwireACK orwholeGUIcompletion"
+    },
+    {
+      "concern": "selected row",
+      "Modern_rule": "Selectonlyfromcompleteownedimmutablecurrentrows:0<=index<actualRows andmatchingdirectorygeneration;resolve server-issuedname/currentcanonicalsource. Revalidatehandleatintentdispatch;do notacceptunknownNativeEAX asauthority.",
+      "Native_limit": "494120 inputs0/3 unknown;only-1check before32bitstride/markerreads;no certifiedrange orphysicalID"
+    },
+    {
+      "concern": "epoch invalidation",
+      "Modern_rule": "Invalidatebuilder andpendingrow/UIselectionhandles onownedtransport reconnect/reauth/sourcegeneration change ornewdirectory S03 snapshot. Discardlateoldgenerationreceipts;localdirectoryinvalidationdoesnotassertserverphysicalselection/readywascleared.",
+      "Native_limit": "noepoch/generationfields inS03/CB andglobalcountersnotepoch;originalreset/invalidation semantics incomplete"
+    },
+    {
+      "concern": "ready intent",
+      "Modern_rule": "Useexplicituserintent andcurrentownedroom/join/session eligibility separately. CBreserved3E/nativeindex/markerflag/protectedselector cannotauthorize ready;D1/E1receiptandGUIacceptance remainindependent.",
+      "Native_limit": "Batch29opcodeonly/UI/transport andBatch30protectedruntime/helper gaps retained"
+    }
+  ],
+  "codec_identity": "MS950/bounds deriveacceptedserverversion. NeverderivephysicalcharacterObjectId/sourceId fromindex/displayalias;servercanonicalsource plusmatchedobjecttuple remainsserverowned.",
+  "remaining_necessary_work": "Modernownauthorizedintegrationmustverifybuilder/selection/epoch refusalpolicy. Nativequerydomain/helpercompletion/storage/GUI remainopen;no unknownbody/run orotherchatmessage requested."
+}

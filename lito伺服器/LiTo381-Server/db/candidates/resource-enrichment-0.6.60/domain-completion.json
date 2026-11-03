@@ -1,0 +1,76 @@
+{
+  "package_status": "未匯入、未接線",
+  "all_planned_local_domains_investigated": true,
+  "scope": "finite extraction + candidate design + offline validation + explicit unrecovered evidence; not full original game restoration",
+  "domains": [
+    {
+      "item": "地圖玩法支援",
+      "local_result": "47 raw rows/62 terrains/40current rules/176 native producer classes independently indexed",
+      "status": "已提取與離線驗證；玩法驗收待外部證據",
+      "unrecovered": "all47 gameplay_confirmed NULL; no new map enabled",
+      "required": "same-version live scene/room producer and acceptance capture"
+    },
+    {
+      "item": "傳送正式接線與可達性",
+      "local_result": "186raw routes + 18 maps static components; map525 exact record and4closed edges confirmed",
+      "status": "已提取與靜態驗證；動態准入未知",
+      "unrecovered": "original dynamic override/room admission for blocked destination; raw tag100..102 opaque",
+      "required": "original runtime portal/dynamic-terrain evidence; do not relocate target"
+    },
+    {
+      "item": "技能flight/hit與圖示",
+      "local_result": "7nonanimation declarations explained;5flight/resource chains;12phase rows;13buff rows;176original dispatch rows",
+      "status": "已資料化；2legacy buff semantic conflicts require review",
+      "unrecovered": "specialized native target semantics, exact collision/playback timing/current DLL equivalence;6picker-only IDs preserve bound",
+      "required": "qualified native effect-controller/target callbacks or existing same-version capture; no guessed gfx"
+    },
+    {
+      "item": "原生map-item頁面與文字圖示",
+      "local_result": "18item catalog/name rows,2native page image bindings,85known native inventory identities/icons",
+      "status": "已提取；pages3..18原始binding未恢復",
+      "unrecovered": "original18item page intent and native service item useType;73descriptions not classified as items",
+      "required": "same-version original item-use producer/table and independent page table/artwork binding"
+    },
+    {
+      "item": "NPC原始actor/座標、HP/AI/掉落/傷害",
+      "local_result": "13native identities/27service action rows;2771Layer8 visual records;26objects/25waves/380player-spawn refs",
+      "status": "可恢復身分／資源完成；原始服務端規則待外部證據",
+      "unrecovered": "original actor, coordinates, HP, exact map-specific waves/AI/drop/damage; configuredHP3000 not original evidence",
+      "required": "original same-version server tables or authoritative S_PUT_OBJECT/spawn/combat capture; other-version templates cannot prove original values"
+    },
+    {
+      "item": "租賃NPC／商品／貨幣／服務",
+      "local_result": "78native name/LBT/retained references +25unique-name template comparisons; currency native5/20005 vs retained49358 separately traced",
+      "status": "參考資料完成；0proven shared ID mappings",
+      "unrecovered": "shared item/currency crosswalk, original hotel keys/maps/endpoints/prices/transaction lifecycle",
+      "required": "original crosswalk or same-version actor/shop transaction source; no same-name automatic pairing"
+    }
+  ],
+  "counts": {
+    "maps": 47,
+    "portals": 186,
+    "skills": 214,
+    "zones": 2,
+    "map_items": 18,
+    "rental_offers": 78,
+    "npc_identities": 13,
+    "skill_phases": 12,
+    "projectiles": 1,
+    "buffs": 13,
+    "map_pages": 2,
+    "rental_mappings": 78,
+    "rental_currency": 1,
+    "map_effects": 2771,
+    "config_references": 498,
+    "item_resources": 85,
+    "npc_services": 27,
+    "skill_requests": 176,
+    "lineage_groups": 14,
+    "sources": 596,
+    "provenance": 30868
+  },
+  "status": "全部已盤點可執行領域已完成提取、候選設計與離線驗證；未部署；未恢復原始資料另列",
+  "sql_executed": false,
+  "overall_verification_passed": true,
+  "full_original_game_restored": false
+}

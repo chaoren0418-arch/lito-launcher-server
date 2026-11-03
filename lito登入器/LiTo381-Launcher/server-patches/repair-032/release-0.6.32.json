@@ -1,0 +1,69 @@
+{
+  "version": "0.6.32",
+  "client": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+  "artifacts": {
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.32\\LiTo381Launcher.exe": "5fc7162e9c32cda7cf9e9c303089a657b91380c80f380a380530abd69053781e",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.32\\development_startup.py": "7a11ab4e6d93e3946d0ef8be4fee06f09ceae6512bc53ea21dc28ebf2628408b",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\compat-gate\\ddraw.dll": "8dc39200ed324d530f54d225b0c06a6d9188917023051f0de1129d75263aeb8d",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\repair-032\\candidate-details.jar": "3554b171ab0f66f1d95a4668a02b56142c051c8653a327c24c26545fadfe7c02"
+  },
+  "legacy_regression": {
+    "found": 1119,
+    "passed": 1115,
+    "failed": 4,
+    "same_as_0_6_31": true,
+    "failures": [
+      "ClientSessionNativeTournamentEconomyTest:nativePolluteWaterCase172AppliesToClassicWorldMonster()",
+      "ClientSessionNativeTournamentEconomyTest:encryptedWaterDragonHealingErosionTurnsHealingIntoFatalDamage()",
+      "ClientSessionNativeTournamentEconomyTest:lethalDisintegrateKeepsNativeWorldAliveUntilItsSixtyFramesComplete()",
+      "ProtocolBattleTest:objectHealUsesNativeTargetAndEffectLayouts()"
+    ],
+    "profile": "legacy fixture, extension disabled"
+  },
+  "shared_profile_focused": [
+    "area attack own summon and hostile player",
+    "ArenaBot blind/weakness/mana drain",
+    "wide item values and more than 20 lines",
+    "encrypted inventory then detail publication"
+  ],
+  "formal_startup": {
+    "accepted": true,
+    "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\server-skills-details\\runs\\shared-timing-ready-1791746260342061800",
+    "port": 32020,
+    "sql_connected": true,
+    "shared_action_count": 60303,
+    "cleanup_verified": true
+  },
+  "native_patch_signatures": {
+    "0x4b2af9": "e89216ffff",
+    "0x4496b8": "8b481885c9",
+    "0x449cc1": "8b481885c9",
+    "0x4d9318": "8b41148b4918"
+  },
+  "native_tests": [
+    "result modal hit test",
+    "Big5 parser and more than 20 rows",
+    "native font ABI and 63-row scrolling",
+    "three compiled x86 bridges, both branch paths"
+  ],
+  "manual_gui_verified": false,
+  "remaining": [
+    "full skill-by-actor matrix is not complete",
+    "ArenaBot has no complete source NPC hit/AC model; disease and additional negative spells remain",
+    "several companion negative spell paths remain",
+    "metadata fields absent from source inventory model are not invented"
+  ],
+  "native_startup_verified": {
+    "run_id": "development-f8693d57f1b34156bf7d561323819f66",
+    "resources": {
+      "pid": 34052,
+      "profile": "tw13081901-v1",
+      "base_count": 30000,
+      "total_count": 30285,
+      "native_cleanup_complete": true
+    },
+    "item_extension_log": "03:24:22.444 LiTo item detail v1 installed",
+    "scale": 200,
+    "launch_parameter_gate_corrected": true
+  }
+}

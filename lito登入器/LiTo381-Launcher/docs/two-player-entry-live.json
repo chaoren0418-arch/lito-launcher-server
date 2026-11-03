@@ -1,0 +1,52 @@
+[
+  {
+    "pid": 18024,
+    "CLIENT_PHASE": "05000000",
+    "CLIENT_WORLD_SCENE": "98e58213",
+    "CLIENT_STATIC_SCENE": "18b91d14",
+    "CLIENT_LITO_PROFILE_ID": "01000000",
+    "CLIENT_GAME_UI_ACTIVE_FLAG": "01000000",
+    "globals": {
+      "ui_group_primary": "f0b93914",
+      "ui_controller_a": "50223215",
+      "ui_controller_b": "30ae1b05",
+      "ui_controller_c": "38598513",
+      "ui_group_secondary_a": "68ba3914",
+      "ui_group_secondary_b": "a0b93914",
+      "ui_group_secondary_c": "d8bd3914",
+      "ui_controller_d": "48ae1b05",
+      "ui_controller_e": "60ae1b05",
+      "ui_control_array": "80c03914",
+      "tournament_table": "14c97c06",
+      "tournament_index": "09000000",
+      "main_window": "58077f00",
+      "arena_width": "40020000",
+      "arena_height": "df010000"
+    }
+  },
+  {
+    "pid": 36176,
+    "CLIENT_PHASE": "02000000",
+    "CLIENT_WORLD_SCENE": "f8d88213",
+    "CLIENT_STATIC_SCENE": "08ba1d14",
+    "CLIENT_LITO_PROFILE_ID": "01000000",
+    "CLIENT_GAME_UI_ACTIVE_FLAG": "01000000",
+    "globals": {
+      "ui_group_primary": "40b15a14",
+      "ui_controller_a": "e8459714",
+      "ui_controller_b": "40abc114",
+      "ui_controller_c": "28428513",
+      "ui_group_secondary_a": "e8b35a14",
+      "ui_group_secondary_b": "c0b35a14",
+      "ui_group_secondary_c": "b8b15a14",
+      "ui_controller_d": "68adc114",
+      "ui_controller_e": "00acc114",
+      "ui_control_array": "78ba5a14",
+      "tournament_table": "14c97a06",
+      "tournament_index": "09000000",
+      "main_window": "4a05ba01",
+      "arena_width": "7b020000",
+      "arena_height": "14010000"
+    }
+  }
+]

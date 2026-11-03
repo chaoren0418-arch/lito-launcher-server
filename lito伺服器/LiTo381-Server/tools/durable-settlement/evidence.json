@@ -1,0 +1,78 @@
+{
+  "version": "0.6.60",
+  "date": "2026-10-13",
+  "base_sha256": "ebf5ee66f051700ac4b8f524847d7372af8065c4dbb5d91b2f74e03dadff4e7b",
+  "candidate_sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/DisconnectedBattleResult.class",
+    "local/lito381/server/DurableBattleSettlement$Context.class",
+    "local/lito381/server/DurableBattleSettlement$Ticket.class",
+    "local/lito381/server/DurableBattleSettlement.class",
+    "local/lito381/server/SettlementJournal$Entry.class",
+    "local/lito381/server/SettlementJournal$Sink.class",
+    "local/lito381/server/SettlementJournal.class",
+    "local/lito381/server/SettlementSql.class",
+    "local/lito381/server/SharedDatabase$Route.class",
+    "local/lito381/server/SharedDatabase.class",
+    "local/lito381/server/TeamDisconnectSettlement.class"
+  ],
+  "sql_fault_regression": "sql-test.log",
+  "flow_regression": "flow-test.log",
+  "native_regression": "native-test.log",
+  "native_regression_jar": "48e1485129d47f0b36c0cae7a76e9f10d9db9a09c533f797dcf7a3840356ee59",
+  "final_followup": "Added source/character guard for pending-result retries; tested against switched character and actual SQL path. Native packet/callback patches unchanged.",
+  "migration": {
+    "controls": "380_lito",
+    "ledger": "lito_battle_settlement",
+    "ledger_engine": "InnoDB",
+    "source_marker": "character_lito.last_result_id",
+    "sources": [
+      "380_ac_1",
+      "380_ac_2"
+    ],
+    "source_engines_unchanged": true,
+    "existing_results_versions_timestamps_unchanged": true,
+    "runtime_ledger_grants": [
+      "SELECT",
+      "INSERT",
+      "UPDATE"
+    ],
+    "log": "migration.log"
+  },
+  "limits": [
+    "Unfinished battle state is not reconstructed after process crash.",
+    "Completed SQL receipts retained for duplicate suppression.",
+    "No long-duration stress or real-user forced-disconnect acceptance yet."
+  ],
+  "backup": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\before-durable-settlement-0.6.59.zip",
+  "final_startup": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791870554941846900"
+  },
+  "desktop_launcher": "LiTo 0.6.60 正式啟動器.lnk",
+  "previous_desktop_shortcut_retained": true,
+  "deployed_sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+  "native_dll_changed": false,
+  "production_pending_files": 0
+}

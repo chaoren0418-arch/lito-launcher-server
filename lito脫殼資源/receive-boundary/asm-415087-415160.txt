@@ -1,0 +1,74 @@
+415087: sub_4C6B30 proc near                    ; CODE XREF: sub_47F340+25↑p
+415088:                                         ; sub_47F340+C78↑p
+415089: 
+415090: var_18= word ptr -18h
+415091: var_16= word ptr -16h
+415092: var_14= dword ptr -14h
+415093: var_8= dword ptr -8
+415094: var_4= dword ptr -4
+415095: arg_4= dword ptr  0Ch
+415096: 
+415097: push    ebp
+415098: mov     ebp, esp
+415099: sub     esp, 18h
+415100: push    ebx
+415101: mov     eax, edx
+415102: mov     ebx, ecx
+415103: push    esi
+415104: sub     eax, 401h
+415105: push    edi
+415106: mov     [ebp+var_4], ebx
+415107: jz      loc_4C6C58
+415108: 
+415109: dec     eax
+415110: jnz     loc_4C6C4D
+415111: 
+415112: mov     eax, [ebp+arg_4]
+415113: shr     eax, 10h
+415114: jz      short loc_4C6B77
+415115: 
+415116: mov     ecx, 2904h
+415117: call    sub_480620
+415118: 
+415119: call    sub_4C65F0
+415120: 
+415121: mov     eax, 1
+415122: pop     edi
+415123: pop     esi
+415124: pop     ebx
+415125: mov     esp, ebp
+415126: pop     ebp
+415127: retn    8
+415128: 
+415129: ; ---------------------------------------------------------------------------
+415130: 
+415131: loc_4C6B77:                             ; CODE XREF: sub_4C6B30+28↑j
+415132: mov     eax, dword_8343E8
+415133: test    eax, eax
+415134: jz      loc_4C6C4D
+415135: 
+415136: movsx   ecx, word_833FEE
+415137: mov     edx, dword_833FF0
+415138: mov     eax, ecx
+415139: mov     [ebp+var_18], 2
+415140: lea     edi, [ebp+var_14]
+415141: mov     esi, [edx]
+415142: shr     ecx, 2
+415143: rep movsd
+415144: mov     ecx, eax
+415145: mov     ax, word_833FDC
+415146: and     ecx, 3
+415147: push    eax
+415148: rep movsb
+415149: mov     esi, [ebp+var_14]
+415150: movsx   edi, ax
+415151: call    sub_4EFE74
+415152: 
+415153: mov     ecx, dword_8343E8
+415154: mov     [ebp+var_16], ax
+415155: push    10h
+415156: push    401h
+415157: push    ebx
+415158: push    ecx
+415159: call    sub_4EFE6E
+415160: 

@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\GroundLifecycleProbe.java",
+      "sha256": "71e6daad66edcc2e615f6f290bc7720d4e24aa56173a733becb3521d6f84e7b0"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\test_placement.py",
+      "sha256": "7097e71bfd5ca25e22f5549fad76e46bf8726513e23a942c30e7fafeca83b9cb"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\prepare_numeric.py",
+      "sha256": "2b55ec304cf4b9af34429e9ea7ffe0a56d1cd627160a1736c6878568d28c80e6"
+    }
+  ],
+  "scope": "legal configurable MP 0/1/65535, two current MP states, actual native58/63, WORLD/BATTLE, both item-app paths; isolated snapshot only"
+}

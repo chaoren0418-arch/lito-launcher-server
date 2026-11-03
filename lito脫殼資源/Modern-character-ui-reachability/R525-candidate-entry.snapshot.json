@@ -1,0 +1,229 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+    "bytes": 23652,
+    "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+  },
+  "captured_content_sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+    "bytes": 23652,
+    "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:17:30.850433+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      24,
+      40
+    ],
+    [
+      79,
+      97
+    ],
+    [
+      183,
+      195
+    ]
+  ],
+  "line_count": 488,
+  "implementation_lines": [
+    {
+      "line": 24,
+      "text": "    CandidateFixture(PathBuf),"
+    },
+    {
+      "line": 25,
+      "text": "    CandidateFixtureWithStartup(PathBuf,PathBuf),"
+    },
+    {
+      "line": 26,
+      "text": "    CandidateJavaBootstrap(PathBuf,PathBuf),"
+    },
+    {
+      "line": 27,
+      "text": "    OfflineMap,"
+    },
+    {
+      "line": 28,
+      "text": "    Version,"
+    },
+    {
+      "line": 29,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 30,
+      "text": "    Preview,"
+    },
+    {
+      "line": 31,
+      "text": "    #[cfg(debug_assertions)]"
+    },
+    {
+      "line": 32,
+      "text": "    Scene,"
+    },
+    {
+      "line": 33,
+      "text": "}"
+    },
+    {
+      "line": 34,
+      "text": "fn route(args: &[OsString]) -> Result<Route> {"
+    },
+    {
+      "line": 35,
+      "text": "    match args.get(1).map(OsString::as_os_str) {"
+    },
+    {
+      "line": 36,
+      "text": "        None => Ok(Route::Pick),"
+    },
+    {
+      "line": 37,
+      "text": "        Some(x) if x == OsStr::new(\"--candidate-java-bootstrap\") && args.len()==4 => {let p=PathBuf::from(&args[2]);let a=PathBuf::from(&args[3]);ensure!(p.is_absolute()&&a.is_absolute(),\"absolute synthetic inputs required\");Ok(Route::CandidateJavaBootstrap(p,a))},"
+    },
+    {
+      "line": 38,
+      "text": "        Some(x) if x == OsStr::new(\"--candidate-synthetic-startup\") && args.len() == 4 => {let profile=PathBuf::from(&args[2]);let host=PathBuf::from(&args[3]);ensure!(profile.is_absolute()&&host.is_absolute(),\"absolute fixture inputs required\");Ok(Route::CandidateFixtureWithStartup(profile,host))}"
+    },
+    {
+      "line": 39,
+      "text": "        Some(x) if x == OsStr::new(\"--candidate-synthetic-fixture\") && args.len() == 3 => {"
+    },
+    {
+      "line": 40,
+      "text": "            let path=PathBuf::from(&args[2]); ensure!(path.is_absolute(),\"合成 profile 必須使用絕對路徑\"); Ok(Route::CandidateFixture(path))"
+    },
+    {
+      "line": 79,
+      "text": "        Some(x)"
+    },
+    {
+      "line": 80,
+      "text": "            if (x == OsStr::new(\"--lito\") || x == OsStr::new(\"--profile\")) && args.len() == 3 =>"
+    },
+    {
+      "line": 81,
+      "text": "        {"
+    },
+    {
+      "line": 82,
+      "text": "            let path = PathBuf::from(&args[2]);"
+    },
+    {
+      "line": 83,
+      "text": "            ensure!(path.is_absolute(), \"LiTo 設定必須使用絕對路徑\");"
+    },
+    {
+      "line": 84,
+      "text": "            Ok(Route::Profile(path))"
+    },
+    {
+      "line": 85,
+      "text": "        }"
+    },
+    {
+      "line": 86,
+      "text": "        _ => anyhow::bail!("
+    },
+    {
+      "line": 87,
+      "text": "            \"僅支援 LiToModern.exe [--profile <設定檔絕對路徑>]；TW 請使用獨立 LHZ 登入器\""
+    },
+    {
+      "line": 88,
+      "text": "        ),"
+    },
+    {
+      "line": 89,
+      "text": "    }"
+    },
+    {
+      "line": 90,
+      "text": "}"
+    },
+    {
+      "line": 91,
+      "text": "fn run() -> Result<i32> {"
+    },
+    {
+      "line": 92,
+      "text": "    let args = std::env::args_os().collect::<Vec<_>>();"
+    },
+    {
+      "line": 93,
+      "text": "    let selected = match route(&args)? {"
+    },
+    {
+      "line": 94,
+      "text": "        Route::CandidateJavaBootstrap(path,adapter_path) => {let profile=modern_lito::native_city_runtime::login_events::FixtureProfile::load(&path)?;let adapter=modern_lito::native_city_runtime::login_bootstrap::JavaFixtureAdapter::load(&adapter_path)?;candidate_java_entry(profile,adapter)?},"
+    },
+    {
+      "line": 95,
+      "text": "        Route::CandidateFixtureWithStartup(path,host_path) => {let profile=modern_lito::native_city_runtime::login_events::FixtureProfile::load(&path)?;let host=modern_lito::native_city_runtime::startup_host::FixtureStartupHost::load(&host_path)?;candidate_offline_entry_with_startup(false,Some(profile),Some(host))?},"
+    },
+    {
+      "line": 96,
+      "text": "        Route::CandidateFixture(path) => { let profile=modern_lito::native_city_runtime::login_events::FixtureProfile::load(&path)?; candidate_offline_entry(false,Some(profile))? },"
+    },
+    {
+      "line": 97,
+      "text": "        Route::CandidateEntry => candidate_offline_entry(false,None)?,"
+    },
+    {
+      "line": 183,
+      "text": "fn candidate_java_entry(profile: modern_lito::native_city_runtime::login_events::FixtureProfile,adapter:modern_lito::native_city_runtime::login_bootstrap::JavaFixtureAdapter)->Result<Option<PathBuf>> {"
+    },
+    {
+      "line": 184,
+      "text": "    use modern_lito::{native_offline_preview_resources::Inputs, native_resources::BytePin, native_city_window::{self, Outcome}};"
+    },
+    {
+      "line": 185,
+      "text": "    let hash = env!(\"R525_BINDING_SHA256\");"
+    },
+    {
+      "line": 186,
+      "text": "    let mut sha256 = [0; 32];"
+    },
+    {
+      "line": 187,
+      "text": "    for (i, byte) in sha256.iter_mut().enumerate() { *byte = u8::from_str_radix(&hash[i*2..i*2+2], 16)?; }"
+    },
+    {
+      "line": 188,
+      "text": "    let inputs = Inputs { project: PathBuf::from(env!(\"R525_MODERN_ROOT\")), manifest: PathBuf::from(env!(\"R525_BINDING_MANIFEST\")), manifest_pin: BytePin { bytes: env!(\"R525_BINDING_BYTES\").parse()?, sha256 } };"
+    },
+    {
+      "line": 189,
+      "text": "    let hash = env!(\"R525_SKIN_SHA256\");"
+    },
+    {
+      "line": 190,
+      "text": "    let mut skin_sha256 = [0; 32];"
+    },
+    {
+      "line": 191,
+      "text": "    for (i, byte) in skin_sha256.iter_mut().enumerate() { *byte = u8::from_str_radix(&hash[i*2..i*2+2], 16)?; }"
+    },
+    {
+      "line": 192,
+      "text": "    let skin_inputs = Inputs { project: PathBuf::from(env!(\"R525_MODERN_ROOT\")), manifest: PathBuf::from(env!(\"R525_SKIN_MANIFEST\")), manifest_pin: BytePin { bytes: env!(\"R525_SKIN_BYTES\").parse()?, sha256: skin_sha256 } };"
+    },
+    {
+      "line": 193,
+      "text": "    native_city_window::run_synthetic_java_bootstrap(inputs,skin_inputs,profile,adapter)?;Ok(None)"
+    },
+    {
+      "line": 194,
+      "text": "}"
+    },
+    {
+      "line": 195,
+      "text": "fn version_document() -> serde_json::Value {"
+    }
+  ]
+}

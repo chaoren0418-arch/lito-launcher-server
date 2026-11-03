@@ -1,0 +1,152 @@
+{
+  "header": "4A2A50 cd reads subtype→EBP-1 androom→EBP-8, payloadstartsbody+6",
+  "phase_room_gate": {
+    "phase6": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A9E7F",
+      "rva": "000A9E7F",
+      "section": "   \u0000    ",
+      "file_offset": "000A9E7F",
+      "raw_backed": true,
+      "raw_hex": "a3f4ab6400",
+      "mnemonic": "mov",
+      "operands": "dword ptr [0x64abf4], eax",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive\\004A9E50-5B.bin",
+        "bytes": 91,
+        "sha256": "0D6DDF9EECFAA036FEFDD86836A6A2DEDAACBD9883822F271BB6C07C4CE745A8"
+      }
+    },
+    "meaning": "unconditionallyassign incomingroom64ABF4 beforevalidsubtype; invalidsubtypecanstilloverwriteglobal",
+    "otherphases": "incomingroomcompared64ABF4, mismatchreturn4AA06C; noadditionalallowedphasecheck",
+    "adapter_requirement": "independentlyownedepoch/CEroom validateBEFOREpublishing; Nativepostassignmentnotatomicroomauthority"
+  },
+  "subtype_gate": "MOVSXi8 thenunsignedJA>9 excludesnegative/10..255; fixedjumptable0..9",
+  "layouts": [
+    {
+      "subtype": 0,
+      "va": "004A9EAB",
+      "rva": "000A9EAB",
+      "section": "   \u0000    ",
+      "file_offset": "000A9EAB",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "schcscccc",
+      "known_server_layout": "d5 00 + u32LE roomId + zMS950 roomName + u8 option0 + u16LE mapWord + u8 summary0 + zMS950 ownerAlias + four u8 summary1..4",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 1,
+      "va": "004A9EF6",
+      "rva": "000A9EF6",
+      "section": "   \u0000    ",
+      "file_offset": "000A9EF6",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "ssccccccc+min(8,max(0,signedK))c",
+      "known_server_layout": "d5 01 + u32LE roomId + zMS950 roomName + zMS950 password + u8 attributes + u8 capacity + four u8 options1..4 + u8 count K + exactly K selection bytes",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": "Native signedK loopalways8iterations; negativeKreadsnone/zeroes8, K>8onlyreads8 anddoesnotexactendvalidate. AD368producer0..8 separate."
+    },
+    {
+      "subtype": 2,
+      "va": "004A9F6A",
+      "rva": "000A9F6A",
+      "section": "   \u0000    ",
+      "file_offset": "000A9F6A",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 02 + u32LE roomId + u8 mode",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 3,
+      "va": "004A9F74",
+      "rva": "000A9F74",
+      "section": "   \u0000    ",
+      "file_offset": "000A9F74",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "h",
+      "known_server_layout": "d5 03 + u32LE roomId + u16LE mapWord",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 4,
+      "va": "004A9FA5",
+      "rva": "000A9FA5",
+      "section": "   \u0000    ",
+      "file_offset": "000A9FA5",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 subtype + u32LE roomId + u8 value",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 5,
+      "va": "004A9FAF",
+      "rva": "000A9FAF",
+      "section": "   \u0000    ",
+      "file_offset": "000A9FAF",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "s",
+      "known_server_layout": "d5 05 + u32LE roomId + zMS950 ownerAlias",
+      "scope": "subtype5 ownerdisplayeffects qualified below",
+      "count_qualification": null
+    },
+    {
+      "subtype": 6,
+      "va": "004AA028",
+      "rva": "000AA028",
+      "section": "   \u0000    ",
+      "file_offset": "000AA028",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 subtype + u32LE roomId + u8 value",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 7,
+      "va": "004AA02F",
+      "rva": "000AA02F",
+      "section": "   \u0000    ",
+      "file_offset": "000AA02F",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 subtype + u32LE roomId + u8 value",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 8,
+      "va": "004AA036",
+      "rva": "000AA036",
+      "section": "   \u0000    ",
+      "file_offset": "000AA036",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 subtype + u32LE roomId + u8 value",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    },
+    {
+      "subtype": 9,
+      "va": "004AA056",
+      "rva": "000AA056",
+      "section": "   \u0000    ",
+      "file_offset": "000AA056",
+      "raw_backed": true,
+      "native_payload_format_after_cd_header": "c",
+      "known_server_layout": "d5 subtype + u32LE roomId + u8 value",
+      "scope": "dispatch/layout only; triggers/settings/UIeffects notadopted",
+      "count_qualification": null
+    }
+  ],
+  "subtype5": "s writesownerdisplay64ABCA cap28includingNUL; no4D3A80self/owner/member compare, row lookup, sessiontransfer orscenephasechange",
+  "notification_order": "aliasglobalwritten beforeformat/predicate. signed834B90>4B selectsformat*[834B94]+12C else63D618; external773F5200 formatsaliasintostackEBP-6C(108bytes). Formatresult notchecked here.",
+  "UI_predicate": "4EBB30 checksECX648F18 exactlyagainst4DWORD836B54..836B63; ifpresentreturnwithout458BB0. Else if648F1C!=0 alsoreturn. Otherwise458BB0(stackmessage,5034A0 color,503478) notification.",
+  "predicate_semantics": "Onlyfour-pointermembership known; do notlabelitself/owner/modeauthority orassumeinitializedUI. NoGUIacceptance.",
+  "owner_linkage": "Displayaliasupdate independentofmemberrow; capturedaliasmatchespriorCDbutNativehandlerdoesnotlinkit. Absentrow cannotmanufactureparticipant/physical/source/sessionauthority."
+}

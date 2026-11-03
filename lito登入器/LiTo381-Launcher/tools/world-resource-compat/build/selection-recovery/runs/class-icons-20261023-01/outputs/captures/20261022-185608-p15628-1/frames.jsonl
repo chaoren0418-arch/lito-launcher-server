@@ -1,0 +1,7 @@
+{"time":"2026-10-22T18:56:11.380805100Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 0C AE 6A C6","note":"S_KEY"}
+{"time":"2026-10-22T18:56:11.384794500Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 B8 03 FF 11","note":"S_KEY"}
+{"time":"2026-10-22T18:56:11.410724200Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 FE 26 1C 68","note":"S_KEY"}
+{"time":"2026-10-22T18:56:11.420699100Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 31 B4 A7 95","note":"S_KEY"}
+{"time":"2026-10-22T18:56:52.826379100Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 0B AA 3B DD","note":"S_KEY"}
+{"time":"2026-10-22T18:56:52.844093300Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T18:56:54.232601100Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}

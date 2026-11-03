@@ -1,0 +1,64 @@
+第二十七批：Native C_D1 subtype3 map selected-key 靜態 callsite
+
+主入口 ../CD1-map-outbound-contract.json；wire-contract.json提供方向/opcode/欄位/長度/端序/VA-RVA/來源SHA/觸發條件/證據等級/未知。selected-key-and-unknown-matrix.json列每段邊界。
+固定PE7094272 SHA4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9，base400000；ranges.json有VA/RVA/fileoffset/rawhex/逐指令與既存rawpin。
+10新code+3data ranges；6必要既存raw引用，47operand assertions，214獨立checks全match；28priorprimarypins保持。無新capture/Native outbound witness。
+只讀固定PE/ASM導航與既存server交接；只寫本組ROOT。無Native/GUI/input/SQL/provider/Java/Modern/BIN變更，無unknown private/external/virtual body展開、他人程序或被攔截server工作，無舊PASS/cipher/GUI/capture重播。
+
+既存等價交接先查
+沿map-table-source/map-candidate-index/D5-mode-map與server-map-selection；前者UIselector停465110、後者D5明確不授Native producer。既存450B90 selectedlookup與450BC0 row基底初始化有完整raw，直接重用。
+固定ASM exact push0D1h僅有限導航兩候選：464E28 map，46B9F4 adjacent mode-step。不宣稱全PE direct/indirectcaller completeness。
+
+完整可見的有限 handler selected-data→sender 邊界
+464AD0 inputECX→ESI，讀物件DWORD+68；unsigned>13退，14DWORD jump table464EE4的case7=464DF1。其它case不展開。
+case7先464DF3→450B90找selectedindex，negative跳464E30不send；非負時464DFE再次呼叫450B90，讀ESI+58 array、array[index] itempointer、itemDWORD+4到EAX。
+450B90完整既存37bytes：countECX+2C、pointerarray+58，依序找第一個itemBYTE+0C非零，沒有選取返回FFFFFFFF。沒有內部callee。
+實際event/callback、物件kind7 producer、UIclick/旗標+0C寫入、有效記憶體/count/array/物件身份、兩次掃描間generation或穩定性仍未知；此有限handler不證完整UI接受。
+從case7入口到4C6AE0之間沒有未知call；這是有條件的靜態來源到已合格sender邊界，非actualruntime送達。
+
+Opcode／欄位／端序／sentinel是request用值
+464E0C CMP EAX,FFFFFFFF；464E11 CMP EAX,FFFFFF9C。命中任一直接到464E1B；其餘464E16 ADD500，32bitwrap。
+464E1B pushmapDWORD；464E1C push3；464E1E pushD1；464E23 push62C078 literal cch；464E28 call4C6AE0，RVA00064E28。
+以Batch26已合格c/h serializer：D1低BYTE、3低BYTE、mapDWORD低WORD littleendian。Body4，frame6，prefix u16LE總長6，無roomID/字串/codec欄位。
+FFFFFFFF作參數不是wireDWORD欄位，它確實序列化成FFFF；FFFFFF9C確實成FF9C。這兩種在此request路径可見，不能只當D5接收projection。
+非sentinel item0000FFFF會先+500，wire01F3（bytesf301），與itemFFFFFFFF不同；不用原值直接截斷取代native轉換。
+Numeric source為完整DWORD bit pattern；table/index/selector的signed comparisons不授實際producer合法域或resourceID。
+Computed examples：item14→map514 d1030202；item64→map564 d1033402；FFFFFFFF→d103ffff；FFFFFF9C→d1039cff；FFFFFFFE→map498 d103f201。
+全部computed，不是Native執行或新frames；computed-request-source-models.json另有高位截斷、選取空列/多列/80/FF旗標模型。
+Formatter/frame/transport只引用Batch26契約与必要c/h及frame raw，不重跑serializer/cipher旧PASS。實際transport仍停4EFEA4 rawE9F7594175 JMP external759058A0，無delivery/ACK。
+Send後或未選取的464E30 cleanup，若64B094非零，464E40 rawFF10 callvirtualslot0是第一個未知，停止；不資格cleanup效果或UI結果。
+
+從table row+20到item尚有缺口
+既存maptable物件64AFD0 count、64AFE0 recordpointer、stride36；rowDWORD+20是候選key，+4 selector對zeroextendedWORD64ACCA，+0 labelpointer。
+既存46B926..46B9D0有限island有條件filter，再key-500作465110 arg1、labelpointer作arg2；不把offline檔行號或candidate token當live recordkey。
+465110 prefix讀arg1→EDI；檢existing itemDWORD+4重複、最多256；46515D→4F118C allocationhelper是第一unknown，STOP不展開。加item完成、memory/ownership/entrycount更新均未授權推定。
+獨立conditionalpostallocation465173..17E把key/label傳4630F0；constructor prefix在463114呼叫已合格450BC0，基底把argDWORD存item+4並把item+0C=0。
+46313C→463B70是constructor剩餘第一未知，STOP。基底初值selection0不證後續selection/click；不橋接allocation、constructor completion、iteminsert或實際tablegeneration。
+因此(key-500)+500可作conditional algebra modulo32，但非已證完整row→UI→request鏈。
+Sentinel碰撞條件模型：tablekey499減500→itemFFFFFFFF→wireFFFF；tablekey400減500→itemFFFFFF9C→wireFF9C。只提醒這條algebra有例外，不宣稱runtime table含499/400或新server差異。
+Actualtableprovider/load/runtime recordkeys、locale/資源binding仍沿Batch21/22 unknown，無重新extract/decode/archive/modelPASS。
+Menu input2 prefix已知41B410 lookup後46B828 rawFF10 virtualslot0 STOP；alternative46B847 push70/46B849→4F118C allocation STOP。後段tablefilter是独立island，沒有跨越這些邊界。
+
+相鄰C_D1 subtype2只列直接Native證據
+46B7D0以inputECX0/1直接跳46B9E6/46B9E2，分別push step2/1；46B9E8 pushsubtype2，46B9EA pushD1，46B9EF literal5028CC ccc，46B9F4→4C6AE0（RVA0006B9F4）。
+三BYTE body3/frame5。這是step operand，不是absolute mode value；inputUI控件/觸發、Java stepenum/union語義/權限/成功未補資格。
+Servermapcontract明確排除subtype2unionarm，本批不擴servermode action、不據此要求Java新packet或Modern打斷receive工作。
+
+與D5 projection、catalog、preview、候選資源保持各自來源
+本request讀selected itemDWORD+4；沒有讀D5mapBYTE64ACC9、CCcatalogrow+74或preview+0F，也沒有直接讀offlinecandidate ordinal。
+D5sub3收到u16→localWORD→lowBYTE+12，FFFF/FF9C有例外；這是獨立接收投影。數值相似不證request逆轉、同一runtime table或資源綁定。
+不同UI物件可共用generic selectedlookup，不能把此kind7物件自動命名成64A958 catalog或實際64A968現存instance；upstreamobjectidentity未知。
+
+既存server契約對照
+server-ordinary-room-map-selection-contract.json 5713 SHA3D0B5BAA46238ED5589C193FBDE22B966B945EFDEAB70D2A2C3933A62CA8E15F；detail7116 SHA BF77DF02B0D6A7AE7892EA7DD0B173AE9A65E8627B08EE8EF4B8D48C2C52FEFA。
+C方向D1/subtype3/u16LEmap exact4body/6frame，map unsigned0..65535；FFFF parse合法，membership後拒絕。room/ROOM/currentroom/owner/notbattle/ready等是servergate，Native有限island不授phase/owner/version/epoch。
+Acceptedbroadcast S_D5sub3、illegal-map restore S_D5sub3、validgatefailure selfD5sub0/1是既知不同分支；本次不重做serverproducer/發包。
+既存conditionalrestore default564 versus selected514差異保持原報告資格，actualtracefalse；沒有新修正、runtime/rollback推定或packetdelta。
+既存七組finitecaptures C_D1sub3/S_D5sub3hits0只採用封存report，不重掃，不宣稱全server沒有request。沒有Native dynamicwitness。
+D5無request/result/role/generation，因此非ACK/owner成功/atomiccommit/rollback/readyreset或allpeer送達保證。
+
+封存交接
+214checks獨立rawdisasm/operand、selectedlookup路徑、map/modevarargs與模型：7map、5selection、6conditionaltablecomposition、2adjacentmode。
+28priorprimarypins不變；newwire/newopcode/wirecorrection/newcapture=0。server-packet-delta.json 26509 SHA B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C不變。
+Modern日後mapwriter可引用C_D1sub3 exactlayout與有限source metadata；仍須其ownedepoch/currentroom/authority與UIaction規格，不能用本批S_D5/Native BYTE投影替代權限或資源選擇。
+主契約/unknownmatrix/監製進度/handoff已更新。有限batch完成；UItrigger/tableproducer/ctorinsert/selection/phase/owner/transport/ACK未知即停。

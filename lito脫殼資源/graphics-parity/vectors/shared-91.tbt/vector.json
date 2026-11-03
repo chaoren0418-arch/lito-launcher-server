@@ -1,0 +1,974 @@
+{
+  "offset_raw": [
+    3,
+    5
+  ],
+  "offset_signed": [
+    3,
+    5
+  ],
+  "header_width": 26,
+  "width_for_vector": 26,
+  "height": 21,
+  "bytes_consumed": 403,
+  "rows": [
+    {
+      "y": 0,
+      "encoded_offset": 4,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 44,
+          "skip_words": 22,
+          "x": 22,
+          "count": 1,
+          "payload_offset": 7,
+          "words": [
+            2081
+          ]
+        }
+      ],
+      "row_end_offset": 9
+    },
+    {
+      "y": 1,
+      "encoded_offset": 9,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 42,
+          "skip_words": 21,
+          "x": 21,
+          "count": 3,
+          "payload_offset": 12,
+          "words": [
+            9479,
+            26389,
+            11593
+          ]
+        }
+      ],
+      "row_end_offset": 18
+    },
+    {
+      "y": 2,
+      "encoded_offset": 18,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 40,
+          "skip_words": 20,
+          "x": 20,
+          "count": 5,
+          "payload_offset": 21,
+          "words": [
+            11593,
+            27446,
+            26389,
+            21105,
+            7364
+          ]
+        }
+      ],
+      "row_end_offset": 31
+    },
+    {
+      "y": 3,
+      "encoded_offset": 31,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 38,
+          "skip_words": 19,
+          "x": 19,
+          "count": 6,
+          "payload_offset": 34,
+          "words": [
+            15788,
+            27446,
+            25332,
+            20048,
+            14763,
+            7365
+          ]
+        }
+      ],
+      "row_end_offset": 46
+    },
+    {
+      "y": 4,
+      "encoded_offset": 46,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 34,
+          "skip_words": 17,
+          "x": 17,
+          "count": 8,
+          "payload_offset": 49,
+          "words": [
+            1057,
+            18991,
+            27414,
+            24243,
+            17934,
+            12650,
+            5284,
+            4227
+          ]
+        }
+      ],
+      "row_end_offset": 65
+    },
+    {
+      "y": 5,
+      "encoded_offset": 65,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 32,
+          "skip_words": 16,
+          "x": 16,
+          "count": 10,
+          "payload_offset": 68,
+          "words": [
+            4227,
+            22162,
+            26357,
+            21105,
+            14764,
+            8422,
+            3171,
+            7365,
+            12682,
+            1057
+          ]
+        }
+      ],
+      "row_end_offset": 88
+    },
+    {
+      "y": 6,
+      "encoded_offset": 88,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 30,
+          "skip_words": 15,
+          "x": 15,
+          "count": 10,
+          "payload_offset": 91,
+          "words": [
+            9479,
+            25300,
+            24275,
+            18991,
+            11593,
+            4228,
+            5284,
+            11593,
+            17934,
+            14764
+          ]
+        }
+      ],
+      "row_end_offset": 111
+    },
+    {
+      "y": 7,
+      "encoded_offset": 111,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 26,
+          "skip_words": 13,
+          "x": 13,
+          "count": 11,
+          "payload_offset": 114,
+          "words": [
+            1057,
+            15820,
+            26357,
+            22162,
+            15788,
+            7398,
+            4227,
+            9512,
+            16878,
+            14764,
+            6341
+          ]
+        }
+      ],
+      "row_end_offset": 136
+    },
+    {
+      "y": 8,
+      "encoded_offset": 136,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 22,
+          "skip_words": 11,
+          "x": 11,
+          "count": 11,
+          "payload_offset": 139,
+          "words": [
+            1024,
+            10465,
+            20013,
+            24276,
+            18991,
+            10569,
+            5284,
+            7398,
+            14764,
+            14764,
+            5285
+          ]
+        }
+      ],
+      "row_end_offset": 161
+    },
+    {
+      "y": 9,
+      "encoded_offset": 161,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 20,
+          "skip_words": 10,
+          "x": 10,
+          "count": 10,
+          "payload_offset": 164,
+          "words": [
+            1024,
+            13674,
+            12549,
+            11461,
+            14731,
+            7398,
+            6309,
+            12650,
+            15820,
+            7366
+          ]
+        }
+      ],
+      "row_end_offset": 184
+    },
+    {
+      "y": 10,
+      "encoded_offset": 184,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 18,
+          "skip_words": 9,
+          "x": 9,
+          "count": 9,
+          "payload_offset": 187,
+          "words": [
+            6341,
+            21105,
+            24243,
+            10471,
+            5187,
+            4162,
+            8455,
+            15821,
+            9512
+          ]
+        }
+      ],
+      "row_end_offset": 205
+    },
+    {
+      "y": 11,
+      "encoded_offset": 205,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 14,
+          "skip_words": 7,
+          "x": 7,
+          "count": 10,
+          "payload_offset": 208,
+          "words": [
+            3170,
+            15821,
+            25300,
+            21105,
+            14764,
+            6308,
+            3138,
+            10503,
+            13707,
+            2114
+          ]
+        }
+      ],
+      "row_end_offset": 228
+    },
+    {
+      "y": 12,
+      "encoded_offset": 228,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 10,
+          "skip_words": 5,
+          "x": 5,
+          "count": 10,
+          "payload_offset": 231,
+          "words": [
+            1057,
+            12650,
+            24243,
+            23219,
+            18959,
+            10536,
+            5284,
+            8422,
+            11593,
+            4129
+          ]
+        }
+      ],
+      "row_end_offset": 251
+    },
+    {
+      "y": 13,
+      "encoded_offset": 251,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 6,
+          "skip_words": 3,
+          "x": 3,
+          "count": 12,
+          "payload_offset": 254,
+          "words": [
+            1057,
+            10569,
+            22162,
+            24243,
+            21073,
+            14763,
+            7366,
+            6309,
+            13707,
+            13707,
+            2113,
+            2048
+          ]
+        }
+      ],
+      "row_end_offset": 278
+    },
+    {
+      "y": 14,
+      "encoded_offset": 278,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 11,
+          "payload_offset": 281,
+          "words": [
+            1057,
+            10569,
+            22129,
+            24275,
+            21105,
+            16877,
+            10536,
+            5252,
+            8423,
+            15821,
+            8423
+          ]
+        }
+      ],
+      "row_end_offset": 303
+    },
+    {
+      "y": 15,
+      "encoded_offset": 303,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 10,
+          "payload_offset": 306,
+          "words": [
+            20016,
+            24276,
+            22162,
+            18959,
+            13707,
+            6341,
+            5252,
+            11626,
+            15821,
+            4195
+          ]
+        }
+      ],
+      "row_end_offset": 326
+    },
+    {
+      "y": 16,
+      "encoded_offset": 326,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 10,
+          "payload_offset": 329,
+          "words": [
+            2081,
+            17935,
+            23186,
+            16877,
+            10536,
+            4227,
+            6341,
+            14764,
+            14764,
+            1057
+          ]
+        }
+      ],
+      "row_end_offset": 349
+    },
+    {
+      "y": 17,
+      "encoded_offset": 349,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 7,
+          "payload_offset": 352,
+          "words": [
+            11557,
+            13637,
+            10536,
+            3171,
+            8455,
+            16877,
+            11593
+          ]
+        }
+      ],
+      "row_end_offset": 366
+    },
+    {
+      "y": 18,
+      "encoded_offset": 366,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 6,
+          "payload_offset": 369,
+          "words": [
+            8386,
+            12613,
+            12649,
+            10536,
+            17934,
+            8423
+          ]
+        }
+      ],
+      "row_end_offset": 381
+    },
+    {
+      "y": 19,
+      "encoded_offset": 381,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 5,
+          "payload_offset": 384,
+          "words": [
+            6340,
+            25298,
+            26390,
+            17935,
+            6309
+          ]
+        }
+      ],
+      "row_end_offset": 394
+    },
+    {
+      "y": 20,
+      "encoded_offset": 394,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 2,
+          "count": 3,
+          "payload_offset": 397,
+          "words": [
+            13707,
+            24243,
+            4228
+          ]
+        }
+      ],
+      "row_end_offset": 403
+    }
+  ],
+  "namespace": "shared",
+  "member": "91.tbt",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\graphics-fallback91\\Sprite\\row90223-91.tbt",
+    "bytes": 403,
+    "sha256": "A88333B37CF5D6F51960375509A0EB34EA856361A4BF906593737D04201699FB"
+  },
+  "provenance": {
+    "archive": "Sprite",
+    "row": 90223,
+    "offset": 903342224,
+    "bytes": 403,
+    "source_index": {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+      "bytes": 2585972,
+      "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+    },
+    "source_pak": {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+      "bytes": 1904012586,
+      "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62"
+    },
+    "authorization": "Supervisor supplemental scope: necessary single Sprite/91.tbt extraction allowed;5 actual samples total. No other archive member read or extracted.",
+    "source_checks": [
+      {
+        "kind": "index_source",
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B",
+        "match": true
+      },
+      {
+        "kind": "decoded_index",
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Sprite.raw.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B",
+        "match": true
+      },
+      {
+        "kind": "pak_source",
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+        "bytes": 1904012586,
+        "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62",
+        "match": true
+      }
+    ]
+  },
+  "prior_layout_details_compared": null,
+  "coverage_words": 168,
+  "covered_zero_words": 0,
+  "uncovered_words": 378,
+  "zero_examples": [],
+  "uncovered_examples": [
+    {
+      "x": 0,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "native_destination_unchanged": true
+    }
+  ],
+  "raw_offset_applied_only_by_draw": true,
+  "files": {
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\raw.bin",
+      "bytes": 403,
+      "sha256": "A88333B37CF5D6F51960375509A0EB34EA856361A4BF906593737D04201699FB"
+    },
+    "inplace_565_payload": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\converted-565.bin",
+      "bytes": 403,
+      "sha256": "E217FA7B619A9FC9C75F3BA5DD0F8EE09F6E64D192F5FAECCB58F57229D8B606"
+    },
+    "coverage_u8": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\coverage.u8",
+      "bytes": 546,
+      "sha256": "D1C354E04C2A6E66D678C54733185F5025CE04586F106FEAA6D3E4EA87DE0A53"
+    },
+    "dense_source_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\source-words.le16",
+      "bytes": 1092,
+      "sha256": "9DC5F0B23F873A0EB85AFED52FBEC58A489B92383774156277E269B7F480614E"
+    },
+    "dense_converted_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\converted-words.le16",
+      "bytes": 1092,
+      "sha256": "2C424BBF16654CF4AC4BB429DC43A08E9771E01C8783353AC340065B582DE65A"
+    },
+    "destination_flag_0": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\destination-flag-0.le16",
+      "bytes": 8192,
+      "sha256": "88C4FB63337E5B655EB4FFCDFF8B35467FC02B99CE0143FDB558145770D39538"
+    },
+    "destination_flag_1": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\destination-flag-1.le16",
+      "bytes": 8192,
+      "sha256": "56446DA6032F40BB58CF0EC796B6DCA7D33CD63133F6127B8FDB5AC1A836C3A7"
+    }
+  },
+  "destination_case": {
+    "width": 64,
+    "height": 64,
+    "pitch_bytes": 128,
+    "caller_origin": [
+      8,
+      8
+    ],
+    "sentinel_word_hex": "5AA5",
+    "mask_flag": 0,
+    "DF": 0,
+    "in_bounds": true
+  },
+  "new_case_checks": [
+    {
+      "conversion_flag": 0,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1730,
+          "source_byte_offset": 7,
+          "bytes": 2
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1856,
+          "source_byte_offset": 12,
+          "bytes": 6
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1982,
+          "source_byte_offset": 21,
+          "bytes": 10
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 2108,
+          "source_byte_offset": 34,
+          "bytes": 12
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 2232,
+          "source_byte_offset": 49,
+          "bytes": 16
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 2358,
+          "source_byte_offset": 68,
+          "bytes": 20
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 2484,
+          "source_byte_offset": 91,
+          "bytes": 20
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 2608,
+          "source_byte_offset": 114,
+          "bytes": 22
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2732,
+          "source_byte_offset": 139,
+          "bytes": 22
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2858,
+          "source_byte_offset": 164,
+          "bytes": 20
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2984,
+          "source_byte_offset": 187,
+          "bytes": 18
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 3108,
+          "source_byte_offset": 208,
+          "bytes": 20
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 3232,
+          "source_byte_offset": 231,
+          "bytes": 20
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 3356,
+          "source_byte_offset": 254,
+          "bytes": 24
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 3480,
+          "source_byte_offset": 281,
+          "bytes": 22
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 3608,
+          "source_byte_offset": 306,
+          "bytes": 20
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3734,
+          "source_byte_offset": 329,
+          "bytes": 20
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3864,
+          "source_byte_offset": 352,
+          "bytes": 14
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3992,
+          "source_byte_offset": 369,
+          "bytes": 12
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 4120,
+          "source_byte_offset": 384,
+          "bytes": 10
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 4250,
+          "source_byte_offset": 397,
+          "bytes": 6
+        }
+      ]
+    },
+    {
+      "conversion_flag": 1,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1730,
+          "source_byte_offset": 7,
+          "bytes": 2
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1856,
+          "source_byte_offset": 12,
+          "bytes": 6
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1982,
+          "source_byte_offset": 21,
+          "bytes": 10
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 2108,
+          "source_byte_offset": 34,
+          "bytes": 12
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 2232,
+          "source_byte_offset": 49,
+          "bytes": 16
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 2358,
+          "source_byte_offset": 68,
+          "bytes": 20
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 2484,
+          "source_byte_offset": 91,
+          "bytes": 20
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 2608,
+          "source_byte_offset": 114,
+          "bytes": 22
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2732,
+          "source_byte_offset": 139,
+          "bytes": 22
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2858,
+          "source_byte_offset": 164,
+          "bytes": 20
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2984,
+          "source_byte_offset": 187,
+          "bytes": 18
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 3108,
+          "source_byte_offset": 208,
+          "bytes": 20
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 3232,
+          "source_byte_offset": 231,
+          "bytes": 20
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 3356,
+          "source_byte_offset": 254,
+          "bytes": 24
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 3480,
+          "source_byte_offset": 281,
+          "bytes": 22
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 3608,
+          "source_byte_offset": 306,
+          "bytes": 20
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3734,
+          "source_byte_offset": 329,
+          "bytes": 20
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3864,
+          "source_byte_offset": 352,
+          "bytes": 14
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3992,
+          "source_byte_offset": 369,
+          "bytes": 12
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 4120,
+          "source_byte_offset": 384,
+          "bytes": 10
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 4250,
+          "source_byte_offset": 397,
+          "bytes": 6
+        }
+      ]
+    }
+  ],
+  "oracle_status": "CODE_DERIVED_EXPECTATIONS_ONLY; no original runtime pixels or Modern output used"
+}

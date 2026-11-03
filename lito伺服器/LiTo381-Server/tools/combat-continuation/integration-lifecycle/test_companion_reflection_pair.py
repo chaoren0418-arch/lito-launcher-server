@@ -1,0 +1,20 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,shutil,subprocess,sys,os,re
+R=Path(__file__).resolve().parent;C=R.parent;S=R.parents[2];B=S/'tools/resource-database/build';D=R/'build'
+read=lambda p:json.loads(p.read_text('utf-8'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();pin=lambda p:dict(path=str(p.resolve()),sha256=sha(p))
+write=lambda p,v:p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n','utf-8')
+assert '--before' not in sys.argv;before=False;b=read(D/('companion-mana-transfer-build-current.json' if before else 'companion-reflection-scene-build-current.json'));jar=Path(b['runtime']['path']);assert sha(jar)==b['runtime']['sha256'];name='companion-reflection-pair';run=D/name/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ');inputs=run/'inputs';inputs.mkdir(parents=True)
+for p in [Path(__file__),R/'CompanionReflectionPairProbe.java',R/'NativeManaCloseDebugger.java',R/'CompanionTypedActorFixtures.java',R/'CompanionRefLifecycleProbe.java',R/'CompanionPlacementProbe.java',C/'return-nature-material/ReturnNatureMaterialProbe.java']:shutil.copyfile(p,inputs/p.name)
+J=Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin');classes=run/'classes';tools=run/'tools';F=B/'baseline-PC-ingress-efd4-v2';cp=';'.join(map(str,[classes,C/'elemental-material/build/boundaries/classes',C/'build/tests/classes',B/'pc-native-signed-hp-development/signed-probe-fixtures',B/'pc-native-accept-development/fixtures',F,F/'fixture-support.zip',jar,S/'lib/*']));env=dict(os.environ,JAVA_TOOL_OPTIONS='-Xms16m -Xmx256m -XX:+UseSerialGC -XX:CICompilerCount=2 -XX:ActiveProcessorCount=2 -XX:ReservedCodeCacheSize=64m -Dfile.encoding=UTF-8 -Dlineage.damage.commitWorkers=2 -Dlineage.damage.commitDispatchCapacity=256 -Dlineage.damage.maxTargetPending=64 -Dlineage.damage.maxGlobalPending=64');log=run/'test.log';v=dict(status='running',runtime=b['runtime'],inputs=[pin(p) for p in inputs.iterdir()],debugger='JDI loopback target; suspend the actual accepted PC worker at the unchanged original native reflection method bytecode 25 after successful NPC lookup before its HP side effect. HP against the player is already committed; a distinct fixture thread demonstrably queues on the held Source owner or caster action lock. No class rewriting, source overlays or synthetic gameplay Frame.',full_goal_achieved=False,formal_deployment_changed=False,Source_or_player_SQL_or_WAL_written=False)
+try:
+ method='nativeReflectionOriginalDamage';location=25;v.update(native_method=method,native_postlookup_bytecode_index=location)
+ with log.open('w',encoding='utf-8') as out:
+  def invoke(args):subprocess.run(list(map(str,args)),cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,check=True,timeout=600)
+  invoke([J/'javac.exe','-g:none','-encoding','UTF-8','--add-modules','jdk.jdi','-d',tools,inputs/'NativeManaCloseDebugger.java']);invoke([J/'javac.exe','-g:none','-encoding','UTF-8','-implicit:none','-sourcepath','','-cp',cp,'-d',classes,*[p for p in sorted(inputs.glob('*.java')) if p.name!='NativeManaCloseDebugger.java']]);invoke([J/'java.exe','--add-modules','jdk.jdi','-Xverify:all','-cp',tools,'NativeManaCloseDebugger',cp,S/'config/server.properties',run/'runtime',run/'observations.json',jar,'before' if before else 'after',method,location,12,'local.lito381.server.CompanionReflectionPairProbe','local.lito381.server.NativeCombatAttacker'])
+ o=read(run/'observations.json');assert o['cases']==o['actual_accepted_Frames']==o['valid_reflected_HP_commits']==o['actual_paired_role_waits']==12;v.update(status='passed-real-postlookup-reflection-actual-paired-role-waits',observations=o)
+except BaseException as error:v.update(status='failed',error=str(error));print(log.read_text('utf-8',errors='replace')[-2600:] if log.exists() else error);raise
+finally:
+ if log.exists():v['log']=pin(log)
+ write(run/'manifest.json',v);write(D/(name+'-current.json'),dict(status=v['status'],runtime=b['runtime'],manifest=pin(run/'manifest.json')))
+print(json.dumps(dict(status=v['status'],observations=v['observations'])))

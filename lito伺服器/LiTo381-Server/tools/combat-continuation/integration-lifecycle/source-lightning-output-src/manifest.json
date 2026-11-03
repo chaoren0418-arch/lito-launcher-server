@@ -1,0 +1,16 @@
+{
+  "original": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-lightning-lifetime-builds\\20261023T181043045571Z\\inputs\\NativeSourceLightningLifetime.java",
+    "sha256": "b1508529eeff1ca2a4b45cb2e28b5868f6ea88bac4068a27ff08515ab2f7a6b6"
+  },
+  "versioned": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-lightning-output-src\\NativeSourceLightningLifetime.java",
+    "sha256": "6a5abe12077a52c7c5ba1220d820a1414167ef49d387ce19a1784f356cf570df"
+  },
+  "changes": [
+    [
+      "byte[] frozen=packet.clone();NativeLightAction.deferScoped(()->{if(a.closed||a.lifetime.mode==NativePlayerLifetime.Mode.STOPPED||!a.c.caster.matches(a.c.pc)||!binding.matches(receiver))return;var out=new Output(receiver,binding,frozen,note,a.token());a.outbound=out;",
+      "byte[] frozen=packet.clone();var out=new Output(receiver,binding,frozen,note,a.token());NativeLightAction.deferScoped(()->{if(a.closed||a.lifetime.mode==NativePlayerLifetime.Mode.STOPPED||!a.c.caster.matches(a.c.pc)||!binding.matches(receiver))return;a.outbound=out;"
+    ]
+  ]
+}

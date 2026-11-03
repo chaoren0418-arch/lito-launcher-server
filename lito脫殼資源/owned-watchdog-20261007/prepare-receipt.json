@@ -1,0 +1,27 @@
+{
+  "task_id": "bin_resources-owned-process-watchdog-20261007",
+  "before": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 160056,
+      "sha256": "7BB602EA880E1A87AFC64F323D892F3B8D47D6749EE13E6626C409E30A619B80"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 68582,
+      "sha256": "E186C63E2437912DB9239774EF9981EF8AB797C545CBD355928C5005D4EE689C"
+    }
+  },
+  "after": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 160894,
+      "sha256": "63854EB112A6B783A8A6ACBC4D644F42A83EB61EFE9A2C4EBC62D443EF45E667"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 70819,
+      "sha256": "57FBAD6E56721041B67CEBBC1B6C74638A128751D656916EE259D415E5DACBBF"
+    }
+  }
+}

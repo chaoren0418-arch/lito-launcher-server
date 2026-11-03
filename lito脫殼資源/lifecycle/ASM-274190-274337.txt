@@ -1,0 +1,148 @@
+274190: 
+274191: ; Attributes: noreturn bp-based frame
+274192: 
+274193: fn_ClientApplication_Run proc near      ; CODE XREF: fn_MFC_WinMain_Wrapper+197↓p
+274194: 
+274195: var_1A0= byte ptr -1A0h
+274196: var_A0= byte ptr -0A0h
+274197: var_84= byte ptr -84h
+274198: var_7C= byte ptr -7Ch
+274199: var_74= dword ptr -74h
+274200: var_70= dword ptr -70h
+274201: var_6C= dword ptr -6Ch
+274202: var_68= dword ptr -68h
+274203: var_64= dword ptr -64h
+274204: var_3C= byte ptr -3Ch
+274205: var_2C= dword ptr -2Ch
+274206: var_26= byte ptr -26h
+274207: var_25= byte ptr -25h
+274208: var_24= dword ptr -24h
+274209: var_20= dword ptr -20h
+274210: var_1C= dword ptr -1Ch
+274211: var_18= dword ptr -18h
+274212: var_14= dword ptr -14h
+274213: var_10= dword ptr -10h
+274214: var_C= dword ptr -0Ch
+274215: var_4= dword ptr -4
+274216: arg_0= dword ptr  8
+274217: 
+274218: push    ebp                             ; LiTo.unpacked-live-image.bin:0 | Recovered from controlled live-image analysis
+274219: mov     ebp, esp
+274220: push    0FFFFFFFFh
+274221: push    offset word_4F4FD6
+274222: mov     eax, large fs:0
+274223: push    eax
+274224: mov     large fs:0, esp
+274225: sub     esp, 194h
+274226: push    ebx
+274227: push    esi
+274228: mov     esi, ecx
+274229: push    edi
+274230: xor     ecx, ecx
+274231: mov     [ebp+var_2C], esi
+274232: call    sub_4D39F0
+274233: 
+274234: call    sub_48E470
+274235: 
+274236: ; ---------------------------------------------------------------------------
+274237: dw 0C9E8h
+274238: dd 68000558h
+274239: dd offset aLineage4912846               ; "Lineage491284632"
+274240: dd offset word_6A016A
+274241: dd 56F567E8h, 18A39005h, 900064BCh, 56F561E8h, 74C08505h, 0E9C03307h, 167Dh, 647DD8B9h, 2E9AE800h, 14BAFFFBh
+274242: dd 0B90062D3h
+274243: dd offset aLitoNew                      ; "LiTo.new"
+274244: dd 0BBD83589h, 0A5E80064h, 6AFFFAD9h, 0E64EE800h, 509076F8h, 0F5BB97E8h, 0C4839076h, 0CCE89008h, 3D055C01h
+274245: dd 3B6h, 64B6D4A3h, 0B6D8A300h, 2B90064h, 75000000h, 0DC05C61Dh, 30064B6h, 0B49C05C7h, 60064h, 5C70000h
+274246: dd 64B498h, 62C9A0h, 0A83D6FEBh, 75000003h, 0DC05C61Dh, 50064B6h, 0B49C05C7h, 60064h, 5C70000h, 64B498h
+274247: dd 62C9A0h, 0E43D4BEBh, 75000004h, 0DC05C619h, 10064B6h, 0B49C0D89h, 5C70064h, 64B498h, 62C998h, 0A43D2BEBh
+274248: dd 75000003h, 0DC05C609h, 40064B6h, 5C6DEEBh, 64B6DCh, 9C05C700h, 140064B4h, 0C7000000h, 64B49805h, 62C94800h
+274249: dd 541D8B00h, 0FF004F72h, 3DF799D3h, 64B49Ch, 64B498A1h, 0FFC98300h, 0B4A01589h, 3C8B0064h, 0F2C03390h
+274250: dd 2BD1F7AEh, 8BD18BF9h, 0B7E4BFF7h, 0E9C10064h, 8BA5F302h, 3E183CAh, 5C6A4F3h, 6476C8h, 0BC44BE01h
+274251: db 64h, 0
+274252: ; ---------------------------------------------------------------------------
+274253: 
+274254: loc_480BDE:                             ; CODE XREF: fn_ClientApplication_Run+1A1↓j
+274255: call    ebx ; dword_4F7254
+274256: 
+274257: cdq
+274258: mov     ecx, 3C00h
+274259: idiv    ecx
+274260: mov     [esi-4], edx
+274261: call    ebx ; dword_4F7254
+274262: 
+274263: cdq
+274264: mov     ecx, 3C00h
+274265: add     esi, 8
+274266: idiv    ecx
+274267: cmp     esi, offset dword_64DB84
+274268: mov     [esi-8], edx
+274269: jl      short loc_480BDE
+274270: 
+274271: mov     edx, [ebp+arg_0]
+274272: lea     ecx, [ebp+var_7C]
+274273: mov     [ebp+var_26], 0
+274274: call    sub_47EC50
+274275: 
+274276: cmp     eax, 1
+274277: mov     [ebp+var_24], eax
+274278: mov     byte ptr [ebp+arg_0+3], 0
+274279: mov     [ebp+var_25], 0
+274280: jl      loc_4817B5
+274281: 
+274282: test    eax, eax
+274283: mov     [ebp+var_20], 0
+274284: jle     loc_4817B5
+274285: 
+274286: mov     [ebp+var_10], 1
+274287: mov     [ebp+var_14], 5
+274288: mov     [ebp+var_18], 4
+274289: lea     ebx, [ebp+var_7C]
+274290: 
+274291: 
+274292: loc_480C4D:                             ; CODE XREF: fn_ClientApplication_Run+BD4↓j
+274293: mov     edi, [ebx]
+274294: mov     al, [edi]
+274295: cmp     al, 2Fh ; '/'
+274296: jz      short loc_480C8D
+274297: 
+274298: cmp     al, 2Dh ; '-'
+274299: jz      short loc_480C8D
+274300: 
+274301: mov     al, [ebp+var_26]
+274302: test    al, al
+274303: jnz     loc_48163F
+274304: 
+274305: or      ecx, 0FFFFFFFFh
+274306: xor     eax, eax
+274307: repne scasb
+274308: not     ecx
+274309: sub     edi, ecx
+274310: mov     [ebp+var_26], 1
+274311: mov     edx, ecx
+274312: mov     esi, edi
+274313: mov     edi, offset a21020018214        ; "210.200.182.14"
+274314: shr     ecx, 2
+274315: rep movsd
+274316: mov     ecx, edx
+274317: and     ecx, 3
+274318: rep movsb
+274319: jmp     loc_481610
+274320: 
+274321: ; ---------------------------------------------------------------------------
+274322: 
+274323: loc_480C8D:                             ; CODE XREF: fn_ClientApplication_Run+1F3↑j
+274324:                                         ; fn_ClientApplication_Run+1F7↑j
+274325: lea     esi, [edi+1]
+274326: mov     edi, dword_4F72E4
+274327: push    offset aKornet                  ; "kornet"
+274328: push    esi
+274329: mov     [ebp+var_1C], esi
+274330: call    edi ; dword_4F72E4
+274331: 
+274332: add     esp, 8
+274333: test    eax, eax
+274334: jnz     loc_480E0B
+274335: 
+274336: mov     eax, [ebp+var_18]
+274337: mov     ecx, [ebp+var_24]

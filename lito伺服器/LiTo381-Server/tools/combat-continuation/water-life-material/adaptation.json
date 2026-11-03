@@ -1,0 +1,11 @@
+{
+  "source": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\ElementalMethods.java",
+    "sha256": "bdd9c3071657163434089bf29d14aeeaefee55dd59be6d91cdbd8c29a47fedb8"
+  },
+  "adapted": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\WaterLifeMethods.java",
+    "sha256": "c9904cfdb6dff9159e187a65b7ead4151d420f006e4ed1707550be547d2cda1a"
+  },
+  "scope": "skill170 pair target material commit; exact candidate base and inverse"
+}

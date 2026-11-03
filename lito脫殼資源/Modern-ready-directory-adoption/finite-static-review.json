@@ -1,0 +1,867 @@
+{
+  "updated_at": "2026-10-06T09:03:18.524990+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption-contract.json",
+    "bytes": 120669,
+    "sha256": "B746EF77645DD5BE45B005C6C1F808B0DB83963D36F019CB8368548EC088A88E"
+  },
+  "all_match": true,
+  "check_count": 213,
+  "anchor_count": 58,
+  "checks": [
+    {
+      "name": "own output build-r492-source-connection-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output build-r493-source-identity-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output build-r494-source-stream-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output build-r498-character-ui-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output build-r513-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output build-r519-consumer.ps1.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output implementation-comparison-table.json",
+      "match": true
+    },
+    {
+      "name": "own output minimal-adoption-order.json",
+      "match": true
+    },
+    {
+      "name": "own output native_character_directory_fields.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_character_selection.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_city_runtime.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_entry_navigation.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_java_character_flow.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_java_room_entry.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_java_room_participants.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_java_room_self.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_login_bootstrap.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_login_events.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_mode_snapshot.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_source_connection.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_source_identity.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output native_source_send.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "own output r492-source-connection-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output r493-source-identity-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output r494-source-stream-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output r498-character-ui-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output r515-participant-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output r519-self-consumer.rs.test-names.json",
+      "match": true
+    },
+    {
+      "name": "own output source-read-catalog.json",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_character_directory_fields.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_character_directory_fields.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_character_selection.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_character_selection.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_city_runtime.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_city_runtime.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_entry_navigation.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_entry_navigation.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_java_character_flow.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_java_character_flow.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_java_room_entry.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_java_room_entry.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_java_room_participants.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_java_room_participants.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_java_room_self.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_java_room_self.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_login_bootstrap.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_login_bootstrap.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_login_events.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_login_events.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_mode_snapshot.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_mode_snapshot.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_source_connection.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_source_connection.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_source_identity.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_source_identity.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata native_source_send.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed native_source_send.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r492-source-connection-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r492-source-connection-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r493-source-identity-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r493-source-identity-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r494-source-stream-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r494-source-stream-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r498-character-ui-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r498-character-ui-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r513-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r513-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata build-r519-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed build-r519-consumer.ps1",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r492-source-connection-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r492-source-connection-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r493-source-identity-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r493-source-identity-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r494-source-stream-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r494-source-stream-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r498-character-ui-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r498-character-ui-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r515-participant-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r515-participant-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "stable read metadata r519-self-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "runtime/test/import not performed r519-self-consumer.rs",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M01",
+      "match": true
+    },
+    {
+      "name": "M01 decode:52",
+      "match": true
+    },
+    {
+      "name": "M01 JAVA_ROW_BOUND:8",
+      "match": true
+    },
+    {
+      "name": "M01 consume_source_identity_event:147",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M02",
+      "match": true
+    },
+    {
+      "name": "M02 Reader::string:47",
+      "match": true
+    },
+    {
+      "name": "M02 decode:55",
+      "match": true
+    },
+    {
+      "name": "M02 decode:60",
+      "match": true
+    },
+    {
+      "name": "M02 Fields::decode:14",
+      "match": true
+    },
+    {
+      "name": "M02 Fields::validate_java_projection:18",
+      "match": true
+    },
+    {
+      "name": "M02 consume_source_identity_event:149",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M03",
+      "match": true
+    },
+    {
+      "name": "M03 State::prepare_packet:75",
+      "match": true
+    },
+    {
+      "name": "M03 State::prepare_packet Start:77",
+      "match": true
+    },
+    {
+      "name": "M03 State::prepare_packet Record:78",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M04",
+      "match": true
+    },
+    {
+      "name": "M04 State::prepare_select_bounded:87",
+      "match": true
+    },
+    {
+      "name": "M04 source_character_control:172",
+      "match": true
+    },
+    {
+      "name": "M04 handle_source_character_control:173",
+      "match": true
+    },
+    {
+      "name": "M04 handle_source_character_submit:183",
+      "match": true
+    },
+    {
+      "name": "M04 prepare_source_send_candidate:214",
+      "match": true
+    },
+    {
+      "name": "M04 Sender::prepare_character:30",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M05",
+      "match": true
+    },
+    {
+      "name": "M05 State::prepare_packet Start:77",
+      "match": true
+    },
+    {
+      "name": "M05 consume_source_identity_event:145",
+      "match": true
+    },
+    {
+      "name": "M05 note_java_self_stream:76",
+      "match": true
+    },
+    {
+      "name": "M05 Scene::retire:21",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M06",
+      "match": true
+    },
+    {
+      "name": "M06 Scope::admit_epoch:45",
+      "match": true
+    },
+    {
+      "name": "M06 commit_source_boundary:132",
+      "match": true
+    },
+    {
+      "name": "M06 resume_java_return_fixture:461",
+      "match": true
+    },
+    {
+      "name": "M06 reconnect_login_bootstrap_fixture:480",
+      "match": true
+    },
+    {
+      "name": "M06 handle_source_choice:97",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M07",
+      "match": true
+    },
+    {
+      "name": "M07 MemberState::decode:20",
+      "match": true
+    },
+    {
+      "name": "M07 decode S_D1:47",
+      "match": true
+    },
+    {
+      "name": "M07 Book::observe:113",
+      "match": true
+    },
+    {
+      "name": "M07 Book::observe D1:149",
+      "match": true
+    },
+    {
+      "name": "M07 java_room_participants_route_enabled:176",
+      "match": true
+    },
+    {
+      "name": "M07 consume_java_room_participants_candidate:187",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M08",
+      "match": true
+    },
+    {
+      "name": "M08 complete_singleton_alias:7",
+      "match": true
+    },
+    {
+      "name": "M08 singleton_binding_current:53",
+      "match": true
+    },
+    {
+      "name": "M08 self_join_current:65",
+      "match": true
+    },
+    {
+      "name": "M08 note_java_self_stream CharacterAccepted:98",
+      "match": true
+    },
+    {
+      "name": "M08 Book::owner_link:98",
+      "match": true
+    },
+    {
+      "name": "M08 consume_java_room_entry_candidate:139",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M09",
+      "match": true
+    },
+    {
+      "name": "M09 Intent:7",
+      "match": true
+    },
+    {
+      "name": "M09 Sender typed room writers:32",
+      "match": true
+    },
+    {
+      "name": "M09 prepare_source_send_candidate:213",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M10",
+      "match": true
+    },
+    {
+      "name": "M10 feed_source_stream_candidate constructor dispatch:245",
+      "match": true
+    },
+    {
+      "name": "M10 Epoch::decoded_packet fallback:24",
+      "match": true
+    },
+    {
+      "name": "M10 Snapshot::decode opcode domain:34",
+      "match": true
+    },
+    {
+      "name": "M10 feed_source_stream_candidate ingress:247",
+      "match": true
+    },
+    {
+      "name": "M10 retire_source_stream:258",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M11",
+      "match": true
+    },
+    {
+      "name": "M11 DecodedPacket:12",
+      "match": true
+    },
+    {
+      "name": "M11 State::prepare_packet Record:78",
+      "match": true
+    },
+    {
+      "name": "M11 decode S_D1:49",
+      "match": true
+    },
+    {
+      "name": "M11 feed_source_stream_candidate:247",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M12",
+      "match": true
+    },
+    {
+      "name": "M12 JAVA_ROW_BOUND:8",
+      "match": true
+    },
+    {
+      "name": "M12 source_character_command_slot:46",
+      "match": true
+    },
+    {
+      "name": "M12 slot:10",
+      "match": true
+    },
+    {
+      "name": "M12 source_character_control_enabled:171",
+      "match": true
+    },
+    {
+      "name": "finding boundaries M13",
+      "match": true
+    },
+    {
+      "name": "M13 Adapter::parse:10",
+      "match": true
+    },
+    {
+      "name": "M13 Adapter/contract pin:5",
+      "match": true
+    },
+    {
+      "name": "M13 Sender::prepare_body:53",
+      "match": true
+    },
+    {
+      "name": "prior pin class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "prior pin S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "prior pin ranges.json",
+      "match": true
+    },
+    {
+      "name": "prior pin snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "prior pin S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "prior pin native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "prior pin skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior pin CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence scope-write-correction.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence server-character-directory-consumer-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence S_CB-fields.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence Protocol-fields-reference.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence LiTo381-Server-letter-auth-wire-candidate.jar",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence Modern-safe-directory-adaptation-table.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence Modern-ready-dependency-matrix.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence server-room-ready-prestart-consumer-contract.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence server-ordinary-room-settings-order-candidate.json",
+      "match": true
+    },
+    {
+      "name": "accepted immutable evidence server-ordinary-room-settings-candidate-network.json",
+      "match": true
+    },
+    {
+      "name": "classification counts",
+      "match": true
+    },
+    {
+      "name": "26 per-file reads;14 implementation files;3 existing tests",
+      "match": true
+    },
+    {
+      "name": "test names exact",
+      "match": true
+    },
+    {
+      "name": "34 prior primary pins",
+      "match": true
+    },
+    {
+      "name": "all action/newwire counters zero",
+      "match": true
+    },
+    {
+      "name": "packet unchanged",
+      "match": true
+    },
+    {
+      "name": "scope incident unchanged/open",
+      "match": true
+    },
+    {
+      "name": "485F ready not promoted",
+      "match": true
+    },
+    {
+      "name": "minimum task exactly M09+M10",
+      "match": true
+    }
+  ],
+  "scope": "Only new owned capture structure, exact source tokens/line links, classifications and immutable accepted pins. No Modern test/build/run. External mutable Modern files deliberately not reread or required to remain frozen.",
+  "runtime_acceptance": false
+}

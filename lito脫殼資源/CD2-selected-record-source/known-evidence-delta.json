@@ -1,0 +1,35 @@
+{
+  "classification": "knownS_CB/03producer-field/nativeinternalmapping补證",
+  "new_wire_differences": 0,
+  "new_opcodes": 0,
+  "wire_corrections": 0,
+  "server_packet_delta_modified": false,
+  "field": {
+    "direction": "S",
+    "opcode": "CB",
+    "token_ordinal": 16,
+    "type": "u8",
+    "bytes": 1,
+    "body_offset": "3+N+M+16",
+    "encoding": "rawBYTE;N/M MS950perAD368producer",
+    "trigger": "acceptedordinarydirectoryrow;Nativeconditionalindex<countargumentisland",
+    "handler": {
+      "va": "004A7550",
+      "rva": "000A7550",
+      "section": "   \u0000    ",
+      "file_offset": "000A7550",
+      "raw_backed": true
+    },
+    "source_SHA256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "evidence_level": "conditionalNativepointer/BYTEstore plusacceptedAD368c0producer,notexecution/GUI/owner",
+    "unknowns": [
+      "FirstunknownCB4D6970;rowstrings77409B70/774095E0;countzero49A510;selectedmarker494120/virtual[EDX];markerconsumer494E00 allSTOP,no bodiesopened.",
+      "+3E isunnamedNativeBYTE mappedtoAD368reservedbyte0,notowner/mode/ready/classqualification. Conditionalwriteonly,notruntimeproof.",
+      "Fourmarkerreset slots !=completeNativecapacity;AD368count0..8producerpolicy doesnotqualify nativeindex/storage safe bounds orzero/multiGUI.",
+      "Call-freeclancopy canoverwrite+3E ifstrlen>=34;boundedAD368clanpolicy only,othercaller/source/lifetime unknown. No blanket+3Eclear/preserve/uniquematch guarantee.",
+      "No newwire/opcode/fieldcorrection;knownCB/03typedmapping补證. Otherrowtailargumentdestinations/codec/fullparsecompletion outsidequalification.",
+      "Userintent/servercommit/D1/E1/GUI/WORLDseparate;Batch29opcodeonly/UI/transport andBatch30runtimeprotectedselectorunknown retained;noJavaSQL/Native/GUI oroldPASS.",
+      "Prior externalpyc cleanup automaticreviewrejection retained,no retry/reframe/alternate/delegation;onlyownedROOTwrites,Python-B/dont_write_bytecode."
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "version": "0.6.46",
+  "baseline_server_sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542",
+  "published_sha256": "e35cb91c43a18a690cc304df8e5a9b2ba15014822261651616ae9420fa8cc5a2",
+  "native_dll_sha256": "e3643ce79776cceee77c76941ecd05c419f0faab1871179805d29e18044ba2d0",
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "8c148fbf11aa87086481d85e9ac38094a8351f7bfb6cb679b4097d4b80c7c3ca"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "24748acbeaf0ee1adb8e15c2895e7f99d85cd917403dcb08e6690e1043ca4be5"
+  },
+  "added_sources": {
+    "src/main/java/local/lito381/server/DragonSkillRequests.java": "2ddfcc11bdb95bb0612331bc3ce54aace4ee1145088609e5731a08311e6f0e0c",
+    "src/main/java/local/lito381/server/DisconnectedBattleResult.java": "dd7dffe45fb1169978f67be8baedaa8969e44dd68c404ad77a82170eb35de3b5"
+  },
+  "rollback_source_archive_sha256": "aa0e01ec96f10958b326706e331ba42cbd00457c7f189bccdd00f49f6b27de14",
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/DisconnectedBattleResult.class",
+    "local/lito381/server/DragonSkillRequests.class"
+  ],
+  "server_regression_passed": true,
+  "server_regression_log": "runtime/dragon-skill-regression.log",
+  "native_picker_skill_ids": [
+    183,
+    184,
+    187,
+    188,
+    192,
+    193,
+    194
+  ],
+  "native_fixture_run": "class-lobby-fixture-1791794161598621600",
+  "no_player_sql_writes": true,
+  "live_disconnect_run": "development-54e74e448a9548ba8f786dacd13eac2c",
+  "last_live_packet_utc": "2026-10-12T08:08:31.535498Z",
+  "verified_effects": [
+    "Dragon Skin physical reduction 50 to 40, magic unchanged",
+    "Burning Slash consumed once",
+    "Thunder Grab damages selected companion",
+    "Resist Fear companion reads NPC MR without null exception",
+    "missing and unknown explicit targets do not choose another actor",
+    "delayed disconnect result adds one loss after live memory release; repeat callback is idempotent"
+  ],
+  "manual_world_click_and_full_match_pending": true,
+  "limitations": [
+    "Native new-class buff status icons are not implemented",
+    "Reference RESIST_FEAR NPC overload applies no dodge-down effect; targets may resist probability magic",
+    "This regression does not certify every skill against every actor family"
+  ],
+  "formal_smoke_run": "cleanup-smoke-1791794571933603800",
+  "formal_smoke_passed": true,
+  "deployment_pins_verified": true,
+  "project_layout_verified": true
+}

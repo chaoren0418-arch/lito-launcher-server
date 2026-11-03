@@ -1,0 +1,923 @@
+{
+  "task_id": "bin_resources-caption-message-boundary-20261007",
+  "evidence_level": "static",
+  "hypothesis": "Do movement/modal/position messages share a direct main-image paint/update call?",
+  "result": "Excluded for the qualified local routes; WM_PAINT has a distinct conditional call. External behavior remains unknown.",
+  "routes": [
+    {
+      "message": "0003",
+      "target": "0047F390",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": false
+        },
+        {
+          "va": "0047F373",
+          "bytes": "7437",
+          "mnemonic": "je",
+          "operands": "0x47f3ac",
+          "taken": false
+        },
+        {
+          "va": "0047F375",
+          "bytes": "8d47fe",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 2]"
+        },
+        {
+          "va": "0047F378",
+          "bytes": "83f80e",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe"
+        },
+        {
+          "va": "0047F37B",
+          "bytes": "0f87270c0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F381",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F383",
+          "bytes": "8a8814004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x480014]",
+          "table_va": "00480015",
+          "selector": 1
+        },
+        {
+          "va": "0047F389",
+          "bytes": "ff248dfcff4700",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x47fffc]",
+          "table_va": "00480000",
+          "target": "0047F390"
+        }
+      ],
+      "name": "WM_MOVE",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0005",
+      "target": "0047F390",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": false
+        },
+        {
+          "va": "0047F373",
+          "bytes": "7437",
+          "mnemonic": "je",
+          "operands": "0x47f3ac",
+          "taken": false
+        },
+        {
+          "va": "0047F375",
+          "bytes": "8d47fe",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 2]"
+        },
+        {
+          "va": "0047F378",
+          "bytes": "83f80e",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe"
+        },
+        {
+          "va": "0047F37B",
+          "bytes": "0f87270c0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F381",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F383",
+          "bytes": "8a8814004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x480014]",
+          "table_va": "00480017",
+          "selector": 1
+        },
+        {
+          "va": "0047F389",
+          "bytes": "ff248dfcff4700",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x47fffc]",
+          "table_va": "00480000",
+          "target": "0047F390"
+        }
+      ],
+      "name": "WM_SIZE",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "000F",
+      "target": "0047F3BA",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": false
+        },
+        {
+          "va": "0047F373",
+          "bytes": "7437",
+          "mnemonic": "je",
+          "operands": "0x47f3ac",
+          "taken": false
+        },
+        {
+          "va": "0047F375",
+          "bytes": "8d47fe",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 2]"
+        },
+        {
+          "va": "0047F378",
+          "bytes": "83f80e",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe"
+        },
+        {
+          "va": "0047F37B",
+          "bytes": "0f87270c0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F381",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F383",
+          "bytes": "8a8814004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x480014]",
+          "table_va": "00480021",
+          "selector": 3
+        },
+        {
+          "va": "0047F389",
+          "bytes": "ff248dfcff4700",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x47fffc]",
+          "table_va": "00480008",
+          "target": "0047F3BA"
+        }
+      ],
+      "name": "WM_PAINT",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0046",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": false
+        },
+        {
+          "va": "0047F47C",
+          "bytes": "0f8488090000",
+          "mnemonic": "je",
+          "operands": "0x47fe0a",
+          "taken": false
+        },
+        {
+          "va": "0047F482",
+          "bytes": "81ff05010000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x105"
+        },
+        {
+          "va": "0047F488",
+          "bytes": "0f87a4050000",
+          "mnemonic": "ja",
+          "operands": "0x47fa32",
+          "taken": false
+        },
+        {
+          "va": "0047F48E",
+          "bytes": "0f8460050000",
+          "mnemonic": "je",
+          "operands": "0x47f9f4",
+          "taken": false
+        },
+        {
+          "va": "0047F494",
+          "bytes": "8d47e4",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x1c]"
+        },
+        {
+          "va": "0047F497",
+          "bytes": "3de8000000",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe8"
+        },
+        {
+          "va": "0047F49C",
+          "bytes": "0f87060b0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F4A2",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F4A4",
+          "bytes": "8a883c004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x48003c]",
+          "table_va": "00480066",
+          "selector": 5
+        },
+        {
+          "va": "0047F4AA",
+          "bytes": "ff248d24004800",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x480024]",
+          "table_va": "00480038",
+          "target": "0047FFA8"
+        }
+      ],
+      "name": "WM_WINDOWPOSCHANGING",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0047",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": false
+        },
+        {
+          "va": "0047F47C",
+          "bytes": "0f8488090000",
+          "mnemonic": "je",
+          "operands": "0x47fe0a",
+          "taken": false
+        },
+        {
+          "va": "0047F482",
+          "bytes": "81ff05010000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x105"
+        },
+        {
+          "va": "0047F488",
+          "bytes": "0f87a4050000",
+          "mnemonic": "ja",
+          "operands": "0x47fa32",
+          "taken": false
+        },
+        {
+          "va": "0047F48E",
+          "bytes": "0f8460050000",
+          "mnemonic": "je",
+          "operands": "0x47f9f4",
+          "taken": false
+        },
+        {
+          "va": "0047F494",
+          "bytes": "8d47e4",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x1c]"
+        },
+        {
+          "va": "0047F497",
+          "bytes": "3de8000000",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe8"
+        },
+        {
+          "va": "0047F49C",
+          "bytes": "0f87060b0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F4A2",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F4A4",
+          "bytes": "8a883c004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x48003c]",
+          "table_va": "00480067",
+          "selector": 5
+        },
+        {
+          "va": "0047F4AA",
+          "bytes": "ff248d24004800",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x480024]",
+          "table_va": "00480038",
+          "target": "0047FFA8"
+        }
+      ],
+      "name": "WM_WINDOWPOSCHANGED",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "00A1",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": false
+        },
+        {
+          "va": "0047F47C",
+          "bytes": "0f8488090000",
+          "mnemonic": "je",
+          "operands": "0x47fe0a",
+          "taken": false
+        },
+        {
+          "va": "0047F482",
+          "bytes": "81ff05010000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x105"
+        },
+        {
+          "va": "0047F488",
+          "bytes": "0f87a4050000",
+          "mnemonic": "ja",
+          "operands": "0x47fa32",
+          "taken": false
+        },
+        {
+          "va": "0047F48E",
+          "bytes": "0f8460050000",
+          "mnemonic": "je",
+          "operands": "0x47f9f4",
+          "taken": false
+        },
+        {
+          "va": "0047F494",
+          "bytes": "8d47e4",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x1c]"
+        },
+        {
+          "va": "0047F497",
+          "bytes": "3de8000000",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xe8"
+        },
+        {
+          "va": "0047F49C",
+          "bytes": "0f87060b0000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047F4A2",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047F4A4",
+          "bytes": "8a883c004800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x48003c]",
+          "table_va": "004800C1",
+          "selector": 5
+        },
+        {
+          "va": "0047F4AA",
+          "bytes": "ff248d24004800",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x480024]",
+          "table_va": "00480038",
+          "target": "0047FFA8"
+        }
+      ],
+      "name": "WM_NCLBUTTONDOWN",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0112",
+      "target": "0047FA7A",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": false
+        },
+        {
+          "va": "0047F47C",
+          "bytes": "0f8488090000",
+          "mnemonic": "je",
+          "operands": "0x47fe0a",
+          "taken": false
+        },
+        {
+          "va": "0047F482",
+          "bytes": "81ff05010000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x105"
+        },
+        {
+          "va": "0047F488",
+          "bytes": "0f87a4050000",
+          "mnemonic": "ja",
+          "operands": "0x47fa32",
+          "taken": true
+        },
+        {
+          "va": "0047FA32",
+          "bytes": "8d87eefeffff",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x112]"
+        },
+        {
+          "va": "0047FA38",
+          "bytes": "3def000000",
+          "mnemonic": "cmp",
+          "operands": "eax, 0xef"
+        },
+        {
+          "va": "0047FA3D",
+          "bytes": "0f8765050000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": false
+        },
+        {
+          "va": "0047FA43",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0047FA45",
+          "bytes": "8a883c014800",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x48013c]",
+          "table_va": "0048013C",
+          "selector": 0
+        },
+        {
+          "va": "0047FA4B",
+          "bytes": "ff248d28014800",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x480128]",
+          "table_va": "00480128",
+          "target": "0047FA7A"
+        }
+      ],
+      "name": "WM_SYSCOMMAND",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0214",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": true
+        },
+        {
+          "va": "0047FE4A",
+          "bytes": "81ffb9030000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x3b9"
+        },
+        {
+          "va": "0047FE50",
+          "bytes": "0f874a010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa0",
+          "taken": false
+        },
+        {
+          "va": "0047FE56",
+          "bytes": "0f8439010000",
+          "mnemonic": "je",
+          "operands": "0x47ff95",
+          "taken": false
+        },
+        {
+          "va": "0047FE5C",
+          "bytes": "8d87fdfdffff",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x203]"
+        },
+        {
+          "va": "0047FE62",
+          "bytes": "83f807",
+          "mnemonic": "cmp",
+          "operands": "eax, 7"
+        },
+        {
+          "va": "0047FE65",
+          "bytes": "0f873d010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": true
+        }
+      ],
+      "name": "WM_SIZING",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0216",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": true
+        },
+        {
+          "va": "0047FE4A",
+          "bytes": "81ffb9030000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x3b9"
+        },
+        {
+          "va": "0047FE50",
+          "bytes": "0f874a010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa0",
+          "taken": false
+        },
+        {
+          "va": "0047FE56",
+          "bytes": "0f8439010000",
+          "mnemonic": "je",
+          "operands": "0x47ff95",
+          "taken": false
+        },
+        {
+          "va": "0047FE5C",
+          "bytes": "8d87fdfdffff",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x203]"
+        },
+        {
+          "va": "0047FE62",
+          "bytes": "83f807",
+          "mnemonic": "cmp",
+          "operands": "eax, 7"
+        },
+        {
+          "va": "0047FE65",
+          "bytes": "0f873d010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": true
+        }
+      ],
+      "name": "WM_MOVING",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0231",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": true
+        },
+        {
+          "va": "0047FE4A",
+          "bytes": "81ffb9030000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x3b9"
+        },
+        {
+          "va": "0047FE50",
+          "bytes": "0f874a010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa0",
+          "taken": false
+        },
+        {
+          "va": "0047FE56",
+          "bytes": "0f8439010000",
+          "mnemonic": "je",
+          "operands": "0x47ff95",
+          "taken": false
+        },
+        {
+          "va": "0047FE5C",
+          "bytes": "8d87fdfdffff",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x203]"
+        },
+        {
+          "va": "0047FE62",
+          "bytes": "83f807",
+          "mnemonic": "cmp",
+          "operands": "eax, 7"
+        },
+        {
+          "va": "0047FE65",
+          "bytes": "0f873d010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": true
+        }
+      ],
+      "name": "WM_ENTERSIZEMOVE",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    },
+    {
+      "message": "0232",
+      "target": "0047FFA8",
+      "trace": [
+        {
+          "va": "0047F36A",
+          "bytes": "83ff14",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x14"
+        },
+        {
+          "va": "0047F36D",
+          "bytes": "0f87fd000000",
+          "mnemonic": "ja",
+          "operands": "0x47f470",
+          "taken": true
+        },
+        {
+          "va": "0047F470",
+          "bytes": "81ff02020000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x202"
+        },
+        {
+          "va": "0047F476",
+          "bytes": "0f87ce090000",
+          "mnemonic": "ja",
+          "operands": "0x47fe4a",
+          "taken": true
+        },
+        {
+          "va": "0047FE4A",
+          "bytes": "81ffb9030000",
+          "mnemonic": "cmp",
+          "operands": "edi, 0x3b9"
+        },
+        {
+          "va": "0047FE50",
+          "bytes": "0f874a010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa0",
+          "taken": false
+        },
+        {
+          "va": "0047FE56",
+          "bytes": "0f8439010000",
+          "mnemonic": "je",
+          "operands": "0x47ff95",
+          "taken": false
+        },
+        {
+          "va": "0047FE5C",
+          "bytes": "8d87fdfdffff",
+          "mnemonic": "lea",
+          "operands": "eax, [edi - 0x203]"
+        },
+        {
+          "va": "0047FE62",
+          "bytes": "83f807",
+          "mnemonic": "cmp",
+          "operands": "eax, 7"
+        },
+        {
+          "va": "0047FE65",
+          "bytes": "0f873d010000",
+          "mnemonic": "ja",
+          "operands": "0x47ffa8",
+          "taken": true
+        }
+      ],
+      "name": "WM_EXITSIZEMOVE",
+      "helper_route": "004C6B30 -> 004C6C4D -> EAX=0; RET 8; no nested call"
+    }
+  ],
+  "checks": {
+    "source_hashes": true,
+    "raw_ranges_fully_backed": true,
+    "code_ranges_fully_decoded": true,
+    "rel32_capstone_vs_arithmetic": true,
+    "eleven_message_routes": true,
+    "eleven_helper_rejections": true,
+    "registration_pointer_exact": true,
+    "paint_call_exact": true,
+    "move_size_reset_writes_exact": true,
+    "caption_move_size_pass_filter": true
+  },
+  "not_execution": "Finite arithmetic over disk bytes; no Windows calls or message delivery.",
+  "hang_reproduced": false,
+  "product_accepted": false
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "Onlynewraw/gates/layout/knownsealedframe readback; nooldmatrix ornativeexecution",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+    "bytes": 41881,
+    "sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C"
+  },
+  "all_match": true,
+  "new_ranges": 28,
+  "inherited_raw_ranges": 13,
+  "instruction_assertions": 54,
+  "aligned_core_branch_targets": 19,
+  "D5_header_bytes": 91,
+  "D5_owner_branch_bytes": 121,
+  "CF_complete_handler_bytes": 66,
+  "CF_UI_delete_complete_bytes": 131,
+  "D5_subtype_table_entries": 10,
+  "sealed_owner_D5_frames": 1,
+  "C_CF_counterdirection_examples": 1,
+  "S_CF_dynamic_delete_frames": 0,
+  "prior_immutable_pins": 19,
+  "D5_phase6_assignsroom_beforetype_confirmed": true,
+  "CF_primary_default_private_effect_unknown": true,
+  "CF_fallback_noactivejoinedroomgate_confirmed": true,
+  "no_owner_alias_physical_source_sessionauthority_or_exitACK": true,
+  "actual_native_UI_or_provider_qualified": false
+}

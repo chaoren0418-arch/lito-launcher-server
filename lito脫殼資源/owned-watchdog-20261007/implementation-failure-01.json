@@ -1,0 +1,11 @@
+{
+  "stage": "initial Python import before preparation or process creation",
+  "command": ["C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe", "-B", "D:/lineage開發/3-lito開發/lito脫殼資源/owned-watchdog-20261007/prepare_task.py"],
+  "exit_code": 1,
+  "error": "AttributeError: function UpdateProcThreadAttributeList not found",
+  "cause": "Implementation named the Windows API incorrectly",
+  "correction": "Use exported UpdateProcThreadAttribute",
+  "fixture_processes_created": 0,
+  "containment_or_platform_refusal": false,
+  "IDA_started": false
+}

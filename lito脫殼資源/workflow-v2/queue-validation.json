@@ -1,0 +1,41 @@
+{
+  "validated_at": "2026-10-06T21:32:32.591695+08:00",
+  "queue": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+    "bytes": 68582,
+    "sha256": "E186C63E2437912DB9239774EF9981EF8AB797C545CBD355928C5005D4EE689C"
+  },
+  "validator": {
+    "path": "C:\\Users\\CHAOREN\\.codex\\skills\\lito-supervisor\\scripts\\supervise.py",
+    "bytes": 11345,
+    "sha256": "5BDD29F8BD0EDD3767A1C273943EAD209A08029F42EB501B7F752EA9BBD2E8B6"
+  },
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "C:\\Users\\CHAOREN\\.codex\\skills\\lito-supervisor\\scripts\\supervise.py",
+    "validate",
+    "--queue",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json"
+  ],
+  "official_result": {
+    "valid": true,
+    "errors": [],
+    "task_count": 12
+  },
+  "returncode": 0,
+  "targeted_checks": {
+    "twelve_existing_categories_preserved": true,
+    "all_task_ids_namespaced": true,
+    "internal_dependencies_exist": true,
+    "all_external_gates_explicitly_missing": true,
+    "all_blockers_have_supplier_input_trigger_consumer": true,
+    "all_outputs_stay_under_owned_root": true,
+    "ready_count_zero": true,
+    "no_unblocked_implementation_invented": true,
+    "no_new_wire_or_renotification": true
+  },
+  "acceptance_scope": "Queue schema and executable contract consistency only, not product/GUI acceptance",
+  "old_source_matrix_tests_replayed": false,
+  "old_artifact_bodies_reaudited": false
+}

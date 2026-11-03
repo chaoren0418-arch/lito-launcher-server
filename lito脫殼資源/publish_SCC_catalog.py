@@ -1,0 +1,122 @@
+"""Seal finite Batch19 catalog boundary; preserve all prior primaries."""
+from audit import *
+from seal_delta import seal
+def load(n):return json.loads((ROOT/n).read_text(encoding='utf-8'))
+
+def main():
+    report=load('SCC-catalog-contract.json');pin=record(ROOT/'SCC-catalog-contract.json');v=report['verification'];review=load('SCC-catalog/independent-review.json')
+    assert review['all_match']and review['primary']==pin
+    assert (v['instruction_assertions'],v['new_code_ranges'],v['new_data_ranges'],v['inherited_raw_ranges'],v['sealed_CC_frames'],v['sealed_CF_additional_frames'])==(61,23,12,21,2,2)
+    assert len(report['prior_primary_pins'])==20
+    for r in report['prior_primary_pins']:assert record(Path(r['path']))['sha256']==r['expected_sha256']
+    for r in report['existing_evidence'].values():assert record(Path(r['path']))==r
+    for r in report['reusable_outputs']:assert record(Path(r['path']))==r
+    packet=record(ROOT/'server-packet-delta.json');assert packet==v['server_packet_unchanged']
+    reader=ROOT/'SCC-catalog/READ-ME.txt'
+    reader.write_text('''第十九批：S_CC catalog row接收／default reset/list／既有CF補證
+
+主入口 ../SCC-catalog-contract.json。有限catalog/UI静態契約封存；Native initializedUI、rowreplacement、selectedpreview、private/provider與joinedroom/source/owner/ownleave authority仍未知，guard保留。
+只寫本組資源目錄，僅讀既有PE/ASM及已封存servertrace。無Native、GUI input、SQL、provider、新capture、舊矩陣重跑，沒有追WORLD、其他房間設定或受攔截事項，沒有接手Java。
+
+來源與資格
+server-room-last-member-delete-reset-network.json SHA4CB29A6DDCB95B4EEE9389AA1B36BF179F3415878F7361E7A7149ABE7F066517；frames626B77E8C057A34CAF01871B5DBEC45F151C930CAAFC9AC0411829E51BEC8914。
+其wire/poststate2039D4710A179C0AA9AF1E65C088AD57D5E24932D44924C793C7017B387A2D82與manifestE1A360935B7999D9DE0ED6379D1A385C7C3C8A8EAEB1E2FBE80BB5B0CB23F669作固定引用。Server獨立GET/SQL/runtime屬其既有證據，本組沒有執行或擴大那些操作。
+fixedPE SHA4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9；BIN CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292；ASM2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A只導航。
+35newranges=23code/12data：CC完整1143bytes、row-add173、constructor120、append35、catalog字段/UIgetter/setters、flagshelper與相關jump/literal。21existingraw逐byte對fixedPE，包含reader/selectors/baseconstructor、Batch18 CF/primarydefault與previewhelper。
+61expected指令、29aligned corebranch與完整bytecoverage由independent-review核對；兩CC與兩CFsealedframe、型別offset/方向/version/pins亦核對。
+這些是本組新有限靜態驗證，不是Native GUI/UI/runtime acceptance。20priorpins含Batch18 C8E20CD0全部保持。
+
+Dispatcher／phase與catalog context
+S_CC=204/CC：primary4B353C=74hex(slot116)→4B33D8，fallback4B3780=2Ehex(slot46)→4B3628；均→4B2F13，4B2F15 ECX=ESI packetbody call4A7A30。
+Selectors沿用mode64BBD4==4且signed64AF98>=3選primary，elsefallback。
+完整handler沒有自己的phase whitelist或64ABF4 joinedroom gate；它處理UI64A958 catalog，不比selfalias64ABF8、不写joinedroom、ownerdisplay、membervector/readyphase，也不call469CA0、46A540或packetwriter。
+這不是無條件admission：UI/currentchannel/ownedepoch/runtime仍未知；Modern須綁currentchannel與transportepoch，不能從catalog row直接得到joinedroom或session/source/physicalauthority。
+
+Wire與version
+Header c subtype在body+1，MOVSXi8後unsignedJA>5拒絕negative/6..255，固定六entry表。
+Subtype0 fullrow：signed63D54C>=9EA8使用6343E4 dschhhc；低版6343DC dsccchc。
+新版payload droom、sname、cattributes/listflags、hdisplayusers、hcapacity、hmapword、cmode。Body15+N/frame17+N，N不含NUL；低版users/capacity為c，body13+N/frame15+N。
+d/u32與h/u16 little-endian，c singlebyte；s opaque8bit NUL、capacity100含NUL。Native這段不宣告codec，capturedASCII/JavaMS950分開；Native externalcopy/seek/inputbounds/exactend未知。
+没有channel/epoch/generation、owner/source/physicalID、joinedroomadmission、reset/self-list角色bit、full-listcount/terminator或ownexitACK。
+Fullrow不是完整清單snapshot；缺席的房間不因一列CC被刪除。Delete仍另由CF；reset/list內容同形且可多列/零列，不能猜固定tail。
+
+Native subtype0既有列不做replace
+465940完整173bytes，room key是incoming fullDWORD對row+4 DWORD，base450BC0直接證+4存fullDWORD。
+UI+68==0時掃count+2C與array+58，第一相同DWORD→4659DA epilogue，直接return。這條路徑不constructor、append、覆寫name/users/capacity/map/flags，也不刷新selectedpreview。
+UI+68!=0跳過dedup，count<256時嘗試append duplicate；flag真正含義/lifetime未知，不能命名成已qualified refresh/reset模式。
+缺列且count<256則allocate124bytes、463C10constructor、450260append；count>=256返回。450260另檢count<UI+5C容量，滿時不append；caller沒有驗證initializedcapacity/array。
+AllocationNULL時跳constructor，仍將NULL傳appendhelper；沒有成功非NULL/owning allocation/UI接受的執行證據。
+所以Java reset完整新資料≠Native已覆寫已有列。ExplicitAD368adapter在currentchannel/epoch按DWORD row upsert/replace是明確projection policy，必須和Native465940 duplicate-ignore分開標記。
+
+UI row字段與直接helper
+463C10完整120bytes，base450BC0 room+4，iconDWORD+8，titlepointer+10，displayusersDWORD+6C，capacityDWORD+70，mapBYTE+74，attributesBYTE+75，flagsDWORD+78；vtable disk4F8C14，virtual+0C diskpoint463D10不等於runtimevtable資格。
+463D10完整44bytes：oldtitle!=0呼叫external773C7310，再external77406880(inputNULstring)，存return到+10。只是call/pointer資料流，actualmodule/body/heap/stringoperation成功未知。
+4A7EC0 attrsbit2→icon7；否則bit4→6，否則5。4A7EE0 attrsbit2→lowflags2，否則1。
+4A7EF0 signedmode0..5→flags2000/200/400/1000/800/100hex，invalidmode走return stacklocal DWORD未有可見初始化；不能為負值或>5推穩定flags。
+>=9EA8 ordinarymapWORD signextended比較64AFD0 count／64AFE0 records stride0x24+0x20 key，firstmatchindex或default0；specialFFFF/FF9C採8bit(maplow-mode-1)。舊版ordinarylowmap+0C，special>=7794 FE-mode else-1。
+MapWORD、UIindex、BYTE+74三者分開，未取得實際maptable/resource/currentversion，不授權map/worldbinding。
+Rowadd/constructor/append沒有寫UI+28 selectedindex，也没有写另一widget64A98C+0C selectedpreviewWORD。因此收到resetCC不證既有selectedrow已更新或preview已刷新。
+
+Subtype1..5只封catalog局部資料流
+1 ds：465B00對所有matchingDWORD row virtual+0C更新title；absent沒有append。
+2 dc：matchingrow icon、attributes、lowflags via465AC0/465C10/465CD0/465C90；getter465CD0 foundfirstrow+78，absent返回傳入roomID，不能當0或造row。
+3 >=9EA8 dh，olderdc：465B80/463D50 matchingcapacity+70。
+4 >=9EA8 dh，olderdc：465B40/463D40 matchingdisplayusers+6C。
+5 dhc：465C50/463D70 matchingmapBYTE+74，再matchingmodeflags+78。
+這些setter掃全matching rows，absentno-op，不是full-rowreplacement；只有catalog欄位和直接helper，沒有加入房間設定動作、trigger/UI workflow或WORLD資格。
+Virtualtext、外部provider/allocator、UIarraycount與重入回呼lifetime仍unknown，沒有真的操控UI。
+
+DWORD key與selected WORD差異
+Catalogconstructor/lookup/dedup/deletekey是fullDWORD row+4；450B90回傳selected row index。
+沿用Batch18 CF handler：UI64A98C+0C WORD MOVSXi16與incomingDWORD比，相等才46A540(0)預覽clear。這是別的storage/predicate，沒有64ABF4activejoinedroomgate。
+不要把catalogDWORD改為signedWORD、truncate ID，或假設相同unsigned16bit就應match；selectedwidget producer／assignment/lifetime仍未閉合。
+CFprimary mode4/signedphase>=3走default C_QUIT attempt與private05AD0986，效果仍未知；新封存CF不授予privateexecution/termination或Modernownleave權限。
+
+新封存trace，既知wire補證
+626B77E8 frames array0based74 Host-GAME／75 Guest-GAME：cf02000000，directionS，body5/frame7。Room2 nondefault delete是既有CF形狀，沒有新wire/opcode/correction。
+Guest當時joined不同room1是server已封存context；catalogdelete2不能當GuestownleaveACK或清其joinedroom。
+Array79 Host resetCC與80 GuestselflistCC body完全相同：cc00010000004c6f63616c204c6f626279000001000800000001，body26/frame28。
+Decoded：subtype0、room1、Local Lobby、attrs/listflags0、displayusers1、capacity8、mapword0、mode1。SameepochS_3A version0x0734FD33>=9EA8支持dschhhc選型；不是Native實際version/phase執行證明。
+Displayusers1不代表現場有一個human/member，也不提供roster/owner；server報告defaultemptyroom rawattributes8與wirecomputedlistflags0分開。
+Hostpeerreset與Guestselflist角色來自acceptedserverrecipients/trigger與source/poststate，payload沒有角色bit。同body不證同角色；globalmergedpeerread先後也不證writecommit順序。
+Defaultreset range[77,81)沒有CF，room1保留Local Lobby/cap8。CC通知不是generalownleaveACK；Server獨立GET commit仍留在其已接受報告資格，本組沒有新增GET或SQL操作。
+Batch18 C8E20CD0歷史報告當時S_CFdynamic0保持原文和SHA；本批以引用增補兩新sealedCF，不能改寫舊封存/宣稱當時已證。
+
+最小consumer與未知
+AD368explicitcatalog可在ownedcurrentchannel/epoch按u32roomID upsert fullrow／replace reset資料；此為adapter資料投影，不是Native duplicate-ignore已實現replacement。
+CatalogCC/CF與joinedroom、owner/member/ready/source/physical/sessionstate分離；sameID/epochreusegeneration仍無wiremarker。舊context row/update/delete不帶到新catalog/join。
+CCpartialunknownID不syntheticrow，fullrows不刪未提到的rows，沒有猜listcomplete或固定count/terminator。CFdelete採removeifpresent，unknownidno-op；activejoinedroominvalidation另資格，無ownleaveACK。
+UI+68/count/capacity/array、selectedWORDproducer、allocator/titleexternal、virtualvtable、mapresource/version、privateCFdefault、codec/readbounds/reentrantcallbacks與races/sendfailures保持unknown。
+NoJavawirechange要求；newwire0/newopcode0/wirecorrection0。server-packet-delta B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C保持；20priorpins保持。Finitecatalogbatch封存即停，overall/NativeGUI/rowreplacement/joined/physical/source/ownerready皆false。
+''',encoding='utf-8')
+    summary={'evidence':pin,'finite_SCC_catalog_complete':True,'Native_UI_joined_source_guard_retained':True,'instruction_assertions':61,'aligned_core_branches':29,
+      'new_code_ranges':23,'new_data_ranges':12,'inherited_raw_ranges':21,'complete_CC_handler_bytes':1143,'row_add_helper_bytes':173,'row_constructor_bytes':120,
+      'sealed_CC_frames':2,'sealed_CF_additional_frames':2,'prior_primary_pins_preserved':20,'Native_existing_fullrow_ignored_UI68_zero':True,
+      'adapter_row_replacement_separate_policy':True,'catalog_DWORD_and_selected_signedWORD_distinct':True,'CC_CF_joined_or_ownexit_authority':False,
+      'Batch18_primary_unchanged':True,'CF_primary_private_effect_unknown':True,'new_wire_differences':0,'new_opcodes':0,'wire_corrections':0,
+      'packet_modified':False,'Java_taken_over_or_change_requested':False,'physical_source_player_owner_GUI_accepted':False}
+    complete=load('completeness-audit.json');complete['SCC_catalog_batch']=summary;write('completeness-audit.json',complete)
+    entry=ROOT/'閱讀入口.md';txt=entry.read_text(encoding='utf-8').split('\n第十九批S_CC catalog：')[0]
+    entry.write_text(txt+'\n第十九批S_CC catalog：SCC-catalog-contract.json + SCC-catalog/READ-ME.txt。Completehandler1143、rowadd173/constructor120，61指令/29branch/23code+12data/21沿用raw。NativeUI+68=0同DWORDexistingrowreturn不replace，absent試append；adapterresetupsert分開。CC無joinedroom/phasegate，DWORDkey不同CFselectedsignedWORD。626B77E8 arrays74/75 CF5/7、79/80 reset/selflist同CC26/28補證，Batch18不改；20priorpins/newwire0/packet不改，UI/provider/private/joined/ownleaveguard留。\n',encoding='utf-8')
+    phase='BATCH19_SCC_CATALOG_BOUNDARY_SEALED_NATIVE_ROWREPLACEMENT_JOINED_AUTHORITY_OPEN'
+    h=load('handoff.json');h.update(updated_at=stamp(),phase=phase,entrypoint=record(entry),SCC_catalog_contract=pin,finite_SCC_catalog_complete=True)
+    added=[pin]+[record(p)for p in sorted((ROOT/'SCC-catalog').iterdir())if p.is_file()]
+    for group in ['modern','launcher']:
+        mapped={r['path']:r for r in h[group]};mapped.update({r['path']:r for r in added});h[group]=[mapped[k]for k in sorted(mapped)]
+    h['shared']=[record(ROOT/'completeness-audit.json')if r['path']==str(ROOT/'completeness-audit.json')else r for r in h['shared']]
+    h['server']['SCC_known_native_catalog_and_CF_corroboration']=pin
+    h['next_steps']=[
+      'Modern explicitAD368 CC0 fullrowupsert/resetreplacement undercurrentchannel/epoch u32ID; labeladapterprojection separatefromNative465940 UI68zero duplicate-ignore. NeitherCC norCF grantsjoinedroom/ownleaveauthority.',
+      'NativeCCbothdispatch/novalidphase orjoinedroomgate; initializedUI64A958,capacity/array/allocator/titleprovider/mapresource andinvalidmodeflagsunknown. KeepNativeUI/sourceguards.',
+      'CatalogDWORDrow+4 distinctfromCF selectedpreviewUI64A98C+0C signedWORD; donottruncateIDs or inferpreviewrefresh. CFprimarydefaultprivate05AD0986 remainsunknown.',
+      '626B77E8 array74/75 S_CF2 body5/frame7 and79/80 identicalCC0 LocalLobby/cap8 body26/frame28 knowncorroboration. Batch18 C8E20CD0 unchanged; reset/selflistrolescontextonly,norolebit/listterminator/ACK.',
+      '20priorpins/packet unchanged,newwire0/noJavawirechange. Readsealedfilesonly,Native/SQL/provider/capture/oldmatrix/world/interceptedwork0; finitecatalogbatchstop.']
+    assert h['server']['packet_delta']==packet;write('handoff.json',h)
+    p=load('監製進度.json');p.update(updated_at=stamp(),phase=phase,current_task='Batch19 S_CCcatalog finiteboundarysealed: NativeexistingfullrowignoredwhenUI68zero, adapterreplacementseparatepolicy; newsealedCF/CCcorroborationwithoutBatch18rewrite; UI/joined/privateauthorityunknown.',SCC_catalog_summary=summary)
+    p['handoffs']['modern']='SCC-catalog-contract.json: versionedfullrow/dedup/absentappend/directUIfields, catalogDWORDvsCFselectedsignedWORD; adapterresetprojectionseparate, 2CC+2CFsealedrefs, Batch18immutable/privateguard'
+    p['next_steps']=h['next_steps'];write('監製進度.json',p)
+    for r in report['prior_primary_pins']:assert record(Path(r['path']))['sha256']==r['expected_sha256']
+    names=['SCC_catalog_audit.py','review_SCC_catalog.py','publish_SCC_catalog.py','SCC-catalog-contract.json','handoff.json','completeness-audit.json','閱讀入口.md']+[str(p.relative_to(ROOT))for p in (ROOT/'SCC-catalog').iterdir()if p.is_file()]
+    count=seal(names,Path(__file__));print(json.dumps({'primary':pin,'changed_files_checked':count,'prior_pins_preserved':20,'delivery':record(ROOT/'delivery-verification.json'),'packet_unchanged':packet,'authority_guard_retained':True},ensure_ascii=False))
+
+if __name__=='__main__':main()

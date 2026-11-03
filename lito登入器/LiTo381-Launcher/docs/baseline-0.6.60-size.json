@@ -1,0 +1,47 @@
+{
+  "version": "0.6.60",
+  "before_bytes": 1210440952,
+  "after_bytes": 1089035261,
+  "projects": {
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher": {
+      "files": 1188,
+      "bytes": 690298440
+    },
+    "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server": {
+      "files": 3494,
+      "bytes": 398736821
+    }
+  },
+  "removed_files": 2992,
+  "removed_bytes": 461037285,
+  "superseded_backup_archives": 27,
+  "pending_deletions": [],
+  "regenerated_python_cache_expected": true,
+  "desktop_old_shortcut": "retained: automatic review rejected deletion (blocked by policy)",
+  "protected_journal_files": [
+    "owner.lock"
+  ],
+  "post_cleanup_startup": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791871695227627600"
+  }
+}

@@ -1,0 +1,27 @@
+565024:                                         ; sub_4928C0:loc_492BAA↑o
+565025:                                         ; ___:off_635B80↑o
+565026: dword_834428 dd 0                       ; DATA XREF: sub_4928C0+307↑w
+565027: dword_83442C dd 0                       ; DATA XREF: sub_4928C0+311↑w
+565028: dword_834430 dd 0                       ; DATA XREF: sub_4928C0+31B↑w
+565029: dd 2 dup(0)
+565030: dword_83443C dd 0                       ; DATA XREF: sub_4928C0+339↑w
+565031: dword_834440 dd 0                       ; DATA XREF: sub_4928C0+343↑w
+565032: dd 41h dup(0)
+565033: dword_834548 dd 10h dup(0)              ; DATA XREF: sub_43F6C0+BF↑o
+565034:                                         ; sub_4928C0+2D0↑o
+565035: dword_834588 dd 4 dup(0)                ; DATA XREF: sub_43F6C0+DB↑o
+565036: dword_834598 dd 0                       ; DATA XREF: sub_43F6C0+144↑w
+565037: dd 3 dup(0)
+565038: dword_8345A8 dd 4 dup(0)                ; DATA XREF: sub_43F6C0+F7↑o
+565039: dword_8345B8 dd 0                       ; DATA XREF: sub_43F6C0+149↑w
+565040: dd 2 dup(0)
+565041: dword_8345C4 dd 0                       ; DATA XREF: sub_43F6C0+15B↑w
+565042: dword_8345C8 dd 4 dup(0)                ; DATA XREF: sub_43F6C0+113↑o
+565043: dword_8345D8 dd 0                       ; DATA XREF: sub_43F6C0+156↑w
+565044: dd 3 dup(0)
+565045: dword_8345E8 dd 30h dup(0)              ; DATA XREF: sub_43F6C0+161↑o
+565046:                                         ; sub_4928C0+21F↑o
+565047: dword_8346A8 dd 33h dup(0)              ; DATA XREF: sub_43F6C0+17D↑o
+565048: dword_834774 dd 30h dup(0)              ; DATA XREF: sub_43F6C0+87↑o
+565049:                                         ; sub_4928C0+2B2↑o
+565050: dword_834834 dd 0Ch dup(0)              ; DATA XREF: sub_43F6C0+A3↑o

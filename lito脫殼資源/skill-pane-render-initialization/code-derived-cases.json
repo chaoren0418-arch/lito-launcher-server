@@ -1,0 +1,512 @@
+{
+  "status": "CODE_DERIVED_ONLY",
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\synthetic-rle.bin",
+      "bytes": 20,
+      "sha256": "6C0D404E64C0EB9371280372C6FEAD09AC8C51E83043790D41189BBE49CB251D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\selection-83673C.le16",
+      "bytes": 1024,
+      "sha256": "5378F618DEEE6908EAD269ED0EE7F42F9CF929A09085551BFBFF02A47392EBFE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-blue-007A789C.le16",
+      "bytes": 2048,
+      "sha256": "2A34334AE74C4167D5398D22311019F9FD16FCBA18BFA1A786EDC6DB90ED8ADA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-green-007A809C.le16",
+      "bytes": 2048,
+      "sha256": "5C1013429373F3670B91B493A291A02D4339FE34180F46A835BC9516EB9E0097"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-red-007A889C.le16",
+      "bytes": 2048,
+      "sha256": "369D8B6B5A615C2FB9256DE8EFCF31915D1550B69062AED1221D1270548D11E8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-synthetic-pitch16.bin",
+      "bytes": 256,
+      "sha256": "81C4B555119366047F9C71FEA3EBF49965064243BD090182EB5C2AE9D85193B4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-synthetic-pitch17.bin",
+      "bytes": 256,
+      "sha256": "6A06099F12358792C856EAC14D92BB4156DDA6B5552E154AB81B7F428BEFBECA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\selection-83673C.le16",
+      "bytes": 1024,
+      "sha256": "CF18ACC3CDBDDF53291159F09EF4962B51359502843DCB1D2A8A0E4937F02F8B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-blue-007A789C.le16",
+      "bytes": 2048,
+      "sha256": "2A34334AE74C4167D5398D22311019F9FD16FCBA18BFA1A786EDC6DB90ED8ADA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-green-007A809C.le16",
+      "bytes": 2048,
+      "sha256": "547D29B17AAEC92012E7C7F903234DCE664FAE956D999BE176E3FA86E80C0C6E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-red-007A889C.le16",
+      "bytes": 2048,
+      "sha256": "ED50AEB6B249A5C3835D3A3E488773D3ACF7644A84554539CCC0837081407BD9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-synthetic-pitch16.bin",
+      "bytes": 256,
+      "sha256": "C6FCABA7292BF7C142EAEC09651A3EB9F880574E40ECF10C7B1D056AE234D960"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-synthetic-pitch17.bin",
+      "bytes": 256,
+      "sha256": "0586D987D3547AED42BDE778CB12251A4A27F645FBB0BF108EA1F1FEE104369B"
+    }
+  ],
+  "cases": [
+    {
+      "format_flag": 0,
+      "format": "RGB555",
+      "selection_LUT_words": 512,
+      "timed_table_words_each": 1024,
+      "reciprocal_mul_vs_integer_divide_all_LUT_entries_equal": true,
+      "timed_projected_loop_vs_index_formula_all_entries_equal": true,
+      "pixel_cases": [
+        {
+          "input": "0000",
+          "timed_color_zero": "0000",
+          "selected_word": "2940"
+        },
+        {
+          "input": "0001",
+          "timed_color_zero": "0000",
+          "selected_word": "2940"
+        },
+        {
+          "input": "001F",
+          "timed_color_zero": "000F",
+          "selected_word": "2954"
+        },
+        {
+          "input": "03E0",
+          "timed_color_zero": "01E0",
+          "selected_word": "2BE0"
+        },
+        {
+          "input": "7C00",
+          "timed_color_zero": "3C00",
+          "selected_word": "7D40"
+        },
+        {
+          "input": "7FFF",
+          "timed_color_zero": "3DEF",
+          "selected_word": "7FF4"
+        },
+        {
+          "input": "8000",
+          "timed_color_zero": "0000",
+          "selected_word": "2940"
+        },
+        {
+          "input": "FFFF",
+          "timed_color_zero": "3DEF",
+          "selected_word": "7FF4"
+        },
+        {
+          "input": "1234",
+          "timed_color_zero": "090A",
+          "selected_word": "36AD"
+        }
+      ],
+      "placement_cases": [
+        {
+          "pitch_bytes": 16,
+          "caller_xy": [
+            2,
+            1
+          ],
+          "destination_base": 32,
+          "header_signed_dxdy": [
+            -1,
+            1
+          ],
+          "header_width_unused": 7,
+          "timed_start_byte": 66,
+          "timed_writes": [
+            {
+              "byte_offset": 69,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 71,
+              "input_word": "7FFF",
+              "output_word": "3DEF"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "8000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 84,
+              "input_word": "0421",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 86,
+              "input_word": "03E0",
+              "output_word": "01E0"
+            }
+          ],
+          "normal_start_byte": 66,
+          "normal_writes": [
+            {
+              "byte_offset": 68,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 70,
+              "input_word": "7FFF",
+              "output_word": "7FFF"
+            },
+            {
+              "byte_offset": 72,
+              "input_word": "8000",
+              "output_word": "8000"
+            },
+            {
+              "byte_offset": 84,
+              "input_word": "0421",
+              "output_word": "0421"
+            },
+            {
+              "byte_offset": 86,
+              "input_word": "03E0",
+              "output_word": "03E0"
+            }
+          ],
+          "timed_destination": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-synthetic-pitch16.bin",
+            "bytes": 256,
+            "sha256": "81C4B555119366047F9C71FEA3EBF49965064243BD090182EB5C2AE9D85193B4"
+          },
+          "normal_equation_reference": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+            "bytes": 6519,
+            "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803"
+          },
+          "new_synthetic_case": true,
+          "native_execution_oracle": false
+        },
+        {
+          "pitch_bytes": 17,
+          "caller_xy": [
+            2,
+            1
+          ],
+          "destination_base": 32,
+          "header_signed_dxdy": [
+            -1,
+            1
+          ],
+          "header_width_unused": 7,
+          "timed_start_byte": 68,
+          "timed_writes": [
+            {
+              "byte_offset": 71,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "7FFF",
+              "output_word": "3DEF"
+            },
+            {
+              "byte_offset": 75,
+              "input_word": "8000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 87,
+              "input_word": "0421",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 89,
+              "input_word": "03E0",
+              "output_word": "01E0"
+            }
+          ],
+          "normal_start_byte": 67,
+          "normal_writes": [
+            {
+              "byte_offset": 69,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 71,
+              "input_word": "7FFF",
+              "output_word": "7FFF"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "8000",
+              "output_word": "8000"
+            },
+            {
+              "byte_offset": 85,
+              "input_word": "0421",
+              "output_word": "0421"
+            },
+            {
+              "byte_offset": 87,
+              "input_word": "03E0",
+              "output_word": "03E0"
+            }
+          ],
+          "timed_destination": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB555\\timed-synthetic-pitch17.bin",
+            "bytes": 256,
+            "sha256": "6A06099F12358792C856EAC14D92BB4156DDA6B5552E154AB81B7F428BEFBECA"
+          },
+          "normal_equation_reference": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+            "bytes": 6519,
+            "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803"
+          },
+          "new_synthetic_case": true,
+          "native_execution_oracle": false
+        }
+      ]
+    },
+    {
+      "format_flag": 1,
+      "format": "RGB565",
+      "selection_LUT_words": 512,
+      "timed_table_words_each": 1024,
+      "reciprocal_mul_vs_integer_divide_all_LUT_entries_equal": true,
+      "timed_projected_loop_vs_index_formula_all_entries_equal": true,
+      "pixel_cases": [
+        {
+          "input": "0000",
+          "timed_color_zero": "0000",
+          "selected_word": "5280"
+        },
+        {
+          "input": "0001",
+          "timed_color_zero": "0000",
+          "selected_word": "5280"
+        },
+        {
+          "input": "001F",
+          "timed_color_zero": "000F",
+          "selected_word": "5294"
+        },
+        {
+          "input": "03E0",
+          "timed_color_zero": "01C0",
+          "selected_word": "5520"
+        },
+        {
+          "input": "7C00",
+          "timed_color_zero": "3A00",
+          "selected_word": "A540"
+        },
+        {
+          "input": "7FFF",
+          "timed_color_zero": "3BCF",
+          "selected_word": "A7F4"
+        },
+        {
+          "input": "8000",
+          "timed_color_zero": "4000",
+          "selected_word": "AA80"
+        },
+        {
+          "input": "FFFF",
+          "timed_color_zero": "7BCF",
+          "selected_word": "FFF4"
+        },
+        {
+          "input": "1234",
+          "timed_color_zero": "090A",
+          "selected_word": "5C0D"
+        }
+      ],
+      "placement_cases": [
+        {
+          "pitch_bytes": 16,
+          "caller_xy": [
+            2,
+            1
+          ],
+          "destination_base": 32,
+          "header_signed_dxdy": [
+            -1,
+            1
+          ],
+          "header_width_unused": 7,
+          "timed_start_byte": 66,
+          "timed_writes": [
+            {
+              "byte_offset": 69,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 71,
+              "input_word": "7FFF",
+              "output_word": "3BCF"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "8000",
+              "output_word": "4000"
+            },
+            {
+              "byte_offset": 84,
+              "input_word": "0421",
+              "output_word": "0200"
+            },
+            {
+              "byte_offset": 86,
+              "input_word": "03E0",
+              "output_word": "01C0"
+            }
+          ],
+          "normal_start_byte": 66,
+          "normal_writes": [
+            {
+              "byte_offset": 68,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 70,
+              "input_word": "7FFF",
+              "output_word": "7FFF"
+            },
+            {
+              "byte_offset": 72,
+              "input_word": "8000",
+              "output_word": "8000"
+            },
+            {
+              "byte_offset": 84,
+              "input_word": "0421",
+              "output_word": "0421"
+            },
+            {
+              "byte_offset": 86,
+              "input_word": "03E0",
+              "output_word": "03E0"
+            }
+          ],
+          "timed_destination": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-synthetic-pitch16.bin",
+            "bytes": 256,
+            "sha256": "C6FCABA7292BF7C142EAEC09651A3EB9F880574E40ECF10C7B1D056AE234D960"
+          },
+          "normal_equation_reference": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+            "bytes": 6519,
+            "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803"
+          },
+          "new_synthetic_case": true,
+          "native_execution_oracle": false
+        },
+        {
+          "pitch_bytes": 17,
+          "caller_xy": [
+            2,
+            1
+          ],
+          "destination_base": 32,
+          "header_signed_dxdy": [
+            -1,
+            1
+          ],
+          "header_width_unused": 7,
+          "timed_start_byte": 68,
+          "timed_writes": [
+            {
+              "byte_offset": 71,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "7FFF",
+              "output_word": "3BCF"
+            },
+            {
+              "byte_offset": 75,
+              "input_word": "8000",
+              "output_word": "4000"
+            },
+            {
+              "byte_offset": 87,
+              "input_word": "0421",
+              "output_word": "0200"
+            },
+            {
+              "byte_offset": 89,
+              "input_word": "03E0",
+              "output_word": "01C0"
+            }
+          ],
+          "normal_start_byte": 67,
+          "normal_writes": [
+            {
+              "byte_offset": 69,
+              "input_word": "0000",
+              "output_word": "0000"
+            },
+            {
+              "byte_offset": 71,
+              "input_word": "7FFF",
+              "output_word": "7FFF"
+            },
+            {
+              "byte_offset": 73,
+              "input_word": "8000",
+              "output_word": "8000"
+            },
+            {
+              "byte_offset": 85,
+              "input_word": "0421",
+              "output_word": "0421"
+            },
+            {
+              "byte_offset": 87,
+              "input_word": "03E0",
+              "output_word": "03E0"
+            }
+          ],
+          "timed_destination": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\RGB565\\timed-synthetic-pitch17.bin",
+            "bytes": 256,
+            "sha256": "0586D987D3547AED42BDE778CB12251A4A27F645FBB0BF108EA1F1FEE104369B"
+          },
+          "normal_equation_reference": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+            "bytes": 6519,
+            "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803"
+          },
+          "new_synthetic_case": true,
+          "native_execution_oracle": false
+        }
+      ]
+    }
+  ],
+  "no_native_execution": true,
+  "no_old_icon_or_packet_test_replay": true
+}

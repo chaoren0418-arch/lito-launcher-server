@@ -1,0 +1,369 @@
+{
+  "schema": "ida77-readonly-environment-audit-v1",
+  "installation": "D:\\IDA_Pro_7.7",
+  "evidence_level": "Selected installed plugin source read; code was not imported or executed",
+  "selected_sources": [
+    {
+      "source": {
+        "path": "D:\\IDA_Pro_7.7\\plugins\\string_batch_analyzer_v2.py",
+        "bytes": 17424,
+        "sha256": "722096D52A348CA7FB850173D91C0614646C438075621FA3213D15F49D6D9F05"
+      },
+      "anchors": [
+        {
+          "line": 40,
+          "text": "OUTPUT_DIR  = Path(r\"D:\\IDA_Pro_7.7\\381bin分析產出\\V2_JSON_Reports\")  # 位於 381bin分析產出\\ 下"
+        },
+        {
+          "line": 42,
+          "text": "CONFIG_FILE = Path(r\"D:\\IDA_Pro_7.7\\plugins\\gepetto\\config.ini\")"
+        },
+        {
+          "line": 45,
+          "text": "INTERVAL_MS  = 600_000   # 10 分鐘"
+        },
+        {
+          "line": 87,
+          "text": "    cfg.read(str(CONFIG_FILE), encoding=\"utf-8\")"
+        },
+        {
+          "line": 318,
+          "text": "        from openai import OpenAI"
+        },
+        {
+          "line": 320,
+          "text": "        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 321,
+          "text": "        client     = OpenAI(api_key=_load_api_key())"
+        },
+        {
+          "line": 375,
+          "text": "                analysis   = _call_openai(client, ea, string_val, xref_info, pseudocode)"
+        },
+        {
+          "line": 468,
+          "text": "            threading.Thread(target=run_analysis, daemon=True).start()"
+        },
+        {
+          "line": 469,
+          "text": "            return INTERVAL_MS"
+        },
+        {
+          "line": 471,
+          "text": "        self._timer = idaapi.register_timer(INTERVAL_MS, _timer_cb)"
+        },
+        {
+          "line": 484,
+          "text": "            idaapi.unregister_timer(self._timer)"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\IDA_Pro_7.7\\plugins\\keypatch.py",
+        "bytes": 73184,
+        "sha256": "C74135AD19CF789A206E9A38986D67BCE8A69926992E189E95DA81C75507F569"
+      },
+      "anchors": [
+        {
+          "line": 123,
+          "text": "KP_CFGFILE = os.path.join(idaapi.get_user_idadir(), \"keypatch.cfg\")"
+        },
+        {
+          "line": 1667,
+          "text": "    def init(self):"
+        },
+        {
+          "line": 1736,
+          "text": "    def term(self):"
+        },
+        {
+          "line": 1745,
+          "text": "            json.dump(self.opts, open(KP_CFGFILE, \"wt\"))"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\IDA_Pro_7.7\\plugins\\plugins.cfg",
+        "bytes": 4462,
+        "sha256": "59C21A32DB68E02C8FCD7BBAE59E05052E0EAE9DEBCB9947E66BDBDD07AA648D"
+      },
+      "anchors": [
+        {
+          "line": 4,
+          "text": ";       Even if a plugin is not present in this file, IDA Pro"
+        },
+        {
+          "line": 5,
+          "text": ";       will find a use it automatically provided that the plugin"
+        },
+        {
+          "line": 6,
+          "text": ";       is in \"plugins\" subdirectory."
+        }
+      ]
+    }
+  ],
+  "idat_executable": {
+    "path": "D:\\IDA_Pro_7.7\\idat.exe",
+    "bytes": 1522688,
+    "sha256": "D4345A0E6A6D04A4493D1235E89A63BBA0106C1570C2A4BF4C33B5F7F3F7D243"
+  },
+  "inventory": {
+    "installation": "D:\\IDA_Pro_7.7",
+    "loadable_plugins": [
+      "IDA_Signsrch.dll",
+      "IDA_Signsrch64.dll",
+      "LazyIDA.py",
+      "StrongCC.dll",
+      "StrongCC_x64.dll",
+      "SyncPlugin.py",
+      "arm_mac_stub64.dll",
+      "armlinux_stub.dll",
+      "armlinux_stub64.dll",
+      "auto_re.py",
+      "bdescr.dll",
+      "bdescr64.dll",
+      "bindiff7_ida.dll",
+      "bindiff7_ida64.dll",
+      "binexport12_ida.dll",
+      "binexport12_ida64.dll",
+      "bochs_user.dll",
+      "bochs_user64.dll",
+      "callee.dll",
+      "callee64.dll",
+      "comhelper.dll",
+      "comhelper64.dll",
+      "dalvik_user.dll",
+      "dalvik_user64.dll",
+      "dbg.dll",
+      "dbg64.dll",
+      "dscu.dll",
+      "dscu64.dll",
+      "dwarf.dll",
+      "dwarf64.dll",
+      "eh_parse.dll",
+      "eh_parse64.dll",
+      "findcrypt3.py",
+      "gdb_user.dll",
+      "gdb_user64.dll",
+      "gepetto.py",
+      "golang.dll",
+      "golang64.dll",
+      "hexarm.dll",
+      "hexarm64.dll",
+      "hexmips.dll",
+      "hexppc.dll",
+      "hexppc64.dll",
+      "hexrays.dll",
+      "hexx64.dll",
+      "idaclang.dll",
+      "idaclang64.dll",
+      "idapython2.dll",
+      "idapython2_64.dll",
+      "idapython3.dll",
+      "idapython3_64.dll",
+      "ios_user.dll",
+      "ios_user64.dll",
+      "keypatch.py",
+      "linux_stub.dll",
+      "linux_stub64.dll",
+      "mac_stub.dll",
+      "mac_stub64.dll",
+      "makeidt.dll",
+      "makeidt64.dll",
+      "nextfix.dll",
+      "nextfix64.dll",
+      "objc.dll",
+      "objc64.dll",
+      "patching.py",
+      "pdb.dll",
+      "pdb64.dll",
+      "pin_user.dll",
+      "pin_user64.dll",
+      "replay_user.dll",
+      "replay_user64.dll",
+      "rtti.dll",
+      "rtti64.dll",
+      "samaout.dll",
+      "samaout64.dll",
+      "string_batch_analyzer_v2.py",
+      "strings.dll",
+      "strings64.dll",
+      "svdimport.dll",
+      "svdimport64.dll",
+      "swift.dll",
+      "swift64.dll",
+      "tds.dll",
+      "tds64.dll",
+      "uiswitch.dll",
+      "uiswitch64.dll",
+      "unpack.dll",
+      "unpack64.dll",
+      "uunp.dll",
+      "uunp64.dll",
+      "win32_stub.dll",
+      "win32_stub64.dll",
+      "win32_user.dll",
+      "win32_user64.dll",
+      "windbg_user.dll",
+      "windbg_user64.dll",
+      "xnu_user64.dll"
+    ],
+    "unqualified_plugins": [
+      "IDA_Signsrch.dll",
+      "IDA_Signsrch64.dll",
+      "LazyIDA.py",
+      "StrongCC.dll",
+      "StrongCC_x64.dll",
+      "SyncPlugin.py",
+      "arm_mac_stub64.dll",
+      "armlinux_stub.dll",
+      "armlinux_stub64.dll",
+      "auto_re.py",
+      "bdescr.dll",
+      "bdescr64.dll",
+      "bindiff7_ida.dll",
+      "bindiff7_ida64.dll",
+      "binexport12_ida.dll",
+      "binexport12_ida64.dll",
+      "bochs_user.dll",
+      "bochs_user64.dll",
+      "callee.dll",
+      "callee64.dll",
+      "comhelper.dll",
+      "comhelper64.dll",
+      "dalvik_user.dll",
+      "dalvik_user64.dll",
+      "dbg.dll",
+      "dbg64.dll",
+      "dscu.dll",
+      "dscu64.dll",
+      "dwarf.dll",
+      "dwarf64.dll",
+      "eh_parse.dll",
+      "eh_parse64.dll",
+      "findcrypt3.py",
+      "gdb_user.dll",
+      "gdb_user64.dll",
+      "gepetto.py",
+      "golang.dll",
+      "golang64.dll",
+      "hexarm.dll",
+      "hexarm64.dll",
+      "hexmips.dll",
+      "hexppc.dll",
+      "hexppc64.dll",
+      "hexx64.dll",
+      "idaclang.dll",
+      "idaclang64.dll",
+      "idapython2.dll",
+      "idapython2_64.dll",
+      "idapython3_64.dll",
+      "ios_user.dll",
+      "ios_user64.dll",
+      "keypatch.py",
+      "linux_stub.dll",
+      "linux_stub64.dll",
+      "mac_stub.dll",
+      "mac_stub64.dll",
+      "makeidt.dll",
+      "makeidt64.dll",
+      "nextfix.dll",
+      "nextfix64.dll",
+      "objc.dll",
+      "objc64.dll",
+      "patching.py",
+      "pdb.dll",
+      "pdb64.dll",
+      "pin_user.dll",
+      "pin_user64.dll",
+      "replay_user.dll",
+      "replay_user64.dll",
+      "rtti.dll",
+      "rtti64.dll",
+      "samaout.dll",
+      "samaout64.dll",
+      "string_batch_analyzer_v2.py",
+      "strings.dll",
+      "strings64.dll",
+      "svdimport.dll",
+      "svdimport64.dll",
+      "swift.dll",
+      "swift64.dll",
+      "tds.dll",
+      "tds64.dll",
+      "uiswitch.dll",
+      "uiswitch64.dll",
+      "unpack.dll",
+      "unpack64.dll",
+      "uunp.dll",
+      "uunp64.dll",
+      "win32_stub.dll",
+      "win32_stub64.dll",
+      "win32_user.dll",
+      "win32_user64.dll",
+      "windbg_user.dll",
+      "windbg_user64.dll",
+      "xnu_user64.dll"
+    ],
+    "qualified_for_launch": false,
+    "reason": "Installed plugin scan can auto-load code not named in plugins.cfg; no runtime start if any unqualified plugin exists",
+    "network_isolation_claimed": false,
+    "execution_certificate": "No current launch qualification; require separately accepted isolated plugin/network/write profile"
+  },
+  "findings": [
+    {
+      "code": "TIMER_CAN_START_OPENAI_ANALYSIS",
+      "source": "plugins/string_batch_analyzer_v2.py",
+      "lines": [
+        45,
+        468,
+        471,
+        318,
+        321,
+        375
+      ],
+      "conclusion": "init registers a timer whose callback starts run_analysis; analysis constructs an OpenAI client and calls it. A 30s timeout is not an isolation certificate."
+    },
+    {
+      "code": "PLUGIN_OUTPUT_OUTSIDE_OWNER_ROOT",
+      "source": "plugins/string_batch_analyzer_v2.py",
+      "lines": [
+        40,
+        320
+      ],
+      "conclusion": "Analysis creates/writes its fixed installation-side directory, outside BIN/resources ownership."
+    },
+    {
+      "code": "TERMINATION_CONFIG_WRITE",
+      "source": "plugins/keypatch.py",
+      "lines": [
+        123,
+        1736,
+        1745
+      ],
+      "conclusion": "Normal plugin termination can write keypatch.cfg under IDA user directory; no accepted owned-write redirection exists."
+    },
+    {
+      "code": "OMITTING_PLUGINS_CFG_IS_NOT_DISABLE",
+      "source": "plugins/plugins.cfg",
+      "lines": [
+        4,
+        5,
+        6
+      ],
+      "conclusion": "Installed comments explicitly describe automatic discovery/use of plugins absent from the config list."
+    }
+  ],
+  "secrets_or_gepetto_config_read": false,
+  "installation_modified_by_this_task": false,
+  "global_configuration_or_plugins_installed": false,
+  "profile_isolation_claimed": false,
+  "all_plugin_behaviors_audited": false,
+  "decision": "STOP_BEFORE_IDA_LAUNCH",
+  "minimum_resume_input": "An accepted isolated plugin/egress/owned-write runtime profile plus an independently tested process-tree watchdog and disk budget. This requires a separate tool qualification; it does not authorize LITO re-analysis."
+}

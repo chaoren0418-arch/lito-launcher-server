@@ -1,0 +1,493 @@
+{
+  "schema": "lito.native-SCC-catalog-lifecycle.v1",
+  "updated_at": "2026-10-06T04:57:40.552612+08:00",
+  "status": "FINITE_STATIC_UI68_CONSTRUCTOR_CLEAR_AND_MAP_PROJECTION_SEALED_RUNTIME_GUARD_RETAINED",
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    }
+  ],
+  "prior_primary_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "bytes": 86352,
+      "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "expected_sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "expected_sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "bytes": 136990,
+      "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "expected_sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "bytes": 26692,
+      "sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "expected_sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "bytes": 13337,
+      "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "expected_sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "bytes": 6519,
+      "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "expected_sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "bytes": 64567,
+      "sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "expected_sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "bytes": 36402,
+      "sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "expected_sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "expected_sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "bytes": 37544,
+      "sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "expected_sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+      "bytes": 102995,
+      "sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "expected_sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "bytes": 85927,
+      "sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "expected_sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "bytes": 30490,
+      "sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "expected_sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56-contract.json",
+      "bytes": 94064,
+      "sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "expected_sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "bytes": 44293,
+      "sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "expected_sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "bytes": 61645,
+      "sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "expected_sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "bytes": 98702,
+      "sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "expected_sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "bytes": 80727,
+      "sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "expected_sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "bytes": 59865,
+      "sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "expected_sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "bytes": 41881,
+      "sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "expected_sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "bytes": 64295,
+      "sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "expected_sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "match": true
+    }
+  ],
+  "existing_evidence": {
+    "Batch19": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "bytes": 64295,
+      "sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5"
+    },
+    "dispatch_navigation": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\analysis\\NATIVE-S-DISPATCH.json",
+      "bytes": 30107,
+      "sha256": "725B0AC33E63AE9ED56A85AA3C19473858107F8823D625B8D69078A3F32EFC52"
+    }
+  },
+  "reusable_outputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00450090-A5.bin",
+      "bytes": 165,
+      "sha256": "F340C014DDD85F57CE9913E5790E45F779F745D9FBA21BA482FC89BCD109B67E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00451514-33.bin",
+      "bytes": 51,
+      "sha256": "2C103255984907B5C48B55CC588B652B6C031FF6723DD993CE3A479737AF9264"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00452C20-78.bin",
+      "bytes": 120,
+      "sha256": "25E24F65CDE515AEE955C5C427F968EA3E57B5F81C7097F766A15D013F120858"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00465610-70.bin",
+      "bytes": 112,
+      "sha256": "9665E7CF57C430593D7B9FEDDBDDDF658D5B796DC05ED7A5EB8B948288E70074"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00465680-21.bin",
+      "bytes": 33,
+      "sha256": "076CBE4347379C08F16515FA0481F7E19052D5F0B570174A6F48AFE476E1C500"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004656B0-4E.bin",
+      "bytes": 78,
+      "sha256": "9CDF8CBC027ED68C66426B4E4606A6CC2835B4E85B61B5CF76A2A8D73DA4E8E6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00465D10-12.bin",
+      "bytes": 18,
+      "sha256": "EBB071F58221B1CBB82024D7E96F02F03DE2E39AACE459F9DED339AE36A800E6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\0046BA10-62.bin",
+      "bytes": 98,
+      "sha256": "CA187E9D535300D889EB2E75E9522855E531DD818D5BCE379F261EA93A038D90"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\0046BC88-5F.bin",
+      "bytes": 95,
+      "sha256": "A66F684BC22FC1C622B8813A02CFD18051050AD6DDC9A7A6489C0FE7A1971665"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004A7850-FC.bin",
+      "bytes": 252,
+      "sha256": "EC6502CE7990FFF718CEA1CA6C810A877365D07574517278109B5325DEBC650B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004A7998-14.bin",
+      "bytes": 20,
+      "sha256": "BE2D328F7C39D7FAE576057C567C4A6EAC18E80697E416A19D18D6014325D4D2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004A79AC-B.bin",
+      "bytes": 11,
+      "sha256": "75AE4236BDB693B3C4F983130A7A78070A833CBD0CE64F4517626021D29C2100"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004B309F-C.bin",
+      "bytes": 12,
+      "sha256": "1FECD3EDE8799FCF31CF99FAA526BE9B47BA43A4332A391F56DFA677AC5D966C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004B33CC-4.bin",
+      "bytes": 4,
+      "sha256": "53CCD94845A571D0823203439DD58805BBF2247DCD9E07CC2CA7EA35189F0897"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004B3539-1.bin",
+      "bytes": 1,
+      "sha256": "8E35C2CD3BF6641BDB0E2050B76932CBB2E6034A0DDACC1D9BEA82A6BA57F7CF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004B361C-4.bin",
+      "bytes": 4,
+      "sha256": "53CCD94845A571D0823203439DD58805BBF2247DCD9E07CC2CA7EA35189F0897"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004B377D-1.bin",
+      "bytes": 1,
+      "sha256": "A318C24216DEFE206FEEB73EF5BE00033FA9C4A74D0B967F6532A26CA5906D3B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\004F8CB0-5C.bin",
+      "bytes": 92,
+      "sha256": "E01B513EA1330235A558F4E9DE1222B42824F60A9CB4512E1CBD969F9414D057"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00502778-3.bin",
+      "bytes": 3,
+      "sha256": "0DBFA82561BC599FBA47056C2E79041F0E02D318FD52BAACBD5C04CC38EE77C1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\catalog-clear-rebuild-lifecycle.json",
+      "bytes": 3511,
+      "sha256": "4A6937D46A186C119D9A660F9660C8CC8101247EF8BC11A1624480E25E00CF94"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\instruction-witnesses.json",
+      "bytes": 45078,
+      "sha256": "4A557F0E83A5D44ED58A45E39FAB738A6B8E11B18E442A0546CD9D71D6140053"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\map-WORD-BYTE-modeflags-dataflow.json",
+      "bytes": 3057,
+      "sha256": "843D5D4415E34B12AFF1417860E0D519F977608F60D93EBE1C6CA8B4ACA39723"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\new-evidence-verification.json",
+      "bytes": 617,
+      "sha256": "7C8F75841489BF825D84B178BC83A375BB1D2C15ECEE347E36E420F972C5D25D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\ranges.json",
+      "bytes": 76722,
+      "sha256": "7A6B219615D3568A826CDC04EC434243AC6C2F7917EC96C41FF87CB112E0E98D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\UI68-constructor-and-mode-source.json",
+      "bytes": 2138,
+      "sha256": "B58815E709C521C2D8CB7EE7B4FFF4CBD9B50833C64A5B41DB64205E1C9771DB"
+    }
+  ],
+  "constructor_mode": {
+    "entry": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "0046565B",
+      "rva": "0006565B",
+      "section": "   \u0000    ",
+      "file_offset": "0006565B",
+      "raw_backed": true,
+      "raw_hex": "894e68",
+      "mnemonic": "mov",
+      "operands": "dword ptr [esi + 0x68], ecx",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00465610-70.bin",
+        "bytes": 112,
+        "sha256": "9665E7CF57C430593D7B9FEDDBDDDF658D5B796DC05ED7A5EB8B948288E70074"
+      }
+    },
+    "argument": "7th u32 argument at EBP+20 copied to UI+68; 8th EBP+24 copied to UI+6C filter mask, different field",
+    "creation": "46BC88..46BCE6 allocates0x70 and conditionally calls465610 with args [21h,38h,17Ch,150h,0Ch,0Ch,0,FFFFh]; 46BCA5 push0 is seventh arg. NULL skips constructor, publishesNULL at64A958.",
+    "base": "450090 complete165 initializes count+2C/selection+28=0, capacity+5C=256, allocates1024 bytes pointerarray+58; allocator/4C2FC0 execution and success remainunknown.",
+    "mode": "New object alongthis static caller hasUI+68=0 AFTERconstructorreturns; noqualifiedsetter/nonzero pathfor64A958 found in these finite directmethods/callers. Notproofofglobalimmutability/runtimeobjectidentity.",
+    "different_field": "465D10 updatesUI+6C filtermask then4509A0. It doesnot setUI+68 orclearcatalog. Nofilter/action expansion.",
+    "mode_writes_audited_scope": [
+      "465610 complete112",
+      "450090 complete165",
+      "465680 complete33",
+      "4656B0 complete78",
+      "465D10 complete18",
+      "46BA10prefix98",
+      "46BC88creation95",
+      "452C20complete120",
+      "C9case0prefix252",
+      "Batch19 CC/directrowhelpers fixedraw"
+    ],
+    "missing_input": [
+      "actual64A958 object/lifetime/generation",
+      "runtimeorvirtualaliases/heapmutation",
+      "successofbaseprovider/allocations",
+      "othercallerorprivatewrites to+68 outsidefinitewitnessscope"
+    ],
+    "vtable": "disk4F8CB0 has23 slots, first465680; constructorwrites thispointer. Noactualruntimevtable/dispatchproof; inheritedmethodbodies notexpanded."
+  },
+  "catalog_lifecycle": {
+    "clear": "450230 iterates count+2C andarray+58, skipsNULL otherwise virtualslot0(1); afterloop setscount+2C=0 andselection+28=0. DoesnotzeroUI+68, changearray+58/capacity+5C, publish64A958, orclearseparate64A98C previewWORD. Callbackmayreenter/mutatecount; completionrequirescallbackreturn.",
+    "paths": [
+      {
+        "path": "46A520→450230→C_CEwriter",
+        "trigger": "direct46A520 call: read64A958 noNULLguard, clearthenattemptC_CE206 withc format. Actualsend/network/writecommitunknown.",
+        "direct_callers": [
+          "469E9D scene1 nonzero62C21C branch, afteropaqueUI/privatepresentationcallbacks",
+          "452C8C directhelper, afterotherknownwriter/previewcalls",
+          "Batch14 sealedCEfailure calls only priorreference; notrereviewed"
+        ],
+        "source_callers": [
+          "Batch16 ownD0→469CA0(1) priorstaticreference; selfalias/currentcontextunknown",
+          "451514..451546 predicate externalcomparatorcallEDI==0 andphase64AF98==1→452C20; commandproducer/token/externalfunction actualinputunknown"
+        ],
+        "bypass": "469CA0 62C21C==0 onlywritesphase64AF98 andreturns, no46A520/clear. Neednonzero andscene1dispatch plusallprecedingcallsreturn; cannotinferclearfromphase1 alone."
+      },
+      {
+        "path": "C9 result0→4A7941→46BA10",
+        "trigger": "bothdispatchmaps→4B309F→4A7850, firstheaderc decodedsigned0 selects4A7897; resultheaderparse/cleanupcallbacks mustreturn. NoC9wire/schema extension oractualNativeentryacceptance.",
+        "reuse_gate": "64A990!=0 AND64A98C!=0 AND64A930!=0 then46BA67 read64A958,46BA6D call450230; 64A958 itselfisnotNULLchecked. OtherUIbody notexpanded.",
+        "create_gate": "anyofthose3isNULL→46BC88 allocation/create →publish64A958 at46BCE2. Seventharg0; old64A958 disposal/ownershipandotherUIinitializercontinuation notqualified.",
+        "boundary": "Onlyprefixfirstcatalogclear orcatalogcreation/globalpublication, notentire46BA10 initializer orlaterotherUI/WORLD. Lastprovedcalls4A7941/46BA6D/46BCD1; actualobjects, branchstate, send/epoch/order missing."
+      },
+      {
+        "path": "diskvtablefirst465680→4656B0→450230→450170",
+        "trigger": "scalar destructor arglowbit1 additionallycalls4F103C; actualinvocation/destruction/lifetime notproved. Base450170body notexpanded.",
+        "boundary": "destructorcleardoesnotqualifya usablepostdestroycatalog orresetresponse."
+      }
+    ],
+    "row_outcomes": {
+      "unchangedexistingID": "UI68==0 andmatchingfullDWORDrow present→ignoreCC0; nofieldreplace",
+      "prior_clear_completed": "count0 meansnoexistingrowinactivescan; nextCC0 attemptsappend ifcapacityandallocationpermit. SameIDmaybeadded again, notreplacement.",
+      "new_constructor_completed": "count0,capacity256,arrayallocattempt,UI68=0; initialCC0 attemptsappend; NULL/objectexecutionunknown.",
+      "CF_delete_completed": "priorBatch18/19 fallbackdelete removesmatchingDWORDrows; a laterCC0 canattemptappend. CFprimaryprivatepath stillunknown; noCFprerequisiteproposal.",
+      "UI68_nonzero": "skipsdedup andattemptsduplicateappendwhilecount<256/capacity; noqualifiedproducerforcatalognonzero inthisfinitechain",
+      "no_clear_marker": "CC0payload hasnoclear/rebuild/listcomplete/resetbit; receivingalone doesnotinvoke450230 orswitchUI68"
+    },
+    "reset_implication": "Nativefullrowresetacceptance maydependonpriorcleared/new/absentrow state. SuppliedJavareset isknownwire; noautomaticrequestforCF/partial/CCextra, noGUIrootcauseorModernreplacementauthority."
+  },
+  "map_projection": {
+    "row_layout": "receivedmapWORD andUIrow+74 BYTE aredifferentrepresentations. Rowadd4659A6 loadsarg7 DWORD EBP+20→4659AD pushesEDX toconstructorarg7; constructor463C47 readsONLYbyte EBP+20→463C50 DLstore. Upperarg24bitsdiscarded. Adjacent4659AA/4659B1 forwardarg6 attributes, notmap.",
+    "full0_new_version": {
+      "condition": "signed63D54C>=9EA8; mapWORDnotFFFF/FF9C",
+      "projection": "signextend16 map toESI; scan64AFD0 signedcount/64AFE0 stride36 keyDWORD+20; EDIstarts0, firstmatchingindex→EDI; absent/count<=0 remains0. PushfullEDI thenrow+74 keepsEDI&FF, indices256apartcollide.",
+      "special": "FFFF/FF9C: low8(map)-u8mode-1 modulo256 (4A7B3F/45/4F), NOT FE-modeforFF9C. UpperECX argbitsnotinitializedasnewwire; byteconstructordiscardsthem.",
+      "flags": "4A7EE0 attrsbit2→2 else1 OR4A7EF0(mode). Validmode0..5→2000/200/400/1000/800/100hex; invalidsignednegative/>5 uninitializedstackreturn remainsunknown."
+    },
+    "full0_old_version": {
+      "condition": "signed63D54C<9EA8",
+      "ordinary": "low8(map)+0C modulo256",
+      "special": "FFFF/FF9C andsignedversion>=7794→FE-u8mode modulo256; below7794→FF; rawmap specialcodescollapseonthisoldbranch"
+    },
+    "partial5": {
+      "condition": "subtype5 dhc independentof9EA8 ordinarylookup threshold",
+      "ordinary": "low8(map)+0C modulo256 (ADD AL,0C); no64AFD0/64AFE0 lookup inthisbranch",
+      "special": "FFFF/FF9C andsignedversion>=7794→FE-u8mode modulo256, otherwiseFF",
+      "store": "465C50 scansallmatchingfullDWORDIDs, calls463D70 byteargto+74. Absentnoappend; upperstack/registerbitsdiscarded.",
+      "flags": "465CD0 firstmatchingflags+78 (absentreturnsinputroomID) →ESI&FF ORmodehelper→465C90 writesallmatchingrows. Preservesonlylow8, replacesallhigherbits; duplicate rowsreceivefirstrowlowflags. Absentflagssetterhasnomatchingrow."
+    },
+    "illustrative_arithmetic_not_runtime": [
+      {
+        "case": "ordinaryWORD0101 olderfull0/partial5",
+        "BYTE_hex": "0D",
+        "reason": "(01+0C)&FF"
+      },
+      {
+        "case": "newfull0 lookupindex256",
+        "BYTE_hex": "00",
+        "reason": "256&FF; mapgeneration/resourceunknown"
+      },
+      {
+        "case": "FFFF mode1 newfull0/oldfull0/partial5",
+        "BYTE_hex": [
+          "FD",
+          "FD",
+          "FD"
+        ]
+      },
+      {
+        "case": "FF9C mode1 newfull0 vsoldfull0/partial5",
+        "BYTE_hex": [
+          "9A",
+          "FD",
+          "FD"
+        ],
+        "reason": "9C-1-1 versusFE-1"
+      },
+      {
+        "case": "sealednewfull0 WORD0000 mode1",
+        "BYTE": "lookupindex&FF ordefault0",
+        "flags_hex": "00000201",
+        "qualification": "hypotheticalvalidattrs0/mode1 staticprojectiononly; existingrowignore/storage/runtimeunproved. Partial5 map0wouldproduce0C."
+      }
+    ],
+    "not_qualified": [
+      "actual64AFD0/64AFE0 tablecontents/generation",
+      "mapresourceID orWORLD binding",
+      "selectedpreview/UIrender/use ofrowBYTE",
+      "Nativeversion/rowwriteexecuted",
+      "stableinvalidmodeflags",
+      "upperregisterpaddingaspacketfields"
+    ]
+  },
+  "verification": {
+    "new_code_ranges": 11,
+    "new_data_ranges": 8,
+    "inherited_raw_ranges": 19,
+    "instruction_assertions": 65,
+    "prior_primary_pins": 21,
+    "complete_catalog_constructor_bytes": 112,
+    "complete_base_constructor_bytes": 165,
+    "creation_slice_bytes": 95,
+    "lifecycle_prefix_bytes": 98,
+    "all_match": true,
+    "server_packet_unchanged": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "new_capture_frames": 0,
+    "old_tests_replayed": false
+  },
+  "delta": {
+    "new_wire": [],
+    "new_opcodes": [],
+    "wire_corrections": [],
+    "known_internal_boundary": "UI68arg7zero constructor, guardedclear/newobject/C9result0/scene1/directcaller, preciseword/index/byteandmodeflagprojection",
+    "Java_additional_CF_CC_partial_requested": false,
+    "Native_GUI_root_cause_claimed": false
+  },
+  "scope": {
+    "writes": "ownresourcefolderonly",
+    "Native_or_GUI_input": false,
+    "SQL_provider_newcapture": false,
+    "Java_taken_over": false,
+    "all_UI_or_WORLD_or_private_protection_scanned": false,
+    "actual_dynamic_object_virtual_lifetime_authority": false,
+    "joined_source_physical_ownexit_authority": false,
+    "overall_complete": false
+  }
+}

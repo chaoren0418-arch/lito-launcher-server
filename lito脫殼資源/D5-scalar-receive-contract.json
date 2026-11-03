@@ -1,0 +1,830 @@
+{
+  "schema": "lito.native-D5-scalar-subtypes4-6-7-8-9.v1",
+  "updated_at": "2026-10-06T06:16:21.470123+08:00",
+  "status": "FINITE_D5_SCALAR_STORES_UI_RET_EDGES_SEALED_PRODUCER_RUNTIME_GUI_AUTHORITY_OPEN",
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "bytes": 1941568,
+      "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    }
+  ],
+  "prior_primary_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "bytes": 86352,
+      "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "expected_sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "expected_sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "bytes": 136990,
+      "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "expected_sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "bytes": 26692,
+      "sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "expected_sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "bytes": 13337,
+      "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "expected_sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "bytes": 6519,
+      "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "expected_sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "bytes": 64567,
+      "sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "expected_sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "bytes": 36402,
+      "sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "expected_sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "expected_sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "bytes": 37544,
+      "sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "expected_sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+      "bytes": 102995,
+      "sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "expected_sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "bytes": 85927,
+      "sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "expected_sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "bytes": 30490,
+      "sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "expected_sha256": "AD09F778515F5AEBBEFAD7E4FF047A34F28BCC67365B8D96DE84653758CB01F5",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56-contract.json",
+      "bytes": 94064,
+      "sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "expected_sha256": "0DEEF1249E3F98A780994680575AF5EE0003DDEEDF6C9A95A5EC109D26184DCE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "bytes": 44293,
+      "sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "expected_sha256": "004F07E864E160E78D7B87133F45B95739D01497DAD327C13DD36D52F94D0372",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "bytes": 61645,
+      "sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "expected_sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "bytes": 98702,
+      "sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "expected_sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "bytes": 80727,
+      "sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "expected_sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "bytes": 59865,
+      "sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "expected_sha256": "5DD6E760A08D3CD3B096FC6B2F25BF053FB51EA12E9141887A7473423EFC7AB1",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "bytes": 41881,
+      "sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "expected_sha256": "C8E20CD020392C0D26E21F8FB1B830B9009998B942CABF65EBDF59AA355EDA2C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "bytes": 64295,
+      "sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "expected_sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+      "bytes": 24893,
+      "sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367",
+      "expected_sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "bytes": 35225,
+      "sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2",
+      "expected_sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "bytes": 23714,
+      "sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307",
+      "expected_sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "bytes": 28849,
+      "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8",
+      "expected_sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "bytes": 29565,
+      "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE",
+      "expected_sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE",
+      "match": true
+    }
+  ],
+  "inherited_D5_mode_map_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+    "bytes": 29565,
+    "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE"
+  },
+  "existing_evidence": {
+    "Batch18_ranges": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive\\ranges.json",
+      "bytes": 66861,
+      "sha256": "75D5F21B7CADA8A8AD5ECA6660B6C97A11821A940FF2E33DA80F0C8D22AE40B4"
+    },
+    "server_D5_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-D5-CF-consumer-supplement.json",
+      "bytes": 12535,
+      "sha256": "7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF"
+    }
+  },
+  "outputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\computed-bytefootprint-examples.json",
+      "bytes": 2974,
+      "sha256": "6119B8DA92A015198A3583345BF87FD83F89F42C7B58A9AFE12B9EEA40170149"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\finite-verification.json",
+      "bytes": 776,
+      "sha256": "2AF50830E5786E99C1321F1D5E07FA232396EB56A222BF5AD6713BECB08BCAAC"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\instruction-witnesses.json",
+      "bytes": 23172,
+      "sha256": "7BBDE95BAACE7C95B1FAB9D817E6C965B8F655BE2E23636234FA57B9B3235082"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\ranges.json",
+      "bytes": 30413,
+      "sha256": "C4A2055B09E528AA53EF76B69F7995576ECDA50922F4B6E7E3AD7DF4150D28C3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\scalar-effect-unknown-matrix.json",
+      "bytes": 10061,
+      "sha256": "AF4A2A40A26B084D4774C5F12747B616F236D174CB671EB69EC85FB8F146A7E0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\server-builder-caller-boundary.json",
+      "bytes": 1742,
+      "sha256": "A362A6F2B1719381EAEE85F29C6E2363E8CE4ED02093B2EBB5056E4FC11C84B5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive\\wire-contracts.json",
+      "bytes": 8355,
+      "sha256": "3D348F2F29BBDA487FB117BB8927947946DC5159FE3482C36457153AFDFE9A75"
+    }
+  ],
+  "gate": {
+    "inherited_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "bytes": 29565,
+      "sha256": "9F1B9863C7F0316A4C580BA83DCD14CA92A366418555073FB4FB1181F544ABAE"
+    },
+    "header": "Existingcd subtypeBYTE localEBP-1 /roomDWORD localEBP-8; payloadbody+6. Existingprimary/fallbackdispatchunchanged.",
+    "phase6": "4A9E7F roomDWORD→64ABF4 before subtype validity; no priorroom equality.",
+    "other_phases": "Incomingroom!=64ABF4→4AA06Creturn; match maydispatch without furtherphasewhitelist.",
+    "subtype": "MOVSX i8 thenunsignedJA>9 allows0..9, eachscalarpacketindependentlygated.",
+    "additional_gates": "No explicitversion/owner/self/ready/sourcecheck in these finitepaths. Upstream/runtime inputs remainconditional.",
+    "Modern": "Validateownedepoch/currentCEroom beforepublish; noNativephase6room/sourceauthority."
+  },
+  "effect_unknown_matrix": [
+    {
+      "subtype": 4,
+      "summary_index_candidate": 0,
+      "entry_VA": "004A9FA5",
+      "entry_RVA": "000A9FA5",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACCC",
+      "destination_width": 1,
+      "common_tail_VA": "004AA05B",
+      "complete_path_bytes": 32,
+      "reader_call_VA": "004AA064",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": null,
+      "direct_UI_callee_VA": null,
+      "direct_UI_callee_effect": "NoUIcalleeedge in thispath",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA070",
+      "adjacent_bytes_retained": [
+        "0064ACCB",
+        "0064ACCD"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 6,
+      "summary_index_candidate": 1,
+      "entry_VA": "004AA028",
+      "entry_RVA": "000AA028",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD0",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 34,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACCF",
+        "0064ACD1"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD1",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 7,
+      "summary_index_candidate": 2,
+      "entry_VA": "004AA02F",
+      "entry_RVA": "000AA02F",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD1",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 34,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACD0",
+        "0064ACD2"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD2",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 8,
+      "summary_index_candidate": 3,
+      "entry_VA": "004AA036",
+      "entry_RVA": "000AA036",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD2",
+      "destination_width": 1,
+      "common_tail_VA": "004AA03B",
+      "complete_path_bytes": 32,
+      "reader_call_VA": "004AA044",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": "004AA04C",
+      "direct_UI_callee_VA": "004A9030",
+      "direct_UI_callee_effect": "FixedPE singleC3 RET; noredraw/store/callback qualified",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA055",
+      "adjacent_bytes_retained": [
+        "0064ACD1",
+        "0064ACD3"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD3"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "subtype": 9,
+      "summary_index_candidate": 4,
+      "entry_VA": "004AA056",
+      "entry_RVA": "000AA056",
+      "value_body_offset": 6,
+      "value_type": "u8 raw BYTE",
+      "destination_VA": "0064ACD3",
+      "destination_width": 1,
+      "common_tail_VA": "004AA05B",
+      "complete_path_bytes": 27,
+      "reader_call_VA": "004AA064",
+      "typed_reader_store_VA": "004A2A93",
+      "value_mask_or_boolean_conversion": false,
+      "direct_UI_edge_VA": null,
+      "direct_UI_callee_VA": null,
+      "direct_UI_callee_effect": "NoUIcalleeedge in thispath",
+      "first_unknown_private_external_virtual_callee": null,
+      "return_VA": "004AA070",
+      "adjacent_bytes_retained": [
+        "0064ACD2",
+        "0064ACD4"
+      ],
+      "other_summary_bytes_retained": [
+        "0064ACCC",
+        "0064ACD0",
+        "0064ACD1",
+        "0064ACD2"
+      ],
+      "producer_builder_layout_qualified": true,
+      "actual_production_caller_or_trigger_qualified": false,
+      "dynamic_scalar_witness_qualified": false,
+      "field_semantic_beyond_source_summary_index": "UNKNOWN: not ready/mode/map/owner orbool/bitdomain byguess",
+      "ACK_ready_owner_source_GUI_qualified": false,
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    }
+  ],
+  "preserved_fields": {
+    "mode_map": "No64ACCA modeBYTE/64ACCB highBYTE/64ACC9 mapprojectionstore, no rawmapWORD/table/resource lookup.",
+    "configuration": "No64ACD4..D7 options or64ACD8..DF selectionsstore; attributes64ABE6/password64ABE8/capacity64ABF0 unchanged byfinitepaths.",
+    "name_owner": "No64AB70 roomname/64ABCA ownerstring write; noalias/member/selflink.",
+    "catalog_preview": "NoUI64A958 catalogrow/row+74 orUI64A98C previewWORD+0C/BYTE+0F directstore/callpath.",
+    "adjacent_gap": "Sub4only64ACCC;64ACCD..CF remainwithoutexplicitstores. Sub6..9one64ACD0..D3BYTE each; siblings andnextoption64ACD4retained.",
+    "ready_authority": "NoD1/ready/phase/member/owner/source/physical/sessionauthority writes; inheritedphase6roomDWORDgate remains distinct.",
+    "event_granularity": "EachscalarwritesonesummaryBYTE andreturns; no whole-summary replacement, atomicpair/generation/requestresult/rollbackqualified. Noautomatic0/1/2/3/5followup.",
+    "scope": "Noexplicitdestination in finitepaths, notwholeimageabsence oractualruntimeGUIacceptance."
+  },
+  "server_builder_caller_boundary": {
+    "server_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-D5-CF-consumer-supplement.json",
+      "bytes": 12535,
+      "sha256": "7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF"
+    },
+    "adopted_scalar_layout": {
+      "subtypes": [
+        4,
+        6,
+        7,
+        8,
+        9
+      ],
+      "name": "summary scalar layouts",
+      "body": "d5 subtype + u32LE roomId + u8 value",
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "authority": "AD368 helper layouts only: summary indices0..4 map to4/6/7/8/9; source explicitly withholds production caller/effect pending trigger evidence"
+    },
+    "summary_index_mapping": {
+      "0": 4,
+      "1": 6,
+      "2": 7,
+      "3": 8,
+      "4": 9
+    },
+    "builder_qualification": "ExistingAD368 helper/source/archivedIL supports7body/9frame layouts andindex→subtype map only.",
+    "caller_qualification": "Existing7774explicitlywithholds productioncaller/effect pendingtrigger evidence. Thisbatchdoesnotsearch/executeJava orrequestnewpackets.",
+    "selected_wire_scope": {
+      "source_scope": "Existing7774selectedordinaryexit only",
+      "observed_D5_subtypes": [
+        5
+      ],
+      "scalar_dynamic_witness_adopted": false,
+      "capture_census_rerun": false
+    },
+    "Modern_controls": "Recordsubtype/value/destination asfutureguardedmetadata; noaction/controlmeaning/produceravailability/ACK/ready/GUIfrombuilderexistence. Anyfutureoutboundoperation needsitsownCprotocol/caller/triggerqualification.",
+    "do_not_infer": [
+      "Java mustsendscalarpackets",
+      "valuebool/bitmask/domain",
+      "aggregate settings accepted",
+      "ownermembership/sourceauthority",
+      "NativeGUIredraw",
+      "ACK/ready/start/rollback"
+    ]
+  },
+  "wire": [
+    {
+      "classification": "KNOWN_SCALAR_LAYOUT_NEW_FINITE_NATIVE_DESTINATION_UI_PATH_QUALIFICATION",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 4,
+      "VA": "004A9FA5",
+      "RVA": "000A9FA5",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "source-summary-index0 candidate, value meaningunknown",
+          "destination": "0064ACCC BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "u32LE; u8singlebyte",
+      "encoding": "no strings/no textcodec",
+      "trigger_state": "AD368 builder/helper layout exists; actualproducer caller/trigger NOTqualified. InheritedNativeD5roomgateonly.",
+      "evidence_level": "FixedPE existingraw completefinitebranch/staticBYTEstore + existingserverbuilder/source/archivedILlayout; no dynamicwitness",
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_SCALAR_LAYOUT_NEW_FINITE_NATIVE_DESTINATION_UI_PATH_QUALIFICATION",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 6,
+      "VA": "004AA028",
+      "RVA": "000AA028",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "source-summary-index1 candidate, value meaningunknown",
+          "destination": "0064ACD0 BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "u32LE; u8singlebyte",
+      "encoding": "no strings/no textcodec",
+      "trigger_state": "AD368 builder/helper layout exists; actualproducer caller/trigger NOTqualified. InheritedNativeD5roomgateonly.",
+      "evidence_level": "FixedPE existingraw completefinitebranch/staticBYTEstore + existingserverbuilder/source/archivedILlayout; no dynamicwitness",
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_SCALAR_LAYOUT_NEW_FINITE_NATIVE_DESTINATION_UI_PATH_QUALIFICATION",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 7,
+      "VA": "004AA02F",
+      "RVA": "000AA02F",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "source-summary-index2 candidate, value meaningunknown",
+          "destination": "0064ACD1 BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "u32LE; u8singlebyte",
+      "encoding": "no strings/no textcodec",
+      "trigger_state": "AD368 builder/helper layout exists; actualproducer caller/trigger NOTqualified. InheritedNativeD5roomgateonly.",
+      "evidence_level": "FixedPE existingraw completefinitebranch/staticBYTEstore + existingserverbuilder/source/archivedILlayout; no dynamicwitness",
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_SCALAR_LAYOUT_NEW_FINITE_NATIVE_DESTINATION_UI_PATH_QUALIFICATION",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 8,
+      "VA": "004AA036",
+      "RVA": "000AA036",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "source-summary-index3 candidate, value meaningunknown",
+          "destination": "0064ACD2 BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "u32LE; u8singlebyte",
+      "encoding": "no strings/no textcodec",
+      "trigger_state": "AD368 builder/helper layout exists; actualproducer caller/trigger NOTqualified. InheritedNativeD5roomgateonly.",
+      "evidence_level": "FixedPE existingraw completefinitebranch/staticBYTEstore + existingserverbuilder/source/archivedILlayout; no dynamicwitness",
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_SCALAR_LAYOUT_NEW_FINITE_NATIVE_DESTINATION_UI_PATH_QUALIFICATION",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 9,
+      "VA": "004AA056",
+      "RVA": "000AA056",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "source-summary-index4 candidate, value meaningunknown",
+          "destination": "0064ACD3 BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "u32LE; u8singlebyte",
+      "encoding": "no strings/no textcodec",
+      "trigger_state": "AD368 builder/helper layout exists; actualproducer caller/trigger NOTqualified. InheritedNativeD5roomgateonly.",
+      "evidence_level": "FixedPE existingraw completefinitebranch/staticBYTEstore + existingserverbuilder/source/archivedILlayout; no dynamicwitness",
+      "unknowns": [
+        "actualNativephase/currentroom/inputavailability",
+        "Nativebounds/exactend",
+        "semanticvalue/domain/controlmeaning",
+        "serverproductioncaller/trigger/delivery",
+        "actualGUI/redraw/runtimeobserver",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    }
+  ],
+  "verification": {
+    "new_code_ranges": 0,
+    "new_data_ranges": 0,
+    "necessary_reused_raw_slices": 16,
+    "distinct_reused_raw_pins": 7,
+    "instruction_assertions": 33,
+    "aligned_in_slice_branch_targets": 7,
+    "scalar_branches_complete": 5,
+    "direct_RET_UI_edge_subtypes": [
+      6,
+      7,
+      8
+    ],
+    "no_UI_edge_subtypes": [
+      4,
+      9
+    ],
+    "offline_bytefootprint_examples": 5,
+    "dynamic_scalar_witnesses": 0,
+    "new_capture_frames": 0,
+    "prior_primary_pins_preserved": 26,
+    "all_match": true,
+    "server_packet_unchanged": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "old_PASS_replayed": false
+  },
+  "delta": {
+    "new_wire": [],
+    "new_opcodes": [],
+    "wire_corrections": [],
+    "known_corroboration": [
+      "D5scalar7body9frame/summaryindex-subtype layouts"
+    ],
+    "new_static_qualification": [
+      "fiveexactBYTEdestinations/fullfinitebranches",
+      "only6/7/8directUIedge4AA04C→fixedRET4A9030",
+      "4/9sharednoUItail; adjacent/siblingfieldretention"
+    ],
+    "Java_new_packets_requested": false,
+    "packet_modified": false
+  },
+  "scope": {
+    "writes": "ownresource directory only",
+    "finite_batch_complete": true,
+    "Native_SQL_provider_GUI_process_or_new_capture": false,
+    "Java_Modern_BIN_modified": false,
+    "private_external_virtual_WORLD_body_expansion": false,
+    "old_PASS_or_capture_replay": false,
+    "subtypes0_1_2_3_5_redone": false,
+    "producer_caller_ACK_ready_owner_source_GUI_authority": false,
+    "first_unknown_private_external_virtual_callee_in_finite_paths": null,
+    "stop": "FixedtypedBYTEreader andRET edges complete; actualproducer/meaning/bounds/runtime/UI/delivery/authority unknown. No extraJavawire request orinterceptedserverwork."
+  }
+}

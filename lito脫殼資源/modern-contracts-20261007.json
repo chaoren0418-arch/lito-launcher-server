@@ -1,0 +1,1051 @@
+{
+  "schema": "lito-modern-consumer-contracts-v1",
+  "task_id": "bin_resources-modern-contracts-20261007",
+  "updated_at": "2026-10-07T06:16:02.062368+08:00",
+  "generator": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern_contracts_20261007.py",
+    "bytes": 21826,
+    "sha256": "1B35BF3D88794508ED226A46C36727FE6B7201865C8EFA9967AA1471F4B02A87"
+  },
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "contracts": [
+    {
+      "id": "native_background_assets",
+      "category": "drawing_resources",
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "existing_status": "completed: raw IMG, preview PNG and direct RGBA buffers already delivered",
+      "increment": "New unified resource/selector representation only; no new pixels or extraction",
+      "anchors": [
+        {
+          "va": "00496F05",
+          "rva": "00096F05",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00496F28",
+          "rva": "00096F28",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AFA0",
+          "rva": "0024AFA0",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        }
+      ],
+      "resources": [
+        {
+          "id": 6314,
+          "namespace": "native",
+          "archive": "LTsurf",
+          "row": 1014,
+          "offset": 53590027,
+          "length": 614408,
+          "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+          "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+          "raw": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01014-6314.img",
+            "bytes": 614408,
+            "sha256": "848F97A410457991EF36F44E8518239E28B20D17279FEF32FB15B41AA1A9F1D5"
+          },
+          "rgba": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\modern-rgba\\6314.rgba",
+            "bytes": 1228800,
+            "sha256": "949463E781BA723BAE1EDA005C1A346E2086EA003317CE7C41F140A8B61850E8"
+          },
+          "pixel_format": "RGBA8",
+          "width": 640,
+          "height": 480,
+          "stride_bytes": 2560,
+          "row_order": "top-to-bottom",
+          "alpha": "straight; color-key pixels become 0,0,0,0; other pixels alpha255",
+          "source_encoding": "plain IMG; qualified RGB555 reference decoding",
+          "scene_binding": null,
+          "draw_position": null,
+          "native_render_parity": false
+        },
+        {
+          "id": 7482,
+          "namespace": "native",
+          "archive": "LTsurf",
+          "row": 1359,
+          "offset": 81252417,
+          "length": 614408,
+          "source_index_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+          "source_pak_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+          "raw": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01359-7482.img",
+            "bytes": 614408,
+            "sha256": "FC6B2DE5A26BE165C8CE97C7658465F6B84170D597832BC67092801C6160181B"
+          },
+          "rgba": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\modern-rgba\\7482.rgba",
+            "bytes": 1228800,
+            "sha256": "A7A1B6AEDA3B9F9259802F428ABEE3FBC809931C6CF41EA8FF07001A7D4E6BBF"
+          },
+          "pixel_format": "RGBA8",
+          "width": 640,
+          "height": 480,
+          "stride_bytes": 2560,
+          "row_order": "top-to-bottom",
+          "alpha": "straight; color-key pixels become 0,0,0,0; other pixels alpha255",
+          "source_encoding": "plain IMG; qualified RGB555 reference decoding",
+          "scene_binding": null,
+          "draw_position": null,
+          "native_render_parity": false
+        }
+      ],
+      "selector": {
+        "input": {
+          "name": "flag_64AFA0",
+          "type": "u8",
+          "initialized_value_known": false
+        },
+        "branches": [
+          {
+            "test": "eq",
+            "value": 0,
+            "resource_id": 6314
+          },
+          {
+            "test": "ne",
+            "value": 0,
+            "resource_id": 7482
+          }
+        ],
+        "on_missing_input": "unresolved; do not treat fixed disk0 as live flag0",
+        "output_kind": "source-conditional asset ID; no scene name"
+      },
+      "offline_consumer_ready": true,
+      "offline_operations": [
+        "Load already pinned RGBA into native_mode_menu_skin::Img or a bounded resource reader.",
+        "Select asset using an explicitly supplied source flag; preserve uninitialized state.",
+        "CPU preview may use explicitly caller-chosen preview geometry, distinguished from unknown Native draw geometry."
+      ],
+      "unknowns": [
+        "Named scene / Directory association",
+        "Backdrop origin/crop/clip/transform/draw mode",
+        "Current initialized flag/owner and reset lifecycle"
+      ],
+      "consumer": {
+        "owner": "modern",
+        "module": "src/modern_lito/native_mode_menu_skin.rs",
+        "input_type": "Img {width:u32,height:u32,rgba:Vec<u8>}; resource reader must verify pin/length",
+        "native_scene_binding_allowed": false
+      },
+      "handoff_refs": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene-contract.json",
+          "bytes": 9015,
+          "sha256": "DDD86F5D197D53987A46DFBBBB879E8FBE0C77C1AE3B68C296EF4F62325056A7"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\modern-rgba\\manifest.json",
+          "bytes": 5799,
+          "sha256": "D25BED57BE58F0AB3EB17F6A716F8202329B4E02BEE98F63B50D84ADA8218540"
+        }
+      ],
+      "human_presence_required_for_offline_consumption": false
+    },
+    {
+      "id": "495520_call_boundary",
+      "category": "infrastructure_and_drawing",
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "existing_status": "completed source callsite/owner/one-hop predicates; actual backdrop draw contract unknown",
+      "increment": "Register/stack/numeric predicates represented as machine fields; no constructor body expanded",
+      "anchors": [
+        {
+          "va": "00496EB0",
+          "rva": "00096EB0",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00496EB8",
+          "rva": "00096EB8",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00496F28",
+          "rva": "00096F28",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00631EC8",
+          "rva": "00231EC8",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00631ECC",
+          "rva": "00231ECC",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "004A74CB",
+          "rva": "000A74CB",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "004AAD02",
+          "rva": "000AAD02",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        }
+      ],
+      "call": {
+        "site": {
+          "va": "00496F28",
+          "rva": "00096F28",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "target": {
+          "va": "00495520",
+          "rva": "00095520",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "registers": {
+          "ECX": {
+            "load_from": {
+              "va": "00631ECC",
+              "rva": "00231ECC",
+              "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "fixed_data_value": 6491640
+          },
+          "EDX": {
+            "load_from": {
+              "va": "00631EC8",
+              "rva": "00231EC8",
+              "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "fixed_data_value": 8
+          }
+        },
+        "stack_push_sequence": [
+          {
+            "name": "image_id",
+            "value_source": "native_background_assets.selector"
+          },
+          {
+            "name": "numeric_kind_argument",
+            "value": 7
+          }
+        ],
+        "return": {
+          "register": "EAX",
+          "saved_to": "EDI",
+          "save_site": {
+            "va": "00496F2D",
+            "rva": "00096F2D",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          }
+        },
+        "role_limit": "Existing source describes a UI factory/constructor call; a direct draw primitive or coordinate calling convention is not established.",
+        "backdrop_x": null,
+        "backdrop_y": null
+      },
+      "owner": {
+        "global": {
+          "va": "0075F6E8",
+          "rva": "0035F6E8",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "field_offset": 12,
+        "compared_value": 5,
+        "non_equal_path": "496F05: background selector",
+        "equal_path": "Opaque helper calls;495520@496EFB with631E38/EDX5/push310/push0;return EAX stored75F6E8.",
+        "live_instance_known": false,
+        "numeric_type_name": null
+      },
+      "one_hop_predicates": [
+        {
+          "caller": {
+            "va": "004A7450",
+            "rva": "000A7450",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          },
+          "transfer": {
+            "va": "004A74CB",
+            "rva": "000A74CB",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          },
+          "source_event": "existing S03 signed countBYTE handler",
+          "all": [
+            {
+              "field": "decoded_count",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "63D54C",
+              "type": "i32",
+              "op": "lt",
+              "value": 30811
+            },
+            {
+              "field": "64AFA3",
+              "type": "u8",
+              "op": "eq",
+              "value": 0
+            }
+          ],
+          "opaque_precondition": "49A510(ECX1) returns normally",
+          "after_normal_return": "64AFA3=1"
+        },
+        {
+          "caller": {
+            "va": "004AACF0",
+            "rva": "000AACF0",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          },
+          "transfer": {
+            "va": "004AAD02",
+            "rva": "000AAD02",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          },
+          "all": [
+            {
+              "field": "64AFBC",
+              "type": "u8",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "64AFBD",
+              "type": "u8",
+              "op": "eq",
+              "value": 0
+            }
+          ],
+          "transfer_kind": "tail jump"
+        }
+      ],
+      "child_descriptor_metadata": {
+        "table": {
+          "va": "00630DF8",
+          "rva": "00230DF8",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "fixed_count": 8,
+        "previously_qualified_first_four_slots": [
+          {
+            "slot": 0,
+            "table_va": "0x630df8",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 19,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 0
+          },
+          {
+            "slot": 1,
+            "table_va": "0x630e34",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 176,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 1
+          },
+          {
+            "slot": 2,
+            "table_va": "0x630e70",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 333,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 2
+          },
+          {
+            "slot": 3,
+            "table_va": "0x630eac",
+            "constructor": "495520 case3 ->415A30 ->4154E0 ->414910",
+            "image_id": 79,
+            "x": 490,
+            "y": 0,
+            "callback": "4934A0",
+            "receiver": 3
+          }
+        ],
+        "limit": "Child x/y and count8 do not establish background x/y or total character capacity."
+      },
+      "offline_consumer_ready": true,
+      "offline_operations": [
+        "Consume explicit source predicates/descriptor metadata in an offline call model.",
+        "Retain source numeric values instead of inventing scene/type names."
+      ],
+      "blocked_extension": {
+        "missing": "Accepted existing495520 result-to-backdrop draw/owner semantics or independently qualified saved instance artifact",
+        "supplier": "Qualified existing BIN/Modern evidence supplied through supervisor",
+        "reason": "Retained stop at495520 constructor/owner semantics; no permission to continue a private next layer.",
+        "human_presence_dependency": false
+      },
+      "unknowns": [
+        "Named scene",
+        "Constructor return ownership semantics",
+        "Backdrop geometry/renderer mode",
+        "Opaque helper/virtual callback side effects and live initialized owner"
+      ],
+      "consumer": {
+        "owner": "modern",
+        "module": "offline background call/scene model plus native_mode_menu_skin.rs",
+        "default_scene_promotion_allowed": false
+      },
+      "handoff_refs": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene-contract.json",
+          "bytes": 9015,
+          "sha256": "DDD86F5D197D53987A46DFBBBB879E8FBE0C77C1AE3B68C296EF4F62325056A7"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-selection-resource-gap\\Native-animation-and-slot-data.json",
+          "bytes": 46278,
+          "sha256": "DE23CD0DE026B996A918550CBA4A0F1C9F28F078623332065E102B376F3B2517"
+        }
+      ]
+    },
+    {
+      "id": "S_F4_244",
+      "category": "packets_and_external_conversion",
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "existing_status": "completed source-qualified schema / external identity / IPv4 conversion; previously adopted F3/F4",
+      "increment": "Typed fields and transition conditions normalized for consumer; no new wire or API execution",
+      "anchors": [
+        {
+          "va": "004B3057",
+          "rva": "000B3057",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "004AC570",
+          "rva": "000AC570",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "00502F2C",
+          "rva": "00102F2C",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "004AC5B0",
+          "rva": "000AC5B0",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "004AC5BD",
+          "rva": "000AC5BD",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0046ED50",
+          "rva": "0006ED50",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        }
+      ],
+      "wire": {
+        "direction": "S",
+        "opcode_decimal": 244,
+        "opcode_hex": "F4",
+        "body_length_including_opcode": 8,
+        "format": "cdh",
+        "fields": [
+          {
+            "order": 0,
+            "body_offset": 0,
+            "name": "opcode",
+            "bytes": 1,
+            "signed": false,
+            "endianness": "N/A"
+          },
+          {
+            "order": 1,
+            "body_offset": 1,
+            "name": "channel_index",
+            "bytes": 1,
+            "signed": true,
+            "endianness": "N/A",
+            "native_use": "sign extended for64AD2C[index]"
+          },
+          {
+            "order": 2,
+            "body_offset": 2,
+            "name": "IPv4_address_word",
+            "bytes": 4,
+            "signed": "32-bit address bits; comparison not arithmetic",
+            "endianness": "little integer assembly; its four wire bytes are IPv4 network octets",
+            "example": {
+              "wire_bytes": "7F000001",
+              "native_x86_u32_hex": "0100007F",
+              "IPv4": "127.0.0.1"
+            }
+          },
+          {
+            "order": 3,
+            "body_offset": 6,
+            "name": "port_word",
+            "bytes": 2,
+            "signed": "unsigned16 wire bits; native uses/stores low16, some consumers read signed WORD",
+            "endianness": "little",
+            "example": {
+              "wire_bytes": "D007",
+              "unsigned_value": 2000
+            }
+          }
+        ],
+        "native_exact_length_guard_proven": false,
+        "modern_exact_length_guard": 8,
+        "new_or_corrected_wire": false
+      },
+      "ipv4_conversion": {
+        "packet_offset": 2,
+        "width_bytes": 4,
+        "integer_assembly": "little endian",
+        "octet_view": "The same four bytes are network IPv4 octets",
+        "modern_operation": "Ipv4Addr::from(address_word.to_le_bytes())",
+        "constant_compare": {
+          "literal_va": {
+            "va": "0062C6A4",
+            "rva": "0022C6A4",
+            "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+          },
+          "text": "127.0.0.1",
+          "x86_u32_hex": "0100007F",
+          "limit": "Fixed PE constant, not universal configured endpoint"
+        }
+      },
+      "transition_order": [
+        {
+          "test": "table[signed_index]==0xFFFFFFFF",
+          "effect": "No transition"
+        },
+        {
+          "test": "address_word==fixed inet_addr(127.0.0.1)",
+          "effect": "46EB30 same-address path"
+        },
+        {
+          "test": "otherwise",
+          "effect": "46ED50 redirect: inet_ntoa; host64AE74/64A9C4; port low16 to64AD70/64A9C0; callback469B10"
+        }
+      ],
+      "table": {
+        "base": {
+          "va": "0064AD2C",
+          "rva": "0024AD2C",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "cells": 10,
+        "cell_width_bytes": 4,
+        "index_type": "i8 sign-extended",
+        "native_local_bounds_guard_proven": false,
+        "modern_safety_domain": {
+          "min": 0,
+          "max": 9,
+          "qualification": "Modern safety policy / valid producer domain, not native rejection proof"
+        }
+      },
+      "external_api_identities": [
+        {
+          "name": "inet_addr",
+          "main_image": {
+            "va": "004EFE56",
+            "rva": "000EFE56",
+            "section": "   \u0000    ",
+            "file_offset": "000EFE56",
+            "raw_backed": true
+          },
+          "branch": {
+            "va": "004EFE56",
+            "bytes": "e985594075",
+            "target_va": "758F57E0"
+          },
+          "export_rva": "000057E0",
+          "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes",
+          "dump_time_dll_sha256": null
+        },
+        {
+          "name": "inet_ntoa",
+          "main_image": {
+            "va": "004EFE4A",
+            "rva": "000EFE4A",
+            "section": "   \u0000    ",
+            "file_offset": "000EFE4A",
+            "raw_backed": true
+          },
+          "branch": {
+            "va": "004EFE4B",
+            "bytes": "e9f05a4075",
+            "target_va": "758F5940"
+          },
+          "export_rva": "00005940",
+          "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes",
+          "dump_time_dll_sha256": null
+        },
+        {
+          "name": "gethostbyname",
+          "main_image": {
+            "va": "004EFE5C",
+            "rva": "000EFE5C",
+            "section": "   \u0000    ",
+            "file_offset": "000EFE5C",
+            "raw_backed": true
+          },
+          "branch": {
+            "va": "004EFE5D",
+            "bytes": "e9ae004375",
+            "target_va": "7591FF10"
+          },
+          "export_rva": "0002FF10",
+          "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes",
+          "dump_time_dll_sha256": null
+        },
+        {
+          "name": "sprintf",
+          "main_image": {
+            "va": "004AC59A",
+            "rva": "000AC59A",
+            "section": "   \u0000    ",
+            "file_offset": "000AC59A",
+            "raw_backed": true
+          },
+          "branch": {
+            "va": "004AC59B",
+            "bytes": "e8608cf476",
+            "target_va": "773F5200"
+          },
+          "export_rva": "00075200",
+          "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes",
+          "dump_time_dll_sha256": null
+        }
+      ],
+      "return_mode_2": {
+        "source_entry": {
+          "va": "0046F010",
+          "rva": "0006F010",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "saved_host": {
+          "va": "0064AD74",
+          "rva": "0024AD74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "destination_host": {
+          "va": "0064AE74",
+          "rva": "0024AE74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "port_word": 2000,
+        "callback": {
+          "va": "00469BD0",
+          "rva": "00069BD0",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "limit": "Separate return path; do not treat this as allF4 packets"
+      },
+      "offline_consumer_ready": true,
+      "offline_operations": [
+        "Deserialize existing typed schema / source branch model.",
+        "Use existing pure address_from_word mapping; no DLL execution needed."
+      ],
+      "unknowns": [
+        "No proof T73 receivedF4 or that F4 fixes GUI failures",
+        "Signed index bounds depend on native packet trust; do not treat malformed packets as valid input",
+        "Export identities match historical module bases plus current RVAs; dump-time DLL hashes absent",
+        "Direct host copy and startup inputs established; private/transitive execution and actual runtime host remain unproved.",
+        "Original handler has no local signed-index bounds check; server must remain within ten-cell valid indices0..9",
+        "Dump-time DLL hash/private branch execution and native same-epoch transition outcomes are not established",
+        "Java sender port width/endian/IP conversion unexamined"
+      ],
+      "consumer": {
+        "owner": "modern",
+        "module": "src/modern_lito/native_entry_transfer.rs",
+        "existing_symbols": [
+          "decode",
+          "address_from_word",
+          "consume_source_transfer_event"
+        ],
+        "requires_human_or_GUI_before_offline_use": false
+      },
+      "handoff_refs": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-F4-contract.json",
+          "bytes": 2573,
+          "sha256": "82EC141E5FCACA2A6D09F1AFBE1D3BC9A3A1116BF165C02F31BE5F1BA5510CA6"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+          "bytes": 6507,
+          "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+          "bytes": 26509,
+          "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+        }
+      ]
+    },
+    {
+      "id": "saved_host_64AD74",
+      "category": "infrastructure",
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "existing_status": "completed direct writer/source/buffer ownership contract; actual runtime host/init chain remains unproven",
+      "increment": "Typed buffer map and event-bound ownership/copy specification for Modern",
+      "anchors": [
+        {
+          "va": "0047C9BC",
+          "rva": "0007C9BC",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0047C9D0",
+          "rva": "0007C9D0",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0047C9D8",
+          "rva": "0007C9D8",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0047C9DF",
+          "rva": "0007C9DF",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064B7E4",
+          "rva": "0024B7E4",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD74",
+          "rva": "0024AD74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD54",
+          "rva": "0024AD54",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD70",
+          "rva": "0024AD70",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        }
+      ],
+      "buffers": [
+        {
+          "va": "0064AD2C",
+          "bytes": 40,
+          "role": "ten dwords channel gate table (47C9E1 ECX10 repstosd); F4 reader has signed index",
+          "adjacent_until": "0064AD54",
+          "rva": "0024AD2C",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD54",
+          "bytes": 28,
+          "role": "saved selected roster alias (IDA7dwords, allocation boundary64AD70)",
+          "adjacent_until": "0064AD70",
+          "capacity_note": "32-byte span to64AD74 includes 2-byte port at64AD70 and 2 padding bytes; alias allocation itself28, not32",
+          "rva": "0024AD54",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD70",
+          "bytes": 2,
+          "role": "current reconnect port signed-word reads, low16copy",
+          "rva": "0024AD70",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AD74",
+          "bytes": 256,
+          "role": "saved startup/master host string",
+          "adjacent_until": "0064AE74",
+          "rva": "0024AD74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064AE74",
+          "bytes": 256,
+          "role": "current connect host string",
+          "adjacent_until": "0064AF74",
+          "rva": "0024AE74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        {
+          "va": "0064B7E4",
+          "bytes": 256,
+          "role": "startup primary host mutable buffer",
+          "adjacent_until": "0064B8E4",
+          "rva": "0024B7E4",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        }
+      ],
+      "saved_host": {
+        "source": {
+          "va": "0064B7E4",
+          "rva": "0024B7E4",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "destination": {
+          "va": "0064AD74",
+          "rva": "0024AD74",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "inline_bytes": 256,
+        "pointer_global": false,
+        "copy_through_first_NUL": true,
+        "copy_includes_NUL": true,
+        "encoding": "NULterminated8bit bytes copied unchanged; no Unicode/UTF8/CP950 conversion oncopy. HostAPIoldinference ischar*,specificupstreamcodepage/IDN normalization unproved.",
+        "native_capacity_guard_proven": false,
+        "safe_bounded_payload_bytes_excluding_NUL": 255,
+        "source_event": "47C8A0login/initworker afterprivate050104CD returns; bytecopy64B7E4→64AD74 includingfirstNUL",
+        "writers": {
+          "start": {
+            "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+            "va": "0047C9BC",
+            "rva": "0007C9BC",
+            "section": "   \u0000    ",
+            "file_offset": "0007C9BC",
+            "raw_backed": true,
+            "raw_hex": "bfe4b76400",
+            "mnemonic": "mov",
+            "operands": "edi, 0x64b7e4",
+            "range": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+              "bytes": 533,
+              "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+            }
+          },
+          "destination": {
+            "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+            "va": "0047C9D0",
+            "rva": "0007C9D0",
+            "section": "   \u0000    ",
+            "file_offset": "0007C9D0",
+            "raw_backed": true,
+            "raw_hex": "bf74ad6400",
+            "mnemonic": "mov",
+            "operands": "edi, 0x64ad74",
+            "range": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+              "bytes": 533,
+              "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+            }
+          },
+          "copyDWORD": {
+            "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+            "va": "0047C9D8",
+            "rva": "0007C9D8",
+            "section": "   \u0000    ",
+            "file_offset": "0007C9D8",
+            "raw_backed": true,
+            "raw_hex": "f3a5",
+            "mnemonic": "rep movsd",
+            "operands": "dword ptr es:[edi], dword ptr [esi]",
+            "range": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+              "bytes": 533,
+              "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+            }
+          },
+          "copyBYTE": {
+            "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+            "va": "0047C9DF",
+            "rva": "0007C9DF",
+            "section": "   \u0000    ",
+            "file_offset": "0007C9DF",
+            "raw_backed": true,
+            "raw_hex": "f3a4",
+            "mnemonic": "rep movsb",
+            "operands": "byte ptr es:[edi], byte ptr [esi]",
+            "range": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+              "bytes": 533,
+              "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+            }
+          }
+        },
+        "startup_sources": [
+          {
+            "destination": "0064B7E4",
+            "copy_instructions": [
+              "00480BC1",
+              "00480BC9",
+              "00480BD0"
+            ],
+            "source": "[64B498 + 64B4A0*4], selected default server list pointer",
+            "timing": "before argument parse"
+          },
+          {
+            "destination": "0064B7E4",
+            "copy_instructions": [
+              "00480C77",
+              "00480C7F",
+              "00480C86"
+            ],
+            "source": "first positional token from47EC50(EDX=[EBP+8]), excludes / and - switches; sets local host-seen flag",
+            "timing": "startup argument parse"
+          },
+          {
+            "destination": "0064B7E4",
+            "copy_instructions": [
+              "00481861",
+              "00481869",
+              "00481870"
+            ],
+            "source": "64B950 external provider output; only nonempty; caller/body authority not closed"
+          }
+        ],
+        "COM_candidate_qualified": false,
+        "actual_initialized_bytes": null
+      },
+      "saved_alias": {
+        "destination": {
+          "va": "0064AD54",
+          "rva": "0024AD54",
+          "source_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+        },
+        "inline_bytes": 28,
+        "safe_bounded_payload_bytes_excluding_NUL": 27,
+        "source": "EBX=0062FAA0+selected_index*0xB4, established492922/25/31; nothost/address norincomingframebody",
+        "source_event": "Ordinary4928C0 selection, afterC9call492F02 returns, scansselectedrecordEBX at492F33 andcopythroughNUL at492F42/4A/51",
+        "encoding": "Opaque8bit throughfirstNUL, includingNUL copied; no conversion inthispath. Bytecapacity isnotcharcount.",
+        "copies_own_bytes": true,
+        "is_startup_host": false,
+        "native_capacity_guard_proven": false
+      },
+      "port_neighbor": {
+        "address": {
+          "va": "0064AD70",
+          "rva": "0024AD70",
+          "section": "   \u0000    ",
+          "file_offset": "0024AD70",
+          "raw_backed": true
+        },
+        "width": 2,
+        "role": "Current reconnectportlow16, notstring length orpointer",
+        "writes": [
+          "469B7A/46F176 literal2000",
+          "469C46 CX afteroldcurrentport handling",
+          "46EEC5 parsedportAX"
+        ],
+        "loads": "SomeuseMOVSX signedword; bitstorage16, APIwholeportinterpretation notexpanded",
+        "padding": "64AD72..73 are2alignmentbytes beforehost64AD74"
+      },
+      "clear_scope": {
+        "half_open_va": [
+          "0064AD2C",
+          "0064AD54"
+        ],
+        "bytes": 40,
+        "clears_alias_port_or_host": false
+      },
+      "offline_consumer_ready": true,
+      "offline_operations": [
+        "Represent distinct owned byte buffers and copy-through-NUL in Modern state.",
+        "Keep saved_host uninitialized until an explicit qualified startup source/event is supplied.",
+        "Apply bounded byte validation as Modern safety; do not claim Native enforced that limit."
+      ],
+      "unknowns": [
+        "Private050104CD at47C9B7 absent from fixed image; may correspond to API thunk, identity/body unknown",
+        "Other transitive init/connection/library calls not exhaustively closed",
+        "Actual host value and callback execution in T73 unobserved",
+        "Upstream codepage/IDN normalization",
+        "Current value / execution epoch",
+        "Private or indirect clearing beyond the qualified direct scope"
+      ],
+      "blocked_extension": {
+        "missing": "Actual initialization/050104CD success and same-epoch owner/value evidence",
+        "scope": "Only that dynamic conclusion is unavailable; pure buffer/packet modelling remains offline usable",
+        "supplier": "Independently qualified existing startup evidence; not a fictional separate PE group prerequisite"
+      },
+      "consumer": {
+        "owner": "modern",
+        "module": "src/modern_lito/native_entry_transfer.rs plus startup host state",
+        "saved_primary_endpoint_may_be_invented": false,
+        "requires_human_or_GUI_before_offline_use": false
+      },
+      "handoff_refs": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+          "bytes": 8125,
+          "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index\\host-alias-port-contract.json",
+          "bytes": 19729,
+          "sha256": "D2B94080D053C95944538609B8089D157949B9A678DE4894A853FEE8DBD6A5C9"
+        }
+      ]
+    }
+  ],
+  "delivery_kind": "Incremental machine-readable bridge from existing accepted/qualified source artifacts",
+  "completion": {
+    "unified_offline_bridge_delivered": true,
+    "new_PE_ranges": 0,
+    "new_private_bodies": 0,
+    "new_resource_extractions": 0,
+    "old_API_or_source_matrix_tests_replayed": false,
+    "Native_or_GUI_runtime_evidence_added": false,
+    "overall_product_complete": false
+  },
+  "wire_delta": {
+    "baseline": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "new_opcodes": 0,
+    "corrected_wire_contracts": 0,
+    "envelopes": [],
+    "server_notification_requested": false
+  },
+  "Modern_request_artifacts_at_read": [],
+  "request_status": "Observed supplied request refs if present; absence does not block this offline delivery",
+  "remaining_actions": [
+    {
+      "id": "modern-consume-offline-bridge",
+      "owner": "modern",
+      "state": "offline_available",
+      "input": "This typed JSON plus cited existing asset/evidence files",
+      "human_presence_required": false
+    },
+    {
+      "id": "native-background-draw-binding",
+      "state": "blocked_at_retained_scope",
+      "missing": "Named scene / backdrop geometry /495520 result semantics",
+      "source_call_parameters_already_complete": true
+    },
+    {
+      "id": "native-runtime-host-owner-proof",
+      "state": "dynamic_evidence_unknown",
+      "missing": "Actual same-epoch initialized host/owner/private prerequisite outcomes",
+      "offline_model_blocked": false
+    }
+  ],
+  "boundaries": [
+    "42E550/42E6D0/42EA50 and prohibited private next layers remain stopped",
+    "No PE/BIN, Modern code, server Java/SQL, other processes or retained failed cleanup actions",
+    "No T291/T27/refund/rebid/auction/castle/full-WORLD transfer or workaround"
+  ]
+}

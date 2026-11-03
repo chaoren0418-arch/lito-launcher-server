@@ -1,0 +1,113 @@
+276769: loc_482098:                             ; CODE XREF: fn_ClientApplication_Run+162F↑j
+276770: call    sub_4C18E0
+276771: 
+276772: ; ---------------------------------------------------------------------------
+276773: call    sub_422950
+276774: 
+276775: call    sub_44EAB0
+276776: 
+276777: mov     esi, dword_4F7464
+276778: mov     edi, dword_4F7460
+276779: mov     ebx, dword_4F745C
+276780: mov     byte_64BBE8, 1
+276781: 
+276782: 
+276783: loc_4820C0:                             ; CODE XREF: fn_ClientApplication_Run+16A1↓j
+276784:                                         ; fn_ClientApplication_Run+16C0↓j
+276785:                                         ; fn_ClientApplication_Run+16C8↓j
+276786: push    1
+276787: push    0
+276788: push    0
+276789: push    0
+276790: push    offset dword_64B6B0
+276791: call    esi ; dword_4F7464
+276792: 
+276793: test    eax, eax
+276794: jz      short loc_482103
+276795: 
+276796: mov     eax, dword_64B6B4
+276797: cmp     eax, 12h
+276798: jz      short loc_48212A
+276799: 
+276800: cmp     eax, 100h
+276801: jnz     short loc_4820F3
+276802: 
+276803: mov     eax, dword_64B6B8
+276804: cmp     eax, 6Bh ; 'k'
+276805: jz      short loc_4820FA
+276806: 
+276807: cmp     eax, 6Dh ; 'm'
+276808: jz      short loc_4820FA
+276809: 
+276810: 
+276811: loc_4820F3:                             ; CODE XREF: fn_ClientApplication_Run+1682↑j
+276812: push    offset dword_64B6B0
+276813: call    edi ; dword_4F7460
+276814: 
+276815: 
+276816: loc_4820FA:                             ; CODE XREF: fn_ClientApplication_Run+168C↑j
+276817:                                         ; fn_ClientApplication_Run+1691↑j
+276818: push    offset dword_64B6B0
+276819: call    ebx ; dword_4F745C
+276820: 
+276821: jmp     short loc_4820C0
+276822: 
+276823: ; ---------------------------------------------------------------------------
+276824: 
+276825: loc_482103:                             ; CODE XREF: fn_ClientApplication_Run+1671↑j
+276826: mov     al, byte_64BBE8
+276827: test    al, al
+276828: jz      short loc_482122
+276829: 
+276830: mov     eax, dword_64B8FC
+276831: test    eax, eax
+276832: jnz     short loc_482122
+276833: 
+276834: call    sub_4D6570
+276835: 
+276836: call    off_62C9C0
+276837: 
+276838: jmp     short loc_4820C0
+276839: 
+276840: ; ---------------------------------------------------------------------------
+276841: 
+276842: loc_482122:                             ; CODE XREF: fn_ClientApplication_Run+16AA↑j
+276843:                                         ; fn_ClientApplication_Run+16B3↑j
+276844: nop
+276845: call    near ptr 5AE044Fh
+276846: 
+276847: jmp     short loc_4820C0
+276848: 
+276849: ; ---------------------------------------------------------------------------
+276850: 
+276851: loc_48212A:                             ; CODE XREF: fn_ClientApplication_Run+167B↑j
+276852: call    sub_47E4B0
+276853: 
+276854: call    sub_47EB50
+276855: 
+276856: ; ---------------------------------------------------------------------------
+276857: mov     eax, dword_64B6B8
+276858: 
+276859: 
+276860: loc_482139:                             ; CODE XREF: fn_ClientApplication_Run+D50↑j
+276861:                                         ; fn_ClientApplication_Run+D9E↑j
+276862:                                         ; fn_ClientApplication_Run+DCC↑j
+276863:                                         ; fn_ClientApplication_Run+DE3↑j
+276864:                                         ; fn_ClientApplication_Run+EFD↑j
+276865:                                         ; fn_ClientApplication_Run+1108↑j
+276866:                                         ; fn_ClientApplication_Run+11D2↑j
+276867:                                         ; fn_ClientApplication_Run+121D↑j
+276868:                                         ; fn_ClientApplication_Run+128A↑j
+276869:                                         ; fn_ClientApplication_Run+14DD↑j
+276870:                                         ; fn_ClientApplication_Run+1532↑j
+276871:                                         ; fn_ClientApplication_Run+1623↑j
+276872:                                         ; fn_ClientApplication_Run+1633↑j
+276873: mov     ecx, [ebp+var_C]
+276874: lea     esp, [ebp-1ACh]
+276875: mov     large fs:0, ecx
+276876: pop     edi
+276877: pop     esi
+276878: pop     ebx
+276879: mov     esp, ebp
+276880: pop     ebp
+276881: retn    8

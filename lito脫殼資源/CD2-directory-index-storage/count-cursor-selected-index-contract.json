@@ -1,0 +1,233 @@
+{
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "count": {
+    "at": {
+      "va": "007607A0",
+      "rva": "003607A0",
+      "section": "   \u0000    ",
+      "file_offset": "003607A0",
+      "raw_backed": true
+    },
+    "width_bytes": 4,
+    "source": "S03 c→localBYTE→MOVSX signedDWORD at4A7464,store4A746B",
+    "native_raw_byte_domain": "0..127 maps0..127;128..255 maps-128..-1;no local0..8 validation in82byteprefix",
+    "writes": "S03 replacescount;CBcompletion4A7667 sets0",
+    "initial_snapshot_hex": "00000000",
+    "meaning": "localexpectedrowcounter only,notepoch/serverowner/selectedcharacter grant"
+  },
+  "cursor": {
+    "at": {
+      "va": "0076079C",
+      "rva": "0036079C",
+      "section": "   \u0000    ",
+      "file_offset": "0036079C",
+      "raw_backed": true
+    },
+    "width_bytes": 4,
+    "writes": "S03 4A7471 zero;posthelper4A7651 INC rereadglobal and4A7658 store;completion4A7671 zero",
+    "reads": "CBindex4A7577 andposthelper4A764C",
+    "gate": "CBsignedDWORD index<count at4A7582/84. No nonnegative guard orknownstoragebound inthisconditionalisland;alternate496E80 unknownSTOP.",
+    "post_helper": "Afterrowparserstringsunknown,4A7647→46EA30 firstunknown withECXrecord/EDX0/stackrecord+95. Laterislandrereads globalcursor/count,not frozenrowindex. Ifreturned andstable:increment,ifnext<count return;elsestoreboth0 before49A510 firstunknown.",
+    "completion": "Localcount/cursor0 andUIcallrequestnotwireACK,atomicdirectorycompletion,storedphysicalselection orGUIacceptance. Nested/reentry/helperwrites/partialparse unknown."
+  },
+  "selected_index": {
+    "query": {
+      "va": "00492914",
+      "rva": "00092914",
+      "section": "   \u0000    ",
+      "file_offset": "00092914",
+      "raw_backed": true
+    },
+    "inputs": {
+      "ECX": 0,
+      "EDX": 3
+    },
+    "first_unknown": "494120 privatebodynotopened;inputsemanticsandEAXreturndomain unknown",
+    "output": "EAX conditional aftersuccessfulreturn;cmp-1 rejects onlyFFFFFFFF. No index<count orindex>=0 check in68byteisland;markerchecks+2DFF/+2EFF/+37nonzero notownership/bounds.",
+    "address": "32bitLEAs*5,*9,*4:EBX=62FAA0+(EAX*180 mod2^32) mod2^32;flags/helperreturn maychange source. Valuesotherthan-1 notqualified safe.",
+    "comparison": "Receivecursor76079C distinctfromprivatequeryEAX. NeitherisphysicalID/sourceID/currentroom/readypermission. ECX0/EDX3 requestisnotproof4slotcapacity;othermarkerqueryECX0/EDX4 inBatch31 likewise.",
+    "following_unknown": "492958→49A510;do nottraceUIlookup/constructor/ownergraph/privatebody"
+  },
+  "storage": {
+    "base": {
+      "va": "0062FAA0",
+      "rva": "0022FAA0",
+      "section": "   \u0000    ",
+      "file_offset": "0022FAA0",
+      "raw_backed": true
+    },
+    "stride_bytes": 180,
+    "raw_endpoint_examples_for_server_policy_8": [
+      {
+        "ordinal": 0,
+        "start": {
+          "va": "0062FAA0",
+          "rva": "0022FAA0",
+          "section": "   \u0000    ",
+          "file_offset": "0022FAA0",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FB53",
+          "rva": "0022FB53",
+          "section": "   \u0000    ",
+          "file_offset": "0022FB53",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 1,
+        "start": {
+          "va": "0062FB54",
+          "rva": "0022FB54",
+          "section": "   \u0000    ",
+          "file_offset": "0022FB54",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FC07",
+          "rva": "0022FC07",
+          "section": "   \u0000    ",
+          "file_offset": "0022FC07",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 2,
+        "start": {
+          "va": "0062FC08",
+          "rva": "0022FC08",
+          "section": "   \u0000    ",
+          "file_offset": "0022FC08",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FCBB",
+          "rva": "0022FCBB",
+          "section": "   \u0000    ",
+          "file_offset": "0022FCBB",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 3,
+        "start": {
+          "va": "0062FCBC",
+          "rva": "0022FCBC",
+          "section": "   \u0000    ",
+          "file_offset": "0022FCBC",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FD6F",
+          "rva": "0022FD6F",
+          "section": "   \u0000    ",
+          "file_offset": "0022FD6F",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 4,
+        "start": {
+          "va": "0062FD70",
+          "rva": "0022FD70",
+          "section": "   \u0000    ",
+          "file_offset": "0022FD70",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FE23",
+          "rva": "0022FE23",
+          "section": "   \u0000    ",
+          "file_offset": "0022FE23",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 5,
+        "start": {
+          "va": "0062FE24",
+          "rva": "0022FE24",
+          "section": "   \u0000    ",
+          "file_offset": "0022FE24",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FED7",
+          "rva": "0022FED7",
+          "section": "   \u0000    ",
+          "file_offset": "0022FED7",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 6,
+        "start": {
+          "va": "0062FED8",
+          "rva": "0022FED8",
+          "section": "   \u0000    ",
+          "file_offset": "0022FED8",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0062FF8B",
+          "rva": "0022FF8B",
+          "section": "   \u0000    ",
+          "file_offset": "0022FF8B",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      },
+      {
+        "ordinal": 7,
+        "start": {
+          "va": "0062FF8C",
+          "rva": "0022FF8C",
+          "section": "   \u0000    ",
+          "file_offset": "0022FF8C",
+          "raw_backed": true
+        },
+        "end": {
+          "va": "0063003F",
+          "rva": "0023003F",
+          "section": "   \u0000    ",
+          "file_offset": "0023003F",
+          "raw_backed": true
+        },
+        "bytes": 180,
+        "raw_backed_endpoints": true,
+        "runtime_array_capacity_or_validity": false
+      }
+    ],
+    "fixed_raw_span_only": "62FAA0..63003F (1440bytes) rawbacked inonefixedPEsection. Backingmappedbytes isnotarrayallocation/initializedrow/ownership/runtimecapacity.",
+    "known_marker_span": "Batch31 exactwrites4pairs+2D/+2E inrecords0..3,notwhole180zeroing;stop62FD9E. Aliasupdate62FAD0..62FDA0 also4-slotloop,notuniversalstoragecapacity.",
+    "capacity": "Neither4nor8Nativecapacity established;no targetarrayend symbol/allocatedextent/safequerydomain/runtimeownership qualification. Do not requestserverpolicyreduction.",
+    "scope": "No new1440byteextract/heap/probe;onlysourcePE sectionmapping endpointmetadata andsealedraw slices."
+  },
+  "version": "FixedPE4271D92F/rawsnapshot only. ServeracceptedAD368 directorycount0..8 /CBrows policy separately;otherJARs/nativeGUI/runtime notnewlyqualified.",
+  "wire": "KnownS03u8count body2/frame4 andCB79bytesnumericsuffix+twoMS950CStrings unchanged;no extraendmarker orindexwirefield;no newfield/opcode/correction."
+}

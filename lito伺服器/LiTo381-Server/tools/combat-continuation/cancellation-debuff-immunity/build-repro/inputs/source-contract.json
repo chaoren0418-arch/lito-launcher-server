@@ -1,0 +1,27 @@
+{
+  "status": "source-mappings-verified-candidate-not-tested",
+  "mapping": {
+    "47": "weakness",
+    "56": "disease",
+    "71": "decayPotion",
+    "173": "polluteWater",
+    "174": "strikerGale"
+  },
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\L1SkillId.java",
+      "sha256": "5b3dafdac87f504efdd11f70f207999badd7ae8f35b4370b513d4bdcbd678a14"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\NativeCancellationSpeedImmunity.java",
+      "sha256": "9b5589032ec3910f121408bbd9aae9a1211c6dd874a165308ecb14c7713fd54e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build\\source-control-audit\\CANCELLATION.java",
+      "sha256": "bf802004d6538c879ebd71fa192f93b6357cb3fa063cbd3ccbc7f79800359fb7"
+    }
+  ],
+  "scope": "Only the five single-identity timed PC debuffs; no alias inference or generic cancellation rewrite",
+  "source_database_mutated": false,
+  "formal_deployment_changed": false
+}

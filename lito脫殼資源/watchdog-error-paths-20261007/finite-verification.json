@@ -1,0 +1,289 @@
+{
+  "status": "PASS",
+  "new_error_path_checks": 11,
+  "exact_independent_retained_handle_exits": [
+    {
+      "pid": 18388,
+      "creation_filetime_100ns": 134358259433372755,
+      "creation_time_utc": "2026-10-07T05:52:23.337276+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 20780,
+      "creation_filetime_100ns": 134358259434222303,
+      "creation_time_utc": "2026-10-07T05:52:23.422230+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 20860,
+      "creation_filetime_100ns": 134358259435026382,
+      "creation_time_utc": "2026-10-07T05:52:23.502638+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 5072,
+      "creation_filetime_100ns": 134358259435976182,
+      "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 20252,
+      "creation_filetime_100ns": 134358259437008102,
+      "creation_time_utc": "2026-10-07T05:52:23.700810+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 1948,
+      "creation_filetime_100ns": 134358259437887941,
+      "creation_time_utc": "2026-10-07T05:52:23.788794+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 21260,
+      "creation_filetime_100ns": 134358259438011528,
+      "creation_time_utc": "2026-10-07T05:52:23.801153+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 20644,
+      "creation_filetime_100ns": 134358259441057303,
+      "creation_time_utc": "2026-10-07T05:52:24.105730+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 21916,
+      "creation_filetime_100ns": 134358259441092834,
+      "creation_time_utc": "2026-10-07T05:52:24.109283+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096388
+      }
+    },
+    {
+      "pid": 10608,
+      "creation_filetime_100ns": 134358259443058632,
+      "creation_time_utc": "2026-10-07T05:52:24.305863+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 22744,
+      "creation_filetime_100ns": 134358259443126791,
+      "creation_time_utc": "2026-10-07T05:52:24.312679+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 23096,
+      "creation_filetime_100ns": 134358259444302739,
+      "creation_time_utc": "2026-10-07T05:52:24.430274+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19372,
+      "creation_filetime_100ns": 134358259444360074,
+      "creation_time_utc": "2026-10-07T05:52:24.436007+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 23164,
+      "creation_filetime_100ns": 134358259458892802,
+      "creation_time_utc": "2026-10-07T05:52:25.889280+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 21164,
+      "creation_filetime_100ns": 134358259458933727,
+      "creation_time_utc": "2026-10-07T05:52:25.893373+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 22668,
+      "creation_filetime_100ns": 134358259460548168,
+      "creation_time_utc": "2026-10-07T05:52:26.054817+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 17420,
+      "creation_filetime_100ns": 134358259460607125,
+      "creation_time_utc": "2026-10-07T05:52:26.060713+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 10720,
+      "creation_filetime_100ns": 134358259475043720,
+      "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 22972,
+      "creation_filetime_100ns": 134358259475076925,
+      "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 12236,
+      "creation_filetime_100ns": 134358259476295534,
+      "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19948,
+      "creation_filetime_100ns": 134358259476352689,
+      "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "verified_owned_job_member": true,
+      "noninherited_process_handle_only": true,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    }
+  ],
+  "observed_exit_count": 21,
+  "candidate_unknown_outcomes_preserved": [
+    "constructor_wait_unknown",
+    "cleanup_wait_unknown"
+  ],
+  "immutable_baseline_pins_verified": 130,
+  "runtime_receipts_persisted_for_all_10_error_cases": true,
+  "old_tests_or_new_passes_reexecuted_by_publication": false,
+  "IDA_launches": 0,
+  "game_launches": 0
+}

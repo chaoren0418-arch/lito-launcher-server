@@ -1,0 +1,31 @@
+{
+  "pins": true,
+  "server_release_verified": true,
+  "formal_input_gate_verified": true,
+  "hash_case_and_mismatch_regression": true,
+  "footer_removed": true,
+  "class_compatibility": {
+    "png_objects": 1128,
+    "seven_class_hooks": true,
+    "lobby_draw_hook": true,
+    "new_class_names": [
+      "\u9f8d\u9a0e\u58eb",
+      "\u9f8d\u9a0e\u58eb",
+      "\u5e7b\u8853\u58eb",
+      "\u5e7b\u8853\u58eb"
+    ],
+    "class_skill_hooks": true,
+    "forced_combat_send_hook": "0x6fd433a0"
+  },
+  "class_icons": {
+    "count": 243,
+    "exact_new_icon_pixels": 10,
+    "render_hooks": 3,
+    "formal_archive": true,
+    "no_generic_client_ddraw": true
+  },
+  "native_ready": true,
+  "exit_code": 0,
+  "cleanup_verified": true,
+  "run": "cleanup-smoke-1792699200066100000"
+}

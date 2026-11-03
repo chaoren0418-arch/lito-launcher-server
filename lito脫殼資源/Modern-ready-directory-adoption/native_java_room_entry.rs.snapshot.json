@@ -1,0 +1,698 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_entry.rs",
+    "bytes": 13000,
+    "sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5"
+  },
+  "captured_content_sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_room_entry.rs",
+    "bytes": 13000,
+    "sha256": "0C4BC545C657D295676574B03F14A825F03D84A1CF1819F4B6B08A1095982AE5"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:53:53.708842+08:00",
+  "ranges": [
+    [
+      1,
+      170
+    ]
+  ],
+  "line_count": 168,
+  "implementation_lines": [
+    {
+      "line": 1,
+      "text": "//! Explicit AD368 ordinary room-entry adapter. These are receipt scenes,"
+    },
+    {
+      "line": 2,
+      "text": "//! not Native UI/owner readiness or numeric phase/dispatch qualification."
+    },
+    {
+      "line": 3,
+      "text": "use anyhow::{ensure, Context, Result};"
+    },
+    {
+      "line": 4,
+      "text": "use super::{Runtime, SourceEpoch, SourceDecodedPacket, entry_navigation::{Scene, Request}};"
+    },
+    {
+      "line": 5,
+      "text": "pub const CONTRACT_SHA: &str = \"11D9483483A6863BF680927748BB7592DE5ADCB7D8AA73C77E5AD3863F04D5C6\";"
+    },
+    {
+      "line": 6,
+      "text": "#[derive(Clone)] pub struct Adapter;"
+    },
+    {
+      "line": 7,
+      "text": "impl Adapter {"
+    },
+    {
+      "line": 8,
+      "text": "    pub fn parse(bytes: &[u8]) -> Result<Self> {"
+    },
+    {
+      "line": 9,
+      "text": "        let v: serde_json::Value = serde_json::from_slice(bytes)?;"
+    },
+    {
+      "line": 10,
+      "text": "        ensure!(v[\"kind\"] == \"modern_synthetic_AD368_room_entry_v1\""
+    },
+    {
+      "line": 11,
+      "text": "            && v[\"producer_sha256\"] == super::login_bootstrap::PRODUCER_SHA"
+    },
+    {
+      "line": 12,
+      "text": "            && v[\"contract_sha256\"] == CONTRACT_SHA, \"explicit pinned AD368 room adapter required\");"
+    },
+    {
+      "line": 13,
+      "text": "        Ok(Self)"
+    },
+    {
+      "line": 14,
+      "text": "    }"
+    },
+    {
+      "line": 15,
+      "text": "}"
+    },
+    {
+      "line": 16,
+      "text": "#[derive(Clone, Debug, PartialEq, Eq)] pub struct Options {"
+    },
+    {
+      "line": 17,
+      "text": "    pub values: [u8; 4], pub selections: Vec<u8>,"
+    },
+    {
+      "line": 18,
+      "text": "}"
+    },
+    {
+      "line": 19,
+      "text": "#[derive(Clone, Debug, PartialEq, Eq)] pub struct Settings {"
+    },
+    {
+      "line": 20,
+      "text": "    /// Caller supplies already encoded MS950 bytes. No source/physical identity."
+    },
+    {
+      "line": 21,
+      "text": "    pub name: Vec<u8>, pub attributes: u8, pub password: Vec<u8>,"
+    },
+    {
+      "line": 22,
+      "text": "    pub capacity: u16, pub options: Option<Options>,"
+    },
+    {
+      "line": 23,
+      "text": "}"
+    },
+    {
+      "line": 24,
+      "text": "#[derive(Clone, Debug, PartialEq, Eq)] pub enum Intent {"
+    },
+    {
+      "line": 25,
+      "text": "    Create(Settings), Join { room_id: u32, password: Vec<u8> }, RefreshList,"
+    },
+    {
+      "line": 26,
+      "text": "}"
+    },
+    {
+      "line": 27,
+      "text": "fn string_bytes(bytes: &[u8], min: usize, max: usize) -> Result<()> {"
+    },
+    {
+      "line": 28,
+      "text": "    ensure!((min..=max).contains(&bytes.len()) && !bytes.contains(&0)"
+    },
+    {
+      "line": 29,
+      "text": "        && !bytes.iter().any(|b| *b < 32 || *b == 127), \"room CString outside adapter byte policy\");"
+    },
+    {
+      "line": 30,
+      "text": "    Ok(())"
+    },
+    {
+      "line": 31,
+      "text": "}"
+    },
+    {
+      "line": 32,
+      "text": "fn z(body: &mut Vec<u8>, bytes: &[u8]) { body.extend_from_slice(bytes); body.push(0); }"
+    },
+    {
+      "line": 33,
+      "text": "/// Strict ordinary adapter request envelope. Admission remains server owned."
+    },
+    {
+      "line": 34,
+      "text": "/// Server MS950 roundtrip validation may still reject caller-supplied raw text."
+    },
+    {
+      "line": 35,
+      "text": "pub fn encode(intent: &Intent) -> Result<Vec<u8>> {"
+    },
+    {
+      "line": 36,
+      "text": "    let mut body = Vec::new();"
+    },
+    {
+      "line": 37,
+      "text": "    match intent {"
+    },
+    {
+      "line": 38,
+      "text": "        Intent::Create(s) => {"
+    },
+    {
+      "line": 39,
+      "text": "            string_bytes(&s.name, 1, 89)?; string_bytes(&s.password, 0, 4)?;"
+    },
+    {
+      "line": 40,
+      "text": "            ensure!(s.attributes & !0x3c == 0 && (s.attributes & 4 != 0) == !s.password.is_empty(), \"room attributes/password mismatch\");"
+    },
+    {
+      "line": 41,
+      "text": "            // AD368 admission narrows the older parser's 2..200 envelope."
+    },
+    {
+      "line": 42,
+      "text": "            ensure!((2..=100).contains(&s.capacity), \"ordinary AD368 room capacity outside 2..100\");"
+    },
+    {
+      "line": 43,
+      "text": "            body.push(204); z(&mut body, &s.name); body.push(s.attributes);"
+    },
+    {
+      "line": 44,
+      "text": "            z(&mut body, &s.password); body.extend(s.capacity.to_le_bytes());"
+    },
+    {
+      "line": 45,
+      "text": "            if let Some(o) = &s.options {"
+    },
+    {
+      "line": 46,
+      "text": "                ensure!(o.selections.len() <= 8 && !o.selections.contains(&0), \"room selection bytes outside envelope\");"
+    },
+    {
+      "line": 47,
+      "text": "                ensure!((o.values == [0; 4] && o.selections.is_empty())"
+    },
+    {
+      "line": 48,
+      "text": "                    || (o.values[0] <= 7 && o.values[1] <= 2 && (1..=127).contains(&o.values[2]) && o.values[3] <= 31), \"room options outside producer domain\");"
+    },
+    {
+      "line": 49,
+      "text": "                body.extend(o.values); body.push(o.selections.len() as u8); body.extend(&o.selections);"
+    },
+    {
+      "line": 50,
+      "text": "            }"
+    },
+    {
+      "line": 51,
+      "text": "        },"
+    },
+    {
+      "line": 52,
+      "text": "        Intent::Join { room_id, password } => {"
+    },
+    {
+      "line": 53,
+      "text": "            ensure!(*room_id != 0, \"explicit nonzero room ID required\"); string_bytes(password, 0, 4)?;"
+    },
+    {
+      "line": 54,
+      "text": "            body.push(207); body.extend(room_id.to_le_bytes()); z(&mut body, password);"
+    },
+    {
+      "line": 55,
+      "text": "        },"
+    },
+    {
+      "line": 56,
+      "text": "        Intent::RefreshList => body.push(206),"
+    },
+    {
+      "line": 57,
+      "text": "    }"
+    },
+    {
+      "line": 58,
+      "text": "    Ok(body)"
+    },
+    {
+      "line": 59,
+      "text": "}"
+    },
+    {
+      "line": 60,
+      "text": "#[derive(Clone, Debug, PartialEq, Eq)] pub struct Room {"
+    },
+    {
+      "line": 61,
+      "text": "    pub id: u32, pub name: Vec<u8>, pub attributes: u8, pub password: Vec<u8>,"
+    },
+    {
+      "line": 62,
+      "text": "    /// max(2,combatants): neither a wire row count nor roster terminator."
+    },
+    {
+      "line": 63,
+      "text": "    pub users_summary: u16, pub capacity: u16, pub mode: u8, pub map_id: u16,"
+    },
+    {
+      "line": 64,
+      "text": "    pub summary: [u8; 5], pub owner_alias: Vec<u8>, pub options: [u8; 4], pub selections: Vec<u8>,"
+    },
+    {
+      "line": 65,
+      "text": "}"
+    },
+    {
+      "line": 66,
+      "text": "#[derive(Clone, Debug, PartialEq, Eq)] pub enum Reply { Accepted(Room), Refused(u8) }"
+    },
+    {
+      "line": 67,
+      "text": "struct Cursor<'a> { body: &'a [u8], at: usize }"
+    },
+    {
+      "line": 68,
+      "text": "impl Cursor<'_> {"
+    },
+    {
+      "line": 69,
+      "text": "    fn take(&mut self, n: usize) -> Result<&[u8]> { let end=self.at.checked_add(n).context(\"room offset overflow\")?; let v=self.body.get(self.at..end).context(\"short room result field\")?; self.at=end; Ok(v) }"
+    },
+    {
+      "line": 70,
+      "text": "    fn c(&mut self) -> Result<u8> { Ok(self.take(1)?[0]) }"
+    },
+    {
+      "line": 71,
+      "text": "    fn h(&mut self) -> Result<u16> { Ok(u16::from_le_bytes(self.take(2)?.try_into().unwrap())) }"
+    },
+    {
+      "line": 72,
+      "text": "    fn d(&mut self) -> Result<u32> { Ok(u32::from_le_bytes(self.take(4)?.try_into().unwrap())) }"
+    },
+    {
+      "line": 73,
+      "text": "    fn z(&mut self, cap: usize) -> Result<Vec<u8>> { let n=self.body[self.at..].iter().take(cap).position(|v| *v==0).context(\"bounded room CString missing\")?; Ok(self.take(n+1)?[..n].to_vec()) }"
+    },
+    {
+      "line": 74,
+      "text": "}"
+    },
+    {
+      "line": 75,
+      "text": "pub fn decode(body: &[u8]) -> Result<Reply> {"
+    },
+    {
+      "line": 76,
+      "text": "    ensure!(body.first()==Some(&206) && (2..=155).contains(&body.len()), \"S_CE outside bounded adapter envelope\");"
+    },
+    {
+      "line": 77,
+      "text": "    if body[1]!=0 { ensure!(body.len()==2, \"S_CE refusal requires exact two bytes\"); return Ok(Reply::Refused(body[1])); }"
+    },
+    {
+      "line": 78,
+      "text": "    let mut c=Cursor {body, at:2};"
+    },
+    {
+      "line": 79,
+      "text": "    let id=c.d()?; let name=c.z(90)?; let attributes=c.c()?; let password=c.z(5)?;"
+    },
+    {
+      "line": 80,
+      "text": "    let users_summary=c.h()?; let capacity=c.h()?; let mode=c.c()?; let map_id=c.h()?;"
+    },
+    {
+      "line": 81,
+      "text": "    let summary=c.take(5)?.try_into().unwrap(); let owner_alias=c.z(28)?;"
+    },
+    {
+      "line": 82,
+      "text": "    let options=c.take(4)?.try_into().unwrap(); let count=usize::from(c.c()?);"
+    },
+    {
+      "line": 83,
+      "text": "    ensure!(count<=8, \"S_CE selection count exceeds adapter bound\");"
+    },
+    {
+      "line": 84,
+      "text": "    let selections=c.take(count)?.to_vec(); ensure!(c.at==body.len(), \"S_CE trailing bytes\");"
+    },
+    {
+      "line": 85,
+      "text": "    // Strict size/end rules are Modern policy, not original malformed handling."
+    },
+    {
+      "line": 86,
+      "text": "    ensure!(id!=0 && !name.is_empty(), \"S_CE accepted room identity absent\");"
+    },
+    {
+      "line": 87,
+      "text": "    Ok(Reply::Accepted(Room {id,name,attributes,password,users_summary,capacity,mode,map_id,summary,owner_alias,options,selections}))"
+    },
+    {
+      "line": 88,
+      "text": "}"
+    },
+    {
+      "line": 89,
+      "text": "#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)] pub enum Phase {"
+    },
+    {
+      "line": 90,
+      "text": "    #[default] Idle, EntryWrite, AwaitReply, RoomReceipts, Refused, RefreshWrite, AwaitRoomList,"
+    },
+    {
+      "line": 91,
+      "text": "}"
+    },
+    {
+      "line": 92,
+      "text": "#[derive(Clone, Debug, Default, PartialEq, Eq)] pub struct Key {"
+    },
+    {
+      "line": 93,
+      "text": "    pub revision: u64, pub phase: Phase, pub request_opcode: Option<u8>,"
+    },
+    {
+      "line": 94,
+      "text": "    pub pending_serial: Option<u64>, pub room: Option<Room>, pub refusal: Option<u8>,"
+    },
+    {
+      "line": 95,
+      "text": "}"
+    },
+    {
+      "line": 96,
+      "text": "#[derive(Clone)] pub struct Control { epoch: SourceEpoch, navigation: u64, roster: u64, room_revision: u64, intent: Intent }"
+    },
+    {
+      "line": 97,
+      "text": "#[derive(Default)] pub(crate) struct State { pub(crate) adapter: Option<Adapter>, pub(crate) key: Key, intent: Option<Intent> }"
+    },
+    {
+      "line": 98,
+      "text": "impl State {"
+    },
+    {
+      "line": 99,
+      "text": "    pub(crate) fn retire(&mut self) -> Result<()> { let revision=self.key.revision.checked_add(1).context(\"room revision exhausted\")?; self.key=Key{revision,..Key::default()}; self.intent=None; Ok(()) }"
+    },
+    {
+      "line": 100,
+      "text": "    pub(crate) fn written(&mut self, serial: u64) {"
+    },
+    {
+      "line": 101,
+      "text": "        if self.key.pending_serial==Some(serial) { self.key.pending_serial=None; self.key.phase=match self.key.phase {Phase::EntryWrite=>Phase::AwaitReply,Phase::RefreshWrite=>Phase::AwaitRoomList,p=>p}; }"
+    },
+    {
+      "line": 102,
+      "text": "    }"
+    },
+    {
+      "line": 103,
+      "text": "}"
+    },
+    {
+      "line": 104,
+      "text": "#[derive(Clone, Debug)] pub enum Change { Accepted { room_id: u32 }, Refused { result: u8 } }"
+    },
+    {
+      "line": 105,
+      "text": "impl Runtime {"
+    },
+    {
+      "line": 106,
+      "text": "    pub fn configure_java_room_entry_adapter(&mut self, adapter: Adapter) -> Result<()> {"
+    },
+    {
+      "line": 107,
+      "text": "        ensure!(self.java_room.key.phase==Phase::Idle && self.source_send.snapshot().pending.is_none(), \"room adapter change during request\");"
+    },
+    {
+      "line": 108,
+      "text": "        self.java_room.retire()?; self.java_room.adapter=Some(adapter); Ok(())"
+    },
+    {
+      "line": 109,
+      "text": "    }"
+    },
+    {
+      "line": 110,
+      "text": "    pub fn java_room_entry_snapshot(&self) -> Key { self.java_room.key.clone() }"
+    },
+    {
+      "line": 111,
+      "text": "    pub fn last_java_room_entry_checkpoint(&self) -> Option<Key> { self.last_room_checkpoint.clone() }"
+    },
+    {
+      "line": 112,
+      "text": "    pub fn java_room_entry_control(&self, intent: Intent) -> Option<Control> {"
+    },
+    {
+      "line": 113,
+      "text": "        if self.bootstrap_adapter.is_none() || self.java_room.adapter.is_none() || self.page!=super::UiPage::Menu"
+    },
+    {
+      "line": 114,
+      "text": "            || self.java_character.key.stage!=super::java_character_flow::Stage::ChannelReceipts"
+    },
+    {
+      "line": 115,
+      "text": "            || self.java_character.key.channel_info.is_none() || self.java_return.key.phase!=super::java_return::Phase::Idle"
+    },
+    {
+      "line": 116,
+      "text": "            || self.entry_transfer.key.timer_active || self.source_send.snapshot().pending.is_some() || !self.entry_navigation.queue.is_empty()"
+    },
+    {
+      "line": 117,
+      "text": "            || encode(&intent).is_err() { return None; }"
+    },
+    {
+      "line": 118,
+      "text": "        let allowed=match intent {Intent::RefreshList=>self.java_room.key.phase==Phase::Refused && self.entry_navigation.key.scene==Scene::RoomRefused,"
+    },
+    {
+      "line": 119,
+      "text": "            _=>self.java_room.key.phase==Phase::Idle && self.entry_navigation.key.scene==Scene::Lobby};"
+    },
+    {
+      "line": 120,
+      "text": "        if !allowed {return None;}"
+    },
+    {
+      "line": 121,
+      "text": "        Some(Control {epoch:self.source_scope.current_epoch().ok()?, navigation:self.entry_navigation.key.revision,"
+    },
+    {
+      "line": 122,
+      "text": "            roster:self.source_roster_revision, room_revision:self.java_room.key.revision, intent})"
+    },
+    {
+      "line": 123,
+      "text": "    }"
+    },
+    {
+      "line": 124,
+      "text": "    pub fn handle_java_room_entry_control(&mut self, c: &Control) -> Result<()> {"
+    },
+    {
+      "line": 125,
+      "text": "        self.source_scope.admit_epoch(&c.epoch)?;"
+    },
+    {
+      "line": 126,
+      "text": "        ensure!(c.navigation==self.entry_navigation.key.revision && c.roster==self.source_roster_revision"
+    },
+    {
+      "line": 127,
+      "text": "            && c.room_revision==self.java_room.key.revision && self.java_room_entry_control(c.intent.clone()).is_some(), \"retired or unavailable room control\");"
+    },
+    {
+      "line": 128,
+      "text": "        let body=encode(&c.intent)?; let revision=self.java_room.key.revision.checked_add(1).context(\"room revision exhausted\")?;"
+    },
+    {
+      "line": 129,
+      "text": "        let refresh=matches!(c.intent,Intent::RefreshList);"
+    },
+    {
+      "line": 130,
+      "text": "        self.begin_source_navigation_sequence(if refresh {Scene::AwaitRoomList} else {Scene::AwaitRoomReply},vec![Request::Room(body)])?;"
+    },
+    {
+      "line": 131,
+      "text": "        self.java_room.key=Key {revision,phase:if refresh {Phase::RefreshWrite} else {Phase::EntryWrite},"
+    },
+    {
+      "line": 132,
+      "text": "            request_opcode:Some(if refresh {206} else if matches!(c.intent,Intent::Create(_)) {204} else {207}),"
+    },
+    {
+      "line": 133,
+      "text": "            pending_serial:self.entry_navigation.key.pending_write,..Key::default()};"
+    },
+    {
+      "line": 134,
+      "text": "        self.java_room.intent=Some(c.intent.clone()); self.status=if refresh {\"正在重新取得房間清單…\"} else {\"正在送出房間要求…\"}.into(); Ok(())"
+    },
+    {
+      "line": 135,
+      "text": "    }"
+    },
+    {
+      "line": 136,
+      "text": "    pub fn consume_java_room_entry_candidate(&mut self, event: &SourceDecodedPacket) -> Result<Change> {"
+    },
+    {
+      "line": 137,
+      "text": "        self.source_scope.admit(event)?;"
+    },
+    {
+      "line": 138,
+      "text": "        ensure!(self.bootstrap_adapter.is_some() && self.java_room.adapter.is_some(), \"explicit AD368 room adapter required\");"
+    },
+    {
+      "line": 139,
+      "text": "        ensure!(self.java_room.key.phase==Phase::AwaitReply && self.entry_navigation.key.scene==Scene::AwaitRoomReply"
+    },
+    {
+      "line": 140,
+      "text": "            && self.entry_navigation.key.write_complete && self.source_send.snapshot().pending.is_none()"
+    },
+    {
+      "line": 141,
+      "text": "            && self.entry_navigation.queue.is_empty(), \"S_CE outside completed owned room intent\");"
+    },
+    {
+      "line": 142,
+      "text": "        let reply=decode(event.body())?;"
+    },
+    {
+      "line": 143,
+      "text": "        if let Reply::Accepted(room)=&reply {"
+    },
+    {
+      "line": 144,
+      "text": "            match self.java_room.intent.as_ref().context(\"room intent absent\")? {"
+    },
+    {
+      "line": 145,
+      "text": "                Intent::Join {room_id,..}=>ensure!(*room_id==room.id, \"S_CE joined room ID differs from explicit intent\"),"
+    },
+    {
+      "line": 146,
+      "text": "                // Raw create name is an expectation, not character identity."
+    },
+    {
+      "line": 147,
+      "text": "                Intent::Create(s)=>ensure!(s.name==room.name, \"S_CE room name differs from create intent\"),"
+    },
+    {
+      "line": 148,
+      "text": "                Intent::RefreshList=>anyhow::bail!(\"S_CE cannot complete room-list request\"),"
+    },
+    {
+      "line": 149,
+      "text": "            }"
+    },
+    {
+      "line": 150,
+      "text": "        }"
+    },
+    {
+      "line": 151,
+      "text": "        let revision=self.java_room.key.revision.checked_add(1).context(\"room revision exhausted\")?;"
+    },
+    {
+      "line": 152,
+      "text": "        let navigation=self.entry_navigation.key.revision.checked_add(1).context(\"navigation revision exhausted\")?;"
+    },
+    {
+      "line": 153,
+      "text": "        let participant_book=if let Reply::Accepted(room)=&reply{self.java_participants.prepare_joined(&self.source_scope.current_epoch()?,room.id,revision,self.java_participants.departure_adapter.as_ref().and_then(|a|a.qualify(self)),self.qualified_singleton_self_alias())?}else{None};"
+    },
+    {
+      "line": 154,
+      "text": "        let settings_book=if let Reply::Accepted(room)=&reply{self.prepare_settings_joined(room.id,revision,navigation)?}else{None};"
+    },
+    {
+      "line": 155,
+      "text": "        let self_state=if let Reply::Accepted(room)=&reply{self.prepare_self_joined(room.id,revision,navigation)}else{self.java_self.clone()};"
+    },
+    {
+      "line": 156,
+      "text": "        // Only the Modern receipt scene changes. Native mode/phase effects"
+    },
+    {
+      "line": 157,
+      "text": "        // continue through their existing guard until separately qualified."
+    },
+    {
+      "line": 158,
+      "text": "        self.entry_navigation.key.revision=navigation; self.entry_navigation.key.pending_write=None;"
+    },
+    {
+      "line": 159,
+      "text": "        self.entry_navigation.key.write_complete=false; self.java_room.key.revision=revision;"
+    },
+    {
+      "line": 160,
+      "text": "        self.java_room.intent=None; self.java_participants.book=participant_book;self.java_settings.book=settings_book;self.java_self=self_state;"
+    },
+    {
+      "line": 161,
+      "text": "        match reply {"
+    },
+    {
+      "line": 162,
+      "text": "            Reply::Accepted(room)=>{let room_id=room.id;self.java_room.key.room=Some(room);self.java_room.key.phase=Phase::RoomReceipts;"
+    },
+    {
+      "line": 163,
+      "text": "                self.entry_navigation.key.scene=Scene::RoomReceipts;self.status=\"已收到進房確認，後續房間名單仍待接線\".into();Ok(Change::Accepted {room_id})},"
+    },
+    {
+      "line": 164,
+      "text": "            Reply::Refused(result)=>{self.java_room.key.refusal=Some(result);self.java_room.key.phase=Phase::Refused;"
+    },
+    {
+      "line": 165,
+      "text": "                self.entry_navigation.key.scene=Scene::RoomRefused;self.status=\"進房未成功，可重新取得房間清單\".into();Ok(Change::Refused {result})},"
+    },
+    {
+      "line": 166,
+      "text": "        }"
+    },
+    {
+      "line": 167,
+      "text": "    }"
+    },
+    {
+      "line": 168,
+      "text": "}"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

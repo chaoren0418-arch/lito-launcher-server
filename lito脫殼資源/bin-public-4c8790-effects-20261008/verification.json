@@ -1,0 +1,19 @@
+{
+  "input_pins_match": true,
+  "raw_ranges_source_match": true,
+  "fully_decoded": true,
+  "exact_direct_transfer_sequence": [
+    "004C85E0",
+    "004C7EC0",
+    "004C83A0",
+    "004C8240",
+    "004C83F0"
+  ],
+  "all_private_stop_targets_unvisited": true,
+  "derived_handoff_SHA": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+    "bytes": 20092,
+    "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+  },
+  "checked_at": "2026-10-08T16:42:14.745271+08:00"
+}

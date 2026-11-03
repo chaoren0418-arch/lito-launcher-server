@@ -1,0 +1,43 @@
+{
+  "provider": "Microsoft Learn",
+  "references": [
+    {
+      "name": "WM_MOVE",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-move"
+    },
+    {
+      "name": "WM_SIZE",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-size"
+    },
+    {
+      "name": "WM_PAINT",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/gdi/wm-paint"
+    },
+    {
+      "name": "WM_WINDOWPOSCHANGING",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-windowposchanging"
+    },
+    {
+      "name": "WM_WINDOWPOSCHANGED",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-windowposchanged"
+    },
+    {
+      "name": "WM_ENTERSIZEMOVE",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-entersizemove"
+    },
+    {
+      "name": "WM_EXITSIZEMOVE",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-exitsizemove"
+    },
+    {
+      "name": "WM_SYSCOMMAND",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/menurc/wm-syscommand"
+    },
+    {
+      "name": "WNDCLASSEXA layout",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexa"
+    }
+  ],
+  "use": "Message constants and documented ABI/OS behavior only; these documents do not resolve opaque original call targets.",
+  "inference": "The 48-byte registration-shaped local structure is consistent with x86 WNDCLASSEXA and contains the candidate callback pointer. Successful registration and API identity are unproved."
+}

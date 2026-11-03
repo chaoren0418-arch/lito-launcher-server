@@ -1,0 +1,840 @@
+{
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "navigation_only": true,
+  "symbol_rows": {
+    "byte_64AF9D": [
+      {
+        "line": 171357,
+        "text": "mov     bl, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 190911,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 221808,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 229591,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 231929,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 232108,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 234312,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 275325,
+        "text": "mov     byte_64AF9D, 1",
+        "kind": "direct_write"
+      },
+      {
+        "line": 309757,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 316925,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 349422,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 350019,
+        "text": "mov     al, byte_64AF9D",
+        "kind": "direct_read"
+      },
+      {
+        "line": 559740,
+        "text": "byte_64AF9D db 0                        ; DATA XREF: sub_450CD0:loc_450E5A↑r",
+        "kind": "definition"
+      }
+    ],
+    "dword_8316B0": [
+      {
+        "line": 3615,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 7561,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 9968,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 13141,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 50519,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52138,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52784,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52842,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149488,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149570,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171365,
+        "text": "mov     esi, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171988,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 175227,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 189072,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 191318,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 206052,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 226801,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227822,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227917,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 229595,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 231938,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 234316,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 253145,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 264974,
+        "text": "mov     ecx, dword_8316B0               ; jumptable 0047BBFC case 16",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265023,
+        "text": "mov     eax, dword_8316B0               ; jumptable 0047BBFC case 13",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265186,
+        "text": "mov     edx, dword_8316B0               ; jumptable 0047BBFC case 26",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265503,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265530,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265560,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265587,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271645,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271873,
+        "text": "mov     edx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 291828,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 292418,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 295520,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 297345,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 309611,
+        "text": "mov     ecx, offset dword_8316B0",
+        "kind": "address_argument"
+      },
+      {
+        "line": 309623,
+        "text": "mov     ecx, offset dword_8316B0",
+        "kind": "address_argument"
+      },
+      {
+        "line": 344089,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345375,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345556,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 352807,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 361032,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 408433,
+        "text": "mov     ecx, offset dword_8316B0",
+        "kind": "address_argument"
+      },
+      {
+        "line": 408452,
+        "text": "mov     ecx, offset dword_8316B0",
+        "kind": "address_argument"
+      },
+      {
+        "line": 471866,
+        "text": "mov     ecx, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 471963,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 484758,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 485280,
+        "text": "mov     eax, dword_8316B0",
+        "kind": "direct_read"
+      },
+      {
+        "line": 564573,
+        "text": "dword_8316B0 dd 0B104FA84h              ; DATA XREF: sub_402740:loc_4027AE↑r",
+        "kind": "definition"
+      }
+    ],
+    "dword_8316B4": [
+      {
+        "line": 3616,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 7562,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 9969,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 13142,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 50516,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52139,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52785,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52843,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149489,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149571,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171366,
+        "text": "mov     edi, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171989,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 175228,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 189070,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 191319,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 206056,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 206107,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 226802,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227827,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227847,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227918,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 229596,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 231939,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 234317,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 253146,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 264975,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265024,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265187,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265504,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265531,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265561,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265588,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271646,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271874,
+        "text": "mov     eax, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 291829,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 292419,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 295521,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 297346,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 344090,
+        "text": "mov     esi, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345373,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345557,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 352808,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 361033,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 471867,
+        "text": "mov     edx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 471964,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 484759,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 485281,
+        "text": "mov     ecx, dword_8316B4",
+        "kind": "direct_read"
+      },
+      {
+        "line": 564588,
+        "text": "dword_8316B4 dd 57E0D48h                ; DATA XREF: sub_402740+74↑r",
+        "kind": "definition"
+      }
+    ],
+    "dword_8316B8": [
+      {
+        "line": 3621,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 7565,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 9972,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 13145,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 50517,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52140,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52791,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 52846,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149492,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 149574,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171369,
+        "text": "mov     edi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 171993,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 175231,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 189074,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 191322,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 206059,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 206110,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 226805,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227830,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227850,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 227921,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 229599,
+        "text": "mov     eax, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 231942,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 234320,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 253149,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 264978,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265027,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265190,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265507,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265534,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265564,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 265591,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271649,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 271877,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 291832,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 292422,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 295522,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 297349,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 344091,
+        "text": "mov     edi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345380,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 345560,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 352811,
+        "text": "mov     eax, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 361036,
+        "text": "mov     edx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 471868,
+        "text": "mov     esi, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 471967,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 484762,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 485284,
+        "text": "mov     ecx, dword_8316B8",
+        "kind": "direct_read"
+      },
+      {
+        "line": 564603,
+        "text": "dword_8316B8 dd 2FE3681Dh               ; DATA XREF: sub_402740+8E↑r",
+        "kind": "definition"
+      }
+    ]
+  },
+  "counts": {
+    "byte_64AF9D": {
+      "direct_read": 11,
+      "direct_write": 1,
+      "address_argument": 0,
+      "definition": 1
+    },
+    "dword_8316B0": {
+      "direct_read": 45,
+      "direct_write": 0,
+      "address_argument": 4,
+      "definition": 1
+    },
+    "dword_8316B4": {
+      "direct_read": 47,
+      "direct_write": 0,
+      "address_argument": 0,
+      "definition": 1
+    },
+    "dword_8316B8": {
+      "direct_read": 47,
+      "direct_write": 0,
+      "address_argument": 0,
+      "definition": 1
+    }
+  },
+  "scope": "Finite exactnamed directoperand inventory, not alias/bulk/runtime/callee closure; otherreaderbodies (includingWORLD) not expanded."
+}

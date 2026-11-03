@@ -1,0 +1,33 @@
+{
+  "mode": 1,
+  "map_id": 534,
+  "sectors": 16,
+  "required_members": 96,
+  "qualified_slots": 14150,
+  "source_references": 347528,
+  "non_floor_references": 216456,
+  "encoded_source_bytes_validated": 10597587,
+  "decoded_bytes_per_slot": 2304,
+  "whole_required_decoded_bytes": 32601600,
+  "cache_bytes": 16777216,
+  "decoded_limit_bytes": 67108864,
+  "current_predicate_paged": false,
+  "required_cache_admission_paged": true,
+  "maximum_resident_slots": 7281,
+  "maximum_resident_slot_bytes": 16775424,
+  "selected_alias_slots": 0,
+  "selected_kind_counts": {
+    "0": 185,
+    "1": 185,
+    "2": 5643,
+    "3": 5651,
+    "6": 1139,
+    "7": 1141,
+    "18": 103,
+    "19": 103
+  },
+  "archive_index_rows": [
+    1210,
+    469
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\GroundLifecycleProbe.java",
+      "sha256": "71e6daad66edcc2e615f6f290bc7720d4e24aa56173a733becb3521d6f84e7b0"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\test_clock.py",
+      "sha256": "17721e24163d173d06ebb947b2eee39ff2a2e0bf0b741c41741dbaaf01c66710"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\prepare_placement.py",
+      "sha256": "5915c29bd7fe66056d11fc589039aff6df55d52d2651a82cee0af252c1170188"
+    }
+  ],
+  "scope": "actual hub monitor contention and placement revocation, native58/63, WORLD/BATTLE, both state and item-app flags"
+}

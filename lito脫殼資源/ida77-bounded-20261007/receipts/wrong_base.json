@@ -1,0 +1,12 @@
+{
+  "schema": "ida77-bounded-receipt-v1",
+  "ida_started": false,
+  "pid": null,
+  "input_executed": false,
+  "database_created": false,
+  "execute_requested": true,
+  "status": "REFUSED",
+  "code": "IMAGE_BASE_MISMATCH",
+  "detail": "Declared PE32 base must equal header",
+  "elapsed_seconds": 0.0
+}

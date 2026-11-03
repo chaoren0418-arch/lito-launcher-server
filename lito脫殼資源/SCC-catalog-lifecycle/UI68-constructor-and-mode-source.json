@@ -1,0 +1,42 @@
+{
+  "entry": {
+    "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "va": "0046565B",
+    "rva": "0006565B",
+    "section": "   \u0000    ",
+    "file_offset": "0006565B",
+    "raw_backed": true,
+    "raw_hex": "894e68",
+    "mnemonic": "mov",
+    "operands": "dword ptr [esi + 0x68], ecx",
+    "range": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle\\00465610-70.bin",
+      "bytes": 112,
+      "sha256": "9665E7CF57C430593D7B9FEDDBDDDF658D5B796DC05ED7A5EB8B948288E70074"
+    }
+  },
+  "argument": "7th u32 argument at EBP+20 copied to UI+68; 8th EBP+24 copied to UI+6C filter mask, different field",
+  "creation": "46BC88..46BCE6 allocates0x70 and conditionally calls465610 with args [21h,38h,17Ch,150h,0Ch,0Ch,0,FFFFh]; 46BCA5 push0 is seventh arg. NULL skips constructor, publishesNULL at64A958.",
+  "base": "450090 complete165 initializes count+2C/selection+28=0, capacity+5C=256, allocates1024 bytes pointerarray+58; allocator/4C2FC0 execution and success remainunknown.",
+  "mode": "New object alongthis static caller hasUI+68=0 AFTERconstructorreturns; noqualifiedsetter/nonzero pathfor64A958 found in these finite directmethods/callers. Notproofofglobalimmutability/runtimeobjectidentity.",
+  "different_field": "465D10 updatesUI+6C filtermask then4509A0. It doesnot setUI+68 orclearcatalog. Nofilter/action expansion.",
+  "mode_writes_audited_scope": [
+    "465610 complete112",
+    "450090 complete165",
+    "465680 complete33",
+    "4656B0 complete78",
+    "465D10 complete18",
+    "46BA10prefix98",
+    "46BC88creation95",
+    "452C20complete120",
+    "C9case0prefix252",
+    "Batch19 CC/directrowhelpers fixedraw"
+  ],
+  "missing_input": [
+    "actual64A958 object/lifetime/generation",
+    "runtimeorvirtualaliases/heapmutation",
+    "successofbaseprovider/allocations",
+    "othercallerorprivatewrites to+68 outsidefinitewitnessscope"
+  ],
+  "vtable": "disk4F8CB0 has23 slots, first465680; constructorwrites thispointer. Noactualruntimevtable/dispatchproof; inheritedmethodbodies notexpanded."
+}

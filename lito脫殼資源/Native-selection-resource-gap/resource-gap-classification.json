@@ -1,0 +1,152 @@
+{
+  "categories": {
+    "available_and_extracted": [
+      {
+        "name": "6201.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00891-6201.img",
+          "bytes": 2354,
+          "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737"
+        },
+        "dimensions": {
+          "width": 51,
+          "height": 23
+        },
+        "row": 891,
+        "offset": 49038213,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Native Enter/Back action pair already source bound"
+      },
+      {
+        "name": "6202.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00894-6202.img",
+          "bytes": 2354,
+          "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0"
+        },
+        "dimensions": {
+          "width": 51,
+          "height": 23
+        },
+        "row": 894,
+        "offset": 49045275,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Native Enter/Back action pair already source bound"
+      },
+      {
+        "name": "6303.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row00999-6303.img",
+          "bytes": 2354,
+          "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15"
+        },
+        "dimensions": {
+          "width": 51,
+          "height": 23
+        },
+        "row": 999,
+        "offset": 51718555,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Native Enter/Back action pair already source bound"
+      },
+      {
+        "name": "6304.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01002-6304.img",
+          "bytes": 2354,
+          "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90"
+        },
+        "dimensions": {
+          "width": 51,
+          "height": 23
+        },
+        "row": 1002,
+        "offset": 51725617,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Native Enter/Back action pair already source bound"
+      },
+      {
+        "name": "6314.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01014-6314.img",
+          "bytes": 614408,
+          "sha256": "848F97A410457991EF36F44E8518239E28B20D17279FEF32FB15B41AA1A9F1D5"
+        },
+        "dimensions": {
+          "width": 640,
+          "height": 480
+        },
+        "row": 1014,
+        "offset": 53590027,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Existing Native640x480 resource; associated branch below, selected-scene assignment unresolved"
+      },
+      {
+        "name": "7482.img",
+        "owned_raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTsurf\\row01359-7482.img",
+          "bytes": 614408,
+          "sha256": "FC6B2DE5A26BE165C8CE97C7658465F6B84170D597832BC67092801C6160181B"
+        },
+        "dimensions": {
+          "width": 640,
+          "height": 480
+        },
+        "row": 1359,
+        "offset": 81252417,
+        "original_index_and_PAK_checked": true,
+        "mapping_status": "Existing Native640x480 resource; associated branch below, selected-scene assignment unresolved"
+      }
+    ],
+    "known_indexed_but_not_extracted": [],
+    "resource_namespace_or_bank_unresolved": [
+      {
+        "item": "Native numeric control image79 and historical requested80",
+        "evidence": "Four raw-backed630DF8 descriptors use79. Exact79.img/80.img absent from all five existing Native indexes and exact loose LTSurf directory; no resolved record offset.",
+        "limit": "The old R498 miss does not prove global absence.79 may resolve in another bank/private initialization;80 has no newly qualified selection role. These are unresolved namespace/index lookups, not known indexed files awaiting extraction."
+      },
+      {
+        "item": "Numeric portrait/animation PNG bank",
+        "evidence": "12 existing96byte tables match fixedPE and retain48 numeric states. Conservative base..base+limit filename envelope0.png..802.png yields no exact matches in the five Native indexes or looseNativeLTSurf. R498 reports base_png+frame routed via834BD0.",
+        "limit": "The pointer-bank resolution/format/namespace is not qualified.803 is a lookup envelope, not an asserted required frame count; frame_limit endpoint semantics remain unknown. No shared/Classic equivalence assumed."
+      }
+    ],
+    "mapping_unknown": [
+      {
+        "item": "Class and variant semantic identity",
+        "known": "Existing R498 metadata numeric selector:class-1 empty;0..4 explicit;otherwise630190;EDXzero/nonzero. Raw table offsets/values confirmed.",
+        "unknown": "Numeric table-to-class association is retained R498 metadata, not a new selector-body proof. Human class names/sex enum, PNG bank entries and image dimensions are unknown; variant_nonzero must not be relabeled sex."
+      },
+      {
+        "item": "Selection background phase",
+        "known": "Existing Native6314/7482 both640x480 and fixedbytes496F05..496F2C choose6314when64AFA0zero or7482nonzero then495520(kind7,631EC8/631ECC).",
+        "unknown": "This finite historical character-UI branch does not identify the Directory phase versus another character subscene. Do not assign either resource to Directory solely from name/dimensions; original target/crop/hit/scene transform are not proved."
+      },
+      {
+        "item": "Historical80 role and slot extent",
+        "known": "Four slots use79 atx19/176/333/490,y0 with callback4934A0 receiver0..3.",
+        "unknown": "79/80 image sizes/hit extents and80 selected/hover role have no resolved assets; four descriptor anchors do not prove Native allocation capacity or adapted8row limit."
+      }
+    ],
+    "dynamic_initialization_or_lifecycle_unknown": [
+      {
+        "item": "Portrait bank initialization",
+        "known": "R498 historical draw chain497150 ->494E00 ->415D40 ->415D70 ->415DA0; bank834BD0;mode0 ->4B9F60,mode1 ->83155C.",
+        "unknown": "Who creates/populates834BD0 and how PNG/surface objects are loaded remain unknown. Stop at existing reported private/external boundaries; no new body expansion."
+      },
+      {
+        "item": "Selected animation startup/expiry and timer",
+        "known": "Fixed table values base_png/frame_limit/delay/draw_mode/dx/dy are preserved, four states each. R498 lifecycle note4D65F0 ->4159B0 ->496660prefetch and selected+3Dh.",
+        "unknown": "State order semantics, frame_limit endpoint, clock domain, startup/expiry/reset, selection redraw and GPU/render parity remain unknown; no timer simulation or GUI acceptance."
+      },
+      {
+        "item": "64AFA0 background selector lifecycle",
+        "known": "Fixed branch checks zero/nonzero only.",
+        "unknown": "Writer/initialization/value ownership and association with desired selection phase are not proven here; disk branch is not live flag evidence."
+      }
+    ]
+  },
+  "known_indexed_but_unextracted_count": 0,
+  "original_full_scene_resources_sufficient": false,
+  "qualification": "Existing six images are available; four action buttons source-bound. Two backgrounds remain scene candidates, portrait-bank mapping and lifecycle remain open. No Classic assets, art generation, new extraction or capacity guesses. Not a product completion claim."
+}

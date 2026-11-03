@@ -1,0 +1,12 @@
+{
+  "retained_exceptions": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\.pytest_cache",
+      "reason": "Windows denied directory listing, ACL reading and nonrecursive empty-directory removal; current token is not elevated; no recursive ownership/ACL changes attempted."
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\baseline-0.6.66-hygiene-restore-check\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\org\\apache\\mina\\core\\buffer\\AbstractIoBuffer.java",
+      "reason": "Restored single-file validation sample; content verified. Automatic approval review rejected its deletion with blocked by policy and no further reason."
+    }
+  ]
+}

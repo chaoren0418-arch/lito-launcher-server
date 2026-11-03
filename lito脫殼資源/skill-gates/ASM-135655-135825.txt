@@ -1,0 +1,171 @@
+135655: sub_43F6C0 proc near                    ; CODE XREF: ___:0047C955↓p
+135656: 
+135657: var_84= byte ptr -84h
+135658: var_4= dword ptr -4
+135659: 
+135660: push    ebp
+135661: mov     ebp, esp
+135662: sub     esp, 84h
+135663: mov     ecx, dword_647988
+135664: push    ebx
+135665: push    esi
+135666: push    edi
+135667: lea     eax, [ebp+var_4]
+135668: push    1
+135669: push    eax
+135670: push    offset aListTil                 ; "list.til"
+135671: call    sub_42EA50
+135672: 
+135673: mov     esi, eax
+135674: test    esi, esi
+135675: jz      loc_43FB0A
+135676: 
+135677: mov     ecx, [ebp+var_4]
+135678: call    sub_478710
+135679: 
+135680: mov     ebx, dword_4F731C
+135681: push    esi
+135682: call    ebx ; dword_4F731C
+135683: 
+135684: push    esi
+135685: mov     dword_647E88, eax
+135686: call    sub_4F103C
+135687: 
+135688: mov     eax, dword_647E88
+135689: add     esp, 8
+135690: test    eax, eax
+135691: jle     loc_43FB0A
+135692: 
+135693: lea     ecx, ds:0[eax*4]
+135694: push    ecx
+135695: call    sub_4F118C
+135696: 
+135697: ; ---------------------------------------------------------------------------
+135698: mov     ecx, dword_647E88
+135699: mov     edi, eax
+135700: xor     eax, eax
+135701: mov     dword_647E8C, edi
+135702: add     esp, 4
+135703: rep stosd
+135704: call    sub_43DE10
+135705: 
+135706: ; ---------------------------------------------------------------------------
+135707: test    al, al
+135708: jz      loc_43FB0A
+135709: 
+135710: mov     ecx, offset dword_834774
+135711: mov     eax, offset word_508648
+135712: 
+135713: 
+135714: loc_43F751:                             ; CODE XREF: sub_43F6C0+A1↓j
+135715: movsx   edx, word ptr [eax]
+135716: mov     [ecx], edx
+135717: add     eax, 2
+135718: add     ecx, 4
+135719: cmp     eax, (offset loc_5086A7+1)
+135720: jl      short loc_43F751
+135721: 
+135722: mov     ecx, offset dword_834834
+135723: mov     eax, offset dword_508728
+135724: 
+135725: 
+135726: loc_43F76D:                             ; CODE XREF: sub_43F6C0+BD↓j
+135727: movsx   edx, word ptr [eax]
+135728: mov     [ecx], edx
+135729: add     eax, 2
+135730: add     ecx, 4
+135731: cmp     eax, offset dword_508738
+135732: jl      short loc_43F76D
+135733: 
+135734: mov     ecx, offset dword_834548
+135735: mov     eax, offset word_508648
+135736: 
+135737: 
+135738: loc_43F789:                             ; CODE XREF: sub_43F6C0+D9↓j
+135739: movsx   edx, word ptr [eax]
+135740: mov     [ecx], edx
+135741: add     eax, 2
+135742: add     ecx, 4
+135743: cmp     eax, offset dword_508668
+135744: jl      short loc_43F789
+135745: 
+135746: mov     ecx, offset dword_834588
+135747: mov     eax, offset dword_508708
+135748: 
+135749: 
+135750: loc_43F7A5:                             ; CODE XREF: sub_43F6C0+F5↓j
+135751: movsx   edx, word ptr [eax]
+135752: mov     [ecx], edx
+135753: add     eax, 2
+135754: add     ecx, 4
+135755: cmp     eax, offset dword_508710
+135756: jl      short loc_43F7A5
+135757: 
+135758: mov     ecx, offset dword_8345A8
+135759: mov     eax, offset dword_508710
+135760: 
+135761: 
+135762: loc_43F7C1:                             ; CODE XREF: sub_43F6C0+111↓j
+135763: movsx   edx, word ptr [eax]
+135764: mov     [ecx], edx
+135765: add     eax, 2
+135766: add     ecx, 4
+135767: cmp     eax, offset dword_508718
+135768: jl      short loc_43F7C1
+135769: 
+135770: mov     ecx, offset dword_8345C8
+135771: mov     eax, offset dword_508718
+135772: 
+135773: 
+135774: loc_43F7DD:                             ; CODE XREF: sub_43F6C0+12D↓j
+135775: movsx   edx, word ptr [eax]
+135776: mov     [ecx], edx
+135777: add     eax, 2
+135778: add     ecx, 4
+135779: cmp     eax, offset word_508720
+135780: jl      short loc_43F7DD
+135781: 
+135782: movsx   eax, word_508720
+135783: movsx   ecx, word_508722
+135784: movsx   edx, word_50867A
+135785: mov     dword_834598, eax
+135786: mov     dword_8345B8, ecx
+135787: movsx   eax, word_508724
+135788: mov     dword_8345D8, eax
+135789: mov     dword_8345C4, edx
+135790: mov     ecx, offset dword_8345E8
+135791: mov     eax, offset word_508648
+135792: 
+135793: 
+135794: loc_43F82B:                             ; CODE XREF: sub_43F6C0+17B↓j
+135795: movsx   edx, word ptr [eax]
+135796: mov     [ecx], edx
+135797: add     eax, 2
+135798: add     ecx, 4
+135799: cmp     eax, (offset loc_5086A7+1)
+135800: jl      short loc_43F82B
+135801: 
+135802: mov     ecx, offset dword_8346A8
+135803: mov     eax, offset loc_508748
+135804: 
+135805: 
+135806: loc_43F847:                             ; CODE XREF: sub_43F6C0+197↓j
+135807: movsx   edx, word ptr [eax]
+135808: mov     [ecx], edx
+135809: add     eax, 2
+135810: add     ecx, 4
+135811: cmp     eax, offset word_5087AE
+135812: jl      short loc_43F847
+135813: 
+135814: mov     ecx, offset dword_834408
+135815: mov     eax, offset word_508648
+135816: 
+135817: 
+135818: loc_43F863:                             ; CODE XREF: sub_43F6C0+1B3↓j
+135819: movsx   edx, word ptr [eax]
+135820: mov     [ecx], edx
+135821: add     eax, 2
+135822: add     ecx, 4
+135823: cmp     eax, offset dword_5086E8
+135824: jl      short loc_43F863
+135825: 

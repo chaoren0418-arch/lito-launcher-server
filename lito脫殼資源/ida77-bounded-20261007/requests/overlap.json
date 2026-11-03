@@ -1,0 +1,27 @@
+{
+  "schema": "ida77-bounded-request-v1",
+  "source_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+  "source_sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3",
+  "image_base": 4194304,
+  "functions": [
+    {
+      "rva": 4096,
+      "end_rva": 4109
+    },
+    {
+      "rva": 4100,
+      "end_rva": 4105
+    }
+  ],
+  "limits": {
+    "timeout_seconds": 30,
+    "max_functions": 8,
+    "max_function_bytes": 4096,
+    "max_instructions_per_function": 512,
+    "max_xrefs_per_function": 64,
+    "max_pseudocode_chars": 8192,
+    "max_output_bytes": 262144,
+    "max_job_disk_bytes": 67108864
+  },
+  "authorization_scope": "synthetic_tool_fixture_only"
+}

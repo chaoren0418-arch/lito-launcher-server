@@ -1,0 +1,53 @@
+{
+  "version": "0.6.68",
+  "previous": "0.6.67",
+  "old_jar_sha256": "76ebe06d89dbd19cdb577e229657883c16156c77a23ede288880c25584d2e3cc",
+  "new_jar_sha256": "c02aaae8d54a27e30460be2e3c47709ee64d35f007a8be27ac74a327268b9539",
+  "changed_entries": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GmTravel.class",
+    "local/lito381/server/ResourceDatabase.class"
+  ],
+  "database_inserted_commands": [
+    "loc",
+    "move"
+  ],
+  "command_access_level": 200,
+  "storm_walk_item_ids": [
+    42501
+  ],
+  "source_database_writes": false,
+  "dll_changed": false,
+  "native_startup_pending": false,
+  "manual_test_pending": true,
+  "tests": {
+    "TravelRegression": true,
+    "ForcedCombatRegression": true,
+    "prior_six_regressions": true,
+    "native_startup": {
+      "pins": true,
+      "server_release_verified": true,
+      "formal_input_gate_verified": true,
+      "hash_case_and_mismatch_regression": true,
+      "footer_removed": true,
+      "class_compatibility": {
+        "png_objects": 1128,
+        "seven_class_hooks": true,
+        "lobby_draw_hook": true,
+        "new_class_names": [
+          "龍騎士",
+          "龍騎士",
+          "幻術士",
+          "幻術士"
+        ],
+        "class_skill_hooks": true,
+        "forced_combat_send_hook": "0x703a1b80"
+      },
+      "native_ready": true,
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "run": "cleanup-smoke-1791988184367316300"
+    }
+  },
+  "scope": "loc and same-map move; classname-based wand.Storm_Walk; no cross-map inspection mode"
+}

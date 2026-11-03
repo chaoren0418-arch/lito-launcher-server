@@ -1,0 +1,9 @@
+{
+  "stage": "Publication only, all process tests already completed",
+  "error": "OWNED_PATH_REQUIRED: runtime writer correctly permits only the new runtime directory; requested primary report is in its authorized BIN parent",
+  "source_sha256": "CBDF2A58474911A5AA1439564D0268D718734A603BE644ADF8EA0DBE50920674",
+  "exit_code": 1,
+  "correction": "Fixed explicit BIN primary-report writer, without changing runtime ownership guard; retain first compile/audit receipts and create final publication receipts separately",
+  "fixture_rerun": false,
+  "automatic_review_refusal": false
+}

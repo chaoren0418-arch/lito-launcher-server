@@ -1,0 +1,138 @@
+{
+  "status": "non-icon-native-routing-qualified",
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+      "sha256": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\\u820a\u7248\u5206\u6790\u8207\u9a57\u6536\\runtime\\LiTo.unpacked-oep-current.exe",
+      "sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\StatusFamilyProbe.java",
+      "sha256": "bf00f7e0b2b55dcbd459e8e2d32337685a96490aaa4d30e931a2731b38a02786"
+    }
+  ],
+  "routes": [
+    {
+      "case": "poison/0",
+      "packet": "32785634120000",
+      "native_receiver": "0x4accb0"
+    },
+    {
+      "case": "blind/0",
+      "packet": "0a00",
+      "native_receiver": "0x4a6f40"
+    },
+    {
+      "case": "poison/1",
+      "packet": "32785634120100",
+      "native_receiver": "0x4accb0"
+    },
+    {
+      "case": "blind/1",
+      "packet": "0a01",
+      "native_receiver": "0x4a6f40"
+    },
+    {
+      "case": "poison/2",
+      "packet": "32785634120001",
+      "native_receiver": "0x4accb0"
+    },
+    {
+      "case": "blind/2",
+      "packet": "0a02",
+      "native_receiver": "0x4a6f40"
+    },
+    {
+      "case": "invisible/0",
+      "packet": "347856341200",
+      "native_receiver": "0x4ace30"
+    },
+    {
+      "case": "invisible/1",
+      "packet": "347856341201",
+      "native_receiver": "0x4ace30"
+    },
+    {
+      "case": "paralysis/PARALYSIS_APPLY",
+      "packet": "2502",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/PARALYSIS_RELEASE",
+      "packet": "2503",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/SECOND_PARALYSIS_APPLY",
+      "packet": "2504",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/SECOND_PARALYSIS_RELEASE",
+      "packet": "2505",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/TELEPORT_LOCK",
+      "packet": "2506",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/TELEPORT_UNLOCK",
+      "packet": "2507",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/SLEEP_APPLY",
+      "packet": "250a",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/SLEEP_RELEASE",
+      "packet": "250b",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/FREEZE_APPLY",
+      "packet": "250c",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/FREEZE_RELEASE",
+      "packet": "250d",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/STUN_APPLY",
+      "packet": "2516",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/STUN_RELEASE",
+      "packet": "2517",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/BIND_APPLY",
+      "packet": "2518",
+      "native_receiver": "0x4a6a80"
+    },
+    {
+      "case": "paralysis/BIND_RELEASE",
+      "packet": "2519",
+      "native_receiver": "0x4a6a80"
+    }
+  ],
+  "classification": {
+    "icon_paths": "shield selectors, strength/dexterity, breath, speed/brave, own graphic, packetbox34/56/154: separate compiled receiver tests",
+    "non_icon_paths": "poison actor color, blindness viewport, invisibility actor visibility, paralysis input/state remain native",
+    "not_resource_presentation": "characterStatus/magicStatus/criminalStatus and lobby/buddy/server status retain their existing gameplay/UI contracts"
+  },
+  "limits": [
+    "This proves paired writer-to-native routing, not a new implementation of negative spell gameplay.",
+    "No claim that all optional TW-only entity flags or every server skill are ported by this resource candidate."
+  ]
+}

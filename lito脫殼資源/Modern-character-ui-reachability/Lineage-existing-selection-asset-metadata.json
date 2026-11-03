@@ -1,0 +1,649 @@
+{
+  "family": "Existing0429classicLineage assets/design exports, separate from Native LiTo LTsurf/630DF8 evidence. Not currently loaded by inspected Modern selection window.",
+  "layout_reads": [
+    {
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelectScene.json",
+          "bytes": 5308,
+          "sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329"
+        },
+        "captured_content_sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelectScene.json",
+          "bytes": 5308,
+          "sha256": "AAB8DCBC50B7A71E505C763EA25D6A50CAF96041F98017C06AC4B48421234329"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.852869+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "original_metadata_source_string_not_followed": "D:\\經典服UI\\CharacterSelectScene.csb",
+      "relative_path": "CharacterSelectScene.csb",
+      "nodes": [
+        {
+          "json_node_path": "Scene",
+          "name": "Scene",
+          "classname": "Node",
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "size": {
+            "width": 1280.0,
+            "height": 960.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Scene/CharacterSelectLayout",
+          "name": "CharacterSelectLayout",
+          "classname": "ProjectNode",
+          "position": {
+            "x": 640.0,
+            "y": 480.0
+          },
+          "size": {
+            "width": 0.0,
+            "height": 0.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [],
+          "file_name": null
+        }
+      ]
+    },
+    {
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelect\\CharacterSelectLayout.json",
+          "bytes": 1098997,
+          "sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46"
+        },
+        "captured_content_sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\csb_json\\CharacterSelect\\CharacterSelectLayout.json",
+          "bytes": 1098997,
+          "sha256": "722962765CBDE30F3AEB17CFE66F65A8185C7F631D21676702737E1A129E2B46"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.853368+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "original_metadata_source_string_not_followed": "D:\\經典服UI\\CharacterSelect\\CharacterSelectLayout.csb",
+      "relative_path": "CharacterSelect/CharacterSelectLayout.csb",
+      "nodes": [
+        {
+          "json_node_path": "Node/Root/Background",
+          "name": "Background",
+          "classname": "ImageView",
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "size": {
+            "width": 1280.0,
+            "height": 960.0
+          },
+          "anchor": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Bg_CharacterSelect.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Bg_CharacterSelect.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/ListView",
+          "name": "ListView",
+          "classname": "ListView",
+          "position": {
+            "x": -545.0,
+            "y": -55.0
+          },
+          "size": {
+            "width": 1100.0,
+            "height": 534.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/CharacterName",
+          "name": "CharacterName",
+          "classname": "ImageView",
+          "position": {
+            "x": -555.9998,
+            "y": -137.0
+          },
+          "size": {
+            "width": 246.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_CharacterName.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_CharacterName.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/Bloodpldge",
+          "name": "Bloodpldge",
+          "classname": "ImageView",
+          "position": {
+            "x": -554.0,
+            "y": -174.0
+          },
+          "size": {
+            "width": 246.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_Blood-Pledge.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Blood-Pledge.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/Class",
+          "name": "Class",
+          "classname": "ImageView",
+          "position": {
+            "x": -517.0,
+            "y": -230.0
+          },
+          "size": {
+            "width": 210.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_Class.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Class.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/HitPoint",
+          "name": "HitPoint",
+          "classname": "ImageView",
+          "position": {
+            "x": -517.0,
+            "y": -363.0
+          },
+          "size": {
+            "width": 210.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_HitPoint.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_HitPoint.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/ManaPoint",
+          "name": "ManaPoint",
+          "classname": "ImageView",
+          "position": {
+            "x": -517.0,
+            "y": -397.0001
+          },
+          "size": {
+            "width": 210.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_ManaPoint.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_ManaPoint.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/AmorClass",
+          "name": "AmorClass",
+          "classname": "ImageView",
+          "position": {
+            "x": -517.0,
+            "y": -453.0001
+          },
+          "size": {
+            "width": 210.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_ArmorClass.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_ArmorClass.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/Level",
+          "name": "Level",
+          "classname": "ImageView",
+          "position": {
+            "x": -62.0,
+            "y": -228.0
+          },
+          "size": {
+            "width": 210.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_Level.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Level.png",
+              "role": "file"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/Bt_Ok",
+          "name": "Bt_Ok",
+          "classname": "Button",
+          "position": {
+            "x": 478.0,
+            "y": -339.0
+          },
+          "size": {
+            "width": 110.0,
+            "height": 38.0
+          },
+          "anchor": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_Ok_N.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+              "role": "normal"
+            },
+            {
+              "path": "Tx_CC_Ok_C.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Ok_C.png",
+              "role": "pressed"
+            },
+            {
+              "path": "Tx_CC_Ok_N.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+              "role": "disabled"
+            }
+          ],
+          "file_name": null
+        },
+        {
+          "json_node_path": "Node/Root/Bt_Cancel",
+          "name": "Bt_Cancel",
+          "classname": "Button",
+          "position": {
+            "x": 478.0,
+            "y": -374.0
+          },
+          "size": {
+            "width": 192.0,
+            "height": 35.0
+          },
+          "anchor": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "visible": true,
+          "resources": [
+            {
+              "path": "Tx_CC_Cancel_N.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+              "role": "normal"
+            },
+            {
+              "path": "Tx_CC_Cancel_C.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Cancel_C.png",
+              "role": "pressed"
+            },
+            {
+              "path": "Tx_CC_Cancel_N.png",
+              "plist": "UI_Resource/OutGames.plist",
+              "resource_type": 1,
+              "extracted_png": "D:\\經典服UI_extracted_png\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+              "role": "disabled"
+            }
+          ],
+          "file_name": null
+        }
+      ]
+    }
+  ],
+  "atlas_plist_read": {
+    "source_before": {
+      "path": "D:\\lineage開發\\介面UI\\經典版\\0429經典服UI\\UI_Resource\\OutGames.plist",
+      "bytes": 154746,
+      "sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A"
+    },
+    "captured_content_sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A",
+    "source_after": {
+      "path": "D:\\lineage開發\\介面UI\\經典版\\0429經典服UI\\UI_Resource\\OutGames.plist",
+      "bytes": 154746,
+      "sha256": "43CA77A6E0FB24F181F871AC2B068621D7CD850E8656F69D347D46729E3F517A"
+    },
+    "stable_during_read": true,
+    "read_at": "2026-10-06T09:14:16.886710+08:00",
+    "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+  },
+  "selected_preexisting_PNG_assets": [
+    {
+      "frame_name": "Bg_CharacterSelect.png",
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Bg_CharacterSelect.png",
+          "bytes": 71670,
+          "sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2"
+        },
+        "captured_content_sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Bg_CharacterSelect.png",
+          "bytes": 71670,
+          "sha256": "0B528A0ED5183A4DB5C60A81D62DA138199E8E22CAABC261B57F7D86CF0889C2"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:16.969939+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "PNG_IHDR_dimensions": {
+        "width": 1280,
+        "height": 960
+      },
+      "existing_plist_frame_metadata": {
+        "frame": "{{1,1},{1280,960}}",
+        "offset": "{0,0}",
+        "rotated": false,
+        "sourceColorRect": "{{0,0},{1280,960}}",
+        "sourceSize": "{1280,960}"
+      },
+      "layout_reference_present": true,
+      "new_image_or_crop": false
+    },
+    {
+      "frame_name": "Tx_CC_Ok_N.png",
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+          "bytes": 1049,
+          "sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B"
+        },
+        "captured_content_sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_N.png",
+          "bytes": 1049,
+          "sha256": "F76C54D26B56649F69E001B02CC51E430689B460DB65D1CA1D01FF489485465B"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:17.045979+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "PNG_IHDR_dimensions": {
+        "width": 110,
+        "height": 38
+      },
+      "existing_plist_frame_metadata": {
+        "frame": "{{1805,3774},{110,38}}",
+        "offset": "{0,0}",
+        "rotated": true,
+        "sourceColorRect": "{{0,0},{110,38}}",
+        "sourceSize": "{110,38}"
+      },
+      "layout_reference_present": true,
+      "new_image_or_crop": false
+    },
+    {
+      "frame_name": "Tx_CC_Ok_C.png",
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_C.png",
+          "bytes": 1730,
+          "sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE"
+        },
+        "captured_content_sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Ok_C.png",
+          "bytes": 1730,
+          "sha256": "FDFD364F83CE02C508A7E291BFA3A8B7F1B31288F078F2D10BB7C1F078785EBE"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:17.054321+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "PNG_IHDR_dimensions": {
+        "width": 110,
+        "height": 38
+      },
+      "existing_plist_frame_metadata": {
+        "frame": "{{1765,3774},{110,38}}",
+        "offset": "{0,0}",
+        "rotated": true,
+        "sourceColorRect": "{{0,0},{110,38}}",
+        "sourceSize": "{110,38}"
+      },
+      "layout_reference_present": true,
+      "new_image_or_crop": false
+    },
+    {
+      "frame_name": "Tx_CC_Cancel_N.png",
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+          "bytes": 2040,
+          "sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698"
+        },
+        "captured_content_sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_N.png",
+          "bytes": 2040,
+          "sha256": "C0DB894B66FAD4259228A1BAE5FD8FDBED19540AD25CFC5467E7DF22B32EB698"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:17.653805+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "PNG_IHDR_dimensions": {
+        "width": 192,
+        "height": 35
+      },
+      "existing_plist_frame_metadata": {
+        "frame": "{{1848,4060},{192,35}}",
+        "offset": "{0,0}",
+        "rotated": false,
+        "sourceColorRect": "{{0,0},{192,35}}",
+        "sourceSize": "{192,35}"
+      },
+      "layout_reference_present": true,
+      "new_image_or_crop": false
+    },
+    {
+      "frame_name": "Tx_CC_Cancel_C.png",
+      "read": {
+        "source_before": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_C.png",
+          "bytes": 2800,
+          "sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663"
+        },
+        "captured_content_sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663",
+        "source_after": {
+          "path": "D:\\lineage開發\\介面UI\\經典版\\經典服UI_全部拆完+解完的座標\\UI_Resource\\Outgames\\Tx_CC_Cancel_C.png",
+          "bytes": 2800,
+          "sha256": "85F289B5BFF91DD52022AF784E0BF0CBD94997CA24CA5E4AC81AA70F2229F663"
+        },
+        "stable_during_read": true,
+        "read_at": "2026-10-06T09:14:17.675024+08:00",
+        "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+      },
+      "PNG_IHDR_dimensions": {
+        "width": 192,
+        "height": 35
+      },
+      "existing_plist_frame_metadata": {
+        "frame": "{{36,1220},{192,35}}",
+        "offset": "{0,0}",
+        "rotated": false,
+        "sourceColorRect": "{{0,0},{192,35}}",
+        "sourceSize": "{192,35}"
+      },
+      "layout_reference_present": true,
+      "new_image_or_crop": false
+    }
+  ],
+  "coordinate_semantics": "Existing CSB JSON local position/anchor/scale and atlas crop metadata only. No inferred Modern screen transform, native hit bounds or executable callback. Exported source strings outside this workspace are historical metadata and were not followed.",
+  "original_assets_modified_or_created": false
+}

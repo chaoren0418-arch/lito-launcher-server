@@ -1,0 +1,45 @@
+{
+  "package_status": "未匯入、未接線",
+  "referenced_files": [
+    {
+      "contract_source_id": 522,
+      "reported_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "actual_file_exists": true,
+      "sha256_matches": true,
+      "limitation": "static address is PE virtual address, not LiTo.bin disk offset; no runtime resource binding inferred"
+    },
+    {
+      "contract_source_id": 522,
+      "reported_path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "actual_file_exists": true,
+      "sha256_matches": true,
+      "limitation": "static address is PE virtual address, not LiTo.bin disk offset; no runtime resource binding inferred"
+    },
+    {
+      "contract_source_id": 522,
+      "reported_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "actual_file_exists": true,
+      "sha256_matches": true,
+      "limitation": "static address is PE virtual address, not LiTo.bin disk offset; no runtime resource binding inferred"
+    },
+    {
+      "contract_source_id": 524,
+      "reported_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "actual_file_exists": true,
+      "sha256_matches": true,
+      "limitation": "static address is PE virtual address, not LiTo.bin disk offset; no runtime resource binding inferred"
+    }
+  ],
+  "source_kind_legend": {
+    "native-code": "原生程式／既有靜態分析",
+    "native-resource": "原生或共用客戶端資源；版本另列",
+    "resource-derived": "資源推導",
+    "runtime-adjusted": "保留執行校正與使用者確認",
+    "shared-db": "共用天堂 SELECT 定義",
+    "retained-history": "保留歷史說明",
+    "retained-server": "保留其他伺服器",
+    "server-policy": "專案／候選預設",
+    "client-extension": "登入器修補",
+    "generated-resource": "生成且隨版固定的資源"
+  }
+}

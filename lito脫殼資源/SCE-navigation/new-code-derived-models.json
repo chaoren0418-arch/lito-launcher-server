@@ -1,0 +1,114 @@
+{
+  "models": [
+    {
+      "label": "map564_to_lowbyte64",
+      "actual": 64,
+      "expected": 64,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "mapFFFF_sentinel",
+      "actual": 255,
+      "expected": 255,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "mapFF9C_sentinel",
+      "actual": 156,
+      "expected": 156,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "map00FF_lowbyte_wrap",
+      "actual": 11,
+      "expected": 11,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "signed_count_0_8_9_128_255",
+      "actual": [
+        0,
+        8,
+        8,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        8,
+        8,
+        0,
+        0
+      ],
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "reset_span_bytes",
+      "actual": 5200,
+      "expected": 5200,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "reset_word_count",
+      "actual": 50,
+      "expected": 50,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "last_reset_word_end",
+      "actual": 6596848,
+      "expected": 6596848,
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "dispatch_mode4_phases2_3",
+      "actual": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "expected": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    },
+    {
+      "label": "result_signed_default",
+      "actual": [
+        0,
+        2,
+        11,
+        12,
+        12,
+        12,
+        12
+      ],
+      "expected": [
+        0,
+        2,
+        11,
+        12,
+        12,
+        12,
+        12
+      ],
+      "match": true,
+      "kind": "New code-derived bounded model; not native execution"
+    }
+  ],
+  "old_tests_replayed": false,
+  "native_process_or_capture_started": false
+}

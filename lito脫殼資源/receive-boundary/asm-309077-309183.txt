@@ -1,0 +1,107 @@
+309077: sub_4928C0 proc near                    ; CODE XREF: sub_4934A0+49↓j
+309078:                                         ; DATA XREF: ___:00630F34↓o
+309079: 
+309080: var_48= byte ptr -48h
+309081: var_2C= byte ptr -2Ch
+309082: var_10= dword ptr -10h
+309083: var_C= dword ptr -0Ch
+309084: var_4= dword ptr -4
+309085: 
+309086: push    ebp
+309087: mov     ebp, esp
+309088: push    0FFFFFFFFh
+309089: push    offset SEH_4928C0
+309090: mov     eax, large fs:0
+309091: push    eax
+309092: mov     large fs:0, esp
+309093: sub     esp, 3Ch
+309094: push    ebx
+309095: push    esi
+309096: push    edi
+309097: mov     edx, 7Fh
+309098: mov     ecx, 1
+309099: call    sub_4C8790
+309100: 
+309101: mov     eax, dword_648F18
+309102: test    eax, eax
+309103: jz      short loc_49290D
+309104: 
+309105: mov     byte ptr [eax+0Ch], 0FFh
+309106: mov     eax, dword_648F18
+309107: mov     byte ptr [eax+0Dh], 0FFh
+309108: mov     ecx, dword_648F18
+309109: mov     byte ptr [ecx+0Eh], 0FFh
+309110: 
+309111: 
+309112: loc_49290D:                             ; CODE XREF: sub_4928C0+34↑j
+309113: mov     edx, 3
+309114: xor     ecx, ecx
+309115: call    sub_494120
+309116: 
+309117: cmp     eax, 0FFFFFFFFh
+309118: jz      loc_492F81
+309119: 
+309120: lea     eax, [eax+eax*4]
+309121: lea     edx, [eax+eax*8]
+309122: mov     al, byte_62FACD[edx*4]
+309123: cmp     al, 0FFh
+309124: lea     ebx, ds:62FAA0h[edx*4]
+309125: jz      loc_492F6E
+309126: 
+309127: cmp     byte ptr [ebx+2Eh], 0FFh
+309128: jz      loc_492F6E
+309129: 
+309130: mov     al, [ebx+37h]
+309131: test    al, al
+309132: jz      loc_492F6E
+309133: 
+309134: mov     ecx, 2
+309135: call    sub_49A510
+309136: 
+309137: mov     edi, ebx
+309138: or      ecx, 0FFFFFFFFh
+309139: xor     eax, eax
+309140: mov     off_62C9BC, offset nullsub_25
+309141: mov     off_62C9B8, offset nullsub_24
+309142: lea     edx, [ebp+var_2C]
+309143: repne scasb
+309144: not     ecx
+309145: sub     edi, ecx
+309146: mov     eax, ecx
+309147: mov     esi, edi
+309148: mov     edi, offset dword_64ABF8
+309149: shr     ecx, 2
+309150: rep movsd
+309151: mov     ecx, eax
+309152: and     ecx, 3
+309153: rep movsb
+309154: lea     ecx, [ebp+var_48]
+309155: push    ecx
+309156: mov     ecx, ebx
+309157: call    sub_46EA30
+309158: 
+309159: lea     edi, [ebp+var_2C]
+309160: or      ecx, 0FFFFFFFFh
+309161: xor     eax, eax
+309162: repne scasb
+309163: not     ecx
+309164: sub     edi, ecx
+309165: mov     edx, ecx
+309166: mov     esi, edi
+309167: mov     edi, offset byte_64ACAD
+309168: shr     ecx, 2
+309169: rep movsd
+309170: mov     ecx, edx
+309171: and     ecx, 3
+309172: rep movsb
+309173: lea     edi, [ebx+1Ch]
+309174: or      ecx, 0FFFFFFFFh
+309175: repne scasb
+309176: not     ecx
+309177: sub     edi, ecx
+309178: mov     eax, ecx
+309179: mov     esi, edi
+309180: mov     edi, offset dword_64AC14
+309181: shr     ecx, 2
+309182: rep movsd
+309183: mov     ecx, eax

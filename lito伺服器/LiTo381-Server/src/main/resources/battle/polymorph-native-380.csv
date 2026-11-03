@@ -1,0 +1,109 @@
+# Exact polymorphs rows matched to selected Text.pak monlist0..9 actions.
+# selection,gfx,min_level,weapon_mask,armor_mask,skill_usable,cause_mask,standard_menu,random_weight
+selection,gfx,min_level,weapon_mask,armor_mask,skill_usable,cause_mask,standard_menu,random_weight
+re bugbear,8859,1,751,945,1,7,1,0
+re cockatrice,3632,1,0,4095,1,7,1,0
+re dragon fly,8862,1,751,4095,1,7,1,0
+re dwarf,3863,1,751,4095,1,7,1,0
+re gelatincube,3945,1,751,0,1,7,1,0
+re ghast,8858,1,751,945,1,7,1,0
+re ghoul,3873,1,751,4095,1,7,1,0
+re giant ant,1037,1,0,136,0,7,1,0
+re giant ant soldier,1039,1,0,136,0,7,1,0
+re kiwi parrot,8866,1,0,954,1,7,1,0
+re lizardman,8865,1,751,4095,1,7,1,0
+re lycanthrope,3874,1,751,4095,1,7,1,0
+re middle oum,3950,1,751,4095,1,7,1,0
+re orc,3906,1,751,4095,1,7,1,0
+re orc scout,8860,1,256,4095,1,7,1,0
+re owlbear,8864,1,751,4095,1,7,1,0
+re raccoon,8863,1,751,4095,1,7,1,0
+re ratman,8867,1,751,4095,1,7,1,0
+re skeleton,2374,1,751,4095,1,7,1,0
+re skeleton archer,3871,1,256,4095,1,7,1,0
+re succubus,8861,1,751,4095,1,7,1,0
+re ungoliant,146,1,0,0,0,7,1,0
+re werewolf,3865,1,751,4095,1,7,1,0
+re wild fang,8868,1,0,4095,1,7,1,0
+re bandit bow,8786,30,256,4095,1,7,1,0
+re darkelf assassin,3634,30,751,4095,1,7,1,0
+re darkelf carrier,8782,30,1080,4095,1,7,1,0
+re elder,8784,30,751,4095,1,7,1,0
+re guard sword,8781,30,751,4095,1,7,1,0
+re orc axe,8785,30,751,4095,1,7,1,0
+re bandit axe,8791,40,751,4095,1,7,1,0
+re dark elder,8790,40,751,4095,1,7,1,0
+re darkelf ranger,8792,40,256,4095,1,7,1,0
+re guard chief,8787,40,751,4095,1,7,1,0
+re guard spear,8788,40,1080,4095,1,7,1,0
+re hose,8789,40,751,4095,1,7,1,0
+re black wizard,8796,45,751,4095,1,7,1,0
+re blaze,8795,45,751,4095,1,7,1,0
+re cargo,8793,45,751,4095,1,7,1,0
+re darkelf spear,8794,45,1080,4095,1,7,1,0
+re darkelf thief,8798,45,256,4095,1,7,1,0
+re dwarf boss,8797,45,751,4095,1,7,1,0
+re assassin master,8801,50,751,4095,1,7,1,0
+re baphomet,8802,50,751,4095,1,7,1,0
+re black knight,8800,50,1080,4095,1,7,1,0
+re black knight chief,8799,50,751,4095,1,7,1,0
+re darkelf guard,8804,50,256,4095,1,7,1,0
+re minotaur,8803,50,751,4095,1,7,1,0
+death 52,6137,52,1791,4095,1,7,1,0
+re darkelf bow,8808,52,256,4095,1,7,1,0
+re dreik,8805,52,192,4095,1,7,1,0
+re great minotaur,8807,52,8,4095,1,7,1,0
+re xinclair,8806,52,751,4095,1,7,1,0
+spearm 52,7332,52,1080,4095,1,7,1,0
+darkelf 55,6145,55,256,4095,1,7,1,0
+death 55,6142,55,1791,4095,1,7,1,0
+neo black assassin,6279,55,751,4095,1,7,1,0
+neo black knight,6267,55,751,4095,1,7,1,0
+neo black mage,6268,55,751,4095,1,7,1,0
+neo black scouter,6269,55,256,4095,1,7,1,0
+spearm 55,7338,55,1080,4095,1,7,1,0
+darkelf 60,6150,60,256,4095,1,7,1,0
+death 60,6147,60,1791,4095,1,7,1,0
+neo silver assassin,6280,60,751,4095,1,7,1,0
+neo silver knight,6270,60,751,4095,1,7,1,0
+neo silver mage,6271,60,751,4095,1,7,1,0
+neo silver scouter,6272,60,256,4095,1,7,1,0
+spearm 60,7339,60,1080,4095,1,7,1,0
+darkelf 65,6155,65,256,4095,1,7,1,0
+death 65,6152,65,1791,4095,1,7,1,0
+neo gold assassin,6281,65,751,4095,1,7,1,0
+neo gold knight,6273,65,751,4095,1,7,1,0
+neo gold mage,6274,65,751,4095,1,7,1,0
+neo gold scouter,6275,65,256,4095,1,7,1,0
+spearm 65,7340,65,1080,4095,1,7,1,0
+darkelf 70,6160,70,256,4095,1,7,1,0
+death 70,6157,70,1791,4095,1,7,1,0
+neo platinum assassin,6282,70,751,4095,1,7,1,0
+neo platinum knight,6276,70,751,4095,1,7,1,0
+neo platinum mage,6277,70,751,4095,1,7,1,0
+neo platinum scouter,6278,70,256,4095,1,7,1,0
+spearm 70,7341,70,1080,4095,1,7,1,0
+darkelf 75,9225,75,256,4095,1,7,1,47600
+death 75,9205,75,1791,4095,1,7,1,47600
+spearm 75,9011,75,1080,4095,1,7,1,47600
+young dantes,8851,75,751,4095,1,7,1,47600
+young helvine,8900,75,256,4095,1,7,1,47600
+young kelenis,8774,75,751,4095,1,7,1,47600
+young ken lauel,8817,75,751,4095,1,7,1,48000
+darkelf 80,9226,80,256,4095,1,7,1,47600
+death 80,9206,80,1791,4095,1,7,1,47600
+spearm 80,9012,80,1080,4095,1,7,1,47600
+young bluedica,8978,80,751,4095,1,7,1,47600
+young gilian,8913,80,256,4095,1,7,1,47600
+young gunter,8812,80,751,4095,1,7,1,47600
+young joewoo,9003,80,751,4095,1,7,1,47600
+# Direct LT item form retained from the prior scroll slice.
+death knight,3784,52,1791,4095,1,7,0,0
+# Selected 380_db no-control-ring weighted forms that are not in monlist0..9.
+Lv Eighty Dark DeathKnight,12229,100,1791,4095,1,7,0,47600
+Lv Eighty Lightning DeathKnight,12230,100,1791,4095,1,7,0,47600
+Lv Eighty Gold DeathKnight,12231,110,1791,4095,1,7,0,47600
+Lv Eighty Fire DeathKnight,12232,110,1791,4095,1,7,0,47600
+lv bounty hunter,11446,200,751,4095,1,7,0,47600
+lv night watch,11447,200,751,4095,1,7,0,47600
+lv black eagle,11448,200,256,4095,1,7,0,47600

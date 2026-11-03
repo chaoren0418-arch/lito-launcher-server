@@ -1,0 +1,9 @@
+import java.nio.file.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+/** Fixture-only: modern paired admission owns multiple receipts; assert ownership, not private count1. */
+public final class AdaptWeaponLifeFixture {
+ public static void main(String[]a)throws Exception{var c=new ClassNode();new ClassReader(Files.readAllBytes(Path.of(a[0]))).accept(c,0);int count=0;for(var m:c.methods)if(m.name.equals("exercise"))for(var i:m.instructions.toArray())if(i instanceof MethodInsnNode call&&call.owner.equals("local/lito381/server/NativePlayerVitalCompletions")&&call.name.equals("pending")){
+  var one=i.getNext();while(one!=null&&one.getOpcode()<0)one=one.getNext();if(one==null)continue;
+  if(one.getOpcode()==LCONST_1){var cmp=one.getNext();while(cmp!=null&&cmp.getOpcode()<0)cmp=cmp.getNext();var branch=cmp==null?null:cmp.getNext();while(branch!=null&&branch.getOpcode()<0)branch=branch.getNext();if(cmp==null||cmp.getOpcode()!=LCMP||!(branch instanceof JumpInsnNode j)||j.getOpcode()!=IFNE)throw new AssertionError("long receipt count branch");m.instructions.set(one,new InsnNode(LCONST_0));j.setOpcode(IFLE);count++;}
+  else if(one.getOpcode()==ICONST_1){var branch=one.getNext();while(branch!=null&&branch.getOpcode()<0)branch=branch.getNext();if(!(branch instanceof JumpInsnNode j)||j.getOpcode()!=IF_ICMPNE)throw new AssertionError("receipt count branch");m.instructions.remove(one);j.setOpcode(IFLE);count++;}
+ }if(count!=1)throw new AssertionError("only old count1 assertion may change: "+count);var w=new ClassWriter(ClassWriter.COMPUTE_MAXS);c.accept(w);var out=Path.of(a[1]).resolve(c.name+".class");Files.createDirectories(out.getParent());Files.write(out,w.toByteArray());System.out.println("PASS fixture-only exact pending==1 to pending>0 branch; every other instruction/declaration retained");}
+}

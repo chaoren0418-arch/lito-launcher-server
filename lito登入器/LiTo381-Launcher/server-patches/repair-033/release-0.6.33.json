@@ -1,0 +1,67 @@
+{
+  "version": "0.6.33",
+  "scope": "native tooltip style plus selected-source custom item descriptions",
+  "client": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+  "artifacts": {
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.33\\LiTo381Launcher.exe": "b8d5f17fa6b0ff84ce3c5d981f6d1456375d1eeeae547981e9ae300c40598056",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\publish-0.6.33\\development_startup.py": "50db37f4ac308666f45c348696630aa1c38ab09d67e041b5c1a413cde837f061",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\compat-details-033\\ddraw.dll": "399df2e48d47831e766b194a7af05286543edbc5fedb34073abb7644dc26d4b3",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\repair-033\\candidate.jar": "fa059cf8cd3364d86963ad93b6f7901a95a08b804e77b1143b4130991cace01d"
+  },
+  "custom_description_table": "道具_物品詳細說明",
+  "row_rule": "Item_Id=-1 global first, then exact item ID; preserve Info text and native color codes",
+  "sql_test": {
+    "item_88889_rows": 21,
+    "item_88890_rows": 21,
+    "full_hp_mp": 999999,
+    "full_mr": 999,
+    "full_ac": -999,
+    "full_sp": 888,
+    "encrypted_publication_passed": true
+  },
+  "native_style": {
+    "width": 142,
+    "bevel_edges": 8,
+    "item_palette": true,
+    "native_color_escapes": true,
+    "preserve_color_on_wrap": true,
+    "ordinary_bounded_items_use_original_renderer": true,
+    "scroll_rows": 35
+  },
+  "formal_startup": {
+    "accepted": true,
+    "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011\\server-details-033\\runs\\shared-timing-ready-1791747826980641200",
+    "port": 32020,
+    "sql_connected": true,
+    "shared_action_count": 60303,
+    "cleanup_verified": true
+  },
+  "manual_gui_verified": false,
+  "prior_user_acceptance": {
+    "result_confirm_neighbor_no_exit_dialog": true,
+    "burning_fireball_own_summon": true
+  },
+  "source_scope": {
+    "changed_classes": [
+      "local/lito381/server/ClientSession.class",
+      "local/lito381/server/LiToItemDetails.class"
+    ],
+    "only_client_session_method_instrumented": "selectedSourceAccounts; preload read-only item metadata once per selected repository"
+  },
+  "retained_limitations": [
+    "all-skill target matrix remains separate unfinished work",
+    "custom definitions reload on server restart",
+    "tooltip appearance still needs human visual acceptance"
+  ],
+  "native_startup": {
+    "run": "development-69c57efb7f804fe0b56d988eb3c706df",
+    "ready": {
+      "pid": 35524,
+      "profile": "tw13081901-v1",
+      "base_count": 30000,
+      "total_count": 30285,
+      "native_cleanup_complete": true
+    },
+    "extension_log": "03:44:44.119 native 142px bevel, item palette, color renderer, wide values, scroll"
+  }
+}

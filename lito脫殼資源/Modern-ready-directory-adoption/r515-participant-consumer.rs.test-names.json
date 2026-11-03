@@ -1,0 +1,69 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r515-participant-consumer.rs",
+    "bytes": 14023,
+    "sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471"
+  },
+  "captured_content_sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r515-participant-consumer.rs",
+    "bytes": 14023,
+    "sha256": "CB8F4B077A5E67DA7779E553F6F1D5188CF5D3675D386A8A54A5F4ACEF025471"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:56:20.228922+08:00",
+  "existing_test_names_only": [],
+  "function_names_only_not_test_claim": [
+    {
+      "line": 4,
+      "name": "hex"
+    },
+    {
+      "line": 5,
+      "name": "inputs"
+    },
+    {
+      "line": 6,
+      "name": "wait"
+    },
+    {
+      "line": 7,
+      "name": "ready"
+    },
+    {
+      "line": 8,
+      "name": "close"
+    },
+    {
+      "line": 9,
+      "name": "z"
+    },
+    {
+      "line": 10,
+      "name": "cd"
+    },
+    {
+      "line": 17,
+      "name": "d1"
+    },
+    {
+      "line": 18,
+      "name": "values"
+    },
+    {
+      "line": 21,
+      "name": "raw"
+    },
+    {
+      "line": 22,
+      "name": "stream_frame"
+    },
+    {
+      "line": 23,
+      "name": "main"
+    }
+  ],
+  "literal_case_names_only_not_pass_claim": [],
+  "script_executed_or_imported": false,
+  "scope": "Only existing test annotations, function headers and literal name labels; no body adoption, no claim compiled/current production test pass."
+}

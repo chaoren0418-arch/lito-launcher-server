@@ -1,0 +1,230 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_character_flow.rs",
+    "bytes": 9224,
+    "sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3"
+  },
+  "captured_content_sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_java_character_flow.rs",
+    "bytes": 9224,
+    "sha256": "C8764F652F34D1D6FA4921A97755360944923833707CF3A7037468EF5A81C7B3"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:56:47.417643+08:00",
+  "ranges": [
+    [
+      29,
+      79
+    ]
+  ],
+  "line_count": 81,
+  "implementation_lines": [
+    {
+      "line": 29,
+      "text": "impl Runtime {"
+    },
+    {
+      "line": 30,
+      "text": " pub fn consume_java_status_candidate(&mut self,event:&SourceDecodedPacket)->Result<Change>{ensure!(event.body().first()==Some(&12),\"typed status candidate requires S0C\");self.consume_java_character_event(event)}"
+    },
+    {
+      "line": 31,
+      "text": " pub fn consume_java_status_family_candidate(&mut self,event:&SourceDecodedPacket)->Result<Change>{ensure!(matches!(event.body().first(),Some(80|81|82|86)),\"typed status family candidate requires S50/S51/S52/S56\");self.consume_java_character_event(event)}"
+    },
+    {
+      "line": 32,
+      "text": " pub fn java_character_snapshot(&self)->Key{self.java_character.key.clone()}"
+    },
+    {
+      "line": 33,
+      "text": " pub fn last_java_character_checkpoint(&self)->Option<Key>{self.last_java_checkpoint.clone()}"
+    },
+    {
+      "line": 34,
+      "text": " pub(crate) fn consume_java_character_event(&mut self,event:&SourceDecodedPacket)->Result<Change>{"
+    },
+    {
+      "line": 35,
+      "text": "  self.source_scope.admit(event)?;ensure!(self.bootstrap_adapter.is_some(),\"explicit AD368 character adapter required\");"
+    },
+    {
+      "line": 36,
+      "text": "  let stage=self.java_character.key.stage;"
+    },
+    {
+      "line": 37,
+      "text": "  match event.body()[0]{"
+    },
+    {
+      "line": 38,
+      "text": "   80|81|82|86=>{ensure!(stage==Stage::ChannelReceipts,\"status-family receipt outside qualified channel receipts\");let parsed=super::status_family::decode(event.body())?;let next=self.java_character.key.status_fields.with_packet(parsed)?;self.java_character.key.status_fields=next;Ok(Change::StatusFieldsReceived{opcode:event.body()[0]})},"
+    },
+    {
+      "line": 39,
+      "text": "   77=>{ensure!(stage==Stage::ChannelReceipts,\"S_MANA_POINT outside channel receipts\");let mana=super::status_receipt::decode_mana(event.body())?;self.java_character.key.mana=Some(mana);Ok(Change::ManaReceived)},"
+    },
+    {
+      "line": 40,
+      "text": "   12=>{ensure!(stage==Stage::ChannelReceipts,\"S_STATUS outside qualified channel receipts\");let status=super::status_receipt::decode(event.body())?;let next=self.java_character.key.status_fields.with_full_status(status)?;self.java_character.key.status_fields=next;self.java_character.key.status=Some(status);self.status=\"已收到狀態資料，後續狀態仍待驗證\".into();Ok(Change::StatusReceived)},"
+    },
+    {
+      "line": 41,
+      "text": "   200|201=>{"
+    },
+    {
+      "line": 42,
+      "text": "    ensure!(self.entry_navigation.key.write_complete&&self.source_send.snapshot().pending.is_none(),\"reply before completed current request\");"
+    },
+    {
+      "line": 43,
+      "text": "    match entry_navigation::decode(event.body())?{"
+    },
+    {
+      "line": 44,
+      "text": "     Reply::Character{status}=>{"
+    },
+    {
+      "line": 45,
+      "text": "      ensure!(stage==Stage::AwaitCharacterResult,\"S_C8 outside character request\");self.java_character.key.character_result=Some(status);"
+    },
+    {
+      "line": 46,
+      "text": "      if status!=0{return self.refuse_java_character(200,status);}"
+    },
+    {
+      "line": 47,
+      "text": "      self.java_character.key.stage=Stage::AwaitInventory;self.status=\"角色已接受，等待物品清單\".into();Ok(Change::CharacterAccepted)"
+    },
+    {
+      "line": 48,
+      "text": "     },"
+    },
+    {
+      "line": 49,
+      "text": "     Reply::Lobby{status,channel,fields}=>{"
+    },
+    {
+      "line": 50,
+      "text": "      ensure!(stage==Stage::AwaitChannelResult&&Some(channel)==self.java_character.key.requested_channel,\"S_C9 outside matching channel request\");self.java_character.key.channel_result=Some(status);"
+    },
+    {
+      "line": 51,
+      "text": "      if status!=0{return self.refuse_java_character(201,status);}"
+    },
+    {
+      "line": 52,
+      "text": "      let f=fields.context(\"accepted channel tail absent\")?;ensure!(f.at_64ad28==0&&f.at_64ad24==0&&f.at_64ad20==0,\"AD368 normal channel reserved tail must be zero\");"
+    },
+    {
+      "line": 53,
+      "text": "      self.java_character.key.stage=Stage::AwaitChannelInfo;self.status=\"頻道已接受，等待頻道人數\".into();Ok(Change::ChannelAccepted)"
+    },
+    {
+      "line": 54,
+      "text": "     },"
+    },
+    {
+      "line": 55,
+      "text": "    }"
+    },
+    {
+      "line": 56,
+      "text": "   },"
+    },
+    {
+      "line": 57,
+      "text": "   124=>{"
+    },
+    {
+      "line": 58,
+      "text": "    ensure!(stage==Stage::AwaitInventory&&self.java_character.key.character_result==Some(0),\"S7C requires accepted current C9\");let Packet::Inventory(rows)=decode(event.body())? else{unreachable!()};let count=rows.len();"
+    },
+    {
+      "line": 59,
+      "text": "    self.java_character.key.inventory=Some(rows);self.java_character.key.stage=Stage::ChooseChannel;"
+    },
+    {
+      "line": 60,
+      "text": "    self.entry_navigation.key.revision=self.entry_navigation.key.revision.checked_add(1).context(\"channel control revision exhausted\")?;self.entry_navigation.key.scene=Scene::Channel;self.entry_navigation.key.pending_write=None;self.entry_navigation.key.write_complete=false;"
+    },
+    {
+      "line": 61,
+      "text": "    self.status=\"請選擇頻道\".into();Ok(Change::InventoryReceived{count})"
+    },
+    {
+      "line": 62,
+      "text": "   },"
+    },
+    {
+      "line": 63,
+      "text": "   202=>{"
+    },
+    {
+      "line": 64,
+      "text": "    ensure!(stage==Stage::AwaitChannelInfo&&self.java_character.key.channel_result==Some(0),\"S_CA requires accepted matching channel request\");let Packet::Channel(info)=decode(event.body())? else{unreachable!()};ensure!(Some(info.channel)==self.java_character.key.requested_channel,\"channel-info mismatch\");"
+    },
+    {
+      "line": 65,
+      "text": "    let channel_revision=self.entry_navigation.key.revision.checked_add(1).context(\"channel revision exhausted\")?;"
+    },
+    {
+      "line": 66,
+      "text": "    let catalog=self.java_tail.prepare_channel(&self.source_scope.current_epoch()?,info.channel,channel_revision)?;"
+    },
+    {
+      "line": 67,
+      "text": "    if self.java_return.key.phase==super::java_return::Phase::ResumeChannel {ensure!(self.java_return.unexpired()&&!self.java_return.key.one_shot_consumed,\"one-shot channel return expired or consumed\");self.java_return.key.one_shot_consumed=true;self.java_return.key.phase=super::java_return::Phase::Idle;self.java_return.expires=None;}"
+    },
+    {
+      "line": 68,
+      "text": "    self.java_tail.catalog=catalog;self.java_character.key.channel_info=Some(info);self.java_character.key.stage=Stage::ChannelReceipts;"
+    },
+    {
+      "line": 69,
+      "text": "    // Only receipts are qualified. Later status/owner packets still pass the"
+    },
+    {
+      "line": 70,
+      "text": "    // ordinary strict dispatcher and retain their first unsupported boundary."
+    },
+    {
+      "line": 71,
+      "text": "    self.entry_navigation.key.revision=channel_revision;self.entry_navigation.key.scene=Scene::Lobby;self.entry_navigation.key.pending_write=None;self.entry_navigation.key.write_complete=false;self.entry_navigation.key.channel=Some(info.channel);"
+    },
+    {
+      "line": 72,
+      "text": "    self.status=\"已收到頻道資料，等待後續狀態\".into();Ok(Change::ChannelInfoReceived)"
+    },
+    {
+      "line": 73,
+      "text": "   },"
+    },
+    {
+      "line": 74,
+      "text": "   _=>anyhow::bail!(\"not a character/channel interoperability receipt\"),"
+    },
+    {
+      "line": 75,
+      "text": "  }"
+    },
+    {
+      "line": 76,
+      "text": " }"
+    },
+    {
+      "line": 77,
+      "text": " fn refuse_java_character(&mut self,opcode:u8,status:u8)->Result<Change>{"
+    },
+    {
+      "line": 78,
+      "text": "  ensure!(match opcode{200=>matches!(status,1|7|8),201=>matches!(status,1|10),_=>false},\"unknown AD368 refusal result\");"
+    },
+    {
+      "line": 79,
+      "text": "  self.java_character.key.refusal=Some((opcode,status));self.java_character.key.stage=Stage::Refused;let epoch=self.source_scope.current_epoch()?;self.disconnect_source_connection_candidate(&epoch)?;self.entry_navigation.key.scene=Scene::ReconnectRequired;self.status=\"選取未成功，請重新連線\".into();Ok(Change::Refused{opcode,status})"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

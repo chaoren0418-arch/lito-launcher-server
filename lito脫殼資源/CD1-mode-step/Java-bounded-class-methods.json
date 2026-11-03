@@ -1,0 +1,4394 @@
+[
+  {
+    "class": "Protocol",
+    "entry": "local/lito381/server/Protocol.class",
+    "AD368_class": {
+      "bytes": 210736,
+      "sha256": "E5A4D671261E66E088D69BD3CA0E4081ED0743198B36957522C20DE653FE62F3"
+    },
+    "C7_class": {
+      "bytes": 210736,
+      "sha256": "E5A4D671261E66E088D69BD3CA0E4081ED0743198B36957522C20DE653FE62F3"
+    },
+    "whole_class_equal": true,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "litoGameInfoRequest",
+        "descriptor": "([B)Llocal/lito381/server/Protocol$LitoGameInfoRequest;",
+        "full_method_bytes": 124,
+        "full_code_sha256": "4BE0540F51CC21CD87E4125BE2B27C6EFECA08F52919173DB75943419C9172AA",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          124
+        ],
+        "bounded_code_hex": "bb010d592ab7010f4c2bb601111100d19f000ebb006a59130c14b7006ebf2bb601113d1c05a000252bb60125049f000ebb006a59130c16b7006ebfbb0c18592bb60111b80c1ab70c1fb01c06a000222bb60125059f000ebb006a59130c22b7006ebfbb0c24592bb60117b70c26b0bb006a591cba0c270000b7006ebf",
+        "bounded_code_sha256": "4BE0540F51CC21CD87E4125BE2B27C6EFECA08F52919173DB75943419C9172AA",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "010d",
+            "cp_index": 269,
+            "cp_symbol": "local/lito381/server/Protocol$Reader"
+          },
+          {
+            "offset": 3,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "010f",
+            "cp_index": 271,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.<init>:([B)V"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "4c",
+            "mnemonic": "astore_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 9,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 10,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0111",
+            "cp_index": 273,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.c:()I"
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "11",
+            "mnemonic": "sipush",
+            "operands_hex": "00d1",
+            "integer": 209
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "9f",
+            "mnemonic": "if_icmpeq",
+            "operands_hex": "000e",
+            "branch_target": 30
+          },
+          {
+            "offset": 19,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006a",
+            "cp_index": 106,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 22,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 23,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "0c14",
+            "cp_index": 3092,
+            "cp_symbol": "not a native C_D1 game-info request"
+          },
+          {
+            "offset": 26,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006e",
+            "cp_index": 110,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 30,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0111",
+            "cp_index": 273,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.c:()I"
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "3d",
+            "mnemonic": "istore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 36,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "a0",
+            "mnemonic": "if_icmpne",
+            "operands_hex": "0025",
+            "branch_target": 74
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 41,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0125",
+            "cp_index": 293,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.remaining:()I"
+          },
+          {
+            "offset": 44,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 45,
+            "opcode_hex": "9f",
+            "mnemonic": "if_icmpeq",
+            "operands_hex": "000e",
+            "branch_target": 59
+          },
+          {
+            "offset": 48,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006a",
+            "cp_index": 106,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 51,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 52,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "0c16",
+            "cp_index": 3094,
+            "cp_symbol": "invalid native C_D1 mode-step length"
+          },
+          {
+            "offset": 55,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006e",
+            "cp_index": 110,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 58,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 59,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0c18",
+            "cp_index": 3096,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepRequest"
+          },
+          {
+            "offset": 62,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 63,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 64,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0111",
+            "cp_index": 273,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.c:()I"
+          },
+          {
+            "offset": 67,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0c1a",
+            "cp_index": 3098,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.fromWire:(I)Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 70,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "0c1f",
+            "cp_index": 3103,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepRequest.<init>:(Llocal/lito381/server/Protocol$LitoModeStepDirection;)V"
+          },
+          {
+            "offset": 73,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          },
+          {
+            "offset": 74,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 75,
+            "opcode_hex": "06",
+            "mnemonic": "iconst_3",
+            "operands_hex": "",
+            "integer": 3
+          },
+          {
+            "offset": 76,
+            "opcode_hex": "a0",
+            "mnemonic": "if_icmpne",
+            "operands_hex": "0022",
+            "branch_target": 110
+          },
+          {
+            "offset": 79,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 80,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0125",
+            "cp_index": 293,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.remaining:()I"
+          },
+          {
+            "offset": 83,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 84,
+            "opcode_hex": "9f",
+            "mnemonic": "if_icmpeq",
+            "operands_hex": "000e",
+            "branch_target": 98
+          },
+          {
+            "offset": 87,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006a",
+            "cp_index": 106,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 90,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 91,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "0c22",
+            "cp_index": 3106,
+            "cp_symbol": "invalid native C_D1 map length"
+          },
+          {
+            "offset": 94,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006e",
+            "cp_index": 110,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 97,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 98,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0c24",
+            "cp_index": 3108,
+            "cp_symbol": "local/lito381/server/Protocol$LitoMapSelectionRequest"
+          },
+          {
+            "offset": 101,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 102,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 103,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0117",
+            "cp_index": 279,
+            "cp_symbol": "local/lito381/server/Protocol$Reader.h:()I"
+          },
+          {
+            "offset": 106,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "0c26",
+            "cp_index": 3110,
+            "cp_symbol": "local/lito381/server/Protocol$LitoMapSelectionRequest.<init>:(I)V"
+          },
+          {
+            "offset": 109,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          },
+          {
+            "offset": 110,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006a",
+            "cp_index": 106,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 113,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 114,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 115,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "0c270000",
+            "cp_index": 3111,
+            "cp_symbol": "bootstrap34:makeConcatWithConstants:(I)Ljava/lang/String;"
+          },
+          {
+            "offset": 120,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006e",
+            "cp_index": 110,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 123,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "litoRoomMode",
+        "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;)[B",
+        "full_method_bytes": 44,
+        "full_code_sha256": "A670AC30639E67DC05DEF4C840F0326615AC53A3340A1EF7018446918B6A8C18",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          44
+        ],
+        "bounded_code_hex": "1eb80f032c130f3ab8024a57bb005559b700571100d5b6005805b600581eb600632cb60e84b60058b6005fb0",
+        "bounded_code_sha256": "A670AC30639E67DC05DEF4C840F0326615AC53A3340A1EF7018446918B6A8C18",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "1e",
+            "mnemonic": "lload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0f03",
+            "cp_index": 3843,
+            "cp_symbol": "local/lito381/server/Protocol.requireRoomId:(J)V"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "0f3a",
+            "cp_index": 3898,
+            "cp_symbol": "room mode"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "024a",
+            "cp_index": 586,
+            "cp_symbol": "java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "57",
+            "mnemonic": "pop",
+            "operands_hex": ""
+          },
+          {
+            "offset": 12,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0055",
+            "cp_index": 85,
+            "cp_symbol": "local/lito381/server/Protocol$Writer"
+          },
+          {
+            "offset": 15,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "0057",
+            "cp_index": 87,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.<init>:()V"
+          },
+          {
+            "offset": 19,
+            "opcode_hex": "11",
+            "mnemonic": "sipush",
+            "operands_hex": "00d5",
+            "integer": 213
+          },
+          {
+            "offset": 22,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0058",
+            "cp_index": 88,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.c:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 26,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0058",
+            "cp_index": 88,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.c:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "1e",
+            "mnemonic": "lload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 30,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0063",
+            "cp_index": 99,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.d:(J)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 33,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0e84",
+            "cp_index": 3716,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.wireId:()I"
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0058",
+            "cp_index": 88,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.c:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "005f",
+            "cp_index": 95,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.bytes:()[B"
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "litoRoomMap",
+        "descriptor": "(JI)[B",
+        "full_method_bytes": 54,
+        "full_code_sha256": "6A973F172062CB724C6CD530BDA19F807456D54A6BAE93CE7626BBEFA2B218C1",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          54
+        ],
+        "bounded_code_hex": "1eb80f031c9b00091c1223a4000ebb006a59130f3cb7006ebfbb005559b700571100d5b6005806b600581eb600631cb6005cb6005fb0",
+        "bounded_code_sha256": "6A973F172062CB724C6CD530BDA19F807456D54A6BAE93CE7626BBEFA2B218C1",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "1e",
+            "mnemonic": "lload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0f03",
+            "cp_index": 3843,
+            "cp_symbol": "local/lito381/server/Protocol.requireRoomId:(J)V"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "9b",
+            "mnemonic": "iflt",
+            "operands_hex": "0009",
+            "branch_target": 14
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 9,
+            "opcode_hex": "12",
+            "mnemonic": "ldc",
+            "operands_hex": "23",
+            "cp_index": 35,
+            "cp_symbol": "0000ffff"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "a4",
+            "mnemonic": "if_icmple",
+            "operands_hex": "000e",
+            "branch_target": 25
+          },
+          {
+            "offset": 14,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006a",
+            "cp_index": 106,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 17,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 18,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "0f3c",
+            "cp_index": 3900,
+            "cp_symbol": "native room map is invalid"
+          },
+          {
+            "offset": 21,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006e",
+            "cp_index": 110,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 24,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0055",
+            "cp_index": 85,
+            "cp_symbol": "local/lito381/server/Protocol$Writer"
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "0057",
+            "cp_index": 87,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.<init>:()V"
+          },
+          {
+            "offset": 32,
+            "opcode_hex": "11",
+            "mnemonic": "sipush",
+            "operands_hex": "00d5",
+            "integer": 213
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0058",
+            "cp_index": 88,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.c:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 38,
+            "opcode_hex": "06",
+            "mnemonic": "iconst_3",
+            "operands_hex": "",
+            "integer": 3
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0058",
+            "cp_index": 88,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.c:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 42,
+            "opcode_hex": "1e",
+            "mnemonic": "lload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0063",
+            "cp_index": 99,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.d:(J)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 46,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 47,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "005c",
+            "cp_index": 92,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.h:(I)Llocal/lito381/server/Protocol$Writer;"
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "005f",
+            "cp_index": 95,
+            "cp_symbol": "local/lito381/server/Protocol$Writer.bytes:()[B"
+          },
+          {
+            "offset": 53,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  },
+  {
+    "class": "Protocol$LitoModeStepDirection",
+    "entry": "local/lito381/server/Protocol$LitoModeStepDirection.class",
+    "AD368_class": {
+      "bytes": 2213,
+      "sha256": "262158DCA28C87D25790B2D16F5166D6C3FEC1A69C6B32057768E607A0BE1470"
+    },
+    "C7_class": {
+      "bytes": 2213,
+      "sha256": "262158DCA28C87D25790B2D16F5166D6C3FEC1A69C6B32057768E607A0BE1470"
+    },
+    "whole_class_equal": true,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "fromWire",
+        "descriptor": "(I)Llocal/lito381/server/Protocol$LitoModeStepDirection;",
+        "full_method_bytes": 55,
+        "full_code_sha256": "9D804ED208ECD7D3B8B53A584BE1C95CAB23C73DA34A3B992ECBA0AE20FC3667",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          55
+        ],
+        "bounded_code_hex": "1aab00000000002700000002000000010000001b0000000200000021b20003a70017b20007a70011bb0021591aba00230000b70027bfb0",
+        "bounded_code_sha256": "9D804ED208ECD7D3B8B53A584BE1C95CAB23C73DA34A3B992ECBA0AE20FC3667",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "ab",
+            "mnemonic": "lookupswitch",
+            "operands_hex": "00000000002700000002000000010000001b0000000200000021"
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.NEXT:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0017",
+            "branch_target": 54
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0007",
+            "cp_index": 7,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.PREVIOUS:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0011",
+            "branch_target": 54
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0021",
+            "cp_index": 33,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 44,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 45,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "00230000",
+            "cp_index": 35,
+            "cp_symbol": "bootstrap0:makeConcatWithConstants:(I)Ljava/lang/String;"
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "0027",
+            "cp_index": 39,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 53,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 54,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "<clinit>",
+        "descriptor": "()V",
+        "full_method_bytes": 35,
+        "full_code_sha256": "E4514C29DE507AB1EFD4E51071EDC56BB448EFBDE8A58AE67DD65E10711E2426",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          35
+        ],
+        "bounded_code_hex": "bb000159122a0304b7002bb30003bb000159122e0405b7002bb30007b8002fb3000ab1",
+        "bounded_code_sha256": "E4514C29DE507AB1EFD4E51071EDC56BB448EFBDE8A58AE67DD65E10711E2426",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0001",
+            "cp_index": 1,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection"
+          },
+          {
+            "offset": 3,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "12",
+            "mnemonic": "ldc",
+            "operands_hex": "2a",
+            "cp_index": 42,
+            "cp_symbol": "NEXT"
+          },
+          {
+            "offset": 6,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 7,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "002b",
+            "cp_index": 43,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.<init>:(Ljava/lang/String;II)V"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "b3",
+            "mnemonic": "putstatic",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.NEXT:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 14,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0001",
+            "cp_index": 1,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection"
+          },
+          {
+            "offset": 17,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 18,
+            "opcode_hex": "12",
+            "mnemonic": "ldc",
+            "operands_hex": "2e",
+            "cp_index": 46,
+            "cp_symbol": "PREVIOUS"
+          },
+          {
+            "offset": 20,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 21,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 22,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "002b",
+            "cp_index": 43,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.<init>:(Ljava/lang/String;II)V"
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "b3",
+            "mnemonic": "putstatic",
+            "operands_hex": "0007",
+            "cp_index": 7,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.PREVIOUS:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "002f",
+            "cp_index": 47,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.$values:()[Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "b3",
+            "mnemonic": "putstatic",
+            "operands_hex": "000a",
+            "cp_index": 10,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.$VALUES:[Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  },
+  {
+    "class": "BattleRules$Mode",
+    "entry": "local/lito381/server/BattleRules$Mode.class",
+    "AD368_class": {
+      "bytes": 6588,
+      "sha256": "FF958DF92A8F43591C7410B08966D4E156A495ABF3879F1A57F6C286E7FBA785"
+    },
+    "C7_class": {
+      "bytes": 6588,
+      "sha256": "FF958DF92A8F43591C7410B08966D4E156A495ABF3879F1A57F6C286E7FBA785"
+    },
+    "whole_class_equal": true,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "stepNative",
+        "descriptor": "(ILlocal/lito381/server/Protocol$LitoModeStepDirection;)Llocal/lito381/server/BattleRules$Mode;",
+        "full_method_bytes": 162,
+        "full_code_sha256": "8957F0EA9EDA35EF0DF98A78F0B033B75A4CCF1344281B3387B3A8949D22DB5A",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          162
+        ],
+        "bounded_code_hex": "1a9b00091a1006a1000dbb005559125eb7005bbf1006bc0a5903034f5904044f5905084f5906054f5907074f5908064f4d023e03360415042cbea200172c15042e1aa0000915043ea70009840401a7ffe81d9c0011bb0055591aba00600000b7005bbfb200612bb600672eab000000190000000200000001000000210000000200000025bb006d59b7006fbf04a700040236042c1d1504602cbeb800722eb80078b0",
+        "bounded_code_sha256": "8957F0EA9EDA35EF0DF98A78F0B033B75A4CCF1344281B3387B3A8949D22DB5A",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "9b",
+            "mnemonic": "iflt",
+            "operands_hex": "0009",
+            "branch_target": 10
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "06",
+            "integer": 6
+          },
+          {
+            "offset": 7,
+            "opcode_hex": "a1",
+            "mnemonic": "if_icmplt",
+            "operands_hex": "000d",
+            "branch_target": 20
+          },
+          {
+            "offset": 10,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0055",
+            "cp_index": 85,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 14,
+            "opcode_hex": "12",
+            "mnemonic": "ldc",
+            "operands_hex": "5e",
+            "cp_index": 94,
+            "cp_symbol": "server-gated LiTo mode cannot use ordinary mode stepping"
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "005b",
+            "cp_index": 91,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 19,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 20,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "06",
+            "integer": 6
+          },
+          {
+            "offset": 22,
+            "opcode_hex": "bc",
+            "mnemonic": "newarray",
+            "operands_hex": "0a"
+          },
+          {
+            "offset": 24,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 26,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 27,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 30,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 32,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 33,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "08",
+            "mnemonic": "iconst_5",
+            "operands_hex": "",
+            "integer": 5
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 36,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "06",
+            "mnemonic": "iconst_3",
+            "operands_hex": "",
+            "integer": 3
+          },
+          {
+            "offset": 38,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 41,
+            "opcode_hex": "07",
+            "mnemonic": "iconst_4",
+            "operands_hex": "",
+            "integer": 4
+          },
+          {
+            "offset": 42,
+            "opcode_hex": "07",
+            "mnemonic": "iconst_4",
+            "operands_hex": "",
+            "integer": 4
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 44,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 45,
+            "opcode_hex": "08",
+            "mnemonic": "iconst_5",
+            "operands_hex": "",
+            "integer": 5
+          },
+          {
+            "offset": 46,
+            "opcode_hex": "06",
+            "mnemonic": "iconst_3",
+            "operands_hex": "",
+            "integer": 3
+          },
+          {
+            "offset": 47,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 48,
+            "opcode_hex": "4d",
+            "mnemonic": "astore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 49,
+            "opcode_hex": "02",
+            "mnemonic": "iconst_m1",
+            "operands_hex": "",
+            "integer": -1
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "3e",
+            "mnemonic": "istore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 51,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 52,
+            "opcode_hex": "36",
+            "mnemonic": "istore",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 54,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 56,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 57,
+            "opcode_hex": "be",
+            "mnemonic": "arraylength",
+            "operands_hex": ""
+          },
+          {
+            "offset": 58,
+            "opcode_hex": "a2",
+            "mnemonic": "if_icmpge",
+            "operands_hex": "0017",
+            "branch_target": 81
+          },
+          {
+            "offset": 61,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 62,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 64,
+            "opcode_hex": "2e",
+            "mnemonic": "iaload",
+            "operands_hex": ""
+          },
+          {
+            "offset": 65,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 66,
+            "opcode_hex": "a0",
+            "mnemonic": "if_icmpne",
+            "operands_hex": "0009",
+            "branch_target": 75
+          },
+          {
+            "offset": 69,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 71,
+            "opcode_hex": "3e",
+            "mnemonic": "istore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 72,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0009",
+            "branch_target": 81
+          },
+          {
+            "offset": 75,
+            "opcode_hex": "84",
+            "mnemonic": "iinc",
+            "operands_hex": "0401"
+          },
+          {
+            "offset": 78,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "ffe8",
+            "branch_target": 54
+          },
+          {
+            "offset": 81,
+            "opcode_hex": "1d",
+            "mnemonic": "iload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 82,
+            "opcode_hex": "9c",
+            "mnemonic": "ifge",
+            "operands_hex": "0011",
+            "branch_target": 99
+          },
+          {
+            "offset": 85,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "0055",
+            "cp_index": 85,
+            "cp_symbol": "java/lang/IllegalArgumentException"
+          },
+          {
+            "offset": 88,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 89,
+            "opcode_hex": "1a",
+            "mnemonic": "iload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 90,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "00600000",
+            "cp_index": 96,
+            "cp_symbol": "bootstrap1:makeConcatWithConstants:(I)Ljava/lang/String;"
+          },
+          {
+            "offset": 95,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "005b",
+            "cp_index": 91,
+            "cp_symbol": "java/lang/IllegalArgumentException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 98,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 99,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0061",
+            "cp_index": 97,
+            "cp_symbol": "local/lito381/server/BattleRules$1.$SwitchMap$local$lito381$server$Protocol$LitoModeStepDirection:[I"
+          },
+          {
+            "offset": 102,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 103,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0067",
+            "cp_index": 103,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.ordinal:()I"
+          },
+          {
+            "offset": 106,
+            "opcode_hex": "2e",
+            "mnemonic": "iaload",
+            "operands_hex": ""
+          },
+          {
+            "offset": 107,
+            "opcode_hex": "ab",
+            "mnemonic": "lookupswitch",
+            "operands_hex": "000000190000000200000001000000210000000200000025"
+          },
+          {
+            "offset": 132,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "006d",
+            "cp_index": 109,
+            "cp_symbol": "java/lang/IncompatibleClassChangeError"
+          },
+          {
+            "offset": 135,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 136,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "006f",
+            "cp_index": 111,
+            "cp_symbol": "java/lang/IncompatibleClassChangeError.<init>:()V"
+          },
+          {
+            "offset": 139,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 140,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 141,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0004",
+            "branch_target": 145
+          },
+          {
+            "offset": 144,
+            "opcode_hex": "02",
+            "mnemonic": "iconst_m1",
+            "operands_hex": "",
+            "integer": -1
+          },
+          {
+            "offset": 145,
+            "opcode_hex": "36",
+            "mnemonic": "istore",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 147,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 148,
+            "opcode_hex": "1d",
+            "mnemonic": "iload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 149,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 151,
+            "opcode_hex": "60",
+            "mnemonic": "iadd",
+            "operands_hex": ""
+          },
+          {
+            "offset": 152,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 153,
+            "opcode_hex": "be",
+            "mnemonic": "arraylength",
+            "operands_hex": ""
+          },
+          {
+            "offset": 154,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0072",
+            "cp_index": 114,
+            "cp_symbol": "java/lang/Math.floorMod:(II)I"
+          },
+          {
+            "offset": 157,
+            "opcode_hex": "2e",
+            "mnemonic": "iaload",
+            "operands_hex": ""
+          },
+          {
+            "offset": 158,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0078",
+            "cp_index": 120,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.fromWire:(I)Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 161,
+            "opcode_hex": "b0",
+            "mnemonic": "areturn",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  },
+  {
+    "class": "ClientSession",
+    "entry": "local/lito381/server/ClientSession.class",
+    "AD368_class": {
+      "bytes": 2589195,
+      "sha256": "A7C9F439D58503441AD9BAB86C05287B678DFEF9CEE49BD8144F2200C628A640"
+    },
+    "C7_class": {
+      "bytes": 2589124,
+      "sha256": "CDF11D34476F5E1062E8EA00161F29E7980194DD2DF31C63D6F4BA063625F31C"
+    },
+    "whole_class_equal": false,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "gameInfo",
+        "descriptor": "([B)V",
+        "full_method_bytes": 141,
+        "full_code_sha256": "BF7B78388F751F61EB93569747820CD075FF8FAA85BCE97B181384230D216270",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          141
+        ],
+        "bounded_code_hex": "2bb834734db2044a2cb8044e2bb806abba34770000b604552ab4004eb204a7a6000c2ab404a409949a0016b2044a2ab4004eb8044eba34780000b60455b12ab406a09900092a2cb63479b12cc1347d9900152cc0347d3a042a1904b6347fb63482a7002b2cc134869900132cc034864e2a2db63488b63489a70014bb05ba592cb8044eba348c0000b705bfbfb1",
+        "bounded_code_sha256": "BF7B78388F751F61EB93569747820CD075FF8FAA85BCE97B181384230D216270",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "3473",
+            "cp_index": 13427,
+            "cp_symbol": "local/lito381/server/Protocol.litoGameInfoRequest:([B)Llocal/lito381/server/Protocol$LitoGameInfoRequest;"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "4d",
+            "mnemonic": "astore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "044a",
+            "cp_index": 1098,
+            "cp_symbol": "java/lang/System.out:Ljava/io/PrintStream;"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 9,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "044e",
+            "cp_index": 1102,
+            "cp_symbol": "java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;"
+          },
+          {
+            "offset": 12,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "06ab",
+            "cp_index": 1707,
+            "cp_symbol": "local/lito381/server/Protocol.hex:([B)Ljava/lang/String;"
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34770000",
+            "cp_index": 13431,
+            "cp_symbol": "bootstrap1013:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 21,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0455",
+            "cp_index": 1109,
+            "cp_symbol": "java/io/PrintStream.println:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 24,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "004e",
+            "cp_index": 78,
+            "cp_symbol": "local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;"
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "04a7",
+            "cp_index": 1191,
+            "cp_symbol": "local/lito381/server/ClientSession$Phase.ROOM:Llocal/lito381/server/ClientSession$Phase;"
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "a6",
+            "mnemonic": "if_acmpne",
+            "operands_hex": "000c",
+            "branch_target": 43
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 38,
+            "opcode_hex": "09",
+            "mnemonic": "lconst_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "94",
+            "mnemonic": "opcode_148",
+            "operands_hex": ""
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "9a",
+            "mnemonic": "ifne",
+            "operands_hex": "0016",
+            "branch_target": 62
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "044a",
+            "cp_index": 1098,
+            "cp_symbol": "java/lang/System.out:Ljava/io/PrintStream;"
+          },
+          {
+            "offset": 46,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 47,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "004e",
+            "cp_index": 78,
+            "cp_symbol": "local/lito381/server/ClientSession.phase:Llocal/lito381/server/ClientSession$Phase;"
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "044e",
+            "cp_index": 1102,
+            "cp_symbol": "java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;"
+          },
+          {
+            "offset": 53,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34780000",
+            "cp_index": 13432,
+            "cp_symbol": "bootstrap1014:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 58,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0455",
+            "cp_index": 1109,
+            "cp_symbol": "java/io/PrintStream.println:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 61,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          },
+          {
+            "offset": 62,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 63,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "06a0",
+            "cp_index": 1696,
+            "cp_symbol": "local/lito381/server/ClientSession.rentalTownRoomState:Z"
+          },
+          {
+            "offset": 66,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0009",
+            "branch_target": 75
+          },
+          {
+            "offset": 69,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 70,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 71,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "3479",
+            "cp_index": 13433,
+            "cp_symbol": "local/lito381/server/ClientSession.handleRentalTownGameInfo:(Llocal/lito381/server/Protocol$LitoGameInfoRequest;)V"
+          },
+          {
+            "offset": 74,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          },
+          {
+            "offset": 75,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 76,
+            "opcode_hex": "c1",
+            "mnemonic": "instanceof",
+            "operands_hex": "347d",
+            "cp_index": 13437,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepRequest"
+          },
+          {
+            "offset": 79,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0015",
+            "branch_target": 100
+          },
+          {
+            "offset": 82,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 83,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "347d",
+            "cp_index": 13437,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepRequest"
+          },
+          {
+            "offset": 86,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 88,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 89,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 91,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "347f",
+            "cp_index": 13439,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepRequest.direction:()Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 94,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "3482",
+            "cp_index": 13442,
+            "cp_symbol": "local/lito381/server/ClientSession.changeRoomMode:(Llocal/lito381/server/Protocol$LitoModeStepDirection;)V"
+          },
+          {
+            "offset": 97,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "002b",
+            "branch_target": 140
+          },
+          {
+            "offset": 100,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 101,
+            "opcode_hex": "c1",
+            "mnemonic": "instanceof",
+            "operands_hex": "3486",
+            "cp_index": 13446,
+            "cp_symbol": "local/lito381/server/Protocol$LitoMapSelectionRequest"
+          },
+          {
+            "offset": 104,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0013",
+            "branch_target": 123
+          },
+          {
+            "offset": 107,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 108,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "3486",
+            "cp_index": 13446,
+            "cp_symbol": "local/lito381/server/Protocol$LitoMapSelectionRequest"
+          },
+          {
+            "offset": 111,
+            "opcode_hex": "4e",
+            "mnemonic": "astore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 112,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 113,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 114,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "3488",
+            "cp_index": 13448,
+            "cp_symbol": "local/lito381/server/Protocol$LitoMapSelectionRequest.mapId:()I"
+          },
+          {
+            "offset": 117,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "3489",
+            "cp_index": 13449,
+            "cp_symbol": "local/lito381/server/ClientSession.changeRoomMap:(I)V"
+          },
+          {
+            "offset": 120,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0014",
+            "branch_target": 140
+          },
+          {
+            "offset": 123,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "05ba",
+            "cp_index": 1466,
+            "cp_symbol": "java/lang/IllegalStateException"
+          },
+          {
+            "offset": 126,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 127,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 128,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "044e",
+            "cp_index": 1102,
+            "cp_symbol": "java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;"
+          },
+          {
+            "offset": 131,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "348c0000",
+            "cp_index": 13452,
+            "cp_symbol": "bootstrap1015:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 136,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "05bf",
+            "cp_index": 1471,
+            "cp_symbol": "java/lang/IllegalStateException.<init>:(Ljava/lang/String;)V"
+          },
+          {
+            "offset": 139,
+            "opcode_hex": "bf",
+            "mnemonic": "athrow",
+            "operands_hex": ""
+          },
+          {
+            "offset": 140,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "changeRoomMode",
+        "descriptor": "(Llocal/lito381/server/Protocol$LitoModeStepDirection;)V",
+        "full_method_bytes": 503,
+        "full_code_sha256": "0D9083005266ED4CD99A15F2C318275270DAA768565E08929D9E545B6BB07156",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          256
+        ],
+        "bounded_code_hex": "2ab400032ab404a4b624674d2cb623d3107f7eb834ae4e2db634b19a00082ab634b4b12cb623d3107f7e2bb834b73a04bb23cb592cb623ca2cb624ce2cb623d21904b634bb99000d2cb6246f102080a7000a2cb6246f10df7e1904b628902cb624d02cb624d32cb624d62cb624d92cb624dcb728983a052ab400032ab404a42a1905b634be9a00082ab634b4b12ab634c22ab404a41904b8349a3a061905b834c5b624cf36072ab404a41507b8348f3a082ab400032ab404a4b618e4b9001701003a091909b9001d01009900361909b900230100c000043a0a190a19061904b628901904b634cbba34ce0000b60077190a19081507ba34cf0000b60077a7ffc6",
+        "bounded_code_sha256": "4973FCB9C0389F0CABF3F38874F21C272D02121A663065EF7406F2467EC4F76A",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "2467",
+            "cp_index": 9319,
+            "cp_symbol": "local/lito381/server/GameHub.roomSettings:(J)Llocal/lito381/server/GameHub$RoomSettings;"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "4d",
+            "mnemonic": "astore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 12,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "23d3",
+            "cp_index": 9171,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option0:()I"
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "7f",
+            "integer": 127
+          },
+          {
+            "offset": 18,
+            "opcode_hex": "7e",
+            "mnemonic": "iand",
+            "operands_hex": ""
+          },
+          {
+            "offset": 19,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "34ae",
+            "cp_index": 13486,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.fromWire:(I)Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 22,
+            "opcode_hex": "4e",
+            "mnemonic": "astore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 23,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 24,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34b1",
+            "cp_index": 13489,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.isBattleScene:()Z"
+          },
+          {
+            "offset": 27,
+            "opcode_hex": "9a",
+            "mnemonic": "ifne",
+            "operands_hex": "0008",
+            "branch_target": 35
+          },
+          {
+            "offset": 30,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34b4",
+            "cp_index": 13492,
+            "cp_symbol": "local/lito381/server/ClientSession.sendGameInfoSnapshot:()V"
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 36,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "23d3",
+            "cp_index": 9171,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option0:()I"
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "7f",
+            "integer": 127
+          },
+          {
+            "offset": 41,
+            "opcode_hex": "7e",
+            "mnemonic": "iand",
+            "operands_hex": ""
+          },
+          {
+            "offset": 42,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 43,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "34b7",
+            "cp_index": 13495,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.stepNative:(ILlocal/lito381/server/Protocol$LitoModeStepDirection;)Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 46,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 48,
+            "opcode_hex": "bb",
+            "mnemonic": "new",
+            "operands_hex": "23cb",
+            "cp_index": 9163,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings"
+          },
+          {
+            "offset": 51,
+            "opcode_hex": "59",
+            "mnemonic": "dup",
+            "operands_hex": ""
+          },
+          {
+            "offset": 52,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 53,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "23ca",
+            "cp_index": 9162,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.name:()Ljava/lang/String;"
+          },
+          {
+            "offset": 56,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 57,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24ce",
+            "cp_index": 9422,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.password:()Ljava/lang/String;"
+          },
+          {
+            "offset": 60,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 61,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "23d2",
+            "cp_index": 9170,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.capacity:()I"
+          },
+          {
+            "offset": 64,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 66,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34bb",
+            "cp_index": 13499,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.teamBased:()Z"
+          },
+          {
+            "offset": 69,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "000d",
+            "branch_target": 82
+          },
+          {
+            "offset": 72,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 73,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "246f",
+            "cp_index": 9327,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.attributes:()I"
+          },
+          {
+            "offset": 76,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "20",
+            "integer": 32
+          },
+          {
+            "offset": 78,
+            "opcode_hex": "80",
+            "mnemonic": "opcode_128",
+            "operands_hex": ""
+          },
+          {
+            "offset": 79,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "000a",
+            "branch_target": 89
+          },
+          {
+            "offset": 82,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 83,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "246f",
+            "cp_index": 9327,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.attributes:()I"
+          },
+          {
+            "offset": 86,
+            "opcode_hex": "10",
+            "mnemonic": "bipush",
+            "operands_hex": "df",
+            "integer": -33
+          },
+          {
+            "offset": 88,
+            "opcode_hex": "7e",
+            "mnemonic": "iand",
+            "operands_hex": ""
+          },
+          {
+            "offset": 89,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 91,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "2890",
+            "cp_index": 10384,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.wireId:()I"
+          },
+          {
+            "offset": 94,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 95,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24d0",
+            "cp_index": 9424,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option1:()I"
+          },
+          {
+            "offset": 98,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 99,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24d3",
+            "cp_index": 9427,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option2:()I"
+          },
+          {
+            "offset": 102,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 103,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24d6",
+            "cp_index": 9430,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option3:()I"
+          },
+          {
+            "offset": 106,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 107,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24d9",
+            "cp_index": 9433,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.option4:()I"
+          },
+          {
+            "offset": 110,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 111,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24dc",
+            "cp_index": 9436,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.selections:()Ljava/util/List;"
+          },
+          {
+            "offset": 114,
+            "opcode_hex": "b7",
+            "mnemonic": "invokespecial",
+            "operands_hex": "2898",
+            "cp_index": 10392,
+            "cp_symbol": "local/lito381/server/GameHub$RoomSettings.<init>:(Ljava/lang/String;Ljava/lang/String;IIIIIIILjava/util/List;)V"
+          },
+          {
+            "offset": 117,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 119,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 120,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 123,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 124,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 127,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 128,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 130,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34be",
+            "cp_index": 13502,
+            "cp_symbol": "local/lito381/server/GameHub.updateSettings:(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/GameHub$RoomSettings;)Z"
+          },
+          {
+            "offset": 133,
+            "opcode_hex": "9a",
+            "mnemonic": "ifne",
+            "operands_hex": "0008",
+            "branch_target": 141
+          },
+          {
+            "offset": 136,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 137,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34b4",
+            "cp_index": 13492,
+            "cp_symbol": "local/lito381/server/ClientSession.sendGameInfoSnapshot:()V"
+          },
+          {
+            "offset": 140,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          },
+          {
+            "offset": 141,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 142,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34c2",
+            "cp_index": 13506,
+            "cp_symbol": "local/lito381/server/ClientSession.resetRoomReadyAfterSettingsChange:()V"
+          },
+          {
+            "offset": 145,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 146,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 149,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 151,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "349a",
+            "cp_index": 13466,
+            "cp_symbol": "local/lito381/server/Protocol.litoRoomMode:(JLlocal/lito381/server/BattleRules$Mode;)[B"
+          },
+          {
+            "offset": 154,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 156,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 158,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "34c5",
+            "cp_index": 13509,
+            "cp_symbol": "local/lito381/server/BattleRules.decode:(Llocal/lito381/server/GameHub$RoomSettings;)Llocal/lito381/server/BattleRules$RuleSet;"
+          },
+          {
+            "offset": 161,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24cf",
+            "cp_index": 9423,
+            "cp_symbol": "local/lito381/server/BattleRules$RuleSet.mapId:()I"
+          },
+          {
+            "offset": 164,
+            "opcode_hex": "36",
+            "mnemonic": "istore",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 166,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 167,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 170,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 172,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "348f",
+            "cp_index": 13455,
+            "cp_symbol": "local/lito381/server/Protocol.litoRoomMap:(JI)[B"
+          },
+          {
+            "offset": 175,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "08"
+          },
+          {
+            "offset": 177,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 178,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 181,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 182,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 185,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "18e4",
+            "cp_index": 6372,
+            "cp_symbol": "local/lito381/server/GameHub.roomMembers:(J)Ljava/util/List;"
+          },
+          {
+            "offset": 188,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00170100",
+            "cp_index": 23,
+            "cp_symbol": "java/util/List.iterator:()Ljava/util/Iterator;"
+          },
+          {
+            "offset": 193,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "09"
+          },
+          {
+            "offset": 195,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "09"
+          },
+          {
+            "offset": 197,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "001d0100",
+            "cp_index": 29,
+            "cp_symbol": "java/util/Iterator.hasNext:()Z"
+          },
+          {
+            "offset": 202,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0036",
+            "branch_target": 256
+          },
+          {
+            "offset": 205,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "09"
+          },
+          {
+            "offset": 207,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00230100",
+            "cp_index": 35,
+            "cp_symbol": "java/util/Iterator.next:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 212,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "0004",
+            "cp_index": 4,
+            "cp_symbol": "local/lito381/server/ClientSession"
+          },
+          {
+            "offset": 215,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "0a"
+          },
+          {
+            "offset": 217,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "0a"
+          },
+          {
+            "offset": 219,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 221,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 223,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "2890",
+            "cp_index": 10384,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.wireId:()I"
+          },
+          {
+            "offset": 226,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 228,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "34cb",
+            "cp_index": 13515,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.displayName:()Ljava/lang/String;"
+          },
+          {
+            "offset": 231,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34ce0000",
+            "cp_index": 13518,
+            "cp_symbol": "bootstrap1024:makeConcatWithConstants:(ILjava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 236,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0077",
+            "cp_index": 119,
+            "cp_symbol": "local/lito381/server/ClientSession.sendEncrypted:([BLjava/lang/String;)V"
+          },
+          {
+            "offset": 239,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "0a"
+          },
+          {
+            "offset": 241,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "08"
+          },
+          {
+            "offset": 243,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 245,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34cf0000",
+            "cp_index": 13519,
+            "cp_symbol": "bootstrap1025:makeConcatWithConstants:(I)Ljava/lang/String;"
+          },
+          {
+            "offset": 250,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0077",
+            "cp_index": 119,
+            "cp_symbol": "local/lito381/server/ClientSession.sendEncrypted:([BLjava/lang/String;)V"
+          },
+          {
+            "offset": 253,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "ffc6",
+            "branch_target": 195
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "sendGameInfoSnapshot",
+        "descriptor": "()V",
+        "full_method_bytes": 75,
+        "full_code_sha256": "BF3B68258035609B8E096FB886E373D4B9949D7367E1365D17220C36C0523BA6",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          75
+        ],
+        "bounded_code_hex": "2ab400032ab404a4b624674c2ab400032ab404a4b623f4b624cf3d2ab400032ab404a4b624cb4e2a2ab404a42b1c2db834a02dba34a40000b600772a2ab404a42bb834a51334a9b60077b1",
+        "bounded_code_sha256": "BF3B68258035609B8E096FB886E373D4B9949D7367E1365D17220C36C0523BA6",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "2467",
+            "cp_index": 9319,
+            "cp_symbol": "local/lito381/server/GameHub.roomSettings:(J)Llocal/lito381/server/GameHub$RoomSettings;"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "4c",
+            "mnemonic": "astore_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 12,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 17,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 20,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "23f4",
+            "cp_index": 9204,
+            "cp_symbol": "local/lito381/server/GameHub.roomRules:(J)Llocal/lito381/server/BattleRules$RuleSet;"
+          },
+          {
+            "offset": 23,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24cf",
+            "cp_index": 9423,
+            "cp_symbol": "local/lito381/server/BattleRules$RuleSet.mapId:()I"
+          },
+          {
+            "offset": 26,
+            "opcode_hex": "3d",
+            "mnemonic": "istore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 27,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 31,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 32,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 35,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24cb",
+            "cp_index": 9419,
+            "cp_symbol": "local/lito381/server/GameHub.roomOwnerDisplayName:(J)Ljava/lang/String;"
+          },
+          {
+            "offset": 38,
+            "opcode_hex": "4e",
+            "mnemonic": "astore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 41,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 44,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 45,
+            "opcode_hex": "1c",
+            "mnemonic": "iload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 46,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 47,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "34a0",
+            "cp_index": 13472,
+            "cp_symbol": "local/lito381/server/Protocol.litoRoomSummary:(JLlocal/lito381/server/GameHub$RoomSettings;ILjava/lang/String;)[B"
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 51,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34a40000",
+            "cp_index": 13476,
+            "cp_symbol": "bootstrap1022:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 56,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0077",
+            "cp_index": 119,
+            "cp_symbol": "local/lito381/server/ClientSession.sendEncrypted:([BLjava/lang/String;)V"
+          },
+          {
+            "offset": 59,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 60,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 61,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 64,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 65,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "34a5",
+            "cp_index": 13477,
+            "cp_symbol": "local/lito381/server/Protocol.litoRoomConfiguration:(JLlocal/lito381/server/GameHub$RoomSettings;)[B"
+          },
+          {
+            "offset": 68,
+            "opcode_hex": "13",
+            "mnemonic": "ldc_w",
+            "operands_hex": "34a9",
+            "cp_index": 13481,
+            "cp_symbol": "S_LITO_GAME_INFO configuration subtype=1"
+          },
+          {
+            "offset": 71,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0077",
+            "cp_index": 119,
+            "cp_symbol": "local/lito381/server/ClientSession.sendEncrypted:([BLjava/lang/String;)V"
+          },
+          {
+            "offset": 74,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      },
+      {
+        "name": "resetRoomReadyAfterSettingsChange",
+        "descriptor": "()V",
+        "full_method_bytes": 116,
+        "full_code_sha256": "8026E01E89D6AD3AAC4AA7C06670ECF1BE339A150886769E4D0D4E724E6DAB35",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          116
+        ],
+        "bounded_code_hex": "2ab400032ab404a4b618e44c2bb9001701004d2cb9001d010099005a2cb900230100c000044e2db424ef9a0006a7ffe62d03b524ef2db624c903b829193a042bb9001701003a051905b9001d01009900221905b900230100c000043a06190619042db60928ba34de0000b60077a7ffdaa7ffa3b1",
+        "bounded_code_sha256": "8026E01E89D6AD3AAC4AA7C06670ECF1BE339A150886769E4D0D4E724E6DAB35",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0003",
+            "cp_index": 3,
+            "cp_symbol": "local/lito381/server/ClientSession.hub:Llocal/lito381/server/GameHub;"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "04a4",
+            "cp_index": 1188,
+            "cp_symbol": "local/lito381/server/ClientSession.currentRoomId:J"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "18e4",
+            "cp_index": 6372,
+            "cp_symbol": "local/lito381/server/GameHub.roomMembers:(J)Ljava/util/List;"
+          },
+          {
+            "offset": 11,
+            "opcode_hex": "4c",
+            "mnemonic": "astore_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 12,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00170100",
+            "cp_index": 23,
+            "cp_symbol": "java/util/List.iterator:()Ljava/util/Iterator;"
+          },
+          {
+            "offset": 18,
+            "opcode_hex": "4d",
+            "mnemonic": "astore_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 19,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 20,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "001d0100",
+            "cp_index": 29,
+            "cp_symbol": "java/util/Iterator.hasNext:()Z"
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "005a",
+            "branch_target": 115
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "2c",
+            "mnemonic": "aload_2",
+            "operands_hex": ""
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00230100",
+            "cp_index": 35,
+            "cp_symbol": "java/util/Iterator.next:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "0004",
+            "cp_index": 4,
+            "cp_symbol": "local/lito381/server/ClientSession"
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "4e",
+            "mnemonic": "astore_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 38,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 39,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "24ef",
+            "cp_index": 9455,
+            "cp_symbol": "local/lito381/server/ClientSession.ready:Z"
+          },
+          {
+            "offset": 42,
+            "opcode_hex": "9a",
+            "mnemonic": "ifne",
+            "operands_hex": "0006",
+            "branch_target": 48
+          },
+          {
+            "offset": 45,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "ffe6",
+            "branch_target": 19
+          },
+          {
+            "offset": 48,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 49,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 50,
+            "opcode_hex": "b5",
+            "mnemonic": "putfield",
+            "operands_hex": "24ef",
+            "cp_index": 9455,
+            "cp_symbol": "local/lito381/server/ClientSession.ready:Z"
+          },
+          {
+            "offset": 53,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 54,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "24c9",
+            "cp_index": 9417,
+            "cp_symbol": "local/lito381/server/ClientSession.litoDisplayName:()Ljava/lang/String;"
+          },
+          {
+            "offset": 57,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 58,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "2919",
+            "cp_index": 10521,
+            "cp_symbol": "local/lito381/server/Protocol.readyState:(Ljava/lang/String;Z)[B"
+          },
+          {
+            "offset": 61,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 63,
+            "opcode_hex": "2b",
+            "mnemonic": "aload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 64,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00170100",
+            "cp_index": 23,
+            "cp_symbol": "java/util/List.iterator:()Ljava/util/Iterator;"
+          },
+          {
+            "offset": 69,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 71,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 73,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "001d0100",
+            "cp_index": 29,
+            "cp_symbol": "java/util/Iterator.hasNext:()Z"
+          },
+          {
+            "offset": 78,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0022",
+            "branch_target": 112
+          },
+          {
+            "offset": 81,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 83,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "00230100",
+            "cp_index": 35,
+            "cp_symbol": "java/util/Iterator.next:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 88,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "0004",
+            "cp_index": 4,
+            "cp_symbol": "local/lito381/server/ClientSession"
+          },
+          {
+            "offset": 91,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 93,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 95,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 97,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 98,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0928",
+            "cp_index": 2344,
+            "cp_symbol": "local/lito381/server/ClientSession.playerName:()Ljava/lang/String;"
+          },
+          {
+            "offset": 101,
+            "opcode_hex": "ba",
+            "mnemonic": "invokedynamic",
+            "operands_hex": "34de0000",
+            "cp_index": 13534,
+            "cp_symbol": "bootstrap1032:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;"
+          },
+          {
+            "offset": 106,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0077",
+            "cp_index": 119,
+            "cp_symbol": "local/lito381/server/ClientSession.sendEncrypted:([BLjava/lang/String;)V"
+          },
+          {
+            "offset": 109,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "ffda",
+            "branch_target": 71
+          },
+          {
+            "offset": 112,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "ffa3",
+            "branch_target": 19
+          },
+          {
+            "offset": 115,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  },
+  {
+    "class": "GameHub",
+    "entry": "local/lito381/server/GameHub.class",
+    "AD368_class": {
+      "bytes": 510829,
+      "sha256": "45423B94D4B1DA1DF9E57ADA30CD47FAF130D86B62E13D417F7DB23A43930950"
+    },
+    "C7_class": {
+      "bytes": 510761,
+      "sha256": "9E8C14F6B067F65FD39177BA7F83CCB46CF985F1A19B2F886E20DDDF8A52FD31"
+    },
+    "whole_class_equal": false,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "updateSettings",
+        "descriptor": "(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/GameHub$RoomSettings;)Z",
+        "full_method_bytes": 205,
+        "full_code_sha256": "1B9935C39CCEFFB6F8651098366D8441632FA027959D8EE551A46790DFC802A3",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          0,
+          205
+        ],
+        "bounded_code_hex": "2ab402321fb80425b9003a0200c003f83a051905c600141905b405442da6000b1905b403fd99000503ac1905b604ec1904b804efa4000503ac1905b40416b6054ab6054e3a0619042ab4029fb80404b6054e3a0719061907a600201907b616c11905b4040db80334b91091020099000b1905b4040da700141907b616c103b902820200c00285b60287360819051904b5040019051508b5040d1905b40410b9041301001905b40416190415082ab4029fb8041ab6041d1906b20551a500101907b20551a600081905b8172e04ac",
+        "bounded_code_sha256": "1B9935C39CCEFFB6F8651098366D8441632FA027959D8EE551A46790DFC802A3",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 1,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0232",
+            "cp_index": 562,
+            "cp_symbol": "local/lito381/server/GameHub.rooms:Ljava/util/Map;"
+          },
+          {
+            "offset": 4,
+            "opcode_hex": "1f",
+            "mnemonic": "lload_1",
+            "operands_hex": ""
+          },
+          {
+            "offset": 5,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0425",
+            "cp_index": 1061,
+            "cp_symbol": "java/lang/Long.valueOf:(J)Ljava/lang/Long;"
+          },
+          {
+            "offset": 8,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "003a0200",
+            "cp_index": 58,
+            "cp_symbol": "java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 13,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "03f8",
+            "cp_index": 1016,
+            "cp_symbol": "local/lito381/server/GameHub$Room"
+          },
+          {
+            "offset": 16,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 18,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 20,
+            "opcode_hex": "c6",
+            "mnemonic": "ifnull",
+            "operands_hex": "0014",
+            "branch_target": 40
+          },
+          {
+            "offset": 23,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 25,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0544",
+            "cp_index": 1348,
+            "cp_symbol": "local/lito381/server/GameHub$Room.owner:Llocal/lito381/server/ClientSession;"
+          },
+          {
+            "offset": 28,
+            "opcode_hex": "2d",
+            "mnemonic": "aload_3",
+            "operands_hex": ""
+          },
+          {
+            "offset": 29,
+            "opcode_hex": "a6",
+            "mnemonic": "if_acmpne",
+            "operands_hex": "000b",
+            "branch_target": 40
+          },
+          {
+            "offset": 32,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 34,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "03fd",
+            "cp_index": 1021,
+            "cp_symbol": "local/lito381/server/GameHub$Room.battleStarted:Z"
+          },
+          {
+            "offset": 37,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "0005",
+            "branch_target": 42
+          },
+          {
+            "offset": 40,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 41,
+            "opcode_hex": "ac",
+            "mnemonic": "ireturn",
+            "operands_hex": ""
+          },
+          {
+            "offset": 42,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 44,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "04ec",
+            "cp_index": 1260,
+            "cp_symbol": "local/lito381/server/GameHub$Room.combatantCount:()I"
+          },
+          {
+            "offset": 47,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 49,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "04ef",
+            "cp_index": 1263,
+            "cp_symbol": "local/lito381/server/GameHub.nativeCombatantCapacity:(Llocal/lito381/server/GameHub$RoomSettings;)I"
+          },
+          {
+            "offset": 52,
+            "opcode_hex": "a4",
+            "mnemonic": "if_icmple",
+            "operands_hex": "0005",
+            "branch_target": 57
+          },
+          {
+            "offset": 55,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 56,
+            "opcode_hex": "ac",
+            "mnemonic": "ireturn",
+            "operands_hex": ""
+          },
+          {
+            "offset": 57,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 59,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0416",
+            "cp_index": 1046,
+            "cp_symbol": "local/lito381/server/GameHub$Room.match:Llocal/lito381/server/BattleRules$MatchState;"
+          },
+          {
+            "offset": 62,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "054a",
+            "cp_index": 1354,
+            "cp_symbol": "local/lito381/server/BattleRules$MatchState.rules:()Llocal/lito381/server/BattleRules$RuleSet;"
+          },
+          {
+            "offset": 65,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "054e",
+            "cp_index": 1358,
+            "cp_symbol": "local/lito381/server/BattleRules$RuleSet.mode:()Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 68,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 70,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 72,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 73,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "029f",
+            "cp_index": 671,
+            "cp_symbol": "local/lito381/server/GameHub.battleControls:Llocal/lito381/server/BattleControlCatalog;"
+          },
+          {
+            "offset": 76,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0404",
+            "cp_index": 1028,
+            "cp_symbol": "local/lito381/server/BattleRules.decode:(Llocal/lito381/server/GameHub$RoomSettings;Llocal/lito381/server/BattleControlCatalog;)Llocal/lito381/server/BattleRules$RuleSet;"
+          },
+          {
+            "offset": 79,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "054e",
+            "cp_index": 1358,
+            "cp_symbol": "local/lito381/server/BattleRules$RuleSet.mode:()Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 82,
+            "opcode_hex": "3a",
+            "mnemonic": "astore",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 84,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 86,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 88,
+            "opcode_hex": "a6",
+            "mnemonic": "if_acmpne",
+            "operands_hex": "0020",
+            "branch_target": 120
+          },
+          {
+            "offset": 91,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 93,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "16c1",
+            "cp_index": 5825,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.maps:()Ljava/util/List;"
+          },
+          {
+            "offset": 96,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 98,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "040d",
+            "cp_index": 1037,
+            "cp_symbol": "local/lito381/server/GameHub$Room.selectedMapId:I"
+          },
+          {
+            "offset": 101,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0334",
+            "cp_index": 820,
+            "cp_symbol": "java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 104,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "10910200",
+            "cp_index": 4241,
+            "cp_symbol": "java/util/List.contains:(Ljava/lang/Object;)Z"
+          },
+          {
+            "offset": 109,
+            "opcode_hex": "99",
+            "mnemonic": "ifeq",
+            "operands_hex": "000b",
+            "branch_target": 120
+          },
+          {
+            "offset": 112,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 114,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "040d",
+            "cp_index": 1037,
+            "cp_symbol": "local/lito381/server/GameHub$Room.selectedMapId:I"
+          },
+          {
+            "offset": 117,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0014",
+            "branch_target": 137
+          },
+          {
+            "offset": 120,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 122,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "16c1",
+            "cp_index": 5825,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.maps:()Ljava/util/List;"
+          },
+          {
+            "offset": 125,
+            "opcode_hex": "03",
+            "mnemonic": "iconst_0",
+            "operands_hex": "",
+            "integer": 0
+          },
+          {
+            "offset": 126,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "02820200",
+            "cp_index": 642,
+            "cp_symbol": "java/util/List.get:(I)Ljava/lang/Object;"
+          },
+          {
+            "offset": 131,
+            "opcode_hex": "c0",
+            "mnemonic": "checkcast",
+            "operands_hex": "0285",
+            "cp_index": 645,
+            "cp_symbol": "java/lang/Integer"
+          },
+          {
+            "offset": 134,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0287",
+            "cp_index": 647,
+            "cp_symbol": "java/lang/Integer.intValue:()I"
+          },
+          {
+            "offset": 137,
+            "opcode_hex": "36",
+            "mnemonic": "istore",
+            "operands_hex": "08"
+          },
+          {
+            "offset": 139,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 141,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 143,
+            "opcode_hex": "b5",
+            "mnemonic": "putfield",
+            "operands_hex": "0400",
+            "cp_index": 1024,
+            "cp_symbol": "local/lito381/server/GameHub$Room.settings:Llocal/lito381/server/GameHub$RoomSettings;"
+          },
+          {
+            "offset": 146,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 148,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "08"
+          },
+          {
+            "offset": 150,
+            "opcode_hex": "b5",
+            "mnemonic": "putfield",
+            "operands_hex": "040d",
+            "cp_index": 1037,
+            "cp_symbol": "local/lito381/server/GameHub$Room.selectedMapId:I"
+          },
+          {
+            "offset": 153,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 155,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0410",
+            "cp_index": 1040,
+            "cp_symbol": "local/lito381/server/GameHub$Room.ready:Ljava/util/Set;"
+          },
+          {
+            "offset": 158,
+            "opcode_hex": "b9",
+            "mnemonic": "invokeinterface",
+            "operands_hex": "04130100",
+            "cp_index": 1043,
+            "cp_symbol": "java/util/Set.clear:()V"
+          },
+          {
+            "offset": 163,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 165,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "0416",
+            "cp_index": 1046,
+            "cp_symbol": "local/lito381/server/GameHub$Room.match:Llocal/lito381/server/BattleRules$MatchState;"
+          },
+          {
+            "offset": 168,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "04"
+          },
+          {
+            "offset": 170,
+            "opcode_hex": "15",
+            "mnemonic": "iload",
+            "operands_hex": "08"
+          },
+          {
+            "offset": 172,
+            "opcode_hex": "2a",
+            "mnemonic": "aload_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 173,
+            "opcode_hex": "b4",
+            "mnemonic": "getfield",
+            "operands_hex": "029f",
+            "cp_index": 671,
+            "cp_symbol": "local/lito381/server/GameHub.battleControls:Llocal/lito381/server/BattleControlCatalog;"
+          },
+          {
+            "offset": 176,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "041a",
+            "cp_index": 1050,
+            "cp_symbol": "local/lito381/server/BattleRules.decode:(Llocal/lito381/server/GameHub$RoomSettings;ILlocal/lito381/server/BattleControlCatalog;)Llocal/lito381/server/BattleRules$RuleSet;"
+          },
+          {
+            "offset": 179,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "041d",
+            "cp_index": 1053,
+            "cp_symbol": "local/lito381/server/BattleRules$MatchState.reconfigure:(Llocal/lito381/server/BattleRules$RuleSet;)V"
+          },
+          {
+            "offset": 182,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "06"
+          },
+          {
+            "offset": 184,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0551",
+            "cp_index": 1361,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.SIEGE_WAR:Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 187,
+            "opcode_hex": "a5",
+            "mnemonic": "if_acmpeq",
+            "operands_hex": "0010",
+            "branch_target": 203
+          },
+          {
+            "offset": 190,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "07"
+          },
+          {
+            "offset": 192,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0551",
+            "cp_index": 1361,
+            "cp_symbol": "local/lito381/server/BattleRules$Mode.SIEGE_WAR:Llocal/lito381/server/BattleRules$Mode;"
+          },
+          {
+            "offset": 195,
+            "opcode_hex": "a6",
+            "mnemonic": "if_acmpne",
+            "operands_hex": "0008",
+            "branch_target": 203
+          },
+          {
+            "offset": 198,
+            "opcode_hex": "19",
+            "mnemonic": "aload",
+            "operands_hex": "05"
+          },
+          {
+            "offset": 200,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "172e",
+            "cp_index": 5934,
+            "cp_symbol": "local/lito381/server/GameHub.balanceSiegeForces:(Llocal/lito381/server/GameHub$Room;)V"
+          },
+          {
+            "offset": 203,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 204,
+            "opcode_hex": "ac",
+            "mnemonic": "ireturn",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  },
+  {
+    "class": "BattleRules$1",
+    "entry": "local/lito381/server/BattleRules$1.class",
+    "AD368_class": {
+      "bytes": 1479,
+      "sha256": "4FA82B6CD708A94A7E7DAD84CB1FA22ED472CE7EC25F96B77737E0C40BFD50B9"
+    },
+    "C7_class": {
+      "bytes": 1479,
+      "sha256": "4FA82B6CD708A94A7E7DAD84CB1FA22ED472CE7EC25F96B77737E0C40BFD50B9"
+    },
+    "whole_class_equal": true,
+    "AD368_source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "C7_source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "methods": [
+      {
+        "name": "<clinit>",
+        "descriptor": "()V",
+        "full_method_bytes": 156,
+        "full_code_sha256": "60C40E4DED82C8784D5F2CE24C4B40C2E91ED057843353B89D7F972466C6E4E4",
+        "AD368_C7_exact_code_and_CP_symbols_equal": true,
+        "bounded_interval": [
+          116,
+          156
+        ],
+        "bounded_code_hex": "b80029bebc0ab3002eb2002eb20031b60035044fa700044bb2002eb20036b60035054fa700044bb1",
+        "bounded_code_sha256": "58608C342C67207D2422AB7C27FFCAFAF3C30E1606D531BB883DCC18060ED3AB",
+        "instructions": [
+          {
+            "offset": 116,
+            "opcode_hex": "b8",
+            "mnemonic": "invokestatic",
+            "operands_hex": "0029",
+            "cp_index": 41,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.values:()[Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 119,
+            "opcode_hex": "be",
+            "mnemonic": "arraylength",
+            "operands_hex": ""
+          },
+          {
+            "offset": 120,
+            "opcode_hex": "bc",
+            "mnemonic": "newarray",
+            "operands_hex": "0a"
+          },
+          {
+            "offset": 122,
+            "opcode_hex": "b3",
+            "mnemonic": "putstatic",
+            "operands_hex": "002e",
+            "cp_index": 46,
+            "cp_symbol": "local/lito381/server/BattleRules$1.$SwitchMap$local$lito381$server$Protocol$LitoModeStepDirection:[I"
+          },
+          {
+            "offset": 125,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "002e",
+            "cp_index": 46,
+            "cp_symbol": "local/lito381/server/BattleRules$1.$SwitchMap$local$lito381$server$Protocol$LitoModeStepDirection:[I"
+          },
+          {
+            "offset": 128,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0031",
+            "cp_index": 49,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.NEXT:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 131,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0035",
+            "cp_index": 53,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.ordinal:()I"
+          },
+          {
+            "offset": 134,
+            "opcode_hex": "04",
+            "mnemonic": "iconst_1",
+            "operands_hex": "",
+            "integer": 1
+          },
+          {
+            "offset": 135,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 136,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0004",
+            "branch_target": 140
+          },
+          {
+            "offset": 139,
+            "opcode_hex": "4b",
+            "mnemonic": "astore_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 140,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "002e",
+            "cp_index": 46,
+            "cp_symbol": "local/lito381/server/BattleRules$1.$SwitchMap$local$lito381$server$Protocol$LitoModeStepDirection:[I"
+          },
+          {
+            "offset": 143,
+            "opcode_hex": "b2",
+            "mnemonic": "getstatic",
+            "operands_hex": "0036",
+            "cp_index": 54,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.PREVIOUS:Llocal/lito381/server/Protocol$LitoModeStepDirection;"
+          },
+          {
+            "offset": 146,
+            "opcode_hex": "b6",
+            "mnemonic": "invokevirtual",
+            "operands_hex": "0035",
+            "cp_index": 53,
+            "cp_symbol": "local/lito381/server/Protocol$LitoModeStepDirection.ordinal:()I"
+          },
+          {
+            "offset": 149,
+            "opcode_hex": "05",
+            "mnemonic": "iconst_2",
+            "operands_hex": "",
+            "integer": 2
+          },
+          {
+            "offset": 150,
+            "opcode_hex": "4f",
+            "mnemonic": "opcode_79",
+            "operands_hex": ""
+          },
+          {
+            "offset": 151,
+            "opcode_hex": "a7",
+            "mnemonic": "goto",
+            "operands_hex": "0004",
+            "branch_target": 155
+          },
+          {
+            "offset": 154,
+            "opcode_hex": "4b",
+            "mnemonic": "astore_0",
+            "operands_hex": ""
+          },
+          {
+            "offset": 155,
+            "opcode_hex": "b1",
+            "mnemonic": "return",
+            "operands_hex": ""
+          }
+        ],
+        "qualification": "Offline read as data; no JVM/classloading/newJava execution. Method equality, not all-class/lifecycle equivalence."
+      }
+    ]
+  }
+]

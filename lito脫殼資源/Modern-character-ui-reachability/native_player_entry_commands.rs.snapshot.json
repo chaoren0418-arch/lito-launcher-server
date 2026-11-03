@@ -1,0 +1,301 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_player_entry_commands.rs",
+    "bytes": 3517,
+    "sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5"
+  },
+  "captured_content_sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_player_entry_commands.rs",
+    "bytes": 3517,
+    "sha256": "85B4F855668B66ED7E46B913E1A40B125B34B51A3A53EBA8BF768D48E7FE5AA5"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:10:45.847272+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      1,
+      69
+    ]
+  ],
+  "line_count": 76,
+  "implementation_lines": [
+    {
+      "line": 1,
+      "text": "//! Shared Window callback and headless candidate command path; no protocol controller."
+    },
+    {
+      "line": 2,
+      "text": "use super::{"
+    },
+    {
+      "line": 3,
+      "text": "    login_form, Action, Runtime, SourceCharacterBack, SourceCharacterControl, SourceCharacterSubmit,"
+    },
+    {
+      "line": 4,
+      "text": "};"
+    },
+    {
+      "line": 5,
+      "text": "use anyhow::Result;"
+    },
+    {
+      "line": 6,
+      "text": "pub enum Command<'a> {"
+    },
+    {
+      "line": 7,
+      "text": "    ChooseSource(&'a super::login_bootstrap::SourceControl),"
+    },
+    {
+      "line": 8,
+      "text": "    ContinueNews(&'a super::login_bootstrap::NewsControl),"
+    },
+    {
+      "line": 9,
+      "text": "    OpenLogin,"
+    },
+    {
+      "line": 10,
+      "text": "    EditLogin {"
+    },
+    {
+      "line": 11,
+      "text": "        control: &'a login_form::Control,"
+    },
+    {
+      "line": 12,
+      "text": "        account: &'a [u8],"
+    },
+    {
+      "line": 13,
+      "text": "        password: &'a [u8],"
+    },
+    {
+      "line": 14,
+      "text": "    },"
+    },
+    {
+      "line": 15,
+      "text": "    SubmitLogin(&'a login_form::Control),"
+    },
+    {
+      "line": 16,
+      "text": "    CancelLogin(&'a login_form::Control),"
+    },
+    {
+      "line": 17,
+      "text": "    ChooseCharacter {"
+    },
+    {
+      "line": 18,
+      "text": "        control: &'a SourceCharacterControl,"
+    },
+    {
+      "line": 19,
+      "text": "        double_click: bool,"
+    },
+    {
+      "line": 20,
+      "text": "    },"
+    },
+    {
+      "line": 21,
+      "text": "    SubmitCharacter(&'a SourceCharacterSubmit),"
+    },
+    {
+      "line": 22,
+      "text": "    BackCharacter(&'a SourceCharacterBack),"
+    },
+    {
+      "line": 23,
+      "text": "    BackLobby(&'a super::SourceLobbyBack),"
+    },
+    {
+      "line": 24,
+      "text": "    ChooseChannel(&'a super::SourceChannelControl),"
+    },
+    {
+      "line": 25,
+      "text": "    ChooseTransferServer(&'a super::SourceTransferServerControl),"
+    },
+    {
+      "line": 26,
+      "text": "    BackChannel(&'a super::SourceChannelBack),"
+    },
+    {
+      "line": 27,
+      "text": "    BackRoom,"
+    },
+    {
+      "line": 28,
+      "text": "    ConfirmJavaReturn { confirmation: &'a super::java_return::Confirmation, accepted: bool },"
+    },
+    {
+      "line": 29,
+      "text": "    Close,"
+    },
+    {
+      "line": 30,
+      "text": "}"
+    },
+    {
+      "line": 31,
+      "text": "impl Runtime {"
+    },
+    {
+      "line": 32,
+      "text": "    pub fn handle_player_entry_command(&mut self, command: Command<'_>) -> Result<()> {"
+    },
+    {
+      "line": 33,
+      "text": "        match command {"
+    },
+    {
+      "line": 34,
+      "text": "            Command::ChooseSource(c) => self.handle_source_choice(c),"
+    },
+    {
+      "line": 35,
+      "text": "            Command::ContinueNews(c) => self.handle_source_news_continue(c),"
+    },
+    {
+      "line": 36,
+      "text": "            Command::ConfirmJavaReturn{confirmation,accepted}=>self.resolve_java_return_confirmation(confirmation,accepted),"
+    },
+    {
+      "line": 37,
+      "text": "            Command::OpenLogin => {"
+    },
+    {
+      "line": 38,
+      "text": "                if self.java_return.key.phase==super::java_return::Phase::Retained{return self.resume_java_return_fixture();}"
+    },
+    {
+      "line": 39,
+      "text": "                anyhow::ensure!(self.login_bootstrap.key.stage==super::login_bootstrap::Stage::Idle,\"source bootstrap already active; disconnect or Close required\");"
+    },
+    {
+      "line": 40,
+      "text": "                self.begin_player_fixture_if_needed()?;"
+    },
+    {
+      "line": 41,
+      "text": "                self.open_source_login_form()"
+    },
+    {
+      "line": 42,
+      "text": "            }"
+    },
+    {
+      "line": 43,
+      "text": "            Command::EditLogin {"
+    },
+    {
+      "line": 44,
+      "text": "                control,"
+    },
+    {
+      "line": 45,
+      "text": "                account,"
+    },
+    {
+      "line": 46,
+      "text": "                password,"
+    },
+    {
+      "line": 47,
+      "text": "            } => self.edit_source_login_form(control, account, password),"
+    },
+    {
+      "line": 48,
+      "text": "            Command::SubmitLogin(c) => {"
+    },
+    {
+      "line": 49,
+      "text": "                self.stage_source_login_form(c)?;"
+    },
+    {
+      "line": 50,
+      "text": "                self.request_player_fixture_submit();"
+    },
+    {
+      "line": 51,
+      "text": "                Ok(())"
+    },
+    {
+      "line": 52,
+      "text": "            }"
+    },
+    {
+      "line": 53,
+      "text": "            Command::CancelLogin(c) => {"
+    },
+    {
+      "line": 54,
+      "text": "                self.cancel_source_login_form(c)?;"
+    },
+    {
+      "line": 55,
+      "text": "                self.login_events.submit = None;"
+    },
+    {
+      "line": 56,
+      "text": "                Ok(())"
+    },
+    {
+      "line": 57,
+      "text": "            }"
+    },
+    {
+      "line": 58,
+      "text": "            Command::ChooseCharacter {"
+    },
+    {
+      "line": 59,
+      "text": "                control,"
+    },
+    {
+      "line": 60,
+      "text": "                double_click,"
+    },
+    {
+      "line": 61,
+      "text": "            } => self.choose_source_character_control(control, double_click),"
+    },
+    {
+      "line": 62,
+      "text": "            Command::SubmitCharacter(c) => self.handle_source_character_submit(c),"
+    },
+    {
+      "line": 63,
+      "text": "            Command::BackLobby(c) => self.handle_source_lobby_back(c),"
+    },
+    {
+      "line": 64,
+      "text": "            Command::ChooseChannel(c) => self.handle_source_channel_control(c),"
+    },
+    {
+      "line": 65,
+      "text": "            Command::ChooseTransferServer(c) => self.handle_source_transfer_server(c),"
+    },
+    {
+      "line": 66,
+      "text": "            Command::BackChannel(c) => self.handle_source_channel_back(c),"
+    },
+    {
+      "line": 67,
+      "text": "            Command::BackRoom => anyhow::bail!(\"房間返回大廳尚未可用：房間場景来源未接線\"),"
+    },
+    {
+      "line": 68,
+      "text": "            Command::BackCharacter(c) => {"
+    },
+    {
+      "line": 69,
+      "text": "                self.handle_source_character_back(c)?;"
+    }
+  ]
+}

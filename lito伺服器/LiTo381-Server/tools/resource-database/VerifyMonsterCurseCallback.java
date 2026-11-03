@@ -1,0 +1,34 @@
+import java.util.*;
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.analysis.*;
+import static org.objectweb.asm.Opcodes.*;
+
+/** Independently restores original NPC operands, publishers and recipient-loop branches. */
+final class VerifyMonsterCurseCallback {
+ static final String P="local/lito381/server/",C=P+"ClientSession",G=P+"GameHub",H=P+"CombatMonsterCurseLifecycle",S=P+"CombatPoisonLifecycle$Scope",PUB="publishNpcMagicCancellation",BODY="sourcePoisonBody$";
+ static void need(boolean b,String why){if(!b)throw new AssertionError("NPC curse callback "+why);}
+ static AbstractInsnNode before(AbstractInsnNode n){return VerifyCombatPreservation.prior(n);}static AbstractInsnNode after(AbstractInsnNode n){return VerifyCombatPreservation.following(n);}
+ static void load(AbstractInsnNode n,int op,int slot){need(n instanceof VarInsnNode v&&v.getOpcode()==op&&v.var==slot,"exact original operand/local");}
+ static AbstractInsnNode unique(SourceValue v){need(v!=null&&v.insns.size()==1,"unique native value");return v.insns.iterator().next();}
+ static void raw(ClassNode c){var counts=new TreeMap<String,Integer>();for(var m:c.methods)for(var n:m.instructions)if(n instanceof MethodInsnNode x){if(x.owner.equals(H)&&!VerifyMonsterDamageCallback.NAMES.contains(x.name))counts.merge(x.name,1,Integer::sum);if(!m.name.equals(PUB)&&x.owner.equals(C)&&x.name.equals(BODY+PUB))counts.merge("sharedPublisher",1,Integer::sum);}need(counts.equals(new TreeMap<>(Map.ofEntries(Map.entry("activateWorld",1),Map.entry("cureWorld",1),Map.entry("magicWorld",1),Map.entry("pollWorld",1),Map.entry("poisonWorld",1),Map.entry("curePoisonWorld",1),Map.entry("playerDamageWorld",2),Map.entry("pollDamageWorld",1),Map.entry("packet",8),Map.entry("send",8),Map.entry("paletteFinished",7),Map.entry("paletteFinishedForId",1),Map.entry("sharedPublisher",2)))),"exact shared factory/clock/cure/recipient boundaries "+counts);}
+ static MethodNode normalize(MethodNode m,int scope){m.maxStack+=32;Frame<SourceValue>[] frames;try{frames=new Analyzer<>(new SourceInterpreter()).analyze(C,m);}catch(AnalyzerException e){throw new AssertionError(e);}
+  var nodes=m.instructions.toArray();var indices=new IdentityHashMap<AbstractInsnNode,Integer>();for(int i=0;i<nodes.length;i++)indices.put(nodes[i],i);for(int at=0;at<nodes.length;at++)if(nodes[at] instanceof MethodInsnNode x){
+   if(x.owner.equals(C)&&x.name.equals(BODY+PUB)){need(scope>=0,"shared NPC publisher is called from owned scope");load(before(x),ALOAD,scope);m.instructions.remove(before(x));need(x.desc.contains("L"+S+";"),"typed shared publisher scope");x.desc=x.desc.replace("L"+S+";","");x.name=PUB;continue;}
+   if(!x.owner.equals(H))continue;need(scope>=0,"NPC bridge belongs to method scope");
+   if(x.name.equals("paletteFinished")||x.name.equals("paletteFinishedForId")){
+    boolean id=x.name.endsWith("ForId");need(x.desc.equals("("+(id?"J":"[B")+"L"+S+";)V"),"completion signature");var scopeLoad=before(x);load(scopeLoad,ALOAD,scope);var packet=before(scopeLoad);need(packet instanceof VarInsnNode v&&v.getOpcode()==(id?LLOAD:ALOAD),"original packet or publisher id");if(id){need(m.name.equals(BODY+PUB),"inline NPC packet belongs only to original NPC publisher");load(packet,LLOAD,1);}else{var local=(VarInsnNode)packet;var definition=frames[indices.get(packet)].getLocal(local.var);var stored=unique(definition);need(stored instanceof VarInsnNode v&&v.getOpcode()==ASTORE&&v.var==local.var&&before(stored) instanceof MethodInsnNode factory&&factory.owner.equals(P+"Protocol")&&factory.name.equals("poison"),"completion uses actual native poison packet local");}
+    var branch=before(packet);var end=after(x);need(branch instanceof JumpInsnNode b&&b.getOpcode()==IFNE&&end instanceof JumpInsnNode e&&e.getOpcode()==GOTO,"native loop exit transformed only around completion");var b=(JumpInsnNode)branch;var e=(JumpInsnNode)end;need(before(b) instanceof MethodInsnNode test&&test.owner.equals("java/util/Iterator")&&test.name.equals("hasNext")&&test.desc.equals("()Z"),"same original recipient iterator decision");need(e.getNext()==b.label,"true branch retains original loop body");b.setOpcode(IFEQ);b.label=e.label;m.instructions.remove(scopeLoad);m.instructions.remove(packet);m.instructions.remove(x);m.instructions.remove(e);continue;
+   }
+   if(x.name.equals("packet")){need(x.desc.equals("(JIL"+C+";L"+S+";)[B"),"same object id/type poison factory");load(before(x),ALOAD,scope);load(before(before(x)),ALOAD,0);m.instructions.remove(before(x));m.instructions.remove(before(x));m.instructions.set(x,new MethodInsnNode(INVOKESTATIC,P+"Protocol","poison","(JI)[B",false));continue;}
+   if(x.name.equals("send")){need(x.desc.equals("(L"+C+";[BLjava/lang/String;L"+S+";)V"),"original recipient/bytes/reason");load(before(x),ALOAD,scope);var packet=unique(frames[at].getStack(frames[at].getStackSize()-3));
+    if(packet instanceof VarInsnNode v&&v.getOpcode()==ALOAD){var stored=unique(frames[indices.get(packet)].getLocal(v.var));need(stored instanceof VarInsnNode a&&a.getOpcode()==ASTORE&&before(stored) instanceof MethodInsnNode factory&&factory.owner.equals(P+"Protocol")&&factory.name.equals("poison"),"poison definition dominates this recipient send");}
+    else need(packet instanceof MethodInsnNode factory&&factory.owner.equals(H)&&factory.name.equals("packet"),"inline packet is the typed poison factory");m.instructions.remove(before(x));m.instructions.set(x,new MethodInsnNode(INVOKEVIRTUAL,C,"sendEncrypted","([BLjava/lang/String;)V",false));continue;
+   }
+   String name=switch(x.name){case "playerDamageWorld"->"poisonClassicWorldMonster";case "pollDamageWorld"->"pollClassicWorldMonsterPoisons";case "poisonWorld"->"poisonClassicWorldMonsterFromNpc";case "curePoisonWorld"->"cureClassicWorldMonsterPoison";case "activateWorld"->"paralyzeClassicWorldMonster";case "cureWorld"->"cureClassicWorldMonsterParalysis";case "magicWorld"->"cancelClassicWorldMonsterMagic";case "pollWorld"->"pollClassicWorldMonsterParalyses";default->throw new AssertionError("unknown NPC callback bridge "+x.name);};
+   load(before(x),ALOAD,scope);load(before(before(x)),ALOAD,0);var frame=frames[at];int args=Type.getArgumentTypes(x.desc).length;var receiver=unique(frame.getStack(frame.getStackSize()-args));need(receiver instanceof FieldInsnNode f&&f.getOpcode()==GETFIELD&&f.owner.equals(C)&&f.name.equals("hub")&&f.desc.equals("L"+G+";"),"actual original GameHub receiver");
+   String d=x.desc;need(d.startsWith("(L"+G+";")&&d.contains("L"+C+";L"+S+";)"),"typed original hub and appended caster/scope");d="("+d.substring(G.length()+3);d=d.replace("L"+C+";L"+S+";)",")");m.instructions.remove(before(x));m.instructions.remove(before(x));m.instructions.set(x,new MethodInsnNode(INVOKEVIRTUAL,G,name,d,false));
+  }
+  return m;
+ }
+}

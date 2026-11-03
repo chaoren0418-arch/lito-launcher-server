@@ -1,0 +1,820 @@
+{
+  "schema": "lito.skill-pane-activation-wire-boundary.v1",
+  "owner": "LITO BIN Analysis",
+  "thread_id": "01a11705-96c0-74a0-b56d-ed486c318c95",
+  "task_id": "bin-skill-pane-activation-wire-boundary-20261008",
+  "updated_at": "2026-10-08T06:18:02.374885+08:00",
+  "question": "Which public action/control activates the skill pane, what local registry/state effects occur, and does this verified activation chain prove a required client-to-server skills request?",
+  "status": "QUALIFIED_BOUNDED_PUBLIC_STATIC_FINDINGS_SUBMITTED_FOR_SUPERVISOR_REVIEW",
+  "source_applicability": {
+    "fixed_PE": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "match": true
+    },
+    "ASM_navigation": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+      "match": true
+    },
+    "ASM_header_input_sha256": "AEB05C78FE029EA6D3F2EF349245669E47E1E83B1C005E32D4663C780627B5A6",
+    "ASM_is_authority": false,
+    "image_base": "00400000",
+    "RVA_rule": "VA - 00400000, for this exact pinned fixed PE only",
+    "mapping": {
+      "image_base": "00400000",
+      "machine": 332,
+      "sections": [
+        {
+          "index": 0,
+          "name_hex": "2020200020202020",
+          "virtual_size": 4415488,
+          "rva": 4096,
+          "raw_size": 4415488,
+          "raw_pointer": 4096
+        },
+        {
+          "index": 1,
+          "name_hex": "2e72737263000000",
+          "virtual_size": 10440,
+          "rva": 4419584,
+          "raw_size": 12288,
+          "raw_pointer": 4419584
+        },
+        {
+          "index": 2,
+          "name_hex": "2e69646174612020",
+          "virtual_size": 4096,
+          "rva": 4431872,
+          "raw_size": 4096,
+          "raw_pointer": 4431872
+        },
+        {
+          "index": 3,
+          "name_hex": "5468656d69646120",
+          "virtual_size": 2658304,
+          "rva": 4435968,
+          "raw_size": 2658304,
+          "raw_pointer": 4435968
+        }
+      ]
+    },
+    "instruction_boundaries": "Entry prefixes begin at named function entries and decode completely to switch jump. Case entries are independently corroborated by raw table targets. Toolbar start is supplied block boundary; complete instructions retained through instruction at 0047DC62 (ends 0047DC68), without expanding its consumer. Helper entries and bounds match accepted prior evidence. No arbitrary raw E8 scan.",
+    "live_values_or_all_other_versions_proved": false
+  },
+  "input_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "bytes": 37544,
+      "sha256": "8B4AFC6C4C884099AD092459B1608B2586E4A4EE6DB22F1FBBA642EE4DC6A7CE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "bytes": 13337,
+      "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "match": true
+    }
+  ],
+  "raw_ranges": {
+    "action_dispatch_entry_prefix": {
+      "va": "0046D640",
+      "rva": "0006D640",
+      "end_exclusive": "0046D72A",
+      "file_offset": "0006D640",
+      "section_index": 0,
+      "bytes": 234,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D640-EA.bin",
+      "sha256": "9CA9DEFAE3A12955F76B45D8D8CD11C5FCE4B8D5F18C9C91AA9B23A186C5581C"
+    },
+    "action19_first_dispatch_block": {
+      "va": "0046D749",
+      "rva": "0006D749",
+      "end_exclusive": "0046D768",
+      "file_offset": "0006D749",
+      "section_index": 0,
+      "bytes": 31,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D749-1F.bin",
+      "sha256": "C43037E59FEB3E4C153FE75C5FB32C082B8C7A3091B2B3262E115430C14ED4F0"
+    },
+    "action_dispatch_second_entry_prefix": {
+      "va": "0047BB10",
+      "rva": "0007BB10",
+      "end_exclusive": "0047BC03",
+      "file_offset": "0007BB10",
+      "section_index": 0,
+      "bytes": 243,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047BB10-F3.bin",
+      "sha256": "A7992507424B22304610B7071E18FC3722F26BC5F6F346C5338B3402D11775E9"
+    },
+    "action19_second_dispatch_block": {
+      "va": "0047BC9B",
+      "rva": "0007BC9B",
+      "end_exclusive": "0047BCC4",
+      "file_offset": "0007BC9B",
+      "section_index": 0,
+      "bytes": 41,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047BC9B-29.bin",
+      "sha256": "AF80E7FDF020DC47206B93BE098B85BC24328F7BA126B23ECB31F85BE025E948"
+    },
+    "toolbar_skill_control_construction": {
+      "va": "0047DC06",
+      "rva": "0007DC06",
+      "end_exclusive": "0047DC68",
+      "file_offset": "0007DC06",
+      "section_index": 0,
+      "bytes": 98,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047DC06-62.bin",
+      "sha256": "F70EB3043BE9EEB599C27C4B01E070BFE9045259853210732882DAF14CB65E9C"
+    },
+    "registry_contains": {
+      "va": "004EBB30",
+      "rva": "000EBB30",
+      "end_exclusive": "004EBB49",
+      "file_offset": "000EBB30",
+      "section_index": 0,
+      "bytes": 25,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBB30-19.bin",
+      "sha256": "D05AA7745961E038223DAE6D4FD9773BA806257C7BCAC59D0F52A6A0782EFD35"
+    },
+    "registry_toggle_or_clear": {
+      "va": "004EBBD0",
+      "rva": "000EBBD0",
+      "end_exclusive": "004EBCA5",
+      "file_offset": "000EBBD0",
+      "section_index": 0,
+      "bytes": 213,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBBD0-D5.bin",
+      "sha256": "3248872BC10982D75C1952D79ECF78DB9B51AE364416C0A3F74CAC3F19B9DEE9"
+    },
+    "registry_toggle_thunk": {
+      "va": "004EBEB0",
+      "rva": "000EBEB0",
+      "end_exclusive": "004EBEB5",
+      "file_offset": "000EBEB0",
+      "section_index": 0,
+      "bytes": 5,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBEB0-5.bin",
+      "sha256": "F43D94BE74A12DACDFA8746D56E13B9F52FDCA42BFD1A632D51407E8F8662CDA"
+    },
+    "toolbar_toggle_callback": {
+      "va": "004EBEC0",
+      "rva": "000EBEC0",
+      "end_exclusive": "004EBED4",
+      "file_offset": "000EBEC0",
+      "section_index": 0,
+      "bytes": 20,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBEC0-14.bin",
+      "sha256": "CC577BF5334A0CE350F54C9AFD3F8392FAF59FB96D25D24A6D63B757A63BBE14"
+    },
+    "action19_first_map_byte": {
+      "va": "0046D896",
+      "rva": "0006D896",
+      "end_exclusive": "0046D897",
+      "file_offset": "0006D896",
+      "section_index": 0,
+      "bytes": 1,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D896-1.bin",
+      "sha256": "E52D9C508C502347344D8C07AD91CBD6068AFC75FF6292F062A09CA381C89E71"
+    },
+    "action19_first_jump_table_slot": {
+      "va": "0046D87C",
+      "rva": "0006D87C",
+      "end_exclusive": "0046D880",
+      "file_offset": "0006D87C",
+      "section_index": 0,
+      "bytes": 4,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D87C-4.bin",
+      "sha256": "5B04E3B26BE9D80B26295EDF12132F3A898F27B22EEB779FE8127C85A866F2A8"
+    },
+    "action19_second_jump_table_slot": {
+      "va": "0047C32C",
+      "rva": "0007C32C",
+      "end_exclusive": "0047C330",
+      "file_offset": "0007C32C",
+      "section_index": 0,
+      "bytes": 4,
+      "output_path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047C32C-4.bin",
+      "sha256": "3DE73E933D7C49DD6771962A165B8297BD7E204A91C811EF7B234706166CCB8C"
+    }
+  },
+  "raw_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\raw-evidence.json",
+    "bytes": 72950,
+    "sha256": "2F0E057D4EA7C3BA1BCAA66AFCABA5520E6605E92D55C59C29E688F7746EB974"
+  },
+  "tools": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "capstone": "5.0.6"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "conclusion": "Logical action value 19 (decimal, 0x13) routes to the skill-pane toggle in both supplied public dispatchers; this is an action identifier, not a proved packet opcode or physical keyboard binding.",
+      "proof": {
+        "input_value": 19,
+        "first_eax_index": 18,
+        "first_byte_slot": 4,
+        "first_target": "0046D749",
+        "second_eax_index": 18,
+        "second_target": "0047BC9B"
+      },
+      "witnesses": [
+        {
+          "va": "0046D70F",
+          "rva": "0006D70F",
+          "file_offset": "0006D70F",
+          "raw_hex": "8d46ff",
+          "mnemonic": "lea",
+          "operands": "eax, [esi - 1]",
+          "range_label": "action_dispatch_entry_prefix"
+        },
+        {
+          "va": "0046D71D",
+          "rva": "0006D71D",
+          "file_offset": "0006D71D",
+          "raw_hex": "8a8884d84600",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [eax + 0x46d884]",
+          "range_label": "action_dispatch_entry_prefix"
+        },
+        {
+          "va": "0046D723",
+          "rva": "0006D723",
+          "file_offset": "0006D723",
+          "raw_hex": "ff248d6cd84600",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [ecx*4 + 0x46d86c]",
+          "range_label": "action_dispatch_entry_prefix"
+        },
+        {
+          "va": "0047BBF0",
+          "rva": "0007BBF0",
+          "file_offset": "0007BBF0",
+          "raw_hex": "8d46ff",
+          "mnemonic": "lea",
+          "operands": "eax, [esi - 1]",
+          "range_label": "action_dispatch_second_entry_prefix"
+        },
+        {
+          "va": "0047BBFC",
+          "rva": "0007BBFC",
+          "file_offset": "0007BBFC",
+          "raw_hex": "ff2485e4c24700",
+          "mnemonic": "jmp",
+          "operands": "dword ptr [eax*4 + 0x47c2e4]",
+          "range_label": "action_dispatch_second_entry_prefix"
+        }
+      ],
+      "preconditions": "Each dispatcher may return earlier when other public UI/control virtual handlers consume the event. The mapping proves the selected switch target after reaching the switch, not unconditional event delivery. Physical key generation and call-site phase assignment were not expanded.",
+      "falsified_by": "Different mapped table bytes, action input not 19, earlier handler consuming the action, or a different live dispatcher/version."
+    },
+    {
+      "id": "F2",
+      "conclusion": "Both action-19 case blocks test dword 006414A0; when zero they load ECX from global 00834884 and call 004EBEB0, which tail-jumps to 004EBBD0. Nonzero follows the supplied branch out of the case without this toggle call.",
+      "witnesses": [
+        {
+          "va": "0046D749",
+          "rva": "0006D749",
+          "file_offset": "0006D749",
+          "raw_hex": "a1a0146400",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [0x6414a0]",
+          "range_label": "action19_first_dispatch_block"
+        },
+        {
+          "va": "0046D750",
+          "rva": "0006D750",
+          "file_offset": "0006D750",
+          "raw_hex": "0f850f010000",
+          "mnemonic": "jne",
+          "operands": "0x46d865",
+          "range_label": "action19_first_dispatch_block"
+        },
+        {
+          "va": "0046D756",
+          "rva": "0006D756",
+          "file_offset": "0006D756",
+          "raw_hex": "8b0d84488300",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x834884]",
+          "range_label": "action19_first_dispatch_block"
+        },
+        {
+          "va": "0046D75C",
+          "rva": "0006D75C",
+          "file_offset": "0006D75C",
+          "raw_hex": "e84fe70700",
+          "mnemonic": "call",
+          "operands": "0x4ebeb0",
+          "range_label": "action19_first_dispatch_block"
+        },
+        {
+          "va": "0047BC9B",
+          "rva": "0007BC9B",
+          "file_offset": "0007BC9B",
+          "raw_hex": "a1a0146400",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [0x6414a0]",
+          "range_label": "action19_second_dispatch_block"
+        },
+        {
+          "va": "0047BCA2",
+          "rva": "0007BCA2",
+          "file_offset": "0007BCA2",
+          "raw_hex": "0f8528060000",
+          "mnemonic": "jne",
+          "operands": "0x47c2d0",
+          "range_label": "action19_second_dispatch_block"
+        },
+        {
+          "va": "0047BCA8",
+          "rva": "0007BCA8",
+          "file_offset": "0007BCA8",
+          "raw_hex": "8b0d84488300",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x834884]",
+          "range_label": "action19_second_dispatch_block"
+        },
+        {
+          "va": "0047BCAE",
+          "rva": "0007BCAE",
+          "file_offset": "0007BCAE",
+          "raw_hex": "e8fd010700",
+          "mnemonic": "call",
+          "operands": "0x4ebeb0",
+          "range_label": "action19_second_dispatch_block"
+        },
+        {
+          "va": "004EBEB0",
+          "rva": "000EBEB0",
+          "file_offset": "000EBEB0",
+          "raw_hex": "e91bfdffff",
+          "mnemonic": "jmp",
+          "operands": "0x4ebbd0",
+          "range_label": "registry_toggle_thunk"
+        }
+      ],
+      "unknown": "006414A0 meaning and live value, actual 00834884 object and epoch, caller phase. Do not label this flag login/room/WORLD readiness.",
+      "falsified_by": "Different flag value, null or different pane pointer, modified action path, or earlier indirect handler intercept."
+    },
+    {
+      "id": "F3",
+      "conclusion": "Toolbar block loads ESI from 00834884 and passes it on the stack alongside callback address 004EBEC0, candidate image IDs 1005/1006 (0x3ED/0x3EE), x-like 536 (0x218), y-like 460 (0x1CC), and literal 3,0,0 to constructor call 0049E570 after a 0x50 allocation succeeds.",
+      "witnesses": [
+        {
+          "va": "0047DC17",
+          "rva": "0007DC17",
+          "file_offset": "0007DC17",
+          "raw_hex": "6a50",
+          "mnemonic": "push",
+          "operands": "0x50",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC2D",
+          "rva": "0007DC2D",
+          "file_offset": "0007DC2D",
+          "raw_hex": "7431",
+          "mnemonic": "je",
+          "operands": "0x47dc60",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC2F",
+          "rva": "0007DC2F",
+          "file_offset": "0007DC2F",
+          "raw_hex": "8b3584488300",
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [0x834884]",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC3B",
+          "rva": "0007DC3B",
+          "file_offset": "0007DC3B",
+          "raw_hex": "bacc010000",
+          "mnemonic": "mov",
+          "operands": "edx, 0x1cc",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC40",
+          "rva": "0007DC40",
+          "file_offset": "0007DC40",
+          "raw_hex": "56",
+          "mnemonic": "push",
+          "operands": "esi",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC41",
+          "rva": "0007DC41",
+          "file_offset": "0007DC41",
+          "raw_hex": "b918020000",
+          "mnemonic": "mov",
+          "operands": "ecx, 0x218",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC46",
+          "rva": "0007DC46",
+          "file_offset": "0007DC46",
+          "raw_hex": "68c0be4e00",
+          "mnemonic": "push",
+          "operands": "0x4ebec0",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC4D",
+          "rva": "0007DC4D",
+          "file_offset": "0007DC4D",
+          "raw_hex": "68ee030000",
+          "mnemonic": "push",
+          "operands": "0x3ee",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC52",
+          "rva": "0007DC52",
+          "file_offset": "0007DC52",
+          "raw_hex": "68ed030000",
+          "mnemonic": "push",
+          "operands": "0x3ed",
+          "range_label": "toolbar_skill_control_construction"
+        },
+        {
+          "va": "0047DC59",
+          "rva": "0007DC59",
+          "file_offset": "0007DC59",
+          "raw_hex": "e812090200",
+          "mnemonic": "call",
+          "operands": "0x49e570",
+          "range_label": "toolbar_skill_control_construction"
+        }
+      ],
+      "qualification": "Raw constructor argument association is proved. Constructor/callback ABI, exact live toolbar object registration, click dispatch and actual rendered images/coordinates are not independently closed in this allowlist. No constructor target expansion. The 0047DC62 instruction ends at 0047DC68 and is retained in full to avoid a truncated instruction.",
+      "falsified_by": "Allocation failure, different pointer capture, different constructor argument semantics or callback dispatch ABI, unpublished control, or different live resource/version."
+    },
+    {
+      "id": "F4",
+      "conclusion": "004EBB30 compares ECX against the four DWORD slots [00836B54,00836B64); returns AL=1 on equality and AL=0 after no match. Null ECX can match an empty slot, so this alone is not a live-pane validity check.",
+      "witnesses": [
+        {
+          "va": "004EBB30",
+          "rva": "000EBB30",
+          "file_offset": "000EBB30",
+          "raw_hex": "b8546b8300",
+          "mnemonic": "mov",
+          "operands": "eax, 0x836b54",
+          "range_label": "registry_contains"
+        },
+        {
+          "va": "004EBB35",
+          "rva": "000EBB35",
+          "file_offset": "000EBB35",
+          "raw_hex": "3908",
+          "mnemonic": "cmp",
+          "operands": "dword ptr [eax], ecx",
+          "range_label": "registry_contains"
+        },
+        {
+          "va": "004EBB43",
+          "rva": "000EBB43",
+          "file_offset": "000EBB43",
+          "raw_hex": "32c0",
+          "mnemonic": "xor",
+          "operands": "al, al",
+          "range_label": "registry_contains"
+        },
+        {
+          "va": "004EBB46",
+          "rva": "000EBB46",
+          "file_offset": "000EBB46",
+          "raw_hex": "b001",
+          "mnemonic": "mov",
+          "operands": "al, 1",
+          "range_label": "registry_contains"
+        }
+      ],
+      "falsified_by": "Different registry bytes/order during the call or patched helper."
+    },
+    {
+      "id": "F5",
+      "conclusion": "004EBBD0 is a toggle/clear operation on the four-slot registry, not a guaranteed open-only operation. Null ECX walks all slots: each nonnull object gets virtual +0x24 then that slot is zeroed. Nonnull ECX uses the accepted index helper 004EBB50; existing index calls the object virtual +0x24, compacts later slots left and zeros slot3. Absent index calls old slot3 virtual +0x24 if nonnull, shifts slots 3<-2<-1<-0, writes ECX-derived pane into slot0, then calls its virtual +0x20.",
+      "witnesses": [
+        {
+          "va": "004EBBE5",
+          "rva": "000EBBE5",
+          "file_offset": "000EBBE5",
+          "raw_hex": "ff5024",
+          "mnemonic": "call",
+          "operands": "dword ptr [eax + 0x24]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBBE8",
+          "rva": "000EBBE8",
+          "file_offset": "000EBBE8",
+          "raw_hex": "c70600000000",
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi], 0",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC29",
+          "rva": "000EBC29",
+          "file_offset": "000EBC29",
+          "raw_hex": "e822ffffff",
+          "mnemonic": "call",
+          "operands": "0x4ebb50",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC33",
+          "rva": "000EBC33",
+          "file_offset": "000EBC33",
+          "raw_hex": "742f",
+          "mnemonic": "je",
+          "operands": "0x4ebc64",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC39",
+          "rva": "000EBC39",
+          "file_offset": "000EBC39",
+          "raw_hex": "ff5224",
+          "mnemonic": "call",
+          "operands": "dword ptr [edx + 0x24]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC48",
+          "rva": "000EBC48",
+          "file_offset": "000EBC48",
+          "raw_hex": "8b4804",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC58",
+          "rva": "000EBC58",
+          "file_offset": "000EBC58",
+          "raw_hex": "c705606b830000000000",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x836b60], 0",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC70",
+          "rva": "000EBC70",
+          "file_offset": "000EBC70",
+          "raw_hex": "ff5224",
+          "mnemonic": "call",
+          "operands": "dword ptr [edx + 0x24]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC84",
+          "rva": "000EBC84",
+          "file_offset": "000EBC84",
+          "raw_hex": "a3606b8300",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x836b60], eax",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC95",
+          "rva": "000EBC95",
+          "file_offset": "000EBC95",
+          "raw_hex": "8935546b8300",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x836b54], esi",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC9F",
+          "rva": "000EBC9F",
+          "file_offset": "000EBC9F",
+          "raw_hex": "ff5020",
+          "mnemonic": "call",
+          "operands": "dword ptr [eax + 0x20]",
+          "range_label": "registry_toggle_or_clear"
+        }
+      ],
+      "inherited_index_evidence": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\inherited-registry-index-support.json",
+        "bytes": 2246,
+        "sha256": "5546A33A3AA901C5DE8992CDE7ACFD2C4376945B1E982AC80629BB962781C450"
+      },
+      "conditional_effects": "These descriptions assume indirect methods return normally and do not mutate registry/pane state through reentry. Registry method invocation is proved; their complete local/indirect effects and current vtables are not proved. No unknown virtual targets were expanded.",
+      "falsified_by": "Unknown virtual call fails or reenters, index helper/version differs, live registry duplicates/changes, or pane pointer lacks valid backing."
+    },
+    {
+      "id": "F6",
+      "conclusion": "On the nonnull branch, before the index lookup, 004EBBD0 writes 0064B4A8=0. If dword 0064AF98 equals 4 it also writes 0075A990=0x137 and [dword(0075AC14)+0x0C]=0x280. The null branch skips these stores.",
+      "witnesses": [
+        {
+          "va": "004EBBFC",
+          "rva": "000EBBFC",
+          "file_offset": "000EBBFC",
+          "raw_hex": "a198af6400",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [0x64af98]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC01",
+          "rva": "000EBC01",
+          "file_offset": "000EBC01",
+          "raw_hex": "c705a8b4640000000000",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x64b4a8], 0",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC0B",
+          "rva": "000EBC0B",
+          "file_offset": "000EBC0B",
+          "raw_hex": "83f804",
+          "mnemonic": "cmp",
+          "operands": "eax, 4",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC10",
+          "rva": "000EBC10",
+          "file_offset": "000EBC10",
+          "raw_hex": "8b0d14ac7500",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x75ac14]",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC16",
+          "rva": "000EBC16",
+          "file_offset": "000EBC16",
+          "raw_hex": "c70590a9750037010000",
+          "mnemonic": "mov",
+          "operands": "dword ptr [0x75a990], 0x137",
+          "range_label": "registry_toggle_or_clear"
+        },
+        {
+          "va": "004EBC20",
+          "rva": "000EBC20",
+          "file_offset": "000EBC20",
+          "raw_hex": "c7410c80020000",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ecx + 0xc], 0x280",
+          "range_label": "registry_toggle_or_clear"
+        }
+      ],
+      "unknown": "Field meanings, live pointer validity and phase meaning of value4 are unresolved; value4 is not equated to joined room or WORLD.",
+      "falsified_by": "Null input, state not4, invalid live 0075AC14 or a different version."
+    },
+    {
+      "id": "F7",
+      "conclusion": "004EBEC0 directly calls registry helper 004EBBD0, then sets EDX=0x7F and ECX=0xED and tail-jumps to 004C8790. This is a separate call-out from the toolbar callback; these constants are not qualified wire opcodes or fields.",
+      "witnesses": [
+        {
+          "va": "004EBEC0",
+          "rva": "000EBEC0",
+          "file_offset": "000EBEC0",
+          "raw_hex": "e80bfdffff",
+          "mnemonic": "call",
+          "operands": "0x4ebbd0",
+          "range_label": "toolbar_toggle_callback"
+        },
+        {
+          "va": "004EBEC5",
+          "rva": "000EBEC5",
+          "file_offset": "000EBEC5",
+          "raw_hex": "ba7f000000",
+          "mnemonic": "mov",
+          "operands": "edx, 0x7f",
+          "range_label": "toolbar_toggle_callback"
+        },
+        {
+          "va": "004EBECA",
+          "rva": "000EBECA",
+          "file_offset": "000EBECA",
+          "raw_hex": "b9ed000000",
+          "mnemonic": "mov",
+          "operands": "ecx, 0xed",
+          "range_label": "toolbar_toggle_callback"
+        },
+        {
+          "va": "004EBECF",
+          "rva": "000EBECF",
+          "file_offset": "000EBECF",
+          "raw_hex": "e9bcc8fdff",
+          "mnemonic": "jmp",
+          "operands": "0x4c8790",
+          "range_label": "toolbar_toggle_callback"
+        }
+      ],
+      "unknown": "004C8790 effects and the callback calling convention are not expanded. No sound, packet, phase, notification or whole-program interpretation is assigned.",
+      "falsified_by": "Modified callback, different call ABI/state, helper failing before return, or independently qualified target semantics."
+    }
+  ],
+  "wire_boundary": {
+    "direct_send_call_observation": "No direct call or jump to accepted formatter/sender 004C6AE0 or send body 004C6770 is present in the two action19 blocks, 004EBEB0, 004EBB30, 004EBBD0 or 004EBEC0. All decoded instructions and direct/indirect transfers are in raw-evidence.json. This observation is restricted to these exact bodies and does not classify every other call as non-network.",
+    "proved_required_skills_request": false,
+    "absence_of_all_network_effects_proved": false,
+    "transitive_chain_closed": false,
+    "direction": null,
+    "opcode": null,
+    "fields": null,
+    "encoding": null,
+    "wire_trigger": null,
+    "state_obligation": null,
+    "null_fields_mean": "No actual wire obligation qualified in this task; not proof that no wire exists.",
+    "unresolved_callouts": [
+      "Registry virtual +0x20/+0x24 and earlier dispatch virtual +0x28 targets/live effects",
+      "Toolbar callback tail target 004C8790 with ECX=0xED,EDX=0x7F",
+      "Control constructor 0049E570 and subsequent live callback ABI/registration"
+    ],
+    "scope_limit": "No full-program absence claim and no need inferred for Server to resend skills whenever the pane opens."
+  },
+  "phase_boundary": {
+    "first_lobby": "No same-session activation, population, reset or draw evidence supplied. Dispatch function names and action19 do not establish first-lobby reachability.",
+    "joined_room": "No packet/session trace proving admission, action delivery or pane membership supplied. Joined room remains distinct from first lobby and WORLD.",
+    "WORLD": "Existing accepted frame contract describes conditional WORLD registry rendering in reverse slot order; no rerun or runtime proof. Slot membership and successful draw are required separately.",
+    "existing_receive_contracts": "Pinned public 0x1E population,0x1F removal,0xDA reset and selection C9 ordering contracts are referenced as prior evidence only, not reanalyzed or replayed. Activation evidence supplies no population/order/reset timing correction."
+  },
+  "consumer_adoption_action": {
+    "consumer": "Launcher through supervisor review",
+    "concrete_action": "Use logical action19 and the toolbar callback as candidate local activation origins in the first-lobby evidence plan. Record origin, 006414A0, pane pointer/epoch, registry before/after and whether activation added or removed the pane, alongside independently supplied skill rows/population/reset/draw evidence from the same session. Do not implement an on-open skills packet or claim a server resend obligation from this contract.",
+    "current_implementation_change_authorized_by_evidence": "No concrete native repair established; this contract refines the discriminating evidence requirement and guards against treating toggle as open-only.",
+    "future_runtime_gate": "Any future observation requires original current human/PID/creation-time/path/SHA/READY/unused-claim/lease/cleanup gates and separate permitted scope. No new instrumentation or live capture was performed."
+  },
+  "stops_and_unknowns": {
+    "boundary_reached": "Unknown indirect virtual targets and 004C8790 call-out: stopped without expansion. This permits reporting qualified local bytes but prevents closure of all packet effects.",
+    "remaining_supplier": "Supervisor/Launcher permitted evidence supplier for current pane/control ABI, phase and same-session skill population/reset/registry/draw evidence; independently scoped public target evidence for indirect effects if needed.",
+    "resume_condition": "A new input-complete lawful question with qualified raw backing and adoption action outside retained private/refused routes. Current human hypothesis alone is not human-ready runtime evidence.",
+    "next_concrete_task": null
+  },
+  "native_goal": {
+    "actual_status": "blocked",
+    "receipt": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\continuous-goal-blocked-resume-1-20261008.json",
+      "bytes": 1964,
+      "sha256": "CB93A92441A7920A423387239F8DC4D6BF0224C91B9E7B216CB553C1451FD14A"
+    },
+    "new_task_release_changes_goal_status": false,
+    "exact_full_objective_retained": true
+  },
+  "acceptance": {
+    "all_supplied_input_hashes_match": true,
+    "all_extracted_ranges_raw_backed": true,
+    "code_ranges_fully_decoded": true,
+    "both_action19_table_targets_match": true,
+    "supervisor_review_pending": true,
+    "released_to_Launcher": false,
+    "consumer_adopted": false,
+    "product_complete": false,
+    "player_GUI_validated": false,
+    "first_lobby_defect_fixed": false
+  },
+  "excluded_work": {
+    "live_process_opened": false,
+    "native_game_started": false,
+    "SQL_or_services_started": false,
+    "new_instrumentation": false,
+    "unknown_private_or_virtual_targets_expanded": false,
+    "timer_expansion": false,
+    "stopped_route_retries_or_transfers": false,
+    "old_PASS_replays": 0,
+    "other_owner_writes": false,
+    "new_subagents_chats_or_workflows": false
+  },
+  "commands": {
+    "python": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B",
+    "workdir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "attempt1": "derive.py failed with AssertionError on toolbar range ending mid-instruction; Python exit1, wrapper final exit0 from subsequent Get-Content. Original stderr/stdout preserved.",
+    "corrected_derivation_receipt": "2e0596 exit0; toolbar complete instruction endpoint fixed to 0047DC68",
+    "incremental_mapping_derivation_receipt": "0e941a exit0; new indexed action-table slots and inherited helper pin qualification added",
+    "old_analysis_rerun": false
+  }
+}

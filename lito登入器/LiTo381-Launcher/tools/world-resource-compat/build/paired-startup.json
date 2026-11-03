@@ -1,0 +1,43 @@
+{
+  "status": "passed-no-process-start",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\candidate_server_entry.py",
+      "sha256": "e0338276943ed88c9bbd410dc3a882f2dd25acae92aedd16720d12c0be119747"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\candidate_startup.py",
+      "sha256": "5a34c69a3e604dda1052a3043103d7831854e5a747b0a79eea0d09bcf7d3ae5f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\status-candidate.json",
+      "sha256": "268355059d3c50d8475ee3c714c8ffd1371634ebcabc025c4a51ac59ef042227"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\presentation-server.json",
+      "sha256": "a5616b28ee332181fb58af73f5bb839324879d30e236fc22cf58a5e20bff3737"
+    }
+  ],
+  "server": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "client": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\ddraw.dll",
+    "sha256": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267"
+  },
+  "rejected": [
+    "unqualified",
+    "different-client-pair",
+    "wrong-jar",
+    "wrong-formal-entry",
+    "changed-server-receipt"
+  ],
+  "unchanged_owned_methods": 7,
+  "scope": "Entry identity checks and reuse of READY/ownership/cleanup function bodies; isolated run root",
+  "limits": [
+    "No SQL, live READY, process shutdown or UI executed by this check."
+  ],
+  "formal_updated": false,
+  "source_database_modified": false
+}

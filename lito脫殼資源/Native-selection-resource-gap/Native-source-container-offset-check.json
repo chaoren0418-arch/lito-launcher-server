@@ -1,0 +1,86 @@
+{
+  "PAK_read": {
+    "before": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+      "bytes": 92788879,
+      "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E"
+    },
+    "content_sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+    "after": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+      "bytes": 92788879,
+      "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T09:45:48.585970+08:00"
+  },
+  "index_read": {
+    "before": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+    },
+    "content_sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+    "after": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T09:45:48.615619+08:00"
+  },
+  "index_format": "Existing plain old28 countu32LE then offsetu32LE/nameASCII20/sizeu32LE",
+  "matches_sealed_source_fingerprints": true,
+  "checks": [
+    {
+      "name": "6201.img",
+      "row": 891,
+      "PAK_offset": 49038213,
+      "bytes": 2354,
+      "raw_sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737",
+      "matches_original_index_and_source_PAK": true
+    },
+    {
+      "name": "6202.img",
+      "row": 894,
+      "PAK_offset": 49045275,
+      "bytes": 2354,
+      "raw_sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0",
+      "matches_original_index_and_source_PAK": true
+    },
+    {
+      "name": "6303.img",
+      "row": 999,
+      "PAK_offset": 51718555,
+      "bytes": 2354,
+      "raw_sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15",
+      "matches_original_index_and_source_PAK": true
+    },
+    {
+      "name": "6304.img",
+      "row": 1002,
+      "PAK_offset": 51725617,
+      "bytes": 2354,
+      "raw_sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90",
+      "matches_original_index_and_source_PAK": true
+    },
+    {
+      "name": "6314.img",
+      "row": 1014,
+      "PAK_offset": 53590027,
+      "bytes": 614408,
+      "raw_sha256": "848F97A410457991EF36F44E8518239E28B20D17279FEF32FB15B41AA1A9F1D5",
+      "matches_original_index_and_source_PAK": true
+    },
+    {
+      "name": "7482.img",
+      "row": 1359,
+      "PAK_offset": 81252417,
+      "bytes": 614408,
+      "raw_sha256": "FC6B2DE5A26BE165C8CE97C7658465F6B84170D597832BC67092801C6160181B",
+      "matches_original_index_and_source_PAK": true
+    }
+  ],
+  "new_raw_extraction": false,
+  "new_decode": false
+}

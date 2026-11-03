@@ -1,0 +1,97 @@
+{
+  "known_FPU_order": "(31-max(D,S))*double_at4FA328*min(D,S)+max(D,S)",
+  "constants_raw": "841042082184a03f0000000000003f40",
+  "constant_1_over_31": 0.03225806451612903,
+  "constant_31": 31.0,
+  "last_visible_call": {
+    "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "va": "004C1972",
+    "rva": "000C1972",
+    "section": "   \u0000    ",
+    "file_offset": "000C1972",
+    "raw_backed": true,
+    "raw_hex": "e81bfc0200",
+    "mnemonic": "call",
+    "operands": "0x4f1592",
+    "range": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\ranges\\004C18E0.bin",
+      "bytes": 2030,
+      "sha256": "C7CE39458EFC0B08E0F65F01D662B4F7D31B11674E0A53403E5A6DB358142DA4"
+    }
+  },
+  "thunk_jump": {
+    "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "va": "004F1593",
+    "rva": "000F1593",
+    "section": "   \u0000    ",
+    "file_offset": "000F1593",
+    "raw_backed": true,
+    "raw_hex": "e98896f276",
+    "mnemonic": "jmp",
+    "operands": "0x7741ac20",
+    "range": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\ranges\\004F1592-6.bin",
+      "bytes": 6,
+      "sha256": "8762DF1EE90A2C3BECCCCB338B8D2DE412ADCEBCF80E8AC22CB4179DCDC1CCEB"
+    }
+  },
+  "missing_destination": {
+    "va": "7741AC20",
+    "rva": "7701AC20",
+    "section": null,
+    "file_offset": null,
+    "raw_backed": false
+  },
+  "missing": "Floating-to-integer implementation/rounding/FPU precision state outside fixed PE. No native935 screen LUT numeric closure claimed. Do not use floor/round from preview.",
+  "expression_examples_only": [
+    {
+      "destination5": 0,
+      "source5": 0,
+      "expression_input_to_4F1592": 0.0,
+      "ideal_rational_numerator": 0,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    },
+    {
+      "destination5": 1,
+      "source5": 1,
+      "expression_input_to_4F1592": 1.967741935483871,
+      "ideal_rational_numerator": 61,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    },
+    {
+      "destination5": 10,
+      "source5": 20,
+      "expression_input_to_4F1592": 23.548387096774192,
+      "ideal_rational_numerator": 730,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    },
+    {
+      "destination5": 16,
+      "source5": 16,
+      "expression_input_to_4F1592": 23.741935483870968,
+      "ideal_rational_numerator": 736,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    },
+    {
+      "destination5": 31,
+      "source5": 5,
+      "expression_input_to_4F1592": 31.0,
+      "ideal_rational_numerator": 961,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    },
+    {
+      "destination5": 31,
+      "source5": 31,
+      "expression_input_to_4F1592": 31.0,
+      "ideal_rational_numerator": 961,
+      "ideal_rational_denominator": 31,
+      "native_integer_result": null
+    }
+  ],
+  "native_table_outputs_generated": false
+}

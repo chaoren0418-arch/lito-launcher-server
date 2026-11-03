@@ -1,0 +1,24 @@
+{
+  "scope": "Newfinitecatalog raw/coverage/branch/knowntrace readback only; noNativeGUI/oldmatrix",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+    "bytes": 64295,
+    "sha256": "E376B067F4E8BACD7F0DC01F2A615BE0E2B0B71C2FA3DC59E001EC0330D3F9B5"
+  },
+  "all_match": true,
+  "new_ranges": 35,
+  "inherited_raw_ranges": 21,
+  "instruction_assertions": 61,
+  "aligned_core_branch_targets": 29,
+  "complete_CC_bytes": 1143,
+  "row_add_helper_bytes": 173,
+  "constructor_bytes": 120,
+  "sealed_CC_frames": 2,
+  "sealed_additional_CF_frames": 2,
+  "prior_immutable_pins": 20,
+  "Native_duplicate_fullrow_ignored_UI68zero": true,
+  "catalog_DWORD_key_separate_from_CF_selected_signedWORD": true,
+  "CC_nojoinedroom_phase_navigation_write": true,
+  "Batch18_primary_unchanged_and_private_default_unknown": true,
+  "actual_Native_UI_rowreplacement_or_ownleave_qualified": false
+}

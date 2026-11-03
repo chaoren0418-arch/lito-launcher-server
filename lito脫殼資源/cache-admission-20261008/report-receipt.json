@@ -1,0 +1,12 @@
+{
+  "task_id": "bin_resources-modern-cache-admission-input-20261008",
+  "reported": true,
+  "notified": false,
+  "adopted": false,
+  "reviewed": false,
+  "supervisor_thread": "01a116fa-dc97-7832-bdec-85d06d810ad7",
+  "send_message_result": "success",
+  "reported_at": "2026-10-08T01:33:56.669272+08:00",
+  "contract_sha256": "2AC6D313CCA261244BD0CF54182F32E436584232D95692F1A756EA7E24D51B38",
+  "goal_status": "active"
+}

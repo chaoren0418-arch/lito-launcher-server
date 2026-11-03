@@ -1,0 +1,13 @@
+{
+  "restored_protected_files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\0.6.26-before-shared-resources-20261011\\launcher\\__pycache__\\development_startup.cpython-312.pyc",
+      "relative": "lito登入器/LiTo381-Launcher/backups/0.6.26-before-shared-resources-20261011/launcher/__pycache__/development_startup.cpython-312.pyc",
+      "scope": "D:\\lineage開發\\3-lito開發\\lito登入器",
+      "bytes": 27277,
+      "sha256": "1ca911f08f33a55949c01914c83f36de5f853a5ece7bf3928796492b149b6ace",
+      "reason": "reproducible python cache"
+    }
+  ],
+  "reason": "Backup directory exclusion now takes priority over cache cleanup."
+}

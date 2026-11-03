@@ -1,0 +1,49 @@
+{
+  "identity": {
+    "mode": 1,
+    "map_id": 534,
+    "name": "Lodun City (Death)"
+  },
+  "member": {
+    "record_index": 245,
+    "decoded_index_record_range": [
+      6864,
+      6892
+    ],
+    "encrypted_index_covering_block_range": [
+      6860,
+      6892
+    ],
+    "decoded_index_row_hex": "A8E902004C546D61707374722D6B2E74626C000000000000180A0000",
+    "pak_offset": 190888,
+    "bytes": 2584,
+    "encoded_sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F",
+    "decoded_sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+  },
+  "target_row": {
+    "source_row": 22,
+    "table_byte_range": [
+      649,
+      722
+    ],
+    "line_ending_hex": "0D0A",
+    "raw_line": "534#deathmatch#Lodun City (Death)#minimap#xseg2#yseg2#xPos32831#yPos32768",
+    "raw_line_hex": "3533342364656174686D61746368234C6F64756E20436974792028446561746829236D696E696D61702378736567322379736567322378506F7333323833312379506F733332373638",
+    "map_id": 534,
+    "raw_category": "deathmatch",
+    "modern_source_policy_mode": 1,
+    "name": "Lodun City (Death)",
+    "extra_fields": [
+      "minimap",
+      "xseg2",
+      "yseg2",
+      "xPos32831",
+      "yPos32768"
+    ]
+  },
+  "declared_table_rows": 67,
+  "archive_index_rows": 353,
+  "authority_sector_count": 16,
+  "canonical_geometry_sha256_declared": "7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE",
+  "mode_is_not_encoded_in_canonical": true
+}

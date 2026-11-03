@@ -1,0 +1,4 @@
+import java.nio.file.*;import java.net.*;import java.util.*;
+public final class SourceBarrierTargetsLoad {
+ public static void main(String[]a)throws Exception{SourceSkillDefaultsLoad.main(a);var jar=Path.of(a[0]).toRealPath();var urls=new ArrayList<URL>();urls.add(jar.toUri().toURL());try(var files=Files.list(Path.of(a[1]))){for(var p:files.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var loader=new URLClassLoader(urls.toArray(URL[]::new),ClassLoader.getPlatformClassLoader())){var c=Class.forName("local.lito381.server.NativeSourceBarrierTargets",false,loader);if(!Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar)||c.getDeclaredFields().length!=0)throw new AssertionError("fieldless candidate scalar helper");c.getDeclaredMethods();c.getDeclaredConstructors();}System.out.println("PASS347 candidate no-init classes with pure Source barrier target whitelist");}
+}

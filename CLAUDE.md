@@ -1,0 +1,40 @@
+﻿# lito-launcher-server — LiTo 登入器 + 伺服器（廠商合約案）
+
+本檔是所有 AI 工具（Claude、Cursor、Codex、ChatGPT）與人的共同規則。`AGENTS.md` 與 `.cursor/rules/project.mdc` 是本檔的複本，改動請只改本檔並重新同步。
+本 repo 根目錄是 `D:\lineage開發\3-lito開發`，只追蹤 `lito登入器/`、`lito伺服器/`、`lito脫殼資源/`；`lito重建版/` 是獨立 repo（lito-modern），此處忽略。
+
+## 目標
+廠商委託：為天堂 3.81C（`LiTo.bin`，SHA CE6EE68A…）提供可用的**登入器**與**伺服器**，支援登入、大廳、技能、進房、戰鬥結算、正常退出。
+
+## 目前狀態（2026-11-03）
+- 登入器正式版 **0.6.70**（桌面捷徑指向 0.6.71），伺服器 **0.6.69**；聯合基準 `lito登入器/LiTo381-Launcher/backups/baseline-0.6.66.zip`。
+- 戰鬥技能同源化尚有 **12 組開放缺口**（材料技能、娃娃、Source 消費端、同 SHA 回歸），詳 `監製工作流/combat-handoff-status-20261029.md`（已不追蹤，留本機參考）。
+- 歷史治理文件（總控任務板、監製索引、對話 ID）只供參考，不再是流程的一部分。
+
+## 技術棧與建置
+| 子專案 | 技術 | 入口 | 建置 |
+|---|---|---|---|
+| `lito登入器/LiTo381-Launcher` | C# (.csproj `src/LiTo381Launcher.csproj`) | `release/current/LiTo381Launcher.exe` | `Build.ps1` |
+| `lito登入器/LiTo381-Launcher/native` + `LiTo381-Compat` | C++ ddraw 相容層 (`ddraw_proxy.cpp`) | `ddraw.dll` | `Build-Compat.cmd` |
+| `lito伺服器/LiTo381-Server` | Java 17 / Maven 3.9 (`pom.xml`) | `1.啟動伺服器.bat`（`--check` 預檢、`--smoke` 短啟動） | `Build-Server.cmd` |
+| `lito脫殼資源` | Python + Rust codec (`codec/l1_decode.rs`) | `閱讀入口.md` | — |
+
+- 伺服器設定只有 `LiTo381-Server/config/server.properties`；資料庫 `380_db`、`380_lito`，天堂角色資料**只讀**，僅回存 `character_lito` 勝敗。
+- 遊戲資源一律引用 `D:\lineage開發\0-客戶端`，不複製 pak/map/sprite 進本專案。
+- Maven 本機倉庫在 `D:\dev-cache\maven\repository`（`~/.m2/settings.xml` 已設定）。
+
+## AI 產出規則（三個工具共用）
+1. 只寫本專案資料夾內；不寫 `C:\`、桌面、`%TEMP%`、家目錄。
+2. 暫存／實驗／一次性腳本一律進 `scratch/`。
+3. 同一主題的報告只保留 `docs/` 下最新版，歷史靠 git；停止每輪新增時間戳 JSON 與 `工作佇列.json`／`監製進度.json`。
+4. 建置產物只進 `bin/`、`obj/`、`target/`、`release/`；不進 git。
+5. 不以 stub、假資料冒充完成；報告分「已驗證／推測／待驗證」。
+6. 不修改正式 `LiTo.bin`、shared BIN、TW／LHZ 資源、玩家實表；不啟停正式程序或 DB。
+7. 不包裝、不散布 `LiTo.bin`。
+
+## 工作方式
+- `PLAN.md`：里程碑與目前狀態。`TASKS.md`：任務清單，每項含範圍、驗收條件、狀態。
+- 分支：`main` 永遠可建置；工作在 `feat/<任務編號>-<短名>`，完成開 PR，Claude 審查、使用者合併。
+- Cursor 執行任務時：先讀本檔與 `TASKS.md` 指定項，只改任務列出的檔案範圍，PR 描述寫「做了什麼／怎麼驗證／未驗證什麼」。
+- 實機測試（啟動伺服器、登入器、遊戲）只由使用者執行；AI 提供步驟與核對清單。
+- 發布版本：tag `launcher-v0.6.x` / `server-v0.6.x`，成品放 `release/`，不進 git。

@@ -1,0 +1,80 @@
+第二十一批：64AFD0/64AFE0 map table直接來源／已有資源候選／row BYTE UI consumer
+
+主入口 ../map-table-source-contract.json。Finite static邊界封存，actualtable/provider/locale/epoch/resource binding保持unknown。
+Batch20 3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367不變；22既有primary pins保持。
+只讀固定PE、ASM導航與現成resourceindex/decoded候選，只寫本組目錄。無Native、GUI、provider執行、SQL、新capture、Java／Modern wire修改；不掃全部UI/WORLD，不追私有body，不重跑Batch20 PASS。
+
+固定來源與檢查
+PE7094272 SHA4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9。
+BIN1941568 SHA CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292。
+ASM41179755 SHA2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A只導航，raw決定call target與instruction。
+31new PE ranges=24code+7data；3沿用raw僅切本次必要map-key/stride與BYTE store，不重跑旧PASS。
+67指令斷言、20片段內alignedbranch、7 locale模型、5 signedBYTE模型及5資源候選raw/decoded共10pins獨立讀回全match。
+Ranges有VA/RVA/fileoffset、raw_hex、每個range SHA與逐指令bytes。這些是靜態條件與operand資格，不是Native/UI實際驗收。
+
+Table object／record layout
+Object base64AFD0，+0 DWORD count；+10 DWORD recordarraypointer=64AFE0。CC ordinary新版比較record+20 key，步幅24h=36bytes。
+Object+4..+C是embedded state三DWORD：4D3DB0將三者清0。Runtime loader內容及state名字未合格，不把recordpointer與embeddedline pointers混同。
+Object+14..+2C七DWORD在conditional postprovider island被zero，欄位語義unknown。
+Record+0 DWORD：recordconstructor46F8B0清0；recorddtor46F8C0非NULL時傳给4F103C。UI條件consumer讀這個pointer作label/formatter參數；API、stringownership、codec與actualheap unknown。
+Record+4 DWORD：46B93C讀，和zeroextended WORD64ACCA比較，是未合格selector/category欄位，不能命名成實際map resourceID。
+Record+8 BYTE：46F8B0清0；其意義及其它WORLD uses不追。
+Record+0C..+1F：本次未合格。
+Record+20 DWORD：Batch19/20既證新版CC把wire mapWORD MOVSXi16後和它比較；UIselector另取此key-500。Actualproducer parse、numeric conversion、record/value/ordinal mapping皆unknown。
+
+直接初始化／更新caller
+Disk502070 DWORD指向46F870；只是固定initializer表entry，沒有CRT調度／執行順序資格。
+46F870 call46F880；46F880 ECX=64AFD0，jmp46F8D0。
+46F8D0完整22bytes：call4D3DB0(ECX=64AFD4)清embedded三DWORD，然後object+10=0，return。沒有明確寫main count+0。
+64AFD0..64AFE3固定20bytes全0只證PE影像內容，不能推當前runtime count0，也不能把此constructor當可反覆使用的完整reset。
+Startup最後可證caller481F7D call4D4870，AL test後conditionaljump；前面後面startup/otherUI不扩張。
+4D4870 prefix讀636584，若-1，4D4879 call固定raw05040E1D。到首次private呼叫即停；ASM文字05A40CBF不同，以raw為準，不猜GetACP或provider/API名字。
+Map load直接caller4D48D6 push636590 "LTmapstr"、ECX64AFD0，4D48E0 call46F9C0；AL結果false返回0、true返回1只是caller條件，未證載入真的成功。
+46F9C0 prefix73bytes：ESI=object，LEA EBX=object+4，4D4450讀入的caller只到46F9EE；ALfalse的可見return，true分支到46FA09是未合格continuation。
+4D4450 prefix43bytes：call4D43D0取得suffix，signedextend AL，準備stack256byte buffer、"%s-%c.tbl"、inputbasename及suffix；4D4476 external773F5200即停。
+未追4D3E40、實際檔案讀取/provider/parser/record轉換body。External結果、bounds、materialization、heap及actual table generation都unknown。
+另封46FA6F..46FA8D 31bytes conditional direct-store island：object+10=EAX，clear七DWORD，object+0=embedded+4。
+這只證unknown provider/allocation之後的可見stores，不跨越未知input去採用它們；不是完整builder資格，不認定EAX非NULL、record初始化完成、count/index可用或資源已載入。
+本次没有接出網路更新table的caller，也不做全image沒有其它writer的斷言。Lastproducer boundary是46F9EE→4D4450→4D4476 externalcall／4D4879 privateinput。
+
+直接cleanup caller與邊界
+46F890傳46F8A0给4F10E0。4F10E0 body與registration/cleanup被呼叫時機unknown；不猜runtime lifecycle。
+46F8A0 ECX=64AFD0，jmp46F8F0。46F8F0完整106bytes：若recordptr!=NULL，讀[ptr-4] hiddencount，以stride36與callback46F8C0傳4F1362，再把ptr-4傳4F103C；最後4D3DC0 cleanup embeddedobject。
+Arraycallbackhelper4F1362、allocator4F103C bodies不追，actualhiddenheader/ownership/return未知。Hiddencount和maincount是不同storage，不推它們實際一致。
+4D3DC0完整51bytes可見對embedded+8/+4兩個pointer各conditional call4F103C，再將該pointer0；未明確清embedded+0 count。
+46F8F0沒有明確清main object+0 count或+10 recordpointer。Destructor不授權一個可重用的空表/currentgeneration；callbacks不返回／重入／物件lifetime仍未知。
+Recorddtor也沒有將+0清NULL；這裡只交接call/field流，不把釋放成功或重複cleanup安全性當已驗收。
+
+Locale條件與現成資源候選
+4D43D0完整45bytes只讀636584，local jump/slot tables：932→j、936→h、949→k、950→c，其他→e。
+這個runtime selector不同於wire version63D54C與comparison locale selector64B6DC。常數本身不授予actualAPI/codepage/name/epoch或兩selector等價資格。
+Provider前準備的basename+format是LTmapstr／%s-%c.tbl，實際輸出名稱及選到檔案停在external unknown。
+沿用resources/archive-manifest.json，精確引用native/LTtext：row241 LTmapstr-c.tbl、242 LTmapstr-h.tbl、243 LTmapstr-h.txt、244 LTmapstr-j.tbl、245 LTmapstr-k.tbl。
+每份raw與decoded沿用原SHA、sourceindex SHA B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8、sourcepak SHA517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D。
+只讀既有檔，不重抽archive、不執行decoder/provider、不重新指定codec。每份firstheader及前六個nonempty physical lines以原byte hex保存。
+c.tbl第一行67只是候選檔header；字串500#town#town#minimap等只是檔內容，不是證64AFD0==67、ordinal0/CCmap0等於town、minimap字段是某resourceID。
+h.txt不符合此.tbl format；此有限五entry沒有建立default e檔的binding，但不對整個archive的檔案存在與否作全域結論。
+不能從physical line ordinal、locale候選或decoded字串推runtime row index/key、loadedrecord順序或map resourceID。
+
+已知row BYTE consumer
+4658B0完整108bytes：UI+68非0則return；selectedindex<0走46A540(0)。非負路徑先用row+4低WORD call46A540，再attribute helper，重讀selection/array，row+74 AL→4687D0。
+4687D0完整13bytes只存低BYTE到ECX+0F；callerECX讀64A98C。沒有reverse lookup、回復原始mapWORD、查+20或選真正map resource。
+Currentcaller object/selection重入、46A540／其它callbacks返回和Native UI實際呼叫未合格。CatalogDWORD、selectedpreview WORD、mapBYTE不互相正規化。
+Preview文字island4681AF..4681F5：讀preview+0F BYTE，CMP AL,FF配SIGNEDJLE，因此80..FF走negative branch，00..7F才可能讀table+36*signextendedBYTE的record+0 pointer。
+該island沒有count64AFD0/boundscheck；不能因此推實際有效index或執行overrun。
+Negative branch4681F6只封signedversion63D54C與7794比較，後續specialswitch/strings不追。NewfullCC ordinarylookup得index128以上可能截成negativecode BYTE只是條件式投影，沒有actualGUI結果。
+非負branch準備的title/formatargs到4683F6 callEDI即停；EDI來自4F7314，diskDWORD773F5200不等於runtimeIAT/provider/module實際值。
+468020 renderprefix52bytes讀runtime834BD4，errorpath46804F private05AD0986即停；到上面island的整條private/virtual CFG、SI room條件、actualrender與GUI都未合格。
+這是conditional label/format consumer，不是image/map/WORLD resource binding。
+
+另一个有界table UI selector island
+46B926..46B9D0只保留table count/stride36的consumer：+4比較zeroextended WORD64ACCA，+20另有conditionalfilters，+0 labelpointer和key-500傳465110(UI64A968)。
+466/其它UI body、完整trigger、currentmode、input/private/provider都不擴張；停在directcallee465110，未追其配置/allocator/UI接受結果。
+此island只證key与UI參數不是recordordinal、row BYTE或map resourceID；沒有採用任何其它房間設定動作。
+
+交接／分類與unknown
+Known補證，newwire0/newopcode0/wirecorrection0/newcapture0。server-packet-delta B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C不變。
+Modern保留rawmapWORD，另外標記unqualifiedlookupindex/BYTE/UIlabelprojection，不從c.tbl header、suffix、key-500或lowBYTE推地圖資源ID。
+Lastprovedcaller/store：481F7D/4D48E0→46F9EE/4D4476；conditional46FA6F/46FA8C island；cleanup46F895 registration／46F8A5→46F92D；row46590C→4687D6；label4681E1→4683F6。
+Missinginputs：actual636584及private回值、外部名稱/provider結果、embeddedline-state/count、allocator/recordparse/ordering、64AFD0/64AFE0的當前generation/lifetime、vtable/IAT/virtualreturn、UIselection/previewSI/currentversion、channel/epoch及resourcebinding。
+有限來源caller及未知已具體封存。原packet和22priorpins保持，不要求Java/Modern額外CF/CC/partial或新wire，不宣稱Native GUI/rootcause/joined/source/physical/ownleave驗收，封存即停。

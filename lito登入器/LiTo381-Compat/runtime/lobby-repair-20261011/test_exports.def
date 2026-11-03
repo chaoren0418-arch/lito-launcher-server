@@ -1,0 +1,3 @@
+EXPORTS
+AcquireDDThreadLock=_AcquireDDThreadLock@0
+ReleaseDDThreadLock=_ReleaseDDThreadLock@0

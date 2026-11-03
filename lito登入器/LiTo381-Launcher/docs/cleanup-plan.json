@@ -1,0 +1,4272 @@
+[
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\briel-lito-guide",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-auto-activation-final",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-auto-activation-final-after3",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-auto-click-proof",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-final-refresh-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-initial-current",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-reselect-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-stable-25s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-stable-no-c8-30s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-stale-guard-final",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\char-stale-guard-final-after6",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-character-confirm-lobby",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-character-row2-local",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-character-row2-stable",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-character-later",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-character-ready",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-confirm",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-login",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-manual-row1",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-row2",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-e2e-row2-stable",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-0.5.45-runtime.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-characters-after-10s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-current",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-lobby-stable",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-login-characters",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-live-row2-confirm",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-battle-entered",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-countdown-1",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-countdown-2",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-countdown-3",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-3336",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-3336b",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-dialog",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-open2",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-open3",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-create-submit",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-exit",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-join",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-start-create-open",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-room-start-ready",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-stable-e2e-char",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-stable-e2e-char-after10",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-stable-e2e-login",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-timer-fix-login",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\final-timer-fix-stable-30s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-complete-directory-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-list-current",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-list-start",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-no-auto-c8-after-25s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-no-auto-c8-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-no-auto-row2-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-row2-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-row3-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-stable-character-after-15s",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\fix-stable-character-live",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-400-base",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-7400-base",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-7400-locale",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-ltsurf-400",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-ltsurf-7400",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-ltsurf-ui",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-test",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\img-test2",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\immediate-f2-ida.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\immediate-f2.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\immediate-f3-ida.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\immediate-f3.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0-client-smoke-canonical-v052.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0-client-smoke-published-v052.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0-client-smoke-v052.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0-client-smoke-versioned-publish.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.42",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.43",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.43-smoke-clean.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.43-smoke-final.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.43-smoke.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.44",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.44-smoke-final.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.44-smoke-full.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.44-smoke.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.45-final",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-0.5.45-smoke.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-build-artifacts-0.5.47",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-publish-v052",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\launcher-saved-settings-smoke-v052.json",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-0-client-test-20260805-214334",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-4gamer-images",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-ab-mss-20260805-214707",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-ab-sprites-20260805-214812",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-ab-sprites00-07-20260805-214908",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-ab-sprites00-07b-20260805-214941",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-briel",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-final-confirm-20260805-215026",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-gamemeca",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-historical-images",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-historical-images-20260821",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-itemdesc-crosslocale",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-live-v065-fix.stderr.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-live-v065-fix.stdout.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-live-v065.stderr.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-live-v065.stdout.log",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-map-renders",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-scale-verify-20260805",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-shop-audit-20260821",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-timeattack-4gamer",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-timeattack-primary",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito-town-text",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\lito7-room-create.jpg",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\LiToHelpExtract-20260806",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\ltshop-test.html",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\LTstring-c.tbl",
+    "reason": "obsolete temporary experiment",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\room-e2e-channel",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\room-e2e-character",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\room-e2e-character-later",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\room-e2e-confirm",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\room-e2e-login",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\window-move-bug",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\歷史暫存證據\\工作區報告",
+    "reason": "obsolete temporary experiment",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\acceptance-20260908",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\attack-all-probe-run",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\attack-all-probe-run2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\attack-all-probe-run3",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\attack-all-probe-run4",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\buddy-status-resource-audit-0.7.696",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clan-row-resource-audit-0.7.697",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-full",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-isolated",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-result-r8",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-result-r9",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r14-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r15-flow-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r16-flow-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r17-current-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r17-flow-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r18-flow-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\clone-visual-r18-series-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\compat-backup-archive",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\crash-dumps",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\diagnostic-staged",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\full-flow-0.7.864-0.5.56-20260908",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\full-flow-20260908",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\gm-de-native-live",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\launch-reports",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ltstring-match-audit",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\matchmaking-help-0.7.453",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-diagnosis-before",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-diagnosis-positioned",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-diagnosis-positioned-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-diagnosis-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-evidence",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-fix-v066-state",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-after-far",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-bot-target",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-continuous-move",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-far-move",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-leave",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-move-to-bot",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\movement-result-v067-summary-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-move",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-move-open",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-rerun-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-source-final",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-0.7.812-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-auto-stuck",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-auto-handoff-destination",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-auto-handoff-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-auto-handoff-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-auto-handoff-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-auto-handoff-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-endpoint",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-complete-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-complete-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-full",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-phase-reset",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-phase-reset-second",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-phase-reset-second-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-battle-handoff-second-character",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-controller-reset-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-controller-reset-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-controller-reset-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-controller-reset-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-controller-reset-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-current-endpoint-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-current-endpoint-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-room-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-final-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-handoff-success-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-handoff-success-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-layout-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-layout-live-restore",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-layout-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r3",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r4",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r5",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r6",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-manual-r7",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-root-preserved-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-root-preserved-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-root-preserved-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-root-preserved-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-root-preserved-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-scene-reset-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-scene-reset-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-tournament-root-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-tournament-root-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-two-stage-success-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-two-stage-success-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-ui-clear-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-ui-clear-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-combat",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-combat-after",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-source",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-e2e-world-roots-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-login-timeout",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-transfer-physical-entry-r2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-gfx-fix",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-gfx-fix-move",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-gfx-fix-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-observer",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-observer-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-physical-row",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-physical-row-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-ready-transition",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-ready-transition-dismiss",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-ready-transition-retry",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-ready-transition-retry2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-ready-transition-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-token-fix",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-token-fix-after",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-e2e-token-fix-after2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\native-rental-ui-live",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\noncanonical-selftest-captures",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\original-endpoint-probe",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pak-html-probe",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pet-race-ltsprite-panel-probe-0.7.386",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pet-race-ltsurf-panel-probe-0.7.386",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pet-race-map-render-0.7.384",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pet-race-panel-sprite-probe-0.7.386",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\pet-race-sprite-probe-0.7.384",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\post-result-user-report",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\protocol-captures",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\protocol-selftest",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\protocol-selftest-32000",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\release-0.7.425-smoke",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\release-0.7.432-smoke",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\release-0.7.446-smoke",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\research-quest-2005-tower",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\research-timeattack-2005",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-lobby-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-after-d3-summary-1s",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-delay-v067a-summary-1s",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-end-db-v067-summary-1s",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-after-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-after-login-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-auth-dismiss",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-auth-dismiss-3",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-battle-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-battle-world",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-channel-enter",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-channel-select",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-dialog-dismiss",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-dialog-dismiss-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-clean",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-clean-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-confirm-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-final",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-login-wait",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-movement",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-native-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-native-login-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-native-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-native-login-confirm-2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-fix-v067-room-enter",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-memory-lobby",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-memory-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-memory-result2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-memory-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-memory-room2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067b-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067b-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067b-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067b-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067b-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-battle-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-result-leave",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067c-summary-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-result-leave",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067d-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-battle",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-result-leave",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-result-leave-actual",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067e-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-channel",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-login-confirm",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-result",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-result-leave",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\result-routing-v067f-room",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema1-e2e-low-enter",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema1-e2e-low-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-altx",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-altx2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-close",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-current2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-char-event-ready2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-ready2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-tab1",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-tab1-clean2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-tab2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-tab2-clean",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-character-tab2-recheck",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-close-friends",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-control-memory-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-control-row-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-control-row-double-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-control-row-second-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-control-state2-diagnostic",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-correct-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-delayed-confirm-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-delayed-confirm-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-dismiss-invalid",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-doubleclick-dialog",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-doubleclick-new",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-doubleclick-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-doubleclick-ready2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-high-enter2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-high-login",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-high-login2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-low",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-low-enter",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-low-enter2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-e2e-low-login2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-lobby-proof",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-ltcharsvr-current",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-ltcharsvr-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-ltcharsvr-ready2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-memory-page-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-relogin",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-room-fixed2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-room-join",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-room-join-fixed",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-room-start",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-room-start-fixed",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-row-c9-delayed-click",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-row-c9-delayed-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-row-c9-e2e",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-correct",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-ready",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-ready2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-ready3",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-ready4",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-source-ready5",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-thread-transaction-e2e",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-thread-transaction-e2e-select",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-world-status-fixed",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-world-status-fixed2",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-world-status-fixed3",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-world-status-fixed4",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\schema2-world-status-fixed5",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\screenshots",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\skill-sprite-audit-20260908",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\string-login-result-audit",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\time-attack-sprite-probe-20260812",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\time-attack-web-evidence-20260829",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\traces",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9b",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9b-after-exit",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9b-credits",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9b-credits-escape",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-close-r9b-current",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-error-close-r8b",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-error-r8b",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-formal-close-r6-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-formal-close-r7-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-approach-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-bot-approach-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-current-after-target-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-current-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-entered-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-move-far-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-move-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-result-join-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-result-leave-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-result-r5-0.7.664-current",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-result-start-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-battle-summary-confirm-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-join-r9-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-join-r9b-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-leave-r9b-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-result-r9b-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-start-r9b-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-current-compat-auto-summary-confirm-r9b-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-D2-caller-click-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-D2-caller-join-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r10-stage-close-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r11-altx-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r11-process-close-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r11-room-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r2-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r3-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r5-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r6-system-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r7-toggle-system-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r8-room-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r8-toolbar-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-controls-r9-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-hit-test-r12-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-hit-test-r12-inspect-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-exit-hit-test-r12-press-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-formal-noarg-login-r7-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-formal-noarg-source-r7-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-lobby-bootstrap-scc-0.7.662",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-lobby-mcp-disassembly",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-lobby-native-sequence-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-lobby-ui-rearm-0.7.662",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-click-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-click-r3-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-click-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-join-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-join-r3-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-ready-start-join-r4-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-result-formal-dialog-r6-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-result-formal-join-r6-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-controls-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-controls-0.7.663-b",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-controls-final-c-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-controls-final-close-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-controls-retry-dialog",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-join-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-map-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-map-menu-real",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-map-row-posted",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-room-map-row4-0.7.663",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-toolbar-plain-r13-click-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-toolbar-plain-r13-close-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-toolbar-plain-r13-inspect-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-native-toolbar-plain-r13-room-0.7.664",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-probes",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-themida-close-r8",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\ui-themida-r8",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\v070-live-screen",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\v070-live-screen-after-dialog",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\v070-live-screen-current",
+    "reason": "obsolete native experiment outputs",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_crazyidol9\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_hillpath\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_hillpath\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_hillpath\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\kr380_hillpath\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw76_mong\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.80c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.660\\tw_tpai\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\chrisliu_2021\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\chrisliu_2021\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\chrisliu_orig\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\chrisliu_orig\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\cyrus99\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_black\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.80c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_charlie\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_dtc\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.80c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\fork_sam99\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\henry380\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\henry380\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\henry380\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\henry380\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\henry380\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\l1j-husky\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\l1j-husky\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\l1j-husky\\l1jserver\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\l1j-husky\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\husky\\l1j-husky\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\jiansoft\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\jiansoft\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\jiansoft\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\jiansoft\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1jgo_whale\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1jgo_whale\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1rj_tw\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1rj_tw\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1rj_tw\\src\\net\\l1j\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1rj_tw\\tool\\l1jp_ppc\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\l1rj_tw\\tool\\l1jtw_quick_build\\apache-ant-1.8.2\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\luke380\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\movan_rust\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\rtkirby380\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\.git",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.50c\\maps",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.50c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.50c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.50c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.80c\\build\\ant\\bin",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.80c\\src\\l1j\\server\\server\\model\\map",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\public-source-audit-0.7.805\\tw99nets\\L1J-TW_3.80c\\tool\\Ip_Convert\\L1J-TW Ip Convertor for 3.3C\\L1J-TW Ip Convertor for 3.3C\\obj",
+    "reason": "frozen reference checkout history/assets/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\action-return-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\channel-hang-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\character-return-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\development-startup-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\exit-hitbox-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\formal-standard-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\four-issue-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\heal-target-crash-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\input-scale-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-authority-routing-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-diagnostic-source7-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-diagnostic-source8-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-diagnostic-source8a-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-fixed-producer-integration-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-isolated-start-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-isolated-start-20261008-fresh2",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-lifetime-root-namespace-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-phase-context-admission-fix-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-precheck-fresh5-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-automated-source-binary-pin-fix-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-bootstrap-current-namespace-fix-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-binder-schema-and-start-seal-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-fresh-console-seal-20261008-r2",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-fresh-console-seal-20261008-r3",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-fresh-console-seal-20261008-r4",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-fresh-console-seal-20261008-r5",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-native-inventory-predicate-fix-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-provider-finalization-and-activation-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-successor-live-bindings-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-current-wrapper-cleanup-evidence-resolution-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-default-exe-startup-adoption-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-exe-memory-server-control-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-exe-ready-fresh-binding-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-exe-ready-fresh-binding2-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-exe-startup-recovery-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-gui-native-successor-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-interactive-menu-regression-fix-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-admission-claim-lifecycle-implementation-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-admission-reserved-policy-addendum-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-bootstrap-contract-fix-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-channel-contract-and-fresh-run-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-cleanup-contract-selector-adoption-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-cleanup-retention-correction-and-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-current-blueprint-consumer-implementation-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-current-plan-selector-and-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-final-startup-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-original-claim-basename-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-original-resident-entry-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-positional-identity-and-fresh-run-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-publication-read-and-fresh-run-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-retained-cleanup-retry-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-sealed-predecessor-and-fresh-run-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-memory-session-shape-and-fresh-run-anchor-build-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-native-start-failure-preflight-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-original-setup-abort-wait-fix-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-provider-precheck-bound-state-fix-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-relocation-compiled-entry-successor-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-relocation-helper-refusal-translation-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-resident-automated-admission-fix-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source10-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source11-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source12-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source13-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source14-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source15-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source16-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source17-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-server-owned-config-source9-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-supplier-controller-diagnostics-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-supplier-diagnostic-argv-fix-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-supplier-diagnostic-integration-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-T89-frozen-resource-path-adoption-fix-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-T89-original-integrity-hash-route-20261009",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-T89-Sprite01-current-test-scope-cause-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\launcher-utf8-helper-protocol-fix-20261010",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\live-flow-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\lobby-controls-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\lobby-crash-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\lobby-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\migration-20261003",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\native-window-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\packet-ui-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\projectile-shop-exit-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\restore-baseline-0.6.2-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\room-exit-dispatch-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\runtime-prefix-input-pin-repair-20261008",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-audit-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\shared-resource-migration-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\source-return-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\target-ui-repair-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\typing-only-candidate-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\runtime\\universal-timer-20261011",
+    "reason": "retired launcher experiment/version",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details_native_test.exe",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details_native_test.map",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details_native_test.obj",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details_test.exe",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details_test.obj",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\summary_input_test.exe",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\summary_input_test.obj",
+    "reason": "native build output",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Compat\\build",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Compat\\publish",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Compat\\target",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Compat\\runtime\\lobby-repair-20261011\\smoke\\publish",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\__pycache__",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\LitoImgProbe\\bin",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\LitoImgProbe\\obj",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\LitoSpriteProbe\\bin",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\LitoSpriteProbe\\obj",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\TextPakGameplayOverlay\\bin",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\TextPakGameplayOverlay\\obj",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\TextPakHtmlProbe\\bin",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\TextPakHtmlProbe\\obj",
+    "reason": "reproducible build/cache",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\LiTo381Launcher.exe",
+    "reason": "obsolete root launcher",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\launcher-smoke-test-error.txt",
+    "reason": "obsolete smoke error",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.35-20261012",
+    "reason": "superseded broad baseline/history archive",
+    "directory": true
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\continuous-goal-20261008.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\continuous-goal-blocked-20261008-resumed-0537.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\continuous-goal-blocked-20261008.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\continuous-goal-resume-20261008-0537.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-3366大廳崩潰V6完整整合與啟動清理契約交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-3366大廳狀態圖示空清單崩潰修復候選交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Actor移除延後與鍵值重用門檻交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-CallClan技能名稱與ASK729回呼及邀請期限分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-CallClan與RunClan名稱替換取消及Selector時序分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-GUI房間與說明診斷交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-GUI退出稽核交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Help前modal空值來源與分派觀測準備交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Help字串界線補充交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Help與結算返回交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Importer-Constructor-Cleanup-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-LTmapstr載入生命週期與開戰索引依賴交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Original-Supplier-Startup-Adapter-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-PortalCue建立持有停止釋放最小契約交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal效果169Sprite解碼幀界限與事件消費者交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal效果169幀資源延遲與有限輪詢前提交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal效果169建立排程移除與輸入邊界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal效果OwnerCue析構與共享資源邊界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal游標解鎖受保護位元與首操作前提交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal真實C08重建Server固定封包依賴交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Portal重載觸發來源與延後門檻交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Provider-Profile-Adoption-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Provider-Reservation-Consumer-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Reservation-Bridge-Successor-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-RunClan傳送目的地與中立重建Self鏡頭輸入邊界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-RunClan原版Selector與V5既有相容修正分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Startup-Policy-Binder-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Static-Startup-Inputs-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-Supplier-Deadline-Envelope-Import-20261007.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T62-NumericObserver-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T63-OfflineAnalysis-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T64-V8-WORLD-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T65-OfflineValidation.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T65-WORLDScene-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T66-V9-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T67-SkillNavigation-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T68-V10-Navigation-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T69-SkillChat-Evidence-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T70-Diagnostic-Observer-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T71-Session-Entry-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T72-Equipment-Observer-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T73-Coordinated-Flow-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T73-Live-Review-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T73-Three-Failure-Remaining-Work.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T74-Skill-Lifecycle-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T75-Chat-Background-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T76-Reentry-Prepared-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T77-Skill-Source-Adoption-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T78-Channel-Back-Source-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T79-Next-Player-Back-Evidence-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T80-Server-Return-Adoption-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T81-Actual-Recovery-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T81-Cleanup-Recovery-Contract.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T81-Eat-Resource-Reconciliation.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T81-Ready-Contract-Fix-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T82-Caption-Drag-Fix-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T82-Integrated-Successor-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T86-Actual-Recovery-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T87-Original-Path-Validation-Fix.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T88-Final-Eat-Event-Integration.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T89-Actual-Recovery-Handoff.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T90-Human-Session-20261007-1053.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-T90-Recovery-Aware-Successor.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI修復候選交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI功能驗收清單.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI完整V4候選READY交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI完整V5候選READY交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI完整V6候選READY交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI完整V7候選READY交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-UI覆蓋與重測分支交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-V10-HumanManualExit.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-V6大廳四項問題與V7獨立整合候選交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-V6大廳角色技能封包缺口交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-V8-HumanForcedClose.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-V9-HumanForcedClose.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-World與Actor建立順序及操作門檻交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-World與戰鬥原生UI交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-一般聊天密語上下歷史與下一輸入待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-倉庫確認C_DB與原頁char動作待Server核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-公告欄Writer保留位元組與首次NPC來源待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-公告欄清單筆數位寬與選題翻頁Owner待Server核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-共用輸入EnterESC回呼替換與焦點生命週期待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-共用輸入工廠字型flags分支更正版交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-原血盟C48清單回覆與成員快取生命週期待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-另一輸入Owner特殊碼頁與密語快取位寬待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-商店清單數量確認與S_DB續接交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-商店購買顯示貨幣與估價數量結算權威分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-啟動入口返回外部邊界與書信讀刪候選依賴交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-大廳技能owner生命週期與離開圖示定位唯讀交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-大廳登出與S_D0續接交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-好友UI回覆清單容量與分組刷新待Server核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-實際物品資料與Help頁面對照交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間phase2繪製門檻與入房無反應對照交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間SCE後D0因果觀測準備交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間名單快照增量與Owner生命週期交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間換隊名單與準備欄位Owner分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間模式值與背景資源來源生命週期交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-房間準備開始倒數取消與狀態分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-技能目標Owner與原版收藏動作交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-排行榜候選Client交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-攻擊快捷鍵與目標生命週期交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-整合診斷解析器轉送資格更正交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-書信撰寫寄送Owner與多收件者待Server核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-物品回覆Help與隊伍續接交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-物品指標ESC與原資源動作交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-特殊輸入視窗通知EnterESC焦點與字元待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-玩家交易Owner與確認鎖定待Server核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-登入器一次性交付就緒與三項玩家問題狀態交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-登出離開state消費與整合診斷候選交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-組字開始結束旗標與下一輸入生命週期待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-背包有限控制與裝卸驗收交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-背包目標取消Owner與Hall動作交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-背包與房間戰鬥鏈交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-自然退出WM_CLOSE清理Guard與同PID時序邊界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-血盟名單F8查詢Owner與有符號筆數待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-血盟建立EF解散F0取消F1與名稱模式待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-血盟角色指派C7C與開窗命令Owner待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-讀信視窗關閉刪信與道具指標生命週期待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-購買後物品接收Model與可見背包列表分界交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\Native-輸入法組字提交顯示與緩衝邊界待核對交接.json",
+    "reason": "historical handoff receipt",
+    "directory": false
+  }
+]

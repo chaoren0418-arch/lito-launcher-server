@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\cache-admission-20261008\derive.py", line 169, in <module>
+    try: main()
+         ^^^^^^
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\cache-admission-20261008\derive.py", line 133, in main
+    parsed=sector_parse(Path(s['pin']['path']).read_bytes(),si,rows,witnesses,required)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\cache-admission-20261008\derive.py", line 68, in sector_parse
+    ref(4,off,x,y,depth,slot,tid)
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\cache-admission-20261008\derive.py", line 47, in ref
+    require(0 <= x < 128 and 0 <= y < 64, 'drawable coordinate outside sector')
+  File "D:\lineage�}�o\3-lito�}�o\lito��߸귽\cache-admission-20261008\derive.py", line 16, in require
+    if not ok: raise ValueError(reason)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: drawable coordinate outside sector

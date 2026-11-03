@@ -1,0 +1,884 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound-contract.json",
+    "bytes": 28800,
+    "sha256": "9A2BA5AB692E92088E5B9BCA3C45A449EB04D7B3D2AD7AACB88EE7AAF43D598D"
+  },
+  "all_match": true,
+  "check_count": 214,
+  "checks": [
+    {
+      "check": "pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin server-ordinary-room-map-selection-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin map-selection-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin 004630F0-51.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00464AD0-18.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00464DF1-3F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00464E30-12.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00464EE4-38.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00465110-52.bin",
+      "match": true
+    },
+    {
+      "check": "pin 00465173-C.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046B7D0-34.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046B804-26.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046B847-7.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046B9E2-1A.bin",
+      "match": true
+    },
+    {
+      "check": "pin 005028CC-4.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0062C078-4.bin",
+      "match": true
+    },
+    {
+      "check": "pin equivalence-search-preflight.json",
+      "match": true
+    },
+    {
+      "check": "pin finite-verification.json",
+      "match": true
+    },
+    {
+      "check": "pin instruction-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin selected-key-and-unknown-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin server-comparison.json",
+      "match": true
+    },
+    {
+      "check": "pin wire-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "raw PE 00464AD0",
+      "match": true
+    },
+    {
+      "check": "offset 00464AD0",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00464AD0",
+      "match": true
+    },
+    {
+      "check": "raw PE 00464DF1",
+      "match": true
+    },
+    {
+      "check": "offset 00464DF1",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00464DF1",
+      "match": true
+    },
+    {
+      "check": "raw PE 00464E30",
+      "match": true
+    },
+    {
+      "check": "offset 00464E30",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00464E30",
+      "match": true
+    },
+    {
+      "check": "raw PE 00465110",
+      "match": true
+    },
+    {
+      "check": "offset 00465110",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00465110",
+      "match": true
+    },
+    {
+      "check": "raw PE 00465173",
+      "match": true
+    },
+    {
+      "check": "offset 00465173",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00465173",
+      "match": true
+    },
+    {
+      "check": "raw PE 004630F0",
+      "match": true
+    },
+    {
+      "check": "offset 004630F0",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 004630F0",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "offset 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B804",
+      "match": true
+    },
+    {
+      "check": "offset 0046B804",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 0046B804",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B847",
+      "match": true
+    },
+    {
+      "check": "offset 0046B847",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 0046B847",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "offset 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "raw PE 00464EE4",
+      "match": true
+    },
+    {
+      "check": "offset 00464EE4",
+      "match": true
+    },
+    {
+      "check": "raw PE 0062C078",
+      "match": true
+    },
+    {
+      "check": "offset 0062C078",
+      "match": true
+    },
+    {
+      "check": "raw PE 005028CC",
+      "match": true
+    },
+    {
+      "check": "offset 005028CC",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B926",
+      "match": true
+    },
+    {
+      "check": "offset 0046B926",
+      "match": true
+    },
+    {
+      "check": "reused pin 0046B926",
+      "match": true
+    },
+    {
+      "check": "reused index 0046B926",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 0046B926",
+      "match": true
+    },
+    {
+      "check": "raw PE 00450B90",
+      "match": true
+    },
+    {
+      "check": "offset 00450B90",
+      "match": true
+    },
+    {
+      "check": "reused pin 00450B90",
+      "match": true
+    },
+    {
+      "check": "reused index 00450B90",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00450B90",
+      "match": true
+    },
+    {
+      "check": "raw PE 00450BC0",
+      "match": true
+    },
+    {
+      "check": "offset 00450BC0",
+      "match": true
+    },
+    {
+      "check": "reused pin 00450BC0",
+      "match": true
+    },
+    {
+      "check": "reused index 00450BC0",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 00450BC0",
+      "match": true
+    },
+    {
+      "check": "raw PE 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "offset 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "reused pin 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "reused index 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 004C6AE0",
+      "match": true
+    },
+    {
+      "check": "raw PE 004C6916",
+      "match": true
+    },
+    {
+      "check": "offset 004C6916",
+      "match": true
+    },
+    {
+      "check": "reused pin 004C6916",
+      "match": true
+    },
+    {
+      "check": "reused index 004C6916",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 004C6916",
+      "match": true
+    },
+    {
+      "check": "raw PE 004C6930",
+      "match": true
+    },
+    {
+      "check": "offset 004C6930",
+      "match": true
+    },
+    {
+      "check": "reused pin 004C6930",
+      "match": true
+    },
+    {
+      "check": "reused index 004C6930",
+      "match": true
+    },
+    {
+      "check": "complete aligned disasm 004C6930",
+      "match": true
+    },
+    {
+      "check": "operand 00464AD5",
+      "match": true
+    },
+    {
+      "check": "operand 00464ADB",
+      "match": true
+    },
+    {
+      "check": "operand 00464AE1",
+      "match": true
+    },
+    {
+      "check": "operand 00464DF3",
+      "match": true
+    },
+    {
+      "check": "operand 00464DFA",
+      "match": true
+    },
+    {
+      "check": "operand 00464DFE",
+      "match": true
+    },
+    {
+      "check": "operand 00464E03",
+      "match": true
+    },
+    {
+      "check": "operand 00464E06",
+      "match": true
+    },
+    {
+      "check": "operand 00464E09",
+      "match": true
+    },
+    {
+      "check": "operand 00464E0C",
+      "match": true
+    },
+    {
+      "check": "operand 00464E0F",
+      "match": true
+    },
+    {
+      "check": "operand 00464E11",
+      "match": true
+    },
+    {
+      "check": "operand 00464E14",
+      "match": true
+    },
+    {
+      "check": "operand 00464E16",
+      "match": true
+    },
+    {
+      "check": "operand 00464E1B",
+      "match": true
+    },
+    {
+      "check": "operand 00464E1C",
+      "match": true
+    },
+    {
+      "check": "operand 00464E1E",
+      "match": true
+    },
+    {
+      "check": "operand 00464E23",
+      "match": true
+    },
+    {
+      "check": "operand 00464E28",
+      "match": true
+    },
+    {
+      "check": "operand 00464E40",
+      "match": true
+    },
+    {
+      "check": "operand 00450BA0",
+      "match": true
+    },
+    {
+      "check": "operand 00450BA5",
+      "match": true
+    },
+    {
+      "check": "operand 00450BAF",
+      "match": true
+    },
+    {
+      "check": "operand 0046B955",
+      "match": true
+    },
+    {
+      "check": "operand 0046B996",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9A7",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9B5",
+      "match": true
+    },
+    {
+      "check": "operand 0046512D",
+      "match": true
+    },
+    {
+      "check": "operand 00465145",
+      "match": true
+    },
+    {
+      "check": "operand 00465152",
+      "match": true
+    },
+    {
+      "check": "operand 0046515D",
+      "match": true
+    },
+    {
+      "check": "operand 00465177",
+      "match": true
+    },
+    {
+      "check": "operand 0046517A",
+      "match": true
+    },
+    {
+      "check": "operand 00463114",
+      "match": true
+    },
+    {
+      "check": "operand 00450BCE",
+      "match": true
+    },
+    {
+      "check": "operand 00450BD1",
+      "match": true
+    },
+    {
+      "check": "operand 0046313C",
+      "match": true
+    },
+    {
+      "check": "operand 0046B828",
+      "match": true
+    },
+    {
+      "check": "operand 0046B849",
+      "match": true
+    },
+    {
+      "check": "operand 0046B7F0",
+      "match": true
+    },
+    {
+      "check": "operand 0046B7F7",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E6",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E8",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9EA",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9EF",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9F4",
+      "match": true
+    },
+    {
+      "check": "case7 dispatch",
+      "match": true
+    },
+    {
+      "check": "map format literal",
+      "match": true
+    },
+    {
+      "check": "mode format literal",
+      "match": true
+    },
+    {
+      "check": "selected model []",
+      "match": true
+    },
+    {
+      "check": "selected model [0, 0]",
+      "match": true
+    },
+    {
+      "check": "selected model [0, 1, 1]",
+      "match": true
+    },
+    {
+      "check": "selected model [128, 0]",
+      "match": true
+    },
+    {
+      "check": "selected model [0, 255]",
+      "match": true
+    },
+    {
+      "check": "map varargs 0xe",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0xe",
+      "match": true
+    },
+    {
+      "check": "map varargs 0x40",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0x40",
+      "match": true
+    },
+    {
+      "check": "map varargs 0xffffffff",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0xffffffff",
+      "match": true
+    },
+    {
+      "check": "map varargs 0xffffff9c",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0xffffff9c",
+      "match": true
+    },
+    {
+      "check": "map varargs 0xfffffffe",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0xfffffffe",
+      "match": true
+    },
+    {
+      "check": "map varargs 0xffff",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0xffff",
+      "match": true
+    },
+    {
+      "check": "map varargs 0x12345678",
+      "match": true
+    },
+    {
+      "check": "map composed wire 0x12345678",
+      "match": true
+    },
+    {
+      "check": "selected source offsets",
+      "match": true
+    },
+    {
+      "check": "two qualified selected reads",
+      "match": true
+    },
+    {
+      "check": "no unknown before map sender",
+      "match": true
+    },
+    {
+      "check": "map first postrequest virtual",
+      "match": true
+    },
+    {
+      "check": "mode args input0",
+      "match": true
+    },
+    {
+      "check": "mode args input1",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0x202",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0x234",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0x1f3",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0x190",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0xffff",
+      "match": true
+    },
+    {
+      "check": "conditional table composition 0x80000001",
+      "match": true
+    },
+    {
+      "check": "first allocation STOP",
+      "match": true
+    },
+    {
+      "check": "conditional ctor base store",
+      "match": true
+    },
+    {
+      "check": "ctor first remaining unknown",
+      "match": true
+    },
+    {
+      "check": "menu first virtual STOP",
+      "match": true
+    },
+    {
+      "check": "known server layout",
+      "match": true
+    },
+    {
+      "check": "no new dynamic witness",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    },
+    {
+      "check": "separate projections explicitly open",
+      "match": true
+    },
+    {
+      "check": "no newwire correction",
+      "match": true
+    },
+    {
+      "check": "new static sizes",
+      "match": true
+    }
+  ],
+  "new_code_ranges": 10,
+  "new_data_ranges": 3,
+  "necessary_reused_raw_ranges": 6,
+  "instruction_assertions": 47,
+  "map_request_models": 7,
+  "selected_lookup_models": 5,
+  "conditional_table_composition_models": 6,
+  "adjacent_mode_models": 2,
+  "prior_primary_pins_preserved": 28,
+  "Native_or_dynamic_witnesses": 0,
+  "old_PASS_replayed": false,
+  "computed_models": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound\\computed-request-source-models.json",
+    "bytes": 10214,
+    "sha256": "7A5FBDEFAB77D38C5F8A3B9A65644C163C0C657C52037C64ACFAE352F44207E6"
+  },
+  "UI_tableproducer_ctor_insert_selection_transport_phase_owner_ACK_qualified": false
+}

@@ -1,0 +1,83 @@
+{
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "navigation_only": true,
+  "literal_queries": {
+    "62FAA0": [
+      {
+        "line": 309124,
+        "text": "lea     ebx, ds:62FAA0h[edx*4]"
+      },
+      {
+        "line": 310465,
+        "text": "lea     esi, dword_62FAA0[eax]"
+      },
+      {
+        "line": 311576,
+        "text": "dd 0E80D8B71h, 0E80075F6h, 0FFF876BCh, 2B9h, 64E2E800h, 44A00000h, 8D0075F7h, 62FAA0B6h, 74C08400h, 4F28A125h"
+      },
+      {
+        "line": 316348,
+        "text": "dd 808B0083h, 10Ch, 18B805EBh, 8D0063D6h, 62FAA08Eh, 68505100h, 75EC88h, 0E90AE890h, 0C48376F5h, 5BA0Ch"
+      },
+      {
+        "line": 349867,
+        "text": "lea     esi, ds:62FAA0h[eax*4]"
+      },
+      {
+        "line": 551840,
+        "text": "dword_62FAA0 dd 7 dup(0)                ; DATA XREF: sub_4934F0+45↑o"
+      }
+    ],
+    "byte_62FACD": [
+      {
+        "line": 309122,
+        "text": "mov     al, byte_62FACD[edx*4]"
+      },
+      {
+        "line": 310459,
+        "text": "cmp     byte_62FACD[eax], 0FFh"
+      },
+      {
+        "line": 311594,
+        "text": "mov     byte_62FACD[eax*4], 0FFh"
+      },
+      {
+        "line": 317149,
+        "text": "mov     esi, offset byte_62FACD"
+      },
+      {
+        "line": 551845,
+        "text": "byte_62FACD db 0FFh                     ; DATA XREF: sub_4928C0+68↑r"
+      }
+    ],
+    "word_62FACE": [
+      {
+        "line": 308582,
+        "text": "mov     eax, offset word_62FACE"
+      },
+      {
+        "line": 349746,
+        "text": "mov     eax, offset word_62FACE"
+      },
+      {
+        "line": 551849,
+        "text": "word_62FACE dw 0FFh                     ; DATA XREF: sub_492270+124↑o"
+      }
+    ],
+    "dword_62FAD0": [
+      {
+        "line": 317700,
+        "text": "mov     ebx, offset dword_62FAD0"
+      },
+      {
+        "line": 551851,
+        "text": "dword_62FAD0 dd 2Ch dup(0)              ; DATA XREF: sub_497600+12↑o"
+      }
+    ]
+  },
+  "scope": "Directliteral/symbolnavigationonly;doesnotclosealias/bulk/privatehelper/caller/runtimewriters."
+}

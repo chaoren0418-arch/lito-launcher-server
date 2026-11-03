@@ -1,0 +1,1469 @@
+{
+  "xml_sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130",
+  "native_table_sha256": "fa175fdeb7b2ffd0b8c0f49c134d9ea2eeb5f953798bbec0166cc49678ee4c08",
+  "mapped_slots": 85,
+  "native_slots": 87,
+  "changed_icons": [
+    {
+      "slot": 0,
+      "from": 481,
+      "to": 5397
+    },
+    {
+      "slot": 2,
+      "from": 486,
+      "to": 5395
+    },
+    {
+      "slot": 5,
+      "from": 485,
+      "to": 1104
+    },
+    {
+      "slot": 13,
+      "from": 777,
+      "to": 728
+    },
+    {
+      "slot": 24,
+      "from": 1110,
+      "to": 5241
+    },
+    {
+      "slot": 54,
+      "from": 852,
+      "to": 1733
+    },
+    {
+      "slot": 57,
+      "from": 1758,
+      "to": 2706
+    },
+    {
+      "slot": 73,
+      "from": 486,
+      "to": 5393
+    }
+  ],
+  "bindings": [
+    {
+      "slot": 0,
+      "effect": {
+        "id": "0",
+        "icon": "5397",
+        "offIcon": "5398",
+        "duration": "0",
+        "group": "0",
+        "remainWhenDie": "true",
+        "startMsg": "849",
+        "startMsgName": "HASTE_S",
+        "endMsg": "185",
+        "endMsgName": "HASTE_E",
+        "kind": "speed",
+        "priority": "5",
+        "bufDesc": "0"
+      },
+      "old_icon": 481
+    },
+    {
+      "slot": 1,
+      "effect": {
+        "id": "1",
+        "icon": "480",
+        "duration": "0",
+        "group": "0",
+        "startMsg": "850",
+        "startMsgName": "SLOW_S",
+        "endMsg": "2159",
+        "endMsgName": "SLOW_E",
+        "kind": "slow"
+      },
+      "old_icon": 480
+    },
+    {
+      "slot": 2,
+      "effect": {
+        "id": "2",
+        "icon": "5395",
+        "offIcon": "5395",
+        "duration": "0",
+        "group": "3",
+        "startMsg": "851",
+        "startMsgName": "SPEED_DOUBLE_S",
+        "endMsg": "185",
+        "endMsgName": "SPEED_DOUBLE_E",
+        "kind": "cook",
+        "priority": "6"
+      },
+      "old_icon": 486
+    },
+    {
+      "slot": 3,
+      "effect": {
+        "id": "3",
+        "icon": "484",
+        "duration": "0",
+        "group": "35",
+        "startMsg": "852",
+        "startMsgName": "POTION_PRUDENCE_S",
+        "endMsg": "2160",
+        "endMsgName": "POTION_PRUDENCE_E",
+        "kind": "cook"
+      },
+      "old_icon": 484
+    },
+    {
+      "slot": 4,
+      "effect": {
+        "id": "4",
+        "icon": "485",
+        "offIcon": "5271",
+        "duration": "0",
+        "group": "5",
+        "startMsg": "853",
+        "startMsgName": "SHIELD_S",
+        "endMsg": "2161",
+        "endMsgName": "SHIELD_E",
+        "kind": "defense"
+      },
+      "old_icon": 485
+    },
+    {
+      "slot": 5,
+      "effect": {
+        "id": "5",
+        "icon": "1104",
+        "offIcon": "5272",
+        "duration": "960",
+        "group": "0",
+        "graphic": "8977",
+        "startMsg": "971",
+        "startMsgName": "OLD_SHADOW_ARMOR",
+        "endMsg": "2162",
+        "endMsgName": "OLD_SHDOW_ARMOR_E",
+        "kind": "defense"
+      },
+      "old_icon": 485
+    },
+    {
+      "slot": 6,
+      "effect": {
+        "id": "6",
+        "icon": "763",
+        "offIcon": "5273",
+        "duration": "0",
+        "group": "5",
+        "graphic": "2249",
+        "startMsg": "972",
+        "startMsgName": "EARTH_SKIN_S",
+        "endMsg": "2163",
+        "endMsgName": "EARTH_SKIN_E",
+        "kind": "defense"
+      },
+      "old_icon": 763
+    },
+    {
+      "slot": 7,
+      "effect": {
+        "id": "7",
+        "icon": "725",
+        "offIcon": "5274",
+        "duration": "0",
+        "group": "5",
+        "graphic": "2287",
+        "startMsg": "973",
+        "startMsgName": "BLESS_OF_EARTH_S",
+        "endMsg": "2164",
+        "endMsgName": "BLESS_OF_EARTH_E",
+        "kind": "defense"
+      },
+      "old_icon": 725
+    },
+    {
+      "slot": 8,
+      "effect": {
+        "id": "8",
+        "icon": "783",
+        "offIcon": "5275",
+        "duration": "0",
+        "group": "5",
+        "graphic": "2252",
+        "startMsg": "974",
+        "startMsgName": "IRON_SKIN_S",
+        "endMsg": "2165",
+        "endMsgName": "IRON_SKIN_E",
+        "kind": "defense"
+      },
+      "old_icon": 783
+    },
+    {
+      "slot": 9,
+      "effect": {
+        "id": "9",
+        "icon": "482",
+        "offIcon": "5246",
+        "duration": "0",
+        "group": "6",
+        "startMsg": "854",
+        "startMsgName": "ENCHANT_MIGHTY_S",
+        "kind": "attack"
+      },
+      "old_icon": 482
+    },
+    {
+      "slot": 10,
+      "effect": {
+        "id": "10",
+        "icon": "483",
+        "offIcon": "5247",
+        "duration": "0",
+        "group": "7",
+        "startMsg": "855",
+        "startMsgName": "ENCHANT_DEXTERITY_S",
+        "kind": "attack"
+      },
+      "old_icon": 483
+    },
+    {
+      "slot": 11,
+      "effect": {
+        "id": "11",
+        "icon": "552",
+        "duration": "0",
+        "group": "0",
+        "remainInArea": "true",
+        "startMsg": "856",
+        "startMsgName": "WATER_BREATH_S",
+        "endMsg": "2166",
+        "endMsgName": "WATER_BREATH_E",
+        "kind": "cook"
+      },
+      "old_icon": 552
+    },
+    {
+      "slot": 12,
+      "effect": {
+        "id": "12",
+        "icon": "777",
+        "offIcon": "5248",
+        "duration": "1200",
+        "group": "4",
+        "graphic": "2165",
+        "startMsg": "964",
+        "startMsgName": "HOLY_WEAPON_S",
+        "endMsg": "718",
+        "endMsgName": "HOLY_WEAPON_E",
+        "kind": "attack"
+      },
+      "old_icon": 777
+    },
+    {
+      "slot": 13,
+      "effect": {
+        "id": "13",
+        "icon": "728",
+        "offIcon": "5267",
+        "duration": "1200",
+        "group": "4",
+        "graphic": "2176",
+        "startMsg": "857",
+        "startMsgName": "BLESS_WEAPON_S",
+        "endMsg": "2167",
+        "endMsgName": "BLESS_WEAPON_E",
+        "kind": "attack"
+      },
+      "old_icon": 777
+    },
+    {
+      "slot": 14,
+      "effect": {
+        "id": "14",
+        "icon": "813",
+        "offIcon": "5276",
+        "duration": "3600",
+        "group": "0",
+        "graphic": "2186",
+        "startMsg": "858",
+        "startMsgName": "RESIST_MAGIC_S",
+        "endMsg": "719",
+        "endMsgName": "RESIST_MAGIC_E",
+        "kind": "defense"
+      },
+      "old_icon": 813
+    },
+    {
+      "slot": 15,
+      "effect": {
+        "id": "15",
+        "icon": "804",
+        "offIcon": "5277",
+        "duration": "1200",
+        "group": "0",
+        "graphic": "2184",
+        "startMsg": "859",
+        "startMsgName": "RESIST_ELEMENT_S",
+        "endMsg": "720",
+        "endMsgName": "RESIST_ELEMENT_E",
+        "kind": "defense"
+      },
+      "old_icon": 804
+    },
+    {
+      "slot": 16,
+      "effect": {
+        "id": "16",
+        "icon": "807",
+        "offIcon": "5278",
+        "duration": "64",
+        "group": "0",
+        "graphic": "2285",
+        "startMsg": "860",
+        "startMsgName": "PROTECTION_FROM_ELEMENT_S",
+        "endMsg": "721",
+        "endMsgName": "PROTECTION_FROM_ELEMENT_E",
+        "kind": "defense"
+      },
+      "old_icon": 807
+    },
+    {
+      "slot": 17,
+      "effect": {
+        "id": "17",
+        "icon": "745",
+        "offIcon": "5279",
+        "duration": "1200",
+        "group": "0",
+        "graphic": "2180",
+        "startMsg": "861",
+        "startMsgName": "CLEAR_MIND_S",
+        "endMsg": "722",
+        "endMsgName": "CLEAR_MIND_E",
+        "kind": "defense"
+      },
+      "old_icon": 745
+    },
+    {
+      "slot": 18,
+      "effect": {
+        "id": "18",
+        "icon": "774",
+        "offIcon": "5249",
+        "duration": "0",
+        "group": "1",
+        "graphic": "2182",
+        "startMsg": "862",
+        "startMsgName": "FIRE_WEAPON_S",
+        "endMsg": "723",
+        "endMsgName": "FIRE_WEAPON_E",
+        "kind": "attack"
+      },
+      "old_icon": 774
+    },
+    {
+      "slot": 19,
+      "effect": {
+        "id": "19",
+        "icon": "735",
+        "offIcon": "5250",
+        "duration": "960",
+        "group": "1",
+        "graphic": "2286",
+        "startMsg": "980",
+        "startMsgName": "BREATH_OF_FIRE_S",
+        "endMsg": "2168",
+        "endMsgName": "BREATH_OF_FIRE_E",
+        "kind": "attack"
+      },
+      "old_icon": 735
+    },
+    {
+      "slot": 20,
+      "effect": {
+        "id": "20",
+        "icon": "738",
+        "offIcon": "5251",
+        "duration": "960",
+        "group": "1",
+        "graphic": "2242",
+        "startMsg": "981",
+        "startMsgName": "BURNING_WEAPON_S",
+        "endMsg": "2169",
+        "endMsgName": "BURNING_WEAPON_E",
+        "kind": "attack"
+      },
+      "old_icon": 738
+    },
+    {
+      "slot": 21,
+      "effect": {
+        "id": "21",
+        "icon": "855",
+        "offIcon": "5252",
+        "duration": "0",
+        "group": "1",
+        "graphic": "2246",
+        "startMsg": "863",
+        "startMsgName": "WIND_SHOT_S",
+        "endMsg": "724",
+        "endMsgName": "WIND_SHOT_E",
+        "kind": "attack"
+      },
+      "old_icon": 855
+    },
+    {
+      "slot": 22,
+      "effect": {
+        "id": "22",
+        "icon": "771",
+        "offIcon": "5253",
+        "duration": "960",
+        "group": "1",
+        "graphic": "2288",
+        "startMsg": "962",
+        "startMsgName": "EYE_OF_STORM_S",
+        "endMsg": "2170",
+        "endMsgName": "EYE_OF_STORM_E",
+        "kind": "attack"
+      },
+      "old_icon": 771
+    },
+    {
+      "slot": 23,
+      "effect": {
+        "id": "23",
+        "icon": "827",
+        "offIcon": "5254",
+        "duration": "960",
+        "group": "1",
+        "graphic": "2248",
+        "startMsg": "963",
+        "startMsgName": "STORM_SHOT_S",
+        "endMsg": "2171",
+        "endMsgName": "STORM_SHOT_E",
+        "kind": "attack"
+      },
+      "old_icon": 827
+    },
+    {
+      "slot": 24,
+      "effect": {
+        "id": "24",
+        "icon": "5241",
+        "offIcon": "5242",
+        "duration": "960",
+        "group": "3",
+        "graphic": "2247",
+        "startMsg": "872",
+        "startMsgName": "WIND_WALK_S",
+        "endMsg": "185",
+        "endMsgName": "WIND_WALK_E",
+        "kind": "speed",
+        "priority": "6"
+      },
+      "old_icon": 1110
+    },
+    {
+      "slot": 25,
+      "effect": {
+        "id": "25",
+        "icon": "880",
+        "offIcon": "5280",
+        "duration": "0",
+        "group": "2",
+        "graphic": "2277",
+        "startMsg": "864",
+        "startMsgName": "GLOWING_AURA_S",
+        "endMsg": "2172",
+        "endMsgName": "GLOWING_AURA_E",
+        "kind": "defense"
+      },
+      "old_icon": 880
+    },
+    {
+      "slot": 26,
+      "effect": {
+        "id": "26",
+        "icon": "1567",
+        "offIcon": "5281",
+        "duration": "0",
+        "group": "0",
+        "graphic": "3941",
+        "startMsg": "865",
+        "startMsgName": "SHINING_AURA_S",
+        "endMsg": "2173",
+        "endMsgName": "SHINING_AURA_E",
+        "kind": "defense"
+      },
+      "old_icon": 1567
+    },
+    {
+      "slot": 27,
+      "effect": {
+        "id": "27",
+        "icon": "1557",
+        "offIcon": "5282",
+        "duration": "0",
+        "group": "33",
+        "graphic": "3942",
+        "startMsg": "866",
+        "startMsgName": "BRAVE_AURA_S",
+        "endMsg": "825",
+        "endMsgName": "BRAVE_AURA_E",
+        "kind": "defense"
+      },
+      "old_icon": 1557
+    },
+    {
+      "slot": 28,
+      "effect": {
+        "id": "28",
+        "icon": "890",
+        "duration": "60",
+        "group": "0",
+        "startMsg": "737",
+        "startMsgName": "NO_USE_DIVINE_SACRIFICE",
+        "kind": "defense"
+      },
+      "old_icon": 890
+    },
+    {
+      "slot": 29,
+      "effect": {
+        "id": "29",
+        "icon": "1101",
+        "offIcon": "5255",
+        "duration": "320",
+        "group": "0",
+        "graphic": "2942",
+        "startMsg": "867",
+        "startMsgName": "ENCHANT_VENOM_S",
+        "endMsg": "827",
+        "endMsgName": "ENCHANT_VENOM_E",
+        "kind": "attack"
+      },
+      "old_icon": 1101
+    },
+    {
+      "slot": 30,
+      "effect": {
+        "id": "30",
+        "icon": "1113",
+        "offIcon": "5256",
+        "duration": "320",
+        "group": "0",
+        "graphic": "2946",
+        "startMsg": "868",
+        "startMsgName": "BURNING_SPIRITS_S",
+        "endMsg": "828",
+        "endMsgName": "BURNING_SPIRITS_E",
+        "kind": "attack"
+      },
+      "old_icon": 1113
+    },
+    {
+      "slot": 31,
+      "effect": {
+        "id": "31",
+        "icon": "1122",
+        "offIcon": "5257",
+        "duration": "192",
+        "group": "0",
+        "graphic": "2949",
+        "startMsg": "869",
+        "startMsgName": "DOUBLE_BREAK_S",
+        "endMsg": "829",
+        "endMsgName": "DOUBLE_BREAK_E",
+        "kind": "attack"
+      },
+      "old_icon": 1122
+    },
+    {
+      "slot": 32,
+      "effect": {
+        "id": "32",
+        "icon": "1125",
+        "offIcon": "5283",
+        "duration": "192",
+        "group": "0",
+        "graphic": "2950",
+        "startMsg": "870",
+        "startMsgName": "ENCANNY_DODGE_S",
+        "endMsg": "830",
+        "endMsgName": "ENCANNY_DODGE_E",
+        "kind": "defense"
+      },
+      "old_icon": 1125
+    },
+    {
+      "slot": 33,
+      "effect": {
+        "id": "33",
+        "icon": "1119",
+        "offIcon": "5284",
+        "duration": "320",
+        "group": "0",
+        "graphic": "2948",
+        "startMsg": "871",
+        "startMsgName": "VENOM_RESIST_S",
+        "endMsg": "831",
+        "endMsgName": "VENOM_RESIST_E",
+        "kind": "defense"
+      },
+      "old_icon": 1119
+    },
+    {
+      "slot": 34,
+      "effect": {
+        "id": "34",
+        "icon": "1558",
+        "offIcon": "5258",
+        "duration": "960",
+        "group": "6",
+        "graphic": "3909",
+        "startMsg": "968",
+        "startMsgName": "DRESS_MIGHTY_S",
+        "addChatMsg": "false",
+        "kind": "attack"
+      },
+      "old_icon": 1558
+    },
+    {
+      "slot": 35,
+      "effect": {
+        "id": "35",
+        "icon": "1559",
+        "offIcon": "5259",
+        "duration": "960",
+        "group": "7",
+        "graphic": "3910",
+        "startMsg": "969",
+        "startMsgName": "DRESS_DEXTERITY_S",
+        "addChatMsg": "false",
+        "kind": "attack"
+      },
+      "old_icon": 1559
+    },
+    {
+      "slot": 36,
+      "effect": {
+        "id": "36",
+        "icon": "1608",
+        "offIcon": "5285",
+        "duration": "32",
+        "group": "0",
+        "graphic": "3911",
+        "startMsg": "970",
+        "startMsgName": "DRESS_EVASION_S",
+        "endMsg": "2176",
+        "endMsgName": "DRESS_EVASION_E",
+        "kind": "defense"
+      },
+      "old_icon": 1608
+    },
+    {
+      "slot": 37,
+      "effect": {
+        "id": "37",
+        "icon": "1110",
+        "offIcon": "5243",
+        "duration": "960",
+        "group": "3",
+        "graphic": "2945",
+        "startMsg": "872",
+        "startMsgName": "MOVING_ACCELERATION_S",
+        "endMsg": "185",
+        "endMsgName": "MOVING_ACCELERATION_E",
+        "addChatMsg": "false",
+        "kind": "speed",
+        "priority": "6"
+      },
+      "old_icon": 1110
+    },
+    {
+      "slot": 39,
+      "effect": {
+        "id": "39",
+        "icon": "1477",
+        "duration": "0",
+        "group": "0",
+        "remainInArea": "true",
+        "startMsg": "911",
+        "startMsgName": "POLYMORPH_S",
+        "kind": "cook",
+        "priority": "4"
+      },
+      "old_icon": 1477
+    },
+    {
+      "slot": 40,
+      "effect": {
+        "id": "40",
+        "icon": "1556",
+        "offIcon": "5320",
+        "duration": "320",
+        "group": "0",
+        "graphic": "3943",
+        "startMsg": "965",
+        "startMsgName": "BERSERKERS_S",
+        "endMsg": "2178",
+        "endMsgName": "BERSERKERS_E",
+        "kind": "neutrality"
+      },
+      "old_icon": 1556
+    },
+    {
+      "slot": 41,
+      "effect": {
+        "id": "41",
+        "icon": "1562",
+        "offIcon": "5286",
+        "duration": "32",
+        "group": "0",
+        "graphic": "228",
+        "startMsg": "966",
+        "startMsgName": "IMMUNE_TO_HARM_S",
+        "endMsg": "315",
+        "endMsgName": "IMMUNE_TO_HARM_E",
+        "addChatMsg": "false",
+        "kind": "defense"
+      },
+      "old_icon": 1562
+    },
+    {
+      "slot": 42,
+      "effect": {
+        "id": "42",
+        "icon": "1561",
+        "offIcon": "5244",
+        "duration": "64",
+        "group": "3",
+        "graphic": "3936",
+        "startMsg": "872",
+        "startMsgName": "HOLY_WALK_S",
+        "endMsg": "185",
+        "kind": "speed",
+        "priority": "6"
+      },
+      "old_icon": 1561
+    },
+    {
+      "slot": 43,
+      "effect": {
+        "id": "43",
+        "icon": "1554",
+        "offIcon": "5287",
+        "duration": "12",
+        "group": "0",
+        "graphic": "2234",
+        "startMsg": "967",
+        "startMsgName": "ABSOLUTE_BARRIER_S",
+        "endMsg": "2179",
+        "endMsgName": "ABSOLUTE_BARRIER_E",
+        "kind": "defense"
+      },
+      "old_icon": 1554
+    },
+    {
+      "slot": 44,
+      "effect": {
+        "id": "44",
+        "icon": "1607",
+        "offIcon": "5288",
+        "duration": "1200",
+        "group": "31",
+        "graphic": "3935",
+        "startMsg": "982",
+        "startMsgName": "ADVANCE_SPIRIT_S",
+        "endMsg": "2180",
+        "endMsgName": "ADVANCE_SPIRIT_E",
+        "kind": "defense"
+      },
+      "old_icon": 1607
+    },
+    {
+      "slot": 45,
+      "effect": {
+        "id": "45",
+        "icon": "795",
+        "offIcon": "5289",
+        "duration": "640",
+        "group": "0",
+        "graphic": "2173",
+        "startMsg": "910",
+        "startMsgName": "MEDITATION_S",
+        "endMsg": "2181",
+        "endMsgName": "MEDITATION_E",
+        "kind": "defense"
+      },
+      "old_icon": 795
+    },
+    {
+      "slot": 46,
+      "effect": {
+        "id": "46",
+        "icon": "1609",
+        "offIcon": "5290",
+        "duration": "320",
+        "group": "32",
+        "graphic": "2243",
+        "startMsg": "994",
+        "startMsgName": "NATURES_TOUCH_S",
+        "endMsg": "2182",
+        "endMsgName": "NATURES_TOUCH_E",
+        "kind": "defense"
+      },
+      "old_icon": 1609
+    },
+    {
+      "slot": 47,
+      "effect": {
+        "id": "47",
+        "icon": "757",
+        "offIcon": "5291",
+        "duration": "1800",
+        "group": "0",
+        "graphic": "2170",
+        "startMsg": "984",
+        "startMsgName": "DECREASE_WEIGHT_S",
+        "endMsg": "2183",
+        "endMsgName": "DECREASE_WEIGHT_E",
+        "kind": "defense"
+      },
+      "old_icon": 757
+    },
+    {
+      "slot": 48,
+      "effect": {
+        "id": "48",
+        "icon": "754",
+        "duration": "16",
+        "group": "0",
+        "graphic": "2232",
+        "startMsg": "985",
+        "startMsgName": "DECAY_POTION_S",
+        "endMsg": "2184",
+        "endMsgName": "DECAY_POTION_E",
+        "kind": "curse"
+      },
+      "old_icon": 754
+    },
+    {
+      "slot": 49,
+      "effect": {
+        "id": "49",
+        "icon": "824",
+        "duration": "16",
+        "group": "0",
+        "graphic": "2177",
+        "startMsg": "986",
+        "startMsgName": "SILENCE_S",
+        "endMsg": "2185",
+        "endMsgName": "SILENCE_E",
+        "kind": "curse"
+      },
+      "old_icon": 824
+    },
+    {
+      "slot": 50,
+      "effect": {
+        "id": "50",
+        "icon": "760",
+        "duration": "64",
+        "group": "0",
+        "graphic": "2230",
+        "startMsg": "987",
+        "startMsgName": "DISEASE_S",
+        "endMsg": "2186",
+        "endMsgName": "DISEASE_E",
+        "kind": "curse"
+      },
+      "old_icon": 760
+    },
+    {
+      "slot": 51,
+      "effect": {
+        "id": "51",
+        "icon": "852",
+        "duration": "64",
+        "group": "0",
+        "graphic": "2228",
+        "startMsg": "988",
+        "startMsgName": "WEAKNESS_S",
+        "endMsg": "2187",
+        "endMsgName": "WEAKNESS_E",
+        "kind": "curse"
+      },
+      "old_icon": 852
+    },
+    {
+      "slot": 52,
+      "effect": {
+        "id": "52",
+        "icon": "1623",
+        "duration": "16",
+        "group": "0",
+        "graphic": "1799",
+        "startMsg": "1001",
+        "startMsgName": "WIND_SHACKLE_S",
+        "endMsg": "2188",
+        "endMsgName": "WIND_SHACKLE_E",
+        "kind": "slow"
+      },
+      "old_icon": 1623
+    },
+    {
+      "slot": 53,
+      "effect": {
+        "id": "53",
+        "icon": "1740",
+        "duration": "64",
+        "group": "0",
+        "graphic": "4396",
+        "startMsg": "1009",
+        "startMsgName": "ELEMENTAL_FALLDOWN_S",
+        "endMsg": "2189",
+        "endMsgName": "ELEMENTAL_FALLDOWN_E",
+        "kind": "curse"
+      },
+      "old_icon": 1740
+    },
+    {
+      "slot": 54,
+      "effect": {
+        "id": "54",
+        "icon": "1733",
+        "offIcon": "5292",
+        "duration": "16",
+        "group": "0",
+        "graphic": "4395",
+        "startMsg": "1010",
+        "startMsgName": "COUNTER_MIRROR_S",
+        "endMsg": "2190",
+        "endMsgName": "COUNTER_MIRROR_E",
+        "kind": "defense"
+      },
+      "old_icon": 852
+    },
+    {
+      "slot": 55,
+      "effect": {
+        "id": "55",
+        "icon": "1834",
+        "duration": "32",
+        "group": "0",
+        "graphic": "10706",
+        "startMsg": "1011",
+        "startMsgName": "ERASE_MAGIC_S",
+        "endMsg": "2191",
+        "endMsgName": "ERASE_MAGIC_E",
+        "kind": "curse"
+      },
+      "old_icon": 1834
+    },
+    {
+      "slot": 56,
+      "effect": {
+        "id": "56",
+        "icon": "1799",
+        "offIcon": "5293",
+        "duration": "960",
+        "group": "0",
+        "graphic": "4400",
+        "startMsg": "1012",
+        "startMsgName": "EXOTIC_VITALIZE_S",
+        "endMsg": "2192",
+        "endMsgName": "EXOTIC_VITALIZE_E",
+        "kind": "defense"
+      },
+      "old_icon": 1799
+    },
+    {
+      "slot": 57,
+      "effect": {
+        "id": "57",
+        "icon": "2706",
+        "offIcon": "5294",
+        "duration": "64",
+        "group": "0",
+        "graphic": "4401",
+        "startMsg": "1013",
+        "startMsgName": "WATER_LIFE_S",
+        "endMsg": "2193",
+        "endMsgName": "WATER_LIFE_E",
+        "kind": "defense"
+      },
+      "old_icon": 1758
+    },
+    {
+      "slot": 58,
+      "effect": {
+        "id": "58",
+        "icon": "1736",
+        "offIcon": "5260",
+        "duration": "320",
+        "group": "0",
+        "graphic": "4402",
+        "startMsg": "1014",
+        "startMsgName": "ELEMENTAL_FIRE_S",
+        "endMsg": "2194",
+        "endMsgName": "ELEMENTAL_FIRE_E",
+        "kind": "attack"
+      },
+      "old_icon": 1736
+    },
+    {
+      "slot": 59,
+      "effect": {
+        "id": "59",
+        "icon": "1563",
+        "offIcon": "5295",
+        "duration": "-1",
+        "group": "0",
+        "startMsg": "975",
+        "startMsgName": "LIFE_STREAM_S",
+        "kind": "defense"
+      },
+      "old_icon": 1563
+    },
+    {
+      "slot": 60,
+      "effect": {
+        "id": "60",
+        "icon": "1612",
+        "duration": "-1",
+        "group": "0",
+        "startMsg": "993",
+        "startMsgName": "MOTHER_TREE",
+        "kind": "defense"
+      },
+      "old_icon": 1612
+    },
+    {
+      "slot": 61,
+      "effect": {
+        "id": "61",
+        "icon": "1620",
+        "duration": "-1",
+        "group": "0",
+        "startMsg": "1000",
+        "startMsgName": "HOLD_S",
+        "endMsg": "2195",
+        "endMsgName": "HOLD_E",
+        "kind": "paralyse"
+      },
+      "old_icon": 1620
+    },
+    {
+      "slot": 62,
+      "effect": {
+        "id": "62",
+        "icon": "1626",
+        "duration": "-1",
+        "group": "0",
+        "startMsg": "999",
+        "startMsgName": "STUN_S",
+        "endMsg": "2196",
+        "endMsgName": "STUN_E",
+        "kind": "paralyse"
+      },
+      "old_icon": 1626
+    },
+    {
+      "slot": 63,
+      "effect": {
+        "id": "63",
+        "icon": "1476",
+        "duration": "120",
+        "group": "0",
+        "remainInArea": "true",
+        "remainWhenDie": "true",
+        "startMsg": "912",
+        "startMsgName": "NO_CHAT_S",
+        "endMsg": "288",
+        "endMsgName": "NO_CHAT_E",
+        "kind": "paralyse"
+      },
+      "old_icon": 1476
+    },
+    {
+      "slot": 64,
+      "effect": {
+        "id": "64",
+        "icon": "1889",
+        "offIcon": "5296",
+        "duration": "192",
+        "group": "0",
+        "graphic": "4824",
+        "startMsg": "1043",
+        "startMsgName": "REDUCTION_ARMOR_S",
+        "endMsg": "2197",
+        "endMsgName": "REDUCTION_ARMOR_E",
+        "kind": "defense"
+      },
+      "old_icon": 1889
+    },
+    {
+      "slot": 65,
+      "effect": {
+        "id": "65",
+        "icon": "1883",
+        "offIcon": "5297",
+        "duration": "64",
+        "group": "0",
+        "graphic": "8989",
+        "startMsg": "1044",
+        "startMsgName": "BOUNCE_ATTACK_S",
+        "endMsg": "2198",
+        "endMsgName": "BOUNCE_ATTACK_E",
+        "kind": "defense"
+      },
+      "old_icon": 1883
+    },
+    {
+      "slot": 66,
+      "effect": {
+        "id": "66",
+        "icon": "2339",
+        "offIcon": "5298",
+        "duration": "960",
+        "group": "0",
+        "graphic": "5825",
+        "startMsg": "1083",
+        "startMsgName": "ADDITIONAL_FIRE_S",
+        "endMsg": "2199",
+        "endMsgName": "ADDITIONAL_FIRE_E",
+        "kind": "defense"
+      },
+      "old_icon": 2339
+    },
+    {
+      "slot": 67,
+      "effect": {
+        "id": "67",
+        "icon": "2357",
+        "duration": "64",
+        "group": "0",
+        "graphic": "5826",
+        "startMsg": "1084",
+        "startMsgName": "STRIKER_GALE_S",
+        "endMsg": "2200",
+        "endMsgName": "STRIKER_GALE_E",
+        "kind": "curse"
+      },
+      "old_icon": 2357
+    },
+    {
+      "slot": 68,
+      "effect": {
+        "id": "68",
+        "icon": "2342",
+        "offIcon": "5299",
+        "duration": "960",
+        "group": "0",
+        "graphic": "5829",
+        "startMsg": "1085",
+        "startMsgName": "AQUA_PROTECT_S",
+        "endMsg": "2201",
+        "endMsgName": "AQUA_PROTECT_E",
+        "kind": "defense"
+      },
+      "old_icon": 2342
+    },
+    {
+      "slot": 69,
+      "effect": {
+        "id": "69",
+        "icon": "2348",
+        "duration": "64",
+        "group": "0",
+        "graphic": "5830",
+        "startMsg": "1086",
+        "startMsgName": "POLLUTE_WATER_S",
+        "endMsg": "2202",
+        "endMsgName": "POLLUTE_WATER_E",
+        "kind": "curse"
+      },
+      "old_icon": 2348
+    },
+    {
+      "slot": 70,
+      "effect": {
+        "id": "70",
+        "icon": "2351",
+        "offIcon": "5300",
+        "duration": "64",
+        "group": "0",
+        "graphic": "5831",
+        "startMsg": "1087",
+        "startMsgName": "SOLID_CARRIAGE_S",
+        "endMsg": "2203",
+        "endMsgName": "SOLID_CARRIAGE_E",
+        "kind": "defense"
+      },
+      "old_icon": 2351
+    },
+    {
+      "slot": 71,
+      "effect": {
+        "id": "71",
+        "icon": "2345",
+        "offIcon": "5301",
+        "duration": "64",
+        "group": "0",
+        "graphic": "10709",
+        "startMsg": "1088",
+        "startMsgName": "COUNTER_BARRIER_S",
+        "endMsg": "2204",
+        "endMsgName": "COUNTER_BARRIER_E",
+        "kind": "defense"
+      },
+      "old_icon": 2345
+    },
+    {
+      "slot": 72,
+      "effect": {
+        "id": "72",
+        "icon": "2354",
+        "offIcon": "5261",
+        "duration": "64",
+        "group": "0",
+        "startMsg": "1089",
+        "startMsgName": "STR_STATUS_EFFECT_SOUL_OF_FLAME",
+        "kind": "attack"
+      },
+      "old_icon": 2354
+    },
+    {
+      "slot": 73,
+      "effect": {
+        "id": "73",
+        "icon": "5393",
+        "offIcon": "5394",
+        "duration": "600",
+        "group": "0",
+        "removeCancel": "true",
+        "startMsg": "851",
+        "startMsgName": "SPEED_TRIPLE_S",
+        "endMsg": "185",
+        "endMsgName": "SPEED_TRIPLE_E",
+        "kind": "speed",
+        "priority": "7"
+      },
+      "old_icon": 486
+    },
+    {
+      "slot": 74,
+      "effect": {
+        "id": "74",
+        "icon": "2382",
+        "duration": "600",
+        "group": "0",
+        "startMsg": "1077",
+        "startMsgName": "STR_STATUS_EFFECT_SMELL_REMOVER",
+        "kind": "cook"
+      },
+      "old_icon": 2382
+    },
+    {
+      "slot": 75,
+      "effect": {
+        "id": "75",
+        "icon": "2430",
+        "duration": "0",
+        "group": "0",
+        "remainInArea": "true",
+        "remainWhenDie": "true",
+        "startMsg": "1090",
+        "startMsgName": "STR_STATUS_EFFECT_LORD_BLESSING",
+        "kind": "defense"
+      },
+      "old_icon": 2430
+    },
+    {
+      "slot": 77,
+      "effect": {
+        "id": "107",
+        "icon": "3080",
+        "offIcon": "5302",
+        "duration": "1800",
+        "group": "0",
+        "graphic": "6531",
+        "startMsg": "1329",
+        "startMsgName": "DRAGON_SKIN_S",
+        "endMsg": "2205",
+        "endMsgName": "DRAGON_SKIN_E",
+        "kind": "defense"
+      },
+      "old_icon": 3080
+    },
+    {
+      "slot": 78,
+      "effect": {
+        "id": "116",
+        "icon": "3123",
+        "offIcon": "5304",
+        "duration": "1200",
+        "group": "0",
+        "graphic": "6813",
+        "startMsg": "1338",
+        "startMsgName": "MIRROR_IMAGE_S",
+        "endMsg": "2211",
+        "endMsgName": "MIRROR_IMAGE_E",
+        "kind": "defense"
+      },
+      "old_icon": 3123
+    },
+    {
+      "slot": 79,
+      "effect": {
+        "id": "118",
+        "icon": "3117",
+        "offIcon": "5262",
+        "duration": "64",
+        "group": "0",
+        "graphic": "6578",
+        "startMsg": "1340",
+        "startMsgName": "ILLUSION_ORGE_S",
+        "endMsg": "2212",
+        "endMsgName": "ILLUSION_ORGE_E",
+        "kind": "attack"
+      },
+      "old_icon": 3117
+    },
+    {
+      "slot": 80,
+      "effect": {
+        "id": "120",
+        "icon": "3097",
+        "offIcon": "5305",
+        "duration": "600",
+        "group": "0",
+        "graphic": "6527",
+        "startMsg": "1342",
+        "startMsgName": "CONCENTRATION_S",
+        "endMsg": "2216",
+        "endMsgName": "CONCENTRATION_E",
+        "kind": "defense"
+      },
+      "old_icon": 3097
+    },
+    {
+      "slot": 81,
+      "effect": {
+        "id": "121",
+        "icon": "3115",
+        "offIcon": "5263",
+        "duration": "64",
+        "group": "0",
+        "graphic": "6577",
+        "startMsg": "1343",
+        "startMsgName": "ILLUSION_LICH_S",
+        "endMsg": "2213",
+        "endMsgName": "ILLUSION_LICH_E",
+        "kind": "attack"
+      },
+      "old_icon": 3115
+    },
+    {
+      "slot": 82,
+      "effect": {
+        "id": "123",
+        "icon": "3127",
+        "offIcon": "5306",
+        "duration": "600",
+        "group": "0",
+        "graphic": "6507",
+        "startMsg": "1345",
+        "startMsgName": "PATIENCE_S",
+        "endMsg": "2217",
+        "endMsgName": "PATIENCE_E",
+        "kind": "defense"
+      },
+      "old_icon": 3127
+    },
+    {
+      "slot": 83,
+      "effect": {
+        "id": "126",
+        "icon": "3113",
+        "offIcon": "5307",
+        "duration": "64",
+        "group": "0",
+        "graphic": "6576",
+        "startMsg": "1347",
+        "startMsgName": "ILLUSION_DIA_GOLEM_S",
+        "endMsg": "2214",
+        "endMsgName": "ILLUSION_DIA_GOLEM_E",
+        "kind": "defense"
+      },
+      "old_icon": 3113
+    },
+    {
+      "slot": 84,
+      "effect": {
+        "id": "128",
+        "icon": "3119",
+        "offIcon": "5264",
+        "duration": "600",
+        "group": "0",
+        "graphic": "6505",
+        "startMsg": "1349",
+        "startMsgName": "INSIGHT_S",
+        "endMsg": "2219",
+        "endMsgName": "INSIGHT_E",
+        "kind": "attack"
+      },
+      "old_icon": 3119
+    },
+    {
+      "slot": 85,
+      "effect": {
+        "id": "129",
+        "icon": "3125",
+        "duration": "64",
+        "group": "0",
+        "graphic": "6506",
+        "startMsg": "1350",
+        "startMsgName": "PANIC_S",
+        "endMsg": "2220",
+        "endMsgName": "PANIC_E",
+        "kind": "curse"
+      },
+      "old_icon": 3125
+    },
+    {
+      "slot": 86,
+      "effect": {
+        "id": "130",
+        "icon": "3111",
+        "offIcon": "5321",
+        "duration": "64",
+        "group": "0",
+        "graphic": "6575",
+        "startMsg": "1351",
+        "startMsgName": "ILLUSION_AVATAR_S",
+        "endMsg": "2215",
+        "endMsgName": "ILLUSION_AVATAR_E",
+        "kind": "neutrality"
+      },
+      "old_icon": 3111
+    }
+  ],
+  "unmapped": [
+    {
+      "slot": 38,
+      "reason": "legacy meaning not independently qualified; preserve"
+    },
+    {
+      "slot": 76,
+      "reason": "reserved empty native row; preserve"
+    }
+  ],
+  "behavior": "icons only; packet duration, group, messages, selectors unchanged",
+  "not_yet_consumed": [
+    "offIcon",
+    "graphic",
+    "XML group/priority and remove rules"
+  ],
+  "source_database_modified": false
+}

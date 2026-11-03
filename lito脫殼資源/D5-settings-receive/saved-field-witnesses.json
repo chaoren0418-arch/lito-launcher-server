@@ -1,0 +1,496 @@
+{
+  "server_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-DD-edit-network.json",
+    "bytes": 10460,
+    "sha256": "A13ECBFE9DC9BFCBA1D32649C829FB960DA995591C59C8613BB403FA4D62C168"
+  },
+  "frames_source": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+    "bytes": 16142,
+    "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+  },
+  "frames": [
+    {
+      "frames_source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 78,
+      "frame_1based": 79,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode_hex": "D5",
+      "subtype": 0,
+      "body_hex": "d50001000000456469744166746572526f6f6d000134020045646974486f737428456469744d6f6f6e290000000000",
+      "body_bytes": 47,
+      "frame_bytes": 49,
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "subtype",
+          "Native_destination": "EBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "byte_length": 4,
+          "raw_hex": "01000000",
+          "value": 1,
+          "semantic": "roomcontext",
+          "Native_destination": "EBP-8 / conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "NUL8bit-string",
+          "byte_length": 14,
+          "raw_hex": "456469744166746572526f6f6d00",
+          "value": "EditAfterRoom",
+          "semantic": "room_name",
+          "Native_destination": "64AB70, capacity90"
+        },
+        {
+          "body_offset": 20,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "01",
+          "value": 1,
+          "semantic": "option0 / mode byte (existing server designation)",
+          "Native_destination": "64ACCA BYTE"
+        },
+        {
+          "body_offset": 21,
+          "type": "u16LE",
+          "byte_length": 2,
+          "raw_hex": "3402",
+          "value": 564,
+          "semantic": "map_word",
+          "Native_destination": "EBP-4 WORD; projected64ACC9 BYTE"
+        },
+        {
+          "body_offset": 23,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary0",
+          "Native_destination": "64ACCC BYTE"
+        },
+        {
+          "body_offset": 24,
+          "type": "NUL8bit-string",
+          "byte_length": 19,
+          "raw_hex": "45646974486f737428456469744d6f6f6e2900",
+          "value": "EditHost(EditMoon)",
+          "semantic": "owner_display_alias",
+          "Native_destination": "64ABCA, capacity28"
+        },
+        {
+          "body_offset": 43,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary1",
+          "Native_destination": "0064ACD0 BYTE"
+        },
+        {
+          "body_offset": 44,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary2",
+          "Native_destination": "0064ACD1 BYTE"
+        },
+        {
+          "body_offset": 45,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary3",
+          "Native_destination": "0064ACD2 BYTE"
+        },
+        {
+          "body_offset": 46,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary4",
+          "Native_destination": "0064ACD3 BYTE"
+        }
+      ],
+      "consumed": 47,
+      "remaining": 0,
+      "witness_qualification": "Existing server saved ASCII field witness only; not Native execution, ACK, semantic outcome, codec or atomicity proof."
+    },
+    {
+      "frames_source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 79,
+      "frame_1based": 80,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode_hex": "D5",
+      "subtype": 1,
+      "body_hex": "d50101000000456469744166746572526f6f6d000028040000000000",
+      "body_bytes": 28,
+      "frame_bytes": 30,
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "01",
+          "value": 1,
+          "semantic": "subtype",
+          "Native_destination": "EBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "byte_length": 4,
+          "raw_hex": "01000000",
+          "value": 1,
+          "semantic": "roomcontext",
+          "Native_destination": "EBP-8 / conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "NUL8bit-string",
+          "byte_length": 14,
+          "raw_hex": "456469744166746572526f6f6d00",
+          "value": "EditAfterRoom",
+          "semantic": "room_name",
+          "Native_destination": "64AB70, capacity90"
+        },
+        {
+          "body_offset": 20,
+          "type": "NUL8bit-string",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": "",
+          "semantic": "password",
+          "Native_destination": "64ABE8, capacity5"
+        },
+        {
+          "body_offset": 21,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "28",
+          "value": 40,
+          "semantic": "attributes",
+          "Native_destination": "64ABE6 BYTE"
+        },
+        {
+          "body_offset": 22,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "04",
+          "value": 4,
+          "semantic": "capacity",
+          "Native_destination": "64ABF0 BYTE"
+        },
+        {
+          "body_offset": 23,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option1",
+          "Native_destination": "0064ACD4 BYTE"
+        },
+        {
+          "body_offset": 24,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option2",
+          "Native_destination": "0064ACD5 BYTE"
+        },
+        {
+          "body_offset": 25,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option3",
+          "Native_destination": "0064ACD6 BYTE"
+        },
+        {
+          "body_offset": 26,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option4",
+          "Native_destination": "0064ACD7 BYTE"
+        },
+        {
+          "body_offset": 27,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "selection_count K",
+          "Native_destination": "EBP-2 BYTE, signed comparison"
+        }
+      ],
+      "consumed": 28,
+      "remaining": 0,
+      "witness_qualification": "Existing server saved ASCII field witness only; not Native execution, ACK, semantic outcome, codec or atomicity proof."
+    },
+    {
+      "frames_source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 84,
+      "frame_1based": 85,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode_hex": "D5",
+      "subtype": 0,
+      "body_hex": "d50001000000456469744166746572526f6f6d000134020045646974486f737428456469744d6f6f6e290000000000",
+      "body_bytes": 47,
+      "frame_bytes": 49,
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "subtype",
+          "Native_destination": "EBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "byte_length": 4,
+          "raw_hex": "01000000",
+          "value": 1,
+          "semantic": "roomcontext",
+          "Native_destination": "EBP-8 / conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "NUL8bit-string",
+          "byte_length": 14,
+          "raw_hex": "456469744166746572526f6f6d00",
+          "value": "EditAfterRoom",
+          "semantic": "room_name",
+          "Native_destination": "64AB70, capacity90"
+        },
+        {
+          "body_offset": 20,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "01",
+          "value": 1,
+          "semantic": "option0 / mode byte (existing server designation)",
+          "Native_destination": "64ACCA BYTE"
+        },
+        {
+          "body_offset": 21,
+          "type": "u16LE",
+          "byte_length": 2,
+          "raw_hex": "3402",
+          "value": 564,
+          "semantic": "map_word",
+          "Native_destination": "EBP-4 WORD; projected64ACC9 BYTE"
+        },
+        {
+          "body_offset": 23,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary0",
+          "Native_destination": "64ACCC BYTE"
+        },
+        {
+          "body_offset": 24,
+          "type": "NUL8bit-string",
+          "byte_length": 19,
+          "raw_hex": "45646974486f737428456469744d6f6f6e2900",
+          "value": "EditHost(EditMoon)",
+          "semantic": "owner_display_alias",
+          "Native_destination": "64ABCA, capacity28"
+        },
+        {
+          "body_offset": 43,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary1",
+          "Native_destination": "0064ACD0 BYTE"
+        },
+        {
+          "body_offset": 44,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary2",
+          "Native_destination": "0064ACD1 BYTE"
+        },
+        {
+          "body_offset": 45,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary3",
+          "Native_destination": "0064ACD2 BYTE"
+        },
+        {
+          "body_offset": 46,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "summary4",
+          "Native_destination": "0064ACD3 BYTE"
+        }
+      ],
+      "consumed": 47,
+      "remaining": 0,
+      "witness_qualification": "Existing server saved ASCII field witness only; not Native execution, ACK, semantic outcome, codec or atomicity proof."
+    },
+    {
+      "frames_source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 85,
+      "frame_1based": 86,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode_hex": "D5",
+      "subtype": 1,
+      "body_hex": "d50101000000456469744166746572526f6f6d000028040000000000",
+      "body_bytes": 28,
+      "frame_bytes": 30,
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "01",
+          "value": 1,
+          "semantic": "subtype",
+          "Native_destination": "EBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "byte_length": 4,
+          "raw_hex": "01000000",
+          "value": 1,
+          "semantic": "roomcontext",
+          "Native_destination": "EBP-8 / conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "NUL8bit-string",
+          "byte_length": 14,
+          "raw_hex": "456469744166746572526f6f6d00",
+          "value": "EditAfterRoom",
+          "semantic": "room_name",
+          "Native_destination": "64AB70, capacity90"
+        },
+        {
+          "body_offset": 20,
+          "type": "NUL8bit-string",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": "",
+          "semantic": "password",
+          "Native_destination": "64ABE8, capacity5"
+        },
+        {
+          "body_offset": 21,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "28",
+          "value": 40,
+          "semantic": "attributes",
+          "Native_destination": "64ABE6 BYTE"
+        },
+        {
+          "body_offset": 22,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "04",
+          "value": 4,
+          "semantic": "capacity",
+          "Native_destination": "64ABF0 BYTE"
+        },
+        {
+          "body_offset": 23,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option1",
+          "Native_destination": "0064ACD4 BYTE"
+        },
+        {
+          "body_offset": 24,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option2",
+          "Native_destination": "0064ACD5 BYTE"
+        },
+        {
+          "body_offset": 25,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option3",
+          "Native_destination": "0064ACD6 BYTE"
+        },
+        {
+          "body_offset": 26,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "option4",
+          "Native_destination": "0064ACD7 BYTE"
+        },
+        {
+          "body_offset": 27,
+          "type": "u8",
+          "byte_length": 1,
+          "raw_hex": "00",
+          "value": 0,
+          "semantic": "selection_count K",
+          "Native_destination": "EBP-2 BYTE, signed comparison"
+        }
+      ],
+      "consumed": 28,
+      "remaining": 0,
+      "witness_qualification": "Existing server saved ASCII field witness only; not Native execution, ACK, semantic outcome, codec or atomicity proof."
+    }
+  ],
+  "success_reject_bodies_equal": true,
+  "ACK_qualified": false
+}

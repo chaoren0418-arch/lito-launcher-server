@@ -1,0 +1,25 @@
+{
+  "decision": "BLOCKED_PRIVATE_LPAC",
+  "probe_job": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe",
+  "native_receipt": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\native-launch.json",
+  "probe_receipt": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\profile-output\\probe-result.json",
+  "sentinel_before_sha256": "E3319B58581131381A5EB056D074478A8D65CF08725D327868A3BA78411DA6C6",
+  "sentinel_after_sha256": "E3319B58581131381A5EB056D074478A8D65CF08725D327868A3BA78411DA6C6",
+  "watchdog_sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B",
+  "boundary": "Requested empty-capability LPAC isolation; no native probe created, therefore no token, file-denial or network-denial observation exists.",
+  "qualified_for_IDA_fixture_run": false,
+  "native_process_created": false,
+  "native_probe_executed": false,
+  "missing_probe_result_is_expected": true,
+  "planned_test_not_observed": [
+    "actual LPAC child token",
+    "private write success",
+    "outside read/write denial",
+    "localhost connection denial"
+  ],
+  "previous_receipt_pin_before_boundary_wording_correction": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\isolation-qualification.json",
+    "bytes": 906,
+    "sha256": "A4278A8947D6AD0C6F003D6B3FD73D1241125C6EB93000C665F374DCCF1B9BFE"
+  }
+}

@@ -1,0 +1,15 @@
+372377: loc_4B29DB:                             ; CODE XREF: sub_4B2970+10↑j
+372378: cmp     dword_64BBD4, 4
+372379: jnz     loc_4B313F
+372380: 
+372381: cmp     dword_64AF98, 3
+372382: jl      loc_4B313F
+372383: 
+372384: xor     eax, eax
+372385: mov     al, [esi]
+372386: cmp     eax, 0FEh                       ; switch 255 cases
+372387: ja      def_4B2A0C                      ; jumptable 004B2A0C default case, cases 2,4-9,72,97,100,103,117,118,125,128-199,206,207,215-217,220-224,228,229
+372388: 
+372389: xor     ecx, ecx
+372390: mov     cl, byte_4B3470[eax]
+372391: jmp     jpt_4B2A0C[ecx*4]               ; switch jump

@@ -1,0 +1,29 @@
+{
+  "status": "prepared-not-qualified",
+  "skill": 145,
+  "parent_composed_qualification_pending": true,
+  "scope": "Material/role/companion binding only; probability, invalid pet79 and SUMMON/TAMED release behavior retained",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\prepare_return_nature.py",
+      "sha256": "0c4bb521cf736c65f44181e502abdd51b69676295e0d055371aa8e3d864d8b47"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\EarthBindMaterialMethods.java",
+      "sha256": "2ec640eaaa4ea69ea776bf2f0c42793a5708d32412784fe2edf96db7f4e2ccdb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build.py",
+      "sha256": "46c90c8e439e597ee0d666046ebc0c4b9d1ead416953c02c71c2b3d2d384f368"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\remaining-material-consumers\\useReturnToNatureSpell.txt",
+      "sha256": "bee5b5996aac75e6af85672431147f0ed2a700332c7b9ddfc1b66d1ca5a32ede"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\NativeResurrectionMaterialAction.java",
+      "sha256": "681c367ad19e559e8922b6b8f8c0db44e15386603e6e44b1796c4fd459e5c111"
+    }
+  ],
+  "formal_deployment_changed": false
+}

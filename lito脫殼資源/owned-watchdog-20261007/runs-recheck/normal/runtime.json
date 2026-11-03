@@ -1,0 +1,159 @@
+{
+  "schema": "owned-process-runtime-v1",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "normal"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal",
+  "controller_pid": 10472,
+  "start_monotonic": 418563.031,
+  "deadline_monotonic": 418565.031,
+  "timeout_seconds": 2,
+  "child_resumed": true,
+  "status": "PRIMARY_EXITED",
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+  },
+  "containment": {
+    "atomic_job_assignment": "PROC_THREAD_ATTRIBUTE_JOB_LIST",
+    "limit_flags": 8200,
+    "kill_on_last_handle_close": true,
+    "breakaway_allowed": false,
+    "job_handle_inheritable": false,
+    "active_process_limit": 16,
+    "hidden_window": true,
+    "only_explicit_stdio_handles_inherited": true
+  },
+  "primary_identity": {
+    "pid": 8200,
+    "creation_filetime_100ns": 134358246045617498,
+    "creation_time_utc": "2026-10-07T05:30:04.561750+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+  },
+  "resume_monotonic": 418563.046,
+  "trigger": [],
+  "pre_cleanup_members": [
+    {
+      "pid": 8200,
+      "creation_filetime_100ns": 134358246045617498,
+      "creation_time_utc": "2026-10-07T05:30:04.561750+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15416,
+      "creation_filetime_100ns": 134358246045734618,
+      "creation_time_utc": "2026-10-07T05:30:04.573462+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    }
+  ],
+  "cleanup_required_active_PIDs": [],
+  "cleanup_method": "No active members; close owned handles",
+  "owned_job_empty": true,
+  "post_exit_members": [
+    {
+      "pid": 8200,
+      "creation_filetime_100ns": 134358246045617498,
+      "creation_time_utc": "2026-10-07T05:30:04.561750+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15416,
+      "creation_filetime_100ns": 134358246045734618,
+      "creation_time_utc": "2026-10-07T05:30:04.573462+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    }
+  ],
+  "capture": {
+    "stdout": {
+      "observed_bytes": 23,
+      "retained_bytes": 23,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\stdout.bin",
+      "sha256": "4B8F00B7C59452C9CA6A75F5AF67388DF94C69CC57637255A5CB93360CF33D47"
+    },
+    "stderr": {
+      "observed_bytes": 23,
+      "retained_bytes": 23,
+      "discarded_bytes": 0,
+      "cap_bytes": 8192,
+      "EOF_observed": true,
+      "reader_error": null,
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\stderr.bin",
+      "sha256": "E72831B593191D2AD11C2A1909D161ED81BD53AD465A5B5D3BA6724A052A9B7E"
+    }
+  },
+  "disk_monitor": {
+    "samples": [
+      {
+        "scan_start_monotonic": 418563.046,
+        "scan_end_monotonic": 418563.046,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 418563.109,
+        "scan_end_monotonic": 418563.109,
+        "bytes": 0
+      },
+      {
+        "scan_start_monotonic": 418563.171,
+        "scan_end_monotonic": 418563.171,
+        "bytes": 633
+      },
+      {
+        "scan_start_monotonic": 418563.234,
+        "scan_end_monotonic": 418563.234,
+        "bytes": 633
+      }
+    ],
+    "requested_poll_seconds": 0.05,
+    "max_observed_sample_gap_seconds": 0.06300000002374873,
+    "final_bytes_before_receipt": 679,
+    "threshold_bytes": 1048576,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "finished_monotonic": 418563.265,
+  "elapsed_seconds": 0.23399999999674037
+}

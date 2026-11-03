@@ -1,0 +1,265 @@
+[
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 73,
+    "epoch": "Host-GAME",
+    "direction": "C",
+    "body_hex": "d1030202",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 514
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 74,
+    "epoch": "Host-GAME",
+    "direction": "S",
+    "body_hex": "d503010000000202",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 514
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 75,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d503010000000202",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 514
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 76,
+    "epoch": "Guest-GAME",
+    "direction": "C",
+    "body_hex": "d201",
+    "body_bytes": 2,
+    "frame_bytes": 4,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 77,
+    "epoch": "Host-GAME",
+    "direction": "S",
+    "body_hex": "d14d61704e65744775657374284d61704e65744d6f6f6e290001",
+    "body_bytes": 26,
+    "frame_bytes": 28,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 78,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d14d61704e65744775657374284d61704e65744d6f6f6e290001",
+    "body_bytes": 26,
+    "frame_bytes": 28,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 79,
+    "epoch": "Host-GAME",
+    "direction": "C",
+    "body_hex": "d103fd01",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 509
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 80,
+    "epoch": "Host-GAME",
+    "direction": "S",
+    "body_hex": "d14d61704e65744775657374284d61704e65744d6f6f6e290000",
+    "body_bytes": 26,
+    "frame_bytes": 28,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 81,
+    "epoch": "Host-GAME",
+    "direction": "S",
+    "body_hex": "d50301000000fd01",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 509
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 82,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d14d61704e65744775657374284d61704e65744d6f6f6e290000",
+    "body_bytes": 26,
+    "frame_bytes": 28,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 83,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d50301000000fd01",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 509
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 84,
+    "epoch": "Host-GAME",
+    "direction": "C",
+    "body_hex": "d103ffff",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 65535
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 85,
+    "epoch": "Host-GAME",
+    "direction": "S",
+    "body_hex": "d50301000000fd01",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 509
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 86,
+    "epoch": "Guest-GAME",
+    "direction": "C",
+    "body_hex": "d103ffff",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 65535
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 87,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d50301000000fd01",
+    "body_bytes": 8,
+    "frame_bytes": 10,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 509
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 88,
+    "epoch": "Guest-GAME",
+    "direction": "C",
+    "body_hex": "d1030202",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness.",
+    "map_u16LE": 514
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 89,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d500010000004d61704e6574526f6f6d0001fd01004d61704e6574486f7374284d61704e65744d6f6f6e290000000000",
+    "body_bytes": 48,
+    "frame_bytes": 50,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  },
+  {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "array_index_zero_based": 90,
+    "epoch": "Guest-GAME",
+    "direction": "S",
+    "body_hex": "d501010000004d61704e6574526f6f6d000028020000000000",
+    "body_bytes": 25,
+    "frame_bytes": 27,
+    "qualification": "Existing accepted C7 WAITING server test-client network; no new capture/replay/NativeGUI/mode-step witness."
+  }
+]

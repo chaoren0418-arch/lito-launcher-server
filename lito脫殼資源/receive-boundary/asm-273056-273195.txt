@@ -1,0 +1,140 @@
+273056: fn_InitializeWindow_Check proc near
+273057: 
+273058: var_30= dword ptr -30h
+273059: var_2C= dword ptr -2Ch
+273060: var_28= dword ptr -28h
+273061: var_24= dword ptr -24h
+273062: var_20= dword ptr -20h
+273063: var_1C= dword ptr -1Ch
+273064: var_18= dword ptr -18h
+273065: var_14= dword ptr -14h
+273066: var_10= dword ptr -10h
+273067: var_C= dword ptr -0Ch
+273068: var_8= dword ptr -8
+273069: var_4= dword ptr -4
+273070: 
+273071: push    ebp                             ; LiTo.unpacked-live-image.bin:0 | Recovered from controlled live-image analysis
+273072: mov     ebp, esp
+273073: sub     esp, 30h
+273074: mov     eax, dword_64BBD8
+273075: push    ebx
+273076: push    esi
+273077: push    edi
+273078: mov     edi, dword_4F7454
+273079: mov     esi, ecx
+273080: xor     ebx, ebx
+273081: push    7Bh ; '{'
+273082: push    eax
+273083: mov     [ebp+var_30], 30h ; '0'
+273084: mov     [ebp+var_2C], 8
+273085: mov     [ebp+var_28], offset sub_47F340
+273086: mov     [ebp+var_24], ebx
+273087: mov     [ebp+var_20], ebx
+273088: mov     [ebp+var_1C], esi
+273089: call    edi ; dword_4F7454
+273090: 
+273091: mov     [ebp+var_18], eax
+273092: mov     [ebp+var_14], ebx
+273093: push    4
+273094: call    near ptr 758C5F50h
+273095: 
+273096: nop
+273097: mov     ecx, dword_64BBD8
+273098: mov     [ebp+var_10], eax
+273099: push    7Bh ; '{'
+273100: push    ecx
+273101: mov     [ebp+var_C], ebx
+273102: mov     [ebp+var_8], offset aLineage    ; "Lineage"
+273103: call    edi ; dword_4F7454
+273104: 
+273105: lea     edx, [ebp+var_30]
+273106: mov     [ebp+var_4], eax
+273107: push    edx
+273108: call    near ptr 5AD08D8h
+273109: 
+273110: nop
+273111: test    ax, ax
+273112: jnz     short loc_48030C
+273113: 
+273114: pop     edi
+273115: pop     esi
+273116: xor     eax, eax
+273117: pop     ebx
+273118: mov     esp, ebp
+273119: pop     ebp
+273120: retn
+273121: 
+273122: ; ---------------------------------------------------------------------------
+273123: 
+273124: loc_48030C:                             ; CODE XREF: fn_InitializeWindow_Check+71↑j
+273125: cmp     byte_64BC04, bl
+273126: jz      short loc_480331
+273127: 
+273128: push    offset aLineageWindows          ; "Lineage Windows Client"
+273129: push    offset aLineage                 ; "Lineage"
+273130: call    near ptr 5AD073Fh
+273131: 
+273132: nop
+273133: test    eax, eax
+273134: jz      short loc_480331
+273135: 
+273136: pop     edi
+273137: pop     esi
+273138: xor     eax, eax
+273139: pop     ebx
+273140: mov     esp, ebp
+273141: pop     ebp
+273142: retn
+273143: 
+273144: ; ---------------------------------------------------------------------------
+273145: 
+273146: loc_480331:                             ; CODE XREF: fn_InitializeWindow_Check+82↑j
+273147:                                         ; fn_InitializeWindow_Check+96↑j
+273148: push    ebx
+273149: push    esi
+273150: mov     esi, dword_4F7448
+273151: push    ebx
+273152: push    ebx
+273153: push    1
+273154: call    esi ; dword_4F7448
+273155: 
+273156: push    eax
+273157: push    ebx
+273158: call    esi ; dword_4F7448
+273159: 
+273160: push    eax
+273161: push    ebx
+273162: push    ebx
+273163: push    90080000h
+273164: push    offset aLineageWindows          ; "Lineage Windows Client"
+273165: push    offset aLineage                 ; "Lineage"
+273166: push    40000h
+273167: nop
+273168: call    near ptr 5AD0000h
+273169: 
+273170: cmp     eax, ebx
+273171: mov     dword_64BBEC, eax
+273172: jnz     short loc_480372
+273173: 
+273174: pop     edi
+273175: pop     esi
+273176: xor     eax, eax
+273177: pop     ebx
+273178: mov     esp, ebp
+273179: pop     ebp
+273180: retn
+273181: 
+273182: ; ---------------------------------------------------------------------------
+273183: 
+273184: loc_480372:                             ; CODE XREF: fn_InitializeWindow_Check+D7↑j
+273185: push    ebx
+273186: push    eax
+273187: call    sub_4EFEB6
+273188: 
+273189: mov     eax, dword_64BBEC
+273190: push    eax
+273191: nop
+273192: call    near ptr 5AA0A7Bh
+273193: 
+273194: mov     ecx, dword_64BBEC
+273195: push    ecx

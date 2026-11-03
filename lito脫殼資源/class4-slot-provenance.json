@@ -1,0 +1,3447 @@
+{
+  "updated_at": "2026-10-05T22:38:34.248313+08:00",
+  "source_BIN": {
+    "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+    "bytes": 1941568,
+    "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+    "expected_bytes": 1941568,
+    "expected_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+    "verified": true
+  },
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "expected_bytes": 7094272,
+    "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "verified": true
+  },
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "expected_bytes": 41179755,
+    "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "verified": true
+  },
+  "evidence_ranges": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+    "bytes": 136990,
+    "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C"
+  },
+  "storage": {
+    "fixed_snapshot": {
+      "va": "00834548",
+      "rva": "00434548",
+      "section": "   \u0000    ",
+      "file_offset": "00434548",
+      "raw_backed": true
+    },
+    "original_BIN": {
+      "va": "00834548",
+      "rva": "00434548",
+      "section": "   \u0000    ",
+      "file_offset": null,
+      "raw_backed": false
+    },
+    "original_section": {
+      "name": "   \u0000    ",
+      "virtual_size": 4415488,
+      "raw_size": 622592,
+      "characteristics_hex": "E0000040",
+      "zero_fill_tail_candidate": true
+    },
+    "interpretation": "Raw-backed expanded OEP snapshot has zero bytes. If original packed PE address is in an unbacked virtual tail, loader-zero is an initial storage candidate; protected unpacking/indirect writes before skill init remain unclosed. No runtime zeros are asserted."
+  },
+  "slots": [
+    {
+      "slot": 0,
+      "va": "00834548",
+      "rva": "00434548",
+      "section": "   \u0000    ",
+      "file_offset": "00434548",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277256,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508648",
+          "rva": "00108648",
+          "section": "   \u0000    ",
+          "file_offset": "00108648",
+          "raw_backed": true
+        },
+        "source_bytes": "7f01",
+        "source_bytes_sha256": "8672FFA2B6AC7028D794AC0A77473C1DDFEAABA38C3FBC4E6881BCA548DFCA6B",
+        "source_signed16": 383
+      },
+      "postselect_override": null,
+      "conditional_native_value": 383,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 1,
+      "va": "0083454C",
+      "rva": "0043454C",
+      "section": "   \u0000    ",
+      "file_offset": "0043454C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277258,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050864A",
+          "rva": "0010864A",
+          "section": "   \u0000    ",
+          "file_offset": "0010864A",
+          "raw_backed": true
+        },
+        "source_bytes": "8001",
+        "source_bytes_sha256": "4F2E968B543C835E6648DDCC49FAEB6987B4C293D8CD50A2DB5D109741007579",
+        "source_signed16": 384
+      },
+      "postselect_override": null,
+      "conditional_native_value": 384,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 2,
+      "va": "00834550",
+      "rva": "00434550",
+      "section": "   \u0000    ",
+      "file_offset": "00434550",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277260,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050864C",
+          "rva": "0010864C",
+          "section": "   \u0000    ",
+          "file_offset": "0010864C",
+          "raw_backed": true
+        },
+        "source_bytes": "8101",
+        "source_bytes_sha256": "AC38783F6A3B2FE3B579718D6BA8493A456D800665B4433A0E7C823CFF90A603",
+        "source_signed16": 385
+      },
+      "postselect_override": null,
+      "conditional_native_value": 385,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 3,
+      "va": "00834554",
+      "rva": "00434554",
+      "section": "   \u0000    ",
+      "file_offset": "00434554",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277262,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050864E",
+          "rva": "0010864E",
+          "section": "   \u0000    ",
+          "file_offset": "0010864E",
+          "raw_backed": true
+        },
+        "source_bytes": "8201",
+        "source_bytes_sha256": "F5731B12FEA535238CA271633140E41F462D9389B9FA656AEA196BD6F3C5CA1A",
+        "source_signed16": 386
+      },
+      "postselect_override": null,
+      "conditional_native_value": 386,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 4,
+      "va": "00834558",
+      "rva": "00434558",
+      "section": "   \u0000    ",
+      "file_offset": "00434558",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277264,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508650",
+          "rva": "00108650",
+          "section": "   \u0000    ",
+          "file_offset": "00108650",
+          "raw_backed": true
+        },
+        "source_bytes": "8301",
+        "source_bytes_sha256": "5EAB10101CEA3068B325DB120999927B22F0BF489DE970CDA374AA38A7E80CA8",
+        "source_signed16": 387
+      },
+      "postselect_override": null,
+      "conditional_native_value": 387,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 5,
+      "va": "0083455C",
+      "rva": "0043455C",
+      "section": "   \u0000    ",
+      "file_offset": "0043455C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277266,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508652",
+          "rva": "00108652",
+          "section": "   \u0000    ",
+          "file_offset": "00108652",
+          "raw_backed": true
+        },
+        "source_bytes": "9102",
+        "source_bytes_sha256": "2DBA24A10ECF4134982C2B953CB8080848243AA95B41746CADB5EA26EB77A247",
+        "source_signed16": 657
+      },
+      "postselect_override": null,
+      "conditional_native_value": 657,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 6,
+      "va": "00834560",
+      "rva": "00434560",
+      "section": "   \u0000    ",
+      "file_offset": "00434560",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277268,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508654",
+          "rva": "00108654",
+          "section": "   \u0000    ",
+          "file_offset": "00108654",
+          "raw_backed": true
+        },
+        "source_bytes": "9702",
+        "source_bytes_sha256": "7D35FC61396A9366224A7D08221D5C261F655BEB60A744A7626D4E72DA19C32A",
+        "source_signed16": 663
+      },
+      "postselect_override": null,
+      "conditional_native_value": 663,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 7,
+      "va": "00834564",
+      "rva": "00434564",
+      "section": "   \u0000    ",
+      "file_offset": "00434564",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277270,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508656",
+          "rva": "00108656",
+          "section": "   \u0000    ",
+          "file_offset": "00108656",
+          "raw_backed": true
+        },
+        "source_bytes": "0703",
+        "source_bytes_sha256": "434437DD2E551013D4D24B6C41396AE86C79C0F0C72279E7A16ED7AEDA8B8AB3",
+        "source_signed16": 775
+      },
+      "postselect_override": null,
+      "conditional_native_value": 775,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 8,
+      "va": "00834568",
+      "rva": "00434568",
+      "section": "   \u0000    ",
+      "file_offset": "00434568",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277272,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508658",
+          "rva": "00108658",
+          "section": "   \u0000    ",
+          "file_offset": "00108658",
+          "raw_backed": true
+        },
+        "source_bytes": "8401",
+        "source_bytes_sha256": "3F2DB284D3C33174DC9622209E0223704B094D038A47C4F98BB4B3319ADBAFB5",
+        "source_signed16": 388
+      },
+      "postselect_override": 392,
+      "conditional_native_value": 392,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 9,
+      "va": "0083456C",
+      "rva": "0043456C",
+      "section": "   \u0000    ",
+      "file_offset": "0043456C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277274,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050865A",
+          "rva": "0010865A",
+          "section": "   \u0000    ",
+          "file_offset": "0010865A",
+          "raw_backed": true
+        },
+        "source_bytes": "8501",
+        "source_bytes_sha256": "7DB5C4903AC659AF60324408DEDACD840A91525058F34CEC923EF096BE32B291",
+        "source_signed16": 389
+      },
+      "postselect_override": 393,
+      "conditional_native_value": 393,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 10,
+      "va": "00834570",
+      "rva": "00434570",
+      "section": "   \u0000    ",
+      "file_offset": "00434570",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277276,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050865C",
+          "rva": "0010865C",
+          "section": "   \u0000    ",
+          "file_offset": "0010865C",
+          "raw_backed": true
+        },
+        "source_bytes": "8601",
+        "source_bytes_sha256": "B7C492BCCE8B594715CBD7C116795257B0633FC89682D1FB27892871BB427F55",
+        "source_signed16": 390
+      },
+      "postselect_override": 394,
+      "conditional_native_value": 394,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 11,
+      "va": "00834574",
+      "rva": "00434574",
+      "section": "   \u0000    ",
+      "file_offset": "00434574",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277278,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050865E",
+          "rva": "0010865E",
+          "section": "   \u0000    ",
+          "file_offset": "0010865E",
+          "raw_backed": true
+        },
+        "source_bytes": "8701",
+        "source_bytes_sha256": "8985EAE317F2F7363CC3260B04E3D2B0D27EF909711EE1913339E9A195A09572",
+        "source_signed16": 391
+      },
+      "postselect_override": null,
+      "conditional_native_value": 391,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 12,
+      "va": "00834578",
+      "rva": "00434578",
+      "section": "   \u0000    ",
+      "file_offset": "00434578",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277280,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508660",
+          "rva": "00108660",
+          "section": "   \u0000    ",
+          "file_offset": "00108660",
+          "raw_backed": true
+        },
+        "source_bytes": "8801",
+        "source_bytes_sha256": "CC808BEE2BE109604FC5C47D2AD89282D6CED79EE8FD598A5F7ADA73DDAB4A81",
+        "source_signed16": 392
+      },
+      "postselect_override": null,
+      "conditional_native_value": 392,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 13,
+      "va": "0083457C",
+      "rva": "0043457C",
+      "section": "   \u0000    ",
+      "file_offset": "0043457C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277282,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508662",
+          "rva": "00108662",
+          "section": "   \u0000    ",
+          "file_offset": "00108662",
+          "raw_backed": true
+        },
+        "source_bytes": "f302",
+        "source_bytes_sha256": "CDC42ED935CC26F4FF6CE8BBB4A72FD5ACCC7E3DC06F466660CE5932AEC0B428",
+        "source_signed16": 755
+      },
+      "postselect_override": 755,
+      "conditional_native_value": 755,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 14,
+      "va": "00834580",
+      "rva": "00434580",
+      "section": "   \u0000    ",
+      "file_offset": "00434580",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277284,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508664",
+          "rva": "00108664",
+          "section": "   \u0000    ",
+          "file_offset": "00108664",
+          "raw_backed": true
+        },
+        "source_bytes": "8b02",
+        "source_bytes_sha256": "93727D1723051642CE3629E16CE2E70AF9A48BF72826E2F3EACEFB1B2C4AA179",
+        "source_signed16": 651
+      },
+      "postselect_override": 651,
+      "conditional_native_value": 651,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 15,
+      "va": "00834584",
+      "rva": "00434584",
+      "section": "   \u0000    ",
+      "file_offset": "00434584",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277286,
+        "producer_loop_VA": "0043F789",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508666",
+          "rva": "00108666",
+          "section": "   \u0000    ",
+          "file_offset": "00108666",
+          "raw_backed": true
+        },
+        "source_bytes": "9302",
+        "source_bytes_sha256": "82085B7FD93D31106C9063E805F9DAED6B5EF51B5BDB0B49E39B035CEB9DF19D",
+        "source_signed16": 659
+      },
+      "postselect_override": null,
+      "conditional_native_value": 659,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 16,
+      "va": "00834588",
+      "rva": "00434588",
+      "section": "   \u0000    ",
+      "file_offset": "00434588",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277448,
+        "producer_loop_VA": "0043F7A5",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508708",
+          "rva": "00108708",
+          "section": "   \u0000    ",
+          "file_offset": "00108708",
+          "raw_backed": true
+        },
+        "source_bytes": "4904",
+        "source_bytes_sha256": "441D6D2AFAF4F2B122BB5D6FCA024BBC2E970B942C3EEDDF669F45E9850D0F7A",
+        "source_signed16": 1097
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1097,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 17,
+      "va": "0083458C",
+      "rva": "0043458C",
+      "section": "   \u0000    ",
+      "file_offset": "0043458C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277450,
+        "producer_loop_VA": "0043F7A5",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050870A",
+          "rva": "0010870A",
+          "section": "   \u0000    ",
+          "file_offset": "0010870A",
+          "raw_backed": true
+        },
+        "source_bytes": "4c04",
+        "source_bytes_sha256": "9668F08006866D4DFACB7A470276E2BA387D853376D9BF964D800FCFAF7BDE0F",
+        "source_signed16": 1100
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1100,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 18,
+      "va": "00834590",
+      "rva": "00434590",
+      "section": "   \u0000    ",
+      "file_offset": "00434590",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277452,
+        "producer_loop_VA": "0043F7A5",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050870C",
+          "rva": "0010870C",
+          "section": "   \u0000    ",
+          "file_offset": "0010870C",
+          "raw_backed": true
+        },
+        "source_bytes": "4f04",
+        "source_bytes_sha256": "C330EB1B1F9100372364D26A503C9EEFE6547C820FF4D53B34AB7D3D56646985",
+        "source_signed16": 1103
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1103,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 19,
+      "va": "00834594",
+      "rva": "00434594",
+      "section": "   \u0000    ",
+      "file_offset": "00434594",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277454,
+        "producer_loop_VA": "0043F7A5",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050870E",
+          "rva": "0010870E",
+          "section": "   \u0000    ",
+          "file_offset": "0010870E",
+          "raw_backed": true
+        },
+        "source_bytes": "5204",
+        "source_bytes_sha256": "76469DE7B48D82BAFCFFE87DE306E601CA95D4C83082AE8AB5464406B4CB5FA0",
+        "source_signed16": 1106
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1106,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 20,
+      "va": "00834598",
+      "rva": "00434598",
+      "section": "   \u0000    ",
+      "file_offset": "00434598",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277472,
+        "producer_block_VA": "0043F7E9..0043F821",
+        "kind": "signedWORD-to-DWORD explicit store",
+        "source": {
+          "va": "00508720",
+          "rva": "00108720",
+          "section": "   \u0000    ",
+          "file_offset": "00108720",
+          "raw_backed": true
+        },
+        "source_bytes": "2606",
+        "source_bytes_sha256": "9736040F4F81ABB0244CC31872F2A7EC89A465F218D77DDE0478790D86714508",
+        "source_signed16": 1574
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1574,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 21,
+      "va": "0083459C",
+      "rva": "0043459C",
+      "section": "   \u0000    ",
+      "file_offset": "0043459C",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 22,
+      "va": "008345A0",
+      "rva": "004345A0",
+      "section": "   \u0000    ",
+      "file_offset": "004345A0",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 23,
+      "va": "008345A4",
+      "rva": "004345A4",
+      "section": "   \u0000    ",
+      "file_offset": "004345A4",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 24,
+      "va": "008345A8",
+      "rva": "004345A8",
+      "section": "   \u0000    ",
+      "file_offset": "004345A8",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277456,
+        "producer_loop_VA": "0043F7C1",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508710",
+          "rva": "00108710",
+          "section": "   \u0000    ",
+          "file_offset": "00108710",
+          "raw_backed": true
+        },
+        "source_bytes": "5504",
+        "source_bytes_sha256": "D5B4E49313842AE0BBC3179BD514BBC7C629D0D3046131D14583C2168B3EFA89",
+        "source_signed16": 1109
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1109,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 25,
+      "va": "008345AC",
+      "rva": "004345AC",
+      "section": "   \u0000    ",
+      "file_offset": "004345AC",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277458,
+        "producer_loop_VA": "0043F7C1",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508712",
+          "rva": "00108712",
+          "section": "   \u0000    ",
+          "file_offset": "00108712",
+          "raw_backed": true
+        },
+        "source_bytes": "5804",
+        "source_bytes_sha256": "B9C0B8B9D6449F14EF449935A9E33EEE1E33135579D74F0EE66BE2880B274DD8",
+        "source_signed16": 1112
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1112,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 26,
+      "va": "008345B0",
+      "rva": "004345B0",
+      "section": "   \u0000    ",
+      "file_offset": "004345B0",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277460,
+        "producer_loop_VA": "0043F7C1",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508714",
+          "rva": "00108714",
+          "section": "   \u0000    ",
+          "file_offset": "00108714",
+          "raw_backed": true
+        },
+        "source_bytes": "5b04",
+        "source_bytes_sha256": "BA1EFA6425F4B4B09B7787D4EB641E993DE509B1300631A6720DF8D96CF096A5",
+        "source_signed16": 1115
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1115,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 27,
+      "va": "008345B4",
+      "rva": "004345B4",
+      "section": "   \u0000    ",
+      "file_offset": "004345B4",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277462,
+        "producer_loop_VA": "0043F7C1",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508716",
+          "rva": "00108716",
+          "section": "   \u0000    ",
+          "file_offset": "00108716",
+          "raw_backed": true
+        },
+        "source_bytes": "5e04",
+        "source_bytes_sha256": "3F5F46B09061A5919753DF93BF6B26B158F5008CDF32433EFFF35CEF4AEF8294",
+        "source_signed16": 1118
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1118,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 28,
+      "va": "008345B8",
+      "rva": "004345B8",
+      "section": "   \u0000    ",
+      "file_offset": "004345B8",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277474,
+        "producer_block_VA": "0043F7E9..0043F821",
+        "kind": "signedWORD-to-DWORD explicit store",
+        "source": {
+          "va": "00508722",
+          "rva": "00108722",
+          "section": "   \u0000    ",
+          "file_offset": "00108722",
+          "raw_backed": true
+        },
+        "source_bytes": "2706",
+        "source_bytes_sha256": "895ACC2214BE010063D76B1527FCF2A51460DDE15FD1C5CC701BF85AECE29B0D",
+        "source_signed16": 1575
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1575,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 29,
+      "va": "008345BC",
+      "rva": "004345BC",
+      "section": "   \u0000    ",
+      "file_offset": "004345BC",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 30,
+      "va": "008345C0",
+      "rva": "004345C0",
+      "section": "   \u0000    ",
+      "file_offset": "004345C0",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 31,
+      "va": "008345C4",
+      "rva": "004345C4",
+      "section": "   \u0000    ",
+      "file_offset": "004345C4",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277306,
+        "producer_block_VA": "0043F7E9..0043F821",
+        "kind": "signedWORD-to-DWORD explicit store",
+        "source": {
+          "va": "0050867A",
+          "rva": "0010867A",
+          "section": "   \u0000    ",
+          "file_offset": "0010867A",
+          "raw_backed": true
+        },
+        "source_bytes": "8f01",
+        "source_bytes_sha256": "4BF9720D3DF1EB9C9B567E392EBCDFE505B65C31B7F9FB8FE3090786CF441797",
+        "source_signed16": 399
+      },
+      "postselect_override": null,
+      "conditional_native_value": 399,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 32,
+      "va": "008345C8",
+      "rva": "004345C8",
+      "section": "   \u0000    ",
+      "file_offset": "004345C8",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277464,
+        "producer_loop_VA": "0043F7DD",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "00508718",
+          "rva": "00108718",
+          "section": "   \u0000    ",
+          "file_offset": "00108718",
+          "raw_backed": true
+        },
+        "source_bytes": "6104",
+        "source_bytes_sha256": "CD155046155967DABDC5D15F10014098EFBFC41CCC2D7C875A0FED629253F032",
+        "source_signed16": 1121
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1121,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 33,
+      "va": "008345CC",
+      "rva": "004345CC",
+      "section": "   \u0000    ",
+      "file_offset": "004345CC",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277466,
+        "producer_loop_VA": "0043F7DD",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050871A",
+          "rva": "0010871A",
+          "section": "   \u0000    ",
+          "file_offset": "0010871A",
+          "raw_backed": true
+        },
+        "source_bytes": "6404",
+        "source_bytes_sha256": "D3F340D4FC171D035BF1B6977971292A8C59177017ADA0E7D306E9BF0136E64B",
+        "source_signed16": 1124
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1124,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 34,
+      "va": "008345D0",
+      "rva": "004345D0",
+      "section": "   \u0000    ",
+      "file_offset": "004345D0",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277468,
+        "producer_loop_VA": "0043F7DD",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050871C",
+          "rva": "0010871C",
+          "section": "   \u0000    ",
+          "file_offset": "0010871C",
+          "raw_backed": true
+        },
+        "source_bytes": "6704",
+        "source_bytes_sha256": "E885E3158427E739DFDD9E627B01C78A18688C4799A693E15EE60B5C9D7CD391",
+        "source_signed16": 1127
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1127,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 35,
+      "va": "008345D4",
+      "rva": "004345D4",
+      "section": "   \u0000    ",
+      "file_offset": "004345D4",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277470,
+        "producer_loop_VA": "0043F7DD",
+        "kind": "signedWORD-to-DWORD loop",
+        "source": {
+          "va": "0050871E",
+          "rva": "0010871E",
+          "section": "   \u0000    ",
+          "file_offset": "0010871E",
+          "raw_backed": true
+        },
+        "source_bytes": "6a04",
+        "source_bytes_sha256": "784BF273FE3B2DD4E1C2201308EA08CC8219D71AA98E5775E6DAE770BE9308A2",
+        "source_signed16": 1130
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1130,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 36,
+      "va": "008345D8",
+      "rva": "004345D8",
+      "section": "   \u0000    ",
+      "file_offset": "004345D8",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": {
+        "source_word_VA": 5277476,
+        "producer_block_VA": "0043F7E9..0043F821",
+        "kind": "signedWORD-to-DWORD explicit store",
+        "source": {
+          "va": "00508724",
+          "rva": "00108724",
+          "section": "   \u0000    ",
+          "file_offset": "00108724",
+          "raw_backed": true
+        },
+        "source_bytes": "4b06",
+        "source_bytes_sha256": "50FAD5BC933B7CEBA3C1DF97D795C40566275ECB95146135AB4D0F6B11AD1588",
+        "source_signed16": 1611
+      },
+      "postselect_override": null,
+      "conditional_native_value": 1611,
+      "runtime_value_proven": false
+    },
+    {
+      "slot": 37,
+      "va": "008345DC",
+      "rva": "004345DC",
+      "section": "   \u0000    ",
+      "file_offset": "004345DC",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 38,
+      "va": "008345E0",
+      "rva": "004345E0",
+      "section": "   \u0000    ",
+      "file_offset": "004345E0",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    },
+    {
+      "slot": 39,
+      "va": "008345E4",
+      "rva": "004345E4",
+      "section": "   \u0000    ",
+      "file_offset": "004345E4",
+      "raw_backed": true,
+      "snapshot_bytes": "00000000",
+      "snapshot_u32": 0,
+      "snapshot_bytes_sha256": "DF3F619804A92FDB4057192DC43DD748EA778ADC52BC498CE80524C014B81119",
+      "producer": null,
+      "postselect_override": null,
+      "conditional_native_value": null,
+      "runtime_value_proven": false,
+      "value_qualification": "Fixed OEP snapshot and ASM storage declaration zero; no explicit producer in bounded class4 init/selection. Post-init/runtime inherited value unknown; not synthesized as zero."
+    }
+  ],
+  "closed_explicit_producer_slots": 32,
+  "unclosed_runtime_value_slots": [
+    21,
+    22,
+    23,
+    29,
+    30,
+    37,
+    38,
+    39
+  ],
+  "exact_literal_scan": [
+    {
+      "slot": 21,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 22,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 23,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 29,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 30,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 37,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 38,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    },
+    {
+      "slot": 39,
+      "exact_address_literal_file_offsets": [],
+      "negative_scope": "Whole fixed PE exact u32 literal scan only; pointer arithmetic/aliases/private code are not excluded."
+    }
+  ],
+  "producer_preconditions": [
+    "43F6C0 opens list.til; pointer nonzero and count>0",
+    "43DE10 returns AL nonzero, then class array write block is reached",
+    "Class4 copy loops stop before holes; adjacent default80-word loop ends834548 exclusive; class2 starts8345E8 exclusive of class4 range",
+    "4928C0 reaches class4 branch after selected record validation; stores class75F694, order635B80=834548, then common overrides8/9/10/13/14",
+    "Full43F6C0 success is stronger than table-block reachability; later icon loading failure does not undo already written tables"
+  ],
+  "minimal_unknown": "Actual eight DWORD values after native table block/selection in the same owner epoch, and any alias/private/protected writer that establishes or overrides them. Storage zeros alone do not close runtime producer provenance.",
+  "conditional_metadata_to_known_class4_slots": [
+    {
+      "skill_index": 0,
+      "icon_word_signed": 383,
+      "known_class4_matching_slots": [
+        0
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 1,
+      "icon_word_signed": 384,
+      "known_class4_matching_slots": [
+        1
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 2,
+      "icon_word_signed": 385,
+      "known_class4_matching_slots": [
+        2
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 3,
+      "icon_word_signed": 386,
+      "known_class4_matching_slots": [
+        3
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 4,
+      "icon_word_signed": 387,
+      "known_class4_matching_slots": [
+        4
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 5,
+      "icon_word_signed": 657,
+      "known_class4_matching_slots": [
+        5
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 6,
+      "icon_word_signed": 663,
+      "known_class4_matching_slots": [
+        6
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 7,
+      "icon_word_signed": 775,
+      "known_class4_matching_slots": [
+        7
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 8,
+      "icon_word_signed": 388,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 9,
+      "icon_word_signed": 389,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 10,
+      "icon_word_signed": 390,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 11,
+      "icon_word_signed": 391,
+      "known_class4_matching_slots": [
+        11
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 12,
+      "icon_word_signed": 392,
+      "known_class4_matching_slots": [
+        8,
+        12
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 13,
+      "icon_word_signed": 755,
+      "known_class4_matching_slots": [
+        13
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 14,
+      "icon_word_signed": 651,
+      "known_class4_matching_slots": [
+        14
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 15,
+      "icon_word_signed": 659,
+      "known_class4_matching_slots": [
+        15
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 16,
+      "icon_word_signed": 393,
+      "known_class4_matching_slots": [
+        9
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 17,
+      "icon_word_signed": 394,
+      "known_class4_matching_slots": [
+        10
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 18,
+      "icon_word_signed": 395,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 19,
+      "icon_word_signed": 396,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 20,
+      "icon_word_signed": 397,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 21,
+      "icon_word_signed": 655,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 22,
+      "icon_word_signed": 848,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 24,
+      "icon_word_signed": 398,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 25,
+      "icon_word_signed": 399,
+      "known_class4_matching_slots": [
+        31
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 26,
+      "icon_word_signed": 400,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 27,
+      "icon_word_signed": 401,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 28,
+      "icon_word_signed": 402,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 29,
+      "icon_word_signed": 647,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 30,
+      "icon_word_signed": 746,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 31,
+      "icon_word_signed": 793,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 32,
+      "icon_word_signed": 403,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 33,
+      "icon_word_signed": 404,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 34,
+      "icon_word_signed": 405,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 35,
+      "icon_word_signed": 406,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 36,
+      "icon_word_signed": 407,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 37,
+      "icon_word_signed": 643,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 38,
+      "icon_word_signed": 791,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 39,
+      "icon_word_signed": 749,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 40,
+      "icon_word_signed": 408,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 41,
+      "icon_word_signed": 409,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 42,
+      "icon_word_signed": 410,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 43,
+      "icon_word_signed": 411,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 44,
+      "icon_word_signed": 412,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 45,
+      "icon_word_signed": 661,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 46,
+      "icon_word_signed": 850,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 47,
+      "icon_word_signed": 726,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 48,
+      "icon_word_signed": 413,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 49,
+      "icon_word_signed": 414,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 50,
+      "icon_word_signed": 415,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 51,
+      "icon_word_signed": 1578,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 52,
+      "icon_word_signed": 417,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 53,
+      "icon_word_signed": 622,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 54,
+      "icon_word_signed": 1570,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 55,
+      "icon_word_signed": 758,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 56,
+      "icon_word_signed": 418,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 57,
+      "icon_word_signed": 419,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 58,
+      "icon_word_signed": 420,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 59,
+      "icon_word_signed": 421,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 60,
+      "icon_word_signed": 422,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 61,
+      "icon_word_signed": 649,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 62,
+      "icon_word_signed": 784,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 63,
+      "icon_word_signed": 822,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 64,
+      "icon_word_signed": 1579,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 65,
+      "icon_word_signed": 424,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 66,
+      "icon_word_signed": 425,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 67,
+      "icon_word_signed": 426,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 68,
+      "icon_word_signed": 427,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 69,
+      "icon_word_signed": 653,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 70,
+      "icon_word_signed": 752,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 71,
+      "icon_word_signed": 1571,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 72,
+      "icon_word_signed": 428,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 73,
+      "icon_word_signed": 429,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 74,
+      "icon_word_signed": 1577,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 75,
+      "icon_word_signed": 1582,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 76,
+      "icon_word_signed": 432,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 77,
+      "icon_word_signed": 715,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 78,
+      "icon_word_signed": 1610,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 79,
+      "icon_word_signed": 1576,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 86,
+      "icon_word_signed": 1624,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 87,
+      "icon_word_signed": 1887,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 88,
+      "icon_word_signed": 1881,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 89,
+      "icon_word_signed": 2349,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 90,
+      "icon_word_signed": 2343,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 96,
+      "icon_word_signed": 1097,
+      "known_class4_matching_slots": [
+        16
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 97,
+      "icon_word_signed": 1100,
+      "known_class4_matching_slots": [
+        17
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 98,
+      "icon_word_signed": 1103,
+      "known_class4_matching_slots": [
+        18
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 99,
+      "icon_word_signed": 1106,
+      "known_class4_matching_slots": [
+        19
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 100,
+      "icon_word_signed": 1109,
+      "known_class4_matching_slots": [
+        24
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 101,
+      "icon_word_signed": 1112,
+      "known_class4_matching_slots": [
+        25
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 102,
+      "icon_word_signed": 1115,
+      "known_class4_matching_slots": [
+        26
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 103,
+      "icon_word_signed": 1118,
+      "known_class4_matching_slots": [
+        27
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 104,
+      "icon_word_signed": 1121,
+      "known_class4_matching_slots": [
+        32
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 105,
+      "icon_word_signed": 1124,
+      "known_class4_matching_slots": [
+        33
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 106,
+      "icon_word_signed": 1127,
+      "known_class4_matching_slots": [
+        34
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 107,
+      "icon_word_signed": 1130,
+      "known_class4_matching_slots": [
+        35
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 108,
+      "icon_word_signed": 1574,
+      "known_class4_matching_slots": [
+        20
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 109,
+      "icon_word_signed": 1575,
+      "known_class4_matching_slots": [
+        28
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 110,
+      "icon_word_signed": 1611,
+      "known_class4_matching_slots": [
+        36
+      ],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 112,
+      "icon_word_signed": 894,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 113,
+      "icon_word_signed": 878,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 114,
+      "icon_word_signed": 875,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 115,
+      "icon_word_signed": 883,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 116,
+      "icon_word_signed": 885,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 117,
+      "icon_word_signed": 1751,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 118,
+      "icon_word_signed": 881,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 119,
+      "icon_word_signed": 888,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 128,
+      "icon_word_signed": 811,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 129,
+      "icon_word_signed": 731,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 130,
+      "icon_word_signed": 846,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 131,
+      "icon_word_signed": 1755,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 132,
+      "icon_word_signed": 1744,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 133,
+      "icon_word_signed": 1731,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 136,
+      "icon_word_signed": 743,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 137,
+      "icon_word_signed": 802,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 144,
+      "icon_word_signed": 820,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 145,
+      "icon_word_signed": 729,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 146,
+      "icon_word_signed": 871,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 147,
+      "icon_word_signed": 772,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 148,
+      "icon_word_signed": 853,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 149,
+      "icon_word_signed": 856,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 150,
+      "icon_word_signed": 761,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 151,
+      "icon_word_signed": 764,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 152,
+      "icon_word_signed": 767,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 153,
+      "icon_word_signed": 867,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 154,
+      "icon_word_signed": 733,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 155,
+      "icon_word_signed": 769,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 156,
+      "icon_word_signed": 891,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 157,
+      "icon_word_signed": 799,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 158,
+      "icon_word_signed": 723,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 159,
+      "icon_word_signed": 2340,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 160,
+      "icon_word_signed": 720,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 161,
+      "icon_word_signed": 869,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 162,
+      "icon_word_signed": 736,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 163,
+      "icon_word_signed": 796,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 164,
+      "icon_word_signed": 739,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 165,
+      "icon_word_signed": 825,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 166,
+      "icon_word_signed": 1621,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 167,
+      "icon_word_signed": 781,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 168,
+      "icon_word_signed": 1737,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 169,
+      "icon_word_signed": 1756,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 170,
+      "icon_word_signed": 1734,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 171,
+      "icon_word_signed": 828,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 172,
+      "icon_word_signed": 2346,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 173,
+      "icon_word_signed": 2355,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 174,
+      "icon_word_signed": 2352,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "skill_index": 175,
+      "icon_word_signed": 2337,
+      "known_class4_matching_slots": [],
+      "unclosed_slots_may_match_only_if_actual_value_equals_icon": [
+        21,
+        22,
+        23,
+        29,
+        30,
+        37,
+        38,
+        39
+      ]
+    }
+  ],
+  "resource_rows_do_not_prove_filled_owner": true,
+  "patched_or_filled_skills": false
+}

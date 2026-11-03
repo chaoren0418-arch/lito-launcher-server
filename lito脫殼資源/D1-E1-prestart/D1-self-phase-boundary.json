@@ -1,0 +1,83 @@
+{
+  "phase_admission": [
+    2,
+    3,
+    6
+  ],
+  "room_gate": "none inpacket/handler; Nativeglobalcurrentcontext only",
+  "self_compare": {
+    "call": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A9597",
+      "rva": "000A9597",
+      "section": "   \u0000    ",
+      "file_offset": "000A9597",
+      "raw_backed": true,
+      "raw_hex": "e8e4a40200",
+      "mnemonic": "call",
+      "operands": "0x4d3a80",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A9550.bin",
+        "bytes": 88,
+        "sha256": "22D8A635D79F4E527C383FA65A86392750F4EED80FCD6FA241EECE61AA2AC7E7"
+      }
+    },
+    "left": "64ABF8",
+    "right": "incoming EBP-20",
+    "authority": "unchangedBatch15 initializedlead/fold guard, notplainASCII orzero tables"
+  },
+  "state1_self": {
+    "sets648F1C": "initialphase==6 viaSETEqu beforeopaque preparationcall",
+    "preparation_calls": {
+      "if": "648EB8 !=0 AND834C18 !=0",
+      "then": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A95D1",
+        "rva": "000A95D1",
+        "section": "   \u0000    ",
+        "file_offset": "000A95D1",
+        "raw_backed": true,
+        "raw_hex": "e88a4dfdff",
+        "mnemonic": "call",
+        "operands": "0x47e360",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart\\004A95A8-C5.bin",
+          "bytes": 197,
+          "sha256": "AD7F172D841C68185595A2622ABE045CA10AE8C7CFD9244C4DEC36267C315C11"
+        }
+      },
+      "else": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A95D8",
+        "rva": "000A95D8",
+        "section": "   \u0000    ",
+        "file_offset": "000A95D8",
+        "raw_backed": true,
+        "raw_hex": "e82339fdff",
+        "mnemonic": "call",
+        "operands": "0x47cf00",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart\\004A95A8-C5.bin",
+          "bytes": 197,
+          "sha256": "AD7F172D841C68185595A2622ABE045CA10AE8C7CFD9244C4DEC36267C315C11"
+        }
+      },
+      "depth": "WORLD/preparation entry boundary only; bodies/descendants not read, executed, reconstructed orqualified"
+    },
+    "after_call": "re-read64AF98; if6returnbeforemembertail. OtherwiseECX3 ->469CA0; callbacks mayhavechangedphase. Noatomicworld/nativeownerready inferred"
+  },
+  "non1_self": {
+    "values": "0/2/otherbyte; only1ready",
+    "phase6": "immediatereturnbeforephase/memberwrites",
+    "otherwise": "ECX2 ->469CA0, no47E360/47CF00preparationcall"
+  },
+  "callback_override": {
+    "if": "64AFC7 !=0 forbothphase2/3paths",
+    "order": "call469CA0 first, then save resulting62C9B8/BC/C0 into64A9B4/B8/BC; install62C9C0=469BD0,BC=47B700,B8=47B6F0",
+    "oldcallbacks": "savedAFTERhelperreturns, notbeforeincomingD1",
+    "unknown": "virtual/runtimeobjects plusinstalledcallbacksactivation/body; no callback execution proof"
+  },
+  "common_tail": "re-readphase==6 returnsforbothself/nonself. Else combatant firstmatch state+44/UI465530 thenreturn; ifnotfoundotherkindfirstmatch. Batch15 tail/UIhelpersunchanged.",
+  "phase6_detail": "Nonself6 skipsmembertail. Self1 maymake preparationcallthenifresultingphase6return; non1self6returnswithoutpreparation. FullNativehandler qualificationdoesnot grantprivatecall execution authority.",
+  "no_new_send_claim": "D1codecontainsno4C6AE0call; opaque preparation/scene/callback descendants remainunknown. No inventedC_D2command fromreceipt."
+}

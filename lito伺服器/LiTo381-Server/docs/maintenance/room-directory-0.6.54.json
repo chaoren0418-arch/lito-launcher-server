@@ -1,0 +1,57 @@
+{
+  "version": "0.6.54",
+  "baseline_server_sha256": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0",
+  "published_sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf",
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "7af3459d661255d65179ecc867b88e8c442c737a51656100a87a88d6b4468d25"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "054ee5c337ebebaea340c3f21569c8190656d89a31b21c6bc85562f13fbc32f2"
+  },
+  "added_sources": {
+    "src/main/java/local/lito381/server/LobbyRoomDirectory.java": "646062c610124055bd6893214363783de447448a87a2fa326bfa3a174b7bc03d"
+  },
+  "rollback_archive": "backups/before-room-directory-0.6.53.zip",
+  "rollback_archive_sha256": "6f6029656445803997afc9bc83eb4b48e135fe099f7af74bc7ea981d78b9cf5b",
+  "regression_passed": true,
+  "original_baseline_reproduced": true,
+  "no_player_sql_writes": true,
+  "manual_native_test_pending": true,
+  "live_evidence_run": "development-de4118b069104f9c956dd3f1afdb0f3d",
+  "tests": [
+    "same-channel cross-source creation",
+    "default room reuse/rename",
+    "new independent room",
+    "join/leave counts",
+    "deleted room removal",
+    "channel and phase recipient isolation",
+    "closed recipient cannot abort active transition"
+  ],
+  "native_dll_sha256": "e83e8f12abe07dd02ac45d53a37a69fc12f432bfef15bbe274f53dcc52388362",
+  "native_startup": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791855871942275700"
+  },
+  "launcher_version": "0.6.54",
+  "launcher_dll_sha256": "7e5b23498344264bdd82292d1d90408827a6f85f668b186eb0acd0662444fd84",
+  "project_layout_verified": true
+}

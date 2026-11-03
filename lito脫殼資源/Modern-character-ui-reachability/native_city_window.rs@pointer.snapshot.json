@@ -1,0 +1,53 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+    "bytes": 46520,
+    "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+  },
+  "captured_content_sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+    "bytes": 46520,
+    "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:15:31.291529+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      131,
+      137
+    ]
+  ],
+  "line_count": 162,
+  "implementation_lines": [
+    {
+      "line": 131,
+      "text": "  WM_COMMAND if (wparam.0&0xffff)==FIRST+MAP&&(wparam.0>>16)&0xffff==CBN_SELCHANGE as usize=>{let index=SendMessageW(s.controls.get()[MAP],CB_GETCURSEL,None,None).0;if (0..=6).contains(&index){action(hwnd,s,Action::Filter(if index==6{Filter::DiagnosticAll}else{Filter::Mode{mode:index as u8,alternate:false}}));}let _=ReleaseCapture();LRESULT(0)},"
+    },
+    {
+      "line": 132,
+      "text": "  WM_COMMAND if (wparam.0>>16)&0xffff==BN_CLICKED as usize=>{match (wparam.0&0xffff).checked_sub(FIRST){Some(SOURCE_SUBMIT)=>{let slot=SendMessageW(s.controls.get()[SOURCE_LIST],CB_GETCURSEL,None,None).0;let token=usize::try_from(slot).ok().and_then(|i|s.source_controls.borrow().get(i).cloned().flatten());let result=token.as_ref().ok_or_else(||anyhow::anyhow!(\"請選擇有效來源\")).and_then(|c|s.runtime.borrow_mut().as_mut().unwrap().handle_player_entry_command(EntryCommand::ChooseSource(c)));if let Err(e)=result{label(s.controls.get()[STATUS],&e.to_string());}else{refresh(hwnd,s);}},Some(NEWS_CONTINUE)=>{let token=s.news_control.borrow().clone();let result=token.as_ref().ok_or_else(||anyhow::anyhow!(\"繼續目前尚未可用\")).and_then(|c|s.runtime.borrow_mut().as_mut().unwrap().handle_player_entry_command(EntryCommand::ContinueNews(c)));if let Err(e)=result{label(s.controls.get()[STATUS],&e.to_string());}else{refresh(hwnd,s);}},Some(NETWORK)=>{let result=s.runtime.borrow_mut().as_mut().unwrap().handle_player_entry_command(EntryCommand::OpenLogin);match result{Ok(())=>{refresh(hwnd,s);let _=SetFocus(Some(s.controls.get()[LOGIN_ACCOUNT]));},Err(e)=>label(s.controls.get()[STATUS],&e.to_string())}},Some(LOGIN_SUBMIT)=>login_submit(hwnd,s),Some(OFFLINE)=>{let result=s.runtime.borrow_mut().as_mut().unwrap().leave_source_character_scene();match result{Ok(())=>{s.screen.set(Screen::Maps);refresh(hwnd,s);let _=SetFocus(Some(s.controls.get()[MAP]));},Err(e)=>label(s.controls.get()[STATUS],&e.to_string())}},Some(ENTER)=>{s.menu_mut(Menu::cancel_press);let _=ReleaseCapture();action(hwnd,s,Action::Enter);},Some(BACK)=>back(hwnd,s),Some(CLOSE)=>action(hwnd,s,Action::Close),Some(LEFT)=>action(hwnd,s,Action::Pan(-48,0)),Some(RIGHT)=>action(hwnd,s,Action::Pan(48,0)),Some(UP)=>action(hwnd,s,Action::Pan(0,-24)),Some(DOWN)=>action(hwnd,s,Action::Pan(0,24)),_=>{}}LRESULT(0)},"
+    },
+    {
+      "line": 133,
+      "text": "  WM_TIMER if wparam.0==TIMER=>{let(changed,closed)={let mut r=s.runtime.borrow_mut();if let Some(r)=r.as_mut(){(r.poll(),r.page()==UiPage::Closed)}else{(false,false)}};if closed{let _=DestroyWindow(hwnd);}else{let allow=s.screen.get()==Screen::Maps&&s.runtime.borrow().as_ref().is_some_and(|r|matches!(r.page(),UiPage::Menu|UiPage::Loading));let scrolled=allow&&s.menu_mut(|m|m.repeat_at(s.clock.elapsed().as_millis().min(u128::from(u64::MAX))as u64)).unwrap_or(false);let _=(changed,scrolled);refresh(hwnd,s);}LRESULT(0)},"
+    },
+    {
+      "line": 134,
+      "text": "  WM_LBUTTONDOWN=>{let hit=pointer_hit(hwnd,s,lparam);let chosen=s.menu_mut(|m|m.down_at(hit,s.clock.elapsed().as_millis().min(u128::from(u64::MAX))as u64)).flatten();if let Some(i)=chosen{select_row(hwnd,s,i);}else if s.menu(|m|m.pressed.is_some()).unwrap_or(false){SetCapture(hwnd);}let _=InvalidateRect(Some(hwnd),None,false);LRESULT(0)},"
+    },
+    {
+      "line": 135,
+      "text": "  WM_MOUSEMOVE=>{let hit=pointer_hit(hwnd,s,lparam);s.menu_mut(|m|m.pointer_move_at(hit,s.clock.elapsed().as_millis().min(u128::from(u64::MAX))as u64));let _=InvalidateRect(Some(hwnd),None,false);LRESULT(0)},"
+    },
+    {
+      "line": 136,
+      "text": "  WM_LBUTTONUP=>{let hit=pointer_hit(hwnd,s,lparam);s.menu_mut(|m|m.release(hit));let _=ReleaseCapture();let _=InvalidateRect(Some(hwnd),None,false);LRESULT(0)},"
+    },
+    {
+      "line": 137,
+      "text": "  WM_CAPTURECHANGED|WM_KILLFOCUS=>{if let Some(r)=s.runtime.borrow_mut().as_mut(){r.cancel_source_character_press();}s.menu_mut(Menu::cancel_press);let _=InvalidateRect(Some(hwnd),None,false);LRESULT(0)},"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "models": [
+    {
+      "case": "zero_disk_fold_false_equality",
+      "left_hex": "416c69636500",
+      "right_hex": "424f42425900",
+      "all_nonlead_foldbytes_zero": true,
+      "modeled_equal": true,
+      "runtime_authority": false
+    },
+    {
+      "case": "allmembers_same_firstDWORD",
+      "capture_count": 8,
+      "unique_firstDWORDs": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "physicalID_inferred": false
+    },
+    {
+      "case": "140byte_stride",
+      "recordDWORDs": 35,
+      "record_bytes": 140,
+      "expected": 140
+    },
+    {
+      "case": "CD_initial_state0_vs_later_state1",
+      "CD_field9_values": [
+        0
+      ],
+      "CD_repeatedname_updates_ready": false,
+      "later_S_D1_effect_qualified_only_in_membertail": true
+    }
+  ],
+  "old_tests_replayed": false,
+  "native_runs": 0
+}

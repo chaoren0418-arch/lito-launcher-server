@@ -1,0 +1,259 @@
+{
+  "ASM_source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "literal_query": "push 0D2h",
+  "hits": [
+    {
+      "line": 15492,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 15554,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 204674,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 228517,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 228680,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 228768,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 228856,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 229363,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 229625,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 229677,
+      "text": "push    0D2h"
+    },
+    {
+      "line": 254887,
+      "text": "push    0D2h"
+    }
+  ],
+  "actual_packet_calls": [
+    {
+      "state": 0,
+      "state_push": {
+        "va": "0046ACE8",
+        "rva": "0006ACE8",
+        "section": "   \u0000    ",
+        "file_offset": "0006ACE8",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046ACF4",
+        "rva": "0006ACF4",
+        "section": "   \u0000    ",
+        "file_offset": "0006ACF4",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "signed versionDWORD[63D54C]>=52E0 and phaseDWORD[64AF98]==2; entry bridge after4EBB30 unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 0,
+      "state_push": {
+        "va": "0046B510",
+        "rva": "0006B510",
+        "section": "   \u0000    ",
+        "file_offset": "0006B510",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B51C",
+        "rva": "0006B51C",
+        "section": "   \u0000    ",
+        "file_offset": "0006B51C",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "no local version/phase/mode/owner gate in21byte handler; caller eligibility unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 1,
+      "state_push": {
+        "va": "0046B74A",
+        "rva": "0006B74A",
+        "section": "   \u0000    ",
+        "file_offset": "0006B74A",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B756",
+        "rva": "0006B756",
+        "section": "   \u0000    ",
+        "file_offset": "0006B756",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "BYTE[64AF9D]==0 OR XOR-decoded selector==0; selector ownership/mode provenance unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 1,
+      "state_push": {
+        "va": "0046B796",
+        "rva": "0006B796",
+        "section": "   \u0000    ",
+        "file_offset": "0006B796",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "0046B7A2",
+        "rva": "0006B7A2",
+        "section": "   \u0000    ",
+        "file_offset": "0006B7A2",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "ECX==0 and input BYTE y/Y, or selectorBYTE[64B6DC]==4 and WORD9982/7882; EDX input lifetime/codec unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 2,
+      "state_push": {
+        "va": "00407DEE",
+        "rva": "00007DEE",
+        "section": "   \u0000    ",
+        "file_offset": "00007DEE",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00407DFA",
+        "rva": "00007DFA",
+        "section": "   \u0000    ",
+        "file_offset": "00007DFA",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d202",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "EAX==0 and signed version>=52E0 and phase==2; upstream command input unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 2,
+      "state_push": {
+        "va": "00407E52",
+        "rva": "00007E52",
+        "section": "   \u0000    ",
+        "file_offset": "00007E52",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00407E5E",
+        "rva": "00007E5E",
+        "section": "   \u0000    ",
+        "file_offset": "00007E5E",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d202",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "EAX==0 and signed version>=52E0 and phase==2; upstream command input unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    },
+    {
+      "state": 0,
+      "state_push": {
+        "va": "00476AA8",
+        "rva": "00076AA8",
+        "section": "   \u0000    ",
+        "file_offset": "00076AA8",
+        "raw_backed": true
+      },
+      "call": {
+        "va": "00476AB4",
+        "rva": "00076AB4",
+        "section": "   \u0000    ",
+        "file_offset": "00076AB4",
+        "raw_backed": true
+      },
+      "format_VA": "00502778",
+      "direction": "C",
+      "opcode": "D2",
+      "field_source": "literal immediate low BYTE",
+      "body_hex": "d200",
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "prefix_u16LE_hex": "0400",
+      "condition": "signed version>=52E0 and phase==2; ECX object/caller unknown",
+      "owner_and_mode": "not qualified by these finite islands",
+      "qualification": "fixed PE conditional argument/call proof; no executed UI or delivery"
+    }
+  ],
+  "false_UI_position_hits": [
+    "00460600→004DBD70 (one)",
+    "0046ADB0→00474A50 (three)"
+  ],
+  "qualification": "finite literal direct-push navigation only; raw PE authoritative. ASM labels sub476A20 conceal independent actual entry476A90. Not whole-image indirect-caller completeness.",
+  "opcode_only_fixed_PE_callsite_found": false,
+  "opcode_only_whole_image_absence_claim": false
+}

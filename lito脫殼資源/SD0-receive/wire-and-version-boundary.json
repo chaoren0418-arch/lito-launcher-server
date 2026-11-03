@@ -1,0 +1,100 @@
+{
+  "classification": "Existing S_D0 wire corroboration only; no new/corrected wire or opcode",
+  "direction": "server-to-client",
+  "opcode_decimal": 208,
+  "opcode_hex": "D0",
+  "native_format": "ds",
+  "fields": [
+    {
+      "index": 1,
+      "type": "DWORD",
+      "endianness": "little",
+      "semantic": "room context DWORD, not physical/source ID",
+      "body_offset": 1,
+      "bytes": 4,
+      "destination": "EBP-0C"
+    },
+    {
+      "index": 2,
+      "type": "NUL terminated 8-bit bytes",
+      "encoding": "Native has no fixed codec declaration here; comparison authority follows Batch15 initialized lead/fold tables. Captures ASCII; Java MS950 producer is separate evidence.",
+      "body_offset": 5,
+      "bytes": "A+1 including NUL",
+      "destination": "EBP-7C",
+      "destination_capacity": 100
+    }
+  ],
+  "body_bytes": "6+A",
+  "transport_frame_bytes": "8+A; sealed framing only",
+  "native_read_boundaries": "reader skips opcode, d little endian, s capacity100 including forcedNUL; externalcopy/seek and inputlength validation unqualified; no exact-end test in handler",
+  "version_gate": {
+    "signed_version": "DWORD63D54C",
+    "threshold_hex": "78B9",
+    "below": {
+      "format_pointer": "00634370",
+      "format": "ds",
+      "reader": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A90D5",
+        "rva": "000A90D5",
+        "section": "   \u0000    ",
+        "file_offset": "000A90D5",
+        "raw_backed": true,
+        "raw_hex": "e87699ffff",
+        "mnemonic": "call",
+        "operands": "0x4a2a50",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+          "bytes": 1216,
+          "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+        }
+      }
+    },
+    "at_or_above": {
+      "same_format_pointer": "00634370",
+      "format": "ds",
+      "reader": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004A90BA",
+        "rva": "000A90BA",
+        "section": "   \u0000    ",
+        "file_offset": "000A90BA",
+        "raw_backed": true,
+        "raw_hex": "e89199ffff",
+        "mnemonic": "call",
+        "operands": "0x4a2a50",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+          "bytes": 1216,
+          "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+        }
+      },
+      "extra_variadic_pointer": "EBP-14",
+      "reader_consumes_extra_pointer": false
+    },
+    "warning": "Additional pointer at >=78B9 does NOT establish third field. Format ds ends before it; later phase4/5 uses EBP-14 without a visible local initialization/write. No invented dsd/tail or node identity."
+  },
+  "absent_fields": [
+    "self/peer flag",
+    "success/result byte",
+    "kind/category",
+    "physical/source ID",
+    "epoch/generation",
+    "request or leave-intent ID",
+    "roster terminator"
+  ],
+  "trigger": "Existing server reports: ArenaBot replacement/peer departure/self notification. Native receive branch itself tests no pending C_D0 intent. Producer/postcommit remains Java group.",
+  "states": "64AF98==1 or6 use room0 preview branch; every other numeric phase passes common currentroom comparison, then self-vs-peer. No general2/3/6 whitelist here.",
+  "evidence_grade": "Pinned fixedPE exact instructions/literals + three existing sealed wire examples; no original runtime execution",
+  "VA": "004A9090",
+  "RVA": "000A9090",
+  "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+  "unknown": [
+    "runtime table/locale authority",
+    "input bounds and native exact-end handling",
+    "nonASCII bytes/actual encoding",
+    "true native version/state",
+    "private/virtual callbacks",
+    "ordinary C_D0/self-D0 dynamic acceptance and server postcommit"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "package_status": "未匯入、未接線",
+  "stage": "all affected local domains",
+  "core_outputs_byte_identical": true,
+  "files_checked": [
+    "candidate-data.json",
+    "sources.json",
+    "provenance.json",
+    "01-candidate-schema.sql",
+    "02-candidate-data.sql",
+    "terrain-connectivity.json",
+    "configuration-comparison.json",
+    "item-resource-evidence.json",
+    "npc-service-evidence.json",
+    "skill-request-evidence.json",
+    "stage2-sprite-evidence.json",
+    "stage2-buff-evidence.json",
+    "stage2-map-page-evidence.json",
+    "stage2-portal-525-evidence.json",
+    "stage2-rental-evidence.json",
+    "pure-presentation-lito-legacy.json",
+    "pure-presentation-tw13081901-v1.json"
+  ],
+  "different_files": [],
+  "input_database_snapshot_refreshed": false,
+  "sql_executed": false,
+  "game_or_server_started": false
+}

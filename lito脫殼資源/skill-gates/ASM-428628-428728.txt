@@ -1,0 +1,101 @@
+428628: sub_4CD1C0 proc near                    ; CODE XREF: sub_46A260+2E↑p
+428629:                                         ; sub_4928C0+2A1↑p
+428630: 
+428631: var_10= dword ptr -10h
+428632: var_C= dword ptr -0Ch
+428633: var_4= dword ptr -4
+428634: 
+428635: push    ebp
+428636: mov     ebp, esp
+428637: push    0FFFFFFFFh
+428638: push    offset byte_4F5D1B
+428639: mov     eax, large fs:0
+428640: push    eax
+428641: mov     large fs:0, esp
+428642: push    ecx
+428643: push    esi
+428644: mov     esi, ecx
+428645: call    sub_450230
+428646: 
+428647: mov     cl, byte_75F694
+428648: mov     eax, 50h ; 'P'
+428649: cmp     cl, 2
+428650: jnz     short loc_4CD1F8
+428651: 
+428652: mov     eax, 63h ; 'c'
+428653: jmp     short loc_4CD20D
+428654: 
+428655: ; ---------------------------------------------------------------------------
+428656: 
+428657: loc_4CD1F8:                             ; CODE XREF: sub_4CD1C0+2F↑j
+428658: test    cl, cl
+428659: jnz     short loc_4CD203
+428660: 
+428661: mov     eax, 38h ; '8'
+428662: jmp     short loc_4CD20D
+428663: 
+428664: ; ---------------------------------------------------------------------------
+428665: 
+428666: loc_4CD203:                             ; CODE XREF: sub_4CD1C0+3A↑j
+428667: cmp     cl, 4
+428668: jnz     short loc_4CD20D
+428669: 
+428670: mov     eax, 28h ; '('
+428671: 
+428672: 
+428673: loc_4CD20D:                             ; CODE XREF: sub_4CD1C0+36↑j
+428674:                                         ; sub_4CD1C0+41↑j
+428675:                                         ; sub_4CD1C0+46↑j
+428676: test    eax, eax
+428677: jle     short loc_4CD253
+428678: 
+428679: push    edi
+428680: mov     edi, eax
+428681: 
+428682: 
+428683: loc_4CD214:                             ; CODE XREF: sub_4CD1C0+90↓j
+428684: push    70h ; 'p'
+428685: call    sub_4F118C
+428686: 
+428687: ; ---------------------------------------------------------------------------
+428688: add     esp, 4
+428689: mov     [ebp+var_10], eax
+428690: test    eax, eax
+428691: mov     [ebp+var_4], 0
+428692: jz      short loc_4CD23E
+428693: 
+428694: push    offset byte_63D618
+428695: push    0FFFFFFFFh
+428696: push    0FFFFFFFFh
+428697: mov     ecx, eax
+428698: call    sub_4C8DE0
+428699: 
+428700: jmp     short loc_4CD240
+428701: 
+428702: ; ---------------------------------------------------------------------------
+428703: 
+428704: loc_4CD23E:                             ; CODE XREF: sub_4CD1C0+6A↑j
+428705: xor     eax, eax
+428706: 
+428707: 
+428708: loc_4CD240:                             ; CODE XREF: sub_4CD1C0+7C↑j
+428709: push    eax
+428710: mov     ecx, esi
+428711: mov     [ebp+var_4], 0FFFFFFFFh
+428712: call    sub_450260
+428713: 
+428714: dec     edi
+428715: jnz     short loc_4CD214
+428716: 
+428717: pop     edi
+428718: 
+428719: 
+428720: loc_4CD253:                             ; CODE XREF: sub_4CD1C0+4F↑j
+428721: mov     ecx, [ebp+var_C]
+428722: pop     esi
+428723: mov     large fs:0, ecx
+428724: mov     esp, ebp
+428725: pop     ebp
+428726: retn
+428727: 
+428728: sub_4CD1C0 endp

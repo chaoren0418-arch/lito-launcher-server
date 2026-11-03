@@ -1,0 +1,15 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+public final class SourceMaterialMainMethods {
+ static final String P="local/lito381/server/",OWNER=P+"NativeLightAction",PC=P+"ClientSession",H=P+"NativeSourceMaterialMain";
+ static final Set<String> RESERVES=Set.of("reserve","nativeSourceMaterialPairOriginalReserve","nativeSourceMaterialPairIngress"),LOCKED=Set.of("lambda$commitSelf$6","lambda$commit$4","lambda$commitPair$9");
+ static void need(boolean b,String why){if(!b)throw new AssertionError(why);}
+ static void patch(ClassNode c){int dispatch=0,reserves=0,locked=0;for(var m:c.methods){boolean d=m.name.equals("dispatch");boolean r=RESERVES.contains(m.name);boolean l=LOCKED.contains(m.name);if(!d&&!r&&!l)continue;
+  var x=new InsnList();var ok=new LabelNode();if(l){need(m.desc.startsWith("(L"+OWNER+"$Ingress;L"+PC+";"),"original typed ingress and PC first arguments");x.add(new VarInsnNode(ALOAD,0));x.add(new VarInsnNode(ALOAD,1));x.add(new MethodInsnNode(INVOKESTATIC,H,"locked","(Ljava/lang/Object;L"+PC+";)Z",false));locked++;}else{need(m.desc.startsWith("(L"+PC+";"),"original PC first argument");x.add(new VarInsnNode(ALOAD,0));x.add(new MethodInsnNode(INVOKESTATIC,H,"ready","(L"+PC+";)Z",false));if(d)dispatch++;else reserves++;}
+  x.add(new JumpInsnNode(IFNE,ok));if(r)x.add(new InsnNode(ACONST_NULL));x.add(new InsnNode(r?ARETURN:RETURN));x.add(ok);m.instructions.insert(x);
+ }need(dispatch==1&&reserves==3&&locked==3,"one dispatch,three complete native ingress reservations,three original after-lock bodies");}
+ public static void main(String[]a)throws Exception{var urls=new ArrayList<java.net.URL>();urls.add(Path.of(a[1]).toUri().toURL());try(var files=Files.list(Path.of(a[3]))){for(var p:files.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}
+  try(var loader=new java.net.URLClassLoader(urls.toArray(java.net.URL[]::new),ClassLoader.getPlatformClassLoader());var base=new JarFile(a[1])){FreezeAcceptedMethods.hierarchy=loader;var c=FreezeAcceptedMethods.read(base,OWNER);patch(c);var canon=new ClassNode();new ClassReader(FreezeAcceptedMethods.bytes(c,true)).accept(canon,ClassReader.SKIP_DEBUG|ClassReader.EXPAND_FRAMES);var bytes=FreezeAcceptedMethods.bytes(canon,false);
+   if(a[0].equals("splice")){var path=Path.of(a[2]).resolve(OWNER+".class");Files.createDirectories(path.getParent());Files.write(path,bytes);Files.write(Path.of(a[2]).getParent().resolve("material-Main-ports.tsv"),List.of("owner\tmethod\tphase",OWNER+"\tdispatch/3 reserve/3 after-lock lambdas\tBATTLE Main/first-lifetime guards; original native bodies retained"));}else try(var jar=new JarFile(a[2])){need(Arrays.equals(bytes,FreezeAcceptedMethods.bytes(FreezeAcceptedMethods.read(jar,OWNER),false)),"exact material Main native body prefixes");}
+  }System.out.println("PASS material Main safety:1 dispatch,3 original reserve,3 original after-lock prefixes; no body/field/sibling replacement");
+ }
+}

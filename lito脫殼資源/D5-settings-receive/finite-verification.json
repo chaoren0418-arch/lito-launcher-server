@@ -1,0 +1,22 @@
+{
+  "new_code_ranges": 2,
+  "new_data_ranges": 0,
+  "inherited_necessary_raw_ranges": 13,
+  "instruction_assertions": 66,
+  "aligned_in_slice_branch_targets": 10,
+  "complete_subtype0_control_after_header": true,
+  "complete_subtype1_branch": true,
+  "saved_field_witness_frames": 4,
+  "new_capture_frames": 0,
+  "map_models": 7,
+  "count_models": 8,
+  "gate_models": 8,
+  "prior_primary_pins_preserved": 24,
+  "all_match": true,
+  "server_packet_unchanged": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+    "bytes": 26509,
+    "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+  },
+  "Batch18_Batch22_or_old_PASS_replayed": false
+}

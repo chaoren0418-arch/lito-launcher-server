@@ -1,0 +1,65 @@
+{
+  "updated_at": "2026-10-05T22:22:16.030605+08:00",
+  "source_report": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-packet-adoption.json",
+    "bytes": 18588,
+    "sha256": "6EA8706EF3FC9A225BE7FD8CCE0DED85DB1DF1F16FB7B36C5CCB641484F7430F"
+  },
+  "preserved_source_report": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\server-adoption-source.txt",
+    "bytes": 18588,
+    "sha256": "6EA8706EF3FC9A225BE7FD8CCE0DED85DB1DF1F16FB7B36C5CCB641484F7430F"
+  },
+  "adopted_submitted_packet_delta_sha256": "A60D0CC4B356C882203E21A7280A2A66A4B30E5274C765A41711CE3977544CC5",
+  "status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE",
+  "candidate": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\native-player-wireid-frozen-09e7fec151fb45b99dd952aec6077896\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+    "bytes": 8906941,
+    "sha256": "79A7DDBEA67AB8C5FB896E4AE83D9CBB88630897207C00D256C68A550DE386E0"
+  },
+  "comparisons": [
+    {
+      "opcode": 243,
+      "direction": "S server->client",
+      "status": "CONSISTENT_IMPLEMENTED",
+      "length": "2+4*n for emitted n in0..10",
+      "fields": [
+        "offset0 opcodeF3 u8",
+        "offset1 count c: native signed int8; producer emits0..10",
+        "offset2+4*i DWORD little endian, opaque32 bits"
+      ],
+      "semantics": "Native signed_count<=0 writes no entries; positive count replaces prefix and retains suffix. Java emits AVAILABLE0 and UNAVAILABLEFFFFFFFF only; native F4 regards all other DWORDs as available.",
+      "producer_constraint": "MAX10 is server compatibility guard based on ten DWORD allocation; no native handler count clamp is asserted."
+    },
+    {
+      "opcode": 244,
+      "direction": "S server->client",
+      "status": "CONSISTENT_IMPLEMENTED",
+      "length": 8,
+      "fields": [
+        "offset0 opcodeF4",
+        "offset1 c: native sign-extends index; producer emits0..9",
+        "offset2 d: LE x86 IPv4 integer, wire bytes remain network octets",
+        "offset6 h: unsigned16 wire bits, LE port; producer emits1..65535"
+      ],
+      "semantics": "Native table[index]==FFFFFFFF returns. Otherwise IPv4 equal fixed127.0.0.1 uses46EB30; different uses46ED50, inet_ntoa host copy and low16 port, arms469B10. Java sends F3 AVAILABLE before F4 for initial/channel route and qualifying rental prefix before rental F4.",
+      "API_identity": "Corroboration of existing inet_addr/inet_ntoa identities; no new opcode or GUI remedy established."
+    }
+  ],
+  "offline_validation": {
+    "executions": 2,
+    "positive_golden_vectors_per_execution": 24,
+    "producer_guard_vectors_per_execution": 10,
+    "outputs_identical": true,
+    "relevant_method_IL_equal": true,
+    "artifact_only_Protocol_codeSource": "file:/D:/lito-dev-runtime/20261003-supervision/server/native-player-wireid-frozen-09e7fec151fb45b99dd952aec6077896/candidate/LiTo381-Server-letter-auth-wire-candidate.jar",
+    "current_source_Protocol_codeSource": "file:/D:/lineage%e9%96%8b%e7%99%bc/3-lito%e9%96%8b%e7%99%bc/lito%e4%bc%ba%e6%9c%8d%e5%99%a8/LiTo381-Server/runtime/server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c/compiled-source/",
+    "output_files": [
+      "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\golden-accepted79A7.stdout.log",
+      "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\server-packet-adoption-fbc4da9286124ac6ba439929b85ec89c\\golden-current-source.stdout.log"
+    ]
+  },
+  "product_changes": [],
+  "GUI_accepted": false,
+  "verification_method": "Expected adoption-report SHA checked; server results read and adopted, no server test execution here."
+}

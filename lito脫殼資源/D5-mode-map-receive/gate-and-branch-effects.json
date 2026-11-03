@@ -1,0 +1,88 @@
+{
+  "gate": {
+    "qualified_by": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "bytes": 28849,
+      "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8"
+    },
+    "dispatch_and_header": "Batch18/23 mode4/signedphase>=3 primary/fallback D5→4B2F67→4A9E50; cd header unchanged, subtype localEBP-1 / roomDWORD localEBP-8.",
+    "phase6": "4A9E7F incomingroom→64ABF4 before subtype validation. No priorroom equality.",
+    "other_phases": "4A9E8F incomingroom compared64ABF4; mismatch→4AA06Creturn; match maydispatch without another phasewhitelist.",
+    "valid_subtype": "MOVSX i8 then unsignedJA>9; 0..9 valid. Both subtype2 and3 use this same gate independently.",
+    "Native_version_or_owner_gate": "No explicitversion63D54C/owner/self/readycheck in these finite paths; upstream/runtime dispatch remains inherited andconditional.",
+    "Modern_requirement": "Validate independent ownedepoch/currentCEroom before applying; Nativephase6 overwrite is not authority."
+  },
+  "effects": {
+    "subtype2": {
+      "VA": "004A9F6A",
+      "RVA": "000A9F6A",
+      "format": "c",
+      "path": [
+        "4A9F6A push64ACCA",
+        "4A9F6F jump4AA05B",
+        "4AA064 call4A2A50 c(body+6,64ACCA)",
+        "4AA070return"
+      ],
+      "wire_mode_destination": "64ACCA BYTE only; typedreader4A2A93 BYTEstore. No sign conversion/domainmask/valueclamp here.",
+      "retained": [
+        "room_name64AB70",
+        "owner_display64ABCA",
+        "attributes64ABE6",
+        "password64ABE8",
+        "capacity64ABF0",
+        "summary0_64ACCC",
+        "summary1..4_64ACD0..D3",
+        "options64ACD4..D7",
+        "selections64ACD8..DF",
+        "adjacentmode_highBYTE64ACCB",
+        "ready/member/source/physical/session identity",
+        "catalogUI64A958 rows/row+74",
+        "selectedpreviewUI64A98C WORD+0C andBYTE+0F",
+        "map_projection64ACC9"
+      ],
+      "UI": "No4A9030/UI/private/external/virtual call in subtype2 path. Sharedtail begins4AA05B, not earlier4AA03B/4AA04C UIedge used by other subtypes.",
+      "map_reprojection": "None: changing mode does not reproject existing64ACC9 or load/default/validate a map.",
+      "qualification": "No explicit state/ready/owner/session/source writes beyond inheritedroomgate andtyped modeBYTE destination; runtime state unknown."
+    },
+    "subtype3": {
+      "VA": "004A9F74",
+      "RVA": "000A9F74",
+      "format": "h",
+      "path": [
+        "4A9F74 localEBP-4",
+        "4A9F81 call4A2A50 h(body+6,localWORD)",
+        "fallthrough4A9F89 sharedBatch23projection",
+        "4A9F9B store64ACC9 BYTE",
+        "4A9FA4return"
+      ],
+      "wire_map_destination": "u16LE into localEBP-4 WORD via4A2AB1; no global rawWORD copy here.",
+      "projection": "Compare fullWORD==FFFF orFF9C then keeplowBYTE; otherwise AL+0C mod256. SharedBatch23 subtype0 tail, no tablelookup/version/locale/mode branch.",
+      "retained": [
+        "room_name64AB70",
+        "owner_display64ABCA",
+        "attributes64ABE6",
+        "password64ABE8",
+        "capacity64ABF0",
+        "summary0_64ACCC",
+        "summary1..4_64ACD0..D3",
+        "options64ACD4..D7",
+        "selections64ACD8..DF",
+        "adjacentmode_highBYTE64ACCB",
+        "ready/member/source/physical/session identity",
+        "catalogUI64A958 rows/row+74",
+        "selectedpreviewUI64A98C WORD+0C andBYTE+0F",
+        "mode_lowBYTE64ACCA"
+      ],
+      "UI": "No4A9030/UI/private/external/virtual call in subtype3 path. No catalog/preview write or map resource/provider activation qualified.",
+      "qualification": "64ACC9 BYTE is lossy internal projection, not rawmapWORD/runtime recordindex/resourceID. ActualGUI/bounds/currentcontext unknown."
+    },
+    "preserved_scope": "No explicit destination in these finite c/h receivepaths; no full-image absence/actualruntime outcome claim.",
+    "reader": "Existingc/h/formatdispatch/return slices only. No strings/s/private/external/virtual body expansion. Nativeinputbounds/exactendvalidation not supplied by handler.",
+    "last_stores": [
+      "4A9E7F conditionalroomDWORD",
+      "4A2A93 modeBYTE",
+      "4A2AB1 localmapWORD",
+      "4A9F9B projectedmapBYTE"
+    ]
+  }
+}

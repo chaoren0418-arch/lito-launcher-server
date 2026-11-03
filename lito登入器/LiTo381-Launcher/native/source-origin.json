@@ -1,0 +1,25 @@
+{
+  "source": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\runtime\\source-return-repair-20261011\\compat\\ddraw_proxy.cpp",
+  "source_sha256": "c10dee65e08fbd0a30f109372d83acb9968227fce632e1291a323c329d898587",
+  "published_binary_sha256": "2f8c468da3a4120c53c52d6478ca9c967feed95da51f3516e03968c2daca1cdf",
+  "changes": [
+    "optional pre-graphics shared-resource gate"
+  ],
+  "dependencies": {
+    "arrow_observe.inc": "1003a4d1f1d8658211f41d1ef784b96f17c5783a4ccf5bfab9acfe040c3bd2b9",
+    "battle_clock.h": "05b96b10065746731e0410dc2d34720901b673e456d000c8fd672e8cf0cb7440",
+    "battle_clock.inc": "5aaeef32b140f5b36aa3e543d0041f11fc2deaf62e36d32ef0604a35478133ac",
+    "battle_clock_resources.inc": "459a305f86c4555cb3ba2000bca08acd4e8872625f9d484ecdae0478d9ea39ed",
+    "channel_click.inc": "837bca754e9e4bd7baf880ccd679f04ee518ca20f12f41541bfc4ccbf3e5a8fd",
+    "character_source_return.inc": "a0707e1839c9926d5e7237567ce7d1aa642fde20a3a74f495462d14097f9182a",
+    "ddraw.def": "872c292fb05dda8561a6b33cc3bb408ce5637aae55c38aba7f8bed8cbc7842aa",
+    "edit_call_layout.inc": "06b56ea6ea70c1bfc07e4767429d6218b6f2848ede023c439fea5f46793ca534",
+    "edit_canvas.inc": "5f7fb3e393c9488deb7b5c0137680ca290e98e7d36f2722a105e420933f9e5a7",
+    "exit_dispatch.inc": "9415260009569a1c1b73b947344b9e505b12bd75bb551916a51dc191ad92b761",
+    "lobby_return.inc": "3ab40dd6604644b244f6c8bb90f1307fbe53008bc93885fb07e607d376a7c688",
+    "selector_patch.inc": "65a177a44129b2101c217dc73a5424b3896667d84bdbee27935dc15afa370ddf",
+    "selector_return.inc": "ac4603ce0943579c6b3979059ea0a38a84baf68aa8ddd8ab64fa95bb69ab0df5",
+    "toolbar_rect.inc": "3e17f7292f0c830b7affa0939c6f59d0aeb0c776e981d805d1ddf44d4f4ae42b",
+    "world_exit.inc": "c12ec5d1588afbdfcc2566276bb73ee0eb797c8c1e081d0754ff3abf5728ae57"
+  }
+}

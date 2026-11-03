@@ -1,0 +1,52 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build\\candidate-weapon-break-material.jar",
+    "sha256": "d3e31773b7388fbd93f7c6598e5f414242976bf4270186f405ef0e6e217200e9"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\candidate-pet-world-policy.jar",
+    "sha256": "3dd19a51bc7b66978a7086ea61f945fb68933228b7b454694fb657a2905bc5b4"
+  },
+  "changed": [
+    "local/lito381/server/NativeCastMaterialPolicy.class",
+    "local/lito381/server/NativePetWorldLifetime.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeWorldMaterialPolicy$Prepared.class",
+    "local/lito381/server/NativeWorldMaterialPolicy.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\build.py",
+      "sha256": "b604ea655ba1cae39a7abc80ff4ab965883c53013321b3ed9d697767835fd98e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\WorldMaterialPolicyMethods.java",
+      "sha256": "f1e3fcb0e0898d430010b4ad5ed35cd1465d892c7317645dc380b792909dd7e9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\original\\NativePetWorldLifetime.java",
+      "sha256": "724508ae5bc6e10770001c079e74ce77c223910cf128b9647157d2f4db327eab"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\sources\\NativePetWorldLifetime.java",
+      "sha256": "8bef2ca27f4cd0c56ab82c3360c11516ca282be0ced5da3999e7e29529ad118c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build-repro\\inputs\\sources\\NativeWorldMaterialPolicy.java",
+      "sha256": "9ae5af228d0e594907692906eb696da624c28b0bb673523db6d39a4799d10eec"
+    }
+  ]
+}

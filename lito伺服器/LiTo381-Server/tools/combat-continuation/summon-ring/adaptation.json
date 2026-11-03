@@ -1,0 +1,32 @@
+{
+  "source": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build.py",
+    "sha256": "e3aa12870531c62ddac00f79bca179105b70b919dc92297a706d0f376486cbf0"
+  },
+  "driver": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build.py",
+    "sha256": "58a0be2af68e02eb87cbbf2de0419cd6f55db0200a38f208697450b226a4a7ce"
+  },
+  "changes": [
+    [
+      "summon-material/build/candidate-summon-material.jar",
+      "summon-parity/build/candidate-summon-parity.jar"
+    ],
+    [
+      "0efdc606c0d5fe1fc5511cabcac9c8b0f227a72ba34fd4183abe323dcb302a54",
+      "a90494520095ce7b8be36a150437b6be9490864d36b6a9693eda67fcfd86f6c4"
+    ],
+    [
+      "SummonSelectionMethods",
+      "SummonRingMethods"
+    ],
+    [
+      "['ClientSession','Protocol']",
+      "['InventoryCatalog$Definition']"
+    ],
+    [
+      "candidate-summon-parity.jar'\n        with",
+      "candidate-summon-ring.jar'\n        with"
+    ]
+  ]
+}

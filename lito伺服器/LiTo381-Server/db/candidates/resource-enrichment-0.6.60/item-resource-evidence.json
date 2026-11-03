@@ -1,0 +1,542 @@
+{
+  "package_status": "未匯入、未接線",
+  "native_item_count": 85,
+  "description_links": {
+    "index_source_id": 9,
+    "archive_source_id": 10,
+    "member": "LTdesc-c.tbl",
+    "row_0based": 176,
+    "offset": 110328,
+    "bytes": 2053,
+    "raw_payload_sha256": "1310c13daad930876690a336bd202c5a57ec9f777a76233a449b639b6132a9c7",
+    "decoded_sha256": "73243064a856fade75de110c5d25f6b1f19ed51c3ba7b1219bbe44ed7e84006b"
+  },
+  "description_header": "173",
+  "unclassified_description_entries": [
+    {
+      "resource_index": 98,
+      "physical_line": 100,
+      "text": "廣場警衛兵"
+    },
+    {
+      "resource_index": 99,
+      "physical_line": 101,
+      "text": "警衛隊長-夏萊"
+    },
+    {
+      "resource_index": 100,
+      "physical_line": 102,
+      "text": "警衛副隊長-波羅"
+    },
+    {
+      "resource_index": 101,
+      "physical_line": 103,
+      "text": "村民(男)"
+    },
+    {
+      "resource_index": 102,
+      "physical_line": 104,
+      "text": "村民(女)"
+    },
+    {
+      "resource_index": 103,
+      "physical_line": 105,
+      "text": "動物"
+    },
+    {
+      "resource_index": 104,
+      "physical_line": 106,
+      "text": "波羅"
+    },
+    {
+      "resource_index": 105,
+      "physical_line": 107,
+      "text": "迪"
+    },
+    {
+      "resource_index": 106,
+      "physical_line": 108,
+      "text": "布蘭奇"
+    },
+    {
+      "resource_index": 107,
+      "physical_line": 109,
+      "text": "奇德"
+    },
+    {
+      "resource_index": 108,
+      "physical_line": 110,
+      "text": "麥德"
+    },
+    {
+      "resource_index": 109,
+      "physical_line": 111,
+      "text": "利武"
+    },
+    {
+      "resource_index": 110,
+      "physical_line": 112,
+      "text": "布魯亞"
+    },
+    {
+      "resource_index": 111,
+      "physical_line": 113,
+      "text": "阿斯塔"
+    },
+    {
+      "resource_index": 112,
+      "physical_line": 114,
+      "text": "白兔"
+    },
+    {
+      "resource_index": 113,
+      "physical_line": 115,
+      "text": "棕兔"
+    },
+    {
+      "resource_index": 114,
+      "physical_line": 116,
+      "text": "灰兔"
+    },
+    {
+      "resource_index": 115,
+      "physical_line": 117,
+      "text": "雞"
+    },
+    {
+      "resource_index": 116,
+      "physical_line": 118,
+      "text": "鴨"
+    },
+    {
+      "resource_index": 117,
+      "physical_line": 119,
+      "text": "小黃"
+    },
+    {
+      "resource_index": 118,
+      "physical_line": 120,
+      "text": "小獵犬"
+    },
+    {
+      "resource_index": 119,
+      "physical_line": 121,
+      "text": "聖伯納犬"
+    },
+    {
+      "resource_index": 120,
+      "physical_line": 122,
+      "text": "柯利"
+    },
+    {
+      "resource_index": 121,
+      "physical_line": 123,
+      "text": "希斯"
+    },
+    {
+      "resource_index": 122,
+      "physical_line": 124,
+      "text": "威奇"
+    },
+    {
+      "resource_index": 123,
+      "physical_line": 125,
+      "text": "武器商人-拉胡"
+    },
+    {
+      "resource_index": 124,
+      "physical_line": 126,
+      "text": "棋棋"
+    },
+    {
+      "resource_index": 125,
+      "physical_line": 127,
+      "text": "防具商人-艾德"
+    },
+    {
+      "resource_index": 126,
+      "physical_line": 128,
+      "text": "防具商人-史特芬"
+    },
+    {
+      "resource_index": 127,
+      "physical_line": 129,
+      "text": "飾品商人-史呆"
+    },
+    {
+      "resource_index": 128,
+      "physical_line": 130,
+      "text": "無界擂台地圖"
+    },
+    {
+      "resource_index": 129,
+      "physical_line": 131,
+      "text": "武器輔助商人"
+    },
+    {
+      "resource_index": 130,
+      "physical_line": 132,
+      "text": "防具輔助商人"
+    },
+    {
+      "resource_index": 131,
+      "physical_line": 133,
+      "text": "防具輔助商人"
+    },
+    {
+      "resource_index": 132,
+      "physical_line": 134,
+      "text": "飾品輔助商人"
+    },
+    {
+      "resource_index": 133,
+      "physical_line": 135,
+      "text": "臨時旅館主人"
+    },
+    {
+      "resource_index": 134,
+      "physical_line": 136,
+      "text": "臨時村莊管理人"
+    },
+    {
+      "resource_index": 135,
+      "physical_line": 137,
+      "text": "武器商人-格蘭"
+    },
+    {
+      "resource_index": 136,
+      "physical_line": 138,
+      "text": "防具商人-文傑"
+    },
+    {
+      "resource_index": 137,
+      "physical_line": 139,
+      "text": "防具商人-萊恩"
+    },
+    {
+      "resource_index": 138,
+      "physical_line": 140,
+      "text": "飾品商人-夏尼斯"
+    },
+    {
+      "resource_index": 139,
+      "physical_line": 141,
+      "text": "旅館主人-芬"
+    },
+    {
+      "resource_index": 140,
+      "physical_line": 142,
+      "text": "郭貝恩"
+    },
+    {
+      "resource_index": 141,
+      "physical_line": 143,
+      "text": "瑟拉斯"
+    },
+    {
+      "resource_index": 142,
+      "physical_line": 144,
+      "text": "警衛隊長-夏曼"
+    },
+    {
+      "resource_index": 143,
+      "physical_line": 145,
+      "text": "安德魯"
+    },
+    {
+      "resource_index": 144,
+      "physical_line": 146,
+      "text": "克拉蘇斯"
+    },
+    {
+      "resource_index": 145,
+      "physical_line": 147,
+      "text": "賽拉"
+    },
+    {
+      "resource_index": 146,
+      "physical_line": 148,
+      "text": "風之追擊者"
+    },
+    {
+      "resource_index": 147,
+      "physical_line": 149,
+      "text": "雷諾雅-守護兵"
+    },
+    {
+      "resource_index": 148,
+      "physical_line": 150,
+      "text": "雷諾雅-傳送師"
+    },
+    {
+      "resource_index": 149,
+      "physical_line": 151,
+      "text": "燈塔看守人-默莉莎"
+    },
+    {
+      "resource_index": 150,
+      "physical_line": 152,
+      "text": "貴族"
+    },
+    {
+      "resource_index": 151,
+      "physical_line": 153,
+      "text": "僕女"
+    },
+    {
+      "resource_index": 152,
+      "physical_line": 154,
+      "text": "市民"
+    },
+    {
+      "resource_index": 153,
+      "physical_line": 155,
+      "text": "冒險家"
+    },
+    {
+      "resource_index": 154,
+      "physical_line": 156,
+      "text": "信賴的證書"
+    },
+    {
+      "resource_index": 155,
+      "physical_line": 157,
+      "text": "傳送石"
+    },
+    {
+      "resource_index": 156,
+      "physical_line": 158,
+      "text": "藥水商人-愛爾麥斯"
+    },
+    {
+      "resource_index": 157,
+      "physical_line": 159,
+      "text": "藥水商人-水米洛"
+    },
+    {
+      "resource_index": 158,
+      "physical_line": 160,
+      "text": "攻擊型裝備"
+    },
+    {
+      "resource_index": 159,
+      "physical_line": 161,
+      "text": "輔助型裝備"
+    },
+    {
+      "resource_index": 160,
+      "physical_line": 162,
+      "text": "攻擊型裝備"
+    },
+    {
+      "resource_index": 161,
+      "physical_line": 163,
+      "text": "抗魔型裝備"
+    },
+    {
+      "resource_index": 162,
+      "physical_line": 164,
+      "text": "防禦型裝備"
+    },
+    {
+      "resource_index": 163,
+      "physical_line": 165,
+      "text": "遠攻型裝備"
+    },
+    {
+      "resource_index": 164,
+      "physical_line": 166,
+      "text": "近戰型裝備"
+    },
+    {
+      "resource_index": 165,
+      "physical_line": 167,
+      "text": "魔法攻擊型裝備"
+    },
+    {
+      "resource_index": 166,
+      "physical_line": 168,
+      "text": "魔戰士型裝備"
+    },
+    {
+      "resource_index": 167,
+      "physical_line": 169,
+      "text": "雙刀型裝備"
+    },
+    {
+      "resource_index": 168,
+      "physical_line": 170,
+      "text": "鋼爪型裝備"
+    },
+    {
+      "resource_index": 169,
+      "physical_line": 171,
+      "text": "遠攻型裝備"
+    },
+    {
+      "resource_index": 170,
+      "physical_line": 172,
+      "text": "不能對其他血盟傳血盟信。"
+    }
+  ],
+  "shared_map_item_names": [
+    {
+      "item_id": 40373,
+      "name_id": "$1101",
+      "resource_text": "地圖:大陸全圖",
+      "physical_line": 1103,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40374,
+      "name_id": "$1102",
+      "resource_text": "地圖:說話之島",
+      "physical_line": 1104,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40375,
+      "name_id": "$1103",
+      "resource_text": "地圖:古魯丁",
+      "physical_line": 1105,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40376,
+      "name_id": "$1104",
+      "resource_text": "地圖:肯特城",
+      "physical_line": 1106,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40377,
+      "name_id": "$1105",
+      "resource_text": "地圖:妖魔城堡",
+      "physical_line": 1107,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40378,
+      "name_id": "$1106",
+      "resource_text": "地圖:妖精森林",
+      "physical_line": 1108,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40379,
+      "name_id": "$1107",
+      "resource_text": "地圖:風木之城",
+      "physical_line": 1109,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40380,
+      "name_id": "$1108",
+      "resource_text": "地圖:銀騎士村莊",
+      "physical_line": 1110,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40381,
+      "name_id": "$1109",
+      "resource_text": "地圖:龍之谷",
+      "physical_line": 1111,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40382,
+      "name_id": "$1188",
+      "resource_text": "地圖:奇岩",
+      "physical_line": 1190,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40383,
+      "name_id": "$1533",
+      "resource_text": "地圖:歌唱之島",
+      "physical_line": 1535,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40384,
+      "name_id": "$1534",
+      "resource_text": "地圖:隱藏之谷",
+      "physical_line": 1536,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40385,
+      "name_id": "$1535",
+      "resource_text": "地圖:海音",
+      "physical_line": 1537,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40386,
+      "name_id": "$1607",
+      "resource_text": "地圖:火龍窟",
+      "physical_line": 1609,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40387,
+      "name_id": "$1889",
+      "resource_text": "地圖:歐瑞",
+      "physical_line": 1891,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40388,
+      "name_id": "$2203",
+      "resource_text": "地圖:亞丁",
+      "physical_line": 2205,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40389,
+      "name_id": "$2543",
+      "resource_text": "地圖:沉默洞穴",
+      "physical_line": 2545,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    },
+    {
+      "item_id": 40390,
+      "name_id": "$3616",
+      "resource_text": "地圖:海賊島",
+      "physical_line": 3618,
+      "source_id": 537,
+      "interpretation": "current unique desc-c.tbl indexed reference; original item-page mapping remains unproven"
+    }
+  ],
+  "shared_text_links": {
+    "index_source_id": 536,
+    "archive_source_id": 537,
+    "member": "desc-c.tbl",
+    "row_0based": 4201,
+    "offset": 1649737,
+    "bytes": 249300,
+    "raw_payload_sha256": "0570773730a7df2cabdf7f3d283d706c77f8b48159e1dc40b845911847371343",
+    "decoded_sha256": "f06c94f47271fcb01f1d5af63725dfa9a230b5f6be3c0dd1d53cd37628adb7df",
+    "qualification": "current unique indexed member independently decoded; no prior retained snapshot available"
+  },
+  "shared_text_header": "17001",
+  "raw_icon_namespace": "LTicon .lbt + wire20000; shared icons are Sprite .tbt",
+  "original_use_type_and_quantities_not_inferred": true
+}

@@ -1,0 +1,78 @@
+{
+  "version": "0.6.55",
+  "root_cause": "Each process polled the global mouse button and acquired dragging based only on overlapping caption geometry. Logs show two HWNDs beginning the same drag.",
+  "changes": [
+    "Fresh press required; held mouse cannot acquire another window",
+    "WindowFromPoint root and foreground root must both equal the owned HWND",
+    "Focus loss or button release cancels fallback drag",
+    "Native caption move loop retained"
+  ],
+  "unit_test": "PASS: overlapping windows; fresh press; held-button crossing; focus loss; release; controls excluded",
+  "live_drag_test": "NOT RUN: Windows Computer Use screenshot capture timed out twice; manual verification required",
+  "initial_multi_window_failure": "multi-window-1791856419690848100: second native exited with code 0 before shared gate; retry in progress",
+  "files": {
+    "native/ddraw_proxy.cpp": "d664656e9885d3ed01ef2b7cd86e4e05ed90652be005783203483c8a740c7778",
+    "native/caption_drag.h": "f38977686fc3a77d919cf689b542dc7c833fa953d2a5ae512b791c415595357c",
+    "native/caption_drag_test.cpp": "9f30238a7d2709245f2b33903f384eb470f16f94d3edb8eed3354204a982fa79",
+    "app/compat/ddraw.dll": "9f7c6cd223be34b1efdcbddc5f3287a4ba214a55c9fff1720f7581b782d2e458",
+    "release/current/LiTo381Launcher.dll": "dd07689fb5091d1476812b2a1e0d2cacfc32acdbedf85f7b8437d509d4ae9f98",
+    "app/server/LiTo381-SharedResources-candidate.jar": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf",
+    "backups/before-caption-isolation-0.6.54.zip": "da61ed0905efacb8e3e8972ae64738124349fe5f4ab01bdce951b5c07d8143e8",
+    "app/lito_runtime_probe_shared.py": "bd67dd38e3e6f3a8e2ba51ee9d6833c9fd88695fdd71b2284622f4bb17cd18ae",
+    "tools/test_multi_window.py": "37bec3a2519e1b62283c63f31d42cae663c9488b2d5eb3fe87eaa142c299c9aa"
+  },
+  "multi_window_test": {
+    "run": "multi-window-1791857430626291400",
+    "no_player_sql_writes": true,
+    "first_pid": 25736,
+    "second_pid": 1876,
+    "single_server_pid": 30696,
+    "both_resources_ready": true,
+    "caption_check": {
+      "status": "manual_verification_required",
+      "reason": "Windows Computer Use capture timed out after fresh selection retry; no drag input sent",
+      "pure_state_machine": "PASS"
+    },
+    "first_close_preserved_peer_and_server": true,
+    "all_closed_auto_cleanup": true,
+    "helper_exit": 0,
+    "cleanup_verified": true,
+    "additional_clients": [
+      {
+        "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\multi-window-1791857430626291400\\client-2",
+        "cleanup_verified": true,
+        "unique_native_mutex": "LiToc953a032b1f6",
+        "existing_window_guard": "0x480326:7409->EB09",
+        "mutex_guard": "0x480AB3:7407->EB07",
+        "probe_lifetime_identity": {
+          "pid": 24364,
+          "birth_filetime": 134363310602347517,
+          "identity_source": "retained Popen process handle"
+        },
+        "probe_identity": {
+          "pid": 24364,
+          "birth_filetime": 134363310602347517,
+          "identity_source": "retained Popen process handle",
+          "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        "native_identity": {
+          "pid": 1876,
+          "parent_pid": 24364,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+          "filetime": 134363310605002117,
+          "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+        },
+        "shared_resources_ready": {
+          "pid": 1876,
+          "profile": "tw13081901-v1",
+          "base_count": 30000,
+          "total_count": 30285,
+          "native_cleanup_complete": true
+        },
+        "exit_code": 0
+      }
+    ]
+  },
+  "startup_diagnostics": "Some rapid additional-client starts exited before readiness; diagnostic changes reverted. Published normal run with first presentation delay passed. No general startup fix claimed.",
+  "probe_restored_from_backup": true
+}

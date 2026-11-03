@@ -1,0 +1,559 @@
+{
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "expected_bytes": 7094272,
+    "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "verified": true
+  },
+  "ranges": [
+    {
+      "va": "004AC520",
+      "rva": "000AC520",
+      "section": "   \u0000    ",
+      "file_offset": "000AC520",
+      "raw_backed": true,
+      "purpose": "F3 count and DWORD prefix writer throughret",
+      "size": 72,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004AC520.bin",
+        "bytes": 72,
+        "sha256": "843D0260975F12AB6B3FEEA4DC28C111912F37C7A9649D2326B83B4161E8CD51"
+      },
+      "instructions": [
+        {
+          "va": "004AC520",
+          "bytes": "55",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "va": "004AC521",
+          "bytes": "8bec",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "va": "004AC523",
+          "bytes": "51",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "va": "004AC524",
+          "bytes": "8d45ff",
+          "mnemonic": "lea",
+          "operands": "eax, [ebp - 1]"
+        },
+        {
+          "va": "004AC527",
+          "bytes": "56",
+          "mnemonic": "push",
+          "operands": "esi"
+        },
+        {
+          "va": "004AC528",
+          "bytes": "50",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "va": "004AC529",
+          "bytes": "41",
+          "mnemonic": "inc",
+          "operands": "ecx"
+        },
+        {
+          "va": "004AC52A",
+          "bytes": "68a8255000",
+          "mnemonic": "push",
+          "operands": "0x5025a8"
+        },
+        {
+          "va": "004AC52F",
+          "bytes": "51",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "va": "004AC530",
+          "bytes": "e81b65ffff",
+          "mnemonic": "call",
+          "operands": "0x4a2a50"
+        },
+        {
+          "va": "004AC535",
+          "bytes": "8a4dff",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [ebp - 1]"
+        },
+        {
+          "va": "004AC538",
+          "bytes": "83c40c",
+          "mnemonic": "add",
+          "operands": "esp, 0xc"
+        },
+        {
+          "va": "004AC53B",
+          "bytes": "33f6",
+          "mnemonic": "xor",
+          "operands": "esi, esi"
+        },
+        {
+          "va": "004AC53D",
+          "bytes": "84c9",
+          "mnemonic": "test",
+          "operands": "cl, cl"
+        },
+        {
+          "va": "004AC53F",
+          "bytes": "7e22",
+          "mnemonic": "jle",
+          "operands": "0x4ac563"
+        },
+        {
+          "va": "004AC541",
+          "bytes": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004AC542",
+          "bytes": "bf2cad6400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64ad2c"
+        },
+        {
+          "va": "004AC547",
+          "bytes": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004AC548",
+          "bytes": "684c426300",
+          "mnemonic": "push",
+          "operands": "0x63424c"
+        },
+        {
+          "va": "004AC54D",
+          "bytes": "50",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "va": "004AC54E",
+          "bytes": "e8fd64ffff",
+          "mnemonic": "call",
+          "operands": "0x4a2a50"
+        },
+        {
+          "va": "004AC553",
+          "bytes": "0fbe4dff",
+          "mnemonic": "movsx",
+          "operands": "ecx, byte ptr [ebp - 1]"
+        },
+        {
+          "va": "004AC557",
+          "bytes": "83c40c",
+          "mnemonic": "add",
+          "operands": "esp, 0xc"
+        },
+        {
+          "va": "004AC55A",
+          "bytes": "46",
+          "mnemonic": "inc",
+          "operands": "esi"
+        },
+        {
+          "va": "004AC55B",
+          "bytes": "83c704",
+          "mnemonic": "add",
+          "operands": "edi, 4"
+        },
+        {
+          "va": "004AC55E",
+          "bytes": "3bf1",
+          "mnemonic": "cmp",
+          "operands": "esi, ecx"
+        },
+        {
+          "va": "004AC560",
+          "bytes": "7ce5",
+          "mnemonic": "jl",
+          "operands": "0x4ac547"
+        },
+        {
+          "va": "004AC562",
+          "bytes": "5f",
+          "mnemonic": "pop",
+          "operands": "edi"
+        },
+        {
+          "va": "004AC563",
+          "bytes": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004AC564",
+          "bytes": "8be5",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "va": "004AC566",
+          "bytes": "5d",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "va": "004AC567",
+          "bytes": "c3",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "va": "004B304B",
+      "rva": "000B304B",
+      "section": "   \u0000    ",
+      "file_offset": "000B304B",
+      "raw_backed": true,
+      "purpose": "F3/F4 receive dispatch cases",
+      "size": 24,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004B304B.bin",
+        "bytes": 24,
+        "sha256": "35E07878C7B2B54AE0F031051140B7536E924D0E02438A6490CBC2329DB30632"
+      },
+      "instructions": [
+        {
+          "va": "004B304B",
+          "bytes": "8bce",
+          "mnemonic": "mov",
+          "operands": "ecx, esi"
+        },
+        {
+          "va": "004B304D",
+          "bytes": "e8ce94ffff",
+          "mnemonic": "call",
+          "operands": "0x4ac520"
+        },
+        {
+          "va": "004B3052",
+          "bytes": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004B3053",
+          "bytes": "8be5",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "va": "004B3055",
+          "bytes": "5d",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "va": "004B3056",
+          "bytes": "c3",
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "va": "004B3057",
+          "bytes": "8bce",
+          "mnemonic": "mov",
+          "operands": "ecx, esi"
+        },
+        {
+          "va": "004B3059",
+          "bytes": "e81295ffff",
+          "mnemonic": "call",
+          "operands": "0x4ac570"
+        },
+        {
+          "va": "004B305E",
+          "bytes": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004B305F",
+          "bytes": "8be5",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "va": "004B3061",
+          "bytes": "5d",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "va": "004B3062",
+          "bytes": "c3",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "va": "004A2A8A",
+      "rva": "000A2A8A",
+      "section": "   \u0000    ",
+      "file_offset": "000A2A8A",
+      "raw_backed": true,
+      "purpose": "c/h/d parser byte assembly",
+      "size": 93,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-004A2A8A.bin",
+        "bytes": 93,
+        "sha256": "4279F626946C95CF56DB641FD496E48B8A6777C33F28CCD0A866135E0E498541"
+      },
+      "instructions": [
+        {
+          "va": "004A2A8A",
+          "bytes": "8b5604",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [esi + 4]"
+        },
+        {
+          "va": "004A2A8D",
+          "bytes": "8a03",
+          "mnemonic": "mov",
+          "operands": "al, byte ptr [ebx]"
+        },
+        {
+          "va": "004A2A8F",
+          "bytes": "83c604",
+          "mnemonic": "add",
+          "operands": "esi, 4"
+        },
+        {
+          "va": "004A2A92",
+          "bytes": "43",
+          "mnemonic": "inc",
+          "operands": "ebx"
+        },
+        {
+          "va": "004A2A93",
+          "bytes": "8802",
+          "mnemonic": "mov",
+          "operands": "byte ptr [edx], al"
+        },
+        {
+          "va": "004A2A95",
+          "bytes": "e9bc000000",
+          "mnemonic": "jmp",
+          "operands": "0x4a2b56"
+        },
+        {
+          "va": "004A2A9A",
+          "bytes": "660fb64b01",
+          "mnemonic": "movzx",
+          "operands": "cx, byte ptr [ebx + 1]"
+        },
+        {
+          "va": "004A2A9F",
+          "bytes": "660fb613",
+          "mnemonic": "movzx",
+          "operands": "dx, byte ptr [ebx]"
+        },
+        {
+          "va": "004A2AA3",
+          "bytes": "8b4604",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi + 4]"
+        },
+        {
+          "va": "004A2AA6",
+          "bytes": "83c604",
+          "mnemonic": "add",
+          "operands": "esi, 4"
+        },
+        {
+          "va": "004A2AA9",
+          "bytes": "c1e108",
+          "mnemonic": "shl",
+          "operands": "ecx, 8"
+        },
+        {
+          "va": "004A2AAC",
+          "bytes": "03ca",
+          "mnemonic": "add",
+          "operands": "ecx, edx"
+        },
+        {
+          "va": "004A2AAE",
+          "bytes": "83c302",
+          "mnemonic": "add",
+          "operands": "ebx, 2"
+        },
+        {
+          "va": "004A2AB1",
+          "bytes": "668908",
+          "mnemonic": "mov",
+          "operands": "word ptr [eax], cx"
+        },
+        {
+          "va": "004A2AB4",
+          "bytes": "e99d000000",
+          "mnemonic": "jmp",
+          "operands": "0x4a2b56"
+        },
+        {
+          "va": "004A2AB9",
+          "bytes": "33c9",
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "004A2ABB",
+          "bytes": "33d2",
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "va": "004A2ABD",
+          "bytes": "8a4b03",
+          "mnemonic": "mov",
+          "operands": "cl, byte ptr [ebx + 3]"
+        },
+        {
+          "va": "004A2AC0",
+          "bytes": "8a5302",
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [ebx + 2]"
+        },
+        {
+          "va": "004A2AC3",
+          "bytes": "c1e108",
+          "mnemonic": "shl",
+          "operands": "ecx, 8"
+        },
+        {
+          "va": "004A2AC6",
+          "bytes": "03ca",
+          "mnemonic": "add",
+          "operands": "ecx, edx"
+        },
+        {
+          "va": "004A2AC8",
+          "bytes": "33c0",
+          "mnemonic": "xor",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004A2ACA",
+          "bytes": "8a4301",
+          "mnemonic": "mov",
+          "operands": "al, byte ptr [ebx + 1]"
+        },
+        {
+          "va": "004A2ACD",
+          "bytes": "83c604",
+          "mnemonic": "add",
+          "operands": "esi, 4"
+        },
+        {
+          "va": "004A2AD0",
+          "bytes": "c1e108",
+          "mnemonic": "shl",
+          "operands": "ecx, 8"
+        },
+        {
+          "va": "004A2AD3",
+          "bytes": "03c8",
+          "mnemonic": "add",
+          "operands": "ecx, eax"
+        },
+        {
+          "va": "004A2AD5",
+          "bytes": "8b06",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi]"
+        },
+        {
+          "va": "004A2AD7",
+          "bytes": "33d2",
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "va": "004A2AD9",
+          "bytes": "8a13",
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [ebx]"
+        },
+        {
+          "va": "004A2ADB",
+          "bytes": "c1e108",
+          "mnemonic": "shl",
+          "operands": "ecx, 8"
+        },
+        {
+          "va": "004A2ADE",
+          "bytes": "03ca",
+          "mnemonic": "add",
+          "operands": "ecx, edx"
+        },
+        {
+          "va": "004A2AE0",
+          "bytes": "83c304",
+          "mnemonic": "add",
+          "operands": "ebx, 4"
+        },
+        {
+          "va": "004A2AE3",
+          "bytes": "8908",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], ecx"
+        },
+        {
+          "va": "004A2AE5",
+          "bytes": "eb6f",
+          "mnemonic": "jmp",
+          "operands": "0x4a2b56"
+        }
+      ]
+    },
+    {
+      "va": "005025A8",
+      "rva": "001025A8",
+      "section": "   \u0000    ",
+      "file_offset": "001025A8",
+      "raw_backed": true,
+      "purpose": "F3 inline c format",
+      "size": 2,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-005025A8.bin",
+        "bytes": 2,
+        "sha256": "EC49F17F2C205644D3A0D242EB5A82EC222ED01FBD8FD6B55D0F2F6EF651E484"
+      },
+      "instructions": []
+    },
+    {
+      "va": "0063424C",
+      "rva": "0023424C",
+      "section": "   \u0000    ",
+      "file_offset": "0023424C",
+      "raw_backed": true,
+      "purpose": "F3 per-entry inline d format",
+      "size": 2,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\VA-0063424C.bin",
+        "bytes": 2,
+        "sha256": "4658D6ABBBAF7748C172ED5A3E003CDB8997648F88724834E41F75E54520E142"
+      },
+      "instructions": []
+    }
+  ],
+  "method": "New bounded static source read for handoff documentation; no execution or test replay. Inline c/d raw bytes checked."
+}

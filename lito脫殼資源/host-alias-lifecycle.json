@@ -1,0 +1,167 @@
+{
+  "updated_at": "2026-10-05T21:41:12.706625+08:00",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "consumer_dependency": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r505-unpacker-minimum-dependency.json",
+    "bytes": 4761,
+    "sha256": "7881280A190AB0ECAA0304215A920F55A977D75CBE397100BE8F4A9A522F40C1"
+  },
+  "host_initializer": {
+    "status": "direct writer and static predecessor proved; full transitive execution chain has unresolved private calls",
+    "startup_source": "ClientApplication_Run480A60 chooses default list then copies selected address into64B7E4 at480BC1; first positional non-/ non-- argument overrides at480C77; provider/COM branches can override later.",
+    "sources": [
+      {
+        "destination": "0064B7E4",
+        "copy_instructions": [
+          "00480BC1",
+          "00480BC9",
+          "00480BD0"
+        ],
+        "source": "[64B498 + 64B4A0*4], selected default server list pointer",
+        "timing": "before argument parse"
+      },
+      {
+        "destination": "0064B7E4",
+        "copy_instructions": [
+          "00480C77",
+          "00480C7F",
+          "00480C86"
+        ],
+        "source": "first positional token from47EC50(EDX=[EBP+8]), excludes / and - switches; sets local host-seen flag",
+        "timing": "startup argument parse"
+      },
+      {
+        "destination": "0064B7E4",
+        "copy_instructions": [
+          "00481861",
+          "00481869",
+          "00481870"
+        ],
+        "source": "64B950 external provider output; only nonempty; caller/body authority not closed"
+      },
+      {
+        "destination": "0064B7E4",
+        "copy_instructions": [
+          "00481DDC",
+          "00481DE4",
+          "00481DEB"
+        ],
+        "source": "string from runtime/COM path; upstream full contract unknown"
+      }
+    ],
+    "save_source": "0064B7E4",
+    "save_destination": "0064AD74",
+    "scan": "0047C9BC..0047C9CA counts strlen+NUL using ECX=-1,EAX=0",
+    "copy": [
+      "0047C9D0 movEDI,64AD74",
+      "0047C9D8 repmovsd",
+      "0047C9DF repmovsb"
+    ],
+    "copy_includes_NUL": true,
+    "copy_has_no_local_explicit_capacity_guard": true,
+    "entry_chain": [
+      "47CAD0 when64B478>=150 calls scene setup and pushes47C8A0 as thread callback at47CB36",
+      "47CB3F ->773E6C30 high-confidence msvcrt _beginthreadex (export confirmation retained below)",
+      "47C8A0 -> preinit ->loadItemDesc/LTSpellDesc ->42FAD0 success ->4C62A0(64B7E4,62C9D4) success ->43F6C0 success ->4831B0 success ->LTdesc andLTlist loaders success ->external call050104CD returns ->hostcopy"
+    ],
+    "unclosed": [
+      "Private050104CD at47C9B7 absent from fixed image; may correspond to API thunk, identity/body unknown",
+      "Other transitive init/connection/library calls not exhaustively closed",
+      "Actual host value and callback execution in T73 unobserved"
+    ],
+    "snapshot_difference": {
+      "64B7E4_current_PE": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "64AD74_current_PE": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "ASM_64B7E4_label": "a21020018214 contains210.200.182.14 (different recovered image initialization)",
+      "meaning": "Never reconstruct fixed startup host using ASM label or fixture endpoint without source-qualified startup input."
+    },
+    "thread_API_current_export_matches": {
+      "target": "773E6C30",
+      "matches": [
+        {
+          "name": "_beginthreadex",
+          "rva": "00066C30"
+        }
+      ],
+      "DLL": {
+        "path": "C:\\Windows\\SysWOW64\\msvcrt.dll",
+        "bytes": 776448,
+        "sha256": "C1BE919E7DE267ED2FCFBB4DA52AAD912CB468069B58B6A00198FF3C525373A0"
+      },
+      "historical_DLL_hash": null
+    }
+  },
+  "buffer_map": [
+    {
+      "va": "0064AD2C",
+      "bytes": 40,
+      "role": "ten dwords channel gate table (47C9E1 ECX10 repstosd); F4 reader has signed index",
+      "adjacent_until": "0064AD54"
+    },
+    {
+      "va": "0064AD54",
+      "bytes": 28,
+      "role": "saved selected roster alias (IDA7dwords, allocation boundary64AD70)",
+      "adjacent_until": "0064AD70",
+      "capacity_note": "32-byte span to64AD74 includes 2-byte port at64AD70 and 2 padding bytes; alias allocation itself28, not32"
+    },
+    {
+      "va": "0064AD70",
+      "bytes": 2,
+      "role": "current reconnect port signed-word reads, low16copy"
+    },
+    {
+      "va": "0064AD74",
+      "bytes": 256,
+      "role": "saved startup/master host string",
+      "adjacent_until": "0064AE74"
+    },
+    {
+      "va": "0064AE74",
+      "bytes": 256,
+      "role": "current connect host string",
+      "adjacent_until": "0064AF74"
+    },
+    {
+      "va": "0064B7E4",
+      "bytes": 256,
+      "role": "startup primary host mutable buffer",
+      "adjacent_until": "0064B8E4"
+    }
+  ],
+  "selected_alias": {
+    "initializer": "4928C0 selected record EBX ->492F33 scansNUL ->492F42 EDI64AD54 ->repMOVSD492F4A/repMOVSB492F51",
+    "source": "selected roster record base EBX, not startup host nor current frame",
+    "earlier_copy": "same EBX alias ->75F71C at492F1D",
+    "lifetime": "copy owns its saved bytes independently of record pointer; no static clearing store found in exact literal references; not proof it is never reset indirectly",
+    "consumer": "4A7550 alternate203 ifAFBC orAFBD enabled; ifAFBE==0 sends C9 withcs+64AD54 at4A76A3..4A76AD then AFBE=1 at4A76BA",
+    "safe_boundary": "Native sequence scans/copies throughNUL without local length clamp; external input validation/upstream record capacity still required"
+  },
+  "launcher_resources": {
+    "metadata_source": "47C8E1->440910(LTSpellDesc;64_7E20 count32 and64_7E24 tablepointer32); completion must precede icon/skill consumers",
+    "raw_snapshot_metadata_zero": true,
+    "meaning": "OEP snapshot zeros do not prove missing allocation on the original runtime; startup worker creates metadata.",
+    "skill_owner": "492D80 publishes834888 owner; then834884pane; T74 provides constructor/reset/destroy evidence",
+    "T73_human_threeFAIL_cause": "unproved; startup metadata gates, packets, reset, callback and GUI binding still distinguished"
+  },
+  "verification": {
+    "raw_static_writer_proven": true,
+    "runtime_initializer_executed_proven": false,
+    "original_game_started": false,
+    "process_handle_opened": false,
+    "GUI": 0
+  },
+  "editorial_correction": {
+    "updated_at": "2026-10-05T21:56:34.289883+08:00",
+    "proof": "Fixed PE raw bytes verify stores492AD4/43F8D6;647E20 is count,647E24 is returned pointer."
+  }
+}

@@ -1,0 +1,40 @@
+package local.lito381.server;
+
+/** Hash-locked selected-source boundary for the empty Lastabad main gate map450. */
+final class ClassicWorldLastabadGateCatalog {
+    static final int MAP_ID = 450;
+    static final String MAP_SOURCE_SHA256 =
+            "16DE5D9F1F84F1D6DACBA50A093F466FA699C9323ACBCA533F78F861D0031787";
+    static final String MAP_RESOURCE_SHA256 =
+            "E22E0D3A863B6F8E6C7FB3905B4320BD1FE6CF74EC7CC0B3F08B9B4A401291E9";
+    static final String MAP451_COLLISION_AUTHORITY_SHA256 =
+            "B5B6E360E5DF950440A085F31740109C6E7B12B7A13FA67AF568F3C597AD9173";
+    static final String ROUTES_SOURCE_SHA256 =
+            "5F883DF8542DF45D4133F68676C852E568B4252517C9C38274E489B9F63B6CB9";
+    static final String FLAGS_SOURCE_SHA256 =
+            "417DB66DBA42D0EA90D24B92BB7B8B8C6E57A4ADA1600CE82B5437345628398D";
+    static final String GETBACK_SOURCE_SHA256 =
+            "4069D9117F0F6608FA6CEC44ED9D18C7703A68C315393F284FDAE33142A05470";
+    static final String NPC_SOURCE_SHA256 =
+            "8263164069B03411156DCA1D6B564F777EED14697D36402D02A1086131AEE8BF";
+    static final String NPC_RESOURCE_SHA256 =
+            "F57A63291DAA2FA275A94300E9D6FE7D599B2B719E73100540FEE9B2B4BD8DDA";
+    static final String MONSTER_SOURCE_SHA256 =
+            "219255B3830F63B32C0D35542B91DF47B5532113719CB79075F5CD233B6DE5E7";
+    static final String MONSTER_RESOURCE_SHA256 =
+            "DC83AC651E6E210F15A728040A1C6555A0B888F8681A406D5AC71FE331105975";
+    static final String DROP_SOURCE_SHA256 =
+            "3FE93EDCC0A0A171C6BB8ADF328460441832AF757DA26B9DAB1E8C8A2963C828";
+    static final String DROP_RESOURCE_SHA256 =
+            "CEC994332B230316219F4AA5D971B22CA97BB43839E48F590F39F186EB275AAB";
+
+    record MapFlags(boolean escapable, boolean usableItem, boolean usableSkill,
+                    boolean teleportable, boolean takePets, boolean recallPets) {}
+
+    private static final MapFlags FLAGS =
+            new MapFlags(true, true, true, false, true, true);
+
+    private ClassicWorldLastabadGateCatalog() {}
+
+    static MapFlags flags() { return FLAGS; }
+}

@@ -1,0 +1,792 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+    "bytes": 28849,
+    "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8"
+  },
+  "all_match": true,
+  "check_count": 192,
+  "checks": [
+    {
+      "check": "pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin server-ordinary-room-DD-edit-network.json",
+      "match": true
+    },
+    {
+      "check": "pin frames.json",
+      "match": true
+    },
+    {
+      "check": "pin 004A9EE9-D.bin",
+      "match": true
+    },
+    {
+      "check": "pin 004A9F89-1C.bin",
+      "match": true
+    },
+    {
+      "check": "pin finite-verification.json",
+      "match": true
+    },
+    {
+      "check": "pin gate-and-branch-effects.json",
+      "match": true
+    },
+    {
+      "check": "pin independent-snapshot-boundary.json",
+      "match": true
+    },
+    {
+      "check": "pin instruction-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin operand-models.json",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin saved-field-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin wire-contracts.json",
+      "match": true
+    },
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9EE9",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9EE9",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9EE9",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9F89",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9F89",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9F89",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9E50",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9E50",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9E50",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9EAB",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9EAB",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9EAB",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9EF6",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9EF6",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9EF6",
+      "match": true
+    },
+    {
+      "check": "raw PE 004AA06C",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004AA06C",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004AA06C",
+      "match": true
+    },
+    {
+      "check": "raw PE 004AA074",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004AA074",
+      "match": true
+    },
+    {
+      "check": "raw PE 00634470",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 00634470",
+      "match": true
+    },
+    {
+      "check": "raw PE 00634464",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 00634464",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A2A50",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A2A50",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A2A50",
+      "match": true
+    },
+    {
+      "check": "raw PE 005028F8",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 005028F8",
+      "match": true
+    },
+    {
+      "check": "raw PE 005025A8",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 005025A8",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A9030",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A9030",
+      "match": true
+    },
+    {
+      "check": "decode alignment 004A9030",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A2B78",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A2B78",
+      "match": true
+    },
+    {
+      "check": "raw PE 004A2B90",
+      "match": true
+    },
+    {
+      "check": "VA RVA offset 004A2B90",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E77",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E7F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E8F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E91",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E97",
+      "match": true
+    },
+    {
+      "check": "operand 004A9E9E",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EAB",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EB0",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EB5",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EBA",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EBF",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EC4",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EC6",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EC9",
+      "match": true
+    },
+    {
+      "check": "operand 004A9ECE",
+      "match": true
+    },
+    {
+      "check": "operand 004A9ECF",
+      "match": true
+    },
+    {
+      "check": "operand 004A9ED4",
+      "match": true
+    },
+    {
+      "check": "operand 004A9ED9",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EDB",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EDE",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EE4",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EE9",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EEC",
+      "match": true
+    },
+    {
+      "check": "operand 004A9030",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EF1",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F89",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F8D",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F91",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F93",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F97",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F99",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F9B",
+      "match": true
+    },
+    {
+      "check": "operand 004A9FA4",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EF6",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EFC",
+      "match": true
+    },
+    {
+      "check": "operand 004A9EFD",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F02",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F07",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F0C",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F11",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F16",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F1B",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F20",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F22",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F27",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F29",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F2F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F37",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F39",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F3D",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F3F",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F41",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F48",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F4D",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F4E",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F58",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F60",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F63",
+      "match": true
+    },
+    {
+      "check": "operand 004A9F69",
+      "match": true
+    },
+    {
+      "check": "operand 004A2A93",
+      "match": true
+    },
+    {
+      "check": "operand 004A2AB1",
+      "match": true
+    },
+    {
+      "check": "operand 004A2AE3",
+      "match": true
+    },
+    {
+      "check": "operand 004A2AF9",
+      "match": true
+    },
+    {
+      "check": "operand 004A2B04",
+      "match": true
+    },
+    {
+      "check": "operand 004A2B09",
+      "match": true
+    },
+    {
+      "check": "operand 004A2B69",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9E7A",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9E84",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9E91",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9E9E",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9EF1",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9F3F",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9F56",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9F63",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9F91",
+      "match": true
+    },
+    {
+      "check": "branch target 004A9F97",
+      "match": true
+    },
+    {
+      "check": "subtype0 contiguous75-byte primary path",
+      "match": true
+    },
+    {
+      "check": "subtype0 complete28-byte projection tail",
+      "match": true
+    },
+    {
+      "check": "subtype1 complete116-byte own return",
+      "match": true
+    },
+    {
+      "check": "stub onlyRET",
+      "match": true
+    },
+    {
+      "check": "subtype0 calltargets onlyreader andRET",
+      "match": true
+    },
+    {
+      "check": "subtype1 calls onlyreader",
+      "match": true
+    },
+    {
+      "check": "subtype0 full13 varargs",
+      "match": true
+    },
+    {
+      "check": "subtype1 full13 varargs",
+      "match": true
+    },
+    {
+      "check": "typed store format dispatch c/d/h/s",
+      "match": true
+    },
+    {
+      "check": "string firstexternal STOP preserved",
+      "match": true
+    },
+    {
+      "check": "mode/attrs/capacity cstore byte notDWORD",
+      "match": true
+    },
+    {
+      "check": "map parsed into localWORD",
+      "match": true
+    },
+    {
+      "check": "subtype0 stringcaps90/28",
+      "match": true
+    },
+    {
+      "check": "subtype1 stringcaps90/5",
+      "match": true
+    },
+    {
+      "check": "mode highbyte explicitly retained",
+      "match": true
+    },
+    {
+      "check": "seven map projections exact",
+      "match": true
+    },
+    {
+      "check": "eight signedK models exact",
+      "match": true
+    },
+    {
+      "check": "eight phase/room/type models exact",
+      "match": true
+    },
+    {
+      "check": "finite numeric footprints disjoint",
+      "match": true
+    },
+    {
+      "check": "preserve config numeric and highbytes",
+      "match": true
+    },
+    {
+      "check": "saved field witness 78",
+      "match": true
+    },
+    {
+      "check": "full saved field conservation 78",
+      "match": true
+    },
+    {
+      "check": "wire length formula 78",
+      "match": true
+    },
+    {
+      "check": "saved field witness 79",
+      "match": true
+    },
+    {
+      "check": "full saved field conservation 79",
+      "match": true
+    },
+    {
+      "check": "wire length formula 79",
+      "match": true
+    },
+    {
+      "check": "saved field witness 84",
+      "match": true
+    },
+    {
+      "check": "full saved field conservation 84",
+      "match": true
+    },
+    {
+      "check": "wire length formula 84",
+      "match": true
+    },
+    {
+      "check": "saved field witness 85",
+      "match": true
+    },
+    {
+      "check": "full saved field conservation 85",
+      "match": true
+    },
+    {
+      "check": "wire length formula 85",
+      "match": true
+    },
+    {
+      "check": "success/reject subtype0 indistinguishable body",
+      "match": true
+    },
+    {
+      "check": "success/reject subtype1 indistinguishable body",
+      "match": true
+    },
+    {
+      "check": "saved map564 projected64",
+      "match": true
+    },
+    {
+      "check": "saved attrs40 capacity4 K0",
+      "match": true
+    },
+    {
+      "check": "no newwire/opcodes/corrections",
+      "match": true
+    },
+    {
+      "check": "packet immutable",
+      "match": true
+    }
+  ],
+  "new_code_ranges": 2,
+  "new_data_ranges": 0,
+  "inherited_necessary_raw_ranges": 13,
+  "instruction_assertions": 66,
+  "aligned_in_slice_branches": 10,
+  "saved_field_witness_frames": 4,
+  "prior_primary_pins_preserved": 24,
+  "complete_subtype0_and_subtype1_finite_control": true,
+  "map_models": 7,
+  "count_models": 8,
+  "gate_models": 8,
+  "Native_GUI_provider_SQL_Java_or_old_PASS": false,
+  "ACK_atomicpair_runtimeGUI_qualified": false
+}

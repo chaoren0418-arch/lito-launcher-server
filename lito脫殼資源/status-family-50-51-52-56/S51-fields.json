@@ -1,0 +1,190 @@
+{
+  "direction": "server_to_client",
+  "opcode": 81,
+  "name_from_existing_server": "S_EXP",
+  "handler": {
+    "va": "004AF0E0",
+    "rva": "000AF0E0",
+    "section": "   \u0000    ",
+    "file_offset": "000AF0E0",
+    "raw_backed": true
+  },
+  "handler_range": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\ranges\\004AF0E0-1A.bin",
+    "bytes": 26,
+    "sha256": "76B2CE1E0565F1C843175CF8118A0F5A69D1025425C11E21F569F3C7BBB50A06"
+  },
+  "body_including_opcode": 6,
+  "parameter_bytes": 5,
+  "field_count": 2,
+  "fields": [
+    {
+      "name_from_existing_Java": "level",
+      "body_offset": 1,
+      "width": 1,
+      "endian": "byte",
+      "native_storage": "raw8bits",
+      "native_destination": {
+        "va": "008348CA",
+        "rva": "004348CA",
+        "section": "   \u0000    ",
+        "file_offset": "004348CA",
+        "raw_backed": true
+      },
+      "write_width_bytes": 1,
+      "server_semantic_type": "u8",
+      "native_signedness": "Exact bit copy, no value sign extension; downstream arithmetic not established",
+      "evidence_levels": [
+        "FIXED_PE_RAW_FOR_OFFSET_WIDTH_DESTINATION",
+        "EXISTING_JAVA_SOURCE_FOR_SEMANTIC_NAME_AND_DOMAIN"
+      ],
+      "destination_argument": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AF0E5",
+        "rva": "000AF0E5",
+        "section": "   \u0000    ",
+        "file_offset": "000AF0E5",
+        "raw_backed": true,
+        "raw_hex": "68ca488300",
+        "mnemonic": "push",
+        "operands": "0x8348ca",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\ranges\\004AF0E0-1A.bin",
+          "bytes": 26,
+          "sha256": "76B2CE1E0565F1C843175CF8118A0F5A69D1025425C11E21F569F3C7BBB50A06"
+        }
+      },
+      "reader_case": {
+        "map": {
+          "va": "004A2BA0",
+          "rva": "000A2BA0",
+          "section": "   \u0000    ",
+          "file_offset": "000A2BA0",
+          "raw_backed": true
+        },
+        "slot": 1,
+        "jump": {
+          "va": "004A2B7C",
+          "rva": "000A2B7C",
+          "section": "   \u0000    ",
+          "file_offset": "000A2B7C",
+          "raw_backed": true
+        },
+        "target": {
+          "va": "004A2A8A",
+          "rva": "000A2A8A",
+          "section": "   \u0000    ",
+          "file_offset": "000A2A8A",
+          "raw_backed": true
+        },
+        "store_witness": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A2A93",
+          "rva": "000A2A93",
+          "section": "   \u0000    ",
+          "file_offset": "000A2A93",
+          "raw_backed": true,
+          "raw_hex": "8802",
+          "mnemonic": "mov",
+          "operands": "byte ptr [edx], al",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004A2A50-97.bin",
+            "bytes": 151,
+            "sha256": "4D19B79CEFC8C34CA209D34F0E0972EDBDD752578B0FD4B52CC425B7133DFAD5"
+          }
+        }
+      }
+    },
+    {
+      "name_from_existing_Java": "experience",
+      "body_offset": 2,
+      "width": 4,
+      "endian": "LE",
+      "native_storage": "raw32bits",
+      "native_destination": {
+        "va": "008348C4",
+        "rva": "004348C4",
+        "section": "   \u0000    ",
+        "file_offset": "004348C4",
+        "raw_backed": true
+      },
+      "write_width_bytes": 4,
+      "server_semantic_type": "u32",
+      "native_signedness": "Exact bit copy, no value sign extension; downstream arithmetic not established",
+      "evidence_levels": [
+        "FIXED_PE_RAW_FOR_OFFSET_WIDTH_DESTINATION",
+        "EXISTING_JAVA_SOURCE_FOR_SEMANTIC_NAME_AND_DOMAIN"
+      ],
+      "destination_argument": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AF0E0",
+        "rva": "000AF0E0",
+        "section": "   \u0000    ",
+        "file_offset": "000AF0E0",
+        "raw_backed": true,
+        "raw_hex": "68c4488300",
+        "mnemonic": "push",
+        "operands": "0x8348c4",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\ranges\\004AF0E0-1A.bin",
+          "bytes": 26,
+          "sha256": "76B2CE1E0565F1C843175CF8118A0F5A69D1025425C11E21F569F3C7BBB50A06"
+        }
+      },
+      "reader_case": {
+        "map": {
+          "va": "004A2BA1",
+          "rva": "000A2BA1",
+          "section": "   \u0000    ",
+          "file_offset": "000A2BA1",
+          "raw_backed": true
+        },
+        "slot": 2,
+        "jump": {
+          "va": "004A2B80",
+          "rva": "000A2B80",
+          "section": "   \u0000    ",
+          "file_offset": "000A2B80",
+          "raw_backed": true
+        },
+        "target": {
+          "va": "004A2AB9",
+          "rva": "000A2AB9",
+          "section": "   \u0000    ",
+          "file_offset": "000A2AB9",
+          "raw_backed": true
+        },
+        "store_witness": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A2AE3",
+          "rva": "000A2AE3",
+          "section": "   \u0000    ",
+          "file_offset": "000A2AE3",
+          "raw_backed": true,
+          "raw_hex": "8908",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], ecx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004A2A50-97.bin",
+            "bytes": 151,
+            "sha256": "4D19B79CEFC8C34CA209D34F0E0972EDBDD752578B0FD4B52CC425B7133DFAD5"
+          }
+        }
+      }
+    }
+  ],
+  "layout": "cd",
+  "format_string": {
+    "va": "005028F8",
+    "rva": "001028F8",
+    "section": "   \u0000    ",
+    "file_offset": "001028F8",
+    "raw_backed": true
+  },
+  "format_status": "Actual raw-backed ASCII literal+NUL",
+  "direct_call_count": 1,
+  "callee": "004A2A50 numericc/d only",
+  "consumption": "Numeric reader returns input+parameter bytes = body+expected body size in EAX. Handler and direct dispatcher case leave EAX unchanged through ret, without validating it or any length.",
+  "length_validation": "No body length parameter/check in these handlers/numeric cases. Structural expected length is not native exact/truncated/trailing rejection.",
+  "direct_side_effects": "Only listed global stores. No protected setter/level-effect/actor lookup/packet send/owner create/test."
+}

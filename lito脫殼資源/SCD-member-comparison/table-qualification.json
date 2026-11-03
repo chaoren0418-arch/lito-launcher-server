@@ -1,0 +1,150 @@
+{
+  "comparator_entry": "004D3A80",
+  "lead_table": "00834A60[256]",
+  "fold_table": "00834960[256]",
+  "algorithm": "NUL-terminated 8-bit compare. If left byte leadtable!=0, compare raw left-right lead and next raw byte, then continue. Otherwise compare fold[left]-fold[right]; if same and left rawbyte0 return0; nonzero continue. No local length/max or validity gate.",
+  "initializer": "004D39F0 completeexistingraw: private05010B41 receivesECXnumericparameter and20-byte stackarea; then clear256leadbytes, ifstackDWORD>1 walk inclusivepairs fromarea+6 until00/00; foldloop0..255 calls*[4F727C],storesAL.",
+  "private_fixed_target": "05010B41",
+  "ASM_target_differs": "05A10EEA islabel-navigationonly; fixedbytes target05010B41 wins",
+  "fold_pointer_disk": "773B2A40",
+  "dump_time_module_export_body_SHA": null,
+  "private_result_checked": false,
+  "table_ready_flag_found_in_bounded_producer": false,
+  "startup": {
+    "call": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "00480A88",
+      "rva": "00080A88",
+      "section": "   \u0000    ",
+      "file_offset": "00080A88",
+      "raw_backed": true,
+      "raw_hex": "e8632f0500",
+      "mnemonic": "call",
+      "operands": "0x4d39f0",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00480A60.bin",
+        "bytes": 631,
+        "sha256": "EB9864D8467A5E4B44D02AE593B362586A2984A38F6A986D9E2D066B7B52F4B1"
+      }
+    },
+    "parameter": 0
+  },
+  "known_S3A_reinitialization": {
+    "selector": "BYTE64B6DC",
+    "branches": [
+      {
+        "selector": 3,
+        "ECX": 950,
+        "call": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A352B",
+          "rva": "000A352B",
+          "section": "   \u0000    ",
+          "file_offset": "000A352B",
+          "raw_backed": true,
+          "raw_hex": "e8c0040300",
+          "mnemonic": "call",
+          "operands": "0x4d39f0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A33E0.bin",
+            "bytes": 780,
+            "sha256": "6DB3C84F391E951EED7F0D37B630A8718004D3B079499791A9252710217D4513"
+          }
+        }
+      },
+      {
+        "selector": 4,
+        "ECX": 932,
+        "call": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A353E",
+          "rva": "000A353E",
+          "section": "   \u0000    ",
+          "file_offset": "000A353E",
+          "raw_backed": true,
+          "raw_hex": "e8ad040300",
+          "mnemonic": "call",
+          "operands": "0x4d39f0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A33E0.bin",
+            "bytes": 780,
+            "sha256": "6DB3C84F391E951EED7F0D37B630A8718004D3B079499791A9252710217D4513"
+          }
+        }
+      },
+      {
+        "selector": 5,
+        "ECX": 936,
+        "call": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A355C",
+          "rva": "000A355C",
+          "section": "   \u0000    ",
+          "file_offset": "000A355C",
+          "raw_backed": true,
+          "raw_hex": "e88f040300",
+          "mnemonic": "call",
+          "operands": "0x4d39f0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A33E0.bin",
+            "bytes": 780,
+            "sha256": "6DB3C84F391E951EED7F0D37B630A8718004D3B079499791A9252710217D4513"
+          }
+        }
+      },
+      {
+        "selector": 0,
+        "ECX": 949,
+        "call": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A356E",
+          "rva": "000A356E",
+          "section": "   \u0000    ",
+          "file_offset": "000A356E",
+          "raw_backed": true,
+          "raw_hex": "e87d040300",
+          "mnemonic": "call",
+          "operands": "0x4d39f0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A33E0.bin",
+            "bytes": 780,
+            "sha256": "6DB3C84F391E951EED7F0D37B630A8718004D3B079499791A9252710217D4513"
+          }
+        }
+      },
+      {
+        "selector": "other",
+        "ECX": 1252,
+        "call": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A356E",
+          "rva": "000A356E",
+          "section": "   \u0000    ",
+          "file_offset": "000A356E",
+          "raw_backed": true,
+          "raw_hex": "e87d040300",
+          "mnemonic": "call",
+          "operands": "0x4d39f0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r496-actor-study\\pe-4A33E0.bin",
+            "bytes": 780,
+            "sha256": "6DB3C84F391E951EED7F0D37B630A8718004D3B079499791A9252710217D4513"
+          }
+        }
+      }
+    ],
+    "scope": "Necessary tableproducer boundary inexistingS3A raw only; no auth/login effect ornew opcode expansion",
+    "lifecycle": "Globaltablecontents may changeafterstartup/onS3A. Tableauthority cannot be retained blindly across sourceversion/locale changes ornewowned connection."
+  },
+  "disk_snapshots": "Both256byte tables arezero in fixedPE. This isnot a valid runtime comparison authority andmustnever be installed as it.",
+  "validity_minimum": [
+    "Privatecallactuallyreturns boundedinitializedarea/terminator/ranges",
+    "All256 foldfunctioncalls finish withqualifiedprovider/module/codepage/locale outputs",
+    "Immutable lead/fold snapshot boundto its initialization event and currentownedepoch/locale generation",
+    "Wellformed boundedNUL strings; multibyte lead neverhasmissingtrail; no guessedencoding/ASCII/plain-equality substitution"
+  ],
+  "native_enforces_validity": false,
+  "actual_runtime_tables_available": false,
+  "Modern_comparison_guard_retained": true,
+  "limits": "No originalDLLbody,privateimplementation orlocale-change execution. Nameddirectwriter evidence doesnot provealias/write completeness orlifetime synchronization."
+}

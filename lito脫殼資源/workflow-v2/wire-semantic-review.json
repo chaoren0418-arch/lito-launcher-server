@@ -1,0 +1,21 @@
+{
+  "baseline": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+    "bytes": 26509,
+    "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+  },
+  "relative_baseline_changed": false,
+  "new_opcodes": 0,
+  "corrected_wire_contracts": 0,
+  "known_contracts_corroborated": 3,
+  "analysis_corrections_are_wire_delta": false,
+  "adoption_ack": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+    "bytes": 3830,
+    "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95",
+    "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+  },
+  "notification_requested": false,
+  "decision": "Known corroboration only; do not renotify F3/F4 or S1E. A genuine typed new delta triggers bin_resources-wire-delta-gate; supervisor owns notification.",
+  "review_method": "Read immutable packet summary/per-packet correction flags and existing adoption metadata once; no old source/Java/SQL/test matrix replay"
+}

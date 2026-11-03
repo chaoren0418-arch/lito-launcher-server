@@ -1,0 +1,46 @@
+{
+  "updated_at": "2026-10-06T21:32:32.708126+08:00",
+  "workflow_task_id": "bin_resources-workflow-v2",
+  "proposal_state": "review",
+  "execution_state": "waiting",
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 68582,
+      "sha256": "E186C63E2437912DB9239774EF9981EF8AB797C545CBD355928C5005D4EE689C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow_v2_queue.py",
+      "bytes": 20184,
+      "sha256": "4A19E2733009FDC799B97CD83E200F9F7DD653363A4E3AD880139A60489CABE2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\publish_workflow_v2.py",
+      "bytes": 6014,
+      "sha256": "699291566C1AD8AF8F4BCA21DA1AD9908474C25E950D3733BDB05C52A8951789"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\wire-semantic-review.json",
+      "bytes": 1108,
+      "sha256": "BF69069333472E99207B4A99D60A5AFBA16EFC0F73215A106C05E4B568A55BC4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\queue-validation.json",
+      "bytes": 1553,
+      "sha256": "F5E79C318B196127890B0A37B6634C44E4597E31EEA65E948833B670F80619AD"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 154327,
+      "sha256": "BF9A9176D5C516D11630CA8176FF91BC9DA3D187C49FB839FAA5F037388B8DFB"
+    }
+  ],
+  "all_current_files_match": true,
+  "legacy_delivery_verification": "Previous artifact-manifest/delivery-verification retained unchanged; this finite workflow delta has a separate receipt, no old hashes/matrices rerun",
+  "changed_legacy_files": [
+    "監製進度.json: only required workflow fields and updated_at added"
+  ],
+  "queue_ready_count": 0,
+  "overall_product_complete": false,
+  "stop": "Wait for the accepted member request or another named external gate; do not repeatedly convert/validate the unchanged queue"
+}

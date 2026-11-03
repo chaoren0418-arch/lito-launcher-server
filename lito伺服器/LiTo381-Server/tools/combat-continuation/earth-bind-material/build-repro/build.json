@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build\\candidate-poison-publication.jar",
+    "sha256": "a53513d544124cbd1aac543f34302a15067f2a98422ed14576bcaaa6c991d4a3"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\candidate-earth-bind-material.jar",
+    "sha256": "2681d9dcd41898581ef6e0d2223fd956b8cea0f94cb91d4022515f512de3892b"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeEarthBindMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\build.py",
+      "sha256": "46c90c8e439e597ee0d666046ebc0c4b9d1ead416953c02c71c2b3d2d384f368"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\EarthBindMaterialMethods.java",
+      "sha256": "2ec640eaaa4ea69ea776bf2f0c42793a5708d32412784fe2edf96db7f4e2ccdb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "9001714250a2dd7cd6d768ba1d8b50ebfee4d22f04c2e79635b0dd97896f7e67"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\sources\\NativeEarthBindMaterialAction.java",
+      "sha256": "5edc31f0a34ba8b83ea8261901c54304662558939f9eb174f39cd88cc74b8afd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "59ec00efe774985412f4ab17bde693310e5e1ce9ca374e18cf82801b144eabe3"
+    }
+  ]
+}

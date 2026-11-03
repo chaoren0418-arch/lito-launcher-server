@@ -1,0 +1,48 @@
+{
+  "status": "published_0.6.58_native_and_formal_smoke_pass_pending_user_playtest",
+  "created": "2026-10-13T12:06:47.725689",
+  "baseline_sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf",
+  "candidate_sha256": "595245c8c3047124b1163e7c9dc2c6c9f2bd24494f41fa8a5aa5c0d78eae8838",
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/Protocol.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/NativeActorTail.class",
+    "local/lito381/server/NativeRoomDirectoryRow.class",
+    "local/lito381/server/NativeMovement.class",
+    "local/lito381/server/NativeBattleVisibility.class"
+  ],
+  "findings": {
+    "room_add": "native 0x465940 ignores an existing id; S_CC 1..5 update existing rows",
+    "room_lifetime": "createRoom reused channel.defaultRoomId; resetOrRemove retained it instead of deleting a user-created room",
+    "actor_tail": "sub_4A3990 format hhdhccccdhsscdssccccshc; PC bit 4 additionally reads c,d at 0x4A3A50/0x4A3A72; missing five bytes read unrelated buffer bytes",
+    "overhead": "actor +0x13A from PC extra dword; renderer 0x486240 uses images 7550..7556. Same flag set by S_FA 0x4AC1C0 and gates C_WAR surrender/ceasefire commands. Native two-client test confirms flags zero after PC tail repair. No tower-only predicate in this renderer.",
+    "crown": "earlier visual attribution not established; crown owner slots all zero in phase4",
+    "movement": "S12 handler 0x4A2C10 parses origin+heading; 0x4B9360 adds direction. Old server sent destination, making peers one tile ahead. Seven player paths corrected; NPC/companion origin senders unchanged.",
+    "visibility": "S12 ignores missing actors; arena view boundary now removes/recreates both directions, retaining heading/invisibility/observer rules.",
+    "entry_order": "Local actor first, peers next; second-battle actual native test now retains both actors on both clients."
+  },
+  "tests": {
+    "native_packet_reader_positive": true,
+    "published_packet_negative_underflow": true,
+    "encrypted_room_lifecycle_native_insert_only_model": true,
+    "native_two_window_ui": true,
+    "native_eight_heading_coordinate_match": true,
+    "native_bilateral_view_reentry": true,
+    "native_second_battle": true,
+    "native_test_uses_server_steps_with_local_correction": true,
+    "formal_startup_smoke": true
+  },
+  "preserved": {
+    "production_server_project_jar_sha256": "3025e3df1c28f55019e79d5f21f9c1587b7268fb6417d6a75a591b6aecacb4b4",
+    "production_ddraw_sha256": "7594af6ca48722b8c207bd2c1878dacd19ab412cb512662ed259ea753d67a04d"
+  },
+  "publish": true,
+  "native_run": "room-state-fixture-1791865767477417400",
+  "manual_pending": [
+    "two-player continuous mouse movement, turn and screen reentry",
+    "new room names and final member exit in user accounts"
+  ]
+}

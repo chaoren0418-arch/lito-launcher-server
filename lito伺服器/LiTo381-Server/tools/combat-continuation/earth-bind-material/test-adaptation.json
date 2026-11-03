@@ -1,0 +1,26 @@
+{
+  "status": "prepared-not-run",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\BlindMaterialProbe.java",
+      "sha256": "043f35ab4a3b706491b41bf7aea604475174cd72ad8ce44ffea4e799e62078f2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\BlindFaultProbe.java",
+      "sha256": "6b8f32bb941d705c78771fb6728056c9de944abcd8a08e08e68b951bbcf5948b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\BlindLifecycleProbe.java",
+      "sha256": "1287a39e9ff4c76601ece5a2a550c424380a27338da65bf10845a43d6a91b9cf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\test.py",
+      "sha256": "817e7e3dc0d079aa97ba75009986f001c21afddda03225245515edd3e28fc4dd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\test_boundaries.py",
+      "sha256": "20ae3e34b46a770d12ea864466a627ecd5a27eca7b193071fcdc2b95cf4183ba"
+    }
+  ],
+  "changes": "skill157 BindSpell, native earth-bind fixture and status, FREEZE_APPLY packet, one-skill case counts; all preconditions and fault/lifetime assertions retained pending execution"
+}

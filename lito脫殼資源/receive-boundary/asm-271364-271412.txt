@@ -1,0 +1,49 @@
+271364: sub_47F340 proc near                    ; DATA XREF: fn_InitializeWindow_Check+29↓o
+271365: 
+271366: var_110= byte ptr -110h
+271367: var_10= dword ptr -10h
+271368: var_C= dword ptr -0Ch
+271369: var_8= dword ptr -8
+271370: var_4= dword ptr -4
+271371: arg_0= dword ptr  8
+271372: arg_4= dword ptr  0Ch
+271373: arg_8= dword ptr  10h
+271374: arg_C= dword ptr  14h
+271375: 
+271376: push    ebp
+271377: mov     ebp, esp
+271378: sub     esp, 110h
+271379: mov     al, byte_64AFA2
+271380: push    ebx
+271381: mov     ebx, [ebp+arg_C]
+271382: push    esi
+271383: mov     esi, [ebp+arg_8]
+271384: push    edi
+271385: mov     edi, [ebp+arg_4]
+271386: test    al, al
+271387: jz      short loc_47F36A
+271388: 
+271389: mov     ecx, [ebp+arg_0]
+271390: push    ebx
+271391: push    esi
+271392: mov     edx, edi
+271393: call    sub_4C6B30
+271394: 
+271395: 
+271396: loc_47F36A:                             ; CODE XREF: sub_47F340+1C↑j
+271397: cmp     edi, 14h
+271398: ja      loc_47F470
+271399: 
+271400: jz      short loc_47F3AC
+271401: 
+271402: lea     eax, [edi-2]                    ; switch 15 cases
+271403: cmp     eax, 0Eh
+271404: ja      def_47F389                      ; jumptable 0047F389 default case, cases 4,6,9-14
+271405:                                         ; jumptable 0047F4AA default case, cases 29-255,259
+271406:                                         ; jumptable 0047FA4B default case, cases 276-511
+271407:                                         ; jumptable 0047FE6B default case
+271408: 
+271409: xor     ecx, ecx
+271410: mov     cl, byte_480014[eax]
+271411: jmp     jpt_47F389[ecx*4]               ; switch jump
+271412: 

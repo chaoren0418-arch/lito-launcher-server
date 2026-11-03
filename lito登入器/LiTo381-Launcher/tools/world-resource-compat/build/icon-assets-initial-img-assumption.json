@@ -1,0 +1,1093 @@
+{
+  "status": "missing-members",
+  "assets": [
+    {
+      "icon": 480,
+      "member": "480.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 927538859,
+          "bytes": 346,
+          "sha256": "2fb97498d1855ab601077e81c3728793386f7ffcfed49e6220e88cc7d8cc7acf",
+          "header_hex": "0d000d0001005349cf39ef39"
+        }
+      ]
+    },
+    {
+      "icon": 482,
+      "member": "482.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 927538167,
+          "bytes": 346,
+          "sha256": "fcfc93c8c781e492496ac28e4e5a7c179d047b9433d6a4b1b3612fbed92d6c1e",
+          "header_hex": "0d000d0001005349ae35ac35"
+        }
+      ]
+    },
+    {
+      "icon": 483,
+      "member": "483.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 927537821,
+          "bytes": 346,
+          "sha256": "1a5d22ea47ad9abcb87f964038b22409402917ee7597d2917e477788c7333fb6",
+          "header_hex": "0d000d0001005349ae35ac35"
+        }
+      ]
+    },
+    {
+      "icon": 484,
+      "member": "484.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 927537033,
+          "bytes": 788,
+          "sha256": "23953cca612acad85516c39434a533040a2216287659e379e5cbf45200ec9b0e",
+          "header_hex": "1a000f00010053496308640c"
+        }
+      ]
+    },
+    {
+      "icon": 485,
+      "member": "485.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 927536245,
+          "bytes": 788,
+          "sha256": "3abd59f316390e4582ae9a88e9e47d53af676f87420fcac11e0a50994090720e",
+          "header_hex": "1a000f00010053496308640c"
+        }
+      ]
+    },
+    {
+      "icon": 552,
+      "member": "552.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 926015071,
+          "bytes": 680,
+          "sha256": "2b57b0c7620570c343200a28fee824890dac6320135f6449a6e9439e3963fe80",
+          "header_hex": "18000e000000220422044204"
+        }
+      ]
+    },
+    {
+      "icon": 725,
+      "member": "725.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 919030301,
+          "bytes": 756,
+          "sha256": "3d43fd5d3f8c0470e0e44b87129c0a8ba3859d760379191a6002a72a10c0280d",
+          "header_hex": "1100160001005102335b335b"
+        }
+      ]
+    },
+    {
+      "icon": 728,
+      "member": "728.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 919019227,
+          "bytes": 968,
+          "sha256": "a2cbb71a2412b24b5f16044d2150d32f3c10045a0b72b2aafe9034a83a123110",
+          "header_hex": "1e0010000100e404e404e404"
+        }
+      ]
+    },
+    {
+      "icon": 735,
+      "member": "735.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 895932835,
+          "bytes": 3176,
+          "sha256": "0ab592f55800d3340555a392d19b1734f55581c619f9cdfdbd3b28026e9189f7",
+          "header_hex": "3000210001005102f66ad666"
+        }
+      ]
+    },
+    {
+      "icon": 738,
+      "member": "738.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 895928419,
+          "bytes": 620,
+          "sha256": "bb66199aa27cfe5eb3bfe1358be1037c7d52479f9639fbbfac16dae23906576a",
+          "header_hex": "1100120001005102f666f766"
+        }
+      ]
+    },
+    {
+      "icon": 745,
+      "member": "745.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 890566069,
+          "bytes": 3770,
+          "sha256": "2a443f1ee4267673012617bef2f9d2bd2b70bbbefa3ee45c9d140f6bf5539cff",
+          "header_hex": "3900210001005102185b185b"
+        }
+      ]
+    },
+    {
+      "icon": 754,
+      "member": "754.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 890546115,
+          "bytes": 512,
+          "sha256": "704205fc05db15737c86f935cac0b602393bce03aad26dc949e5ad5394128e67",
+          "header_hex": "0e001200010051029c6bbd73"
+        }
+      ]
+    },
+    {
+      "icon": 757,
+      "member": "757.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 847337572,
+          "bytes": 8456,
+          "sha256": "a79e1bd1d720a6483d18fb0a880db364bec3632b25ca591a1e7df08a29eaf2ae",
+          "header_hex": "100008010100e744821cc714"
+        }
+      ]
+    },
+    {
+      "icon": 760,
+      "member": "760.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 847312204,
+          "bytes": 8456,
+          "sha256": "fd289cfcc9370f86f967ce195d5ae93d96aed28139af125624e113e203717e69",
+          "header_hex": "100008010100e744821cc714"
+        }
+      ]
+    },
+    {
+      "icon": 763,
+      "member": "763.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 847286836,
+          "bytes": 8456,
+          "sha256": "ecccc4fef6f6e50c72b6780d4bed1824b8b0dea2cd111a51ad3d3cc55614d6f8",
+          "header_hex": "100008010100e744821cc714"
+        }
+      ]
+    },
+    {
+      "icon": 771,
+      "member": "771.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 831751581,
+          "bytes": 8456,
+          "sha256": "233de81c11835dbeba72b7ad34ab6774c340b7631863a9c31bbb69c20245ded4",
+          "header_hex": "100008010100e744821cc714"
+        }
+      ]
+    },
+    {
+      "icon": 774,
+      "member": "774.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite13.pak",
+          "offset": 241151963,
+          "bytes": 614408,
+          "sha256": "1086291cbf37a267c8d678960df4c74902bee65d7ee3ab0151ba3801e8005668",
+          "header_hex": "8002e00100000000ff7fff7f"
+        },
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 831128397,
+          "bytes": 614408,
+          "sha256": "9cd0aaa1793864edf5b36280e01d291e75ffae178fcfbb4e2c8096e558e76cc4",
+          "header_hex": "8002e0010000ff7fff7fff7f"
+        }
+      ]
+    },
+    {
+      "icon": 777,
+      "member": "777.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 829535984,
+          "bytes": 8456,
+          "sha256": "fa18261ed037758be4a3bf331ba68ced042bea71d7e5e9472a9a4dcce9b5afd9",
+          "header_hex": "100008010100e744821cc714"
+        }
+      ]
+    },
+    {
+      "icon": 783,
+      "member": "783.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 827639031,
+          "bytes": 614408,
+          "sha256": "e23b7542d7c57ee33e21cbe16ff5afade1a16d2baef0ed96a79f9c4a460425df",
+          "header_hex": "8002e0010000ff7fff7fff7f"
+        }
+      ]
+    },
+    {
+      "icon": 795,
+      "member": "795.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 527611663,
+          "bytes": 272,
+          "sha256": "1f21a9c34f25e7af052385bec4f28427b511279e5c7da8105e777f3124538e90",
+          "header_hex": "0c000b000100e003e003e003"
+        }
+      ]
+    },
+    {
+      "icon": 804,
+      "member": "804.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 519879529,
+          "bytes": 11838,
+          "sha256": "c61b6b0ab02e0941f4c7a802c76f0e39001e685c9f8684e85cfc8e0cdf0e1885",
+          "header_hex": "5b0041000000410c410c210c"
+        }
+      ]
+    },
+    {
+      "icon": 807,
+      "member": "807.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 527292439,
+          "bytes": 77096,
+          "sha256": "028a607b64b55d348d14de536919cf10a310a41af313d8a646f31a523390e2dc",
+          "header_hex": "840024010000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 813,
+      "member": "813.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite07.pak",
+          "offset": 352745972,
+          "bytes": 768,
+          "sha256": "311493d1a7817da7f65a99cc2576298cca6cb2362a0fa98426970866e437d600",
+          "header_hex": "14001300000078737873776f"
+        },
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 527120643,
+          "bytes": 768,
+          "sha256": "311493d1a7817da7f65a99cc2576298cca6cb2362a0fa98426970866e437d600",
+          "header_hex": "14001300000078737873776f"
+        }
+      ]
+    },
+    {
+      "icon": 824,
+      "member": "824.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 519241935,
+          "bytes": 614408,
+          "sha256": "ac2a81bc92cf7402877d1a9c1b956c7aa0843cda6e0edd52f571445a78ef309d",
+          "header_hex": "8002e0010000062906290629"
+        }
+      ]
+    },
+    {
+      "icon": 827,
+      "member": "827.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 519233207,
+          "bytes": 2728,
+          "sha256": "8d015d08ac908bda93354ec532ce629f01536483e38a6a7552cf436f3fc2a327",
+          "header_hex": "440014000000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 852,
+      "member": "852.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 517529779,
+          "bytes": 73136,
+          "sha256": "3dd95f77acee1da665e313e59a8f7297b2be14bb26e4dec6435b5e493f8927a0",
+          "header_hex": "840015010000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 855,
+      "member": "855.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 517367929,
+          "bytes": 73136,
+          "sha256": "04397233b6bc09942a0de8d73a85fd4eb78128671b8d74ba69634a1dae0b4204",
+          "header_hex": "840015010000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 880,
+      "member": "880.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 515680417,
+          "bytes": 2692,
+          "sha256": "e582950e6e7ffb7e41ccaade7a4adea291bfdb758f54a28d16944dd592e33f2a",
+          "header_hex": "3d0016000000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 890,
+      "member": "890.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 512493161,
+          "bytes": 8456,
+          "sha256": "d9dce66ba08f4d57fe75deecb5e7622ac4bdc1e03dac2869946465d872ea6b48",
+          "header_hex": "100008010100e744821ca718"
+        }
+      ]
+    },
+    {
+      "icon": 1101,
+      "member": "1101.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 370675389,
+          "bytes": 151392,
+          "sha256": "05a0bee8fac1b23e97d9487d4ff10dadbe13d1ca7fa1adff9721883227a9bd59",
+          "header_hex": "fe002a010100000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 1104,
+      "member": "1104.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398830546,
+          "bytes": 106,
+          "sha256": "4d3ad42e93f26e9b9a08f0638f6809e90a16a28b7137b87d2bc5e51712ba2645",
+          "header_hex": "0700070001004b294b292a25"
+        }
+      ]
+    },
+    {
+      "icon": 1110,
+      "member": "1110.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398824888,
+          "bytes": 1388,
+          "sha256": "9580a80daca4f6e922697c057402488e224e471c88c5f09df810545fcf055730",
+          "header_hex": "2e000f0001004c3200000621"
+        }
+      ]
+    },
+    {
+      "icon": 1113,
+      "member": "1113.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite01.pak",
+          "offset": 516104,
+          "bytes": 614408,
+          "sha256": "f2420542475b9a8a474f0d25b21c5067ba1d55797ed442e07f21f08b2b26904b",
+          "header_hex": "8002e00100000000136f136f"
+        },
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398207704,
+          "bytes": 614408,
+          "sha256": "5758684cf0ef987441aaa9da7a93f3fb50cee04f806554359c0d7bb63ef7c761",
+          "header_hex": "8002e0010000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 1119,
+      "member": "1119.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398189056,
+          "bytes": 3968,
+          "sha256": "0799666a97b190b3e20575e66a370f4e07bab816282737ec2245c8c82762752c",
+          "header_hex": "2c002d000100d401d401d401"
+        }
+      ]
+    },
+    {
+      "icon": 1122,
+      "member": "1122.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398177152,
+          "bytes": 3968,
+          "sha256": "982b8151cbc84827ee3ae60d8379082c4f186889515d9e9189158fb6db69d8e8",
+          "header_hex": "2c002d000100d401d401d401"
+        }
+      ]
+    },
+    {
+      "icon": 1125,
+      "member": "1125.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+          "offset": 398165248,
+          "bytes": 3968,
+          "sha256": "2b72bbd4ce3c46fde009f0f52b0945c4c3c8bcb2b5927e773cb1a02bce68221a",
+          "header_hex": "2c002d000100d401d401d401"
+        }
+      ]
+    },
+    {
+      "icon": 1476,
+      "member": "1476.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite13.pak",
+          "offset": 82765833,
+          "bytes": 33808,
+          "sha256": "2f62c63fc82baef8b630b4caaaed1e802b1f01e5a621dc3c88d18e1f52c7c0b6",
+          "header_hex": "a900640001004c324c324c32"
+        }
+      ]
+    },
+    {
+      "icon": 1477,
+      "member": "1477.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite14.pak",
+          "offset": 120170592,
+          "bytes": 26696,
+          "sha256": "8e6afe7e80140efec84aa3429a5f88a0a0cc62ed35f043930abd3ca709bef90f",
+          "header_hex": "8b0060000000a318a318c41c"
+        }
+      ]
+    },
+    {
+      "icon": 1554,
+      "member": "1554.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite10.pak",
+          "offset": 82026453,
+          "bytes": 1520,
+          "sha256": "5d50e6f7c66b194ebbf6d56a854bcbe642cf76098df9a9bd197e22a189a11aec",
+          "header_hex": "240015000100883288328832"
+        }
+      ]
+    },
+    {
+      "icon": 1556,
+      "member": "1556.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite12.pak",
+          "offset": 71711945,
+          "bytes": 1478,
+          "sha256": "ea1a81085bc0fd831c5557ecb76babd6c37356460435566da91fab4764ddf4c4",
+          "header_hex": "230015000100883288328832"
+        }
+      ]
+    },
+    {
+      "icon": 1557,
+      "member": "1557.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite13.pak",
+          "offset": 83034877,
+          "bytes": 1478,
+          "sha256": "728304cd55458875c335cbc3bac9d7b1d2797a1a3d2bae5c16ddc8b4af45bdea",
+          "header_hex": "230015000100883288328832"
+        }
+      ]
+    },
+    {
+      "icon": 1558,
+      "member": "1558.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite14.pak",
+          "offset": 120247381,
+          "bytes": 1490,
+          "sha256": "0d2f846cec287e83711c5bd9404308d14568abf372e76fe62d03498b4b557f33",
+          "header_hex": "270013000000366b366b166b"
+        }
+      ]
+    },
+    {
+      "icon": 1559,
+      "member": "1559.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite15.pak",
+          "offset": 17225727,
+          "bytes": 1490,
+          "sha256": "55ddf0897d9f784ee87ad879a6562b890689c81303dbcd7fdf2ba493fb13e31b",
+          "header_hex": "270013000000366b366b166b"
+        }
+      ]
+    },
+    {
+      "icon": 1561,
+      "member": "1561.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite08.pak",
+          "offset": 85546144,
+          "bytes": 876,
+          "sha256": "9d18f3399a8e4f99567ceb7e416e3b426242901c470b99fc209ae87f0260ee68",
+          "header_hex": "1f000e000000f362f362d262"
+        }
+      ]
+    },
+    {
+      "icon": 1562,
+      "member": "1562.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+          "offset": 78343673,
+          "bytes": 876,
+          "sha256": "333e321dc7b349c34cd4e2ed6cb2b8113e7ac473a0e1d1c3796a7be136da1447",
+          "header_hex": "1f000e000000f362f362d262"
+        }
+      ]
+    },
+    {
+      "icon": 1563,
+      "member": "1563.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite10.pak",
+          "offset": 82031603,
+          "bytes": 876,
+          "sha256": "b541e68703b54f3d5345250f9405017e0f67e6789de19d18fbac272c9c70662c",
+          "header_hex": "1f000e000000f362f362d262"
+        }
+      ]
+    },
+    {
+      "icon": 1567,
+      "member": "1567.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite14.pak",
+          "offset": 120249719,
+          "bytes": 101368,
+          "sha256": "33e78291416d7e11f5b35540ba0af6def951a93b73a4e6fee5678ef634394120",
+          "header_hex": "b5001801000015671567d35e"
+        }
+      ]
+    },
+    {
+      "icon": 1607,
+      "member": "1607.img",
+      "candidates": []
+    },
+    {
+      "icon": 1608,
+      "member": "1608.img",
+      "candidates": []
+    },
+    {
+      "icon": 1609,
+      "member": "1609.img",
+      "candidates": []
+    },
+    {
+      "icon": 1612,
+      "member": "1612.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite05.pak",
+          "offset": 108225150,
+          "bytes": 128,
+          "sha256": "8fad2382d4b844b2ae06b1c32ca75b9ea6de5d6f2d9b13655c265316cdd56b4b",
+          "header_hex": "06000a00010000000000c07f"
+        }
+      ]
+    },
+    {
+      "icon": 1620,
+      "member": "1620.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite04.pak",
+          "offset": 130911431,
+          "bytes": 208,
+          "sha256": "01557fb2a9b9adbb6733d73dee876c2318475ae818cdd9758f362db7edc4c018",
+          "header_hex": "0a000a000100000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 1623,
+      "member": "1623.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite07.pak",
+          "offset": 142685896,
+          "bytes": 228,
+          "sha256": "a54dc1a8c2283acb45aeebd92a6bc893a86fd7cce23d89304a5c857b16f06440",
+          "header_hex": "0b000a000100000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 1626,
+      "member": "1626.img",
+      "candidates": []
+    },
+    {
+      "icon": 1733,
+      "member": "1733.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+          "offset": 78379455,
+          "bytes": 3000,
+          "sha256": "e7ac28210b93cf87ec52e5f1924baeeb98cd9d38105d96d8102894a3aa970997",
+          "header_hex": "440016000000000000000004"
+        }
+      ]
+    },
+    {
+      "icon": 1736,
+      "member": "1736.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite12.pak",
+          "offset": 71769075,
+          "bytes": 1940,
+          "sha256": "bc5efb746c4f1d5112dbb71c22709a0aee4bcd1514fcf3029c4791f48a70bafd",
+          "header_hex": "2e0015000000f372f3727062"
+        }
+      ]
+    },
+    {
+      "icon": 1740,
+      "member": "1740.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite07.pak",
+          "offset": 143317680,
+          "bytes": 2948,
+          "sha256": "b77c4ddc9e2f8311de9afa09ff8dbce23832173a8882027528b13fb861a29e64",
+          "header_hex": "46001500000007210721ee3d"
+        }
+      ]
+    },
+    {
+      "icon": 1799,
+      "member": "1799.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite05.pak",
+          "offset": 108240324,
+          "bytes": 5192,
+          "sha256": "381e227670411315c28d4cc03726aa7f726c65687f0be883e9c3887eec2d31d5",
+          "header_hex": "90001200000000000000a414"
+        }
+      ]
+    },
+    {
+      "icon": 1834,
+      "member": "1834.img",
+      "candidates": []
+    },
+    {
+      "icon": 1883,
+      "member": "1883.img",
+      "candidates": []
+    },
+    {
+      "icon": 1889,
+      "member": "1889.img",
+      "candidates": []
+    },
+    {
+      "icon": 2339,
+      "member": "2339.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite12.pak",
+          "offset": 170274516,
+          "bytes": 3248,
+          "sha256": "83e77501a9383cec24dea1ce4d527add5554302efc75fb724a5d6a8e94d95a00",
+          "header_hex": "6c000f0001001f7cc420c524"
+        }
+      ]
+    },
+    {
+      "icon": 2342,
+      "member": "2342.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite06.pak",
+          "offset": 230731535,
+          "bytes": 4268,
+          "sha256": "d693bd1104a1d0cdddd353898b804fbe41560bd30f6ba490731c6c82847b9eaf",
+          "header_hex": "8e000f0001001f7cc420c524"
+        }
+      ]
+    },
+    {
+      "icon": 2345,
+      "member": "2345.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+          "offset": 185784376,
+          "bytes": 5228,
+          "sha256": "9f6008c3dfba69fdd03183a97538edfa597f9b35be86e13f8915e56092866416",
+          "header_hex": "ae000f0001001f7cc420c524"
+        }
+      ]
+    },
+    {
+      "icon": 2348,
+      "member": "2348.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite12.pak",
+          "offset": 170292885,
+          "bytes": 344,
+          "sha256": "f2fcaa72ce113fb6d37fde3747f4e581db29b30f161bdc4c877f28a91d4f0b4c",
+          "header_hex": "1500080001004c324c324c32"
+        }
+      ]
+    },
+    {
+      "icon": 2351,
+      "member": "2351.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite06.pak",
+          "offset": 230737807,
+          "bytes": 424,
+          "sha256": "4897298ed40a9bb074b4d74ab9746a9d58c273d54f873ad45bb16dccc2bd6eed",
+          "header_hex": "1a00080001004c324c324c32"
+        }
+      ]
+    },
+    {
+      "icon": 2354,
+      "member": "2354.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite09.pak",
+          "offset": 185791662,
+          "bytes": 30728,
+          "sha256": "b917ca760ed028b739de6363839311fd6ce3746aa240ad647b67b5469ab052a1",
+          "header_hex": "4001300001001f7c1f7c1f7c"
+        }
+      ]
+    },
+    {
+      "icon": 2357,
+      "member": "2357.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite12.pak",
+          "offset": 170323957,
+          "bytes": 4288,
+          "sha256": "484a3b776d534123bbe858a5877c8b8060c013f626b03d26a007f22ee87171f1",
+          "header_hex": "6b00140001001f7ca31cc420"
+        }
+      ]
+    },
+    {
+      "icon": 2382,
+      "member": "2382.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite10.pak",
+          "offset": 187413317,
+          "bytes": 2186,
+          "sha256": "624b8b4b1260d5083cb2534d08ece8668ec7671a1019deb5ed041ddaac014531",
+          "header_hex": "210021000000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 2430,
+      "member": "2430.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite04.pak",
+          "offset": 235660995,
+          "bytes": 168,
+          "sha256": "8201dae4d8365342f6efb4a347de4fe0ce2b53ba2603e1f09f16d202ca814468",
+          "header_hex": "08000a000000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 2706,
+      "member": "2706.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite10.pak",
+          "offset": 192954678,
+          "bytes": 9608,
+          "sha256": "a9f94f4d32cb9721aba5f83739bdbbf3b2905dcf3be3ea6589b62fbf95986c43",
+          "header_hex": "3c0050000000420842082829"
+        }
+      ]
+    },
+    {
+      "icon": 3080,
+      "member": "3080.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite06.pak",
+          "offset": 236635605,
+          "bytes": 6564,
+          "sha256": "2f20f6c5c2ec652a75d09a8ef70d75b3846926f3cbef73ffc11a8d49be50869e",
+          "header_hex": "95001600000000008c354a2d"
+        }
+      ]
+    },
+    {
+      "icon": 3097,
+      "member": "3097.img",
+      "candidates": []
+    },
+    {
+      "icon": 3111,
+      "member": "3111.img",
+      "candidates": []
+    },
+    {
+      "icon": 3113,
+      "member": "3113.img",
+      "candidates": []
+    },
+    {
+      "icon": 3115,
+      "member": "3115.img",
+      "candidates": []
+    },
+    {
+      "icon": 3117,
+      "member": "3117.img",
+      "candidates": []
+    },
+    {
+      "icon": 3119,
+      "member": "3119.img",
+      "candidates": []
+    },
+    {
+      "icon": 3123,
+      "member": "3123.img",
+      "candidates": []
+    },
+    {
+      "icon": 3125,
+      "member": "3125.img",
+      "candidates": []
+    },
+    {
+      "icon": 3127,
+      "member": "3127.img",
+      "candidates": []
+    },
+    {
+      "icon": 5241,
+      "member": "5241.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite07.pak",
+          "offset": 266207623,
+          "bytes": 764,
+          "sha256": "8e7f459681aa702723362f2fca336c4c6f321540b0478bb8decbac0fc2ea82af",
+          "header_hex": "120015000000000000000000"
+        }
+      ]
+    },
+    {
+      "icon": 5393,
+      "member": "5393.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite15.pak",
+          "offset": 111906723,
+          "bytes": 2364,
+          "sha256": "a4339488e5353779df4e9eaa56da2af2a700f899255dd1f648c68a4d5f9ffcf7",
+          "header_hex": "3e00130000000000a518a414"
+        }
+      ]
+    },
+    {
+      "icon": 5395,
+      "member": "5395.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite01.pak",
+          "offset": 107622993,
+          "bytes": 2528,
+          "sha256": "ab30563545b670718b9376266250008678260fd54f916c685757042fec76ad00",
+          "header_hex": "3f00140001004c324c324c32"
+        }
+      ]
+    },
+    {
+      "icon": 5397,
+      "member": "5397.img",
+      "candidates": [
+        {
+          "archive": "D:\\lineage開發\\0-客戶端\\Sprite03.pak",
+          "offset": 106479114,
+          "bytes": 2364,
+          "sha256": "1e12aa92f274c9abcdd3b6fadfecded6c8e14ffd9a6de3b85fd62a1098c54913",
+          "header_hex": "3e00130000000000c620c61c"
+        }
+      ]
+    }
+  ],
+  "missing": [
+    "1607.img",
+    "1608.img",
+    "1609.img",
+    "1626.img",
+    "1834.img",
+    "1883.img",
+    "1889.img",
+    "3097.img",
+    "3111.img",
+    "3113.img",
+    "3115.img",
+    "3117.img",
+    "3119.img",
+    "3123.img",
+    "3125.img",
+    "3127.img"
+  ],
+  "index_pins": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+      "sha256": "327c06372d87f6cf6d5176da51da5ef1f94dbf388d1588b735c5965b96b6a52b"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite00.idx",
+      "sha256": "ab8dcf18c2a63dde97abbfb23c7e9e4f35efd0f1e2ab5acf9f53cded6f5f9817"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite01.idx",
+      "sha256": "465274c542a7373af97b1b4fc7c906827293fa000d9f0ea09546bb527e693d54"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite02.idx",
+      "sha256": "bcae6bc833e2a761554d660848496342afe6b512716984710c52ceaf5ce0c7ce"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite03.idx",
+      "sha256": "109e35f01da25de2658e2b610c7096889dde367fecb461d2792688e8c0d7fdd6"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite04.idx",
+      "sha256": "06f0933d6ff439ae9766a1154b19c04701a7e8dfb79ae6c39f05659f86b68bcb"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite05.idx",
+      "sha256": "ccc4e63222def764abd49fc5d42b98ac05c6267accdacccd01bea9f42c347619"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite06.idx",
+      "sha256": "f102d2b343d1e471714853d1c1391a4bd610a3fa1b066340cdb80c882c31c1e2"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite07.idx",
+      "sha256": "79f844a872761014cfc74109fbced128f29232941ccf23857d2ac01793a23ab6"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite08.idx",
+      "sha256": "e5867da3438190a77b283ec45a427819bee1526d1071046ffd6bb8e375ebf961"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite09.idx",
+      "sha256": "0c446e0a839911b02eb4adeccce3bcdb2bceb39a0e39f9a40ec5914803ce73db"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite10.idx",
+      "sha256": "90e10dcd775a475fccb5c989be842a3e38dede810333649ebccbaaadeca55c57"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite11.idx",
+      "sha256": "c470f356d5c0b09166962f5b302317c667973b9d206cde73bcc5598de0463aeb"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite12.idx",
+      "sha256": "f529da765cf96b6354fe5a8cb927d3a1610fac265865c6b7245e97eeee6d96a0"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite13.idx",
+      "sha256": "803960def65a3b1713515c9350c9c60a90cb03888dd18dfa8f61c2272d6f9251"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite14.idx",
+      "sha256": "d5d6a491280ce37a30790aa113768a4e0adafe6dd0533fbb3536031fb048187f"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite15.idx",
+      "sha256": "e4ce732730c62c820b6cabfcd818193cead90723823527996bc4f77e021725d0"
+    }
+  ],
+  "native_decode_and_render_verified": false,
+  "source_modified": false
+}

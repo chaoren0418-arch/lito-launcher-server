@@ -1,0 +1,8 @@
+{
+  "app/server/LiTo381-SharedResources-candidate.jar": "db2ef1343a85a7dc830cbc42311a43ab66e2521bf623f115894f90fd36344511",
+  "app/compat/ddraw.dll": "525fd521219c7d70431263cb429e70fe4a86406ea31699811e5f216158db1778",
+  "native/class_skills.inc": "ce7367659313d299abd682203ce1b5027bd7aac12b2568623f72752ebf81fd55",
+  "native/ddraw_proxy.cpp": "0054cdd11eaad0463066cda55049d33ec8eddae738a9395582dd6301ef90d70a",
+  "server-source/ClientSession.java": "c01c62786eaae20257291d4552ba847cb5607236df21f60968c5bcd7a0c1ba9f",
+  "server-source/DragonSkillRequests.java": "2ddfcc11bdb95bb0612331bc3ce54aace4ee1145088609e5731a08311e6f0e0c"
+}

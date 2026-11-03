@@ -1,0 +1,8 @@
+[LiTo] GAME claimed classic-source handoff source=公牛 consumed=true account=2***
+[LiTo] entered game lobby channel=0 name=DeathKnight users=1/100
+[LiTo] sent room list entries=1
+[LiTo] GAME claimed classic-source handoff source=天使 consumed=true account=2***
+[LiTo] entered game lobby channel=0 name=DeathKnight users=2/100
+[LiTo] sent room list entries=1
+[LiTo] C_LITO_CREATE_ROOM name=123 capacity=2 attributes=0x8 layout=COMPACT mode=deathmatch map=564 selections=[]
+[LiTo] joined room=1 player=2222(天使) observer=false

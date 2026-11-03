@@ -1,0 +1,50 @@
+{
+  "object_VA": "0064AFD0",
+  "record_pointer_VA": "0064AFE0",
+  "record_stride": 36,
+  "object_fields": {
+    "+0": "countusedbyCClookup/UIislands; constructorDOESNOT explicitlysetthisfield",
+    "+4..+C": "embeddedline/state triple initializedzero by4D3DB0; actualloaderinputunknown",
+    "+10": "recordarraypointer; ctorzero; conditionalpostprovider store EAX then countcopyfrom+4 at46FA8C",
+    "+14..+2C": "sevenDWORDs zeroedbyconditionalpostproviderstoreisland; semanticsnotqualified"
+  },
+  "record_fields": {
+    "+0 DWORD": "initialized0 by46F8B0; recordcleanupifnonnull passesitto4F103C. ConditionalUIconsumerreadspointerforlabel/formatargs; title/stringownershipandencodingunknown",
+    "+4 DWORD": "conditionalUIselectorcomparetozeroextendedword64ACCA; unqualifiedcategory/selector, notmapresourceID",
+    "+8 BYTE": "recordconstructorzero; meaning/otherWORLDusesnotfollowed",
+    "+0C..+1F": "unqualified inthisfiniteboundary",
+    "+20 DWORD": "CCnewfullrow comparesagainstsignextendedreceivedmapWORD; UIselectoruseskey-500. Producerparse/valueconversion/actualkeymappingunknown"
+  },
+  "construct": "502070 diskptr46F870→46F880 ECX64AFD0→46F8D0→4D3DB0(64AFD4),thenrecordptr+10zero. Diskobject20byteszeroNOTactualruntimecount.",
+  "registration_cleanup": "46F890 passes46F8A0 to4F10E0 (body/lifecycleunknown);46F8A0 ECX64AFD0→46F8F0. Ifrecordptrnonnull useshiddenheader[ptr-4]count,stride36,callback46F8C0→4F1362 then4F103C; embeddedcleanup4D3DC0 allocatorcalls. Noqualifieddestructionorproviderbody.",
+  "cleanup_NOT_reset": "46F8F0 doesnotexplicitlyzeroobject+0 countor+10 pointer aftercalls; cannotusepostdestroytable asvalidempty/currentgeneration. Hiddenheadercountisnotnecessarilypubliccount; runtimeownershipunknown.",
+  "loader_last_callers": "startup481F7D→4D4870; mapdirectcaller4D48D6 pushLTmapstr/ECX64AFD0→4D48E0 call46F9C0;46F9EE call4D4450 withembeddedobject64AFD4. Onlyattemptstaticcaller.",
+  "first_boundaries": [
+    {
+      "VA": "004D4879",
+      "raw_destination": "05040E1D",
+      "kind": "private",
+      "unknown": "producerof636584/locale, return/effectnotread; ASMlabel05A40CBFdiffersraw"
+    },
+    {
+      "VA": "004D4476",
+      "raw_destination": "773F5200",
+      "kind": "external",
+      "unknown": "formatting/name/return/bounds/providerload unknown; STOPatcall, no4D3E40/provider/parsercontinuation"
+    },
+    {
+      "VA": "0046F895",
+      "raw_destination": "004F10E0",
+      "kind": "unexpanded registrationhelper",
+      "unknown": "callbackregistration/invocationorder notqualified"
+    },
+    {
+      "VA": "0046F92D",
+      "raw_destination": "004F1362",
+      "kind": "unexpanded arraycallbackhelper",
+      "unknown": "cleanupinvocation/memory/hiddenheader validity unknown"
+    }
+  ],
+  "conditional_store_island": "46FA6F..46FA8D directstoresonly: +10=EAX,sevenDWORDclear,+0=embedded+4. Theseareafterunknownprovider/allocationpaths, NOT aqualifiedproducer/parser/tablegeneration; nofollow-uprecordparser orfullbuildercompletionclaimed.",
+  "versions": "CC9EA8 lookupgate isunchangedBatch20. Qualifiedconstructor/loadcaller/prefix hasno63D54C gate. Runtime636584locale isseparatefrom63D54C and64B6DC; noactualversion/locale/epoch assumed."
+}

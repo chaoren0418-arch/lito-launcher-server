@@ -1,0 +1,51 @@
+{
+  "source_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-map-selection-contract.json",
+    "bytes": 5713,
+    "sha256": "3D0B5BAA46238ED5589C193FBDE22B966B945EFDEAB70D2A2C3933A62CA8E15F"
+  },
+  "detail_contract": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-selection-contract-65877892a76c4333a56190888c47d6fc\\evidence\\map-selection-contract.json",
+    "bytes": 7116,
+    "sha256": "BF77DF02B0D6A7AE7892EA7DD0B173AE9A65E8627B08EE8EF4B8D48C2C52FEFA"
+  },
+  "D5_layout_authority": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-D5-CF-consumer-supplement.json",
+    "bytes": 12535,
+    "sha256": "7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF"
+  },
+  "S_D5_sub3_success": "Source/archivedIL only: acceptedmap update→selectedMapId/roomready/reconfigure→sessionready D1reset→D5sub3 requestedword roommembers. No universal atomic/allpeer delivery guarantee.",
+  "S_D5_sub3_illegal_restore": "Source/archivedIL only: invalidpool/FFFF→selfD5sub3 BattleRules.decode(settings).mapId(firstpoolmap). Same layout, no outcome/flowrole field; nohubupdate orreadyreset on this path.",
+  "valid_request_hub_false": "SelfD5sub0/1 snapshot instead ofsub3; Native receive does not know C_D1admission outcome.",
+  "inherited_candidate_value_mismatch": {
+    "status": "CONFIRMED_CONDITIONAL_STATIC_VALUE_MISMATCH_NO_DYNAMIC_CASE",
+    "condition": "An ordinary room has successfully selected a non-first map in its unchanged mode, then receives a parser-valid out-of-pool map. Restore path returns first pool map while hub match/selectedMap remain previous selected map.",
+    "counterexample": {
+      "mode": "DEATHMATCH",
+      "wire_mode": 1,
+      "first_map": 564,
+      "current_selected_map": 514,
+      "valid_prior_C_D1_body": "d1030202",
+      "invalid_request_map": 65535,
+      "invalid_C_D1_body": "d103ffff",
+      "current_selected_map_LE": "0202",
+      "returned_restore_map": 564,
+      "returned_restore_map_LE": "3402",
+      "hypothetical_room1_restore_D5_body": "d503010000003402",
+      "computed_bytes_only": true,
+      "actual_trace": false
+    },
+    "candidate_fix_requirement": "Candidate only: illegal-map restore must derive authoritative current room map from hub.roomRules(currentRoomId).mapId(), consistently with selfsnapshot, instead of BattleRules.decode(settings) default. Preserve existing packet/gate distinctions; review missing-room/race behavior separately. No source or JAR changed.",
+    "known_dynamic_evidence": false
+  },
+  "mismatch_classification": "Existingserver conditionalrestore-value discrepancy, not a newly discovered wirelayout/opcode correction. No candidate/server/JAR changes requested or performed in this batch.",
+  "Native_response": "Bothacceptedbroadcast andillegalrestore bytes enter sameNativegate/sub3projection. No requestcorrelation/success/reject/rollback test; preserve unresolvedreceived-vs-expected conflict without automaticrewrite/retry/hubrollback inference.",
+  "S_D5_sub2": "7774 layout source/actualIL only: d502+roomDWORD+modeBYTE; mapcontract excludesC_D1sub2mode-step union arm. No mode runtime/trigger/serveraction expansion granted here.",
+  "dynamic": "No newcapture; serverfinite7selectedcaptures reportsC_D1sub3=0/S_D5sub3=0. Thisbatchdoesnotre-scanthosecaptures ormanufacturewitness; examples belowarecomputedbytesonly.",
+  "unknowns": [
+    "No ordinary C_D1sub3 or S_D5sub3 in the seven finite selected captures; no live non-first map/invalid restore/nonowner/countdown/battle/disabled-map branch qualification.",
+    "Snapshot getters, recipient lists and sends are separate; races/partial delivery/send failure are unknown. Map broadcast can abort after prefix; commit may already have happened.",
+    "No all-server trace census, Native numeric phase/map menu/UI acceptance, or live Modern implementation acceptance.",
+    "COUNTDOWN/disabled-map exception enclosing cleanup and queued messages are not expanded. No new mode/rental/matchmaking/battle/provider/formalSQL test; S0 unknown unchanged."
+  ]
+}

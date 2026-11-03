@@ -1,0 +1,43 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build\\candidate-cancellation-npc.jar",
+    "sha256": "792e12b590db0d566b65f85f48e42362512bea0cbccb143f7c7fd829fad4c64f"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "static L1Quest type1 adapter; movement AI, type2 and full qualification remain pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build-repro\\candidate-cancellation-npc-static.jar",
+    "sha256": "f6d98acd97684be09c502bd803816537e677bed6073335c37d38758670ea3391"
+  },
+  "exact_three_methods_and_field_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCancellationNpcStatic$Appearance.class",
+    "local/lito381/server/NativeCancellationNpcStatic$State.class",
+    "local/lito381/server/NativeCancellationNpcStatic$Target.class",
+    "local/lito381/server/NativeCancellationNpcStatic.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build-repro\\inputs\\build.py",
+      "sha256": "ca8ae0324a343b59a0229e371e25f4cce92da95cb217a8d8915d33969989e76a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build-repro\\inputs\\CancellationNpcStaticMethods.java",
+      "sha256": "6e1e5506bd5e48534337c11d81829e333b5091a2fc0efe65d91f9d24c660392c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build-repro\\inputs\\NativeCancellationNpcStatic.java",
+      "sha256": "7a974ccc256e852ef1b2b28aa4121e5ca44d9e10af21b58c1f385bb0248c50c4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

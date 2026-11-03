@@ -1,0 +1,11 @@
+{
+  "source": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\test.py",
+    "sha256": "c9bf7e4f8016e13014a9bdfeb0413d71f6404aed8a6d824720c4a8c8e0c9637a"
+  },
+  "driver": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\test.py",
+    "sha256": "dc4c304374eff243829238860bcc144766cbdfb61745e564df411f28bba9a1c4"
+  },
+  "changes": "probe class and expected case count only; own build base retained"
+}

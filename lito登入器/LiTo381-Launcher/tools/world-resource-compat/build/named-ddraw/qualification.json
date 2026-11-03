@@ -1,0 +1,72 @@
+{
+  "status": "named-dll-resources-and-owned-startup-verified-native-ui-pending",
+  "native_load_runs": 3,
+  "contract_drift_rejections": 3,
+  "owned_test_pids": [
+    135648,
+    132288,
+    136828
+  ],
+  "owned_processes_gone": true,
+  "old_client_ddraw_absent": true,
+  "formal_updated": false,
+  "source_database_modified": false,
+  "client_bin_modified": false,
+  "pins": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+      "sha256": "c17d4ca0728f2a0d92ddc471952f4f6d89bcf78a700a77838ac78cdaeea99116"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\named_ddraw.py",
+      "sha256": "4de00027a104804695f25fd26e3dbd1d9a6ea6aaf3de7e887ab177ce1bac13ba"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\named_startup.py",
+      "sha256": "5e1f218f73918de11d60a5ecf67891744db116f072895983695b6b88b91b9c10"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\selection_startup.py",
+      "sha256": "7b5265233a1de0b67d8a8ae6a6b5f3e5f516977bff6958c85fa6fa98793253b0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\named-ddraw\\lito_runtime_probe_named.py",
+      "sha256": "dbec6fa1fffe973f68c85297fcc03067368434ebdf794d2ede2babaa66925bc0"
+    }
+  ],
+  "startup": {
+    "run_id": "named-ddraw-20261021-01",
+    "sql_ready": true,
+    "native_resources_ready": true,
+    "base_count": 30000,
+    "total_count": 30285,
+    "named_module_path": "D:\\lineage開發\\0-客戶端\\litoddraw.dll",
+    "system_ddraw_path": "C:\\WINDOWS\\SysWOW64\\DDRAW.dll",
+    "client_ddraw_absent_before_during_after": true,
+    "window_responding": true,
+    "stop_method": "owned startup command stop",
+    "cleanup_verified": true,
+    "cleanup_errors": [],
+    "native_ui_verified": false,
+    "native_ui_limit": "Windows capture timed out; no visual/login/battle acceptance claimed"
+  },
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\named-ddraw\\tile-requalification.json",
+      "sha256": "7c233042ea62b5961f09ca6bf31fa98b74953ac35f86d31da9e46537c37733d1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\named-ddraw\\live-modules.json",
+      "sha256": "3dcde56dd5c86b5fabaf0dafbdad7b9deeb6d68c3b4575a54e339d0dbd7e9f24"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\named-ddraw-20261021-01\\terminal.json",
+      "sha256": "0e96d17145c0af8517dd9a4c01c9958b7daedbd9589cc442c8782958de1bde57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\named-ddraw-20261021-01\\native-probe.shared-ready.json",
+      "sha256": "cbc3afb585643aeacdd3d8fa81959cc8165e10da7f869b2f1ee45ae9de217623"
+    }
+  ],
+  "formal_pins_rechecked": true
+}

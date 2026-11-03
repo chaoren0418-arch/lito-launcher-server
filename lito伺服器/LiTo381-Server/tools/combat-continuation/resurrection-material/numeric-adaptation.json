@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\GroundNumericProbe.java",
+      "sha256": "d0722c8b84f0ae1d974792714e2626e15888052b09fc86fc059a43ec022ae5ea"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\test.py",
+      "sha256": "8b986c3138deb3c7b0d067f170d2b832fad86549e18ffe42b675a622e31e7af9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\prepare_numeric.py",
+      "sha256": "e7b7cce581bd5acf358016940579d0786f6c280ab9ccc12d5f4c8042df3d9158"
+    }
+  ],
+  "scope": "48 before/after cases; zero/one/65535 configured MP in isolated snapshots; memory only; original unbounded signed-cost behavior observed separately from corrected bounds"
+}

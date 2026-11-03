@@ -1,0 +1,127 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+    "bytes": 24893,
+    "sha256": "3ADB8FD6D3F48E6BB444C00BF3808A1F1A758E82C2EB2E9CEDD4F45CFAB38367"
+  },
+  "all_match": true,
+  "new_ranges": 19,
+  "new_code_ranges": 11,
+  "new_data_ranges": 8,
+  "inherited_raw_ranges": 19,
+  "instruction_assertions": 65,
+  "aligned_in_slice_branch_targets": 12,
+  "branches": [
+    {
+      "va": "0046568F",
+      "target": "0046569A",
+      "aligned": true
+    },
+    {
+      "va": "0046BC9E",
+      "target": "0046BCD8",
+      "aligned": true
+    },
+    {
+      "va": "0046BCD6",
+      "target": "0046BCDA",
+      "aligned": true
+    },
+    {
+      "va": "00452C31",
+      "target": "00452C58",
+      "aligned": true
+    },
+    {
+      "va": "00452C56",
+      "target": "00452C7F",
+      "aligned": true
+    },
+    {
+      "va": "004A78BE",
+      "target": "004A78D0",
+      "aligned": true
+    },
+    {
+      "va": "004A78D6",
+      "target": "004A78E4",
+      "aligned": true
+    },
+    {
+      "va": "004A78F1",
+      "target": "004A7913",
+      "aligned": true
+    },
+    {
+      "va": "004A78FE",
+      "target": "004A790B",
+      "aligned": true
+    },
+    {
+      "va": "004A7910",
+      "target": "004A78FA",
+      "aligned": true
+    },
+    {
+      "va": "004A791D",
+      "target": "004A7932",
+      "aligned": true
+    },
+    {
+      "va": "004A792B",
+      "target": "004A791F",
+      "aligned": true
+    }
+  ],
+  "constructor_stack_arguments": [
+    33,
+    56,
+    380,
+    336,
+    12,
+    12,
+    0,
+    65535
+  ],
+  "qualified_UI68_writes_in_finite_scope": [
+    "0046565B"
+  ],
+  "map_arithmetic_models": [
+    {
+      "label": "newfull_special_FF9C_mode1",
+      "computed": 154,
+      "expected": 154
+    },
+    {
+      "label": "old_or_partial_special_FF9C_mode1",
+      "computed": 253,
+      "expected": 253
+    },
+    {
+      "label": "partial_ordinary_WORD0101",
+      "computed": 13,
+      "expected": 13
+    },
+    {
+      "label": "newfull_lookupindex256_truncation",
+      "computed": 0,
+      "expected": 0
+    },
+    {
+      "label": "validattrs0_mode1_flags",
+      "computed": 513,
+      "expected": 513
+    },
+    {
+      "label": "partial_flags_preserve_only_low8",
+      "computed": 1026,
+      "expected": 1026
+    }
+  ],
+  "complete_UI_constructor_bytes": 112,
+  "complete_base_constructor_bytes": 165,
+  "prior_immutable_pins": 21,
+  "whole_image_UI68_setter_absence_claim": false,
+  "actual_Native_UI_object_lifecycle_or_map_resource_qualified": false,
+  "old_tests_replayed": false
+}

@@ -1,0 +1,19 @@
+from pathlib import Path
+import subprocess,hashlib,json
+R=Path(__file__).resolve().parent;S=R.parents[1];B=R/'build';L=S.parent.parent/'lito登入器/LiTo381-Launcher'
+J=Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin');cp=str(B/'candidate.jar')+';'+str(S/'lib/*');source=S.parents[2]/'1-伺服器/target/classes'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+names=['model/combat/NpcPhysicalAttackFlow','model/Instance/L1PcInstance','model/L1AttackNpc','model/L1AttackList','model/L1AttackMode','model/L1Character','model/Instance/L1NpcInstance','model/Instance/L1PetInstance','model/skill/skillmode/ARM_BREAKER',*[f'model/skill/skillmode/{n}' for n in ['CURE_POISON','REMOVE_CURSE','CANCELLATION']],*[f'model/poison/{n}' for n in ['L1Poison','L1DamagePoison','L1SilencePoison','L1ParalysisPoison']],'model/gametime/L1GameTime','model/gametime/L1GameTimeClock','utils/RangeInt','model/classes/L1ClassFeature',*[f'model/classes/L1{n}ClassFeature' for n in ['Royal','Knight','Elf','Wizard','DarkElf','DragonKnight','Illusionist']]]
+pins=[{'path':str(p),'sha256':sha(p)} for name in names for p in [source/('com/lineage/server/'+name+'.class'),source.parents[1]/('src/com/lineage/server/'+name+'.java')]]
+sources=[R/(n+'.java') for n in ['RangedDamageRegression','KiringkuRegression','CombatRegression','CounterDetectionRegression','PlayerMagicRegression','PlayerMirrorRegression','PlayerDamageRegression','PatienceRegression','NpcPhysicalRegression','NpcPoisonRegression','PoisonAtomicRegression','WorldCompanionPhysicalRegression','CompanionDamageRegression','ClassMagicRegression','ClassDamageRegression','WeaponBuffRegression','AwakenCombatRegression']]
+sources.extend([S/'tools/durable-settlement/FlowRegression.java',S/'tools/dragon-combat/Regression.java',S/'tools/native-room-state/NativeDirectoryRegression.java',S/'tools/shared-database/SourceLoginRegression.java'])
+subprocess.run([str(J/'javac.exe'),'-encoding','UTF-8','-implicit:none','-cp',cp,'-d',str(B/'tests'),*map(str,sources)],check=True)
+asm=Path.home()/'.m2/repository/org/ow2/asm';acp=';'.join(str(asm/f'{n}/9.7/{n}-9.7.jar') for n in ['asm','asm-tree'])
+subprocess.run([str(J/'javac.exe'),'-encoding','UTF-8','-cp',acp,'-d',str(B),str(R/'BuildNpcSourceOracle.java')],check=True)
+subprocess.run([str(J/'java.exe'),'-Xverify:all','-cp',str(B)+';'+acp,'BuildNpcSourceOracle',str(source),str(B/'tests'),str(B/'poison-atomic-oracle-current.json')],check=True)
+receipt=B/'poison-atomic-oracle-current.json';binding=json.loads(receipt.read_text('utf-8'));binding.update(status='running',candidate_sha256=sha(B/'candidate.jar'),source_files=pins,generated_executable_files=[{'path':str(p),'sha256':sha(p)} for p in [B/('tests/local/lito381/server/'+n+'.class') for n in ['NpcSourceModeOracle','NpcSourceModeOracle$Npc','NpcSourceModeOracle$Template','NpcSourceModeOracle$Target','NpcSourceModeOracle$Pc','NpcSourceModeOracle$Damage','NpcSourceModeOracle$Silence','NpcSourceModeOracle$Paralysis','SourceNpcTableOracle']]]);receipt.write_text(json.dumps(binding,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+with (B/'PoisonAtomicRegression.log').open('w',encoding='utf-8') as log:
+ p=subprocess.run([str(J/'java.exe'),'-Dfile.encoding=UTF-8','-Dlito.resourceProfile=tw13081901-v1','-Dlito.commonCatalog='+str(L/'app/common_catalog.bin'),'-Xverify:all','-cp',str(B/'tests')+';'+cp,'local.lito381.server.PoisonAtomicRegression',str(S/'config/server.properties'),str(S/'runtime/combat-poison-atomic-regression'),str(source)],cwd=S,stdout=log,stderr=subprocess.STDOUT,timeout=90)
+for item in pins:assert sha(Path(item['path']))==item['sha256'],'source changed during NPC physical regression: '+item['path']
+binding['status']='passed' if p.returncode==0 else 'failed';receipt.write_text(json.dumps(binding,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+print((B/'PoisonAtomicRegression.log').read_text('utf-8',errors='replace')[-5000:]);raise SystemExit(p.returncode)

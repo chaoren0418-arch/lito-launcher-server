@@ -1,0 +1,31 @@
+{
+  "before": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 165303,
+      "sha256": "9F7F93286FDB0D512CAA16F9C570FAF81B45CFCF995DF2A5397D769C50118040"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 71878,
+      "sha256": "86F837CEF56E09807D3DCD089EF05933FDC3F8338FC5763704D33559162B7336"
+    }
+  },
+  "after": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 166062,
+      "sha256": "030A1302F7B424351DB7AD0A237290E84A47037EE19C7D2FD01812E995B8337E"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 74718,
+      "sha256": "5FE6E94E979E84C5C1CC9A65344ACA3F1739BF059DB7C84C2C949E307D088B10"
+    }
+  },
+  "old_module": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+    "bytes": 20925,
+    "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+  }
+}

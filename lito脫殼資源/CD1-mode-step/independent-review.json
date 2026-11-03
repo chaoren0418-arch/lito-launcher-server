@@ -1,0 +1,1029 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step-contract.json",
+    "bytes": 36362,
+    "sha256": "1BB37D61C8E25EC195EA2084941EFDC89D2E6F2760119583357A088A04C3EC8F"
+  },
+  "all_match": true,
+  "check_count": 248,
+  "checks": [
+    {
+      "check": "pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin server-ordinary-room-map-selection-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin map-selection-evidence.json",
+      "match": true
+    },
+    {
+      "check": "pin server-ordinary-room-map-network.json",
+      "match": true
+    },
+    {
+      "check": "pin frames.json",
+      "match": true
+    },
+    {
+      "check": "pin observations.json",
+      "match": true
+    },
+    {
+      "check": "pin map-network-wire-state-proof.json",
+      "match": true
+    },
+    {
+      "check": "pin product-class-identities.json",
+      "match": true
+    },
+    {
+      "check": "pin ClassFileReadOnly.py",
+      "match": true
+    },
+    {
+      "check": "pin LiTo381-Server-letter-auth-wire-candidate.jar",
+      "match": true
+    },
+    {
+      "check": "pin AD368-ordinary-map-update-order-candidate.jar",
+      "match": true
+    },
+    {
+      "check": "pin ClientSession.java",
+      "match": true
+    },
+    {
+      "check": "pin AD368-ClientSession.javap.txt",
+      "match": true
+    },
+    {
+      "check": "pin AD368-GameHub.javap.txt",
+      "match": true
+    },
+    {
+      "check": "pin AD368-Protocol.javap.txt",
+      "match": true
+    },
+    {
+      "check": "pin Protocol.java",
+      "match": true
+    },
+    {
+      "check": "pin GameHub.java",
+      "match": true
+    },
+    {
+      "check": "pin BattleRules.java",
+      "match": true
+    },
+    {
+      "check": "pin 004154E0-23.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D07E-F.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D09E-21.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D0C3-11.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D0D4-7.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D0EC-21.bin",
+      "match": true
+    },
+    {
+      "check": "pin 0046D111-11.bin",
+      "match": true
+    },
+    {
+      "check": "pin C7-saved-map-frame-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin equivalence-search-preflight.json",
+      "match": true
+    },
+    {
+      "check": "pin finite-verification.json",
+      "match": true
+    },
+    {
+      "check": "pin instruction-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin Java-bounded-class-methods.json",
+      "match": true
+    },
+    {
+      "check": "pin native-caller-and-unknown-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin source-IL-witnesses.json",
+      "match": true
+    },
+    {
+      "check": "pin version-evidence-table.json",
+      "match": true
+    },
+    {
+      "check": "pin wire-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D07E",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D07E",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D07E",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D0D4",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D0D4",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D0D4",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D09E",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D09E",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D09E",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D0EC",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D0EC",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D0EC",
+      "match": true
+    },
+    {
+      "check": "raw PE 004154E0",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 004154E0",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 004154E0",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D0C3",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D0C3",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D0C3",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046D111",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046D111",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046D111",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "reused pin 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "reused index 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046B7D0",
+      "match": true
+    },
+    {
+      "check": "raw PE 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "reused pin 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "reused index 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "aligned disasm 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "raw PE 005028CC",
+      "match": true
+    },
+    {
+      "check": "VA/RVA/offset 005028CC",
+      "match": true
+    },
+    {
+      "check": "reused pin 005028CC",
+      "match": true
+    },
+    {
+      "check": "reused index 005028CC",
+      "match": true
+    },
+    {
+      "check": "operand 0046D088",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0D6",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0A5",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0AC",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0BA",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0F3",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0FA",
+      "match": true
+    },
+    {
+      "check": "operand 0046D108",
+      "match": true
+    },
+    {
+      "check": "operand 004154E3",
+      "match": true
+    },
+    {
+      "check": "operand 004154EC",
+      "match": true
+    },
+    {
+      "check": "operand 004154FE",
+      "match": true
+    },
+    {
+      "check": "operand 0046D0CF",
+      "match": true
+    },
+    {
+      "check": "operand 0046D11D",
+      "match": true
+    },
+    {
+      "check": "operand 0046B7F0",
+      "match": true
+    },
+    {
+      "check": "operand 0046B7F7",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E2",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E6",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9E8",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9EA",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9EF",
+      "match": true
+    },
+    {
+      "check": "operand 0046B9F4",
+      "match": true
+    },
+    {
+      "check": "new control caller 0",
+      "match": true
+    },
+    {
+      "check": "new control caller 1",
+      "match": true
+    },
+    {
+      "check": "constructor first unknown forwarding",
+      "match": true
+    },
+    {
+      "check": "no phase owner checks in bounded0/1branches",
+      "match": true
+    },
+    {
+      "check": "class bytes Protocol",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols Protocol.litoGameInfoRequest",
+      "match": true
+    },
+    {
+      "check": "bounded method Protocol.litoGameInfoRequest",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols Protocol.litoRoomMode",
+      "match": true
+    },
+    {
+      "check": "bounded method Protocol.litoRoomMode",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols Protocol.litoRoomMap",
+      "match": true
+    },
+    {
+      "check": "bounded method Protocol.litoRoomMap",
+      "match": true
+    },
+    {
+      "check": "class bytes Protocol$LitoModeStepDirection",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols Protocol$LitoModeStepDirection.fromWire",
+      "match": true
+    },
+    {
+      "check": "bounded method Protocol$LitoModeStepDirection.fromWire",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols Protocol$LitoModeStepDirection.<clinit>",
+      "match": true
+    },
+    {
+      "check": "bounded method Protocol$LitoModeStepDirection.<clinit>",
+      "match": true
+    },
+    {
+      "check": "class bytes BattleRules$Mode",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols BattleRules$Mode.stepNative",
+      "match": true
+    },
+    {
+      "check": "bounded method BattleRules$Mode.stepNative",
+      "match": true
+    },
+    {
+      "check": "class bytes ClientSession",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols ClientSession.gameInfo",
+      "match": true
+    },
+    {
+      "check": "bounded method ClientSession.gameInfo",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols ClientSession.changeRoomMode",
+      "match": true
+    },
+    {
+      "check": "bounded method ClientSession.changeRoomMode",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols ClientSession.sendGameInfoSnapshot",
+      "match": true
+    },
+    {
+      "check": "bounded method ClientSession.sendGameInfoSnapshot",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols ClientSession.resetRoomReadyAfterSettingsChange",
+      "match": true
+    },
+    {
+      "check": "bounded method ClientSession.resetRoomReadyAfterSettingsChange",
+      "match": true
+    },
+    {
+      "check": "class bytes GameHub",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols GameHub.updateSettings",
+      "match": true
+    },
+    {
+      "check": "bounded method GameHub.updateSettings",
+      "match": true
+    },
+    {
+      "check": "class bytes BattleRules$1",
+      "match": true
+    },
+    {
+      "check": "actual code + CP symbols BattleRules$1.<clinit>",
+      "match": true
+    },
+    {
+      "check": "bounded method BattleRules$1.<clinit>",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-source16278",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-source16331",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-source16358",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-source16437",
+      "match": true
+    },
+    {
+      "check": "text exact Protocol-source-reference1924",
+      "match": true
+    },
+    {
+      "check": "text exact Protocol-source-reference7171",
+      "match": true
+    },
+    {
+      "check": "text exact BattleRules-source-reference119",
+      "match": true
+    },
+    {
+      "check": "text exact GameHub-source-reference10034",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-archived-IL49739",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-archived-IL49880",
+      "match": true
+    },
+    {
+      "check": "text exact actual-CS-archived-IL49979",
+      "match": true
+    },
+    {
+      "check": "text exact actual-GameHub-archived-IL30185",
+      "match": true
+    },
+    {
+      "check": "text exact actual-Protocol-archived-IL15865",
+      "match": true
+    },
+    {
+      "check": "wire direction switch",
+      "match": true
+    },
+    {
+      "check": "wire1 NEXT wire2 PREVIOUS",
+      "match": true
+    },
+    {
+      "check": "NEXT switch-map store",
+      "match": true
+    },
+    {
+      "check": "PREVIOUS switch-map store",
+      "match": true
+    },
+    {
+      "check": "enum switch map identity",
+      "match": true
+    },
+    {
+      "check": "relative cycle 0/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 0/2",
+      "match": true
+    },
+    {
+      "check": "relative cycle 1/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 1/2",
+      "match": true
+    },
+    {
+      "check": "relative cycle 5/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 5/2",
+      "match": true
+    },
+    {
+      "check": "relative cycle 2/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 2/2",
+      "match": true
+    },
+    {
+      "check": "relative cycle 4/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 4/2",
+      "match": true
+    },
+    {
+      "check": "relative cycle 3/1",
+      "match": true
+    },
+    {
+      "check": "relative cycle 3/2",
+      "match": true
+    },
+    {
+      "check": "ordinary domain guard -1",
+      "match": true
+    },
+    {
+      "check": "ordinary domain guard 6",
+      "match": true
+    },
+    {
+      "check": "parser byte direction + exact length",
+      "match": true
+    },
+    {
+      "check": "parse before phase ordinary direction call",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI43",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI130",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI142",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI151",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI158",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI172",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI236",
+      "match": true
+    },
+    {
+      "check": "mode publication BCI250",
+      "match": true
+    },
+    {
+      "check": "mode failure snapshots",
+      "match": true
+    },
+    {
+      "check": "self0/1 independent snapshot source",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI25",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI34",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI143",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI150",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI158",
+      "match": true
+    },
+    {
+      "check": "updateSettings BCI179",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 73",
+      "match": true
+    },
+    {
+      "check": "C7 map field 73",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 74",
+      "match": true
+    },
+    {
+      "check": "C7 map field 74",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 75",
+      "match": true
+    },
+    {
+      "check": "C7 map field 75",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 76",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 77",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 78",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 79",
+      "match": true
+    },
+    {
+      "check": "C7 map field 79",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 80",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 81",
+      "match": true
+    },
+    {
+      "check": "C7 map field 81",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 82",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 83",
+      "match": true
+    },
+    {
+      "check": "C7 map field 83",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 84",
+      "match": true
+    },
+    {
+      "check": "C7 map field 84",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 85",
+      "match": true
+    },
+    {
+      "check": "C7 map field 85",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 86",
+      "match": true
+    },
+    {
+      "check": "C7 map field 86",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 87",
+      "match": true
+    },
+    {
+      "check": "C7 map field 87",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 88",
+      "match": true
+    },
+    {
+      "check": "C7 map field 88",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 89",
+      "match": true
+    },
+    {
+      "check": "C7 saved adoption 90",
+      "match": true
+    },
+    {
+      "check": "C7 requested514 and509",
+      "match": true
+    },
+    {
+      "check": "C7 FFFF current509 selfresponses",
+      "match": true
+    },
+    {
+      "check": "C7 saved scope is map notmode",
+      "match": true
+    },
+    {
+      "check": "old absence notoverall absence",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    },
+    {
+      "check": "prior Batch27 immutable",
+      "match": true
+    },
+    {
+      "check": "knowncorroboration only",
+      "match": true
+    },
+    {
+      "check": "scope incident pin and remaining cache recorded",
+      "match": true
+    },
+    {
+      "check": "bytecode writes disabled in both owned scripts",
+      "match": true
+    }
+  ],
+  "new_code_ranges": 7,
+  "new_data_ranges": 0,
+  "necessary_reused_raw_ranges": 3,
+  "instruction_assertions": 21,
+  "bounded_Java_classes": 6,
+  "bounded_Java_methods": 12,
+  "source_IL_slices": 13,
+  "new_conditional_caller_models": 2,
+  "new_relative_cycle_models": 12,
+  "saved_C7_map_frame_rows_adopted": 18,
+  "new_capture_frames": 0,
+  "Native_or_mode_dynamic_witnesses": 0,
+  "prior_primary_pins_preserved": 29,
+  "old_PASS_or_network_replayed": false,
+  "computed_models": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\computed-caller-cycle-models.json",
+    "bytes": 19529,
+    "sha256": "FD0F26A5EA35954D6EC38F63B1CE33113960A3F5F543B68B50E7D3508F816A2F"
+  },
+  "UI_phase_owner_transport_mode_dynamic_ACK_qualified": false,
+  "scope_write_correction": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+    "bytes": 1454,
+    "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+  },
+  "cleanup_completed": false
+}

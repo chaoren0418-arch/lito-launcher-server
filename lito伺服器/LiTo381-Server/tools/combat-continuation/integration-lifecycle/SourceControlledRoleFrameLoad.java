@@ -1,0 +1,4 @@
+import java.nio.file.*;import java.net.*;import java.util.*;
+public final class SourceControlledRoleFrameLoad {
+ public static void main(String[]a)throws Exception{SourceControlledAudienceLoad.main(a);var jar=Path.of(a[0]).toRealPath();var urls=new ArrayList<URL>();urls.add(jar.toUri().toURL());try(var f=Files.list(Path.of(a[1]))){for(var p:f.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var loader=new URLClassLoader(urls.toArray(URL[]::new),ClassLoader.getPlatformClassLoader())){var c=Class.forName("local.lito381.server.NativeSourceControlledRoleFrame",false,loader);c.getDeclaredFields();c.getDeclaredMethods();c.getDeclaredConstructors();if(!Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar))throw new AssertionError("candidate helper");}System.out.println("PASS363 candidate no-init classes with controlled Task readonly role frame");}
+}

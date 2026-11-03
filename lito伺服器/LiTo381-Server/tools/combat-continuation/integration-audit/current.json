@@ -1,0 +1,12 @@
+{
+  "status": "passed-static-two-lineage-conflict-and-goal-scope-audit",
+  "manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-audit\\build\\20261020T085544894257Z\\manifest.json",
+    "sha256": "459ebd2dc5fec7814b6a48cd29eeb53710e35b32c1f8e56bbb768f0c5b7af43d"
+  },
+  "working_base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-static-runtime\\build\\candidate-cancellation-static-runtime.jar",
+    "sha256": "743b35d17ea45b495af78a0208c69aca1bef977a0cdf56706bb0e7c7a52b8507"
+  },
+  "full_goal_achieved": false
+}

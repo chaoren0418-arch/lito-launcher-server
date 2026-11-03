@@ -1,0 +1,2099 @@
+{
+  "offset_raw": [
+    0,
+    0
+  ],
+  "offset_signed": [
+    0,
+    0
+  ],
+  "header_width": 32,
+  "width_for_vector": 32,
+  "height": 31,
+  "bytes_consumed": 2079,
+  "rows": [
+    {
+      "y": 0,
+      "encoded_offset": 4,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 31,
+          "payload_offset": 7,
+          "words": [
+            11635,
+            8496,
+            6382,
+            2122,
+            2120,
+            2087,
+            1062,
+            2120,
+            2120,
+            3178,
+            2121,
+            1062,
+            3,
+            1094,
+            1062,
+            2,
+            2,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            1062,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 69
+    },
+    {
+      "y": 1,
+      "encoded_offset": 69,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 72,
+          "words": [
+            17976,
+            14805,
+            11667,
+            8464,
+            3179,
+            2121,
+            2122,
+            2121,
+            2120,
+            3178,
+            2120,
+            2119,
+            2120,
+            1062,
+            1060,
+            1062,
+            1062,
+            1094,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1062,
+            2,
+            1,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 136
+    },
+    {
+      "y": 2,
+      "encoded_offset": 136,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 139,
+          "words": [
+            23260,
+            20090,
+            16919,
+            11699,
+            6383,
+            3181,
+            2124,
+            2155,
+            4268,
+            3211,
+            2120,
+            2119,
+            2119,
+            2120,
+            2119,
+            1062,
+            3,
+            1061,
+            1060,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            3371,
+            30719,
+            35,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 203
+    },
+    {
+      "y": 3,
+      "encoded_offset": 203,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 206,
+          "words": [
+            29599,
+            26430,
+            22204,
+            16952,
+            9586,
+            5327,
+            8497,
+            8496,
+            3212,
+            3179,
+            3179,
+            3179,
+            2122,
+            2120,
+            2119,
+            1062,
+            1060,
+            1061,
+            1061,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            67,
+            10836,
+            26623,
+            7632,
+            1,
+            1
+          ]
+        }
+      ],
+      "row_end_offset": 270
+    },
+    {
+      "y": 4,
+      "encoded_offset": 270,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 273,
+          "words": [
+            32767,
+            32767,
+            30623,
+            20091,
+            14806,
+            13781,
+            13781,
+            7408,
+            4269,
+            4270,
+            4237,
+            3179,
+            3178,
+            2121,
+            2118,
+            3172,
+            3205,
+            1093,
+            35,
+            2,
+            2,
+            1,
+            0,
+            0,
+            0,
+            4329,
+            17145,
+            32767,
+            18202,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 337
+    },
+    {
+      "y": 5,
+      "encoded_offset": 337,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 340,
+          "words": [
+            32767,
+            32767,
+            32767,
+            24383,
+            16953,
+            13748,
+            7441,
+            8498,
+            7440,
+            5326,
+            3213,
+            3180,
+            3146,
+            3146,
+            2118,
+            5285,
+            29630,
+            10671,
+            4296,
+            1125,
+            2,
+            1,
+            0,
+            34,
+            9614,
+            23388,
+            32767,
+            27647,
+            1224,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 404
+    },
+    {
+      "y": 6,
+      "encoded_offset": 404,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 407,
+          "words": [
+            26463,
+            32767,
+            32767,
+            29599,
+            26399,
+            16953,
+            13782,
+            10611,
+            7442,
+            8498,
+            4269,
+            3245,
+            3212,
+            3179,
+            2119,
+            1092,
+            23288,
+            19127,
+            11728,
+            12785,
+            3272,
+            0,
+            1125,
+            12785,
+            24412,
+            32767,
+            31743,
+            8623,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 471
+    },
+    {
+      "y": 7,
+      "encoded_offset": 471,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 474,
+          "words": [
+            23294,
+            32767,
+            32767,
+            32767,
+            32767,
+            25374,
+            13816,
+            14840,
+            23259,
+            28510,
+            24315,
+            8466,
+            4270,
+            3244,
+            1064,
+            1,
+            4297,
+            24378,
+            31743,
+            18070,
+            5354,
+            5386,
+            15956,
+            24380,
+            30719,
+            32767,
+            14899,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 538
+    },
+    {
+      "y": 8,
+      "encoded_offset": 538,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 541,
+          "words": [
+            21181,
+            32767,
+            32767,
+            31679,
+            30655,
+            32735,
+            28511,
+            31679,
+            30623,
+            21179,
+            24317,
+            30623,
+            12692,
+            7441,
+            11632,
+            6345,
+            35,
+            30687,
+            17047,
+            4330,
+            8557,
+            15956,
+            19095,
+            28639,
+            32767,
+            23355,
+            68,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 605
+    },
+    {
+      "y": 9,
+      "encoded_offset": 605,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 608,
+          "words": [
+            19068,
+            30655,
+            32767,
+            32735,
+            22270,
+            24351,
+            32767,
+            27486,
+            12726,
+            10613,
+            9523,
+            19065,
+            30655,
+            27453,
+            23256,
+            14799,
+            3171,
+            67,
+            6477,
+            9615,
+            4262,
+            7467,
+            12785,
+            24380,
+            23356,
+            3271,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 672
+    },
+    {
+      "y": 10,
+      "encoded_offset": 672,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 675,
+          "words": [
+            12725,
+            21181,
+            32767,
+            32735,
+            23294,
+            19100,
+            20124,
+            20123,
+            20121,
+            12726,
+            11668,
+            8498,
+            12693,
+            11700,
+            6415,
+            4268,
+            9514,
+            2082,
+            23322,
+            8557,
+            3205,
+            11728,
+            14867,
+            8557,
+            67,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 739
+    },
+    {
+      "y": 11,
+      "encoded_offset": 739,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 742,
+          "words": [
+            5326,
+            11701,
+            26463,
+            32767,
+            22238,
+            16954,
+            18009,
+            18010,
+            19033,
+            21146,
+            11669,
+            11668,
+            9554,
+            6416,
+            6416,
+            4268,
+            2152,
+            33,
+            27550,
+            14933,
+            20185,
+            13842,
+            8524,
+            3272,
+            8590,
+            2281,
+            0,
+            1,
+            0,
+            3,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 806
+    },
+    {
+      "y": 12,
+      "encoded_offset": 806,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 809,
+          "words": [
+            2155,
+            7440,
+            21181,
+            32767,
+            29599,
+            18044,
+            18010,
+            15895,
+            15863,
+            21146,
+            14840,
+            11669,
+            10644,
+            4263,
+            1092,
+            2151,
+            1060,
+            20150,
+            11762,
+            1192,
+            15956,
+            7468,
+            1125,
+            7500,
+            21274,
+            19193,
+            2281,
+            8591,
+            12818,
+            1125,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 873
+    },
+    {
+      "y": 13,
+      "encoded_offset": 873,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 876,
+          "words": [
+            2122,
+            5325,
+            12725,
+            24285,
+            32767,
+            30687,
+            25374,
+            19100,
+            19100,
+            24317,
+            22206,
+            18011,
+            8495,
+            18992,
+            13708,
+            4229,
+            21173,
+            9647,
+            10672,
+            68,
+            9582,
+            2215,
+            1158,
+            5353,
+            7499,
+            11795,
+            7467,
+            29695,
+            22332,
+            10704,
+            1,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 940
+    },
+    {
+      "y": 14,
+      "encoded_offset": 940,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 943,
+          "words": [
+            2120,
+            3178,
+            11667,
+            11702,
+            28543,
+            32767,
+            32767,
+            32767,
+            32735,
+            32767,
+            32767,
+            30655,
+            11630,
+            28572,
+            17900,
+            21105,
+            13706,
+            7432,
+            3240,
+            1,
+            0,
+            1,
+            14865,
+            3272,
+            5419,
+            5352,
+            22364,
+            8624,
+            12819,
+            23355,
+            8557,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1007
+    },
+    {
+      "y": 15,
+      "encoded_offset": 1007,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1010,
+          "words": [
+            1062,
+            2120,
+            6382,
+            3213,
+            9556,
+            21180,
+            28511,
+            29567,
+            30655,
+            31711,
+            31711,
+            29564,
+            6342,
+            25334,
+            7298,
+            22094,
+            27448,
+            7365,
+            1,
+            0,
+            0,
+            0,
+            67,
+            14865,
+            101,
+            9614,
+            13875,
+            10704,
+            4329,
+            8557,
+            21241,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1074
+    },
+    {
+      "y": 16,
+      "encoded_offset": 1074,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1077,
+          "words": [
+            1060,
+            1061,
+            4233,
+            7407,
+            3245,
+            4271,
+            12725,
+            19066,
+            11704,
+            14872,
+            9551,
+            3172,
+            23220,
+            3136,
+            4160,
+            10501,
+            15753,
+            21072,
+            0,
+            0,
+            0,
+            0,
+            0,
+            18004,
+            10639,
+            8557,
+            10671,
+            11728,
+            6443,
+            9614,
+            12752,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1141
+    },
+    {
+      "y": 17,
+      "encoded_offset": 1141,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1144,
+          "words": [
+            2,
+            4,
+            1061,
+            5322,
+            4268,
+            3212,
+            12723,
+            16949,
+            4268,
+            2117,
+            7403,
+            16878,
+            10435,
+            11524,
+            7331,
+            6274,
+            12615,
+            14730,
+            0,
+            1,
+            2,
+            1,
+            1,
+            30654,
+            12785,
+            3272,
+            6443,
+            6443,
+            11728,
+            14899,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1208
+    },
+    {
+      "y": 18,
+      "encoded_offset": 1208,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1211,
+          "words": [
+            0,
+            1,
+            4,
+            5,
+            4,
+            5322,
+            6382,
+            3207,
+            13674,
+            18925,
+            16844,
+            9411,
+            11525,
+            15720,
+            11558,
+            4194,
+            5250,
+            1057,
+            1,
+            34,
+            2,
+            2,
+            1,
+            2115,
+            29597,
+            5386,
+            4329,
+            10638,
+            16980,
+            33,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1275
+    },
+    {
+      "y": 19,
+      "encoded_offset": 1275,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1278,
+          "words": [
+            0,
+            0,
+            1,
+            3,
+            3,
+            2120,
+            1062,
+            3,
+            18959,
+            10469,
+            21072,
+            15720,
+            16809,
+            11559,
+            0,
+            0,
+            0,
+            1057,
+            2115,
+            2116,
+            2117,
+            2,
+            2,
+            1,
+            1090,
+            26426,
+            21174,
+            1125,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1342
+    },
+    {
+      "y": 20,
+      "encoded_offset": 1342,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1345,
+          "words": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            34,
+            2081,
+            25367,
+            8354,
+            8387,
+            26390,
+            16843,
+            2081,
+            0,
+            0,
+            2,
+            3171,
+            5285,
+            7400,
+            5288,
+            4230,
+            3172,
+            1,
+            0,
+            0,
+            2115,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1409
+    },
+    {
+      "y": 21,
+      "encoded_offset": 1409,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1412,
+          "words": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5285,
+            23220,
+            9411,
+            5250,
+            4194,
+            13640,
+            17900,
+            0,
+            0,
+            1,
+            35,
+            1092,
+            5320,
+            10571,
+            10604,
+            5289,
+            2116,
+            2117,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1476
+    },
+    {
+      "y": 22,
+      "encoded_offset": 1476,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1479,
+          "words": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            8389,
+            18992,
+            9411,
+            12582,
+            10502,
+            9445,
+            13639,
+            9445,
+            0,
+            1,
+            2,
+            1060,
+            1061,
+            1094,
+            7435,
+            12684,
+            7402,
+            36,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1543
+    },
+    {
+      "y": 23,
+      "encoded_offset": 1543,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1546,
+          "words": [
+            0,
+            0,
+            0,
+            4194,
+            12616,
+            18959,
+            8387,
+            11558,
+            15754,
+            15754,
+            4194,
+            0,
+            0,
+            0,
+            1,
+            3,
+            1060,
+            36,
+            1060,
+            5320,
+            6343,
+            8456,
+            2149,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1610
+    },
+    {
+      "y": 24,
+      "encoded_offset": 1610,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1613,
+          "words": [
+            0,
+            0,
+            4194,
+            12616,
+            18959,
+            8387,
+            11558,
+            13640,
+            14729,
+            5251,
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            2,
+            1059,
+            7400,
+            3172,
+            5285,
+            4229,
+            1059,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1677
+    },
+    {
+      "y": 25,
+      "encoded_offset": 1677,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1680,
+          "words": [
+            0,
+            8389,
+            8421,
+            10502,
+            8387,
+            11559,
+            13640,
+            13673,
+            8389,
+            0,
+            0,
+            0,
+            0,
+            1,
+            3,
+            3,
+            2,
+            1,
+            1,
+            7401,
+            1059,
+            3172,
+            3172,
+            2115,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1744
+    },
+    {
+      "y": 26,
+      "encoded_offset": 1744,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1747,
+          "words": [
+            0,
+            18959,
+            15787,
+            7330,
+            9445,
+            12616,
+            13673,
+            12616,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            3,
+            1059,
+            2115,
+            2115,
+            7400,
+            23254,
+            9514,
+            3172,
+            4228,
+            3172,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1811
+    },
+    {
+      "y": 27,
+      "encoded_offset": 1811,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1814,
+          "words": [
+            0,
+            20050,
+            20048,
+            16844,
+            10503,
+            14729,
+            12616,
+            2081,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            2116,
+            5285,
+            6343,
+            16912,
+            32767,
+            20083,
+            6343,
+            6343,
+            4229,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1878
+    },
+    {
+      "y": 28,
+      "encoded_offset": 1878,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1881,
+          "words": [
+            0,
+            0,
+            28539,
+            10535,
+            14730,
+            10502,
+            2081,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1057,
+            13741,
+            2114,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1945
+    },
+    {
+      "y": 29,
+      "encoded_offset": 1945,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1948,
+          "words": [
+            0,
+            0,
+            0,
+            19026,
+            11593,
+            6308,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            5285,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 2012
+    },
+    {
+      "y": 30,
+      "encoded_offset": 2012,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 2015,
+          "words": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4228,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 2079
+    }
+  ],
+  "namespace": "LTicon",
+  "member": "106.lbt",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTicon\\row00009-106.lbt",
+    "bytes": 2079,
+    "sha256": "2A12F8CD6A7B06C8C478D7526E15E6643EB941FE6973EC122505E157D7B68C66"
+  },
+  "provenance": {
+    "index_row": 9,
+    "source_index": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.idx",
+      "bytes": 6360,
+      "sha256": "2EA2E48A61C246A5D4CB2820C4C3431F487705C67459290A998D9DBE9017BAA7"
+    },
+    "source_pak": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.pak",
+      "bytes": 274258,
+      "sha256": "52FEC7B547B63B75BE1178D66E4C0E17EA5B48F089B47E1836EDD120C79C015D"
+    },
+    "role": "offset_or_coverage_case"
+  },
+  "prior_layout_details_compared": {
+    "offset": [
+      0,
+      0
+    ],
+    "header_width": 32,
+    "width": 32,
+    "height": 31,
+    "coverage_sha256": "2478039014190C26E3EE43C82BD317697289325D31C20BE034B2AB3ADBD6A2B6",
+    "rgba_coverage_alpha_sha256": "A094DD4CE4E490997603ADE25EE23556344A2FDA16F79E69BBCA74E4B5BC3C38",
+    "encoded_pixels": 991,
+    "zero_pixels": 291,
+    "bytes_consumed": 2079,
+    "native_offset_alpha_blit_parity": false
+  },
+  "coverage_words": 991,
+  "covered_zero_words": 291,
+  "uncovered_words": 1,
+  "zero_examples": [
+    {
+      "x": 20,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 22,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 23,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 28,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 29,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    }
+  ],
+  "uncovered_examples": [
+    {
+      "x": 0,
+      "y": 0,
+      "native_destination_unchanged": true
+    }
+  ],
+  "raw_offset_applied_only_by_draw": true,
+  "files": {
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\raw.bin",
+      "bytes": 2079,
+      "sha256": "2A12F8CD6A7B06C8C478D7526E15E6643EB941FE6973EC122505E157D7B68C66"
+    },
+    "inplace_565_payload": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\converted-565.bin",
+      "bytes": 2079,
+      "sha256": "722D7F77FA7FEFE024D007BFC6EF14216A98EF142B11E6575646E08490597CC7"
+    },
+    "coverage_u8": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\coverage.u8",
+      "bytes": 992,
+      "sha256": "2478039014190C26E3EE43C82BD317697289325D31C20BE034B2AB3ADBD6A2B6"
+    },
+    "dense_source_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\source-words.le16",
+      "bytes": 1984,
+      "sha256": "076F717D0D888A9E8DDF234DE3EB8A6C240652224B1584DA6F8CC43EE146FDAA"
+    },
+    "dense_converted_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\converted-words.le16",
+      "bytes": 1984,
+      "sha256": "2FB95275F461FA03F4C3C8B9DA0C6F102CCD43D93F3309D458EFAF84D9AAE207"
+    },
+    "destination_flag_0": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\destination-flag-0.le16",
+      "bytes": 8192,
+      "sha256": "05B711720986B89B442FE0AA6E0D7C0C0A48B886566FD32CED57B383A72A1CF9"
+    },
+    "destination_flag_1": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\destination-flag-1.le16",
+      "bytes": 8192,
+      "sha256": "0ED23E2AB7C8D28915522809A5FE1E8F5E9A03DFF278C770659D98EF00AFE927"
+    }
+  },
+  "destination_case": {
+    "width": 64,
+    "height": 64,
+    "pitch_bytes": 128,
+    "caller_origin": [
+      8,
+      8
+    ],
+    "sentinel_word_hex": "5AA5",
+    "mask_flag": 0,
+    "DF": 0,
+    "in_bounds": true
+  },
+  "new_case_checks": [
+    {
+      "conversion_flag": 0,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1042,
+          "source_byte_offset": 7,
+          "bytes": 62
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1168,
+          "source_byte_offset": 72,
+          "bytes": 64
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1296,
+          "source_byte_offset": 139,
+          "bytes": 64
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1424,
+          "source_byte_offset": 206,
+          "bytes": 64
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1552,
+          "source_byte_offset": 273,
+          "bytes": 64
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1680,
+          "source_byte_offset": 340,
+          "bytes": 64
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1808,
+          "source_byte_offset": 407,
+          "bytes": 64
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1936,
+          "source_byte_offset": 474,
+          "bytes": 64
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2064,
+          "source_byte_offset": 541,
+          "bytes": 64
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2192,
+          "source_byte_offset": 608,
+          "bytes": 64
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2320,
+          "source_byte_offset": 675,
+          "bytes": 64
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 2448,
+          "source_byte_offset": 742,
+          "bytes": 64
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 2576,
+          "source_byte_offset": 809,
+          "bytes": 64
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2704,
+          "source_byte_offset": 876,
+          "bytes": 64
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2832,
+          "source_byte_offset": 943,
+          "bytes": 64
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 2960,
+          "source_byte_offset": 1010,
+          "bytes": 64
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3088,
+          "source_byte_offset": 1077,
+          "bytes": 64
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3216,
+          "source_byte_offset": 1144,
+          "bytes": 64
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3344,
+          "source_byte_offset": 1211,
+          "bytes": 64
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 3472,
+          "source_byte_offset": 1278,
+          "bytes": 64
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3600,
+          "source_byte_offset": 1345,
+          "bytes": 64
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3728,
+          "source_byte_offset": 1412,
+          "bytes": 64
+        },
+        {
+          "row": 22,
+          "destination_byte_offset": 3856,
+          "source_byte_offset": 1479,
+          "bytes": 64
+        },
+        {
+          "row": 23,
+          "destination_byte_offset": 3984,
+          "source_byte_offset": 1546,
+          "bytes": 64
+        },
+        {
+          "row": 24,
+          "destination_byte_offset": 4112,
+          "source_byte_offset": 1613,
+          "bytes": 64
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4240,
+          "source_byte_offset": 1680,
+          "bytes": 64
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4368,
+          "source_byte_offset": 1747,
+          "bytes": 64
+        },
+        {
+          "row": 27,
+          "destination_byte_offset": 4496,
+          "source_byte_offset": 1814,
+          "bytes": 64
+        },
+        {
+          "row": 28,
+          "destination_byte_offset": 4624,
+          "source_byte_offset": 1881,
+          "bytes": 64
+        },
+        {
+          "row": 29,
+          "destination_byte_offset": 4752,
+          "source_byte_offset": 1948,
+          "bytes": 64
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4880,
+          "source_byte_offset": 2015,
+          "bytes": 64
+        }
+      ]
+    },
+    {
+      "conversion_flag": 1,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1042,
+          "source_byte_offset": 7,
+          "bytes": 62
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1168,
+          "source_byte_offset": 72,
+          "bytes": 64
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1296,
+          "source_byte_offset": 139,
+          "bytes": 64
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1424,
+          "source_byte_offset": 206,
+          "bytes": 64
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1552,
+          "source_byte_offset": 273,
+          "bytes": 64
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1680,
+          "source_byte_offset": 340,
+          "bytes": 64
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1808,
+          "source_byte_offset": 407,
+          "bytes": 64
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1936,
+          "source_byte_offset": 474,
+          "bytes": 64
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2064,
+          "source_byte_offset": 541,
+          "bytes": 64
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2192,
+          "source_byte_offset": 608,
+          "bytes": 64
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2320,
+          "source_byte_offset": 675,
+          "bytes": 64
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 2448,
+          "source_byte_offset": 742,
+          "bytes": 64
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 2576,
+          "source_byte_offset": 809,
+          "bytes": 64
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2704,
+          "source_byte_offset": 876,
+          "bytes": 64
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2832,
+          "source_byte_offset": 943,
+          "bytes": 64
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 2960,
+          "source_byte_offset": 1010,
+          "bytes": 64
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3088,
+          "source_byte_offset": 1077,
+          "bytes": 64
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3216,
+          "source_byte_offset": 1144,
+          "bytes": 64
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3344,
+          "source_byte_offset": 1211,
+          "bytes": 64
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 3472,
+          "source_byte_offset": 1278,
+          "bytes": 64
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3600,
+          "source_byte_offset": 1345,
+          "bytes": 64
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3728,
+          "source_byte_offset": 1412,
+          "bytes": 64
+        },
+        {
+          "row": 22,
+          "destination_byte_offset": 3856,
+          "source_byte_offset": 1479,
+          "bytes": 64
+        },
+        {
+          "row": 23,
+          "destination_byte_offset": 3984,
+          "source_byte_offset": 1546,
+          "bytes": 64
+        },
+        {
+          "row": 24,
+          "destination_byte_offset": 4112,
+          "source_byte_offset": 1613,
+          "bytes": 64
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4240,
+          "source_byte_offset": 1680,
+          "bytes": 64
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4368,
+          "source_byte_offset": 1747,
+          "bytes": 64
+        },
+        {
+          "row": 27,
+          "destination_byte_offset": 4496,
+          "source_byte_offset": 1814,
+          "bytes": 64
+        },
+        {
+          "row": 28,
+          "destination_byte_offset": 4624,
+          "source_byte_offset": 1881,
+          "bytes": 64
+        },
+        {
+          "row": 29,
+          "destination_byte_offset": 4752,
+          "source_byte_offset": 1948,
+          "bytes": 64
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4880,
+          "source_byte_offset": 2015,
+          "bytes": 64
+        }
+      ]
+    }
+  ],
+  "oracle_status": "CODE_DERIVED_EXPECTATIONS_ONLY; no original runtime pixels or Modern output used"
+}

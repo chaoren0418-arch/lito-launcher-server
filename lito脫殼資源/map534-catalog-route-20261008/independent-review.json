@@ -1,0 +1,37 @@
+{
+  "reviewer": "/root/boundary_review",
+  "authority": "Preserved independent peer report; supervisor acceptance remains pending.",
+  "reported_tool_receipt": "25ec12",
+  "reported_exit_code": 0,
+  "invocation": "Fresh literal PowerShell Python here-string piped to python -B -; workdir D:/lineage開發/3-lito開發/lito脫殼資源. Exact cipher core provided in collaboration message; full inline review command is not preserved in this file.",
+  "independent_method": "Fused nibble/permuted paired-Sbox formulation, unlike producer's direct bitwise implementation. No producer import/execution.",
+  "checks": {
+    "input_snapshots_verified": 7,
+    "index_count": 353,
+    "index_plaintext_count_hex": "61010000",
+    "index_preserved_tail_range": [9884, 9888],
+    "index_preserved_tail_hex": "9A410000",
+    "record_index": 245,
+    "decoded_record_range": [6864, 6892],
+    "covering_cipher_block_range": [6860, 6892],
+    "pak_member_range": [190888, 193472],
+    "member_complete_blocks": 323,
+    "encoded_sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F",
+    "decoded_sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD",
+    "declared_rows": 67,
+    "source_compatible_active_choices": 47,
+    "unique_source_row": 22,
+    "raw_row_content_range": [649, 722],
+    "crlf_end": 724,
+    "mode": 1,
+    "map_id": 534,
+    "complete_one_to_one_authority_sector_count": 16
+  },
+  "conclusion": "No current-input mismatch found; all raw decode/offsets/route values match. Full source-compatible row parsing and independent set equality/sorted uniqueness checks match current exact inputs.",
+  "limits": [
+    "Producer validates the targeted row rather than every other catalog row; peer supplied the full parse check for these exact bytes only.",
+    "Static Modern resource/category policy; no original PE cipher identity, original wire/room admission, native/full-WORLD, spawn/camera or extra-field semantics."
+  ],
+  "supervisor_reviewed": false,
+  "product_accepted": false
+}

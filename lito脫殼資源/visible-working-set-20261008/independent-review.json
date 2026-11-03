@@ -1,0 +1,12 @@
+{
+  "reviewer": "/root/boundary_review",
+  "authority": "Preserved peer report; not supervisor acceptance or actual consumer execution.",
+  "reported_tool_receipt": "35b95a",
+  "reported_exit_code": 0,
+  "exact_inline_review_command_preserved": false,
+  "checks": {"raw_references":347528,"floor":131072,"overlay":113794,"object":102662,"all_csv_tuples_match":true,"half_cell_parity_checked":true,"optimized_floor_row_enumeration_checked":true,"five_frames_all_fields_checked":true,"per_key_visible_multiplicities_checked":true,"keyset_hashes_checked":true,"two_capacity_sequences_all_fields_checked":true,"limited_eviction_deltas":[0,0,1605,406,1562]},
+  "conclusion": "No substantive mismatch found. Independent fresh raw parse, alternate parity projection and ordered-set LRU model match artifacts.",
+  "limits": ["Progress phase may change before budget rejection; payload/counters unchanged qualifier retained.", "Five fixed cameras are sampled working sets, not a worst-case bound across all cameras.", "No raster/pixel, Rust cache execution, cancellation/decode failure, native movement or runtime proof."],
+  "supervisor_reviewed":false,
+  "product_accepted":false
+}

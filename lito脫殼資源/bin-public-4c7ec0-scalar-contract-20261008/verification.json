@@ -1,0 +1,13 @@
+{
+  "fixedPE_source_same_bytes_hashed_and_decoded": true,
+  "raw_body49bytes_all_decoded": true,
+  "ret4_at004C7EEE": true,
+  "internal_branch_instruction_starts": true,
+  "complete_local_CFG": true,
+  "all_helper_bodies_unexpanded": true,
+  "caller_context_only_no_redissembly": true,
+  "scalar_equality_at004C7ED3": true,
+  "NULL_on_miss_not_proved": true,
+  "fallthroughEAX_unchanged_after_fallback": true,
+  "PRODUCT_ACCEPTED": false
+}

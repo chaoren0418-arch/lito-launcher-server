@@ -1,0 +1,122 @@
+{
+  "task_id": "bin-skill-pane-activation-wire-boundary-20261008",
+  "generated_at": "2026-10-08T06:18:02.374885+08:00",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008-contract.json",
+    "bytes": 34931,
+    "sha256": "8D133F72AA4F9E05175B1F463E962EFD0495C9A23AB966A8CEC8C25E485D5229"
+  },
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D640-EA.bin",
+      "bytes": 234,
+      "sha256": "9CA9DEFAE3A12955F76B45D8D8CD11C5FCE4B8D5F18C9C91AA9B23A186C5581C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D749-1F.bin",
+      "bytes": 31,
+      "sha256": "C43037E59FEB3E4C153FE75C5FB32C082B8C7A3091B2B3262E115430C14ED4F0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D87C-4.bin",
+      "bytes": 4,
+      "sha256": "5B04E3B26BE9D80B26295EDF12132F3A898F27B22EEB779FE8127C85A866F2A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0046D896-1.bin",
+      "bytes": 1,
+      "sha256": "E52D9C508C502347344D8C07AD91CBD6068AFC75FF6292F062A09CA381C89E71"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047BB10-F3.bin",
+      "bytes": 243,
+      "sha256": "A7992507424B22304610B7071E18FC3722F26BC5F6F346C5338B3402D11775E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047BC9B-29.bin",
+      "bytes": 41,
+      "sha256": "AF80E7FDF020DC47206B93BE098B85BC24328F7BA126B23ECB31F85BE025E948"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047C32C-4.bin",
+      "bytes": 4,
+      "sha256": "3DE73E933D7C49DD6771962A165B8297BD7E204A91C811EF7B234706166CCB8C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047DC06-5D.bin",
+      "bytes": 93,
+      "sha256": "878F62D44715FF97F286BA09A3EA140E73E5E1B973828473EF0D77D980E0EC0A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\0047DC06-62.bin",
+      "bytes": 98,
+      "sha256": "F70EB3043BE9EEB599C27C4B01E070BFE9045259853210732882DAF14CB65E9C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBB30-19.bin",
+      "bytes": 25,
+      "sha256": "D05AA7745961E038223DAE6D4FD9773BA806257C7BCAC59D0F52A6A0782EFD35"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBBD0-D5.bin",
+      "bytes": 213,
+      "sha256": "3248872BC10982D75C1952D79ECF78DB9B51AE364416C0A3F74CAC3F19B9DEE9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBEB0-5.bin",
+      "bytes": 5,
+      "sha256": "F43D94BE74A12DACDFA8746D56E13B9F52FDCA42BFD1A632D51407E8F8662CDA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\004EBEC0-14.bin",
+      "bytes": 20,
+      "sha256": "CC577BF5334A0CE350F54C9AFD3F8392FAF59FB96D25D24A6D63B757A63BBE14"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\asm-navigation.json",
+      "bytes": 44154,
+      "sha256": "4A7C13BEACF268A8086D8A9A34D736CFFDEF66C52DBA3C3EE56A2AFDE388A3B8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\attempt1.stderr.txt",
+      "bytes": 657,
+      "sha256": "7A8F53AAB9324A01E23D335A321B7A9CC807242C2B1BFED8695A873E9EAC3510"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\attempt1.stdout.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\derive.py",
+      "bytes": 6049,
+      "sha256": "AACC974553B7EBD57FB9BA723E9B87BFB1B32578C026B90D76A348D4799AFD95"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\derive.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\derive.stdout.txt",
+      "bytes": 10661,
+      "sha256": "41AFAAA600B18B2E67409DB8280DB98FB4F34BDCC443C44AC869A28578A09801"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\finalize.py",
+      "bytes": 13691,
+      "sha256": "1FEABE33F70D05C8BCE95ACD28CBE45B245A8ED4965320C239C1CCA9AECCB72C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\inherited-registry-index-support.json",
+      "bytes": 2246,
+      "sha256": "5546A33A3AA901C5DE8992CDE7ACFD2C4376945B1E982AC80629BB962781C450"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008\\raw-evidence.json",
+      "bytes": 72950,
+      "sha256": "2F0E057D4EA7C3BA1BCAA66AFCABA5520E6605E92D55C59C29E688F7746EB974"
+    }
+  ],
+  "scope": "Exact task directory artifacts and sibling contract; manifest itself is externally pinned, not self-hashed."
+}

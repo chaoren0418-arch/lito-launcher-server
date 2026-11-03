@@ -1,0 +1,12 @@
+{
+  "schema": "ida77-bounded-receipt-v1",
+  "ida_started": false,
+  "pid": null,
+  "input_executed": false,
+  "database_created": false,
+  "execute_requested": true,
+  "status": "REFUSED",
+  "code": "SCOPE_NOT_AUTHORIZED",
+  "detail": "This delivery does not authorize any LITO analysis",
+  "elapsed_seconds": 0.0
+}

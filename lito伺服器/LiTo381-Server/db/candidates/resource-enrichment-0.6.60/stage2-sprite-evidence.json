@@ -1,0 +1,174 @@
+{
+  "package_status": "未匯入、未接線",
+  "unmatched_resolutions": [
+    {
+      "effect_id": 754,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "declared sprite without animation action in TW; packet object-effect consumer exists",
+      "tw_source_id": 535,
+      "tw_line": 2843,
+      "tw_block_sha256": "bce2d6e3ae19f1673884fe0bf4c282e6a72d25f8be0629d4e9b9735695a44d5a",
+      "tw_declaration": "#754  1       turn undead\n\t102.(0)\n\t104.attr(8)",
+      "retained_text_source_id": 539,
+      "retained_line": 1145,
+      "retained_animation_present": true,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 5906,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "reserved dummy; slot rejected before cast",
+      "tw_source_id": 535,
+      "tw_line": 31851,
+      "tw_block_sha256": "9c590ba99c47366ce38bf2952cc7d18847b20b5fa96fce83426420e4f3eefde8",
+      "tw_declaration": "#5906 1 dummy\n\t102.type(0)",
+      "retained_text_source_id": 539,
+      "retained_line": 24627,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 5907,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "reserved dummy; slot rejected before cast",
+      "tw_source_id": 535,
+      "tw_line": 31853,
+      "tw_block_sha256": "8e9cdb40de026b7b60a01ed8cde00c18b38bd2aef77e0ee783cc8c9915ccc60d",
+      "tw_declaration": "#5907 1 dummy\n\t102.type(0)",
+      "retained_text_source_id": 539,
+      "retained_line": 24628,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 5909,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "reserved dummy; slot rejected before cast",
+      "tw_source_id": 535,
+      "tw_line": 31858,
+      "tw_block_sha256": "49e0f13b0cf495b48f81a9dd38bd093b6fcbdf25cbd7d782820ef4dc3acb53fa",
+      "tw_declaration": "#5909 1 dummy\n\t102.type(0)",
+      "retained_text_source_id": 539,
+      "retained_line": 24631,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 5910,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "reserved dummy; slot rejected before cast",
+      "tw_source_id": 535,
+      "tw_line": 31860,
+      "tw_block_sha256": "969f4851ea357e7e543459e1ef705225af4ab6d04bef1b057107017d5b5926ef",
+      "tw_declaration": "#5910 1 dummy\n\t102.type(0)",
+      "retained_text_source_id": 539,
+      "retained_line": 24632,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 2941,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "declared sprite without animation action in TW; packet object-effect consumer exists",
+      "tw_source_id": 535,
+      "tw_line": 13209,
+      "tw_block_sha256": "ded068a47438ba659194bb8e6ddd6fcccb8eea61eb9913f449f08126bac2a1bc",
+      "tw_declaration": "#2941\t1 earth cloak\n\t102.type(9)",
+      "retained_text_source_id": 539,
+      "retained_line": 6363,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    },
+    {
+      "effect_id": 527,
+      "tw_declared": true,
+      "tw_animation_present": false,
+      "classification": "coexist metadata; no packet consumer",
+      "tw_source_id": 535,
+      "tw_line": 2096,
+      "tw_block_sha256": "8bafbd3990b3dfb8ef6f7ae790e0f813cdaa934ac4d8c06bd5f03fd6f7caf24e",
+      "tw_declaration": "#527  1       dummy\n\t102.type(0)",
+      "retained_text_source_id": 539,
+      "retained_line": 875,
+      "retained_animation_present": false,
+      "not_fixed_by_fallback": true
+    }
+  ],
+  "flight_declarations": [
+    {
+      "skill_id": 4,
+      "sprite_id": 167,
+      "source_id": 535,
+      "line": 946,
+      "block_sha256": "5b74f869e0d890203094decb0c310578eae0231f5c4fe74f57f48907caf18717",
+      "declaration": "#167  4       energy bolt\n\t0.fly(1 4,0.3:3 0.0:2[97 0.1:3 0.2:2)\n\t104.attr(8)\n\t109.effect(4 219)"
+    },
+    {
+      "skill_id": 6,
+      "sprite_id": 1797,
+      "source_id": 535,
+      "line": 7491,
+      "block_sha256": "7625a7a3e721f8b8611a139b98f134d5ddde7120f6fbecb05c7aa2c54788161d",
+      "declaration": "#1797 8       icedagger shooting\n\t0.fly(1 4,0.3:2 0.0:2[719 0.1:2 0.2:2)\n\t104.attr(8)\n\t109.effect(5 1798)"
+    },
+    {
+      "skill_id": 7,
+      "sprite_id": 1799,
+      "source_id": 535,
+      "line": 7498,
+      "block_sha256": "7ccde763140e558abf5903a08737d14224c367a854d54184a79b07e1099ffb05",
+      "declaration": "#1799 4       windcutter shooting\n\t0.fly(0 5,0.4:2 0.0:2[719 0.1:2 0.2:2 0.3:2)\n\t104.attr(8)\n\t109.effect(4 1800)"
+    },
+    {
+      "skill_id": 15,
+      "sprite_id": 1583,
+      "source_id": 535,
+      "line": 6487,
+      "block_sha256": "b55633fe048d8c118c35cc87f945ee6ec9ee57c4cd58313e3b0949c84324f339",
+      "declaration": "#1583 4       fire bolt\n\t0.fly(1 4,0.3:3 0.0:2[97 0.1:3 0.2:2)\n\t104.attr(8)\n\t109.effect(4 218)"
+    },
+    {
+      "skill_id": 38,
+      "sprite_id": 11738,
+      "source_id": 535,
+      "line": 80005,
+      "block_sha256": "cac4927d5a43ddda805f82944631e2a69c5a9f11651b048bfabb91b13a75f2b6",
+      "declaration": "#11738 8 renewal cone of cold fly sc\n\t0.fly(1 3,0.2:2 0.0:2 0.1:2)\n\t104.attr(8)\n\t105.clothes(1 11739)\n\t109.effect(5 11740)"
+    }
+  ],
+  "physical_arrow_declaration": {
+    "line": 490,
+    "offset": 27960,
+    "text": "#66   8       arrow\n\t0.fly(1 3,0.2:1 0.0:1 0.1:1)\n\t102.type(9)\n\t109.effect(3 -1)",
+    "sha256": "b19032728c1f9c62db4ce242d5a2d7079b47450e6166bddcaf299089a7b41f93"
+  },
+  "namespace_warning": "LTlist.spr #66 is shining effect; shared SPR#66 is arrow. Same integers are distinct namespaces.",
+  "retained_resource_links": [
+    {
+      "index_source_id": 536,
+      "archive_source_id": 537,
+      "member": "list.spr",
+      "row_0based": 15937,
+      "offset": 7864336,
+      "bytes": 4067417,
+      "raw_payload_sha256": "69faa6bdb817279d6b20d132c7744be387ccecd9843ac82cf454e363932d33c4",
+      "decoded_sha256": "523c61ad5cc362a56a36f58b262c84efa8b4435f017e7074d35b5834e8b9f127"
+    },
+    {
+      "index_source_id": 9,
+      "archive_source_id": 10,
+      "member": "LTlist.spr",
+      "row_0based": 240,
+      "offset": 145671,
+      "bytes": 39135,
+      "raw_payload_sha256": "8baf964cf30f49c29e194cb5ebbef1bb6b8bb61c755975ad26b034538f660962",
+      "decoded_sha256": "f55779aeb5c3982d8b366068cdbe4003d802619074e54388f26ee87368f42603"
+    }
+  ]
+}

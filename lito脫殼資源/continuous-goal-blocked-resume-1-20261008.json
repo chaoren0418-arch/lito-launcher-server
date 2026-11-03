@@ -1,0 +1,24 @@
+{
+  "record_kind": "Actual Goal blocked transition after fresh resumed three-turn audit",
+  "resume_generation": 1,
+  "consecutive_resumed_no_progress_turns": 3,
+  "threshold_met": true,
+  "actual_goal_tool_result": {
+    "goal": {
+      "threadId": "01a11705-96c0-74a0-b56d-ed486c318c95",
+      "objective": "Continuously answer concrete unresolved LITO BIN function/packet/resource/UI/behavior questions needed by Launcher, Server and Modern, producing supervisor-verifiable contracts with source SHA, VA/RVA or explicitly inapplicable/unknown mapping, raw tool output, conclusions, unknowns, and a concrete consumer adoption action. Work from qualified fixed PE/raw bytes and pinned existing resource sources; ASM is navigation only. Prioritize consumer defects that can currently be resolved, submit each new result to the supervisor for validation before release, then continue the next substantive analysis. Completion requires all necessary BIN handoffs for the three products' actual acceptance to be qualified, adopted and reviewed. Preserve stopped private backing/next layer, tool/refusal and native-human/runtime gates; visible IDA/MCP is not evidence. No old PASS reruns, blanket inventories, fabricated semantic/scene/owner/clock/wire claims, or infinite report loops. Follow actual Goal blocker rules if every independent lawful analysis path truly requires unavailable inputs.",
+      "status": "blocked",
+      "tokensUsed": 821428,
+      "timeUsedSeconds": 4151,
+      "createdAt": 1791393717,
+      "updatedAt": 1791409406
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "blocking_condition": "All currently concrete remaining BIN consumer paths require qualified external input or lawful independent scope.",
+  "new_source_or_runtime_changes": false,
+  "product_complete": false,
+  "previous_blocked_receipt": "continuous-goal-blocked-20261008.json",
+  "audit_file": "external-input-blocker-audit-20261008.json"
+}

@@ -1,0 +1,16 @@
+560600:                                         ; sub_4D4170+C6↑o
+560601: aIleNotFoundFor db 'ile not found for Teleport.txt',0Ah,0
+560602: align 4
+560603: dd 37h dup(0)
+560604: a21020018214 db '210.200.182.14',0      ; DATA XREF: ___:0047C943↑o
+560605:                                         ; sub_480620:loc_4806F6↑o
+560606:                                         ; fn_ClientApplication_Run+217↑o
+560607:                                         ; fn_ClientApplication_Run+E01↑o
+560608: align 4
+560609: dd 3Ch dup(0)
+560610: dword_64B8E4 dd 0                       ; DATA XREF: sub_47CF00+12C7↑w
+560611:                                         ; sub_47E360+E2↑w
+560612:                                         ; sub_47E4B0+3D6↑r
+560613:                                         ; sub_47E4B0+3F0↑w
+560614: dword_64B8E8 dd 0                       ; DATA XREF: sub_47EB50+8C↑r
+560615:                                         ; sub_47EB50+A5↑w

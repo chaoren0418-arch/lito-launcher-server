@@ -1,0 +1,117 @@
+{
+  "Source_failure_reference": "build/source-target-failure-oracle-current.json",
+  "Source76_only_effect_failure_and_STOPPED_rejection_changed": true,
+  "skill66_expectations_retained": true,
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\CompanionAreaSceneProbe.java",
+        "sha256": "7fe8c34dba005dcce0c80a5bb7806787d0ccd983ac195c4659a9e3d4dcb69905"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-legacy-fixtures\\CompanionAreaSceneProbe.java",
+        "sha256": "aae001ef2676c132197083bbc2c52a41baacf024b78aabfce1b3da0c5d230086"
+      },
+      "changes": [
+        [
+          "if(scene==1&&!applied)oldGaps++;",
+          "if(skill==66&&scene==1&&!applied)oldGaps++;"
+        ],
+        [
+          "need(applied==accepted,",
+          "need(applied==(accepted&&skill==66),"
+        ],
+        [
+          "need(self.contains(fx)==accepted&&",
+          "need(self.contains(fx)==(accepted&&skill==66)&&"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\CompanionAreaPublicationProbe.java",
+        "sha256": "b38191bc563f7440c8f1121aefeb460f758d332f052f3d4d1c5350f27a8092d0"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-legacy-fixtures\\CompanionAreaPublicationProbe.java",
+        "sha256": "beb2214008982e024ccc2589d958b3ad384c8b76377c52f400db6aa95cbd949e"
+      },
+      "changes": [
+        [
+          "need(committed&&a.raw.size()+b.raw.size()==0,",
+          "need(committed==(skill==66)&&a.raw.size()+b.raw.size()==0,"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\CompanionAreaLifecycleProbe.java",
+        "sha256": "209053f48dc4c44a26474ebdf3ab7a42110313588f750c050aa60851672f0942"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-legacy-fixtures\\CompanionAreaLifecycleProbe.java",
+        "sha256": "0f3f063fb1858f24caf7cc09fdd195596d2550e366fc375bc2e9832cb7ae3c49"
+      },
+      "changes": [
+        [
+          "boolean accepted=mode==0||mode==7||mode==5&&item==0;",
+          "boolean accepted=mode==0||mode==7&&skill==66||mode==5&&item==0;"
+        ],
+        [
+          "if(scene==1&&mode==0&&!applied)oldGaps++;",
+          "if(skill==66&&scene==1&&mode==0&&!applied)oldGaps++;"
+        ],
+        [
+          "need(applied==accepted,",
+          "need(applied==(accepted&&skill==66),"
+        ],
+        [
+          "need(self.contains(fx)==accepted&&",
+          "need(self.contains(fx)==(accepted&&skill==66)&&"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\CompanionAreaSecondaryProbe.java",
+        "sha256": "b83b1a791a80b82efc8174b6b1eb450a2b89e43cfc6a33b280b4e1e18c05caa8"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-legacy-fixtures\\CompanionAreaSecondaryProbe.java",
+        "sha256": "1489cc5d6eef50023fa301b5a75afb4f37381d4e26345e4c7afff241e9976e51"
+      },
+      "changes": [
+        [
+          "boolean expectedPet=scene==1&&!before;",
+          "boolean expectedPet=skill==66&&scene==1&&!before;"
+        ],
+        [
+          "if(scene==1&&!applied)oldGaps++;",
+          "if(skill==66&&scene==1&&!applied)oldGaps++;"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\CompanionAreaSecondaryRetirementProbe.java",
+        "sha256": "65e00a81f35bec6d8851c0cded79e36b535ab27c28759b9c5339ed41da19ba03"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-legacy-fixtures\\CompanionAreaSecondaryRetirementProbe.java",
+        "sha256": "1f8e7240e1a41df87c6db12bbeff2be141c4f0340e48861bc694deb3bd5a3179"
+      },
+      "changes": [
+        [
+          "boolean expectedPet=mode==7;boolean accepted=!before||mode==7;",
+          "boolean expectedPet=skill==66&&mode==7;boolean accepted=skill==66?(!before||mode==7):mode!=7;"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    }
+  ],
+  "full_goal_achieved": false
+}

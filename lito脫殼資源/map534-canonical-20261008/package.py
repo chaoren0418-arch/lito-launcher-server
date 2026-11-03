@@ -1,0 +1,25 @@
+import datetime,hashlib,json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parent;OWNER=ROOT.parent;TASK='bin_resources-modern-map534-canonical-qualification-20261008'
+def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+def put(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+def pin(p):return dict(path=str(p),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest().upper())
+now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat();result=read(ROOT/'result.json')
+contract=dict(task_id=TASK,owner='bin_resources',state='review',evidence_level='independent_raw_resource_source_policy_geometry_serialization',updated_at=now,
+ conclusion='Independently reconstructed map534 canonical geometry bytes match the pinned binding SHA7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE. This closes the declared-only digest limitation of the two preceding resource-input contracts.',
+ result=result,inputs=pin(ROOT/'inputs.json'),evidence=[pin(p) for p in sorted(ROOT.iterdir()) if p.is_file() and p.name not in ['package.py','delivery-manifest.json']],
+ reproduction=dict(command='C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B map534-canonical-20261008/derive.py',workdir=str(OWNER),exit_code=0,raw_stdout=str(ROOT/'raw.stdout.txt'),raw_stderr=str(ROOT/'raw.stderr.txt')),
+ method='Raw attribute pairs parsed at each sector layer3 byte range; portal blockers parsed at layer7. World cells constructed across16 pinned sectors before direction calculation. Cardinal edges use originating north/east attribute bit0, destination south/west bit0, and require both cells; diagonals require either complete two-edge route. Serialize sorted sectors with big-endian geometry header/source SHA and row-major4096 mask bytes after fixed manifest prefix/version/map/count. Exact66391 bytes saved in canonical.bin.',
+ byte_mapping='Sector attribute/portal file ranges and canonical header/direction output offsets are in sector-directions.json. VA/RVA N/A for raw data/Rust text; no fixed-PE function, main-image semantic or runtime attribution.',
+ consumer_adoption=dict(owner='Modern',action='Bind admission/frame regression runs to exact mode1/map534 sector/archive pins from admission contract and independently qualified canonical geometry digest. Compare the actual loaded plan/canonical digest, not only numeric map ID or historical PNG.',falsifiable_regression=['Actual loaded plan mode1/map534 and all20 resource SHA/length pins must match; actual canonical_digest must equal7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE.', 'If a selected sector byte/hash, portal blocker, direction rule, ordering or source length changes, these baseline canonical bytes/digest are inapplicable; reject stale identity instead of silently reusing old demand/keysets.', 'Keep mode qualification explicit: canonical serialization contains map_id534 but not mode1. The manifest route supplies mode identity.']),
+ unknowns=['Geometry digest identifies Modern current static movement/serialization policy for pinned S32 bytes; it does not independently prove native movement/collision semantics or original wire rules.', '65536 world cells,9688 standing cells and1322 cross-sector open direction edges are source-policy mask counts, not spawn/scene/completeness/runtime acceptance.', 'No RGBA decode, pixel comparison, native process acquisition, current game interval, consumer binary/test run or GUI/timing proof.', 'Modern adoption and supervisor review remain pending; source snapshots can become stale after changes.'],
+ reporting=dict(reported=False,notified=False,adopted=False,reviewed=False),goal_status='active',self_accepted=False,product_complete=False,
+ next_required_action='Supervisor review/forward all three qualified inputs; Modern run adoption regressions and supply new source/run pins. BIN review any concrete resource discrepancy from those new receipts; do not replay old PASS suites or fabricate native acceptance.')
+path=OWNER/'map534-canonical-20261008-contract.json';put(path,contract)
+put(ROOT/'delivery-manifest.json',dict(task_id=TASK,contract=pin(path),files=[pin(p) for p in sorted(ROOT.iterdir()) if p.is_file() and p.name!='delivery-manifest.json'],state='review',self_accepted=False))
+entry=dict(task_id=TASK,state='review',updated_at=now,delivery=pin(path),delivery_manifest=pin(ROOT/'delivery-manifest.json'),goal_status='active',self_accepted=False,product_complete=False,reporting=contract['reporting'],blockers=[],next_required_action=contract['next_required_action'])
+for name in ['監製進度.json','工作佇列.json']:
+ p=OWNER/name;d=read(p);key='map534_canonical_20261008';assert key not in d;d[key]=entry
+ if name=='工作佇列.json':d['items'].append(dict(id=TASK,owner='bin_resources',title='Independently qualify exact pinned map534 canonical geometry identity',**{k:v for k,v in entry.items() if k!='task_id'}))
+ put(p,d)
+print(json.dumps(dict(contract=pin(path),delivery_manifest=pin(ROOT/'delivery-manifest.json')),ensure_ascii=True))

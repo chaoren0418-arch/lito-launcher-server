@@ -1,0 +1,52 @@
+420783: sub_4C9220 proc near                    ; CODE XREF: sub_4AEE70+8A↑p
+420784: 
+420785: arg_0= dword ptr  8
+420786: arg_4= word ptr  0Ch
+420787: arg_8= dword ptr  10h
+420788: 
+420789: push    ebp
+420790: mov     ebp, esp
+420791: mov     edx, [ecx+2Ch]
+420792: push    ebx
+420793: push    esi
+420794: xor     eax, eax
+420795: push    edi
+420796: mov     edi, [ebp+arg_0]
+420797: test    edx, edx
+420798: jle     short loc_4C9244
+420799: 
+420800: mov     esi, [ecx+58h]
+420801: 
+420802: 
+420803: loc_4C9235:                             ; CODE XREF: sub_4C9220+22↓j
+420804: mov     ebx, [esi]
+420805: cmp     [ebx+4], edi
+420806: jz      short loc_4C925B
+420807: 
+420808: inc     eax
+420809: add     esi, 4
+420810: cmp     eax, edx
+420811: jl      short loc_4C9235
+420812: 
+420813: 
+420814: loc_4C9244:                             ; CODE XREF: sub_4C9220+10↑j
+420815: cmp     edx, 100h
+420816: jge     short loc_4C925B
+420817: 
+420818: movsx   edx, [ebp+arg_4]
+420819: mov     eax, [ebp+arg_8]
+420820: push    eax
+420821: push    edx
+420822: push    edi
+420823: call    sub_4CD050
+420824: 
+420825: 
+420826: loc_4C925B:                             ; CODE XREF: sub_4C9220+1A↑j
+420827:                                         ; sub_4C9220+2A↑j
+420828: pop     edi
+420829: pop     esi
+420830: pop     ebx
+420831: pop     ebp
+420832: retn    0Ch
+420833: 
+420834: sub_4C9220 endp

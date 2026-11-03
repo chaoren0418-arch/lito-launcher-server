@@ -1,0 +1,45 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionMaterialProbe.java",
+      "sha256": "a7b39b33a9c7163669ec3d22bbcbba8174ddbc8230fb8d4e1acf3b9189ef03a7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionFaultProbe.java",
+      "sha256": "56ecbeb1271601230680badc52e1f25c49508e946bde7df3c29bec2160f69a67"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionLifecycleProbe.java",
+      "sha256": "c2da8347ce1e9dfc63f23efcb337ea33dea8741b664f2a1f379316225c67d4bc"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionNumericProbe.java",
+      "sha256": "aacdb23491a158c290d08a31b875fe8a2aced314cda1c3fad66bd08a0e636a0b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionAnswerLifetimeProbe.java",
+      "sha256": "fea90607f062b3ccfa45f840a3caf5d42ba6907107dc5aadf5c30562aebb9848"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\test.py",
+      "sha256": "48f39d9ecdc012fc8eb5c4365540835278c606299f93dc4c1e368ed19423e78c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\test_boundaries.py",
+      "sha256": "ba9e33fe1dc503320f3e3f64140dde72a2d73e2090ab8675218bf9930dc13d75"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\test_numeric.py",
+      "sha256": "0acb52eb22d0b62004574b45b8eca42dd86209e984507b65da5e02f55be55021"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\audit_answer_lifetime.py",
+      "sha256": "87a26248684033f31fd950ce451ba5ebe4afd9a8fb3da9e78e0d132abf382326"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-lifetime\\prepare_tests.py",
+      "sha256": "f04f5f0fd94fc249653b046cb7871459714922b713a398b038f61e16ccc3c24f"
+    }
+  ],
+  "scope": "before/after64 native/direct role-replacement replies; retain256 original cast/reply and48 numeric cases; actual material fault observer and48 cast lifetime cases; no NPC/full-release claim"
+}

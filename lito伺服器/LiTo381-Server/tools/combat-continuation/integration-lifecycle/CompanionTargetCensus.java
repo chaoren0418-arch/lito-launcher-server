@@ -1,0 +1,5 @@
+import java.nio.file.*;import java.io.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Read-only actual actor query and TTL consumer inventory. */
+public final class CompanionTargetCensus {
+ public static void main(String[]args)throws Exception{try(var j=new JarFile(args[0]);var out=new PrintWriter(Files.newBufferedWriter(Path.of(args[1])))){out.println("class\tmethod\tdescriptor\towner\tquery\tquery_descriptor");for(var e:Collections.list(j.entries())){if(!e.getName().startsWith("local/lito381/server/")||!e.getName().endsWith(".class"))continue;var c=new ClassNode();new ClassReader(j.getInputStream(e)).accept(c,ClassReader.SKIP_DEBUG);for(var m:c.methods)for(var n:m.instructions)if(n instanceof MethodInsnNode call&&(call.name.equals("companions")&&call.owner.endsWith("NativeAreaMaterialAction")||call.name.equals("retry")&&call.owner.endsWith("NativeSummonTerminalLifecycle")||call.name.equals("classicWorldCompanionSnapshots")||call.name.equals("tickClassicWorldCompanions")))out.println(c.name+"\t"+m.name+"\t"+m.desc+"\t"+call.owner+"\t"+call.name+"\t"+call.desc);}}}
+}

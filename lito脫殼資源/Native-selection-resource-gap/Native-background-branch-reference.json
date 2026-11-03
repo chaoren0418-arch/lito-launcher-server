@@ -1,0 +1,84 @@
+{
+  "existing_fragment_read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\496EB0-497010.disasm",
+      "bytes": 3361,
+      "sha256": "8E1E9DCBFA15A306E228B027D36CBF156FD19848956269C8615BC451B765855A"
+    },
+    "content_sha256": "8E1E9DCBFA15A306E228B027D36CBF156FD19848956269C8615BC451B765855A",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\496EB0-497010.disasm",
+      "bytes": 3361,
+      "sha256": "8E1E9DCBFA15A306E228B027D36CBF156FD19848956269C8615BC451B765855A"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T09:44:06.062123+08:00"
+  },
+  "fixed_PE_origin": {
+    "va": "00496F05",
+    "rva": "00096F05",
+    "file_offset": 618245,
+    "bytes": 40,
+    "PE": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    }
+  },
+  "fixed_bytes_sha256": "CC04DFC0ACA3DEAC18EDD91F315A555EC79F8DD8AC5BD470FD388F83647A5226",
+  "existing_fragment_lines": [
+    {
+      "va": "00496F05",
+      "bytes": "a0a0af6400",
+      "instruction": "mov al, byte ptr [0x64afa0]"
+    },
+    {
+      "va": "00496F0A",
+      "bytes": "84c0",
+      "instruction": "test al, al"
+    },
+    {
+      "va": "00496F0C",
+      "bytes": "7407",
+      "instruction": "je 0x496f15"
+    },
+    {
+      "va": "00496F0E",
+      "bytes": "683a1d0000",
+      "instruction": "push 0x1d3a"
+    },
+    {
+      "va": "00496F13",
+      "bytes": "eb05",
+      "instruction": "jmp 0x496f1a"
+    },
+    {
+      "va": "00496F15",
+      "bytes": "68aa180000",
+      "instruction": "push 0x18aa"
+    },
+    {
+      "va": "00496F1A",
+      "bytes": "8b15c81e6300",
+      "instruction": "mov edx, dword ptr [0x631ec8]"
+    },
+    {
+      "va": "00496F20",
+      "bytes": "8b0dcc1e6300",
+      "instruction": "mov ecx, dword ptr [0x631ecc]"
+    },
+    {
+      "va": "00496F26",
+      "bytes": "6a07",
+      "instruction": "push 7"
+    },
+    {
+      "va": "00496F28",
+      "bytes": "e8f3e5ffff",
+      "instruction": "call 0x495520"
+    }
+  ],
+  "fixed_bytes_match": true,
+  "branch": "496F05 reads64AFA0;nonzero pushes7482(1D3A),zero pushes6314(18AA);passes kind7 and631EC8/631ECC descriptors to495520. Stop at call; no constructor/callback/private body expansion.",
+  "qualification": "Both native IMG files exist and match this numeric branch. This caller belongs to the historical character UI study; whether this phase is the selected directory background or another character subscene is not qualified by this finite branch alone. Do not bind it to Directory solely from filename or dimensions."
+}

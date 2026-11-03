@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\ArmorMaterialProbe.java",
+      "sha256": "362b50d73c18993f68888cb9ac4a6694db6e7b9456d9320d39b1a32c2047c46f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\test.py",
+      "sha256": "6f7e7f6418857be9b820a194e688aacdcf68d6e0f285a8080b666c8978de40eb"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\prepare_targets.py",
+      "sha256": "b702bfb6678058e0825c5f518cf58dbd0eeb43e8c881e9cd73041250d2e9a87a"
+    }
+  ],
+  "scope": "actual native112 packet; unique/unknown/self fallback, two-PC ambiguity, explicit PC, own/enemy companion rejection; direct actual NPC DTO filter; no all-NPC runtime claim"
+}

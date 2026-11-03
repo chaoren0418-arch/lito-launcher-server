@@ -1,0 +1,36 @@
+{
+  "task_id": "bin-public-4c83a0-guard-boundary-20261008",
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\004C83A0-4D.bin",
+      "bytes": 77,
+      "sha256": "23A84F62D2678508CFFCDFE2651C409B2D67C37BDC22358E41CD05952E291801"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\asm-navigation.json",
+      "bytes": 2378,
+      "sha256": "4FDFAD0651DF210969EFA211F10664E584F9356B0A8C447DD8415C61EABE72A9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\derive.py",
+      "bytes": 9673,
+      "sha256": "FF14146436B888AF85D62A2F3E6A4D0AF3FF0472D6A99070EE22E7E55A1A9B47"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\disassembly.txt",
+      "bytes": 2232,
+      "sha256": "7BE4642EBE6F17EE0E1E23D983517D6A2F90ECE806CFEA961FFE2B57FAB030B2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\handoff.json",
+      "bytes": 11228,
+      "sha256": "BA1564AAEBB9FCB78CBFAE8355346B9DD9E7167B7379CE09D0E9EEA61A6C2D8F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\raw-evidence.json",
+      "bytes": 10586,
+      "sha256": "3ED87DFB21CE8D3299A3D9B6F7824A4FED970F205F7A199E1527580DB60A4160"
+    }
+  ],
+  "command_logs": "Pinned after shell closes them; manifest itself externally pinned."
+}

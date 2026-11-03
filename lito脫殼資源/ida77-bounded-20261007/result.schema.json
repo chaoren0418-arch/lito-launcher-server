@@ -1,0 +1,351 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IDA77 draft static export (no export generated in this delivery)",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "input_executed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ida77-bounded-result-v1"
+    },
+    "status": {
+      "enum": [
+        "EXPORTED",
+        "DISASSEMBLY_ONLY_DECOMPILER_UNAVAILABLE",
+        "REFUSED",
+        "EXPORT_ERROR"
+      ]
+    },
+    "input_executed": {
+      "const": false
+    },
+    "followed_target_functions": {
+      "const": false
+    },
+    "functions": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "address",
+          "end_address",
+          "instructions",
+          "direct_xrefs",
+          "pseudocode",
+          "pseudocode_status",
+          "source_sha256",
+          "ida_version",
+          "evidence_level"
+        ],
+        "properties": {
+          "address": {
+            "type": "object",
+            "required": [
+              "va",
+              "rva",
+              "source_sha256",
+              "ida_version",
+              "evidence_level"
+            ],
+            "properties": {
+              "va": {
+                "type": "integer"
+              },
+              "rva": {
+                "type": "integer"
+              },
+              "source_sha256": {
+                "type": "string"
+              },
+              "ida_version": {
+                "type": "string"
+              },
+              "evidence_level": {
+                "type": "string"
+              }
+            }
+          },
+          "end_address": {
+            "type": "object",
+            "required": [
+              "va",
+              "rva",
+              "source_sha256",
+              "ida_version",
+              "evidence_level"
+            ],
+            "properties": {
+              "va": {
+                "type": "integer"
+              },
+              "rva": {
+                "type": "integer"
+              },
+              "source_sha256": {
+                "type": "string"
+              },
+              "ida_version": {
+                "type": "string"
+              },
+              "evidence_level": {
+                "type": "string"
+              }
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "array",
+            "maxItems": 512,
+            "items": {
+              "type": "object",
+              "required": [
+                "address",
+                "bytes",
+                "text",
+                "source_sha256",
+                "ida_version",
+                "evidence_level"
+              ],
+              "properties": {
+                "address": {
+                  "type": "object",
+                  "required": [
+                    "va",
+                    "rva",
+                    "source_sha256",
+                    "ida_version",
+                    "evidence_level"
+                  ],
+                  "properties": {
+                    "va": {
+                      "type": "integer"
+                    },
+                    "rva": {
+                      "type": "integer"
+                    },
+                    "source_sha256": {
+                      "type": "string"
+                    },
+                    "ida_version": {
+                      "type": "string"
+                    },
+                    "evidence_level": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "bytes": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "source_sha256": {
+                  "type": "string"
+                },
+                "ida_version": {
+                  "type": "string"
+                },
+                "evidence_level": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "direct_xrefs": {
+            "type": "array",
+            "maxItems": 64,
+            "items": {
+              "type": "object",
+              "required": [
+                "direction",
+                "from",
+                "to",
+                "type",
+                "source_sha256",
+                "ida_version",
+                "evidence_level"
+              ],
+              "properties": {
+                "direction": {
+                  "enum": [
+                    "incoming_to_start",
+                    "outgoing_from_item"
+                  ]
+                },
+                "from": {
+                  "type": "object",
+                  "required": [
+                    "va",
+                    "rva",
+                    "source_sha256",
+                    "ida_version",
+                    "evidence_level"
+                  ],
+                  "properties": {
+                    "va": {
+                      "type": "integer"
+                    },
+                    "rva": {
+                      "type": "integer"
+                    },
+                    "source_sha256": {
+                      "type": "string"
+                    },
+                    "ida_version": {
+                      "type": "string"
+                    },
+                    "evidence_level": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "to": {
+                  "type": "object",
+                  "required": [
+                    "va",
+                    "rva",
+                    "source_sha256",
+                    "ida_version",
+                    "evidence_level"
+                  ],
+                  "properties": {
+                    "va": {
+                      "type": "integer"
+                    },
+                    "rva": {
+                      "type": "integer"
+                    },
+                    "source_sha256": {
+                      "type": "string"
+                    },
+                    "ida_version": {
+                      "type": "string"
+                    },
+                    "evidence_level": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "source_sha256": {
+                  "type": "string"
+                },
+                "ida_version": {
+                  "type": "string"
+                },
+                "evidence_level": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "pseudocode": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "address",
+                  "text",
+                  "source_sha256",
+                  "ida_version",
+                  "evidence_level"
+                ],
+                "properties": {
+                  "address": {
+                    "type": "object",
+                    "required": [
+                      "va",
+                      "rva",
+                      "source_sha256",
+                      "ida_version",
+                      "evidence_level"
+                    ],
+                    "properties": {
+                      "va": {
+                        "type": "integer"
+                      },
+                      "rva": {
+                        "type": "integer"
+                      },
+                      "source_sha256": {
+                        "type": "string"
+                      },
+                      "ida_version": {
+                        "type": "string"
+                      },
+                      "evidence_level": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 8192
+                  },
+                  "source_sha256": {
+                    "type": "string"
+                  },
+                  "ida_version": {
+                    "type": "string"
+                  },
+                  "evidence_level": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "pseudocode_status": {
+            "type": "string"
+          },
+          "source_sha256": {
+            "type": "string"
+          },
+          "ida_version": {
+            "type": "string"
+          },
+          "evidence_level": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "EXPORTED",
+              "DISASSEMBLY_ONLY_DECOMPILER_UNAVAILABLE"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "source",
+          "ida_version",
+          "python_version",
+          "decompiler",
+          "functions",
+          "xref_policy",
+          "followed_target_functions"
+        ]
+      }
+    }
+  ]
+}

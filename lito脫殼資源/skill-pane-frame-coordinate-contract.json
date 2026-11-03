@@ -1,0 +1,883 @@
+{
+  "schema": "lito.finite-skill-pane-frame-coordinate.v1",
+  "updated_at": "2026-10-06T01:03:55.092237+08:00",
+  "status": "FINITE_STATIC_FRAME_COORDINATE_CONTRACT_COMPLETE_WITH_RUNTIME_BOUNDARIES",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "authority": "FixedPE rawbytes govern; ASM recoveredheap/global values are fromanother input and arenot livefixedPEdata.",
+  "scope": "Directframe-table initializer/writes,necessaryIMG loader/namespace overlay,visibletranslation directwriterlocalblocks,andpane input/registry one-layer callers. No fullprogramreverse.",
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges.json",
+      "bytes": 220872,
+      "sha256": "0F20732D197F85B790D8BA93FA0E2A03186DA08BBE760A75A71D30F2D0985D20"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\translation-direct-writers.json",
+      "bytes": 110049,
+      "sha256": "6CA7A45B7CCCC481494D3B3E7DFA49E34B3DEE5C1C748C6A756DA586665376A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\frame934-extraction.json",
+      "bytes": 3473,
+      "sha256": "20F33FF5C8206943BDC71FEDBAB9F828B5C8B4F80B7C45AC170939053896AEED"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\frame934-header.json",
+      "bytes": 2822,
+      "sha256": "7AB51BFD0CF4A6B6205326275D574CFCB945B0BB057F9BF129FEED313669F29E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\modern-comparison.json",
+      "bytes": 2534,
+      "sha256": "5E74FC3DAA15704037EB5F38DDA27CA1D6B248D3B455B73920255A1C04EBA076"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\coordinate-cases.json",
+      "bytes": 2132,
+      "sha256": "16D7970ACA675794D7FA5ED7D3241F6412ADB1BA25C80929292AE4BB5AC5C62F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\asm-reference-inventory.json",
+      "bytes": 39719,
+      "sha256": "C4899E779BA971853906BB7CDCE547225DBD26BFC885F8064E3C3EBFAD58AF37"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\new-evidence-verification.json",
+      "bytes": 63450,
+      "sha256": "858C915CC4C0C61D3EE342F6947BD39A6E30038A9C9060C4F6E01DC731CD19B3"
+    }
+  ],
+  "prior_primary_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "bytes": 86352,
+      "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "expected_sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "expected_sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "bytes": 136990,
+      "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "expected_sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "bytes": 26692,
+      "sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "expected_sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "bytes": 13337,
+      "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "expected_sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "bytes": 6519,
+      "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "expected_sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "bytes": 64567,
+      "sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "expected_sha256": "45EBDED431F925A0F38066702E67F0AD79E9139939D793E201A96EEBD15E681F",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "bytes": 36402,
+      "sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "expected_sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+      "match": true
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "expected_sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+      "match": true
+    }
+  ],
+  "frame_table_834BD4": {
+    "snapshot": "00000000",
+    "CRT_initializer_slot": "00502194→004D4930",
+    "direct_initializer_thunk": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004D4940",
+      "rva": "000D4940",
+      "section": "   \u0000    ",
+      "file_offset": "000D4940",
+      "raw_backed": true,
+      "raw_hex": "b9d44b8300",
+      "mnemonic": "mov",
+      "operands": "ecx, 0x834bd4",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4930-9A.bin",
+        "bytes": 154,
+        "sha256": "3F3560B29CA222C76DCAED2F22B938610B94FE6B065C7551A9181237920F25BB"
+      }
+    },
+    "table_allocation_bytes": 31496,
+    "entry_count": 7874,
+    "table_publication": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004D497A",
+      "rva": "000D497A",
+      "section": "   \u0000    ",
+      "file_offset": "000D497A",
+      "raw_backed": true,
+      "raw_hex": "8907",
+      "mnemonic": "mov",
+      "operands": "dword ptr [edi], eax",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4930-9A.bin",
+        "bytes": 154,
+        "sha256": "3F3560B29CA222C76DCAED2F22B938610B94FE6B065C7551A9181237920F25BB"
+      }
+    },
+    "entry_constructor_call": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004D4999",
+      "rva": "000D4999",
+      "section": "   \u0000    ",
+      "file_offset": "000D4999",
+      "raw_backed": true,
+      "raw_hex": "e8a2030000",
+      "mnemonic": "call",
+      "operands": "0x4d4d40",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4930-9A.bin",
+        "bytes": 154,
+        "sha256": "3F3560B29CA222C76DCAED2F22B938610B94FE6B065C7551A9181237920F25BB"
+      }
+    },
+    "entry_publication": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004D49B2",
+      "rva": "000D49B2",
+      "section": "   \u0000    ",
+      "file_offset": "000D49B2",
+      "raw_backed": true,
+      "raw_hex": "8944b1fc",
+      "mnemonic": "mov",
+      "operands": "dword ptr [ecx + esi*4 - 4], eax",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4930-9A.bin",
+        "bytes": 154,
+        "sha256": "3F3560B29CA222C76DCAED2F22B938610B94FE6B065C7551A9181237920F25BB"
+      }
+    },
+    "entry_type": "12byteobject: +0 vtable4FA734 whosevirtual0=4D4D90 lazyloader; +4 cachedIMGpayloadpointer initially0; +8 numericID. Constructorstores loopID0..7873.",
+    "entry_field_witnesses": [
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004D4D48",
+        "rva": "000D4D48",
+        "section": "   \u0000    ",
+        "file_offset": "000D4D48",
+        "raw_backed": true,
+        "raw_hex": "c70034a74f00",
+        "mnemonic": "mov",
+        "operands": "dword ptr [eax], 0x4fa734",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4D40-1C.bin",
+          "bytes": 28,
+          "sha256": "B185425F7983A4B8EF3A8B466E0D34BFE362CBF6F11879CE01BE7B9D87A713A6"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004D4D4E",
+        "rva": "000D4D4E",
+        "section": "   \u0000    ",
+        "file_offset": "000D4D4E",
+        "raw_backed": true,
+        "raw_hex": "c7400400000000",
+        "mnemonic": "mov",
+        "operands": "dword ptr [eax + 4], 0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4D40-1C.bin",
+          "bytes": 28,
+          "sha256": "B185425F7983A4B8EF3A8B466E0D34BFE362CBF6F11879CE01BE7B9D87A713A6"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004D4D55",
+        "rva": "000D4D55",
+        "section": "   \u0000    ",
+        "file_offset": "000D4D55",
+        "raw_backed": true,
+        "raw_hex": "894808",
+        "mnemonic": "mov",
+        "operands": "dword ptr [eax + 8], ecx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004D4D40-1C.bin",
+          "bytes": 28,
+          "sha256": "B185425F7983A4B8EF3A8B466E0D34BFE362CBF6F11879CE01BE7B9D87A713A6"
+        }
+      }
+    ],
+    "member_E98": {
+      "byte_offset": 3736,
+      "array_index": 934,
+      "resource_id": 934,
+      "resource_name_default": "934.img",
+      "usage": "Mainpane frame,size/rightalignment,drag geometry andpane inputbounds",
+      "witnesses": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC64A",
+          "rva": "000CC64A",
+          "section": "   \u0000    ",
+          "file_offset": "000CC64A",
+          "raw_backed": true,
+          "raw_hex": "8b88980e0000",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 0xe98]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC727",
+          "rva": "000CC727",
+          "section": "   \u0000    ",
+          "file_offset": "000CC727",
+          "raw_backed": true,
+          "raw_hex": "8bb8980e0000",
+          "mnemonic": "mov",
+          "operands": "edi, dword ptr [eax + 0xe98]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CCD5D",
+          "rva": "000CCD5D",
+          "section": "   \u0000    ",
+          "file_offset": "000CCD5D",
+          "raw_backed": true,
+          "raw_hex": "8bb0980e0000",
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [eax + 0xe98]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CCD40-18F.bin",
+            "bytes": 399,
+            "sha256": "457C308BB645957F2B998C93115AECCE2DF477DBD09B19AF5E8EB463721DEA7D"
+          }
+        }
+      ],
+      "main_draw_inherited": [
+        {
+          "va": "004CCC3B",
+          "raw_hex": "8b98980e0000",
+          "mnemonic": "mov",
+          "operands": "ebx, dword ptr [eax + 0xe98]"
+        },
+        {
+          "va": "004CCC96",
+          "raw_hex": "e885d5feff",
+          "mnemonic": "call",
+          "operands": "0x4ba220"
+        }
+      ],
+      "inherited_range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CCB20.bin",
+        "bytes": 542,
+        "sha256": "C6BE14D1D87EE5288221E7B7C903C0569F3C35964D74D4FDBB71E1C14E4DCDED"
+      }
+    },
+    "member_E94_inherited": {
+      "array_index": 933,
+      "resource_name_default": "933.img",
+      "usage": "Additionalpane draw atchildorigin+G+(8,10); conditional6328C0 branch",
+      "inherited_range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CCB20.bin",
+        "bytes": 542,
+        "sha256": "C6BE14D1D87EE5288221E7B7C903C0569F3C35964D74D4FDBB71E1C14E4DCDED"
+      },
+      "inherited_instructions": [
+        {
+          "va": "004CCB42",
+          "raw_hex": "8bb0940e0000",
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [eax + 0xe94]"
+        },
+        {
+          "va": "004CCB61",
+          "raw_hex": "8b159ca97500",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x75a99c]"
+        },
+        {
+          "va": "004CCB71",
+          "raw_hex": "8b0d98a97500",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x75a998]"
+        },
+        {
+          "va": "004CCBA3",
+          "raw_hex": "e8b8d3feff",
+          "mnemonic": "call",
+          "operands": "0x4b9f60"
+        },
+        {
+          "va": "004CCBBD",
+          "raw_hex": "8bb8940e0000",
+          "mnemonic": "mov",
+          "operands": "edi, dword ptr [eax + 0xe94]"
+        },
+        {
+          "va": "004CCBE2",
+          "raw_hex": "8b0d9ca97500",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x75a99c]"
+        },
+        {
+          "va": "004CCBF2",
+          "raw_hex": "a198a97500",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [0x75a998]"
+        },
+        {
+          "va": "004CCC2C",
+          "raw_hex": "ff154c158300",
+          "mnemonic": "call",
+          "operands": "dword ptr [0x83154c]"
+        },
+        {
+          "va": "004CCC3B",
+          "raw_hex": "8b98980e0000",
+          "mnemonic": "mov",
+          "operands": "ebx, dword ptr [eax + 0xe98]"
+        },
+        {
+          "va": "004CCC5A",
+          "raw_hex": "8b0d98a97500",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x75a998]"
+        },
+        {
+          "va": "004CCC63",
+          "raw_hex": "8b159ca97500",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x75a99c]"
+        },
+        {
+          "va": "004CCC96",
+          "raw_hex": "e885d5feff",
+          "mnemonic": "call",
+          "operands": "0x4ba220"
+        },
+        {
+          "va": "004CCCBD",
+          "raw_hex": "8bb09c0e0000",
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [eax + 0xe9c]"
+        },
+        {
+          "va": "004CCCDC",
+          "raw_hex": "8b159ca97500",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x75a99c]"
+        },
+        {
+          "va": "004CCCEC",
+          "raw_hex": "8b0d98a97500",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [0x75a998]"
+        }
+      ],
+      "payload_not_extracted": true
+    },
+    "member_E9C_scope_boundary": {
+      "array_index": 935,
+      "resource_name_default": "935.img",
+      "last_visible": "004CCCBD reads table+E9C in inherited pane render",
+      "inherited_range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CCB20.bin",
+        "bytes": 542,
+        "sha256": "C6BE14D1D87EE5288221E7B7C903C0569F3C35964D74D4FDBB71E1C14E4DCDED"
+      },
+      "payload_not_extracted": true,
+      "further_layer_role": "Outside this finite main-frame coordinate contract; no dimensions or rendering equivalence inferred."
+    },
+    "lazy_load": "Caller checksobject+4==0 then invokesvirtual0. Loaderconstructsnamefromobject+8; storesallocated payload inobject+4; flag641298 nonzero calls4BB450. Converter leaves width/height unchanged.",
+    "language_names": {
+      "flag64B6DC": {
+        "1": "934e.img",
+        "2": "934.img",
+        "3": "934c.img",
+        "4": "934j.img",
+        "5": "934h.img",
+        "default": "934.img"
+      },
+      "fallback": "Try variant hashedSpriteNN andbase handle; ifpayload remainsNULL, formatdefault934.img thenhashedSpriteNN/base. Alreadycachedpayload bypassesreloading.",
+      "boundary": "Actual64B6DC/cachedentry/livefilesystem I/O unobserved. Existingsealedindex candidates containonlydefault934.img inLTsurf andSprite."
+    },
+    "namespace_priority": "hash(name) selects6479E8 SpriteNN IMG-clone. Fallback64798C iscloneofbaseSprite.42EA50 recognizes64798C andtries6479A0 nativeLiTo\\LTSurf beforebaseSprite. OneLTsurf934memberextracted; sharedSprite934indexedonly.",
+    "filename_shard_inherited": {
+      "inherited_range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\ranges\\0043FFC0.bin",
+        "bytes": 65,
+        "sha256": "4592389F278122C8AD97CEB3A0DDA9DFE8F3979F1AF5DFE6465D3A62E7AF5AC8"
+      },
+      "formula": "sum of ASCII filename bytes & 15",
+      "default934_ascii_sum": 523,
+      "default934_shard": 11,
+      "default934_shard_name": "Sprite11",
+      "member_absent_from_existing_sealed_shard_indices": true,
+      "language_variants_hash_separately": true
+    },
+    "namespace_witnesses": [
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0042EEFC",
+        "rva": "0002EEFC",
+        "section": "   \u0000    ",
+        "file_offset": "0002EEFC",
+        "raw_backed": true,
+        "raw_hex": "a3a0796400",
+        "mnemonic": "mov",
+        "operands": "dword ptr [0x6479a0], eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0042EEEE-1B.bin",
+          "bytes": 27,
+          "sha256": "C2DC4C79FFE79500F4EE039EA019BCC12399CDD1C5D96D4C6F419040AEC67554"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0042EB0C",
+        "rva": "0002EB0C",
+        "section": "   \u0000    ",
+        "file_offset": "0002EB0C",
+        "raw_backed": true,
+        "raw_hex": "3b358c796400",
+        "mnemonic": "cmp",
+        "operands": "esi, dword ptr [0x64798c]",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0042EB0C-2B.bin",
+          "bytes": 43,
+          "sha256": "9399EB5696AD01FD7B00B0F0035271C7C2CE9E85B2DE2EF62B7FD0FB3A623AEB"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0042EB1B",
+        "rva": "0002EB1B",
+        "section": "   \u0000    ",
+        "file_offset": "0002EB1B",
+        "raw_backed": true,
+        "raw_hex": "8b0da0796400",
+        "mnemonic": "mov",
+        "operands": "ecx, dword ptr [0x6479a0]",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0042EB0C-2B.bin",
+          "bytes": 43,
+          "sha256": "9399EB5696AD01FD7B00B0F0035271C7C2CE9E85B2DE2EF62B7FD0FB3A623AEB"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0042EB23",
+        "rva": "0002EB23",
+        "section": "   \u0000    ",
+        "file_offset": "0002EB23",
+        "raw_backed": true,
+        "raw_hex": "e828ffffff",
+        "mnemonic": "call",
+        "operands": "0x42ea50",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\0042EB0C-2B.bin",
+          "bytes": 43,
+          "sha256": "9399EB5696AD01FD7B00B0F0035271C7C2CE9E85B2DE2EF62B7FD0FB3A623AEB"
+        }
+      }
+    ],
+    "loader_internal_boundary": "42EA50 payloadI/O/cipher/API implementation notexpanded beyond neededoverlaybranch; postload livepointer andsuccess unobserved.",
+    "destruction": "4D49E0 destroys/freesentries andtablethenzeroes834BD4;4D49D0 registersitscallback. No runtimeCRTreachabilityclaim."
+  },
+  "qualified_single_resource": {
+    "extraction": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\frame934-extraction.json",
+      "bytes": 3473,
+      "sha256": "20F33FF5C8206943BDC71FEDBAB9F828B5C8B4F80B7C45AC170939053896AEED"
+    },
+    "header": {
+      "resource": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+        "bytes": 119654,
+        "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+      },
+      "width_signed": 207,
+      "height_signed": 289,
+      "flag": 1,
+      "key_word": "324C",
+      "exact_dense_pixel_bytes": 119646,
+      "header_native_reads": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC686",
+          "rva": "000CC686",
+          "section": "   \u0000    ",
+          "file_offset": "000CC686",
+          "raw_backed": true,
+          "raw_hex": "0fbf5102",
+          "mnemonic": "movsx",
+          "operands": "edx, word ptr [ecx + 2]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC6D5",
+          "rva": "000CC6D5",
+          "section": "   \u0000    ",
+          "file_offset": "000CC6D5",
+          "raw_backed": true,
+          "raw_hex": "0fbf1b",
+          "mnemonic": "movsx",
+          "operands": "ebx, word ptr [ebx]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC757",
+          "rva": "000CC757",
+          "section": "   \u0000    ",
+          "file_offset": "000CC757",
+          "raw_backed": true,
+          "raw_hex": "0fbf08",
+          "mnemonic": "movsx",
+          "operands": "ecx, word ptr [eax]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        }
+      ],
+      "preview": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\frame934-source-preview.png",
+        "bytes": 16853,
+        "sha256": "6814F7FDEDB8C4036F5C55AD29D37697B1206D745BA316D107FDB681CCB10A2A"
+      },
+      "preview_policy": {
+        "width": 207,
+        "height": 289,
+        "flag": 1,
+        "key": 12876,
+        "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+        "mode": "color_key",
+        "rgba_sha256": "C18B820F4E1070BE4EE0C6C9F5867CB9487EA3FB0EDDCBA2E94C5D086549E516"
+      },
+      "native_GUI_oracle": false
+    },
+    "meaning": "Exactcandidatebytes207x289; ifthisnativeLTsurfmemberloads, alignmentB=433. Not an observedliveframewidth andnot everypane drawresource."
+  },
+  "translation_75A998_75A99C": {
+    "snapshot": [
+      0,
+      0
+    ],
+    "direct_writer_inventory": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\translation-direct-writers.json",
+      "bytes": 110049,
+      "sha256": "6CA7A45B7CCCC481494D3B3E7DFA49E34B3DEE5C1C748C6A756DA586665376A8"
+    },
+    "named_store_count": 50,
+    "writer_blocks": 25,
+    "semantics": "Mutable global draw translation. Visible paths reset0, temporarily zero/restore saved previous globals, copy75A9A0/75A9A4, or add movement direction tuples. Live values cannot be assumed0. 4C22A0 source ESI remains conditional on its upstream control flow.",
+    "draw": "4CD290 addsG toownerleft/top;main934 drawat4CCC96 useschildorigin+G;additional933draw addsG tochildcontainerorigin then(8,10). Dragcallback4CC330 changeschildorigin+ownerrectangle,doesnotwriteG.",
+    "input": "4CCD40 usesincomingarg8/argC directlyagainstchildorigin..origin+934width/height, thenforwardsunchangedcoordinates tochildcontrols41B420 orownervirtual+20=4CD730. Neithercompletepanehandler noracceptedlistgate/hithelper subtractG.",
+    "one_layer_dispatch": "46D8A0 acceptsmessageECX,wparamEDX,x=stackarg0,y=stackarg4;46DF76 registryloop forwardsmessage,wparam,x,y tovirtual+2C=4CCD40. FullOSnormalization/stabilitythroughotherbranchesnotclosed.",
+    "consistency_condition": "ForG!=0,screen/inputmappingrequires upstream normalization orrender/input epoch policy. Thisreport providesonlyconditional screen=owner_input+G equation; doesnotassert currentOSinputalreadydoesit.",
+    "inherited_ranges": [
+      {
+        "skill_grid_render": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CD290.bin",
+          "bytes": 488,
+          "sha256": "1152BA77103C220B745B9A25D5E0FC7DCB69AD732B6AA0EFD79185110833946F"
+        }
+      },
+      {
+        "pane_drag_translation": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CC330.bin",
+          "bytes": 117,
+          "sha256": "D625D8BA4CE03E967E0B4F4E2F0B980D6611395FB128A71F7BC47DA623966982"
+        }
+      },
+      {
+        "input_rectangle_gate": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CD730.bin",
+          "bytes": 49,
+          "sha256": "4E4BD8E50F7938859D4DBE57534E6F1AA3E51B2C6BBB214E4BA005FEDBBB8D35"
+        }
+      },
+      {
+        "grid_hit_index": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\004CD480.bin",
+          "bytes": 77,
+          "sha256": "531D007B2A6F84EA0783BB08503EF1AA75A4202408A47CFD58F8796D86DE0E8A"
+        }
+      },
+      {
+        "world_visible_pane_registry_draw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout\\ranges\\0048A9E4.bin",
+          "bytes": 39,
+          "sha256": "0D86330A560A943F17033048D18F950EEA3C468CCFF63375B9D61666703845CA"
+        }
+      }
+    ]
+  },
+  "pane_registry_836B54_60": {
+    "capacity": 4,
+    "ordering": "slot0 front;render visits3→0, input46DF76 visits0→3 stoppingonhandled.",
+    "writers": "4EBBD0 withNULL callsvirtual+24 onallnonnullandzerosallslots;withexistingptr callsits+24,compactsandzeroslast;withnewptr callsoldlast+24,shift3←2←1←0,slot0=newptr,thennewvirtual+20.4EBB70 onlyraisesalreadyregisteredptrtofront.4EC8E4 teardownzerosfour.",
+    "direct_callers": "4EBEB0 tailjmp,4EBEC0 directcall,andpane4CCD40 calls4EBB70 forin-bounds201/204/206;206 then4EBEB0toggle. Othernamedcallersinventoryonly,not recursivelyexpanded.",
+    "pane_direct_call_witnesses": [
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004CCE29",
+        "rva": "000CCE29",
+        "section": "   \u0000    ",
+        "file_offset": "000CCE29",
+        "raw_backed": true,
+        "raw_hex": "e842ed0100",
+        "mnemonic": "call",
+        "operands": "0x4ebb70",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CCD40-18F.bin",
+          "bytes": 399,
+          "sha256": "457C308BB645957F2B998C93115AECCE2DF477DBD09B19AF5E8EB463721DEA7D"
+        }
+      },
+      {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004CCE3A",
+        "rva": "000CCE3A",
+        "section": "   \u0000    ",
+        "file_offset": "000CCE3A",
+        "raw_backed": true,
+        "raw_hex": "e871f00100",
+        "mnemonic": "call",
+        "operands": "0x4ebeb0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CCD40-18F.bin",
+          "bytes": 399,
+          "sha256": "457C308BB645957F2B998C93115AECCE2DF477DBD09B19AF5E8EB463721DEA7D"
+        }
+      }
+    ],
+    "membership_boundary": "Live834884membershipnotobserved; construction/publication alone isnotregistrationproof."
+  },
+  "Modern_differences": {
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_skill_panel.rs",
+      "bytes": 15680,
+      "sha256": "5C62C2197C1DC87E994D892856C38520A96843A43D97EABB7494055679CA5922"
+    },
+    "references": [
+      {
+        "line": 11,
+        "text": "const WIDTH: i32 = 800;"
+      },
+      {
+        "line": 13,
+        "text": "const FRAME_WIDTH: i32 = 193;"
+      },
+      {
+        "line": 14,
+        "text": "const FRAME_HEIGHT: i32 = 282;"
+      },
+      {
+        "line": 15,
+        "text": "const NUM: i32 = 5;"
+      },
+      {
+        "line": 16,
+        "text": "const DEN: i32 = 4;"
+      },
+      {
+        "line": 17,
+        "text": "pub(super) const LEFT: i32 = WIDTH - FRAME_WIDTH * NUM / DEN;"
+      },
+      {
+        "line": 18,
+        "text": "const TOP: i32 = 0;"
+      },
+      {
+        "line": 19,
+        "text": "const GRID_LEFT: i32 = 27;"
+      },
+      {
+        "line": 20,
+        "text": "const GRID_TOP: i32 = 34;"
+      },
+      {
+        "line": 21,
+        "text": "const CELL_WIDTH: i32 = 35;"
+      },
+      {
+        "line": 22,
+        "text": "const CELL_HEIGHT: i32 = 35;"
+      },
+      {
+        "line": 51,
+        "text": "    let mut archive = SharedArchive::open(root, SharedArchiveKind::SpriteShard(9))?;"
+      },
+      {
+        "line": 52,
+        "text": "    let bytes = archive.read_entry(\"2057.img\")?;"
+      },
+      {
+        "line": 54,
+        "text": "        \"shared magic 2057.img length mismatch\");"
+      },
+      {
+        "line": 60,
+        "text": "        \"shared magic 2057.img header mismatch\");"
+      },
+      {
+        "line": 311,
+        "text": "    #[ignore = \"explicit LITO_SHARED_RESOURCE_ROOT; real Sprite09 2057.img + SpellIcon.idx + list.ico\"]"
+      }
+    ],
+    "native_main_frame_size_and_hit_resource": "index934→934.img;mainframe4CCC3B→4CCC96",
+    "native_additional_draw_resource": "index933→933.img atE94; no payload extracted inthisbatch",
+    "Modern_frame": "sharedSprite09/2057.img;193x282",
+    "finding": "Modern2057 frame binding differs fromnative934 mainframe/sizing/hit and933 additionaldraw roles.934 ismainframe,butdoesnot replacealladditionalpane layers.",
+    "native_coordinate_condition": "If extractednativeLTsurf934 is successfullyloaded anddrag/G=0: childorigin=(433,0),ownerrect=(470,43,607,248),gridorigin=(470,43). Additional933 draworigin=(441,10).",
+    "Modern_policy": "800x600,5/4scale,frame193x282,inset27/34,step35;native codeuses640 rightalignment with934 width plus separate933 inset8/10 and34pxgrid."
+  },
+  "unknowns": [
+    {
+      "last_visible": "004D4972 allocationcall→004D497A tablepublication;004CC727 dereference+E98;004CCD5D same",
+      "missing": "Initializedlive834BD4 table,entry934+4 payload,cachedIDstate,allocator/loadsuccess. Fixedsnapshotpointer0; no liveaddress/rangeinvented."
+    },
+    {
+      "last_visible": "004CCBA3 /004CCC2C usesentry933+4",
+      "missing": "933actualpayloadbytes/width/livevariant; only934memberextractionauthorizedandperformed. Name/typeclosed,indexlookupcanbehandedoff."
+    },
+    {
+      "last_visible": "004CC660/004CC6A2/004CC73B→private05AD0986 onresource-errorbranches",
+      "call_witnesses": [
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC660",
+          "rva": "000CC660",
+          "section": "   \u0000    ",
+          "file_offset": "000CC660",
+          "raw_backed": true,
+          "raw_hex": "e821436005",
+          "mnemonic": "call",
+          "operands": "0x5ad0986",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC6A2",
+          "rva": "000CC6A2",
+          "section": "   \u0000    ",
+          "file_offset": "000CC6A2",
+          "raw_backed": true,
+          "raw_hex": "e8df426005",
+          "mnemonic": "call",
+          "operands": "0x5ad0986",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        },
+        {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004CC73B",
+          "rva": "000CC73B",
+          "section": "   \u0000    ",
+          "file_offset": "000CC73B",
+          "raw_backed": true,
+          "raw_hex": "e846426005",
+          "mnemonic": "call",
+          "operands": "0x5ad0986",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+            "bytes": 401,
+            "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+          }
+        }
+      ],
+      "destination": {
+        "va": "05AD0986",
+        "rva": "056D0986",
+        "section": null,
+        "file_offset": null,
+        "raw_backed": false
+      },
+      "missing": "Private error helper body outside fixed PE; no attempt to fill it. Normal binding facts are conditional on successful resources."
+    },
+    {
+      "last_visible": "004E2150 directwritesfrom834EE4+11 anddirectiontuples;visiblecopyfrom75A9A0/A4",
+      "missing": "Dynamicactor/direction/savedoriginvaluesandtheirupstreamwriters;boundedbranchstopsatsourceoperands."
+    },
+    {
+      "last_visible": "0046DF76 registryvirtual+2C→004CCD40→owner+20/4CD730",
+      "missing": "FullOS/inputnormalization,realGepoch,coordinateevents/callstack;GUI/inputnotaccepted."
+    }
+  ],
+  "new_wire_differences": 0,
+  "new_opcodes": 0,
+  "new_archive_members_extracted": 1,
+  "native_GUI_accepted": false,
+  "overall_unpacking_accepted": false,
+  "constraints": {
+    "owned_directory_only": true,
+    "native_observer_launch": false,
+    "native_input_or_injection": false,
+    "other_group_edits": false,
+    "old_PASS_icon_packet_replay": false,
+    "server_S0_policy_work": false
+  }
+}

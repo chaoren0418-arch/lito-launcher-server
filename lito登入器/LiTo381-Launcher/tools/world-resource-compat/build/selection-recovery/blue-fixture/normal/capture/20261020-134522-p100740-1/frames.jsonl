@@ -1,0 +1,5 @@
+{"time":"2026-10-20T13:45:22.816011600Z","direction":"server_to_client","opcode":"0x7B","wire_length":6,"plain":"7B 22 58 02","note":"S_PACKET_BOX shared-blue-potion-status"}
+{"time":"2026-10-20T13:45:22.824613800Z","direction":"server_to_client","opcode":"0x1A","wire_length":11,"plain":"1A 01 10 80 72 01 00 00 00","note":"S_CHANGE_COUNT object=1920995329 count=1"}
+{"time":"2026-10-20T13:45:22.824613800Z","direction":"server_to_client","opcode":"0x18","wire_length":12,"plain":"18 01 10 80 72 24 32 33 32 00","note":"S_CHANGE_ITEM_DESC stack-count=1 object=1920995329"}
+{"time":"2026-10-20T13:45:22.855863900Z","direction":"server_to_client","opcode":"0x0C","wire_length":39,"plain":"0C 01 00 80 72 50 00 00 00 00 0E 0C 0C 0C 0E 0C 2C 01 2C 01 64 00 64 00 00 00 00 00 00 05 00 00 00 00 00 00 00","note":"S_STATUS player=Presentation object=1920991233 level=80 weight240=1 reason=inventory-delta"}
+{"time":"2026-10-20T13:45:22.858060Z","direction":"server_to_client","opcode":"0x10","wire_length":6,"plain":"10 EF 03 00","note":"S_MESSAGE_CODE blue-potion-active=1007 duration=600"}

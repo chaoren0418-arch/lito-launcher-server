@@ -1,0 +1,26 @@
+{
+  "index_read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+      "bytes": 45989,
+      "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+    },
+    "content_sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.csv",
+      "bytes": 45989,
+      "sha256": "FA34C350962D80696B4C9DF47177FBD004AED15C5A6D64B79129D94E2EE48269"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:04:45.032433+08:00"
+  },
+  "exact_new_queries": [
+    "79c.img",
+    "79e.img",
+    "79h.img",
+    "79j.img"
+  ],
+  "matches": [],
+  "qualification": "Only four newly source-proven suffix literals for79 in one existing LTsurf index. Prior five-index803PNG/plain79 lookup is inherited Batch35, not replayed. Does not exclude other resolver/provider namespaces, languages, loosefiles or dynamic assets.",
+  "old_lookup_replayed": false
+}

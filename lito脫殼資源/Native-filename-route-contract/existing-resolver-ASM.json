@@ -1,0 +1,292 @@
+{
+  "read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\sub_43FFC0.asm",
+      "bytes": 1861,
+      "sha256": "37310897CB0F7D075E7E9142245A072F9E62BB951828F10DF96873D227E83D3D"
+    },
+    "content_sha256": "37310897CB0F7D075E7E9142245A072F9E62BB951828F10DF96873D227E83D3D",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\sub_43FFC0.asm",
+      "bytes": 1861,
+      "sha256": "37310897CB0F7D075E7E9142245A072F9E62BB951828F10DF96873D227E83D3D"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:18:56.953885+08:00"
+  },
+  "source_lines": [
+    {
+      "line": 1,
+      "text": "sub_43FFC0 proc near                    ; CODE XREF: sub_43EDA0+1A1↑p"
+    },
+    {
+      "line": 2,
+      "text": "                                        ; sub_43F6C0+1BA↑p"
+    },
+    {
+      "line": 3,
+      "text": "                                        ; sub_43F6C0+27A↑p"
+    },
+    {
+      "line": 4,
+      "text": "                                        ; sub_440010+9↓p"
+    },
+    {
+      "line": 5,
+      "text": "                                        ; sub_4402D0+9↓p"
+    },
+    {
+      "line": 6,
+      "text": "                                        ; sub_4831B0+17↓p"
+    },
+    {
+      "line": 7,
+      "text": "                                        ; sub_4831B0+BE↓p"
+    },
+    {
+      "line": 8,
+      "text": "                                        ; sub_48D760+5A↓p"
+    },
+    {
+      "line": 9,
+      "text": "                                        ; sub_4D4D90+46↓p"
+    },
+    {
+      "line": 10,
+      "text": "                                        ; sub_4D4D90+7E↓p"
+    },
+    {
+      "line": 11,
+      "text": "                                        ; sub_4D4D90+CB↓p"
+    },
+    {
+      "line": 12,
+      "text": "                                        ; sub_4D4D90+138↓p"
+    },
+    {
+      "line": 13,
+      "text": "                                        ; sub_4D5270+42↓p"
+    },
+    {
+      "line": 14,
+      "text": "push    ebx"
+    },
+    {
+      "line": 15,
+      "text": "push    esi"
+    },
+    {
+      "line": 16,
+      "text": "mov     esi, ecx"
+    },
+    {
+      "line": 17,
+      "text": "push    edi"
+    },
+    {
+      "line": 18,
+      "text": "mov     edi, esi"
+    },
+    {
+      "line": 19,
+      "text": "or      ecx, 0FFFFFFFFh"
+    },
+    {
+      "line": 20,
+      "text": "xor     eax, eax"
+    },
+    {
+      "line": 21,
+      "text": "xor     ebx, ebx"
+    },
+    {
+      "line": 22,
+      "text": "xor     edx, edx"
+    },
+    {
+      "line": 23,
+      "text": "repne scasb"
+    },
+    {
+      "line": 24,
+      "text": "not     ecx"
+    },
+    {
+      "line": 25,
+      "text": "dec     ecx"
+    },
+    {
+      "line": 26,
+      "text": "jz      short loc_43FFEF"
+    },
+    {
+      "line": 27,
+      "text": ""
+    },
+    {
+      "line": 28,
+      "text": ""
+    },
+    {
+      "line": 29,
+      "text": "loc_43FFD7:                             ; CODE XREF: sub_43FFC0+2D↓j"
+    },
+    {
+      "line": 30,
+      "text": "xor     eax, eax"
+    },
+    {
+      "line": 31,
+      "text": "mov     edi, esi"
+    },
+    {
+      "line": 32,
+      "text": "mov     al, [edx+esi]"
+    },
+    {
+      "line": 33,
+      "text": "or      ecx, 0FFFFFFFFh"
+    },
+    {
+      "line": 34,
+      "text": "add     ebx, eax"
+    },
+    {
+      "line": 35,
+      "text": "xor     eax, eax"
+    },
+    {
+      "line": 36,
+      "text": "inc     edx"
+    },
+    {
+      "line": 37,
+      "text": "repne scasb"
+    },
+    {
+      "line": 38,
+      "text": "not     ecx"
+    },
+    {
+      "line": 39,
+      "text": "dec     ecx"
+    },
+    {
+      "line": 40,
+      "text": "cmp     edx, ecx"
+    },
+    {
+      "line": 41,
+      "text": "jb      short loc_43FFD7"
+    },
+    {
+      "line": 42,
+      "text": ""
+    },
+    {
+      "line": 43,
+      "text": ""
+    },
+    {
+      "line": 44,
+      "text": "loc_43FFEF:                             ; CODE XREF: sub_43FFC0+15↑j"
+    },
+    {
+      "line": 45,
+      "text": "mov     eax, ebx"
+    },
+    {
+      "line": 46,
+      "text": "and     eax, 8000000Fh"
+    },
+    {
+      "line": 47,
+      "text": "jns     short loc_43FFFD"
+    },
+    {
+      "line": 48,
+      "text": ""
+    },
+    {
+      "line": 49,
+      "text": "dec     eax"
+    },
+    {
+      "line": 50,
+      "text": "or      eax, 0FFFFFFF0h"
+    },
+    {
+      "line": 51,
+      "text": "inc     eax"
+    },
+    {
+      "line": 52,
+      "text": ""
+    },
+    {
+      "line": 53,
+      "text": ""
+    },
+    {
+      "line": 54,
+      "text": "loc_43FFFD:                             ; CODE XREF: sub_43FFC0+36↑j"
+    },
+    {
+      "line": 55,
+      "text": "pop     edi"
+    },
+    {
+      "line": 56,
+      "text": "pop     esi"
+    },
+    {
+      "line": 57,
+      "text": "pop     ebx"
+    },
+    {
+      "line": 58,
+      "text": "retn"
+    },
+    {
+      "line": 59,
+      "text": ""
+    },
+    {
+      "line": 60,
+      "text": "sub_43FFC0 endp"
+    },
+    {
+      "line": 61,
+      "text": ""
+    },
+    {
+      "line": 62,
+      "text": "; ---------------------------------------------------------------------------"
+    },
+    {
+      "line": 63,
+      "text": "align 10h"
+    },
+    {
+      "line": 64,
+      "text": ""
+    },
+    {
+      "line": 65,
+      "text": "; =============== S U B R O U T I N E ======================================="
+    },
+    {
+      "line": 66,
+      "text": ""
+    },
+    {
+      "line": 67,
+      "text": "; Attributes: bp-based frame"
+    },
+    {
+      "line": 68,
+      "text": ""
+    }
+  ],
+  "scope": "Only existing R498 direct43FFC0 body; callers in header are navigation, not opened. No other privatefunction expansion."
+}

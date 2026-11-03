@@ -1,0 +1,546 @@
+{
+  "initial_identity": {
+    "pid": 16064,
+    "creation_filetime_100ns": 134358259432269486,
+    "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+    "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "identity_status": "KNOWN",
+    "primary": true,
+    "membership_verified": true,
+    "first_seen_monotonic": 419901.703,
+    "exit": {
+      "signaled": false,
+      "wait_result": 258,
+      "exit_code": 259
+    }
+  },
+  "checks": [
+    {
+      "case": "post_create_membership_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_membership_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_identity_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_identity_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_snapshot_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_snapshot_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_capture_setup_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "post_create_capture_setup_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "constructor_wait_unknown_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "constructor_wait_unknown_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "final_scan_entrycap_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "final_scan_entrycap_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "poll_and_final_scan_io_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "poll_and_final_scan_io_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "cleanup_wait_unknown_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "cleanup_wait_unknown_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "cleanup_snapshots_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "cleanup_snapshots_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "capture_observation_failure_before",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    },
+    {
+      "case": "capture_observation_failure_after",
+      "identity": {
+        "pid": 16064,
+        "creation_filetime_100ns": 134358259432269486,
+        "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+        "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "identity_status": "KNOWN",
+        "primary": true,
+        "membership_verified": true,
+        "first_seen_monotonic": 419901.703,
+        "exit": {
+          "signaled": false,
+          "wait_result": 258,
+          "exit_code": 259
+        }
+      },
+      "same_identity": true,
+      "still_running": true
+    }
+  ],
+  "primary_natural_exit": {
+    "signaled": true,
+    "wait_result": 0,
+    "exit_code": 0
+  },
+  "remaining_owned_members_before_final_cleanup": [],
+  "cleanup": {
+    "status": "AUDITED",
+    "method": "Owned unnamed job only; unconditional close in finally",
+    "owned_job_empty": true,
+    "pre_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 16064,
+          "creation_filetime_100ns": 134358259432269486,
+          "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419901.703,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 0
+          }
+        }
+      ]
+    },
+    "member_observation": {
+      "status": "OBSERVED",
+      "value": []
+    },
+    "termination": {
+      "status": "OBSERVED",
+      "value": null
+    },
+    "exit_audit": {
+      "status": "OBSERVED",
+      "value": {
+        "owned_job_empty": true,
+        "active_job_PIDs": [],
+        "job_query_error": null,
+        "retained_handle_waits": [
+          {
+            "pid": 16064,
+            "creation_filetime_100ns": 134358259432269486,
+            "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+            "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+            "identity_status": "KNOWN",
+            "primary": true,
+            "handle_origin": "retained CreateProcess result",
+            "wait_result": 0,
+            "signaled": true,
+            "exit_code": 0
+          }
+        ],
+        "deadline_monotonic": 419909.64,
+        "elapsed_seconds": 0.0,
+        "exit_evidence_status": "CONFIRMED"
+      }
+    },
+    "post_snapshot": {
+      "status": "OBSERVED",
+      "value": [
+        {
+          "pid": 16064,
+          "creation_filetime_100ns": 134358259432269486,
+          "creation_time_utc": "2026-10-07T05:52:23.226948+00:00",
+          "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "identity_status": "KNOWN",
+          "primary": true,
+          "membership_verified": true,
+          "first_seen_monotonic": 419901.703,
+          "exit": {
+            "signaled": true,
+            "wait_result": 0,
+            "exit_code": 0
+          }
+        }
+      ]
+    },
+    "close": [
+      {
+        "kind": "sole_noninherited_job",
+        "status": "OBSERVED",
+        "value": true
+      },
+      {
+        "kind": "retained_process",
+        "status": "OBSERVED",
+        "value": true
+      }
+    ]
+  },
+  "capture": {
+    "stdout": {
+      "status": "OBSERVED",
+      "value": {
+        "observed_bytes": 0,
+        "retained_bytes": 0,
+        "discarded_bytes": 0,
+        "cap_bytes": 8192,
+        "EOF_observed": true,
+        "reader_error": null,
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\sentinel\\stdout.bin",
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "persisted": true
+      }
+    },
+    "stderr": {
+      "status": "OBSERVED",
+      "value": {
+        "observed_bytes": 0,
+        "retained_bytes": 0,
+        "discarded_bytes": 0,
+        "cap_bytes": 8192,
+        "EOF_observed": true,
+        "reader_error": null,
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\sentinel\\stderr.bin",
+        "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "persisted": true
+      }
+    }
+  },
+  "primary_not_miskilled": true
+}

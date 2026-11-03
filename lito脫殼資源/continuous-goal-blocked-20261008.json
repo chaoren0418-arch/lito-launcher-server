@@ -1,0 +1,27 @@
+{
+  "dispatch_id": "bin_resources-continuous-product-goal-20261008",
+  "actual_goal_result": {
+    "goal": {
+      "threadId": "01a11705-96c0-74a0-b56d-ed486c318c95",
+      "objective": "Continuously answer concrete unresolved LITO BIN function/packet/resource/UI/behavior questions needed by Launcher, Server and Modern, producing supervisor-verifiable contracts with source SHA, VA/RVA or explicitly inapplicable/unknown mapping, raw tool output, conclusions, unknowns, and a concrete consumer adoption action. Work from qualified fixed PE/raw bytes and pinned existing resource sources; ASM is navigation only. Prioritize consumer defects that can currently be resolved, submit each new result to the supervisor for validation before release, then continue the next substantive analysis. Completion requires all necessary BIN handoffs for the three products' actual acceptance to be qualified, adopted and reviewed. Preserve stopped private backing/next layer, tool/refusal and native-human/runtime gates; visible IDA/MCP is not evidence. No old PASS reruns, blanket inventories, fabricated semantic/scene/owner/clock/wire claims, or infinite report loops. Follow actual Goal blocker rules if every independent lawful analysis path truly requires unavailable inputs.",
+      "status": "blocked",
+      "tokensUsed": 579984,
+      "timeUsedSeconds": 3766,
+      "createdAt": 1791393717,
+      "updatedAt": 1791397484
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "blocked_audit": {
+    "consecutive_turns": 3,
+    "threshold_met": true,
+    "condition": "No remaining currently concrete BIN consumer path is input-complete and lawful; new qualified external input or lawful independent scope is required.",
+    "supplier": "Supervisor-qualified original resource/provider/scene/skill/packet/actor/timing evidence owners and requesting Launcher/Server/Modern consumers; human/provider owners for original live gates.",
+    "resume_when": "A concrete unresolved consumer question with qualified fixed/raw source and intended adoption action outside all retained refusals is supplied, or missing independently permitted skill/provider/scene/packet/actor/566 evidence is qualified. Original runtime gates still all apply. New Unicode/Launcher timer and private/next-layer refusals are not released.",
+    "producer_restarted": false
+  },
+  "product_accepted": false,
+  "runtime_adopted": false,
+  "goal_complete": false
+}

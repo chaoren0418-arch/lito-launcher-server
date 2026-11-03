@@ -1,0 +1,5 @@
+import java.nio.file.*;import java.util.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Fixture only: retarget the two existing observation calls; all other instructions retained. */
+public final class RetargetWeaponMemoryObserver {
+ public static void main(String[]a)throws Exception{var c=new ClassNode();new ClassReader(Files.readAllBytes(Path.of(a[0]))).accept(c,0);int count=0;for(var m:c.methods)for(var i:m.instructions)if(i instanceof MethodInsnNode call&&call.owner.equals("local/lito381/server/DeItemTransactionProbe")&&Set.of("beforeSave","beforeFlush").contains(call.name)){call.owner="local/lito381/server/WeaponBreakNpcMaterialFaultProbe";count++;}if(count!=2)throw new AssertionError("two original observation calls: "+count);var w=new ClassWriter(0);c.accept(w);var p=Path.of(a[1]).resolve(c.name+".class");Files.createDirectories(p.getParent());Files.write(p,w.toByteArray());System.out.println("PASS fixture-only two call-owner substitutions; no production PC/item/admission overlay");}
+}

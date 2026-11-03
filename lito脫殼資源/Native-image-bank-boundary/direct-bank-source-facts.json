@@ -1,0 +1,1314 @@
+{
+  "facts": [
+    {
+      "id": "B01",
+      "title": "PNGbank direct initialization and writer",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4A50",
+            "bytes": "b9d04b8300",
+            "mnemonic": "mov",
+            "operands": "ecx, 0x834bd0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4A7D",
+            "bytes": "68a80c0000",
+            "mnemonic": "push",
+            "operands": "0xca8"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4A8A",
+            "bytes": "8907",
+            "mnemonic": "mov",
+            "operands": "dword ptr [edi], eax"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4AA9",
+            "bytes": "e872070000",
+            "mnemonic": "call",
+            "operands": "0x4d5220"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4AB5",
+            "bytes": "81fe2a030000",
+            "mnemonic": "cmp",
+            "operands": "esi, 0x32a"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_initializer",
+          "origin": {
+            "va": "004D4A50",
+            "rva": "000D4A50",
+            "file_offset": 870992,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4AC2",
+            "bytes": "8944b1fc",
+            "mnemonic": "mov",
+            "operands": "dword ptr [ecx + esi*4 - 4], eax"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNG_global_clear",
+          "origin": {
+            "va": "004D4B39",
+            "rva": "000D4B39",
+            "file_offset": 871225,
+            "bytes": 10,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4B39",
+            "bytes": "c705d04b830000000000",
+            "mnemonic": "mov",
+            "operands": "dword ptr [0x834bd0], 0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "4D4A50 setsECX=834BD0 thenEDI=ECX;requests0CA8bytes via4F118C;4D4A8A writes returned pointer through[EDI]. LoopESI0..809 requests0Cbyte objects,passesordinal to4D5220 andstoresobject atbank[index]. Directzero writer4D4B39 clearsglobal. IDA endp occurs before reachable store/loop; fixedbytes cover post-endp continuation.",
+      "qualification_limit": "810 is the statically requested PNG bank pointer count, not character roster capacity. Allocation, initializer invocation/order, object validity/live pointers and teardown execution are not demonstrated; no whole-program indirectwriter absence claim."
+    },
+    {
+      "id": "B02",
+      "title": "79slot image bank is834BD4, separate from PNGbank",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4940",
+            "bytes": "b9d44b8300",
+            "mnemonic": "mov",
+            "operands": "ecx, 0x834bd4"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D496D",
+            "bytes": "68087b0000",
+            "mnemonic": "push",
+            "operands": "0x7b08"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D497A",
+            "bytes": "8907",
+            "mnemonic": "mov",
+            "operands": "dword ptr [edi], eax"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4999",
+            "bytes": "e8a2030000",
+            "mnemonic": "call",
+            "operands": "0x4d4d40"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D49A5",
+            "bytes": "81fec21e0000",
+            "mnemonic": "cmp",
+            "operands": "esi, 0x1ec2"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGbank_initializer",
+          "origin": {
+            "va": "004D4940",
+            "rva": "000D4940",
+            "file_offset": 870720,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D49B2",
+            "bytes": "8944b1fc",
+            "mnemonic": "mov",
+            "operands": "dword ptr [ecx + esi*4 - 4], eax"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMG_global_clear",
+          "origin": {
+            "va": "004D4A29",
+            "rva": "000D4A29",
+            "file_offset": 870953,
+            "bytes": 10,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4A29",
+            "bytes": "c705d44b830000000000",
+            "mnemonic": "mov",
+            "operands": "dword ptr [0x834bd4], 0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "slot_image_consumer",
+          "origin": {
+            "va": "00414960",
+            "rva": "00014960",
+            "file_offset": 84320,
+            "bytes": 60,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "0041496F",
+            "bytes": "8b0dd44b8300",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [0x834bd4]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "slot_image_consumer",
+          "origin": {
+            "va": "00414960",
+            "rva": "00014960",
+            "file_offset": 84320,
+            "bytes": 60,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00414979",
+            "bytes": "8b3c81",
+            "mnemonic": "mov",
+            "operands": "edi, dword ptr [ecx + eax*4]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "4D4940 writes an allocationrequest7B08bytes to834BD4;0..7873 loopcreates0Cbyte entries with4D4D40 andstoresbankordinal pointers.414910 inputimageID held[esi+20] is compared with1EC2 then[834BD4+id*4] is loaded;79slot descriptor mapping was already preserved Batch35. Separate zero writer4D4A29.",
+      "qualification_limit": "7874 is IMG pointer-bank request count, not character storage capacity. The shown signed uppercheck is not a proved nonnegative/every-pointer-valid guarantee. Historical79descriptor bridge is inherited, not a fresh allcaller audit; no79dimensions/blob yet."
+    },
+    {
+      "id": "B03",
+      "title": "Bank ordinal and virtual read entry are source-closed",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGentry_constructor",
+          "origin": {
+            "va": "004D4D40",
+            "rva": "000D4D40",
+            "file_offset": 871744,
+            "bytes": 28,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4D48",
+            "bytes": "c70034a74f00",
+            "mnemonic": "mov",
+            "operands": "dword ptr [eax], 0x4fa734"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGentry_constructor",
+          "origin": {
+            "va": "004D4D40",
+            "rva": "000D4D40",
+            "file_offset": 871744,
+            "bytes": 28,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4D4E",
+            "bytes": "c7400400000000",
+            "mnemonic": "mov",
+            "operands": "dword ptr [eax + 4], 0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGentry_constructor",
+          "origin": {
+            "va": "004D4D40",
+            "rva": "000D4D40",
+            "file_offset": 871744,
+            "bytes": 28,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4D55",
+            "bytes": "894808",
+            "mnemonic": "mov",
+            "operands": "dword ptr [eax + 8], ecx"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGentry_constructor",
+          "origin": {
+            "va": "004D5220",
+            "rva": "000D5220",
+            "file_offset": 872992,
+            "bytes": 28,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D522A",
+            "bytes": "e811fbffff",
+            "mnemonic": "call",
+            "operands": "0x4d4d40"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGentry_constructor",
+          "origin": {
+            "va": "004D5220",
+            "rva": "000D5220",
+            "file_offset": 872992,
+            "bytes": 28,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D522F",
+            "bytes": "c70638a74f00",
+            "mnemonic": "mov",
+            "operands": "dword ptr [esi], 0x4fa738"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "slot_image_consumer",
+          "origin": {
+            "va": "00414960",
+            "rva": "00014960",
+            "file_offset": 84320,
+            "bytes": 60,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "0041498F",
+            "bytes": "8b4704",
+            "mnemonic": "mov",
+            "operands": "eax, dword ptr [edi + 4]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "slot_image_consumer",
+          "origin": {
+            "va": "00414960",
+            "rva": "00014960",
+            "file_offset": 84320,
+            "bytes": 60,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "0041499A",
+            "bytes": "ff12",
+            "mnemonic": "call",
+            "operands": "dword ptr [edx]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_mode1_consumer",
+          "origin": {
+            "va": "00415E4C",
+            "rva": "00015E4C",
+            "file_offset": 89676,
+            "bytes": 78,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415E87",
+            "bytes": "8b4704",
+            "mnemonic": "mov",
+            "operands": "eax, dword ptr [edi + 4]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_mode1_consumer",
+          "origin": {
+            "va": "00415E4C",
+            "rva": "00015E4C",
+            "file_offset": 89676,
+            "bytes": 78,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415E98",
+            "bytes": "ff12",
+            "mnemonic": "call",
+            "operands": "dword ptr [edx]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "Leaf4D4D40 writesvtable4FA734,+4payload=0,+8ordinal.4D5220 reuses thisleaf thenwritesPNGvtable4FA738. Fixeddata4FA734 ->4D4D90 IMGread;4FA738 ->4D5270 PNGread. Consumerscallvtable[0] whenpayload+4 iszero.",
+      "qualification_limit": "One necessary direct entry initializer bridge only; baseleaf is shared withparallelIMGfactory. This closes conditional constructor-to-lazyentry sourceflow, not actual initialized runtime objects or loaded image parity."
+    },
+    {
+      "id": "B04",
+      "title": "Numeric PNG frame index reaches both direct lookup branches",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "numeric_frame_prefix",
+          "origin": {
+            "va": "00415DA0",
+            "rva": "00015DA0",
+            "file_offset": 89504,
+            "bytes": 49,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415DBB",
+            "bytes": "8b4e34",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [esi + 0x34]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "numeric_frame_prefix",
+          "origin": {
+            "va": "00415DA0",
+            "rva": "00015DA0",
+            "file_offset": 89504,
+            "bytes": 49,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415DC1",
+            "bytes": "8b3cc1",
+            "mnemonic": "mov",
+            "operands": "edi, dword ptr [ecx + eax*8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "numeric_frame_prefix",
+          "origin": {
+            "va": "00415DA0",
+            "rva": "00015DA0",
+            "file_offset": 89504,
+            "bytes": 49,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415DCA",
+            "bytes": "03f9",
+            "mnemonic": "add",
+            "operands": "edi, ecx"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "numeric_frame_prefix",
+          "origin": {
+            "va": "00415DA0",
+            "rva": "00015DA0",
+            "file_offset": 89504,
+            "bytes": 49,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415DD0",
+            "bytes": "47",
+            "mnemonic": "inc",
+            "operands": "edi"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_mode1_consumer",
+          "origin": {
+            "va": "00415E4C",
+            "rva": "00015E4C",
+            "file_offset": 89676,
+            "bytes": 78,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415E54",
+            "bytes": "a1d04b8300",
+            "mnemonic": "mov",
+            "operands": "eax, dword ptr [0x834bd0]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGbank_mode1_consumer",
+          "origin": {
+            "va": "00415E4C",
+            "rva": "00015E4C",
+            "file_offset": 89676,
+            "bytes": 78,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "00415E5D",
+            "bytes": "8b3cb8",
+            "mnemonic": "mov",
+            "operands": "edi, dword ptr [eax + edi*4]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "415DA0 usesstateindex fromunexpanded415D70,24byte stride tablebase,+38frame counter andoptional+3E increment toprepareEDI. Mode1 andmode0 rawblocks read834BD0[id*4], withsigned uppercompare32A(810);payloadzero dispatchesresolved PNGreadentry.",
+      "qualification_limit": "No statehelper/timer/class/sex/selectedexpiry body expanded; validstate/pointer conditions remain. The bank bound810 does not change producer0..8 policy or prove everyPNG asset exists."
+    },
+    {
+      "id": "B05",
+      "title": "PNG filename literal and routing boundary are direct evidence",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D5293",
+            "bytes": "8b4708",
+            "mnemonic": "mov",
+            "operands": "eax, dword ptr [edi + 8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D529D",
+            "bytes": "68d8656300",
+            "mnemonic": "push",
+            "operands": "0x6365d8"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D52B2",
+            "bytes": "e809adf6ff",
+            "mnemonic": "call",
+            "operands": "0x43ffc0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D52B7",
+            "bytes": "8b0c85e8796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [eax*4 + 0x6479e8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D52CE",
+            "bytes": "e87d97f5ff",
+            "mnemonic": "call",
+            "operands": "0x42ea50"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D52E7",
+            "bytes": "8b0d8c796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [0x64798c]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "PNGformat_provider_boundary",
+          "origin": {
+            "va": "004D5270",
+            "rva": "000D5270",
+            "file_offset": 873072,
+            "bytes": 144,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D52EE",
+            "bytes": "e85d97f5ff",
+            "mnemonic": "call",
+            "operands": "0x42ea50"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "PNGread4D5270 suppliesordinal[entry+8] andfixedliteral%d.png at6365D8 toexternalformatter773F5200. It callsprivate43FFC0(filename),loadsECX from6479E8[EAX*4], thenprivate42EA50(filename,outlength,0). Ifrouteproviderabsent orreadreturnszero, it triesdefaultprovider64798C withsamefilename.",
+      "qualification_limit": "Requested literal is source evidence, not a guessed PNG member or a formatter/runtime PASS.43FFC0 classification/index semantics,6479E8 tableextent/provideridentity and42EA50 container/offset/read/encoding remain blocked; no privatecalledbody orexternalmodule followed."
+    },
+    {
+      "id": "B06",
+      "title": "IMG79 suffix requests and plain/default fallback are direct evidence",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4D99",
+            "bytes": "0fbe05dcb66400",
+            "mnemonic": "movsx",
+            "operands": "eax, byte ptr [0x64b6dc]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4DB4",
+            "bytes": "ff2485304f4d00",
+            "mnemonic": "jmp",
+            "operands": "dword ptr [eax*4 + 0x4d4f30]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4DDB",
+            "bytes": "8b0c85e8796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [eax*4 + 0x6479e8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4EAD",
+            "bytes": "8b4608",
+            "mnemonic": "mov",
+            "operands": "eax, dword ptr [esi + 8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4EB7",
+            "bytes": "68b0656300",
+            "mnemonic": "push",
+            "operands": "0x6365b0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4EC8",
+            "bytes": "e8f3b0f6ff",
+            "mnemonic": "call",
+            "operands": "0x43ffc0"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4ECD",
+            "bytes": "8b0c85e8796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [eax*4 + 0x6479e8]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4EE5",
+            "bytes": "e8669bf5ff",
+            "mnemonic": "call",
+            "operands": "0x42ea50"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4F00",
+            "bytes": "8b0d8c796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [0x64798c]"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+            "bytes": 82855,
+            "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+          },
+          "code_slice": "IMGformat_provider_boundary",
+          "origin": {
+            "va": "004D4D90",
+            "rva": "000D4D90",
+            "file_offset": 871824,
+            "bytes": 383,
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            }
+          },
+          "instruction": {
+            "va": "004D4F07",
+            "bytes": "e8449bf5ff",
+            "mnemonic": "call",
+            "operands": "0x42ea50"
+          },
+          "evidence_level": "FixedPE exactrawbytes; sourceconditional, not executed Native state"
+        }
+      ],
+      "direct_evidence": "Signedbyte64B6DC switchviafixedjumptable:1 ->%de.img,3 ->%dc.img,4 ->%dj.img,5 ->%dh.img;2/out-of-range useplain%d.img, withprovider/default fallbacks. Ordinal comesfromentry+8;79thus hasfour newly source-grounded suffixrequests. OneLTsurfindex exactquery79e/c/j/h hasnohit; Batch35 plain79/803PNG/fiveindex results are inherited, not rerun.",
+      "qualification_limit": "Do not infer language enum semantics/class/sex fromsuffixes orbyte. Formattingpointer4F7314 isexternal773F5200; no liveflag/formatter/assetabsence claim. Readerprivatecalls43FFC0/42EA50 stophere; dynamic/provider namespace maydiffer fromLTsurf."
+    },
+    {
+      "id": "B07",
+      "title": "Fixed disk pointers cannot supply initialized resource blobs",
+      "anchors": [],
+      "direct_evidence": "FixedPE raw-backed834BD0/834BD4 are0/0;defaultprovider64798C=0 andonlyfirst6479E8bucket=0. ASM navigation recorded581B018/57E1960 bankvalues and6373158/58CD718 provider values fromanother state; they are not current fixedrawobjects.",
+      "qualification_limit": "Only selected rawcells read, not entireprovider table. No dereference ofhistoric/externalheap pointers, noNativeprocess/capture/GUI. Diskzero cannot prove livebankabsence or explain thethreepriorGUI failures; it prevents sourcing a blob fromthisdisk snapshot alone."
+    }
+  ],
+  "new_resolved_boundaries": [
+    "SeparatePNG834BD0 andIMG834BD4 banks",
+    "Directallocationrequest/globalwriter/ordinalfactory",
+    "FixedvtabletoIMG/PNGreadentry",
+    "Sourcefilenameformats/providerroutecallsite"
+  ],
+  "qualification": "Replaces selected Batch35 initializer/bank-entry unknowns with directfixedPE sourcefacts whilepreservinghistoricalrecords. Filename/routeevidence isnotcontaineroffset/assetexistence/runtimegrant;no causal claim about GUI failures."
+}

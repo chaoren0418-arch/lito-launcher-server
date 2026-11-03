@@ -1,0 +1,2606 @@
+{
+  "offset_raw": [
+    0,
+    0
+  ],
+  "offset_signed": [
+    0,
+    0
+  ],
+  "header_width": 32,
+  "width_for_vector": 32,
+  "height": 32,
+  "bytes_consumed": 2126,
+  "rows": [
+    {
+      "y": 0,
+      "encoded_offset": 4,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 1,
+          "count": 31,
+          "payload_offset": 7,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            2147,
+            2147,
+            1091,
+            1090,
+            1058,
+            1057,
+            1057,
+            33,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1057,
+            1,
+            2115,
+            11594,
+            11594,
+            15821,
+            19025,
+            12752,
+            6377,
+            2114
+          ]
+        }
+      ],
+      "row_end_offset": 69
+    },
+    {
+      "y": 1,
+      "encoded_offset": 69,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 2,
+          "count": 30,
+          "payload_offset": 72,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            2147,
+            2147,
+            1091,
+            1090,
+            1058,
+            1057,
+            1057,
+            33,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1058,
+            0,
+            5285,
+            14732,
+            21073,
+            10537,
+            11559,
+            14730,
+            19025,
+            1058,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 132
+    },
+    {
+      "y": 2,
+      "encoded_offset": 132,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 1,
+          "payload_offset": 135,
+          "words": [
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 3,
+          "count": 29,
+          "payload_offset": 139,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            2147,
+            2147,
+            1091,
+            1090,
+            1058,
+            1057,
+            1057,
+            33,
+            0,
+            0,
+            1057,
+            2114,
+            3171,
+            5286,
+            22198,
+            27450,
+            13741,
+            9515,
+            6343,
+            5252,
+            8455,
+            6375,
+            4263
+          ]
+        }
+      ],
+      "row_end_offset": 197
+    },
+    {
+      "y": 3,
+      "encoded_offset": 197,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 2,
+          "payload_offset": 200,
+          "words": [
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 4,
+          "count": 28,
+          "payload_offset": 206,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            2147,
+            2147,
+            2115,
+            1090,
+            1058,
+            1057,
+            1057,
+            2114,
+            3171,
+            0,
+            0,
+            7399,
+            16913,
+            22232,
+            14833,
+            10605,
+            9548,
+            33,
+            1,
+            1092,
+            6376,
+            2115
+          ]
+        }
+      ],
+      "row_end_offset": 262
+    },
+    {
+      "y": 4,
+      "encoded_offset": 262,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 3,
+          "payload_offset": 265,
+          "words": [
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 5,
+          "count": 27,
+          "payload_offset": 273,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            2147,
+            2147,
+            1091,
+            1090,
+            1090,
+            3171,
+            1057,
+            3171,
+            8456,
+            10571,
+            13774,
+            13775,
+            10605,
+            4296,
+            5352,
+            6343,
+            1,
+            4262,
+            2147,
+            2114,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 327
+    },
+    {
+      "y": 5,
+      "encoded_offset": 327,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 4,
+          "payload_offset": 330,
+          "words": [
+            5385,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 6,
+          "count": 26,
+          "payload_offset": 340,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            3204,
+            2148,
+            2147,
+            2147,
+            2147,
+            1090,
+            0,
+            0,
+            8490,
+            16946,
+            9514,
+            10603,
+            10604,
+            2181,
+            2148,
+            2115,
+            5286,
+            5286,
+            10570,
+            0,
+            1057,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 392
+    },
+    {
+      "y": 6,
+      "encoded_offset": 392,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 5,
+          "payload_offset": 395,
+          "words": [
+            6442,
+            5385,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 7,
+          "count": 25,
+          "payload_offset": 407,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            2180,
+            2148,
+            3172,
+            2114,
+            2114,
+            5251,
+            7433,
+            11661,
+            10571,
+            10637,
+            12718,
+            12686,
+            3172,
+            0,
+            3204,
+            9547,
+            6343,
+            2114,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 457
+    },
+    {
+      "y": 7,
+      "encoded_offset": 457,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 6,
+          "payload_offset": 460,
+          "words": [
+            6442,
+            6442,
+            5385,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 8,
+          "count": 24,
+          "payload_offset": 474,
+          "words": [
+            4262,
+            3238,
+            3237,
+            3205,
+            3204,
+            33,
+            2147,
+            5286,
+            9547,
+            6375,
+            9512,
+            6376,
+            11662,
+            5320,
+            1091,
+            4229,
+            1,
+            4262,
+            34,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 522
+    },
+    {
+      "y": 8,
+      "encoded_offset": 522,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 7,
+          "payload_offset": 525,
+          "words": [
+            6475,
+            6442,
+            6442,
+            5385,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 9,
+          "count": 23,
+          "payload_offset": 541,
+          "words": [
+            4294,
+            3238,
+            3205,
+            0,
+            2147,
+            10604,
+            11695,
+            11662,
+            3238,
+            8489,
+            14798,
+            14798,
+            0,
+            0,
+            2115,
+            3205,
+            0,
+            2114,
+            1057,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 587
+    },
+    {
+      "y": 9,
+      "encoded_offset": 587,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 8,
+          "payload_offset": 590,
+          "words": [
+            7499,
+            6475,
+            6442,
+            6442,
+            6409,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 4,
+          "skip_words": 2,
+          "x": 10,
+          "count": 22,
+          "payload_offset": 608,
+          "words": [
+            4294,
+            3204,
+            3172,
+            3171,
+            11661,
+            11662,
+            7466,
+            11663,
+            11694,
+            15854,
+            5285,
+            1091,
+            4262,
+            5319,
+            1091,
+            0,
+            1057,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 652
+    },
+    {
+      "y": 10,
+      "encoded_offset": 652,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 9,
+          "payload_offset": 655,
+          "words": [
+            7532,
+            7499,
+            6475,
+            6442,
+            6442,
+            6409,
+            5385,
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 10,
+          "count": 22,
+          "payload_offset": 675,
+          "words": [
+            4262,
+            3171,
+            2115,
+            6342,
+            16879,
+            17970,
+            11694,
+            14833,
+            6343,
+            1057,
+            2147,
+            3238,
+            5352,
+            4296,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 719
+    },
+    {
+      "y": 11,
+      "encoded_offset": 719,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 722,
+          "words": [
+            8557,
+            7532,
+            7500,
+            6475,
+            6442,
+            6442,
+            6409,
+            5385,
+            5352,
+            5352,
+            2148,
+            2114,
+            12685,
+            9479,
+            11559,
+            22130,
+            15888,
+            0,
+            1090,
+            1090,
+            3238,
+            5386,
+            4262,
+            1024,
+            1057,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 786
+    },
+    {
+      "y": 12,
+      "encoded_offset": 786,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 789,
+          "words": [
+            8589,
+            7533,
+            7532,
+            7499,
+            6475,
+            6442,
+            6442,
+            6409,
+            5385,
+            4262,
+            1058,
+            13674,
+            13709,
+            7398,
+            11560,
+            16843,
+            12651,
+            5285,
+            2180,
+            5386,
+            68,
+            1,
+            3072,
+            12352,
+            3138,
+            0,
+            33,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 853
+    },
+    {
+      "y": 13,
+      "encoded_offset": 853,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 8,
+          "payload_offset": 856,
+          "words": [
+            8590,
+            8589,
+            7533,
+            7532,
+            7499,
+            6475,
+            6442,
+            6442
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 9,
+          "count": 23,
+          "payload_offset": 874,
+          "words": [
+            4261,
+            13741,
+            12652,
+            15890,
+            11662,
+            10570,
+            7431,
+            4261,
+            6376,
+            3272,
+            134,
+            3205,
+            20907,
+            17669,
+            9282,
+            5120,
+            2114,
+            1057,
+            33,
+            33,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 920
+    },
+    {
+      "y": 14,
+      "encoded_offset": 920,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 7,
+          "payload_offset": 923,
+          "words": [
+            8590,
+            8590,
+            8589,
+            7533,
+            7466,
+            6410,
+            6442
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 8,
+          "count": 24,
+          "payload_offset": 939,
+          "words": [
+            5285,
+            20051,
+            16913,
+            12719,
+            12752,
+            5319,
+            4262,
+            1124,
+            67,
+            2181,
+            67,
+            3138,
+            20906,
+            25068,
+            21931,
+            9313,
+            7168,
+            5218,
+            1090,
+            1057,
+            33,
+            33,
+            0,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 987
+    },
+    {
+      "y": 15,
+      "encoded_offset": 987,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 990,
+          "words": [
+            9647,
+            8622,
+            8557,
+            7466,
+            1057,
+            3204,
+            14799,
+            4261,
+            7433,
+            13776,
+            9582,
+            13776,
+            3172,
+            34,
+            4262,
+            3205,
+            3204,
+            0,
+            11461,
+            27149,
+            16678,
+            16745,
+            21964,
+            18826,
+            10371,
+            3072,
+            5251,
+            1057,
+            1057,
+            33,
+            33,
+            0
+          ]
+        }
+      ],
+      "row_end_offset": 1054
+    },
+    {
+      "y": 16,
+      "encoded_offset": 1054,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1057,
+          "words": [
+            9679,
+            8590,
+            8490,
+            1,
+            10603,
+            22198,
+            26426,
+            18003,
+            5319,
+            1092,
+            9548,
+            5319,
+            8457,
+            3204,
+            5285,
+            1057,
+            0,
+            0,
+            8289,
+            30287,
+            18793,
+            19850,
+            20941,
+            16746,
+            12551,
+            8290,
+            7234,
+            4195,
+            1057,
+            1057,
+            33,
+            33
+          ]
+        }
+      ],
+      "row_end_offset": 1121
+    },
+    {
+      "y": 17,
+      "encoded_offset": 1121,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1124,
+          "words": [
+            8556,
+            3205,
+            33,
+            11629,
+            18003,
+            16946,
+            18004,
+            21175,
+            13775,
+            5286,
+            0,
+            2148,
+            4229,
+            0,
+            1057,
+            1058,
+            1057,
+            1057,
+            0,
+            8323,
+            19817,
+            19883,
+            12518,
+            11494,
+            9413,
+            7266,
+            8257,
+            6176,
+            3171,
+            1058,
+            1057,
+            33
+          ]
+        }
+      ],
+      "row_end_offset": 1188
+    },
+    {
+      "y": 18,
+      "encoded_offset": 1188,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1191,
+          "words": [
+            4262,
+            0,
+            0,
+            4228,
+            19060,
+            11695,
+            7466,
+            14833,
+            16913,
+            2115,
+            0,
+            0,
+            1057,
+            1090,
+            1090,
+            1090,
+            1090,
+            1090,
+            0,
+            3138,
+            13574,
+            22988,
+            19917,
+            18828,
+            8323,
+            2048,
+            7234,
+            7168,
+            10436,
+            1090,
+            1058,
+            1057
+          ]
+        }
+      ],
+      "row_end_offset": 1255
+    },
+    {
+      "y": 19,
+      "encoded_offset": 1255,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1258,
+          "words": [
+            5352,
+            0,
+            0,
+            0,
+            6342,
+            23288,
+            11694,
+            7433,
+            6375,
+            6343,
+            2147,
+            1090,
+            1090,
+            2147,
+            2148,
+            3205,
+            3205,
+            3204,
+            2115,
+            0,
+            2113,
+            15688,
+            19883,
+            23055,
+            17770,
+            15656,
+            12486,
+            9281,
+            11328,
+            5218,
+            1090,
+            1058
+          ]
+        }
+      ],
+      "row_end_offset": 1322
+    },
+    {
+      "y": 20,
+      "encoded_offset": 1322,
+      "span_count": 3,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 14,
+          "payload_offset": 1325,
+          "words": [
+            8590,
+            4261,
+            2114,
+            0,
+            1057,
+            6343,
+            10604,
+            2,
+            5319,
+            7433,
+            6343,
+            2147,
+            2148,
+            3237
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 15,
+          "count": 2,
+          "payload_offset": 1355,
+          "words": [
+            5352,
+            5352
+          ]
+        },
+        {
+          "span": 2,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 18,
+          "count": 14,
+          "payload_offset": 1361,
+          "words": [
+            3204,
+            0,
+            1057,
+            7332,
+            17802,
+            19917,
+            14698,
+            16811,
+            20908,
+            18728,
+            10304,
+            12451,
+            4195,
+            1090
+          ]
+        }
+      ],
+      "row_end_offset": 1389
+    },
+    {
+      "y": 21,
+      "encoded_offset": 1389,
+      "span_count": 3,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 12,
+          "payload_offset": 1392,
+          "words": [
+            10704,
+            6442,
+            0,
+            0,
+            0,
+            3171,
+            1057,
+            11660,
+            8490,
+            5319,
+            3172,
+            2180
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 13,
+          "count": 5,
+          "payload_offset": 1418,
+          "words": [
+            5385,
+            6442,
+            6442,
+            6410,
+            5385
+          ]
+        },
+        {
+          "span": 2,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 19,
+          "count": 13,
+          "payload_offset": 1430,
+          "words": [
+            2148,
+            2114,
+            0,
+            8356,
+            22989,
+            11462,
+            12617,
+            21006,
+            15656,
+            10371,
+            12419,
+            10404,
+            3171
+          ]
+        }
+      ],
+      "row_end_offset": 1456
+    },
+    {
+      "y": 22,
+      "encoded_offset": 1456,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1459,
+          "words": [
+            10770,
+            8590,
+            3237,
+            0,
+            0,
+            1057,
+            1057,
+            10604,
+            6343,
+            0,
+            3171,
+            3238,
+            5385,
+            6475,
+            7499,
+            6443,
+            6442,
+            6410,
+            5353,
+            4262,
+            2114,
+            0,
+            0,
+            18827,
+            27151,
+            18826,
+            14665,
+            6243,
+            8323,
+            7200,
+            9248,
+            9380
+          ]
+        }
+      ],
+      "row_end_offset": 1523
+    },
+    {
+      "y": 23,
+      "encoded_offset": 1523,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1526,
+          "words": [
+            11827,
+            10737,
+            8557,
+            3204,
+            1057,
+            0,
+            0,
+            1,
+            3171,
+            2147,
+            2180,
+            4327,
+            6475,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            6409,
+            5352,
+            3238,
+            1057,
+            2114,
+            3138,
+            16746,
+            24013,
+            17769,
+            12485,
+            10404,
+            11494,
+            7200,
+            14499
+          ]
+        }
+      ],
+      "row_end_offset": 1590
+    },
+    {
+      "y": 24,
+      "encoded_offset": 1590,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1593,
+          "words": [
+            12851,
+            11827,
+            10704,
+            7499,
+            3204,
+            0,
+            0,
+            2114,
+            2147,
+            2148,
+            3238,
+            6410,
+            7532,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            6409,
+            5352,
+            3205,
+            0,
+            1057,
+            7333,
+            28273,
+            18761,
+            13509,
+            18794,
+            15656,
+            9380,
+            11394
+          ]
+        }
+      ],
+      "row_end_offset": 1657
+    },
+    {
+      "y": 25,
+      "encoded_offset": 1657,
+      "span_count": 3,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 9,
+          "payload_offset": 1660,
+          "words": [
+            12852,
+            12851,
+            11794,
+            9680,
+            6475,
+            4262,
+            2147,
+            2148,
+            3205
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 10,
+          "count": 11,
+          "payload_offset": 1680,
+          "words": [
+            6442,
+            7532,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            5385
+          ]
+        },
+        {
+          "span": 2,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 22,
+          "count": 10,
+          "payload_offset": 1704,
+          "words": [
+            2148,
+            1057,
+            0,
+            10437,
+            26126,
+            13542,
+            11461,
+            18827,
+            15721,
+            7267
+          ]
+        }
+      ],
+      "row_end_offset": 1724
+    },
+    {
+      "y": 26,
+      "encoded_offset": 1724,
+      "span_count": 3,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 7,
+          "payload_offset": 1727,
+          "words": [
+            12884,
+            12852,
+            12851,
+            11794,
+            9680,
+            7500,
+            5352
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 8,
+          "count": 14,
+          "payload_offset": 1743,
+          "words": [
+            5352,
+            7499,
+            8590,
+            9646,
+            9646,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            5385
+          ]
+        },
+        {
+          "span": 2,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 23,
+          "count": 9,
+          "payload_offset": 1773,
+          "words": [
+            2114,
+            0,
+            0,
+            16680,
+            26126,
+            12518,
+            11461,
+            15722,
+            6275
+          ]
+        }
+      ],
+      "row_end_offset": 1791
+    },
+    {
+      "y": 27,
+      "encoded_offset": 1791,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1794,
+          "words": [
+            13908,
+            12884,
+            12852,
+            12851,
+            11795,
+            10737,
+            8590,
+            7533,
+            8589,
+            9647,
+            9680,
+            9679,
+            9647,
+            9646,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            5385,
+            3238,
+            33,
+            0,
+            0,
+            17704,
+            14631,
+            11461,
+            10436,
+            9413
+          ]
+        }
+      ],
+      "row_end_offset": 1858
+    },
+    {
+      "y": 28,
+      "encoded_offset": 1858,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1861,
+          "words": [
+            13908,
+            13908,
+            12884,
+            12852,
+            12851,
+            11827,
+            11794,
+            10737,
+            10737,
+            10737,
+            10737,
+            9680,
+            9679,
+            9647,
+            9646,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6475,
+            6442,
+            5352,
+            3237,
+            2114,
+            0,
+            5218,
+            11428,
+            13542,
+            13608,
+            13641
+          ]
+        }
+      ],
+      "row_end_offset": 1925
+    },
+    {
+      "y": 29,
+      "encoded_offset": 1925,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 1928,
+          "words": [
+            14965,
+            13908,
+            13908,
+            12884,
+            12852,
+            12851,
+            11827,
+            11794,
+            11794,
+            10770,
+            10737,
+            10737,
+            10704,
+            9679,
+            9647,
+            9646,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            6442,
+            4328,
+            3204,
+            1057,
+            3171,
+            7267,
+            15589,
+            9412,
+            12584
+          ]
+        }
+      ],
+      "row_end_offset": 1992
+    },
+    {
+      "y": 30,
+      "encoded_offset": 1992,
+      "span_count": 2,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 25,
+          "payload_offset": 1995,
+          "words": [
+            14965,
+            14965,
+            13941,
+            13908,
+            12884,
+            12852,
+            12851,
+            11827,
+            11794,
+            11794,
+            10770,
+            10737,
+            10737,
+            9680,
+            9679,
+            9647,
+            9647,
+            8590,
+            8589,
+            8557,
+            7532,
+            7532,
+            7499,
+            6443,
+            6410
+          ]
+        },
+        {
+          "span": 1,
+          "skip_bytes": 2,
+          "skip_words": 1,
+          "x": 26,
+          "count": 6,
+          "payload_offset": 2047,
+          "words": [
+            2147,
+            1057,
+            0,
+            11460,
+            11427,
+            8322
+          ]
+        }
+      ],
+      "row_end_offset": 2059
+    },
+    {
+      "y": 31,
+      "encoded_offset": 2059,
+      "span_count": 1,
+      "spans": [
+        {
+          "span": 0,
+          "skip_bytes": 0,
+          "skip_words": 0,
+          "x": 0,
+          "count": 32,
+          "payload_offset": 2062,
+          "words": [
+            14965,
+            14965,
+            14965,
+            13908,
+            13908,
+            12884,
+            12852,
+            12851,
+            11827,
+            11795,
+            11794,
+            11794,
+            10737,
+            10737,
+            10704,
+            9679,
+            9647,
+            9647,
+            8590,
+            8589,
+            8557,
+            7532,
+            7500,
+            7499,
+            6443,
+            5385,
+            4294,
+            1057,
+            2114,
+            6276,
+            12484,
+            13509
+          ]
+        }
+      ],
+      "row_end_offset": 2126
+    }
+  ],
+  "namespace": "LTicon",
+  "member": "91.lbt",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTicon\\row00217-91.lbt",
+    "bytes": 2126,
+    "sha256": "95659E473081DD0C311DB445166BAF0ACF5C3955570C411DBEDE91689E223A9E"
+  },
+  "provenance": {
+    "index_row": 217,
+    "source_index": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.idx",
+      "bytes": 6360,
+      "sha256": "2EA2E48A61C246A5D4CB2820C4C3431F487705C67459290A998D9DBE9017BAA7"
+    },
+    "source_pak": {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.pak",
+      "bytes": 274258,
+      "sha256": "52FEC7B547B63B75BE1178D66E4C0E17EA5B48F089B47E1836EDD120C79C015D"
+    },
+    "role": "namespace_control_not_unknown_spell_fallback"
+  },
+  "prior_layout_details_compared": {
+    "offset": [
+      0,
+      0
+    ],
+    "header_width": 32,
+    "width": 32,
+    "height": 32,
+    "coverage_sha256": "FB61E2353DB7B2E5D2849AD60CA4F33840592DB5FD4097FFACAC79E6ED8E4A44",
+    "rgba_coverage_alpha_sha256": "5CEE7065D1EEA170B081E46CD46B4976CB2432BF3903E7C91A9E1A37A9E3B006",
+    "encoded_pixels": 993,
+    "zero_pixels": 111,
+    "bytes_consumed": 2126,
+    "native_offset_alpha_blit_parity": false
+  },
+  "coverage_words": 993,
+  "covered_zero_words": 111,
+  "uncovered_words": 31,
+  "zero_examples": [
+    {
+      "x": 15,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 16,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 17,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 18,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 19,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 20,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 21,
+      "y": 0,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    },
+    {
+      "x": 16,
+      "y": 1,
+      "native_written_word": 0,
+      "reference_rgba_alpha_policy": 0
+    }
+  ],
+  "uncovered_examples": [
+    {
+      "x": 0,
+      "y": 0,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "native_destination_unchanged": true
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "native_destination_unchanged": true
+    }
+  ],
+  "raw_offset_applied_only_by_draw": true,
+  "files": {
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\raw.bin",
+      "bytes": 2126,
+      "sha256": "95659E473081DD0C311DB445166BAF0ACF5C3955570C411DBEDE91689E223A9E"
+    },
+    "inplace_565_payload": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\converted-565.bin",
+      "bytes": 2126,
+      "sha256": "3ADF327287B16E95E3AE209854684E82C96B57468F10CE45A0213A7CF5A73B00"
+    },
+    "coverage_u8": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\coverage.u8",
+      "bytes": 1024,
+      "sha256": "FB61E2353DB7B2E5D2849AD60CA4F33840592DB5FD4097FFACAC79E6ED8E4A44"
+    },
+    "dense_source_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\source-words.le16",
+      "bytes": 2048,
+      "sha256": "3BA08317F956017E13C6A2704E0749621B5133A860753AD2FC975F5BD4E3E06D"
+    },
+    "dense_converted_words_le16": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\converted-words.le16",
+      "bytes": 2048,
+      "sha256": "DE8B6A9B0D92123E26C5AE662A1E9A64C97D4374A2F379D8F20D9746FBAD24FD"
+    },
+    "destination_flag_0": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\destination-flag-0.le16",
+      "bytes": 8192,
+      "sha256": "A2A5A4BA8B01868BC9FC57F92E8DB7E7D6957625F719E02043AB32BC0545CD35"
+    },
+    "destination_flag_1": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\destination-flag-1.le16",
+      "bytes": 8192,
+      "sha256": "88CBAC5EDAA3511B86E5B3E3144410100FE2E2FDDE32F3E1B716D98201EF36A6"
+    }
+  },
+  "destination_case": {
+    "width": 64,
+    "height": 64,
+    "pitch_bytes": 128,
+    "caller_origin": [
+      8,
+      8
+    ],
+    "sentinel_word_hex": "5AA5",
+    "mask_flag": 0,
+    "DF": 0,
+    "in_bounds": true
+  },
+  "new_case_checks": [
+    {
+      "conversion_flag": 0,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1042,
+          "source_byte_offset": 7,
+          "bytes": 62
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1172,
+          "source_byte_offset": 72,
+          "bytes": 60
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1296,
+          "source_byte_offset": 135,
+          "bytes": 2
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1302,
+          "source_byte_offset": 139,
+          "bytes": 58
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1424,
+          "source_byte_offset": 200,
+          "bytes": 4
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1432,
+          "source_byte_offset": 206,
+          "bytes": 56
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1552,
+          "source_byte_offset": 265,
+          "bytes": 6
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1562,
+          "source_byte_offset": 273,
+          "bytes": 54
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1680,
+          "source_byte_offset": 330,
+          "bytes": 8
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1692,
+          "source_byte_offset": 340,
+          "bytes": 52
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1808,
+          "source_byte_offset": 395,
+          "bytes": 10
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1822,
+          "source_byte_offset": 407,
+          "bytes": 50
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1936,
+          "source_byte_offset": 460,
+          "bytes": 12
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1952,
+          "source_byte_offset": 474,
+          "bytes": 48
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2064,
+          "source_byte_offset": 525,
+          "bytes": 14
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2082,
+          "source_byte_offset": 541,
+          "bytes": 46
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2192,
+          "source_byte_offset": 590,
+          "bytes": 16
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2212,
+          "source_byte_offset": 608,
+          "bytes": 44
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2320,
+          "source_byte_offset": 655,
+          "bytes": 18
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2340,
+          "source_byte_offset": 675,
+          "bytes": 44
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 2448,
+          "source_byte_offset": 722,
+          "bytes": 64
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 2576,
+          "source_byte_offset": 789,
+          "bytes": 64
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2704,
+          "source_byte_offset": 856,
+          "bytes": 16
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2722,
+          "source_byte_offset": 874,
+          "bytes": 46
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2832,
+          "source_byte_offset": 923,
+          "bytes": 14
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2848,
+          "source_byte_offset": 939,
+          "bytes": 48
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 2960,
+          "source_byte_offset": 990,
+          "bytes": 64
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3088,
+          "source_byte_offset": 1057,
+          "bytes": 64
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3216,
+          "source_byte_offset": 1124,
+          "bytes": 64
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3344,
+          "source_byte_offset": 1191,
+          "bytes": 64
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 3472,
+          "source_byte_offset": 1258,
+          "bytes": 64
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3600,
+          "source_byte_offset": 1325,
+          "bytes": 28
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3630,
+          "source_byte_offset": 1355,
+          "bytes": 4
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3636,
+          "source_byte_offset": 1361,
+          "bytes": 28
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3728,
+          "source_byte_offset": 1392,
+          "bytes": 24
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3754,
+          "source_byte_offset": 1418,
+          "bytes": 10
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3766,
+          "source_byte_offset": 1430,
+          "bytes": 26
+        },
+        {
+          "row": 22,
+          "destination_byte_offset": 3856,
+          "source_byte_offset": 1459,
+          "bytes": 64
+        },
+        {
+          "row": 23,
+          "destination_byte_offset": 3984,
+          "source_byte_offset": 1526,
+          "bytes": 64
+        },
+        {
+          "row": 24,
+          "destination_byte_offset": 4112,
+          "source_byte_offset": 1593,
+          "bytes": 64
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4240,
+          "source_byte_offset": 1660,
+          "bytes": 18
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4260,
+          "source_byte_offset": 1680,
+          "bytes": 22
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4284,
+          "source_byte_offset": 1704,
+          "bytes": 20
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4368,
+          "source_byte_offset": 1727,
+          "bytes": 14
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4384,
+          "source_byte_offset": 1743,
+          "bytes": 28
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4414,
+          "source_byte_offset": 1773,
+          "bytes": 18
+        },
+        {
+          "row": 27,
+          "destination_byte_offset": 4496,
+          "source_byte_offset": 1794,
+          "bytes": 64
+        },
+        {
+          "row": 28,
+          "destination_byte_offset": 4624,
+          "source_byte_offset": 1861,
+          "bytes": 64
+        },
+        {
+          "row": 29,
+          "destination_byte_offset": 4752,
+          "source_byte_offset": 1928,
+          "bytes": 64
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4880,
+          "source_byte_offset": 1995,
+          "bytes": 50
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4932,
+          "source_byte_offset": 2047,
+          "bytes": 12
+        },
+        {
+          "row": 31,
+          "destination_byte_offset": 5008,
+          "source_byte_offset": 2062,
+          "bytes": 64
+        }
+      ]
+    },
+    {
+      "conversion_flag": 1,
+      "independent_stream_vs_span_model_equal": true,
+      "writes": [
+        {
+          "row": 0,
+          "destination_byte_offset": 1042,
+          "source_byte_offset": 7,
+          "bytes": 62
+        },
+        {
+          "row": 1,
+          "destination_byte_offset": 1172,
+          "source_byte_offset": 72,
+          "bytes": 60
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1296,
+          "source_byte_offset": 135,
+          "bytes": 2
+        },
+        {
+          "row": 2,
+          "destination_byte_offset": 1302,
+          "source_byte_offset": 139,
+          "bytes": 58
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1424,
+          "source_byte_offset": 200,
+          "bytes": 4
+        },
+        {
+          "row": 3,
+          "destination_byte_offset": 1432,
+          "source_byte_offset": 206,
+          "bytes": 56
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1552,
+          "source_byte_offset": 265,
+          "bytes": 6
+        },
+        {
+          "row": 4,
+          "destination_byte_offset": 1562,
+          "source_byte_offset": 273,
+          "bytes": 54
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1680,
+          "source_byte_offset": 330,
+          "bytes": 8
+        },
+        {
+          "row": 5,
+          "destination_byte_offset": 1692,
+          "source_byte_offset": 340,
+          "bytes": 52
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1808,
+          "source_byte_offset": 395,
+          "bytes": 10
+        },
+        {
+          "row": 6,
+          "destination_byte_offset": 1822,
+          "source_byte_offset": 407,
+          "bytes": 50
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1936,
+          "source_byte_offset": 460,
+          "bytes": 12
+        },
+        {
+          "row": 7,
+          "destination_byte_offset": 1952,
+          "source_byte_offset": 474,
+          "bytes": 48
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2064,
+          "source_byte_offset": 525,
+          "bytes": 14
+        },
+        {
+          "row": 8,
+          "destination_byte_offset": 2082,
+          "source_byte_offset": 541,
+          "bytes": 46
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2192,
+          "source_byte_offset": 590,
+          "bytes": 16
+        },
+        {
+          "row": 9,
+          "destination_byte_offset": 2212,
+          "source_byte_offset": 608,
+          "bytes": 44
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2320,
+          "source_byte_offset": 655,
+          "bytes": 18
+        },
+        {
+          "row": 10,
+          "destination_byte_offset": 2340,
+          "source_byte_offset": 675,
+          "bytes": 44
+        },
+        {
+          "row": 11,
+          "destination_byte_offset": 2448,
+          "source_byte_offset": 722,
+          "bytes": 64
+        },
+        {
+          "row": 12,
+          "destination_byte_offset": 2576,
+          "source_byte_offset": 789,
+          "bytes": 64
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2704,
+          "source_byte_offset": 856,
+          "bytes": 16
+        },
+        {
+          "row": 13,
+          "destination_byte_offset": 2722,
+          "source_byte_offset": 874,
+          "bytes": 46
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2832,
+          "source_byte_offset": 923,
+          "bytes": 14
+        },
+        {
+          "row": 14,
+          "destination_byte_offset": 2848,
+          "source_byte_offset": 939,
+          "bytes": 48
+        },
+        {
+          "row": 15,
+          "destination_byte_offset": 2960,
+          "source_byte_offset": 990,
+          "bytes": 64
+        },
+        {
+          "row": 16,
+          "destination_byte_offset": 3088,
+          "source_byte_offset": 1057,
+          "bytes": 64
+        },
+        {
+          "row": 17,
+          "destination_byte_offset": 3216,
+          "source_byte_offset": 1124,
+          "bytes": 64
+        },
+        {
+          "row": 18,
+          "destination_byte_offset": 3344,
+          "source_byte_offset": 1191,
+          "bytes": 64
+        },
+        {
+          "row": 19,
+          "destination_byte_offset": 3472,
+          "source_byte_offset": 1258,
+          "bytes": 64
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3600,
+          "source_byte_offset": 1325,
+          "bytes": 28
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3630,
+          "source_byte_offset": 1355,
+          "bytes": 4
+        },
+        {
+          "row": 20,
+          "destination_byte_offset": 3636,
+          "source_byte_offset": 1361,
+          "bytes": 28
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3728,
+          "source_byte_offset": 1392,
+          "bytes": 24
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3754,
+          "source_byte_offset": 1418,
+          "bytes": 10
+        },
+        {
+          "row": 21,
+          "destination_byte_offset": 3766,
+          "source_byte_offset": 1430,
+          "bytes": 26
+        },
+        {
+          "row": 22,
+          "destination_byte_offset": 3856,
+          "source_byte_offset": 1459,
+          "bytes": 64
+        },
+        {
+          "row": 23,
+          "destination_byte_offset": 3984,
+          "source_byte_offset": 1526,
+          "bytes": 64
+        },
+        {
+          "row": 24,
+          "destination_byte_offset": 4112,
+          "source_byte_offset": 1593,
+          "bytes": 64
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4240,
+          "source_byte_offset": 1660,
+          "bytes": 18
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4260,
+          "source_byte_offset": 1680,
+          "bytes": 22
+        },
+        {
+          "row": 25,
+          "destination_byte_offset": 4284,
+          "source_byte_offset": 1704,
+          "bytes": 20
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4368,
+          "source_byte_offset": 1727,
+          "bytes": 14
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4384,
+          "source_byte_offset": 1743,
+          "bytes": 28
+        },
+        {
+          "row": 26,
+          "destination_byte_offset": 4414,
+          "source_byte_offset": 1773,
+          "bytes": 18
+        },
+        {
+          "row": 27,
+          "destination_byte_offset": 4496,
+          "source_byte_offset": 1794,
+          "bytes": 64
+        },
+        {
+          "row": 28,
+          "destination_byte_offset": 4624,
+          "source_byte_offset": 1861,
+          "bytes": 64
+        },
+        {
+          "row": 29,
+          "destination_byte_offset": 4752,
+          "source_byte_offset": 1928,
+          "bytes": 64
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4880,
+          "source_byte_offset": 1995,
+          "bytes": 50
+        },
+        {
+          "row": 30,
+          "destination_byte_offset": 4932,
+          "source_byte_offset": 2047,
+          "bytes": 12
+        },
+        {
+          "row": 31,
+          "destination_byte_offset": 5008,
+          "source_byte_offset": 2062,
+          "bytes": 64
+        }
+      ]
+    }
+  ],
+  "oracle_status": "CODE_DERIVED_EXPECTATIONS_ONLY; no original runtime pixels or Modern output used"
+}

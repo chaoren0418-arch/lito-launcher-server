@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build\\candidate-armor-state.jar",
+    "sha256": "c7bae84c7a0d260186e38763c1af7dba16db643a77477d096d6540fa747a01b8"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\candidate-negative-material.jar",
+    "sha256": "18fbe46a414e29974bdb4d625b33b6aca9b3271cac0eaf9994a14ed7801f244e"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeNegativeMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\build.py",
+      "sha256": "c9ee72a181da381998d0de4e9f4fc89628a799096c4df3f540b582bcf9b366b2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\NegativeMaterialMethods.java",
+      "sha256": "7af7e8ab259e21495d40d8d94f06a1233041ae3d6a816f053cc306175c59a43c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "c6d1260720b7c0437ff750fde780e7d9a98560bf47026432b6ae6365281bcfdc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "1622414545428b94e8ff3a787a3974642b539d61bbb6001b6173165197cabcee"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build-repro\\inputs\\sources\\NativeNegativeMaterialAction.java",
+      "sha256": "ee851af0438960dff828fd7d362819fe501f6d1c0f11f4532c0325e2bb0dc96d"
+    }
+  ]
+}

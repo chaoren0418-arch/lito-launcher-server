@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build\\candidate-elemental-lifetime.jar",
+    "sha256": "b0362026f3ec4ec105a63ed1f1da87cdb1192f69e546f86f16f88d220b6d582c"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\candidate-summon-material.jar",
+    "sha256": "0efdc606c0d5fe1fc5511cabcac9c8b0f227a72ba34fd4183abe323dcb302a54"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeSummonCastAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\build.py",
+      "sha256": "2df713c943d3000346fe05baeb2bd455ce05535c825704c1ac30f4b12144a3ab"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\SummonMethods.java",
+      "sha256": "1f31f585da83d29be6905f0fd649e68b41b538ac39134ac2584e8851993a5dfe"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "d7f8049e6c2bc96eb1bebae18d4e83dc67d407d1a8598480bbdaa9bdcb113995"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\source-reference\\SUMMON_MONSTER.java",
+      "sha256": "16cdceaa1adbc8718a3cc239ead29021cc14c57e80caa094333522a84e9fdce8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "747332ca13b7c94c840d9e8cec852fa4cbbb49f10625cf5c7b27355037f1178c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build-repro\\inputs\\sources\\NativeSummonCastAction.java",
+      "sha256": "70a00e3965c2611c10538646744627351be829348d560eba892d029aa96b1052"
+    }
+  ]
+}

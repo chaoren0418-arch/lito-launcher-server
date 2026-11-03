@@ -1,0 +1,95 @@
+{
+  "status": "CONDITIONAL_CODE_DERIVED_ONLY",
+  "cases": [
+    {
+      "qualified_resource": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+        "bytes": 119654,
+        "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+      },
+      "drag_delta": [
+        0,
+        0
+      ],
+      "draw_translation": [
+        0,
+        0
+      ],
+      "childorigin": [
+        433,
+        0
+      ],
+      "owner_input_rectangle": [
+        470,
+        43,
+        607,
+        248
+      ],
+      "pane934_input_bounds": [
+        433,
+        0,
+        640,
+        289
+      ],
+      "main934_draw_origin": [
+        433,
+        0
+      ],
+      "grid_draw_origin": [
+        470,
+        43
+      ],
+      "additional933_draw_origin": [
+        441,
+        10
+      ],
+      "input_point_if_upstream_removes_G": "screenpoint-G; conditional mapping only, upstream fullOS normalizationnotclosed",
+      "native_GUI_oracle": false
+    },
+    {
+      "qualified_resource": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+        "bytes": 119654,
+        "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+      },
+      "drag_delta": [
+        5,
+        -3
+      ],
+      "draw_translation": [
+        12,
+        7
+      ],
+      "childorigin": [
+        438,
+        -3
+      ],
+      "owner_input_rectangle": [
+        475,
+        40,
+        612,
+        245
+      ],
+      "pane934_input_bounds": [
+        438,
+        -3,
+        645,
+        286
+      ],
+      "main934_draw_origin": [
+        450,
+        4
+      ],
+      "grid_draw_origin": [
+        487,
+        47
+      ],
+      "additional933_draw_origin": [
+        458,
+        14
+      ],
+      "input_point_if_upstream_removes_G": "screenpoint-G; conditional mapping only, upstream fullOS normalizationnotclosed",
+      "native_GUI_oracle": false
+    }
+  ]
+}

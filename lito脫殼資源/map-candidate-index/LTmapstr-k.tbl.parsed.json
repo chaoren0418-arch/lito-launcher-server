@@ -1,0 +1,3926 @@
+{
+  "schema": "LTmapstr-byte-candidate-index-v1",
+  "candidate": "LTmapstr-k.tbl",
+  "provenance": {
+    "namespace": "native",
+    "archive": "LTtext",
+    "row": 245,
+    "offset": 190888,
+    "bytes": 2584,
+    "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+    "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+    "raw": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00245-LTmapstr-k.tbl",
+      "bytes": 2584,
+      "sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F"
+    },
+    "decoded": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00245-LTmapstr-k.tbl",
+      "bytes": 2584,
+      "sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+    },
+    "existing_resource_encoding_marker": "L1",
+    "marker_is_text_codec_qualification": false,
+    "qualified_text_codec": null,
+    "existing_display_reference": {
+      "assumed_code_page": 950,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\text-view\\LTtext\\row00245-LTmapstr-k.tbl.utf8.txt",
+        "bytes": 2652,
+        "sha256": "20BEEF3AC06A3B18A47B9BA702BA5762FA020746D484FB16C90CE1C51D620ADA"
+      },
+      "binary_authoritative": true
+    },
+    "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+  },
+  "policy": {
+    "encoding": "bytes authoritative; printable ASCII view only; no codec inference or non-ASCII decode",
+    "physical_lines": "CRLF, standalone CR, standalone LF only; retain terminator; terminal EOL creates no phantom row",
+    "tokens": "literal byte 23 (#), retain every empty/trailing token and whitespace; no escape grammar inferred",
+    "header": "first nonblank physical line, standalone unsigned ASCII decimal after SP/HT trim; observed count declaration only",
+    "comment": "first non-SP/HT byte is 3B (;); preserve whole content; other semicolons retained without inline truncation",
+    "file_key": "non-header non-comment hash row, first token SP/HT-trimmed signed ASCII decimal; arbitrary precision; no width coercion",
+    "commented_key": "separate inactive declaration after exactly one leading comment marker; never active file key",
+    "placeholder": "token SP/HT-trimmed equals exact lowercase ASCII no exist or no exsist; marker flag, not deleted",
+    "label_metadata": "all tokens returned with positions and bytes; no canonical title column or fallback key",
+    "duplicate_keys": "all matching physical rows in source order; no first/last winner"
+  },
+  "authority_guard": "Candidate bytes only. File key, physical line, header count and token position do not qualify runtime table index, locale, label codec or map/resource ID. No cross-candidate alignment or title-column inference.",
+  "source_byte_length": 2584,
+  "source_sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD",
+  "header_declared_count": 67,
+  "header_physical_line_1based": 1,
+  "counts": {
+    "physical_rows": 68,
+    "header_rows": 1,
+    "physical_rows_after_header": 67,
+    "nonblank_rows_after_header": 67,
+    "comment_rows_after_header": 12,
+    "noncomment_nonblank_rows_after_header": 55,
+    "hash_rows_after_header_including_comments": 67,
+    "noncomment_hash_rows_after_header": 55,
+    "noncomment_plain_rows_after_header": 0,
+    "explicit_numeric_key_rows": 47,
+    "commented_numeric_key_rows": 1,
+    "placeholder_rows_including_comments": 8,
+    "noncomment_placeholder_rows": 8,
+    "hash_delimiters": 212,
+    "tokens": 280
+  },
+  "count_minus_header": {
+    "physical_rows_after_header": 0,
+    "nonblank_rows_after_header": 0,
+    "noncomment_nonblank_rows_after_header": -12,
+    "noncomment_hash_rows_after_header": -12
+  },
+  "terminal_eol": true,
+  "eol_counts": {
+    "CRLF": 68,
+    "CR": 0,
+    "LF": 0,
+    "NONE": 0
+  },
+  "duplicate_explicit_file_keys": {},
+  "coverage": {
+    "reconstructed_source_sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD",
+    "all_source_bytes_preserved": true,
+    "all_token_bytes_preserved": true,
+    "byte_interval": [
+      0,
+      2584
+    ]
+  },
+  "rows": [
+    {
+      "physical_line_1based": 1,
+      "byte_offset": 0,
+      "content_byte_length": 2,
+      "full_byte_length": 4,
+      "raw_bytes_hex": "36370d0a",
+      "content_hex": "3637",
+      "content_sha256": "49D180ECF56132819571BF39D9B7B342522A2AC6D23C1418D3338251BFE469C8",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "header_count",
+      "hash_delimiter_byte_offsets": [],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 0,
+          "byte_length": 2,
+          "raw_hex": "3637",
+          "printable_ascii": "67"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 2,
+      "byte_offset": 4,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "35303023746f776e23746f776e236d696e696d61700d0a",
+      "content_hex": "35303023746f776e23746f776e236d696e696d6170",
+      "content_sha256": "BB8357A7E8C8E55899B13B0441F01130FD2983714E2AD92376B8A9B861C320D5",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        7,
+        12,
+        17
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 4,
+          "byte_length": 3,
+          "raw_hex": "353030",
+          "printable_ascii": "500"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 8,
+          "byte_length": 4,
+          "raw_hex": "746f776e",
+          "printable_ascii": "town"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 13,
+          "byte_length": 4,
+          "raw_hex": "746f776e",
+          "printable_ascii": "town"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 18,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 500,
+      "file_key_lexeme_hex": "353030",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 3,
+      "byte_offset": 27,
+      "content_byte_length": 22,
+      "full_byte_length": 24,
+      "raw_bytes_hex": "35363023746f776e23746f776e32236d696e696d61700d0a",
+      "content_hex": "35363023746f776e23746f776e32236d696e696d6170",
+      "content_sha256": "21D1566E2F47ED4EF00DE1E8B4E040D22E7C987766C989453BF640AB8401D580",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        30,
+        35,
+        41
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 27,
+          "byte_length": 3,
+          "raw_hex": "353630",
+          "printable_ascii": "560"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 31,
+          "byte_length": 4,
+          "raw_hex": "746f776e",
+          "printable_ascii": "town"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 36,
+          "byte_length": 5,
+          "raw_hex": "746f776e32",
+          "printable_ascii": "town2"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 42,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 560,
+      "file_key_lexeme_hex": "353630",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 4,
+      "byte_offset": 51,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        59
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 51,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 60,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 5,
+      "byte_offset": 71,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        79
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 71,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 80,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 6,
+      "byte_offset": 91,
+      "content_byte_length": 23,
+      "full_byte_length": 25,
+      "raw_bytes_hex": "353635237065745261636523526163696e6720436974790d0a",
+      "content_hex": "353635237065745261636523526163696e672043697479",
+      "content_sha256": "F45DD5289B7FC6670C82991EAE703E687569279997A360EA508D0CC173490035",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        94,
+        102
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 91,
+          "byte_length": 3,
+          "raw_hex": "353635",
+          "printable_ascii": "565"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 95,
+          "byte_length": 7,
+          "raw_hex": "70657452616365",
+          "printable_ascii": "petRace"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 103,
+          "byte_length": 11,
+          "raw_hex": "526163696e672043697479",
+          "printable_ascii": "Racing City"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 565,
+      "file_key_lexeme_hex": "353635",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 7,
+      "byte_offset": 116,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "3536362370657452616365234561737920546f776e0d0a",
+      "content_hex": "3536362370657452616365234561737920546f776e",
+      "content_sha256": "AF96841A9E9CB756287CD8E18C79BAD6BC4AFB5AC44F2ECBE7A99112BA845CCC",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        119,
+        127
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 116,
+          "byte_length": 3,
+          "raw_hex": "353636",
+          "printable_ascii": "566"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 120,
+          "byte_length": 7,
+          "raw_hex": "70657452616365",
+          "printable_ascii": "petRace"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 128,
+          "byte_length": 9,
+          "raw_hex": "4561737920546f776e",
+          "printable_ascii": "Easy Town"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 566,
+      "file_key_lexeme_hex": "353636",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 8,
+      "byte_offset": 139,
+      "content_byte_length": 22,
+      "full_byte_length": 24,
+      "raw_bytes_hex": "3b353731237065745261636523547320436173746c650d0a",
+      "content_hex": "3b353731237065745261636523547320436173746c65",
+      "content_sha256": "75EDFF471ABCAC4E5C55A88CC30F20F46999B91FCF08A07D6396A611A7013560",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        143,
+        151
+      ],
+      "semicolon_byte_offsets": [
+        139
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 139,
+          "byte_length": 4,
+          "raw_hex": "3b353731",
+          "printable_ascii": ";571"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 144,
+          "byte_length": 7,
+          "raw_hex": "70657452616365",
+          "printable_ascii": "petRace"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 152,
+          "byte_length": 9,
+          "raw_hex": "547320436173746c65",
+          "printable_ascii": "Ts Castle"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 139,
+      "commented_file_key": 571,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 9,
+      "byte_offset": 163,
+      "content_byte_length": 27,
+      "full_byte_length": 29,
+      "raw_bytes_hex": "353639237065745261636523526163696e672043697479202852290d0a",
+      "content_hex": "353639237065745261636523526163696e67204369747920285229",
+      "content_sha256": "98DD2BDD021A3B6D4900DE44EDA0F12A7118A38253853131DBADBA9AEC615E00",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        166,
+        174
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 163,
+          "byte_length": 3,
+          "raw_hex": "353639",
+          "printable_ascii": "569"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 167,
+          "byte_length": 7,
+          "raw_hex": "70657452616365",
+          "printable_ascii": "petRace"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 175,
+          "byte_length": 15,
+          "raw_hex": "526163696e67204369747920285229",
+          "printable_ascii": "Racing City (R)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 569,
+      "file_key_lexeme_hex": "353639",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 10,
+      "byte_offset": 192,
+      "content_byte_length": 25,
+      "full_byte_length": 27,
+      "raw_bytes_hex": "3537302370657452616365234561737920546f776e202852290d0a",
+      "content_hex": "3537302370657452616365234561737920546f776e20285229",
+      "content_sha256": "08B0AA1DAEA481F27F3F526E7E2EAAC4DDC486F97ACA3C48014D54824FB9D1F0",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        195,
+        203
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 192,
+          "byte_length": 3,
+          "raw_hex": "353730",
+          "printable_ascii": "570"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 196,
+          "byte_length": 7,
+          "raw_hex": "70657452616365",
+          "printable_ascii": "petRace"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 204,
+          "byte_length": 13,
+          "raw_hex": "4561737920546f776e20285229",
+          "printable_ascii": "Easy Town (R)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 570,
+      "file_key_lexeme_hex": "353730",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 11,
+      "byte_offset": 219,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "3536342364656174686d6174636823426174746c652047726f756e64200d0a",
+      "content_hex": "3536342364656174686d6174636823426174746c652047726f756e6420",
+      "content_sha256": "E929BCA9C7D1A0FBE7A96DBEA03D5D9A306AF798A0BF3819F9954CE3C763FA11",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        222,
+        233
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 219,
+          "byte_length": 3,
+          "raw_hex": "353634",
+          "printable_ascii": "564"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 223,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 234,
+          "byte_length": 14,
+          "raw_hex": "426174746c652047726f756e6420",
+          "printable_ascii": "Battle Ground "
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 564,
+      "file_key_lexeme_hex": "353634",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 12,
+      "byte_offset": 250,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "3531342364656174686d617463682354656d706c650d0a",
+      "content_hex": "3531342364656174686d617463682354656d706c65",
+      "content_sha256": "2342ECCC9A244EE403D5D99DE8D97AC98B370A524362C0A2B9B0B992E3AF7DC6",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        253,
+        264
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 250,
+          "byte_length": 3,
+          "raw_hex": "353134",
+          "printable_ascii": "514"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 254,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 265,
+          "byte_length": 6,
+          "raw_hex": "54656d706c65",
+          "printable_ascii": "Temple"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 514,
+      "file_key_lexeme_hex": "353134",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 13,
+      "byte_offset": 273,
+      "content_byte_length": 23,
+      "full_byte_length": 25,
+      "raw_bytes_hex": "3530392364656174686d6174636823466174616c6974790d0a",
+      "content_hex": "3530392364656174686d6174636823466174616c697479",
+      "content_sha256": "A707875A6B1465B34523ADAD6DF61313B7CA63DE2AC2BD39322EA2AB743E5354",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        276,
+        287
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 273,
+          "byte_length": 3,
+          "raw_hex": "353039",
+          "printable_ascii": "509"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 277,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 288,
+          "byte_length": 8,
+          "raw_hex": "466174616c697479",
+          "printable_ascii": "Fatality"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 509,
+      "file_key_lexeme_hex": "353039",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 14,
+      "byte_offset": 298,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "3530382364656174686d6174636823466174616c6974792854726170290d0a",
+      "content_hex": "3530382364656174686d6174636823466174616c697479285472617029",
+      "content_sha256": "5AA2B68D25A9EEFA5D77085C7E773568C1FE11EC2AFE2FF24A1E1D57A4192F94",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        301,
+        312
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 298,
+          "byte_length": 3,
+          "raw_hex": "353038",
+          "printable_ascii": "508"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 302,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 313,
+          "byte_length": 14,
+          "raw_hex": "466174616c697479285472617029",
+          "printable_ascii": "Fatality(Trap)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 508,
+      "file_key_lexeme_hex": "353038",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 15,
+      "byte_offset": 329,
+      "content_byte_length": 26,
+      "full_byte_length": 28,
+      "raw_bytes_hex": "3535312364656174686d61746368234c656e6f612057686172660d0a",
+      "content_hex": "3535312364656174686d61746368234c656e6f61205768617266",
+      "content_sha256": "5FFE62FED9B01B2E1CE2034058C2AECF53A78AF582177F2C70296B53C2A4E678",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        332,
+        343
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 329,
+          "byte_length": 3,
+          "raw_hex": "353531",
+          "printable_ascii": "551"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 333,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 344,
+          "byte_length": 11,
+          "raw_hex": "4c656e6f61205768617266",
+          "printable_ascii": "Lenoa Wharf"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 551,
+      "file_key_lexeme_hex": "353531",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 16,
+      "byte_offset": 357,
+      "content_byte_length": 61,
+      "full_byte_length": 63,
+      "raw_bytes_hex": "3530342364656174686d617463682347617264656e236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "3530342364656174686d617463682347617264656e236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "97645C885360072BE925A370AC593498AF83F2CB4EA3722497DB7D4E09E98CE1",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        360,
+        371,
+        378,
+        386,
+        392,
+        398,
+        408
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 357,
+          "byte_length": 3,
+          "raw_hex": "353034",
+          "printable_ascii": "504"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 361,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 372,
+          "byte_length": 6,
+          "raw_hex": "47617264656e",
+          "printable_ascii": "Garden"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 379,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 387,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 393,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 399,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 409,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 504,
+      "file_key_lexeme_hex": "353034",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 17,
+      "byte_offset": 420,
+      "content_byte_length": 24,
+      "full_byte_length": 26,
+      "raw_bytes_hex": "3530352364656174686d617463682343726f7373726f61640d0a",
+      "content_hex": "3530352364656174686d617463682343726f7373726f6164",
+      "content_sha256": "58D044D212EFFAC4CC2415D92CD2328ED008EEE70F555655573906DA925C637E",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        423,
+        434
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 420,
+          "byte_length": 3,
+          "raw_hex": "353035",
+          "printable_ascii": "505"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 424,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 435,
+          "byte_length": 9,
+          "raw_hex": "43726f7373726f6164",
+          "printable_ascii": "Crossroad"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 505,
+      "file_key_lexeme_hex": "353035",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 18,
+      "byte_offset": 446,
+      "content_byte_length": 23,
+      "full_byte_length": 25,
+      "raw_bytes_hex": "3535322364656174686d6174636823536b7920476174650d0a",
+      "content_hex": "3535322364656174686d6174636823536b792047617465",
+      "content_sha256": "20F7FEAB44856431DEEFEF30EFEEC4ACAC0D3E2F2587F2CF262147FC7982D258",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        449,
+        460
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 446,
+          "byte_length": 3,
+          "raw_hex": "353532",
+          "printable_ascii": "552"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 450,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 461,
+          "byte_length": 8,
+          "raw_hex": "536b792047617465",
+          "printable_ascii": "Sky Gate"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 552,
+      "file_key_lexeme_hex": "353532",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 19,
+      "byte_offset": 471,
+      "content_byte_length": 24,
+      "full_byte_length": 26,
+      "raw_bytes_hex": "3530362364656174686d61746368234f726320416c7461720d0a",
+      "content_hex": "3530362364656174686d61746368234f726320416c746172",
+      "content_sha256": "E9D71A5184A0A871B2C53A554B21C491CA43FAF66E77BD1B3F4AEA05801A44C0",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        474,
+        485
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 471,
+          "byte_length": 3,
+          "raw_hex": "353036",
+          "printable_ascii": "506"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 475,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 486,
+          "byte_length": 9,
+          "raw_hex": "4f726320416c746172",
+          "printable_ascii": "Orc Altar"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 506,
+      "file_key_lexeme_hex": "353036",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 20,
+      "byte_offset": 497,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "3532362364656174686d61746368235371756172650d0a",
+      "content_hex": "3532362364656174686d6174636823537175617265",
+      "content_sha256": "D64FB0042D92592BAE751720BD2AFBB687A875C89F9EFCC0A0E82D9C3EEA2902",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        500,
+        511
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 497,
+          "byte_length": 3,
+          "raw_hex": "353236",
+          "printable_ascii": "526"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 501,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 512,
+          "byte_length": 6,
+          "raw_hex": "537175617265",
+          "printable_ascii": "Square"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 526,
+      "file_key_lexeme_hex": "353236",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 21,
+      "byte_offset": 520,
+      "content_byte_length": 26,
+      "full_byte_length": 28,
+      "raw_bytes_hex": "3532352364656174686d6174636823416e74656368616d6265720d0a",
+      "content_hex": "3532352364656174686d6174636823416e74656368616d626572",
+      "content_sha256": "092BEE17D4BDA5846548099AC7ED385FC1A13444A00F649BA17443A4EE390D67",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        523,
+        534
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 520,
+          "byte_length": 3,
+          "raw_hex": "353235",
+          "printable_ascii": "525"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 524,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 535,
+          "byte_length": 11,
+          "raw_hex": "416e74656368616d626572",
+          "printable_ascii": "Antechamber"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 525,
+      "file_key_lexeme_hex": "353235",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 22,
+      "byte_offset": 548,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "3531362364656174686d6174636823536563726574204368616d6265720d0a",
+      "content_hex": "3531362364656174686d6174636823536563726574204368616d626572",
+      "content_sha256": "FDAD6183C16342A0DDE61AF929846848D592FB3DCAB27715A4C1B5DF57E43D8E",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        551,
+        562
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 548,
+          "byte_length": 3,
+          "raw_hex": "353136",
+          "printable_ascii": "516"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 552,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 563,
+          "byte_length": 14,
+          "raw_hex": "536563726574204368616d626572",
+          "printable_ascii": "Secret Chamber"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 516,
+      "file_key_lexeme_hex": "353136",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 23,
+      "byte_offset": 579,
+      "content_byte_length": 68,
+      "full_byte_length": 70,
+      "raw_bytes_hex": "3533312364656174686d6174636823496e657669746162696c697479236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "3533312364656174686d6174636823496e657669746162696c697479236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "1BF0804659C12BBE2F822C3561C7F6A4497B2DCF3CC29392640EB7FD340F3DB5",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        582,
+        593,
+        607,
+        615,
+        621,
+        627,
+        637
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 579,
+          "byte_length": 3,
+          "raw_hex": "353331",
+          "printable_ascii": "531"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 583,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 594,
+          "byte_length": 13,
+          "raw_hex": "496e657669746162696c697479",
+          "printable_ascii": "Inevitability"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 608,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 616,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 622,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 628,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 638,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 531,
+      "file_key_lexeme_hex": "353331",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 24,
+      "byte_offset": 649,
+      "content_byte_length": 73,
+      "full_byte_length": 75,
+      "raw_bytes_hex": "3533342364656174686d61746368234c6f64756e20436974792028446561746829236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "3533342364656174686d61746368234c6f64756e20436974792028446561746829236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "19194A20E84960B0022FCED1159E2F129856AEDA9B5E20BE1CE32480BFE21933",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        652,
+        663,
+        682,
+        690,
+        696,
+        702,
+        712
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 649,
+          "byte_length": 3,
+          "raw_hex": "353334",
+          "printable_ascii": "534"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 653,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 664,
+          "byte_length": 18,
+          "raw_hex": "4c6f64756e20436974792028446561746829",
+          "printable_ascii": "Lodun City (Death)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 683,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 691,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 697,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 703,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 713,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 534,
+      "file_key_lexeme_hex": "353334",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 25,
+      "byte_offset": 724,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "3532392364656174686d61746368234f7269656e74616c204d616e6f720d0a",
+      "content_hex": "3532392364656174686d61746368234f7269656e74616c204d616e6f72",
+      "content_sha256": "27EA6AB8ADD1D077A3ABBE8547D86812A26C293A8AF3F8502151F40DBF19F3F1",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        727,
+        738
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 724,
+          "byte_length": 3,
+          "raw_hex": "353239",
+          "printable_ascii": "529"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 728,
+          "byte_length": 10,
+          "raw_hex": "64656174686d61746368",
+          "printable_ascii": "deathmatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 739,
+          "byte_length": 14,
+          "raw_hex": "4f7269656e74616c204d616e6f72",
+          "printable_ascii": "Oriental Manor"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 529,
+      "file_key_lexeme_hex": "353239",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 26,
+      "byte_offset": 755,
+      "content_byte_length": 30,
+      "full_byte_length": 32,
+      "raw_bytes_hex": "3b64656174686d6174636823582d6d6173204369747920284576656e74290d0a",
+      "content_hex": "3b64656174686d6174636823582d6d6173204369747920284576656e7429",
+      "content_sha256": "EDBF351BEE89774CC5EA467901B0B151CADCB594DA43ECBEDAF0A4875F4FAEEF",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        766
+      ],
+      "semicolon_byte_offsets": [
+        755
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 755,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 767,
+          "byte_length": 18,
+          "raw_hex": "582d6d6173204369747920284576656e7429",
+          "printable_ascii": "X-mas City (Event)"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 755,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 27,
+      "byte_offset": 787,
+      "content_byte_length": 17,
+      "full_byte_length": 19,
+      "raw_bytes_hex": "3b64656174686d6174636823546f7765720d0a",
+      "content_hex": "3b64656174686d6174636823546f776572",
+      "content_sha256": "AA84708B6BCA44A4FE6602A717E37C44C94A79182F2C24D52459B60093A252F3",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        798
+      ],
+      "semicolon_byte_offsets": [
+        787
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 787,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 799,
+          "byte_length": 5,
+          "raw_hex": "546f776572",
+          "printable_ascii": "Tower"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 787,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 28,
+      "byte_offset": 806,
+      "content_byte_length": 24,
+      "full_byte_length": 26,
+      "raw_bytes_hex": "3b64656174686d61746368235265642053746169727320200d0a",
+      "content_hex": "3b64656174686d6174636823526564205374616972732020",
+      "content_sha256": "9EF64C8E6B2A885494A3C09B497D3315AE5BFF7673CBAC05D769F8DD8A94A4C9",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        817
+      ],
+      "semicolon_byte_offsets": [
+        806
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 806,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 818,
+          "byte_length": 12,
+          "raw_hex": "526564205374616972732020",
+          "printable_ascii": "Red Stairs  "
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 806,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 29,
+      "byte_offset": 832,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "3b64656174686d617463682333202d204172656e610d0a",
+      "content_hex": "3b64656174686d617463682333202d204172656e61",
+      "content_sha256": "69626263822FBD33E0F1FD9D3735E50B78B335031E6BFC9372F238132421C60C",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        843
+      ],
+      "semicolon_byte_offsets": [
+        832
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 832,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 844,
+          "byte_length": 9,
+          "raw_hex": "33202d204172656e61",
+          "printable_ascii": "3 - Arena"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 832,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 30,
+      "byte_offset": 855,
+      "content_byte_length": 24,
+      "full_byte_length": 26,
+      "raw_bytes_hex": "3b64656174686d617463682343616e646c657374616e64200d0a",
+      "content_hex": "3b64656174686d617463682343616e646c657374616e6420",
+      "content_sha256": "03A017AA5CFDC2C98970764AC678BA05823900DFE6F15B0B2C35196EB95EB882",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        866
+      ],
+      "semicolon_byte_offsets": [
+        855
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 855,
+          "byte_length": 11,
+          "raw_hex": "3b64656174686d61746368",
+          "printable_ascii": ";deathmatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 867,
+          "byte_length": 12,
+          "raw_hex": "43616e646c657374616e6420",
+          "printable_ascii": "Candlestand "
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 855,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 31,
+      "byte_offset": 881,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        889
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 881,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 890,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 32,
+      "byte_offset": 901,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        909
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 901,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 910,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 33,
+      "byte_offset": 921,
+      "content_byte_length": 64,
+      "full_byte_length": 66,
+      "raw_bytes_hex": "35313023686f6e6f726d617463682354686520476c6f7279236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "35313023686f6e6f726d617463682354686520476c6f7279236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "26AC4B3B4CC04E7270446800577DCF8D013A22C904FAC57E42FE70E79E1EF614",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        924,
+        935,
+        945,
+        953,
+        959,
+        965,
+        975
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 921,
+          "byte_length": 3,
+          "raw_hex": "353130",
+          "printable_ascii": "510"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 925,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 936,
+          "byte_length": 9,
+          "raw_hex": "54686520476c6f7279",
+          "printable_ascii": "The Glory"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 946,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 954,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 960,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 966,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 976,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 510,
+      "file_key_lexeme_hex": "353130",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 34,
+      "byte_offset": 987,
+      "content_byte_length": 64,
+      "full_byte_length": 66,
+      "raw_bytes_hex": "35323823686f6e6f726d6174636823456e746572616e6365236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "35323823686f6e6f726d6174636823456e746572616e6365236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "A9D94D7299E66DEA9728E07D9E70E8D0DC32F3AA03292CE6139E45B008EB06A6",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        990,
+        1001,
+        1011,
+        1019,
+        1025,
+        1031,
+        1041
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 987,
+          "byte_length": 3,
+          "raw_hex": "353238",
+          "printable_ascii": "528"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 991,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1002,
+          "byte_length": 9,
+          "raw_hex": "456e746572616e6365",
+          "printable_ascii": "Enterance"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1012,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1020,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1026,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1032,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1042,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 528,
+      "file_key_lexeme_hex": "353238",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 35,
+      "byte_offset": 1053,
+      "content_byte_length": 69,
+      "full_byte_length": 71,
+      "raw_bytes_hex": "35333223686f6e6f726d61746368234368616f7469632054656d706c65236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "35333223686f6e6f726d61746368234368616f7469632054656d706c65236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "B5EEBEFD208518612611BD7115EF0A182E1B5C57EA69760C67E436CA45CD3D35",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1056,
+        1067,
+        1082,
+        1090,
+        1096,
+        1102,
+        1112
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1053,
+          "byte_length": 3,
+          "raw_hex": "353332",
+          "printable_ascii": "532"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1057,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1068,
+          "byte_length": 14,
+          "raw_hex": "4368616f7469632054656d706c65",
+          "printable_ascii": "Chaotic Temple"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1083,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1091,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1097,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1103,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1113,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 532,
+      "file_key_lexeme_hex": "353332",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 36,
+      "byte_offset": 1124,
+      "content_byte_length": 68,
+      "full_byte_length": 70,
+      "raw_bytes_hex": "35313223686f6e6f726d61746368235761746572204375727461696e236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "35313223686f6e6f726d61746368235761746572204375727461696e236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "A81BDEB214B7E7B41D87742D8E98E0EF8C7CF5BC3C2980D16D3CC7C339474C8D",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1127,
+        1138,
+        1152,
+        1160,
+        1166,
+        1172,
+        1182
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1124,
+          "byte_length": 3,
+          "raw_hex": "353132",
+          "printable_ascii": "512"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1128,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1139,
+          "byte_length": 13,
+          "raw_hex": "5761746572204375727461696e",
+          "printable_ascii": "Water Curtain"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1153,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1161,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1167,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1173,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1183,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 512,
+      "file_key_lexeme_hex": "353132",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 37,
+      "byte_offset": 1194,
+      "content_byte_length": 26,
+      "full_byte_length": 28,
+      "raw_bytes_hex": "35313723686f6e6f726d617463682353616372656420466972650d0a",
+      "content_hex": "35313723686f6e6f726d61746368235361637265642046697265",
+      "content_sha256": "77A596272EA80478BE5A86FC14EA548DA1F7D043C810DE0893EB3298591E0D38",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1197,
+        1208
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1194,
+          "byte_length": 3,
+          "raw_hex": "353137",
+          "printable_ascii": "517"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1198,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1209,
+          "byte_length": 11,
+          "raw_hex": "5361637265642046697265",
+          "printable_ascii": "Sacred Fire"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 517,
+      "file_key_lexeme_hex": "353137",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 38,
+      "byte_offset": 1222,
+      "content_byte_length": 64,
+      "full_byte_length": 66,
+      "raw_bytes_hex": "35323423686f6e6f726d617463682353616e637475617279236d696e696d61702378736567312379736567312378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "35323423686f6e6f726d617463682353616e637475617279236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638",
+      "content_sha256": "43CE9D28BC7FC97CDA8E383BC920E715BB9FDF3CBA39C2577FDB5CC8369B427F",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1225,
+        1236,
+        1246,
+        1254,
+        1260,
+        1266,
+        1276
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1222,
+          "byte_length": 3,
+          "raw_hex": "353234",
+          "printable_ascii": "524"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1226,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1237,
+          "byte_length": 9,
+          "raw_hex": "53616e637475617279",
+          "printable_ascii": "Sanctuary"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1247,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1255,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1261,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1267,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1277,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 524,
+      "file_key_lexeme_hex": "353234",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 39,
+      "byte_offset": 1288,
+      "content_byte_length": 70,
+      "full_byte_length": 72,
+      "raw_bytes_hex": "35333023686f6e6f726d61746368234f7269656e74616c2047617264656e236d696e696d61702378736567312379736567312378506f7333323736372379506f7333323736380d0a",
+      "content_hex": "35333023686f6e6f726d61746368234f7269656e74616c2047617264656e236d696e696d61702378736567312379736567312378506f7333323736372379506f733332373638",
+      "content_sha256": "19C0F1522C592789F3F6E8145D19E32784A4CFB0CF54AC503607F639CF934568",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1291,
+        1302,
+        1318,
+        1326,
+        1332,
+        1338,
+        1348
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1288,
+          "byte_length": 3,
+          "raw_hex": "353330",
+          "printable_ascii": "530"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1292,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1303,
+          "byte_length": 15,
+          "raw_hex": "4f7269656e74616c2047617264656e",
+          "printable_ascii": "Oriental Garden"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1319,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1327,
+          "byte_length": 5,
+          "raw_hex": "7873656731",
+          "printable_ascii": "xseg1"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1333,
+          "byte_length": 5,
+          "raw_hex": "7973656731",
+          "printable_ascii": "yseg1"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1339,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1349,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 530,
+      "file_key_lexeme_hex": "353330",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 40,
+      "byte_offset": 1360,
+      "content_byte_length": 73,
+      "full_byte_length": 75,
+      "raw_bytes_hex": "35333523686f6e6f726d61746368234c6f64756e20436974792028486f6e6f7229236d696e696d61702378736567332379736567332378506f7333323833312379506f7333323833320d0a",
+      "content_hex": "35333523686f6e6f726d61746368234c6f64756e20436974792028486f6e6f7229236d696e696d61702378736567332379736567332378506f7333323833312379506f733332383332",
+      "content_sha256": "53CE9C8161E9A5756AE0048B77FE03CB238CC23991F94AA31F916EBC7CC5E266",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1363,
+        1374,
+        1393,
+        1401,
+        1407,
+        1413,
+        1423
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1360,
+          "byte_length": 3,
+          "raw_hex": "353335",
+          "printable_ascii": "535"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1364,
+          "byte_length": 10,
+          "raw_hex": "686f6e6f726d61746368",
+          "printable_ascii": "honormatch"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1375,
+          "byte_length": 18,
+          "raw_hex": "4c6f64756e20436974792028486f6e6f7229",
+          "printable_ascii": "Lodun City (Honor)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1394,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1402,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1408,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 1414,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 1424,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 535,
+      "file_key_lexeme_hex": "353335",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 41,
+      "byte_offset": 1435,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "3b686f6e6f726d6174636823436572656d6f6e790d0a",
+      "content_hex": "3b686f6e6f726d6174636823436572656d6f6e79",
+      "content_sha256": "E8C97780486736F6E996D5110AFCC2624FEDC377E84FBB08542184F853AE5820",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        1446
+      ],
+      "semicolon_byte_offsets": [
+        1435
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1435,
+          "byte_length": 11,
+          "raw_hex": "3b686f6e6f726d61746368",
+          "printable_ascii": ";honormatch"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1447,
+          "byte_length": 8,
+          "raw_hex": "436572656d6f6e79",
+          "printable_ascii": "Ceremony"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 1435,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 42,
+      "byte_offset": 1457,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1465
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1457,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1466,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 43,
+      "byte_offset": 1477,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "353534237175657374626174746c6523546f6d62206f6620646576696c0d0a",
+      "content_hex": "353534237175657374626174746c6523546f6d62206f6620646576696c",
+      "content_sha256": "46E2374A86ABE03012110E03EB878DDF038427AC2AB65BB4F122A47E884493B5",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1480,
+        1492
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1477,
+          "byte_length": 3,
+          "raw_hex": "353534",
+          "printable_ascii": "554"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1481,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1493,
+          "byte_length": 13,
+          "raw_hex": "546f6d62206f6620646576696c",
+          "printable_ascii": "Tomb of devil"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 554,
+      "file_key_lexeme_hex": "353534",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 44,
+      "byte_offset": 1508,
+      "content_byte_length": 21,
+      "full_byte_length": 23,
+      "raw_bytes_hex": "353533237175657374626174746c652341627973730d0a",
+      "content_hex": "353533237175657374626174746c65234162797373",
+      "content_sha256": "CF3862FA9F9E1CF13C385CDFFF454425182EB84A34C0463904280E977D688860",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1511,
+        1523
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1508,
+          "byte_length": 3,
+          "raw_hex": "353533",
+          "printable_ascii": "553"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1512,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1524,
+          "byte_length": 5,
+          "raw_hex": "4162797373",
+          "printable_ascii": "Abyss"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 553,
+      "file_key_lexeme_hex": "353533",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 45,
+      "byte_offset": 1531,
+      "content_byte_length": 24,
+      "full_byte_length": 26,
+      "raw_bytes_hex": "353133237175657374626174746c652348656c6c476174650d0a",
+      "content_hex": "353133237175657374626174746c652348656c6c47617465",
+      "content_sha256": "9243445E1640A7BE7604FD616A8AC6C93176FBBFD71A2B5BABC57D02D5DBC178",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1534,
+        1546
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1531,
+          "byte_length": 3,
+          "raw_hex": "353133",
+          "printable_ascii": "513"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1535,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1547,
+          "byte_length": 8,
+          "raw_hex": "48656c6c47617465",
+          "printable_ascii": "HellGate"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 513,
+      "file_key_lexeme_hex": "353133",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 46,
+      "byte_offset": 1557,
+      "content_byte_length": 30,
+      "full_byte_length": 32,
+      "raw_bytes_hex": "353237237175657374626174746c65235465727269626c652051756573740d0a",
+      "content_hex": "353237237175657374626174746c65235465727269626c65205175657374",
+      "content_sha256": "90BF9F516965C5FF26755692C10F05EF8FF6E2395C247C794FE2019F799FCA8B",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1560,
+        1572
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1557,
+          "byte_length": 3,
+          "raw_hex": "353237",
+          "printable_ascii": "527"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1561,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1573,
+          "byte_length": 14,
+          "raw_hex": "5465727269626c65205175657374",
+          "printable_ascii": "Terrible Quest"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 527,
+      "file_key_lexeme_hex": "353237",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 47,
+      "byte_offset": 1589,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "353138237175657374626174746c65235175657374205261636520284c7631290d0a",
+      "content_hex": "353138237175657374626174746c65235175657374205261636520284c763129",
+      "content_sha256": "C1223A47AEE66B46AE8DD571599D95993D29766ACE6CC00F415622AD67E7188C",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1592,
+        1604
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1589,
+          "byte_length": 3,
+          "raw_hex": "353138",
+          "printable_ascii": "518"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1593,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1605,
+          "byte_length": 16,
+          "raw_hex": "5175657374205261636520284c763129",
+          "printable_ascii": "Quest Race (Lv1)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 518,
+      "file_key_lexeme_hex": "353138",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 48,
+      "byte_offset": 1623,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "353139237175657374626174746c65235175657374205261636520284c7632290d0a",
+      "content_hex": "353139237175657374626174746c65235175657374205261636520284c763229",
+      "content_sha256": "DB1AFBB86D3EAFB4987F572519E8AC2FCDDCCBF7F1FCD0D40060A74499C3244A",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1626,
+        1638
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1623,
+          "byte_length": 3,
+          "raw_hex": "353139",
+          "printable_ascii": "519"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1627,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1639,
+          "byte_length": 16,
+          "raw_hex": "5175657374205261636520284c763229",
+          "printable_ascii": "Quest Race (Lv2)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 519,
+      "file_key_lexeme_hex": "353139",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 49,
+      "byte_offset": 1657,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "353230237175657374626174746c65235175657374205261636520284c7633290d0a",
+      "content_hex": "353230237175657374626174746c65235175657374205261636520284c763329",
+      "content_sha256": "AC9F18AB862D67B87E13F9AA0FC2B735DC69F4F014A6C43744B5E5C3C96DA00C",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1660,
+        1672
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1657,
+          "byte_length": 3,
+          "raw_hex": "353230",
+          "printable_ascii": "520"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1661,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1673,
+          "byte_length": 16,
+          "raw_hex": "5175657374205261636520284c763329",
+          "printable_ascii": "Quest Race (Lv3)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 520,
+      "file_key_lexeme_hex": "353230",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 50,
+      "byte_offset": 1691,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "353231237175657374626174746c65235175657374205261636532284c7634290d0a",
+      "content_hex": "353231237175657374626174746c65235175657374205261636532284c763429",
+      "content_sha256": "AF72C105D031013E41E719C888A42A98B3AD6F4AC4BBD8E21BE5D425FA9E6591",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1694,
+        1706
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1691,
+          "byte_length": 3,
+          "raw_hex": "353231",
+          "printable_ascii": "521"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1695,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1707,
+          "byte_length": 16,
+          "raw_hex": "5175657374205261636532284c763429",
+          "printable_ascii": "Quest Race2(Lv4)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 521,
+      "file_key_lexeme_hex": "353231",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 51,
+      "byte_offset": 1725,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "353232237175657374626174746c65235175657374205261636532284c7635290d0a",
+      "content_hex": "353232237175657374626174746c65235175657374205261636532284c763529",
+      "content_sha256": "0CBBD0B9F637D5CD7C0330765832BD419D603C452A3F19FD06AAB940D68D103E",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1728,
+        1740
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1725,
+          "byte_length": 3,
+          "raw_hex": "353232",
+          "printable_ascii": "522"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1729,
+          "byte_length": 11,
+          "raw_hex": "7175657374626174746c65",
+          "printable_ascii": "questbattle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1741,
+          "byte_length": 16,
+          "raw_hex": "5175657374205261636532284c763529",
+          "printable_ascii": "Quest Race2(Lv5)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 522,
+      "file_key_lexeme_hex": "353232",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 52,
+      "byte_offset": 1759,
+      "content_byte_length": 20,
+      "full_byte_length": 22,
+      "raw_bytes_hex": "3b7175657374626174746c6523476174657761790d0a",
+      "content_hex": "3b7175657374626174746c652347617465776179",
+      "content_sha256": "51F1271DC32CD9805069EABFCA53F40A8E32421B5B3FC0CE710F3CAB46D887E3",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        1771
+      ],
+      "semicolon_byte_offsets": [
+        1759
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1759,
+          "byte_length": 12,
+          "raw_hex": "3b7175657374626174746c65",
+          "printable_ascii": ";questbattle"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1772,
+          "byte_length": 7,
+          "raw_hex": "47617465776179",
+          "printable_ascii": "Gateway"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 1759,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 53,
+      "byte_offset": 1781,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1789
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1781,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1790,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 54,
+      "byte_offset": 1801,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1809
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1801,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1810,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    },
+    {
+      "physical_line_1based": 55,
+      "byte_offset": 1821,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "3534302374696d6561747461636b234669656c64206f662048656c6c202852290d0a",
+      "content_hex": "3534302374696d6561747461636b234669656c64206f662048656c6c20285229",
+      "content_sha256": "97B779C1557F323F73D8F78EF3D4DCC025FD47FD6A9541C757BAA7436E79E8E8",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1824,
+        1835
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1821,
+          "byte_length": 3,
+          "raw_hex": "353430",
+          "printable_ascii": "540"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1825,
+          "byte_length": 10,
+          "raw_hex": "74696d6561747461636b",
+          "printable_ascii": "timeattack"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1836,
+          "byte_length": 17,
+          "raw_hex": "4669656c64206f662048656c6c20285229",
+          "printable_ascii": "Field of Hell (R)"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 540,
+      "file_key_lexeme_hex": "353430",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 56,
+      "byte_offset": 1855,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "3b74696d6561747461636b234669656c64206f6620446561746820284c7632290d0a",
+      "content_hex": "3b74696d6561747461636b234669656c64206f6620446561746820284c763229",
+      "content_sha256": "6913CB712F18817B48B7A0162FD95C4D7DCFFB93AF05A163E60529923E8D99E6",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        1866
+      ],
+      "semicolon_byte_offsets": [
+        1855
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1855,
+          "byte_length": 11,
+          "raw_hex": "3b74696d6561747461636b",
+          "printable_ascii": ";timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1867,
+          "byte_length": 20,
+          "raw_hex": "4669656c64206f6620446561746820284c763229",
+          "printable_ascii": "Field of Death (Lv2)"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 1855,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 57,
+      "byte_offset": 1889,
+      "content_byte_length": 32,
+      "full_byte_length": 34,
+      "raw_bytes_hex": "3b74696d6561747461636b234669656c64206f6620446561746820284c7633290d0a",
+      "content_hex": "3b74696d6561747461636b234669656c64206f6620446561746820284c763329",
+      "content_sha256": "09AFC2C3F64C906E04237DE5564F6B1B62A71C9EB072EEC98A4949C919568413",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        1900
+      ],
+      "semicolon_byte_offsets": [
+        1889
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1889,
+          "byte_length": 11,
+          "raw_hex": "3b74696d6561747461636b",
+          "printable_ascii": ";timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1901,
+          "byte_length": 20,
+          "raw_hex": "4669656c64206f6620446561746820284c763329",
+          "printable_ascii": "Field of Death (Lv3)"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 1889,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 58,
+      "byte_offset": 1923,
+      "content_byte_length": 29,
+      "full_byte_length": 31,
+      "raw_bytes_hex": "3b74696d6561747461636b23546865204c617374204a7564676d656e740d0a",
+      "content_hex": "3b74696d6561747461636b23546865204c617374204a7564676d656e74",
+      "content_sha256": "15B6E5B47B170354BEA29B286007092E21E56E4C3CA8DD24A4A56EC6C0D5B2CB",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        1934
+      ],
+      "semicolon_byte_offsets": [
+        1923
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1923,
+          "byte_length": 11,
+          "raw_hex": "3b74696d6561747461636b",
+          "printable_ascii": ";timeattack"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1935,
+          "byte_length": 17,
+          "raw_hex": "546865204c617374204a7564676d656e74",
+          "printable_ascii": "The Last Judgment"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 1923,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 59,
+      "byte_offset": 1954,
+      "content_byte_length": 66,
+      "full_byte_length": 68,
+      "raw_bytes_hex": "3537332373696567657761722354616977616e20436173746c65236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "3537332373696567657761722354616977616e20436173746c65236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "01D076D945BEAAA2994E241AAB9DEEEE35AF04F14381F552D6CB3B1A6D1013A4",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        1957,
+        1966,
+        1980,
+        1988,
+        1994,
+        2000,
+        2010
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 1954,
+          "byte_length": 3,
+          "raw_hex": "353733",
+          "printable_ascii": "573"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 1958,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 1967,
+          "byte_length": 13,
+          "raw_hex": "54616977616e20436173746c65",
+          "printable_ascii": "Taiwan Castle"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 1981,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 1989,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 1995,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2001,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2011,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 573,
+      "file_key_lexeme_hex": "353733",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 60,
+      "byte_offset": 2022,
+      "content_byte_length": 66,
+      "full_byte_length": 68,
+      "raw_bytes_hex": "3537342373696567657761722354616977616e20436173746c65236d696e696d61702378736567322379736567322378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "3537342373696567657761722354616977616e20436173746c65236d696e696d61702378736567322379736567322378506f7333323833312379506f733332373638",
+      "content_sha256": "76534B7851CB22484F253140B99277EE6431A1947826E4D30AF0B8E5D18F8C67",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2025,
+        2034,
+        2048,
+        2056,
+        2062,
+        2068,
+        2078
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2022,
+          "byte_length": 3,
+          "raw_hex": "353734",
+          "printable_ascii": "574"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2026,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2035,
+          "byte_length": 13,
+          "raw_hex": "54616977616e20436173746c65",
+          "printable_ascii": "Taiwan Castle"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2049,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2057,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2063,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2069,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2079,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 574,
+      "file_key_lexeme_hex": "353734",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 61,
+      "byte_offset": 2090,
+      "content_byte_length": 64,
+      "full_byte_length": 66,
+      "raw_bytes_hex": "353632237369656765776172234164656e20436173746c65236d696e696d61702378736567332379736567332378506f7333323833312379506f7333323833320d0a",
+      "content_hex": "353632237369656765776172234164656e20436173746c65236d696e696d61702378736567332379736567332378506f7333323833312379506f733332383332",
+      "content_sha256": "45F7BA85F0E34DF3A128BFAD5D0865B62E29E039550551E43BB574910A4F1B50",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2093,
+        2102,
+        2114,
+        2122,
+        2128,
+        2134,
+        2144
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2090,
+          "byte_length": 3,
+          "raw_hex": "353632",
+          "printable_ascii": "562"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2094,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2103,
+          "byte_length": 11,
+          "raw_hex": "4164656e20436173746c65",
+          "printable_ascii": "Aden Castle"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2115,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2123,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2129,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2135,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2145,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 562,
+      "file_key_lexeme_hex": "353632",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 62,
+      "byte_offset": 2156,
+      "content_byte_length": 64,
+      "full_byte_length": 66,
+      "raw_bytes_hex": "353633237369656765776172234164656e20436173746c65236d696e696d61702378736567332379736567332378506f7333323833312379506f7333323833320d0a",
+      "content_hex": "353633237369656765776172234164656e20436173746c65236d696e696d61702378736567332379736567332378506f7333323833312379506f733332383332",
+      "content_sha256": "44803D6D108664F25099D870518E9CC26BDD17FE7EBBF549E28164248BFA7BF6",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2159,
+        2168,
+        2180,
+        2188,
+        2194,
+        2200,
+        2210
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2156,
+          "byte_length": 3,
+          "raw_hex": "353633",
+          "printable_ascii": "563"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2160,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2169,
+          "byte_length": 11,
+          "raw_hex": "4164656e20436173746c65",
+          "printable_ascii": "Aden Castle"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2181,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2189,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2195,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2201,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2211,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 563,
+      "file_key_lexeme_hex": "353633",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 63,
+      "byte_offset": 2222,
+      "content_byte_length": 68,
+      "full_byte_length": 70,
+      "raw_bytes_hex": "3534392373696567657761722353746f726d57696e64202852656429236d696e696d61702378736567342379736567342378506f7333323839352379506f7333323833320d0a",
+      "content_hex": "3534392373696567657761722353746f726d57696e64202852656429236d696e696d61702378736567342379736567342378506f7333323839352379506f733332383332",
+      "content_sha256": "DBEBA2554162B9A747FE22ED5B5F0F51C6E57BA20288150ED3850EEFF1954D39",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2225,
+        2234,
+        2250,
+        2258,
+        2264,
+        2270,
+        2280
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2222,
+          "byte_length": 3,
+          "raw_hex": "353439",
+          "printable_ascii": "549"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2226,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2235,
+          "byte_length": 15,
+          "raw_hex": "53746f726d57696e64202852656429",
+          "printable_ascii": "StormWind (Red)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2251,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2259,
+          "byte_length": 5,
+          "raw_hex": "7873656734",
+          "printable_ascii": "xseg4"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2265,
+          "byte_length": 5,
+          "raw_hex": "7973656734",
+          "printable_ascii": "yseg4"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2271,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383935",
+          "printable_ascii": "xPos32895"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2281,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 549,
+      "file_key_lexeme_hex": "353439",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 64,
+      "byte_offset": 2292,
+      "content_byte_length": 69,
+      "full_byte_length": 71,
+      "raw_bytes_hex": "3535302373696567657761722353746f726d57696e642028426c756529236d696e696d61702378736567342379736567342378506f7333323839352379506f7333323833320d0a",
+      "content_hex": "3535302373696567657761722353746f726d57696e642028426c756529236d696e696d61702378736567342379736567342378506f7333323839352379506f733332383332",
+      "content_sha256": "3B85423D3AAF319582C5217AC4D85166D99555C3874DCB344B1996096D6E8910",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2295,
+        2304,
+        2321,
+        2329,
+        2335,
+        2341,
+        2351
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2292,
+          "byte_length": 3,
+          "raw_hex": "353530",
+          "printable_ascii": "550"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2296,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2305,
+          "byte_length": 16,
+          "raw_hex": "53746f726d57696e642028426c756529",
+          "printable_ascii": "StormWind (Blue)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2322,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2330,
+          "byte_length": 5,
+          "raw_hex": "7873656734",
+          "printable_ascii": "xseg4"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2336,
+          "byte_length": 5,
+          "raw_hex": "7973656734",
+          "printable_ascii": "yseg4"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2342,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383935",
+          "printable_ascii": "xPos32895"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2352,
+          "byte_length": 9,
+          "raw_hex": "79506f733332383332",
+          "printable_ascii": "yPos32832"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 550,
+      "file_key_lexeme_hex": "353530",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 65,
+      "byte_offset": 2363,
+      "content_byte_length": 65,
+      "full_byte_length": 67,
+      "raw_bytes_hex": "353437237369656765776172235261696e6269726420285229236d696e696d61702378736567332379736567332378506f7333323736372379506f7333323730340d0a",
+      "content_hex": "353437237369656765776172235261696e6269726420285229236d696e696d61702378736567332379736567332378506f7333323736372379506f733332373034",
+      "content_sha256": "AA86D9ED6FBD1B5AEC1E07FAFB816C72F34B8C37DB8BB77F27FF70054FC45801",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2366,
+        2375,
+        2388,
+        2396,
+        2402,
+        2408,
+        2418
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2363,
+          "byte_length": 3,
+          "raw_hex": "353437",
+          "printable_ascii": "547"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2367,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2376,
+          "byte_length": 12,
+          "raw_hex": "5261696e6269726420285229",
+          "printable_ascii": "Rainbird (R)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2389,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2397,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2403,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2409,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373637",
+          "printable_ascii": "xPos32767"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2419,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373034",
+          "printable_ascii": "yPos32704"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 547,
+      "file_key_lexeme_hex": "353437",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 66,
+      "byte_offset": 2430,
+      "content_byte_length": 65,
+      "full_byte_length": 67,
+      "raw_bytes_hex": "353438237369656765776172235261696e6269726420285229236d696e696d61702378736567332379736567332378506f7333323833312379506f7333323736380d0a",
+      "content_hex": "353438237369656765776172235261696e6269726420285229236d696e696d61702378736567332379736567332378506f7333323833312379506f733332373638",
+      "content_sha256": "5CBEC09E6D9AE59478DD365CF676A1B82CECACF01ADFE664FE4D71C98B0326C6",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2433,
+        2442,
+        2455,
+        2463,
+        2469,
+        2475,
+        2485
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2430,
+          "byte_length": 3,
+          "raw_hex": "353438",
+          "printable_ascii": "548"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2434,
+          "byte_length": 8,
+          "raw_hex": "7369656765776172",
+          "printable_ascii": "siegewar"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2443,
+          "byte_length": 12,
+          "raw_hex": "5261696e6269726420285229",
+          "printable_ascii": "Rainbird (R)"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2456,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2464,
+          "byte_length": 5,
+          "raw_hex": "7873656733",
+          "printable_ascii": "xseg3"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2470,
+          "byte_length": 5,
+          "raw_hex": "7973656733",
+          "printable_ascii": "yseg3"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2476,
+          "byte_length": 9,
+          "raw_hex": "78506f733332383331",
+          "printable_ascii": "xPos32831"
+        },
+        {
+          "token_0based": 7,
+          "byte_offset": 2486,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": 548,
+      "file_key_lexeme_hex": "353438",
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 67,
+      "byte_offset": 2497,
+      "content_byte_length": 65,
+      "full_byte_length": 67,
+      "raw_bytes_hex": "3b736965676577617223546865205477696e20436173746c65236d696e696d61702378736567322379736567322378506f7333323736302379506f7333323736380d0a",
+      "content_hex": "3b736965676577617223546865205477696e20436173746c65236d696e696d61702378736567322379736567322378506f7333323736302379506f733332373638",
+      "content_sha256": "82F5D8D107A8F90B15E94077821785A713D08C454F59C89E3BC800ADCBB2D346",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "full_line_comment",
+      "hash_delimiter_byte_offsets": [
+        2506,
+        2522,
+        2530,
+        2536,
+        2542,
+        2552
+      ],
+      "semicolon_byte_offsets": [
+        2497
+      ],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2497,
+          "byte_length": 9,
+          "raw_hex": "3b7369656765776172",
+          "printable_ascii": ";siegewar"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2507,
+          "byte_length": 15,
+          "raw_hex": "546865205477696e20436173746c65",
+          "printable_ascii": "The Twin Castle"
+        },
+        {
+          "token_0based": 2,
+          "byte_offset": 2523,
+          "byte_length": 7,
+          "raw_hex": "6d696e696d6170",
+          "printable_ascii": "minimap"
+        },
+        {
+          "token_0based": 3,
+          "byte_offset": 2531,
+          "byte_length": 5,
+          "raw_hex": "7873656732",
+          "printable_ascii": "xseg2"
+        },
+        {
+          "token_0based": 4,
+          "byte_offset": 2537,
+          "byte_length": 5,
+          "raw_hex": "7973656732",
+          "printable_ascii": "yseg2"
+        },
+        {
+          "token_0based": 5,
+          "byte_offset": 2543,
+          "byte_length": 9,
+          "raw_hex": "78506f733332373630",
+          "printable_ascii": "xPos32760"
+        },
+        {
+          "token_0based": 6,
+          "byte_offset": 2553,
+          "byte_length": 9,
+          "raw_hex": "79506f733332373638",
+          "printable_ascii": "yPos32768"
+        }
+      ],
+      "full_line_comment": true,
+      "comment_marker_byte_offset": 2497,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": []
+    },
+    {
+      "physical_line_1based": 68,
+      "byte_offset": 2564,
+      "content_byte_length": 18,
+      "full_byte_length": 20,
+      "raw_bytes_hex": "6e6f206578697374236e6f206578736973740d0a",
+      "content_hex": "6e6f206578697374236e6f20657873697374",
+      "content_sha256": "3B3EA5CEC2F316A2B6FF636956E1F2CD54FA71C2BEA13E121E27EC7C81A08661",
+      "eol_hex": "0d0a",
+      "eol_kind": "CRLF",
+      "kind": "hash_delimited",
+      "hash_delimiter_byte_offsets": [
+        2572
+      ],
+      "semicolon_byte_offsets": [],
+      "tokens": [
+        {
+          "token_0based": 0,
+          "byte_offset": 2564,
+          "byte_length": 8,
+          "raw_hex": "6e6f206578697374",
+          "printable_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "byte_offset": 2573,
+          "byte_length": 9,
+          "raw_hex": "6e6f20657873697374",
+          "printable_ascii": "no exsist"
+        }
+      ],
+      "full_line_comment": false,
+      "comment_marker_byte_offset": null,
+      "commented_file_key": null,
+      "file_declared_key": null,
+      "file_key_lexeme_hex": null,
+      "placeholder_markers": [
+        {
+          "token_0based": 0,
+          "marker_ascii": "no exist"
+        },
+        {
+          "token_0based": 1,
+          "marker_ascii": "no exsist"
+        }
+      ]
+    }
+  ]
+}

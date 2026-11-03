@@ -1,0 +1,52 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build\\candidate-pet-material.jar",
+    "sha256": "16879896610b66f48c722a9557e65b576469659bd6c063e07b3f2f0327353ab7"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\candidate-pet-world-lifetime.jar",
+    "sha256": "18738d9d5728bfeef5f2b4cd2466f8fc87b2104352000e6b196cf17b9d216de3"
+  },
+  "changed": [
+    "local/lito381/server/NativeLightAction.class",
+    "local/lito381/server/NativePetMaterialAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePetWorldLifetime$Target.class",
+    "local/lito381/server/NativePetWorldLifetime.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\build.py",
+      "sha256": "4f0b9b73b744aba5271e70bc84010e214f30fa0d1020b13ec0e0bf8b8665c678"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\NativePetWorldLifetime.java",
+      "sha256": "1b3ee6f67ef6f17dd6efd1ad53f7d9c9a935c11b732987f4da25b0b3dd41e8ea"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "f0b7a3f88065af6dea1d5a38f12c0484088a28583298515aaec106fdaa26d297"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\original\\NativePetMaterialAction.java",
+      "sha256": "e20d4a0ad70d0ea11054facaaa922b8971149ebcbe84d12dfbd683e265b3bd6d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "67dcd8087eb431fab2ab8479429490debc7ded2901fa94b40d63381186ab8497"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\sources\\NativePetMaterialAction.java",
+      "sha256": "1a554ea4d1d0c88051b76a3ce159ae5e8cff1c28bb4c56346dbf75dc225c9315"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-lifetime\\build-repro\\inputs\\sources\\NativePetWorldLifetime.java",
+      "sha256": "1b3ee6f67ef6f17dd6efd1ad53f7d9c9a935c11b732987f4da25b0b3dd41e8ea"
+    }
+  ]
+}

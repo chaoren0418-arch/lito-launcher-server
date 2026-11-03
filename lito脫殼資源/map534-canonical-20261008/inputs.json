@@ -1,0 +1,112 @@
+{
+  "input_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\input-sources.json",
+    "bytes": 9208,
+    "sha256": "0A8A5C7E09DF61F04C105A8E01BCF86DA7D210D7F3F7A28D5328CDD459EDF83E"
+  },
+  "layer_parse": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\sector-parse.json",
+    "bytes": 16309,
+    "sha256": "4434069296CFE20752ADA0CB97A6F38E2BC1E62AB5423E45185C5B7A4E6C3992"
+  },
+  "source_sectors": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe7fff.s32",
+      "bytes": 109148,
+      "sha256": "AC84DB3783FA1B25358198C71D589245E314BC8E834A42E6B33BA330DEB8A618"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8000.s32",
+      "bytes": 155424,
+      "sha256": "3E4BEC3875F702B51929F1110C29828223437962C80A19209199DAA6080368D0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8001.s32",
+      "bytes": 148169,
+      "sha256": "99D6D5545B4BDB8781D379D1663333C010BB7F48AB3117B2467E75EFD296D08D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8002.s32",
+      "bytes": 101496,
+      "sha256": "AE8E851F1B6AEE31057AFC40EC0AC23CEB5D1CF14724A8AEE95A3250130DA9E1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff7fff.s32",
+      "bytes": 131866,
+      "sha256": "05C940ACEAFD30969545E18ABE317EC56696757F1CD0A03F6993EDD011EB627B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8000.s32",
+      "bytes": 188697,
+      "sha256": "E9C27D71199F06690DEBA601D77B5C3BFCB324B3AADC7E15E049E640A3AB4A87"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8001.s32",
+      "bytes": 193623,
+      "sha256": "4C284795D39439A454D7FEDFB8738D32D2027056949104F9226CAF28972DF98C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8002.s32",
+      "bytes": 120864,
+      "sha256": "C19A47155D6D4E42F7B2B4D82C21AA3740F8E1B9F2382E5FECD436908EBDCEFA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80007fff.s32",
+      "bytes": 134266,
+      "sha256": "0415C65955783161D03F8F1194A47A109071D5A93B4284437D1E3B4C28FAD996"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008000.s32",
+      "bytes": 191747,
+      "sha256": "D731A274923AE27F0782C4FDBD9A8E4FF1314DF1F093BF4B2C43706BA8B90303"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008001.s32",
+      "bytes": 214412,
+      "sha256": "6EC276177C4886E87AA97E681C8153E8BB1387FE419AA973A507C67C4CB2FF87"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008002.s32",
+      "bytes": 113627,
+      "sha256": "542A94A0704AC0FEA434EE2BCD6B09E00772F1C1E85FFF834CA8984D9E2BC3CA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80017fff.s32",
+      "bytes": 109086,
+      "sha256": "0893B985BF34504E0177481FAB33D9208EE77CA3FC03CA1AC5D0766457087868"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018000.s32",
+      "bytes": 129275,
+      "sha256": "7AB78EB7CAAE40567BC2C2CD109FC0AAC7B2E45F4E8F3A53E05B684ECF98094C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018001.s32",
+      "bytes": 124891,
+      "sha256": "D782CAA3CD9557DA5EA52AE10905FAA9C6273B4920FDF1A1D41C91452623142D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018002.s32",
+      "bytes": 99232,
+      "sha256": "69563EA46F9558A230FA89F9817EED4BCBE034DF4C312D76FEDBFABBA3E6976B"
+    }
+  ],
+  "consumer_source_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\map.rs",
+      "bytes": 25934,
+      "sha256": "7AA001F037C8A06510D7C8D26357C012968B132C7CA36E15DCCBAD1B64F6D196"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_map.rs",
+      "bytes": 37344,
+      "sha256": "B0605CCB14A4368F163E0DC73351C911EEC8E984637E1B389F6FC4463208E7A2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\resources.rs",
+      "bytes": 58237,
+      "sha256": "6453A858B2257DF1D38CB9EC1F9874E866DA7A679356FA614C99AA3525E807C1"
+    }
+  ],
+  "va_rva": "N/A: raw sectors and Rust geometry/serialization sources; file offsets retained."
+}

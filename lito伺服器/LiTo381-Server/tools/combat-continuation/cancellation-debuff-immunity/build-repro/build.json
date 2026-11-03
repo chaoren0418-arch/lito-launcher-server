@@ -1,0 +1,36 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build\\candidate-cancellation-speed-immunity.jar",
+    "sha256": "345640f9126e8db6ed152eaaeb41262d3edf564a5c07b6f514206ac8ffaf4a41"
+  },
+  "formal_deployment_changed": false,
+  "source_database_mutated": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build-repro\\candidate-cancellation-debuff-immunity.jar",
+    "sha256": "9eb812b8222d3573b4049596d7114230a86d3019b25153bf74ba1cebc11bc211"
+  },
+  "C0_byte_equal": true,
+  "changed_entries": [
+    "local/lito381/server/NativeCancellationSpeedImmunity.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build-repro\\inputs\\build.py",
+      "sha256": "1cf5a03ac54bdbf35bde5b882a249aab5a2581bc41737138a36ed70c9d2c9191"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build-repro\\inputs\\NativeCancellationSpeedImmunity.java",
+      "sha256": "74346f209db2dbd83543ab4153410f8e1f4df690fb82f1b02fc47437edf493b6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build-repro\\inputs\\source-contract.json",
+      "sha256": "85f4c8ae38bf7c1b34c25abcc3d5462ef8e912d7ab199aff4be21dbb13d0a0d7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-debuff-immunity\\build-repro\\inputs\\original\\NativeCancellationSpeedImmunity.java",
+      "sha256": "9b5589032ec3910f121408bbd9aae9a1211c6dd874a165308ecb14c7713fd54e"
+    }
+  ]
+}

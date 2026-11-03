@@ -1,0 +1,56 @@
+266592: 
+266593: var_4= byte ptr -4
+266594: 
+266595: push    ebp
+266596: mov     ebp, esp
+266597: push    ecx
+266598: cmp     dword_64B478, 96h
+266599: jge     short loc_47CB0B
+266600: 
+266601: push    0
+266602: mov     edx, offset sub_47CAD0
+266603: mov     ecx, 21h ; '!'
+266604: call    sub_4D65F0
+266605: 
+266606: mov     edx, dword_64B478
+266607: mov     ecx, 103Ch
+266608: call    sub_478EA0
+266609: 
+266610: inc     dword_64B478
+266611: mov     esp, ebp
+266612: pop     ebp
+266613: retn
+266614: 
+266615: ; ---------------------------------------------------------------------------
+266616: 
+266617: loc_47CB0B:                             ; CODE XREF: sub_47CAD0+E↑j
+266618: call    sub_49A4D0
+266619: 
+266620: mov     ecx, 2
+266621: call    sub_49A510
+266622: 
+266623: mov     dword_64BBD4, 1
+266624: call    sub_478800
+266625: 
+266626: call    sub_49AFB0
+266627: 
+266628: lea     eax, [ebp+var_4]
+266629: push    eax
+266630: push    0
+266631: push    0
+266632: push    offset sub_47C8A0
+266633: push    0
+266634: push    0
+266635: nop
+266636: call    near ptr 773E6C30h
+266637: 
+266638: add     esp, 18h
+266639: mov     dword_64B8FC, eax
+266640: mov     esp, ebp
+266641: pop     ebp
+266642: retn
+266643: 
+266644: sub_47CAD0 endp
+266645: 
+266646: ; ---------------------------------------------------------------------------
+266647: align 10h

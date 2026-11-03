@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "scope": "documentation-only",
+  "archive": {
+    "path": "docs/history/combat-reports-before-simplification-20261019.zip",
+    "sha256": "9952d56bca66fe3a07984dbb87101521b662b33b745b652b33f7f56fb3ffab85"
+  },
+  "files": [
+    {
+      "path": "docs/maintenance/combat-continuation-current.zh-TW.md",
+      "before_bytes": 41314,
+      "after_bytes": 7407,
+      "before_sha256": "de8f61b3126a53b8fb5cbbe07ce5b5338d008919c3c1351dd9a7ab95523a96c9",
+      "after_sha256": "49e7d2dd927e1524a385ab6a479e528db2095b50f075a83a098183e11070d3a2",
+      "lines": 60
+    },
+    {
+      "path": "VALIDATION.md",
+      "before_bytes": 92893,
+      "after_bytes": 2537,
+      "before_sha256": "4aadd35b6419dab7e5f6bbbb95bf551602be82aea5fa94160301cb331bcd6911",
+      "after_sha256": "e4a322dc5a79d3ee18279b9c55e0971717146b5053be384a8b671c2fd68a88d3",
+      "lines": 31
+    },
+    {
+      "path": "docs/maintenance/combat-integration-current.md",
+      "before_bytes": 322125,
+      "after_bytes": 1760,
+      "before_sha256": "bf3312257d287fd2f05990a885d9011570c6a9dd26a603062c997169555131da",
+      "after_sha256": "ab5fc259634ae6c6e8de49909e30b0993fcfe71fad4e6b98bcf399ca116b9448",
+      "lines": 20
+    },
+    {
+      "path": "docs/HISTORY.md",
+      "before_bytes": 3853,
+      "after_bytes": 4039,
+      "before_sha256": "c9501f931b79982eeb958d60da1000f77e905f8918e12d622ef81f0f68d24fcd",
+      "after_sha256": "ea90b3e9df35a83fd3a26c7a9e57836bb85480753439222bc06f65c1231e3ca3",
+      "lines": 48
+    }
+  ],
+  "protected_files_unchanged": {
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar": "75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371",
+    "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\ddraw.dll": "0135e6e76594eb98695b85e9b451669adaedccfa6a13fafc49bf934d9c761de4",
+    "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\continuation-current.json": "8e54bac4aa83affad55b5f123dcc2c03fd9987b6b9f7ffc870107f57e9645dcb",
+    "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\control-gaps.json": "e5b4fbaed81b818d690ad6bc3ac9b3dfb381f524bee9f2c9d26865f23888a992"
+  },
+  "candidate_unchanged": "f2217019c4cf2ae19cddc590713ac13d7544a515b320b6b1f224eda104a9f36b",
+  "local_links_verified": true,
+  "archive_verified": true
+}

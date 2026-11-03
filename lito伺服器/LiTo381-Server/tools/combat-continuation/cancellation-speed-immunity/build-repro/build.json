@@ -1,0 +1,33 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build\\candidate-cancellation-material.jar",
+    "sha256": "08b49d26d1680f45d4e2e9fe150c677a8745aa0e375efd71cde22b288a871db9"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "player skill-44 haste/slow immunity; all other cancellation families remain separately gated",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build-repro\\candidate-cancellation-speed-immunity.jar",
+    "sha256": "345640f9126e8db6ed152eaaeb41262d3edf564a5c07b6f514206ac8ffaf4a41"
+  },
+  "exact_two_call_inverse": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build-repro\\inputs\\build.py",
+      "sha256": "a0fd5336d5b07f8c8dc2cd9c479b22f0ed05acf010b5d224cc02fb77c276c8ee"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build-repro\\inputs\\CancellationSpeedImmunityMethods.java",
+      "sha256": "e80ce0641a635be74b85fcb7e43db55ffe9308255abaef731b63aed92c02c9aa"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build-repro\\inputs\\NativeCancellationSpeedImmunity.java",
+      "sha256": "9b5589032ec3910f121408bbd9aae9a1211c6dd874a165308ecb14c7713fd54e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-speed-immunity\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "exit_code": 0,
+  "output": {
+    "valid": true,
+    "errors": [],
+    "task_count": 15
+  },
+  "stderr": "",
+  "old_tests_replayed": false
+}

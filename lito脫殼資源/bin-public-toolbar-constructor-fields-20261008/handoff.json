@@ -1,0 +1,590 @@
+{
+  "schema": "lito.public-toolbar-constructor-field-association.v1",
+  "task_id": "bin-public-toolbar-constructor-fields-20261008",
+  "owner": "LITO BIN Analysis",
+  "thread_id": "01a11705-96c0-74a0-b56d-ed486c318c95",
+  "state": "review",
+  "generated_at": "2026-10-08T16:54:13.560345+08:00",
+  "question": "Do the public constructor forwarding/local-store instructions associate the toolbar callback004EBEC0 and captured pane00834884 with concrete object fields, without assuming a live click binding?",
+  "scope": "0049E570..0049E5B6 and0049E110..0049E150 complete public wrappers;0049CD70..0049CE03 prefix only, stopping after the private error call instruction0049CDFF. No private,resource virtual,vtable dispatch or deeper constructor expansion.",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "prior_activation_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-activation-wire-boundary-20261008-contract.json",
+    "bytes": 34931,
+    "sha256": "8D133F72AA4F9E05175B1F463E962EFD0495C9A23AB966A8CEC8C25E485D5229"
+  },
+  "raw_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\raw-evidence.json",
+    "bytes": 29372,
+    "sha256": "276779247539645EB14FB33CB56FEFBB15238CFE92CE1BD3DBD7E4FC1B0BE75B"
+  },
+  "raw_ranges": [
+    {
+      "label": "public_specialized_constructor",
+      "va": "0049E570",
+      "rva": "0009E570",
+      "end_exclusive": "0049E5B7",
+      "file_offset": "0009E570",
+      "bytes": 71,
+      "artifact": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049E570-47.bin",
+        "bytes": 71,
+        "sha256": "0A1EF3896E5878AC32CEF8BCDD3691722D27A1ED140E5972DB17A3063ED5AE30"
+      }
+    },
+    {
+      "label": "public_eight_argument_forwarder",
+      "va": "0049E110",
+      "rva": "0009E110",
+      "end_exclusive": "0049E151",
+      "file_offset": "0009E110",
+      "bytes": 65,
+      "artifact": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049E110-41.bin",
+        "bytes": 65,
+        "sha256": "D3003337B16CB668333D464CC130389227A15101649FFF55676E188EA48B04B8"
+      }
+    },
+    {
+      "label": "public_base_constructor_prefix_until_private_boundary",
+      "va": "0049CD70",
+      "rva": "0009CD70",
+      "end_exclusive": "0049CE04",
+      "file_offset": "0009CD70",
+      "bytes": 148,
+      "artifact": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-toolbar-constructor-fields-20261008\\0049CD70-94.bin",
+        "bytes": 148,
+        "sha256": "8DE816BDB988DD2C9014815B5C64A70DD91A9B549A3BC486C287EF2DAD79FDA6"
+      }
+    }
+  ],
+  "argument_store_map": [
+    {
+      "outer_arg_index": 0,
+      "toolbar_value": "0x3ED",
+      "base_arg_index": 0,
+      "local_store": "object+0x20",
+      "store_va": "0049CDA5"
+    },
+    {
+      "outer_arg_index": 1,
+      "toolbar_value": "0x3EE",
+      "base_arg_index": null,
+      "local_store": "object+0x48 after base returns",
+      "store_va": "0049E5A6"
+    },
+    {
+      "outer_arg_index": 2,
+      "toolbar_value": "536",
+      "base_arg_index": 1,
+      "local_store": "object+0x04",
+      "store_va": "0049CDBA"
+    },
+    {
+      "outer_arg_index": 3,
+      "toolbar_value": "460",
+      "base_arg_index": 2,
+      "local_store": "object+0x08",
+      "store_va": "0049CDBD"
+    },
+    {
+      "outer_arg_index": 4,
+      "toolbar_value": "0x004EBEC0",
+      "base_arg_index": 3,
+      "local_store": "object+0x2C",
+      "store_va": "0049CDB1"
+    },
+    {
+      "outer_arg_index": 5,
+      "toolbar_value": "captured dword[00834884]",
+      "base_arg_index": 4,
+      "local_store": "object+0x30",
+      "store_va": "0049CDB4"
+    },
+    {
+      "outer_arg_index": 6,
+      "toolbar_value": "3",
+      "base_arg_index": 5,
+      "local_store": null,
+      "qualification": "forwarded only; later base stores beyond stopped prefix not claimed"
+    },
+    {
+      "outer_arg_index": 7,
+      "toolbar_value": "0",
+      "base_arg_index": 6,
+      "local_store": "object+0x39 low byte",
+      "store_va": "0049CDB7"
+    },
+    {
+      "outer_arg_index": 8,
+      "toolbar_value": "0",
+      "base_arg_index": 7,
+      "local_store": null,
+      "qualification": "forwarded only; later base stores beyond stopped prefix not claimed"
+    }
+  ],
+  "findings": [
+    {
+      "conclusion": "0049E570 accepts9 DWORD stack args and forwards8 to0049E110 with the originalECX object. It omits outerarg1, otherwise preserves ordering. On normal base return, it sets object vtable pointer004F9AD0, outerarg1 at+48, +4C=-1, returns object inEAX andret0x24.",
+      "witnesses": [
+        {
+          "va": "0049E573",
+          "rva": "0009E573",
+          "file_offset": "0009E573",
+          "raw_hex": "8b4528",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 0x28]"
+        },
+        {
+          "va": "0049E576",
+          "rva": "0009E576",
+          "file_offset": "0009E576",
+          "raw_hex": "8b5520",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 0x20]"
+        },
+        {
+          "va": "0049E57A",
+          "rva": "0009E57A",
+          "file_offset": "0009E57A",
+          "raw_hex": "8bf1",
+          "size": 2,
+          "mnemonic": "mov",
+          "operands": "esi, ecx"
+        },
+        {
+          "va": "0049E598",
+          "rva": "0009E598",
+          "file_offset": "0009E598",
+          "raw_hex": "e873fbffff",
+          "size": 5,
+          "mnemonic": "call",
+          "operands": "0x49e110",
+          "direct_target": "0049E110"
+        },
+        {
+          "va": "0049E59D",
+          "rva": "0009E59D",
+          "file_offset": "0009E59D",
+          "raw_hex": "8b550c",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 0xc]"
+        },
+        {
+          "va": "0049E5A0",
+          "rva": "0009E5A0",
+          "file_offset": "0009E5A0",
+          "raw_hex": "c706d09a4f00",
+          "size": 6,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi], 0x4f9ad0"
+        },
+        {
+          "va": "0049E5A6",
+          "rva": "0009E5A6",
+          "file_offset": "0009E5A6",
+          "raw_hex": "895648",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x48], edx"
+        },
+        {
+          "va": "0049E5A9",
+          "rva": "0009E5A9",
+          "file_offset": "0009E5A9",
+          "raw_hex": "c7464cffffffff",
+          "size": 7,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x4c], 0xffffffff"
+        },
+        {
+          "va": "0049E5B0",
+          "rva": "0009E5B0",
+          "file_offset": "0009E5B0",
+          "raw_hex": "8bc6",
+          "size": 2,
+          "mnemonic": "mov",
+          "operands": "eax, esi"
+        },
+        {
+          "va": "0049E5B4",
+          "rva": "0009E5B4",
+          "file_offset": "0009E5B4",
+          "raw_hex": "c22400",
+          "size": 3,
+          "mnemonic": "ret",
+          "operands": "0x24"
+        }
+      ],
+      "falsified_by": "Changed version, invalid original object, nonnormal base return, reentry or callee ABI changes."
+    },
+    {
+      "conclusion": "0049E110 forwards all8 DWORD args unchanged to0049CD70. On normal return it writes vtable004F99F8 and object+44=0x1F, returns original object andret0x20.",
+      "witnesses": [
+        {
+          "va": "0049E113",
+          "rva": "0009E113",
+          "file_offset": "0009E113",
+          "raw_hex": "8b4524",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 0x24]"
+        },
+        {
+          "va": "0049E11A",
+          "rva": "0009E11A",
+          "file_offset": "0009E11A",
+          "raw_hex": "8bf1",
+          "size": 2,
+          "mnemonic": "mov",
+          "operands": "esi, ecx"
+        },
+        {
+          "va": "0049E138",
+          "rva": "0009E138",
+          "file_offset": "0009E138",
+          "raw_hex": "e833ecffff",
+          "size": 5,
+          "mnemonic": "call",
+          "operands": "0x49cd70",
+          "direct_target": "0049CD70"
+        },
+        {
+          "va": "0049E13D",
+          "rva": "0009E13D",
+          "file_offset": "0009E13D",
+          "raw_hex": "c706f8994f00",
+          "size": 6,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi], 0x4f99f8"
+        },
+        {
+          "va": "0049E143",
+          "rva": "0009E143",
+          "file_offset": "0009E143",
+          "raw_hex": "c746441f000000",
+          "size": 7,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x44], 0x1f"
+        },
+        {
+          "va": "0049E14A",
+          "rva": "0009E14A",
+          "file_offset": "0009E14A",
+          "raw_hex": "8bc6",
+          "size": 2,
+          "mnemonic": "mov",
+          "operands": "eax, esi"
+        },
+        {
+          "va": "0049E14E",
+          "rva": "0009E14E",
+          "file_offset": "0009E14E",
+          "raw_hex": "c22000",
+          "size": 3,
+          "mnemonic": "ret",
+          "operands": "0x20"
+        }
+      ],
+      "falsified_by": "Changed forwarding/store instructions, object identity or nonnormal callee return."
+    },
+    {
+      "conclusion": "Before any resource/private-error branch in captured0049CD70 prefix, and assuming prior0041AA20 returns normally, basearg3 is written toobject+2C andbasearg4 toobject+30. Composing raw toolbar stack pushes with these two wrappers therefore yields stores callback004EBEC0 at+2C and captured pane value at+30. Coordinates536/460 go to+4/+8; base ID3ED to+20; outer3EE is separately stored by outer wrapper at+48 after base returns. These are instruction-level associations, not proof that final live object fields remain those values or that any click invokes them.",
+      "witnesses": [
+        {
+          "va": "0049CD91",
+          "rva": "0009CD91",
+          "file_offset": "0009CD91",
+          "raw_hex": "e88adcf7ff",
+          "size": 5,
+          "mnemonic": "call",
+          "operands": "0x41aa20",
+          "direct_target": "0041AA20"
+        },
+        {
+          "va": "0049CD96",
+          "rva": "0009CD96",
+          "file_offset": "0009CD96",
+          "raw_hex": "8b4508",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "va": "0049CD99",
+          "rva": "0009CD99",
+          "file_offset": "0009CD99",
+          "raw_hex": "8b4d14",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp + 0x14]"
+        },
+        {
+          "va": "0049CD9C",
+          "rva": "0009CD9C",
+          "file_offset": "0009CD9C",
+          "raw_hex": "8b5518",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 0x18]"
+        },
+        {
+          "va": "0049CD9F",
+          "rva": "0009CD9F",
+          "file_offset": "0009CD9F",
+          "raw_hex": "8b5d0c",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "ebx, dword ptr [ebp + 0xc]"
+        },
+        {
+          "va": "0049CDA2",
+          "rva": "0009CDA2",
+          "file_offset": "0009CDA2",
+          "raw_hex": "8b7d10",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "edi, dword ptr [ebp + 0x10]"
+        },
+        {
+          "va": "0049CDA5",
+          "rva": "0009CDA5",
+          "file_offset": "0009CDA5",
+          "raw_hex": "894620",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x20], eax"
+        },
+        {
+          "va": "0049CDB1",
+          "rva": "0009CDB1",
+          "file_offset": "0009CDB1",
+          "raw_hex": "894e2c",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x2c], ecx"
+        },
+        {
+          "va": "0049CDB4",
+          "rva": "0009CDB4",
+          "file_offset": "0009CDB4",
+          "raw_hex": "895630",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x30], edx"
+        },
+        {
+          "va": "0049CDBA",
+          "rva": "0009CDBA",
+          "file_offset": "0009CDBA",
+          "raw_hex": "895e04",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 4], ebx"
+        },
+        {
+          "va": "0049CDBD",
+          "rva": "0009CDBD",
+          "file_offset": "0009CDBD",
+          "raw_hex": "897e08",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 8], edi"
+        }
+      ],
+      "falsified_by": "Different toolbar argument order/ECX pointer, failing or state-mutating constructor call, later overwrites beyond captured prefix, wrong control instance/version, or different live callback dispatch ABI."
+    },
+    {
+      "conclusion": "Resource validation follows these stores in the captured prefix: object+20==-1 takes a branch outside prefix; signed>=0x1EC2 or missing834BD4 table takes an error branch; a nonnull table entry branches to0049CE64 outside prefix. Error branch calls00497C60 and then unbacked private05AD0986. No resource loading, error helper or later virtual target was followed.",
+      "witnesses": [
+        {
+          "va": "0049CDC0",
+          "rva": "0009CDC0",
+          "file_offset": "0009CDC0",
+          "raw_hex": "8b4620",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi + 0x20]"
+        },
+        {
+          "va": "0049CDC3",
+          "rva": "0009CDC3",
+          "file_offset": "0009CDC3",
+          "raw_hex": "83f8ff",
+          "size": 3,
+          "mnemonic": "cmp",
+          "operands": "eax, -1"
+        },
+        {
+          "va": "0049CDCD",
+          "rva": "0009CDCD",
+          "file_offset": "0009CDCD",
+          "raw_hex": "7435",
+          "size": 2,
+          "mnemonic": "je",
+          "operands": "0x49ce04"
+        },
+        {
+          "va": "0049CDCF",
+          "rva": "0009CDCF",
+          "file_offset": "0009CDCF",
+          "raw_hex": "3dc21e0000",
+          "size": 5,
+          "mnemonic": "cmp",
+          "operands": "eax, 0x1ec2"
+        },
+        {
+          "va": "0049CDD4",
+          "rva": "0009CDD4",
+          "file_offset": "0009CDD4",
+          "raw_hex": "7d1c",
+          "size": 2,
+          "mnemonic": "jge",
+          "operands": "0x49cdf2"
+        },
+        {
+          "va": "0049CDD6",
+          "rva": "0009CDD6",
+          "file_offset": "0009CDD6",
+          "raw_hex": "8b15d44b8300",
+          "size": 6,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [0x834bd4]"
+        },
+        {
+          "va": "0049CDDC",
+          "rva": "0009CDDC",
+          "file_offset": "0009CDDC",
+          "raw_hex": "85d2",
+          "size": 2,
+          "mnemonic": "test",
+          "operands": "edx, edx"
+        },
+        {
+          "va": "0049CDDE",
+          "rva": "0009CDDE",
+          "file_offset": "0009CDDE",
+          "raw_hex": "7412",
+          "size": 2,
+          "mnemonic": "je",
+          "operands": "0x49cdf2"
+        },
+        {
+          "va": "0049CDE0",
+          "rva": "0009CDE0",
+          "file_offset": "0009CDE0",
+          "raw_hex": "8b0c82",
+          "size": 3,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx + eax*4]"
+        },
+        {
+          "va": "0049CDE3",
+          "rva": "0009CDE3",
+          "file_offset": "0009CDE3",
+          "raw_hex": "85c9",
+          "size": 2,
+          "mnemonic": "test",
+          "operands": "ecx, ecx"
+        },
+        {
+          "va": "0049CDE5",
+          "rva": "0009CDE5",
+          "file_offset": "0009CDE5",
+          "raw_hex": "741d",
+          "size": 2,
+          "mnemonic": "je",
+          "operands": "0x49ce04"
+        },
+        {
+          "va": "0049CDF0",
+          "rva": "0009CDF0",
+          "file_offset": "0009CDF0",
+          "raw_hex": "eb72",
+          "size": 2,
+          "mnemonic": "jmp",
+          "operands": "0x49ce64"
+        },
+        {
+          "va": "0049CDF7",
+          "rva": "0009CDF7",
+          "file_offset": "0009CDF7",
+          "raw_hex": "e864aeffff",
+          "size": 5,
+          "mnemonic": "call",
+          "operands": "0x497c60",
+          "direct_target": "00497C60"
+        },
+        {
+          "va": "0049CDFF",
+          "rva": "0009CDFF",
+          "file_offset": "0009CDFF",
+          "raw_hex": "e8823b6305",
+          "size": 5,
+          "mnemonic": "call",
+          "operands": "0x5ad0986",
+          "direct_target": "05AD0986"
+        }
+      ],
+      "falsified_by": "Different resource table/ID/pointers or source bytes. Static branches do not prove resource success."
+    }
+  ],
+  "stopped_boundaries": {
+    "public_setup0041AA20": "Observed direct call only; complete effects not expanded.",
+    "private05AD0986": {
+      "va": "05AD0986",
+      "arithmetic_rva": "056D0986",
+      "raw_backed": false,
+      "section": null,
+      "file_offset": null,
+      "followed": false
+    },
+    "resource_continuation0049CE64": "Outside captured prefix; not followed.",
+    "final_vtable004F9AD0": "Written pointer observed; no slot resolved or virtual method expanded.",
+    "no_guess": "No constructor/UI/scene binding beyond exact conditional local-store composition."
+  },
+  "consumer_adoption_action": "After Root review, Launcher can use+2C/+30 as source-backed conditional callback/parameter store witnesses for this specific0049E570 control family, rather than assuming+24/+28 from another UI family. Verify exact live instance, constructor completion and post-construction values in a future separately qualified automated session. This does not authorize new hooks or prove physicalG/click/room semantics.",
+  "wire_boundary": {
+    "no_direct_004C6AE0_or_004C6770_in_captured_ranges": true,
+    "whole_chain_network_absence": false,
+    "wire_opcode_direction_fields": null,
+    "skill_request_obligation": false
+  },
+  "unknowns_supplier_resume": {
+    "unknown": "Remaining base constructor/resource success, final callback+parameter stability, actual virtual click-dispatch ABI/object registration, physical-key action mapping and actual same-session population/reset/draw.",
+    "supplier": "Root/Launcher for exact fresh session and qualified public control-dispatch question; private backing remains stopped.",
+    "resume": "New input-complete lawful public scope or genuinely fresh exact runtime session with all retained source/instance/READY/nonce/claim/lease/cleanup/tool gates.",
+    "next_input_complete_task": null
+  },
+  "runtime": {
+    "fresh_instance_received": false,
+    "attached_or_monitoring": false,
+    "human_click_or_human_ready_fabricated": false,
+    "live_or_instrumentation_actions": false
+  },
+  "native_goal_status": "blocked, per actual tool observation; no replacement Goal",
+  "product_accepted": false,
+  "GUI_or_first_lobby_accepted": false,
+  "supervisor_review_pending": true,
+  "consumer_adopted": false,
+  "validation": {
+    "supplied_source_pins_match": true,
+    "all_ranges_raw_backed_and_fully_decoded": true,
+    "all_witness_addresses_valid": true,
+    "unknown_private_boundary_not_followed": true,
+    "old_PASS_replay": false
+  },
+  "command": "Python312 python.exe -B bin-public-toolbar-constructor-fields-20261008/derive.py; canonical BIN workdir; exact exit in sealed manifest",
+  "tools": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "capstone": "5.0.6"
+  }
+}

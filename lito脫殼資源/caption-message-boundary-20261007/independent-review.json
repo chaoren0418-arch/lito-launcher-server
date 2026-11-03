@@ -1,0 +1,32 @@
+{
+  "reviewer": "/root/dispatch_locator",
+  "mode": "read-only; no generator rerun or file writes",
+  "result": "static evidence sound; no correctness blocker found",
+  "evidence_level": "static",
+  "product_or_GUI_acceptance": false,
+  "source_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+  "tool_receipts": [
+    {
+      "id": "be9bf8",
+      "stdout_exact": "SOURCE_SHA 4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9\nWITNESSES 25 CODE 13 TRACES 11 ERRORS []\nSTATE_TABLE [(0, '0x47cca5'), (1, '0x47ccdf'), (2, '0x47cce4'), (3, '0x47cce9'), (4, '0x47cd3f'), (5, '0x47ccee'), (6, '0x47cd23'), (7, '0x47cd3f'), (8, '0x47ccf3'), (9, '0x47cd13'), (10, '0x47cd03')]\nSTDOUT '{\"task_id\": \"bin_resources-caption-message-boundary-20261007\", \"result\": \"PASS finite static qualification\", \"source_hashes_verified\": 3, \"raw_ranges\": 25, \"message_routes\": 11, \"game_executed\": false, \"process_attached\": false, \"product_acceptance\": false}\\n'\nDELIVERABLE qualify_fixed_bytes.py 11461 B02413E6B19E880BD920851FA7E7AD6CC59094D20E50D1686FCE1EB142642EE0\nDELIVERABLE raw-witnesses.json 79381 04B9E816D120A77F8F28D026B5FD49F23243A1A3444D038F17227FA8D38A408B\nDELIVERABLE finite-branch-verification.json 24172 2E46961B6C2B0D319F8640B59021FEF0F78F926A038474B95541D53B862D1729\nDELIVERABLE asm-navigation.json 13948 03B45E20BF96C16BBFA13A4EA3C57077907619B90BA2086D06C3C2DC91AA64D2\nDELIVERABLE qualification.stdout.txt 259 925C5545C239861401F7DA05773D7D6860E2F6FDCB39085561B4358E9C5CADC6\n"
+    },
+    {
+      "id": "b8ad2e",
+      "stdout_exact": "ROUTE WM_MOVE 0047F390 checked\nROUTE WM_SIZE 0047F390 checked\nROUTE WM_PAINT 0047F3BA checked\nROUTE WM_WINDOWPOSCHANGING 0047FFA8 checked\nROUTE WM_WINDOWPOSCHANGED 0047FFA8 checked\nROUTE WM_NCLBUTTONDOWN 0047FFA8 checked\nROUTE WM_SYSCOMMAND 0047FA7A checked\nROUTE WM_SIZING 0047FFA8 checked\nROUTE WM_MOVING 0047FFA8 checked\nROUTE WM_ENTERSIZEMOVE 0047FFA8 checked\nROUTE WM_EXITSIZEMOVE 0047FFA8 checked\nBRANCH_DECISIONS 52\nSC_SIZE_MOVE 0 0xf000 0xf000 0x47ffe4\nSC_SIZE_MOVE 0 0xf00f 0xf000 0x47ffe4\nSC_SIZE_MOVE 0 0xf010 0xf010 0x47ffe4\nSC_SIZE_MOVE 0 0xf01f 0xf010 0x47ffe4\nSC_SIZE_MOVE 1 0xf000 0xf000 0x47ffe4\nSC_SIZE_MOVE 1 0xf00f 0xf000 0x47ffe4\nSC_SIZE_MOVE 1 0xf010 0xf010 0x47ffe4\nSC_SIZE_MOVE 1 0xf01f 0xf010 0x47ffe4\n"
+    }
+  ],
+  "findings": [
+    "25 witness slices and 13 code disassemblies match fixed PE bytes, RVA/file offsets, slice SHA and saved binaries.",
+    "11 message routes and 52 branch decisions independently verified.",
+    "SC_SIZE/SC_MOVE, including low-nibble variants, reach47FFE4 for both zero/nonzero64BBE8.",
+    "Paint calls47CC90 conditionally and uses stored64BBEC without an incoming-HWND equality guard.",
+    "47CC90 proves state/callback mutations and synchronous call/tail boundaries; downstream rendering/rebase/wait semantics, OS thread and lock ownership remain unknown."
+  ],
+  "corrections_applied_by_primary": [
+    "Navigation excerpt272438-272477 replaced with272324-272365; original reviewed navigation SHA preserved in navigation-repair-receipt.json.",
+    "Generator caption-filter literal set test distinguished from independent raw branch evaluation.",
+    "State mutation/dispatch wording retained; no render/rebase/wait attribution."
+  ],
+  "explained_reader_failures": "14febd and2878ff UTF-8 output repairs; actual artifact checks returned no errors.",
+  "forbidden_actions_performed": false
+}

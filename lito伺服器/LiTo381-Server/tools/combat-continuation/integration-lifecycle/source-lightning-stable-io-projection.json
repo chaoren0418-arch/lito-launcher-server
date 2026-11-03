@@ -1,0 +1,18 @@
+{
+  "status": "verified-exact-inverse-fixture-only-observe-real-receiver-publisher",
+  "original": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceLightningIoProbe.java",
+    "sha256": "387d8279ffc3467f3fc6308df872d9e3be72f206a751356204d6947cdb978641"
+  },
+  "versioned": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceLightningStableIoProbe.java",
+    "sha256": "7468b75dc3a56543ef611ced7d5a5aec30dcc97542d94ed2440d2563a366e5ff"
+  },
+  "only_changes": [
+    "class name",
+    "require actual receiver monitor identity and current fixture lock owner",
+    "allow existing accepted HP publisher when it owns the same actual final frame wait"
+  ],
+  "all_retirement_and_output_expectations_unchanged": true,
+  "production_overlays": 0
+}

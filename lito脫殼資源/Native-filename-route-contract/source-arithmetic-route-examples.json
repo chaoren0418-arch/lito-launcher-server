@@ -1,0 +1,96 @@
+{
+  "examples": [
+    {
+      "source_requested_name_example": "0.png",
+      "unsigned_ASCII_byte_sum": 419,
+      "route": 3,
+      "bucket_va": "006479F4",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79.png",
+      "unsigned_ASCII_byte_sum": 483,
+      "route": 3,
+      "bucket_va": "006479F4",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "809.png",
+      "unsigned_ASCII_byte_sum": 532,
+      "route": 4,
+      "bucket_va": "006479F8",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79.img",
+      "unsigned_ASCII_byte_sum": 475,
+      "route": 11,
+      "bucket_va": "00647A14",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79e.img",
+      "unsigned_ASCII_byte_sum": 576,
+      "route": 0,
+      "bucket_va": "006479E8",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79c.img",
+      "unsigned_ASCII_byte_sum": 574,
+      "route": 14,
+      "bucket_va": "00647A20",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79j.img",
+      "unsigned_ASCII_byte_sum": 581,
+      "route": 5,
+      "bucket_va": "006479FC",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "79h.img",
+      "unsigned_ASCII_byte_sum": 579,
+      "route": 3,
+      "bucket_va": "006479F4",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "0.PNG",
+      "unsigned_ASCII_byte_sum": 323,
+      "route": 3,
+      "bucket_va": "006479F4",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "19.png",
+      "unsigned_ASCII_byte_sum": 477,
+      "route": 13,
+      "bucket_va": "00647A1C",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    },
+    {
+      "source_requested_name_example": "91.png",
+      "unsigned_ASCII_byte_sum": 477,
+      "route": 13,
+      "bucket_va": "00647A1C",
+      "provider": "unknown;fixedrawcellzero",
+      "qualification": "Sourceformula arithmetic witness only;formatter/fileexistence/provider/read notexecuted. No filenameassetlookup."
+    }
+  ],
+  "not_Native_execution_or_test_PASS": true,
+  "not_new_filename_search": true,
+  "case_policy": "No explicitcasefold in43FFC0;ASCIIcase toggles change sum bymultiplesof32,so thesebucketexamplescollide. Doesnotprovebackingfilelookupcasepolicy.",
+  "ordering_policy": "Byteadditionignoresbyteorder;19.png/91.pngcollision demonstrates routeisnotuniqueidentity/namespace."
+}

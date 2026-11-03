@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeMaterialProbe.java",
+      "sha256": "579722411d1491dd3619e19c9e941a294c9be84cd4001d6c357cd3ecd0fb769e"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\test.py",
+      "sha256": "cb803b96a2b1a414335c40e0570de695409ff968f607ce42ee67097cd39084c7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\prepare_companions.py",
+      "sha256": "bcd952332f0334adbac6639d8de35a8e332337d0a1886d0eb0f2a44e5842de5d"
+    }
+  ],
+  "scope": "actual constructed npc45306 elemental, own/enemy, dead/inactive/range/missing material/Source action window/native packet; no all-NPC lifetime claim"
+}

@@ -1,0 +1,26 @@
+559666: dword_64AD28 dd 0                       ; DATA XREF: sub_4A7850+52↑o
+559667: dword_64AD2C dd 0                       ; DATA XREF: sub_4AC520+22↑o
+559668:                                         ; ___:004AC5B0↑r
+559669: dd 9 dup(0)
+559670: dword_64AD54 dd 7 dup(0)                ; DATA XREF: sub_4928C0+682↑o
+559671:                                         ; sub_4A7550+153↑o
+559672: word_64AD70 dw 0                        ; DATA XREF: sub_469B10+6A↑w
+559673:                                         ; sub_469B10+7D↑r
+559674:                                         ; sub_469BD0+76↑w
+559675:                                         ; sub_469BD0+82↑r
+559676:                                         ; ___:0046EEC5↑w
+559677:                                         ; ___:0046EEED↑r
+559678:                                         ; ___:0046EF69↑r
+559679:                                         ; sub_455330+19DE6↑r
+559680:                                         ; sub_455330+19E46↑w
+559681:                                         ; sub_455330+19EE7↑r
+559682:                                         ; sub_4C6B30+18F↑r
+559683: align 4
+559684: dword_64AD74 dd 40h dup(0)              ; DATA XREF: sub_469B10+3C↑o
+559685:                                         ; sub_455330+19E0B↑o
+559686:                                         ; sub_475F40:loc_4760FF↑o
+559687:                                         ; sub_475F40+1D3↑o
+559688: dword_64AE74 dd 40h dup(0)              ; DATA XREF: sub_469B10+57↑o
+559689:                                         ; sub_469B10+8B↑o
+559690:                                         ; sub_469BD0+57↑o
+559691:                                         ; sub_469BD0+90↑o

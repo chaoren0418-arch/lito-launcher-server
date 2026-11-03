@@ -1,0 +1,41 @@
+{
+  "qualified_reference": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\references.csv",
+    "bytes": 9030143,
+    "sha256": "4EA5DF810A8726651C5CD53402023076C515B3F80A10F2F224D2CB5EAFC33B9D"
+  },
+  "preceding_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008-contract.json",
+    "bytes": 8746,
+    "sha256": "2AC6D313CCA261244BD0CF54182F32E436584232D95692F1A756EA7E24D51B38"
+  },
+  "sector_parse": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\sector-parse.json",
+    "bytes": 16309,
+    "sha256": "4434069296CFE20752ADA0CB97A6F38E2BC1E62AB5423E45185C5B7A4E6C3992"
+  },
+  "projection_cache_source_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_resources.rs",
+      "bytes": 16562,
+      "sha256": "16837FE97B14CD3F7A0BABF882B34473CF3C3E08993E4FB3BDB9113978AA03A3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_tile_cache.rs",
+      "bytes": 8615,
+      "sha256": "5B22DC2AD88568B38A11862EDF5AEEE7F237CADDC7EABB2C1EAA4965702E99A4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_depth.rs",
+      "bytes": 12589,
+      "sha256": "D8BAF5EDF7FA7862F9339C01B4554B5A43511D7507B5CDA6225DC1CCD116FF22"
+    }
+  ],
+  "historical_static_reference": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r483-city-visible-rows\\reference\\reference-534-initial.png",
+    "bytes": 1649530,
+    "sha256": "D7B9C260F35297EE7E9505D2170667C6CE4EE8F8FA77E9C96EFC3AB81E6B7CB5"
+  },
+  "camera_origin": "Historical static regression camera coordinates; no runtime scene/owner proof.",
+  "va_rva": "N/A: CSV/raw sectors and Rust projection/cache text; no PE mapping claim."
+}

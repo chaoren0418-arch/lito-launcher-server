@@ -1,0 +1,137 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+    "bytes": 10536,
+    "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+  },
+  "captured_content_sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_mode_menu_skin.rs",
+    "bytes": 10536,
+    "sha256": "8A0BCD30AD4CD9F040FB05E14D432F695D72F29531E2393537F0BB6E81F79F12"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:10:45.849272+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      1,
+      19
+    ],
+    [
+      30,
+      37
+    ]
+  ],
+  "line_count": 62,
+  "implementation_lines": [
+    {
+      "line": 1,
+      "text": "//! Qualified LTsurf map-menu subset. Default routes never load this skin."
+    },
+    {
+      "line": 2,
+      "text": "//! RGB555 reference only; no native runtime, language overlay or full UI parity."
+    },
+    {
+      "line": 3,
+      "text": "use super::{compositor::{Canvas,Viewport},native_offline_preview_resources::Inputs};"
+    },
+    {
+      "line": 4,
+      "text": "use anyhow::{ensure,Context,Result};"
+    },
+    {
+      "line": 5,
+      "text": "use serde_json::{Value,json};"
+    },
+    {
+      "line": 6,
+      "text": "use sha2::{Digest,Sha256};"
+    },
+    {
+      "line": 7,
+      "text": "use std::{path::Path,sync::Arc};"
+    },
+    {
+      "line": 8,
+      "text": "#[path=\"../../tools/native-resource-adapter.rs\"]mod adapter;"
+    },
+    {
+      "line": 9,
+      "text": "pub const WIDTH:u32=157;pub const HEIGHT:u32=81;"
+    },
+    {
+      "line": 10,
+      "text": "#[derive(Clone,Copy,Debug,PartialEq,Eq)]pub enum CopyMode{Opaque,ColorKey}"
+    },
+    {
+      "line": 11,
+      "text": "pub struct Img {pub width:u32,pub height:u32,pub rgba:Vec<u8>}"
+    },
+    {
+      "line": 12,
+      "text": "pub fn decode_img(bytes:&[u8],mode:CopyMode)->Result<Img>{"
+    },
+    {
+      "line": 13,
+      "text": " ensure!(bytes.len()>=8,\"IMG header truncated\");let word=|n|u16::from_le_bytes([bytes[n],bytes[n+1]]);"
+    },
+    {
+      "line": 14,
+      "text": " let(w,h)=(word(0) as i16,word(2) as i16);ensure!(w>0&&h>0,\"positive signed IMG dimensions required\");let(w,h)=(w as u32,h as u32);"
+    },
+    {
+      "line": 15,
+      "text": " ensure!(w<=2048&&h<=2048&&u64::from(w)*u64::from(h)<=1_048_576,\"IMG decode budget\");"
+    },
+    {
+      "line": 16,
+      "text": " ensure!(word(4)<=1,\"unknown IMG flag\");ensure!(bytes.len()==8+w as usize*h as usize*2,\"exact IMG pixel payload required\");"
+    },
+    {
+      "line": 17,
+      "text": " let mut rgba=Vec::with_capacity(w as usize*h as usize*4);"
+    },
+    {
+      "line": 18,
+      "text": " for p in bytes[8..].chunks_exact(2){let v=u16::from_le_bytes([p[0],p[1]]);ensure!(v&0x8000==0,\"RGB555 high bit unqualified\");if mode==CopyMode::ColorKey&&v==word(6){rgba.extend_from_slice(&[0;4]);}else{let c=[(v>>10)&31,(v>>5)&31,v&31];rgba.extend(c.map(|x|((x<<3)|(x>>2)) as u8));rgba.push(255);}}"
+    },
+    {
+      "line": 19,
+      "text": " Ok(Img{width:w,height:h,rgba})"
+    },
+    {
+      "line": 30,
+      "text": "pub struct Skin{pub normal_bgra:Arc<[u8]>,pub up_pressed_bgra:Arc<[u8]>,pub down_pressed_bgra:Arc<[u8]>,pub entry_art:Option<Arc<[u8]>>,pub character_buttons:Vec<Img>,pub channel_buttons:Vec<Img>,pub channel_background:Option<Img>,pub channel_back:Vec<Img>,thumb:Img,arrows:Vec<Img>}"
+    },
+    {
+      "line": 31,
+      "text": "impl Skin{"
+    },
+    {
+      "line": 32,
+      "text": " pub fn load(inputs:&Inputs)->Result<Self>{"
+    },
+    {
+      "line": 33,
+      "text": "  ensure!(inputs.project.is_absolute()&&inputs.manifest.starts_with(&inputs.project),\"owned skin manifest root\");let v=json!({\"path\":inputs.manifest,\"bytes\":inputs.manifest_pin.bytes,\"sha256\":adapter::hex(&inputs.manifest_pin.sha256)});let m:Value=serde_json::from_slice(&read(&inputs.project,&v)?)?;"
+    },
+    {
+      "line": 34,
+      "text": "  let index=read(&inputs.project,&m[\"LTsurf_index\"])?;let pak=read(&inputs.project,&m[\"LTsurf_pak\"])?;let table=adapter::parse_index(&index,pak.len()).map_err(|e|anyhow::anyhow!(\"{e}\"))?;"
+    },
+    {
+      "line": 35,
+      "text": "  let entry_art=if let Some(row)=m.get(\"entry_art\"){ensure!(row[\"id\"]==6279,\"source entry image identity\");let range=table.get(\"6279.img\").context(\"source entry IMG absent\")?;let raw=&pak[range.clone()];ensure!(raw.len()as u64==row[\"bytes\"].as_u64().context(\"entry size\")?&&format!(\"{:X}\",Sha256::digest(raw))==row[\"sha256\"].as_str().context(\"entry SHA\")?,\"entry IMG pin drift\");let img=decode_img(raw,CopyMode::Opaque)?;ensure!((img.width,img.height)==(11,11),\"source entry IMG geometry\");let mut c=Canvas::new(11,11)?;c.blit_rgba(&img.rgba,11,11,0,0)?;let mut bgra=Vec::new();c.copy_bgra(&mut bgra)?;Some(Arc::<[u8]>::from(bgra))}else{None};"
+    },
+    {
+      "line": 36,
+      "text": "  let mut character_buttons=Vec::new();if let Some(rows)=m.get(\"character_buttons\"){let rows=rows.as_array().context(\"character button rows\")?;ensure!(rows.len()==4,\"four original character button images\");for(row,id)in rows.iter().zip([6303,6304,6201,6202]){ensure!(row[\"id\"]==id,\"character button identity\");let range=table.get(&format!(\"{id}.img\")).context(\"character button absent\")?;let raw=&pak[range.clone()];ensure!(raw.len()as u64==row[\"bytes\"].as_u64().context(\"button size\")?&&format!(\"{:X}\",Sha256::digest(raw))==row[\"sha256\"].as_str().context(\"button SHA\")?,\"character button pin drift\");let image=decode_img(raw,CopyMode::ColorKey)?;ensure!((image.width,image.height)==(51,23),\"character button geometry\");character_buttons.push(image);}}"
+    },
+    {
+      "line": 37,
+      "text": "  let load_channel=|row:&Value,id:u32,geometry:(u32,u32),mode:CopyMode|->Result<Img>{ensure!(row[\"id\"]==id,\"channel image identity\");let range=table.get(&format!(\"{id}.img\")).context(\"channel image absent\")?;let raw=&pak[range.clone()];ensure!(raw.len()as u64==row[\"bytes\"].as_u64().context(\"channel size\")?&&format!(\"{:X}\",Sha256::digest(raw))==row[\"sha256\"].as_str().context(\"channel SHA\")?,\"channel image pin drift\");let image=decode_img(raw,mode)?;ensure!((image.width,image.height)==geometry,\"channel geometry\");Ok(image)};"
+    }
+  ]
+}

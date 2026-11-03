@@ -1,0 +1,21 @@
+{
+  "version": "0.6.64",
+  "status": "deployed",
+  "server_sha256": "5d4b8ad4469143f824b8f6599d1951e535274f7152385cae0b427c720622cd15",
+  "tests_passed": [
+    "ResourceRegression",
+    "RoomRulesRegression",
+    "FlowRegression",
+    "NativeDirectoryRegression"
+  ],
+  "display_counts": {
+    "empty_test_room": 1,
+    "one_human_and_bot": 2,
+    "two_humans_no_bot": 2,
+    "empty_bot_disabled": 0
+  },
+  "database_changed": false,
+  "client_dll_changed": false,
+  "formal_sql_startup_accepted": true,
+  "native_manual_gameplay_verified": false
+}

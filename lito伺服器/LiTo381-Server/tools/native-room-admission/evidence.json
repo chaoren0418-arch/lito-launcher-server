@@ -1,0 +1,49 @@
+{
+  "release": "0.6.59",
+  "candidate_sha256": "ebf5ee66f051700ac4b8f524847d7372af8065c4dbb5d91b2f74e03dadff4e7b",
+  "changed_classes": [
+    "local/lito381/server/BattleRules$Mode.class",
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub$Room.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/NativeRoomDirectoryRow.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/NativeRoomAdmission.class"
+  ],
+  "native_run": "room-state-fixture-1791867112010000200",
+  "tests": {
+    "three_session_encrypted_admission": true,
+    "no_bot_roster_world_ai_winner": true,
+    "native_A_lobby_B_result_hidden": true,
+    "native_second_battle": true,
+    "prior_room_movement_regression": true
+  },
+  "formal_smoke": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791867268165773300"
+  },
+  "manual_playtest": "pending",
+  "source_server_jar_sha256": "3025e3df1c28f55019e79d5f21f9c1587b7268fb6417d6a75a591b6aecacb4b4",
+  "published": true,
+  "shortcut": "LiTo 0.6.59 正式啟動器"
+}

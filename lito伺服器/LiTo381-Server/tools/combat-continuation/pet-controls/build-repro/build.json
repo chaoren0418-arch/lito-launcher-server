@@ -1,0 +1,41 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build\\candidate-earth-bind-material.jar",
+    "sha256": "2681d9dcd41898581ef6e0d2223fd956b8cea0f94cb91d4022515f512de3892b"
+  },
+  "parent_behavioral_qualification_pending": true,
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build-repro\\candidate-pet-controls.jar",
+    "sha256": "4319a8e7f5c9dff541c263b9d85fbfafc03fe963dd3007677b54b181f0c9253e"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/CombatRules.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePetControls.class"
+  ],
+  "exact_inverse": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build-repro\\inputs\\build.py",
+      "sha256": "8e6270238269897227a93034ed9665058d67c8076ce1ca8b70844c77a490e415"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build-repro\\inputs\\NativePetControls.java",
+      "sha256": "5f77e28115d7012ff2ff98533e4e5b635bcc47b878546df3bdf011510ac253a8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-controls\\build-repro\\inputs\\PetControlsMethods.java",
+      "sha256": "c25878ae474f14631f565b34601bce783e92882ea6ad04090678977efb2312f1"
+    }
+  ]
+}

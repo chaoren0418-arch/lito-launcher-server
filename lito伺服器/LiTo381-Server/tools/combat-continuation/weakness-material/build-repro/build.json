@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\build\\candidate-negative-material.jar",
+    "sha256": "18fbe46a414e29974bdb4d625b33b6aca9b3271cac0eaf9994a14ed7801f244e"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\candidate-weakness-material.jar",
+    "sha256": "9654d951236b38a68261f2efd6d6e839a52e86c0a3b7e598709cb256c702395e"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeWeaknessMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\build.py",
+      "sha256": "9c7613628be682ae9da2ba30894a716466e120287fcb28e5050098eee2fa917d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\WeaknessMaterialMethods.java",
+      "sha256": "47fb92286ded6c1a9d806e8ab50a0a712dbec61d15a66c3628eac52efd2ea6d3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "1622414545428b94e8ff3a787a3974642b539d61bbb6001b6173165197cabcee"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "8cbf1be2d636dda2aad646ef44fb1851e4808509b76255e17a7b07994c7eeb3c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build-repro\\inputs\\sources\\NativeWeaknessMaterialAction.java",
+      "sha256": "da7e99530f0f94234cb5dced0a1416e8b0662107ef78a4d2cf648989ccdc0267"
+    }
+  ]
+}

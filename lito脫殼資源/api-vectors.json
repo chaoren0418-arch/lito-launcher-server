@@ -1,0 +1,99 @@
+{
+  "updated_at": "2026-10-05T21:41:07.227275+08:00",
+  "test_process": {
+    "pid": 16312,
+    "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "architecture_bits": 64,
+    "owned_script": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\api_vectors.py",
+      "bytes": 1942,
+      "sha256": "0724A86C5ACCC8BBC66AAD15A1E5706DC59B485B5588D424AAF4F876421D8E89"
+    }
+  },
+  "system_DLL": {
+    "path": "C:\\Windows\\System32\\ws2_32.dll",
+    "bytes": 429408,
+    "sha256": "5E9857A80A301AD21D0E0A0928A4FF2B5360C305A97BFC88886E3B686BF8D503"
+  },
+  "vectors": [
+    {
+      "input": "127.0.0.1",
+      "returned_u32": "0100007F",
+      "memory_network_bytes": "7f000001",
+      "inet_ntoa_copy": "127.0.0.1"
+    },
+    {
+      "input": "127.0.0.2",
+      "returned_u32": "0200007F",
+      "memory_network_bytes": "7f000002",
+      "inet_ntoa_copy": "127.0.0.2"
+    },
+    {
+      "input": "1.2.3.4",
+      "returned_u32": "04030201",
+      "memory_network_bytes": "01020304",
+      "inet_ntoa_copy": "1.2.3.4"
+    },
+    {
+      "input": "",
+      "returned_u32": "FFFFFFFF",
+      "memory_network_bytes": "ffffffff",
+      "inet_ntoa_copy": "255.255.255.255"
+    },
+    {
+      "input": " ",
+      "returned_u32": "00000000",
+      "memory_network_bytes": "00000000",
+      "inet_ntoa_copy": "0.0.0.0"
+    },
+    {
+      "input": "255.255.255.255",
+      "returned_u32": "FFFFFFFF",
+      "memory_network_bytes": "ffffffff",
+      "inet_ntoa_copy": "255.255.255.255"
+    },
+    {
+      "input": "256.0.0.1",
+      "returned_u32": "FFFFFFFF",
+      "memory_network_bytes": "ffffffff",
+      "inet_ntoa_copy": "255.255.255.255"
+    },
+    {
+      "input": "invalid",
+      "returned_u32": "FFFFFFFF",
+      "memory_network_bytes": "ffffffff",
+      "inet_ntoa_copy": "255.255.255.255"
+    },
+    {
+      "input": "127.1",
+      "returned_u32": "0100007F",
+      "memory_network_bytes": "7f000001",
+      "inet_ntoa_copy": "127.0.0.1"
+    },
+    {
+      "input": "0177.0.0.1",
+      "returned_u32": "0100007F",
+      "memory_network_bytes": "7f000001",
+      "inet_ntoa_copy": "127.0.0.1"
+    },
+    {
+      "input": "0x7f.0.0.1",
+      "returned_u32": "0100007F",
+      "memory_network_bytes": "7f000001",
+      "inet_ntoa_copy": "127.0.0.1"
+    },
+    {
+      "input": null,
+      "returned_u32": "FFFFFFFF",
+      "memory_network_bytes": "ffffffff",
+      "inet_ntoa_copy": "255.255.255.255"
+    }
+  ],
+  "checks_passed": true,
+  "scope": "Pure system-library conversion in owned Python; 64-bit current OS ABI/semantics only; NOT historical32-bit DLL body identity or original runtime evidence. No original game/provider process opened, no socket created, no DNS call, no GUI.",
+  "inet_ntoa_lifetime": "Returned buffer must be copied immediately; thread-local storage valid until next Windows Sockets call on same thread (Microsoft docs).",
+  "official_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-inet_addr",
+    "https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-inet_ntoa"
+  ]
+}

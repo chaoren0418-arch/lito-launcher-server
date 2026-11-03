@@ -1,0 +1,12 @@
+{
+  "ASM_pin": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "different_input_SHA": "AEB05C78FE029EA6D3F2EF349245669E47E1E83B1C005E32D4663C780627B5A6",
+  "authority": "Navigation only, all conclusions from fixed-PE bytes.",
+  "start_line": 417774,
+  "end_line": 417818,
+  "function_text": "sub_4C7EC0 proc near                    ; CODE XREF: sub_4C8490+13↓p\n                                        ; sub_4C84F0+1B↓p\n                                        ; sub_4C8560+1B↓p\n                                        ; sub_4C85A0+18↓p\n                                        ; sub_4C85E0+18↓p\n                                        ; sub_4C87C0+11↓p\n\narg_0= dword ptr  8\n\npush    ebp\nmov     ebp, esp\npush    esi\npush    edi\nmov     esi, ecx\ncall    sub_419DB0\n\nmov     edi, [ebp+arg_0]\ntest    eax, eax\njz      short loc_4C7EE3\n\n\nloc_4C7ED3:                             ; CODE XREF: sub_4C7EC0+21↓j\ncmp     [eax+4], edi\njz      short loc_4C7EEB\n\nmov     ecx, esi\ncall    sub_419E00\n\ntest    eax, eax\njnz     short loc_4C7ED3\n\n\nloc_4C7EE3:                             ; CODE XREF: sub_4C7EC0+11↑j\npush    edi\nmov     ecx, esi\ncall    sub_4C7DC0\n\n\nloc_4C7EEB:                             ; CODE XREF: sub_4C7EC0+16↑j\npop     edi\npop     esi\npop     ebp\nretn    4\n\nsub_4C7EC0 endp"
+}

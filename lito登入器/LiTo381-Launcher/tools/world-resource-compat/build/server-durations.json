@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\2-登入器\\打包建置\\編碼器\\TW13081901.txt",
+      "sha256": "7ebe2b464c8b1ea9c58ac985dd8ff4c823784d8231894262eddcd7691ca94008"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\inputs\\LTlist.spr",
+      "sha256": "f55779aeb5c3982d8b366068cdbe4003d802619074e54388f26ee87368f42603"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\SharedDurationProbe.java",
+      "sha256": "b55cd129bcde189926a01cfa3233950191b173f407d5f3ccebbd6662ac40b128"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\presentation-contract.json",
+      "sha256": "c01f65b8e786eb69fc7ae1968eb838fe5ae2df8414be048a6fee08767d828379"
+    }
+  ],
+  "compiler_provenance": [
+    {
+      "archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\docs\\history\\development-evidence.zip",
+      "member": "LiTo381-Launcher/runtime/shared-resource-migration-20261011/catalog.py",
+      "sha256": "5dd9daf33a64f33c1e7b8c193151237bb2875fc8c7a4950323a6d75bf1f510f2",
+      "candidate_copy": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\compiler\\animation_catalog.py"
+    },
+    {
+      "archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\docs\\history\\development-evidence.zip",
+      "member": "LiTo381-Launcher/runtime/shared-resource-migration-20261011/frame_ir.py",
+      "sha256": "652226f07f349120906cb341e5d2a13277616d971206fd89671067e7152e21e6",
+      "candidate_copy": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\compiler\\frame_ir.py"
+    },
+    {
+      "archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\docs\\history\\development-evidence.zip",
+      "member": "LiTo381-Launcher/runtime/shared-resource-migration-20261011/native_parser_harness.py",
+      "sha256": "d3505748a167f84a72207a13f99c94eec6e913a0cd3b17f15fc46befff60be87",
+      "candidate_copy": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\compiler\\native_parser_harness.py"
+    }
+  ],
+  "results": [
+    {
+      "jar": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+        "sha256": "75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371"
+      },
+      "label": "formal",
+      "duration_resource_sha256": "3931df428c38456bd5df52b71f051a17f3587b94e97059952c363f87948e825c",
+      "source_rows_compared": 60303,
+      "actual_lookup": "PASS 60303 actual shared duration lookups"
+    },
+    {
+      "jar": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+        "sha256": "8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8"
+      },
+      "label": "backend-qualified",
+      "duration_resource_sha256": "3931df428c38456bd5df52b71f051a17f3587b94e97059952c363f87948e825c",
+      "source_rows_compared": 60303,
+      "actual_lookup": "PASS 60303 actual shared duration lookups"
+    },
+    {
+      "jar": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\tamed-builds\\20261020T094837055072Z\\candidate-integrated-tamed-unqualified.jar",
+        "sha256": "4dd7876008d6d6d8de54c958ec247934e50c59d242dba79a7b83a72c38fe2b92"
+      },
+      "label": "incremental-unqualified",
+      "duration_resource_sha256": "3931df428c38456bd5df52b71f051a17f3587b94e97059952c363f87948e825c",
+      "source_rows_compared": 60303,
+      "actual_lookup": "PASS 60303 actual shared duration lookups"
+    }
+  ],
+  "scope": "Per-frame integer milliseconds summed per action, including aliases and 285 LiTo UI additions",
+  "limits": [
+    "No renderer wall-clock measurement, network pacing or live battle tested.",
+    "Does not qualify all damage/skill logic in any combat candidate."
+  ],
+  "source_database_modified": false,
+  "formal_updated": false
+}

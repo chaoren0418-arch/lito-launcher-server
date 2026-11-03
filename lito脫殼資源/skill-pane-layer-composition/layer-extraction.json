@@ -1,0 +1,165 @@
+{
+  "authorization": "Supervisor batch9: each exact933.img and935.img one extraction; no other payloads.",
+  "index_candidates_only": [
+    {
+      "archive": "LTsurf",
+      "namespace": "native",
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.raw.idx",
+        "bytes": 45448,
+        "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+      },
+      "rows": [
+        {
+          "row": 1556,
+          "name": "933.img",
+          "offset": 91134715,
+          "bytes": 104676
+        },
+        {
+          "row": 1558,
+          "name": "935.img",
+          "offset": 91359045,
+          "bytes": 105974
+        }
+      ]
+    },
+    {
+      "archive": "Sprite",
+      "namespace": "shared",
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Sprite.raw.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+      },
+      "rows": [
+        {
+          "row": 90875,
+          "name": "933.img",
+          "offset": 383096296,
+          "bytes": 104676
+        },
+        {
+          "row": 90877,
+          "name": "933c.img",
+          "offset": 357701535,
+          "bytes": 104676
+        },
+        {
+          "row": 90878,
+          "name": "933h.img",
+          "offset": 357596859,
+          "bytes": 104676
+        },
+        {
+          "row": 90977,
+          "name": "935.img",
+          "offset": 382870668,
+          "bytes": 105974
+        }
+      ]
+    }
+  ],
+  "source_checks": [
+    {
+      "kind": "index_source",
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+      "match": true
+    },
+    {
+      "kind": "decoded_index",
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.raw.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+      "match": true
+    },
+    {
+      "kind": "pak_source",
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+      "bytes": 92788879,
+      "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+      "match": true
+    }
+  ],
+  "members": [
+    {
+      "namespace": "native",
+      "archive": "LTsurf",
+      "row": 1556,
+      "name": "933.img",
+      "offset": 91134715,
+      "bytes": 104676,
+      "source_index": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+        "bytes": 45448,
+        "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+      },
+      "source_pak": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+        "bytes": 92788879,
+        "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E"
+      },
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-pane-layers\\LTsurf\\row01556-933.img",
+        "bytes": 104676,
+        "sha256": "3B49C6E154334E3252BEDCD1FF101D5362F787F5892FF49EE3191FE73EF978E7"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-pane-layers\\LTsurf\\row01556-933.img",
+        "bytes": 104676,
+        "sha256": "3B49C6E154334E3252BEDCD1FF101D5362F787F5892FF49EE3191FE73EF978E7"
+      },
+      "header_first_32_hex": "bf0012010000734e734e734e734e9452734e734e734e734e734e945294529452",
+      "header": [
+        191,
+        274,
+        0,
+        20083
+      ],
+      "namespace_qualification": "Native LTsurf default-name priority candidate after hashed shard miss. Actual language variant/cache/I/O unobserved;933c/933h exist in sharedSprite and may win before default933.",
+      "native_GUI_accepted": false
+    },
+    {
+      "namespace": "native",
+      "archive": "LTsurf",
+      "row": 1558,
+      "name": "935.img",
+      "offset": 91359045,
+      "bytes": 105974,
+      "source_index": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+        "bytes": 45448,
+        "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+      },
+      "source_pak": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+        "bytes": 92788879,
+        "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E"
+      },
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-pane-layers\\LTsurf\\row01558-935.img",
+        "bytes": 105974,
+        "sha256": "479EFD1EC7E4838FA33881CC0C9E5C387B7D98B4491995733D0F7C53A5191F26"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-pane-layers\\LTsurf\\row01558-935.img",
+        "bytes": 105974,
+        "sha256": "479EFD1EC7E4838FA33881CC0C9E5C387B7D98B4491995733D0F7C53A5191F26"
+      },
+      "header_first_32_hex": "cb00050101000000000000000000000000000000000000000000000000000000",
+      "header": [
+        203,
+        261,
+        1,
+        0
+      ],
+      "namespace_qualification": "Native LTsurf default-name priority candidate after hashed shard miss. Actual language variant/cache/I/O unobserved;933c/933h exist in sharedSprite and may win before default933.",
+      "native_GUI_accepted": false
+    }
+  ],
+  "new_pak_members_read_or_extracted": 2,
+  "shared_Sprite_payload_read": false,
+  "934_replayed": false
+}

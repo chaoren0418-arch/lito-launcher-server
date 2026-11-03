@@ -1,0 +1,133 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_presentation.rs",
+    "bytes": 1813,
+    "sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101"
+  },
+  "captured_content_sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_presentation.rs",
+    "bytes": 1813,
+    "sha256": "6937A10B3EF18CDD48E2A75B94528FEA6F717610AE0708CF6D69CC37C899B101"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:12:19.058886+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      3,
+      29
+    ]
+  ],
+  "line_count": 30,
+  "implementation_lines": [
+    {
+      "line": 3,
+      "text": "#[derive(Clone,Debug,PartialEq,Eq)]pub struct Key {"
+    },
+    {
+      "line": 4,
+      "text": " pub java_ready:super::java_room_ready::Snapshot,"
+    },
+    {
+      "line": 5,
+      "text": " pub java_mode_request:super::java_room_mode_request::Snapshot,"
+    },
+    {
+      "line": 6,
+      "text": " pub java_settings_request:super::java_room_settings_request::Snapshot,"
+    },
+    {
+      "line": 7,
+      "text": " pub java_map_request:super::java_room_map_request::Snapshot,"
+    },
+    {
+      "line": 8,
+      "text": " pub java_settings:Option<super::java_room_settings::Snapshot>,"
+    },
+    {
+      "line": 9,
+      "text": " pub java_self:super::java_room_self::Snapshot,"
+    },
+    {
+      "line": 10,
+      "text": " pub java_catalog:Option<super::java_room_tail::CatalogSnapshot>,"
+    },
+    {
+      "line": 11,
+      "text": " pub java_participants:Option<super::java_room_participants::Snapshot>,"
+    },
+    {
+      "line": 12,
+      "text": " pub java_room:super::java_room_entry::Key,"
+    },
+    {
+      "line": 13,
+      "text": " pub java_return:super::java_return::Key,"
+    },
+    {
+      "line": 14,
+      "text": " pub java_character:super::java_character_flow::Key,"
+    },
+    {
+      "line": 15,
+      "text": " pub bootstrap:super::login_bootstrap::Key,"
+    },
+    {
+      "line": 16,
+      "text": " pub login_form:super::login_form::Snapshot,"
+    },
+    {
+      "line": 17,
+      "text": " pub awaiting_roster:bool,"
+    },
+    {
+      "line": 18,
+      "text": " pub character_ui:super::character_selection::Key,"
+    },
+    {
+      "line": 19,
+      "text": " pub navigation:super::entry_navigation::Key,"
+    },
+    {
+      "line": 20,
+      "text": " pub transfer:super::entry_transfer::Key,"
+    },
+    {
+      "line": 21,
+      "text": " pub startup_host_fixture:Option<std::net::SocketAddrV4>,"
+    },
+    {
+      "line": 22,
+      "text": " pub epoch:Option<u64>,pub roster_revision:u64,pub pending:source_send::Snapshot,"
+    },
+    {
+      "line": 23,
+      "text": " pub page:UiPage,pub generation:u64,pub frame_revision:u64,pub skin:bool,pub status:String,"
+    },
+    {
+      "line": 24,
+      "text": " pub phase:u32,pub mode:u16,pub identifier:u32,pub version:Option<i32>,pub selected_slot:Option<usize>,"
+    },
+    {
+      "line": 25,
+      "text": " pub selected_map:Option<usize>,pub pan_pending:bool,pub menu:Option<(Filter,usize,usize,Option<usize>,Option<Hit>)>,"
+    },
+    {
+      "line": 26,
+      "text": "}"
+    },
+    {
+      "line": 27,
+      "text": "#[derive(Default)]pub struct Gate {last:Option<(Key,bool)>}"
+    },
+    {
+      "line": 28,
+      "text": "impl Gate {"
+    },
+    {
+      "line": 29,
+      "text": " pub fn changed(&mut self,key:Key,entry_scene:bool)->bool{let next=(key,entry_scene);if self.last.as_ref()==Some(&next){false}else{self.last=Some(next);true}}"
+    }
+  ]
+}

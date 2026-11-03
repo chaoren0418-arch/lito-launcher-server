@@ -1,0 +1,34 @@
+{
+  "version": "0.6.60",
+  "baseline": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+    "sha256": "7fd9eaa21ee0e65761b93fda968f439213013c4c463ddbe0391a6aa7f3ec6172",
+    "bytes": 260209898,
+    "files": 4162
+  },
+  "history": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\history\\through-0.6.60-evidence.zip",
+    "sha256": "d4d41bc4a1d1ab90117394595c67a315306572531329745aead990d497381077",
+    "bytes": 69615731,
+    "files": 7096
+  },
+  "plan_sha256": "06a6c5f682ef3d81a0ab7a0764f8d94d50a18ca3ba3b52b28b3f9c97ee5b3aa0",
+  "target_files": 2992,
+  "target_bytes": 461037285,
+  "protected_runs": [
+    "cleanup-smoke-1791870554941846900",
+    "development-71326581aeb04fd8a8497bf310384201",
+    "development-b41b514684174963bf46a57ca1eb93ec",
+    "room-state-fixture-1791870232016224000"
+  ],
+  "retained_legacy": "backups/0.6.26-before-shared-resources-20261011",
+  "runtime_pins": {
+    "server_sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+    "catalog_sha256": "b64ed920792805c3380ad0e50b1ae089a8779b4adddec2fbf3780c2fa88a3c01",
+    "java_runtime": {
+      "path": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+      "bytes": 50208,
+      "sha256": "0D3815053960E0B7695A09E8C26406C53D92B13C71E946CCB6EB84E6A8028EDE"
+    }
+  }
+}

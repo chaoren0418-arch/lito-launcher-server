@@ -1,0 +1,5 @@
+import java.nio.file.*;import java.net.*;import java.util.*;
+/** JVM verification of the two actual modified consumers without initialization or SQL. */
+public final class SourceLegacyEquipmentSqlLoad {
+ public static void main(String[]a)throws Exception{var jar=Path.of(a[0]).toRealPath();var urls=new ArrayList<URL>();urls.add(jar.toUri().toURL());try(var paths=Files.list(Path.of(a[1]))){for(var p:paths.filter(p->p.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var loader=new URLClassLoader(urls.toArray(URL[]::new),ClassLoader.getPlatformClassLoader())){for(String name:List.of("LegacyMySqlRepository","LegacyInventoryWeightLoader")){var type=Class.forName("local.lito381.server."+name,false,loader);if(!Path.of(type.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar))throw new AssertionError("actual consumer");type.getDeclaredFields();type.getDeclaredConstructors();type.getDeclaredMethods();}}System.out.println("PASS two actual modified SQL consumers verified; no class initialization, Hub or SQL connection");}
+}

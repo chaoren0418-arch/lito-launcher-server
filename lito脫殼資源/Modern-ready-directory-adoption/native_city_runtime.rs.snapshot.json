@@ -1,0 +1,722 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+    "bytes": 57230,
+    "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+  },
+  "captured_content_sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_runtime.rs",
+    "bytes": 57230,
+    "sha256": "ED08120ED3A97DDE318081D17AE73B8F40B236AF98B5D55F31011298CA3C5FF7"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:52:10.260257+08:00",
+  "ranges": [
+    [
+      1,
+      58
+    ],
+    [
+      118,
+      153
+    ],
+    [
+      171,
+      218
+    ],
+    [
+      234,
+      262
+    ]
+  ],
+  "line_count": 369,
+  "implementation_lines": [
+    {
+      "line": 1,
+      "text": "//! UI thread owns only presentation. One cancellable worker owns all resource IO/render."
+    },
+    {
+      "line": 2,
+      "text": "use super::{native_multisector_resources::{self,Inputs,Entry},native_city_flow::{OfflineMapFlow,MapChoice,Page,PreviewFrame},compositor::{Canvas,Viewport},scene::CameraRect};"
+    },
+    {
+      "line": 3,
+      "text": "use anyhow::{ensure,Context,Result};"
+    },
+    {
+      "line": 4,
+      "text": "use super::native_mode_menu::{Menu,Filter,Row};"
+    },
+    {
+      "line": 5,
+      "text": "#[path=\"native_mode_selection.rs\"]pub mod mode_selection;"
+    },
+    {
+      "line": 6,
+      "text": "#[path=\"native_source_connection.rs\"]pub mod source_connection;"
+    },
+    {
+      "line": 7,
+      "text": "#[path=\"native_source_identity.rs\"]pub mod source_identity;"
+    },
+    {
+      "line": 8,
+      "text": "#[path=\"native_source_stream.rs\"]pub mod source_stream;"
+    },
+    {
+      "line": 9,
+      "text": "#[path=\"native_source_send.rs\"]pub mod source_send;"
+    },
+    {
+      "line": 10,
+      "text": "#[path=\"native_source_actor.rs\"]pub mod source_actor;"
+    },
+    {
+      "line": 11,
+      "text": "#[path=\"native_character_selection.rs\"]pub mod character_selection;"
+    },
+    {
+      "line": 12,
+      "text": "#[path=\"native_login_form.rs\"]pub mod login_form;"
+    },
+    {
+      "line": 13,
+      "text": "#[path=\"native_login_wire.rs\"]pub mod login_wire;"
+    },
+    {
+      "line": 14,
+      "text": "#[path=\"native_login_bootstrap.rs\"]pub mod login_bootstrap;"
+    },
+    {
+      "line": 15,
+      "text": "#[path=\"native_login_transport.rs\"]pub mod login_transport;"
+    },
+    {
+      "line": 16,
+      "text": "#[path=\"native_login_events.rs\"]pub mod login_events;"
+    },
+    {
+      "line": 17,
+      "text": "#[path=\"native_player_entry_commands.rs\"]pub mod player_entry_commands;"
+    },
+    {
+      "line": 18,
+      "text": "#[path=\"native_java_character_flow.rs\"]pub mod java_character_flow;"
+    },
+    {
+      "line": 19,
+      "text": "#[path=\"native_status_receipt.rs\"]pub mod status_receipt;"
+    },
+    {
+      "line": 20,
+      "text": "#[path=\"native_status_family.rs\"]pub mod status_family;"
+    },
+    {
+      "line": 21,
+      "text": "#[path=\"native_java_return.rs\"]pub mod java_return;"
+    },
+    {
+      "line": 22,
+      "text": "#[path=\"native_java_room_entry.rs\"]pub mod java_room_entry;"
+    },
+    {
+      "line": 23,
+      "text": "#[path=\"native_java_room_mode_request.rs\"]pub mod java_room_mode_request;"
+    },
+    {
+      "line": 24,
+      "text": "#[path=\"native_java_room_settings_request.rs\"]pub mod java_room_settings_request;"
+    },
+    {
+      "line": 25,
+      "text": "#[path=\"native_java_room_map_request.rs\"]pub mod java_room_map_request;"
+    },
+    {
+      "line": 26,
+      "text": "#[path=\"native_java_room_settings.rs\"]pub mod java_room_settings;"
+    },
+    {
+      "line": 27,
+      "text": "#[path=\"native_java_room_tail.rs\"]pub mod java_room_tail;"
+    },
+    {
+      "line": 28,
+      "text": "#[path=\"native_java_room_catalog.rs\"]pub mod java_room_catalog;"
+    },
+    {
+      "line": 29,
+      "text": "#[path=\"native_java_room_self.rs\"]pub mod java_room_self;"
+    },
+    {
+      "line": 30,
+      "text": "#[path=\"native_java_room_departure.rs\"]pub mod java_room_departure;"
+    },
+    {
+      "line": 31,
+      "text": "#[path=\"native_java_room_participants.rs\"]pub mod java_room_participants;"
+    },
+    {
+      "line": 32,
+      "text": "#[path=\"native_entry_navigation.rs\"]pub mod entry_navigation;"
+    },
+    {
+      "line": 33,
+      "text": "#[path=\"native_entry_transfer.rs\"]pub mod entry_transfer;"
+    },
+    {
+      "line": 34,
+      "text": "#[path=\"native_startup_host.rs\"]pub mod startup_host;"
+    },
+    {
+      "line": 35,
+      "text": "#[path=\"native_city_presentation.rs\"]pub mod presentation;"
+    },
+    {
+      "line": 36,
+      "text": "use source_connection::{Scope as SourceScope,Epoch as SourceEpoch,DecodedPacket as SourceDecodedPacket};"
+    },
+    {
+      "line": 37,
+      "text": "use mode_selection::{ModeSelection,Outcome,SnapshotOutcome,snapshot::{Snapshot,Context as NativeStateContext}};"
+    },
+    {
+      "line": 38,
+      "text": "use mode_selection::state_flow::{Flow as SourceFlow,Transition as SourceTransition};"
+    },
+    {
+      "line": 39,
+      "text": "use std::{sync::{Arc,mpsc::{self,Receiver,SyncSender},atomic::{AtomicBool,AtomicU64,Ordering}},thread::{self,JoinHandle}};"
+    },
+    {
+      "line": 40,
+      "text": "#[derive(Clone,Copy,Debug,PartialEq,Eq)]pub enum UiPage {Booting,Menu,Loading,Preview,Closing,Closed}"
+    },
+    {
+      "line": 41,
+      "text": "#[derive(Clone,Copy,Debug,PartialEq,Eq)]pub enum Action {Enter,Pan(i32,i32),Back,Close,Select(u8,u32),Filter(Filter),RowSelect(usize),OpenSourceMenu}"
+    },
+    {
+      "line": 42,
+      "text": "/// Modern local player command. Native46B7D0 receiver2 opens the map list;"
+    },
+    {
+      "line": 43,
+      "text": "/// this ID is a Modern binding, not a recovered Native resource/control ID."
+    },
+    {
+      "line": 44,
+      "text": "pub const SOURCE_MENU_COMMAND_ID:u16=0x4910;"
+    },
+    {
+      "line": 45,
+      "text": "pub const SOURCE_CHARACTER_COMMAND_FIRST:u16=0x4960;"
+    },
+    {
+      "line": 46,
+      "text": "pub fn source_character_command_slot(command:u16)->Option<usize>{(SOURCE_CHARACTER_COMMAND_FIRST..SOURCE_CHARACTER_COMMAND_FIRST+4).contains(&command).then(||usize::from(command-SOURCE_CHARACTER_COMMAND_FIRST))}"
+    },
+    {
+      "line": 47,
+      "text": "pub fn player_command_action(command:u16)->Option<Action>{match command{SOURCE_MENU_COMMAND_ID=>Some(Action::OpenSourceMenu),_=>None}}"
+    },
+    {
+      "line": 48,
+      "text": "#[derive(Clone)]pub struct SourceCharacterControl {epoch:SourceEpoch,revision:u64,scene_revision:u64,slot:usize}"
+    },
+    {
+      "line": 49,
+      "text": "#[derive(Clone)]pub struct SourceCharacterBack {epoch:SourceEpoch,revision:u64,scene_revision:u64}"
+    },
+    {
+      "line": 50,
+      "text": "#[derive(Clone)]pub struct SourceCharacterSubmit {control:SourceCharacterControl,selection_revision:u64}"
+    },
+    {
+      "line": 51,
+      "text": "#[derive(Clone)]pub struct SourceLobbyBack {epoch:SourceEpoch,revision:u64,roster_revision:u64}"
+    },
+    {
+      "line": 52,
+      "text": "#[derive(Clone)]pub struct SourceChannelBack {epoch:SourceEpoch,revision:u64}"
+    },
+    {
+      "line": 53,
+      "text": "#[derive(Clone)]pub struct SourceChannelControl {epoch:SourceEpoch,revision:u64,slot:usize}"
+    },
+    {
+      "line": 54,
+      "text": "#[derive(Clone)]pub struct SourceTransferServerControl {epoch:SourceEpoch,revision:u64,navigation_revision:u64,slot:usize}"
+    },
+    {
+      "line": 55,
+      "text": "impl SourceChannelControl {pub fn slot(&self)->usize{self.slot}}"
+    },
+    {
+      "line": 56,
+      "text": "impl SourceTransferServerControl {pub fn slot(&self)->usize{self.slot}}"
+    },
+    {
+      "line": 57,
+      "text": "impl SourceCharacterControl {pub fn slot(&self)->usize{self.slot}}"
+    },
+    {
+      "line": 58,
+      "text": "#[derive(Clone,Debug)]pub enum StreamIngress {JavaRoomModeMap(java_room_settings::Change),JavaRoomSettings(java_room_settings::Change),JavaRoomTail(java_room_tail::Change),JavaParticipants(java_room_participants::Change),JavaRoom(java_room_entry::Change),JavaReturn(java_return::Change),JavaCharacter(java_character_flow::Change),Bootstrap(login_bootstrap::Change),SeedAccepted{counter:u64},Roster(source_identity::Change),Mode(SourceTransition),Actor(source_actor::Change),Navigation(entry_navigation::Change),Transfer(entry_transfer::Change) }"
+    },
+    {
+      "line": 118,
+      "text": " pub fn source_connection_epoch(&self)->Option<u64>{self.source_scope.active_serial()}"
+    },
+    {
+      "line": 119,
+      "text": " pub fn source_connection_candidate_token(&self)->Option<SourceEpoch>{self.source_scope.current_epoch().ok()}"
+    },
+    {
+      "line": 120,
+      "text": " /// Explicit Native decoded-ingress candidate. No Modern TLS/profile or"
+    },
+    {
+      "line": 121,
+      "text": " /// authentication result is converted into a Native connection assertion."
+    },
+    {
+      "line": 122,
+      "text": " pub fn begin_source_connection_candidate(&mut self)->Result<SourceEpoch>{"
+    },
+    {
+      "line": 123,
+      "text": "  let (next,epoch)=self.source_scope.prepare_begin()?;self.commit_source_boundary(next)?;self.last_source_rejection=None;self.last_java_checkpoint=None;self.last_room_checkpoint=None;self.last_participants_checkpoint=None;self.last_tail_checkpoint=None;self.last_self_checkpoint=None;self.last_settings_checkpoint=None;self.last_map_request_checkpoint=None;self.last_settings_request_checkpoint=None;self.last_mode_request_checkpoint=None;Ok(epoch)"
+    },
+    {
+      "line": 124,
+      "text": " }"
+    },
+    {
+      "line": 125,
+      "text": " pub fn disconnect_source_connection_candidate(&mut self,epoch:&SourceEpoch)->Result<()>{"
+    },
+    {
+      "line": 126,
+      "text": "  let next=self.source_scope.prepare_disconnect(epoch)?;self.commit_source_boundary(next)"
+    },
+    {
+      "line": 127,
+      "text": " }"
+    },
+    {
+      "line": 128,
+      "text": " fn commit_source_boundary(&mut self,next:SourceScope)->Result<()>{"
+    },
+    {
+      "line": 129,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source connection boundary unavailable\");"
+    },
+    {
+      "line": 130,
+      "text": "  self.next_generation()?;self.invalidate();self.selected=None;"
+    },
+    {
+      "line": 131,
+      "text": "  if let Some(menu)=self.menu.as_mut(){menu.clear_items();}"
+    },
+    {
+      "line": 132,
+      "text": "  if self.bootstrap_adapter.is_some()&&self.java_character.key.stage!=java_character_flow::Stage::Idle{self.last_java_checkpoint=Some(self.java_character.key.clone());}if let Some(book)=&self.java_participants.book{self.last_participants_checkpoint=Some(book.snapshot());}if self.java_self.java_snapshot_present(){self.last_self_checkpoint=Some(self.java_room_self_snapshot());}if let Some(book)=&self.java_settings.book{self.last_settings_checkpoint=Some(book.snapshot());}self.java_settings.retire();self.archive_retire_java_room_map_request();self.archive_retire_java_room_settings_request();self.archive_retire_java_room_mode_request();self.java_self.retire();self.java_participants.retire();if let Some(catalog)=&self.java_tail.catalog{self.last_tail_checkpoint=Some(catalog.snapshot());}self.java_tail.retire();if self.java_room.key.phase!=java_room_entry::Phase::Idle{self.last_room_checkpoint=Some(self.java_room.key.clone());}self.java_room.retire()?;self.java_return.clear();self.java_character=java_character_flow::State::default();self.login_bootstrap.retire();self.entry_transfer.retire()?;self.entry_navigation.retire()?;self.login_events.retire();self.login_transport=None;self.login_form.retire()?;self.awaiting_source_roster=false;self.character_scene.retire()?;self.source_roster_revision=0;self.source_actor=source_actor::Session::default();self.source_send=source_send::Sender::default();self.source_stream=source_stream::Receiver::default();self.source_identity=source_identity::State::default();self.source_flow=SourceFlow::default();self.source_scope=next;"
+    },
+    {
+      "line": 133,
+      "text": "  self.page=UiPage::Menu;self.status=\"場地來源已更新，請等待場地狀態\".into();"
+    },
+    {
+      "line": 134,
+      "text": "  if let Some(tx)=&self.commands{let _=tx.try_send(Command::Back);}Ok(())"
+    },
+    {
+      "line": 135,
+      "text": " }"
+    },
+    {
+      "line": 136,
+      "text": " pub fn consume_source_event(&mut self,event:&SourceDecodedPacket)->Result<SourceTransition>{"
+    },
+    {
+      "line": 137,
+      "text": "  self.source_scope.admit(event)?;self.apply_source_packet(event.body())"
+    },
+    {
+      "line": 138,
+      "text": " }"
+    },
+    {
+      "line": 139,
+      "text": " /// Future Native decoded dispatcher routes opcode3/203 here;206/213 use"
+    },
+    {
+      "line": 140,
+      "text": " /// consume_source_event. This route itself parses the source roster body."
+    },
+    {
+      "line": 141,
+      "text": " /// No socket/profile producer or AFBC/AFBD alternate branch is claimed."
+    },
+    {
+      "line": 142,
+      "text": " pub fn consume_source_identity_event(&mut self,event:&SourceDecodedPacket)->Result<source_identity::Change>{"
+    },
+    {
+      "line": 143,
+      "text": "  self.source_scope.admit(event)?;"
+    },
+    {
+      "line": 144,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source identity unavailable\");"
+    },
+    {
+      "line": 145,
+      "text": "  ensure!(!self.entry_navigation.active(),\"roster replacement during navigation requires source retirement\");"
+    },
+    {
+      "line": 146,
+      "text": "  ensure!(event.body().first()!=Some(&3)||self.source_send.snapshot().pending.is_none(),\"roster replacement while selected write pending;retire source epoch\");"
+    },
+    {
+      "line": 147,
+      "text": "  if event.body().first()==Some(&3)&&self.bootstrap_adapter.is_none(){ensure!(usize::from(event.body()[1])<=source_identity::SLOT_COUNT,\"strict Native four-row UI boundary\");}"
+    },
+    {
+      "line": 148,
+      "text": "  if self.bootstrap_adapter.is_some()&&event.body().first()==Some(&3){ensure!(matches!(self.login_bootstrap.key.stage,login_bootstrap::Stage::AwaitRoster|login_bootstrap::Stage::Roster),\"GAME roster requires completed NEWS continuation\");self.login_bootstrap.credentials=None;self.login_bootstrap.key.credentials_pending=false;self.login_bootstrap.key.stage=login_bootstrap::Stage::Roster;self.login_bootstrap.key.roster_count=Some(event.body()[1]);self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::Directory,..Default::default()};}"
+    },
+    {
+      "line": 149,
+      "text": "  let revision=self.source_roster_revision.checked_add(1).context(\"source roster control revision exhausted\")?;let(next,change)=self.source_identity.prepare_packet(event.body())?;self.login_form.retire()?;self.character_scene.retire()?;if self.bootstrap_adapter.is_some(){for r in next.records(){r.fields().validate_java_projection()?;ensure!(!r.name().is_empty(),\"AD368 empty character name\");r.display_name()?;source_identity::fields::display_ms950(r.clan_name())?;}}self.source_identity=next;self.source_roster_revision=revision;if matches!(change,source_identity::Change::Started{..}){self.java_self.retire();}if matches!(change,source_identity::Change::Started{..}){self.awaiting_source_roster=false;}if self.source_identity.complete()&&!self.awaiting_source_roster{self.character_scene.enter();}self.finish_java_return_roster()?;Ok(change)"
+    },
+    {
+      "line": 150,
+      "text": " }"
+    },
+    {
+      "line": 151,
+      "text": " ///LocalModern form lifecycle for631E38/492270;no sourcephase/roster setters."
+    },
+    {
+      "line": 152,
+      "text": " pub fn source_login_snapshot(&self)->login_form::Snapshot{self.login_form.snapshot()}"
+    },
+    {
+      "line": 153,
+      "text": " pub fn source_login_control(&self)->Option<login_form::Control>{self.login_form.control()}"
+    },
+    {
+      "line": 171,
+      "text": " pub fn source_character_control_enabled(&self,slot:usize)->bool{!self.entry_navigation.active()&&!self.awaiting_source_roster&&self.character_scene.key().active&&self.page==UiPage::Menu&&self.source_scope.active_serial().is_some()&&self.source_send.snapshot().counter.is_some()&&self.source_send.snapshot().pending.is_none()&&self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT}).is_ok()}"
+    },
+    {
+      "line": 172,
+      "text": " pub fn source_character_control(&self,slot:usize)->Option<SourceCharacterControl>{if !self.source_character_control_enabled(slot){return None;}Some(SourceCharacterControl{epoch:self.source_scope.current_epoch().ok()?,revision:self.source_roster_revision,scene_revision:self.character_scene.key().scene_revision,slot})}"
+    },
+    {
+      "line": 173,
+      "text": " pub fn handle_source_character_control(&mut self,control:&SourceCharacterControl)->Result<()>{self.source_scope.admit_epoch(&control.epoch)?;ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired source character control\");self.prepare_source_send_candidate(&control.epoch,source_send::Intent::SelectCharacter{slot:control.slot})?;self.status=\"角色已選取，等待傳送\".into();Ok(())}"
+    },
+    {
+      "line": 174,
+      "text": " ///415C40(+34) normal release ->4934A0:select only;414A80 WM203"
+    },
+    {
+      "line": 175,
+      "text": " /// increments +18 and415C90(+40)->4934A0->4928C0 for double click."
+    },
+    {
+      "line": 176,
+      "text": " pub fn choose_source_character_control(&mut self,control:&SourceCharacterControl,double_click:bool)->Result<()>{"
+    },
+    {
+      "line": 177,
+      "text": "  self.source_scope.admit_epoch(&control.epoch)?;"
+    },
+    {
+      "line": 178,
+      "text": "  ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired character selection callback\");"
+    },
+    {
+      "line": 179,
+      "text": "  self.character_scene.select(control.slot)?;self.status=\"角色已選取，可按進入角色或雙擊\".into();"
+    },
+    {
+      "line": 180,
+      "text": "  if double_click{let submit=self.source_character_submit().context(\"character submit unavailable\")?;self.handle_source_character_submit(&submit)?;}Ok(())"
+    },
+    {
+      "line": 181,
+      "text": " }"
+    },
+    {
+      "line": 182,
+      "text": " pub fn source_character_submit(&self)->Option<SourceCharacterSubmit>{let key=self.character_scene.key();Some(SourceCharacterSubmit{control:self.source_character_control(key.selected?)?,selection_revision:key.selection_revision})}"
+    },
+    {
+      "line": 183,
+      "text": " pub fn handle_source_character_submit(&mut self,submit:&SourceCharacterSubmit)->Result<()>{let key=self.character_scene.key();ensure!(submit.selection_revision==key.selection_revision&&key.selected==Some(submit.control.slot),\"retired selected character submit\");self.handle_source_character_control(&submit.control)}"
+    },
+    {
+      "line": 184,
+      "text": " pub fn source_character_press(&mut self,control:&SourceCharacterControl)->Result<()>{self.source_scope.admit_epoch(&control.epoch)?;ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_control_enabled(control.slot),\"retired character press\");self.character_scene.press(control.slot);Ok(())}"
+    },
+    {
+      "line": 185,
+      "text": " pub fn cancel_source_character_press(&mut self){self.character_scene.cancel_press();}"
+    },
+    {
+      "line": 186,
+      "text": " pub fn enter_source_character_scene(&mut self)->Result<()>{ensure!(!self.entry_navigation.active()&&!self.awaiting_source_roster&&self.page==UiPage::Menu&&self.source_scope.active_serial().is_some()&&self.source_identity.complete(),\"character scene unavailable\");self.character_scene.enter();Ok(())}"
+    },
+    {
+      "line": 187,
+      "text": " pub fn leave_source_character_scene(&mut self)->Result<()>{ensure!(!self.entry_navigation.active(),\"navigation scene cannot open offline gallery\");ensure!(!matches!(self.login_form.snapshot().stage,login_form::Stage::Sending|login_form::Stage::AwaitingReply),\"login write or reply pending\");self.login_form.retire()?;self.character_scene.retire()}"
+    },
+    {
+      "line": 188,
+      "text": " ///Native493150 receiver6 ->496E30 ->46B670 reserves c15 before local"
+    },
+    {
+      "line": 189,
+      "text": " ///cleanup and64BBD4=5. Preserve this connection's seed/version/RX/TX."
+    },
+    {
+      "line": 190,
+      "text": " ///Nativedynamicdestructors/authentication/loginpanel remain unqualified."
+    },
+    {
+      "line": 191,
+      "text": " pub fn source_character_back(&self)->Option<SourceCharacterBack>{if self.entry_navigation.active()||self.awaiting_source_roster||!self.character_scene.key().active||self.page!=UiPage::Menu||!self.source_identity.complete()||self.source_send.snapshot().counter.is_none()||self.source_send.snapshot().pending.is_some(){return None;}Some(SourceCharacterBack{epoch:self.source_scope.current_epoch().ok()?,revision:self.source_roster_revision,scene_revision:self.character_scene.key().scene_revision})}"
+    },
+    {
+      "line": 192,
+      "text": " pub fn handle_source_character_back(&mut self,control:&SourceCharacterBack)->Result<()>{"
+    },
+    {
+      "line": 193,
+      "text": "  self.source_scope.admit_epoch(&control.epoch)?;"
+    },
+    {
+      "line": 194,
+      "text": "  ensure!(control.revision==self.source_roster_revision&&control.scene_revision==self.character_scene.key().scene_revision&&self.source_character_back().is_some(),\"retired source character Back\");"
+    },
+    {
+      "line": 195,
+      "text": "  let prepared=self.source_send.prepare_return_login()?;"
+    },
+    {
+      "line": 196,
+      "text": "  let revision=self.source_roster_revision.checked_add(1).context(\"source roster revision exhausted\")?;let mut scene=self.character_scene.clone();scene.retire()?;"
+    },
+    {
+      "line": 197,
+      "text": "  let identity=self.source_identity.without_selected();let flow=self.source_flow.returned_to_login();"
+    },
+    {
+      "line": 198,
+      "text": "  self.next_generation()?;self.invalidate();self.selected=None;if let Some(menu)=self.menu.as_mut(){menu.clear_items();}"
+    },
+    {
+      "line": 199,
+      "text": "  self.login_form.retire()?;self.source_send.commit(prepared);self.character_scene=scene;self.source_identity=identity;self.source_flow=flow;self.source_roster_revision=revision;self.java_self.retire();self.awaiting_source_roster=true;"
+    },
+    {
+      "line": 200,
+      "text": "  self.page=UiPage::Menu;self.status=\"已返回入口，返回要求等待傳送；等待新角色名單\".into();if let Some(tx)=&self.commands{let _=tx.try_send(Command::Back);}Ok(())"
+    },
+    {
+      "line": 201,
+      "text": " }"
+    },
+    {
+      "line": 202,
+      "text": " pub fn return_source_character_scene(&mut self)->Result<()>{let control=self.source_character_back().context(\"source character Back unavailable\")?;self.handle_source_character_back(&control)}"
+    },
+    {
+      "line": 203,
+      "text": " pub fn source_pending_write_ticket(&self,epoch:&SourceEpoch)->Result<Option<source_send::Ticket>>{self.source_scope.admit_epoch(epoch)?;Ok(self.source_send.pending_ticket())}"
+    },
+    {
+      "line": 204,
+      "text": " /// Typed selected source record ->4928C0 cs/201 candidate. Reserving a"
+    },
+    {
+      "line": 205,
+      "text": " /// frame advances sendcounter BEFORE any reported write, like4C6770."
+    },
+    {
+      "line": 206,
+      "text": " /// Complete is a local write report;no authentication/ACK/phase transition."
+    },
+    {
+      "line": 207,
+      "text": " pub fn prepare_source_send_candidate(&mut self,epoch:&SourceEpoch,intent:source_send::Intent)->Result<source_send::Reservation>{"
+    },
+    {
+      "line": 208,
+      "text": "  self.source_scope.admit_epoch(epoch)?;"
+    },
+    {
+      "line": 209,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source send unavailable\");"
+    },
+    {
+      "line": 210,
+      "text": "  ensure!(!matches!(intent,source_send::Intent::ReturnLogin),\"ReturnLogin requirescurrentopaqueBack control\");"
+    },
+    {
+      "line": 211,
+      "text": "  ensure!(!self.entry_navigation.active(),\"source navigation reply pending or lobby active\");"
+    },
+    {
+      "line": 212,
+      "text": "  ensure!(!self.awaiting_source_roster,\"new source roster required after Back\");"
+    },
+    {
+      "line": 213,
+      "text": "  let source_send::Intent::SelectCharacter{slot}=intent else{anyhow::bail!(\"Native480560 FromCD/version/registry/auth sideeffects unqualified\");};"
+    },
+    {
+      "line": 214,
+      "text": "  let next=self.source_identity.prepare_select_bounded(slot,if self.bootstrap_adapter.is_some(){source_identity::JAVA_ROW_BOUND}else{source_identity::SLOT_COUNT})?;"
+    },
+    {
+      "line": 215,
+      "text": "  let prepared=self.source_send.prepare_character(next.selected().unwrap().actor_alias())?;"
+    },
+    {
+      "line": 216,
+      "text": "  let serial=prepared.reservation.ticket.serial();let mut navigation=self.entry_navigation.clone();navigation.await_character(serial)?;let mut scene=self.character_scene.clone();scene.retire()?;"
+    },
+    {
+      "line": 217,
+      "text": "  if self.bootstrap_adapter.is_some(){ensure!(self.java_character.key.stage==java_character_flow::Stage::Directory,\"AD368 directory not available for C9\");self.java_character.key=java_character_flow::Key{stage:java_character_flow::Stage::AwaitCharacterResult,selected_name:Some(next.selected().unwrap().actor_alias().to_vec()),..Default::default()};}"
+    },
+    {
+      "line": 218,
+      "text": "  let reservation=self.source_send.commit(prepared);self.java_self.selection_requested(serial);self.source_identity=next;self.entry_navigation=navigation;self.character_scene=scene;Ok(reservation)"
+    },
+    {
+      "line": 234,
+      "text": " pub fn feed_source_stream_candidate(&mut self,epoch:&SourceEpoch,input:&[u8])->Result<StreamBatch>{"
+    },
+    {
+      "line": 235,
+      "text": "  self.source_scope.admit_epoch(epoch)?;"
+    },
+    {
+      "line": 236,
+      "text": "  ensure!(!matches!(self.page,UiPage::Booting|UiPage::Closing|UiPage::Closed),\"source stream unavailable\");"
+    },
+    {
+      "line": 237,
+      "text": "  let mut batch=StreamBatch{consumed:0,events:Vec::new(),terminal:None};"
+    },
+    {
+      "line": 238,
+      "text": "  while batch.consumed<input.len() && batch.events.len()<source_stream::MAX_BATCH_EVENTS {"
+    },
+    {
+      "line": 239,
+      "text": "   let(n,frame)=self.source_stream.next(&input[batch.consumed..]);batch.consumed+=n;"
+    },
+    {
+      "line": 240,
+      "text": "   let frame=match frame {Ok(Some(f))=>f,Ok(None)=>break,Err(reason)=>{self.retire_source_stream(epoch,reason,&mut batch)?;break;}};"
+    },
+    {
+      "line": 241,
+      "text": "   let event=match frame {"
+    },
+    {
+      "line": 242,
+      "text": "    source_stream::Frame::Seed{counter}=>{self.source_send.seed_from_source(counter)?;if self.login_transport.is_some(){self.prepare_source_compatibility_fixture(epoch)?;}StreamEvent{ingress:StreamIngress::SeedAccepted{counter},counter_step:None}},"
+    },
+    {
+      "line": 243,
+      "text": "    source_stream::Frame::Body{bytes,step}=>{"
+    },
+    {
+      "line": 244,
+      "text": "     if bytes.first()==Some(&1){self.retire_source_stream(epoch,source_stream::Terminal::RepeatedSeed,&mut batch)?;break;}"
+    },
+    {
+      "line": 245,
+      "text": "     let packet=match if self.java_room_mode_map_dispatch(&bytes){epoch.decoded_java_room_mode_map(&bytes)}else if self.java_room_settings_dispatch(&bytes){epoch.decoded_java_room_settings(&bytes)}else if bytes.first()==Some(&204)&&self.java_room_catalog_full_row_route_enabled(){epoch.decoded_java_room_catalog(&bytes)}else if (bytes.first()==Some(&213)&&self.java_room_owner_route_enabled())||(bytes.first()==Some(&207)&&self.java_room_catalog_route_enabled()){epoch.decoded_java_room_tail(&bytes)}else if (matches!(bytes.first(),Some(205|209))&&self.java_room_participants_route_enabled())||(bytes.first()==Some(&208)&&self.java_room_departure_route_enabled()){epoch.decoded_java_room_participant(&bytes)}else if bytes.first()==Some(&203)&&self.entry_transfer.roster_alternate(){epoch.decoded_transfer_roster_trigger(&bytes)}else{epoch.decoded_packet(&bytes)}{Ok(p)=>p,Err(error)=>{self.last_source_rejection=Some(SourceRejection{epoch:epoch.serial(),opcode:bytes.first().copied(),body_bytes:bytes.len(),reason:error.to_string()});let unsupported59=bytes.first()==Some(&59);self.retire_source_stream(epoch,source_stream::Terminal::UnsupportedBody,&mut batch)?;if unsupported59{self.status=\"收到尚未支援的 59 清單回包；連線已結束\".into();}break;}};"
+    },
+    {
+      "line": 246,
+      "text": "     let before=self.source_stream.snapshot();"
+    },
+    {
+      "line": 247,
+      "text": "     let ingress=if self.java_room_mode_map_dispatch(&bytes){self.consume_java_room_mode_map_candidate(&packet).map(StreamIngress::JavaRoomModeMap)}else if self.java_room_settings_dispatch(&bytes){self.consume_java_room_settings_candidate(&packet).map(StreamIngress::JavaRoomSettings)}else if bytes.first()==Some(&204)&&self.java_room_catalog_full_row_route_enabled(){self.consume_java_room_tail_candidate(&packet).map(StreamIngress::JavaRoomTail)}else if (bytes.first()==Some(&213)&&self.java_room_owner_route_enabled())||(bytes.first()==Some(&207)&&self.java_room_catalog_route_enabled()){self.consume_java_room_tail_candidate(&packet).map(StreamIngress::JavaRoomTail)}else if (matches!(bytes.first(),Some(205|209))&&self.java_room_participants_route_enabled())||(bytes.first()==Some(&208)&&self.java_room_departure_route_enabled()){self.consume_java_room_participants_candidate(&packet).map(StreamIngress::JavaParticipants)}else if bytes.first()==Some(&206)&&self.bootstrap_adapter.is_some()&&self.java_room.adapter.is_some(){self.consume_java_room_entry_candidate(&packet).map(StreamIngress::JavaRoom)}else if bytes.first()==Some(&245){self.consume_java_return_event(&packet).map(StreamIngress::JavaReturn)}else if (self.bootstrap_adapter.is_some()&&matches!(bytes.first(),Some(200|201)))||matches!(bytes.first(),Some(12|77|80|81|82|86|124|202)){self.consume_java_character_event(&packet).map(StreamIngress::JavaCharacter)}else if matches!(bytes.first(),Some(0|59|230)){self.consume_source_bootstrap_event(&packet).map(StreamIngress::Bootstrap)}else if bytes.first()==Some(&244)&&self.bootstrap_adapter.is_some()&&self.login_bootstrap.key.stage==login_bootstrap::Stage::AwaitRedirect{let entry_transfer::Packet::Request{slot,address_word,port_word}=entry_transfer::decode(&bytes)? else{unreachable!()};self.redirect_login_bootstrap(slot,address_word,port_word).map(StreamIngress::Bootstrap)}else if matches!(bytes.first(),Some(243|244|251)){self.consume_source_transfer_event(&packet).map(StreamIngress::Transfer)}else if matches!(bytes.first(),Some(200|201)){self.consume_source_navigation_event(&packet).map(StreamIngress::Navigation)}else if bytes.first()==Some(&205)&&self.java_room.key.phase==java_room_entry::Phase::RoomReceipts{Err(anyhow::anyhow!(\"AD368 incremental room S_CD receipt adapter unqualified\"))}else if matches!(bytes.first(),Some(58|205|209)){self.consume_source_actor_event(&packet).map(StreamIngress::Actor)}else if matches!(bytes.first(),Some(3|203)){if self.entry_transfer.roster_alternate(){self.consume_source_transfer_roster(&packet).map(StreamIngress::Transfer)}else{self.consume_source_identity_event(&packet).map(StreamIngress::Roster)}}else{self.consume_source_event(&packet).map(StreamIngress::Mode)};"
+    },
+    {
+      "line": 248,
+      "text": "     let ingress=ingress.and_then(|i|{self.note_java_self_stream(epoch,&bytes,&i)?;Ok(i)});"
+    },
+    {
+      "line": 249,
+      "text": "     match ingress {Ok(StreamIngress::JavaCharacter(change@java_character_flow::Change::Refused{..}))=>{batch.events.push(StreamEvent{ingress:StreamIngress::JavaCharacter(change),counter_step:Some(step)});batch.terminal=Some(source_stream::End{terminal:source_stream::Terminal::DispatchRefused,before});break;},Ok(StreamIngress::Actor(source_actor::Change::LoginRefused))=>{batch.events.push(StreamEvent{ingress:StreamIngress::Actor(source_actor::Change::LoginRefused),counter_step:Some(step)});batch.terminal=Some(source_stream::End{terminal:source_stream::Terminal::DispatchRefused,before});break;},Ok(StreamIngress::Navigation(change@entry_navigation::Change::RestartAfterNativeAlert{..}))=>{batch.events.push(StreamEvent{ingress:StreamIngress::Navigation(change),counter_step:Some(step)});batch.terminal=Some(source_stream::End{terminal:source_stream::Terminal::DispatchRefused,before});break;},Ok(ingress)=>StreamEvent{ingress,counter_step:Some(step)},Err(error)=>{self.last_source_rejection=Some(SourceRejection{epoch:epoch.serial(),opcode:bytes.first().copied(),body_bytes:bytes.len(),reason:error.to_string()});self.retire_source_stream(epoch,source_stream::Terminal::DispatchRefused,&mut batch)?;break;}}"
+    },
+    {
+      "line": 250,
+      "text": "    }"
+    },
+    {
+      "line": 251,
+      "text": "   };if let StreamIngress::JavaParticipants(change)=&event.ingress{self.java_participants.note_stream(change);}"
+    },
+    {
+      "line": 252,
+      "text": "   match &event.ingress {StreamIngress::JavaRoomSettings(_)|StreamIngress::JavaRoomModeMap(_)=>self.java_settings.note_stream(),StreamIngress::JavaRoomTail(java_room_tail::Change::Owner(change))=>self.java_participants.note_stream(change),StreamIngress::JavaRoomTail(java_room_tail::Change::CatalogDelete{..}|java_room_tail::Change::CatalogFullRow{..})=>self.java_tail.note_stream(),_=>{}}"
+    },
+    {
+      "line": 253,
+      "text": "   batch.events.push(event);if self.source_scope.admit_epoch(epoch).is_err(){break;}"
+    },
+    {
+      "line": 254,
+      "text": "  }"
+    },
+    {
+      "line": 255,
+      "text": "  Ok(batch)"
+    },
+    {
+      "line": 256,
+      "text": " }"
+    },
+    {
+      "line": 257,
+      "text": " fn retire_source_stream(&mut self,epoch:&SourceEpoch,reason:source_stream::Terminal,batch:&mut StreamBatch)->Result<()>{"
+    },
+    {
+      "line": 258,
+      "text": "  let before=self.source_stream.snapshot();self.disconnect_source_connection_candidate(epoch)?;"
+    },
+    {
+      "line": 259,
+      "text": "  batch.terminal=Some(source_stream::End{terminal:reason,before});Ok(())"
+    },
+    {
+      "line": 260,
+      "text": " }"
+    },
+    {
+      "line": 261,
+      "text": " pub fn end_source_stream_candidate(&mut self,epoch:&SourceEpoch)->Result<source_stream::End>{"
+    },
+    {
+      "line": 262,
+      "text": "  self.source_scope.admit_epoch(epoch)?;let end=self.source_stream.end();self.disconnect_source_connection_candidate(epoch)?;Ok(end)"
+    }
+  ],
+  "existing_test_names_only": [],
+  "runtime_or_test_execution": false
+}

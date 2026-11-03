@@ -1,0 +1,77 @@
+{
+  "task_id": "bin_resources-modern-visible-working-set-input-20261008",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008-contract.json",
+    "bytes": 15381,
+    "sha256": "A64644A403F1C9444D745AF35D47515BC1DE2C6D1AA99A8D1BCDFDC60103F069"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\cache-sequence-model.json",
+      "bytes": 3792,
+      "sha256": "5918A222DD67E2F2AD55298042467D3165F51A171993556FC3B520DE1276FD5C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\derive.py",
+      "bytes": 6140,
+      "sha256": "DB12EB8424E24F8B00052988F5A7CD831CD523062A06F76DC13786C1F9AE1F01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\frame-demands.json",
+      "bytes": 3484,
+      "sha256": "EE871986DF2D51ABF0AD46F01BF180ED5293F32727DC105716B5BFECC35DAA93"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\initial-keys.csv",
+      "bytes": 18346,
+      "sha256": "733D214B9DCB8BBAE517597C89B3138A222ADD26B1E7322E0CE91319EA4DB206"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\inputs.json",
+      "bytes": 1995,
+      "sha256": "6E0FC9717DCEC59985172BD9D3C116B32F709BBE1F3A2F38DF8A9399FA585D79"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\maximum-keys.csv",
+      "bytes": 38,
+      "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\minimum-keys.csv",
+      "bytes": 38,
+      "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\package.py",
+      "bytes": 5598,
+      "sha256": "77AA3CC5872E2FFA2F50E908EDCF95BBB33171395FC388A1B6C443FD2257A6D0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stdout.txt",
+      "bytes": 5792,
+      "sha256": "E0217E6A4C2EA52296AB1375ED05D72E6770CA5BBC726C672A868FA7365856F4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\rejection-witness.json",
+      "bytes": 215,
+      "sha256": "3027CA2C827478A79C4FB1935E5EC305B80BD68100CCD54C5CDEB7E6C52DD550"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_after-keys.csv",
+      "bytes": 25105,
+      "sha256": "652313D2E6D66B9A6E40C548FCC241F38DD15F3850C2AB74587EB5CD907007B8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_before-keys.csv",
+      "bytes": 24891,
+      "sha256": "D5C60DE5884111027EFA4EC08B6826FE633B69F1C1DE3A55BABC48EA1F34C06B"
+    }
+  ],
+  "state": "review",
+  "self_accepted": false
+}

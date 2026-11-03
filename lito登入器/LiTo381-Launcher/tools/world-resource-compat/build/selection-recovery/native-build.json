@@ -1,0 +1,17 @@
+{
+  "status": "qualified-native-fixture",
+  "candidate": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\candidate\\ddraw.dll",
+    "sha256": "c17d4ca0728f2a0d92ddc471952f4f6d89bcf78a700a77838ac78cdaeea99116"
+  },
+  "parent": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\ddraw.dll",
+    "sha256": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267"
+  },
+  "tests": [
+    "accept",
+    "reject",
+    "reject-option"
+  ],
+  "formal_updated": false
+}

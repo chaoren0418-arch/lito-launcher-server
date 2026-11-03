@@ -1,0 +1,146 @@
+{
+  "source": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\ready-cancel-network-df39d504a63f46e697fa7825408d6315\\evidence\\frames.json",
+    "bytes": 15968,
+    "sha256": "7799F0CFA1687EE425F5B60D50D36A749410C01988F246E8C4C055680A5A1C81"
+  },
+  "report": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-state2-ready-cancel-network.json",
+    "bytes": 9481,
+    "sha256": "7168EAD2353A7A8D39F5117EB0CB7943A6D05817C4D9AEB29D5B440037B5542E"
+  },
+  "rows": [
+    {
+      "array_index": 73,
+      "direction": "C",
+      "epoch": "Guest-GAME",
+      "body_hex": "d202",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 74,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290002",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 75,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290002",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 76,
+      "direction": "C",
+      "epoch": "Guest-GAME",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 77,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290001",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 78,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290001",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 79,
+      "direction": "C",
+      "epoch": "Host-GAME",
+      "body_hex": "d2",
+      "body_bytes": 1,
+      "frame_bytes": 3
+    },
+    {
+      "array_index": 80,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "d15265616479486f73742852656164794d6f6f6e290001",
+      "body_bytes": 23,
+      "frame_bytes": 25
+    },
+    {
+      "array_index": 81,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 82,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "d15265616479486f73742852656164794d6f6f6e290001",
+      "body_bytes": 23,
+      "frame_bytes": 25
+    },
+    {
+      "array_index": 83,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "e103",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 84,
+      "direction": "C",
+      "epoch": "Guest-GAME",
+      "body_hex": "d201",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 85,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290000",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 86,
+      "direction": "S",
+      "epoch": "Host-GAME",
+      "body_hex": "e100",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    },
+    {
+      "array_index": 87,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "d1526561647947756573742852656164794d6f6f6e290000",
+      "body_bytes": 24,
+      "frame_bytes": 26
+    },
+    {
+      "array_index": 88,
+      "direction": "S",
+      "epoch": "Guest-GAME",
+      "body_hex": "e100",
+      "body_bytes": 2,
+      "frame_bytes": 4
+    }
+  ],
+  "new_capture_frames": 0,
+  "cipher_or_old_PASS_replayed": false,
+  "qualification": "AD368 server test-client only:73 D202,74/75 D1state2;76 D201,77/78 D1state1;79 ownerD2,80/82 ownerD1state1,81/83 E103;84 repeatedD201,85/87 D1state0,86/88 E100. Per-peer order; no general global ordering/freshness inference.",
+  "bounded_case": "Cancellation before first tick; accepted report4second/15sample watch. No Native GUI/state0 dynamic, general race, rollback or WORLD qualification."
+}

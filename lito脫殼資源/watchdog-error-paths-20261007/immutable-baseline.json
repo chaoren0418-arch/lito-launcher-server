@@ -1,0 +1,655 @@
+{
+  "pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\affected-case-recheck.json",
+      "bytes": 3307,
+      "sha256": "B1155F373B775EF700732C3F0970ABEC3AE2A0DC24E4C0DAAFC21D1443D48292"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-owned_process.py.txt",
+      "bytes": 20778,
+      "sha256": "7D1F6FC55559896EDCBF3AE1EA7F89445C556A6DDFF12F27F6B669D60DC221D4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-publish_watchdog.py.txt",
+      "bytes": 17551,
+      "sha256": "CBDF2A58474911A5AA1439564D0268D718734A603BE644ADF8EA0DBE50920674"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\attempt1-test_new_fixtures.py.txt",
+      "bytes": 9503,
+      "sha256": "D9316E49FA0327B8C5E214D1221122B5EFD3E96F419FB05585AB94A53FD3CD83"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\authorized-task-at-read.json",
+      "bytes": 3320,
+      "sha256": "5CEE3217655AB6B7EEE8761FD6AE2558F33917EAD1D26A1E965BA0B825707197"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\compile-receipt-final.json",
+      "bytes": 3795,
+      "sha256": "193ADBC1BDF1970B50983ADE4A06E5AFC168C01444C6911DBBC7571C3BA75EDE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\compile-receipt.json",
+      "bytes": 3795,
+      "sha256": "347B3CD3FC52443DA4343F839BD02823423F51742F225A7CE27CF3EBF25A05E5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\crash_controller.py",
+      "bytes": 1109,
+      "sha256": "9A6A2BA3325D2EC88DACB4CE1D511B312A8BD604DF1633B71393837AE814FB45"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\delivery.json",
+      "bytes": 24819,
+      "sha256": "DF781DE85DB84EC935C60C8F3B3367FBB7174D2181B524F19E75DEF436ED1761"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+      "bytes": 1810,
+      "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\immutable-prior-adapter-pins.json",
+      "bytes": 8101,
+      "sha256": "55B214979E2D476AFF969C621FBD9D47D29366E70F5A9D873A22957BDB6E557F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-01.json",
+      "bytes": 580,
+      "sha256": "AF0BEE2CC5A767CBA9B6B6624FDE793FF2FB7F56BAE16D597ED2924BF3E23B55"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-02.json",
+      "bytes": 992,
+      "sha256": "122A781B3A6AA86FA483A309693FD174E82A74C971972598E24E2259EEC91E38"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\implementation-failure-03.json",
+      "bytes": 583,
+      "sha256": "8C9E5442F443BE9627E78717606BFECF1C809D7138578D9A5D0D4336583FA266"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\new-real-process-tests.json",
+      "bytes": 4727,
+      "sha256": "B417A39889364EDC96BCE5CD28F7937A81E7ADE50371FED4D743AA19F10A7F87"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+      "bytes": 20925,
+      "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\post-exit-audit-final.json",
+      "bytes": 11240,
+      "sha256": "B95246FBFF5DA70808B6B467DF481FBA65E58E66060691E8864AA6EC4A011E63"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\post-exit-audit.json",
+      "bytes": 11240,
+      "sha256": "B95246FBFF5DA70808B6B467DF481FBA65E58E66060691E8864AA6EC4A011E63"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\prepare-receipt.json",
+      "bytes": 959,
+      "sha256": "2866FA1E83FF18976E22E9B88EDFB89EDFDC01481CAFCD14A270F708D13578A5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\prepare_task.py",
+      "bytes": 3203,
+      "sha256": "34893F31246EE4B8A963028AE350423525BD235699DC2C9D9EE29546628FCD52"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\publish_watchdog.py",
+      "bytes": 17969,
+      "sha256": "B17CA627C1EBCFD1B3851AFDC033C3EB645939B111296A9F872AE9F62EDF8D66"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\queue-validation.json",
+      "bytes": 697,
+      "sha256": "4DF881EDF58465C94C6BC94AC4898818E776769A6F9A7930F50FF473EDCE5EF2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py",
+      "bytes": 5434,
+      "sha256": "E321D86D3EF719C0709C0FF0E2BD3D387E52D59C4FD66B8CD2F4936EDE94AD9B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\child-created.json",
+      "bytes": 259,
+      "sha256": "7B3CBA035A1F3139D98B534A488F2FB17BD60D130FB503148AE9F6B8E0EC683B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\leaf-start.json",
+      "bytes": 630,
+      "sha256": "D7E2C4C79389C0829C0FF656B1F8D140169D459543C92ED68AF7A30221601076"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\runtime.json",
+      "bytes": 6627,
+      "sha256": "DF352EBD891160461BD616B8772A897D882C58502686A5C8A9C6C17F9E07A386"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\tree-start.json",
+      "bytes": 629,
+      "sha256": "FCD5839AD1F6CE96A79291BF5F06CF00EC1E42CA1D88D96532A52E96A3A627D6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\abrupt-exit-audit.json",
+      "bytes": 6648,
+      "sha256": "2C34D1142D8053801EA229E3B6A249AA58E0609500E30027869C74913E9B6371"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\crash-checkpoint.json",
+      "bytes": 2424,
+      "sha256": "B6BB962597329A7B8B309A9212DFC8FBC09C145C2FD03ACF36E7E16F1541A3A9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\inner\\child-created.json",
+      "bytes": 256,
+      "sha256": "456CF269742E344B1AAF3865C326B2F2D9E225826DE6F37CBE5765B72B093A61"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\inner\\leaf-start.json",
+      "bytes": 628,
+      "sha256": "88D4715A1E8BE8D07A1AE34ED89377DABC93DC591076A76BAEFEB8B5460A0CF3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\inner\\tree-start.json",
+      "bytes": 627,
+      "sha256": "1C8A11ADF76D2490249F200B1D9100B0CC0FD32A7ED56D63468755D0C0EB2DD6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\disk-start.json",
+      "bytes": 630,
+      "sha256": "F629C900825406B1F0FFD8CED3EF63515384CF332B45801DE5962CB6A802E041"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\finite-payload.bin",
+      "bytes": 294912,
+      "sha256": "69A0C8D28597955CCD894F0990560B519B89C676306CF031FFD81F2536B765A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\runtime.json",
+      "bytes": 5269,
+      "sha256": "4FB2F243670F8B84A3551B7860469CCCE23F30005C67D14B9153AD1BDC4675F4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\failed_containment\\runtime.json",
+      "bytes": 1328,
+      "sha256": "DF536AE47864176BD1A906E37BDFB2C6AF769B6E3F47D503AD8E24F4DE0C5558"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\hang\\hang-start.json",
+      "bytes": 630,
+      "sha256": "BDECD3C90C23B3674C1F201EDDBF90312226F6FC8BDAC5F2F3C64DB02466465B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\hang\\runtime.json",
+      "bytes": 8926,
+      "sha256": "DC410B53BE749576B2BF8A1FA02C32478839D2DEBAAA9199D880016740CCEF46"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\hang\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\hang\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\normal\\normal-start.json",
+      "bytes": 634,
+      "sha256": "7829FD7D046D7728D0DC7987DA105F8A77B3DFDCD7AF7D0E0E5CB1F4CDDD61B9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\normal\\runtime.json",
+      "bytes": 5192,
+      "sha256": "84B52BF2020A447144AA1490EBF915757C8F137D142C0583A3A4B48F7EDBD425"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\normal\\stderr.bin",
+      "bytes": 23,
+      "sha256": "E72831B593191D2AD11C2A1909D161ED81BD53AD465A5B5D3BA6724A052A9B7E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\normal\\stdout.bin",
+      "bytes": 23,
+      "sha256": "4B8F00B7C59452C9CA6A75F5AF67388DF94C69CC57637255A5CB93360CF33D47"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\sentinel-audit.json",
+      "bytes": 10197,
+      "sha256": "C04119E7B0BC4E57B29CCF42B3657F30FABF13FA38923962C796B5098F242361"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\sentinel-start.json",
+      "bytes": 638,
+      "sha256": "0988FD31552EAC60D98AC50D6A8359AAFEF1C3454470014EC0F247BC407D73BA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\stop",
+      "bytes": 50,
+      "sha256": "398E97D76CC07AED444691D7BA08ABC7A8D52A2EFE1D792B54549A6F02CF3B57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\child-created.json",
+      "bytes": 260,
+      "sha256": "5E886FD25757DDB9EFF4345235832507BB7A76F264F2FCDC02A5B8D5AA83F3EE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\leaf-start.json",
+      "bytes": 629,
+      "sha256": "A9786A8E9590A3CE8E0D38B2910813B7CD8A8A5ADAD83FB3C4B92581BF01619F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\runtime.json",
+      "bytes": 10585,
+      "sha256": "4C2C8406726DCABA10B0BBE99B0622EC5B3A5D7570CB8DA65DC65C816B130161"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\tree-start.json",
+      "bytes": 630,
+      "sha256": "CF3A12466E98D8BB3B97A27F4F5FF43980462130EB5E0CE76B07672C7A60BA5E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\flood-start.json",
+      "bytes": 632,
+      "sha256": "6EFD105C88647746AACBC9A4575B9FD9A8BFCC668F6275BC85B34366D23A35FE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\runtime.json",
+      "bytes": 4963,
+      "sha256": "FDA8982413CEB8AE931B1EA86333969686852961A6A37B2A8C25FC3F1043A07D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\stderr.bin",
+      "bytes": 8192,
+      "sha256": "496B508798A75FA4B21D59630074D38C88F84C3DF14E0DF3303F08F19333A316"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\stdout.bin",
+      "bytes": 8192,
+      "sha256": "7013E4844519851CF185FDD8F387B9F159AAC71A21CFF909FA1FD7BECD3392D8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\child-created.json",
+      "bytes": 259,
+      "sha256": "E4E0F9565265B1FA1FDA878B20E416C970975AB05089D2FD7EB83C442AE3EA18"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\leaf-start.json",
+      "bytes": 629,
+      "sha256": "0AB8263EA7F2223DA9DAB167CC51C0CFE1CEC649C2E899F24EB79DA6FEC1EF1D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\runtime.json",
+      "bytes": 6637,
+      "sha256": "CACCCAF43D783C6CF0717FFA5A3104F7B65B02CC64D4DC6521F0193C1675F8BA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\tree-start.json",
+      "bytes": 630,
+      "sha256": "9C577C48650F2B4ED4C6BADFA20247CB28844DB24691324E537BB44B0DB14E8A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\disk-start.json",
+      "bytes": 630,
+      "sha256": "B51326D1C54D365278B1260E139D9721678E75BE75B6A9AC39397E77B5E0BFEE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\finite-payload.bin",
+      "bytes": 360448,
+      "sha256": "8D2B0FB5C6F4054D9E3822C494F47218FC5560B4E14903FFBC43401C1E565CF9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\runtime.json",
+      "bytes": 5304,
+      "sha256": "9E65517F3DCC93A290460315889D8347793A2CDE3D01230D4FF555057B47E95E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\hang-start.json",
+      "bytes": 630,
+      "sha256": "02AD1C3D003FC4593CDCE4DB9DDB7D1D8B8CBAD44A6E4926B9475975D1B884D7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\runtime.json",
+      "bytes": 8912,
+      "sha256": "A923F63059E9C01709CCA470AD6A9F303EE2B506D038B5B23975B62147F251E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\normal-start.json",
+      "bytes": 633,
+      "sha256": "151C698B13A47CAA3A64E8705105EDF95B6CDDB958F520879B5E5CF849F271B0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\runtime.json",
+      "bytes": 5180,
+      "sha256": "FDD7AD4A85D65DBADF2C9C4C3D302DC2AD05D8FF3FCB0015EA13CCF64F590829"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\stderr.bin",
+      "bytes": 23,
+      "sha256": "E72831B593191D2AD11C2A1909D161ED81BD53AD465A5B5D3BA6724A052A9B7E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\stdout.bin",
+      "bytes": 23,
+      "sha256": "4B8F00B7C59452C9CA6A75F5AF67388DF94C69CC57637255A5CB93360CF33D47"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\sentinel-audit.json",
+      "bytes": 7598,
+      "sha256": "9A91E6DD8EBF854D27D35A85A8AF664999C4A700B31A9872C328ECE5E5255C92"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\sentinel-start.json",
+      "bytes": 638,
+      "sha256": "ED2EEAFF39547B50A8EE0ED28EBE546068E4CC5A8C3DE038F11B928D300A00FE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\stop",
+      "bytes": 33,
+      "sha256": "B66BC376A16E5AA24695139A386E5396D847C77B71D3C599FA08498A4669D41C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\child-created.json",
+      "bytes": 260,
+      "sha256": "28FEB6DB6E0B7AFBA96D26C6C338C9D2ECBE3D3CA02039E61F6A922CB136C314"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\leaf-start.json",
+      "bytes": 630,
+      "sha256": "356EC2F1A911C2CC346471CC0DD82CB205966194F8982809B9FB13F9A2C294DC"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\runtime.json",
+      "bytes": 10607,
+      "sha256": "7127902A67C0E9B2BFCFFCF300412AA6961690AFDB7767CE3C289C7A174F6081"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\stdout.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\tree-start.json",
+      "bytes": 629,
+      "sha256": "C636E253BF6FA1B9F95EC1799FCED251582752AB9E2267DB5BCE124801DDD7B9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py",
+      "bytes": 9503,
+      "sha256": "D9316E49FA0327B8C5E214D1221122B5EFD3E96F419FB05585AB94A53FD3CD83"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\delivery.json",
+      "bytes": 8895,
+      "sha256": "3C4DE75B46DA91C30A43E35DCA2A2B8FE81ED0BD047B623BB3478729EEEF25B2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\environment-audit.json",
+      "bytes": 10017,
+      "sha256": "65E620DCCAC707316BFA4FF7922631D68EB8CE29B39CA08D6D5C9B20E3D9D75C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\finite-delivery-verification.json",
+      "bytes": 436,
+      "sha256": "27FFE4422D006E560FABA3955FED3BC67328D9EBF369FD98DEC37DDBE0ADC82D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+      "bytes": 1025,
+      "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_export.py",
+      "bytes": 7325,
+      "sha256": "26419AAF7AEC24305560B4C3C5CBA09ABA8B3219AA1F06C160F94365374E6B4A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_request.py",
+      "bytes": 7516,
+      "sha256": "90904C006A1060C891277D1DADB04630EE76FFBC6CB261ED5F1F64E1E9B5AC40"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+      "bytes": 3388,
+      "sha256": "9CBE862C49BA8726FF92E9AFB0A1CC8E95673E8F89179BD2FAA411DF0486CF3A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\new-tests.json",
+      "bytes": 12772,
+      "sha256": "EC1B33081BD81C0F738D259ED47C5744E0510E5C3BD7249A1915F61F57685FC1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\prepare_and_test.py",
+      "bytes": 9779,
+      "sha256": "B37788317981C3F9C5BD9882B858F535106B7C8E477109F3176FA8973BDB96C9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\publish_review.py",
+      "bytes": 14577,
+      "sha256": "9BEDDBA33B82B764C2F513730C5BC546BE58E120D3398FC5D0539A4BC6A5F9A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\empty_allowlist.json",
+      "bytes": 300,
+      "sha256": "F3938AC3AE450B182CA3757600C641B0CDE4217E3A30BAB27ABB9ACBA3BA5F6B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\excess_time_budget.json",
+      "bytes": 274,
+      "sha256": "D3B1B00F71429DDE051BF78620383C78488D3DA9FDE5187D3A3A5BF2AC3367E5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\non_code_range.json",
+      "bytes": 307,
+      "sha256": "E687F52E7F8D8A5C56BE8A58EE8F080726D703E16D79D71314465E6183EAA467"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\out_of_range.json",
+      "bytes": 285,
+      "sha256": "B7B8452C91814C0FF3246B5FAF0B9A285114A89392126AB1CF5F477A90A9DB8F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\overlap.json",
+      "bytes": 297,
+      "sha256": "8225F469C832519D8C5A74F85D550725B6956B06A7313259D0C328AA612AD757"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_execute_gate.json",
+      "bytes": 6361,
+      "sha256": "58D9859B0C6058D551BDB1C0F97DDB62BC0596536489735F4DD38EF4BD24AAD7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_input.json",
+      "bytes": 6233,
+      "sha256": "4BA657EAA97AA96936F18864D459A6230ACF9EA39481C437D7412293B8051D01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\unauthorized_scope.json",
+      "bytes": 315,
+      "sha256": "864C1801545DACF9D4C82671E31D8A455B58467B479934DEFCA427BD8C98D330"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_base.json",
+      "bytes": 300,
+      "sha256": "BB0AC545AB6C0336F149539EAC072ECF06D4FE7F81E18589C2D5ECBEF41BC47B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_sha.json",
+      "bytes": 308,
+      "sha256": "03CF63A67119DC44D4B66752424B83951AA01772260906F64E45BD84AFED23F8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\request.schema.json",
+      "bytes": 2482,
+      "sha256": "E316051C27D75AD0853F9266EDE5AF94A1BCFFE38046351DC4387712E125E4DF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\empty_allowlist.json",
+      "bytes": 625,
+      "sha256": "09D6DD07EB5457A32D4C70FA9C0D9CD6CA6C5D692B2E3B241835C1B7F0F812C8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\excess_time_budget.json",
+      "bytes": 735,
+      "sha256": "8DE0A5E152A2481A1E83B6DA6FD7A691918BEB85214C935A94AD918844D4A2A9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\non_code_range.json",
+      "bytes": 679,
+      "sha256": "C34F824B6F6F7A5A5BE3C9E650812455BD5A1350976D1195F96BBBD482370464"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\out_of_range.json",
+      "bytes": 682,
+      "sha256": "4DEBEE69DE149D0EE6B27C66299270E52B9F31B05F21C492938D45094C26576E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\overlap.json",
+      "bytes": 735,
+      "sha256": "96AB963A7B5559BE30B0CD580304D4DBAD77AB6F839D6C2CEBD0DC4CFC181D12"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_execute_gate.json",
+      "bytes": 735,
+      "sha256": "0E0B243C161E6C921E9FED8D4E7A53AAB385C499579FCA8963FCB8B4040B276C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_input.json",
+      "bytes": 735,
+      "sha256": "0E0B243C161E6C921E9FED8D4E7A53AAB385C499579FCA8963FCB8B4040B276C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\unauthorized_scope.json",
+      "bytes": 712,
+      "sha256": "8A15FCF668E3500A12EAAE94D9AB96AD2CBA511879D21D6BF7E4F69B1B57ABA6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_base.json",
+      "bytes": 735,
+      "sha256": "5BF89B95E17828917FF2CC1D8697E6DF05EE2BC7D7628CB9764EC1EB3040D866"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_sha.json",
+      "bytes": 735,
+      "sha256": "1984EEAAA5499AC08AB889E6A49EAC7B2BF525AEC978DC707A10A5DD5D919881"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\result.schema.json",
+      "bytes": 9296,
+      "sha256": "F0BC2BDB5EB532FBE979A38B7F75068FDAD90E7B89D4428DB9613A3F1956C75F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Owned-Process-Watchdog-20261007.json",
+      "bytes": 22883,
+      "sha256": "776DBD138010A71AAA746DBE487D0D195D9B7045DAF2480FF79EA7463973DB99"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\IDA77-Bounded-Export-Adapter-20261007.json",
+      "bytes": 19003,
+      "sha256": "A1133472ED1C0CA9C80EC84AD7573D41C3EC7D9EAEE74D9CFB3EA8D0673AA21A"
+    }
+  ],
+  "old_test_execution": false
+}

@@ -1,0 +1,39 @@
+{
+  "index_pin_at_read": {
+    "path": "D:\\lineage開發\\3-lito開發\\LITO-監製索引.json",
+    "bytes": 1258655,
+    "sha256": "4BD21FC7DA14192F4D08C9CAFF1B45130517FF4395E702E1D05E2392AFD5153C"
+  },
+  "task": {
+    "id": "bin_resources-watchdog-error-paths-20261007",
+    "owner": "bin_resources",
+    "priority": 0,
+    "title": "Repair post-create constructor cleanup evidence and durable error receipts",
+    "state": "running",
+    "dependencies": [],
+    "gates": [],
+    "blockers": [],
+    "policy_blocked": false,
+    "continuation_of": "bin_resources-owned-process-watchdog-20261007",
+    "next_deliverable": "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Watchdog-Error-Paths-20261007.json with preserved original baseline and corrected new module/receipts",
+    "acceptance": "Fix reviewed constructor failures after successful CreateProcess: unconditional finally closes/terminates own job even if identity/snapshots throw; bounded retained-handle/job exit audit and identity failures must be carried to caller. Never derive owned_job_empty=true from process=None. Guard final disk scan, cleanup audit and capture errors so runtime receipt persists with original failure and partial/unknown evidence. Test new post-create membership/identity/snapshot failure and final scan entry-cap/I/O plus cleanup/capture fault cases with fresh harmless owned fixtures; only changed paths, no whole old PASS replay. Record process_created/resumed, exact known identities, actual wait outcomes, unknowns and ownership-scoped cleanup; no false completed state. Preserve atomic job membership, no-breakaway/non-inherited sole job handle, bounded capture/deadline and original install refusal. No quota/sandbox claim.",
+    "boundary": "New BIN-owned successor directory only; prior owned-watchdog-20261007 and adapter receipts/sources immutable. Harmless new fixture processes hidden; only retained own job/handles for cleanup. No IDA/game/provider/SQL/globalconfig/security settings/canonical live registry/GUI/MCP/shared BIN/TW/LHZ/private backing. All policy refusals remain.",
+    "resume_when": "New independent source review identifies two concrete engineering faults with executable own-fixture corrections; no external input required.",
+    "evidence": [
+      "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-owned-process-watchdog-20261007-assessment.json",
+      "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Process-Watchdog-20261007.json"
+    ],
+    "handoff_to": [
+      "supervisor"
+    ],
+    "stop_condition": "Deliver source diff, immutable baseline hashes and new affected-case evidence only. Any unavailable observation remains unknown; do not qualify full IDA export/environment.",
+    "dispatch_receipt": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-watchdog-error-paths-20261007-send-receipt.json",
+    "execution_observed_at": "2026-10-07T05:46:17.913Z",
+    "execution_turn_id": "01a114e2-a1e2-7c40-a156-6aac79555afd"
+  },
+  "assessment": {
+    "path": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-owned-process-watchdog-20261007-assessment.json",
+    "bytes": 2708,
+    "sha256": "96455CA62639C2FADA58465C0053B443702BE48A530E9A6755E2DB784B7BCA82"
+  }
+}

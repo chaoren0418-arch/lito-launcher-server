@@ -1,0 +1,882 @@
+{
+  "updated_at": "2026-10-06T09:50:05.787461+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-selection-resource-gap-contract.json",
+    "bytes": 21184,
+    "sha256": "07005BF58CB90C133F94E286A376D86301FEA1806CE060906CDE3773A9042EF6"
+  },
+  "all_match": true,
+  "check_count": 217,
+  "checks": [
+    {
+      "name": "own output minimal-Native-binding-handoff.json",
+      "match": true
+    },
+    {
+      "name": "own output Native-animation-and-slot-data.json",
+      "match": true
+    },
+    {
+      "name": "own output Native-background-branch-reference.json",
+      "match": true
+    },
+    {
+      "name": "own output Native-existing-resource-inventory.json",
+      "match": true
+    },
+    {
+      "name": "own output Native-resource-handoff.md",
+      "match": true
+    },
+    {
+      "name": "own output Native-source-container-offset-check.json",
+      "match": true
+    },
+    {
+      "name": "own output native_city_runtime.rs.frozen-slices.json",
+      "match": true
+    },
+    {
+      "name": "own output native_city_runtime.rs.live-slices.json",
+      "match": true
+    },
+    {
+      "name": "own output native_source_send.rs.frozen-slices.json",
+      "match": true
+    },
+    {
+      "name": "own output native_source_send.rs.live-slices.json",
+      "match": true
+    },
+    {
+      "name": "own output R526-selection-compatibility-addendum.json",
+      "match": true
+    },
+    {
+      "name": "own output resource-gap-classification.json",
+      "match": true
+    },
+    {
+      "name": "own output retained-read-provenance.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 immutable primary",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved character-flow-findings.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved count-slot-route-matrix.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved finite-call-chains.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved Lineage-existing-selection-asset-metadata.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved minimal-original-UI-adoption-proposal.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved Native-existing-asset-metadata.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_character_selection.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_city_presentation.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_city_runtime.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_city_window.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_city_window.rs@pointer.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_city_window.rs@render.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_mode_menu_skin.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_player_entry_commands.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_source_identity.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved native_source_send.rs.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved production-main.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved R525-candidate-entry.snapshot.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved R525-existing-entry-reference.json",
+      "match": true
+    },
+    {
+      "name": "Batch34 original preserved read-provenance-catalog.json",
+      "match": true
+    },
+    {
+      "name": "owned read record 0",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 0",
+      "match": true
+    },
+    {
+      "name": "owned read record 1",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 1",
+      "match": true
+    },
+    {
+      "name": "owned read record 2",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 2",
+      "match": true
+    },
+    {
+      "name": "owned read record 3",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 3",
+      "match": true
+    },
+    {
+      "name": "owned read record 4",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 4",
+      "match": true
+    },
+    {
+      "name": "owned read record 5",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 5",
+      "match": true
+    },
+    {
+      "name": "owned read record 6",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 6",
+      "match": true
+    },
+    {
+      "name": "owned read record 7",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 7",
+      "match": true
+    },
+    {
+      "name": "owned read record 8",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 8",
+      "match": true
+    },
+    {
+      "name": "owned read record 9",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 9",
+      "match": true
+    },
+    {
+      "name": "owned read record 10",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 10",
+      "match": true
+    },
+    {
+      "name": "owned read record 11",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 11",
+      "match": true
+    },
+    {
+      "name": "owned read record 12",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 12",
+      "match": true
+    },
+    {
+      "name": "owned read record 13",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 13",
+      "match": true
+    },
+    {
+      "name": "owned read record 14",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 14",
+      "match": true
+    },
+    {
+      "name": "owned read record 15",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 15",
+      "match": true
+    },
+    {
+      "name": "owned read record 16",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 16",
+      "match": true
+    },
+    {
+      "name": "owned read record 17",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 17",
+      "match": true
+    },
+    {
+      "name": "owned read record 18",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 18",
+      "match": true
+    },
+    {
+      "name": "owned read record 19",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 19",
+      "match": true
+    },
+    {
+      "name": "owned read record 20",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 20",
+      "match": true
+    },
+    {
+      "name": "owned read record 21",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 21",
+      "match": true
+    },
+    {
+      "name": "owned read record 22",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 22",
+      "match": true
+    },
+    {
+      "name": "owned read record 23",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 23",
+      "match": true
+    },
+    {
+      "name": "owned read record 24",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 24",
+      "match": true
+    },
+    {
+      "name": "owned read record 25",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 25",
+      "match": true
+    },
+    {
+      "name": "owned read record 26",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 26",
+      "match": true
+    },
+    {
+      "name": "owned read record 27",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 27",
+      "match": true
+    },
+    {
+      "name": "owned read record 28",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 28",
+      "match": true
+    },
+    {
+      "name": "owned read record 29",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 29",
+      "match": true
+    },
+    {
+      "name": "owned read record 30",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 30",
+      "match": true
+    },
+    {
+      "name": "owned read record 31",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 31",
+      "match": true
+    },
+    {
+      "name": "owned read record 32",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 32",
+      "match": true
+    },
+    {
+      "name": "owned read record 33",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 33",
+      "match": true
+    },
+    {
+      "name": "owned read record 34",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 34",
+      "match": true
+    },
+    {
+      "name": "owned read record 35",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 35",
+      "match": true
+    },
+    {
+      "name": "owned read record 36",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 36",
+      "match": true
+    },
+    {
+      "name": "owned read record 37",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 37",
+      "match": true
+    },
+    {
+      "name": "owned read record 38",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 38",
+      "match": true
+    },
+    {
+      "name": "owned read record 39",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 39",
+      "match": true
+    },
+    {
+      "name": "owned read record 40",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 40",
+      "match": true
+    },
+    {
+      "name": "owned read record 41",
+      "match": true
+    },
+    {
+      "name": "before/content/after stable 41",
+      "match": true
+    },
+    {
+      "name": "only two selected sourcefiles",
+      "match": true
+    },
+    {
+      "name": "R526 manifest correct",
+      "match": true
+    },
+    {
+      "name": "frozen pin native_city_runtime.rs",
+      "match": true
+    },
+    {
+      "name": "live matches frozen at read native_city_runtime.rs",
+      "match": true
+    },
+    {
+      "name": "frozen pin native_source_send.rs",
+      "match": true
+    },
+    {
+      "name": "live matches frozen at read native_source_send.rs",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 0",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 1",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 2",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 3",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 4",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 5",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 6",
+      "match": true
+    },
+    {
+      "name": "selected anchored span 7",
+      "match": true
+    },
+    {
+      "name": "eight anchors all unchanged",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62fd70",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x630130",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x6300d0",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62ffb0",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62ff50",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62fef0",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62fe90",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x630070",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x630010",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62fe30",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x62fdd0",
+      "match": true
+    },
+    {
+      "name": "12 numeric table value hash 0x630190",
+      "match": true
+    },
+    {
+      "name": "descriptor rows raw fingerprint",
+      "match": true
+    },
+    {
+      "name": "four79descriptor anchors only",
+      "match": true
+    },
+    {
+      "name": "selector numeric metadata no sex guess",
+      "match": true
+    },
+    {
+      "name": "conservative lookup envelope only",
+      "match": true
+    },
+    {
+      "name": "five Native index boundaries",
+      "match": true
+    },
+    {
+      "name": "no targetedPNG79/80 index hits",
+      "match": true
+    },
+    {
+      "name": "exact loose Native LTSurf scope",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 6201.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 6201.img",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 6202.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 6202.img",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 6303.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 6303.img",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 6304.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 6304.img",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 6314.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 6314.img",
+      "match": true
+    },
+    {
+      "name": "asset dimension/source offset 7482.img",
+      "match": true
+    },
+    {
+      "name": "existing preview immutable 7482.img",
+      "match": true
+    },
+    {
+      "name": "fourbutton/twobackground exactdimensions",
+      "match": true
+    },
+    {
+      "name": "source PAK/index pinned no extraction",
+      "match": true
+    },
+    {
+      "name": "ten existingbackground instructions exact40bytes",
+      "match": true
+    },
+    {
+      "name": "background IDs/conditional source only",
+      "match": true
+    },
+    {
+      "name": "no known indexed but unextracted",
+      "match": true
+    },
+    {
+      "name": "finite exact unknown categories",
+      "match": true
+    },
+    {
+      "name": "bindingproposal no fallback art/native scene claim",
+      "match": true
+    },
+    {
+      "name": "no wire change/server notification",
+      "match": true
+    },
+    {
+      "name": "prior immutable class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable ranges.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "prior immutable Modern-character-ui-reachability-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixed source pin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "fixed source pin LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "fixed source pin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "42 retained reads/36priors",
+      "match": true
+    },
+    {
+      "name": "14reusedPEranges/1732bytes truthful",
+      "match": true
+    },
+    {
+      "name": "all newactions zero",
+      "match": true
+    },
+    {
+      "name": "R527 unaffected/no full scene GUI proof",
+      "match": true
+    },
+    {
+      "name": "packet immutable",
+      "match": true
+    },
+    {
+      "name": "scope incident open immutable",
+      "match": true
+    }
+  ],
+  "scope": "Owned evidence, historical primary/outputs, rawtable checksum, exact source spans/index dimensions/provenance and immutable pins only. No Modern function/model/tests/build/GUI run. External live R527 sources not reread or frozen.",
+  "GUI_runtime_acceptance": false
+}

@@ -1,0 +1,646 @@
+{
+  "schema": "lito.public-4c7ec0-scalar-contract.v1",
+  "TASK_ID": "bin-public-4c7ec0-scalar-contract-20261008",
+  "STATE": "review_new_public_scalar_equality_and_fallback_contract",
+  "OWNER": "LITO BIN Analysis",
+  "generated_at": "2026-10-08T21:15:58.820441+08:00",
+  "QUESTION": "Within public raw-backed004C7EC0 only, how is caller-savedECX scalar(toolbar0xED) passed/used, what are calling convention/stack cleanup and boundedEAX return semantics; do local bytes support key/index comparison/NULL contract?",
+  "NEW_GAP": "Accepted004C8790→004C85E0 caller contract stopped at directhelper004C7EC0. This task adds only its new49-byte public body; no caller rerun/helper/virtual/private backing expansion.",
+  "INPUT_SHA": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+      "bytes": 20092,
+      "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+    }
+  ],
+  "SOURCE_VA_RVA": {
+    "va": "004C7EC0",
+    "rva": "000C7EC0",
+    "end_exclusive": "004C7EF1",
+    "file_offset": "000C7EC0",
+    "section_index": 0,
+    "bytes": 49,
+    "raw_hex": "558bec56578bf1e8e41ef5ff8b7d0885c0741039780474138bcee8211ff5ff85c075f0578bcee8d5feffff5f5e5dc20400",
+    "artifact": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\004C7EC0-31.bin",
+      "bytes": 49,
+      "sha256": "A4E7712484C12F198802660732FCF420736B4C93AE6228DD67D52F91A3B491F7"
+    }
+  },
+  "ASM_LIMIT": "ASM pinned2A3A6E10... different original inputAEB05C78... navigation only. Conclusions from same fixedPE7094272/SHA4271D92F... snapshot atbase00400000.",
+  "RAW_RESULTS": {
+    "raw_evidence": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\raw-evidence.json",
+      "bytes": 8872,
+      "sha256": "35284AE60BDA53E59B5CED0058AC9F9812B00162251011EBC1C7EEAB3E019FBA"
+    },
+    "disassembly": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\disassembly.txt",
+      "bytes": 1195,
+      "sha256": "26D332DF4E09DF7077800AEFE83F13B59B136B7B542AE67D79DE024781EDAEEB"
+    },
+    "raw_function": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\004C7EC0-31.bin",
+      "bytes": 49,
+      "sha256": "A4E7712484C12F198802660732FCF420736B4C93AE6228DD67D52F91A3B491F7"
+    },
+    "control_flow": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\control-flow.json",
+      "bytes": 3869,
+      "sha256": "80BE5C6A52A24AED72DC71A0D6BC948A8142D8C695F47EF13C97B7A8AED474BB"
+    },
+    "stack_and_scalar": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\stack-and-scalar-flow.json",
+      "bytes": 1744,
+      "sha256": "A20CCA79CC4437F127F074B3247B17C921955614EC159B1E6836558CD6D97D9C"
+    },
+    "original_tool_logs": "extract.stdout.txt/extract.stderr.txt closed before sealing; shell receipt0bd2ec exit0."
+  },
+  "FINDINGS": [
+    {
+      "id": "F1",
+      "conclusion": "IncomingECX is saved inESI. The first direct call00419DB0 receives thatECX unchanged. After the call, [EBP+8] (entryESP+4) is loaded as a32-bit scalar intoEDI. It is not read as an address or dereferenced. For the accepted caller context this scalar is0xED, while this helper incomingECX is the caller-loaded008343EC receiver, not0xED.",
+      "witnesses": [
+        {
+          "va": "004C7EC0",
+          "rva": "000C7EC0",
+          "file_offset": "000C7EC0",
+          "size": 1,
+          "raw_hex": "55",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "va": "004C7EC1",
+          "rva": "000C7EC1",
+          "file_offset": "000C7EC1",
+          "size": 2,
+          "raw_hex": "8bec",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "va": "004C7EC3",
+          "rva": "000C7EC3",
+          "file_offset": "000C7EC3",
+          "size": 1,
+          "raw_hex": "56",
+          "mnemonic": "push",
+          "operands": "esi"
+        },
+        {
+          "va": "004C7EC4",
+          "rva": "000C7EC4",
+          "file_offset": "000C7EC4",
+          "size": 1,
+          "raw_hex": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EC5",
+          "rva": "000C7EC5",
+          "file_offset": "000C7EC5",
+          "size": 2,
+          "raw_hex": "8bf1",
+          "mnemonic": "mov",
+          "operands": "esi, ecx"
+        },
+        {
+          "va": "004C7EC7",
+          "rva": "000C7EC7",
+          "file_offset": "000C7EC7",
+          "size": 5,
+          "raw_hex": "e8e41ef5ff",
+          "mnemonic": "call",
+          "operands": "0x419db0",
+          "direct_target": "00419DB0"
+        },
+        {
+          "va": "004C7ECC",
+          "rva": "000C7ECC",
+          "file_offset": "000C7ECC",
+          "size": 3,
+          "raw_hex": "8b7d08",
+          "mnemonic": "mov",
+          "operands": "edi, dword ptr [ebp + 8]"
+        }
+      ],
+      "context": "Accepted prior caller contract only; no caller redisassembly. No meaning assigned to008343EC or0xED."
+    },
+    {
+      "id": "F2",
+      "conclusion": "A nonzeroEAX from00419DB0 is treated as an address for a dword load/compare at+4. CMP [EAX+4],EDI followed byJE implements exact32-bit equality. On mismatch, ECX is reloaded from savedESI and00419E00 supplies the nextEAX. Nonzero result repeats the same equality comparison.",
+      "witnesses": [
+        {
+          "va": "004C7ECF",
+          "rva": "000C7ECF",
+          "file_offset": "000C7ECF",
+          "size": 2,
+          "raw_hex": "85c0",
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004C7ED1",
+          "rva": "000C7ED1",
+          "file_offset": "000C7ED1",
+          "size": 2,
+          "raw_hex": "7410",
+          "mnemonic": "je",
+          "operands": "0x4c7ee3",
+          "direct_target": "004C7EE3"
+        },
+        {
+          "va": "004C7ED3",
+          "rva": "000C7ED3",
+          "file_offset": "000C7ED3",
+          "size": 3,
+          "raw_hex": "397804",
+          "mnemonic": "cmp",
+          "operands": "dword ptr [eax + 4], edi"
+        },
+        {
+          "va": "004C7ED6",
+          "rva": "000C7ED6",
+          "file_offset": "000C7ED6",
+          "size": 2,
+          "raw_hex": "7413",
+          "mnemonic": "je",
+          "operands": "0x4c7eeb",
+          "direct_target": "004C7EEB"
+        },
+        {
+          "va": "004C7ED8",
+          "rva": "000C7ED8",
+          "file_offset": "000C7ED8",
+          "size": 2,
+          "raw_hex": "8bce",
+          "mnemonic": "mov",
+          "operands": "ecx, esi"
+        },
+        {
+          "va": "004C7EDA",
+          "rva": "000C7EDA",
+          "file_offset": "000C7EDA",
+          "size": 5,
+          "raw_hex": "e8211ff5ff",
+          "mnemonic": "call",
+          "operands": "0x419e00",
+          "direct_target": "00419E00"
+        },
+        {
+          "va": "004C7EDF",
+          "rva": "000C7EDF",
+          "file_offset": "000C7EDF",
+          "size": 2,
+          "raw_hex": "85c0",
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004C7EE1",
+          "rva": "000C7EE1",
+          "file_offset": "000C7EE1",
+          "size": 2,
+          "raw_hex": "75f0",
+          "mnemonic": "jne",
+          "operands": "0x4c7ed3",
+          "direct_target": "004C7ED3"
+        }
+      ],
+      "bounded_semantics": "Equality-discriminator/search shape is supported. No scalar-scaled address calculation or ordered/signed comparison in this body; array index, resource key, skill, opcode, node/container type and iterator semantics are unqualified. Object backing and helper progression are not expanded."
+    },
+    {
+      "id": "F3",
+      "conclusion": "On equality, JE004C7EEB reaches the shared register restore/ret4 without modifyingEAX; it returns the current nonzero comparison address. That return condition locally guarantees dword[EAX+4] equalled the scalar at comparison time, assuming valid backing and normal helper returns.",
+      "witnesses": [
+        {
+          "va": "004C7ED3",
+          "rva": "000C7ED3",
+          "file_offset": "000C7ED3",
+          "size": 3,
+          "raw_hex": "397804",
+          "mnemonic": "cmp",
+          "operands": "dword ptr [eax + 4], edi"
+        },
+        {
+          "va": "004C7ED6",
+          "rva": "000C7ED6",
+          "file_offset": "000C7ED6",
+          "size": 2,
+          "raw_hex": "7413",
+          "mnemonic": "je",
+          "operands": "0x4c7eeb",
+          "direct_target": "004C7EEB"
+        },
+        {
+          "va": "004C7EEB",
+          "rva": "000C7EEB",
+          "file_offset": "000C7EEB",
+          "size": 1,
+          "raw_hex": "5f",
+          "mnemonic": "pop",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EEC",
+          "rva": "000C7EEC",
+          "file_offset": "000C7EEC",
+          "size": 1,
+          "raw_hex": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004C7EED",
+          "rva": "000C7EED",
+          "file_offset": "000C7EED",
+          "size": 1,
+          "raw_hex": "5d",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "va": "004C7EEE",
+          "rva": "000C7EEE",
+          "file_offset": "000C7EEE",
+          "size": 3,
+          "raw_hex": "c20400",
+          "mnemonic": "ret",
+          "operands": "4"
+        }
+      ],
+      "limits": "No ownership, lifetime, layout beyond+4, later stability, same-session availability or nonnull receiver validation is supplied."
+    },
+    {
+      "id": "F4",
+      "conclusion": "Initial or stepEAX==0 reaches004C7EE3, which pushesEDI, reloadsECX=ESI, and directly calls004C7DC0. Shared epilogue then returns that helper EAX unchanged, with no success/NULL test or local overwrite. Zero traversal does not itself returnNULL; it selects the fallback call.",
+      "witnesses": [
+        {
+          "va": "004C7ECF",
+          "rva": "000C7ECF",
+          "file_offset": "000C7ECF",
+          "size": 2,
+          "raw_hex": "85c0",
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004C7ED1",
+          "rva": "000C7ED1",
+          "file_offset": "000C7ED1",
+          "size": 2,
+          "raw_hex": "7410",
+          "mnemonic": "je",
+          "operands": "0x4c7ee3",
+          "direct_target": "004C7EE3"
+        },
+        {
+          "va": "004C7EDF",
+          "rva": "000C7EDF",
+          "file_offset": "000C7EDF",
+          "size": 2,
+          "raw_hex": "85c0",
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004C7EE1",
+          "rva": "000C7EE1",
+          "file_offset": "000C7EE1",
+          "size": 2,
+          "raw_hex": "75f0",
+          "mnemonic": "jne",
+          "operands": "0x4c7ed3",
+          "direct_target": "004C7ED3"
+        },
+        {
+          "va": "004C7EE3",
+          "rva": "000C7EE3",
+          "file_offset": "000C7EE3",
+          "size": 1,
+          "raw_hex": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EE4",
+          "rva": "000C7EE4",
+          "file_offset": "000C7EE4",
+          "size": 2,
+          "raw_hex": "8bce",
+          "mnemonic": "mov",
+          "operands": "ecx, esi"
+        },
+        {
+          "va": "004C7EE6",
+          "rva": "000C7EE6",
+          "file_offset": "000C7EE6",
+          "size": 5,
+          "raw_hex": "e8d5feffff",
+          "mnemonic": "call",
+          "operands": "0x4c7dc0",
+          "direct_target": "004C7DC0"
+        },
+        {
+          "va": "004C7EEB",
+          "rva": "000C7EEB",
+          "file_offset": "000C7EEB",
+          "size": 1,
+          "raw_hex": "5f",
+          "mnemonic": "pop",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EEE",
+          "rva": "000C7EEE",
+          "file_offset": "000C7EEE",
+          "size": 3,
+          "raw_hex": "c20400",
+          "mnemonic": "ret",
+          "operands": "4"
+        }
+      ],
+      "NULL_contract": "Fallback return may be zero or nonzero; this body imposes neither a guaranteedNULL-on-miss nor guaranteednonNULL result. No scalar0 or receiverNULL special case/check. Fallback creation/allocation/load/cache/error semantics unknown."
+    },
+    {
+      "id": "F5",
+      "conclusion": "The function reads one explicit4-byte stack argument and ends C2 04 00 (ret4). Combined withECXreceiver and localEBP/ESI/EDI saves/restores, this is thiscall-compatible callee argument cleanup. No formal class/C++signature or fallback callee ret4 is independently proved.",
+      "witnesses": [
+        {
+          "va": "004C7EC0",
+          "rva": "000C7EC0",
+          "file_offset": "000C7EC0",
+          "size": 1,
+          "raw_hex": "55",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "va": "004C7EC1",
+          "rva": "000C7EC1",
+          "file_offset": "000C7EC1",
+          "size": 2,
+          "raw_hex": "8bec",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "va": "004C7EC3",
+          "rva": "000C7EC3",
+          "file_offset": "000C7EC3",
+          "size": 1,
+          "raw_hex": "56",
+          "mnemonic": "push",
+          "operands": "esi"
+        },
+        {
+          "va": "004C7EC4",
+          "rva": "000C7EC4",
+          "file_offset": "000C7EC4",
+          "size": 1,
+          "raw_hex": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7ECC",
+          "rva": "000C7ECC",
+          "file_offset": "000C7ECC",
+          "size": 3,
+          "raw_hex": "8b7d08",
+          "mnemonic": "mov",
+          "operands": "edi, dword ptr [ebp + 8]"
+        },
+        {
+          "va": "004C7EE3",
+          "rva": "000C7EE3",
+          "file_offset": "000C7EE3",
+          "size": 1,
+          "raw_hex": "57",
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EE4",
+          "rva": "000C7EE4",
+          "file_offset": "000C7EE4",
+          "size": 2,
+          "raw_hex": "8bce",
+          "mnemonic": "mov",
+          "operands": "ecx, esi"
+        },
+        {
+          "va": "004C7EE6",
+          "rva": "000C7EE6",
+          "file_offset": "000C7EE6",
+          "size": 5,
+          "raw_hex": "e8d5feffff",
+          "mnemonic": "call",
+          "operands": "0x4c7dc0",
+          "direct_target": "004C7DC0"
+        },
+        {
+          "va": "004C7EEB",
+          "rva": "000C7EEB",
+          "file_offset": "000C7EEB",
+          "size": 1,
+          "raw_hex": "5f",
+          "mnemonic": "pop",
+          "operands": "edi"
+        },
+        {
+          "va": "004C7EEC",
+          "rva": "000C7EEC",
+          "file_offset": "000C7EEC",
+          "size": 1,
+          "raw_hex": "5e",
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "va": "004C7EED",
+          "rva": "000C7EED",
+          "file_offset": "000C7EED",
+          "size": 1,
+          "raw_hex": "5d",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "va": "004C7EEE",
+          "rva": "000C7EEE",
+          "file_offset": "000C7EEE",
+          "size": 3,
+          "raw_hex": "c20400",
+          "mnemonic": "ret",
+          "operands": "4"
+        }
+      ],
+      "stack_analysis": {
+        "notation": "S is ESP at entry; [S] return address, [S+4] one4-byte scalar.",
+        "entry_prologue": [
+          {
+            "VA": "004C7EC0",
+            "operation": "pushEBP",
+            "ESP": "S-4"
+          },
+          {
+            "VA": "004C7EC1",
+            "operation": "movEBP,ESP",
+            "EBP": "S-4"
+          },
+          {
+            "VA": "004C7EC3",
+            "operation": "pushESI",
+            "ESP": "S-8"
+          },
+          {
+            "VA": "004C7EC4",
+            "operation": "pushEDI",
+            "ESP": "S-12"
+          }
+        ],
+        "argument_load": {
+          "VA": "004C7ECC",
+          "operand": "[EBP+8]",
+          "entry_relative": "[S+4]",
+          "destination": "EDI"
+        },
+        "match_path": "At shared epilogue ESP=S-12 assuming initial/step callees normally return without net stack change. PopEDI/ESI/EBP ->ESP=S; ret4 pops returnaddress+one4-byte argument ->callerESP=S+8.",
+        "fallback_path": "004C7EE3 pushes scalar ->ESP=S-16; directcall004C7DC0 supplies one stack argument plusECXreceiver. No addESP4 follows. Balanced shared epilogue therefore requires the fallback helper to consume/otherwise balance that4-byte argument on normal return. Its actual ret/body is not inspected and not independently proved.",
+        "explicit_ret": {
+          "va": "004C7EEE",
+          "rva": "000C7EEE",
+          "file_offset": "000C7EEE",
+          "size": 3,
+          "raw_hex": "c20400",
+          "mnemonic": "ret",
+          "operands": "4"
+        },
+        "convention_conclusion": "ECX receiver + one stack scalar + callee ret4 is thiscall-compatible x8632. Language/type/name and callee stack policies are not proved by this body alone.",
+        "callee_saved_registers": "Local body saves/restoresEBP/ESI/EDI. Across unknown callees their preservation and normal return are ABI assumptions; EBX untouched locally, transitive effects unknown."
+      }
+    },
+    {
+      "id": "F6",
+      "conclusion": "Complete local49-byte body has three direct call boundaries00419DB0/00419E00/004C7DC0, three conditional internal branches, one shared ret4, and no local indirect call or explicit object/global store. All helper bodies and their transitive writes/virtual/API/network effects remain unknown.",
+      "witnesses": [
+        {
+          "va": "004C7EC7",
+          "rva": "000C7EC7",
+          "file_offset": "000C7EC7",
+          "size": 5,
+          "raw_hex": "e8e41ef5ff",
+          "mnemonic": "call",
+          "operands": "0x419db0",
+          "direct_target": "00419DB0"
+        },
+        {
+          "va": "004C7EDA",
+          "rva": "000C7EDA",
+          "file_offset": "000C7EDA",
+          "size": 5,
+          "raw_hex": "e8211ff5ff",
+          "mnemonic": "call",
+          "operands": "0x419e00",
+          "direct_target": "00419E00"
+        },
+        {
+          "va": "004C7EE6",
+          "rva": "000C7EE6",
+          "file_offset": "000C7EE6",
+          "size": 5,
+          "raw_hex": "e8d5feffff",
+          "mnemonic": "call",
+          "operands": "0x4c7dc0",
+          "direct_target": "004C7DC0"
+        }
+      ],
+      "limits": "No whole-BIN/no-network claim, decoded receive, packet obligation, skill/resource identity, runtime behavior or native repair follows."
+    }
+  ],
+  "BOUNDED_PSEUDOCODE": [
+    "receiver = incomingECX;",
+    "p = opaque_00419DB0(ECX=receiver);",
+    "scalar = stack_arg_dword; // loaded after first helper returns",
+    "while (p != 0) { if (*(u32*)(p+4) == scalar) return p; p = opaque_00419E00(ECX=receiver); }",
+    "return opaque_004C7DC0(ECX=receiver, stack_scalar=scalar);"
+  ],
+  "pseudocode_qualification": "Structural local effects only, all opaque calls unexpanded, callee-saved register/stack balance/valid memory/normal returns assumed. Repetition is not guaranteed to terminate; no allocation or resource naming.",
+  "DIRECT_CALL_BOUNDARY": {
+    "targets": [
+      "00419DB0",
+      "00419E00",
+      "004C7DC0"
+    ],
+    "expanded": [],
+    "indirect_in_this_body": false,
+    "private_or_refused_targets_followed": [],
+    "object_backing_followed": false
+  },
+  "LEVEL": "New exact fixed-PE raw instruction/control/dataflow evidence for one public function; no complete reverse engineering/live native/decoded receive/GUI evidence.",
+  "CONSUMER_ACTION": "After Root review, Launcher can refine its callback evidence model:0xED is a32-bit equality discriminator against helper-returned address+4 and a fallback scalar argument; the result is match address or opaque fallbackEAX with callee cleanup4. Keep possibleNULL conditional on opaque fallback, not a proved missing-resource/skills condition. No native code, packet, resource or Server/Modern behavior repair justified; keep same-session population/reset/draw/runtime inputs pending. Do not contact consumers until Root routes reviewed contract.",
+  "BLOCKERS": {
+    "unknown": "Receiver/global meaning, address/node/container backing and lifetime, helper implementations and traversal termination, fallback result/ownership, all transitive virtual/API/network effects, resource/skill/opcode/key-vs-index identity, real lobby/room/WORLD availability.",
+    "supplier": "Root-qualified separate concrete public-helper question or genuinely fresh authorized exactfull7/session evidence; this task does not expand further.",
+    "stop": "One direct body analyzed. No process attach/GUI/private/refused routes/helper expansion or retiredsession polling."
+  },
+  "COMMAND_EXIT": [
+    {
+      "receipt": "4df6fb",
+      "exit": 0,
+      "action": "Read accepted caller contract inputs/owned instructions only; no caller decoding."
+    },
+    {
+      "receipt": "065aa3",
+      "exit": 0,
+      "action": "Read tool parser pattern, ASM navigation and accepted runtime closure; adjacent ASM output ignored and not qualified."
+    },
+    {
+      "receipt": "14b367",
+      "exit": 0,
+      "action": "Create owned new namespace."
+    },
+    {
+      "receipt": "0bd2ec",
+      "exit": 0,
+      "action": "NEW49-byte fixedPE extraction, capstone disassembly, section/branch/ret boundary verification."
+    }
+  ],
+  "tools": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "capstone": "5.0.6"
+  },
+  "ACCEPTANCE": {
+    "static_new_body_bytes_qualified": true,
+    "supervisor_review_pending": true,
+    "consumer_adopted": false,
+    "complete_reverse_engineering": false,
+    "runtime_or_decoded_receive_collected": false,
+    "native_GUI_accepted": false
+  },
+  "PRESERVED_STOPS": [
+    "Private backing/next-layer and object backing",
+    "0042E550/0042E6D0/0042EA50/05AD0986 not followed",
+    "Server T291/T27/refund/rebid/castle/auction/fullWORLD/Store refused scopes",
+    "NativeGUI restrictions and refusal/tool/owner-transfer gates",
+    "No foreign/shared/formalBIN writes"
+  ],
+  "OLD_PASS_REPLAY": false,
+  "NATIVE_PROCESS_ATTACHED_OR_STARTED": false,
+  "NEXT_READY_TASK": null,
+  "PRODUCT_ACCEPTED": false,
+  "GOAL_STATUS": "Actual native Goal blocked; full objective retained, no transition or repeated blocker audit."
+}

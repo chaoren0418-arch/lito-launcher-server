@@ -1,0 +1,147 @@
+{
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+      "bytes": 400833,
+      "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\NumericBreakthrough.java",
+      "bytes": 5104,
+      "sha256": "143E912AFBEFDFA854B3CE556242C2C105C3683174169255F02B7376157AB28B"
+    }
+  ],
+  "read_only_excerpts": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 302,
+      "last_line": 308,
+      "text": "302:     static final int S_MAGIC_STATUS = 0x56;\n303:     static final int S_MAGE_STRENGTH = 0x6B;\n304:     static final int S_MAGE_DEXTERITY = 0x6C;\n305:     static final int S_MAGE_SHIELD = 0x6D;\n306:     static final int S_ABILITY_SCORES = 0x50;\n307:     static final int S_EXP = 0x51;\n308:     static final int S_AC = 0x52;"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 1029,
+      "last_line": 1044,
+      "text": "1029:         Writer c(int value) {\n1030:             out.write(value & 0xFF);\n1031:             if (out.size() == 1 && NumericBreakthrough.enabled()\n1032:                     && (value == S_HIT_POINT || value == S_MANA_POINT)) {\n1033:                 wideVitalFieldsRemaining = 2;\n1034:             }\n1035:             return this;\n1036:         }\n1037:         Writer h(int value) {\n1038:             if (wideVitalFieldsRemaining > 0) {\n1039:                 wideVitalFieldsRemaining--;\n1040:                 return d(Integer.toUnsignedLong(value));\n1041:             }\n1042:             c(value); c(value >>> 8); return this;\n1043:         }\n1044:         Writer d(long value) { c((int) value); c((int) (value >>> 8)); c((int) (value >>> 16)); c((int) (value >>> 24)); return this; }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 5472,
+      "last_line": 5490,
+      "text": "5472:     /**\n5473:      * Exact LiTo 3.81C S_MAGIC_STATUS receiver {@code sub_4AF320}: {@code cc}.\n5474:      * Same-family 3.81 S_SPMR identifies the bytes as current SP and MR\n5475:      * modifiers; an unmodified tournament character therefore bootstraps 0/0.\n5476:      * Numeric schema 3 replaces that exact receiver with a paired dword decoder.\n5477:      */\n5478:     static byte[] magicStatus(int spellPowerModifier, int magicResistanceModifier) {\n5479:         Writer packet = new Writer().c(S_MAGIC_STATUS);\n5480:         if (NumericBreakthrough.magicModifierEnabled()) {\n5481:             requireBreakthroughModifier(spellPowerModifier, \"spell-power modifier\");\n5482:             requireBreakthroughModifier(magicResistanceModifier,\n5483:                     \"magic-resistance modifier\");\n5484:             return packet.d(Integer.toUnsignedLong(spellPowerModifier))\n5485:                     .d(Integer.toUnsignedLong(magicResistanceModifier)).bytes();\n5486:         }\n5487:         requireSignedByte(spellPowerModifier, \"spell-power modifier\");\n5488:         requireSignedByte(magicResistanceModifier, \"magic-resistance modifier\");\n5489:         return packet.c(spellPowerModifier).c(magicResistanceModifier).bytes();\n5490:     }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 5529,
+      "last_line": 5579,
+      "text": "5529:     /**\n5530:      * Native {@code sub_4AF0A0} copies STR, INT, WIS, DEX, CON, CHA and the\n5531:      * inventory weight byte into {@code 0x8348B0..B5/CB}.  This exact LiTo\n5532:      * build renders that byte on a 0..29 gauge, so the retained weight240\n5533:      * domain is projected at the wire boundary; it is not an unspent-stat\n5534:      * counter.\n5535:      */\n5536:     static byte[] abilityScores(int strength, int constitution, int dexterity,\n5537:                                  int charisma, int intelligence, int wisdom,\n5538:                                  int weight240) {\n5539:         if (NumericBreakthrough.levelAbilityEnabled()) {\n5540:             requireBreakthroughAbility(strength, \"strength\");\n5541:             requireBreakthroughAbility(constitution, \"constitution\");\n5542:             requireBreakthroughAbility(dexterity, \"dexterity\");\n5543:             requireBreakthroughAbility(charisma, \"charisma\");\n5544:             requireBreakthroughAbility(intelligence, \"intelligence\");\n5545:             requireBreakthroughAbility(wisdom, \"wisdom\");\n5546:         } else {\n5547:             requireByte(strength, \"strength\");\n5548:             requireByte(constitution, \"constitution\");\n5549:             requireByte(dexterity, \"dexterity\");\n5550:             requireByte(charisma, \"charisma\");\n5551:             requireByte(intelligence, \"intelligence\");\n5552:             requireByte(wisdom, \"wisdom\");\n5553:         }\n5554:         Writer packet = new Writer().c(S_ABILITY_SCORES);\n5555:         if (NumericBreakthrough.levelAbilityEnabled()) {\n5556:             packet.d(strength).d(intelligence).d(wisdom)\n5557:                     .d(dexterity).d(constitution).d(charisma);\n5558:         } else {\n5559:             packet.c(strength).c(intelligence).c(wisdom)\n5560:                     .c(dexterity).c(constitution).c(charisma);\n5561:         }\n5562:         return packet.c(nativeWeightGauge(weight240)).bytes();\n5563:     }\n5564: \n5565:     /** Exact 0..29 LiTo food gauge projected from the retained 0..225 domain. */\n5566:     static int nativeFoodGauge(int food225) {\n5567:         return nativeGauge29(food225, 225);\n5568:     }\n5569: \n5570:     /** Exact 0..29 LiTo weight gauge projected from retained getWeight240(). */\n5571:     static int nativeWeightGauge(int weight240) {\n5572:         return nativeGauge29(weight240, 240);\n5573:     }\n5574: \n5575:     private static int nativeGauge29(int retainedValue, int retainedMaximum) {\n5576:         int saturated = Math.max(0, Math.min(retainedMaximum, retainedValue));\n5577:         return (saturated * 29 + retainedMaximum / 2) / retainedMaximum;\n5578:     }\n5579: "
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 5580,
+      "last_line": 5631,
+      "text": "5580:     /** Native sub_4AF0E0 parses {@code cd}: level followed by total EXP. */\n5581:     static byte[] experience(int level, long totalExperience) {\n5582:         if (level <= 0 || level > (NumericBreakthrough.levelAbilityEnabled()\n5583:                 ? NumericBreakthrough.MAX_LEVEL : 0xFF)\n5584:                 || totalExperience < 0 || totalExperience > 0xFFFF_FFFFL) {\n5585:             throw new IllegalArgumentException(\"invalid native S_EXP values\");\n5586:         }\n5587:         Writer packet = new Writer().c(S_EXP);\n5588:         if (NumericBreakthrough.levelAbilityEnabled()) packet.d(level);\n5589:         else packet.c(level);\n5590:         return packet.d(totalExperience).bytes();\n5591:     }\n5592: \n5593:     /** Native sub_4AF100 parses AC plus fire, water, wind and earth resistance. */\n5594:     static byte[] armorClass(int base, int fireResistance, int waterResistance,\n5595:                              int windResistance, int earthResistance) {\n5596:         if (NumericBreakthrough.enabled()) {\n5597:             if (base < NumericBreakthrough.MIN_ARMOR_CLASS\n5598:                     || base > NumericBreakthrough.MAX_ARMOR_CLASS) {\n5599:                 throw new IllegalArgumentException(\"base armor class exceeds breakthrough range\");\n5600:             }\n5601:         } else {\n5602:             requireSignedByte(base, \"base armor class\");\n5603:         }\n5604:         if (NumericBreakthrough.elementalResistanceEnabled()) {\n5605:             requireBreakthroughElementalResistance(fireResistance,\n5606:                     \"fire resistance\");\n5607:             requireBreakthroughElementalResistance(waterResistance,\n5608:                     \"water resistance\");\n5609:             requireBreakthroughElementalResistance(windResistance,\n5610:                     \"wind resistance\");\n5611:             requireBreakthroughElementalResistance(earthResistance,\n5612:                     \"earth resistance\");\n5613:         } else {\n5614:             requireSignedByte(fireResistance, \"fire resistance\");\n5615:             requireSignedByte(waterResistance, \"water resistance\");\n5616:             requireSignedByte(windResistance, \"wind resistance\");\n5617:             requireSignedByte(earthResistance, \"earth resistance\");\n5618:         }\n5619:         Writer packet = new Writer().c(S_AC);\n5620:         if (NumericBreakthrough.enabled()) packet.d(base);\n5621:         else packet.c(base);\n5622:         if (NumericBreakthrough.elementalResistanceEnabled()) {\n5623:             packet.d(Integer.toUnsignedLong(fireResistance))\n5624:                     .d(Integer.toUnsignedLong(waterResistance))\n5625:                     .d(Integer.toUnsignedLong(windResistance))\n5626:                     .d(Integer.toUnsignedLong(earthResistance));\n5627:         } else {\n5628:             packet.c(fireResistance).c(waterResistance)\n5629:                     .c(windResistance).c(earthResistance);\n5630:         }\n5631:         return packet.bytes();"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 6540,
+      "last_line": 6542,
+      "text": "6540:     private static void requireByte(int value, String label) {\n6541:         if (value < 0 || value > 0xFF) throw new IllegalArgumentException(label + \" is outside byte range\");\n6542:     }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+        "bytes": 400833,
+        "sha256": "A3D5498A88180C0FA1E6C6E256CAFCAA800D892EFD5A345B06046706D2CA8617"
+      },
+      "first_line": 6562,
+      "last_line": 6566,
+      "text": "6562:     private static void requireSignedByte(int value, String label) {\n6563:         if (value < -128 || value > 127) {\n6564:             throw new IllegalArgumentException(label + \" is outside signed byte range\");\n6565:         }\n6566:     }"
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\NumericBreakthrough.java",
+        "bytes": 5104,
+        "sha256": "143E912AFBEFDFA854B3CE556242C2C105C3683174169255F02B7376157AB28B"
+      },
+      "first_line": 1,
+      "last_line": 49,
+      "text": "1: package local.lito381.server;\n2: \n3: /** Shared opt-in contract for the LiTo launcher/runtime 32-bit stat patches. */\n4: final class NumericBreakthrough {\n5:     static final int VITAL_ARMOR_SCHEMA_VERSION = 1;\n6:     static final int LEVEL_ABILITY_SCHEMA_VERSION = 2;\n7:     static final int MAGIC_MODIFIER_SCHEMA_VERSION = 3;\n8:     static final int ELEMENTAL_RESISTANCE_SCHEMA_VERSION = 4;\n9:     static final int MAX_VITAL = 999_999;\n10:     static final int MIN_ARMOR_CLASS = -999_999;\n11:     static final int MAX_ARMOR_CLASS = 999_999;\n12:     static final int MAX_LEVEL = 999_999;\n13:     static final int MAX_ABILITY = 999_999;\n14:     static final int MIN_ABILITY_MODIFIER = -999_999;\n15:     static final int MAX_ABILITY_MODIFIER = 999_999;\n16:     static final int MIN_MAGIC_MODIFIER = -999_999;\n17:     static final int MAX_MAGIC_MODIFIER = 999_999;\n18:     static final int MIN_ELEMENTAL_RESISTANCE = -999_999;\n19:     static final int MAX_ELEMENTAL_RESISTANCE = 999_999;\n20:     private static final String ENVIRONMENT = \"LITO_NUMERIC_BREAKTHROUGH\";\n21:     private static final String PROPERTY = \"lito.numeric.breakthrough\";\n22: \n23:     private NumericBreakthrough() {}\n24: \n25:     static int schemaVersion() {\n26:         String property = System.getProperty(PROPERTY);\n27:         String value = property != null ? property : System.getenv(ENVIRONMENT);\n28:         if (value == null) return 0;\n29:         try {\n30:             int parsed = Integer.parseInt(value);\n31:             return parsed >= VITAL_ARMOR_SCHEMA_VERSION\n32:                     && parsed <= ELEMENTAL_RESISTANCE_SCHEMA_VERSION ? parsed : 0;\n33:         } catch (NumberFormatException ignored) {\n34:             return 0;\n35:         }\n36:     }\n37: \n38:     static boolean enabled() {\n39:         return schemaVersion() >= VITAL_ARMOR_SCHEMA_VERSION;\n40:     }\n41: \n42:     static boolean levelAbilityEnabled() {\n43:         return schemaVersion() >= LEVEL_ABILITY_SCHEMA_VERSION;\n44:     }\n45: \n46:     static boolean magicModifierEnabled() {\n47:         return schemaVersion() >= MAGIC_MODIFIER_SCHEMA_VERSION;\n48:     }\n49: "
+    }
+  ],
+  "baseline_by_opcode": {
+    "S50": "abilityScores writer reorders Javaargumentlist toSTR/INT/WIS/DEX/CON/CHA exactlynative,thenweightgauge; nativeGauge29 clamp/round fromweight240 to0..29.",
+    "S51": "experience writerc(level),d(totalEXP); level1..255 validated,EXP0..FFFFFFFF; nativecopiesfullc/dbits includingout-of-domainlevel0.",
+    "S52": "armorClass writerc(AC),c(fire),c(water),c(wind),c(earth); signedbyte validation; primitiveNative reader copyraw8.",
+    "S56": "magicStatus writerc(SPmodifier),c(MRmodifier); signedbyte validation andsame-family naming areJava semantic evidence,not expandednative downstream arithmetic."
+  },
+  "numeric_patched_profiles": [
+    {
+      "opcode": "S50",
+      "baseline_body": 8,
+      "patched_schema_threshold": 2,
+      "patched_body": 26,
+      "change": "6abilitiesc→d; weightgauge remainsc"
+    },
+    {
+      "opcode": "S51",
+      "baseline_body": 6,
+      "patched_schema_threshold": 2,
+      "patched_body": 9,
+      "change": "levelc→d; experience remainsd"
+    },
+    {
+      "opcode": "S52",
+      "baseline_body": 6,
+      "patched_schema_threshold": 1,
+      "patched_body": 9,
+      "change": "ACc→d,4resists remainc forschema1..3"
+    },
+    {
+      "opcode": "S52",
+      "baseline_body": 6,
+      "patched_schema_threshold": 4,
+      "patched_body": 21,
+      "change": "AC and4resists alldwords"
+    },
+    {
+      "opcode": "S56",
+      "baseline_body": 3,
+      "patched_schema_threshold": 3,
+      "patched_body": 9,
+      "change": "SP/MR modifierc→d"
+    }
+  ],
+  "profile_boundary": "Existingnumeric opt-ins needmatchedpatched client; all8sealedframes arebaseline lengths. No currentserver environment/profile or patched receiver runtime proven.",
+  "sequence_boundary": "Sealedcapture sequence is proven for8records. Comparing existing method wire layout does not establish every current source caller or replay originalAD368 entryflow.",
+  "classification": "KNOWN_CONTRACT_CORROBORATION",
+  "new_wire_differences": 0,
+  "new_opcodes": 0,
+  "wire_corrections_required": 0,
+  "Java_SQL_tests_producer_oldPASS_executed": false,
+  "server_product_or_packet_delta_modified": false
+}

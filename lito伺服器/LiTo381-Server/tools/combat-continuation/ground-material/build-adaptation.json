@@ -1,0 +1,13 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build.py",
+      "sha256": "9c7613628be682ae9da2ba30894a716466e120287fcb28e5050098eee2fa917d"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\prepare_build.py",
+      "sha256": "d096a962813feacca052184858a8c72235187eb296ebb1aaca2ec244ef554e52"
+    }
+  ],
+  "scope": "same narrow deterministic builder and C0/inverse gates; adds private ground placement copies in GameHub; original hub methods remain unchanged"
+}

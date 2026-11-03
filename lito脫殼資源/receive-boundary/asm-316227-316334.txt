@@ -1,0 +1,108 @@
+316227: sub_4966A0 proc near                    ; CODE XREF: sub_47F340+7B6↑p
+316228: 
+316229: var_1= byte ptr -1
+316230: 
+316231: push    ebp
+316232: mov     ebp, esp
+316233: push    ecx
+316234: mov     al, byte_64AFA0
+316235: push    ebx
+316236: xor     ebx, ebx
+316237: mov     [ebp+var_1], cl
+316238: cmp     al, bl
+316239: jz      short loc_4966D7
+316240: 
+316241: mov     dword_630EE8, ebx
+316242: mov     dword_630EEC, 1D2Eh
+316243: mov     dword_630FA0, 1D2Fh
+316244: mov     off_630FAC, offset dword_4967B0
+316245: 
+316246: 
+316247: loc_4966D7:                             ; CODE XREF: sub_4966A0+11↑j
+316248: push    189Eh
+316249: push    ebx
+316250: mov     edx, 5
+316251: mov     ecx, offset dword_631E38
+316252: mov     dword_64BBD4, 2
+316253: mov     dword_6414A4, ebx
+316254: mov     dword_6414A0, ebx
+316255: mov     dword_64149C, ebx
+316256: mov     byte_75F6E5, bl
+316257: mov     off_62C9B8, offset sub_496200
+316258: mov     off_62C9BC, offset sub_4962B0
+316259: mov     off_62C9C0, offset sub_495E40
+316260: mov     dword_63DF20, ebx
+316261: mov     dword_63DF1C, 1D4h
+316262: mov     dword_834F28, ebx
+316263: call    sub_495520
+316264: 
+316265: mov     dl, [ebp+var_1]
+316266: mov     ecx, eax
+316267: call    sub_495230
+316268: 
+316269: cmp     [ebp+var_1], bl
+316270: jnz     short loc_4967A5
+316271: 
+316272: mov     edx, dword_631EC8
+316273: mov     ecx, off_631ECC
+316274: push    edi
+316275: push    69h ; 'i'
+316276: push    7
+316277: call    sub_495520
+316278: 
+316279: mov     edi, eax
+316280: mov     eax, dword_75F750
+316281: cmp     eax, ebx
+316282: jz      short loc_49679B
+316283: 
+316284: push    esi
+316285: xor     esi, esi
+316286: 
+316287: 
+316288: loc_496775:                             ; CODE XREF: sub_4966A0+F8↓j
+316289: push    esi
+316290: mov     ecx, edi
+316291: call    sub_41B410
+316292: 
+316293: mov     ecx, eax
+316294: mov     eax, dword_75F750
+316295: cmp     esi, eax
+316296: jnz     short loc_49678F
+316297: 
+316298: mov     eax, [ecx]
+316299: call    dword ptr [eax+38h]
+316300: 
+316301: jmp     short loc_496794
+316302: 
+316303: ; ---------------------------------------------------------------------------
+316304: 
+316305: loc_49678F:                             ; CODE XREF: sub_4966A0+E6↑j
+316306: mov     edx, [ecx]
+316307: call    dword ptr [edx+3Ch]
+316308: 
+316309: 
+316310: loc_496794:                             ; CODE XREF: sub_4966A0+ED↑j
+316311: inc     esi
+316312: cmp     esi, 4
+316313: jl      short loc_496775
+316314: 
+316315: pop     esi
+316316: 
+316317: 
+316318: loc_49679B:                             ; CODE XREF: sub_4966A0+D0↑j
+316319: mov     dl, 1
+316320: mov     ecx, edi
+316321: call    sub_495230
+316322: 
+316323: pop     edi
+316324: 
+316325: 
+316326: loc_4967A5:                             ; CODE XREF: sub_4966A0+AF↑j
+316327: call    sub_4963E0
+316328: 
+316329: pop     ebx
+316330: mov     esp, ebp
+316331: pop     ebp
+316332: retn
+316333: 
+316334: sub_4966A0 endp

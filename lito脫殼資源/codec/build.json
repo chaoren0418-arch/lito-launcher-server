@@ -1,0 +1,20 @@
+{
+  "compiler": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "command": "rustc --edition=2021 -O codec/l1_decode.rs -o codec/l1_decode.exe",
+  "exit_code": 0,
+  "executable": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\codec\\l1_decode.exe",
+    "bytes": 229376,
+    "sha256": "94AC1F9C265D8EC1B22EA04CF682E15DB052895EA25FE7C59A6D8C550F441323"
+  },
+  "dependency": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\codec\\resource_cipher.rs",
+    "bytes": 21316,
+    "sha256": "FBB1BE885AC7F82319B13E13CDBF387633EDC957B166322EB04B1C3460F949E1"
+  },
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\codec\\l1_decode.rs",
+    "bytes": 1275,
+    "sha256": "F449E4FECB582FA5DF1DA33BD0A0D5CCC51CB7775A8715EF0E97DE699AF7F95A"
+  }
+}

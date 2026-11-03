@@ -1,0 +1,165 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+    "bytes": 46520,
+    "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+  },
+  "captured_content_sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_city_window.rs",
+    "bytes": 46520,
+    "sha256": "D7D929A81139A4C081E2BB6CCD7F934BE94DB8825E504E709EEA51BA6FAF26DB"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:11:34.555389+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      19,
+      24
+    ],
+    [
+      96,
+      111
+    ],
+    [
+      119,
+      124
+    ],
+    [
+      138,
+      138
+    ],
+    [
+      143,
+      144
+    ]
+  ],
+  "line_count": 162,
+  "implementation_lines": [
+    {
+      "line": 19,
+      "text": "fn scale(n:i32,dpi:u32)->i32{((i64::from(n)*i64::from(dpi.clamp(48,768))+48)/96) as i32}"
+    },
+    {
+      "line": 20,
+      "text": "unsafe fn label(hwnd:HWND,text:&str){let text:Vec<u16>=text.encode_utf16().chain(Some(0)).collect();let _=SetWindowTextW(hwnd,PCWSTR(text.as_ptr()));}"
+    },
+    {
+      "line": 21,
+      "text": "unsafe fn refresh(hwnd:HWND,s:&State){"
+    },
+    {
+      "line": 22,
+      "text": " let key={let r=s.runtime.borrow();let Some(r)=r.as_ref()else{return;};r.presentation_key()};if !s.refresh_gate.borrow_mut().changed(key,s.screen.get()==Screen::Entry){return;}"
+    },
+    {
+      "line": 23,
+      "text": " let(page,_choice,status,pending)={let r=s.runtime.borrow();let Some(r)=r.as_ref() else{return;};(r.page(),r.choice().cloned(),r.status().to_owned(),r.pan_pending())};"
+    },
+    {
+      "line": 24,
+      "text": " let login=s.runtime.borrow().as_ref().unwrap().source_login_snapshot();let login_active=login.stage!=LoginStage::Hidden;"
+    },
+    {
+      "line": 96,
+      "text": "unsafe fn menu_layout(hwnd:HWND)->Option<super::native_offline_menu_skin::Layout>{let mut r=RECT::default();GetClientRect(hwnd,&mut r).ok()?;let dpi=GetDpiForWindow(hwnd);let m=scale(24,dpi);super::native_offline_menu_skin::Layout::fit(m,scale(156,dpi),r.right-2*m,(r.bottom-scale(156+154,dpi)).min(scale(324,dpi)))}"
+    },
+    {
+      "line": 97,
+      "text": "unsafe fn select_row(hwnd:HWND,s:&State,i:usize){action(hwnd,s,Action::RowSelect(i));let _=SetFocus(Some(hwnd));}"
+    },
+    {
+      "line": 98,
+      "text": "unsafe fn pointer_hit(hwnd:HWND,s:&State,lparam:LPARAM)->Option<Hit>{if s.screen.get()!=Screen::Maps||!s.runtime.borrow().as_ref().is_some_and(|r|matches!(r.page(),UiPage::Menu|UiPage::Loading)){return None;}let(x,y)=((lparam.0 as u16 as i16) as i32,((lparam.0>>16) as u16 as i16) as i32);s.menu(|m|m.hit(&menu_layout(hwnd)?,x,y)).flatten()}"
+    },
+    {
+      "line": 99,
+      "text": "unsafe fn paint_menu(hwnd:HWND,s:&State,dc:windows::Win32::Graphics::Gdi::HDC){"
+    },
+    {
+      "line": 100,
+      "text": " if s.screen.get()!=Screen::Maps{return;}let r=s.runtime.borrow();let Some(r)=r.as_ref()else{return;};if !matches!(r.page(),UiPage::Menu|UiPage::Loading){return;}let(Some(skin),Some(vp))=(r.skin(),menu_layout(hwnd))else{return;};let Some(menu)=r.menu()else{return;};let Ok(b)=skin.compose(menu.top,menu.count(),menu.pressed)else{return;};"
+    },
+    {
+      "line": 101,
+      "text": " let info=BITMAPINFO{bmiHeader:BITMAPINFOHEADER{biSize:std::mem::size_of::<BITMAPINFOHEADER>() as u32,biWidth:157,biHeight:-81,biPlanes:1,biBitCount:32,biCompression:BI_RGB.0,..Default::default()},..Default::default()};StretchDIBits(dc,vp.x,vp.y,vp.width,vp.height,0,0,157,81,Some(b.as_ptr().cast()),&info,DIB_RGB_COLORS,SRCCOPY);"
+    },
+    {
+      "line": 102,
+      "text": " let mut lf=LOGFONTW{lfHeight:Menu::font_height(&vp),..Default::default()};for(i,c)in \"Segoe UI\".encode_utf16().enumerate(){lf.lfFaceName[i]=c;}let font=CreateFontIndirectW(&lf);if font.0.is_null(){return;}let old=SelectObject(dc,HGDIOBJ(font.0));SetBkMode(dc,TRANSPARENT);"
+    },
+    {
+      "line": 103,
+      "text": " for visible in 0..6 {let i=menu.top+visible;let Some(item)=menu.row(i)else{break;};let (text,available)=match item{Row::Map(index)=>{let entry=&r.rows()[index];(format!(\"{} {}:{} {}\",if entry.available{\"可\"}else{\"待\"},entry.choice.mode,entry.choice.map_id,entry.choice.name),entry.available)},Row::Header{text,..}=>(format!(\"{text} · 特殊項目\"),false)};let Some((left,top,right,bottom))=Menu::row_rect(&vp,visible)else{continue;};if right<=left||bottom<=top{continue;}let mut rect=RECT{left,top,right,bottom};if Some(i)==menu.selected{FillRect(dc,&rect,GetSysColorBrush(COLOR_HIGHLIGHT));}SetTextColor(dc,COLORREF(if available{0x00ffffff}else{0x00909090}));let mut text:Vec<u16>=text.encode_utf16().collect();DrawTextW(dc,&mut text,&mut rect,DT_SINGLELINE|DT_VCENTER|DT_END_ELLIPSIS|DT_NOPREFIX);}"
+    },
+    {
+      "line": 104,
+      "text": " SelectObject(dc,old);let _=DeleteObject(HGDIOBJ(font.0));"
+    },
+    {
+      "line": 105,
+      "text": "}"
+    },
+    {
+      "line": 106,
+      "text": "unsafe fn channel_layout(hwnd:HWND)->Option<super::compositor::Viewport>{let mut r=RECT::default();GetClientRect(hwnd,&mut r).ok()?;let dpi=GetDpiForWindow(hwnd);let top=scale(104,dpi);let m=scale(24,dpi);let mut v=super::compositor::Viewport::fit((r.right-2*m).max(0),(r.bottom-top-scale(114,dpi)).max(0),640,480)?;v.x+=m;v.y+=top;Some(v)}"
+    },
+    {
+      "line": 107,
+      "text": "unsafe fn paint_channel(hwnd:HWND,s:&State,dc:windows::Win32::Graphics::Gdi::HDC){if s.screen.get()!=Screen::Entry{return;}let r=s.runtime.borrow();let Some(r)=r.as_ref()else{return;};if r.source_navigation_snapshot().scene!=NavigationScene::Channel{return;}let(Some(skin),Some(v))=(r.skin(),channel_layout(hwnd))else{return;};let Some(img)=&skin.channel_background else{return;};let b:Vec<u8>=img.rgba.chunks_exact(4).flat_map(|p|[p[2],p[1],p[0],p[3]]).collect();let info=BITMAPINFO{bmiHeader:BITMAPINFOHEADER{biSize:std::mem::size_of::<BITMAPINFOHEADER>()as u32,biWidth:640,biHeight:-480,biPlanes:1,biBitCount:32,biCompression:BI_RGB.0,..Default::default()},..Default::default()};StretchDIBits(dc,v.x,v.y,v.width,v.height,0,0,640,480,Some(b.as_ptr().cast()),&info,DIB_RGB_COLORS,SRCCOPY);}"
+    },
+    {
+      "line": 108,
+      "text": "unsafe fn paint_source_entry(hwnd:HWND,s:&State,dc:windows::Win32::Graphics::Gdi::HDC){"
+    },
+    {
+      "line": 109,
+      "text": " if s.screen.get()!=Screen::Entry{return;}let r=s.runtime.borrow();let Some(r)=r.as_ref()else{return;};if r.source_connection_epoch().is_none()||r.source_flow().phase()!=2{return;}let Some(skin)=r.skin()else{return;};let Some(bgra)=skin.entry_art.as_ref()else{return;};let dpi=GetDpiForWindow(hwnd);let info=BITMAPINFO{bmiHeader:BITMAPINFOHEADER{biSize:std::mem::size_of::<BITMAPINFOHEADER>()as u32,biWidth:11,biHeight:-11,biPlanes:1,biBitCount:32,biCompression:BI_RGB.0,..Default::default()},..Default::default()};StretchDIBits(dc,scale(24,dpi),scale(348,dpi),scale(11,dpi),scale(11,dpi),0,0,11,11,Some(bgra.as_ptr().cast()),&info,DIB_RGB_COLORS,SRCCOPY);"
+    },
+    {
+      "line": 110,
+      "text": "}"
+    },
+    {
+      "line": 111,
+      "text": "unsafe fn paint(hwnd:HWND,s:&State){let mut ps=PAINTSTRUCT::default();let dc=BeginPaint(hwnd,&mut ps);let mut whole=RECT::default();if GetClientRect(hwnd,&mut whole).is_ok(){FillRect(dc,&whole,GetSysColorBrush(COLOR_BTNFACE));}paint_menu(hwnd,s,dc);paint_channel(hwnd,s,dc);paint_source_entry(hwnd,s,dc);let frame:Option<UiFrame>=if s.screen.get()==Screen::Maps{s.runtime.borrow().as_ref().and_then(Runtime::frame)}else{None};if let Some(frame)=frame{let mut r=RECT::default();if GetClientRect(hwnd,&mut r).is_ok(){let dpi=GetDpiForWindow(hwnd);let m=scale(24,dpi);let top=scale(110,dpi);let footer=scale(104,dpi);if let Some(mut vp)=frame.viewport((r.right-2*m).max(0),(r.bottom-top-footer).max(0)){vp.x+=m;vp.y+=top;let rect=RECT{left:m,top,right:r.right-m,bottom:r.bottom-footer};FillRect(dc,&rect,HBRUSH(GetStockObject(BLACK_BRUSH).0));if let Ok(bgra)=frame.bgra(){let camera=frame.camera();let info=BITMAPINFO{bmiHeader:BITMAPINFOHEADER{biSize:std::mem::size_of::<BITMAPINFOHEADER>() as u32,biWidth:camera.width as i32,biHeight:-(camera.height as i32),biPlanes:1,biBitCount:32,biCompression:BI_RGB.0,..Default::default()},..Default::default()};StretchDIBits(dc,vp.x,vp.y,vp.width,vp.height,0,0,camera.width as i32,camera.height as i32,Some(bgra.as_ptr().cast()),&info,DIB_RGB_COLORS,SRCCOPY);}}}}let _=EndPaint(hwnd,&ps);}"
+    },
+    {
+      "line": 119,
+      "text": "unsafe extern \"system\" fn proc(hwnd:HWND,msg:u32,wparam:WPARAM,lparam:LPARAM)->LRESULT {"
+    },
+    {
+      "line": 120,
+      "text": " if msg==WM_NCCREATE{let cs=&*(lparam.0 as *const CREATESTRUCTW);SetWindowLongPtrW(hwnd,GWLP_USERDATA,cs.lpCreateParams as _);}"
+    },
+    {
+      "line": 121,
+      "text": " let ptr=GetWindowLongPtrW(hwnd,GWLP_USERDATA) as *const State;if ptr.is_null(){return DefWindowProcW(hwnd,msg,wparam,lparam);}let s=&*ptr;"
+    },
+    {
+      "line": 122,
+      "text": " let result=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||match msg{"
+    },
+    {
+      "line": 123,
+      "text": "  WM_DRAWITEM=>{let draw=&*(lparam.0 as *const DRAWITEMSTRUCT);if draw.CtlID as usize==FIRST+CHARACTER_SUBMIT||draw.CtlID as usize==FIRST+BACK||(FIRST+CHANNEL_FIRST..FIRST+CHANNEL_FIRST+4).contains(&(draw.CtlID as usize)){draw_character_button(s,draw);LRESULT(1)}else{DefWindowProcW(hwnd,msg,wparam,lparam)}},"
+    },
+    {
+      "line": 124,
+      "text": "  WM_COMMAND if (FIRST+CHANNEL_FIRST..FIRST+CHANNEL_FIRST+4).contains(&(wparam.0&0xffff))&&((wparam.0>>16)&0xffff)==BN_CLICKED as usize=>{let slot=(wparam.0&0xffff)-FIRST-CHANNEL_FIRST;let token=s.channel_controls.borrow()[slot].clone();let result=token.as_ref().ok_or_else(||anyhow::anyhow!(\"頻道目前尚未可操作\")).and_then(|c|s.runtime.borrow_mut().as_mut().unwrap().handle_player_entry_command(EntryCommand::ChooseChannel(c)));if let Err(e)=result{label(s.controls.get()[STATUS],&e.to_string());}else{refresh(hwnd,s);}LRESULT(0)},"
+    },
+    {
+      "line": 138,
+      "text": "  WM_CLOSE=>{s.menu_mut(Menu::cancel_press);let _=ReleaseCapture();action(hwnd,s,Action::Close);LRESULT(0)},WM_SIZE=>{resize(hwnd,s);LRESULT(0)},WM_PAINT=>{paint(hwnd,s);LRESULT(0)},"
+    },
+    {
+      "line": 143,
+      "text": "pub fn run(inputs:Inputs,skin_inputs:Inputs,start_at_maps:bool)->Result<Outcome>{run_inner(inputs,skin_inputs,start_at_maps,None,None,None)}"
+    },
+    {
+      "line": 144,
+      "text": "pub fn run_synthetic_fixture(inputs:Inputs,skin_inputs:Inputs,profile:FixtureProfile)->Result<Outcome>{run_inner(inputs,skin_inputs,false,Some(profile),None,None)}"
+    }
+  ]
+}

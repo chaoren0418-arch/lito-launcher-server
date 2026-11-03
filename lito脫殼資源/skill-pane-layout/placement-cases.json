@@ -1,0 +1,459 @@
+{
+  "oracle": "CODE_DERIVED_ONLY, not native execution or Modern output",
+  "coordinate_basis": "Placement origin is already resolved after pane/frame/drag/global translation. Hit cases use owner/input coordinates and upstream rect gate; global translation assumed0 for these cases, not observed runtime state.",
+  "placement_cases": [
+    {
+      "count": 80,
+      "scroll_start": 0,
+      "already_resolved_origin": [
+        37,
+        43
+      ],
+      "placements": [
+        {
+          "index": 0,
+          "caller_origin": [
+            37,
+            43
+          ]
+        },
+        {
+          "index": 1,
+          "caller_origin": [
+            71,
+            43
+          ]
+        },
+        {
+          "index": 2,
+          "caller_origin": [
+            105,
+            43
+          ]
+        },
+        {
+          "index": 3,
+          "caller_origin": [
+            139,
+            43
+          ]
+        },
+        {
+          "index": 4,
+          "caller_origin": [
+            37,
+            77
+          ]
+        },
+        {
+          "index": 5,
+          "caller_origin": [
+            71,
+            77
+          ]
+        },
+        {
+          "index": 6,
+          "caller_origin": [
+            105,
+            77
+          ]
+        },
+        {
+          "index": 7,
+          "caller_origin": [
+            139,
+            77
+          ]
+        },
+        {
+          "index": 8,
+          "caller_origin": [
+            37,
+            111
+          ]
+        },
+        {
+          "index": 9,
+          "caller_origin": [
+            71,
+            111
+          ]
+        },
+        {
+          "index": 10,
+          "caller_origin": [
+            105,
+            111
+          ]
+        },
+        {
+          "index": 11,
+          "caller_origin": [
+            139,
+            111
+          ]
+        },
+        {
+          "index": 12,
+          "caller_origin": [
+            37,
+            145
+          ]
+        },
+        {
+          "index": 13,
+          "caller_origin": [
+            71,
+            145
+          ]
+        },
+        {
+          "index": 14,
+          "caller_origin": [
+            105,
+            145
+          ]
+        },
+        {
+          "index": 15,
+          "caller_origin": [
+            139,
+            145
+          ]
+        },
+        {
+          "index": 16,
+          "caller_origin": [
+            37,
+            179
+          ]
+        },
+        {
+          "index": 17,
+          "caller_origin": [
+            71,
+            179
+          ]
+        },
+        {
+          "index": 18,
+          "caller_origin": [
+            105,
+            179
+          ]
+        },
+        {
+          "index": 19,
+          "caller_origin": [
+            139,
+            179
+          ]
+        },
+        {
+          "index": 20,
+          "caller_origin": [
+            37,
+            213
+          ]
+        },
+        {
+          "index": 21,
+          "caller_origin": [
+            71,
+            213
+          ]
+        },
+        {
+          "index": 22,
+          "caller_origin": [
+            105,
+            213
+          ]
+        },
+        {
+          "index": 23,
+          "caller_origin": [
+            139,
+            213
+          ]
+        }
+      ],
+      "loop_vs_closed_form_equal": true,
+      "parameter_status": "code-derived inputs, not observed native pane state"
+    },
+    {
+      "count": 10,
+      "scroll_start": 4,
+      "already_resolved_origin": [
+        37,
+        43
+      ],
+      "placements": [
+        {
+          "index": 4,
+          "caller_origin": [
+            37,
+            43
+          ]
+        },
+        {
+          "index": 5,
+          "caller_origin": [
+            71,
+            43
+          ]
+        },
+        {
+          "index": 6,
+          "caller_origin": [
+            105,
+            43
+          ]
+        },
+        {
+          "index": 7,
+          "caller_origin": [
+            139,
+            43
+          ]
+        },
+        {
+          "index": 8,
+          "caller_origin": [
+            37,
+            77
+          ]
+        },
+        {
+          "index": 9,
+          "caller_origin": [
+            71,
+            77
+          ]
+        }
+      ],
+      "loop_vs_closed_form_equal": true,
+      "parameter_status": "code-derived inputs, not observed native pane state"
+    },
+    {
+      "count": 80,
+      "scroll_start": 79,
+      "already_resolved_origin": [
+        101,
+        60
+      ],
+      "placements": [
+        {
+          "index": 79,
+          "caller_origin": [
+            101,
+            60
+          ]
+        }
+      ],
+      "loop_vs_closed_form_equal": true,
+      "parameter_status": "code-derived inputs, not observed native pane state"
+    },
+    {
+      "count": 80,
+      "scroll_start": 80,
+      "already_resolved_origin": [
+        37,
+        43
+      ],
+      "placements": [],
+      "loop_vs_closed_form_equal": true,
+      "parameter_status": "code-derived inputs, not observed native pane state"
+    }
+  ],
+  "hit_cases": [
+    {
+      "gate": "IN_RECT",
+      "index": 0,
+      "row": 0,
+      "column": 0,
+      "point": [
+        37,
+        43
+      ],
+      "rect": [
+        37,
+        43,
+        174,
+        248
+      ],
+      "count": 80,
+      "scroll_start": 0
+    },
+    {
+      "gate": "IN_RECT",
+      "index": 23,
+      "row": 5,
+      "column": 3,
+      "point": [
+        172,
+        246
+      ],
+      "rect": [
+        37,
+        43,
+        174,
+        248
+      ],
+      "count": 80,
+      "scroll_start": 0
+    },
+    {
+      "gate": "4CD480_UPPER_BOUND_REJECT",
+      "index": -1,
+      "row": 0,
+      "column": 4,
+      "point": [
+        173,
+        43
+      ],
+      "rect": [
+        37,
+        43,
+        174,
+        248
+      ],
+      "count": 80,
+      "scroll_start": 0
+    },
+    {
+      "gate": "IN_RECT",
+      "index": 24,
+      "row": 6,
+      "column": 0,
+      "point": [
+        37,
+        247
+      ],
+      "rect": [
+        37,
+        43,
+        174,
+        248
+      ],
+      "count": 80,
+      "scroll_start": 0
+    },
+    {
+      "gate": "OUTSIDE_UPSTREAM_RECT",
+      "index": null,
+      "point": [
+        37,
+        248
+      ],
+      "rect": [
+        37,
+        43,
+        174,
+        248
+      ],
+      "count": 80,
+      "scroll_start": 0
+    }
+  ],
+  "normal_bitmap_offset_case": {
+    "already_resolved_grid_origin": [
+      37,
+      43
+    ],
+    "asset": "shared91.tbt",
+    "source_vector": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\vector.json",
+      "bytes": 22431,
+      "sha256": "BEFA644252EAAE58137912E9B7C350F0BBDBA56E0E884061287CDC819295CED8"
+    },
+    "normal_blitter_header_offset": [
+      3,
+      5
+    ],
+    "normal_blitter_effective_origin": [
+      40,
+      48
+    ],
+    "inherited_blitter_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "bytes": 6519,
+      "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803"
+    },
+    "applied_in_grid_loop": false,
+    "applied_in_normal_4BE000": true,
+    "alternate_8300E4_offset_application": "UNKNOWN_BODY",
+    "original_GUI_oracle": false
+  },
+  "scroll_cases": [
+    {
+      "start": 0,
+      "count": 80,
+      "action": "up4",
+      "parameter": null,
+      "expected_start": 0,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 0,
+      "count": 80,
+      "action": "down4",
+      "parameter": null,
+      "expected_start": 4,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 0,
+      "count": 80,
+      "action": "page_down36",
+      "parameter": null,
+      "expected_start": 36,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 76,
+      "count": 80,
+      "action": "page_down36",
+      "parameter": null,
+      "expected_start": 76,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 4,
+      "count": 80,
+      "action": "page_up36",
+      "parameter": null,
+      "expected_start": 0,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 0,
+      "count": 80,
+      "action": "slider",
+      "parameter": 231,
+      "expected_start": 76,
+      "start_valid_for_draw": true,
+      "code_derived": true
+    },
+    {
+      "start": 0,
+      "count": 80,
+      "action": "callback_row",
+      "parameter": 21,
+      "expected_start": 84,
+      "start_valid_for_draw": false,
+      "code_derived": true
+    }
+  ],
+  "unsafe_negative_start": {
+    "read_site": "004CD300",
+    "guard_missing": "No start>=0 check before table[start]; model does not execute this unsafe case"
+  },
+  "checks": "4 loop-vs-formula cases,5 hit boundaries,7 scroll transitions,1 inherited actual-source-offset calculation. No previous resource/packet test replay."
+}

@@ -1,0 +1,472 @@
+{
+  "function": "43FFC0(filename inECX)",
+  "VA": "0043FFC0",
+  "RVA": "0003FFC0",
+  "fixed_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "file_offset": 262080,
+  "bytes": 65,
+  "facts": [
+    {
+      "id": "R01",
+      "topic": "Input and byte accumulation",
+      "anchors": [
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFC2",
+            "bytes": "8bf1",
+            "mnemonic": "mov",
+            "operands": "esi, ecx"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFCC",
+            "bytes": "33db",
+            "mnemonic": "xor",
+            "operands": "ebx, ebx"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFCE",
+            "bytes": "33d2",
+            "mnemonic": "xor",
+            "operands": "edx, edx"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFD0",
+            "bytes": "f2ae",
+            "mnemonic": "repne scasb",
+            "operands": "al, byte ptr es:[edi]"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFDB",
+            "bytes": "8a0432",
+            "mnemonic": "mov",
+            "operands": "al, byte ptr [edx + esi]"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFE1",
+            "bytes": "03d8",
+            "mnemonic": "add",
+            "operands": "ebx, eax"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFE6",
+            "bytes": "f2ae",
+            "mnemonic": "repne scasb",
+            "operands": "al, byte ptr es:[edi]"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFED",
+            "bytes": "72e8",
+            "mnemonic": "jb",
+            "operands": "0x43ffd7"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        }
+      ],
+      "direct_contract": "ECXisfilenamepointer;ESI retainsit. EBX/EDXstart0. REPNE SCASB findsfirstNUL andlength;eachiterationzeroesEAX,loadsAL=unsignedbyte[ESI+EDX],ADD32 toEBX,incrementsEDX andrescansstrlen. EmptyCString returnszero.",
+      "conditions": "Readable,stableNULterminatedCString,DFclear ABI assumption;function hasnoexplicitmaxlen/buffer/filerouteguard. A malformed/mutatingCString isnotqualified."
+    },
+    {
+      "id": "R02",
+      "topic": "General signed remainder contract",
+      "anchors": [
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFEF",
+            "bytes": "8bc3",
+            "mnemonic": "mov",
+            "operands": "eax, ebx"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFF1",
+            "bytes": "250f000080",
+            "mnemonic": "and",
+            "operands": "eax, 0x8000000f"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFF6",
+            "bytes": "7905",
+            "mnemonic": "jns",
+            "operands": "0x43fffd"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFF8",
+            "bytes": "48",
+            "mnemonic": "dec",
+            "operands": "eax"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFF9",
+            "bytes": "83c8f0",
+            "mnemonic": "or",
+            "operands": "eax, 0xfffffff0"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "0043FFFC",
+            "bytes": "40",
+            "mnemonic": "inc",
+            "operands": "eax"
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        },
+        {
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0043FFC0",
+            "rva": "0003FFC0",
+            "file_offset": 262080,
+            "bytes": 65
+          },
+          "instruction": {
+            "va": "00440000",
+            "bytes": "c3",
+            "mnemonic": "ret",
+            "operands": ""
+          },
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract\\fixed-PE-resolver-and-route-cells.json",
+            "bytes": 9478,
+            "sha256": "38E92D1EAB87E3C0E51B1CF9A3B0F19A976558636262A3618ED1EE2417BE02A4"
+          },
+          "evidence_level": "FixedPE exactrawbytes/sourcearithmetic only;no Nativeexecution"
+        }
+      ],
+      "direct_contract": "S=sum(unsignednonNULbytes) modulo2^32. EAXreturns signed_int32(S) remainder16 withtruncationtowardzero. Ifsignbitclear,returnS&15;ifsignbitset,return0whenlow4=0,elselow4-16. Generalrange -15..15,notunconditional0..15.",
+      "conditions": "No privatecallee,noglobaltable/stringnamespace access. Modulo/sign claimsderivefromAND8000000F/JNS/DEC/ORFFFFFFF0/INC,not aNativefunctiontest."
+    },
+    {
+      "id": "R03",
+      "topic": "Current source-qualified ASCII filename domain",
+      "anchors": [],
+      "direct_contract": "InheritedBatch36 factory ordinalsPNG0..809 andIMG0..7873 plusfixedformats%d.png/%d[ecjh].img produceexpectedshortASCIIrequests. Conservativebyte-sum maximaPNG542,IMG697 arebelow2^31;undertheseconditionsindex0..15. IMG79suffix/plainrequestsalsosatisfythisdomain.",
+      "conditions": "Conditionalonvalidfactoryordinalandcorrectexternalformatting/NULoutputalreadyqualifiedassourceonly. Do notextendnonnegativeguaranteetoarbitrarycallerCString,untrustedpointerornegativeid;noformatter/runtimeacceptance."
+    },
+    {
+      "id": "R04",
+      "topic": "No extension or namespace classification",
+      "anchors": [],
+      "direct_contract": "Thefull65byteleaf containsonlyCString scanning,byteaddition,signedmod16 andregisterrestore. No extension/prefixcompare,lowercase/casefold,archive/membersearch,staticclassificationtable orstringliteral. Distinctnames0.png/79.png route3,19.png/91.png route13;ASCIIcase0.PNG also3withoutexplicitnormalization.",
+      "conditions": "Bucketcollision notidentity/namespace/fileexistence. Thisdoesnotprovecasepolicyof42EA50 oractualcontainer. Byteadditionignoresorder;allinputbytesincludingextension/pathwouldcontribute."
+    },
+    {
+      "id": "R05",
+      "topic": "6479E8 correspondence and first dynamic blocker",
+      "anchors": [],
+      "direct_contract": "Inheritedsourcecallerloadsprovider ECX=[6479E8+EAX*4]. Forqualifiedindex0..15,address6479E8..647A24 (halfopenend647A28). Those16fixedPEcellsarerawzero. Generalnegativeindexcouldaddressbelowbase;resolveritselfdoesnotcheckthat,soadmissibilitycomesfromqualifiedshortASCIIcallercontract.",
+      "conditions": "Thisis16admissibleaddresses,notproofallocatedproviderarrayextentorliveemptytable. Providerobject/backingcontainer/filename-to-offset aredynamicunknown. Stopatthisfirstnewdynamicdependency;42EA50/providerwriter notopened."
+    }
+  ],
+  "input_domain": "Stable readableCString throughfirstNUL,DF0;no explicitsizebound",
+  "return_general": {
+    "operation": "signed_int32(sum(unsignedbytes) modulo2^32) remainder16,truncate towardzero",
+    "minimum": -15,
+    "maximum": 15,
+    "empty": 0,
+    "sign_bit_branch_examples": [
+      {
+        "S_u32_hex": "80000000",
+        "EAX_signed": 0
+      },
+      {
+        "S_u32_hex": "80000001",
+        "EAX_signed": -15
+      },
+      {
+        "S_u32_hex": "FFFFFFFF",
+        "EAX_signed": -1
+      }
+    ]
+  },
+  "return_current_source_qualified_names": {
+    "minimum": 0,
+    "maximum": 15,
+    "PNG_max_ASCII_sum_bound": 542,
+    "IMG_max_ASCII_sum_bound": 697,
+    "qualification": "Expectedsourceformatrequestsfromnonnegativefactoryordinals,notgeneralNativecallerguarantee."
+  },
+  "namespace_classification": false,
+  "route_to_provider_identity_resolved": false,
+  "internal_calls": 0,
+  "static_table_or_string_dependency_within_resolver": false,
+  "inherited_Batch36_caller_and_literal_evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\direct-bank-source-facts.json",
+      "bytes": 59290,
+      "sha256": "23A886A94CD7989F387D87FECD6639B13A34566036738485C6E08B7B3522D77B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary\\fixed-PE-bank-boundaries.json",
+      "bytes": 82855,
+      "sha256": "A1A02A73F8B77CFD8167A343EA486506782F6A616F8BAF793767099E57E7A745"
+    }
+  ],
+  "first_new_dependency": "Dynamic6479E8[computedbucket] providerobject;container/memberoffset notpresent inclassifier",
+  "no_new_asset_or_wire": true
+}

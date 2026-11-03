@@ -1,0 +1,17 @@
+{
+  "run_id": "world-shared-test-20261020-02",
+  "native_pid": 105300,
+  "owner_exec_session": 22143,
+  "scale": 200,
+  "resources_ready": {
+    "pid": 105300,
+    "profile": "tw13081901-v1",
+    "base_count": 30000,
+    "total_count": 30285,
+    "native_cleanup_complete": true
+  },
+  "sql_ready": true,
+  "formal_updated": false,
+  "manual_result": "pending user",
+  "dependency_fix": "Four unchanged formal runtime libraries copied beside isolated candidate JAR; preflight now verifies them."
+}

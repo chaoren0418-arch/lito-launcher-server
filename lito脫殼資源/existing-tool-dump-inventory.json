@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe.json",
+      "bytes": 2761,
+      "sha256": "0EDEEE9F8BEC81D8A3DFD4BCA510BEAF5B6F7FEFDC5B45EAF1BD8BB815BC0D34"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-full\\LiTo.unpacked.full-same-boot.validation.json",
+      "bytes": 642,
+      "sha256": "027761A1ECE2C8FD2F3AB176430BBD69093FC290DB938513A00B29B7771AD830"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-full\\LiTo.unpacked.same-boot.exe.json",
+      "bytes": 7306,
+      "sha256": "57C21927D652625F2B5D6BE9FB8DA580D639A77770B8EB1521F5EFC36864D76A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-result-r9\\LiTo.unpacked.full-same-boot.validation.json",
+      "bytes": 642,
+      "sha256": "027761A1ECE2C8FD2F3AB176430BBD69093FC290DB938513A00B29B7771AD830"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\client-result-r9\\LiTo.unpacked.same-boot.exe.json",
+      "bytes": 7306,
+      "sha256": "57C21927D652625F2B5D6BE9FB8DA580D639A77770B8EB1521F5EFC36864D76A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\tools\\ida_immediate_contract.py",
+      "bytes": 2027,
+      "sha256": "893052E2B96181BD9CF947BEF2E03276DBD2C33E5E4AB78ABB357EEA0A596F62"
+    }
+  ],
+  "scope": "runtime/tools/client-toolbox; junctions and live client folders excluded; no processes opened"
+}

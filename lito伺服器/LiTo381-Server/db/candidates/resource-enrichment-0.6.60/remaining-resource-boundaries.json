@@ -1,0 +1,20 @@
+{
+  "package_status": "未匯入、未接線",
+  "rows": [
+    {
+      "archive": "Text",
+      "member": "desc-c.tbl",
+      "old_index_sha256": "9fdf2e2a220dafcee69b512d7bc5d5672e92835d6d0aeddbdcee8bfa3ed15bf4",
+      "current_index_sha256": "039f01b53ee2a1a470798444be78a106b63a8faa2dafe32a03c7069203675871",
+      "old_pak_sha256": "81e4b61d7df6d48dc7149e3d3de53be1db90a5dc1121179ab2234a97ffc311b0",
+      "current_pak_sha256": "19bfe9d44c55f697d55ca23292509aea56dbbc1f534427afc740522081b7448c",
+      "changed_or_removed_old_index_records": 9579,
+      "new_or_changed_index_records": 9580,
+      "added_pak_bytes": 164,
+      "same_name_duplicates": false,
+      "same_name_member_count": 1,
+      "active_runtime_winner_confirmed": null,
+      "qualification": "selected member only; explicit retained raw payload identity when duplicate; independent decode; old whole-container equality NOT claimed"
+    }
+  ]
+}

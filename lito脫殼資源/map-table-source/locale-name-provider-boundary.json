@@ -1,0 +1,14 @@
+{
+  "selector_VA": "00636584",
+  "raw_helper": "004D43D0 complete45, noexternalcalls",
+  "values": {
+    "932": "j",
+    "936": "h",
+    "949": "k",
+    "950": "c",
+    "other": "e"
+  },
+  "name_arguments": "4D4450 signedextendsAL, preparesexternal773F5200 args stackbuf256,%s-%c.tbl,inputbasename,selectorchar; fixedbaseLTmapstr.",
+  "actual_name_or_loaded_file": "unknownatfirstexternal/privateinput. Fourlocale.tbl+oneh.txt areexistingcandidatesonly; h.txt doesnotmatchformat.tbl. Noe.tbl bindingfromthisfinitecandidateinventory.",
+  "not_codepage_authority": "Knownconstantslooklikecodes,but actualprivateprovider/API/currentsetting/localeupdate/epochnotqualified; do notinferGetACP/nameAPI or64B6DCequivalence."
+}

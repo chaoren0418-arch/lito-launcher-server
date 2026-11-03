@@ -1,0 +1,256 @@
+{
+  "archive_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+    "bytes": 760029,
+    "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+  },
+  "candidates": [
+    {
+      "name": "LTmapstr-c.tbl",
+      "archive": "LTtext",
+      "row": 241,
+      "offset": 184806,
+      "bytes": 2458,
+      "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+      "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00241-LTmapstr-c.tbl",
+        "bytes": 2458,
+        "sha256": "DA88809E3691B365B85241802314A78BE263F5D113B7318B2A9BE135DBC6C4DD"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00241-LTmapstr-c.tbl",
+        "bytes": 2458,
+        "sha256": "9DC26DE8BB303B9A2C63CED51EDEAF9E2D6252C450EF8801AC6B21F8B9F949E4"
+      },
+      "encoding_reference": "L1",
+      "first_nonempty_line_hex": "3637",
+      "first_nonempty_line_ascii": "67",
+      "first_6_nonempty_lines": [
+        {
+          "physical_line_1based": 1,
+          "raw_hex": "3637"
+        },
+        {
+          "physical_line_1based": 2,
+          "raw_hex": "35303023746f776e23746f776e236d696e696d6170"
+        },
+        {
+          "physical_line_1based": 3,
+          "raw_hex": "35363023746f776e23746f776e32236d696e696d6170"
+        },
+        {
+          "physical_line_1based": 4,
+          "raw_hex": "6e6f206578697374236e6f20657873697374"
+        },
+        {
+          "physical_line_1based": 5,
+          "raw_hex": "6e6f206578697374236e6f20657873697374"
+        },
+        {
+          "physical_line_1based": 6,
+          "raw_hex": "353635237065745261636523c476b374abb0a5ab"
+        }
+      ],
+      "qualification": "Existingsealeddecodedcandidate only; nofileextraction/codecredecode/providerload. Physicalfileheader/lineordinalnotlivecount/recordindex/keybinding."
+    },
+    {
+      "name": "LTmapstr-h.tbl",
+      "archive": "LTtext",
+      "row": 242,
+      "offset": 187264,
+      "bytes": 1377,
+      "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+      "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00242-LTmapstr-h.tbl",
+        "bytes": 1377,
+        "sha256": "57D700E3709A8513E45F8F2E6D9485FB107547645D4A762BA0D928D4F47CB088"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00242-LTmapstr-h.tbl",
+        "bytes": 1377,
+        "sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07"
+      },
+      "encoding_reference": "L1",
+      "first_nonempty_line_hex": "3432",
+      "first_nonempty_line_ascii": "42",
+      "first_6_nonempty_lines": [
+        {
+          "physical_line_1based": 1,
+          "raw_hex": "3432"
+        },
+        {
+          "physical_line_1based": 2,
+          "raw_hex": "64656174686d6174636823d6f2cca8bebabcbcb3a120"
+        },
+        {
+          "physical_line_1based": 3,
+          "raw_hex": "3b64656174686d6174636823d1aac8bebdd7ccdd2020"
+        },
+        {
+          "physical_line_1based": 4,
+          "raw_hex": "3b64656174686d6174636823d4b2d0cebebabcbcb3a1"
+        },
+        {
+          "physical_line_1based": 5,
+          "raw_hex": "64656174686d6174636823c5b7d6debba8d4b0236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638"
+        },
+        {
+          "physical_line_1based": 6,
+          "raw_hex": "64656174686d6174636823c3fcd4cbcaaed7d6c2b7"
+        }
+      ],
+      "qualification": "Existingsealeddecodedcandidate only; nofileextraction/codecredecode/providerload. Physicalfileheader/lineordinalnotlivecount/recordindex/keybinding."
+    },
+    {
+      "name": "LTmapstr-h.txt",
+      "archive": "LTtext",
+      "row": 243,
+      "offset": 188641,
+      "bytes": 396,
+      "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+      "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00243-LTmapstr-h.txt",
+        "bytes": 396,
+        "sha256": "0EF0CF1CE87D16B3A8A0F8D74F4D62E11F97537989CA1DD50B60A1272B68F3D1"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00243-LTmapstr-h.txt",
+        "bytes": 396,
+        "sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3"
+      },
+      "encoding_reference": "L1",
+      "first_nonempty_line_hex": "3332",
+      "first_nonempty_line_ascii": "32",
+      "first_6_nonempty_lines": [
+        {
+          "physical_line_1based": 1,
+          "raw_hex": "3332"
+        },
+        {
+          "physical_line_1based": 2,
+          "raw_hex": "d6f2cca8bebabcbcb3a1"
+        },
+        {
+          "physical_line_1based": 3,
+          "raw_hex": "d1aac8bebdd7ccdd"
+        },
+        {
+          "physical_line_1based": 4,
+          "raw_hex": "d4b2d0cebebabcbcb3a1"
+        },
+        {
+          "physical_line_1based": 5,
+          "raw_hex": "c5b7d6debba8d4b0"
+        },
+        {
+          "physical_line_1based": 6,
+          "raw_hex": "c3fcd4cbcaaed7d6c2b7"
+        }
+      ],
+      "qualification": "Existingsealeddecodedcandidate only; nofileextraction/codecredecode/providerload. Physicalfileheader/lineordinalnotlivecount/recordindex/keybinding."
+    },
+    {
+      "name": "LTmapstr-j.tbl",
+      "archive": "LTtext",
+      "row": 244,
+      "offset": 189037,
+      "bytes": 1851,
+      "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+      "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00244-LTmapstr-j.tbl",
+        "bytes": 1851,
+        "sha256": "3CF54B23EC8044B313FB876D1845D2B711181ADEDDEB7C1D344E2889A676A36F"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00244-LTmapstr-j.tbl",
+        "bytes": 1851,
+        "sha256": "70EFB7A2A15A1D2B87D219365A749F42963E54FFDB55F585D8B38E56A8F1F91B"
+      },
+      "encoding_reference": "L1",
+      "first_nonempty_line_hex": "3537",
+      "first_nonempty_line_ascii": "57",
+      "first_6_nonempty_lines": [
+        {
+          "physical_line_1based": 1,
+          "raw_hex": "3537"
+        },
+        {
+          "physical_line_1based": 2,
+          "raw_hex": "64656174686d617463682343616e646c657374616e6420"
+        },
+        {
+          "physical_line_1based": 3,
+          "raw_hex": "3b64656174686d6174636823526564205374616972732020"
+        },
+        {
+          "physical_line_1based": 4,
+          "raw_hex": "3b64656174686d617463682333202d204172656e61"
+        },
+        {
+          "physical_line_1based": 5,
+          "raw_hex": "64656174686d617463682347617264656e236d696e696d61702378736567312379736567312378506f7333323833312379506f733332373638"
+        },
+        {
+          "physical_line_1based": 6,
+          "raw_hex": "64656174686d617463682343726f7373726f6164"
+        }
+      ],
+      "qualification": "Existingsealeddecodedcandidate only; nofileextraction/codecredecode/providerload. Physicalfileheader/lineordinalnotlivecount/recordindex/keybinding."
+    },
+    {
+      "name": "LTmapstr-k.tbl",
+      "archive": "LTtext",
+      "row": 245,
+      "offset": 190888,
+      "bytes": 2584,
+      "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+      "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+      "raw": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00245-LTmapstr-k.tbl",
+        "bytes": 2584,
+        "sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F"
+      },
+      "decoded": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00245-LTmapstr-k.tbl",
+        "bytes": 2584,
+        "sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+      },
+      "encoding_reference": "L1",
+      "first_nonempty_line_hex": "3637",
+      "first_nonempty_line_ascii": "67",
+      "first_6_nonempty_lines": [
+        {
+          "physical_line_1based": 1,
+          "raw_hex": "3637"
+        },
+        {
+          "physical_line_1based": 2,
+          "raw_hex": "35303023746f776e23746f776e236d696e696d6170"
+        },
+        {
+          "physical_line_1based": 3,
+          "raw_hex": "35363023746f776e23746f776e32236d696e696d6170"
+        },
+        {
+          "physical_line_1based": 4,
+          "raw_hex": "6e6f206578697374236e6f20657873697374"
+        },
+        {
+          "physical_line_1based": 5,
+          "raw_hex": "6e6f206578697374236e6f20657873697374"
+        },
+        {
+          "physical_line_1based": 6,
+          "raw_hex": "353635237065745261636523526163696e672043697479"
+        }
+      ],
+      "qualification": "Existingsealeddecodedcandidate only; nofileextraction/codecredecode/providerload. Physicalfileheader/lineordinalnotlivecount/recordindex/keybinding."
+    }
+  ],
+  "extraction_or_archive_replay": false,
+  "binding": "Noactualproviderselection/tablematerialization/recordordinalbinding. Filefirstlinee.g.67 iscandidateheader, NOT qualified64AFD0count. Existingdecodedbinary remainsauthoritative; nopersonalcodepage/redecode."
+}

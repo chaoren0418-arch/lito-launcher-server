@@ -1,0 +1,75 @@
+{
+  "contracts": [
+    {
+      "direction": "server-to-client",
+      "opcode_hex": "D1",
+      "opcode_decimal": 209,
+      "schema": "sc",
+      "VA": "004A9550",
+      "RVA": "000A9550",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "index": 1,
+          "type": "NUL8bitstring",
+          "endianness": "byte stream",
+          "encoding": "ActualNative lead/fold initializedauthority required; capturesASCII,JavaMS950 separate",
+          "capacity_including_NUL": 28,
+          "body_offset": 1
+        },
+        {
+          "index": 2,
+          "type": "8bitstate",
+          "endianness": "singlebyte",
+          "body_offset": "2+A",
+          "domain": "Known0NOT_READY/1READY/2SHOP_LIST; Native self tests exactly1, doesnotvalidate0..2here; recordbyte/UI MOVSX i8"
+        }
+      ],
+      "body_bytes": "3+A",
+      "frame_bytes": "5+A",
+      "absent_fields": [
+        "roomId",
+        "epoch",
+        "requestID",
+        "owner/source/physicalID"
+      ],
+      "trigger": "Java ready publication priorE1 peracceptedcontract; not a local command intent or native self authority",
+      "state_gate": "Nativephase2/3/6; self compare64ABF8; Batch15 tableguard",
+      "evidence": "Pinned completehandler assembledfrom2reusedraw+newgap;8sealedframes",
+      "unknown": "Actualnativephase/table/selfidentity, externalreaderbounds, world-preparation call effects stopped at call boundary"
+    },
+    {
+      "direction": "server-to-client",
+      "opcode_hex": "E1",
+      "opcode_decimal": 225,
+      "schema": "c",
+      "VA": "004AABB0",
+      "RVA": "000AABB0",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "index": 1,
+          "type": "8bitunsigneddisplay/count",
+          "endianness": "singlebyte",
+          "body_offset": 1,
+          "encoding": "none",
+          "Native_range_check": "none",
+          "Java_domain": "known3/2/1ticks;0cancellationsource/ILonly"
+        }
+      ],
+      "body_bytes": 2,
+      "frame_bytes": 4,
+      "trigger": "Java COUNTDOWN transition/tick/cancel publication; sameClientSessionROOM remainsseparate",
+      "states": "Nativeprimarydispatcher only; handlerphase3/6 soundmessage thenre-readphase; phase4 enqueuepresentationcallbacks; otherreturn",
+      "absent_fields": [
+        "roomId",
+        "epoch/generation",
+        "deadline/timestamp",
+        "startgrant",
+        "owneridentity"
+      ],
+      "evidence": "Pinned complete272bytehandler/directhelpers and12sealed3/2/1frames",
+      "unknown": "actualNativephase/UI/schedulerauthority, cancellation0 dynamicbehavior, tabledependentD1transition, Java publishrace/postcommit outsideNativequalification"
+    }
+  ]
+}

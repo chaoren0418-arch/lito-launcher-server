@@ -1,0 +1,57 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\NativeSilenceMaterialAction.java",
+      "sha256": "b50e229557a935ace6172f0997109bfc798e5d4a8c3df305eb128872af26873a"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceFaultProbe.java",
+      "sha256": "1a1f40ebf36358bcf8b99ff3cc4624392642bc0bc12d961f1bb199db67e92652"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceLifecycleProbe.java",
+      "sha256": "cda63a86f61d52d85068c6004e0a4be71cf887d8e17717016731241440791497"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceMaterialMethods.java",
+      "sha256": "00418d09c96abe536e6c6964ddf720c68d66f0b9605e0edfda21e259e4b770c3"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceMaterialProbe.java",
+      "sha256": "a9ba87bebb1e0226fb74628b565626845b8adc0943bc3815c42f9f901946578f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceWorldNpcProbe.java",
+      "sha256": "4fe8c1db9f7f3f8a4f382427b101e764201341be803d29c1493e28b3239d6d5b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build.py",
+      "sha256": "736edd34eef0bf81046e77ad15cb1a07577d5ab684145cc01811996ceb330117"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\test.py",
+      "sha256": "3b523c3fe1266e1a205c832d845c32b6e6c81915ecdc1698ac402a5a321de4e0"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\test_boundaries.py",
+      "sha256": "32040d90c8d09690236bf3037db544513090c803c6feae8bdb3201f697743d62"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\test_world_npcs.py",
+      "sha256": "ca189d30494226101b21372a039c99b501468ed00b9848c1030a8d2b7090d954"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessLifecycleProbe.java",
+      "sha256": "a8a357831a8353583f55a703654cc5e1be5cf4204bb33732ac91e959a1437a9c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\build\\sleep-decay-audit\\inputs.json",
+      "sha256": "7d973ae3760ab2671790f3fefcc9dfaa9fe18f3a095d63d60a2b16d9f5155ff5"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\prepare.py",
+      "sha256": "ab1d1da3698c8ace88c1bb549e99a9c9e9469a13bd39a2e33fa4b1b8e77a58a0"
+    }
+  ],
+  "scope": "skill71 only; original eligibility/probability/counter/status bodies retained; potion consumer and full target qualification remain separate"
+}

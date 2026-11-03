@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\build\\candidate-target-negative-material.jar",
+    "sha256": "c3c4c84f7efcf8ab9c8513f10b58457f5c7056c436a13872f50e049dfeedf882"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\candidate-blind-material.jar",
+    "sha256": "dd9c336f14976831ac8c7a91b660a0fb2e4e775f66385688a59848fcbe774b91"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeBlindMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\BlindMaterialMethods.java",
+      "sha256": "979d06875988fdc5b641b31db0ff61aeb75aefeb49df13bc78a794547e302b72"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\build.py",
+      "sha256": "837f9ea527c8f4e86cf69b3f10f4d689e439c683b0eb534af40a6a17250f8668"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "ba4fb572e730860832c83b6402ce3bd49f8beb7f08fae788418701c3e317a9f1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\sources\\NativeBlindMaterialAction.java",
+      "sha256": "8451e73e3e71c5ed9a08a8129e9728ed9f281451a735652c599dfc8d4923ac9c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "8991f7dc8bdf3aad4d8d473aaa2d18a4f67ce3cabfe5a39aef3af13f0a760646"
+    }
+  ]
+}

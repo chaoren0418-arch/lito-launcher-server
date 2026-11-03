@@ -1,0 +1,366 @@
+{
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "record_base": {
+    "va": "0062FAA0",
+    "rva": "0022FAA0",
+    "section": "   \u0000    ",
+    "file_offset": "0022FAA0",
+    "raw_backed": true
+  },
+  "stride_bytes": 180,
+  "target_field_offset": 62,
+  "target_field_width_bytes": 1,
+  "S_CB": {
+    "direction": "S",
+    "opcode": "CB",
+    "dispatch_call": {
+      "va": "004B3095",
+      "rva": "000B3095",
+      "section": "   \u0000    ",
+      "file_offset": "000B3095",
+      "raw_backed": true
+    },
+    "handler": {
+      "va": "004A7550",
+      "rva": "000A7550",
+      "section": "   \u0000    ",
+      "file_offset": "000A7550",
+      "raw_backed": true
+    },
+    "known_existing_row_format_after_opcode": "sscchhhcccccccccddddddddddcdddddc",
+    "format": {
+      "va": "006343B4",
+      "rva": "002343B4",
+      "section": "   \u0000    ",
+      "file_offset": "002343B4",
+      "raw_backed": true
+    },
+    "handler_first_unknown": {
+      "at": {
+        "va": "004A7572",
+        "rva": "000A7572",
+        "section": "   \u0000    ",
+        "file_offset": "000A7572",
+        "raw_backed": true
+      },
+      "target": "004D6970"
+    },
+    "alternative_first_unknown": "4A7587 tail496E80",
+    "qualified_argument_island": "4A758C..4A7636; indexDWORD76079C<countDWORD7607A0, inputECX copiedEDI then++ skipsopcode; ESI=62FAA0+index*180. No localcapacity/phase/owner qualification.",
+    "parser_call": {
+      "va": "004A7631",
+      "rva": "000A7631",
+      "section": "   \u0000    ",
+      "file_offset": "000A7631",
+      "raw_backed": true
+    },
+    "field_pointer": {
+      "lea": {
+        "va": "004A75E9",
+        "rva": "000A75E9",
+        "section": "   \u0000    ",
+        "file_offset": "000A75E9",
+        "raw_backed": true
+      },
+      "push": {
+        "va": "004A75F0",
+        "rva": "000A75F0",
+        "section": "   \u0000    ",
+        "file_offset": "000A75F0",
+        "raw_backed": true
+      },
+      "dest": "ESI+3E"
+    },
+    "field_token_ordinal_after_opcode_including_strings": 16,
+    "numeric_field_ordinal": 14,
+    "numeric_suffix_offset_bytes": 16,
+    "typed_store": "c dispatchcharmap1→4A2A8A;4A2A8D readsBYTE;4A2A93 writesBYTE toargumentpointer. Conditional only, earlierstwo strings hitexternal77409B70 then priorseek774095E0 unknownSTOP; no runtimeparsecompletion orcodec qualification.",
+    "row_after_opcode_arg_map_through_field16": [
+      {
+        "format_token_ordinal_excluding_opcode": 1,
+        "token": "s",
+        "destination_record_offset": 0,
+        "string_capacity_including_NUL": 28
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 2,
+        "token": "s",
+        "destination_record_offset": 28,
+        "string_capacity_including_NUL": 17
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 3,
+        "token": "c",
+        "destination_record_offset": 45,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 4,
+        "token": "c",
+        "destination_record_offset": 46,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 5,
+        "token": "h",
+        "destination_record_offset": 48,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 6,
+        "token": "h",
+        "destination_record_offset": 50,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 7,
+        "token": "h",
+        "destination_record_offset": 52,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 8,
+        "token": "c",
+        "destination_record_offset": 54,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 9,
+        "token": "c",
+        "destination_record_offset": 55,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 10,
+        "token": "c",
+        "destination_record_offset": 56,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 11,
+        "token": "c",
+        "destination_record_offset": 57,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 12,
+        "token": "c",
+        "destination_record_offset": 58,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 13,
+        "token": "c",
+        "destination_record_offset": 59,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 14,
+        "token": "c",
+        "destination_record_offset": 60,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 15,
+        "token": "c",
+        "destination_record_offset": 61,
+        "string_capacity_including_NUL": null
+      },
+      {
+        "format_token_ordinal_excluding_opcode": 16,
+        "token": "c",
+        "destination_record_offset": 62,
+        "string_capacity_including_NUL": null
+      }
+    ],
+    "caller_stack_pushes": 36,
+    "other_tail_fields": "Outside selectedfield qualification; remainingdestinations/extra frame slots/validation not requalified; useacceptedserver wire contract, not wholeNativeargumentcompletion.",
+    "AD368_reference": {
+      "report": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-character-directory-consumer-contract.json",
+        "bytes": 13072,
+        "sha256": "412748DE715782AEC88D00251DEE791A472EF7C180F905EDF43AA3A36B9464C7"
+      },
+      "fields": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\character-directory-consumer-contract-efd038f10a874fe597e462e2b2c9bc94\\S_CB-fields.json",
+        "sha256": "00E5BD5FEFA3A67B1AC4F1F28145CC78ECA8ABBDE74326F38B53E9DEA47DB9C4",
+        "bytes": 8721
+      },
+      "field": {
+        "name": "reserved_byte",
+        "kind": "u8",
+        "suffix_offset": 16,
+        "body_offset": "B+16",
+        "bytes": 1,
+        "bounds": "always0"
+      },
+      "Protocol_method": {
+        "method": "litoCharacterDirectoryRow",
+        "start_line": 5859,
+        "end_line": 5912,
+        "text": "    static byte[] litoCharacterDirectoryRow(LitoCharacterDirectoryRow row) {\n        if (row == null) throw new IllegalArgumentException(\"missing LiTo character row\");\n        if (row.rankings() == null || row.battleStatistics() == null) {\n            throw new IllegalArgumentException(\"missing LiTo character extension\");\n        }\n        requireBoundedLegacyString(row.name(), 1, 27, \"LiTo character name\");\n        requireBoundedLegacyString(row.clanName(), 0, 16, \"LiTo clan name\");\n        // sub_4A7550 stores the class byte without a 0..4 guard. The later\n        // sub_4928C0 selector has dedicated 0/1/2/4 branches and routes 3/5/6\n        // through its common class UI, so 3.81 dragon knights and illusionists\n        // are valid directory rows as well.\n        if (row.type() < 0 || row.type() > 6 || row.sex() < 0 || row.sex() > 1) {\n            throw new IllegalArgumentException(\"invalid LiTo character type or sex\");\n        }\n        requireSignedWord(row.lawful(), \"LiTo lawful\");\n        requireSignedNonNegativeWord(row.hp(), \"LiTo hp\");\n        requireSignedNonNegativeWord(row.mp(), \"LiTo mp\");\n        requireSignedByte(row.armorClass(), \"LiTo armor class\");\n        requirePositiveSignedByte(row.level(), \"LiTo level\");\n        requireNonNegativeSignedByte(row.strength(), \"LiTo strength\");\n        requireNonNegativeSignedByte(row.dexterity(), \"LiTo dexterity\");\n        requireNonNegativeSignedByte(row.constitution(), \"LiTo constitution\");\n        requireNonNegativeSignedByte(row.wisdom(), \"LiTo wisdom\");\n        requireNonNegativeSignedByte(row.charisma(), \"LiTo charisma\");\n        requireNonNegativeSignedByte(row.intelligence(), \"LiTo intelligence\");\n        requireUnsignedDword(row.nativeTime(), \"LiTo native character time\");\n\n        int checkCode = row.level() ^ row.strength() ^ row.dexterity()\n                ^ row.constitution() ^ row.wisdom() ^ row.charisma()\n                ^ row.intelligence();\n        LitoCharacterRankings ranks = row.rankings();\n        LitoCharacterBattleStatistics battle = row.battleStatistics();\n        return new Writer().c(S_LITO_CHARACTER_INFO)\n                .s(row.name()).s(row.clanName())\n                .c(row.type()).c(row.sex())\n                .h(row.lawful()).h(row.hp()).h(row.mp())\n                .c(row.armorClass()).c(row.level())\n                .c(row.strength()).c(row.dexterity()).c(row.constitution())\n                .c(row.wisdom()).c(row.charisma()).c(row.intelligence())\n                .c(0)\n                .d(row.nativeTime())\n                // Wire order follows the destination pointers pushed by\n                // sub_4A7550, not the visual ranking-row order.\n                .d(ranks.overall()).d(ranks.level()).d(ranks.classicServer())\n                .d(ranks.channel()).d(ranks.race())\n                .d(battle.disconnects()).d(battle.winRateDenominator())\n                .d(battle.wins()).d(battle.losses())\n                .c(battle.rankingSelector())\n                .d(ranks.overallMovement()).d(ranks.levelMovement())\n                .d(ranks.classicServerMovement()).d(ranks.channelMovement())\n                .d(ranks.raceMovement())\n                .c(checkCode)\n                .bytes();\n    }",
+        "sha256": "2EDD887C90832D0DE427B60B30FEC9D7B29ED28B76F352E93C9F0B6A890875DA"
+      },
+      "Protocol_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\runtime\\character-directory-consumer-contract-efd038f10a874fe597e462e2b2c9bc94\\source-slices\\Protocol-fields-reference.json",
+        "sha256": "4271C02C5A158858701C20A16252EEDE4CA712376D019853D4B8D0E0C6514068",
+        "bytes": 8974
+      },
+      "actual_JAR": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+        "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219",
+        "bytes": 8906298
+      },
+      "level": "accepted preexisting AD368 producer/source/finiteIL equality reference adopted asdata; reservedbyte always0. Nativeconditionaldestination mapping new; no runtime/matrix/golden replay."
+    },
+    "body_lengths": "B=3+N+M aftertwoMS950CStrings; targetoffset B+16; body82+N+M,frame84+N+M (u16LEtotallength); numeric suffix79. N1..27/M0..16 producerpolicy; Native strings capacities28/17 inclNUL,externalcopy/seek unknown."
+  },
+  "S03_marker_reset": {
+    "direction": "S",
+    "opcode": "03",
+    "dispatch_call": {
+      "va": "004B3177",
+      "rva": "000B3177",
+      "section": "   \u0000    ",
+      "file_offset": "000B3177",
+      "raw_backed": true
+    },
+    "handler": {
+      "va": "004A7450",
+      "rva": "000A7450",
+      "section": "   \u0000    ",
+      "file_offset": "000A7450",
+      "raw_backed": true
+    },
+    "format": "c afteropcode",
+    "body_bytes": 2,
+    "frame_bytes": 4,
+    "native_count": "readBYTE local thenMOVSX signedDWORD7607A0; resetindex76079C=0. Nativeboundedprefixhasno0..8guard; serverAD368policy0..8 separate.",
+    "clear_loop": "4A747B..4A7494: writesFF atrecord+2D/+2E for4slots(start62FACE,stepB4,stop62FD9E). No+3Eclear orwhole180bytezeroing.",
+    "marker_slots": [
+      {
+        "slot": 0,
+        "record_VA": "0062FAA0",
+        "writes": [
+          "0062FACD",
+          "0062FACE"
+        ],
+        "field3E_VA": "0062FADE"
+      },
+      {
+        "slot": 1,
+        "record_VA": "0062FB54",
+        "writes": [
+          "0062FB81",
+          "0062FB82"
+        ],
+        "field3E_VA": "0062FB92"
+      },
+      {
+        "slot": 2,
+        "record_VA": "0062FC08",
+        "writes": [
+          "0062FC35",
+          "0062FC36"
+        ],
+        "field3E_VA": "0062FC46"
+      },
+      {
+        "slot": 3,
+        "record_VA": "0062FCBC",
+        "writes": [
+          "0062FCE9",
+          "0062FCEA"
+        ],
+        "field3E_VA": "0062FCFA"
+      }
+    ],
+    "first_following_unknown": "4A749D→49A510 incountzero branch;countnonzero alternative4A74E0 notexpanded",
+    "capacity_limit": "Fourmarkerpairscan isnotproofcompleteNativecapacity4 or8. Acceptedserver8-rowpolicy/annotation cannot establish thisfixedPE storage/index safety."
+  },
+  "other_direct_marker_islands": [
+    {
+      "at": {
+        "va": "00492394",
+        "rva": "00092394",
+        "section": "   \u0000    ",
+        "file_offset": "00092394",
+        "raw_backed": true
+      },
+      "effect": "same4pairsFF at+2D/+2E;upstreamUI/resetinvoker unknown;no+3Eclear"
+    },
+    {
+      "at": {
+        "va": "004940EA",
+        "rva": "000940EA",
+        "section": "   \u0000    ",
+        "file_offset": "000940EA",
+        "raw_backed": true
+      },
+      "effect": "conditionalselectedrecord+2D=FF only;query4940D7→494120 firstunknown;afterreturnindependentmarkerisland virtual4940F8 [EDX]STOP"
+    },
+    {
+      "at": {
+        "va": "00497150",
+        "rva": "00097150",
+        "section": "   \u0000    ",
+        "file_offset": "00097150",
+        "raw_backed": true
+      },
+      "effect": "reads+2D/+2E markerpair;497168→494E00 firstunknownSTOP;notaclear/write proof"
+    }
+  ],
+  "direct_copy_update": {
+    "at": {
+      "va": "00497600",
+      "rva": "00097600",
+      "section": "   \u0000    ",
+      "file_offset": "00097600",
+      "raw_backed": true
+    },
+    "discovery": "directtableaddressxref62FAD0;actualECXsourcecaller unknown;bodyindependenttablexref, no callee traversal",
+    "code_bytes": 170,
+    "calls_in_body": 0,
+    "record": "EBX=62FAD0+slot*180=recordbase+30;compareinputECXalias torecordbase NUL bytewise;looptillEBX62FDA0,4slots;mayupdateeachmatchingalias,notphysicalID/uniqueness proof",
+    "copy": "EDXnewclanpointer→localEBP-8;aliasmatch strlen+NUL countedwithREPNE SCASB,copytoEBX-14=record+1C usingREP MOVSD/MOVSB. No localcapacityclamp;validsource/destmemory required.",
+    "scalar_stores": [
+      {
+        "record_offset": 48,
+        "bytes": 2,
+        "arg": "EBP+8"
+      },
+      {
+        "record_offset": 50,
+        "bytes": 2,
+        "arg": "EBP+C"
+      },
+      {
+        "record_offset": 52,
+        "bytes": 2,
+        "arg": "EBP+10"
+      },
+      {
+        "record_offset": 54,
+        "bytes": 1,
+        "arg": "EBP+14"
+      },
+      {
+        "record_offset": 55,
+        "bytes": 1,
+        "arg": "EBP+18 lowBYTE"
+      }
+    ],
+    "field3E": "Scalarsstop+37. StringcopyincludesNUL,starts+1C;strlen>=34 canreach+3E. UnderAD368clan<=16 policy copywouldstop<=2C andpreserve3E;othercaller/inputbounds unqualified, no universalpreservation/clear claim.",
+    "trigger_phase": "aliasmatched localcallargs only;caller/opcode/epoch/phase unknown andnotexpanded;noNativeinvocation/class/owner/readylabel"
+  },
+  "snapshot": {
+    "first_record_markers_hex": "ffff",
+    "first_record_field3E_hex": "00",
+    "level": "fixedPEsnapshot only,notloader/startup/currentrow/clearedafterselection"
+  },
+  "lifetime": "KnownS_CBconditionalwriteoverwrites+3E;knownmarkerresetsretainit;variablecopymayoverwriteifunbounded. Alias/bulk/otherrecordproducers,actualcountindex safety andcurrentselectedepoch remainopen."
+}

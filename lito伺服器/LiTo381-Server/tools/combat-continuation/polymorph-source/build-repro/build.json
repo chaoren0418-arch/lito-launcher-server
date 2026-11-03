@@ -1,0 +1,64 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-transfer\\build\\candidate-return-nature-transfer.jar",
+    "sha256": "54a781b55528a43e037508561b422ca4376f06dee0777493050a0decf9ca158c"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\candidate-polymorph-source.jar",
+    "sha256": "32d88c6b3b82926b035831fd8f6c186d662dc311f88826b06badda8f53853465"
+  },
+  "changed": [
+    "local/lito381/server/BattlePolymorphCatalog.class",
+    "local/lito381/server/CombatDatabase.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePolymorphSource$Row.class",
+    "local/lito381/server/NativePolymorphSource$Snapshot.class",
+    "local/lito381/server/NativePolymorphSource.class",
+    "local/lito381/server/NativePolymorphWeights$Row.class",
+    "local/lito381/server/NativePolymorphWeights.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\build.py",
+      "sha256": "f63430d2abbb59231e17863f894df267f774a8d1dc1f1a1d635667bbec0dd905"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\PolymorphSourceMethods.java",
+      "sha256": "d5723a828ac56f9e3c0c524f7525be0fd1f243afc583f55c645a26343fb8d0b1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\source-reference\\L1PolyMorph.java",
+      "sha256": "d34fa89f890ac9275192a1ccfc1ba6cf30bd77221466cbb5506fb8bffbaba68c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\source-reference\\PolyTable.java",
+      "sha256": "3b47e89a0a8c9de915d161bd9d5bc834d528ccd1a990c7d99aa3bd3c04e38327"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\source-reference\\WandPolyTable.java",
+      "sha256": "e100c527df2c6e879598b5722c74022b416778c33f1bbe578b0d192aefcac8a8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\sources\\NativePolymorphSource.java",
+      "sha256": "fabf0a77730ad8b0799e7d70021e1f467d72b1b2b9e11ddac7b7b7eca2caa461"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build-repro\\inputs\\sources\\NativePolymorphWeights.java",
+      "sha256": "b1046695f43282d69cc2e6a4ea5a382e8d196ab3eb3f6839927613caf795a41d"
+    }
+  ],
+  "remaining": [
+    "actual shared SQL read/rollback/close and retry validation",
+    "actual skill67 random/controlled menu regressions",
+    "cause-mismatch no-change response and polymorph projectile metadata are not qualified",
+    "final composed regression and native UI publication gates"
+  ]
+}

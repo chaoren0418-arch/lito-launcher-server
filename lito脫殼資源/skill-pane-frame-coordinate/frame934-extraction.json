@@ -1,0 +1,103 @@
+{
+  "namespace": "native",
+  "archive": "LTsurf",
+  "row": 1557,
+  "name": "934.img",
+  "offset": 91239391,
+  "bytes": 119654,
+  "source_index": {
+    "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+    "bytes": 45448,
+    "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+  },
+  "source_pak": {
+    "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+    "bytes": 92788879,
+    "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E"
+  },
+  "raw": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+    "bytes": 119654,
+    "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+  },
+  "decoded": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+    "bytes": 119654,
+    "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+  },
+  "authorization": "Batch8 supervisor authorizes only exact frame member read/extraction after static binding. LTsurf overlay is tried before baseSprite for64798C.",
+  "index_candidates_only": [
+    {
+      "archive": "LTsurf",
+      "namespace": "native",
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.raw.idx",
+        "bytes": 45448,
+        "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF"
+      },
+      "rows": [
+        {
+          "row": 1557,
+          "name": "934.img",
+          "offset": 91239391,
+          "bytes": 119654
+        }
+      ]
+    },
+    {
+      "archive": "Sprite",
+      "namespace": "shared",
+      "source_index": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Sprite.raw.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+      },
+      "rows": [
+        {
+          "row": 90927,
+          "name": "934.img",
+          "offset": 382976642,
+          "bytes": 119654
+        }
+      ]
+    }
+  ],
+  "source_checks": [
+    {
+      "kind": "index_source",
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+      "match": true
+    },
+    {
+      "kind": "decoded_index",
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\LTsurf.raw.idx",
+      "bytes": 45448,
+      "sha256": "C699CCF22C5F59EB37E8936D939D2632C15AC381980A6FE3F26F2565185193BF",
+      "match": true
+    },
+    {
+      "kind": "pak_source",
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTsurf.pak",
+      "bytes": 92788879,
+      "sha256": "42E676C255B248C295A71097A53B1B67BF73A0C2C3DC0FE11D12BDB9EE79621E",
+      "match": true
+    }
+  ],
+  "new_pak_members_read_or_extracted": 1,
+  "shared_Sprite_payload_read": false,
+  "header_first_32_hex": "cf00210101004c324c324c324c324c324c324c324c324c324c324c324c324c32",
+  "first_four_u16": [
+    207,
+    289,
+    1,
+    12876
+  ],
+  "first_two_i16": [
+    207,
+    289
+  ],
+  "source_namespace_qualification": "Native LTsurf priority candidate. SharedSprite row90927 is indexed fallback only; actual live load success/order not observed.",
+  "native_GUI_accepted": false
+}

@@ -1,0 +1,52 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-material\\build\\candidate-polymorph-material.jar",
+    "sha256": "a1b7d3390f04262f240364fbd6ef0ad7f6009ff27cc80bab170985ba151948e4"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\candidate-return-nature-material.jar",
+    "sha256": "280dcb25f32f6bc6dc53b31d374946fe6f3dfdc525fabcc9543d1e3e1d2e564b"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeReturnNatureMaterialAction$Target.class",
+    "local/lito381/server/NativeReturnNatureMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\build.py",
+      "sha256": "c1e974e981fb018d8d0b82868e9e7c2eb9c49916e200cc1f361a1bd982a7a636"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\ReturnNatureMaterialMethods.java",
+      "sha256": "76dbc60345ce949bb88d3f4e1f2721296de8ea9a366dcf52e7747a26fa7b2377"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "7924a0736ad4562d6882d81f7259e2cab5750c281f096f7b7e5c1eb07f9033bf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "50ca58390fc06e3e76c90629a4a5ac47b11ba1698895bf551b24d402e6334382"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\return-nature-material\\build-repro\\inputs\\sources\\NativeReturnNatureMaterialAction.java",
+      "sha256": "652eb4e58c686d7a4a3bc7827ab7b71587f19afe4ff9797c7a791f56e23e6c4c"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+import java.util.*;
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+final class DeathCancellationPatch implements Opcodes {
+ static final String P="local/lito381/server/",C=P+"ClientSession",H=P+"CombatDeathCancellation",E="(L"+P+"BattleDeathmatchFatalityCatalog$Effect;)V";
+ static AbstractInsnNode prior(AbstractInsnNode n){return DragonPatch.prior(n);}
+ static void apply(ClassNode c,Map<String,Integer> hooks){
+  var original=CombatPatch.method(c,"applyFatalityCancellation",E);var clone=new MethodNode(original.access,"sourceDeathCancellation",original.desc,original.signature,original.exceptions.toArray(String[]::new));original.accept(clone);clone.name="sourceDeathCancellation";int graphic=0,adapters=0,death=0;
+  for(var n:clone.instructions.toArray())if(n instanceof MethodInsnNode call){
+   if(call.owner.equals(C)&&call.name.equals("broadcastFatalityEffect")){var list=prior(call);var actor=prior(list);var effect=prior(actor);var self=prior(effect);if(!(list instanceof MethodInsnNode x)||!x.owner.equals("java/util/List")||!x.name.equals("of")||!(actor instanceof VarInsnNode a)||a.getOpcode()!=ALOAD||a.var!=0||!(effect instanceof VarInsnNode e)||e.getOpcode()!=ALOAD||e.var!=1||!(self instanceof VarInsnNode s)||s.getOpcode()!=ALOAD||s.var!=0)throw new IllegalStateException("exact native fatality graphic sequence");for(var removed:List.of(self,effect,actor,list,call))clone.instructions.remove(removed);graphic++;}
+   else if(call.owner.equals(P+"CombatNpcPoison")&&call.name.equals("cancelMagic")){var add=new InsnList();add.add(new VarInsnNode(ALOAD,0));add.add(new MethodInsnNode(INVOKESTATIC,H,"timed","(L"+P+"BattleTimedStatus$MagicCancellation;L"+C+";)L"+P+"BattleTimedStatus$MagicCancellation;",false));clone.instructions.insert(call,add);adapters++;}
+   else if(call.owner.equals(P+"BattleAbilityStatus")&&call.name.equals("cancelMagicEffects")){var add=new InsnList();add.add(new VarInsnNode(ALOAD,0));add.add(new MethodInsnNode(INVOKESTATIC,H,"ability","(L"+P+"BattleAbilityStatus$Cancellation;L"+C+";)L"+P+"BattleAbilityStatus$Cancellation;",false));clone.instructions.insert(call,add);adapters++;}
+   else if(call.owner.equals(P+"BattleWeaponBuffStatus")&&call.name.equals("cancelMagicEffects")){var add=new InsnList();add.add(new VarInsnNode(ALOAD,0));add.add(new MethodInsnNode(INVOKESTATIC,H,"weapon","(L"+P+"BattleWeaponBuffStatus$Cancellation;L"+C+";)L"+P+"BattleWeaponBuffStatus$Cancellation;",false));clone.instructions.insert(call,add);adapters++;}
+   else if(call.owner.equals(P+"BattleCookingStatus")&&call.name.equals("clear")){clone.instructions.set(call,new MethodInsnNode(INVOKESTATIC,H,"cooking","(L"+P+"BattleCookingStatus;)Ljava/util/List;",false));adapters++;}
+  }
+  CombatPatch.require(graphic,1,"death clone excludes only trap graphic");CombatPatch.require(adapters,4,"death-specific state policies");c.methods.add(clone);
+  int cooking=0;for(var m:c.methods)if(Set.of("applyFatalityCancellation","useCancellationSpell","useWorldPlayerCancellation").contains(m.name))for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode call&&call.owner.equals(P+"BattleCookingStatus")&&call.name.equals("clear")){m.instructions.set(call,new MethodInsnNode(INVOKESTATIC,H,"cooking","(L"+P+"BattleCookingStatus;)Ljava/util/List;",false));cooking++;}CombatPatch.require(cooking,3,"ordinary cancellation cooking immunity");hooks.put("source-cancellation-cooking-policy",cooking);
+  for(var m:c.methods)if(Set.of("takePlayerDamage","takeClassicWorldDirectDamage").contains(m.name))for(var n:m.instructions.toArray())if(n instanceof MethodInsnNode call&&call.owner.equals(P+"BattleTimedStatus")&&call.name.equals("clearWaterDragonAffliction")){var field=prior(call);var actor=prior(field);if(!(field instanceof FieldInsnNode f)||f.getOpcode()!=GETFIELD||!f.owner.equals(C)||!f.name.equals("timedStatus")||!(actor instanceof VarInsnNode a)||a.getOpcode()!=ALOAD||a.var!=0)throw new IllegalStateException("native fatal cleanup anchor");var add=new InsnList();add.add(new VarInsnNode(ALOAD,0));add.add(new MethodInsnNode(INVOKESTATIC,H,"death","(L"+C+";)V",false));m.instructions.insertBefore(actor,add);death++;}
+  CombatPatch.require(death,2,"BATTLE and WORLD fatal cleanup gates");hooks.put("source-death-cancellation",death+adapters+graphic);
+ }
+}

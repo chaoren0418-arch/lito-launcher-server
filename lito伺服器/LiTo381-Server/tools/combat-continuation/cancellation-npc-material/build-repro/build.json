@@ -1,0 +1,41 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build\\candidate-cancellation-npc-replacement.jar",
+    "sha256": "51ad61a62e189503006fc04073f44c8b25bed545579413ba572d3aea2917bc4f"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "WORLD NPC/companion atomic material and lifetime ownership; conversion scheduler remains pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-material\\build-repro\\candidate-cancellation-npc-material.jar",
+    "sha256": "94d971cc7ba7844573b45501ce89fe346d36141b7286ee74e120b6463aef4e4e"
+  },
+  "exact_one_NPC_body_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCancellationNpcMaterialAction$Target.class",
+    "local/lito381/server/NativeCancellationNpcMaterialAction.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-material\\build-repro\\inputs\\build.py",
+      "sha256": "a02f2121c2e983b2cf48166c7bb110c6999d91c733cc9b0fbf3175030f8ccc7d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-material\\build-repro\\inputs\\CancellationNpcMaterialMethods.java",
+      "sha256": "23e0302e325cb73538aceef0f1fbe3c1099d464e92d46464e54dc8ba8877b57e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-material\\build-repro\\inputs\\NativeCancellationNpcMaterialAction.java",
+      "sha256": "5b3be74f8e9061205695e9f12da0aa20b410305d59387a8c853a1cfe3b6c50a5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

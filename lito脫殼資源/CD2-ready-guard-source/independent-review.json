@@ -1,0 +1,1603 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source-contract.json",
+    "bytes": 30762,
+    "sha256": "FCD54F0D67C11EC6BE3E3BDFD03C579F117A205773B67F8A29A850BB99501AB2"
+  },
+  "checks": [
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\0-客戶端\\LiTo.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-settings-candidate-network.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-order-candidate-ea9eb86912ed4d1b9502bcecdc7911ec\\candidate\\C7-ordinary-settings-order-candidate.jar",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-settings-order-candidate.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-candidate-network-0cd3359976074b5ea4077a88d551f2b7\\evidence\\product-class-identities.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\00480C8D-14.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\00481410-43.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\004C3760-5.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\004C3770-A.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\004C3780-A.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\004C3790-A.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\0062D25C-B.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\0064AF9D-1.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\008316B0-C.bin",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\direct-source-xrefs.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\ranges.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\source-width-trigger-and-unknown-matrix.json",
+      "match": true
+    },
+    {
+      "check": "pin D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\version-evidence-supplement.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "check": "prior D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "check": "output 00480C8D",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00480C8D",
+      "match": true
+    },
+    {
+      "check": "aligned 00480C8D",
+      "match": true
+    },
+    {
+      "check": "output 00481410",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00481410",
+      "match": true
+    },
+    {
+      "check": "aligned 00481410",
+      "match": true
+    },
+    {
+      "check": "output 004C3760",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004C3760",
+      "match": true
+    },
+    {
+      "check": "aligned 004C3760",
+      "match": true
+    },
+    {
+      "check": "output 004C3770",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004C3770",
+      "match": true
+    },
+    {
+      "check": "aligned 004C3770",
+      "match": true
+    },
+    {
+      "check": "output 004C3780",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004C3780",
+      "match": true
+    },
+    {
+      "check": "aligned 004C3780",
+      "match": true
+    },
+    {
+      "check": "output 004C3790",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004C3790",
+      "match": true
+    },
+    {
+      "check": "aligned 004C3790",
+      "match": true
+    },
+    {
+      "check": "output 0064AF9D",
+      "match": true
+    },
+    {
+      "check": "PE bytes 0064AF9D",
+      "match": true
+    },
+    {
+      "check": "output 008316B0",
+      "match": true
+    },
+    {
+      "check": "PE bytes 008316B0",
+      "match": true
+    },
+    {
+      "check": "output 0062D25C",
+      "match": true
+    },
+    {
+      "check": "PE bytes 0062D25C",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00480C03",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00480C03",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00480C03",
+      "match": true
+    },
+    {
+      "check": "aligned 00480C03",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00480C4D",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00480C4D",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00480C4D",
+      "match": true
+    },
+    {
+      "check": "aligned 00480C4D",
+      "match": true
+    },
+    {
+      "check": "reuse pin 004928C0",
+      "match": true
+    },
+    {
+      "check": "reuse slice 004928C0",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004928C0",
+      "match": true
+    },
+    {
+      "check": "aligned 004928C0",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00492914",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00492914",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00492914",
+      "match": true
+    },
+    {
+      "check": "aligned 00492914",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00492919",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00492919",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00492919",
+      "match": true
+    },
+    {
+      "check": "aligned 00492919",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00492E6B",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00492E6B",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00492E6B",
+      "match": true
+    },
+    {
+      "check": "aligned 00492E6B",
+      "match": true
+    },
+    {
+      "check": "reuse pin 00492E85",
+      "match": true
+    },
+    {
+      "check": "reuse slice 00492E85",
+      "match": true
+    },
+    {
+      "check": "PE bytes 00492E85",
+      "match": true
+    },
+    {
+      "check": "aligned 00492E85",
+      "match": true
+    },
+    {
+      "check": "reuse pin 0046B6F0",
+      "match": true
+    },
+    {
+      "check": "reuse slice 0046B6F0",
+      "match": true
+    },
+    {
+      "check": "PE bytes 0046B6F0",
+      "match": true
+    },
+    {
+      "check": "aligned 0046B6F0",
+      "match": true
+    },
+    {
+      "check": "reuse pin 004C3E90",
+      "match": true
+    },
+    {
+      "check": "reuse slice 004C3E90",
+      "match": true
+    },
+    {
+      "check": "PE bytes 004C3E90",
+      "match": true
+    },
+    {
+      "check": "aligned 004C3E90",
+      "match": true
+    },
+    {
+      "check": "operand 00480C0D",
+      "match": true
+    },
+    {
+      "check": "operand 00480C51",
+      "match": true
+    },
+    {
+      "check": "operand 00480C53",
+      "match": true
+    },
+    {
+      "check": "operand 00480C55",
+      "match": true
+    },
+    {
+      "check": "operand 00480C57",
+      "match": true
+    },
+    {
+      "check": "operand 00480C8D",
+      "match": true
+    },
+    {
+      "check": "operand 00480C90",
+      "match": true
+    },
+    {
+      "check": "operand 00480C9C",
+      "match": true
+    },
+    {
+      "check": "operand 00480C9F",
+      "match": true
+    },
+    {
+      "check": "operand 00481410",
+      "match": true
+    },
+    {
+      "check": "operand 00481413",
+      "match": true
+    },
+    {
+      "check": "operand 00481420",
+      "match": true
+    },
+    {
+      "check": "operand 00481424",
+      "match": true
+    },
+    {
+      "check": "operand 0048142E",
+      "match": true
+    },
+    {
+      "check": "operand 00481438",
+      "match": true
+    },
+    {
+      "check": "operand 0048143A",
+      "match": true
+    },
+    {
+      "check": "operand 0048143E",
+      "match": true
+    },
+    {
+      "check": "operand 00481440",
+      "match": true
+    },
+    {
+      "check": "operand 00481445",
+      "match": true
+    },
+    {
+      "check": "operand 00481447",
+      "match": true
+    },
+    {
+      "check": "operand 0048144E",
+      "match": true
+    },
+    {
+      "check": "operand 004C3760",
+      "match": true
+    },
+    {
+      "check": "operand 004C3770",
+      "match": true
+    },
+    {
+      "check": "operand 004C3775",
+      "match": true
+    },
+    {
+      "check": "operand 004C3780",
+      "match": true
+    },
+    {
+      "check": "operand 004C3785",
+      "match": true
+    },
+    {
+      "check": "operand 004C3790",
+      "match": true
+    },
+    {
+      "check": "operand 004C3795",
+      "match": true
+    },
+    {
+      "check": "operand 004928E8",
+      "match": true
+    },
+    {
+      "check": "operand 00492914",
+      "match": true
+    },
+    {
+      "check": "operand 00492922",
+      "match": true
+    },
+    {
+      "check": "operand 00492925",
+      "match": true
+    },
+    {
+      "check": "operand 00492931",
+      "match": true
+    },
+    {
+      "check": "operand 00492958",
+      "match": true
+    },
+    {
+      "check": "operand 00492E6B",
+      "match": true
+    },
+    {
+      "check": "operand 00492E6D",
+      "match": true
+    },
+    {
+      "check": "operand 00492E72",
+      "match": true
+    },
+    {
+      "check": "operand 00492E85",
+      "match": true
+    },
+    {
+      "check": "operand 00492E8A",
+      "match": true
+    },
+    {
+      "check": "operand 00492E8C",
+      "match": true
+    },
+    {
+      "check": "operand 00492E8E",
+      "match": true
+    },
+    {
+      "check": "operand 00492E93",
+      "match": true
+    },
+    {
+      "check": "operand 00492E9E",
+      "match": true
+    },
+    {
+      "check": "operand 0046B6F0",
+      "match": true
+    },
+    {
+      "check": "operand 0046B6F7",
+      "match": true
+    },
+    {
+      "check": "operand 0046B6F9",
+      "match": true
+    },
+    {
+      "check": "operand 0046B6FE",
+      "match": true
+    },
+    {
+      "check": "operand 0046B704",
+      "match": true
+    },
+    {
+      "check": "operand 0046B709",
+      "match": true
+    },
+    {
+      "check": "operand 0046B70C",
+      "match": true
+    },
+    {
+      "check": "operand 0046B711",
+      "match": true
+    },
+    {
+      "check": "operand 0046B713",
+      "match": true
+    },
+    {
+      "check": "operand 0046B726",
+      "match": true
+    },
+    {
+      "check": "operand 004C3E97",
+      "match": true
+    },
+    {
+      "check": "operand 004C3EA1",
+      "match": true
+    },
+    {
+      "check": "operand 004C3EB6",
+      "match": true
+    },
+    {
+      "check": "operand 004C3ECA",
+      "match": true
+    },
+    {
+      "check": "operand 004C3ECD",
+      "match": true
+    },
+    {
+      "check": "operand 004C3ED7",
+      "match": true
+    },
+    {
+      "check": "operand 004C3EE1",
+      "match": true
+    },
+    {
+      "check": "exact xref inventory byte_64AF9D",
+      "match": true
+    },
+    {
+      "check": "navigation line 171357",
+      "match": true
+    },
+    {
+      "check": "navigation line 190911",
+      "match": true
+    },
+    {
+      "check": "navigation line 221808",
+      "match": true
+    },
+    {
+      "check": "navigation line 229591",
+      "match": true
+    },
+    {
+      "check": "navigation line 231929",
+      "match": true
+    },
+    {
+      "check": "navigation line 232108",
+      "match": true
+    },
+    {
+      "check": "navigation line 234312",
+      "match": true
+    },
+    {
+      "check": "navigation line 275325",
+      "match": true
+    },
+    {
+      "check": "navigation line 309757",
+      "match": true
+    },
+    {
+      "check": "navigation line 316925",
+      "match": true
+    },
+    {
+      "check": "navigation line 349422",
+      "match": true
+    },
+    {
+      "check": "navigation line 350019",
+      "match": true
+    },
+    {
+      "check": "navigation line 559740",
+      "match": true
+    },
+    {
+      "check": "xref count byte_64AF9D",
+      "match": true
+    },
+    {
+      "check": "exact xref inventory dword_8316B0",
+      "match": true
+    },
+    {
+      "check": "navigation line 3615",
+      "match": true
+    },
+    {
+      "check": "navigation line 7561",
+      "match": true
+    },
+    {
+      "check": "navigation line 9968",
+      "match": true
+    },
+    {
+      "check": "navigation line 13141",
+      "match": true
+    },
+    {
+      "check": "navigation line 50519",
+      "match": true
+    },
+    {
+      "check": "navigation line 52138",
+      "match": true
+    },
+    {
+      "check": "navigation line 52784",
+      "match": true
+    },
+    {
+      "check": "navigation line 52842",
+      "match": true
+    },
+    {
+      "check": "navigation line 149488",
+      "match": true
+    },
+    {
+      "check": "navigation line 149570",
+      "match": true
+    },
+    {
+      "check": "navigation line 171365",
+      "match": true
+    },
+    {
+      "check": "navigation line 171988",
+      "match": true
+    },
+    {
+      "check": "navigation line 175227",
+      "match": true
+    },
+    {
+      "check": "navigation line 189072",
+      "match": true
+    },
+    {
+      "check": "navigation line 191318",
+      "match": true
+    },
+    {
+      "check": "navigation line 206052",
+      "match": true
+    },
+    {
+      "check": "navigation line 226801",
+      "match": true
+    },
+    {
+      "check": "navigation line 227822",
+      "match": true
+    },
+    {
+      "check": "navigation line 227917",
+      "match": true
+    },
+    {
+      "check": "navigation line 229595",
+      "match": true
+    },
+    {
+      "check": "navigation line 231938",
+      "match": true
+    },
+    {
+      "check": "navigation line 234316",
+      "match": true
+    },
+    {
+      "check": "navigation line 253145",
+      "match": true
+    },
+    {
+      "check": "navigation line 264974",
+      "match": true
+    },
+    {
+      "check": "navigation line 265023",
+      "match": true
+    },
+    {
+      "check": "navigation line 265186",
+      "match": true
+    },
+    {
+      "check": "navigation line 265503",
+      "match": true
+    },
+    {
+      "check": "navigation line 265530",
+      "match": true
+    },
+    {
+      "check": "navigation line 265560",
+      "match": true
+    },
+    {
+      "check": "navigation line 265587",
+      "match": true
+    },
+    {
+      "check": "navigation line 271645",
+      "match": true
+    },
+    {
+      "check": "navigation line 271873",
+      "match": true
+    },
+    {
+      "check": "navigation line 291828",
+      "match": true
+    },
+    {
+      "check": "navigation line 292418",
+      "match": true
+    },
+    {
+      "check": "navigation line 295520",
+      "match": true
+    },
+    {
+      "check": "navigation line 297345",
+      "match": true
+    },
+    {
+      "check": "navigation line 309611",
+      "match": true
+    },
+    {
+      "check": "navigation line 309623",
+      "match": true
+    },
+    {
+      "check": "navigation line 344089",
+      "match": true
+    },
+    {
+      "check": "navigation line 345375",
+      "match": true
+    },
+    {
+      "check": "navigation line 345556",
+      "match": true
+    },
+    {
+      "check": "navigation line 352807",
+      "match": true
+    },
+    {
+      "check": "navigation line 361032",
+      "match": true
+    },
+    {
+      "check": "navigation line 408433",
+      "match": true
+    },
+    {
+      "check": "navigation line 408452",
+      "match": true
+    },
+    {
+      "check": "navigation line 471866",
+      "match": true
+    },
+    {
+      "check": "navigation line 471963",
+      "match": true
+    },
+    {
+      "check": "navigation line 484758",
+      "match": true
+    },
+    {
+      "check": "navigation line 485280",
+      "match": true
+    },
+    {
+      "check": "navigation line 564573",
+      "match": true
+    },
+    {
+      "check": "xref count dword_8316B0",
+      "match": true
+    },
+    {
+      "check": "exact xref inventory dword_8316B4",
+      "match": true
+    },
+    {
+      "check": "navigation line 3616",
+      "match": true
+    },
+    {
+      "check": "navigation line 7562",
+      "match": true
+    },
+    {
+      "check": "navigation line 9969",
+      "match": true
+    },
+    {
+      "check": "navigation line 13142",
+      "match": true
+    },
+    {
+      "check": "navigation line 50516",
+      "match": true
+    },
+    {
+      "check": "navigation line 52139",
+      "match": true
+    },
+    {
+      "check": "navigation line 52785",
+      "match": true
+    },
+    {
+      "check": "navigation line 52843",
+      "match": true
+    },
+    {
+      "check": "navigation line 149489",
+      "match": true
+    },
+    {
+      "check": "navigation line 149571",
+      "match": true
+    },
+    {
+      "check": "navigation line 171366",
+      "match": true
+    },
+    {
+      "check": "navigation line 171989",
+      "match": true
+    },
+    {
+      "check": "navigation line 175228",
+      "match": true
+    },
+    {
+      "check": "navigation line 189070",
+      "match": true
+    },
+    {
+      "check": "navigation line 191319",
+      "match": true
+    },
+    {
+      "check": "navigation line 206056",
+      "match": true
+    },
+    {
+      "check": "navigation line 206107",
+      "match": true
+    },
+    {
+      "check": "navigation line 226802",
+      "match": true
+    },
+    {
+      "check": "navigation line 227827",
+      "match": true
+    },
+    {
+      "check": "navigation line 227847",
+      "match": true
+    },
+    {
+      "check": "navigation line 227918",
+      "match": true
+    },
+    {
+      "check": "navigation line 229596",
+      "match": true
+    },
+    {
+      "check": "navigation line 231939",
+      "match": true
+    },
+    {
+      "check": "navigation line 234317",
+      "match": true
+    },
+    {
+      "check": "navigation line 253146",
+      "match": true
+    },
+    {
+      "check": "navigation line 264975",
+      "match": true
+    },
+    {
+      "check": "navigation line 265024",
+      "match": true
+    },
+    {
+      "check": "navigation line 265187",
+      "match": true
+    },
+    {
+      "check": "navigation line 265504",
+      "match": true
+    },
+    {
+      "check": "navigation line 265531",
+      "match": true
+    },
+    {
+      "check": "navigation line 265561",
+      "match": true
+    },
+    {
+      "check": "navigation line 265588",
+      "match": true
+    },
+    {
+      "check": "navigation line 271646",
+      "match": true
+    },
+    {
+      "check": "navigation line 271874",
+      "match": true
+    },
+    {
+      "check": "navigation line 291829",
+      "match": true
+    },
+    {
+      "check": "navigation line 292419",
+      "match": true
+    },
+    {
+      "check": "navigation line 295521",
+      "match": true
+    },
+    {
+      "check": "navigation line 297346",
+      "match": true
+    },
+    {
+      "check": "navigation line 344090",
+      "match": true
+    },
+    {
+      "check": "navigation line 345373",
+      "match": true
+    },
+    {
+      "check": "navigation line 345557",
+      "match": true
+    },
+    {
+      "check": "navigation line 352808",
+      "match": true
+    },
+    {
+      "check": "navigation line 361033",
+      "match": true
+    },
+    {
+      "check": "navigation line 471867",
+      "match": true
+    },
+    {
+      "check": "navigation line 471964",
+      "match": true
+    },
+    {
+      "check": "navigation line 484759",
+      "match": true
+    },
+    {
+      "check": "navigation line 485281",
+      "match": true
+    },
+    {
+      "check": "navigation line 564588",
+      "match": true
+    },
+    {
+      "check": "xref count dword_8316B4",
+      "match": true
+    },
+    {
+      "check": "exact xref inventory dword_8316B8",
+      "match": true
+    },
+    {
+      "check": "navigation line 3621",
+      "match": true
+    },
+    {
+      "check": "navigation line 7565",
+      "match": true
+    },
+    {
+      "check": "navigation line 9972",
+      "match": true
+    },
+    {
+      "check": "navigation line 13145",
+      "match": true
+    },
+    {
+      "check": "navigation line 50517",
+      "match": true
+    },
+    {
+      "check": "navigation line 52140",
+      "match": true
+    },
+    {
+      "check": "navigation line 52791",
+      "match": true
+    },
+    {
+      "check": "navigation line 52846",
+      "match": true
+    },
+    {
+      "check": "navigation line 149492",
+      "match": true
+    },
+    {
+      "check": "navigation line 149574",
+      "match": true
+    },
+    {
+      "check": "navigation line 171369",
+      "match": true
+    },
+    {
+      "check": "navigation line 171993",
+      "match": true
+    },
+    {
+      "check": "navigation line 175231",
+      "match": true
+    },
+    {
+      "check": "navigation line 189074",
+      "match": true
+    },
+    {
+      "check": "navigation line 191322",
+      "match": true
+    },
+    {
+      "check": "navigation line 206059",
+      "match": true
+    },
+    {
+      "check": "navigation line 206110",
+      "match": true
+    },
+    {
+      "check": "navigation line 226805",
+      "match": true
+    },
+    {
+      "check": "navigation line 227830",
+      "match": true
+    },
+    {
+      "check": "navigation line 227850",
+      "match": true
+    },
+    {
+      "check": "navigation line 227921",
+      "match": true
+    },
+    {
+      "check": "navigation line 229599",
+      "match": true
+    },
+    {
+      "check": "navigation line 231942",
+      "match": true
+    },
+    {
+      "check": "navigation line 234320",
+      "match": true
+    },
+    {
+      "check": "navigation line 253149",
+      "match": true
+    },
+    {
+      "check": "navigation line 264978",
+      "match": true
+    },
+    {
+      "check": "navigation line 265027",
+      "match": true
+    },
+    {
+      "check": "navigation line 265190",
+      "match": true
+    },
+    {
+      "check": "navigation line 265507",
+      "match": true
+    },
+    {
+      "check": "navigation line 265534",
+      "match": true
+    },
+    {
+      "check": "navigation line 265564",
+      "match": true
+    },
+    {
+      "check": "navigation line 265591",
+      "match": true
+    },
+    {
+      "check": "navigation line 271649",
+      "match": true
+    },
+    {
+      "check": "navigation line 271877",
+      "match": true
+    },
+    {
+      "check": "navigation line 291832",
+      "match": true
+    },
+    {
+      "check": "navigation line 292422",
+      "match": true
+    },
+    {
+      "check": "navigation line 295522",
+      "match": true
+    },
+    {
+      "check": "navigation line 297349",
+      "match": true
+    },
+    {
+      "check": "navigation line 344091",
+      "match": true
+    },
+    {
+      "check": "navigation line 345380",
+      "match": true
+    },
+    {
+      "check": "navigation line 345560",
+      "match": true
+    },
+    {
+      "check": "navigation line 352811",
+      "match": true
+    },
+    {
+      "check": "navigation line 361036",
+      "match": true
+    },
+    {
+      "check": "navigation line 471868",
+      "match": true
+    },
+    {
+      "check": "navigation line 471967",
+      "match": true
+    },
+    {
+      "check": "navigation line 484762",
+      "match": true
+    },
+    {
+      "check": "navigation line 485284",
+      "match": true
+    },
+    {
+      "check": "navigation line 564603",
+      "match": true
+    },
+    {
+      "check": "xref count dword_8316B8",
+      "match": true
+    },
+    {
+      "check": "one flag write only",
+      "match": true
+    },
+    {
+      "check": "four selector address args",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e7473767200/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e7473767200/1",
+      "match": true
+    },
+    {
+      "check": "flag leaf 4c746576656e7473767200/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 4c746576656e7473767200/1",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e747376725800/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e747376725800/1",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e7400/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e7400/1",
+      "match": true
+    },
+    {
+      "check": "flag leaf 00/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 00/1",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e747376720069676e6f726564/0",
+      "match": true
+    },
+    {
+      "check": "flag leaf 6c746576656e747376720069676e6f726564/1",
+      "match": true
+    },
+    {
+      "check": "ready guard 0/0",
+      "match": true
+    },
+    {
+      "check": "ready guard 0/1",
+      "match": true
+    },
+    {
+      "check": "ready guard 0/None",
+      "match": true
+    },
+    {
+      "check": "ready guard 1/0",
+      "match": true
+    },
+    {
+      "check": "ready guard 1/1",
+      "match": true
+    },
+    {
+      "check": "ready guard 1/None",
+      "match": true
+    },
+    {
+      "check": "ready guard 255/0",
+      "match": true
+    },
+    {
+      "check": "ready guard 255/1",
+      "match": true
+    },
+    {
+      "check": "ready guard 255/None",
+      "match": true
+    },
+    {
+      "check": "record field 0",
+      "match": true
+    },
+    {
+      "check": "record field 1",
+      "match": true
+    },
+    {
+      "check": "record field 7",
+      "match": true
+    },
+    {
+      "check": "record field 255",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 00480C8D",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 00481410",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 004C3760",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 004C3770",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 004C3780",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 004C3790",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 0064AF9D",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 008316B0",
+      "match": true
+    },
+    {
+      "check": "no new unknownbody 0062D25C",
+      "match": true
+    },
+    {
+      "check": "fixed flag snapshot zero",
+      "match": true
+    },
+    {
+      "check": "fixed selector snapshot zero invalidstorage",
+      "match": true
+    },
+    {
+      "check": "ASM is different initialization",
+      "match": true
+    },
+    {
+      "check": "485F report acceptance",
+      "match": true
+    },
+    {
+      "check": "485F exact result adoption",
+      "match": true
+    },
+    {
+      "check": "485F limited WAITING settings only",
+      "match": true
+    },
+    {
+      "check": "Batch29 immutable",
+      "match": true
+    },
+    {
+      "check": "cleanup rejection remains open",
+      "match": true
+    },
+    {
+      "check": "packet unchanged",
+      "match": true
+    },
+    {
+      "check": "finite counts",
+      "match": true
+    }
+  ],
+  "check_count": 395,
+  "all_match": true,
+  "decoded_instruction_rows": 140,
+  "models": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-guard-source\\computed-source-conditional-models.json",
+    "bytes": 7733,
+    "sha256": "DAAF85CBAF8C27260ED6C09E0EFE4E1B98EDBF77FDA49FB8DECA434D2507E00C"
+  },
+  "model_count": 25,
+  "scope_write_correction": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+    "bytes": 1454,
+    "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+  }
+}

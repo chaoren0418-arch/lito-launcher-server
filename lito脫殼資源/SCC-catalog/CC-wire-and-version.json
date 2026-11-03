@@ -1,0 +1,49 @@
+{
+  "direction": "server-to-client",
+  "opcode_hex": "CC",
+  "opcode_decimal": 204,
+  "handler_VA": "004A7A30",
+  "handler_RVA": "000A7A30",
+  "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+  "header": "c signeddecoded subtypebody+1; 0..5 valid,unsignedJA excludesnegative/>5",
+  "full_row_subtype": 0,
+  "version_formats": [
+    {
+      "signed63D54C_min": null,
+      "format": "dsccchc",
+      "literal_VA": "006343DC",
+      "fields": "droom,sname,cattributes,cdisplayusers,ccapacity,hmapword,cmode"
+    },
+    {
+      "signed63D54C_min_hex": "9EA8",
+      "format": "dschhhc",
+      "literal_VA": "006343E4",
+      "fields": "droom,sname,cattributes,hdisplayusers,hcapacity,hmapword,cmode"
+    }
+  ],
+  "endianness": "d/u32 andh/u16 little-endian; c singlebyte; s opaque8bitNUL",
+  "string_capacity_including_NUL": 100,
+  "encoding": "Nativebyteparserdoesnotnamecodec; tracesASCII, JavaMS950authorityseparate",
+  "known_new_format_body_bytes": "15+N",
+  "frame_bytes": "17+N",
+  "old_format_body_bytes": "13+N",
+  "field_offsets_new": "opcode0, subtype1,room2..5,name6..NUL;attributesafterNUL,usersnextu16,capacitynextu16,mapnextu16,modebyte",
+  "absent_fields": [
+    "channel/epoch/generation",
+    "joinedroomadmission",
+    "owner/physical/sourceID",
+    "full-listcount/terminator",
+    "reset/self-listrolebit",
+    "ownexitACK"
+  ],
+  "phase_room_gate": "Neither64AF98phasewhitelistnor64ABF4joinedroomcheck inhandler; bothdispatch selectorscall; UI64A958catalogcontext/runtimeguardunknown",
+  "trigger": "Existingdefaultreset/list samepayload, rolesfromacceptedserverrecipients/triggerreference; othercatalogpartialupdatesknownrawonly",
+  "evidence": "1143bytecompletehandler/directUIhelpers +2sealedCC26/28; noNative/UIacceptance",
+  "unknown": [
+    "actualnativeversion/phase/UI/catalog/currentchannel/epoch",
+    "externalstringbounds/checkedread/exactend",
+    "mapindexresource/invalidmodeflags",
+    "defaultresetrowreplacementNativevsadapterpolicy",
+    "physical/source/owner/session/ownleaveauthority"
+  ]
+}

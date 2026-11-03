@@ -1,0 +1,19 @@
+package local.lito381.server;
+import java.nio.file.*;import java.sql.*;import java.lang.reflect.*;import java.util.*;
+/** Startup-only SQL and static metadata audit; no Hub, role or account fixture. */
+public final class WindTargetSnapshotProbe {
+ static int checks,queries;
+ static void need(boolean value,String why){checks++;if(!value)throw new AssertionError(why);}
+ static Object invoke(Object target,Method method,Object[]args)throws Throwable{try{return method.invoke(target,args);}catch(InvocationTargetException ex){throw ex.getCause();}}
+ public static void main(String[]a)throws Exception{
+  var jar=Path.of(a[2]).toRealPath();need(Path.of(NativeSkillTargetMetadata.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar),"actual metadata class");var config=ServerConfig.load(Path.of(a[0]),"standard");ResourceDatabase.load(config);var p=UnifiedConfiguration.read(config.source());String db=SharedDatabase.identifier(p.getProperty("database.static.database"));
+  try(var c=DriverManager.getConnection(p.getProperty("database.jdbc.base.url")+db+p.getProperty("database.jdbc.options"),p.getProperty("database.user"),p.getProperty("database.password"))){c.setReadOnly(true);c.setAutoCommit(false);c.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+   for(int mode=0;mode<2;mode++){final int flag=mode;var rejected=(Connection)Proxy.newProxyInstance(WindTargetSnapshotProbe.class.getClassLoader(),new Class[]{Connection.class},(proxy,m,args)->{if(m.getName().equals("isReadOnly"))return flag!=0;if(m.getName().equals("getAutoCommit"))return flag!=0;throw new AssertionError("SQL before readonly transaction guards");});boolean refused=false;try{NativeSkillTargetMetadata.read(rejected);}catch(SQLException expected){refused=true;}need(refused,"readonly/autocommit guard rejects before any SQL");}
+   var observed=(Connection)Proxy.newProxyInstance(WindTargetSnapshotProbe.class.getClassLoader(),new Class[]{Connection.class},(proxy,m,args)->{
+    Object result=invoke(c,m,args);if(m.getName().equals("createStatement")){var statement=(Statement)result;return Proxy.newProxyInstance(WindTargetSnapshotProbe.class.getClassLoader(),new Class[]{Statement.class},(q,sm,sa)->{if(sm.getName().startsWith("execute")){need(sm.getName().equals("executeQuery")&&((String)sa[0]).stripLeading().toUpperCase(Locale.ROOT).startsWith("SELECT"),"only SELECT queries at startup");queries++;}return invoke(statement,sm,sa);});}return result;
+   });NativeSkillTargetMetadata.read(observed);
+   try(var st=c.createStatement();var rs=st.executeQuery("SELECT COUNT(*) FROM skills")){need(rs.next()&&rs.getInt(1)==NativeSkillTargetMetadata.size(),"all current rows, including blank placeholders, preserved");}c.rollback();
+  }
+  var row=NativeSkillTargetMetadata.row(167);var spell=BattleSpellCatalog.windShackleSpell(167);need(row.target().equals("buff")&&row.area()==0&&!row.through(),"live Source single buff with LOS");need(spell.area()==row.area()&&spell.targetTo()==row.targetTo()&&spell.maximumRange()==row.ranged()&&spell.type()==row.type()&&spell.attribute()==row.attribute()&&spell.nativeId()==row.nativeId(),"six live target field accessors agree");var field=NativeSkillTargetMetadata.class.getDeclaredField("rows");field.setAccessible(true);boolean immutable=false;try{((Map<Integer,NativeSkillTargetMetadata.Row>)field.get(null)).put(-1,row);}catch(UnsupportedOperationException expected){immutable=true;}need(immutable,"immutable bounded resource snapshot");need(NativePlayerLifetime.allIdle(),"no player lifetime created");Files.writeString(Path.of(a[1]),"{\"cases\":1,\"checks\":"+checks+",\"metadata_rows\":"+NativeSkillTargetMetadata.size()+",\"observed_SELECT_queries\":"+queries+",\"SQL_writes\":0,\"created_Hub\":false,\"full_goal_achieved\":false}\n");
+ }
+}

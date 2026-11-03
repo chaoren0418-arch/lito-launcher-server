@@ -1,0 +1,28 @@
+{
+  "status": "prepared-not-qualified",
+  "skill": 67,
+  "scope": "Source target control-ring/random branches retained; material ownership and ordered PC lifecycle only",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\prepare_polymorph.py",
+      "sha256": "a558afe10b43c8a5961b3cd116497862ccd17af976557e0c8aeab5ba9563e1b3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\EarthBindMaterialMethods.java",
+      "sha256": "2ec640eaaa4ea69ea776bf2f0c42793a5708d32412784fe2edf96db7f4e2ccdb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\earth-bind-material\\build.py",
+      "sha256": "46c90c8e439e597ee0d666046ebc0c4b9d1ead416953c02c71c2b3d2d384f368"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\remaining-material-consumers\\usePolymorphSpell.txt",
+      "sha256": "f257e66f2ec89a5ec9869934241a5178ecd31c948e9059dcd91ecd6bbd245e0e"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    }
+  ],
+  "formal_deployment_changed": false
+}

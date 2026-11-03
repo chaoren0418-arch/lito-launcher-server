@@ -1,0 +1,241 @@
+{
+  "task_id": "bin_resources-caption-message-boundary-20261007",
+  "owner": "new BIN development owner",
+  "state": "review",
+  "updated_at": "2026-10-07T23:54:43.810618+08:00",
+  "accepted": false,
+  "self_accepted": false,
+  "product_complete": false,
+  "evidence_level": "static",
+  "question": "Which accessible fixed MAIN-IMAGE caption/move/size/position/modal/paint branches can synchronously enter update/render/rebase/wait paths, and what caller/thread facts do fixed raw bytes prove?",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "baseline": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\baseline.json",
+    "bytes": 2018,
+    "sha256": "1CB0718A8692BB0D4BB74F73FCB6A5C415BB2A38EC2A0DD67BD709C489A281BA"
+  },
+  "navigation": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\asm-navigation.json",
+    "bytes": 14270,
+    "sha256": "2C80116BDACE86A1DB10167C3D3214BA32E166199CE4F5547A418BB6C68FA656"
+  },
+  "raw_witnesses": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\raw-witnesses.json",
+    "bytes": 79381,
+    "sha256": "04B9E816D120A77F8F28D026B5FD49F23243A1A3444D038F17227FA8D38A408B"
+  },
+  "finite_verification": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\finite-branch-verification.json",
+    "bytes": 24172,
+    "sha256": "2E46961B6C2B0D319F8640B59021FEF0F78F926A038474B95541D53B862D1729"
+  },
+  "original_dispatcher": {
+    "va": "0047F340",
+    "rva": "0007F340",
+    "file_offset": "0007F340",
+    "qualification": "Four stack arguments; second argument dispatched from EDI; ret10h. Function pointer stored at4802B9 in registration-shaped caller480290; named API and successful registration unproved.",
+    "caller": "00480290 writes0047F340 at004802B9 and passes local structure to external05AE0922 at004802F9. Only this observed pointer relationship is claimed; no exhaustive caller census."
+  },
+  "branches": [
+    {
+      "messages": [
+        "WM_MOVE=0003",
+        "WM_SIZE=0005"
+      ],
+      "entry": "0047F390",
+      "proved": "If first argument equals[64BBEC], write zero to[64BBE0] and[64BBE4], then return1. If unequal, call external fallback05AD0980. Optional early helper4C6B30 rejects these messages without nested calls.",
+      "not_proved": "No direct local render/rebase/wait call on matching handle path; reset-cell consumer semantics and external fallback behavior remain unknown."
+    },
+    {
+      "messages": [
+        "WM_PAINT=000F"
+      ],
+      "entry": "0047F3BA",
+      "proved": "First CALL at47F3C8 targets external05AD0BD1 using[64BBEC], local16-byte destination and zero. If return is nonzero, [6476DC] is nonzero, any of four local dwords is nonzero, and[64BBD4]!=4, CALL47CC90 at47F3FF before returning. After nonzero first return, CALL external05AD0A70 at47F40E. Return0.",
+      "qualification": "Local dwords are opaque; calling them an update RECT or external calls GetUpdateRect/ValidateRect is unsupported by this snapshot.",
+      "not_proved": "Actual first return/local writes, rendering success, live state, wait semantics, driver or lock ownership."
+    },
+    {
+      "messages": [
+        "WM_WINDOWPOSCHANGING=0046",
+        "WM_WINDOWPOSCHANGED=0047",
+        "WM_NCLBUTTONDOWN=00A1"
+      ],
+      "entry": "0047FFA8",
+      "proved": "Position-selector value5 selects default branch. Helper4C6B30 rejects value without nested calls, then four original arguments go to external05AD0980 at47FFEB.",
+      "not_proved": "No dedicated local rebase/update/wait body on these selected routes; default external behavior is opaque."
+    },
+    {
+      "messages": [
+        "WM_ENTERSIZEMOVE=0231",
+        "WM_EXITSIZEMOVE=0232",
+        "WM_SIZING=0214",
+        "WM_MOVING=0216"
+      ],
+      "entry": "0047FFA8",
+      "proved": "Router47FE4A subtracts203; indices exceed7 and branch to47FFA8. Same rejecting helper and external fallback. No dedicated branch body selected for these values.",
+      "not_proved": "No conclusion that modal behavior or waits are absent behind external fallback."
+    },
+    {
+      "messages": [
+        "WM_SYSCOMMAND=0112",
+        "SC_SIZE=F000",
+        "SC_MOVE=F010"
+      ],
+      "entry": "0047FA7A",
+      "proved": "Mask wParam withFFF0 when[64BBE8]!=0; suppression set isF060/F090/F100/F140/F170. SC_SIZE and SC_MOVE reach47FFE4 under either flag value, which CALLs external05AD0980.",
+      "not_proved": "The external target is not qualified as DefWindowProc. Documented DefWindowProc modal behavior is a conditional test hypothesis only."
+    }
+  ],
+  "direct_state_dispatch": {
+    "va": "0047CC90",
+    "rva": "0007CC90",
+    "file_offset": "0007CC90",
+    "table_va": "0047CD40",
+    "states_0_through_10": [
+      "0047CCA5",
+      "0047CCDF",
+      "0047CCE4",
+      "0047CCE9",
+      "0047CD3F",
+      "0047CCEE",
+      "0047CD23",
+      "0047CD3F",
+      "0047CCF3",
+      "0047CD13",
+      "0047CD03"
+    ],
+    "proved": "Read[64BBD4]; unsigned>10 returns. Otherwise dispatch via table. State0 sets[64BBD4]=8, resets[64B478], writes callback pointers496270/4961D0, CALLs4D65F0. State6 sets state7, CALLs497C60 then external05AD0986. Some states tail-JMP to outgoing main-image bodies.",
+    "semantic_level": "Accessible synchronous state mutation/dispatch; rendering, rebase and wait semantics of outgoing bodies are not established.",
+    "stop_main_image_descendants": [
+      "004D65F0",
+      "00478980",
+      "00495E40",
+      "0046D630",
+      "00478AC0",
+      "00497C60"
+    ],
+    "reason": "Beyond this task's direct accessible call-body boundary; no recursive analysis performed."
+  },
+  "caller_thread_facts": [
+    "x86 direct CALL47CC90 preserves the current caller continuation; the locally selected paint branch contains no queue/worker dispatch instruction before that CALL.",
+    "Raw control flow proves this direct synchronous boundary, not the runtime thread ID. A callee may have effects outside the bounded body.",
+    "Registration-shaped pointer storage associates candidate callback47F340 with caller480290. No successful OS registration, HWND value, owner epoch, actual caller stack, UI/presenter/visibility thread or lock ownership is proved.",
+    "No identifiable lock/wait API or local wait loop is established within the relevant bounded branches. This cannot exclude waits in opaque external or stopped descendant calls."
+  ],
+  "exact_external_STOP_targets": [
+    {
+      "va": "05AD0BD1",
+      "site": "0047F3C8",
+      "role": "first paint CALL; identity unknown"
+    },
+    {
+      "va": "05AD0A70",
+      "site": "0047F40E",
+      "role": "second paint CALL; identity unknown"
+    },
+    {
+      "va": "05AD0980",
+      "site": "0047FFEB",
+      "role": "default four-argument fallback; identity unknown"
+    },
+    {
+      "va": "05AD0986",
+      "site": "0047CD3A",
+      "role": "state6 call; identity unknown"
+    },
+    {
+      "va": "05AE0922",
+      "site": "004802F9",
+      "role": "registration-shaped call; identity unknown"
+    },
+    {
+      "va": "758C5F50",
+      "site": "004802D4",
+      "role": "registration helper; identity unknown"
+    },
+    {
+      "cell": "004F7454",
+      "sites": [
+        "004802C9",
+        "004802EF"
+      ],
+      "role": "indirect registration helper; target/API ownership unproved"
+    }
+  ],
+  "retained_forbidden_boundaries": [
+    "0042E550",
+    "0042E6D0",
+    "0042EA50",
+    "050104CD",
+    "map private05040E1D",
+    "external formatter773F5200",
+    "private provider backing and owner epochs",
+    "495520 semantics boundary",
+    "native input/screenshot restrictions",
+    "Server T291/T27/refund/rebid/auction/castle/full-WORLD dependent refusals"
+  ],
+  "T82_nonduplication": {
+    "scope": "Read-only review of Compat-only source hazard analysis; historical tests not replayed.",
+    "handoff": {
+      "path": "D:/lineage開發/3-lito開發/lito登入器/Native-T82-Caption-Drag-Fix-Handoff.json",
+      "sha256": "FC6FEC5269CC17C731632D14BFCDFC6053D635FF68175A8F213631F46D4EA98B"
+    },
+    "difference": "Original fixed main-image move/size only reset cells for matching handle; paint conditional state-dispatch path differs from Compat's rebase/Present logic. Neither evidence establishes the native hang cycle."
+  },
+  "actionable_conclusion": "Launcher can plan observations at47F340 message entry,47F3FF paint update CALL/return,47FFEB external fallback CALL/return, and its existing Compat original-WndProc boundary. Separating durations there tests whether a drag stall is already inside original paint/default processing or occurs after return in Compat. No opcode/source change or runtime probe is authorized by this contract.",
+  "prospective_causal_test": {
+    "state": "blocked_missing_inputs",
+    "executed": false,
+    "decision_points": [
+      "Record original message value and current OS thread at callback entry.",
+      "Pair before/after observations of paint call47F3FF and fallback47FFEB with observed state64BBD4; avoid guessing API names.",
+      "Compare time spent inside original callback with Compat rebase/Present boundary, using a controller-reviewed permitted path.",
+      "If a boundary does not return, qualify actual instruction stack and wait ownership; do not infer deadlock from static call presence."
+    ],
+    "no_current_human_interval": true
+  },
+  "unknowns": [
+    "Identity/semantics of all opaque external calls; no parsed imports.",
+    "Initialized runtime global values and owner epochs; snapshot zeros are not live values.",
+    "Actual GUI registration/callback delivery/thread identity.",
+    "Render/rebase semantics of state-dispatch descendants.",
+    "Wait objects, lock ordering, driver state, exact drag hang cause and player-visible result."
+  ],
+  "blockers": [
+    {
+      "missing_input": "Qualified identity and semantics of fixed-PE external targets 05AD0BD1, 05AD0A70, 05AD0980 and registration target 05AE0922; the PE has no parsed imports.",
+      "supplier": "controller / authorized original-source evidence supplier",
+      "resume_when": "Controller reviews the semantic boundary and supplies newly qualified evidence that is independently permitted. No acquisition or expansion is authorized by this blocker.",
+      "consumer": "Launcher causal-test planning; BIN semantic attribution"
+    },
+    {
+      "missing_input": "Actual message-entry thread, UI/presenter/visibility instruction stacks and wait-object/lock ownership during a new hang; no current human-operable interval.",
+      "supplier": "human / controller / Launcher owner with an originally permitted observation path",
+      "resume_when": "Current human interval, exact PID/creation time/path/SHA, READY, unused claim, lease and cleanup gates all exist, and the controller has reviewed the observation plan. Consumed claims and exited T73/T81 remain unusable.",
+      "consumer": "Launcher; product acceptance"
+    },
+    {
+      "missing_input": "Semantics of state-dispatch descendant bodies; this task ends at the direct accessible dispatcher and its outgoing targets.",
+      "supplier": "controller / original-source owner",
+      "resume_when": "A new input-complete, explicit main-image scope outside retained refusals is reviewed; no recursive work is implied.",
+      "consumer": "Launcher; BIN render attribution"
+    }
+  ],
+  "next_ready_task": null,
+  "tests": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\test-receipts.json",
+    "bytes": 2701,
+    "sha256": "F2A3E1930365825B27FC1C2A72CE5CDFA8540DA4FC45EC8F112B72A1D589997C"
+  },
+  "forbidden_actions_performed": false,
+  "historical_owner_messages_sent": 0,
+  "heartbeat_changed": false,
+  "scheduled_work_created": false,
+  "no_product_completion_claim": true,
+  "delivery_index": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\delivery-manifest.json"
+}

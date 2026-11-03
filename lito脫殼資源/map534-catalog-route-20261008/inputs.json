@@ -1,0 +1,39 @@
+{
+  "binding": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r486-map-binding.json",
+    "bytes": 208039,
+    "sha256": "14805BC5D26A88EEAAE3B182A4A477D30AE7B0F26212B760F1CFA29B452DCA6E"
+  },
+  "index": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r473-campaign-resource-snapshot\\lito-lttext\\LTtext.idx",
+    "bytes": 9888,
+    "sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8"
+  },
+  "pak": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r473-campaign-resource-snapshot\\lito-lttext\\LTtext.pak",
+    "bytes": 292553,
+    "sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D"
+  },
+  "original_authority_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r474-mode-map-binding.json",
+    "bytes": 105021,
+    "sha256": "EB3FF940E1944812D0AA30A6016E9EAEAAC37ADF38210703B43BC96E5B44AFD2"
+  },
+  "cipher_source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\resource_cipher.rs",
+    "bytes": 21316,
+    "sha256": "FBB1BE885AC7F82319B13E13CDBF387633EDC957B166322EB04B1C3460F949E1"
+  },
+  "category_policy_source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_offline_map_flow.rs",
+    "bytes": 9344,
+    "sha256": "4E0F7AC411091B95367201E910EC457786797157917A16B83F57A59D8AF4F7FE"
+  },
+  "whole_plan_loader_source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_multisector_resources.rs",
+    "bytes": 5531,
+    "sha256": "D1C242EC89F9BAE31711088E994C92A2937A11A2BC9F8FFF7BF5B7A6B6B01410"
+  },
+  "same_snapshot_rule": "SHA and parse use the same in-memory byte snapshot for every bounded input; encrypted member is sliced from the hashed PAK snapshot.",
+  "va_rva": "N/A raw resource data and Rust source-policy text; no original PE cipher/mode function mapping is claimed."
+}

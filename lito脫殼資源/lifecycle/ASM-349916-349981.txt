@@ -1,0 +1,66 @@
+349916: push    eax
+349917: lea     edx, [esi+34h]
+349918: push    ecx
+349919: lea     eax, [esi+32h]
+349920: push    edx
+349921: lea     ecx, [esi+30h]
+349922: push    eax
+349923: lea     edx, [esi+2Eh]
+349924: push    ecx
+349925: lea     eax, [esi+2Dh]
+349926: push    edx
+349927: lea     ecx, [esi+1Ch]
+349928: push    eax
+349929: push    ecx
+349930: push    11h
+349931: push    esi
+349932: push    1Ch
+349933: push    offset aSscchhhccccccc          ; "sscchhhcccccccccddddddddddcdddddc"
+349934: push    edi
+349935: call    sub_4A2A50
+349936: 
+349937: add     esp, 90h
+349938: lea     edx, [esi+95h]
+349939: mov     ecx, esi
+349940: push    edx
+349941: xor     edx, edx
+349942: call    sub_46EA30
+349943: 
+349944: mov     eax, dword_76079C
+349945: inc     eax
+349946: mov     ecx, dword_7607A0
+349947: mov     dword_76079C, eax
+349948: cmp     eax, ecx
+349949: pop     esi
+349950: jl      short loc_4A76C1
+349951: 
+349952: mov     ecx, 1
+349953: mov     dword_7607A0, 0
+349954: mov     dword_76079C, 0
+349955: call    sub_49A510
+349956: 
+349957: mov     off_62C9BC, offset sub_4962B0
+349958: mov     off_62C9B8, offset sub_496200
+349959: pop     edi
+349960: jmp     sub_497010
+349961: 
+349962: ; ---------------------------------------------------------------------------
+349963: 
+349964: loc_4A769A:                             ; CODE XREF: sub_4A7550+A↑j
+349965:                                         ; sub_4A7550+17↑j
+349966: mov     al, byte_64AFBE
+349967: test    al, al
+349968: jnz     short loc_4A76C1
+349969: 
+349970: push    offset dword_64AD54
+349971: push    0C9h
+349972: push    offset aCs                      ; "cs"
+349973: call    sub_4C6AE0
+349974: 
+349975: add     esp, 0Ch
+349976: mov     byte_64AFBE, 1
+349977: 
+349978: 
+349979: loc_4A76C1:                             ; CODE XREF: sub_4A7550+110↑j
+349980:                                         ; sub_4A7550+151↑j
+349981: pop     edi

@@ -1,0 +1,72 @@
+第十八批：S_D5 subtype5 房主顯示／S_CF catalog刪房接收
+
+主入口 ../D5-CF-receive-contract.json。有限靜態契約封存，Native currentroom／UI／資源／私有函式／provider與owner/session/source authority仍未閉合。其他D5 subtype只辨識dispatch/layout，不展開設定/UI效果。
+只寫本組資源目錄；沒有Native、GUI input、SQL、provider、新capture或舊矩陣重跑，沒有追WORLD或受攔截事項，沒有接手Java。
+
+來源與證據級別
+server-room-D5-CF-consumer-supplement.json SHA7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF；reference-index SHA3F909EBD6D459567106E3FD3692E07E100D2A4BC5D399975C12D0D072A4C3110，manifest SHA3B06FD0CF4DA3F46FA7916EF43FCAB03E6D61791D08377E5B269B37526DB838D。
+fixedPE SHA4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9；BIN CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292；ASM2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A只導航，不凌駕raw。
+原版證据是精確VA/RVA、fixedbytes/指令/literal；D5owner另有既有sealed34/36packet。CF沒有本批封存動態deleteframe，不能把dump證據升成Runtime/UI驗收。
+28newranges=14code+14data；13existingraw逐byte比fixedPE與boundeddecode。D5header91bytes、ownerbranch121、CFhandler66、UIdelete131；10-entry D5jump表與各payload literal。
+54expected指令斷言，independent-review另核對19aligned corebranch落點、owner/header/CF/helper coverage、4dispatcher mappings、10subtype entries、方向與封存frame。
+19prior固定pins包含Batch17 5DD6E760，全部保持。沒有重跑先前已通過的矩陣或runtime。
+
+D5 dispatch與room/typegate
+D5=213/D5：primary4B3545=7Bhex(slot123)→4B33F4，fallback4B3789=35hex(slot53)→4B3644；均→4B2F67，4B2F69 ECX=ESI packetbody call4A9E50。
+Selectors沿用mode64BBD4==4且signedphase64AF98>=3→primary，elsefallback。
+4A9E50先reader cd：body+1 subtypebyte→EBP-1，roomDWORD little-endian→EBP-8；payload從body+6。
+Nativephase6直接先將incomingroom寫64ABF4，再檢查type。Invalidtype仍可能已覆寫global；此後置typegate不等於ownedroom authority。
+其他所有numericphase將incomingroom對64ABF4，不同→4AA06Creturn。沒有額外2/3/6 whitelist。
+Type MOVSXi8後unsignedJA>9，拒絕negative/10..255；0..9按4AA074 table分流。Adapter須先獨立檢查ownedepoch/CEroom，再發布owner；不能沿用Nativephase6未驗證assign授權。
+
+D5 subtype5 ownerdisplay
+Jump5→4A9FAF，reader s literal634300，payloadbody+6，容量28包含NUL，直接寫64ABCA presentationstring。它不是WORD ownerID，即使反組譯label看似word。
+完整branch沒有4D3A80 self/member compare、沒有找memberrow、session transfer、phasewrite或physical/source admission。Displayalias本身不授權收到者是房主session。
+Ownerglobal寫入在format與notificationpredicate前。Signedresourcecount834B90>4B取*[834B94]+12C formatpointer，否則63D618；external773F5200 formats(owner64ABCA)到EBP-6C stackbuffer108bytes；return未檢查，actualprovider/format/bounds未知。
+4EBB30完整25bytes：檢查ECX648F18是否等於836B54..836B63四個DWORD之一。是則不呼叫458BB0；否則若648F1C!=0也不通知；兩者都否才458BB0(stackmessage,5034A0color,503478)。
+只證四指標membership與byte suppression，不把它命名成self/owner/session/foreground authority。這些global/UIpointer初始化/lifetime與458BB0實際顯示未知。
+Absentmemberrow不能從D5造participant或complete roster；封存alias與CD raw相符只支援displaylink，原版handler沒有做該連結。
+
+其他D5：只做layout discrimination
+Header都是c subtype+droom；以下是payloadformat，不給新的trigger/settings/UI acceptance：
+0→4A9EAB，schcscccc；roomname cap90、ownerdisplay cap28，含mapWORD與summarybytes。Subtype0也有owner字段；不能把每個D5第一字串當owner。
+1→4A9EF6，ssccccccc＋selectionbytes；roomname cap90/passwordcap5；capacity是c而不是CE的h，沒有ownerfield。
+Native count是signedbyte；8iteration loop，negativeK不讀selection並補0，K>8只讀8不exactend驗證。Java builder K0..8及checkedbody是分開的authority，沒有wirecorrection。
+2→4A9F6A c；3→4A9F74 h；4→4A9FA5 c；6/7/8/9→4AA028/2F/36/56 c。四scalar summary布局與0..9jumpentries核對，沒有新的producercaller/effect動態證據。
+只有branch入口/reader/literal/count布局納入本批；subtype0/3後續mapeffect等未展開。Native字串codec仍由另外runtime資格決定，capturedASCII/JavaMS950不自動證Nativeencoding。
+
+CF dispatch的重要差異
+CF=207/CF，primary4B353F=99hex(slot153)→既有4B346C→4B3123default。
+Fixedraw default push0F/C_QUIT和c literal5025A8→4C6AE0，再private05AD0986(0)。只證attempt與target，不證實際wire成功或private terminate；legacy report的client_quit/terminate是導航標籤，未知維持。
+Fallback4B3783=31hex(slot49)→4B3634→4B31A5，4B31A7call4A9040。不能把CF在兩個dispatcher都說成delete，也不能把primaryprivatepath模擬成adapterownexitACK。
+
+CF fallbackhandler與UIdelete
+4A9040完整66bytes，reader d literal63424C，把body+1 DWORD→EBP-4；沒有內部phase/currentjoinedroom64ABF4 equality gate。
+4659F0完整16bytes呼叫450290(UI64A958,roomDWORD)。450290完整131bytes掃count+2C與pointerarray+58，rowDWORD+4等於incomingDWORD才virtual[vtbl](1)刪除；若還有rows，via*[4F7228]移動pointerarray；count--、selection+28clamp。
+刪除後重查同一index，會移除所有matching catalogrows；unknownrow無matchingdelete。Row+4 dereference在NULLguard之前，不能聲稱UI未初始化也安全。
+Disk*[4F7228]=77409100，actualdump-time module/export/body、runtimepointer與copyoperation完成未知，virtualdestructor/type/lifetime/arraybounds未知。
+完成cataloghelper後，handler讀UI64A98C+0C WORD MOVSXi16，與incomingDWORD相等才call46A540(0)。這是selectedpreviewwidget資料，沒有activejoinedroom equality。
+重用Batch16 46A540(0)：450230(UI64A954)、previewend64ACF8=begin64ACF4、4687B0(0)；SI==0分支跳過既有C_CD送包。DeepUI/callback effects未qualified。
+SelectedWORD signedextension對>32767房號不一般等於同unsigned16bits，屬UI資料資格，不是wirecorrection。
+Handler沒有clear64ABF4、沒有469CA0自身離房call或C_D0intentcheck；catalogdelete／previewclear不能當own-exitACK，也不能改auth/physical/source/sessionownership。
+
+Direction與CC reset必須分開
+S_CF：server→client，cf+u32LEroomId，body固定5/frame7，無subtype/result/string。Native dreader本地沒有exactendtest；explicitAD368adapter依既有Java契約exact5，非5不能猜成password/result/reset。
+C_CF：client→server，cf+u32LEroomId+NULpassword，body6+P/frame8+P。此處只以已封存empty-password join作counterdirection補證，不追Nativeproducer或要求新Javawire。
+Defaultemptyroom reset是S_CC row replacement/list，不是S_CF格式、delete/recreate pair或CF ACK。CFhandler沒有呼叫S_CCreset；defaultreset/cardinality/terminator仍是另一serverproducer契約。
+CatalogCF可以刪另一個visible room；adapter綁currentchannel/transportepoch，unknownidno-op。若指向activejoinedroom，另記invalidation，不能推leave成功。NumericID同epoch重用沒有wiregeneration。
+
+普通ROOM exit sealed對照
+frames.json SHA758D2371792B77E876A6AE67D8819FFFD085AC6CED26D96D3CE0AEE4DB5DEDD6；body/direction/currentexcerpt逐byte核對。
+Array0based77（一基78）Guest-GAME：d50501000000＋RoomExitGuest(RoomExitMoon)＋NUL，owner O27、body34/frame36，room1。
+同Guest先前CD array72名字raw相同，peerD0 array75在D5前；Nativehandler不自動提供sessionauthority。Guest維持ROOM，不能將peerdeparture或D5換成ownreturn。
+C_CF array66（一基67）：directionC bodycf0100000000，body6/frame8，empty-passwordjoin；不是serverdelete。
+普通exit range[73,78)沒有S_CF；本批S_CFdynamicdelete0。Defaultreset/deletebranch仍source/actualIL-only，沒有extra run。
+HostCCmergedreadindex76與GuestD5index77跨peer先後不能當writecommit順序；ownerD5也不是serveratomicpostcommit證明。沿用serverordinaryexit independentcommit資格，不重述或接管其Java工作。
+
+Minimalconsumer與guard
+ExplicitAD368 D505在ownedepoch/CEjoinedroom更新ownerpresentation，不造member，不授權ownsession/physical/source/selectedidentity。原版未做aliascomparison，此點不給其他Nativeactor/tableguard解除資格。
+S_CF只刪currentepoch/channel catalogrow，unknownrowno-op；joinedroominvalidation與ownexitintent/commit分開。D5/CF都不是own-exitACK/ready/start。
+Phase6globalassignment、primaryCFprivatepath及UIselection signedWORD均不能當adapterauthority。其他D5settings/UI／NativeUI/provider/currentstate與私有effects未知。
+newwire0/newopcode0/wirecorrection0；所有內容為既知布局／原版內部資料補證，無真正wire差異，不要求Java改動。
+server-packet-delta B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C維持；19priorpins維持。有限batch完結，overall與NativeGUI/source/player/owner/sessionauthority皆false，封存即停。

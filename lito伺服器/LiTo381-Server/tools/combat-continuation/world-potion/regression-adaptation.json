@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay_regression.py",
+      "sha256": "3878a66441b0c23977ea3cb23c5735fe715ddec420c1fe8abe7cabc2c53c13a7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\census.py",
+      "sha256": "e72d458fa39761d0795fe2d43129f317a48396c67ebd32b2ff524d9d168be71f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\prepare_regression.py",
+      "sha256": "ecf67560e2c78476c9141476be7237410462c42a3090ad453e4cb12310d7a9a6"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\world_potion_regression.py",
+      "sha256": "8cc0ed0a20bba52525e978ea71cac69920146554a4d47b7d309eb165a01d386a"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\census.py",
+      "sha256": "8cbab26bb7149239ae79507efd8bc78019fbc4aba908c29ee3ed5b0f89ab4dce"
+    }
+  ],
+  "scope": "exact candidate and evidence destination only; no assertion or timeout changes; material census unchanged by HEAL gate"
+}

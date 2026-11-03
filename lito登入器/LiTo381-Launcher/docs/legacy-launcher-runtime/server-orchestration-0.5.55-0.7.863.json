@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "launcherVersion": "0.5.55.0",
+  "serviceMode": "StandardArena",
+  "numericBreakthrough": true,
+  "profile": "lito-shared",
+  "startedAtUtc": "2026-09-08T00:31:31.1186829+00:00",
+  "stoppedAtUtc": "2026-09-08T00:31:34.2484356+00:00",
+  "startOrder": [
+    {
+      "role": "\u4E00\u822C\u64C2\u53F0",
+      "configFileName": "server.properties",
+      "endpoints": [
+        "\u4E00\u822C\u64C2\u53F0/LOGIN=127.0.0.1:32000",
+        "\u4E00\u822C\u64C2\u53F0/GAME=127.0.0.2:32000"
+      ]
+    }
+  ],
+  "processIds": [
+    18856
+  ],
+  "readyEndpointCount": 2,
+  "holdSeconds": 0,
+  "allProcessesStopped": true,
+  "allEndpointsReleased": true,
+  "logs": [
+    "[Server] \u555F\u52D5 \u4E00\u822C\u64C2\u53F0\uFF1Bconfig=server.properties",
+    "[Server/\u4E00\u822C\u64C2\u53F0 ERR] SLF4J: Failed to load class \u0022org.slf4j.impl.StaticLoggerBinder\u0022.",
+    "[Server/\u4E00\u822C\u64C2\u53F0 ERR] SLF4J: Defaulting to no-operation (NOP) logger implementation",
+    "[Server/\u4E00\u822C\u64C2\u53F0 ERR] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.",
+    "[Server/\u4E00\u822C\u64C2\u53F0] LiTo381 Server 0.7.863",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] login-listen=127.0.0.1:32000",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] game-listen=127.0.0.2:[32000] shared-channel-endpoint",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] database=source_router(\u592A\u967D\u795E=lito_mysql(dynamic-database=380_ac_1, resource-database=lito_static, read-only=true), \u6708\u4EAE\u795E=lito_mysql(dynamic-database=380_ac_2, resource-database=lito_static, read-only=true))",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] maps=native-litmap-embedded(active=47, resource-directories=62)",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] origin-source=lito-shared name=LiTo \u5171\u7528\u8CC7\u6599\u67B6\u69CB",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] state=D:\\lineage\u958B\u767C\\LiTo381-Server\\runtime\\server.state source-profiles=ephemeral",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] rental-handoff=process-local",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] battle-ai=false tick=900ms damage=5",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] battle-control=lito_static(rules=40, objects=26, npc-spawn-rows=25, player-spawn-rows=380)",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] battle-animations=/battle/spr-action-380.csv sprites=6423 actions=30812",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] capture=D:\\lineage\u958B\u767C\\LiTo381-Server\\runtime\\captures\\20260908-003132-p18856-1\\frames.jsonl",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] extended-stats-schema=2",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] numeric-breakthrough-schema=4",
+    "[Server/\u4E00\u822C\u64C2\u53F0] [LiTo] ready",
+    "[Server] \u5DF2\u505C\u6B62 PID 18856\u3002"
+  ]
+}

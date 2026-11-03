@@ -1,0 +1,33 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-policy\\build\\candidate-pet-world-policy.jar",
+    "sha256": "3dd19a51bc7b66978a7086ea61f945fb68933228b7b454694fb657a2905bc5b4"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-lifetime\\build-repro\\candidate-weapon-break-lifetime.jar",
+    "sha256": "221518da47ac7aca5ba7c134628d3de09e2073c6c63870ab67bcace7748db9e7"
+  },
+  "changed": [
+    "local/lito381/server/NativeWeaponBreakMaterialAction.class"
+  ],
+  "added": [],
+  "C0_byte_equal": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-lifetime\\build-repro\\inputs\\build.py",
+      "sha256": "19fbf8522d597f7e01c51a0d6246b3fafd223cdea31c3a3242e74de5244ab921"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-lifetime\\build-repro\\inputs\\NativeWeaponBreakMaterialAction.java",
+      "sha256": "98fb7f93c930f8b0cd13fe4666f5ab90909ccb1aeabed585bb183f6ab335171f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-lifetime\\build-repro\\inputs\\original\\NativeWeaponBreakMaterialAction.java",
+      "sha256": "4869bb62fb958b95790e35b6ff1bf031947b48378723c2461af85cac8c9d9c72"
+    }
+  ]
+}

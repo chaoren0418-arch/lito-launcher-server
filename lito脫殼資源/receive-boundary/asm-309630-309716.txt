@@ -1,0 +1,87 @@
+309630: mov     byte_64BC13, 1
+309631: 
+309632: 
+309633: loc_492EB0:                             ; CODE XREF: sub_4928C0+5CA↑j
+309634:                                         ; sub_4928C0+5E7↑j
+309635: mov     al, [ebx+94h]
+309636: lea     edi, [ebx+95h]
+309637: mov     byte_8348DE, al
+309638: mov     ecx, esi
+309639: xor     eax, eax
+309640: push    ebx
+309641: repne scasb
+309642: not     ecx
+309643: sub     edi, ecx
+309644: push    0C9h
+309645: mov     edx, ecx
+309646: mov     esi, edi
+309647: mov     edi, offset dword_64AC64
+309648: push    offset aCs                      ; "cs"
+309649: shr     ecx, 2
+309650: rep movsd
+309651: mov     ecx, edx
+309652: and     ecx, 3
+309653: rep movsb
+309654: movsx   eax, byte ptr [ebx+2Eh]
+309655: mov     dword_75F488, eax
+309656: mov     byte_62C224, 1
+309657: mov     byte_75AA68, 0
+309658: call    sub_4C6AE0
+309659: 
+309660: mov     edi, ebx
+309661: or      ecx, 0FFFFFFFFh
+309662: xor     eax, eax
+309663: add     esp, 0Ch
+309664: repne scasb
+309665: not     ecx
+309666: sub     edi, ecx
+309667: push    0
+309668: mov     edx, ecx
+309669: mov     esi, edi
+309670: mov     edi, offset dword_75F71C
+309671: shr     ecx, 2
+309672: rep movsd
+309673: mov     ecx, edx
+309674: mov     edx, offset sub_48F110
+309675: and     ecx, 3
+309676: rep movsb
+309677: mov     edi, ebx
+309678: or      ecx, 0FFFFFFFFh
+309679: repne scasb
+309680: not     ecx
+309681: sub     edi, ecx
+309682: mov     eax, ecx
+309683: mov     esi, edi
+309684: mov     edi, offset dword_64AD54
+309685: shr     ecx, 2
+309686: rep movsd
+309687: mov     ecx, eax
+309688: and     ecx, 3
+309689: rep movsb
+309690: mov     ecx, 3A980h
+309691: call    sub_4D65F0
+309692: 
+309693: mov     ecx, [ebp+var_C]
+309694: mov     large fs:0, ecx
+309695: pop     edi
+309696: pop     esi
+309697: pop     ebx
+309698: mov     esp, ebp
+309699: pop     ebp
+309700: retn
+309701: 
+309702: ; ---------------------------------------------------------------------------
+309703: 
+309704: loc_492F6E:                             ; CODE XREF: sub_4928C0+78↑j
+309705:                                         ; sub_4928C0+82↑j
+309706:                                         ; sub_4928C0+8D↑j
+309707: mov     al, byte_64AFA0
+309708: test    al, al
+309709: jz      short loc_492F81
+309710: 
+309711: mov     ecx, 8
+309712: call    sub_493150
+309713: 
+309714: 
+309715: loc_492F81:                             ; CODE XREF: sub_4928C0+5C↑j
+309716:                                         ; sub_4928C0+6B5↑j

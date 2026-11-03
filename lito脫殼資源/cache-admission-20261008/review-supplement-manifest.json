@@ -1,0 +1,37 @@
+{
+  "published_delivery_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\delivery-manifest.json",
+    "bytes": 3396,
+    "sha256": "BA9797B0F6E3C0581A84F0CC0947BC7E69F603C81E0388AC61B36EC783E74F90"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\independent-review.json",
+      "bytes": 1367,
+      "sha256": "745AE8BB70EE0C5AC08BAD86CBF7ECCADDF9ABDF020E756C69214E7C1399608B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\caller-configuration.py",
+      "bytes": 1844,
+      "sha256": "40C3D0804FD4B91F0E556B4AD8CB88D0DE2122C918BB68A5EE634E10795E3C81"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\caller-configuration.stdout.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\caller-configuration.stderr.txt",
+      "bytes": 1829,
+      "sha256": "242E4F3D8DB14EC00CFDE2B1DBFF2DA33B4C174877402E506716E3C77464C545"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\source-drift.json",
+      "bytes": 8531,
+      "sha256": "5D5C84EC647911531C1F5AA5DB559007D82A8ED196557E66DFC875E748887C93"
+    }
+  ],
+  "consumer_candidate_adopted": false,
+  "supervisor_reviewed": false,
+  "original_delivery_unchanged": true
+}

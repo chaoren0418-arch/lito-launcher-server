@@ -1,0 +1,354 @@
+{
+  "TASK_ID": "bin-public-4c7ec0-scalar-contract-20261008",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+      "bytes": 20092,
+      "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+    }
+  ],
+  "same_PE_snapshot_hashed_and_decoded": true,
+  "tools": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "capstone": "5.0.6"
+  },
+  "PE": {
+    "machine": 332,
+    "imagebase": "00400000",
+    "sections": [
+      {
+        "index": 0,
+        "name_hex": "2020200020202020",
+        "virtual_size": 4415488,
+        "rva": 4096,
+        "raw_size": 4415488,
+        "raw_pointer": 4096,
+        "characteristics": 3758096480
+      },
+      {
+        "index": 1,
+        "name_hex": "2e72737263000000",
+        "virtual_size": 10440,
+        "rva": 4419584,
+        "raw_size": 12288,
+        "raw_pointer": 4419584,
+        "characteristics": 3221225536
+      },
+      {
+        "index": 2,
+        "name_hex": "2e69646174612020",
+        "virtual_size": 4096,
+        "rva": 4431872,
+        "raw_size": 4096,
+        "raw_pointer": 4431872,
+        "characteristics": 3221225536
+      },
+      {
+        "index": 3,
+        "name_hex": "5468656d69646120",
+        "virtual_size": 2658304,
+        "rva": 4435968,
+        "raw_size": 2658304,
+        "raw_pointer": 4435968,
+        "characteristics": 3221225536
+      }
+    ]
+  },
+  "body": {
+    "va": "004C7EC0",
+    "rva": "000C7EC0",
+    "end_exclusive": "004C7EF1",
+    "file_offset": "000C7EC0",
+    "section_index": 0,
+    "bytes": 49,
+    "raw_hex": "558bec56578bf1e8e41ef5ff8b7d0885c0741039780474138bcee8211ff5ff85c075f0578bcee8d5feffff5f5e5dc20400",
+    "artifact": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c7ec0-scalar-contract-20261008\\004C7EC0-31.bin",
+      "bytes": 49,
+      "sha256": "A4E7712484C12F198802660732FCF420736B4C93AE6228DD67D52F91A3B491F7"
+    }
+  },
+  "instructions": [
+    {
+      "va": "004C7EC0",
+      "rva": "000C7EC0",
+      "file_offset": "000C7EC0",
+      "size": 1,
+      "raw_hex": "55",
+      "mnemonic": "push",
+      "operands": "ebp"
+    },
+    {
+      "va": "004C7EC1",
+      "rva": "000C7EC1",
+      "file_offset": "000C7EC1",
+      "size": 2,
+      "raw_hex": "8bec",
+      "mnemonic": "mov",
+      "operands": "ebp, esp"
+    },
+    {
+      "va": "004C7EC3",
+      "rva": "000C7EC3",
+      "file_offset": "000C7EC3",
+      "size": 1,
+      "raw_hex": "56",
+      "mnemonic": "push",
+      "operands": "esi"
+    },
+    {
+      "va": "004C7EC4",
+      "rva": "000C7EC4",
+      "file_offset": "000C7EC4",
+      "size": 1,
+      "raw_hex": "57",
+      "mnemonic": "push",
+      "operands": "edi"
+    },
+    {
+      "va": "004C7EC5",
+      "rva": "000C7EC5",
+      "file_offset": "000C7EC5",
+      "size": 2,
+      "raw_hex": "8bf1",
+      "mnemonic": "mov",
+      "operands": "esi, ecx"
+    },
+    {
+      "va": "004C7EC7",
+      "rva": "000C7EC7",
+      "file_offset": "000C7EC7",
+      "size": 5,
+      "raw_hex": "e8e41ef5ff",
+      "mnemonic": "call",
+      "operands": "0x419db0",
+      "direct_target": "00419DB0"
+    },
+    {
+      "va": "004C7ECC",
+      "rva": "000C7ECC",
+      "file_offset": "000C7ECC",
+      "size": 3,
+      "raw_hex": "8b7d08",
+      "mnemonic": "mov",
+      "operands": "edi, dword ptr [ebp + 8]"
+    },
+    {
+      "va": "004C7ECF",
+      "rva": "000C7ECF",
+      "file_offset": "000C7ECF",
+      "size": 2,
+      "raw_hex": "85c0",
+      "mnemonic": "test",
+      "operands": "eax, eax"
+    },
+    {
+      "va": "004C7ED1",
+      "rva": "000C7ED1",
+      "file_offset": "000C7ED1",
+      "size": 2,
+      "raw_hex": "7410",
+      "mnemonic": "je",
+      "operands": "0x4c7ee3",
+      "direct_target": "004C7EE3"
+    },
+    {
+      "va": "004C7ED3",
+      "rva": "000C7ED3",
+      "file_offset": "000C7ED3",
+      "size": 3,
+      "raw_hex": "397804",
+      "mnemonic": "cmp",
+      "operands": "dword ptr [eax + 4], edi"
+    },
+    {
+      "va": "004C7ED6",
+      "rva": "000C7ED6",
+      "file_offset": "000C7ED6",
+      "size": 2,
+      "raw_hex": "7413",
+      "mnemonic": "je",
+      "operands": "0x4c7eeb",
+      "direct_target": "004C7EEB"
+    },
+    {
+      "va": "004C7ED8",
+      "rva": "000C7ED8",
+      "file_offset": "000C7ED8",
+      "size": 2,
+      "raw_hex": "8bce",
+      "mnemonic": "mov",
+      "operands": "ecx, esi"
+    },
+    {
+      "va": "004C7EDA",
+      "rva": "000C7EDA",
+      "file_offset": "000C7EDA",
+      "size": 5,
+      "raw_hex": "e8211ff5ff",
+      "mnemonic": "call",
+      "operands": "0x419e00",
+      "direct_target": "00419E00"
+    },
+    {
+      "va": "004C7EDF",
+      "rva": "000C7EDF",
+      "file_offset": "000C7EDF",
+      "size": 2,
+      "raw_hex": "85c0",
+      "mnemonic": "test",
+      "operands": "eax, eax"
+    },
+    {
+      "va": "004C7EE1",
+      "rva": "000C7EE1",
+      "file_offset": "000C7EE1",
+      "size": 2,
+      "raw_hex": "75f0",
+      "mnemonic": "jne",
+      "operands": "0x4c7ed3",
+      "direct_target": "004C7ED3"
+    },
+    {
+      "va": "004C7EE3",
+      "rva": "000C7EE3",
+      "file_offset": "000C7EE3",
+      "size": 1,
+      "raw_hex": "57",
+      "mnemonic": "push",
+      "operands": "edi"
+    },
+    {
+      "va": "004C7EE4",
+      "rva": "000C7EE4",
+      "file_offset": "000C7EE4",
+      "size": 2,
+      "raw_hex": "8bce",
+      "mnemonic": "mov",
+      "operands": "ecx, esi"
+    },
+    {
+      "va": "004C7EE6",
+      "rva": "000C7EE6",
+      "file_offset": "000C7EE6",
+      "size": 5,
+      "raw_hex": "e8d5feffff",
+      "mnemonic": "call",
+      "operands": "0x4c7dc0",
+      "direct_target": "004C7DC0"
+    },
+    {
+      "va": "004C7EEB",
+      "rva": "000C7EEB",
+      "file_offset": "000C7EEB",
+      "size": 1,
+      "raw_hex": "5f",
+      "mnemonic": "pop",
+      "operands": "edi"
+    },
+    {
+      "va": "004C7EEC",
+      "rva": "000C7EEC",
+      "file_offset": "000C7EEC",
+      "size": 1,
+      "raw_hex": "5e",
+      "mnemonic": "pop",
+      "operands": "esi"
+    },
+    {
+      "va": "004C7EED",
+      "rva": "000C7EED",
+      "file_offset": "000C7EED",
+      "size": 1,
+      "raw_hex": "5d",
+      "mnemonic": "pop",
+      "operands": "ebp"
+    },
+    {
+      "va": "004C7EEE",
+      "rva": "000C7EEE",
+      "file_offset": "000C7EEE",
+      "size": 3,
+      "raw_hex": "c20400",
+      "mnemonic": "ret",
+      "operands": "4"
+    }
+  ],
+  "local_branches": [
+    {
+      "va": "004C7ED1",
+      "rva": "000C7ED1",
+      "file_offset": "000C7ED1",
+      "size": 2,
+      "raw_hex": "7410",
+      "mnemonic": "je",
+      "operands": "0x4c7ee3",
+      "direct_target": "004C7EE3"
+    },
+    {
+      "va": "004C7ED6",
+      "rva": "000C7ED6",
+      "file_offset": "000C7ED6",
+      "size": 2,
+      "raw_hex": "7413",
+      "mnemonic": "je",
+      "operands": "0x4c7eeb",
+      "direct_target": "004C7EEB"
+    },
+    {
+      "va": "004C7EE1",
+      "rva": "000C7EE1",
+      "file_offset": "000C7EE1",
+      "size": 2,
+      "raw_hex": "75f0",
+      "mnemonic": "jne",
+      "operands": "0x4c7ed3",
+      "direct_target": "004C7ED3"
+    }
+  ],
+  "direct_call_boundary": [
+    {
+      "va": "004C7EC7",
+      "rva": "000C7EC7",
+      "file_offset": "000C7EC7",
+      "size": 5,
+      "raw_hex": "e8e41ef5ff",
+      "mnemonic": "call",
+      "operands": "0x419db0",
+      "direct_target": "00419DB0"
+    },
+    {
+      "va": "004C7EDA",
+      "rva": "000C7EDA",
+      "file_offset": "000C7EDA",
+      "size": 5,
+      "raw_hex": "e8211ff5ff",
+      "mnemonic": "call",
+      "operands": "0x419e00",
+      "direct_target": "00419E00"
+    },
+    {
+      "va": "004C7EE6",
+      "rva": "000C7EE6",
+      "file_offset": "000C7EE6",
+      "size": 5,
+      "raw_hex": "e8d5feffff",
+      "mnemonic": "call",
+      "operands": "0x4c7dc0",
+      "direct_target": "004C7DC0"
+    }
+  ],
+  "raw_body_complete": true,
+  "call_target_bodies_expanded": [],
+  "caller_bytes_redecoded": false
+}

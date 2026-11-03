@@ -1,0 +1,3642 @@
+[
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 1,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 1,
+    "field_name": "effectGfx",
+    "value": 11722,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "LightSpell",
+    "skill_id": 2,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "LIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "LightSpell",
+    "skill_id": 2,
+    "field_name": "effectGfx",
+    "value": 2510,
+    "binding": "LIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 3,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 3,
+    "field_name": "effectGfx",
+    "value": 221,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 4,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 4,
+    "field_name": "effectGfx",
+    "value": 167,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 6,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 6,
+    "field_name": "effectGfx",
+    "value": 1797,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 7,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 7,
+    "field_name": "effectGfx",
+    "value": 1799,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBuffSpell",
+    "skill_id": 8,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEAPON_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBuffSpell",
+    "skill_id": 8,
+    "field_name": "effectGfx",
+    "value": 2165,
+    "binding": "WEAPON_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CurseRemovalSpell",
+    "skill_id": 9,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CURSE_REMOVAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CurseRemovalSpell",
+    "skill_id": 9,
+    "field_name": "effectGfx",
+    "value": 871,
+    "binding": "CURSE_REMOVAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 10,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 10,
+    "field_name": "effectGfx",
+    "value": 252,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PoisonSpell",
+    "skill_id": 11,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "POISON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PoisonSpell",
+    "skill_id": 11,
+    "field_name": "effectGfx",
+    "value": 745,
+    "binding": "POISON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemWeaponEnchantSpell",
+    "skill_id": 12,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ITEM_WEAPON_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemWeaponEnchantSpell",
+    "skill_id": 12,
+    "field_name": "effectGfx",
+    "value": 747,
+    "binding": "ITEM_WEAPON_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DetectionSpell",
+    "skill_id": 13,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DETECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DetectionSpell",
+    "skill_id": 13,
+    "field_name": "effectGfx",
+    "value": 749,
+    "binding": "DETECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeightSpell",
+    "skill_id": 14,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeightSpell",
+    "skill_id": 14,
+    "field_name": "effectGfx",
+    "value": 2170,
+    "binding": "WEIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 15,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 15,
+    "field_name": "effectGfx",
+    "value": 1583,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 16,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 16,
+    "field_name": "effectGfx",
+    "value": 1801,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "LineAttackSpell",
+    "skill_id": 17,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "LINE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "LineAttackSpell",
+    "skill_id": 17,
+    "field_name": "effectGfx",
+    "value": 170,
+    "binding": "LINE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TurnUndeadSpell",
+    "skill_id": 18,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "TURN_UNDEAD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 19,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 19,
+    "field_name": "effectGfx",
+    "value": 11723,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 20,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 20,
+    "field_name": "effectGfx",
+    "value": 746,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemArmorEnchantSpell",
+    "skill_id": 21,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ITEM_ARMOR_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemArmorEnchantSpell",
+    "skill_id": 21,
+    "field_name": "effectGfx",
+    "value": 748,
+    "binding": "ITEM_ARMOR_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 22,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 22,
+    "field_name": "effectGfx",
+    "value": 1804,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "effectGfx",
+    "value": 2510,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "earthEffectGfx",
+    "value": 2169,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "fireEffectGfx",
+    "value": 2167,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "waterEffectGfx",
+    "value": 2166,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RevealWeaknessSpell",
+    "skill_id": 23,
+    "field_name": "windEffectGfx",
+    "value": 2168,
+    "binding": "REVEAL_WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 25,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 25,
+    "field_name": "effectGfx",
+    "value": 171,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 26,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 26,
+    "field_name": "effectGfx",
+    "value": 750,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBreakSpell",
+    "skill_id": 27,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEAPON_BREAK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBreakSpell",
+    "skill_id": 27,
+    "field_name": "effectGfx",
+    "value": 172,
+    "binding": "WEAPON_BREAK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 28,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 28,
+    "field_name": "effectGfx",
+    "value": 236,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EntangleSpell",
+    "skill_id": 29,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ENTANGLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EntangleSpell",
+    "skill_id": 29,
+    "field_name": "effectGfx",
+    "value": 752,
+    "binding": "ENTANGLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 30,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 30,
+    "field_name": "effectGfx",
+    "value": 1805,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterMagicSpell",
+    "skill_id": 31,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "COUNTER_MAGIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterMagicSpell",
+    "skill_id": 31,
+    "field_name": "effectGfx",
+    "value": 10701,
+    "binding": "COUNTER_MAGIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterMagicSpell",
+    "skill_id": 31,
+    "field_name": "consumeEffectGfx",
+    "value": 10701,
+    "binding": "COUNTER_MAGIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RegenSpell",
+    "skill_id": 32,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "REGEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RegenSpell",
+    "skill_id": 32,
+    "field_name": "effectGfx",
+    "value": 2173,
+    "binding": "REGEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ParalysisSpell",
+    "skill_id": 33,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PARALYSIS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ParalysisSpell",
+    "skill_id": 33,
+    "field_name": "effectGfx",
+    "value": 746,
+    "binding": "PARALYSIS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 34,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 34,
+    "field_name": "effectGfx",
+    "value": 11736,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 35,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 35,
+    "field_name": "effectGfx",
+    "value": 11724,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TamingSpell",
+    "skill_id": 36,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "TAMING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TamingSpell",
+    "skill_id": 36,
+    "field_name": "effectGfx",
+    "value": 228,
+    "binding": "TAMING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CurseRemovalSpell",
+    "skill_id": 37,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CURSE_REMOVAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CurseRemovalSpell",
+    "skill_id": 37,
+    "field_name": "effectGfx",
+    "value": 227,
+    "binding": "CURSE_REMOVAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 38,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 38,
+    "field_name": "effectGfx",
+    "value": 11738,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ManaDrainSpell",
+    "skill_id": 39,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MANA_DRAIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ManaDrainSpell",
+    "skill_id": 39,
+    "field_name": "effectGfx",
+    "value": 2171,
+    "binding": "MANA_DRAIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 40,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 40,
+    "field_name": "effectGfx",
+    "value": 2175,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CreateZombieSpell",
+    "skill_id": 41,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CREATE_ZOMBIE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CreateZombieSpell",
+    "skill_id": 41,
+    "field_name": "effectGfx",
+    "value": 226,
+    "binding": "CREATE_ZOMBIE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 42,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 42,
+    "field_name": "effectGfx",
+    "value": 6342,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HasteSpell",
+    "skill_id": 43,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "HASTE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HasteSpell",
+    "skill_id": 43,
+    "field_name": "effectGfx",
+    "value": 755,
+    "binding": "HASTE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CancellationSpell",
+    "skill_id": 44,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CANCELLATION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CancellationSpell",
+    "skill_id": 44,
+    "field_name": "effectGfx",
+    "value": 870,
+    "binding": "CANCELLATION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 45,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 45,
+    "field_name": "effectGfx",
+    "value": 129,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 46,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 46,
+    "field_name": "effectGfx",
+    "value": 1811,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaknessSpell",
+    "skill_id": 47,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaknessSpell",
+    "skill_id": 47,
+    "field_name": "effectGfx",
+    "value": 2228,
+    "binding": "WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBuffSpell",
+    "skill_id": 48,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEAPON_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaponBuffSpell",
+    "skill_id": 48,
+    "field_name": "effectGfx",
+    "value": 2176,
+    "binding": "WEAPON_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroupHealingSpell",
+    "skill_id": 49,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "GROUP_HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroupHealingSpell",
+    "skill_id": 49,
+    "field_name": "effectGfx",
+    "value": 759,
+    "binding": "GROUP_HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 50,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 50,
+    "field_name": "effectGfx",
+    "value": 756,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SummonSpell",
+    "skill_id": 51,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SummonSpell",
+    "skill_id": 51,
+    "field_name": "effectGfx",
+    "value": 2510,
+    "binding": "SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SummonSpell",
+    "skill_id": 51,
+    "field_name": "spawnEffectGfx",
+    "value": 755,
+    "binding": "SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 52,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 52,
+    "field_name": "effectGfx",
+    "value": 3936,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 53,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 53,
+    "field_name": "effectGfx",
+    "value": 758,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SelfHasteSpell",
+    "skill_id": 54,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SELF_HASTE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SelfHasteSpell",
+    "skill_id": 54,
+    "field_name": "effectGfx",
+    "value": 3104,
+    "binding": "SELF_HASTE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CombatBuffSpell",
+    "skill_id": 55,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "COMBAT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CombatBuffSpell",
+    "skill_id": 55,
+    "field_name": "effectGfx",
+    "value": 3943,
+    "binding": "COMBAT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaknessSpell",
+    "skill_id": 56,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WeaknessSpell",
+    "skill_id": 56,
+    "field_name": "effectGfx",
+    "value": 2230,
+    "binding": "WEAKNESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 57,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "HealingSpell",
+    "skill_id": 57,
+    "field_name": "effectGfx",
+    "value": 11725,
+    "binding": "HEALING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroundSpell",
+    "skill_id": 58,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "GROUND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroundSpell",
+    "skill_id": 58,
+    "field_name": "effectGfx",
+    "value": 168,
+    "binding": "GROUND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 59,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 59,
+    "field_name": "effectGfx",
+    "value": 757,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "InvisibilitySpell",
+    "skill_id": 60,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "INVISIBILITY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 61,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 61,
+    "field_name": "effectGfx",
+    "value": 3944,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 62,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 62,
+    "field_name": "effectGfx",
+    "value": 1812,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroundSpell",
+    "skill_id": 63,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "GROUND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GroundSpell",
+    "skill_id": 63,
+    "field_name": "effectGfx",
+    "value": 2231,
+    "binding": "GROUND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SilenceSpell",
+    "skill_id": 64,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SILENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SilenceSpell",
+    "skill_id": 64,
+    "field_name": "effectGfx",
+    "value": 2177,
+    "binding": "SILENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 65,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 65,
+    "field_name": "effectGfx",
+    "value": 3924,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SleepSpell",
+    "skill_id": 66,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SLEEP_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SleepSpell",
+    "skill_id": 66,
+    "field_name": "effectGfx",
+    "value": 760,
+    "binding": "SLEEP_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PolymorphSpell",
+    "skill_id": 67,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "POLYMORPH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PolymorphSpell",
+    "skill_id": 67,
+    "field_name": "effectGfx",
+    "value": 230,
+    "binding": "POLYMORPH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DamageProtectionSpell",
+    "skill_id": 68,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DAMAGE_PROTECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DamageProtectionSpell",
+    "skill_id": 68,
+    "field_name": "effectGfx",
+    "value": 228,
+    "binding": "DAMAGE_PROTECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MassTeleportSpell",
+    "skill_id": 69,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MASS_TELEPORT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MassTeleportSpell",
+    "skill_id": 69,
+    "field_name": "effectGfx",
+    "value": 2236,
+    "binding": "MASS_TELEPORT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 70,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 70,
+    "field_name": "effectGfx",
+    "value": 1819,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DecayPotionSpell",
+    "skill_id": 71,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DECAY_POTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DecayPotionSpell",
+    "skill_id": 71,
+    "field_name": "effectGfx",
+    "value": 2232,
+    "binding": "DECAY_POTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterDetectionSpell",
+    "skill_id": 72,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "COUNTER_DETECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterDetectionSpell",
+    "skill_id": 72,
+    "field_name": "effectGfx",
+    "value": 3934,
+    "binding": "COUNTER_DETECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MagicalWeaponSpell",
+    "skill_id": 73,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MAGICAL_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MagicalWeaponSpell",
+    "skill_id": 73,
+    "field_name": "effectGfx",
+    "value": 763,
+    "binding": "MAGICAL_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 74,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 74,
+    "field_name": "effectGfx",
+    "value": 762,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 75,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 75,
+    "field_name": "effectGfx",
+    "value": 3944,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MassSlowSpell",
+    "skill_id": 76,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MASS_SLOW_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MassSlowSpell",
+    "skill_id": 76,
+    "field_name": "effectGfx",
+    "value": 3932,
+    "binding": "MASS_SLOW_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 77,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 77,
+    "field_name": "effectGfx",
+    "value": 11746,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 77,
+    "field_name": "specialCriticalGfx",
+    "value": 11748,
+    "binding": "ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbsoluteBarrierSpell",
+    "skill_id": 78,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ABSOLUTE_BARRIER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbsoluteBarrierSpell",
+    "skill_id": 78,
+    "field_name": "effectGfx",
+    "value": 2234,
+    "binding": "ABSOLUTE_BARRIER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AdvanceSpiritSpell",
+    "skill_id": 79,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ADVANCE_SPIRIT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AdvanceSpiritSpell",
+    "skill_id": 79,
+    "field_name": "effectGfx",
+    "value": 3935,
+    "binding": "ADVANCE_SPIRIT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 80,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 80,
+    "field_name": "effectGfx",
+    "value": 3933,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShockStunSpell",
+    "skill_id": 87,
+    "field_name": "impactGfx",
+    "value": 4434,
+    "binding": "SHOCK_STUN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShockStunSpell",
+    "skill_id": 87,
+    "field_name": "effectNpcGfx",
+    "value": 4183,
+    "binding": "SHOCK_STUN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ReductionArmorSpell",
+    "skill_id": 88,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "REDUCTION_ARMOR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ReductionArmorSpell",
+    "skill_id": 88,
+    "field_name": "effectGfx",
+    "value": 4824,
+    "binding": "REDUCTION_ARMOR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BounceAttackSpell",
+    "skill_id": 89,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BOUNCE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BounceAttackSpell",
+    "skill_id": 89,
+    "field_name": "effectGfx",
+    "value": 4648,
+    "binding": "BOUNCE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SolidCarriageSpell",
+    "skill_id": 90,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SOLID_CARRIAGE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "SolidCarriageSpell",
+    "skill_id": 90,
+    "field_name": "effectGfx",
+    "value": 5831,
+    "binding": "SOLID_CARRIAGE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterBarrierSpell",
+    "skill_id": 91,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "COUNTER_BARRIER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterBarrierSpell",
+    "skill_id": 91,
+    "field_name": "effectGfx",
+    "value": 5832,
+    "binding": "COUNTER_BARRIER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterBarrierSpell",
+    "skill_id": 91,
+    "field_name": "triggerEffectGfx",
+    "value": 10710,
+    "binding": "COUNTER_BARRIER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "InvisibilitySpell",
+    "skill_id": 97,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "INVISIBILITY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EnchantVenomSpell",
+    "skill_id": 98,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ENCHANT_VENOM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EnchantVenomSpell",
+    "skill_id": 98,
+    "field_name": "effectGfx",
+    "value": 2942,
+    "binding": "ENCHANT_VENOM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 99,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 99,
+    "field_name": "effectGfx",
+    "value": 2943,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BringStoneSpell",
+    "skill_id": 100,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BRING_STONE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BringStoneSpell",
+    "skill_id": 100,
+    "field_name": "effectGfx",
+    "value": 2944,
+    "binding": "BRING_STONE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 101,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 101,
+    "field_name": "effectGfx",
+    "value": 2945,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 102,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 102,
+    "field_name": "effectGfx",
+    "value": 2946,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 103,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BlindSpell",
+    "skill_id": 103,
+    "field_name": "effectGfx",
+    "value": 2947,
+    "binding": "BLIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PoisonResistanceSpell",
+    "skill_id": 104,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "POISON_RESISTANCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PoisonResistanceSpell",
+    "skill_id": 104,
+    "field_name": "effectGfx",
+    "value": 2948,
+    "binding": "POISON_RESISTANCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 105,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 105,
+    "field_name": "effectGfx",
+    "value": 2949,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DodgeBuffSpell",
+    "skill_id": 106,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DODGE_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DodgeBuffSpell",
+    "skill_id": 106,
+    "field_name": "effectGfx",
+    "value": 11765,
+    "binding": "DODGE_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemWeaponEnchantSpell",
+    "skill_id": 107,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ITEM_WEAPON_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ItemWeaponEnchantSpell",
+    "skill_id": 107,
+    "field_name": "effectGfx",
+    "value": 2951,
+    "binding": "ITEM_WEAPON_ENCHANT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 108,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "FINAL_BURN_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AttackSpell",
+    "skill_id": 108,
+    "field_name": "effectGfx",
+    "value": 2952,
+    "binding": "FINAL_BURN_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 109,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 109,
+    "field_name": "effectGfx",
+    "value": 3909,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 110,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AbilityBuffSpell",
+    "skill_id": 110,
+    "field_name": "effectGfx",
+    "value": 3910,
+    "binding": "ABILITY_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RangedEvasionBuffSpell",
+    "skill_id": 111,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RANGED_EVASION_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RangedEvasionBuffSpell",
+    "skill_id": 111,
+    "field_name": "effectGfx",
+    "value": 11766,
+    "binding": "RANGED_EVASION_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ArmorBreakSpell",
+    "skill_id": 112,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ARMOR_BREAK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ArmorBreakSpell",
+    "skill_id": 112,
+    "field_name": "effectGfx",
+    "value": 3400,
+    "binding": "ARMOR_BREAK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TrueTargetSpell",
+    "skill_id": 113,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "TRUE_TARGET_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TrueTargetSpell",
+    "skill_id": 113,
+    "field_name": "effectGfx",
+    "value": 1765,
+    "binding": "TRUE_TARGET_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 114,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 114,
+    "field_name": "effectGfx",
+    "value": 2277,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 115,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 115,
+    "field_name": "effectGfx",
+    "value": 3941,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CallClanSpell",
+    "skill_id": 116,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CALL_CLAN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 117,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RoyalAuraSpell",
+    "skill_id": 117,
+    "field_name": "effectGfx",
+    "value": 3942,
+    "binding": "ROYAL_AURA_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RunClanSpell",
+    "skill_id": 118,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RUN_CLAN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MagicResistanceSpell",
+    "skill_id": 129,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MAGIC_RESISTANCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MagicResistanceSpell",
+    "skill_id": 129,
+    "field_name": "effectGfx",
+    "value": 2186,
+    "binding": "MAGIC_RESISTANCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BodyToMindSpell",
+    "skill_id": 130,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BODY_TO_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BodyToMindSpell",
+    "skill_id": 130,
+    "field_name": "effectGfx",
+    "value": 2179,
+    "binding": "BODY_TO_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WorldTreeCallSpell",
+    "skill_id": 131,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WORLD_TREE_CALL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WorldTreeCallSpell",
+    "skill_id": 131,
+    "field_name": "effectGfx",
+    "value": 169,
+    "binding": "WORLD_TREE_CALL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "TripleArrowSpell",
+    "skill_id": 132,
+    "field_name": "effectGfx",
+    "value": 4394,
+    "binding": "TRIPLE_ARROW_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalFallDownSpell",
+    "skill_id": 133,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ELEMENTAL_FALL_DOWN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalFallDownSpell",
+    "skill_id": 133,
+    "field_name": "effectGfx",
+    "value": 4396,
+    "binding": "ELEMENTAL_FALL_DOWN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterMirrorSpell",
+    "skill_id": 134,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "COUNTER_MIRROR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CounterMirrorSpell",
+    "skill_id": 134,
+    "field_name": "effectGfx",
+    "value": 4395,
+    "binding": "COUNTER_MIRROR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ClearMindSpell",
+    "skill_id": 137,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CLEAR_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ClearMindSpell",
+    "skill_id": 137,
+    "field_name": "effectGfx",
+    "value": 2180,
+    "binding": "CLEAR_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResistElementalSpell",
+    "skill_id": 138,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RESIST_ELEMENTAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResistElementalSpell",
+    "skill_id": 138,
+    "field_name": "effectGfx",
+    "value": 2184,
+    "binding": "RESIST_ELEMENTAL_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ReturnToNatureSpell",
+    "skill_id": 145,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RETURN_TO_NATURE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ReturnToNatureSpell",
+    "skill_id": 145,
+    "field_name": "effectGfx",
+    "value": 2245,
+    "binding": "RETURN_TO_NATURE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BodyToMindSpell",
+    "skill_id": 146,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BODY_TO_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BodyToMindSpell",
+    "skill_id": 146,
+    "field_name": "effectGfx",
+    "value": 2178,
+    "binding": "BODY_TO_MIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalProtectionSpell",
+    "skill_id": 147,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ELEMENTAL_PROTECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalProtectionSpell",
+    "skill_id": 147,
+    "field_name": "effectGfx",
+    "value": 2285,
+    "binding": "ELEMENTAL_PROTECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireWeaponSpell",
+    "skill_id": 148,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "FIRE_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireWeaponSpell",
+    "skill_id": 148,
+    "field_name": "effectGfx",
+    "value": 2182,
+    "binding": "FIRE_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WindShotSpell",
+    "skill_id": 149,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WIND_SHOT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WindShotSpell",
+    "skill_id": 149,
+    "field_name": "effectGfx",
+    "value": 2246,
+    "binding": "WIND_SHOT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 150,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MovementBuffSpell",
+    "skill_id": 150,
+    "field_name": "effectGfx",
+    "value": 2247,
+    "binding": "MOVEMENT_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 151,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ShieldSpell",
+    "skill_id": 151,
+    "field_name": "effectGfx",
+    "value": 2249,
+    "binding": "SHIELD_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EntangleSpell",
+    "skill_id": 152,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ENTANGLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EntangleSpell",
+    "skill_id": 152,
+    "field_name": "effectGfx",
+    "value": 2250,
+    "binding": "ENTANGLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EraseMagicSpell",
+    "skill_id": 153,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ERASE_MAGIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EraseMagicSpell",
+    "skill_id": 153,
+    "field_name": "effectGfx",
+    "value": 10706,
+    "binding": "ERASE_MAGIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 154,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 154,
+    "field_name": "effectGfx",
+    "value": 2510,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 154,
+    "field_name": "spawnEffectGfx",
+    "value": 755,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireBlessSpell",
+    "skill_id": 155,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "FIRE_BLESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireBlessSpell",
+    "skill_id": 155,
+    "field_name": "effectGfx",
+    "value": 2286,
+    "binding": "FIRE_BLESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StormEyeSpell",
+    "skill_id": 156,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "STORM_EYE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StormEyeSpell",
+    "skill_id": 156,
+    "field_name": "effectGfx",
+    "value": 2288,
+    "binding": "STORM_EYE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BindSpell",
+    "skill_id": 157,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BindSpell",
+    "skill_id": 157,
+    "field_name": "effectGfx",
+    "value": 2251,
+    "binding": "BIND_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "NaturesTouchSpell",
+    "skill_id": 158,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "NATURES_TOUCH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "NaturesTouchSpell",
+    "skill_id": 158,
+    "field_name": "effectGfx",
+    "value": 2243,
+    "binding": "NATURES_TOUCH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EarthBlessSpell",
+    "skill_id": 159,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "EARTH_BLESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "EarthBlessSpell",
+    "skill_id": 159,
+    "field_name": "effectGfx",
+    "value": 2287,
+    "binding": "EARTH_BLESS_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AquaProtectSpell",
+    "skill_id": 160,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "AQUA_PROTECT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AquaProtectSpell",
+    "skill_id": 160,
+    "field_name": "effectGfx",
+    "value": 5829,
+    "binding": "AQUA_PROTECT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaSilenceSpell",
+    "skill_id": 161,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "AREA_SILENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaSilenceSpell",
+    "skill_id": 161,
+    "field_name": "effectGfx",
+    "value": 2241,
+    "binding": "AREA_SILENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 162,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 162,
+    "field_name": "effectGfx",
+    "value": 2510,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ElementalSummonSpell",
+    "skill_id": 162,
+    "field_name": "spawnEffectGfx",
+    "value": 755,
+    "binding": "ELEMENTAL_SUMMON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireWeaponSpell",
+    "skill_id": 163,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "FIRE_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FireWeaponSpell",
+    "skill_id": 163,
+    "field_name": "effectGfx",
+    "value": 2242,
+    "binding": "FIRE_WEAPON_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "NaturesBlessingSpell",
+    "skill_id": 164,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "NATURES_BLESSING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "NaturesBlessingSpell",
+    "skill_id": 164,
+    "field_name": "effectGfx",
+    "value": 2244,
+    "binding": "NATURES_BLESSING_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 165,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResurrectionSpell",
+    "skill_id": 165,
+    "field_name": "effectGfx",
+    "value": 2245,
+    "binding": "RESURRECTION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StormShotSpell",
+    "skill_id": 166,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "STORM_SHOT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StormShotSpell",
+    "skill_id": 166,
+    "field_name": "effectGfx",
+    "value": 2248,
+    "binding": "STORM_SHOT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WindShackleSpell",
+    "skill_id": 167,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WIND_SHACKLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WindShackleSpell",
+    "skill_id": 167,
+    "field_name": "effectGfx",
+    "value": 1799,
+    "binding": "WIND_SHACKLE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IronSkinSpell",
+    "skill_id": 168,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "IRON_SKIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IronSkinSpell",
+    "skill_id": 168,
+    "field_name": "effectGfx",
+    "value": 2252,
+    "binding": "IRON_SKIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IronSkinSpell",
+    "skill_id": 168,
+    "field_name": "coexistGraphic",
+    "value": 528,
+    "binding": "IRON_SKIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ExoticVitalizeSpell",
+    "skill_id": 169,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "EXOTIC_VITALIZE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ExoticVitalizeSpell",
+    "skill_id": 169,
+    "field_name": "effectGfx",
+    "value": 4400,
+    "binding": "EXOTIC_VITALIZE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WaterLifeSpell",
+    "skill_id": 170,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "WATER_LIFE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "WaterLifeSpell",
+    "skill_id": 170,
+    "field_name": "effectGfx",
+    "value": 4401,
+    "binding": "WATER_LIFE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 171,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 171,
+    "field_name": "effectGfx",
+    "value": 4402,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "OtherNoEffectSpell",
+    "skill_id": 172,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "OTHER_NO_EFFECT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PolluteWaterSpell",
+    "skill_id": 173,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "POLLUTE_WATER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PolluteWaterSpell",
+    "skill_id": 173,
+    "field_name": "effectGfx",
+    "value": 5830,
+    "binding": "POLLUTE_WATER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StrikerGaleSpell",
+    "skill_id": 174,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "STRIKER_GALE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "StrikerGaleSpell",
+    "skill_id": 174,
+    "field_name": "effectGfx",
+    "value": 5826,
+    "binding": "STRIKER_GALE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 175,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhysicalProcBuffSpell",
+    "skill_id": 175,
+    "field_name": "effectGfx",
+    "value": 5833,
+    "binding": "PHYSICAL_PROC_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AdditionalFireSpell",
+    "skill_id": 176,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ADDITIONAL_FIRE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AdditionalFireSpell",
+    "skill_id": 176,
+    "field_name": "effectGfx",
+    "value": 5825,
+    "binding": "ADDITIONAL_FIRE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DragonSkinSpell",
+    "skill_id": 181,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DRAGON_SKIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DragonSkinSpell",
+    "skill_id": 181,
+    "field_name": "effectGfx",
+    "value": 6531,
+    "binding": "DRAGON_SKIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BurningSlashSpell",
+    "skill_id": 182,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BURNING_SLASH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BurningSlashSpell",
+    "skill_id": 182,
+    "field_name": "effectGfx",
+    "value": 6590,
+    "binding": "BURNING_SLASH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BurningSlashSpell",
+    "skill_id": 182,
+    "field_name": "impactGfx",
+    "value": 6591,
+    "binding": "BURNING_SLASH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GuardBrakeSpell",
+    "skill_id": 183,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "GUARD_BRAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GuardBrakeSpell",
+    "skill_id": 183,
+    "field_name": "effectGfx",
+    "value": 6508,
+    "binding": "GUARD_BRAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 184,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 184,
+    "field_name": "effectGfx",
+    "value": 6516,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 185,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 185,
+    "field_name": "effectGfx",
+    "value": 6975,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 185,
+    "field_name": "dragonGfx",
+    "value": 9362,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BloodlustSpell",
+    "skill_id": 186,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "BLOODLUST_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "BloodlustSpell",
+    "skill_id": 186,
+    "field_name": "effectGfx",
+    "value": 6523,
+    "binding": "BLOODLUST_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FoeSlayerSpell",
+    "skill_id": 187,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "FOE_SLAYER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FoeSlayerSpell",
+    "skill_id": 187,
+    "field_name": "attackerEffectGfx",
+    "value": 7020,
+    "binding": "FOE_SLAYER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FoeSlayerSpell",
+    "skill_id": 187,
+    "field_name": "targetEffectGfx",
+    "value": 6509,
+    "binding": "FOE_SLAYER_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResistFearSpell",
+    "skill_id": 188,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "RESIST_FEAR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "ResistFearSpell",
+    "skill_id": 188,
+    "field_name": "effectGfx",
+    "value": 6586,
+    "binding": "RESIST_FEAR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 189,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AreaAttackSpell",
+    "skill_id": 189,
+    "field_name": "effectGfx",
+    "value": 6532,
+    "binding": "AREA_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 190,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 190,
+    "field_name": "effectGfx",
+    "value": 6976,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 190,
+    "field_name": "dragonGfx",
+    "value": 9364,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MortalBodySpell",
+    "skill_id": 191,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "MORTAL_BODY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "MortalBodySpell",
+    "skill_id": 191,
+    "field_name": "effectGfx",
+    "value": 6519,
+    "binding": "MORTAL_BODY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GuardBrakeSpell",
+    "skill_id": 193,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "GUARD_BRAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "GuardBrakeSpell",
+    "skill_id": 193,
+    "field_name": "effectGfx",
+    "value": 6588,
+    "binding": "GUARD_BRAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 194,
+    "field_name": "actionId",
+    "value": 18,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "FreezeAttackSpell",
+    "skill_id": 194,
+    "field_name": "effectGfx",
+    "value": 6988,
+    "binding": "FREEZE_ATTACK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 195,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 195,
+    "field_name": "effectGfx",
+    "value": 6922,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "AwakenSpell",
+    "skill_id": 195,
+    "field_name": "dragonGfx",
+    "value": 9363,
+    "binding": "AWAKEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DodgeBuffSpell",
+    "skill_id": 201,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DODGE_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DodgeBuffSpell",
+    "skill_id": 201,
+    "field_name": "effectGfx",
+    "value": 6813,
+    "binding": "DODGE_BUFF_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionOgreSpell",
+    "skill_id": 204,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ILLUSION_OGRE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionOgreSpell",
+    "skill_id": 204,
+    "field_name": "effectGfx",
+    "value": 6578,
+    "binding": "ILLUSION_OGRE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeIgnitionSpell",
+    "skill_id": 205,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CUBE_IGNITION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeIgnitionSpell",
+    "skill_id": 205,
+    "field_name": "cubeGfx",
+    "value": 6706,
+    "binding": "CUBE_IGNITION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeIgnitionSpell",
+    "skill_id": 205,
+    "field_name": "allyEffectGfx",
+    "value": 6708,
+    "binding": "CUBE_IGNITION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeIgnitionSpell",
+    "skill_id": 205,
+    "field_name": "enemyEffectGfx",
+    "value": 6709,
+    "binding": "CUBE_IGNITION_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RegenSpell",
+    "skill_id": 206,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "REGEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "RegenSpell",
+    "skill_id": 206,
+    "field_name": "effectGfx",
+    "value": 6527,
+    "binding": "REGEN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionLichSpell",
+    "skill_id": 209,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ILLUSION_LICH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionLichSpell",
+    "skill_id": 209,
+    "field_name": "effectGfx",
+    "value": 6577,
+    "binding": "ILLUSION_LICH_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeQuakeSpell",
+    "skill_id": 210,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CUBE_QUAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeQuakeSpell",
+    "skill_id": 210,
+    "field_name": "cubeGfx",
+    "value": 6712,
+    "binding": "CUBE_QUAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeQuakeSpell",
+    "skill_id": 210,
+    "field_name": "allyEffectGfx",
+    "value": 6714,
+    "binding": "CUBE_QUAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeQuakeSpell",
+    "skill_id": 210,
+    "field_name": "enemyEffectGfx",
+    "value": 6715,
+    "binding": "CUBE_QUAKE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PatienceSpell",
+    "skill_id": 211,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PATIENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PatienceSpell",
+    "skill_id": 211,
+    "field_name": "effectGfx",
+    "value": 6507,
+    "binding": "PATIENCE_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhantasmSpell",
+    "skill_id": 212,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PHANTASM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PhantasmSpell",
+    "skill_id": 212,
+    "field_name": "effectGfx",
+    "value": 6530,
+    "binding": "PHANTASM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DiamondGolemSpell",
+    "skill_id": 214,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "DIAMOND_GOLEM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "DiamondGolemSpell",
+    "skill_id": 214,
+    "field_name": "effectGfx",
+    "value": 6576,
+    "binding": "DIAMOND_GOLEM_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeShockSpell",
+    "skill_id": 215,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CUBE_SHOCK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeShockSpell",
+    "skill_id": 215,
+    "field_name": "cubeGfx",
+    "value": 6718,
+    "binding": "CUBE_SHOCK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeShockSpell",
+    "skill_id": 215,
+    "field_name": "allyEffectGfx",
+    "value": 6720,
+    "binding": "CUBE_SHOCK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeShockSpell",
+    "skill_id": 215,
+    "field_name": "enemyEffectGfx",
+    "value": 6721,
+    "binding": "CUBE_SHOCK_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "InsightSpell",
+    "skill_id": 216,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "INSIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "InsightSpell",
+    "skill_id": 216,
+    "field_name": "effectGfx",
+    "value": 6505,
+    "binding": "INSIGHT_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PanicSpell",
+    "skill_id": 217,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "PANIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "PanicSpell",
+    "skill_id": 217,
+    "field_name": "effectGfx",
+    "value": 6506,
+    "binding": "PANIC_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "JoyOfPainSpell",
+    "skill_id": 218,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "JOY_OF_PAIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "JoyOfPainSpell",
+    "skill_id": 218,
+    "field_name": "effectGfx",
+    "value": 6528,
+    "binding": "JOY_OF_PAIN_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionAvatarSpell",
+    "skill_id": 219,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "ILLUSION_AVATAR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "IllusionAvatarSpell",
+    "skill_id": 219,
+    "field_name": "effectGfx",
+    "value": 6575,
+    "binding": "ILLUSION_AVATAR_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeHarmonySpell",
+    "skill_id": 220,
+    "field_name": "actionId",
+    "value": 19,
+    "binding": "CUBE_HARMONY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeHarmonySpell",
+    "skill_id": 220,
+    "field_name": "cubeGfx",
+    "value": 6724,
+    "binding": "CUBE_HARMONY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  },
+  {
+    "record_type": "CubeHarmonySpell",
+    "skill_id": 220,
+    "field_name": "effectGfx",
+    "value": 6727,
+    "binding": "CUBE_HARMONY_SPELLS",
+    "enabled": 1,
+    "evidence_status": "qualified",
+    "evidence_note": "封存0.6.60與現行0.6.61技能class逐位元相同；效果通過TW資源檢查。欄位來源見 lito_resource_skill/provenance。"
+  }
+]

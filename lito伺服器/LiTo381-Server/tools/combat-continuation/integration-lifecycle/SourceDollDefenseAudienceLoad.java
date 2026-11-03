@@ -1,0 +1,6 @@
+import java.nio.file.*;import java.net.*;import java.util.*;import java.lang.reflect.*;
+public final class SourceDollDefenseAudienceLoad {
+ public static void main(String[]a)throws Exception{SourceDollAudienceLoad.main(a);var jar=Path.of(a[0]).toRealPath();var urls=new ArrayList<URL>();urls.add(jar.toUri().toURL());try(var files=Files.list(Path.of(a[1]))){for(var p:files.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}try(var loader=new URLClassLoader(urls.toArray(URL[]::new),ClassLoader.getPlatformClassLoader())){
+  var c=Class.forName("local.lito381.server.NativeSourceDollDefenseAudience",false,loader);if(!Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar)||c.getDeclaredFields().length!=0)throw new AssertionError("fieldless candidate helper");c.getDeclaredMethods();c.getDeclaredConstructors();var r=Class.forName("local.lito381.server.NativeSourceDollDefense$Receiver",false,loader);var f=r.getDeclaredField("nativeSourceDollDefenseAudienceProof");if(!Modifier.isFinal(f.getModifiers())||!Modifier.isTransient(f.getModifiers())||r.getRecordComponents().length!=2)throw new AssertionError("same original record schema with transient final proof");
+ }System.out.println("PASS345 candidate no-init classes with original defense record schema and first-audience proof");}
+}

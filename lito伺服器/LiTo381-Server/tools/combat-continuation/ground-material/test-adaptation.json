@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessMaterialProbe.java",
+      "sha256": "c6c11c02a2dd97332f792438900a9e580dc540b403956f0838eba67e7c299471"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\test.py",
+      "sha256": "cf6e5bc01f6f439089296249630362b11de1a93e6527adb1b86f53de26c2ab82"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\prepare_tests.py",
+      "sha256": "869cbe3b5566aaa57fd10f855d3fd294bc5b72da0891899016e4ca79bbe51fb0"
+    }
+  ],
+  "scope": "actual ground58/63 packets, resource/window/reuse, missing material, player admission and actual hub placement rejection; not pulse damage/healing or all terrain/mode coverage"
+}

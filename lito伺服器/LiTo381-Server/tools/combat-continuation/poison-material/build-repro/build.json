@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\build\\candidate-resurrection-ingress.jar",
+    "sha256": "f1ebfa0c00b3ef38b68a92f5f9a54af5e5186a98072cccd6e5525cd47315f949"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\candidate-poison-material.jar",
+    "sha256": "886691d40734ad057ca0fea2d7859941bcffa4344c094685dc7e21bbd8d99263"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePoisonMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\build.py",
+      "sha256": "8dd235de4d40d79bcf13fdfde8652780fe4a9a319ba3f8a48d7dba0bd4f14dea"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\PoisonMaterialMethods.java",
+      "sha256": "bf0631809380d769cb603b1f8ccea0073679bbc3aa33914237506fc5012d3c94"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "8dfd178211a6033f342c4c5304ac487a11e0ea2b02df85c32aec558a38fe4da0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "ea2102972f85910d4d0dd2c3c9e275e103f28ed30f3d6fe7ee30ce4b4aac68d5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-material\\build-repro\\inputs\\sources\\NativePoisonMaterialAction.java",
+      "sha256": "33a0f47d9e1dbec3d0c47bd69d2eb6b5f00e07dd61094eb5fb1786f82dfd5429"
+    }
+  ]
+}

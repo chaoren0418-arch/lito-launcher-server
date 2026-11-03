@@ -1,0 +1,58 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "navigation": [
+    {
+      "label": "S50",
+      "first_line": 365321,
+      "last_line": 365344,
+      "text": "365321: sub_4AF0A0 proc near                    ; CODE XREF: sub_4B2970+3BD↓p\n365322: mov     al, [ecx+1]\n365323: inc     ecx\n365324: inc     ecx\n365325: mov     byte_8348B0, al\n365326: mov     al, [ecx]\n365327: inc     ecx\n365328: mov     byte_8348B1, al\n365329: mov     al, [ecx]\n365330: inc     ecx\n365331: mov     byte_8348B2, al\n365332: mov     al, [ecx]\n365333: inc     ecx\n365334: mov     byte_8348B3, al\n365335: mov     al, [ecx]\n365336: inc     ecx\n365337: mov     byte_8348B4, al\n365338: mov     al, [ecx]\n365339: mov     byte_8348B5, al\n365340: mov     cl, [ecx+1]\n365341: mov     byte_8348CB, cl\n365342: retn\n365343: \n365344: sub_4AF0A0 endp"
+    },
+    {
+      "label": "S51",
+      "first_line": 365352,
+      "last_line": 365363,
+      "text": "365352: sub_4AF0E0 proc near                    ; CODE XREF: sub_4B2970+3C9↓p\n365353: push    offset dword_8348C4\n365354: push    offset byte_8348CA\n365355: inc     ecx\n365356: push    offset aCd                      ; \"cd\"\n365357: push    ecx\n365358: call    sub_4A2A50\n365359: \n365360: add     esp, 10h\n365361: retn\n365362: \n365363: sub_4AF0E0 endp"
+    },
+    {
+      "label": "S52",
+      "first_line": 365371,
+      "last_line": 365385,
+      "text": "365371: sub_4AF100 proc near                    ; CODE XREF: sub_4B2970+3D5↓p\n365372: push    offset byte_8348BE\n365373: push    offset byte_8348BF\n365374: push    offset byte_8348C0\n365375: push    offset byte_8348C1\n365376: push    offset byte_8348B6\n365377: inc     ecx\n365378: push    offset aCcccc                   ; \"ccccc\"\n365379: push    ecx\n365380: call    sub_4A2A50\n365381: \n365382: add     esp, 1Ch\n365383: retn\n365384: \n365385: sub_4AF100 endp"
+    },
+    {
+      "label": "S56",
+      "first_line": 365609,
+      "last_line": 365620,
+      "text": "365609: sub_4AF320 proc near                    ; CODE XREF: sub_4B2970+403↓p\n365610: push    offset byte_8348E0\n365611: push    offset byte_8348DF\n365612: inc     ecx\n365613: push    offset aCc                      ; \"cc\"\n365614: push    ecx\n365615: call    sub_4A2A50\n365616: \n365617: add     esp, 10h\n365618: retn\n365619: \n365620: sub_4AF320 endp"
+    },
+    {
+      "label": "caller50",
+      "first_line": 373246,
+      "last_line": 373257,
+      "text": "373246: loc_4B2D2B:                             ; CODE XREF: sub_4B2970+9C↑j\n373247:                                         ; sub_4B2970+7E6↓j\n373248:                                         ; DATA XREF: ___:jpt_4B2A0C↓o\n373249:                                         ; ___:jpt_4B3156↓o\n373250: mov     ecx, esi                        ; jumptable 004B2A0C case 80\n373251:                                         ; jumptable 004B3156 case 80\n373252: call    sub_4AF0A0\n373253: \n373254: pop     esi\n373255: mov     esp, ebp\n373256: pop     ebp\n373257: retn"
+    },
+    {
+      "label": "caller51",
+      "first_line": 373261,
+      "last_line": 373272,
+      "text": "373261: loc_4B2D37:                             ; CODE XREF: sub_4B2970+9C↑j\n373262:                                         ; sub_4B2970+7E6↓j\n373263:                                         ; DATA XREF: ___:jpt_4B2A0C↓o\n373264:                                         ; ___:jpt_4B3156↓o\n373265: mov     ecx, esi                        ; jumptable 004B2A0C case 81\n373266:                                         ; jumptable 004B3156 case 81\n373267: call    sub_4AF0E0\n373268: \n373269: pop     esi\n373270: mov     esp, ebp\n373271: pop     ebp\n373272: retn"
+    },
+    {
+      "label": "caller52",
+      "first_line": 373276,
+      "last_line": 373287,
+      "text": "373276: loc_4B2D43:                             ; CODE XREF: sub_4B2970+9C↑j\n373277:                                         ; sub_4B2970+7E6↓j\n373278:                                         ; DATA XREF: ___:jpt_4B2A0C↓o\n373279:                                         ; ___:jpt_4B3156↓o\n373280: mov     ecx, esi                        ; jumptable 004B2A0C case 82\n373281:                                         ; jumptable 004B3156 case 82\n373282: call    sub_4AF100\n373283: \n373284: pop     esi\n373285: mov     esp, ebp\n373286: pop     ebp\n373287: retn"
+    },
+    {
+      "label": "caller56",
+      "first_line": 373327,
+      "last_line": 373338,
+      "text": "373327: loc_4B2D71:                             ; CODE XREF: sub_4B2970+9C↑j\n373328:                                         ; sub_4B2970+7E6↓j\n373329:                                         ; DATA XREF: ___:jpt_4B2A0C↓o\n373330:                                         ; ___:jpt_4B3156↓o\n373331: mov     ecx, esi                        ; jumptable 004B2A0C case 86\n373332:                                         ; jumptable 004B3156 case 86\n373333: call    sub_4AF320\n373334: \n373335: pop     esi\n373336: mov     esp, ebp\n373337: pop     ebp\n373338: retn"
+    }
+  ],
+  "authority": "ASM labels/navigation only; claimedinstructions/format/maps checked againstfixedPE raw"
+}

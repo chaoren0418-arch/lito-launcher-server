@@ -1,0 +1,6 @@
+import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Archive strings only; never creates a connection or initializes a game class. */
+public final class SourceEquipmentSqlInventory {
+ static boolean query(String s){var l=s.toLowerCase(Locale.ROOT);return (l.contains("select ")||l.contains(" from ")||l.contains(" join "))&&(l.contains("weapon")||l.contains("armor")||s.contains("裝備_"));}
+ public static void main(String[]a)throws Exception{int count=0;var classes=new TreeSet<String>();try(var jar=new JarFile(a[0])){for(var entry:Collections.list(jar.entries()))if(entry.getName().endsWith(".class")){var c=new ClassNode();new ClassReader(jar.getInputStream(entry)).accept(c,ClassReader.SKIP_DEBUG|ClassReader.SKIP_FRAMES);for(var m:c.methods){var values=new TreeSet<String>();for(var node:m.instructions){if(node instanceof LdcInsnNode x&&x.cst instanceof String s&&query(s))values.add(s);if(node instanceof InvokeDynamicInsnNode x)for(var argument:x.bsmArgs)if(argument instanceof String s&&query(s))values.add(s);}for(var value:values){System.out.println(c.name+'\t'+m.name+'\t'+value.replace('\n',' ').replace('\r',' '));count++;classes.add(c.name);}}}}System.out.println("TOTAL\t"+count+"\t"+classes.size());}
+}

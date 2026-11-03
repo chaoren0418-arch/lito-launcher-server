@@ -1,0 +1,355 @@
+{
+  "version": "0.6.70",
+  "status": "published-and-verified",
+  "candidate_qualification": "2307668ea520c5167c3d134e8ca4e1fa8bbbd7f901f9d415a7cbb540bbf23c79",
+  "user_verified": [
+    "dragon knight lobby and room icon",
+    "illusionist lobby and room icon"
+  ],
+  "backup": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\pre-0.6.70-changed-files.zip",
+  "source_database_modified": false,
+  "changes": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\inputs\\formal-0.6.69.jar",
+      "sha256": "75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\inputs\\development_startup-0.6.69.py",
+      "sha256": "19ac0622989c7e625cece58a82bd969cefeb41cbfbb6751d566e6a8cb21ea6a7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\candidate_startup.py",
+      "sha256": "036415464535f939d2da1a8dc98ba77880ebefa74eda2adcd7018e8a9fe207c0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\litoddraw.dll",
+      "sha256": "e47bd6c6ec9979c8747a523e4457133802d19f673c8dc1e67707abfa96216a8a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\shared_status.bin",
+      "sha256": "ba91b436034ce04c5a77bc626af1355ede8766dd72a353b0ad0ec5aaf069b198"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\lib\\mysql-connector-j-8.0.33.jar",
+      "sha256": "e2a3b2fc726a1ac64e998585db86b30fa8bf3f706195b78bb77c5f99bf877bd9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\lib\\protobuf-java-3.21.9.jar",
+      "sha256": "1b78b4a76a71512debfdff8f8fc5aef6bfd459f65758fecf7aff245e6e6301e4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\lib\\HikariCP-5.1.0.jar",
+      "sha256": "a47a6ee62379694ee52c30036f0931b72f9aee2a801d590341ed82bd839e2134"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\lib\\slf4j-api-1.7.36.jar",
+      "sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\arrow_flight_observe.inc",
+      "sha256": "7948d276417e6d12317eec0eab47eec58799e8d4b4bcfe8553762470da69d0c1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\arrow_observe.inc",
+      "sha256": "1003a4d1f1d8658211f41d1ef784b96f17c5783a4ccf5bfab9acfe040c3bd2b9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\battle_clock.h",
+      "sha256": "05b96b10065746731e0410dc2d34720901b673e456d000c8fd672e8cf0cb7440"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\battle_clock.inc",
+      "sha256": "5aaeef32b140f5b36aa3e543d0041f11fc2deaf62e36d32ef0604a35478133ac"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\battle_clock_resources.inc",
+      "sha256": "459a305f86c4555cb3ba2000bca08acd4e8872625f9d484ecdae0478d9ea39ed"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\battle_result_return.inc",
+      "sha256": "ff78d952573c2835679b2ed75e5909376500a9b72d1634f048e4e7b3040e981a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\battle_window_idle.inc",
+      "sha256": "feba3094c1ce1d417c1ccef69ac09e96eac6d2f7e0923448dee7ec718ee95f39"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\caption_drag.h",
+      "sha256": "f38977686fc3a77d919cf689b542dc7c833fa953d2a5ae512b791c415595357c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\channel_click.inc",
+      "sha256": "837bca754e9e4bd7baf880ccd679f04ee518ca20f12f41541bfc4ccbf3e5a8fd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\character_pages.h",
+      "sha256": "2a5281e3d3438385a67e8026850c4fd2babddc69f17f995ab9cf96f9ed89b01c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\character_pages.inc",
+      "sha256": "791dedac0d348a8db9cb61b3185dc25d394e402faebf7cf8071188a6f59e3d9f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\character_source_return.inc",
+      "sha256": "4816ff61d63bca211d7a523765d74a787b0e689176ed8fdbff18c68d0b1cc4a0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_compat.h",
+      "sha256": "01a0555c4e1ed49f20aa8a287de8729d7727bc22ee5ad464de12cc9654d38d9c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_compat.inc",
+      "sha256": "505aa162bd0ff7bdea6115d3d65b122ff3c4b98a56487d6cc905e46430943c8e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_icons.inc",
+      "sha256": "8563f5ac2a4761f006cb5fb1fdea64064439c13cd310e66e2d37dccefa22afd5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_icons_fixture.inc",
+      "sha256": "7ff49f0749ccad9b3505f77f78e5edd8b45b7256e7b4ee729e660ed6671bf317"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_skills.inc",
+      "sha256": "26467116c02612cfff06a4d96907685d52b3b7f7be5166c80799cd06710b027a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\class_skill_names.inc",
+      "sha256": "62e03e88dc99d1799d36b6f22c069ba07c183f562a86d2d7787593e1b2e02e89"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\ddraw.def",
+      "sha256": "872c292fb05dda8561a6b33cc3bb408ce5637aae55c38aba7f8bed8cbc7842aa"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\ddraw_proxy.cpp",
+      "sha256": "75abba6ca4e0ee45e17d78c2ece38bfb4c04d25e6962317d33619c86a9aa075a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\dragon_combo.inc",
+      "sha256": "44d7ccf66c529c29908354fa3bdab0a2b99cb5c799700017d21e99d65d811b57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\dragon_status.inc",
+      "sha256": "b0cbd6e010664a0eae09056d5c35b960eb9662ffb961f75c2ffb9d2993a07435"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\edit_call_layout.inc",
+      "sha256": "06b56ea6ea70c1bfc07e4767429d6218b6f2848ede023c439fea5f46793ca534"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\edit_canvas.inc",
+      "sha256": "5f7fb3e393c9488deb7b5c0137680ca290e98e7d36f2722a105e420933f9e5a7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\exit_dispatch.inc",
+      "sha256": "9415260009569a1c1b73b947344b9e505b12bd75bb551916a51dc191ad92b761"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\forced_combat.h",
+      "sha256": "fcf75bcdd2d9b29c0a74aadba1a5a3e8625106b54449e596e5b3f972aaac56c2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\forced_combat.inc",
+      "sha256": "52f212ac7d8cca6ab58a69065880b2607827b49eff7db4b31ac5b76c9ebc4ef3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details.h",
+      "sha256": "935bbf98c545a0c8a918a3f34be054db756a8451f2170682452a635d951f6f25"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\item_details.inc",
+      "sha256": "2e52b1caa60c84bc9611a81c5192fb7f92bb548e98bf72e25ed945d0a9c80e5f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\live_stats.h",
+      "sha256": "4b2fd12578ab007c0cd3cb0371c13d5cb42f82c2da273fb32a445ce531794801"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\live_stats.inc",
+      "sha256": "181472da6afaae7b507fdfe094dc01831e045da5e6fd84034415e8ca0c68946b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\lobby_return.inc",
+      "sha256": "3ab40dd6604644b244f6c8bb90f1307fbe53008bc93885fb07e607d376a7c688"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\profile_location.inc",
+      "sha256": "dda9e7e159c540bbea2f9a46955581e4a9d9602d05d69733dcbd031d0ab7c0b9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\selection_login_fixture.inc",
+      "sha256": "f29a963141b7d5068ef7602fcd4c70f3d853ba5a40cd0946a8c2064dcde62870"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\selection_login_recovery.inc",
+      "sha256": "aa17b277fe1aa3ca6d51921f1bfb4c08a85f25c57105961519b30b67cd5d60cd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\selector_patch.inc",
+      "sha256": "a93dfe36afaf58615467a690f1042e2b732ab64105b2d5347cb641cc066c5bcb"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\selector_return.inc",
+      "sha256": "ac4603ce0943579c6b3979059ea0a38a84baf68aa8ddd8ab64fa95bb69ab0df5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\self_name.inc",
+      "sha256": "f103f2e674bb1ee3c41a331f20e2d129872c6dbb1a64c72048a80c9da685e8c7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_doll_wire_fixture.h",
+      "sha256": "b21a9688966aa1067668b1ca60765348889a9eaabccd900bde76c2429bde3055"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_frame_fixture.h",
+      "sha256": "d8312a928a3713f20825d457e5dd8124541374cac1a564520173d12cfa03a2cc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_frame_rate.inc",
+      "sha256": "bb8e4e0de3252cb31af80bf04c5a859cbf699fa854c40a86ff0b9280893e7bac"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_packetbox.inc",
+      "sha256": "7ed7a31e2b37f43faf6e20b0e4f9ac527ecd8085331f7db3a96fbd999594d351"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_status_behavior.h",
+      "sha256": "a1ccfc773e8998ec58bd9e6e3e202e2ea2c41460dbb029591af0437ce0cbe4c8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_status_catalog.h",
+      "sha256": "8226823b96f01ff53a43dc491e436f7b94847102b1a6d4407f0a8954ff0f93c8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_status_lifecycle.h",
+      "sha256": "2d51273f1906f80905a3eee37078dee90ff1f26ca01c45d24e4342a802cfe355"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_status_lifecycle.inc",
+      "sha256": "55b70399c8cd0b1901a43c865449cbea4cf09ba9ab781e3218c5b4c2163e5426"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\shared_status_order.inc",
+      "sha256": "961947728f46c3bf01b64b6be36c8e5e13322405e7bd7407c04672c92097a1dd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\source_login_order.inc",
+      "sha256": "8f1613a5740986143d6c501623633da78712d43b0d8a7b6533bd19d67f185214"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\status_catalog_test.cpp",
+      "sha256": "d7eb9fb79e34cab83647f20a664f65487e378fb11980455d050107032121596e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\status_install_test.cpp",
+      "sha256": "ba12d61f7dfed79ccdf97f43913a6f98b4bae52340064e5c618ad274af8a2e3d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\status_lifecycle_test.cpp",
+      "sha256": "7a6ca138cce87413c51f28e4dd60d320e219b08312894d975261250cd6bdf0f2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\summary_input.inc",
+      "sha256": "5f7296c5267e6520c347b4086b9ac7b78050bb64a1264863fcdee3ce68fd1f0c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\toolbar_rect.inc",
+      "sha256": "3e17f7292f0c830b7affa0939c6f59d0aeb0c776e981d805d1ddf44d4f4ae42b"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\world_exit.inc",
+      "sha256": "c12ec5d1588afbdfcc2566276bb73ee0eb797c8c1e081d0754ff3abf5728ae57"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.idx",
+      "sha256": "f7fc014fb3c2c723fa11b86e1929c24d325995055cb0e2889ea61c3cdc25ad9f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.pak",
+      "sha256": "23db693b33e03b576483ed572a58350dfc7a6caf31d10ac364c223341eff37b7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\resources.json",
+      "sha256": "6f777ef0cd1d94bd1009f4e601f81b131ecb53d2c80cf867439abd6a86ee5a15"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\named_ddraw.py",
+      "sha256": "4de00027a104804695f25fd26e3dbd1d9a6ea6aaf3de7e887ab177ce1bac13ba"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\class_icon_bootstrap.py",
+      "sha256": "345e9194a25aa2237d878cc1feebfa4ae5c123caaca960c6dc909ff8592133d7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\lito_runtime_probe_named.py",
+      "sha256": "16311c07dda9fd06118d628609e58faa20d352fdf5ec65cff29a16cf3c78f136"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\world\\inputs\\effectlist2.xml.extraction.json",
+      "sha256": "12f86969ad93c69e13af0a0a871ce655b9f82ae1fa403f5387be053b22716ad0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\world\\icon-assets.json",
+      "sha256": "bbfe020cef51b190e0b0cf996320640bedb86ee06c28308a84543c501bc17889"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\world_resource_preflight.py",
+      "sha256": "353c362ec12d3443c790d707fbc26b50944081bc2d1da9967a75d471cb289f34"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\Start-Shared-World.py",
+      "sha256": "b93cf124aca916f904d9790c1f16b226385632aa0285d674f8352434edbda2b3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\deployment\\release-inputs.json",
+      "sha256": "d0cdc9b716298a7b2b7ee89fff58ee9e60c55069e274e913280f8a414ad00d43"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\Protocol.java",
+      "sha256": "9a0a1e67ff94bd08c3fa5403582807f1a5d0cb74e28aed2abcb4e7788107f213"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\ClientSession.java",
+      "sha256": "4f5418e0cf0dd6e0f9981f9a02ee48317e0e6527643e86e0f3460f2dac2794a8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\development_startup.py",
+      "sha256": "0bd3ee2bca01cea5bb4d0fc58fbd83eaf4d740d799c72664d8cf7037902d9f01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\LiTo381Launcher.csproj",
+      "sha256": "54bc996090d689df0098075b4ed8c03f99c772bf087c2e13604787e932a08b58"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\MainForm.cs",
+      "sha256": "373551bb54b1c708080f5c9add65c97cd62ed76e14fedfbc7f09d99766eb3cfd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\build_current.py",
+      "sha256": "8234d7cee87ecaba105129b48f167c6e172f4a56b003def260f091d33a68d877"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\FormalStandardSources.cs",
+      "sha256": "df036eb554e5cd91f1fb242bc6db5455cc82aec754034e6cd364219528a732e4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\verify_current.py",
+      "sha256": "de1a145ed729d2f889423d380240730baf6f2cf8ac1d633d43232c1070e7d5c0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\native\\build.cmd",
+      "sha256": "3cba27f3df8621a9aa48be91d3d983541e0ef4f7f5a448bb89c41abdf6a7ae5a"
+    }
+  ],
+  "formal_updated": true,
+  "release_receipt": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\maintenance\\release-0.6.70.json",
+    "bytes": 4920,
+    "sha256": "4f0ce1080df0629e28c46d51ed20973973b5e3f65480f1edf213e2e777db6c62"
+  }
+}

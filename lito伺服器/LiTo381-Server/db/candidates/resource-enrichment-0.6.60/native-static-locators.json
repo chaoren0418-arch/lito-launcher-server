@@ -1,0 +1,34 @@
+{
+  "package_status": "未匯入、未接線",
+  "rows": [
+    {
+      "topic": "map-table loader",
+      "contract": "map-table-source-contract.json",
+      "virtual_addresses": [
+        "0x004D48D6",
+        "0x004D48E0",
+        "0x0046F9C0",
+        "0x004D4450"
+      ],
+      "qualification": "retained contract; provider/runtime resource binding remains open; address not disk offset"
+    },
+    {
+      "topic": "Layer7 opaque suffix",
+      "reference_source": "modern_lito/map.rs parse_native_s32 comment and existing ArenaPortalCatalog",
+      "virtual_addresses": [
+        "0x00483A80",
+        "0x00484C49",
+        "0x00484C91"
+      ],
+      "qualification": "existing parser reference; this run validates resources, does not redo disassembly or infer permission"
+    },
+    {
+      "topic": "directional Layer3",
+      "reference_source": "ArenaPassabilityCatalog SOURCE",
+      "virtual_addresses": [
+        "0x0048B640"
+      ],
+      "qualification": "existing native algorithm mapping; this run validates standing/cardinal neighbor only"
+    }
+  ]
+}

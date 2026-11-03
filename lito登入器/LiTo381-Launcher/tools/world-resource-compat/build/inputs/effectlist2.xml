@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+	<!-- last group number: 29 -->
+<effectlist count="538">
+	<effect id="0" icon="5397" offIcon="5398" duration="0" group="0" remainWhenDie="true" startMsg="849" startMsgName="HASTE_S" endMsg="185" endMsgName="HASTE_E" kind="speed" priority="5" bufDesc="0"/>
+	<effect id="1" icon="480" duration="0" group="0" startMsg="850" startMsgName="SLOW_S" endMsg="2159" endMsgName="SLOW_E" kind="slow"/>
+	<effect id="2" icon="5395" offIcon="5395" duration="0" group="3" startMsg="851" startMsgName="SPEED_DOUBLE_S" endMsg="185" endMsgName="SPEED_DOUBLE_E" kind="cook" priority="6"/>
+	<effect id="3" icon="484" duration="0" group="35" startMsg="852" startMsgName="POTION_PRUDENCE_S" endMsg="2160" endMsgName="POTION_PRUDENCE_E" kind="cook"/>
+<effect id="4" icon="485" offIcon="5271" duration="0" group="5" startMsg="853" startMsgName="SHIELD_S" endMsg="2161" endMsgName="SHIELD_E" kind="defense"/>
+	<effect id="5" icon="1104" offIcon="5272" duration="960" group="0" graphic="8977" startMsg="971" startMsgName="OLD_SHADOW_ARMOR" endMsg="2162" endMsgName="OLD_SHDOW_ARMOR_E" kind="defense"/>
+<effect id="6" icon="763" offIcon="5273" duration="0" group="5" graphic="2249" startMsg="972" startMsgName="EARTH_SKIN_S" endMsg="2163" endMsgName="EARTH_SKIN_E" kind="defense"/>
+<effect id="7" icon="725" offIcon="5274" duration="0" group="5" graphic="2287" startMsg="973" startMsgName="BLESS_OF_EARTH_S" endMsg="2164" endMsgName="BLESS_OF_EARTH_E" kind="defense"/>
+<effect id="8" icon="783" offIcon="5275" duration="0" group="5" graphic="2252" startMsg="974" startMsgName="IRON_SKIN_S" endMsg="2165" endMsgName="IRON_SKIN_E" kind="defense"/>
+<effect id="9" icon="482" offIcon="5246" duration="0" group="6" startMsg="854" startMsgName="ENCHANT_MIGHTY_S" kind="attack"/>
+<effect id="10" icon="483" offIcon="5247" duration="0" group="7" startMsg="855" startMsgName="ENCHANT_DEXTERITY_S" kind="attack"/>
+	<effect id="11" icon="552" duration="0" group="0" remainInArea="true" startMsg="856" startMsgName="WATER_BREATH_S" endMsg="2166" endMsgName="WATER_BREATH_E" kind="cook"/>
+	<effect id="12" icon="777" offIcon="5248" duration="1200" group="4" graphic="2165" startMsg="964" startMsgName="HOLY_WEAPON_S" endMsg="718" endMsgName="HOLY_WEAPON_E" kind="attack"/>
+	<effect id="13" icon="728" offIcon="5267" duration="1200" group="4" graphic="2176" startMsg="857" startMsgName="BLESS_WEAPON_S" endMsg="2167" endMsgName="BLESS_WEAPON_E" kind="attack"/>
+	<effect id="14" icon="813" offIcon="5276" duration="3600" group="0" graphic="2186" startMsg="858" startMsgName="RESIST_MAGIC_S" endMsg="719" endMsgName="RESIST_MAGIC_E" kind="defense"/>
+	<effect id="15" icon="804" offIcon="5277" duration="1200" group="0" graphic="2184" startMsg="859" startMsgName="RESIST_ELEMENT_S" endMsg="720" endMsgName="RESIST_ELEMENT_E" kind="defense"/>
+	<effect id="16" icon="807" offIcon="5278" duration="64" group="0" graphic="2285" startMsg="860" startMsgName="PROTECTION_FROM_ELEMENT_S" endMsg="721" endMsgName="PROTECTION_FROM_ELEMENT_E" kind="defense"/>
+	<effect id="17" icon="745" offIcon="5279" duration="1200" group="0" graphic="2180" startMsg="861" startMsgName="CLEAR_MIND_S" endMsg="722" endMsgName="CLEAR_MIND_E" kind="defense"/>
+<effect id="18" icon="774" offIcon="5249" duration="0" group="1" graphic="2182" startMsg="862" startMsgName="FIRE_WEAPON_S" endMsg="723" endMsgName="FIRE_WEAPON_E" kind="attack"/>
+<effect id="19" icon="735" offIcon="5250" duration="960" group="1" graphic="2286" startMsg="980" startMsgName="BREATH_OF_FIRE_S" endMsg="2168" endMsgName="BREATH_OF_FIRE_E" kind="attack"/>
+<effect id="20" icon="738" offIcon="5251" duration="960" group="1" graphic="2242" startMsg="981" startMsgName="BURNING_WEAPON_S" endMsg="2169" endMsgName="BURNING_WEAPON_E" kind="attack"/>
+<effect id="21" icon="855" offIcon="5252" duration="0" group="1" graphic="2246" startMsg="863" startMsgName="WIND_SHOT_S" endMsg="724" endMsgName="WIND_SHOT_E" kind="attack"/>
+<effect id="22" icon="771" offIcon="5253" duration="960" group="1" graphic="2288" startMsg="962" startMsgName="EYE_OF_STORM_S" endMsg="2170" endMsgName="EYE_OF_STORM_E" kind="attack"/>
+<effect id="23" icon="827" offIcon="5254" duration="960" group="1" graphic="2248" startMsg="963" startMsgName="STORM_SHOT_S" endMsg="2171" endMsgName="STORM_SHOT_E" kind="attack"/>
+	<effect id="24" icon="5241" offIcon="5242" duration="960" group="3" graphic="2247" startMsg="872" startMsgName="WIND_WALK_S" endMsg="185" endMsgName="WIND_WALK_E" kind="speed" priority="6"/>
+<effect id="25" icon="880" offIcon="5280" duration="0" group="2" graphic="2277" startMsg="864" startMsgName="GLOWING_AURA_S" endMsg="2172" endMsgName="GLOWING_AURA_E" kind="defense"/>
+	<effect id="26" icon="1567" offIcon="5281" duration="0" group="0" graphic="3941" startMsg="865" startMsgName="SHINING_AURA_S" endMsg="2173" endMsgName="SHINING_AURA_E" kind="defense"/>
+	<effect id="27" icon="1557" offIcon="5282" duration="0" group="33" graphic="3942" startMsg="866" startMsgName="BRAVE_AURA_S" endMsg="825" endMsgName="BRAVE_AURA_E" kind="defense"/>
+	<effect id="28" icon="890" duration="60" group="0" startMsg="737" startMsgName="NO_USE_DIVINE_SACRIFICE" kind="defense"/>
+	<effect id="29" icon="1101" offIcon="5255" duration="320" group="0" graphic="2942" startMsg="867" startMsgName="ENCHANT_VENOM_S" endMsg="827" endMsgName="ENCHANT_VENOM_E" kind="attack"/>
+	<effect id="30" icon="1113" offIcon="5256" duration="320" group="0" graphic="2946" startMsg="868" startMsgName="BURNING_SPIRITS_S" endMsg="828" endMsgName="BURNING_SPIRITS_E" kind="attack"/>
+	<effect id="31" icon="1122" offIcon="5257" duration="192" group="0" graphic="2949" startMsg="869" startMsgName="DOUBLE_BREAK_S" endMsg="829" endMsgName="DOUBLE_BREAK_E" kind="attack"/>
+	<effect id="32" icon="1125" offIcon="5283" duration="192" group="0" graphic="2950" startMsg="870" startMsgName="ENCANNY_DODGE_S" endMsg="830" endMsgName="ENCANNY_DODGE_E" kind="defense"/>
+	<effect id="33" icon="1119" offIcon="5284" duration="320" group="0" graphic="2948" startMsg="871" startMsgName="VENOM_RESIST_S" endMsg="831" endMsgName="VENOM_RESIST_E" kind="defense"/>
+<effect id="34" icon="1558" offIcon="5258" duration="960" group="6" graphic="3909" startMsg="968" startMsgName="DRESS_MIGHTY_S" addChatMsg="false" kind="attack"/>
+<effect id="35" icon="1559" offIcon="5259" duration="960" group="7" graphic="3910" startMsg="969" startMsgName="DRESS_DEXTERITY_S" addChatMsg="false" kind="attack"/>
+	<effect id="36" icon="1608" offIcon="5285" duration="32" group="0" graphic="3911" startMsg="970" startMsgName="DRESS_EVASION_S" endMsg="2176" endMsgName="DRESS_EVASION_E" kind="defense"/>
+	<effect id="37" icon="1110" offIcon="5243" duration="960" group="3" graphic="2945" startMsg="872" startMsgName="MOVING_ACCELERATION_S" endMsg="185" endMsgName="MOVING_ACCELERATION_E" addChatMsg="false" kind="speed" priority="6"/>
+	<effect id="38" icon="5399" offIcon="5400" duration="600" group="0" startMsg="3121" startMsgName="POTION_OF_MANA1_S" endMsg="2177" endMsgName="POTION_OF_MANA1_E" kind="cook" priority="8"/>
+	<effect id="39" icon="1477" duration="0" group="0" remainInArea="true" startMsg="911" startMsgName="POLYMORPH_S" kind="cook" priority="4"/>
+	<effect id="40" icon="1556" offIcon="5320" duration="320" group="0" graphic="3943" startMsg="965" startMsgName="BERSERKERS_S" endMsg="2178" endMsgName="BERSERKERS_E" kind="neutrality"/>
+	<effect id="41" icon="1562" offIcon="5286" duration="32" group="0" graphic="228" startMsg="966" startMsgName="IMMUNE_TO_HARM_S" endMsg="315" endMsgName="IMMUNE_TO_HARM_E" addChatMsg="false" kind="defense"/>
+	<effect id="42" icon="1561" offIcon="5244" duration="64" group="3" graphic="3936" startMsg="872" startMsgName="HOLY_WALK_S" endMsg="185" kind="speed" priority="6"/>
+	<effect id="43" icon="1554" offIcon="5287" duration="12" group="0" graphic="2234" startMsg="967" startMsgName="ABSOLUTE_BARRIER_S" endMsg="2179" endMsgName="ABSOLUTE_BARRIER_E" kind="defense"/>
+	<effect id="44" icon="1607" offIcon="5288" duration="1200" group="31" graphic="3935" startMsg="982" startMsgName="ADVANCE_SPIRIT_S" endMsg="2180" endMsgName="ADVANCE_SPIRIT_E" kind="defense"/>
+	<effect id="45" icon="795" offIcon="5289" duration="640" group="0" graphic="2173" startMsg="910" startMsgName="MEDITATION_S" endMsg="2181" endMsgName="MEDITATION_E" kind="defense"/>
+	<effect id="46" icon="1609" offIcon="5290" duration="320" group="32" graphic="2243" startMsg="994" startMsgName="NATURES_TOUCH_S" endMsg="2182" endMsgName="NATURES_TOUCH_E" kind="defense"/>
+	<effect id="47" icon="757" offIcon="5291" duration="1800" group="0" graphic="2170" startMsg="984" startMsgName="DECREASE_WEIGHT_S" endMsg="2183" endMsgName="DECREASE_WEIGHT_E" kind="defense"/>
+	<effect id="48" icon="754" duration="16" group="0" graphic="2232" startMsg="985" startMsgName="DECAY_POTION_S" endMsg="2184" endMsgName="DECAY_POTION_E" kind="curse"/>
+	<effect id="49" icon="824" duration="16" group="0" graphic="2177" startMsg="986" startMsgName="SILENCE_S" endMsg="2185" endMsgName="SILENCE_E" kind="curse"/>
+	<effect id="50" icon="760" duration="64" group="0" graphic="2230" startMsg="987" startMsgName="DISEASE_S" endMsg="2186" endMsgName="DISEASE_E" kind="curse"/>
+	<effect id="51" icon="852" duration="64" group="0" graphic="2228" startMsg="988" startMsgName="WEAKNESS_S" endMsg="2187" endMsgName="WEAKNESS_E" kind="curse"/>
+	<effect id="52" icon="1623" duration="16" group="0" graphic="1799" startMsg="1001" startMsgName="WIND_SHACKLE_S" endMsg="2188" endMsgName="WIND_SHACKLE_E" kind="slow"/>
+	<effect id="53" icon="1740" duration="64" group="0" graphic="4396" startMsg="1009" startMsgName="ELEMENTAL_FALLDOWN_S" endMsg="2189" endMsgName="ELEMENTAL_FALLDOWN_E" kind="curse"/>
+	<effect id="54" icon="1733" offIcon="5292" duration="16" group="0" graphic="4395" startMsg="1010" startMsgName="COUNTER_MIRROR_S" endMsg="2190" endMsgName="COUNTER_MIRROR_E" kind="defense"/>
+	<effect id="55" icon="1834" duration="32" group="0" graphic="10706" startMsg="1011" startMsgName="ERASE_MAGIC_S" endMsg="2191" endMsgName="ERASE_MAGIC_E" kind="curse"/>
+	<effect id="56" icon="1799" offIcon="5293" duration="960" group="0" graphic="4400" startMsg="1012" startMsgName="EXOTIC_VITALIZE_S" endMsg="2192" endMsgName="EXOTIC_VITALIZE_E" kind="defense"/>
+	<effect id="57" icon="2706" offIcon="5294" duration="64" group="0" graphic="4401" startMsg="1013" startMsgName="WATER_LIFE_S" endMsg="2193" endMsgName="WATER_LIFE_E" kind="defense"/>
+	<effect id="58" icon="1736" offIcon="5260" duration="320" group="0" graphic="4402" startMsg="1014" startMsgName="ELEMENTAL_FIRE_S" endMsg="2194" endMsgName="ELEMENTAL_FIRE_E" kind="attack"/>
+	<effect id="59" icon="1563" offIcon="5295" duration="-1" group="0" startMsg="975" startMsgName="LIFE_STREAM_S" kind="defense"/>
+	<effect id="60" icon="1612" duration="-1" group="0" startMsg="993" startMsgName="MOTHER_TREE" kind="defense"/>
+	<effect id="61" icon="1620" duration="-1" group="0" startMsg="1000" startMsgName="HOLD_S" endMsg="2195" endMsgName="HOLD_E" kind="paralyse"/>
+	<effect id="62" icon="1626" duration="-1" group="0" startMsg="999" startMsgName="STUN_S" endMsg="2196" endMsgName="STUN_E" kind="paralyse"/>
+	<effect id="63" icon="1476" duration="120" group="0" remainInArea="true" remainWhenDie="true" startMsg="912" startMsgName="NO_CHAT_S" endMsg="288" endMsgName="NO_CHAT_E" kind="paralyse"/>
+	<effect id="64" icon="1889" offIcon="5296" duration="192" group="0" graphic="4824" startMsg="1043" startMsgName="REDUCTION_ARMOR_S" endMsg="2197" endMsgName="REDUCTION_ARMOR_E" kind="defense"/>
+	<effect id="65" icon="1883" offIcon="5297" duration="64" group="0" graphic="8989" startMsg="1044" startMsgName="BOUNCE_ATTACK_S" endMsg="2198" endMsgName="BOUNCE_ATTACK_E" kind="defense"/>
+	<effect id="66" icon="2339" offIcon="5298" duration="960" group="0" graphic="5825" startMsg="1083" startMsgName="ADDITIONAL_FIRE_S" endMsg="2199" endMsgName="ADDITIONAL_FIRE_E" kind="defense"/>
+	<effect id="67" icon="2357" duration="64" group="0" graphic="5826" startMsg="1084" startMsgName="STRIKER_GALE_S" endMsg="2200" endMsgName="STRIKER_GALE_E" kind="curse"/>
+	<effect id="68" icon="2342" offIcon="5299" duration="960" group="0" graphic="5829" startMsg="1085" startMsgName="AQUA_PROTECT_S" endMsg="2201" endMsgName="AQUA_PROTECT_E" kind="defense"/>
+	<effect id="69" icon="2348" duration="64" group="0" graphic="5830" startMsg="1086" startMsgName="POLLUTE_WATER_S" endMsg="2202" endMsgName="POLLUTE_WATER_E" kind="curse"/>
+	<effect id="70" icon="2351" offIcon="5300" duration="64" group="0" graphic="5831" startMsg="1087" startMsgName="SOLID_CARRIAGE_S" endMsg="2203" endMsgName="SOLID_CARRIAGE_E" kind="defense"/>
+	<effect id="71" icon="2345" offIcon="5301" duration="64" group="0" graphic="10709" startMsg="1088" startMsgName="COUNTER_BARRIER_S" endMsg="2204" endMsgName="COUNTER_BARRIER_E" kind="defense"/>
+	<effect id="72" icon="2354" offIcon="5261" duration="64" group="0" startMsg="1089" startMsgName="STR_STATUS_EFFECT_SOUL_OF_FLAME" kind="attack"/>
+	<effect id="73" icon="5393" offIcon="5394" duration="600" group="0" removeCancel="true" startMsg="851" startMsgName="SPEED_TRIPLE_S" endMsg="185" endMsgName="SPEED_TRIPLE_E" kind="speed" priority="7"/>
+	<effect id="74" icon="2382" duration="600" group="0" startMsg="1077" startMsgName="STR_STATUS_EFFECT_SMELL_REMOVER" kind="cook"/>
+	<effect id="75" icon="2430" duration="0" group="0" remainInArea="true" remainWhenDie="true" startMsg="1090" startMsgName="STR_STATUS_EFFECT_LORD_BLESSING" kind="defense"/>
+	<effect id="76" icon="1609" duration="900" group="0" startMsg="1082" startMsgName="STR_STATUS_EFFECT_HP_JAPAN_EVENT" kind="cook"/>
+	<effect id="77" icon="2433" duration="900" group="0" startMsg="1127" startMsgName="STR_STATUS_EFFECT_KARMA_BUF" kind="neutrality"/>
+	<effect id="78" icon="2432" duration="900" group="0" startMsg="1127" startMsgName="STR_STATUS_EFFECT_KARMA_BUF" kind="neutrality"/>
+	<effect id="79" icon="2566" duration="900" group="0" startMsg="1140" startMsgName="STR_STATUS_EFFECT_HOLY_EVA_WATER" kind="neutrality"/>
+	<effect id="80" icon="2563" duration="900" group="0" startMsg="1141" startMsgName="STR_STATUS_EFFECT_HOLY_WATER" kind="neutrality"/>
+	<effect id="81" icon="2563" duration="900" group="0" startMsg="1142" startMsgName="STR_STATUS_EFFECT_HOLY_MITHRIL_POWDER" kind="neutrality"/>
+	<effect id="82" icon="2588" offIcon="5323" duration="3600" group="0" remainInArea="true" remainWhenDie="true" startMsg="1143" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="magic doll"/>
+	<effect id="83" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1152" startMsgName="STR_STATUS_EFFECT_FLOATING_EYE_STEAK" kind="cook"/>
+	<effect id="84" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1153" startMsgName="STR_STATUS_EFFECT_BEAR_MEAT" kind="cook"/>
+	<effect id="85" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1154" startMsgName="STR_STATUS_EFFECT_SEED_PAN_CAKE" kind="cook"/>
+	<effect id="86" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1155" startMsgName="STR_STATUS_EFFECT_CHEESE_ANT_MEAT" kind="cook"/>
+	<effect id="87" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1156" startMsgName="STR_STATUS_EFFECT_FRUIT_SALAD" kind="cook"/>
+	<effect id="88" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1157" startMsgName="STR_STATUS_EFFECT_FRIED_TENDERLOIN" kind="cook"/>
+	<effect id="89" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1158" startMsgName="STR_STATUS_EFFECT_WILD_BEAR_SOUVLAKI" kind="cook"/>
+	<effect id="90" icon="2565" offIcon="5325" duration="920" group="101" startMsg="1159" startMsgName="STR_STATUS_EFFECT_MUSHROOM_SOUP" kind="cook"/>
+	<effect id="91" icon="1478" duration="600" group="0" startMsg="3121" startMsgName="POTION_OF_MANA2_S" endMsg="2177" endMsgName="POTION_OF_MANA2_E" kind="cook" priority="8"/>
+	<effect id="92" icon="2708" duration="3600" group="0" remainInArea="true" remainWhenDie="true" startMsg="1197" startMsgName="STR_STATUS_EFFECT_LOVE_DOLL" kind="magic doll"/>
+	<effect id="93" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1219" startMsgName="STR_STATUS_EFFECT_CAVIAR_CANAPE" kind="cook"/>
+	<effect id="94" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1220" startMsgName="STR_STATUS_EFFECT_ALLIGATOR_STEAK" kind="cook"/>
+	<effect id="95" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1221" startMsgName="STR_STATUS_EFFECT_TURTLE_DRAGON_COOKIE" kind="cook"/>
+	<effect id="96" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1222" startMsgName="STR_STATUS_EFFECT_FRIED_KIWI_PARROT" kind="cook"/>
+	<effect id="97" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1223" startMsgName="STR_STATUS_EFFECT_SCORPION_STEAK" kind="cook"/>
+	<effect id="98" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1224" startMsgName="STR_STATUS_EFFECT_ELEKKADOM_STEW" kind="cook"/>
+	<effect id="99" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1225" startMsgName="STR_STATUS_EFFECT_SPIDER_LEG_SOUVLAKI" kind="cook"/>
+	<effect id="100" icon="2565" offIcon="5325" duration="920" group="101" startMsg="1226" startMsgName="STR_STATUS_EFFECT_CRAB_MEAT_SOUP" kind="cook"/>
+	<effect id="101" icon="2565" offIcon="5325" duration="920" group="16" remainInArea="true" remainWhenDie="true" startMsg="1292" startMsgName="STR_STATUS_EFFECT_ENERGY_SOUP" kind="cook"/>
+	<effect id="102" icon="1612" duration="-1" group="0" startMsg="1300" startMsgName="STR_STATUS_EFFECT_PCCAFE_MOTHER_TREE" kind="defense"/>
+	<effect id="103" icon="3069" duration="3600" group="16" remainWhenDie="true" startMsg="1313" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER" kind="einhasad"/>
+	<effect id="104" icon="2430" duration="3600" group="11" remainWhenDie="true" startMsg="1314" startMsgName="STR_STATUS_EFFECT_BM_MAGIC_SCROLL1" kind="magic doll"/>
+	<effect id="105" icon="2430" duration="3600" group="11" remainWhenDie="true" startMsg="1315" startMsgName="STR_STATUS_EFFECT_BM_MAGIC_SCROLL2" kind="cook"/>
+	<effect id="106" icon="2430" duration="3600" group="11" remainWhenDie="true" startMsg="1316" startMsgName="STR_STATUS_EFFECT_BM_MAGIC_SCROLL3" kind="cook"/>
+	<effect id="107" icon="3080" offIcon="5302" duration="1800" group="0" graphic="6531" startMsg="1329" startMsgName="DRAGON_SKIN_S" endMsg="2205" endMsgName="DRAGON_SKIN_E" kind="defense"/>
+	<effect id="108" icon="3187" duration="32" group="0" graphic="6508" startMsg="1330" startMsgName="GUARD_BREAK_S" endMsg="2206" endMsgName="GUARD_BREAK_E" kind="curse"/>
+	<effect id="109" icon="3182" duration="600" group="34" startMsg="2267" startMsgName="DIAENCHANTMENT_A_S" endMsg="2420" endMsgName="DIAENCHANTMENT_A_E" kind="neutrality"/>
+	<effect id="110" icon="3075" offIcon="5245" duration="300" group="0" startMsg="1332" startMsgName="BLOODLUST_S" endMsg="2207" endMsgName="BLOODLUST_E" kind="speed" priority="6"/>
+	<effect id="111" icon="3190" duration="16" group="0" graphic="6586" startMsg="1333" startMsgName="FEAR_S" endMsg="2208" endMsgName="FEAR_E" kind="curse"/>
+	<effect id="112" icon="3184" duration="600" group="34" startMsg="2271" startMsgName="DIAENCHANTMENT_F_S" endMsg="2424" endMsgName="DIAENCHANTMENT_F_E" kind="neutrality"/>
+	<effect id="113" offIcon="5303" duration="300" group="0" graphic="6519" startMsg="1335" icon="3089" startMsgName="MOTAL_BODY_S" endMsg="2209" endMsgName="MOTAL_BODY_E" kind="defense"/>
+	<effect id="114" icon="3188" duration="32" group="0" graphic="6588" startMsg="1336" startMsgName="HORROR_OF_DEATH_S" endMsg="2210" endMsgName="HORROR_OF_DEATH_E" kind="curse"/>
+	<effect id="115" icon="3078" duration="600" group="34" startMsg="2274" startMsgName="DIAENCHANTMENT_V_S" endMsg="2427" endMsgName="DIAENCHANTMENT_V_E" kind="neutrality"/>
+	<effect id="116" icon="3123" offIcon="5304" duration="1200" group="0" graphic="6813" startMsg="1338" startMsgName="MIRROR_IMAGE_S" endMsg="2211" endMsgName="MIRROR_IMAGE_E" kind="defense"/>
+	<effect id="117" icon="3211" duration="8" group="0" graphic="10761" startMsg="986" startMsgName="CONFUSION_S" endMsg="2185" endMsgName="CONFUSION_E" kind="curse"/>
+	<effect id="118" icon="3117" offIcon="5262" duration="64" group="0" graphic="6578" startMsg="1340" startMsgName="ILLUSION_ORGE_S" endMsg="2212" endMsgName="ILLUSION_ORGE_E" kind="attack"/>
+	<effect id="119" icon="3104" duration="4" group="23" graphic="6709" startMsg="1341" startMsgName="CUBE_IGNITION_S" addChatMsg="false" kind="curse"/>
+	<effect id="120" icon="3097" offIcon="5305" duration="600" group="0" graphic="6527" startMsg="1342" startMsgName="CONCENTRATION_S" endMsg="2216" endMsgName="CONCENTRATION_E" kind="defense"/>
+	<effect id="121" icon="3115" offIcon="5263" duration="64" group="0" graphic="6577" startMsg="1343" startMsgName="ILLUSION_LICH_S" endMsg="2213" endMsgName="ILLUSION_LICH_E" kind="attack"/>
+	<effect id="122" icon="3106" duration="4" group="23" graphic="6715" startMsg="1344" startMsgName="CUBE_QUAKE_S" addChatMsg="false" kind="paralyse"/>
+	<effect id="123" icon="3127" offIcon="5306" duration="600" group="0" graphic="6507" startMsg="1345" startMsgName="PATIENCE_S" endMsg="2217" endMsgName="PATIENCE_E" kind="defense"/>
+	<effect id="124" icon="3129" duration="5" group="0" graphic="6530" startMsg="1346" startMsgName="PHANTASM_S" endMsg="2218" endMsgName="PHANTASM_E" kind="paralyse"/>
+	<effect id="125" icon="3254" duration="12" group="0" startMsg="1389" startMsgName="NO_USE_ARM_BREAKER" kind="curse"/>
+	<effect id="126" icon="3113" offIcon="5307" duration="64" group="0" graphic="6576" startMsg="1347" startMsgName="ILLUSION_DIA_GOLEM_S" endMsg="2214" endMsgName="ILLUSION_DIA_GOLEM_E" kind="defense"/>
+	<effect id="127" icon="5308" offIcon="5309" duration="4" group="23" graphic="6720" startMsg="1348" startMsgName="CUBE_SHOCK_S" addChatMsg="false" kind="defense"/>
+	<effect id="128" icon="3119" offIcon="5264" duration="600" group="0" graphic="6505" startMsg="1349" startMsgName="INSIGHT_S" endMsg="2219" endMsgName="INSIGHT_E" kind="attack"/>
+	<effect id="129" icon="3125" duration="64" group="0" graphic="6506" startMsg="1350" startMsgName="PANIC_S" endMsg="2220" endMsgName="PANIC_E" kind="curse"/>
+	<effect id="130" icon="3111" offIcon="5321" duration="64" group="0" graphic="6575" startMsg="1351" startMsgName="ILLUSION_AVATAR_S" endMsg="2215" endMsgName="ILLUSION_AVATAR_E" kind="neutrality"/>
+	<effect id="131" icon="3109" duration="4" group="23" graphic="6721" startMsg="1381" startMsgName="STR_STATUS_EFFECT_DE_CUBE_SHOCK" addChatMsg="false" kind="curse"/>
+	<effect id="132" icon="2566" duration="600" group="0" startMsg="1382" startMsgName="STR_STATUS_EFFECT_POTION_OF_DESTRUCT" kind="neutrality"/>
+	<effect id="133" icon="1612" duration="-1" group="0" startMsg="1391" startMsgName="DRAGONKNIGHT_MOTHER_TREE" kind="defense"/>
+	<effect id="134" icon="1612" duration="-1" group="0" startMsg="1392" startMsgName="ILLUSIONIST_MOTHER_TREE" kind="defense"/>
+	<effect id="135" icon="3080" duration="16" group="0" startMsg="1393" startMsgName="CHAIN_SWORD_COUNT" kind="defense"/>
+	<effect id="136" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1402" startMsgName="STR_STATUS_EFFECT_ROAST_CRUSTANCEAN" kind="cook"/>
+	<effect id="137" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1403" startMsgName="STR_STATUS_EFFECT_ROAST_GRIFFON" kind="cook"/>
+	<effect id="138" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1404" startMsgName="STR_STATUS_EFFECT_COCKATRICE_STEAK" kind="cook"/>
+	<effect id="139" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1405" startMsgName="STR_STATUS_EFFECT_ROAST_TURTLE_DRAGON" kind="cook"/>
+	<effect id="140" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1406" startMsgName="STR_STATUS_EFFECT_LESSER_DRAGON_WING_SOUVLAKI" kind="cook"/>
+	<effect id="141" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1407" startMsgName="STR_STATUS_EFFECT_ROAST_DRAKE" kind="cook"/>
+	<effect id="142" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1408" startMsgName="STR_STATUS_EFFECT_ABYSS_FISH_STEW" kind="cook"/>
+	<effect id="143" icon="2565" offIcon="5325" duration="920" group="101" startMsg="1409" startMsgName="STR_STATUS_EFFECT_BASILISK_EGG_SOUP" kind="cook"/>
+	<effect id="144" icon="2430" duration="3600" group="11" startMsg="1436" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM1" kind="cook"/>
+	<effect id="145" icon="2430" duration="3600" group="11" startMsg="1437" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM2" kind="cook"/>
+	<effect id="146" icon="2430" duration="3600" group="11" startMsg="1438" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM3" kind="cook"/>
+	<effect id="147" icon="2430" duration="3600" group="11" startMsg="1439" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM4" kind="cook"/>
+	<effect id="148" icon="2430" duration="3600" group="11" startMsg="1440" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM5" kind="cook"/>
+	<effect id="149" icon="2430" duration="3600" group="11" startMsg="1441" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM6" kind="cook"/>
+	<effect id="150" icon="2430" duration="3600" group="11" startMsg="1442" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM7" kind="cook"/>
+	<effect id="151" icon="2430" duration="3600" group="11" startMsg="1443" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM8" kind="cook"/>
+	<effect id="152" icon="2430" duration="3600" group="11" startMsg="1444" startMsgName="STR_STATUS_EFFECT_BM_CHINA_ITEM9" kind="cook"/>
+	<effect id="153" icon="5395" duration="480" group="0" startMsg="1446" startMsgName="EMOTION_PRESSING_S" endMsg="185" endMsgName="EMOTION_PRESSING_E" kind="speed" priority="6"/>
+	<effect id="154" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1454" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM1" kind="cook"/>
+	<effect id="155" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1455" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM2" kind="cook"/>
+	<effect id="156" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1456" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM3" kind="cook"/>
+	<effect id="157" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1457" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM4" kind="cook"/>
+	<effect id="158" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1458" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM5" kind="cook"/>
+	<effect id="159" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1459" startMsgName="STR_STATUddS_EFFECT_BM_JAPAN_ITEM6" kind="cook"/>
+	<effect id="160" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1460" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM7" kind="cook"/>
+	<effect id="161" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1461" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM8" kind="cook"/>
+	<effect id="162" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1462" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM9" kind="cook"/>
+	<effect id="163" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1463" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM10" kind="cook"/>
+	<effect id="164" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1464" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM11" kind="cook"/>
+	<effect id="165" icon="2430" duration="1500" group="11" remainInArea="true" remainWhenDie="true" startMsg="1465" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM12" kind="cook"/>
+	<effect id="166" icon="3069" duration="1800" group="16" remainWhenDie="true" startMsg="1491" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_WHITEDAY" kind="einhasad"/>
+	<effect id="167" icon="3549" duration="600" group="0" remainInArea="true" remainWhenDie="true" startMsg="1508" startMsgName="STR_BLESS_OF_IVORY_TOWER" kind="cook"/>
+	<effect id="168" icon="3549" duration="3600" group="0" remainInArea="true" remainWhenDie="true" startMsg="1508" startMsgName="STR_BLESS_OF_IVORY_TOWER" kind="cook"/>
+	<effect id="169" icon="3549" duration="3600" group="9" remainInArea="true" remainWhenDie="true" startMsg="1519" startMsgName="STR_STATUS_EFFECT_MINI_GAME_BUFF1" kind="cook"/>
+	<effect id="170" icon="3549" duration="7200" group="9" remainInArea="true" remainWhenDie="true" startMsg="1520" startMsgName="STR_STATUS_EFFECT_MINI_GAME_BUFF2" kind="cook"/>
+	<effect id="171" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1538" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM13" kind="cook"/>
+	<effect id="172" icon="2430" duration="1500" group="0" remainInArea="true" remainWhenDie="true" startMsg="1539" startMsgName="STR_STATUS_EFFECT_BM_JAPAN_ITEM14" kind="cook"/>
+	<effect id="173" icon="3069" duration="1800" group="16" remainWhenDie="true" startMsg="1542" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_25" kind="einhasad"/>
+	<effect id="174" icon="3069" duration="1500" group="16" remainInArea="true" remainWhenDie="true" startMsg="1543" startMsgName="STR_STATUS_EFFECT_JBM_EXP_BOOSTER" kind="einhasad"/>
+	<effect id="175" icon="3589" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="1550" startMsgName="STR_STATUS_EFFECT_BLESS_OF_EINHASAD" kind="einhasad" priority="2"/>
+	<effect id="176" icon="2430" duration="1800" group="8" startMsg="1552" startMsgName="STR_STATUS_EFFECT_BM_CHINA_POTION1" kind="cook"/>
+	<effect id="177" icon="2430" duration="1800" group="8" startMsg="1553" startMsgName="STR_STATUS_EFFECT_BM_CHINA_POTION2" kind="cook"/>
+	<effect id="178" icon="2430" duration="1800" group="8" startMsg="1554" startMsgName="STR_STATUS_EFFECT_BM_CHINA_POTION3" kind="cook"/>
+	<effect id="179" icon="2430" duration="1800" group="8" startMsg="1555" startMsgName="STR_STATUS_EFFECT_BM_CHINA_POTION4" kind="cook"/>
+	<effect id="180" icon="2430" duration="1800" group="8" startMsg="1556" startMsgName="STR_STATUS_EFFECT_BM_CHINA_POTION5" kind="cook"/>
+	<effect id="181" icon="3557" duration="2400" group="1" remainInArea="true" remainWhenDie="true" startMsg="1562" startMsgName="STR_STATUS_EFFECT_GOD_MAJO_POTION_SPELL" kind="cook"/>
+	<effect id="182" icon="1612" duration="-1" group="0" startMsg="1563" startMsgName="STR_STATUS_EFFECT_GOD_MAJO_MOTHER_TREE" kind="neutrality"/>
+	<effect id="183" icon="3622" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1595" startMsgName="STR_STATUS_EFFECT_ANTHARAS_BUFF_ON" kind="dragon"/>
+	<effect id="184" icon="3623" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1596" startMsgName="STR_STATUS_EFFECT_ANTHARAS_BUFF_OFF" kind="dragon"/>
+	<effect id="185" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1597" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_ANTHARAS" kind="dragon"/>
+	<effect id="186" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1610" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_FAFURION" kind="dragon"/>
+	<effect id="187" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1611" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_LINDVIOR" kind="dragon"/>
+	<effect id="188" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1612" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_VALAKAS" kind="dragon"/>
+	<effect id="189" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1613" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_BIRTH" kind="dragon"/>
+	<effect id="190" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1615" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_SHAPE" kind="dragon"/>
+	<effect id="191" icon="3624" duration="600" group="10" remainInArea="true" remainWhenDie="true" startMsg="1614" startMsgName="STR_STATUS_EFFECT_MAGICAL_EYE_LIFE" kind="dragon"/>
+	<effect id="192" icon="3706" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="1628" startMsgName="STR_STATUS_EFFECT_DRAGON_BLOOD" kind="dragon"  priority="10"/>
+	<effect id="193" icon="3733" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="1644" startMsgName="STR_STATUS_EFFECT_DRAGON_BLOOD2" kind="dragon" priority="11"/>
+	<effect id="194" icon="3734" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="1646" startMsgName="STR_STATUS_EFFECT_DRAGON_BLOOD3" kind="dragon" priority="12"/>
+	<effect id="195" icon="3735" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="1648" startMsgName="STR_STATUS_EFFECT_DRAGON_BLOOD4" kind="dragon" priority="13"/>
+	<effect id="196" icon="2564" offIcon="5324" duration="1000" group="0" startMsg="1656" startMsgName="STR_STATUS_EFFECT_OREN_DRUG" kind="cook"/>
+	<effect id="197" icon="3777" duration="12" group="14" startMsg="1672" startMsgName="FAFURION_REDUCE_HEAL_S" endMsg="2221" endMsgName="FAFURION_REDUCE_HEAL_E" kind="dragon"/>
+	<effect id="198" icon="3778" duration="12" group="14" startMsg="1673" startMsgName="FAFURION_POLLUTE_HEAL_S" endMsg="2222" endMsgName="FAFURION_POLLUTE_HEAL_E" kind="curse"/>
+	<effect id="199" icon="3776" duration="12" group="14" startMsg="1674" startMsgName="FAFURION_POLLUTE_POTION_S" endMsg="2223" endMsgName="FAFURION_POLLUTE_POTION_E" kind="curse"/>
+	<effect id="200" icon="3790" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1675" startMsgName="STR_STATUS_EFFECT_FAFURION_BUFF_ON" kind="dragon"/>
+	<effect id="201" icon="3791" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1676" startMsgName="STR_STATUS_EFFECT_FAFURION_BUFF_OFF" kind="dragon"/>
+	<effect id="202" icon="3731" duration="60" group="13" remainWhenDie="true" startMsg="1677" startMsgName="FAFURION_SAEL_MASS_TRAIT1" kind="dragon"/>
+	<effect id="203" icon="3732" duration="60" group="13" remainWhenDie="true" startMsg="1678" startMsgName="FAFURION_SAEL_MASS_TRAIT2" kind="dragon"/>
+	<effect id="204" icon="2430" duration="1800" group="17" remainInArea="true" remainWhenDie="true" startMsg="1689" startMsgName="STR_STATUS_EFFECT_BM_PC_CAFE_CHEF_1" kind="cook"/>
+	<effect id="205" icon="2430" duration="1800" group="17" remainInArea="true" remainWhenDie="true" startMsg="1690" startMsgName="STR_STATUS_EFFECT_BM_PC_CAFE_CHEF_2" kind="cook"/>
+	<effect id="206" icon="2430" duration="1800" group="17" remainInArea="true" remainWhenDie="true" startMsg="1691" startMsgName="STR_STATUS_EFFECT_BM_PC_CAFE_CHEF_3" kind="cook"/>
+	<effect id="207" icon="2430" duration="1800" group="17" remainInArea="true" remainWhenDie="true" startMsg="1692" startMsgName="STR_STATUS_EFFECT_BM_PC_CAFE_CHEF_4" kind="cook"/>
+	<effect id="208" icon="3069" duration="900" group="16" remainInArea="true" remainWhenDie="true" startMsg="1718" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_GREENTEA_CAKE" kind="cook"/>
+	<effect id="209" icon="3814" duration="300" group="15" remainInArea="true" remainWhenDie="true" startMsg="1719" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_BANANA_CAKE" kind="cook"/>
+	<effect id="210" icon="3814" duration="900" group="15" remainInArea="true" remainWhenDie="true" startMsg="1719" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_BANANA_CAKE" kind="cook"/>
+	<effect id="211" icon="3814" duration="300" group="15" remainInArea="true" remainWhenDie="true" startMsg="1720" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_CHERRY_CAKE" kind="cook"/>
+	<effect id="212" icon="3814" duration="900" group="15" remainInArea="true" remainWhenDie="true" startMsg="1720" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_CHERRY_CAKE" kind="cook"/>
+	<effect id="213" icon="3814" duration="300" group="15" remainInArea="true" remainWhenDie="true" startMsg="1721" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_BERRY_CAKE" kind="cook"/>
+	<effect id="214" icon="3814" duration="900" group="15" remainInArea="true" remainWhenDie="true" startMsg="1721" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_BERRY_CAKE" kind="cook"/>
+	<effect id="215" icon="3069" duration="1500" group="16" remainInArea="true" remainWhenDie="true" startMsg="1491" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_WHITEDAY" kind="einhasad"/>
+	<effect id="216" icon="3878" duration="-1" group="0" remainWhenDie="true" startMsg="1793" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_BLUE1" kind="security" priority="1"/>
+	<effect id="217" icon="3879" duration="-1" group="0" remainWhenDie="true" startMsg="1794" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_BLUE2" kind="security" priority="1"/>
+	<effect id="218" icon="3880" duration="-1" group="0" remainWhenDie="true" startMsg="1795" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_BLUE3" kind="security" priority="1"/>
+	<effect id="219" icon="3881" duration="-1" group="0" remainWhenDie="true" startMsg="1796" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_RED1" kind="security" priority="1"/>
+	<effect id="220" icon="3882" duration="-1" group="0" remainWhenDie="true" startMsg="1797" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_RED2" kind="security" priority="1"/>
+	<effect id="221" icon="3883" duration="-1" group="0" remainWhenDie="true" startMsg="1798" startMsgName="STR_STATUS_EFFECT_ALIGNMENT_RED3" kind="security" priority="1"/>
+	<effect id="222" icon="3884" duration="-1" group="0" remainWhenDie="true" startMsg="1799" startMsgName="STR_STATUS_EFFECT_LOW_LEVEL" kind="security" priority="1"/>
+	<effect id="223" icon="3875" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1787" startMsgName="STR_STATUS_EFFECT_LINDVIOR_BUFF_ON" kind="dragon"/>
+	<effect id="224" icon="3874" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1788" startMsgName="STR_STATUS_EFFECT_LINDVIOR_BUFF_OFF" kind="dragon"/>
+	<effect id="225" icon="2564" offIcon="5324" duration="920" group="0" startMsg="1812" startMsgName="STR_STATUS_EFFECT_LIPTON_ICETEA" kind="cook"/>
+	<effect id="226" icon="3549" duration="7200" group="16" remainInArea="true" remainWhenDie="true" startMsg="1827" startMsgName="STR_STATUS_EFFECT_BIRTHDAY_BUFF" kind="cook"/>
+	<effect id="227" icon="2565" offIcon="5325" duration="920" group="101" startMsg="1828" startMsgName="STR_STATUS_EFFECT_MONSTER_CAKE" kind="cook"/>
+	<effect id="228" icon="2430" duration="1800" group="11" remainInArea="true" remainWhenDie="true" startMsg="1830" startMsgName="STR_STATUS_EFFECT_SUMMER_ICE" kind="cook"/>
+	<effect id="229" icon="3953" duration="-1" group="0" startMsg="1919" startMsgName="STR_STATUS_EFFECT_AURA_OF_CRACK" kind="neutrality"/>
+	<effect id="230" icon="4087" duration="3600" group="18" startMsg="1939" startMsgName="STR_STATUS_EFFECT_HIT_RATE0" kind="attack"/>
+	<effect id="231" icon="4116" duration="3600" group="18" startMsg="1940" startMsgName="STR_STATUS_EFFECT_HIT_RATE1" kind="attack"/>
+	<effect id="232" icon="4117" duration="3600" group="18" startMsg="1941" startMsgName="STR_STATUS_EFFECT_HIT_RATE2" kind="attack"/>
+	<effect id="233" icon="4078" duration="3600" group="19" startMsg="1933" startMsgName="STR_STATUS_EFFECT_MAX_MP0" kind="defense"/>
+	<effect id="234" icon="4112" duration="3600" group="19" startMsg="1934" startMsgName="STR_STATUS_EFFECT_MAX_MP1" kind="defense"/>
+	<effect id="235" icon="4113" duration="3600" group="19" startMsg="1935" startMsgName="STR_STATUS_EFFECT_MAX_MP2" kind="defense"/>
+	<effect id="236" icon="4079" duration="3600" group="20" startMsg="1936" startMsgName="STR_STATUS_EFFECT_MAX_HP0" kind="defense"/>
+	<effect id="237" icon="4114" duration="3600" group="20" startMsg="1937" startMsgName="STR_STATUS_EFFECT_MAX_HP1" kind="defense"/>
+	<effect id="238" icon="4115" duration="3600" group="20" startMsg="1938" startMsgName="STR_STATUS_EFFECT_MAX_HP2" kind="defense"/>
+	<effect id="239" icon="4080" duration="-1" group="21" startMsg="1942" startMsgName="STR_STATUS_EFFECT_COLLECTION_PERIOD0" kind="neutrality"/>
+	<effect id="240" icon="4082" duration="-1" group="21" startMsg="1943" startMsgName="STR_STATUS_EFFECT_COLLECTION_PERIOD1" kind="neutrality"/>
+	<effect id="241" icon="4084" duration="-1" group="21" startMsg="1944" startMsgName="STR_STATUS_EFFECT_COLLECTION_PERIOD2" kind="neutrality"/>
+	<effect id="242" icon="4086" duration="-1" group="21" startMsg="1945" startMsgName="STR_STATUS_EFFECT_COLLECTION_PERIOD3" kind="neutrality"/>
+	<effect id="243" icon="4081" duration="-1" group="21" startMsg="1946" startMsgName="STR_STATUS_EFFECT_REWARD_PERIOD0" kind="neutrality"/>
+	<effect id="244" icon="4083" duration="-1" group="21" startMsg="1947" startMsgName="STR_STATUS_EFFECT_REWARD_PERIOD1" kind="neutrality"/>
+	<effect id="245" icon="4085" duration="-1" group="21" startMsg="1948" startMsgName="STR_STATUS_EFFECT_REWARD_PERIOD2" kind="neutrality"/>
+	<effect id="246" icon="3875" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1971" startMsgName="STR_STATUS_EFFECT_VALAKAS_BUFF_ON" kind="dragon"/>
+	<effect id="247" icon="3874" duration="2400" group="12" remainInArea="true" remainWhenDie="true" startMsg="1972" startMsgName="STR_STATUS_EFFECT_VALAKAS_BUFF_OFF" kind="dragon"/>
+	<effect id="248" icon="2430" duration="1800" group="11" startMsg="1999" startMsgName="STR_STATUS_EFFECT_PANDORA_DDUK"/>
+	<effect id="249" icon="2564" offIcon="5324" duration="1200" group="100" startMsg="2003" startMsgName="STR_STATUS_EFFECT_CHRISTMAS_PUDDING" kind="cook"/>
+	<effect id="250" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2013" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF1" kind="cook"/>
+	<effect id="251" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2014" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF2" kind="cook"/>
+	<effect id="252" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2015" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF3" kind="cook"/>
+	<effect id="253" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2016" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF4" kind="cook"/>
+	<effect id="254" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2017" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF5" kind="cook"/>
+	<effect id="255" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2018" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF6" kind="cook"/>
+	<effect id="256" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2019" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF7" kind="cook"/>
+	<effect id="257" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2020" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF8" kind="cook"/>
+	<effect id="258" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2021" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF9" kind="cook"/>
+	<effect id="259" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2022" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF10" kind="cook"/>
+	<effect id="260" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2023" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF11" kind="cook"/>
+	<effect id="261" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2024" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF12" kind="cook"/>
+	<effect id="262" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2025" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF13" kind="cook"/>
+	<effect id="263" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2026" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF14" kind="cook"/>
+	<effect id="264" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2027" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF15" kind="cook"/>
+	<effect id="265" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2028" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF16" kind="cook"/>
+	<effect id="266" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2029" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF17" kind="cook"/>
+	<effect id="267" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2030" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF18" kind="cook"/>
+	<effect id="268" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2031" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF19" kind="cook"/>
+	<effect id="269" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2032" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF20" kind="cook"/>
+	<effect id="270" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2033" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF21" kind="cook"/>
+	<effect id="271" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2034" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF22" kind="cook"/>
+	<effect id="272" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2035" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF23" kind="cook"/>
+	<effect id="273" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2036" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF24" kind="cook"/>
+	<effect id="274" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2037" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF25" kind="cook"/>
+	<effect id="275" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2038" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF26" kind="cook"/>
+	<effect id="276" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2039" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF27" kind="cook"/>
+	<effect id="277" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2040" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF28" kind="cook"/>
+	<effect id="278" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2041" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF29" kind="cook"/>
+	<effect id="279" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2042" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF30" kind="cook"/>
+	<effect id="280" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2043" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF31" kind="cook"/>
+	<effect id="281" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2044" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF32" kind="cook"/>
+	<effect id="282" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2045" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF33" kind="cook"/>
+	<effect id="283" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2046" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF34" kind="cook"/>
+	<effect id="284" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2047" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF35" kind="cook"/>
+	<effect id="285" icon="2430" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="2048" startMsgName="STR_STATUS_EFFECT_TAIWAN_STONE_BUFF36" kind="cook"/>
+	<effect id="286" icon="3069" duration="1800" group="16" remainWhenDie="true" startMsg="2116" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_40" kind="einhasad"/>
+	<effect id="287" icon="3069" duration="1800" group="16" remainWhenDie="true" startMsg="2117" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_30" kind="einhasad"/>
+	<effect id="288" icon="4757" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="2129" startMsgName="STR_WINDOWS_UPDATE_BUFF" kind="security" priority="1"/>
+	<effect id="289" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2132" startMsgName="STR_SPRING_LUNCH" kind="cook"/>
+	<effect id="290" icon="4765" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="2134" startMsgName="STR_NO_DEATH_PENALTY" kind="neutrality"/>
+	<effect id="291" icon="4768" duration="10800" group="0" remainInArea="true" remainWhenDie="true" startMsg="2140" startMsgName="STR_STATUS_EFFECT_EINHASAD_EMERALD_COOLING_TIME" kind="einhasad" priority="3"/>
+	<effect id="292" icon="4768" duration="10800" group="0" remainInArea="true" remainWhenDie="true" startMsg="2142" startMsgName="STR_STATUS_EFFECT_EINHASAD_NOT_EMERALD_COOLING_TIME" kind="einhasad" priority="3"/>
+	<effect id="293" icon="5448" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="2156" startMsgName="STR_STATUS_EFFECT_PC_CAFE_CHRISTER" kind="neutrality" priority="1"/>
+	<effect id="294" icon="4911" duration="900" group="55" startMsg="2554" startMsgName="STR_STATUS_EFFECT_RED_WINE" kind="cook"/>
+	<effect id="295" icon="4911" duration="900" group="55" startMsg="2555" startMsgName="STR_STATUS_EFFECT_WHITE_WINE" kind="cook"/>
+	<effect id="296" icon="4911" duration="900" group="55" startMsg="2556" startMsgName="STR_STATUS_EFFECT_ICE_WINE" kind="cook"/>
+	<effect id="297" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2565" startMsgName="STR_STATUS_EFFECT_GRILLED_COMMON_CARP" kind="cook"/>
+	<effect id="298" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2566" startMsgName="STR_STATUS_EFFECT_GRILLED_CRUCIAN_CARP" kind="cook"/>
+	<effect id="299" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2567" startMsgName="STR_STATUS_EFFECT_GRILLED_RED_LIGHT_FISH" kind="cook"/>
+	<effect id="300" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2568" startMsgName="STR_STATUS_EFFECT_GRILLED_BLUE_LIGHT_FISH" kind="cook"/>
+	<effect id="301" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2569" startMsgName="STR_STATUS_EFFECT_GRILLED_WHITE_LIGHT_FISH" kind="cook"/>
+	<effect id="302" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2570" startMsgName="STR_STATUS_EFFECT_GRILLED_GREEN_LIGHT_FISH" kind="cook"/>
+	<effect id="303" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2571" startMsgName="STR_STATUS_EFFECT_SPICY_FISH_SOUP" kind="cook"/>
+	<effect id="304" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2572" startMsgName="STR_STATUS_EFFECT_SPECIAL_TURTLE_SOUP" kind="cook"/>
+	<effect id="305" icon="4907" duration="300" group="0" startMsg="2573" startMsgName="STR_STATUS_EFFECT_MAGIC_BULLET" kind="cook"/>
+	<effect id="306" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2686" startMsgName="STR_STATUS_EFFECT_FLOATING_EYE_STEAK_ENCHANT" kind="cook"/>
+	<effect id="307" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2687" startMsgName="STR_STATUS_EFFECT_BEAR_MEAT_ENCHANT" kind="cook"/>
+	<effect id="308" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2688" startMsgName="STR_STATUS_EFFECT_SEED_PAN_CAKE_ENCHANT" kind="cook"/>
+	<effect id="309" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2689" startMsgName="STR_STATUS_EFFECT_CHEESE_ANT_MEAT_ENCHANT" kind="cook"/>
+	<effect id="310" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2690" startMsgName="STR_STATUS_EFFECT_FRUIT_SALAD_ENCHANT" kind="cook"/>
+	<effect id="311" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2691" startMsgName="STR_STATUS_EFFECT_FRIED_TENDERLOIN_ENCHANT" kind="cook"/>
+	<effect id="312" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2692" startMsgName="STR_STATUS_EFFECT_WILD_BEAR_SOUVLAKI_ENCHANT" kind="cook"/>
+	<effect id="313" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2693" startMsgName="STR_STATUS_EFFECT_MUSHROOM_SOUP_ENCHANT" kind="cook"/>
+	<effect id="314" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2694" startMsgName="STR_STATUS_EFFECT_CAVIAR_CANAPE_ENCHANT" kind="cook"/>
+	<effect id="315" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2695" startMsgName="STR_STATUS_EFFECT_ALLIGATOR_STEAK_ENCHANT" kind="cook"/>
+	<effect id="316" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2696" startMsgName="STR_STATUS_EFFECT_TURTLE_DRAGON_COOKIE_ENCHANT" kind="cook"/>
+	<effect id="317" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2697" startMsgName="STR_STATUS_EFFECT_FRIED_KIWI_PARROT_ENCHANT" kind="cook"/>
+	<effect id="318" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2698" startMsgName="STR_STATUS_EFFECT_SCORPION_STEAK_ENCHANT" kind="cook"/>
+	<effect id="319" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2699" startMsgName="STR_STATUS_EFFECT_ELEKKADOM_STEW_ENCHANT" kind="cook"/>
+	<effect id="320" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2700" startMsgName="STR_STATUS_EFFECT_SPIDER_LEG_SOUVLAKI_ENCHANT" kind="cook"/>
+	<effect id="321" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2701" startMsgName="STR_STATUS_EFFECT_CRAB_MEAT_SOUP_ENCHANT" kind="cook"/>
+	<effect id="322" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2702" startMsgName="STR_STATUS_EFFECT_ROAST_CRUSTANCEAN_ENCHANT" kind="cook"/>
+	<effect id="323" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2703" startMsgName="STR_STATUS_EFFECT_ROAST_GRIFFON_ENCHANT" kind="cook"/>
+	<effect id="324" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2704" startMsgName="STR_STATUS_EFFECT_COCKATRICE_STEAK_ENCHANT" kind="cook"/>
+	<effect id="325" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2705" startMsgName="STR_STATUS_EFFECT_ROAST_TURTLE_DRAGON_ENCHANT" kind="cook"/>
+	<effect id="326" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2706" startMsgName="STR_STATUS_EFFECT_LESSER_DRAGON_WING_SOUVLAKI_ENCHANT" kind="cook"/>
+	<effect id="327" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2707" startMsgName="STR_STATUS_EFFECT_ROAST_DRAKE_ENCHANT" kind="cook"/>
+	<effect id="328" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2708" startMsgName="STR_STATUS_EFFECT_ABYSS_FISH_STEW_ENCHANT" kind="cook"/>
+	<effect id="329" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2709" startMsgName="STR_STATUS_EFFECT_BASILISK_EGG_SOUP_ENCHANT" kind="cook"/>
+	<effect id="330" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2710" startMsgName="STR_STATUS_EFFECT_GRILLED_COMMON_CARP_ENCHANT" kind="cook"/>
+	<effect id="331" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2711" startMsgName="STR_STATUS_EFFECT_GRILLED_CRUCIAN_CARP_ENCHANT" kind="cook"/>
+	<effect id="332" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2712" startMsgName="STR_STATUS_EFFECT_GRILLED_RED_LIGHT_FISH_ENCHANT" kind="cook"/>
+	<effect id="333" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2713" startMsgName="STR_STATUS_EFFECT_GRILLED_BLUE_LIGHT_FISH_ENCHANT" kind="cook"/>
+	<effect id="334" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2714" startMsgName="STR_STATUS_EFFECT_GRILLED_WHITE_LIGHT_FISH_ENCHANT" kind="cook"/>
+	<effect id="335" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2715" startMsgName="STR_STATUS_EFFECT_GRILLED_GREEN_LIGHT_FISH_ENCHANT" kind="cook"/>
+	<effect id="336" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2716" startMsgName="STR_STATUS_EFFECT_SPICY_FISH_SOUP_ENCHANT" kind="cook"/>
+	<effect id="337" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2717" startMsgName="STR_STATUS_EFFECT_SPECIAL_TURTLE_SOUP_ENCHANT" kind="cook"/>
+	<effect id="338" icon="4765" duration="300" group="0" startMsg="2725" startMsgName="STR_STATUS_EFFECT_TW_GOOD_WATER" kind="cook"/>
+	<effect id="339" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2717" startMsgName="STR_STATUS_EFFECT_MUSHROOM_SOUP" kind="cook"/>
+	<effect id="340" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2790" startMsgName="STR_STATUS_EFFECT_GM_COOK" kind="cook"/>
+	<effect id="341" icon="5104" duration="3600" group="0" remainInArea="true" remainWhenDie="true" startMsg="2806" startMsgName="STR_STATUS_EFFECT_CHAR_CLONING" kind="magic doll"/>
+	<effect id="342" icon="484" duration="300" group="35" graphic="9275" startMsg="3154" startMsgName="RENEWAL_EMOTION_PRUDENCE_S" endMsg="2224" endMsgName="RENEWAL_EMOTION_PRUDENCE_E" kind="cook"/>
+	<effect id="343" icon="2563" duration="3600" group="0" startMsg="3052" endMsg="3053" startMsgName="STR_STATUS_EFFECT_NODEATHP_ONE" kind="cook"/>
+	<effect id="344" icon="1104" offIcon="5272" duration="960" group="0" graphic="8977" startMsg="971" startMsgName="RENEWAL_SHADOW_ARMOR_S" endMsg="2162" endMsgName="RENEWAL_SHADOW_ARMOR_E" kind="defense"/>
+	<effect id="345" icon="481" offIcon="5392" duration="-1" group="0" remainWhenDie="true" startMsg="849" startMsgName="NEW_HASTE_S" endMsg="185" endMsgName="NEW_HASTE_E" kind="cook" priority="5"/>
+	<effect id="346" icon="486" duration="-1" group="3" startMsg="851" startMsgName="NEW_EMOTION_BRAVERY_S" endMsg="185" endMsgName="NEW_EMOTION_BRAVERY_E" kind="cook" priority="6"/>
+	<effect id="347" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2836" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_0" kind="cook"/>
+	<effect id="348" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2837" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_1" kind="cook"/>
+	<effect id="349" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2838" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_2" kind="cook"/>
+	<effect id="350" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2839" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_3" kind="cook"/>
+	<effect id="351" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2840" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_4" kind="cook"/>
+	<effect id="352" icon="2708" duration="600" group="15" remainInArea="true" remainWhenDie="true" startMsg="2841" startMsgName="STR_STATUS_EFFECT_VALENTINE_2012_5" kind="cook"/>
+	<effect id="353" icon="2430" duration="1800" group="15" remainInArea="true" remainWhenDie="true" startMsg="2850" startMsgName="STR_STATUS_EFFECT_WHITEDAY_2012" kind="cook"/>
+	<effect id="354" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2881" startMsgName="STR_STATUS_EFFECT_WHITEDAY_2012_COCKTAIL_1" kind="cook"/>
+	<effect id="355" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2882" startMsgName="STR_STATUS_EFFECT_WHITEDAY_2012_COCKTAIL_2" kind="cook"/>
+	<effect id="356" icon="2564" offIcon="5324" duration="920" group="100" startMsg="2883" startMsgName="STR_STATUS_EFFECT_WHITEDAY_2012_COCKTAIL_3" kind="cook"/>
+	<effect id="357" icon="1862" duration="3600" group="24" startMsg="2889" startMsgName="STR_STATUS_EFFECT_TW_ETERNITY_GOLD" kind="cook"/>
+	<effect id="358" icon="5220" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="2932" startMsgName="STR_STATUS_EFFECT_TW_HEROMARK_BUFF" kind="cook"/>
+	<effect id="359" icon="5221" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3007" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF1" kind="cook"/>
+	<effect id="360" icon="5222" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3008" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF2" kind="cook"/>
+	<effect id="361" icon="5222" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3009" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF3" kind="cook"/>
+	<effect id="362" icon="5222" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3010" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF4" kind="cook"/>
+	<effect id="363" icon="5223" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3011" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF5" kind="cook"/>
+	<effect id="364" icon="5223" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3012" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF6" kind="cook"/>
+	<effect id="365" icon="5223" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3013" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF7" kind="cook"/>
+	<effect id="366" icon="5223" duration="-1" group="25" remainInArea="true" remainWhenDie="true" startMsg="3014" startMsgName="STR_STATUS_EFFECT_MENTORING_BUFF8" kind="cook"/>
+	<effect id="367" icon="4760" duration="62" group="0" startMsg="3030" startMsgName="STR_WEDDING_ANGER_BUFF" kind="neutrality"/>
+	<effect id="368" icon="2564" offIcon="5324" duration="920" group="100" startMsg="3042" startMsgName="STR_STATUS_EFFECT_RED_WINE" kind="cook"/>
+	<effect id="369" icon="5431" offIcon="5433" duration="1800" group="100" startMsg="3043" startMsgName="STR_STATUS_EFFECT_T_BONE_STEAK" kind="cook"/>
+	<effect id="370" icon="5431" offIcon="5433" duration="1800" group="100" startMsg="3136" startMsgName="STR_COOK_RNW_SALMON_STEAM" kind="cook"/>
+	<effect id="371" icon="5431" offIcon="5433" duration="1800" group="100" startMsg="3137" startMsgName="STR_COOK_RNW_CHICKEN_STEAK" kind="cook"/>
+	<effect id="372" icon="2565" offIcon="5325" duration="1800" group="101" startMsg="3138" startMsgName="STR_COOK_RNW_CHICKEN_SOUP" kind="cook"/>
+	<effect id="373" icon="2564" offIcon="5324" duration="920" group="100" startMsg="3139" startMsgName="STR_STATUS_EFFECT_PSY_SPICY_RAMEN" removeCancel="true" kind="cook"/>
+	<effect id="374" icon="2565" offIcon="5325" duration="920" group="101" startMsg="3140" startMsgName="STR_STATUS_EFFECT_PSY_SOFT_DRINK" removeCancel="true" kind="cook"/>
+	<effect id="375" icon="2564" offIcon="5324" duration="920" group="100" startMsg="1405" startMsgName="STR_STATUS_EFFECT_ROAST_TURTLE_DRAGON" kind="cook"/>
+	<effect id="376" icon="5231" duration="7200" group="0" remainInArea="true" remainWhenDie="true" startMsg="3197" startMsgName="STR_CANT_USE_EINSAHAD_EMERALD" kind="einhasad" priority="2"/>
+	<effect id="377" icon="1098" offIcon="5310" duration="32" group="0" graphic="9290" startMsg="3057" startMsgName="BLIND_HIDING_S" endMsg="2225" endMsgName="BLIND_HIDING_E" kind="defense"/>
+	<effect id="378" icon="893" duration="12" group="0" graphic="2251" startMsg="3058" startMsgName="EARTH_BIND_S" endMsg="2226" endMsgName="EARTH_BIND_E" kind="paralyse"/>
+	<effect id="379" icon="5265" offIcon="5266" duration="1800" group="4" graphic="747" startMsg="3064" startMsgName="ENCHANT_WEAPON_S" endMsg="2239" endMsgName="ENCHANT_WEAPON_E" kind="attack"/>
+	<effect id="380" icon="766" duration="64" group="0" graphic="2250" startMsg="3065" startMsgName="ENTANGLE_S" endMsg="2227" endMsgName="ENTANGLE_E" kind="slow"/>
+	<effect id="381" icon="722" duration="16" group="0" graphic="10708" startMsg="986" startMsgName="AREA_OF_SILENCE_S" endMsg="2185" endMsgName="AREA_OF_SILENCE_E" kind="curse"/>
+	<effect id="382" icon="5318" duration="16" group="0" graphic="10703" startMsg="3067" startMsgName="CURSE_BLIND_S" endMsg="2228" endMsgName="CURSE_BLIND_E" kind="curse"/>
+	<effect id="383" icon="751" duration="32" group="0" graphic="2175" startMsg="3062" startMsgName="DARKNESS_S" endMsg="2229" endMsgName="DARKNESS_E" kind="curse"/>
+	<effect id="384" icon="1116" duration="3" group="0" graphic="9218" startMsg="3063" startMsgName="DARK_BLIND_SHADOW_SLEEP_S" endMsg="2230" endMsgName="DARK_BLIND_SHADOW_SLEEP_E" kind="curse"/>
+	<effect id="385" icon="5269" duration="16" group="0" graphic="756" startMsg="3070" startMsgName="ICE_LANCE_S" endMsg="2231" endMsgName="ICE_LANCE_E" kind="paralyse"/>
+	<effect id="386" icon="5270" duration="7" group="27" graphic="10704" startMsg="3071" startMsgName="CURSE_PARALYZE_S" kind="paralyse"/>
+	<effect id="387" icon="1560" duration="32" group="0" startMsg="3072" graphic="9218" startMsgName="FOG_OF_SLEEPING_S" endMsg="2233" endMsgName="FOG_OF_SLEEPING_E" kind="paralyse"/>
+	<effect id="388" icon="3101" offIcon="5322" duration="20" group="23" graphic="6727" startMsg="3073" startMsgName="BUFF_CUBE_BALANCE" addChatMsg="false" kind="neutrality"/>
+	<effect id="389" icon="5311" offIcon="5312" duration="20" group="23" graphic="6708" startMsg="3074" startMsgName="BUFF_CUBE_IGNITION" addChatMsg="false" kind="defense"/>
+	<effect id="390" icon="5313" offIcon="5314" duration="20" group="23" graphic="6714" startMsg="3075" startMsgName="BUFF_CUBE_QUAKE" addChatMsg="false" kind="defense"/>
+	<effect id="391" icon="5319" duration="192" group="0" graphic="10705" startMsg="3061" startMsgName="CURSE_POISON" kind="curse"/>
+	<effect id="392" icon="1128" offIcon="5268" duration="192" group="0" graphic="2951" startMsg="1339" startMsgName="SHADOW_FANG_S" endMsg="2234" endMsgName="SHADOW_FANG_E" kind="attack"/>
+	<effect id="393" icon="748" offIcon="5315" duration="16" group="0" graphic="10701" startMsg="3059" startMsgName="COUNTER_MAGIC_S" endMsg="2235" endMsgName="COUNTER_MAGIC_E" removeCancel="true" kind="defense"/>
+	<effect id="394" icon="5316" offIcon="5317" duration="1800" group="0" graphic="748" startMsg="3060" startMsgName="BLESSED_ARMOR_S" endMsg="2240" endMsgName="BLESSED_ARMOR_E" addChatMsg="false" kind="defense"/>
+	<effect id="395" icon="5270" duration="4" graphic="2228" group="27" startMsg="2853" startMsgName="CURSE_PARALYZED_S" endMsg="2232" endMsgName="CURSE_PARALYZED_E" kind="paralyse"/>
+	<effect id="396" icon="5401" duration="-1" group="0" startMsg="3057" startMsgName="Invisiblity" kind="neutrality"/>
+	<effect id="397" icon="2564" duration="3600" group="100" startMsg="3108" startMsgName="STR_STATUS_EFFECT_TENCENT_EVENT_2012_1" kind="cook"/>
+	<effect id="398" icon="5330" duration="1800" group="26" remainInArea="true" remainWhenDie="true" startMsg="3111" startMsgName="STR_STATUS_EFFECT_TW_2012_DANO_EVENT1" kind="cook"/>
+	<effect id="399" icon="5328" duration="1800" group="26" remainInArea="true" remainWhenDie="true" startMsg="3112" startMsgName="STR_STATUS_EFFECT_TW_2012_DANO_EVENT2" kind="cook"/>
+	<effect id="400" icon="5334" duration="1800" group="26" remainInArea="true" remainWhenDie="true" startMsg="3113" startMsgName="STR_STATUS_EFFECT_TW_2012_DANO_EVENT3" kind="cook"/>
+	<effect id="401" icon="5327" duration="1800" group="26" remainInArea="true" remainWhenDie="true" startMsg="3114" startMsgName="STR_STATUS_EFFECT_TW_2012_DANO_EVENT4" kind="cook"/>
+	<effect id="402" icon="5329" duration="1800" group="26" remainInArea="true" remainWhenDie="true" startMsg="3115" startMsgName="STR_STATUS_EFFECT_TW_2012_DANO_EVENT5" kind="cook"/>
+	<effect id="403" icon="5270" duration="6" group="27" graphic="746" startMsg="3071" startMsgName="SUPER_PARALYZE" kind="paralyse"/>
+	<effect id="404" icon="893" duration="30" group="0" graphic="1054" startMsg="2236" startMsgName="STONE_BEAM_S" endMsg="2237" endMsgName="STONE_BEAM_E" kind="paralyse"/>
+	<effect id="405" icon="893" duration="30" group="0" graphic="1043" startMsg="2236" startMsgName="STONE_BLAST_S" endMsg="2237" endMsgName="STONE_BLAST_E" kind="paralyse"/>
+	<effect id="406" icon="893" duration="8" group="0" graphic="2251" startMsg="3058" startMsgName="MUMMY_EARTH_BIND_S" endMsg="2226" endMsgName="MUMMY_EARTH_BIND_E" kind="paralyse"/>
+	<effect id="407" icon="5402" duration="20" group="23" graphic="10762" startMsg="3073" startMsgName="STR_STATUS_EFFECT_CUBE_BALANCE" addChatMsg="false" kind="curse"/>
+	<effect id="408" icon="1560" duration="5" group="0" graphic="6534" startMsg="3072" startMsgName="COUGAR_SOLID_SLEEP_S" endMsg="2233" endMsgName="COUGAR_SOLID_SLEEP_E" kind="curse"/>
+	<effect id="409" icon="4473" duration="8" group="0" graphic="3400" startMsg="3141" startMsgName="DE_BUFF_MENTAL_BREAK_S" endMsg="2238" endMsgName="DE_BUFF_MENTAL_BREAK_S" kind="curse"/>
+	<effect id="410" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3157" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT1" kind="cook"/>
+	<effect id="411" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3158" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT2" kind="cook"/>
+	<effect id="412" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3159" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT3" kind="cook"/>
+	<effect id="413" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3160" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT4" kind="cook"/>
+	<effect id="414" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3161" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT5" kind="cook"/>
+	<effect id="415" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3162" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT6" kind="cook"/>
+	<effect id="416" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3163" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT7" kind="cook"/>
+	<effect id="417" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3164" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT8" kind="cook"/>
+	<effect id="418" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3165" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT9" kind="cook"/>
+	<effect id="419" icon="5441" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3166" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT10" kind="cook"/>
+	<effect id="420" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3167" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT11" kind="cook"/>
+	<effect id="421" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3168" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT12" kind="cook"/>
+	<effect id="422" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3169" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT13" kind="cook"/>
+	<effect id="423" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3170" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT14" kind="cook"/>
+	<effect id="424" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3171" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT15" kind="cook"/>
+	<effect id="425" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3172" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT16" kind="cook"/>
+	<effect id="426" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3173" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT17" kind="cook"/>
+	<effect id="427" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3174" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT18" kind="cook"/>
+	<effect id="428" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3175" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT19" kind="cook"/>
+	<effect id="429" icon="5443" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3176" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT20" kind="cook"/>
+	<effect id="430" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3177" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT21" kind="cook"/>
+	<effect id="431" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3178" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT22" kind="cook"/>
+	<effect id="432" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3179" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT23" kind="cook"/>
+	<effect id="433" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3180" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT24" kind="cook"/>
+	<effect id="434" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3181" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT25" kind="cook"/>
+	<effect id="435" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3182" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT26" kind="cook"/>
+	<effect id="436" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3183" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT27" kind="cook"/>
+	<effect id="437" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3184" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT28" kind="cook"/>
+	<effect id="438" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3185" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT29" kind="cook"/>
+	<effect id="439" icon="5445" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3186" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT30" kind="cook"/>
+	<effect id="440" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3187" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT31" kind="cook"/>
+	<effect id="441" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3188" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT32" kind="cook"/>
+	<effect id="442" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3189" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT33" kind="cook"/>
+	<effect id="443" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3190" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT34" kind="cook"/>
+	<effect id="444" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3191" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT35" kind="cook"/>
+	<effect id="445" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3192" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT36" kind="cook"/>
+	<effect id="446" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3193" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT37" kind="cook"/>
+	<effect id="447" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3194" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT38" kind="cook"/>
+	<effect id="448" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3195" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT39" kind="cook"/>
+	<effect id="449" icon="5447" duration="600" group="22" remainInArea="true" remainWhenDie="true" startMsg="3196" startMsgName="STR_STATUS_EFFECT_TW_ENCHANT_STONE_EVENT40" kind="cook"/>
+	<effect id="450" icon="4512" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3240" startMsgName="STR_STATUS_EFFECT_PLEDGE_BUFF" kind="neutrality"/>
+	<effect id="451" icon="754" duration="5" group="0" graphic="11030" startMsg="985" startMsgName="DECAY_POTION2_S" endMsg="2184" endMsgName="DECAY_POTION2_E" kind="curse"/>
+	<effect id="452" icon="1612" duration="-1" group="0" startMsg="3282" startMsgName="STR_STATUS_EFFECT_BEGINER_TREE" kind="defense"/>
+	<effect id="453" icon="2563" duration="1800" group="28" remainInArea="true" remainWhenDie="true" startMsg="3288" startMsgName="STR_STATUS_EFFECT_TW_2012_CHUSEOK_EVENT1" kind="cook"/>
+	<effect id="454" icon="2563" duration="1800" group="28" remainInArea="true" remainWhenDie="true" startMsg="3289" startMsgName="STR_STATUS_EFFECT_TW_2012_CHUSEOK_EVENT2" kind="cook"/>
+	<effect id="455" icon="2430" duration="900" group="15" remainInArea="true" remainWhenDie="true" startMsg="3290" graphic="11031" startMsgName="STR_STATUS_EFFECT_CH_2012_CHUSEOK_EVENT1" kind="cook"/>
+	<effect id="456" icon="2430" duration="900" group="15" remainInArea="true" remainWhenDie="true" startMsg="3291" graphic="11032" startMsgName="STR_STATUS_EFFECT_CH_2012_CHUSEOK_EVENT2" kind="cook"/>
+	<effect id="457" icon="1555" duration="1800" group="0" remainInArea="true" startMsg="3311" startMsgName="STR_STATUS_EFFECT_CH_LUCKY_BUFF" kind="cook"/>
+	<effect id="458" icon="4470" duration="-1" group="29" startMsg="3332" startMsgName="STR_STATUS_EFFECT_DANTES_BUFF" kind="attack"/>
+	<effect id="459" icon="3069" duration="3600" group="16" remainInArea="true" remainWhenDie="true" startMsg="1292" startMsgName="STR_STATUS_EFFECT_ENERGY_SOUP" kind="attack"/>
+	<effect id="460" icon="5596" offIcon="5597" duration="1800" group="30" graphic="4914" startMsg="3356" startMsgName="STR_2013_BLACK_SNAKE_BUFF_S" endMsg="3357" endMsgName="STR_2013_BLACK_SNAKE_BUFF_E" kind="defense"/>
+	<effect id="461" icon="1607" offIcon="5288" duration="1800" group="31" graphic="11300" startMsg="982" startMsgName="GM_BUFF_ADVANCE_SPIRIT_S" endMsg="2180" endMsgName="GM_BUFF_ADVANCE_SPIRIT_E" kind="defense"/>
+	<effect id="462" icon="1609" offIcon="5290" duration="1800" group="32" graphic="11301" startMsg="994" startMsgName="GM_BUFF_NATURES_TOUCH_S" endMsg="2182" endMsgName="GM_BUFF_NATURES_TOUCH_E" kind="defense"/>
+<effect id="463" icon="783" offIcon="5275" duration="1800" group="5" graphic="11302" startMsg="974" startMsgName="GM_BUFF_IRON_SKIN_S" endMsg="2165" endMsgName="GM_BUFF_IRON_SKIN_E" kind="defense"/>
+	<effect id="464" icon="2430" duration="1800" group="17" graphic="11305" startMsg="1691" startMsgName="GM_BUFF_MAGIC_SCROLL2" kind="cook"/>
+	<effect id="465" icon="1557" offIcon="5282" duration="1800" group="33" graphic="11303" startMsg="866" startMsgName="GM_BUFF_BRAVE_AURA_S" endMsg="825" endMsgName="GM_BUFF_BRAVE_AURA_E" kind="defense"/>
+<effect id="466" icon="880" offIcon="5280" duration="1800" group="2" graphic="11304" startMsg="864" startMsgName="GM_BUFF_GLOWING_AURA_S" endMsg="2172" endMsgName="GM_BUFF_GLOWING_AURA_E" kind="defense"/>
+	<effect id="467" icon="2565" offIcon="5325" duration="900" group="101" startMsg="3394" startMsgName="STR_STATUS_EFFECT_JP_EV_LOVE_CHOCOLATE" kind="cook"/>
+	<effect id="468" icon="2565" offIcon="5325" duration="900" group="101" startMsg="3395" startMsgName="STR_STATUS_EFFECT_TW_ADZUKI" kind="cook"/>
+	<effect id="469" icon="5648" duration="10800" group="0" startMsg="3400" remainWhenDie="true" startMsgName="STR_LEVEL_UP_CARE_BUFF" kind="einhasad" priority="2"/>
+	<effect id="470" icon="5646" offIcon="5647" duration="-1" group="0" startMsg="3398" startMsgName="STR_STATUS_EFFECT_CH_VIP_BUFF" kind="neutrality" priority="1"/>
+	<effect id="471" icon="1608" duration="600" group="101" remainInArea="true" remainWhenDie="true" startMsg="3403" startMsgName="STR_STATUS_EFFECT_TAIWAN_WHITEDAY_PERFUME" kind="cook"/>
+	<effect id="472" icon="892" duration="900" group="0" remainInArea="true" remainWhenDie="true" startMsg="3404" startMsgName="STR_STATUS_EFFECT_TAIWAN_WHITEDAY_FEATHER" kind="cook"/>
+	<effect id="473" icon="5672" duration="59760" group="12" remainInArea="true" remainWhenDie="true" startMsg="3418" startMsgName="STR_DRAGON_RAID_ACCOUNT_BUFF" kind="dragon"/>
+	<effect id="474" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2717" startMsgName="STR_STATUS_EFFECT_Beer_SOUP" removeCancel="true" kind="cook"/>
+	<effect id="475" icon="2564" offIcon="5324" duration="920" group="100" startMsg="3420" startMsgName="STR_STATUS_EFFECT_Chicken_COOK" removeCancel="true" kind="cook"/>
+	<effect id="476" icon="484" duration="1000" group="35" graphic="11628" startMsg="3154" startMsgName="RENEWAL_EMOTION_PRUDENCE_S" endMsg="2224" endMsgName="RENEWAL_EMOTION_PRUDENCE_E" kind="cook"/>
+	<effect id="477" icon="5735" offIcon="5736" duration="-1" group="0" startMsg="3430" endMsg="3451" startMsgName="STR_BRAVE_AVATAR_BUFF_TOOLTIP0" kind="neutrality"/>
+	<effect id="478" icon="5735" offIcon="5736" duration="-1" group="0" startMsg="3431" endMsg="3451" startMsgName="STR_BRAVE_AVATAR_BUFF_TOOLTIP1" kind="neutrality"/>
+	<effect id="479" icon="5735" offIcon="5736" duration="-1" group="0" startMsg="3432" endMsg="3451" startMsgName="STR_BRAVE_AVATAR_BUFF_TOOLTIP2" kind="neutrality"/>
+	<effect id="480" icon="5738" offIcon="5739" duration="1800" group="36" graphic="6528" startMsg="3433" startMsgName="STR_NEW_JOY_OF_PAIN" removeCancel="true" kind="defense"/>
+	<effect id="481" icon="5399" duration="300" group="38" graphic="11815" startMsg="3437" startMsgName="STR_PC_MANA_POTION_TOOLTIP" endMsg="2177" endMsgName="POTION_OF_MANA2_E" kind="cook" priority="8"  removeCancel="true"/>
+<effect id="482" icon="485"  offIcon="5271" duration="0" group="5" startMsg="3446" startMsgName="SHIELD_S" endMsg="2161" endMsgName="SHIELD_E" kind="defense"/>
+	<effect id="483" icon="1125" offIcon="5283" duration="192" group="37" graphic="11766" startMsg="3450" startMsgName="ENCANNY_DODGE_S" endMsg="830" endMsgName="ENCANNY_DODGE_E" kind="defense"/>
+	<effect id="484" icon="2563" duration="3600" group="0" graphic="11894" startMsg="3479" endMsg="3480" startMsgName="STR_STATUS_EFFECT_NODEATHP_ONE" kind="cook"/>
+	<effect id="485" icon="2430" duration="600" group="0" remainInArea="true" remainWhenDie="true" startMsg="3481" startMsgName="STR_STATUS_EFFECT_TW_SASIN_BUFF" kind="cook"/>
+	<effect id="486" icon="484" duration="1200" group="35" graphic="11897" startMsg="3154" startMsgName="RENEWAL_EMOTION_PRUDENCE_S" endMsg="2224" endMsgName="RENEWAL_EMOTION_PRUDENCE_E" kind="cook"/>
+	<effect id="487" icon="5806" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3502" startMsgName="STR_STATUS_EFFECT_PLEDGE_BUFF" kind="neutrality" priority="1"/>
+	<effect id="488" icon="2433" duration="-1" group="0" foodId="171" startMsg="3508" kind="cook"/>
+	<effect id="489" icon="824" duration="-1" group="0" startMsg="3529" startMsgName="STR_STATUS_EFFECT_SILIENCE_POISON_START" endMsg="3530" endMsgName="STR_STATUS_EFFECT_SILIENCE_POISON_END" kind="curse"/>
+	<effect id="490" icon="5805" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3533" startMsgName="STR_STATUS_EFFECT_PLEDGE_BUFF" kind="neutrality" priority="1"/>
+  <effect id="491" icon="2430" duration="1800" group="0" foodId="172" remainInArea="true" remainWhenDie="true" startMsg="3600" startMsgName="STR_STATUS_EFFECT_TW_2013_CHUSEOK_EVENT" kind="cook"/>	
+	<effect id="492" icon="2565" offIcon="5325" duration="920" group="101" startMsg="2717" foodId="173" startMsgName="STR_STATUS_EFFECT_fullmoon_SOUP" removeCancel="true" kind="cook"/>
+	<effect id="493" icon="2564" offIcon="5324" duration="920" group="100" startMsg="3420" foodId="174" startMsgName="STR_STATUS_EFFECT_fullmoon_COOK" removeCancel="true" kind="cook"/>
+	<effect id="494" icon="2430" duration="300" group="11" remainWhenDie="true" startMsg="3602" graphic="12036" startMsgName="STR_STATUS_EFFECT_CH_CHUSUCK_SCROLL1" kind="cook"/>
+	<effect id="495" icon="2430" duration="300" group="11" remainWhenDie="true" startMsg="3603" graphic="12037" startMsgName="STR_STATUS_EFFECT_CH_CHUSUCK_SCROLL2" kind="cook"/>
+	<effect id="496" icon="2430" duration="300" group="11" remainWhenDie="true" startMsg="3604" graphic="12038" startMsgName="STR_STATUS_EFFECT_CH_CHUSUCK_SCROLL3" kind="cook"/>
+	<effect id="497" icon="5806" duration="-1" group="0" startMsg="3607" startMsgName="STR_SIEGE_ZONE_RED_KNIGHTAGE_BUFF" kind="attack"/>
+	<effect id="498" icon="5894" offIcon="5895" duration="300" group="4" graphic="20" startMsg="3461" startMsgName="HOLY_WEAPON_S" endMsg="3461" endMsgName="HOLY_WEAPON_E" kind="attack"/>
+	<effect id="499" icon="4768" offIcon="4768" duration="600" group="0" graphic="21" startMsg="3460" startMsgName="STR_STATUS_EFFECT_DRAGON_GEM" kind="attack" priority="2"/>
+	<effect id="500" icon="3069" duration="1500" group="16" graphic="12213" remainWhenDie="true" startMsg="2116" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_40" kind="einhasad"/>
+  <effect id="501" icon="2430" duration="1200" group="0" remainWhenDie="true" foodId="175" startMsg="3692" kind="cook"/>
+	<effect id="502" icon="5231" offIcon="5231" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3406" startMsgName="TIMED_EXP_RATE" kind="neutrality"/>
+	<effect id="503" icon="8337" offIcon="8337" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3407" startMsgName="TIMED_ADENA_RATE" kind="neutrality"/>
+	<effect id="504" icon="8336" offIcon="8336" duration="-1" group="0" remainInArea="true" remainWhenDie="true" startMsg="3408" startMsgName="TIMED_DROP_RATE" kind="neutrality"/>
+	<effect id="505" icon="5646" offIcon="5647" duration="-1" group="0" remainWhenDie="true" startMsg="3700" startMsgName="STR_STATUS_EFFECT_VIP_Z_BUFF" kind="neutrality" priority="1"/>
+	<effect id="506" icon="2430" duration="1800" group="39" graphic="10" remainWhenDie="true" startMsg="3701" startMsgName="STR_STATUS_EFFECT_BM_DEATH_SCROLL" kind="cook"/>
+	<effect id="507" icon="5231" duration="1800" group="40" remainInArea="true" remainWhenDie="true" startMsg="3717" startMsgName="STR_CANT_USE_EINSAHAD_EMERALD2" kind="einhasad" priority="2"/>
+	<effect id="508" icon="1477" duration="0" group="41" graphic="12230" remainInArea="true" startMsg="3732" startMsgName="STR_LIGHTNING_DEATHKNIGHT_POLYMORPH_TOOLTIP" kind="cook" priority="4"/>
+	<effect id="509" icon="1477" duration="0" group="41" graphic="12231" remainInArea="true" startMsg="3732" startMsgName="STR_GOLDEN_DEATHKNIGHT_POLYMORPH_TOOLTIP" kind="cook" priority="4"/>
+	<effect id="510" icon="1477" duration="0" group="41" graphic="12232" remainInArea="true" startMsg="3732" startMsgName="STR_FIRE_DEATHKNIGHT_POLYMORPH_TOOLTIP" kind="cook" priority="4"/>
+	<effect id="511" icon="1477" duration="0" group="41" graphic="12229" remainInArea="true" startMsg="3732" startMsgName="STR_DARK_DEATHKNIGHT_POLYMORPH_TOOLTIP" kind="cook" priority="4"/>
+	<effect id="512" icon="8341" offIcon="8341" duration="1800" group="0" graphic="512" remainInArea="true" remainWhenDie="true" startMsg="1143" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="cook"/>
+	<effect id="513" icon="8342" offIcon="8342" duration="1800" group="0" graphic="513" remainInArea="true" remainWhenDie="true" startMsg="1143" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="cook"/>
+	<effect id="514" icon="8343" offIcon="8343" duration="1800" group="0" graphic="514" remainInArea="true" remainWhenDie="true" startMsg="1143" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="cook"/>
+	<effect id="515" icon="8344" offIcon="8344" duration="1800" group="0" graphic="515" remainInArea="true" remainWhenDie="true" startMsg="1143" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="cook"/>
+	<effect id="516" icon="2566" offIcon="2566" duration="1800" group="0" graphic="516" remainInArea="true" remainWhenDie="true" startMsg="3459" startMsgName="STR_STATUS_EFFECT_MAGIC_DOLL" kind="cook"/>
+	<effect id="517" icon="3069" offIcon="5323" duration="1800" group="0" remainInArea="true" remainWhenDie="true" startMsg="2116" startMsgName="STR_STATUS_EFFECT_BM_EXP_BOOSTER_40" kind="cook"/>
+	<effect id="518" icon="774" offIcon="5249" duration="0" group="0" graphic="518" remainInArea="true" startMsg="862" startMsgName="FIRE_WEAPON_S_INDEPENDENT" endMsg="723" endMsgName="FIRE_WEAPON_E" kind="cook"/>
+	<effect id="519" icon="855" offIcon="5252" duration="0" group="0" graphic="519" remainInArea="true" startMsg="863" startMsgName="WIND_SHOT_S_INDEPENDENT" endMsg="724" endMsgName="WIND_SHOT_E" kind="cook"/>
+	<effect id="520" icon="735" offIcon="5250" duration="960" group="0" graphic="520" remainInArea="true" startMsg="980" startMsgName="BREATH_OF_FIRE_S_INDEPENDENT" endMsg="2168" endMsgName="BREATH_OF_FIRE_E" kind="cook"/>
+	<effect id="521" icon="771" offIcon="5253" duration="960" group="0" graphic="521" remainInArea="true" startMsg="962" startMsgName="EYE_OF_STORM_S_INDEPENDENT" endMsg="2170" endMsgName="EYE_OF_STORM_E" kind="cook"/>
+	<effect id="522" icon="738" offIcon="5251" duration="960" group="0" graphic="522" remainInArea="true" startMsg="981" startMsgName="BURNING_WEAPON_S_INDEPENDENT" endMsg="2169" endMsgName="BURNING_WEAPON_E" kind="cook"/>
+	<effect id="523" icon="827" offIcon="5254" duration="960" group="0" graphic="523" remainInArea="true" startMsg="963" startMsgName="STORM_SHOT_S_INDEPENDENT" endMsg="2171" endMsgName="STORM_SHOT_E" kind="cook"/>
+	<effect id="524" icon="485" offIcon="5271" duration="0" group="0" graphic="524" remainInArea="true" startMsg="853" startMsgName="SHIELD_S_INDEPENDENT" endMsg="2161" endMsgName="SHIELD_E" kind="cook"/>
+	<effect id="525" icon="1104" offIcon="5272" duration="960" group="0" graphic="525" remainInArea="true" startMsg="971" startMsgName="SHADOW_ARMOR_S_INDEPENDENT" endMsg="2162" endMsgName="SHADOW_ARMOR_E" kind="cook"/>
+	<effect id="526" icon="763" offIcon="5273" duration="0" group="0" graphic="526" remainInArea="true" startMsg="972" startMsgName="EARTH_SKIN_S_INDEPENDENT" endMsg="2163" endMsgName="EARTH_SKIN_E" kind="cook"/>
+	<effect id="527" icon="725" offIcon="5274" duration="0" group="0" graphic="527" remainInArea="true" startMsg="973" startMsgName="BLESS_OF_EARTH_S_INDEPENDENT" endMsg="2164" endMsgName="BLESS_OF_EARTH_E" kind="cook"/>
+	<effect id="528" icon="783" offIcon="5275" duration="0" group="0" graphic="528" remainInArea="true" startMsg="974" startMsgName="IRON_SKIN_S_INDEPENDENT" endMsg="2165" endMsgName="IRON_SKIN_E" kind="cook"/>
+	<effect id="529" icon="483" offIcon="5247" duration="0" group="0" graphic="529" remainInArea="true" startMsg="855" startMsgName="ENCHANT_DEXTERITY_S_INDEPENDENT" kind="cook"/>
+	<effect id="530" icon="1559" offIcon="5259" duration="960" group="0" graphic="530" remainInArea="true" startMsg="969" startMsgName="DRESS_DEXTERITY_S_INDEPENDENT" addChatMsg="false" kind="cook"/>
+	<effect id="531" icon="482" offIcon="5246" duration="0" group="0" graphic="531" remainInArea="true" startMsg="854" startMsgName="ENCHANT_MIGHTY_S_INDEPENDENT" kind="cook"/>
+	<effect id="532" icon="1558" offIcon="5258" duration="960" group="0" graphic="532" remainInArea="true" startMsg="968" startMsgName="DRESS_MIGHTY_S_INDEPENDENT" addChatMsg="false" kind="cook"/>
+	<effect id="533" icon="880" offIcon="5280" duration="0" group="0" graphic="533" remainInArea="true" startMsg="864" startMsgName="GLOWING_AURA_S_INDEPENDENT" endMsg="2172" endMsgName="GLOWING_AURA_E" kind="cook"/>
+	<effect id="534" icon="1567" offIcon="5281" duration="0" group="0" graphic="534" remainInArea="true" startMsg="865" startMsgName="SHINING_AURA_S_INDEPENDENT" endMsg="2173" endMsgName="SHINING_AURA_E" kind="cook"/>
+	<effect id="535" icon="777" offIcon="5248" duration="1200" group="0" graphic="535" remainInArea="true" startMsg="964" startMsgName="HOLY_WEAPON_S_INDEPENDENT" endMsg="718" endMsgName="HOLY_WEAPON_E" kind="cook"/>
+	<effect id="536" icon="728" offIcon="5267" duration="1200" group="0" graphic="536" remainInArea="true" startMsg="857" startMsgName="BLESS_WEAPON_S_INDEPENDENT" endMsg="2167" endMsgName="BLESS_WEAPON_E" kind="cook"/>
+	<effect id="537" icon="5265" offIcon="5266" duration="1800" group="0" graphic="537" remainInArea="true" startMsg="3064" startMsgName="ENCHANT_WEAPON_S_INDEPENDENT" endMsg="2239" endMsgName="ENCHANT_WEAPON_E" kind="cook"/>
+</effectlist>

@@ -1,0 +1,50 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weight-material\\build\\candidate-weight-material.jar",
+    "sha256": "f2217019c4cf2ae19cddc590713ac13d7544a515b320b6b1f224eda104a9f36b"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "player skill44 probability and sleep66/212 identity; pending final combined qualification",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\candidate-cancellation-probability.jar",
+    "sha256": "2ae86db74d2ba4cfbc847a97b099331ec94252ca7d9c5763351ea67f09e328d9"
+  },
+  "exact_five_method_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeCancellationMaterialAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCancellationProbability.class",
+    "local/lito381/server/NativeCancellationSleep$Origin.class",
+    "local/lito381/server/NativeCancellationSleep.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\build.py",
+      "sha256": "da5ce267292bc23400bfaea659112249fac91dfbde5dd4b20ac0dc0f1fac8771"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\CancellationProbabilityMethods.java",
+      "sha256": "cb56479341c9f96ee6cff88faf76c11d3db54dd226b90d73a5bb580daea6b952"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\NativeCancellationMaterialAction.java",
+      "sha256": "5a96248c7c1d4796787d0bed5a009fb4b8d41b1fb9a4d4cfd6690cc93bb1d475"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\NativeCancellationProbability.java",
+      "sha256": "6ccc7593214cf374a8ba628d1eb3e85b7b531579f5991285ba6a4acb933364f1"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\NativeCancellationSleep.java",
+      "sha256": "68db09747da2c5072eca8ce7e7d40b379140ee8267607b5a9c2141e537ae99ed"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

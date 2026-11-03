@@ -1,0 +1,109 @@
+364990: sub_4AEE70 proc near                    ; CODE XREF: sub_4B2970+165↓p
+364991: 
+364992: var_8= dword ptr -8
+364993: var_1= byte ptr -1
+364994: 
+364995: push    ebp
+364996: mov     ebp, esp
+364997: sub     esp, 8
+364998: push    ebx
+364999: lea     eax, [ebp+var_8]
+365000: push    edi
+365001: push    eax
+365002: inc     ecx
+365003: push    offset dword_5025A8
+365004: push    ecx
+365005: call    sub_4A2A50
+365006: 
+365007: mov     ebx, eax
+365008: mov     al, byte ptr [ebp+var_8]
+365009: add     esp, 0Ch
+365010: test    al, al
+365011: jz      loc_4AEF1C
+365012: 
+365013: xor     edi, edi
+365014: test    al, al
+365015: jbe     short loc_4AEF1C
+365016: 
+365017: push    esi
+365018: 
+365019: 
+365020: loc_4AEE9F:                             ; CODE XREF: sub_4AEE70+A9↓j
+365021: lea     ecx, [ebp+var_1]
+365022: push    ecx
+365023: push    offset dword_5025A8
+365024: push    ebx
+365025: call    sub_4A2A50
+365026: 
+365027: add     esp, 0Ch
+365028: mov     ebx, eax
+365029: xor     esi, esi
+365030: 
+365031: 
+365032: loc_4AEEB5:                             ; CODE XREF: sub_4AEE70+9B↓j
+365033: test    [ebp+var_1], 1
+365034: jz      short loc_4AEEFF
+365035: 
+365036: mov     edx, offset word_508648
+365037: lea     eax, [esi+edi*8]
+365038: test    edx, edx
+365039: jz      short loc_4AEEEC
+365040: 
+365041: mov     ecx, dword_647E24
+365042: test    ecx, ecx
+365043: jz      short loc_4AEEEC
+365044: 
+365045: cmp     eax, dword_647E20
+365046: jge     short loc_4AEEEC
+365047: 
+365048: mov     ecx, [ecx+eax*4]
+365049: test    ecx, ecx
+365050: jz      short loc_4AEEEC
+365051: 
+365052: push    ecx
+365053: mov     cx, word_508648[eax*2]
+365054: push    ecx
+365055: jmp     short loc_4AEEF3
+365056: 
+365057: ; ---------------------------------------------------------------------------
+365058: 
+365059: loc_4AEEEC:                             ; CODE XREF: sub_4AEE70+55↑j
+365060:                                         ; sub_4AEE70+5F↑j
+365061:                                         ; sub_4AEE70+67↑j
+365062:                                         ; sub_4AEE70+6E↑j
+365063: push    offset aUnknownSpell            ; "unknown spell"
+365064: push    5Bh ; '['
+365065: 
+365066: 
+365067: loc_4AEEF3:                             ; CODE XREF: sub_4AEE70+7A↑j
+365068: mov     ecx, dword_834888
+365069: push    eax
+365070: call    sub_4C9220
+365071: 
+365072: 
+365073: loc_4AEEFF:                             ; CODE XREF: sub_4AEE70+49↑j
+365074: mov     dl, [ebp+var_1]
+365075: sar     dl, 1
+365076: inc     esi
+365077: mov     [ebp+var_1], dl
+365078: cmp     esi, 8
+365079: jl      short loc_4AEEB5
+365080: 
+365081: mov     edx, [ebp+var_8]
+365082: inc     edi
+365083: and     edx, 0FFh
+365084: cmp     edi, edx
+365085: jl      short loc_4AEE9F
+365086: 
+365087: pop     esi
+365088: 
+365089: 
+365090: loc_4AEF1C:                             ; CODE XREF: sub_4AEE70+22↑j
+365091:                                         ; sub_4AEE70+2C↑j
+365092: pop     edi
+365093: pop     ebx
+365094: mov     esp, ebp
+365095: pop     ebp
+365096: retn
+365097: 
+365098: sub_4AEE70 endp

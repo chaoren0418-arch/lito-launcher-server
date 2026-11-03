@@ -1,0 +1,3218 @@
+{
+  "TOTAL": [
+    179341943325,
+    133333
+  ],
+  "LiTo381-Compat": [
+    13750405,
+    414
+  ],
+  "LiTo381-Compat/build": [
+    408647,
+    3
+  ],
+  "LiTo381-Compat/publish": [
+    204734,
+    5
+  ],
+  "LiTo381-Compat/runtime": [
+    2749239,
+    26
+  ],
+  "LiTo381-Compat/runtime/lobby-repair-20261011": [
+    2749239,
+    26
+  ],
+  "LiTo381-Compat/target": [
+    10231534,
+    373
+  ],
+  "LiTo381-Compat/target/canonical-client-path-fallback-20261008": [
+    2127223,
+    120
+  ],
+  "LiTo381-Compat/target/canonical-client-point-doubleclick-20261008": [
+    1988277,
+    49
+  ],
+  "LiTo381-Compat/target/canonical-drag-rebase-20261007": [
+    2071474,
+    39
+  ],
+  "LiTo381-Compat/target/canonical-map-geometry-failure-20261008": [
+    1789500,
+    46
+  ],
+  "LiTo381-Compat/target/canonical-windowed-display-choices-20261008": [
+    2255060,
+    119
+  ],
+  "LiTo381-Launcher": [
+    11559344002,
+    30749
+  ],
+  "LiTo381-Launcher/backups": [
+    1918730966,
+    365
+  ],
+  "LiTo381-Launcher/backups/0.6.26-before-shared-resources-20261011": [
+    138454683,
+    345
+  ],
+  "LiTo381-Launcher/backups/baseline-0.6.35-20261012": [
+    1780276283,
+    20
+  ],
+  "LiTo381-Launcher/runtime": [
+    9636792270,
+    30282
+  ],
+  "LiTo381-Launcher/runtime/action-return-repair-20261011": [
+    1705592,
+    51
+  ],
+  "LiTo381-Launcher/runtime/channel-hang-20261011": [
+    2142299,
+    52
+  ],
+  "LiTo381-Launcher/runtime/character-return-20261011": [
+    1194337,
+    24
+  ],
+  "LiTo381-Launcher/runtime/development-startup-repair-20261011": [
+    7383003251,
+    15317
+  ],
+  "LiTo381-Launcher/runtime/exit-hitbox-20261011": [
+    911260,
+    23
+  ],
+  "LiTo381-Launcher/runtime/formal-standard-20261011": [
+    385203885,
+    995
+  ],
+  "LiTo381-Launcher/runtime/four-issue-repair-20261011": [
+    1853953,
+    34
+  ],
+  "LiTo381-Launcher/runtime/heal-target-crash-20261011": [
+    3049101,
+    24
+  ],
+  "LiTo381-Launcher/runtime/input-scale-20261011": [
+    1078337,
+    24
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-authority-routing-20261008": [
+    231160,
+    19
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-diagnostic-source7-20261008": [
+    4678569,
+    289
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-diagnostic-source8-20261009": [
+    718702,
+    41
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-diagnostic-source8a-20261009": [
+    3930747,
+    176
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-fixed-producer-integration-20261008": [
+    3420296,
+    130
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-isolated-start-20261008": [
+    5092566,
+    357
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-isolated-start-20261008-fresh2": [
+    3308873,
+    124
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-lifetime-root-namespace-20261008": [
+    232855,
+    20
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-phase-context-admission-fix-20261009": [
+    30009867,
+    80
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-precheck-fresh5-20261008": [
+    3529146,
+    143
+  ],
+  "LiTo381-Launcher/runtime/launcher-automated-source-binary-pin-fix-20261008": [
+    998430,
+    50
+  ],
+  "LiTo381-Launcher/runtime/launcher-bootstrap-current-namespace-fix-20261009": [
+    1497061,
+    37
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-binder-schema-and-start-seal-20261008": [
+    3608224,
+    164
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-fresh-console-seal-20261008-r2": [
+    208153,
+    21
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-fresh-console-seal-20261008-r3": [
+    182359,
+    15
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-fresh-console-seal-20261008-r4": [
+    250333,
+    25
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-fresh-console-seal-20261008-r5": [
+    223440,
+    15
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-native-inventory-predicate-fix-20261008": [
+    4067582,
+    149
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-provider-finalization-and-activation-20261008": [
+    6312948,
+    282
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-successor-live-bindings-20261008": [
+    7445070,
+    283
+  ],
+  "LiTo381-Launcher/runtime/launcher-current-wrapper-cleanup-evidence-resolution-20261008": [
+    1711976,
+    89
+  ],
+  "LiTo381-Launcher/runtime/launcher-default-exe-startup-adoption-20261010": [
+    57548108,
+    159
+  ],
+  "LiTo381-Launcher/runtime/launcher-exe-memory-server-control-20261010": [
+    31127811,
+    152
+  ],
+  "LiTo381-Launcher/runtime/launcher-exe-ready-fresh-binding-20261008": [
+    3510568,
+    174
+  ],
+  "LiTo381-Launcher/runtime/launcher-exe-ready-fresh-binding2-20261008": [
+    3209742,
+    120
+  ],
+  "LiTo381-Launcher/runtime/launcher-exe-startup-recovery-20261008": [
+    4155574,
+    59
+  ],
+  "LiTo381-Launcher/runtime/launcher-gui-native-successor-20261008": [
+    11133391,
+    424
+  ],
+  "LiTo381-Launcher/runtime/launcher-interactive-menu-regression-fix-20261010": [
+    28745935,
+    139
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-admission-claim-lifecycle-implementation-20261010": [
+    86408378,
+    227
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-admission-reserved-policy-addendum-20261010": [
+    15342,
+    5
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-bootstrap-contract-fix-20261010": [
+    22295305,
+    126
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-channel-contract-and-fresh-run-anchor-build-20261010": [
+    34018168,
+    128
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-cleanup-contract-selector-adoption-20261010": [
+    33598933,
+    159
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-cleanup-retention-correction-and-anchor-build-20261010": [
+    93537705,
+    241
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-current-blueprint-consumer-implementation-20261010": [
+    61387069,
+    196
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-current-plan-selector-and-anchor-build-20261010": [
+    51158950,
+    142
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-final-startup-anchor-build-20261010": [
+    33330849,
+    136
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-original-claim-basename-anchor-build-20261010": [
+    33713909,
+    130
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-original-resident-entry-20261010": [
+    101725127,
+    270
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-positional-identity-and-fresh-run-anchor-build-20261010": [
+    33950695,
+    130
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-publication-read-and-fresh-run-anchor-build-20261010": [
+    33943314,
+    130
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-retained-cleanup-retry-20261010": [
+    41082062,
+    93
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-sealed-predecessor-and-fresh-run-anchor-build-20261010": [
+    33992897,
+    129
+  ],
+  "LiTo381-Launcher/runtime/launcher-memory-session-shape-and-fresh-run-anchor-build-20261010": [
+    33929455,
+    129
+  ],
+  "LiTo381-Launcher/runtime/launcher-native-start-failure-preflight-20261010": [
+    48990875,
+    207
+  ],
+  "LiTo381-Launcher/runtime/launcher-original-setup-abort-wait-fix-20261010": [
+    2170326,
+    73
+  ],
+  "LiTo381-Launcher/runtime/launcher-provider-precheck-bound-state-fix-20261008": [
+    3582305,
+    143
+  ],
+  "LiTo381-Launcher/runtime/launcher-relocation-compiled-entry-successor-20261008": [
+    3333267,
+    100
+  ],
+  "LiTo381-Launcher/runtime/launcher-relocation-helper-refusal-translation-20261008": [
+    3307214,
+    104
+  ],
+  "LiTo381-Launcher/runtime/launcher-resident-automated-admission-fix-20261008": [
+    3715970,
+    173
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source10-20261009": [
+    5468048,
+    201
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source11-20261009": [
+    7470538,
+    767
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source12-20261009": [
+    5957820,
+    218
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source13-20261009": [
+    5220111,
+    162
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source14-20261009": [
+    6082179,
+    188
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source15-20261009": [
+    7074795,
+    251
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source16-20261009": [
+    10108424,
+    341
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source17-20261009": [
+    10000691,
+    362
+  ],
+  "LiTo381-Launcher/runtime/launcher-server-owned-config-source9-20261009": [
+    2174442,
+    140
+  ],
+  "LiTo381-Launcher/runtime/launcher-supplier-controller-diagnostics-20261008": [
+    253664,
+    38
+  ],
+  "LiTo381-Launcher/runtime/launcher-supplier-diagnostic-argv-fix-20261009": [
+    4379494,
+    477
+  ],
+  "LiTo381-Launcher/runtime/launcher-supplier-diagnostic-integration-20261008": [
+    1767041,
+    231
+  ],
+  "LiTo381-Launcher/runtime/launcher-T89-frozen-resource-path-adoption-fix-20261009": [
+    3555788,
+    144
+  ],
+  "LiTo381-Launcher/runtime/launcher-T89-original-integrity-hash-route-20261009": [
+    2450916,
+    107
+  ],
+  "LiTo381-Launcher/runtime/launcher-T89-Sprite01-current-test-scope-cause-20261010": [
+    1573402,
+    29
+  ],
+  "LiTo381-Launcher/runtime/launcher-utf8-helper-protocol-fix-20261010": [
+    48860567,
+    163
+  ],
+  "LiTo381-Launcher/runtime/live-flow-repair-20261011": [
+    1646586,
+    72
+  ],
+  "LiTo381-Launcher/runtime/lobby-controls-repair-20261011": [
+    1962563,
+    41
+  ],
+  "LiTo381-Launcher/runtime/lobby-crash-20261011": [
+    43837318,
+    121
+  ],
+  "LiTo381-Launcher/runtime/lobby-repair-20261011": [
+    2412235,
+    68
+  ],
+  "LiTo381-Launcher/runtime/migration-20261003": [
+    11195255,
+    106
+  ],
+  "LiTo381-Launcher/runtime/native-window-repair-20261011": [
+    9830,
+    7
+  ],
+  "LiTo381-Launcher/runtime/packet-ui-repair-20261011": [
+    26073877,
+    154
+  ],
+  "LiTo381-Launcher/runtime/projectile-shop-exit-20261011": [
+    11066,
+    3
+  ],
+  "LiTo381-Launcher/runtime/restore-baseline-0.6.2-20261011": [
+    7235643,
+    19
+  ],
+  "LiTo381-Launcher/runtime/room-exit-dispatch-20261011": [
+    1291226,
+    27
+  ],
+  "LiTo381-Launcher/runtime/runtime-prefix-input-pin-repair-20261008": [
+    1155595,
+    31
+  ],
+  "LiTo381-Launcher/runtime/shared-resource-audit-20261011": [
+    5231,
+    1
+  ],
+  "LiTo381-Launcher/runtime/shared-resource-migration-20261011": [
+    614404831,
+    2166
+  ],
+  "LiTo381-Launcher/runtime/source-return-repair-20261011": [
+    3485101,
+    66
+  ],
+  "LiTo381-Launcher/runtime/target-ui-repair-20261011": [
+    1972566,
+    42
+  ],
+  "LiTo381-Launcher/runtime/typing-only-candidate-20261011": [
+    1162984,
+    17
+  ],
+  "LiTo381-Launcher/runtime/universal-timer-20261011": [
+    2045807,
+    60
+  ],
+  "LiTo381-Launcher/server-profiles": [
+    511,
+    1
+  ],
+  "LiTo381-Launcher/src": [
+    3488347,
+    97
+  ],
+  "LiTo381-Launcher/src/bin": [
+    1697221,
+    21
+  ],
+  "LiTo381-Launcher/src/obj": [
+    1487333,
+    54
+  ],
+  "工作流採證": [
+    41698,
+    11
+  ],
+  "工作流採證/launcher-human-native-receive-preflight-20261008": [
+    26115,
+    9
+  ],
+  "歷史暫存證據": [
+    31239440501,
+    916
+  ],
+  "歷史暫存證據/briel-lito-guide": [
+    418467,
+    4
+  ],
+  "歷史暫存證據/char-auto-activation-final": [
+    975270,
+    5
+  ],
+  "歷史暫存證據/char-auto-activation-final-after3": [
+    146867,
+    2
+  ],
+  "歷史暫存證據/char-auto-click-proof": [
+    467331,
+    3
+  ],
+  "歷史暫存證據/char-final-refresh-live": [
+    975259,
+    5
+  ],
+  "歷史暫存證據/char-initial-current": [
+    975244,
+    5
+  ],
+  "歷史暫存證據/char-reselect-live": [
+    975238,
+    5
+  ],
+  "歷史暫存證據/char-stable-25s": [
+    146766,
+    2
+  ],
+  "歷史暫存證據/char-stable-no-c8-30s": [
+    146552,
+    2
+  ],
+  "歷史暫存證據/char-stale-guard-final": [
+    975252,
+    5
+  ],
+  "歷史暫存證據/char-stale-guard-final-after6": [
+    120705,
+    2
+  ],
+  "歷史暫存證據/final-character-confirm-lobby": [
+    386378,
+    3
+  ],
+  "歷史暫存證據/final-character-row2-local": [
+    299609,
+    3
+  ],
+  "歷史暫存證據/final-character-row2-stable": [
+    147381,
+    2
+  ],
+  "歷史暫存證據/final-e2e-character-later": [
+    320606,
+    2
+  ],
+  "歷史暫存證據/final-e2e-character-ready": [
+    120701,
+    2
+  ],
+  "歷史暫存證據/final-e2e-confirm": [
+    293394,
+    3
+  ],
+  "歷史暫存證據/final-e2e-login": [
+    975226,
+    5
+  ],
+  "歷史暫存證據/final-e2e-manual-row1": [
+    293603,
+    3
+  ],
+  "歷史暫存證據/final-e2e-row2": [
+    293097,
+    3
+  ],
+  "歷史暫存證據/final-e2e-row2-stable": [
+    146605,
+    2
+  ],
+  "歷史暫存證據/final-live-characters-after-10s": [
+    291009,
+    2
+  ],
+  "歷史暫存證據/final-live-current": [
+    290996,
+    2
+  ],
+  "歷史暫存證據/final-live-lobby-stable": [
+    239033,
+    2
+  ],
+  "歷史暫存證據/final-live-login-characters": [
+    976202,
+    5
+  ],
+  "歷史暫存證據/final-live-row2-confirm": [
+    824514,
+    5
+  ],
+  "歷史暫存證據/final-room-battle-entered": [
+    456044,
+    2
+  ],
+  "歷史暫存證據/final-room-countdown-1": [
+    238172,
+    2
+  ],
+  "歷史暫存證據/final-room-countdown-2": [
+    238793,
+    2
+  ],
+  "歷史暫存證據/final-room-countdown-3": [
+    483781,
+    3
+  ],
+  "歷史暫存證據/final-room-create-3336": [
+    239987,
+    2
+  ],
+  "歷史暫存證據/final-room-create-3336b": [
+    244882,
+    2
+  ],
+  "歷史暫存證據/final-room-create-dialog": [
+    703970,
+    4
+  ],
+  "歷史暫存證據/final-room-create-open2": [
+    443622,
+    3
+  ],
+  "歷史暫存證據/final-room-create-open3": [
+    464707,
+    3
+  ],
+  "歷史暫存證據/final-room-create-submit": [
+    443627,
+    3
+  ],
+  "歷史暫存證據/final-room-exit": [
+    484176,
+    3
+  ],
+  "歷史暫存證據/final-room-join": [
+    718121,
+    4
+  ],
+  "歷史暫存證據/final-room-start-create-open": [
+    463192,
+    3
+  ],
+  "歷史暫存證據/final-room-start-ready": [
+    244881,
+    2
+  ],
+  "歷史暫存證據/final-stable-e2e-char": [
+    120697,
+    2
+  ],
+  "歷史暫存證據/final-stable-e2e-char-after10": [
+    146231,
+    2
+  ],
+  "歷史暫存證據/final-stable-e2e-login": [
+    975254,
+    5
+  ],
+  "歷史暫存證據/final-timer-fix-login": [
+    1026959,
+    5
+  ],
+  "歷史暫存證據/final-timer-fix-stable-30s": [
+    146800,
+    2
+  ],
+  "歷史暫存證據/fix-complete-directory-live": [
+    975274,
+    5
+  ],
+  "歷史暫存證據/fix-list-current": [
+    375279,
+    2
+  ],
+  "歷史暫存證據/fix-list-start": [
+    374708,
+    1
+  ],
+  "歷史暫存證據/fix-no-auto-c8-after-25s": [
+    120701,
+    2
+  ],
+  "歷史暫存證據/fix-no-auto-c8-live": [
+    975241,
+    5
+  ],
+  "歷史暫存證據/fix-no-auto-row2-live": [
+    269084,
+    3
+  ],
+  "歷史暫存證據/fix-row2-live": [
+    446261,
+    3
+  ],
+  "歷史暫存證據/fix-row3-live": [
+    428145,
+    3
+  ],
+  "歷史暫存證據/fix-stable-character-after-15s": [
+    146649,
+    2
+  ],
+  "歷史暫存證據/fix-stable-character-live": [
+    975266,
+    5
+  ],
+  "歷史暫存證據/img-400-base": [
+    4738,
+    5
+  ],
+  "歷史暫存證據/img-ltsurf-7400": [
+    19687,
+    5
+  ],
+  "歷史暫存證據/img-ltsurf-ui": [
+    69845,
+    19
+  ],
+  "歷史暫存證據/img-test": [
+    11225,
+    2
+  ],
+  "歷史暫存證據/img-test2": [
+    11225,
+    2
+  ],
+  "歷史暫存證據/launcher-0.5.42": [
+    316626,
+    2
+  ],
+  "歷史暫存證據/launcher-0.5.42/server-profiles": [
+    511,
+    1
+  ],
+  "歷史暫存證據/launcher-0.5.43": [
+    316626,
+    2
+  ],
+  "歷史暫存證據/launcher-0.5.43/server-profiles": [
+    511,
+    1
+  ],
+  "歷史暫存證據/launcher-0.5.44": [
+    357266,
+    3
+  ],
+  "歷史暫存證據/launcher-0.5.44/server-profiles": [
+    511,
+    1
+  ],
+  "歷史暫存證據/launcher-0.5.45-final": [
+    357266,
+    3
+  ],
+  "歷史暫存證據/launcher-0.5.45-final/server-profiles": [
+    511,
+    1
+  ],
+  "歷史暫存證據/launcher-build-artifacts-0.5.47": [
+    11870372,
+    56
+  ],
+  "歷史暫存證據/launcher-build-artifacts-0.5.47/publish": [
+    318674,
+    2
+  ],
+  "歷史暫存證據/launcher-build-artifacts-0.5.47/src-bin": [
+    676264,
+    11
+  ],
+  "歷史暫存證據/launcher-build-artifacts-0.5.47/src-obj": [
+    10875434,
+    43
+  ],
+  "歷史暫存證據/launcher-publish-v052": [
+    270376,
+    4
+  ],
+  "歷史暫存證據/launcher-publish-v052/server-profiles": [
+    759,
+    2
+  ],
+  "歷史暫存證據/lito-0-client-test-20260805-214334": [
+    903,
+    2
+  ],
+  "歷史暫存證據/lito-4gamer-images": [
+    381926,
+    20
+  ],
+  "歷史暫存證據/lito-ab-mss-20260805-214707": [
+    9173497479,
+    87
+  ],
+  "歷史暫存證據/lito-ab-sprites-20260805-214812": [
+    5392141876,
+    87
+  ],
+  "歷史暫存證據/lito-ab-sprites00-07-20260805-214908": [
+    9174243547,
+    88
+  ],
+  "歷史暫存證據/lito-ab-sprites00-07b-20260805-214941": [
+    7386477730,
+    88
+  ],
+  "歷史暫存證據/lito-briel": [
+    231242,
+    3
+  ],
+  "歷史暫存證據/lito-final-confirm-20260805-215026": [
+    902,
+    2
+  ],
+  "歷史暫存證據/lito-gamemeca": [
+    64911,
+    1
+  ],
+  "歷史暫存證據/lito-historical-images": [
+    2233016,
+    20
+  ],
+  "歷史暫存證據/lito-historical-images-20260821": [
+    52926574,
+    11
+  ],
+  "歷史暫存證據/lito-itemdesc-crosslocale": [
+    713948,
+    10
+  ],
+  "歷史暫存證據/lito-scale-verify-20260805": [
+    44103,
+    9
+  ],
+  "歷史暫存證據/lito-shop-audit-20260821": [
+    97479,
+    35
+  ],
+  "歷史暫存證據/lito-timeattack-4gamer": [
+    2697422,
+    35
+  ],
+  "歷史暫存證據/lito-timeattack-primary": [
+    1402917,
+    8
+  ],
+  "歷史暫存證據/lito-town-text": [
+    13918,
+    8
+  ],
+  "歷史暫存證據/LiToHelpExtract-20260806": [
+    12157,
+    16
+  ],
+  "歷史暫存證據/room-e2e-channel": [
+    146668,
+    2
+  ],
+  "歷史暫存證據/room-e2e-character": [
+    120695,
+    2
+  ],
+  "歷史暫存證據/room-e2e-character-later": [
+    146528,
+    2
+  ],
+  "歷史暫存證據/room-e2e-confirm": [
+    527111,
+    3
+  ],
+  "歷史暫存證據/room-e2e-login": [
+    975223,
+    5
+  ],
+  "歷史暫存證據/window-move-bug": [
+    9211729,
+    72
+  ],
+  "歷史暫存證據/window-move-bug/after-close-request": [
+    238864,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/after-move-current": [
+    86711,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/close-current": [
+    238703,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/final-after-25-moves": [
+    148039,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/final-enter-lobby": [
+    296665,
+    3
+  ],
+  "歷史暫存證據/window-move-bug/final-intro-click": [
+    750715,
+    3
+  ],
+  "歷史暫存證據/window-move-bug/final-lobby-after-move": [
+    239607,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/final-lobby-before-move": [
+    239607,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/final-login-check": [
+    375299,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/final-login-submit": [
+    978343,
+    5
+  ],
+  "歷史暫存證據/window-move-bug/fixed-after-move": [
+    188656,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/fixed-login-submit": [
+    978344,
+    5
+  ],
+  "歷史暫存證據/window-move-bug/login-submit": [
+    978320,
+    5
+  ],
+  "歷史暫存證據/window-move-bug/login.png": [
+    375290,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-after-move": [
+    148336,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-after-sweep": [
+    147856,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-current": [
+    13139,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-enter-lobby": [
+    296422,
+    3
+  ],
+  "歷史暫存證據/window-move-bug/rebased-intro-click": [
+    333990,
+    3
+  ],
+  "歷史暫存證據/window-move-bug/rebased-lobby": [
+    239598,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-login": [
+    13137,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-login-submit-2": [
+    978360,
+    5
+  ],
+  "歷史暫存證據/window-move-bug/rebased-now-login": [
+    375300,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-skip-intro": [
+    13142,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/rebased-skip-intro-2": [
+    13144,
+    2
+  ],
+  "歷史暫存證據/window-move-bug/stale-runtime-backups": [
+    526142,
+    6
+  ],
+  "歷史暫存證據/工作區報告": [
+    16542,
+    4
+  ],
+  "舊版分析與驗收": [
+    136525587390,
+    101114
+  ],
+  "舊版分析與驗收/acceptance": [
+    27233676,
+    144
+  ],
+  "舊版分析與驗收/acceptance/2026-08-05": [
+    27233676,
+    144
+  ],
+  "舊版分析與驗收/analysis": [
+    349916819,
+    5599
+  ],
+  "舊版分析與驗收/analysis/candidate-server-pack-2010-c180bb03": [
+    114622886,
+    2913
+  ],
+  "舊版分析與驗收/analysis/CURRENT-AFTER-ROOM-EXIT-LATE": [
+    247022,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ALIAS-MANUAL": [
+    237680,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-AUTO-LOBBY": [
+    240252,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-AFTER-ROW5": [
+    245057,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-FINAL-CREATE": [
+    460092,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-FINAL-LOBBY": [
+    237669,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-FINAL-START": [
+    716635,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-MAP-ROW2": [
+    726003,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-MAP-ROW2-DOUBLE": [
+    726024,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BATTLE-MAP2": [
+    971198,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BUTTON-CREATE": [
+    699612,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-BUTTON-MATCH": [
+    461771,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-CREATE-BRIDGE": [
+    969356,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-CREATE-BRIDGE-AFTER": [
+    293604,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-CREATE-BRIDGE-RESULT": [
+    465309,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-CREATE-ROOM-AFTER-CONFIRM": [
+    224938,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-CREATE-ROOM-AFTER-CONFIRM2": [
+    224939,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-CREATE-FLOW": [
+    460088,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-MAP-SELECT": [
+    245016,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-MODE-MAP": [
+    971039,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-ROOM": [
+    466747,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-ROOM-BLUE": [
+    490186,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-ROOM-ENTERED": [
+    245052,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-ROOM-EXIT": [
+    483451,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-ROOM-TEAM": [
+    490418,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FINAL-SHOP": [
+    476224,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX-CHARACTER-PAGE": [
+    979702,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX-CHARACTER-PAGE-AFTER": [
+    148524,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX2-CHARACTER-AFTER": [
+    150289,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX2-CHARACTER-PAGE": [
+    982872,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX3-CHARACTER-AFTER": [
+    124351,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX3-CHARACTER-PAGE": [
+    982874,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX3-LOBBY": [
+    239031,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX3-OWN-PROCESS": [
+    150438,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX3-SELECT-3333": [
+    451273,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-CHARACTER": [
+    978364,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-CHARACTER-AFTER": [
+    122246,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-CHARACTER-STABLE": [
+    148046,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-LOBBY": [
+    147337,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-LOBBY2": [
+    281316,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FIX4-SELECT-3333": [
+    976730,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-FULL-FLOW-LOBBY": [
+    240257,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-LATEST-LOBBY": [
+    240255,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MANUAL-CREATE": [
+    731174,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MANUAL-CREATE-AFTERLOGIN": [
+    362745,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-BRIDGE-CREATE": [
+    459899,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-BRIDGE-LOBBY": [
+    237667,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-FINAL-BATTLE": [
+    433885,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-FINAL-BLUE": [
+    735620,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-FINAL-ROW2": [
+    725635,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-MAP-FINAL-ROW4": [
+    725512,
+    4
+  ],
+  "舊版分析與驗收/analysis/CURRENT-NUMERIC-FINAL-CREATE": [
+    459904,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-NUMERIC-FINAL-START": [
+    715743,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-REPRO-CHARACTER-PAGE.png": [
+    1183305,
+    5
+  ],
+  "舊版分析與驗收/analysis/CURRENT-REPRO-ROW2": [
+    432429,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ROOM-EXIT": [
+    494707,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ROOM-FLOW": [
+    465286,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ROOM-FLOW-AFTER": [
+    247375,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ROOM-FORCE-BLUE": [
+    247552,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-ROOM-STAGE-CLOSE": [
+    493601,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-AV": [
+    475403,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-AV-TRACE": [
+    263697,
+    1
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-AV2": [
+    475405,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-BRIDGE-RESULT": [
+    477963,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-BUTTON": [
+    494141,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-DEBUG-AFTER": [
+    237071,
+    1
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-DEBUG-BEFORE": [
+    237667,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-DIRECT-DF": [
+    475417,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-FINAL-PASS": [
+    374706,
+    1
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-LOCAL-VEH": [
+    237665,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-LOCAL-VEH-CLICK": [
+    237071,
+    1
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-MODE-GUARD": [
+    237666,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-MODE-GUARD2": [
+    16217,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-MODE-GUARD2-READY": [
+    16223,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-MODE-GUARD3": [
+    462900,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-PURCHASE-FINAL": [
+    462907,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-PURCHASE-FINAL-AFTER": [
+    237676,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-STACK-BEFORE": [
+    125553,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-STACK-READY": [
+    125552,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-UI-LOBBY-WAIT": [
+    237670,
+    2
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-UI-NATIVE": [
+    295065,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-UI-NATIVE2": [
+    237071,
+    1
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-UI-PASS": [
+    475412,
+    3
+  ],
+  "舊版分析與驗收/analysis/CURRENT-SHOP-WINDOW-PASS": [
+    237071,
+    1
+  ],
+  "舊版分析與驗收/analysis/FIX-AUTO-MANUAL": [
+    368738,
+    2
+  ],
+  "舊版分析與驗收/analysis/FIX-CHAR-STABLE-IDENTITY": [
+    2383436,
+    17
+  ],
+  "舊版分析與驗收/analysis/FIX-MANUAL-AUTO": [
+    368802,
+    1
+  ],
+  "舊版分析與驗收/analysis/FIX-PHYSICAL": [
+    3512174,
+    26
+  ],
+  "舊版分析與驗收/analysis/FIX-PHYSICAL2": [
+    1125307,
+    5
+  ],
+  "舊版分析與驗收/analysis/FOUR-ISSUE-ACCEPTANCE-0.7.861-0.5.53": [
+    34734750,
+    160
+  ],
+  "舊版分析與驗收/analysis/historical-lito-2003": [
+    598839,
+    6
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-AUTO-CHANNEL-0.7.852": [
+    1183315,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-AUTO-CLOSE-0.7.852": [
+    2712,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-AUTO-CONFIRM-0.7.852": [
+    298901,
+    4
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-AUTO-LOBBY-0.7.852": [
+    1573,
+    2
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-CHARACTER-SELECT-0.7.852": [
+    448943,
+    2
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-CHANNEL-0.7.852": [
+    793597,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-CLOSE-0.7.852": [
+    479102,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-CONFIRM-CLOSE-0.7.852": [
+    239678,
+    2
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-EXIT-HOTKEY-0.7.852": [
+    923421,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-LEAVE-0.7.852": [
+    696462,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-ROOM-JOIN-0.7.852": [
+    485485,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-ROOM-SELECT-0.7.852": [
+    479957,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-SOURCE-CHAR-0.7.852": [
+    1191402,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-FINAL-START-0.7.852": [
+    712933,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-NATIVE-CHANNEL-FIX-0.7.852": [
+    1183464,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-NATIVE-CHANNEL-FIX-CONFIRM-0.7.852": [
+    553801,
+    4
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-NATIVE-LOBBY-FIX-0.7.852": [
+    547460,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-ROOM-FIX-0.7.852": [
+    718942,
+    4
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-SOURCE-AND-CHARACTER-0.7.852": [
+    979386,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-TRACE-CHAR-0.7.852": [
+    368882,
+    4
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-TRACE-SC8-0.7.852": [
+    1183302,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-WORLD-0.7.852": [
+    979210,
+    5
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-WORLD-CHARROW-0.7.852": [
+    297090,
+    3
+  ],
+  "舊版分析與驗收/analysis/LITO-3333-WORLD-CONFIRM-0.7.852": [
+    148176,
+    1
+  ],
+  "舊版分析與驗收/analysis/lito-launcher-contract": [
+    5875266,
+    3
+  ],
+  "舊版分析與驗收/analysis/lito-login-contract": [
+    1249594,
+    2
+  ],
+  "舊版分析與驗收/analysis/lt-npc-services-0.7.641": [
+    24907,
+    47
+  ],
+  "舊版分析與驗收/analysis/lttext-extracted-audit-0.7.593": [
+    292553,
+    353
+  ],
+  "舊版分析與驗收/analysis/native-attack-all-runtime": [
+    1295647,
+    5
+  ],
+  "舊版分析與驗收/analysis/native-lito-time-attack-source-boundary-archive": [
+    166445,
+    5
+  ],
+  "舊版分析與驗收/analysis/native-ranking-buttons": [
+    3340039,
+    129
+  ],
+  "舊版分析與驗收/analysis/native-ranking-icons": [
+    274258,
+    227
+  ],
+  "舊版分析與驗收/analysis/native-ranking-lbt": [
+    204,
+    1
+  ],
+  "舊版分析與驗收/analysis/native-time-attack-ncjapan-archive": [
+    153152,
+    3
+  ],
+  "舊版分析與驗收/analysis/native-toolbar-400-405": [
+    11553,
+    10
+  ],
+  "舊版分析與驗收/analysis/native-toolbar-400-405-color": [
+    32140,
+    6
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-ACCEPTANCE-0.7.860-0.5.52": [
+    17626,
+    3
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-BASELINE-20260907": [
+    9272004,
+    57
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-FINAL-20260907": [
+    71852277,
+    340
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-LIVE-0.7.862": [
+    9211730,
+    49
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-RERUN-20260907": [
+    11766254,
+    58
+  ],
+  "舊版分析與驗收/analysis/NINE-ISSUE-SCHEMA4-20260907": [
+    4570204,
+    29
+  ],
+  "舊版分析與驗收/analysis/premium-ui-surfaces": [
+    637658,
+    24
+  ],
+  "舊版分析與驗收/analysis/quest-fukuoka": [
+    88754,
+    4
+  ],
+  "舊版分析與驗收/analysis/quest-fukuoka-room1-0.7.638": [
+    210511,
+    7
+  ],
+  "舊版分析與驗收/analysis/quest-room-species-audit-0.7.639": [
+    401163,
+    78
+  ],
+  "舊版分析與驗收/analysis/quest-source-audit-20260829": [
+    2401413,
+    30
+  ],
+  "舊版分析與驗收/analysis/quest-tokyo": [
+    596113,
+    3
+  ],
+  "舊版分析與驗收/analysis/resource-collision-6257-6258": [
+    40937,
+    8
+  ],
+  "舊版分析與驗收/analysis/source-evidence": [
+    112282,
+    2
+  ],
+  "舊版分析與驗收/analysis/town-map-alp-audit": [
+    103289,
+    2
+  ],
+  "舊版分析與驗收/ida-client-oep-v2": [
+    87635155,
+    19
+  ],
+  "舊版分析與驗收/ida-launcher": [
+    21737804,
+    19
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.660": [
+    738334766,
+    21956
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.660/kr380_crazyidol9": [
+    249181074,
+    9583
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.660/kr380_hillpath": [
+    245978163,
+    9563
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.660/tw76_mong": [
+    40820225,
+    51
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.660/tw_tpai": [
+    202355304,
+    2759
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805": [
+    21804146878,
+    33014
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/chrisliu_2021": [
+    3931353,
+    121
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/chrisliu_orig": [
+    3936296,
+    121
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/cyrus99": [
+    76702649,
+    2059
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/fork_black": [
+    223290596,
+    2175
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/fork_charlie": [
+    203175063,
+    2758
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/fork_dtc": [
+    88671731,
+    2058
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/fork_sam99": [
+    192148892,
+    2754
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/henry380": [
+    191607711,
+    2427
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/husky": [
+    316686771,
+    3908
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/jiansoft": [
+    183887531,
+    2369
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/l1jgo_whale": [
+    192169395,
+    1752
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/l1rj_tw": [
+    16945542959,
+    2131
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/luke380": [
+    189822372,
+    3528
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/movan_rust": [
+    166305,
+    61
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/official-map-images": [
+    160074,
+    9
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/rtkirby380": [
+    76701508,
+    2059
+  ],
+  "舊版分析與驗收/public-source-audit-0.7.805/tw99nets": [
+    2915545672,
+    2724
+  ],
+  "舊版分析與驗收/resources": [
+    2947,
+    6
+  ],
+  "舊版分析與驗收/resources/pc-action-html": [
+    2947,
+    6
+  ],
+  "舊版分析與驗收/runtime": [
+    113435143699,
+    39570
+  ],
+  "舊版分析與驗收/runtime/acceptance-20260908": [
+    42362226,
+    753
+  ],
+  "舊版分析與驗收/runtime/attack-all-probe-run": [
+    2668180,
+    14
+  ],
+  "舊版分析與驗收/runtime/attack-all-probe-run2": [
+    3152761,
+    16
+  ],
+  "舊版分析與驗收/runtime/attack-all-probe-run3": [
+    768335,
+    12
+  ],
+  "舊版分析與驗收/runtime/attack-all-probe-run4": [
+    35540515,
+    146
+  ],
+  "舊版分析與驗收/runtime/buddy-status-resource-audit-0.7.696": [
+    19634,
+    10
+  ],
+  "舊版分析與驗收/runtime/client-full": [
+    7363348604,
+    14698
+  ],
+  "舊版分析與驗收/runtime/client-isolated": [
+    7326025999,
+    14666
+  ],
+  "舊版分析與驗收/runtime/client-result-r8": [
+    2877064,
+    7
+  ],
+  "舊版分析與驗收/runtime/client-result-r9": [
+    5261896638,
+    119
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r14-0.7.664": [
+    9367674,
+    25
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r15-flow-0.7.664": [
+    676040,
+    2
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r16-flow-0.7.664": [
+    606167,
+    2
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r17-current-0.7.664": [
+    462030,
+    2
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r17-flow-0.7.664": [
+    1222733,
+    6
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r18-flow-0.7.664": [
+    1222733,
+    6
+  ],
+  "舊版分析與驗收/runtime/clone-visual-r18-series-0.7.664": [
+    147281517,
+    379
+  ],
+  "舊版分析與驗收/runtime/compat-backup-archive": [
+    2465441,
+    31
+  ],
+  "舊版分析與驗收/runtime/diagnostic-staged": [
+    2547824,
+    2
+  ],
+  "舊版分析與驗收/runtime/full-flow-0.7.864-0.5.56-20260908": [
+    45259531,
+    197
+  ],
+  "舊版分析與驗收/runtime/full-flow-20260908": [
+    50439745,
+    251
+  ],
+  "舊版分析與驗收/runtime/gm-de-native-live": [
+    6653303,
+    38
+  ],
+  "舊版分析與驗收/runtime/isolated-resource-tests": [
+    89442213149,
+    1630
+  ],
+  "舊版分析與驗收/runtime/launch-reports": [
+    3122704167,
+    437
+  ],
+  "舊版分析與驗收/runtime/ltstring-match-audit": [
+    16730,
+    3
+  ],
+  "舊版分析與驗收/runtime/matchmaking-help-0.7.453": [
+    11730,
+    15
+  ],
+  "舊版分析與驗收/runtime/movement-diagnosis-before": [
+    162392,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-diagnosis-positioned": [
+    162396,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-diagnosis-positioned-2": [
+    162397,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-diagnosis-start": [
+    502598,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-channel": [
+    620236,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-evidence": [
+    449521,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-login": [
+    750470,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-room": [
+    742437,
+    4
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-start": [
+    711673,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-fix-v066-state": [
+    375300,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-after-far": [
+    433396,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-bot-target": [
+    2621344,
+    7
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-channel": [
+    552634,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-continuous-move": [
+    914558,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-far-move": [
+    888734,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-leave": [
+    707747,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-login": [
+    750786,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-login-confirm": [
+    683426,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-move-to-bot": [
+    893582,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-result": [
+    430519,
+    2
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-room": [
+    742447,
+    4
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-start": [
+    711647,
+    3
+  ],
+  "舊版分析與驗收/runtime/movement-result-v067-summary-confirm": [
+    528365,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-lobby": [
+    237895,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-move": [
+    859208,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-lobby": [
+    237900,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-move-open": [
+    920474,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-room": [
+    721911,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-source": [
+    1365341,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-start": [
+    491243,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-rerun-world": [
+    459289,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-room": [
+    721900,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-source": [
+    657989,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-source-final": [
+    1259544,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-start": [
+    491243,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-0.7.812-world": [
+    459001,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-auto-stuck": [
+    1576,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-auto-handoff-destination": [
+    475578,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-auto-handoff-room": [
+    721423,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-auto-handoff-source": [
+    1181958,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-auto-handoff-start": [
+    490329,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-auto-handoff-world": [
+    490268,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-endpoint": [
+    1266945,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-complete-battle": [
+    534358,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-complete-source": [
+    1351910,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-full": [
+    1189807,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-phase-reset": [
+    1280789,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-phase-reset-second": [
+    132834,
+    1
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-phase-reset-second-click": [
+    400557,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-battle-handoff-second-character": [
+    231421,
+    1
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-controller-reset-lobby": [
+    237763,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-controller-reset-room": [
+    721500,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-controller-reset-source": [
+    1145748,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-controller-reset-start": [
+    490997,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-controller-reset-world": [
+    245168,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-current-endpoint-battle": [
+    534146,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-current-endpoint-source": [
+    1298444,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-lobby": [
+    237750,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-room": [
+    721470,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-room-ready": [
+    245065,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-source": [
+    1296617,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-start": [
+    490276,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-final-world": [
+    245060,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-handoff-success-battle": [
+    533912,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-handoff-success-source": [
+    1145652,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-layout-battle": [
+    527744,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-layout-live-restore": [
+    413731,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-layout-source": [
+    1342990,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual": [
+    1115296,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r2": [
+    1024471,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r3": [
+    1029041,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r4": [
+    863767,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r5": [
+    1075589,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r6": [
+    1068329,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-manual-r7": [
+    1454486,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-root-preserved-lobby": [
+    237761,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-root-preserved-room": [
+    721516,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-root-preserved-source": [
+    1303921,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-root-preserved-start": [
+    490330,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-root-preserved-world": [
+    245088,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-scene-reset-battle": [
+    534310,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-scene-reset-source": [
+    1263484,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-tournament-root-battle": [
+    718272,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-tournament-root-source": [
+    1125653,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-two-stage-success-battle": [
+    534169,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-two-stage-success-source": [
+    1311000,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-ui-clear-battle": [
+    527845,
+    5
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-ui-clear-source": [
+    1266897,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-combat": [
+    915092,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-combat-after": [
+    455337,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-lobby": [
+    237912,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-room": [
+    721936,
+    4
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-source": [
+    1303901,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-start": [
+    491244,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-e2e-world-roots-world": [
+    458993,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-login-timeout": [
+    47204,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-transfer-physical-entry-r2": [
+    1359092,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-gfx-fix": [
+    997879,
+    6
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-gfx-fix-move": [
+    761666,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-gfx-fix-world": [
+    387867,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-observer": [
+    1123656,
+    6
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-observer-world": [
+    266154,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-physical-row": [
+    1168598,
+    7
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-physical-row-world": [
+    387600,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-ready-transition": [
+    743544,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-ready-transition-retry": [
+    745154,
+    3
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-ready-transition-retry2": [
+    1124023,
+    6
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-ready-transition-world": [
+    266163,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-token-fix": [
+    1214435,
+    6
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-token-fix-after": [
+    266044,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-e2e-token-fix-after2": [
+    135460,
+    2
+  ],
+  "舊版分析與驗收/runtime/native-rental-ui-live": [
+    24635542,
+    130
+  ],
+  "舊版分析與驗收/runtime/noncanonical-selftest-captures": [
+    433206,
+    1
+  ],
+  "舊版分析與驗收/runtime/original-endpoint-probe": [
+    149785,
+    4
+  ],
+  "舊版分析與驗收/runtime/pak-html-probe": [
+    3389,
+    12
+  ],
+  "舊版分析與驗收/runtime/pet-race-ltsprite-panel-probe-0.7.386": [
+    1455931,
+    176
+  ],
+  "舊版分析與驗收/runtime/pet-race-map-render-0.7.384": [
+    60506,
+    4
+  ],
+  "舊版分析與驗收/runtime/pet-race-panel-sprite-probe-0.7.386": [
+    7467406,
+    2615
+  ],
+  "舊版分析與驗收/runtime/pet-race-sprite-probe-0.7.384": [
+    178265,
+    49
+  ],
+  "舊版分析與驗收/runtime/post-result-user-report": [
+    447775,
+    2
+  ],
+  "舊版分析與驗收/runtime/protocol-captures": [
+    12360,
+    50
+  ],
+  "舊版分析與驗收/runtime/protocol-selftest": [
+    871,
+    6
+  ],
+  "舊版分析與驗收/runtime/protocol-selftest-32000": [
+    2942,
+    7
+  ],
+  "舊版分析與驗收/runtime/release-0.7.425-smoke": [
+    842,
+    3
+  ],
+  "舊版分析與驗收/runtime/release-0.7.432-smoke": [
+    513,
+    2
+  ],
+  "舊版分析與驗收/runtime/release-0.7.446-smoke": [
+    95788,
+    4
+  ],
+  "舊版分析與驗收/runtime/research-quest-2005-tower": [
+    167732,
+    7
+  ],
+  "舊版分析與驗收/runtime/research-timeattack-2005": [
+    3145255,
+    21
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-channel": [
+    552624,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-confirm": [
+    615452,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-lobby-confirm": [
+    518320,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-login": [
+    750577,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-result": [
+    704401,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-room": [
+    743253,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-after-d3-summary-1s": [
+    730036,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-channel": [
+    552630,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-confirm": [
+    615458,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-login": [
+    661401,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-result": [
+    704450,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-room": [
+    743262,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-delay-v067a-summary-1s": [
+    728852,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-channel": [
+    552630,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-confirm": [
+    615458,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-login": [
+    750583,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-result": [
+    704406,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-room": [
+    743262,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-end-db-v067-summary-1s": [
+    728735,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-after-login": [
+    750735,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-after-login-2": [
+    751018,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-auth-dismiss": [
+    747281,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-auth-dismiss-3": [
+    747287,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-battle-start": [
+    711655,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-battle-world": [
+    459108,
+    2
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-channel-enter": [
+    552636,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-channel-select": [
+    307683,
+    2
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-dialog-dismiss": [
+    745512,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-dialog-dismiss-2": [
+    745592,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login": [
+    375281,
+    2
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-clean": [
+    747380,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-clean-confirm": [
+    743713,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-confirm": [
+    739571,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-confirm-2": [
+    745634,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-final": [
+    744678,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-login-wait": [
+    375565,
+    2
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-movement": [
+    914549,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-native-login": [
+    746965,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-native-login-2": [
+    750724,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-native-login-confirm": [
+    743717,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-native-login-confirm-2": [
+    589779,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-fix-v067-room-enter": [
+    742450,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-memory-lobby": [
+    517090,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-memory-result": [
+    554509,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-memory-result2": [
+    703741,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-memory-room": [
+    831711,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-memory-room2": [
+    731833,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067-channel": [
+    552631,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067-login": [
+    750584,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067-login-confirm": [
+    638216,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067-room": [
+    742443,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067b-channel": [
+    552634,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067b-login": [
+    750587,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067b-login-confirm": [
+    630959,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067b-result": [
+    252259,
+    1
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067b-room": [
+    743268,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-battle-start": [
+    712032,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-channel": [
+    552634,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-login": [
+    750587,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-login-confirm": [
+    573939,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-result-leave": [
+    728731,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-room": [
+    743268,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067c-summary-confirm": [
+    517124,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-battle": [
+    712030,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-channel": [
+    552633,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-login": [
+    750586,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-login-confirm": [
+    539924,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-result-leave": [
+    736429,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067d-room": [
+    743267,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-battle": [
+    712032,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-channel": [
+    552634,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-login": [
+    750585,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-login-confirm": [
+    683227,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-result-leave": [
+    908273,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-result-leave-actual": [
+    726472,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067e-room": [
+    743268,
+    4
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-channel": [
+    552633,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-login": [
+    750584,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-login-confirm": [
+    594044,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-result": [
+    704410,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-result-leave": [
+    728858,
+    3
+  ],
+  "舊版分析與驗收/runtime/result-routing-v067f-room": [
+    743267,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema1-e2e-low-enter": [
+    246474,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema1-e2e-low-login": [
+    621034,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-altx": [
+    375303,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-altx2": [
+    535132,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-close": [
+    375277,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-current2": [
+    246961,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-ready": [
+    749543,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-char-event-ready2": [
+    621238,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-character-ready2": [
+    268413,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-character-tab1": [
+    428987,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-character-tab1-clean2": [
+    840602,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-character-tab2": [
+    643530,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-character-tab2-clean": [
+    1301081,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-character-tab2-recheck": [
+    214182,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-close-friends": [
+    462450,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-control-memory-ready": [
+    824966,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-control-row-click": [
+    268474,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-control-row-double-click": [
+    737571,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-control-row-second-click": [
+    269085,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-control-state2-diagnostic": [
+    133763,
+    1
+  ],
+  "舊版分析與驗收/runtime/schema2-correct-login": [
+    661542,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-delayed-confirm-click": [
+    436031,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-delayed-confirm-ready": [
+    804415,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-dismiss-invalid": [
+    747326,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-doubleclick-dialog": [
+    747332,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-doubleclick-new": [
+    1117130,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-doubleclick-ready": [
+    825638,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-doubleclick-ready2": [
+    640257,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-high-enter2": [
+    268417,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-high-login": [
+    618569,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-high-login2": [
+    629950,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-low": [
+    497141,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-low-enter": [
+    419445,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-low-enter2": [
+    246350,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-e2e-low-login2": [
+    621037,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-lobby-proof": [
+    238906,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-ltcharsvr-current": [
+    369036,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-ltcharsvr-ready": [
+    696594,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-ltcharsvr-ready2": [
+    368141,
+    1
+  ],
+  "舊版分析與驗收/runtime/schema2-memory-page-ready": [
+    796073,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-relogin": [
+    747086,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-room-fixed2": [
+    969113,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-room-join": [
+    723398,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-room-join-fixed": [
+    723467,
+    4
+  ],
+  "舊版分析與驗收/runtime/schema2-room-start": [
+    489628,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-room-start-fixed": [
+    705246,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-row-c9-delayed-click": [
+    268693,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-row-c9-delayed-ready": [
+    268697,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-row-c9-e2e": [
+    907859,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-source-correct": [
+    285571,
+    1
+  ],
+  "舊版分析與驗收/runtime/schema2-source-ready": [
+    374711,
+    1
+  ],
+  "舊版分析與驗收/runtime/schema2-source-ready2": [
+    730969,
+    2
+  ],
+  "舊版分析與驗收/runtime/schema2-source-ready3": [
+    983113,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-source-ready4": [
+    1222117,
+    6
+  ],
+  "舊版分析與驗收/runtime/schema2-source-ready5": [
+    1222303,
+    6
+  ],
+  "舊版分析與驗收/runtime/schema2-thread-transaction-e2e": [
+    907913,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-thread-transaction-e2e-select": [
+    948449,
+    5
+  ],
+  "舊版分析與驗收/runtime/schema2-world-status-fixed": [
+    922350,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-world-status-fixed2": [
+    882250,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-world-status-fixed3": [
+    785163,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-world-status-fixed4": [
+    737154,
+    3
+  ],
+  "舊版分析與驗收/runtime/schema2-world-status-fixed5": [
+    586719,
+    3
+  ],
+  "舊版分析與驗收/runtime/screenshots": [
+    15185318,
+    40
+  ],
+  "舊版分析與驗收/runtime/skill-sprite-audit-20260908": [
+    2000657,
+    75
+  ],
+  "舊版分析與驗收/runtime/string-login-result-audit": [
+    229635,
+    3
+  ],
+  "舊版分析與驗收/runtime/time-attack-sprite-probe-20260812": [
+    6745735,
+    1025
+  ],
+  "舊版分析與驗收/runtime/time-attack-web-evidence-20260829": [
+    7471953,
+    34
+  ],
+  "舊版分析與驗收/runtime/traces": [
+    558129,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-close-r9": [
+    286414,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-close-r9b": [
+    239357,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-close-r9b-after-exit": [
+    336848,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-close-r9b-credits": [
+    333723,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-close-r9b-current": [
+    239744,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-error-close-r8b": [
+    2175,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-error-r8b": [
+    2305,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-formal-close-r6-0.7.664": [
+    270438,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-formal-close-r7-0.7.664": [
+    301603,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-approach-r4-0.7.664": [
+    882905,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-bot-approach-r5-0.7.664": [
+    447382,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-current-after-target-r4-0.7.664": [
+    454647,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-current-r5-0.7.664": [
+    460469,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-entered-r4-0.7.664": [
+    460130,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-move-far-r4-0.7.664": [
+    913911,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-move-r4-0.7.664": [
+    861893,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-result-join-r5-0.7.664": [
+    1838899,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-result-leave-r5-0.7.664": [
+    713534,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-result-r5-0.7.664-current": [
+    443366,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-result-start-r5-0.7.664": [
+    496637,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-battle-summary-confirm-r5-0.7.664": [
+    517085,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-join-r9-0.7.664": [
+    946680,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-join-r9b-0.7.664": [
+    1838957,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-leave-r9b-0.7.664": [
+    724368,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-result-r9b-0.7.664": [
+    453658,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-start-r9b-0.7.664": [
+    496651,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-current-compat-auto-summary-confirm-r9b-0.7.664": [
+    509748,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-D2-caller-click-0.7.663": [
+    458992,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-D2-caller-join-0.7.663": [
+    1232531,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r10-stage-close-0.7.664": [
+    232933,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r11-altx-0.7.664": [
+    488587,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r11-process-close-0.7.664": [
+    240944,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r11-room-0.7.664": [
+    1838588,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r2-0.7.664": [
+    2086606,
+    10
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r3-0.7.664": [
+    481101,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r5-0.7.664": [
+    2071734,
+    10
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r6-system-0.7.664": [
+    481076,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r7-toggle-system-0.7.664": [
+    714298,
+    4
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r8-room-0.7.664": [
+    1838577,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r8-toolbar-0.7.664": [
+    1660227,
+    8
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-controls-r9-0.7.664": [
+    729171,
+    4
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-hit-test-r12-0.7.664": [
+    1838602,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-hit-test-r12-inspect-0.7.664": [
+    251724,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-exit-hit-test-r12-press-0.7.664": [
+    251876,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-formal-noarg-login-r7-0.7.664": [
+    697414,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-formal-noarg-source-r7-0.7.664": [
+    281381,
+    1
+  ],
+  "舊版分析與驗收/runtime/ui-native-lobby-bootstrap-scc-0.7.662": [
+    1109651,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-lobby-mcp-disassembly": [
+    1109613,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-lobby-native-sequence-0.7.663": [
+    1348958,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-lobby-ui-rearm-0.7.662": [
+    1348916,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-click-0.7.663": [
+    495951,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-click-r3-0.7.664": [
+    257983,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-click-r4-0.7.664": [
+    496633,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-join-0.7.663": [
+    1838594,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-join-r3-0.7.664": [
+    1232559,
+    7
+  ],
+  "舊版分析與驗收/runtime/ui-native-ready-start-join-r4-0.7.664": [
+    1838885,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-result-formal-dialog-r6-0.7.664": [
+    571784,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-result-formal-join-r6-0.7.664": [
+    975658,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-controls-0.7.663": [
+    743726,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-controls-0.7.663-b": [
+    2573205,
+    12
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-controls-final-c-0.7.663": [
+    2573271,
+    12
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-controls-final-close-0.7.663": [
+    247721,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-controls-retry-dialog": [
+    745190,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-join-0.7.663": [
+    1838538,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-map-0.7.663": [
+    2573126,
+    12
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-map-menu-real": [
+    486434,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-map-row-posted": [
+    486473,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-room-map-row4-0.7.663": [
+    734524,
+    4
+  ],
+  "舊版分析與驗收/runtime/ui-native-toolbar-plain-r13-click-0.7.664": [
+    484105,
+    3
+  ],
+  "舊版分析與驗收/runtime/ui-native-toolbar-plain-r13-close-0.7.664": [
+    238996,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-toolbar-plain-r13-inspect-0.7.664": [
+    248696,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-native-toolbar-plain-r13-room-0.7.664": [
+    1831570,
+    9
+  ],
+  "舊版分析與驗收/runtime/ui-probes": [
+    111452513,
+    422
+  ],
+  "舊版分析與驗收/runtime/ui-themida-close-r8": [
+    5048,
+    2
+  ],
+  "舊版分析與驗收/runtime/ui-themida-r8": [
+    5180,
+    2
+  ],
+  "舊版分析與驗收/runtime/v070-live-screen": [
+    415780,
+    2
+  ],
+  "舊版分析與驗收/runtime/v070-live-screen-after-dialog": [
+    430986,
+    2
+  ],
+  "舊版分析與驗收/runtime/v070-live-screen-current": [
+    244745,
+    2
+  ],
+  "舊版分析與驗收/tools": [
+    60783936,
+    775
+  ],
+  "舊版分析與驗收/tools/LitoImgProbe": [
+    8489799,
+    35
+  ],
+  "舊版分析與驗收/tools/LitoSpriteProbe": [
+    16900919,
+    63
+  ],
+  "舊版分析與驗收/tools/TextPakGameplayOverlay": [
+    8500109,
+    35
+  ],
+  "舊版分析與驗收/tools/TextPakHtmlProbe": [
+    16929602,
+    63
+  ],
+  "舊版分析與驗收/tools/__pycache__": [
+    4770264,
+    244
+  ]
+}

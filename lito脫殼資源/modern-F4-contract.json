@@ -1,0 +1,67 @@
+{
+  "updated_at": "2026-10-05T21:28:03.181690+08:00",
+  "classification": "static source-qualified contract with high-confidence external API identities; no wire/runtime validation",
+  "opcode": 244,
+  "dispatch_va": "004B3057",
+  "handler_va": "004AC570",
+  "format_bytes_at_00502F2C": "63646800",
+  "format": "cdh",
+  "fields_after_opcode": [
+    {
+      "type": "c",
+      "role": "signed channel index; sign extended at4AC5AC",
+      "native_local": "ebp-1"
+    },
+    {
+      "type": "d",
+      "role": "IPv4 integer compared to local inet_addr result",
+      "native_local": "ebp-8"
+    },
+    {
+      "type": "h",
+      "role": "port low16 stored by46ED50",
+      "native_local": "ebp-0C"
+    }
+  ],
+  "sequence": [
+    "4AC589 parses opcode+1 using inline format cdh",
+    "4AC59B sprintf(local28, global62C6A4); fixed PE string127.0.0.1",
+    "4AC5A7 calls4EFE56 -> WS2_32 inet_addr",
+    "4AC5B0 checks64AD2C[signed_index]==FFFFFFFF: returns without transition",
+    "4AC5BD compares parsed d to inet_addr result",
+    "equal:4AC5C1 ->46EB30",
+    "different:4AC5CA loadsEDX=localport,ECX stillpacketIPv4 ->46ED50",
+    "46ED50 usesinet_ntoa then copies address into64AE74 and64A9C4; low16port ->64AD70/64A9C0; arms callback469B10",
+    "return_mode2:46F010 copies64AD74 host to64AE74, port2000 and later arms469BD0"
+  ],
+  "known_constant": "62C6A4=127.0.0.1 in this fixed PE; not a universal server address",
+  "canonical_vectors": [
+    {
+      "ipv4": "127.0.0.1",
+      "network_bytes": "7f000001",
+      "x86_u32": "0100007F"
+    },
+    {
+      "ipv4": "127.0.0.2",
+      "network_bytes": "7f000002",
+      "x86_u32": "0200007F"
+    },
+    {
+      "ipv4": "1.2.3.4",
+      "network_bytes": "01020304",
+      "x86_u32": "04030201"
+    }
+  ],
+  "API_documentation": "https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-inet_addr",
+  "limits": [
+    "No proof T73 receivedF4 or that F4 fixes GUI failures",
+    "Signed index bounds depend on native packet trust; do not treat malformed packets as valid input",
+    "Export identities match historical module bases plus current RVAs; dump-time DLL hashes absent",
+    "Direct host copy and startup inputs established; private/transitive execution and actual runtime host remain unproved."
+  ],
+  "host_initializer_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+    "bytes": 8125,
+    "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644"
+  }
+}

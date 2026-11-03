@@ -1,0 +1,50 @@
+{
+  "task_id": "bin_resources-caption-message-boundary-20261007",
+  "evidence_level": "static",
+  "executed": [
+    {
+      "command": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B ./caption-message-boundary-20261007/qualify_fixed_bytes.py",
+      "cwd": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+      "tool_receipt": "d64ec9",
+      "exit_code": 0,
+      "stdout": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualification.stdout.txt",
+        "bytes": 259,
+        "sha256": "925C5545C239861401F7DA05773D7D6860E2F6FDCB39085561B4358E9C5CADC6"
+      },
+      "executed_script": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualify_fixed_bytes.executed.txt",
+        "bytes": 11461,
+        "sha256": "B02413E6B19E880BD920851FA7E7AD6CC59094D20E50D1686FCE1EB142642EE0"
+      },
+      "current_script": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\qualify_fixed_bytes.py",
+        "bytes": 11461,
+        "sha256": "252367BB8AECEFDA9EC9FE545B29CD209F0A00A7EA9E41650A1FE1C04C494359"
+      },
+      "script_change_after_execution": "Only ASM navigation excerpt lines corrected; raw qualification logic unchanged. See navigation-repair-receipt.json.",
+      "result": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\finite-branch-verification.json",
+        "bytes": 24172,
+        "sha256": "2E46961B6C2B0D319F8640B59021FEF0F78F926A038474B95541D53B862D1729"
+      },
+      "new_hypothesis": "Movement/modal/position routes versus a distinct paint conditional update call; all three pinned source hashes, 25 raw slices, 11 message routes, helper rejection, exact call/registration/reset bytes and rel32 targets."
+    }
+  ],
+  "caption_filter_check_method": "Generator checks literal suppression-set exclusion; independent reviewer separately evaluates raw filter branches including low-nibble variants.",
+  "independent_static_review": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\caption-message-boundary-20261007\\independent-review.json",
+    "bytes": 3479,
+    "sha256": "6FF001762F679AD8458D83FCED2437F52D7E79E25E31F47C6C6CAA8138E256B2"
+  },
+  "not_executed": [
+    "Original PE or game",
+    "IDA",
+    "native GUI/input/screenshot",
+    "process attach or memory acquisition",
+    "old T82/T81 tests",
+    "resource extraction",
+    "SQL/server/opcode changes"
+  ],
+  "PASS_scope": "Finite static qualification only; no product or freeze acceptance."
+}

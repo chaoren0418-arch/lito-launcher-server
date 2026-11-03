@@ -1,0 +1,271 @@
+{
+  "updated_at": "2026-10-06T14:55:58.552894+08:00",
+  "checks": [
+    {
+      "check": "direct_string_comparisons_and_two_flag_writers raw-backed",
+      "pass": true
+    },
+    {
+      "check": "direct_string_comparisons_and_two_flag_writers exact length",
+      "pass": true
+    },
+    {
+      "check": "direct_string_comparisons_and_two_flag_writers complete aligned decode",
+      "pass": true
+    },
+    {
+      "check": "background_entry_owner_prefix raw-backed",
+      "pass": true
+    },
+    {
+      "check": "background_entry_owner_prefix exact length",
+      "pass": true
+    },
+    {
+      "check": "background_entry_owner_prefix complete aligned decode",
+      "pass": true
+    },
+    {
+      "check": "background_return_and_direct_setup_prefix raw-backed",
+      "pass": true
+    },
+    {
+      "check": "background_return_and_direct_setup_prefix exact length",
+      "pass": true
+    },
+    {
+      "check": "background_return_and_direct_setup_prefix complete aligned decode",
+      "pass": true
+    },
+    {
+      "check": "S03_one_hop_caller_suffix raw-backed",
+      "pass": true
+    },
+    {
+      "check": "S03_one_hop_caller_suffix exact length",
+      "pass": true
+    },
+    {
+      "check": "S03_one_hop_caller_suffix complete aligned decode",
+      "pass": true
+    },
+    {
+      "check": "second_one_hop_caller raw-backed",
+      "pass": true
+    },
+    {
+      "check": "second_one_hop_caller exact length",
+      "pass": true
+    },
+    {
+      "check": "second_one_hop_caller complete aligned decode",
+      "pass": true
+    },
+    {
+      "check": "two_compared_literals raw-backed",
+      "pass": true
+    },
+    {
+      "check": "two_compared_literals exact length",
+      "pass": true
+    },
+    {
+      "check": "disk_selector_byte raw-backed",
+      "pass": true
+    },
+    {
+      "check": "disk_selector_byte exact length",
+      "pass": true
+    },
+    {
+      "check": "inherited branch40 matches current source without regenerating output",
+      "pass": true
+    },
+    {
+      "check": "inherited S03 prefix82 matches source",
+      "pass": true
+    },
+    {
+      "check": "inherited descriptor pair matches current source",
+      "pass": true
+    },
+    {
+      "check": "descriptor pair exact count and pointer",
+      "pass": true
+    },
+    {
+      "check": "literal bytes qualified",
+      "pass": true
+    },
+    {
+      "check": "disk selector zero only",
+      "pass": true
+    },
+    {
+      "check": "004814DA direct operand",
+      "pass": true
+    },
+    {
+      "check": "00481519 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00481528 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00481563 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EB0 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EB8 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EBC direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EF1 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EF6 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496EFB direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F00 direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F2D direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F2F direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F3D direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F5A direct operand",
+      "pass": true
+    },
+    {
+      "check": "00496F63 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74A2 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74B1 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74C0 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74C2 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74C9 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74CB direct operand",
+      "pass": true
+    },
+    {
+      "check": "004A74D0 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004AACF0 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004AACF9 direct operand",
+      "pass": true
+    },
+    {
+      "check": "004AAD02 direct operand",
+      "pass": true
+    },
+    {
+      "check": "ASM navigation source pin",
+      "pass": true
+    },
+    {
+      "check": "two ASM named writers only in finite search",
+      "pass": true
+    },
+    {
+      "check": "fixed PE stable",
+      "pass": true
+    },
+    {
+      "check": "navigation source stable",
+      "pass": true
+    },
+    {
+      "check": "retained pin Native-provider-writer-contract.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin resources/modern-rgba/manifest.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin server-packet-delta.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin CD1-mode-step/scope-write-correction.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin Native-selection-resource-gap/Native-background-branch-reference.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin CD2-selected-record-source/producer-copy-clear-and-field-contract.json",
+      "pass": true
+    },
+    {
+      "check": "retained pin CD2-selected-record-source/004A7450-52.bin",
+      "pass": true
+    },
+    {
+      "check": "retained pin receive-boundary/VA-00631EC8.bin",
+      "pass": true
+    },
+    {
+      "check": "scene and draw unknown",
+      "pass": true
+    }
+  ],
+  "all_pass": true,
+  "checks_count": 64,
+  "new_code_ranges": 5,
+  "new_code_bytes": 383,
+  "new_instruction_rows": 124,
+  "new_data_ranges": 2,
+  "new_data_bytes": 25,
+  "old_tests_replayed": false,
+  "unknown_callee_bodies_opened": 0,
+  "scope": "Targeted source delta only; no runnable/GUI/scene acceptance"
+}

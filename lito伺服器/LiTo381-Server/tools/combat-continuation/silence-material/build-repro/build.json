@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\build\\candidate-ground-material.jar",
+    "sha256": "9c5e60af1702d4e99d6a25da0fad1ce4ad66b1eeeb62db6637423b8145d7572d"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\candidate-silence-material.jar",
+    "sha256": "51d02d4dae284d440024956adafb5e1c69a3c3c7f4c89fb3400c90b145afe889"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeSilenceMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\build.py",
+      "sha256": "736edd34eef0bf81046e77ad15cb1a07577d5ab684145cc01811996ceb330117"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\SilenceMaterialMethods.java",
+      "sha256": "00418d09c96abe536e6c6964ddf720c68d66f0b9605e0edfda21e259e4b770c3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "faa9d252554acfefb0ec09ff7b04d744276dae84cf8936263a17bc426fed5d1c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "b0f82a698c8a9f016c14db99704ee87fc2109361ec6b50cf271c99d85b324159"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build-repro\\inputs\\sources\\NativeSilenceMaterialAction.java",
+      "sha256": "b50e229557a935ace6172f0997109bfc798e5d4a8c3df305eb128872af26873a"
+    }
+  ]
+}

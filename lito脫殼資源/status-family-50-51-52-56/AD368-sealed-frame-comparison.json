@@ -1,0 +1,538 @@
+{
+  "source_handoff": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r509-character-selection-channel-handoff.json",
+    "bytes": 24255,
+    "sha256": "9295E24C330A358C9893ED8A52F4DAC2E29D6637C6C9D853A04BD1A4B515B72D"
+  },
+  "capture": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\modern\\nw-747e22a785b249aeba3ee70420370c0f\\native-captures\\20261005-170830-p16184-1\\frames.jsonl",
+    "bytes": 21132,
+    "sha256": "E6840F9A98E51188DF4651D49C7A189F77D595A3A727BEEBB381AF5B0CDD7EED"
+  },
+  "R509_reported_state": "FINITE_9_NEW_CHECKS_PASS_FIRST_0C37_OWNER_BOUNDARY_PRESERVED",
+  "frames": [
+    {
+      "capture_line": 45,
+      "opcode": 80,
+      "record": {
+        "time": "2026-10-05T17:08:53.093858900Z",
+        "direction": "server_to_client",
+        "opcode": "0x50",
+        "wire_length": 10,
+        "plain": "50 12 08 09 0D 12 0C 00",
+        "note": "S_ABILITY_SCORES player=測試甲"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line045-S50.plain.bin",
+        "bytes": 8,
+        "sha256": "3853ABB7E4E6C55F042017A5869E9F84227621AE86F0CC6C6AD25D89EA508FEB"
+      },
+      "decode": [
+        {
+          "name": "strength",
+          "body_offset": 1,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348B0",
+          "write_width": 1
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 2,
+          "raw_hex": "08",
+          "native_raw_bits": 8,
+          "Java_semantic_value": 8,
+          "destination_va": "008348B1",
+          "write_width": 1
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 3,
+          "raw_hex": "09",
+          "native_raw_bits": 9,
+          "Java_semantic_value": 9,
+          "destination_va": "008348B2",
+          "write_width": 1
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 4,
+          "raw_hex": "0d",
+          "native_raw_bits": 13,
+          "Java_semantic_value": 13,
+          "destination_va": "008348B3",
+          "write_width": 1
+        },
+        {
+          "name": "constitution",
+          "body_offset": 5,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348B4",
+          "write_width": 1
+        },
+        {
+          "name": "charisma",
+          "body_offset": 6,
+          "raw_hex": "0c",
+          "native_raw_bits": 12,
+          "Java_semantic_value": 12,
+          "destination_va": "008348B5",
+          "write_width": 1
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 7,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348CB",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 43,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 46,
+      "opcode": 81,
+      "record": {
+        "time": "2026-10-05T17:08:53.095429500Z",
+        "direction": "server_to_client",
+        "opcode": "0x51",
+        "wire_length": 8,
+        "plain": "51 34 00 00 00 00",
+        "note": "S_EXP player=測試甲 level=52 experience=0"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line046-S51.plain.bin",
+        "bytes": 6,
+        "sha256": "179CB11144AD9FBDC1FC1F6732F630C0987C5F37E09040AF47B78ABD6A886112"
+      },
+      "decode": [
+        {
+          "name": "level",
+          "body_offset": 1,
+          "raw_hex": "34",
+          "native_raw_bits": 52,
+          "Java_semantic_value": 52,
+          "destination_va": "008348CA",
+          "write_width": 1
+        },
+        {
+          "name": "experience",
+          "body_offset": 2,
+          "raw_hex": "00000000",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C4",
+          "write_width": 4
+        }
+      ],
+      "earlier_S0C_capture_line": 43,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 47,
+      "opcode": 82,
+      "record": {
+        "time": "2026-10-05T17:08:53.095938600Z",
+        "direction": "server_to_client",
+        "opcode": "0x52",
+        "wire_length": 8,
+        "plain": "52 0A 00 00 00 00",
+        "note": "S_AC player=測試甲 base=10"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line047-S52.plain.bin",
+        "bytes": 6,
+        "sha256": "BFDE96D173CCF6C4BEEA81A1B7B62313F4AEC03B281B03FC50E2CA3906BD8FB1"
+      },
+      "decode": [
+        {
+          "name": "armor_class",
+          "body_offset": 1,
+          "raw_hex": "0a",
+          "native_raw_bits": 10,
+          "Java_semantic_value": 10,
+          "destination_va": "008348B6",
+          "write_width": 1
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 2,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C1",
+          "write_width": 1
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 3,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C0",
+          "write_width": 1
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 4,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348BF",
+          "write_width": 1
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 5,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348BE",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 43,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 48,
+      "opcode": 86,
+      "record": {
+        "time": "2026-10-05T17:08:53.095938600Z",
+        "direction": "server_to_client",
+        "opcode": "0x56",
+        "wire_length": 5,
+        "plain": "56 00 00",
+        "note": "S_MAGIC_STATUS battle-status player=測試甲 sp-modifier=0 mr-modifier=0 wire-sp=0 wire-mr=0"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line048-S56.plain.bin",
+        "bytes": 3,
+        "sha256": "CC50E47FBBC7CC274354D05D9B03AC75B23A66027E057A7A1951C4EA3D44EDFC"
+      },
+      "decode": [
+        {
+          "name": "spell_power_modifier",
+          "body_offset": 1,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348DF",
+          "write_width": 1
+        },
+        {
+          "name": "magic_resistance_modifier",
+          "body_offset": 2,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348E0",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 43,
+      "earlier_S0C_shared_values_match": null,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 75,
+      "opcode": 80,
+      "record": {
+        "time": "2026-10-05T17:09:04.980758900Z",
+        "direction": "server_to_client",
+        "opcode": "0x50",
+        "wire_length": 10,
+        "plain": "50 12 08 09 0D 12 0C 00",
+        "note": "S_ABILITY_SCORES player=SenderA"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line075-S50.plain.bin",
+        "bytes": 8,
+        "sha256": "3853ABB7E4E6C55F042017A5869E9F84227621AE86F0CC6C6AD25D89EA508FEB"
+      },
+      "decode": [
+        {
+          "name": "strength",
+          "body_offset": 1,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348B0",
+          "write_width": 1
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 2,
+          "raw_hex": "08",
+          "native_raw_bits": 8,
+          "Java_semantic_value": 8,
+          "destination_va": "008348B1",
+          "write_width": 1
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 3,
+          "raw_hex": "09",
+          "native_raw_bits": 9,
+          "Java_semantic_value": 9,
+          "destination_va": "008348B2",
+          "write_width": 1
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 4,
+          "raw_hex": "0d",
+          "native_raw_bits": 13,
+          "Java_semantic_value": 13,
+          "destination_va": "008348B3",
+          "write_width": 1
+        },
+        {
+          "name": "constitution",
+          "body_offset": 5,
+          "raw_hex": "12",
+          "native_raw_bits": 18,
+          "Java_semantic_value": 18,
+          "destination_va": "008348B4",
+          "write_width": 1
+        },
+        {
+          "name": "charisma",
+          "body_offset": 6,
+          "raw_hex": "0c",
+          "native_raw_bits": 12,
+          "Java_semantic_value": 12,
+          "destination_va": "008348B5",
+          "write_width": 1
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 7,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348CB",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 73,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 76,
+      "opcode": 81,
+      "record": {
+        "time": "2026-10-05T17:09:04.980758900Z",
+        "direction": "server_to_client",
+        "opcode": "0x51",
+        "wire_length": 8,
+        "plain": "51 34 00 00 00 00",
+        "note": "S_EXP player=SenderA level=52 experience=0"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line076-S51.plain.bin",
+        "bytes": 6,
+        "sha256": "179CB11144AD9FBDC1FC1F6732F630C0987C5F37E09040AF47B78ABD6A886112"
+      },
+      "decode": [
+        {
+          "name": "level",
+          "body_offset": 1,
+          "raw_hex": "34",
+          "native_raw_bits": 52,
+          "Java_semantic_value": 52,
+          "destination_va": "008348CA",
+          "write_width": 1
+        },
+        {
+          "name": "experience",
+          "body_offset": 2,
+          "raw_hex": "00000000",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C4",
+          "write_width": 4
+        }
+      ],
+      "earlier_S0C_capture_line": 73,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 77,
+      "opcode": 82,
+      "record": {
+        "time": "2026-10-05T17:09:04.981352800Z",
+        "direction": "server_to_client",
+        "opcode": "0x52",
+        "wire_length": 8,
+        "plain": "52 0A 00 00 00 00",
+        "note": "S_AC player=SenderA base=10"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line077-S52.plain.bin",
+        "bytes": 6,
+        "sha256": "BFDE96D173CCF6C4BEEA81A1B7B62313F4AEC03B281B03FC50E2CA3906BD8FB1"
+      },
+      "decode": [
+        {
+          "name": "armor_class",
+          "body_offset": 1,
+          "raw_hex": "0a",
+          "native_raw_bits": 10,
+          "Java_semantic_value": 10,
+          "destination_va": "008348B6",
+          "write_width": 1
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 2,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C1",
+          "write_width": 1
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 3,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348C0",
+          "write_width": 1
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 4,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348BF",
+          "write_width": 1
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 5,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348BE",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 73,
+      "earlier_S0C_shared_values_match": true,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    },
+    {
+      "capture_line": 78,
+      "opcode": 86,
+      "record": {
+        "time": "2026-10-05T17:09:04.981352800Z",
+        "direction": "server_to_client",
+        "opcode": "0x56",
+        "wire_length": 5,
+        "plain": "56 00 00",
+        "note": "S_MAGIC_STATUS battle-status player=SenderA sp-modifier=0 mr-modifier=0 wire-sp=0 wire-mr=0"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\status-family-50-51-52-56\\frames\\AD368-r509-line078-S56.plain.bin",
+        "bytes": 3,
+        "sha256": "CC50E47FBBC7CC274354D05D9B03AC75B23A66027E057A7A1951C4EA3D44EDFC"
+      },
+      "decode": [
+        {
+          "name": "spell_power_modifier",
+          "body_offset": 1,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348DF",
+          "write_width": 1
+        },
+        {
+          "name": "magic_resistance_modifier",
+          "body_offset": 2,
+          "raw_hex": "00",
+          "native_raw_bits": 0,
+          "Java_semantic_value": 0,
+          "destination_va": "008348E0",
+          "write_width": 1
+        }
+      ],
+      "earlier_S0C_capture_line": 73,
+      "earlier_S0C_shared_values_match": null,
+      "S0C_overlap_scope": "S50/S51/S52 share14listedstatdestinations withacceptedS0C. S56 hasnoS0C SP/MR fields; no equality inferred.",
+      "evidence_level": "SEALED_CAPTURE_ONLY",
+      "native_or_Modern_handler_execution_proven": false
+    }
+  ],
+  "actual_frames": 8,
+  "actual_fields": 32,
+  "sealed_sequence": [
+    {
+      "lines": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "opcodes": [
+        "0C",
+        "4D",
+        "50",
+        "51",
+        "52",
+        "56"
+      ]
+    },
+    {
+      "lines": [
+        73,
+        74,
+        75,
+        76,
+        77,
+        78
+      ],
+      "opcodes": [
+        "0C",
+        "4D",
+        "50",
+        "51",
+        "52",
+        "56"
+      ]
+    }
+  ],
+  "new_capture": false,
+  "native_or_player_ready": false,
+  "wire_difference_found": false
+}

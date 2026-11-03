@@ -1,0 +1,40 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-material\\build\\candidate-mass-teleport-material.jar",
+    "sha256": "d114a1001ed6d304360020ba00951d1d2215788366df0ccec3443a1a43b94a34"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build-repro\\candidate-mass-teleport-lifetime.jar",
+    "sha256": "d8062ca1505f3aa3c4912f4b1f31add7feb47c1aa1bc70fa4e7ea5f423f8edcc"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativePlayerCommit.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeMassTeleportAnswerLife$Lease.class",
+    "local/lito381/server/NativeMassTeleportAnswerLife.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build-repro\\inputs\\build.py",
+      "sha256": "fe659d068ce58a2a42aab46bf0f7cdf2d59b4da8090ea170a657384b9726c349"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build-repro\\inputs\\MassTeleportAnswerLifeMethods.java",
+      "sha256": "fe9b87ea0e1c8e32935c6e193caeda7fad44c1cd6770d475708487736b0a50dc"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build-repro\\inputs\\NativeMassTeleportAnswerLife.java",
+      "sha256": "44c1665cce32aa2af98921161228a122fa87006657ff1e0948af7167db5df3d5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ],
+  "original_PC_inverse_verified": true
+}

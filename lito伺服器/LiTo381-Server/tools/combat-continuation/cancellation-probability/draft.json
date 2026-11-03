@@ -1,0 +1,16 @@
+{
+  "status": "superseded-by-targeted-tested-candidate",
+  "qualification": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build\\qualification-current.json",
+    "sha256": "2a6d90de6ae496a21228d6e830ea99a4d7e0565e2013dc79cd7fd6eea8a48e48"
+  },
+  "original_draft": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build\\history\\draft-before-implementation.json",
+    "sha256": "a14094fd6125087c44f9d31b6ad879e3e59c31278fd7c267bb9e8a77a92ccc32"
+  },
+  "original_source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build\\initial-draft.java",
+    "sha256": "fec6cacc4b6021cda57c8f0b3437c52fead4df6da0b6532c7f08fb400bbe0a7d"
+  },
+  "formal_deployment_changed": false
+}

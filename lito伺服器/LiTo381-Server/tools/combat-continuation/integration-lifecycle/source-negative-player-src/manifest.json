@@ -1,0 +1,21 @@
+{
+  "status": "two-whole-file-inverse-PC-capture-and-admission-projections",
+  "original": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\NativeSourceNegativeTargets.java",
+    "sha256": "2bc2d9c935b1b9d836b289b6ba3ad0edf1c2895b44c75ab69f97c6ef00ef6735"
+  },
+  "versioned": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-player-src\\NativeSourceNegativeTargets.java",
+    "sha256": "307340dd80414b7b7b4ef617d4375f3a645122a06adcff7af87cb77661d1c413"
+  },
+  "changes": [
+    [
+      "if(n==null||n.kind()!=3){original(pc,packet,spell,fixture);return;}var aim=new Aim(c,n,null,skill);",
+      "ClientSession player=null;for(var candidate:c.players)if(c.bindings.get(candidate).object()==request.targetObjectId()){player=candidate;break;}if(player==null&&(n==null||n.kind()!=3)){original(pc,packet,spell,fixture);return;}if(player!=null)n=null;var aim=new Aim(c,n,player,skill);"
+    ],
+    [
+      "if(a.c.pc!=pc||a.skill!=skill||player!=null||owner!=a.owner||!a.valid())return false;",
+      "if(a.c.pc!=pc||a.skill!=skill||!a.valid()||(a.player!=null?(player!=a.player||owner!=null):(player!=null||owner!=a.owner)))return false;"
+    ]
+  ]
+}

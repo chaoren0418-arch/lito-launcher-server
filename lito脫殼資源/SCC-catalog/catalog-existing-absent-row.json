@@ -1,0 +1,24 @@
+{
+  "helper": "00465940 complete173bytes",
+  "room_key": "fullDWORDrow+4==incomingDWORD, base450BC0proven; notWORD",
+  "existing_row_when_UI68_zero": "firstmatchingkey→4659DAreturn, noconstructor/append/fieldoverwrite/textrefresh; subtype0NOTreplace",
+  "when_UI68_nonzero": "skipdedup, attemptappendduplicateifcount<256; flagmeaning/lifetimeunknown",
+  "absent_row": "ifcount>=256return; otherwiseallocate124bytes,463C10constructor,450260append. UI+5Ccapacityindependentlyguardsappend; callerdoesnotensureUIinitialized/capacity.",
+  "allocation_failure": "constructor skippedandNULLpassedtoappendhelper; noacceptednonnull/append/ownership proof",
+  "selection": "rowadd/constructor/append do notwriteUI+28 selectedindex or64A98CselectedpreviewWORD; defaultresetreceiptdoesnotguaranteeoldselectedrowrefresh",
+  "constructor_fields": {
+    "roomDWORD": "+4 via450BC0",
+    "iconDWORD": "+8",
+    "titlepointer": "+10 via463D10",
+    "displayusersDWORD": "+6C",
+    "capacityDWORD": "+70",
+    "mapBYTE": "+74",
+    "attributesBYTE": "+75",
+    "flagsDWORD": "+78",
+    "row_vtable": "4F8C14; diskvirtual+0C→463D10notruntimeproof"
+  },
+  "title_helper": "463D10 complete44bytes calls external773C7310 ifoldtitle!=0 thenexternal77406880(inputNULstring)storesreturn+10; provider/heapoperation/stringcopy success notqualified.",
+  "fullrow_UI_maps": "4A7EC0 attrsbit2=>icon7 elsebit4=>6 else5;4A7EE0 attrsbit2=>flagslow2 else1;4A7EF0 mode0/1/2/3/4/5=>2000/200/400/1000/800/100hex;invalidmode signednegative/>5 returnsuninitializedlocalDWORD, noauthority.",
+  "map_projection": "new>=9EA8 ordinarymapWORD signextendscan64AFD0count/64AFE0stride36+20key, firstmatchindexor0ifabsent; mapFFFF/FF9C uses lowbyte(map)-mode-1 modulo256. Olderordinarymaplowbyte+0C;special>=7794 FE-modeelse-1. RawWORD!=mapbinding/UIindexauthority.",
+  "defaultreset_adapter": "ExplicitAD368consumer mayreplacecatalogrowbyid withreceivedfullrow underownedchannel/epoch policy. This isadapterprojection, notNative465940 replacement orjoinedroomcommit."
+}

@@ -1,0 +1,131 @@
+{
+  "changes": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\SummonMaterialProbe.java",
+        "sha256": "0c39249a1465be88b623d720b657b7ccf8da6d89d7c7303f7a2b969f6d6880cc"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\SummonMaterialProbe.java",
+        "sha256": "9de55ddbca6885264d4c640ed407ab0be0f7ed814033f6c3fdbc424cc57fa736"
+      },
+      "replacements": [
+        {
+          "old": "/** Real skill51 packet and unchanged Source grade/cost/map branches. */",
+          "new": "/** Real skill51 packet; Source grade ignores a no-ring selection DWORD. */"
+        },
+        {
+          "old": "mode==0||mode==6||mode==7||mode==1&&before",
+          "new": "mode==0||mode==6||mode==7||mode==1&&before||mode==5&&!before"
+        },
+        {
+          "old": "mode==2||mode==3||mode==4||mode==5||mode==7",
+          "new": "mode==2||mode==3||mode==4||mode==7"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\test.py",
+        "sha256": "c9bf7e4f8016e13014a9bdfeb0413d71f6404aed8a6d824720c4a8c8e0c9637a"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\test.py",
+        "sha256": "d7c6e762ad779da25cd8b217cc4b6eaa32779f7115dd09c26da77a87190f5e81"
+      },
+      "replacements": [
+        {
+          "old": "b=read(R/'build/build.json');frozen",
+          "new": "b=read(R/'build/build.json');b['base']=read(R.parent/'elemental-lifetime/build/build.json')['runtime'];frozen"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\SummonFaultProbe.java",
+        "sha256": "6d6708c20cd328a5a416db179ffbf37bdca184a1668c891ecc2b77918ae17378"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\SummonFaultProbe.java",
+        "sha256": "6d6708c20cd328a5a416db179ffbf37bdca184a1668c891ecc2b77918ae17378"
+      },
+      "replacements": []
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\SummonStoppedProbe.java",
+        "sha256": "60a146e403f65065c978ee711fcf0a07d298809cc34711f291df3b629210f68c"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\SummonStoppedProbe.java",
+        "sha256": "60a146e403f65065c978ee711fcf0a07d298809cc34711f291df3b629210f68c"
+      },
+      "replacements": []
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\SummonEdgesProbe.java",
+        "sha256": "538302501fc9609ad5b467644b2643274029cf05ac03adb4a826710f5623a198"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\SummonEdgesProbe.java",
+        "sha256": "538302501fc9609ad5b467644b2643274029cf05ac03adb4a826710f5623a198"
+      },
+      "replacements": []
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\test_boundaries.py",
+        "sha256": "370246fa74fc4d25fa1f04e2d294f21326babb47786ada440c0b64a34c84a860"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\test_boundaries.py",
+        "sha256": "a34b3f524b6145216d6e55a6b2f7171cf8eb8bc74dc45d5c5c44a262b52fc9f7"
+      },
+      "replacements": [
+        {
+          "old": "old=Path(build['base']['path']);",
+          "new": "old=Path(read(R.parent/'elemental-lifetime/build/build.json')['runtime']['path']);"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\SummonChoicesProbe.java",
+        "sha256": "370cb86d2f8753ee84ea2d6c098872058d0e17090cf814b16264e0304f366771"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\SummonChoicesProbe.java",
+        "sha256": "da44a306da2154f45eef980b28f0542dafbc8e8deac69be65fc9e712b2155a85"
+      },
+      "replacements": [
+        {
+          "old": "inv.toggleNativeArmor(ring.objectId())",
+          "new": "inv.toggleRing(ring.objectId())"
+        },
+        {
+          "old": "need(pets.isEmpty()&&(int)get(pc,\"playerMp\")==1000&&(int)get(pc,\"playerHp\")==4000\n                        &&pc.nativeDeInventory(0).countCatalog(item)==count+3,\"existing LiTo selection preflight rejects before any accepted cost\");",
+          "new": "need(pets.isEmpty()&&(int)get(pc,\"playerMp\")==1000-cost(pc,51,row)&&(int)get(pc,\"playerHp\")==4000-row.hpCost()\n                        &&pc.nativeDeInventory(0).countCatalog(item)==3,\"Source level failure after accepted resources and materials\");\n                need(((Map<?,?>)get(pc,\"spellReadyNanos\")).containsKey(51),\"accepted level failure retains reuse\");"
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\test_choices.py",
+        "sha256": "f218e26ef44db2b40bbb124182aeb8f07738521c1dc48c8e22b0206b3f72a449"
+      },
+      "adapted": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\test_choices.py",
+        "sha256": "30c22e24e358191af5674512a2e1bf4585ae0ac47d7c981420e679192379d751"
+      },
+      "replacements": [
+        {
+          "old": "build/inputs/source-reference/SUMMON_MONSTER.java",
+          "new": "build/inputs/SUMMON_MONSTER.java"
+        }
+      ]
+    }
+  ],
+  "comparison_base": "elemental-lifetime b036; includes both material and selection changes",
+  "formal_deployment_changed": false
+}

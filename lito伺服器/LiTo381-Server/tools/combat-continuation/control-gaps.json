@@ -1,0 +1,209 @@
+{
+  "scope": "Four Source controls implemented and tested; composed-candidate regression receipts are indexed by latest_status, and the full combat release remains open",
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\config\\ConfigSkill.java",
+      "sha256": "ffc81f59cdd57d18371538b92ab0d6b591009fbb37355be86737adbc414e7d7e"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\skillmode\\SOLID_CARRIAGE.java",
+      "sha256": "56675b9adaa7e3f72df8df9331d353551b5b98c433dfc46fea820cb30bbd5d89"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\skillmode\\TELEPORT.java",
+      "sha256": "953a425baa071d8349df80f00a4fae13e56c4f4019dba78b5821764a41acd171"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\skill\\skillmode\\TELEPORT_TO_MATHER.java",
+      "sha256": "05d09cffc3037e433095d3226a343c421340af1326aed93679bb012a9a95315a"
+    },
+    {
+      "path": "D:\\lineage開發\\1-伺服器\\src\\com\\lineage\\server\\model\\L1AttackPc.java",
+      "sha256": "3fdc94cedc6c3ec803e731be238093bd7fe55c432cf84be6822a079a1627ddfc"
+    }
+  ],
+  "pending_controls": [],
+  "research_notes": {
+    "SLAY_BREAK_NOT_TELEPORT": "PC action lock excludes thunder binding; movement retains old lock. Actual skill 5 consumes accepted resources before blocked message/unlock. NPC lock unchanged. Skill 131 remains production-disabled; enabled 131 branch has not been behaviorally qualified.",
+    "INVIS_CAST_BREAK": "Source Boolean parser and 72 actual cast variants passed; enabled packet output matched parent. Separate overlapping 60/97 timers candidate is not implied qualified by this control receipt.",
+    "SOLID_CARRIAGE_MODE": "Shield/guarder handling, parser fallback, native equipment and source equipment snapshot paths tested. See exact result receipt.",
+    "Triple_Arrow_Dmg": "Bow/gauntlet, three indexed attempts, same caster and scoped calculation only; maximum multiplier before defense. Nonfinite values deliberately rejected at startup instead of Source NaN/Infinity acceptance."
+  },
+  "source_database_mutations": false,
+  "formal_deployment_changed": false,
+  "implemented_controls": [
+    {
+      "key": "SOLID_CARRIAGE_MODE",
+      "source_default": 1,
+      "behavior": "shield OR mode==1 and guarder; native useType25 predicate and source-stat fallback both need update",
+      "status": "implemented-targeted-tested-full-combat-release-pending",
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build\\candidate-solid-control.jar",
+        "sha256": "c02e9d1e716b08bb27c21184d11a72c2fc8e66be7581165ec99c08b82b20d99c"
+      },
+      "tests": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build\\tests\\result.json",
+        "sha256": "8e290d71b09ddfbc6f4aee20b8d13dffc1f867443e533fd3934bab099eb66039"
+      },
+      "reproduction": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\solid-control\\build-repro\\build.json",
+        "sha256": "58edcb826ce4b6a71e653ec444e8a0b46f79de54e1a0e31f879b2888b65aa522"
+      }
+    },
+    {
+      "key": "INVIS_CAST_BREAK",
+      "source_default": false,
+      "behavior": "admission/cancellation ordering in L1SkillUse; true currently configured",
+      "status": "implemented-targeted-tested-full-combat-release-pending",
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-control\\build\\candidate-invisibility-control.jar",
+        "sha256": "c7f2ad7ad7d527e5f2e6f86efbf3f42d48a4828e29543d9216d09ddec9f56729"
+      },
+      "tests": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-control\\build\\tests\\result.json",
+        "sha256": "f118a9ddaaeb54a6109a12580bea31495100247d1ccacbb1449828601cee99c2"
+      },
+      "reproduction": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\invisibility-control\\build-repro\\build.json",
+        "sha256": "8101c855d049e58ecf25af51833f96f46785e5176975f75dd167c157ba8ff491"
+      }
+    },
+    {
+      "key": "Triple_Arrow_Dmg",
+      "source_field": "TRIPLE_ARROW_DMG",
+      "source_default": 1.0,
+      "behavior": "max multiplier, bow/gauntlet only, at most three hit attempts; not final-damage multiplication",
+      "status": "implemented-targeted-tested-full-combat-release-pending",
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build\\candidate-triple-control.jar",
+        "sha256": "2fad5a7454e0369600ee97c09dd35fb03d53199835a261dc0fe758b170db62ac"
+      },
+      "tests": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build\\tests\\result.json",
+        "sha256": "2df721091a2b9af3f47feb8bd3332c779bebe5718f094d14d0540e9d806c0a0f"
+      },
+      "reproduction": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\triple-control\\build-repro\\build.json",
+        "sha256": "7a6e4db2dde3e698f6b9aae7bff4369c827f34e43dca996cb528178c58180a72"
+      }
+    },
+    {
+      "key": "SLAY_BREAK_NOT_TELEPORT",
+      "source_default": true,
+      "behavior": "THUNDER_GRAB guards in TELEPORT and TELEPORT_TO_MATHER",
+      "status": "implemented-targeted-tested-full-combat-release-pending",
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build\\candidate-bind-control.jar",
+        "sha256": "29534793beba10c1d1a4d4a922bfaae769cbc0ad9e3500c107f737ca49f38c1f"
+      },
+      "tests": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build\\tests\\result.json",
+        "sha256": "931b4c62441cae22837378557b9e8fd8b6f4f537693047686161f094c1267131"
+      },
+      "reproduction": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\bind-control\\build-repro\\build.json",
+        "sha256": "720729a42b551088e30453458880c1a9208c9f34ecb6cdda9b8bd0ebfe3efd6b"
+      }
+    }
+  ],
+  "latest_status": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\continuation-current.json",
+    "sha256": "f788eca166310816d93fdba5cabef285b16e10ef242b8d775f4b9e6ba7c0d20e"
+  },
+  "additional_control_audit": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\build\\control-inventory\\other-controls-scope.json",
+    "sha256": "e00a8f0639fb2244ef42e340e562798d89b37bb9b5dfa8a25412c8f0e74314df"
+  },
+  "additional_unqualified_controls": [
+    {
+      "key": "hpbar",
+      "source_field": "HPBAR",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgDisplayPhysicalEnable",
+      "source_field": "DMG_DISPLAY_ENABLE",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalMiss",
+      "source_field": "DMG_SPR_PHYSICAL_MISS",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalCrit",
+      "source_field": "DMG_SPR_PHYSICAL_CRIT",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalUnit",
+      "source_field": "DMG_SPR_PHYSICAL_UNIT",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalTen",
+      "source_field": "DMG_SPR_PHYSICAL_TEN",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalHundred",
+      "source_field": "DMG_SPR_PHYSICAL_HUNDRED",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalThousand",
+      "source_field": "DMG_SPR_PHYSICAL_THOUSAND",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprPhysicalTenThousand",
+      "source_field": "DMG_SPR_PHYSICAL_TEN_THOUSAND",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprMagicUnit",
+      "source_field": "DMG_SPR_MAGIC_UNIT",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprMagicTen",
+      "source_field": "DMG_SPR_MAGIC_TEN",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprMagicHundred",
+      "source_field": "DMG_SPR_MAGIC_HUNDRED",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprMagicThousand",
+      "source_field": "DMG_SPR_MAGIC_THOUSAND",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "DmgSprMagicTenThousand",
+      "source_field": "DMG_SPR_MAGIC_TEN_THOUSAND",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "KiringkuEffectEnable",
+      "source_field": "KIRINGKU_EFFECT_ENABLE",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    },
+    {
+      "key": "KiringkuEffectSpr",
+      "source_field": "KIRINGKU_EFFECT_SPR",
+      "status": "combat-presentation-consumer-and-native-resource-validation-pending"
+    }
+  ],
+  "excluded_controls": [
+    {
+      "key": "encounter_lv",
+      "reason": "LiTo has no death equipment or experience penalty"
+    }
+  ]
+}

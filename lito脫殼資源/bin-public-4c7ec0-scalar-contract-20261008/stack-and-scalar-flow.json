@@ -1,0 +1,44 @@
+{
+  "notation": "S is ESP at entry; [S] return address, [S+4] one4-byte scalar.",
+  "entry_prologue": [
+    {
+      "VA": "004C7EC0",
+      "operation": "pushEBP",
+      "ESP": "S-4"
+    },
+    {
+      "VA": "004C7EC1",
+      "operation": "movEBP,ESP",
+      "EBP": "S-4"
+    },
+    {
+      "VA": "004C7EC3",
+      "operation": "pushESI",
+      "ESP": "S-8"
+    },
+    {
+      "VA": "004C7EC4",
+      "operation": "pushEDI",
+      "ESP": "S-12"
+    }
+  ],
+  "argument_load": {
+    "VA": "004C7ECC",
+    "operand": "[EBP+8]",
+    "entry_relative": "[S+4]",
+    "destination": "EDI"
+  },
+  "match_path": "At shared epilogue ESP=S-12 assuming initial/step callees normally return without net stack change. PopEDI/ESI/EBP ->ESP=S; ret4 pops returnaddress+one4-byte argument ->callerESP=S+8.",
+  "fallback_path": "004C7EE3 pushes scalar ->ESP=S-16; directcall004C7DC0 supplies one stack argument plusECXreceiver. No addESP4 follows. Balanced shared epilogue therefore requires the fallback helper to consume/otherwise balance that4-byte argument on normal return. Its actual ret/body is not inspected and not independently proved.",
+  "explicit_ret": {
+    "va": "004C7EEE",
+    "rva": "000C7EEE",
+    "file_offset": "000C7EEE",
+    "size": 3,
+    "raw_hex": "c20400",
+    "mnemonic": "ret",
+    "operands": "4"
+  },
+  "convention_conclusion": "ECX receiver + one stack scalar + callee ret4 is thiscall-compatible x8632. Language/type/name and callee stack policies are not proved by this body alone.",
+  "callee_saved_registers": "Local body saves/restoresEBP/ESI/EDI. Across unknown callees their preservation and normal return are ABI assumptions; EBX untouched locally, transitive effects unknown."
+}

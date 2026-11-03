@@ -1,0 +1,15 @@
+{
+  "scope": "Independent readback of new ranges/witnesses plus fixed frame offsets; no old tests or producer execution",
+  "raw_ranges_checked": 27,
+  "instruction_witnesses_checked": 107,
+  "frame65_66_manual_byte_offsets_match": true,
+  "prior_primary_pins_preserved": 15,
+  "new_wire_differences": 0,
+  "Modern_guard_retained": true,
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCE-navigation-contract.json",
+    "bytes": 61645,
+    "sha256": "2256D57DC068C669E41BFFACB9F39D0E26E83C652D8B987F7524B3AAA2B178B4"
+  },
+  "all_match": true
+}

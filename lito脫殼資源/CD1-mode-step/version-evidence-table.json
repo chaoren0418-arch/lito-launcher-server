@@ -1,0 +1,64 @@
+[
+  {
+    "version": "AD368 original",
+    "JAR": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r507-java-dc70396256134d659ff6f11074a40af9\\candidate\\LiTo381-Server-letter-auth-wire-candidate.jar",
+      "bytes": 8906298,
+      "sha256": "AD368F49CF47E37A76A954AAFAAE1962AB2AB761057AAD4EE3145F7BBFD71219"
+    },
+    "source_report": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-map-selection-contract.json",
+      "bytes": 5713,
+      "sha256": "3D0B5BAA46238ED5589C193FBDE22B966B945EFDEAB70D2A2C3933A62CA8E15F"
+    },
+    "level": "Old finite static/archivedIL and7selectedcaptures only",
+    "map_scope": "Illegalmap restore firstmode map564 can differselected514; prior7capturehits0 applies onlyoldscope, not currentoverallabsence.",
+    "mode_scope": "Mode/parser/updateSettings selected methods exact code andCPsymbols matchC7; static qualification only."
+  },
+  {
+    "version": "0612833B restore parent",
+    "JAR": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-restore-candidate-b444ee8f9ba842b19e22e5a17f6775f9\\candidate\\AD368-ordinary-map-restore-candidate.jar",
+      "bytes": 8906278,
+      "sha256": "0612833BED929B72B5AD37D19CEEA88848A8CEED1C6797957AEF021A0936C17B"
+    },
+    "source_report": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-map-network.json",
+      "bytes": 11112,
+      "sha256": "3BBAA920A2B379B7562A38C3FF2CADC8842B98F7033C3A5C103174F4A28A8545"
+    },
+    "level": "Accepted parentsource/eightunits as reported, not launchedinC7networkbatch",
+    "map_scope": "Restore fixed currenthubrules; updateMap failureordering unchanged, parent notexecutedhere."
+  },
+  {
+    "version": "C7B169C0",
+    "JAR": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-update-candidate-0b9d4a0677cd4b098892a054809e8495\\candidate\\AD368-ordinary-map-update-order-candidate.jar",
+      "bytes": 8906263,
+      "sha256": "C7B169C00955B444BCDB357E6A63625A87AABC5B23F8F3A21E75988D8270D43A"
+    },
+    "source_report": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-map-network.json",
+      "bytes": 11112,
+      "sha256": "3BBAA920A2B379B7562A38C3FF2CADC8842B98F7033C3A5C103174F4A28A8545"
+    },
+    "frames": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-map-network-283c88cb7bbd4b07a3cea53b85717879\\evidence\\frames.json",
+      "bytes": 16427,
+      "sha256": "1FA280195BCA621AD7AB16A6E2B07CC8AABFD026FD92AE480FFA1396F3D52A26"
+    },
+    "indices": [
+      73,
+      90
+    ],
+    "level": "Accepted singleWAITING ordinarymap/auth network plusnewoffline mode methodequality",
+    "map_scope": "Host514→bothD5WORD514;Guestready1;Host509→perpeerD1ready0thenD5WORD509;Host/GuestFFFF→selfD5current509;Guestvalid514→selfD5summary0/config1 current509.",
+    "mode_scope": "These savedframes haveC_D1sub3,notC_D1sub2. Do not upgrade mode-step semantics/publication/failedmode changes to dynamic acceptance.",
+    "unknowns": [
+      "No Native GUI/numeric phase or live Modern acceptance; no new COUNTDOWN/RUNNING/disabled-map failure network case.",
+      "Source/IL/seeded unit vs real network evidence remain distinct. Current case does not upgrade the prior known-failure repair to network qualification.",
+      "Snapshots use separate getter/send/session reads; race/partial delivery/send failure/general transaction guarantees remain open. Quiet peer bounds are not wire ACK/completion.",
+      "Other modes/passwords/non-ASCII/maps/epoch/restart matrices and opaque callbacks are not expanded. S0 unknown and intercepted-work restrictions remain unchanged."
+    ]
+  }
+]

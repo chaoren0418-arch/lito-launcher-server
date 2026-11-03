@@ -1,0 +1,97 @@
+{
+  "entry_contract_read": {
+    "source_before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r525-entry-source-contract.json",
+      "bytes": 6633,
+      "sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8"
+    },
+    "captured_content_sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8",
+    "source_after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r525-entry-source-contract.json",
+      "bytes": 6633,
+      "sha256": "A607AE5CEE087F585FEB621DC5B44B568D321A30EB18673F36AC91BF41069EE8"
+    },
+    "stable_during_read": true,
+    "read_at": "2026-10-06T09:18:23.254117+08:00",
+    "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+  },
+  "selected_reference_pins": {
+    "original_main": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\main.rs",
+      "bytes": 17805,
+      "sha256": "F445E1B028DD51483BB11442C72B2A266CC47B89121B6627B0C4A5D1C7085335"
+    },
+    "candidate_main": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r525-player-entry-candidate\\LiToModern-R525.rs",
+      "bytes": 23652,
+      "sha256": "183F820C5D97DB7BD71CD8B50D1F9D2CF2861971F902DD11181C43784A0ADE37"
+    },
+    "skin_binding": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r506-native-menu-skin-binding.json",
+      "bytes": 37911,
+      "sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379"
+    }
+  },
+  "candidate_matches_existing_entry_reference": true,
+  "production_matches_existing_entry_reference": true,
+  "skin_binding_read": {
+    "source_before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r506-native-menu-skin-binding.json",
+      "bytes": 37911,
+      "sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379"
+    },
+    "captured_content_sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379",
+    "source_after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r506-native-menu-skin-binding.json",
+      "bytes": 37911,
+      "sha256": "27475914E201922FF0661EDA513B85E73C3E2CBF33FECB3CE71C7345CEF9D379"
+    },
+    "stable_during_read": true,
+    "read_at": "2026-10-06T09:18:23.254117+08:00",
+    "adoption": "source/metadata only; non-atomic; no GUI/test/build"
+  },
+  "skin_binding_matches_existing_reference": true,
+  "selected_skin_character_buttons": [
+    {
+      "id": 6303,
+      "bytes": 2354,
+      "sha256": "494D2C32B01322773BF8BE52FEFE92D30AFC1B4F903EF0F5D31985637EBCAA15",
+      "reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6303.rgba",
+        "bytes": 4692,
+        "sha256": "0E35436B302D3A291A0C20FD7E07F5C53C68D4CFB2943D95D55089DB85777389"
+      }
+    },
+    {
+      "id": 6304,
+      "bytes": 2354,
+      "sha256": "1EFCAAE803CE3217C84EAADD55B128276A50075A870091F92BDABA1B21E33D90",
+      "reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6304.rgba",
+        "bytes": 4692,
+        "sha256": "094289DBB295488E4655BEEC9B9698EB564A01C02AE57A71DA9FA13F44A97327"
+      }
+    },
+    {
+      "id": 6201,
+      "bytes": 2354,
+      "sha256": "D38AC62924BEC12F6C6E6D38B2EECCB4BF70E3CA068D836353EAFA3FC491D737",
+      "reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6201.rgba",
+        "bytes": 4692,
+        "sha256": "5EB1EAAD55513564B232F5C7BBD5933B16E73466DAA722D464924C6256594BF1"
+      }
+    },
+    {
+      "id": 6202,
+      "bytes": 2354,
+      "sha256": "22742E9A3B2358238121F11DE6609E7CEBC3691DC2997B7A7E8F9142E91115D0",
+      "reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r498-character-ui-study\\6202.rgba",
+        "bytes": 4692,
+        "sha256": "73A8C5177110531A090DA49D543DDA6A7AE288FD97BA07AC51532DCE8520DEEB"
+      }
+    }
+  ],
+  "scope": "Existing source entry/binding metadata only. No executable/library read or build/GUI/runtime acceptance; R526 active is not inspected."
+}

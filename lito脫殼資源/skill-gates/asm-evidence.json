@@ -1,0 +1,246 @@
+{
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "expected_bytes": 41179755,
+    "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "verified": true
+  },
+  "excerpts": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 135655,
+      "line_end": 135825,
+      "purpose": "class4 table producer and neighboring loop bounds",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-135655-135825.txt",
+        "bytes": 5241,
+        "sha256": "681CC90B4C82475A00A5A1A0FFFE628EE78CAAE2A3AF128BD790DE75803B5E42"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 565024,
+      "line_end": 565050,
+      "purpose": "static zero declarations and slot gaps",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-565024-565050.txt",
+        "bytes": 1836,
+        "sha256": "C11D3703706A698C40E278CAB8682D65612746EDAE47BDCDE5D10723ADCA5684"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 309248,
+      "line_end": 309333,
+      "purpose": "class publication, common overrides and reuse reset",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-309248-309333.txt",
+        "bytes": 2947,
+        "sha256": "B25F1648812DFB34F124C3B4F636CFD6EBF54CFAFB336025C091929A23F7497E"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 364990,
+      "line_end": 365098,
+      "purpose": "S1E metadata fallback and owner call",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-364990-365098.txt",
+        "bytes": 3198,
+        "sha256": "ED8D70835976148CA583F39BCF4A4FF84C8EEDC378764A7545CCD0E78FDE3091"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 420783,
+      "line_end": 420834,
+      "purpose": "index-only duplicate and count gate",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-420783-420834.txt",
+        "bytes": 1440,
+        "sha256": "8103D1F67824F3F64271132F6C8A6A1F0A325F22D916B3FC079B686DD21EC6F3"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 428394,
+      "line_end": 428518,
+      "purpose": "matching all class-order slots, no scene/pointer guard",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-428394-428518.txt",
+        "bytes": 3882,
+        "sha256": "C10BD0F579A27017B222EE020764A49351D8842225B350A96DC29A47B5F45829"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 428628,
+      "line_end": 428728,
+      "purpose": "rebuild creates -1/-1 placeholders independent of class-order values",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-428628-428728.txt",
+        "bytes": 3138,
+        "sha256": "B859E66886A5D4C16070B7508F468047A924F3DE146C44093FB431CB8F657E53"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 372377,
+      "line_end": 372391,
+      "purpose": "primary mode/phase dispatch",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-372377-372391.txt",
+        "bytes": 642,
+        "sha256": "E0E7D282E82A980FC02219EBD506A392BB78A0238C323FDCB8DA57FCF71AB037"
+      }
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "line_start": 374425,
+      "line_end": 374435,
+      "purpose": "fallback dispatch",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ASM-374425-374435.txt",
+        "bytes": 750,
+        "sha256": "2E88F8E3F14ADA68705C3DDD52C750111E145CB1A3010631D20B69B9B5FB9868"
+      }
+    }
+  ],
+  "literal_references": [
+    {
+      "line": 135734,
+      "text": "mov     ecx, offset dword_834548"
+    },
+    {
+      "line": 135790,
+      "text": "mov     ecx, offset dword_8345E8"
+    },
+    {
+      "line": 309253,
+      "text": "mov     ecx, offset dword_8345E8"
+    },
+    {
+      "line": 309255,
+      "text": "mov     off_635B80, ecx"
+    },
+    {
+      "line": 309262,
+      "text": "mov     edx, off_635B80"
+    },
+    {
+      "line": 309264,
+      "text": "mov     eax, off_635B80"
+    },
+    {
+      "line": 309266,
+      "text": "mov     ecx, off_635B80"
+    },
+    {
+      "line": 309268,
+      "text": "mov     edx, off_635B80"
+    },
+    {
+      "line": 309301,
+      "text": "mov     off_635B80, ecx"
+    },
+    {
+      "line": 309310,
+      "text": "mov     ecx, offset dword_834548"
+    },
+    {
+      "line": 309312,
+      "text": "mov     off_635B80, ecx"
+    },
+    {
+      "line": 309320,
+      "text": "mov     off_635B80, ecx"
+    },
+    {
+      "line": 428453,
+      "text": "mov     eax, off_635B80"
+    },
+    {
+      "line": 553986,
+      "text": "off_635B80 dd offset dword_834408       ; DATA XREF: sub_4928C0+22E↑w"
+    },
+    {
+      "line": 565025,
+      "text": "                                        ; ___:off_635B80↑o"
+    },
+    {
+      "line": 565033,
+      "text": "dword_834548 dd 10h dup(0)              ; DATA XREF: sub_43F6C0+BF↑o"
+    },
+    {
+      "line": 565045,
+      "text": "dword_8345E8 dd 30h dup(0)              ; DATA XREF: sub_43F6C0+161↑o"
+    }
+  ],
+  "different_ASM_input_PE": true,
+  "raw_fixed_PE_authoritative": true
+}

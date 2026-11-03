@@ -1,0 +1,14 @@
+{
+  "run_id": "world-selection-test-20261020-03",
+  "native_pid": 109988,
+  "server_pid": 105240,
+  "owner_exec_session": 42459,
+  "scale": 200,
+  "resources_ready": true,
+  "sql_ready": true,
+  "previous_cleanup_verified": true,
+  "formal_updated": false,
+  "source_database_modified": false,
+  "manual_result": "pending user",
+  "qualification": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\qualification.json"
+}

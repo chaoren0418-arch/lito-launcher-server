@@ -1,0 +1,38 @@
+{
+  "steps": [
+    {
+      "order": 1,
+      "action": "Supervisor waits for already active R525 and485F ready comparison; selects accepted server pin. No new task sent by this group.",
+      "adoption": "AD368 accepted ready baseline retained;485F settings acceptance does not qualify ready."
+    },
+    {
+      "order": 2,
+      "action": "Reuse M01–M08 existing directory/selection/epoch/current join/self/D1 mechanisms; no duplicate directory builder/row handle/parser or protection tests.",
+      "adoption": "Source-text inspection only; Modern group owns any later build/runtime acceptance."
+    },
+    {
+      "order": 3,
+      "action": "Dispatch ONE ordinary joined-room ready/prestart integration task for M09/M10: typed explicit D2 state0/1/2 control/reservation and exact E1 receipt projection/route under reused owned scope.",
+      "adoption": "Minimum initial scope is independently qualified singleton self/current ordinary room; wider self/observer/owner/battle eligibility needs accepted evidence and server gates. D1 is observation, not acknowledgement."
+    },
+    {
+      "order": 4,
+      "action": "Carry M11–M13 limits as decisions/evidence prerequisites; row5..8 UI and new protocol/generation fields are outside minimal dispatch.",
+      "adoption": "No Native runtime/GUI/WORLD authority or server selected/ready clearing inference."
+    }
+  ],
+  "one_task_acceptance_boundaries": [
+    "One explicit user intent serializes exact D2,state with existing Sender; refuse stale or unqualified scope before reserving.",
+    "Completed local write is not server ready ACK; D1 unique-alias state observation and E1 joined prestart receipt are separate ordered projections.",
+    "Valid E1 must stop reaching generic206/213 fallback in qualified ordinary room; malformed/out-of-scope remains refused.",
+    "Retire ready handles/projection at owned boundary/join invalidation; never use+3E/index/native marker/protected selector for ready or owner.",
+    "Pin accepted server semantics before choosing repeat1/state2 behavior; no inferred all-ready, local-timer WORLD or universal send transaction."
+  ],
+  "existing_tests": "Only existing names/header presence catalogued, none executed. No new tests authored or guessed names; these are future task behavior boundaries, not a new test suite.",
+  "prohibited_actions_retained": [
+    "No Native/GUI/input/injection/Java/SQL/provider/JVM/build/test/capture",
+    "No Modern/launcher/BIN writes or external helper imports",
+    "No unknown/private/virtual/external body expansion or WORLD/bot/matching scope",
+    "No cache cleanup retry/reframe/transfer/bypass"
+  ]
+}

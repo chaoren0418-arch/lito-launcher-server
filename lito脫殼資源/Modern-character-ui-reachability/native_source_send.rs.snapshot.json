@@ -1,0 +1,37 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+    "bytes": 7863,
+    "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+  },
+  "captured_content_sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_send.rs",
+    "bytes": 7863,
+    "sha256": "7AE4B2EB00EA1947A5E4B222F6013528DF5A63BC46B1F65FDFEC4EFA376F0EAC"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:11:34.558583+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      29,
+      31
+    ]
+  ],
+  "line_count": 71,
+  "implementation_lines": [
+    {
+      "line": 29,
+      "text": " pub(crate) fn prepare_character(&self,name:&[u8])->Result<Prepared>{"
+    },
+    {
+      "line": 30,
+      "text": "  ensure!(name.len()<28&&!name.contains(&0),\"selected source name exceeds NativeNUL capacity\");let mut body=Vec::with_capacity(name.len()+2);body.push(201);body.extend_from_slice(name);body.push(0);self.prepare_body(body)"
+    },
+    {
+      "line": 31,
+      "text": " }"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "adoptable_asset_available": false,
+  "new_extractable_assets": 0,
+  "blockers": [
+    {
+      "boundary": "Externalformatter773F5200 / IMGpointer4F7314",
+      "known": "Fixedfilename literal andordinal arguments;pointerdata agreeswithexternalcalltarget.",
+      "missing": "Actualformatteridentity/semantics notexecuted ormodulequalified. Noexternalbodyfollowed."
+    },
+    {
+      "boundary": "Private43FFC0(filename) ->EAX",
+      "known": "EAXindexes6479E8 providerpointertable.",
+      "missing": "Qualifiedrouteindex/domain/bounds/namespace andproviderselectioncontract;noclassifierbodyfollowed."
+    },
+    {
+      "boundary": "Dynamic6479E8[EAX*4] ordefault64798C ->ECX",
+      "known": "Two readroutesandfallback shown. Selecteddiskcellszero.",
+      "missing": "A qualifiedproviderobject/initializer withprovenbackingcontainerorloosepath;historicheappointersnotusable."
+    },
+    {
+      "boundary": "Private42EA50(ECXprovider,filename,outlength,0)",
+      "known": "Sourcecallsite/outlength andreturnedpointer usedasreadresult.",
+      "missing": "Providerreadcontractmapping exactfilename tosourcefileSHA+memberoffset+length+encoding andactualblob;callee/privatevirtualdownstreamnotexpanded."
+    }
+  ],
+  "minimum_evidence_contract": {
+    "request": {
+      "bank_global": "834BD0PNG or834BD4IMG",
+      "ordinal": "Exactrequestedid,notclass/sexguess",
+      "filename": "ActualASCIIrequestedname tiedtosourceformat/selectorcontext",
+      "source_version": "FixedPE/sourceartifactSHA andVA/RVA readcallsite"
+    },
+    "resolved_provider": {
+      "route": "6479E8bucketindex/provideridentity orqualified64798C fallback",
+      "provenance": "Accepted staticprovider/sourcecontract orpre-existingqualifiedsaved-readartifact;historicpointeraloneinsufficient",
+      "backing_source": "Actualcontainer/loosefileabsolutepath andSHA256",
+      "member": "Exactnamespace/membername/indexroworqualifiedloosefilepath",
+      "offset_length": "Resolvedboundedbyteoffset+length,orqualifiedwholeloosefile"
+    },
+    "blob": {
+      "raw_SHA256": "Extractedoriginalbyteshash matchingqualifiedsourceoffset",
+      "format": "ActualPNG/IMG/containerformat;encoding/decryptionprovenance",
+      "dimensions": "OriginalPNG_IHDR/qualifiedIMGheaderwidthheight,notbankcapacity",
+      "ownership": "Artifactorigin/version andexistingROsourcecorrespondence;loadedconvertedpayloaddistinguishedfromoriginalblob"
+    },
+    "acceptance": "Onlythen sourcebindingcandidate;GUI/renderer/classsex/lifecyclequalificationseparate. No wirefield/newservergeneration orNativecapacityinvented."
+  },
+  "current_tools_assessment": {
+    "within_current_scope_can_get_new_blob": false,
+    "reason": "StaticfixedPE bank/providercellsarenotinitializedobjects andsourcecallsstopatprivate43FFC0/42EA50;knownnamesdo notprovidecontainer/path/offset. Existingfiveindexabsenceisalreadysealed,no replay. No authorizedNativeprocess/runtimecapture andnosourcequalifiedassetoffsettocopy.",
+    "can_proceed_without_Native_when": "Givenonequalifiedprovider-to-existingcontainer/memberoffset contract oralready-existingqualifiedresolvedblob, currentread-onlyfile/Python tools canchecksourcehash/bounds/copyasmalloriginalblobtoROOTandverifyheader. NoGUI/process/newartrequired.",
+    "single_remaining_evidence_need": "One provider-to-file/member identity+boundedoffset/length+rawblob provenance for one PNG ordinal orIMG79. Do not repeatbankinitializerresearch orall803filenamechecks.",
+    "future_scope_if_static_research_authorized": "One explicitlyboundedprovider/classifierorcontainerreadcontract mayaddressmissingidentity, butcurrentbatchstopsbeforethoseprivatebodies."
+  },
+  "no_native_image_generated_or_extracted": true,
+  "R527_read_only_uninterrupted": true,
+  "background64AFA0_scope_not_expanded": true,
+  "wire_differences": [],
+  "server_notification_requested": false
+}

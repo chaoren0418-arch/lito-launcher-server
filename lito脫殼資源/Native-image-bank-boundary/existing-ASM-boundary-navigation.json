@@ -1,0 +1,2034 @@
+{
+  "read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    "content_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:04:44.232238+08:00"
+  },
+  "direct_PNG_global_references": [
+    {
+      "line": 45793,
+      "text": "mov     eax, dword_834BD0"
+    },
+    {
+      "line": 45857,
+      "text": "mov     eax, dword_834BD0"
+    },
+    {
+      "line": 444748,
+      "text": "mov     ecx, offset dword_834BD0"
+    },
+    {
+      "line": 444831,
+      "text": "mov     eax, dword_834BD0"
+    },
+    {
+      "line": 444851,
+      "text": "mov     eax, dword_834BD0"
+    },
+    {
+      "line": 444854,
+      "text": "mov     eax, dword_834BD0"
+    },
+    {
+      "line": 444866,
+      "text": "mov     dword_834BD0, 0"
+    },
+    {
+      "line": 565650,
+      "text": "dword_834BD0 dd 581B018h                ; DATA XREF: sub_415DA0+B4↑r"
+    }
+  ],
+  "selected_IMG_initializer_global_references": [
+    {
+      "line": 202631,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 202652,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 202671,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 202695,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 202713,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 212632,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 444599,
+      "text": "mov     ecx, offset dword_834BD4"
+    },
+    {
+      "line": 444717,
+      "text": "mov     dword_834BD4, 0"
+    },
+    {
+      "line": 565657,
+      "text": "dword_834BD4 dd 57E1960h                ; DATA XREF: sub_40D200+56↑r"
+    }
+  ],
+  "contexts": [
+    {
+      "name": "PNG bank initializer4D4A50",
+      "start_line": 444747,
+      "end_line": 444816,
+      "lines": [
+        {
+          "line": 444747,
+          "text": "sub_4D4A50 proc near                    ; CODE XREF: sub_4D4A40↑p"
+        },
+        {
+          "line": 444748,
+          "text": "mov     ecx, offset dword_834BD0"
+        },
+        {
+          "line": 444749,
+          "text": "jmp     loc_4D4A60"
+        },
+        {
+          "line": 444750,
+          "text": ""
+        },
+        {
+          "line": 444751,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444752,
+          "text": "align 10h"
+        },
+        {
+          "line": 444753,
+          "text": ""
+        },
+        {
+          "line": 444754,
+          "text": "loc_4D4A60:                             ; CODE XREF: sub_4D4A50+5↑j"
+        },
+        {
+          "line": 444755,
+          "text": "push    ebp"
+        },
+        {
+          "line": 444756,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 444757,
+          "text": "push    0FFFFFFFFh"
+        },
+        {
+          "line": 444758,
+          "text": "push    offset byte_4F5EAB"
+        },
+        {
+          "line": 444759,
+          "text": "mov     eax, large fs:0"
+        },
+        {
+          "line": 444760,
+          "text": "push    eax"
+        },
+        {
+          "line": 444761,
+          "text": "mov     large fs:0, esp"
+        },
+        {
+          "line": 444762,
+          "text": "push    ecx"
+        },
+        {
+          "line": 444763,
+          "text": "push    esi"
+        },
+        {
+          "line": 444764,
+          "text": "push    edi"
+        },
+        {
+          "line": 444765,
+          "text": "mov     edi, ecx"
+        },
+        {
+          "line": 444766,
+          "text": "push    0CA8h"
+        },
+        {
+          "line": 444767,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 444768,
+          "text": ""
+        },
+        {
+          "line": 444769,
+          "text": "sub_4D4A50 endp"
+        },
+        {
+          "line": 444770,
+          "text": ""
+        },
+        {
+          "line": 444771,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444772,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 444773,
+          "text": "mov     [edi], eax"
+        },
+        {
+          "line": 444774,
+          "text": "xor     esi, esi"
+        },
+        {
+          "line": 444775,
+          "text": ""
+        },
+        {
+          "line": 444776,
+          "text": ""
+        },
+        {
+          "line": 444777,
+          "text": "loc_4D4A8E:                             ; CODE XREF: ___:004D4AC6↓j"
+        },
+        {
+          "line": 444778,
+          "text": "push    0Ch"
+        },
+        {
+          "line": 444779,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 444780,
+          "text": ""
+        },
+        {
+          "line": 444781,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444782,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 444783,
+          "text": "mov     [ebp-10h], eax"
+        },
+        {
+          "line": 444784,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 444785,
+          "text": "mov     dword ptr [ebp-4], 0"
+        },
+        {
+          "line": 444786,
+          "text": "jz      short loc_4D4AB0"
+        },
+        {
+          "line": 444787,
+          "text": ""
+        },
+        {
+          "line": 444788,
+          "text": "push    esi"
+        },
+        {
+          "line": 444789,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 444790,
+          "text": "call    sub_4D5220"
+        },
+        {
+          "line": 444791,
+          "text": ""
+        },
+        {
+          "line": 444792,
+          "text": "jmp     short loc_4D4AB2"
+        },
+        {
+          "line": 444793,
+          "text": ""
+        },
+        {
+          "line": 444794,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444795,
+          "text": ""
+        },
+        {
+          "line": 444796,
+          "text": "loc_4D4AB0:                             ; CODE XREF: ___:004D4AA4↑j"
+        },
+        {
+          "line": 444797,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 444798,
+          "text": ""
+        },
+        {
+          "line": 444799,
+          "text": ""
+        },
+        {
+          "line": 444800,
+          "text": "loc_4D4AB2:                             ; CODE XREF: ___:004D4AAE↑j"
+        },
+        {
+          "line": 444801,
+          "text": "mov     ecx, [edi]"
+        },
+        {
+          "line": 444802,
+          "text": "inc     esi"
+        },
+        {
+          "line": 444803,
+          "text": "cmp     esi, 32Ah"
+        },
+        {
+          "line": 444804,
+          "text": "mov     dword ptr [ebp-4], 0FFFFFFFFh"
+        },
+        {
+          "line": 444805,
+          "text": "mov     [ecx+esi*4-4], eax"
+        },
+        {
+          "line": 444806,
+          "text": "jl      short loc_4D4A8E"
+        },
+        {
+          "line": 444807,
+          "text": ""
+        },
+        {
+          "line": 444808,
+          "text": "mov     ecx, [ebp-0Ch]"
+        },
+        {
+          "line": 444809,
+          "text": "mov     eax, edi"
+        },
+        {
+          "line": 444810,
+          "text": "pop     edi"
+        },
+        {
+          "line": 444811,
+          "text": "pop     esi"
+        },
+        {
+          "line": 444812,
+          "text": "mov     large fs:0, ecx"
+        },
+        {
+          "line": 444813,
+          "text": "mov     esp, ebp"
+        },
+        {
+          "line": 444814,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 444815,
+          "text": "retn"
+        },
+        {
+          "line": 444816,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "IMG bank initializer4D4940",
+      "start_line": 444598,
+      "end_line": 444667,
+      "lines": [
+        {
+          "line": 444598,
+          "text": "sub_4D4940 proc near                    ; CODE XREF: sub_4D4930↑p"
+        },
+        {
+          "line": 444599,
+          "text": "mov     ecx, offset dword_834BD4"
+        },
+        {
+          "line": 444600,
+          "text": "jmp     loc_4D4950"
+        },
+        {
+          "line": 444601,
+          "text": ""
+        },
+        {
+          "line": 444602,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444603,
+          "text": "align 10h"
+        },
+        {
+          "line": 444604,
+          "text": ""
+        },
+        {
+          "line": 444605,
+          "text": "loc_4D4950:                             ; CODE XREF: sub_4D4940+5↑j"
+        },
+        {
+          "line": 444606,
+          "text": "push    ebp"
+        },
+        {
+          "line": 444607,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 444608,
+          "text": "push    0FFFFFFFFh"
+        },
+        {
+          "line": 444609,
+          "text": "push    offset byte_4F5E8B"
+        },
+        {
+          "line": 444610,
+          "text": "mov     eax, large fs:0"
+        },
+        {
+          "line": 444611,
+          "text": "push    eax"
+        },
+        {
+          "line": 444612,
+          "text": "mov     large fs:0, esp"
+        },
+        {
+          "line": 444613,
+          "text": "push    ecx"
+        },
+        {
+          "line": 444614,
+          "text": "push    esi"
+        },
+        {
+          "line": 444615,
+          "text": "push    edi"
+        },
+        {
+          "line": 444616,
+          "text": "mov     edi, ecx"
+        },
+        {
+          "line": 444617,
+          "text": "push    7B08h"
+        },
+        {
+          "line": 444618,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 444619,
+          "text": ""
+        },
+        {
+          "line": 444620,
+          "text": "sub_4D4940 endp"
+        },
+        {
+          "line": 444621,
+          "text": ""
+        },
+        {
+          "line": 444622,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444623,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 444624,
+          "text": "mov     [edi], eax"
+        },
+        {
+          "line": 444625,
+          "text": "xor     esi, esi"
+        },
+        {
+          "line": 444626,
+          "text": ""
+        },
+        {
+          "line": 444627,
+          "text": ""
+        },
+        {
+          "line": 444628,
+          "text": "loc_4D497E:                             ; CODE XREF: ___:004D49B6↓j"
+        },
+        {
+          "line": 444629,
+          "text": "push    0Ch"
+        },
+        {
+          "line": 444630,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 444631,
+          "text": ""
+        },
+        {
+          "line": 444632,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444633,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 444634,
+          "text": "mov     [ebp-10h], eax"
+        },
+        {
+          "line": 444635,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 444636,
+          "text": "mov     dword ptr [ebp-4], 0"
+        },
+        {
+          "line": 444637,
+          "text": "jz      short loc_4D49A0"
+        },
+        {
+          "line": 444638,
+          "text": ""
+        },
+        {
+          "line": 444639,
+          "text": "push    esi"
+        },
+        {
+          "line": 444640,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 444641,
+          "text": "call    sub_4D4D40"
+        },
+        {
+          "line": 444642,
+          "text": ""
+        },
+        {
+          "line": 444643,
+          "text": "jmp     short loc_4D49A2"
+        },
+        {
+          "line": 444644,
+          "text": ""
+        },
+        {
+          "line": 444645,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 444646,
+          "text": ""
+        },
+        {
+          "line": 444647,
+          "text": "loc_4D49A0:                             ; CODE XREF: ___:004D4994↑j"
+        },
+        {
+          "line": 444648,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 444649,
+          "text": ""
+        },
+        {
+          "line": 444650,
+          "text": ""
+        },
+        {
+          "line": 444651,
+          "text": "loc_4D49A2:                             ; CODE XREF: ___:004D499E↑j"
+        },
+        {
+          "line": 444652,
+          "text": "mov     ecx, [edi]"
+        },
+        {
+          "line": 444653,
+          "text": "inc     esi"
+        },
+        {
+          "line": 444654,
+          "text": "cmp     esi, 1EC2h"
+        },
+        {
+          "line": 444655,
+          "text": "mov     dword ptr [ebp-4], 0FFFFFFFFh"
+        },
+        {
+          "line": 444656,
+          "text": "mov     [ecx+esi*4-4], eax"
+        },
+        {
+          "line": 444657,
+          "text": "jl      short loc_4D497E"
+        },
+        {
+          "line": 444658,
+          "text": ""
+        },
+        {
+          "line": 444659,
+          "text": "mov     ecx, [ebp-0Ch]"
+        },
+        {
+          "line": 444660,
+          "text": "mov     eax, edi"
+        },
+        {
+          "line": 444661,
+          "text": "pop     edi"
+        },
+        {
+          "line": 444662,
+          "text": "pop     esi"
+        },
+        {
+          "line": 444663,
+          "text": "mov     large fs:0, ecx"
+        },
+        {
+          "line": 444664,
+          "text": "mov     esp, ebp"
+        },
+        {
+          "line": 444665,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 444666,
+          "text": "retn"
+        },
+        {
+          "line": 444667,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "IMG entry constructor4D4D40",
+      "start_line": 445182,
+      "end_line": 445204,
+      "lines": [
+        {
+          "line": 445182,
+          "text": "sub_4D4D40 proc near                    ; CODE XREF: ___:004D4999↑p"
+        },
+        {
+          "line": 445183,
+          "text": "                                        ; sub_4D5220+A↓p"
+        },
+        {
+          "line": 445184,
+          "text": ""
+        },
+        {
+          "line": 445185,
+          "text": "arg_0= dword ptr  8"
+        },
+        {
+          "line": 445186,
+          "text": ""
+        },
+        {
+          "line": 445187,
+          "text": "push    ebp"
+        },
+        {
+          "line": 445188,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 445189,
+          "text": "mov     eax, ecx"
+        },
+        {
+          "line": 445190,
+          "text": "mov     ecx, [ebp+arg_0]"
+        },
+        {
+          "line": 445191,
+          "text": "mov     dword ptr [eax], offset off_4FA734"
+        },
+        {
+          "line": 445192,
+          "text": "mov     dword ptr [eax+4], 0"
+        },
+        {
+          "line": 445193,
+          "text": "mov     [eax+8], ecx"
+        },
+        {
+          "line": 445194,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 445195,
+          "text": "retn    4"
+        },
+        {
+          "line": 445196,
+          "text": ""
+        },
+        {
+          "line": 445197,
+          "text": "sub_4D4D40 endp"
+        },
+        {
+          "line": 445198,
+          "text": ""
+        },
+        {
+          "line": 445199,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 445200,
+          "text": "align 10h"
+        },
+        {
+          "line": 445201,
+          "text": ""
+        },
+        {
+          "line": 445202,
+          "text": "; =============== S U B R O U T I N E ======================================="
+        },
+        {
+          "line": 445203,
+          "text": ""
+        },
+        {
+          "line": 445204,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "PNG entry constructor4D5220",
+      "start_line": 445909,
+      "end_line": 445929,
+      "lines": [
+        {
+          "line": 445909,
+          "text": "sub_4D5220 proc near                    ; CODE XREF: ___:004D4AA9↑p"
+        },
+        {
+          "line": 445910,
+          "text": ""
+        },
+        {
+          "line": 445911,
+          "text": "arg_0= dword ptr  8"
+        },
+        {
+          "line": 445912,
+          "text": ""
+        },
+        {
+          "line": 445913,
+          "text": "push    ebp"
+        },
+        {
+          "line": 445914,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 445915,
+          "text": "mov     eax, [ebp+arg_0]"
+        },
+        {
+          "line": 445916,
+          "text": "push    esi"
+        },
+        {
+          "line": 445917,
+          "text": "mov     esi, ecx"
+        },
+        {
+          "line": 445918,
+          "text": "push    eax"
+        },
+        {
+          "line": 445919,
+          "text": "call    sub_4D4D40"
+        },
+        {
+          "line": 445920,
+          "text": ""
+        },
+        {
+          "line": 445921,
+          "text": "mov     dword ptr [esi], offset off_4FA738"
+        },
+        {
+          "line": 445922,
+          "text": "mov     eax, esi"
+        },
+        {
+          "line": 445923,
+          "text": "pop     esi"
+        },
+        {
+          "line": 445924,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 445925,
+          "text": "retn    4"
+        },
+        {
+          "line": 445926,
+          "text": ""
+        },
+        {
+          "line": 445927,
+          "text": "sub_4D5220 endp"
+        },
+        {
+          "line": 445928,
+          "text": ""
+        },
+        {
+          "line": 445929,
+          "text": "; ---------------------------------------------------------------------------"
+        }
+      ]
+    },
+    {
+      "name": "IMG reader formatting/provider boundary4D4D90",
+      "start_line": 445241,
+      "end_line": 445430,
+      "lines": [
+        {
+          "line": 445241,
+          "text": ""
+        },
+        {
+          "line": 445242,
+          "text": "push    ebp"
+        },
+        {
+          "line": 445243,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 445244,
+          "text": "sub     esp, 104h"
+        },
+        {
+          "line": 445245,
+          "text": "movsx   eax, byte_64B6DC"
+        },
+        {
+          "line": 445246,
+          "text": "dec     eax                             ; switch 5 cases"
+        },
+        {
+          "line": 445247,
+          "text": "push    esi"
+        },
+        {
+          "line": 445248,
+          "text": "push    edi"
+        },
+        {
+          "line": 445249,
+          "text": "mov     edi, dword_4F7314"
+        },
+        {
+          "line": 445250,
+          "text": "cmp     eax, 4"
+        },
+        {
+          "line": 445251,
+          "text": "mov     esi, ecx"
+        },
+        {
+          "line": 445252,
+          "text": "ja      def_4D4DB4                      ; jumptable 004D4DB4 default case, case 2"
+        },
+        {
+          "line": 445253,
+          "text": ""
+        },
+        {
+          "line": 445254,
+          "text": "jmp     jpt_4D4DB4[eax*4]               ; switch jump"
+        },
+        {
+          "line": 445255,
+          "text": ""
+        },
+        {
+          "line": 445256,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 445257,
+          "text": ""
+        },
+        {
+          "line": 445258,
+          "text": "loc_4D4DBB:                             ; CODE XREF: sub_4D4D90+24↑j"
+        },
+        {
+          "line": 445259,
+          "text": "                                        ; DATA XREF: ___:jpt_4D4DB4↓o"
+        },
+        {
+          "line": 445260,
+          "text": "mov     eax, [esi+8]                    ; jumptable 004D4DB4 case 3"
+        },
+        {
+          "line": 445261,
+          "text": "push    eax"
+        },
+        {
+          "line": 445262,
+          "text": "push    offset aDcImg                   ; \"%dc.img\""
+        },
+        {
+          "line": 445263,
+          "text": ""
+        },
+        {
+          "line": 445264,
+          "text": ""
+        },
+        {
+          "line": 445265,
+          "text": "loc_4D4DC4:                             ; CODE XREF: sub_4D4D90+61↓j"
+        },
+        {
+          "line": 445266,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445267,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445268,
+          "text": "call    edi ; dword_4F7314"
+        },
+        {
+          "line": 445269,
+          "text": ""
+        },
+        {
+          "line": 445270,
+          "text": "add     esp, 0Ch"
+        },
+        {
+          "line": 445271,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445272,
+          "text": "call    sub_43FFC0"
+        },
+        {
+          "line": 445273,
+          "text": ""
+        },
+        {
+          "line": 445274,
+          "text": "mov     ecx, dword_6479E8[eax*4]"
+        },
+        {
+          "line": 445275,
+          "text": "test    ecx, ecx"
+        },
+        {
+          "line": 445276,
+          "text": "jz      short loc_4D4E33"
+        },
+        {
+          "line": 445277,
+          "text": ""
+        },
+        {
+          "line": 445278,
+          "text": "jmp     short loc_4D4E1E"
+        },
+        {
+          "line": 445279,
+          "text": ""
+        },
+        {
+          "line": 445280,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 445281,
+          "text": ""
+        },
+        {
+          "line": 445282,
+          "text": "loc_4D4DE8:                             ; CODE XREF: sub_4D4D90+24↑j"
+        },
+        {
+          "line": 445283,
+          "text": "                                        ; DATA XREF: ___:jpt_4D4DB4↓o"
+        },
+        {
+          "line": 445284,
+          "text": "mov     eax, [esi+8]                    ; jumptable 004D4DB4 case 5"
+        },
+        {
+          "line": 445285,
+          "text": "push    eax"
+        },
+        {
+          "line": 445286,
+          "text": "push    offset aDhImg                   ; \"%dh.img\""
+        },
+        {
+          "line": 445287,
+          "text": "jmp     short loc_4D4DC4"
+        },
+        {
+          "line": 445288,
+          "text": ""
+        },
+        {
+          "line": 445289,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 445290,
+          "text": ""
+        },
+        {
+          "line": 445291,
+          "text": "loc_4D4DF3:                             ; CODE XREF: sub_4D4D90+24↑j"
+        },
+        {
+          "line": 445292,
+          "text": "                                        ; DATA XREF: ___:jpt_4D4DB4↓o"
+        },
+        {
+          "line": 445293,
+          "text": "mov     eax, [esi+8]                    ; jumptable 004D4DB4 case 4"
+        },
+        {
+          "line": 445294,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445295,
+          "text": "push    eax"
+        },
+        {
+          "line": 445296,
+          "text": "push    offset aDjImg                   ; \"%dj.img\""
+        },
+        {
+          "line": 445297,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445298,
+          "text": "call    edi ; dword_4F7314"
+        },
+        {
+          "line": 445299,
+          "text": ""
+        },
+        {
+          "line": 445300,
+          "text": "add     esp, 0Ch"
+        },
+        {
+          "line": 445301,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445302,
+          "text": "call    sub_43FFC0"
+        },
+        {
+          "line": 445303,
+          "text": ""
+        },
+        {
+          "line": 445304,
+          "text": "mov     ecx, dword_6479E8[eax*4]"
+        },
+        {
+          "line": 445305,
+          "text": "test    ecx, ecx"
+        },
+        {
+          "line": 445306,
+          "text": "jz      short loc_4D4E33"
+        },
+        {
+          "line": 445307,
+          "text": ""
+        },
+        {
+          "line": 445308,
+          "text": ""
+        },
+        {
+          "line": 445309,
+          "text": "loc_4D4E1E:                             ; CODE XREF: sub_4D4D90+56↑j"
+        },
+        {
+          "line": 445310,
+          "text": "lea     edx, [ebp+var_4]"
+        },
+        {
+          "line": 445311,
+          "text": "push    0"
+        },
+        {
+          "line": 445312,
+          "text": "lea     eax, [ebp+var_104]"
+        },
+        {
+          "line": 445313,
+          "text": "push    edx"
+        },
+        {
+          "line": 445314,
+          "text": "push    eax"
+        },
+        {
+          "line": 445315,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 445316,
+          "text": ""
+        },
+        {
+          "line": 445317,
+          "text": "mov     [esi+4], eax"
+        },
+        {
+          "line": 445318,
+          "text": ""
+        },
+        {
+          "line": 445319,
+          "text": ""
+        },
+        {
+          "line": 445320,
+          "text": "loc_4D4E33:                             ; CODE XREF: sub_4D4D90+54↑j"
+        },
+        {
+          "line": 445321,
+          "text": "                                        ; sub_4D4D90+8C↑j"
+        },
+        {
+          "line": 445322,
+          "text": "mov     eax, [esi+4]"
+        },
+        {
+          "line": 445323,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 445324,
+          "text": "jnz     loc_4D4F0F"
+        },
+        {
+          "line": 445325,
+          "text": ""
+        },
+        {
+          "line": 445326,
+          "text": "jmp     short loc_4D4E8B"
+        },
+        {
+          "line": 445327,
+          "text": ""
+        },
+        {
+          "line": 445328,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 445329,
+          "text": ""
+        },
+        {
+          "line": 445330,
+          "text": "loc_4D4E40:                             ; CODE XREF: sub_4D4D90+24↑j"
+        },
+        {
+          "line": 445331,
+          "text": "                                        ; DATA XREF: ___:jpt_4D4DB4↓o"
+        },
+        {
+          "line": 445332,
+          "text": "mov     eax, [esi+8]                    ; jumptable 004D4DB4 case 1"
+        },
+        {
+          "line": 445333,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445334,
+          "text": "push    eax"
+        },
+        {
+          "line": 445335,
+          "text": "push    offset aDeImg                   ; \"%de.img\""
+        },
+        {
+          "line": 445336,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445337,
+          "text": "call    edi ; dword_4F7314"
+        },
+        {
+          "line": 445338,
+          "text": ""
+        },
+        {
+          "line": 445339,
+          "text": "add     esp, 0Ch"
+        },
+        {
+          "line": 445340,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445341,
+          "text": "call    sub_43FFC0"
+        },
+        {
+          "line": 445342,
+          "text": ""
+        },
+        {
+          "line": 445343,
+          "text": "mov     ecx, dword_6479E8[eax*4]"
+        },
+        {
+          "line": 445344,
+          "text": "test    ecx, ecx"
+        },
+        {
+          "line": 445345,
+          "text": "jz      short loc_4D4E80"
+        },
+        {
+          "line": 445346,
+          "text": ""
+        },
+        {
+          "line": 445347,
+          "text": "lea     edx, [ebp+var_4]"
+        },
+        {
+          "line": 445348,
+          "text": "push    0"
+        },
+        {
+          "line": 445349,
+          "text": "lea     eax, [ebp+var_104]"
+        },
+        {
+          "line": 445350,
+          "text": "push    edx"
+        },
+        {
+          "line": 445351,
+          "text": "push    eax"
+        },
+        {
+          "line": 445352,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 445353,
+          "text": ""
+        },
+        {
+          "line": 445354,
+          "text": "mov     [esi+4], eax"
+        },
+        {
+          "line": 445355,
+          "text": ""
+        },
+        {
+          "line": 445356,
+          "text": ""
+        },
+        {
+          "line": 445357,
+          "text": "loc_4D4E80:                             ; CODE XREF: sub_4D4D90+D9↑j"
+        },
+        {
+          "line": 445358,
+          "text": "mov     eax, [esi+4]"
+        },
+        {
+          "line": 445359,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 445360,
+          "text": "jnz     loc_4D4F0F"
+        },
+        {
+          "line": 445361,
+          "text": ""
+        },
+        {
+          "line": 445362,
+          "text": ""
+        },
+        {
+          "line": 445363,
+          "text": "loc_4D4E8B:                             ; CODE XREF: sub_4D4D90+AE↑j"
+        },
+        {
+          "line": 445364,
+          "text": "lea     ecx, [ebp+var_4]"
+        },
+        {
+          "line": 445365,
+          "text": "push    0"
+        },
+        {
+          "line": 445366,
+          "text": "lea     edx, [ebp+var_104]"
+        },
+        {
+          "line": 445367,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445368,
+          "text": "mov     ecx, dword_64798C"
+        },
+        {
+          "line": 445369,
+          "text": "push    edx"
+        },
+        {
+          "line": 445370,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 445371,
+          "text": ""
+        },
+        {
+          "line": 445372,
+          "text": "mov     [esi+4], eax"
+        },
+        {
+          "line": 445373,
+          "text": ""
+        },
+        {
+          "line": 445374,
+          "text": ""
+        },
+        {
+          "line": 445375,
+          "text": "def_4D4DB4:                             ; CODE XREF: sub_4D4D90+1E↑j"
+        },
+        {
+          "line": 445376,
+          "text": "                                        ; sub_4D4D90+24↑j"
+        },
+        {
+          "line": 445377,
+          "text": "                                        ; DATA XREF: ___:jpt_4D4DB4↓o"
+        },
+        {
+          "line": 445378,
+          "text": "mov     eax, [esi+4]                    ; jumptable 004D4DB4 default case, case 2"
+        },
+        {
+          "line": 445379,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 445380,
+          "text": "jnz     short loc_4D4F0F"
+        },
+        {
+          "line": 445381,
+          "text": ""
+        },
+        {
+          "line": 445382,
+          "text": "mov     eax, [esi+8]"
+        },
+        {
+          "line": 445383,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445384,
+          "text": "push    eax"
+        },
+        {
+          "line": 445385,
+          "text": "push    offset aDImg                    ; \"%d.img\""
+        },
+        {
+          "line": 445386,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445387,
+          "text": "call    edi ; dword_4F7314"
+        },
+        {
+          "line": 445388,
+          "text": ""
+        },
+        {
+          "line": 445389,
+          "text": "add     esp, 0Ch"
+        },
+        {
+          "line": 445390,
+          "text": "lea     ecx, [ebp+var_104]"
+        },
+        {
+          "line": 445391,
+          "text": "call    sub_43FFC0"
+        },
+        {
+          "line": 445392,
+          "text": ""
+        },
+        {
+          "line": 445393,
+          "text": "mov     ecx, dword_6479E8[eax*4]"
+        },
+        {
+          "line": 445394,
+          "text": "test    ecx, ecx"
+        },
+        {
+          "line": 445395,
+          "text": "jz      short loc_4D4EED"
+        },
+        {
+          "line": 445396,
+          "text": ""
+        },
+        {
+          "line": 445397,
+          "text": "lea     edx, [ebp+var_4]"
+        },
+        {
+          "line": 445398,
+          "text": "push    0"
+        },
+        {
+          "line": 445399,
+          "text": "lea     eax, [ebp+var_104]"
+        },
+        {
+          "line": 445400,
+          "text": "push    edx"
+        },
+        {
+          "line": 445401,
+          "text": "push    eax"
+        },
+        {
+          "line": 445402,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 445403,
+          "text": ""
+        },
+        {
+          "line": 445404,
+          "text": "mov     [esi+4], eax"
+        },
+        {
+          "line": 445405,
+          "text": ""
+        },
+        {
+          "line": 445406,
+          "text": ""
+        },
+        {
+          "line": 445407,
+          "text": "loc_4D4EED:                             ; CODE XREF: sub_4D4D90+146↑j"
+        },
+        {
+          "line": 445408,
+          "text": "mov     eax, [esi+4]"
+        },
+        {
+          "line": 445409,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 445410,
+          "text": "jnz     short loc_4D4F0F"
+        },
+        {
+          "line": 445411,
+          "text": ""
+        },
+        {
+          "line": 445412,
+          "text": "lea     ecx, [ebp+var_4]"
+        },
+        {
+          "line": 445413,
+          "text": "push    0"
+        },
+        {
+          "line": 445414,
+          "text": "lea     edx, [ebp+var_104]"
+        },
+        {
+          "line": 445415,
+          "text": "push    ecx"
+        },
+        {
+          "line": 445416,
+          "text": "mov     ecx, dword_64798C"
+        },
+        {
+          "line": 445417,
+          "text": "push    edx"
+        },
+        {
+          "line": 445418,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 445419,
+          "text": ""
+        },
+        {
+          "line": 445420,
+          "text": "mov     [esi+4], eax"
+        },
+        {
+          "line": 445421,
+          "text": ""
+        },
+        {
+          "line": 445422,
+          "text": ""
+        },
+        {
+          "line": 445423,
+          "text": "loc_4D4F0F:                             ; CODE XREF: sub_4D4D90+A8↑j"
+        },
+        {
+          "line": 445424,
+          "text": "                                        ; sub_4D4D90+F5↑j"
+        },
+        {
+          "line": 445425,
+          "text": "                                        ; sub_4D4D90+11B↑j"
+        },
+        {
+          "line": 445426,
+          "text": "                                        ; sub_4D4D90+162↑j"
+        },
+        {
+          "line": 445427,
+          "text": "mov     al, byte_641298"
+        },
+        {
+          "line": 445428,
+          "text": "test    al, al"
+        },
+        {
+          "line": 445429,
+          "text": "jz      short loc_4D4F28"
+        },
+        {
+          "line": 445430,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "PNG reader formatting/provider boundary4D5270",
+      "start_line": 445966,
+      "end_line": 446066,
+      "lines": [
+        {
+          "line": 445966,
+          "text": "sub_4D5270 proc near                    ; DATA XREF: ___:off_4FA738↓o"
+        },
+        {
+          "line": 445967,
+          "text": ""
+        },
+        {
+          "line": 445968,
+          "text": "var_124= byte ptr -124h"
+        },
+        {
+          "line": 445969,
+          "text": "var_24= byte ptr -24h"
+        },
+        {
+          "line": 445970,
+          "text": "var_20= byte ptr -20h"
+        },
+        {
+          "line": 445971,
+          "text": "var_1C= dword ptr -1Ch"
+        },
+        {
+          "line": 445972,
+          "text": "var_18= dword ptr -18h"
+        },
+        {
+          "line": 445973,
+          "text": "var_14= dword ptr -14h"
+        },
+        {
+          "line": 445974,
+          "text": "var_10= dword ptr -10h"
+        },
+        {
+          "line": 445975,
+          "text": "var_C= dword ptr -0Ch"
+        },
+        {
+          "line": 445976,
+          "text": "var_8= dword ptr -8"
+        },
+        {
+          "line": 445977,
+          "text": "var_4= dword ptr -4"
+        },
+        {
+          "line": 445978,
+          "text": ""
+        },
+        {
+          "line": 445979,
+          "text": "push    ebp"
+        },
+        {
+          "line": 445980,
+          "text": "mov     ebp, esp"
+        },
+        {
+          "line": 445981,
+          "text": "sub     esp, 124h"
+        },
+        {
+          "line": 445982,
+          "text": "push    ebx"
+        },
+        {
+          "line": 445983,
+          "text": "push    esi"
+        },
+        {
+          "line": 445984,
+          "text": "push    edi"
+        },
+        {
+          "line": 445985,
+          "text": "mov     edi, ecx"
+        },
+        {
+          "line": 445986,
+          "text": "xor     esi, esi"
+        },
+        {
+          "line": 445987,
+          "text": "mov     eax, [edi+4]"
+        },
+        {
+          "line": 445988,
+          "text": "cmp     eax, esi"
+        },
+        {
+          "line": 445989,
+          "text": "jz      short loc_4D5293"
+        },
+        {
+          "line": 445990,
+          "text": ""
+        },
+        {
+          "line": 445991,
+          "text": "push    eax"
+        },
+        {
+          "line": 445992,
+          "text": "call    sub_4F103C"
+        },
+        {
+          "line": 445993,
+          "text": ""
+        },
+        {
+          "line": 445994,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 445995,
+          "text": "mov     [edi+4], esi"
+        },
+        {
+          "line": 445996,
+          "text": ""
+        },
+        {
+          "line": 445997,
+          "text": ""
+        },
+        {
+          "line": 445998,
+          "text": "loc_4D5293:                             ; CODE XREF: sub_4D5270+15↑j"
+        },
+        {
+          "line": 445999,
+          "text": "mov     eax, [edi+8]"
+        },
+        {
+          "line": 446000,
+          "text": "lea     ecx, [ebp+var_124]"
+        },
+        {
+          "line": 446001,
+          "text": "push    eax"
+        },
+        {
+          "line": 446002,
+          "text": "push    offset aDPng                    ; \"%d.png\""
+        },
+        {
+          "line": 446003,
+          "text": "push    ecx"
+        },
+        {
+          "line": 446004,
+          "text": "call    near ptr 773F5200h"
+        },
+        {
+          "line": 446005,
+          "text": ""
+        },
+        {
+          "line": 446006,
+          "text": "nop"
+        },
+        {
+          "line": 446007,
+          "text": "add     esp, 0Ch"
+        },
+        {
+          "line": 446008,
+          "text": "lea     ecx, [ebp+var_124]"
+        },
+        {
+          "line": 446009,
+          "text": "call    sub_43FFC0"
+        },
+        {
+          "line": 446010,
+          "text": ""
+        },
+        {
+          "line": 446011,
+          "text": "mov     ecx, dword_6479E8[eax*4]"
+        },
+        {
+          "line": 446012,
+          "text": "cmp     ecx, esi"
+        },
+        {
+          "line": 446013,
+          "text": "jz      short loc_4D52DC"
+        },
+        {
+          "line": 446014,
+          "text": ""
+        },
+        {
+          "line": 446015,
+          "text": "lea     edx, [ebp+var_1C]"
+        },
+        {
+          "line": 446016,
+          "text": "push    esi"
+        },
+        {
+          "line": 446017,
+          "text": "lea     eax, [ebp+var_124]"
+        },
+        {
+          "line": 446018,
+          "text": "push    edx"
+        },
+        {
+          "line": 446019,
+          "text": "push    eax"
+        },
+        {
+          "line": 446020,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 446021,
+          "text": ""
+        },
+        {
+          "line": 446022,
+          "text": "mov     ebx, eax"
+        },
+        {
+          "line": 446023,
+          "text": "cmp     ebx, esi"
+        },
+        {
+          "line": 446024,
+          "text": "mov     [ebp+var_14], ebx"
+        },
+        {
+          "line": 446025,
+          "text": "jnz     short loc_4D5300"
+        },
+        {
+          "line": 446026,
+          "text": ""
+        },
+        {
+          "line": 446027,
+          "text": ""
+        },
+        {
+          "line": 446028,
+          "text": "loc_4D52DC:                             ; CODE XREF: sub_4D5270+50↑j"
+        },
+        {
+          "line": 446029,
+          "text": "lea     ecx, [ebp+var_1C]"
+        },
+        {
+          "line": 446030,
+          "text": "push    esi"
+        },
+        {
+          "line": 446031,
+          "text": "lea     edx, [ebp+var_124]"
+        },
+        {
+          "line": 446032,
+          "text": "push    ecx"
+        },
+        {
+          "line": 446033,
+          "text": "mov     ecx, dword_64798C"
+        },
+        {
+          "line": 446034,
+          "text": "push    edx"
+        },
+        {
+          "line": 446035,
+          "text": "call    sub_42EA50"
+        },
+        {
+          "line": 446036,
+          "text": ""
+        },
+        {
+          "line": 446037,
+          "text": "mov     ebx, eax"
+        },
+        {
+          "line": 446038,
+          "text": "cmp     ebx, esi"
+        },
+        {
+          "line": 446039,
+          "text": "mov     [ebp+var_14], ebx"
+        },
+        {
+          "line": 446040,
+          "text": "jz      loc_4D53FF"
+        },
+        {
+          "line": 446041,
+          "text": ""
+        },
+        {
+          "line": 446042,
+          "text": ""
+        },
+        {
+          "line": 446043,
+          "text": "loc_4D5300:                             ; CODE XREF: sub_4D5270+6A↑j"
+        },
+        {
+          "line": 446044,
+          "text": "lea     eax, [ebp+var_20]"
+        },
+        {
+          "line": 446045,
+          "text": "lea     ecx, [ebp+var_24]"
+        },
+        {
+          "line": 446046,
+          "text": "push    eax"
+        },
+        {
+          "line": 446047,
+          "text": "lea     edx, [ebp+var_4]"
+        },
+        {
+          "line": 446048,
+          "text": "push    ecx"
+        },
+        {
+          "line": 446049,
+          "text": "lea     eax, [ebp+var_8]"
+        },
+        {
+          "line": 446050,
+          "text": "push    edx"
+        },
+        {
+          "line": 446051,
+          "text": "mov     edx, [ebp+var_1C]"
+        },
+        {
+          "line": 446052,
+          "text": "lea     ecx, [ebp+var_C]"
+        },
+        {
+          "line": 446053,
+          "text": "push    eax"
+        },
+        {
+          "line": 446054,
+          "text": "push    ecx"
+        },
+        {
+          "line": 446055,
+          "text": "mov     ecx, ebx"
+        },
+        {
+          "line": 446056,
+          "text": "call    sub_4B8B10"
+        },
+        {
+          "line": 446057,
+          "text": ""
+        },
+        {
+          "line": 446058,
+          "text": "mov     edx, [ebp+var_8]"
+        },
+        {
+          "line": 446059,
+          "text": "imul    edx, [ebp+var_4]"
+        },
+        {
+          "line": 446060,
+          "text": "lea     eax, [edx+edx+8]"
+        },
+        {
+          "line": 446061,
+          "text": "push    eax"
+        },
+        {
+          "line": 446062,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 446063,
+          "text": ""
+        },
+        {
+          "line": 446064,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 446065,
+          "text": "mov     cx, word ptr [ebp+var_8]"
+        },
+        {
+          "line": 446066,
+          "text": "mov     [edi+4], eax"
+        }
+      ]
+    }
+  ],
+  "qualification": "ASM navigation only. FixedPE bytes below are authoritative; IDA recorded loaded pointers differ from fixed disk zeros. Context endpoints may contain a call or next local label, never its callee body. No whole-program indirectwriter/absence claim."
+}

@@ -1,0 +1,728 @@
+{
+  "initializer": "fn_LoadGameData_Check post-IDA-endp reachabletail",
+  "fixed_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "facts": [
+    {
+      "id": "P01",
+      "topic": "Fallback source object literal input",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ECBA",
+            "rva": "0002ECBA",
+            "file_offset": 191674,
+            "bytes": 52
+          },
+          "instruction": {
+            "va": "0042ECD3",
+            "bytes": "68cc555000",
+            "mnemonic": "push",
+            "operands": "0x5055cc"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ECBA",
+            "rva": "0002ECBA",
+            "file_offset": 191674,
+            "bytes": 52
+          },
+          "instruction": {
+            "va": "0042ECDA",
+            "bytes": "e871f8ffff",
+            "mnemonic": "call",
+            "operands": "0x42e550"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ECBA",
+            "rva": "0002ECBA",
+            "file_offset": 191674,
+            "bytes": 52
+          },
+          "instruction": {
+            "va": "0042ECDF",
+            "bytes": "85c0",
+            "mnemonic": "test",
+            "operands": "eax, eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ECBA",
+            "rva": "0002ECBA",
+            "file_offset": 191674,
+            "bytes": 52
+          },
+          "instruction": {
+            "va": "0042ECE1",
+            "bytes": "a384796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [0x647984], eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ECBA",
+            "rva": "0002ECBA",
+            "file_offset": 191674,
+            "bytes": 52
+          },
+          "instruction": {
+            "va": "0042ECE6",
+            "bytes": "7506",
+            "mnemonic": "jne",
+            "operands": "0x42ecee"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        }
+      ],
+      "direct_evidence": "InitializerpushesfixedliteralSprite at5055CC into42E550;storesnormalreturnEAX in647984 at42ECE1. Returnzero iswrittenandthenfails withAL0;nonzero continues.",
+      "limit": "42E550 isfirstnewprivatefactoryboundary anditsbodyisnotopened. Sourcecallargument tiesstem,notfilestem-extension/rootpath/openedfileoractualprovideridentity."
+    },
+    {
+      "id": "P02",
+      "topic": "Fallback provider direct writer and dependency",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED3B",
+            "bytes": "8b0d84796400",
+            "mnemonic": "mov",
+            "operands": "ecx, dword ptr [0x647984]"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED41",
+            "bytes": "51",
+            "mnemonic": "push",
+            "operands": "ecx"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED44",
+            "bytes": "e887f9ffff",
+            "mnemonic": "call",
+            "operands": "0x42e6d0"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED49",
+            "bytes": "85c0",
+            "mnemonic": "test",
+            "operands": "eax, eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED4B",
+            "bytes": "a38c796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [0x64798c], eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED22",
+            "rva": "0002ED22",
+            "file_offset": 191778,
+            "bytes": 54
+          },
+          "instruction": {
+            "va": "0042ED50",
+            "bytes": "7506",
+            "mnemonic": "jne",
+            "operands": "0x42ed58"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        }
+      ],
+      "direct_evidence": "Onreachingdefaultinitializerblock,reads647984 normalSprite-factoryresult asargumentto42E6D0,withECXnewobject/baseinitializerresult. StoresnormalreturnEAX to64798C at42ED4B;zeroalsowritten thenreturnsAL0.",
+      "limit": "42E6D0 privatebodyunopened. Thisisparameter-to-return dependence,notproofwrapperownsopenedSprite.pak orimmutablebackingsource. Allocation/baseinitializer42E4F0 semantics remainoutside;livevaluesnotobserved."
+    },
+    {
+      "id": "P03",
+      "topic": "Bucket stream stem and provider direct writer",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042ED96",
+            "bytes": "33f6",
+            "mnemonic": "xor",
+            "operands": "esi, esi"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042ED98",
+            "bytes": "56",
+            "mnemonic": "push",
+            "operands": "esi"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042ED9C",
+            "bytes": "68c85d5000",
+            "mnemonic": "push",
+            "operands": "0x505dc8"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDA2",
+            "bytes": "ffd7",
+            "mnemonic": "call",
+            "operands": "edi"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDC3",
+            "bytes": "e888f7ffff",
+            "mnemonic": "call",
+            "operands": "0x42e550"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDC8",
+            "bytes": "8904b5a8796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [esi*4 + 0x6479a8], eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDE8",
+            "bytes": "8b14b5a8796400",
+            "mnemonic": "mov",
+            "operands": "edx, dword ptr [esi*4 + 0x6479a8]"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDF2",
+            "bytes": "e8d9f8ffff",
+            "mnemonic": "call",
+            "operands": "0x42e6d0"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042ED8E",
+            "rva": "0002ED8E",
+            "file_offset": 191886,
+            "bytes": 112
+          },
+          "instruction": {
+            "va": "0042EDF7",
+            "bytes": "8904b5e8796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [esi*4 + 0x6479e8], eax"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042EE17",
+            "rva": "0002EE17",
+            "file_offset": 192023,
+            "bytes": 32
+          },
+          "instruction": {
+            "va": "0042EE2D",
+            "bytes": "46",
+            "mnemonic": "inc",
+            "operands": "esi"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042EE17",
+            "rva": "0002EE17",
+            "file_offset": 192023,
+            "bytes": 32
+          },
+          "instruction": {
+            "va": "0042EE2E",
+            "bytes": "83fe10",
+            "mnemonic": "cmp",
+            "operands": "esi, 0x10"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042EE17",
+            "rva": "0002EE17",
+            "file_offset": 192023,
+            "bytes": 32
+          },
+          "instruction": {
+            "va": "0042EE31",
+            "bytes": "0f8c61ffffff",
+            "mnemonic": "jl",
+            "operands": "0x42ed98"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        }
+      ],
+      "direct_evidence": "ESI=r starts0;literalSprite%02d at505DC8+externalformatter requestsSprite00..Sprite15.42E550(stem_r) returnsX_r stored6479A8[r].42E6D0(argX_r) returnsH_r stored6479E8[r] at42EDF7. Samecallerlooptailincrementsr andcompares16;backedge42ED98. NoimmediateH_rnonnullguardshown.",
+      "limit": "Expectedformatnames conditionalonformattercorrectbehavior. Private42E550/42E6D0 bodiesnotopened;X_r/H_rcanbezero. NumberedSpriteargumentstemisdirectsourceevidence,notarbitraryfilenameguess,notactualphysicalfileorfilememberoffset."
+    },
+    {
+      "id": "P04",
+      "topic": "One concrete bucket construction chain",
+      "anchors": [],
+      "direct_evidence": "InheritedBatch37 sourcewitness79.png hasbyte-sum483→route3. Sameindex3 in6479E8 isconstructedfromX_3=42E550(requestedstemSprite03),stored6479A8+12=6479B4,thenH_3=42E6D0(argX_3) stored6479E8+12=6479F4. FallbackdependsontheSpriteparameterchain.",
+      "limit": "Request/hashsourcecontractinheritednotreexecuted. Qualifiedconstruction-inputstemidentityonly;notqualifiedprovider->Sprite03.pak/.idxabsoluteidentity,notLTsurf mapping/casepolicy orassetexistence."
+    },
+    {
+      "id": "P05",
+      "topic": "Direct reset statements and disk-state limit",
+      "anchors": [
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042EF48",
+            "rva": "0002EF48",
+            "file_offset": 192328,
+            "bytes": 2
+          },
+          "instruction": {
+            "va": "0042EF48",
+            "bytes": "33db",
+            "mnemonic": "xor",
+            "operands": "ebx, ebx"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042F01F",
+            "rva": "0002F01F",
+            "file_offset": 192543,
+            "bytes": 6
+          },
+          "instruction": {
+            "va": "0042F01F",
+            "bytes": "891d8c796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [0x64798c], ebx"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        },
+        {
+          "owned_capture": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\fixed-PE-provider-writer-boundaries.json",
+            "bytes": 23333,
+            "sha256": "53C05EEDB4F690A99A09B99FB63FBFDE1F42606CA55D1EB425EA5A932BE46E94"
+          },
+          "origin": {
+            "source": {
+              "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+              "bytes": 7094272,
+              "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+            },
+            "va": "0042F0C1",
+            "rva": "0002F0C1",
+            "file_offset": 192705,
+            "bytes": 6
+          },
+          "instruction": {
+            "va": "0042F0C1",
+            "bytes": "899ee8796400",
+            "mnemonic": "mov",
+            "operands": "dword ptr [esi + 0x6479e8], ebx"
+          },
+          "evidence_level": "FixedPErawbytes,conditionalcallerinputs/writevaluesonly"
+        }
+      ],
+      "direct_evidence": "Writerxrefincludes42F01F storesEBX to64798C and42F0C1 storesEBX to6479E8[ESI]. OnlyEBXzero-definition42EF48 andtwostorestatementsadopted. Fixeddisk647984 and16X_r6479A8cellsallzero.",
+      "limit": "Nocleanup/privatecalledbody/lifecycleexpanded;do notassert actualpath/calleeregisterpreservationorlivezero. Selectedsourcecellsdiskzero do notprovideactualsourceobject/content identity orcompletewriterabsence."
+    }
+  ],
+  "direct_fallback_writer": {
+    "VA": "0042ED4B",
+    "RVA": "0002ED4B",
+    "target": "0064798C",
+    "value": "NormalreturnEAX from42E6D0(arg[647984])",
+    "source_parameter_chain": "42E550(requestedliteralSprite)->647984->42E6D0->64798C",
+    "input_write_conditions": "Controlreachesblock;alloc/base/factorycallsreturnnormally. Storeprecedesnonnullbranch;failuremaywrite0thenAL0return."
+  },
+  "direct_bucket_writer": {
+    "VA": "0042EDF7",
+    "RVA": "0002EDF7",
+    "target": "6479E8+4*r",
+    "r_domain": "DirectinitializerESI0..15",
+    "value": "NormalreturnEAX from42E6D0(arg[6479A8+4*r])",
+    "source_parameter_chain": "ExternalformatSprite%02d(r)->42E550->6479A8[r]->42E6D0->6479E8[r]",
+    "input_write_conditions": "Callerloopreachedandcallsreturnnormally;H_rwrittenwithoutimmediateindividualnonnullacceptance."
+  },
+  "qualified_provider_construction_stem_identity": true,
+  "qualified_provider_to_backing_file_identity": false,
+  "one_requested_bucket_stem": "3 ->Sprite03;fallback ->Sprite",
+  "first_new_private_dependencies": [
+    "42E550 namedfactory",
+    "42E6D0 wrapper/bindfactory"
+  ],
+  "first_dynamic_inputs": "TheirreturnedopaqueX_r/H_r orXdefault/Hdefault",
+  "file_path_extension_or_case_policy_proof": false,
+  "reader42EA50_expanded": false,
+  "no_new_member_offset_length_or_blob": true,
+  "direct_writer_xrefs_not_exhaustive_indirect_writer_audit": true
+}

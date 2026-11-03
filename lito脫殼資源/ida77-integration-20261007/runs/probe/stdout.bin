@@ -1,0 +1,1 @@
+{"mode": "probe", "created": false, "resumed": false, "exit_code": null, "error": {"stage": "CreateProcessW_private_LPAC_suspended", "exception_stage": "CreateProcessW_private_LPAC_suspended", "type": "ControlError", "message": "CreateProcessW_private_LPAC_suspended: winerror=2", "winerror": 2, "origin": "actual_exception_or_refusal"}}

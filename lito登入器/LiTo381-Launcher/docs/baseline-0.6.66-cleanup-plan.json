@@ -1,0 +1,3250 @@
+[
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\__pycache__\\extract_validate.cpython-312.pyc",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 53899,
+    "sha256": "13a5e173fcd0ac21c1f1794af1f978390eca0f506899beaeb15f6c342d6deb96",
+    "reason": "reproducible python cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\Audit.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2647,
+    "sha256": "5e5fd5e782b234129a42d2c86dfc64ba6a185d39c45a343608f1b54da909ef1a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6242453,
+    "sha256": "ae063385dcdf3898aeb003137f807e6c3365073aece62b8531fb7e86886dcd06",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\BattleDragonSkinStatus$Snapshot.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2000,
+    "sha256": "960103e786fc193be1b1a525d1ceb904973ec1475fb3b619da35ef1bef926736",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\BattleDragonSkinStatus.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2041,
+    "sha256": "3d5e062791df45e3a1ff2d8a0035dd27f0c538660df270270cd8d9d1695bfa65",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\DragonCombat.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5810,
+    "sha256": "5f45c6a2ae5ec25ff1eb56137a87fd8b9c5ddd448b4488b907d53775dff80e25",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7903,
+    "sha256": "772702c7b988b389e99c1919fdcc225a5c251fe385aca9ee05f2947620899748",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-presentation\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6242437,
+    "sha256": "9c97f86821738cd4e039f20bf69cae286bb1f095bdda77e3305799a77f5c1a23",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-presentation\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5501,
+    "sha256": "2c0d24b192283f9f552ecc979cf918d52dfda7b266c5ab41495243526865f28c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\Audit.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2761,
+    "sha256": "5a08a6248d21d6ac58257f7081ab74523b410801a23c9c3f9a39d10605bcc795",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6239420,
+    "sha256": "e35cb91c43a18a690cc304df8e5a9b2ba15014822261651616ae9420fa8cc5a2",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\local\\lito381\\server\\DisconnectedBattleResult.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3189,
+    "sha256": "fd171732280275ee7883072cc1a2849162fc7a07f4932ecec34274d4562819e7",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\local\\lito381\\server\\DragonSkillRequests.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7317,
+    "sha256": "92168288671fa2e8cf90497d76f545ce6eb6a295c95c979723730d6a95c36d02",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8322,
+    "sha256": "6929ee196aa686216632b21dd7253b8ce80e9ae5f7cac04f098c9f5aee970f46",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 16132,
+    "sha256": "83767ae49f3ff86bac40e113f0ee68cd38aaf46079135f0b380bc8bc33d72de2",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6290590,
+    "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DisconnectedBattleResult.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3628,
+    "sha256": "9ccd14314cecf73d928b22f1fcf45c1b54736cddc34bc813dd352a8cde5d0b0a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement$Context.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1355,
+    "sha256": "14c316479b136bff5c206ee455f6b521cc8c59a648980ba120e280eb6287cdea",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement$Ticket.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1201,
+    "sha256": "8f4d048dfa1cffd56450d5075ca52ff8d3eb6129a3405eebcd24f6882658f0be",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 21320,
+    "sha256": "c469225686f0fae593f53c48d72e6a693d15492e6514c23567ef0ee3dfe75452",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal$Entry.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3631,
+    "sha256": "9698d87c573667ce3d9abb70c9776c809fb879eacee044dc4c06d3cf90a95727",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal$Sink.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 484,
+    "sha256": "5f9fa2a4ba2b770964eab8e613d3dec65244af00006f209e21b03003d2eba5b9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8183,
+    "sha256": "07229e880eacde373dbc9a5d16a37648cf5d695c4ec1c890721b028d2e72a14f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementSql.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 13497,
+    "sha256": "8b10d1f8adf33eb4555e03c5ddd6cb59dbdd6aec28f3171ebf5f57a8b142b262",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SharedDatabase$Route.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3296,
+    "sha256": "b7c36239b97adb080653a86e9ccb85fb807b762214c9c97b1e11bc3edca78670",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SharedDatabase.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 16465,
+    "sha256": "be8092957775614d8b6af49c0c178ed3bed2f8fa49eb1437408a8a2e34bd5e85",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\TeamDisconnectSettlement.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6629,
+    "sha256": "e6f0ea13241dc000a2c8613f948198674c87bf05c62af1bf8f7203fc5213070e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10693,
+    "sha256": "8cd35a593e36b69c53ad8aa014690041a57e4f30381f775d66aac37bb85f8995",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6246774,
+    "sha256": "589733435518d92c05baeeae37a686d384ec3f7b9897e975ad1ef50d67a74aa7",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\local\\lito381\\server\\EmptyMelee.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8007,
+    "sha256": "b5ca3ae27afff96a661edb118c626ff579b341da47bfe31452d3bd462c3a6d0a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5477,
+    "sha256": "bb8d08dc5b7f9db325d8de81e256db95f8f3a4ffb6bced1c1498557c46549a0e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\EmptyMeleeRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10253,
+    "sha256": "0e670647dd05ec0fd2b383cbc3b4582fc347c7088e8e1b16def66c8f7ef86f92",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6249809,
+    "sha256": "db2ef1343a85a7dc830cbc42311a43ab66e2521bf623f115894f90fd36344511",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\local\\lito381\\server\\EmptyMelee.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8004,
+    "sha256": "41c3287f99e0cae54fc7e9a55ae1374ee512e2b48b5954697084b30be265f5d1",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\local\\lito381\\server\\IllusionStatusIcons.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5139,
+    "sha256": "a2e2f0ba341b5c108b3d79159e70ab6aad28bfab21ddf37bb7db1aff05b815f9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4924,
+    "sha256": "6e7232757aded50b759d2c24708da7d646cf53ceb050961bfc59b5d34703a09f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\EmptyMeleeRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10253,
+    "sha256": "0e670647dd05ec0fd2b383cbc3b4582fc347c7088e8e1b16def66c8f7ef86f92",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\IllusionRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9095,
+    "sha256": "56777989a18c392754f5caaf9e2a35301cbe206240a1860aa6d1eda7cad6ed16",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6252869,
+    "sha256": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\local\\lito381\\server\\DragonSkillRequests.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7474,
+    "sha256": "a1440994b8316de6399f5b58de35bd20fdbc2af5ba90e9fe0642ae8c08a5bc81",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\local\\lito381\\server\\IllusionSkillRequests.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5739,
+    "sha256": "f262f539c7eeec18dbf128e4d62357cd8f501ba6975e37f556defba6a8845af6",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7801,
+    "sha256": "5b67d5e00399acf4ef19557b56206de4665fdaeca8e9343f7ff7ba423bd9878a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\IllusionRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9101,
+    "sha256": "e42a5ec27982b9a4a7dff9d6b31820b24e717f706df478af67c4b3e1d1884e46",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\TargetRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11425,
+    "sha256": "55fc7e5144f30a95a7dcadf523c175065d4bd2a7f806c46cd39f7755bcf4c74b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6263873,
+    "sha256": "ebf5ee66f051700ac4b8f524847d7372af8065c4dbb5d91b2f74e03dadff4e7b",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\local\\lito381\\server\\NativeRoomAdmission.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2983,
+    "sha256": "569851bc616d3f4754dc54d598b9912aca91974ccb9236ac74699819203c29b5",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3981,
+    "sha256": "40d5e115fe01dea992f5e983dfa2b640ebcffd0512aa37e4bb7a208b386ad209",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7047,
+    "sha256": "6a09209731cda51a9b1b6dd4772aa691724f79fec1dc734a5453b914efe7146b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\AdmissionRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9872,
+    "sha256": "9e1921816ba199efb2166d4260aa18d272c63b4ee4f2af1b4a319a1a01c7773f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1785,
+    "sha256": "93b5a089c45a6a70574a5c9a139cb034c24e690ac8241cb0e00089d14268c81a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14800,
+    "sha256": "86bdc0a463b6f91629692f1e1bc7c620162862555cf142b4c38d515ef7e5bf5b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6261992,
+    "sha256": "595245c8c3047124b1163e7c9dc2c6c9f2bd24494f41fa8a5aa5c0d78eae8838",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeActorTail.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 386,
+    "sha256": "4a3957604c785a5f04c35a3a2efd3fa8c2519713b0bc2f079985e60079f3ac25",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeBattleVisibility.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7106,
+    "sha256": "1d5eea3129d6c68573350da7b2d8af92d24afb211c2ac46582c9e908aa500c55",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeMovement.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1373,
+    "sha256": "bc57a7a94e9981f1deb44fbfae536920ba7cdfb5b57fa5fe2e06c4fd3b6cc10b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3711,
+    "sha256": "4bd6348d45195dcc490eeec9bdb758a42b1a001e31a20ec2dac33b8297169a16",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8752,
+    "sha256": "4bb2d0cedef933b5c9fe9125540a7abb147c0f24e2b9872ebc372327e31bd99a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\MovementRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8413,
+    "sha256": "7f58865d240abd1d3b0e6cd0057278478faf851f24269078a2427d5b1594b322",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1785,
+    "sha256": "93b5a089c45a6a70574a5c9a139cb034c24e690ac8241cb0e00089d14268c81a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14800,
+    "sha256": "86bdc0a463b6f91629692f1e1bc7c620162862555cf142b4c38d515ef7e5bf5b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\base-061.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6297359,
+    "sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac",
+    "reason": "relocated pinned build input"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6313307,
+    "sha256": "f9aba6f3a0887484c03a532adeac180b86246017ab5aa63e4d91bc72c946cfd6",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\EquipmentTransitions.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 933,
+    "sha256": "3a75ba28804e3c9deb6c4529da42a81972e37e5bc1658480bed40c2421a9f838",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4627,
+    "sha256": "541421de68f1c835328a1ad4424f0d788482b5e6bb265888cf4d9f736abe324e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomRules$Policy.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1441,
+    "sha256": "56c56a522540c177a99e0a614d588cbcf26e9145010bfcdee6c098d109d10d4e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomRules.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11277,
+    "sha256": "5c3816334dbdcae11737137d9e2d31bd21a88f76a92c4976be2a429526160d38",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase$Key.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1538,
+    "sha256": "ea03e403786f5ca228707bd9aa030aacbb2d7ee0b4299a3c58fa1c76590f7ae4",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase$Snapshot.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4869,
+    "sha256": "d4210470b1984884cfd22128081a2ab7117a79ebe1f49ad2871e069865f439ce",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14529,
+    "sha256": "1683f197feac09691eb724ac25545c6f3f81ac7260a8bcb0c50fafa7adc7c87c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\archive-verification.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 349,
+    "sha256": "c3a8fe38898fe5ee4dea7fbbbb8f4c0c09f04d898db0956ae9012e5720ab6757",
+    "reason": "retired migration evidence"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\data.jsonl",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14044883,
+    "sha256": "5bbb133e7284d080ec467705d771a03a8c46e0847cffc51a0134b2cc0e8bf15e",
+    "reason": "verified migration backup duplicate"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\deployment-before-063.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5934461,
+    "sha256": "407585b82028f1d2b95513fe819b17b8e16b97faa3678bc8a99b779134592471",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\legacy-tools-062.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 7494,
+    "sha256": "2a5facac5779bc84e6764acc2d5b1257c7104c5d2711b5ebebf800395f5e988d",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\local\\lito381\\server\\CompactResources.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 13994,
+    "sha256": "08e84681c95002cd9ac6da0d5dadeb5bcd39c2b2235fdda3e3f82b7696e1156e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\original-counts.tsv",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 690,
+    "sha256": "ee8c11c96637d2304fc7250a7a2f36f293c53f5c0105d4fbddcb09339d0c2bc4",
+    "reason": "verified migration backup duplicate"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\pending-inserts.sql",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 25334,
+    "sha256": "32197ff29f3f742d1c16d3139de5b5fc6f7f77ddb2c21015f85b9ad06f3c277c",
+    "reason": "retired migration evidence"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\restore.sql",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 33064017,
+    "sha256": "a26c4d15afdda2a39d44bb27bfadb6f913c210b98f4786f2d9914d13543b70ad",
+    "reason": "verified migration backup duplicate"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\schema.jsonl",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 15853,
+    "sha256": "44550f7a315f224276f4c954c8c9668444ff231a7daf1f9084b63802cba2d3ba",
+    "reason": "verified migration backup duplicate"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\snapshot.tsv",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2226,
+    "sha256": "7ff65b1fca9bc935cde6f2d2e5b0f5c0c6612e8e84d69d09f3d8005a4ccfeedc",
+    "reason": "verified migration backup duplicate"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-062.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 24000,
+    "sha256": "234b56ee41be8fead615351b00c50ecabe2a206990620dc345eca257191f29f3",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-064.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5934809,
+    "sha256": "09d805f86e1c68081c85a46bc2f06b134ae42a067d74f3520a8cdb986e926d68",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-065.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5950285,
+    "sha256": "24799f4d724b48948a4261c70aac67051359ed4118e28ec69f842cec83cec4fc",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-066.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5951063,
+    "sha256": "2fba18f2d9b83aae2786eef76a7775b11dca89bf741e5b9c828133aa895a2ffb",
+    "reason": "superseded deployment rollback"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\EquipmentRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14565,
+    "sha256": "fee50f7c43d7cbea344b6a86ea920712cbd4648ac46863e7cb704e9b5496b88a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1785,
+    "sha256": "93b5a089c45a6a70574a5c9a139cb034c24e690ac8241cb0e00089d14268c81a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14815,
+    "sha256": "dd101943dad0f39cbc1a8b548a0be82ff8c161b205639fec5f7c0adc4da85e75",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-toggle\\ClientSession.javap",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 16703811,
+    "sha256": "9bfe894233dcb8596b2efe081b118caf1a987a272bd0423bd975884c61434a78",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-toggle\\LegacyMySqlRepository.javap",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2159385,
+    "sha256": "2f7d608cee797f3a36c6fec52f56805db921d5b31b3c821164191bb4af706288",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\EquipmentPatch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5392,
+    "sha256": "e80981647608afcddc2e8b4542b5afc46c5c21734d8f0dfc47b428eac4abf86b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\local\\lito381\\server\\ImportResources.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9389,
+    "sha256": "5658579258805e2923bb7b0155d9c503269122c1928d4a8de5caed1b29bc659d",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\MovementLockPatch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3777,
+    "sha256": "ee91aafe59194ce711147e7344a6ae9d196b6bdbbb08bd2346050fc0cda272f2",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 12281,
+    "sha256": "71a8b022f9f21c335e839cafc6c9e5151ad6dd0139e251d0fd2e4f6e3729745f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\CompactResources.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 13994,
+    "sha256": "08e84681c95002cd9ac6da0d5dadeb5bcd39c2b2235fdda3e3f82b7696e1156e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\FlowRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10000,
+    "sha256": "c95b097be0c3895f52a837b52524215e8e801c2233cc1a038b102efaea5a8d5e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\MovementLockRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9782,
+    "sha256": "2d397c0d7c91ac36ff8fa9ddd99e09b706e806639df2e63ebdb885419e2823a4",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\MovementRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 8413,
+    "sha256": "7f58865d240abd1d3b0e6cd0057278478faf851f24269078a2427d5b1594b322",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1785,
+    "sha256": "93b5a089c45a6a70574a5c9a139cb034c24e690ac8241cb0e00089d14268c81a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14815,
+    "sha256": "dd101943dad0f39cbc1a8b548a0be82ff8c161b205639fec5f7c0adc4da85e75",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\ResourceRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9434,
+    "sha256": "e0dfefff5289d26fdfde0a90c202d475e8d30bdc36acef3b32d40fb5566e42c4",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\RoomRulesRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 13755,
+    "sha256": "4723d7f0279c25bb3e7615a9e6ead0f7dd24fa1dc32c05025319095c8406cd44",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\VerifyCompact.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6347,
+    "sha256": "b8f40b71ab8cc5536e0167868de9d3a4d800555e4cad6bfc20c0482cbaa1120e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\VerifyImported.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 5426,
+    "sha256": "9f92ad5add86908164f5842d2fc800c26ba3e17c958dcb29a8e002139a634532",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6254854,
+    "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\local\\lito381\\server\\LobbyRoomDirectory.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3538,
+    "sha256": "d643eb11edf4099e8a700aded722563c7556ae2f79b863aa2b408859ab5c5d4b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6223,
+    "sha256": "dae5631e1cfb5ce25e566b3c58ebb4aa5280003beee2d5b50ba1dabf2efc7ac2",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\DirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10645,
+    "sha256": "538aaf27db596344f27d1c1a283bfebd2bb2a756fe6f1893e2a7ed2db6d1f3f6",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6297359,
+    "sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement$Context.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1482,
+    "sha256": "b88350f6cde0e89f09f9321eaf155a612d0d3c5049f0da73509bb4c01325d3f4",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement$Ticket.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1201,
+    "sha256": "8f4d048dfa1cffd56450d5075ca52ff8d3eb6129a3405eebcd24f6882658f0be",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 21560,
+    "sha256": "8c27c28411852281b163eaec9cbce30d93050bf7aff0f0d134715035feec5fac",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\NativeRoomRules$Policy.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1441,
+    "sha256": "56c56a522540c177a99e0a614d588cbcf26e9145010bfcdee6c098d109d10d4e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\NativeRoomRules.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11059,
+    "sha256": "b3ce77fdfd0c1469b452d13d79e13b8e026be8c41d9053099403aed8b06c8310",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\ClientSession.javap.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 16408024,
+    "sha256": "d1034d4394d02a357a1fdf5d2aa78362cb9bab151d1a66fbcb7c85c8cf7b674c",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\DurableBattleSettlement.javap.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 97857,
+    "sha256": "be509669fce4ee4b514e49d2e961965b90a0e23009c4d4e40e1d7bfc05987129",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\GameHub$Room.javap.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17054,
+    "sha256": "783dbab2775aaf3e407c157c56297d0e3279ea250493656596c05fe586784bc5",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\GameHub.javap.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 2390144,
+    "sha256": "8a67131df17a7462b73f3e32ddb9e3f0a742444d49681dd75af30038d06a2e76",
+    "reason": "reproducible disassembly"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 12447,
+    "sha256": "6ddc965c662e8a897537ea14eb1b40c537f4a297c94dad490ac7a6393e175f4f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\FlowRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 10000,
+    "sha256": "c95b097be0c3895f52a837b52524215e8e801c2233cc1a038b102efaea5a8d5e",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1785,
+    "sha256": "93b5a089c45a6a70574a5c9a139cb034c24e690ac8241cb0e00089d14268c81a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 14800,
+    "sha256": "86bdc0a463b6f91629692f1e1bc7c620162862555cf142b4c38d515ef7e5bf5b",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 17919,
+    "sha256": "8a25ecda78c4f8f4a5aca9df82a7215a704da7ff5ee90ed1bfa32ebefe8da0e3",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\RoomPolicySql.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4148,
+    "sha256": "a9815d68821e8c92c68072dfe6cbc34e598a287798a59556e5c917f5aaf2e57c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\RoomRulesRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 12350,
+    "sha256": "4a73eb815f163224d9bb81b35bf85e694a2c0729e45a17060e68526993ca4ed4",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\candidate.jar",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 6234416,
+    "sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542",
+    "reason": "reproducible candidate jar"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration$Grant.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1698,
+    "sha256": "3accae86850524f580394ccbe99fe3d010101cd8706535e4d35e42e48b9f52cd",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration$Slot.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 481,
+    "sha256": "29c31ef1e561cc824c8fd4eb1f45f1436e2a35e3ecdce4512a55e58281f348a5",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 3810,
+    "sha256": "e2164a7af06c8a073c78ee8b90ae75cfb393f7e213c54dfca7a375b39c336a5a",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration$1.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1242,
+    "sha256": "d890898b2157ced4f1ed9263ec8a28a961d85a90d0cba58f374b0dd48adddf8f",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration$Source.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 1689,
+    "sha256": "ef743485aa40ac855d6c80a18f989e2868261a39b1bef55f5eff5d66db9633bb",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 15168,
+    "sha256": "da38d670f60a1e66fc1e1549fbc7ab54a6483578bf6aaa749fc010db8afea360",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\Patch.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 9754,
+    "sha256": "1c3dd95fd7b88ed6b8f4c9a93743a50e34e5ba9687c14d49b2b0836f9f7d6e74",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\CommandRoutingRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4719,
+    "sha256": "673b335e544770f0bcbee2f932b4e3f0c4373e92848137fe9c4922d7a94d424d",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\Regression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 13475,
+    "sha256": "5c22fbbd3cc90502c063f3d60cd6b79b13848e00ead35a476f52a07b8b4b3247",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 4136,
+    "sha256": "00295e8999c7491df130c4c5677692b12675b0c526cae3ce5fa4c4c2d52eba8c",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+    "bytes": 11332,
+    "sha256": "b7d8009f93778508ca99a2ec082856812fbd00171daf1170345aabfb43edb0c9",
+    "reason": "reproducible java class"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\__pycache__\\Start-Shared-Formal.cpython-312.pyc",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 51494,
+    "sha256": "d8a5fb65118770b1bbe019f5c9691dc5a33fe6c0932baecb76a5c912015435e7",
+    "reason": "reproducible python cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 260209898,
+    "sha256": "7fd9eaa21ee0e65761b93fda968f439213013c4c463ddbe0391a6aa7f3ec6172",
+    "reason": "superseded joint baseline"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\__pycache__\\development_startup.cpython-312.pyc",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 44655,
+    "sha256": "065e3562204eb93885bcd4d3d97f9f7957353b3da750a3511829617020529bfb",
+    "reason": "reproducible python cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\__pycache__\\development_startup.cpython-312.pyc",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 44643,
+    "sha256": "9f44b3554d0d239a2009bb24b2bf6f1fdf949ad9ecfd0ee59106d5c2dc4bb600",
+    "reason": "reproducible python cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Accessibility.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 20816,
+    "sha256": "09188fb02784dd549e33a2f4feb4966f4a7f14aee5391dd0f1dac32a727e068b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clretwrc.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 317736,
+    "sha256": "4aadb8078977b0722189f7d004ef0fce4e37a22c06ed5f5da5acce2f52692f24",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clrgc.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 442152,
+    "sha256": "546b6abe31bf267b2d87c672b500e1c843c29dfc9f6e2f94aa93aedd5b853339",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clrjit.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1710376,
+    "sha256": "088e6cee7fc3b00d9e7f1e90c27621aebae1e16a50ef9f9835f68cd4208bb5c4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\coreclr.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 3785512,
+    "sha256": "3cf1a8ec9bb7af9ecbeca5e296b08533c4096eae8e442de344ed93c0084533e1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\createdump.exe",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 59224,
+    "sha256": "08777868bea11eefe500d6fbcdf45d6c49be81f4160f2dcf300d9a23bde747b3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "b8f5c66603f59f9167813686f07085dd7eab5b5300a179c937fdcbf21d9b1ac5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 269096,
+    "sha256": "2c1b8aa7849b45f615236725e2684250e70b329445a3135a1d5c1d7a2d65e3f9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "991b7a19fed984aab0c384394b225898cd65056d7ef53a25f440936e7c5722e7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 369960,
+    "sha256": "f88fc697a7e903760df7b3edb33644c59ce86a61cc61592d77999f324b593b63",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "6e1cc04d4ce7d6297037a3ba7a9ffa53e2f3a6221d36d1145df34f1912abf33f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 270160,
+    "sha256": "65e0b18a824d9b08f105ed2f7a02dd0d7c2b467b6fd52b555298c8c59af13997",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "bc7c7ac4327ea6b51a591151a496c75a8eeb9cd43ce66574f64002fceb89ca81",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 378704,
+    "sha256": "db4886483071c68baa0c7a259a39cf86f0fc35513518e72edda9185eebe5cdbf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\development_startup.py",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 26889,
+    "sha256": "d83f8e619bcab342b37cd13186042004065a183854c47155c8ff89aa269d874b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "ee1cfa408ed986a380f890566303690eff5f32c77a8c1962d0eddf915c816376",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 269608,
+    "sha256": "d8b05f124bcc6a6d12e091b2bee2b64a057cb7ff4b151c47467e03b0b895ce3d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "b5aaea2d1e71df532763c9b3a9ef835e89ffaabe6400e7318b9407bfc6f5faaa",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 370472,
+    "sha256": "7de602218c0bb80d3bffd36ea7b86645840e5f71cd6fff6080ebea9701b66ab7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "947c5b3e301c7354ce03b1e45a86b9eec97b8b65d38e5a06047cf14b6cb8326b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 270632,
+    "sha256": "b9867068ba2dd92d4fac2c41ebe046fe1651fbe06e68c343e752992d9e16a2c4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "bed9785339c7d0670dea257be2207d59f4fbbeed4e174698b33de77ac8e576e8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 377640,
+    "sha256": "866ea39c9e9f35e64ac4622f7db7df66934ac22d4598c6b1833c82daf2f6d7a2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\hostfxr.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 312104,
+    "sha256": "686eed3f8afa2e61983ad680c0e3abeb7758136b43cb1312b52e69c25dda486c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\hostpolicy.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 315216,
+    "sha256": "8117f096fbf4f963d60efa43babced0d2e140f7d0cf17a502df49d561e9c4618",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "9b85b148896004724db49af285b10441314a0244d25bf8013238b1b14f0e7916",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 270632,
+    "sha256": "9fc106c832e4c41b2f507002e044346681dca8e100e84c5f2fdb64391909f86e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "8a90e87622f40d3d9c24905af1ec95edd23cc214b08a8fc0979ef648b82ea401",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 373032,
+    "sha256": "91b0b38f0be0fc1e9a7f2768567b5724b4d6b49a55daef1b4cec39d6385b96ee",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25896,
+    "sha256": "44a9964b4efc0e00f4c2bc613590ce416957a0c7f7d532ce62f7e001a8ec244d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 276264,
+    "sha256": "b83e22038a5410eeea8f70e656bacb15358b6e01676a763bff3e3b828cc3af10",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "ecf9971e983d5847649f2fa7ac12ceae177ab1c2317b7445ddac033145283866",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 413992,
+    "sha256": "d5b70b3557b86e9f319343ad09c9145230d40ff72c80c9d8d5fb6cdaefc25ec0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "eb4eb6f6657db6e9594a7d1362d5f87dcceb610521c7f24025d49f9881480950",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 271696,
+    "sha256": "bd3c32f7ab7b49df969e8f703cdc7340ba8905a32dc89ed6df7b7cd6aae95207",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "9197b526ddc7baa001d2dbfbd19ffcef6898d8529bb902ad32d29bcfc762a64c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 375592,
+    "sha256": "9f547a2a3726a151fdf369a5457e855e8bc06c6499e4a5171d605cf2e8a426c1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.deps.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 32269,
+    "sha256": "eb71e1459032182ca67070b0204b9efdbef5e266742992259a4795b81d57893a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 407552,
+    "sha256": "207bdd4194b97bde497931de26539485ccca0a63f9dfa8185ee0bbf2b4881a20",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.exe",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 132096,
+    "sha256": "ed32a69c0922a325ee1c6e1a0616bb30e906df75834c1902f92edb4eda038326",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.pdb",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 75852,
+    "sha256": "ceba49c3e98eed44470a2e7a8e85532aab31561174585f2b4b8290809ffc75d1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.runtimeconfig.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 527,
+    "sha256": "74f985744e8134cbd21428da8a217a9f54a0a48c298244236b1215e645ce9554",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.CSharp.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 927528,
+    "sha256": "a379d7bc0cdd79daa4ed88a73d624fe8dd4aca3fb032e3a9ce1c8d34bfbc0292",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.DiaSymReader.Native.x86.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 2146344,
+    "sha256": "6564545beab3cb9cd35cfb0cb77d4ec8ba3297d384e98f2fa24c536184e7830f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.Core.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1156944,
+    "sha256": "d94c41946cc05549fd77eb2604e4ed7c6c5e01b972c0183e6b0bc261dfe4612f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 18768,
+    "sha256": "821f5323c6d167a1f3cf0d44aae81be324e3c9edae9af4ddb8e7a19c6f064224",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.Forms.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 235304,
+    "sha256": "a58742f463c98f42e768b397b1baef0d5fcc57b72606965aba36cd3012d4874d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "d9568f77202455a9ddd14a26bb5f65e16e4b072ba539085fced021b47d0c63bf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Registry.AccessControl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 34600,
+    "sha256": "e0c26b1985adc26ff076f43613dd25f6314b061cc7a49d36e244c57db56277fd",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Registry.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 108328,
+    "sha256": "3dd2307486b3f9339447a73ad44435a05369ef0f0dc221ef86f8dfe1cd5b07e8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.SystemEvents.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 112424,
+    "sha256": "15758aa56c80662adc47b8b958b3d3787dd20b27662ac5bc76960ebbc30bee76",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordaccore.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1233240,
+    "sha256": "d26dd933b897e1edbaccab2132fa57dd00e6222a92ed38a43961ae93a073def2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordaccore_x86_x86_10.0.826.23019.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1233240,
+    "sha256": "d26dd933b897e1edbaccab2132fa57dd00e6222a92ed38a43961ae93a073def2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordbi.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1185624,
+    "sha256": "d50022028432d65514b948e3dda5b390d4d3e8a87384ad4b10e7355d5ead4020",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscorlib.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 59688,
+    "sha256": "24378b944b60f73ba18503427ef2eb04ee15e6087b94cfeefae16f5e29bedbf7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscorrc.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 133968,
+    "sha256": "444195a8959db8212699c676788189ddfacc0c37a329d63c40326275130f5567",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\msquic.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 602696,
+    "sha256": "0bef6707630341a4ed5214480c7d2875dad5f51c42539531c605eff3fc337b74",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\netstandard.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 100648,
+    "sha256": "7f245d3728918e9ad3d8784a1971999352a62ab576778bc29f24c85faee71f79",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "13829ff0dfd87413b575413f665b41a24e3330d08e120dd5893e11b054f8fb33",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 269096,
+    "sha256": "53a6bf2513c571976838ec4cf3d4a223e3184fc456ec0ddf2831681bc4ddecca",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "9aa81828b793779aacd1dcd96e6c6aacba8114ac52b9c9aa1b3992b1597bb7b1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 371024,
+    "sha256": "ae7ed28c5bb404309a19e64377a9a4cb321c385b14862fd83c0361c3b80dd65e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "cbe36e543fbc196ddb01440adf991af342bdf45e0c81960e5da22c0e4a452fa2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 269136,
+    "sha256": "d6872617e5cd7a8c6c6e4f064537f6b2230e4a3048cf7a07a00258d665591bd2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "b7a7672bff166788f0ddf7572cf3df00a146c6762d4e1f3a26a660938280660d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 363816,
+    "sha256": "0d7560b2259119600ecc804d9a969b064a42ac74cedb7c3c25d49ebc6eede623",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 26408,
+    "sha256": "acac143667796649d3d8477614f3f36a6e0a8f75bc3bdb93f549d7ffb2616804",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 285992,
+    "sha256": "e807cacfa9275ac2b01acae7d5420b5b642aa1b89970e2826f6f8cad1563cea5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "548f0550a57ef27a07d514037de905275f1dd6125de2eb250d84a0fde60f59eb",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 482600,
+    "sha256": "130103539041271467afc47475ec4a50a909a23d1e8b9db2c7ed2ddff40c23ef",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\server-profiles\\lito-shared.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 511,
+    "sha256": "d78a91b7b894f4b9ef541e7b7002fea0f9f9978d93288044ad5e0f98be5d7d00",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.AppContext.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "8b5db6ef15bff3db7c8f88f682ef21053fdcc89f07df7bc84a39f096387cff66",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Buffers.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15184,
+    "sha256": "e4d0ea03460fdc11bf12d3020451587ebd7a4a8504d41083764131905be9b761",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.CodeDom.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 440104,
+    "sha256": "3fac448e0503dece64dffbf3df3972f80407730561d26386d1f47f561c2e716d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Concurrent.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 218920,
+    "sha256": "1f16134d43d2cb775bcba3af87e91914b3e79d486a89a061daf811c976bfc25e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 280360,
+    "sha256": "db09be299b9d6d3a2888e83d54c76c910525cb5cdfc43eb560380251e185afe5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Immutable.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 898896,
+    "sha256": "810b50e171c701acef9ad6084246f66e4ab51bd91ef235046f4367b56c2515ae",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.NonGeneric.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 96040,
+    "sha256": "05087564c9d2843b3c32caa8470b3005f9354b964578f5a18202b902731c4c94",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Specialized.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 91944,
+    "sha256": "57e7aa3501a6b2c198c20d2c7774df3a6aa57fc04b15b99c2f90646ba5688dca",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.Annotations.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 190240,
+    "sha256": "0db7a34ac2ec28f5e4971710b96b73cdaa9c86961e3ef15afd5ed8867cec6f27",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.DataAnnotations.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16680,
+    "sha256": "5216da8b7455db07743aef744d5d1780bcc1cabe3674d52e24f83ac97bc07f3d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 30544,
+    "sha256": "731576cf60e007f96c884e11bf26aca9efa9485d4624fd83817ccb74b34a91ee",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.EventBasedAsync.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 46888,
+    "sha256": "2b1f7634602dfea33e9c4e36f3c90dafa1023df7e04199353d7f960920fb55eb",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 75560,
+    "sha256": "c80ea973aad04848766e6cbbe8a1971c5ce858baa229bc01e14bcf260cc33a92",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.TypeConverter.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 714536,
+    "sha256": "db64e1073d811e79647ecd3aed40308630c07a5025381d2ce114603e45a1da9a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Configuration.ConfigurationManager.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 976680,
+    "sha256": "6345d99e3666df52800b7b8a2aaea99b6fa422b5d5f1600b21b11c5dede2bee9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Configuration.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 19240,
+    "sha256": "d25e135d7f8a40c9fc8e699a928cca0df44b8c6256a29ca6df2f6b2b3bfeee49",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Console.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 157480,
+    "sha256": "cd04a67122d8942ba5046d58b42c508243e50d6a566b14d7e8b4c6420c4207b0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Core.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 23336,
+    "sha256": "02272b0b306f2bb0c28111f2414a0a963723a995ed0395396c6016bc507aece9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.Common.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 2656040,
+    "sha256": "f4257b53940a52d3c1fef0e6b6911c9113c8cdc8f2a0a496c0f777625ffa9126",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.DataSetExtensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "68de79f807f4e674603955ca27c9d36666e3d6f5d7b1a6025904bde6509afe2b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25424,
+    "sha256": "41029a11ab11cd581e34f39c0069d534b75c6dc46c4bb0f8ac5e728994f3de11",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Design.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 23336,
+    "sha256": "9246965fd3ac7e3fac0d0ee7346dd281eb544ed2acaf65f1abf9fb0ed3fb8f22",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Contracts.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16208,
+    "sha256": "208d1074b60d314be94786221f81101c1cd6bf4e29134e08c74f06799f2adbf9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Debug.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "2f2711656d0b216a129e45b0193117c0d62e36e088d8af758d997531ab97d177",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.DiagnosticSource.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 476968,
+    "sha256": "71f13fc98dd62c19f7ef707bc44a315696ad0fd9ef5e766ae59a8eb18753f4f9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.EventLog.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 345936,
+    "sha256": "9eecbb1fdf05835074ef9ee7f564da11372d62a92311905888c5da353b7f1c20",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.EventLog.Messages.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 800552,
+    "sha256": "8c24b1e6164ef4c26af72ccff347734b41501d375a0e7f04b48eebcc8a7425be",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.FileVersionInfo.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 42792,
+    "sha256": "79ae72ef9dc1338ff75a715959f4b5096c7bba59d705cd721e05d407df222d5b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.PerformanceCounter.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 284456,
+    "sha256": "29b5d84db2ddc7f835d73f44e6a2306abce26824cd296fb1c7b4c6deebeac838",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Process.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 304976,
+    "sha256": "4194a78c89b366bb2d2f4329a4d52c2b45b326248e0dbf6238a469f25927b556",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.StackTrace.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 46928,
+    "sha256": "bb1eff3797433fb6c1b75f242455f9994dac16f9bc719fc4ff2b8f43acdf2901",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.TextWriterTraceListener.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 63272,
+    "sha256": "6012f88abc84430266a8d889093ed74073683876857754c1701b815bb44e21b6",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Tools.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "39a4e0c88ec48f0a8bb8b15c03f999f1bb20f44cf843551c72d7ccbb1a4213a8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.TraceSource.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 132904,
+    "sha256": "952e58f0084d9d5fd4356e7c4a5f48ef03bb9aad12eb2e96f9ce1dc0e5c4af08",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Tracing.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "0fd081310ad602b0bc7812302faae77197cda4ffc3c44daf63c1d43a7976242b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.DirectoryServices.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 960296,
+    "sha256": "cea27b6f1861ac69ddaa1b0a750db1d96b2ea7dbc31ae12c1bc3dccbe7678592",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 50472,
+    "sha256": "4df79c6f30fce67f52e5331c64a6e2133603b0439c2e866eeabb6d43ea9d7aa9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Common.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 870184,
+    "sha256": "74fe6676d5df09c0c5c062da6d7279c07a597deed8ecd091567b35beb95875e9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Design.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "bb4a8212249d0c962f5c80abf7762f5cdb4e6deffd13d0a32ebef17c50bf5acc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 20816,
+    "sha256": "b2f09b1fdcef785b4485d376c2ebfb3a0471748ecad24d35d3343b42869c7fd7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 128808,
+    "sha256": "2745c7289f74218e38ddfb727bd1468f58c3019d390845c43e2458c343f60c35",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Dynamic.Runtime.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "9131c13c902c44c8535b3eb6cf35329917cc6479b297f3f40c8add387bb7f86a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Asn1.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 218960,
+    "sha256": "1c9e80e17a1f779a448dd898c867ebd6cebdca3bf4a2601a7708ea053fc03ebf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Nrbf.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 128848,
+    "sha256": "aa105f0c4f54fa3dbcf6cecd52df3b34747ab165bd14c497e8f481bc81e43d91",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Tar.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 255784,
+    "sha256": "2a5f744e18c1993675360804ad0af9084c7d917f1a04f5fb3fc5679ac527d909",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.Calendars.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "861fa875d478fbcbaa541b1bae0adc4ae0d5ed9a1a0d977fff251cf0b3bad6dc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "60ab4e55ad0faaf36ad7f2eb19a7a9e824d92a86b9913a53487e5a9d2deae959",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "fa68f115d0a642638f4e01b947c1ab281ea3ace64342e09644bfd3e00dbd8069",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.Brotli.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 75560,
+    "sha256": "5920eb4e8cfcc66caec8048a3c5b3cc3b6b0891e832cf785f8e92d60d9efbb81",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 403240,
+    "sha256": "6129cf7e77bf5bf586b0adc72c5b3a866af5f44e68318a111f522218e448589a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.FileSystem.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "4cae32a673cc2289ebcde5a93444d07f1fa15b8559dcc62e987910b1899c94f1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.Native.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 846672,
+    "sha256": "65e94ee2e247d21d1de1664e06e33f8b0dfc6e6751d66527779c4b80bfb56538",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.ZipFile.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 91944,
+    "sha256": "4c01ba8fe36956fcb7df2cf82660894d51a7b901c659ef08849ce69464c8d5d0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "75254b96b2bf324373655ac61f8160a17c6b64256117a29a5e6a9051dbb73c7e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.AccessControl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 96040,
+    "sha256": "086233a7f2644c6eccd49093edfbbd594734353eaf74f31b4205521bc0f9a7d9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "0aac634e624e0f72e3abdd22f12a198eea7fd72630d56263ae232f5aab84874c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.DriveInfo.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 51024,
+    "sha256": "253399b563fe8c87d732e8b55dcf95da44d7ebfde8f532fc2821e006826b00a9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "3425bcab2f1947de1dd2f2577adf024ac4c595ff42e3a3dad0131d6de453e1ef",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.Watcher.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 79656,
+    "sha256": "98c0d06a0096f4e2e9ec75768853ca4ae50380c9246b091c13b346389bb605ce",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.IsolatedStorage.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 83752,
+    "sha256": "10911f116ddd2121cdacce5fd3ce14d19fe70ef829ace346f3506e63e14e3693",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.MemoryMappedFiles.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 75600,
+    "sha256": "b53a8a927ef740708c20abb8030027821665131ac6c4f9d5c399c04d3ba0c4cd",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Packaging.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 304936,
+    "sha256": "420b3da3929158957b3623af6cfa54e51761e6b0bc03c3a15668a7fe93d3371e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipelines.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 182056,
+    "sha256": "d87ad0e9c80097de4e3fd2e023072e8d4f42addf2fb0fe3a1fe37c2aedf78d49",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipes.AccessControl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "91f9aab423816ebcf73235defee5fd18f236ebbf7d9676cee6d3b15f74a067a3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipes.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 157480,
+    "sha256": "56da0ec9eeda3d0f2ff5d193a3cb6a1040389773c726263cc0aba551e802acaf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.UnmanagedMemoryStream.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "e3c06421d63d1493383c3cd5e56276decfc98ad6600e71e4371bd9365b90ca65",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.AsyncEnumerable.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1242920,
+    "sha256": "ada43f30f7c53cc6ce27cacf8e48286229477bc036e8a412225985fdafdbbeed",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 644944,
+    "sha256": "ec0314908d6827ab36403af0604e20b605aab8d9076c05da4eb4857eb57da6ef",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Expressions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 3372840,
+    "sha256": "33ae65e52e540c9bec927faf0f0a5da1040db7b17561f827618d349f0e15db3c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Parallel.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 730920,
+    "sha256": "9e9bbde74b237ea40c5c3f562bc62f66f3e7d4e150f722e0a130da7be869e848",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Queryable.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 177960,
+    "sha256": "261e18e81789ce4715a5ea34bfae1723f94c4649e34e9bd2e7386f5338ecb63f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Memory.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 157480,
+    "sha256": "973516af03f5c4d8dc3ab6dc719ac17b1d95336b88fb367af6037e68d36ec570",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17192,
+    "sha256": "5eb06740b30b22b647a60774d158959e30ad38a6cd5dc6ecf226813d9b1e6152",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Http.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1652520,
+    "sha256": "9c1ed55456da3b6c15b9ec0bdf53d912679250241a165380b067948a3765ca6a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Http.Json.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 116560,
+    "sha256": "461a1f1ba9acd2f12deb5f2539a94e6357ef46d36a8c0a550b7a1b39db49df12",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.HttpListener.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 505680,
+    "sha256": "e08e7efe6a4856de57a49287e338bc53ba646b81d644976bf22b1b1cef16c72a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Mail.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 452392,
+    "sha256": "40ff0d384003b7cf43e3b41239102ad456370ce828f0507b180ad194624e4eb0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.NameResolution.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 112464,
+    "sha256": "97bba76936cd8071cf98bd1578565b2c595a0559c3f9fe985ae4c1742f306b0e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.NetworkInformation.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 145192,
+    "sha256": "e943fa162521edf21ec14eca86548d50740570b3c46af08d8054be2e07bb2c2d",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Ping.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 87888,
+    "sha256": "f76b17340f793fd769e469398e0ec9ef9dd75af38df70cdfb2594ea6d7515822",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 202576,
+    "sha256": "7c7aa2695472c11831911da9dd491cc084065dd1a8544c43e4a4f1fbdc202281",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Quic.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 337704,
+    "sha256": "ff8b4de1746a80e27921f073c3d3debe8697e95a12da458f3ca2036b1b53b6c5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Requests.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 354088,
+    "sha256": "eb4593a40d63f2b5cbf3b080e76030c44ff28e87d651cbdfbe4b9500ddd700bb",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Security.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 632616,
+    "sha256": "c692b8746a68de801920ec871670e7172810242a47c8b70dee8e79e8a529d7a7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.ServerSentEvents.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 79696,
+    "sha256": "5573756e99ccda09f5d859af1234d6a936e1da349e796b853f3bfdc8598a1534",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.ServicePoint.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "bb3c8e40eeb345e7ed492ea1ff0219bb5d9f5b260cd58f4c4119431d92e5a3a8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Sockets.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 493352,
+    "sha256": "4bc94d72e0df6df725bc4a26c86349895d4d0ee9aa56e278604871b87d871dc8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebClient.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 157480,
+    "sha256": "a144ee1a38740d480d7c65eeece5ee4ef3439472d9a658ca87ad46e406b3e347",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebHeaderCollection.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 59176,
+    "sha256": "1b268add2692cc8a9eea749ee3d28ecbe4b386ef84cb9f33fa42d5d74ebfb745",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebProxy.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 42792,
+    "sha256": "9ed97b76fb13918eb666e4abf8a6ca91531ad26ab627bd7023673c1ba6050caf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebSockets.Client.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 91984,
+    "sha256": "d1f9ff21ac49e9b800decca2b25b43aff9b70472fc17dffb54c9c972c422d7fc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebSockets.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 231208,
+    "sha256": "b1abcce9a7acfb1be89a64b2887e37fdcb7f638a4c10336882e91340bba1e2f3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Numerics.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "58e3fe25cfb46c3f020252c62db44a952a916eece9851ada9b7ee1636ea25593",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Numerics.Vectors.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "5370e5113eb933daf8f2281aaa32be655b9be9f28d100b34f02cadb0ecfe69e3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ObjectModel.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 71504,
+    "sha256": "91f6390c49cfd1c58d09fa3b6a948733d3b2f7edb0e84bede5e1909b25d334a4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.CoreLib.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15599440,
+    "sha256": "e0457d3ebff7ad8f87534d0163786c66f623b7118f2e82f22fa0e8b6d8f61a28",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.DataContractSerialization.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1939240,
+    "sha256": "13eaec707e62bcc4a1fafd737aa098586c367a22624a36269e73aa28765aba63",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Uri.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 247592,
+    "sha256": "73a226122b02ef001e9da3b076963f083eefc7ed8523ce5218d3dcc8f7f7de4e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Windows.Core.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1787688,
+    "sha256": "5aaa3dfb1f2e3155fce438a1aff12365f9352f383bced0d5e3e225b7e21cf2c2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Windows.GdiPlus.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 325416,
+    "sha256": "4492ea0f75218f0e215d26a07359fa3a0a3c0ca8a2e4d29f9bc1d08ea4430fe3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Xml.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 7386960,
+    "sha256": "2f29f931237e1b6214d3d868e4a905fc430d813c51549a2c8ccec790c72aa3e2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Xml.Linq.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 366376,
+    "sha256": "b029c82601b0c52ad07570b1b1bcb56bf08bd5a7306772bcab19ee71899ac577",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.DispatchProxy.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 71464,
+    "sha256": "1c9fb76c4549f71c5e6d8aad893850cd9e66fa490ccf6ff37896d67f5583ba9c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "2a1d17da2f6cce6579d77d8618cc5eb5fd84719119923aad3ec4360c42050b86",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 292688,
+    "sha256": "7d536e81b4009f75afdd6e234ee4361f952cd7089e8081c78b99ee8ee89e8e04",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.ILGeneration.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "268d2bdc338f9b55f48586bd34df5eef2330194a8af4bf312ec70448977b6733",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.Lightweight.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "b1a558c6c060c09fce3023b76bd964accacd63fa391cc1ceb7f5e7437a38f9ce",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "1285e27afacdf2e716b7440b2592f8c761872d6a6fc432372252085de78ef1c0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Metadata.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1120080,
+    "sha256": "0a8682262456a17c4f8007458e0cdfa3870148cb1a65216acffb16551bef79ae",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "4105cb1c536715590aa1a29bb9346aecdb18574fccb0c33e84d86559efce74db",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.TypeExtensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 42832,
+    "sha256": "b93de180f9e8aabcf9bee7f210a4c8f5c035addc5b1b30513fa4621a14151b86",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 186152,
+    "sha256": "4a7271cb4e3db57dd88bd82c34380ff5c521f6170a476be1fb0c453fa05a3f4c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Reader.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "d6fa4beea64acf7eb57dd754506fd1f75fde5797227dae9a3c46d9f097f78b94",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.ResourceManager.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "5b09de43c470ee256213441170f80167db2c02cf49102af9ddd005acdf5d88f5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Writer.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 50984,
+    "sha256": "1b2fd33b08af3a25edfb02fda32c49528c72f2e3997e37a63315a17bbbb80e75",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.CompilerServices.Unsafe.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "66cf0b1ac80492794e84707bc9b971fd8b5a710a744ea9d0ae682657bc5f5ee8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.CompilerServices.VisualC.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 30504,
+    "sha256": "d64b1268c95f2a389b365651fb17e677c7204b3c46c292c24fa3bfe8e15bc906",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 44840,
+    "sha256": "d1c6be271888201f767787867765bfd363dccdb96b413cb0e194432e05c40ab1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17704,
+    "sha256": "75c74cc7172b95d88479cff4a0792e2ad18fe4fdd801dbd8901877e87ad1cd52",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Handles.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "70de5ea990d77aab44bd33ae1a06d62c1a6311f139e90ae89f4b5812284f6a2c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 108368,
+    "sha256": "481ca3899ab895dc3c2c72b5947aee219291843b9bd59506fe1131d6bbb9b29a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.JavaScript.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 51024,
+    "sha256": "5bb4195ff30292d25358b78b2a5801fcba2111a82d1e080adce9960ff713a9f9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.RuntimeInformation.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15184,
+    "sha256": "406b299945ff122b188d65916ffcb9c9d1b66f2952cd1235adb530c9221bc853",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Intrinsics.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17232,
+    "sha256": "592e9036d0a87a6978f8e681cbba227007ce94d5d603289be1d5f18a6a3638e0",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Loader.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "30c2d4a1effcd63bb6623f1cf3f73d2207be33ea340cbad567d4c279a42d7493",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Numerics.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 349992,
+    "sha256": "74a238915c8a8ea33ba1e47c1b4f19a2ffb44d40fe18cf8455d45e9fdac9d1b8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17192,
+    "sha256": "d20eaeb9e0a0a700e52d2e9ce2fdfa8a8f36f0d00ad1bcc275b30c209b6b6fb1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Formatters.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 120616,
+    "sha256": "9113cfa72397dba45e707f769b3353ad09d6864586257ecf67f0f37a375283b3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Json.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "884c608e2897aec30ee7d7a24c14decf852cb49dce49768c12924e79834a6942",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 38696,
+    "sha256": "04010c764d96cde89589f5a58d20014c7e4f0ab76ae52738369599e7753eff4e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Xml.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16680,
+    "sha256": "722c97c9c90cd83838dcaeb9828fd237ca3154903b033f38d07c0c2773580f74",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.AccessControl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 210728,
+    "sha256": "fc6a229b139c5b7fc0853bb7c5a44dd1bcd4ad8115abe9baa03bdc73f2a9b83b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Claims.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 96040,
+    "sha256": "7e977e5887aeda02f081093de6ebd0ed5769aeca55b2232f446b04a73e9a1c77",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Algorithms.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17192,
+    "sha256": "dcef4b1eff2c6281ed805f33f5c0f67f66cc73c17edf5694adca7dad7cdc412a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Cng.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "a6dec9ab7b6f94095ecc42060677e1ca4ed1fed7e47c076e8a746c35c74f30d4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Csp.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "0177d991a72bf1ad1385c628a33bff3be97b637c8deb7030181b354b76633f86",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 2357032,
+    "sha256": "de3c1331628d08f69111899acb05b1ab33c411eeea8ff220bd3f9a15664957eb",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Encoding.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "951b2ed3d4faf51210827925a0ffa40a08a616ea6f2ad46b4b8ed04888804e65",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.OpenSsl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "485a0ad638b69299c751ae82bbe0fde25e8a84c64e99f319c98d72ac09c3af86",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Pkcs.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 718672,
+    "sha256": "4cb5440bbce81fadcc01486fb36b4670eaeeac7165f5f8716a9b7c976998314f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "94dffc9f603b65dc1efbd829779a35abff0a8bd5dbcefd7fac0ddd9b30ca9747",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.ProtectedData.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 59176,
+    "sha256": "057b7f7b7fe02038cd1cb20fa9fc53e031495d61ed30fb7b33839ff17cfdeb23",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.X509Certificates.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16720,
+    "sha256": "100377af607964755dfa83873f3af99110d6806fa29a802d25bbdeda405e9ad4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Xml.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 423760,
+    "sha256": "ab249a721e4f7c1a85cde7d86febee042f3ce2de5ac765b760afe9a46c222a19",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 18216,
+    "sha256": "54b6afe57b33b01b2ede291faf6e857c4d7417213c0243df0b263e6e36ce27b6",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Permissions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 186192,
+    "sha256": "235a1ee16bd047b188c9cbe6f69621aaae1e1b9c282310c3a3f93de404545d08",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Principal.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "c87d763f5a738f98937359ecf08fe2bd98995779b5640198620123d768518312",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Principal.Windows.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 165672,
+    "sha256": "c6e9e1967abfefa8ace86dcf82b9c0e7575f52307ec7f89d09f78a505e238892",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.SecureString.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "074be0a7794e1738812d38a1e21d21f0c3aedfd59bf01750613443e1683bcbc1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ServiceModel.Web.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16680,
+    "sha256": "7430f1eda697ad763692832f4f9289492d64ee6bbc065535d10fa95ee5357fe4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ServiceProcess.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "0945eb6c79e51dd67f8219673a6afbeea55cd6dbc8f2bb38d999bb3d1d7a1f7a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.CodePages.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 857896,
+    "sha256": "de6bb755d315b1c60f50516968dde006f1f299812eef0ca492aa4d345498cc0c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "0e5bb42d29683c20f7df0a914b5440f0214522cee65af6efa7d13cf6c85ba0b4",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "e93882d7ddc4649e5a4a1aa7916a5425527a4c059ea4f32ebc58d54c0d582288",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encodings.Web.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 120616,
+    "sha256": "fe1400f4bf608a728097fa25d36d66ee795969f77b93ad5ae0bda7ea83e30bc5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Json.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1787688,
+    "sha256": "ffc58ac4063f7715ab3835bc19f53bf65c2ac4c33e3a592fe366767f5203e8b8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.RegularExpressions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 984912,
+    "sha256": "2456ad2635e90e07a68fbc5e97a86dc979f553d9f2649cc3f0dd3d2ac42cef2f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.AccessControl.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 71504,
+    "sha256": "204028ddf3438246172d542ab3ebe325bd235d1f9ebed0ffa435489f36ace801",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Channels.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 149288,
+    "sha256": "f1f13d26ddeaf94b3bd1e0c0bbf248f11fe5af743b9b0165e98ad69e5c212c17",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 79656,
+    "sha256": "15889518267ea997d59db1fa144f1c92696c8b05fefed1ad082261f13d266190",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Overlapped.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "d51bf708762c326776b2e242d601a232d91c4090e6edbf3c544caf163e209b95",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Dataflow.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 444200,
+    "sha256": "1dd8b91d0763bf793da8400c19154e30e2f2e4df705ae9e69ff2c9ddf685f9e7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16680,
+    "sha256": "9f8a8da8ff8a9ec965fcd20e6dcc9909f72705387a32c6e88afaba9950b9846e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "9f331cb335d99a675ba0f0530dc592a84e759449ae9f7c6a7055d526bc84e0a5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Parallel.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 120616,
+    "sha256": "82b126ebfd2190919b9b2925c390165a9d2b393fe7b9c0f78d7fc1017ed52581",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Thread.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "ce42bdd6416a920e3594378ba4cc8d6f762581c76e070e604a8c9e7c82ef2127",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.ThreadPool.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "366ceb5ae863f6ae8a7e5135c2221172c0f211c7b5188a9530b8a5e28138716b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Timer.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "72c5f6b9e4ebec14690aa62c13a3c5fb70506980c047ba787106769b8c91aa60",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Transactions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16720,
+    "sha256": "df8f55db0d3368f4996ada3b5151d3639a82b344df754455258aa04d021d9680",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Transactions.Local.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 608040,
+    "sha256": "241677651b2d70edf1c88de517ebadc7b535e4606fa408bd1cb62f211a5c3d35",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ValueTuple.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "d1f6104cc23c5e57d44b27aa78105fcdd150ab2317ca7ccb200ac2258c8b39da",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Web.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15144,
+    "sha256": "413fdc792541a18f57101e493afbc9144c767a342824ba3e604b6171719d6277",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Web.HttpUtility.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 63312,
+    "sha256": "b30b0cdeb21555776fdd4d7137b5ccf8b5d63255911dab73e67f5abfc2ecf7c1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "3aafa3da88980aced28e1234fddd9f2270bcd897f5bc7a6f67da2562cc5098d3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Extensions.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 116520,
+    "sha256": "7e0b9885627f028f501a4a0ce568e07ae68f31ecdc3dc39a72af974eca9d50e9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Design.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 5875536,
+    "sha256": "25ce3a2161c3e719615e5ef58922217b2fd4e41098156f1b63c67ec61a14b0f9",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Design.Editors.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16208,
+    "sha256": "922ffdf286c3ed74403171362a3ae3d2c2ae280631e7a24c87d1a564633a76cd",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 13162320,
+    "sha256": "9cb914d9a4efc005cb122a5d195d8286dca8cac7d35378427bad176a1d0bce51",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Primitives.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 3200848,
+    "sha256": "31b69f6a82f0cda77e4514764b95f73283965ae54f2a93849ca0752d1718d2dc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 23376,
+    "sha256": "af7840d04094b8ed9c176a05e6184ed58388a15fbd563566714a893e77eebd19",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.Linq.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "d1a1a46bbf5db9ad5b3ff3e4837e210b22df7fbf028ab13b45cbb27e3635b10c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.ReaderWriter.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 21800,
+    "sha256": "a91443cb4fccc6242b45eee7d0ccad058d53c5c92edb6505ce034f7ac1b02750",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.Serialization.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16208,
+    "sha256": "c5d45061468dda2cd85b5bc17fce45617113d8fa490bb4728f1a833b7836579c",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XDocument.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "071203803d53ae420fa6b8752db19a3422a150d0fba7483d98833a632f522761",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XmlDocument.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "55e55271a25104a9c8f7a98f84e3e0e6c4c2c18d38d66ff1024b555c24327d8e",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XmlSerializer.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 17704,
+    "sha256": "35c1a1084bb26bb5c6beaef7a49e68e4d0c313478da35a78e052341c8e321ade",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XPath.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "40a3ff2ec5f010c5bc5f770fa1dd88fc4076eb6c7c5c37ff7ba091e2cd4cf32b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XPath.XDocument.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 30504,
+    "sha256": "81ae3fe6d362c8e1d7bbe31a154fe9d5509201125623b98541623d8d8b6c80c3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 25384,
+    "sha256": "06830909d60d8db4fa115e9bfbb90ff4cb9935a49d4545e3aeae0ab100b7f8cf",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 268584,
+    "sha256": "97042de35b247399af2f99f15534ba45ad6fe63bc8b38e43134b15e4c6c2b82f",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "b3a9330a881a22049fb5aa980ed7e7c3c5b9ef8285a26057e1553970fb4575a3",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 365864,
+    "sha256": "2cd2ef056592cf795515fcfe19aca47d178d5a96b126312458e7eb7eae70a38a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\WindowsBase.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 16168,
+    "sha256": "b2c5db29829eeae02641f3ff2022b6cdba3ce4d4bd6223a20c526032920dbcad",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 24912,
+    "sha256": "f133b2567e9de0d4cf91708bb175dc1588d691d5583cf843070498b977ad1aed",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 263976,
+    "sha256": "928a5a35523489ad51c3d56f2d833c50f69adc4d0092a493d37f7fa2cb21821a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15696,
+    "sha256": "e01fb44ad3a5debb5608998a6b4ac34dcd15d0e21d088d3ae361f95531d7a3ec",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 323408,
+    "sha256": "46a5c864a8ea142813d7e1b30df70f95aea000f6579bf0558eb01c03293b9cce",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\Microsoft.VisualBasic.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 24872,
+    "sha256": "f0b7fb6ef5437c627eebcaee4ba706da8136439367a78a786cb46292a3f69266",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.Design.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 264528,
+    "sha256": "2d7f1a1448e8020ca2efd2e796e0b4a779a96f76ad96a9d779eeb1a2923b9a7a",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.Primitives.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 15656,
+    "sha256": "740c0130afc576f3e894fb8c8f87f1bef41ff2c76e9449f2e79fc028a16ed090",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.resources.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 329040,
+    "sha256": "af90886d27969099aecd29ec00c550f9c856aa20767e93dda3bc60b8c677ac70",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.dgspec.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 23480,
+    "sha256": "0abe57b032e3fc783a85038bd5350067ec701659ece4bf0eb97d290ad707a559",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.g.props",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1139,
+    "sha256": "e813a7c3e79227450ed98d65dac46764f60d0bcfcdf0a8b6aa4d938c4887cd41",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.g.targets",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 150,
+    "sha256": "971cc9b535384849b5c661d776cd7a80833a416265e32e8968e06c367368b8b5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\project.assets.json",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 22745,
+    "sha256": "9569444467fc778033042a20c6f97097bd467d0de2e196ad853e1d30cf0c45e5",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\project.nuget.cache",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 859,
+    "sha256": "399243541b8fbea01936b1841876c78f27de32e6c6851ad4bffca7d6fe4d44d7",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 200,
+    "sha256": "93d67476196ebfc80d1d7d8844b91146cfd678d105f5ce635eb900ca40610c9b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\apphost.exe",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 132096,
+    "sha256": "ed32a69c0922a325ee1c6e1a0616bb30e906df75834c1902f92edb4eda038326",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381L.2AB26466.Up2Date",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.AssemblyInfo.cs",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1142,
+    "sha256": "1db4656b7ce57167a59f2c5c680be32b81237e353401dd619253b4ca508c13b2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.AssemblyInfoInputs.cache",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 66,
+    "sha256": "fa9a1746d4dfc9768d8aed3ae86d801ee2ac3e35a615f16ac4af9f5fd7af76a8",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.assets.cache",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 154,
+    "sha256": "114f7e5b96b794773a5dc56c71ce3c7863f3d34a7dc371c752fa10b71c9a3383",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.csproj.CoreCompileInputs.cache",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 66,
+    "sha256": "241b8aeae2f057d79c6b0286be3667521da230826a52201d114ba858e8353e1b",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.csproj.FileListAbsolute.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 37849,
+    "sha256": "42260884aab20099e4e7ace3bb5a71de2f3b308c3757a3df65d58afe4944f3de",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 407552,
+    "sha256": "207bdd4194b97bde497931de26539485ccca0a63f9dfa8185ee0bbf2b4881a20",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.GeneratedMSBuildEditorConfig.editorconfig",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 1192,
+    "sha256": "0973bc0aacf86e5b33d88228188599fc343bc80dabd634ad1e0524efacf9bc63",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.genruntimeconfig.cache",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 66,
+    "sha256": "74533c3af568a66a786e56c9dd73553f0f6d74953ac3affe59c8cf7ac4a32ac2",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.GlobalUsings.g.cs",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 305,
+    "sha256": "c95ea51a9e8c77e5367f652ede0c8871e7d6413090add59e1b8dd6805ac37e70",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.pdb",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 75852,
+    "sha256": "ceba49c3e98eed44470a2e7a8e85532aab31561174585f2b4b8290809ffc75d1",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\PublishOutputs.a6344582af.txt",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 29967,
+    "sha256": "c92111eab0c0b82f53858e8a9c6c80726e3be4d0f6eb1b9721dfc1681dc7c554",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\ref\\LiTo381Launcher.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 83456,
+    "sha256": "abaca0b1e40ea024dffdad72f9b08f41ba642a4479b9c97e9947b44a95f9d7fc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\refint\\LiTo381Launcher.dll",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 83456,
+    "sha256": "abaca0b1e40ea024dffdad72f9b08f41ba642a4479b9c97e9947b44a95f9d7fc",
+    "reason": "reproducible dotnet cache"
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\class_compat\\__pycache__\\verify_live.cpython-312.pyc",
+    "scope": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher",
+    "bytes": 4270,
+    "sha256": "28b80ad601c0035b544eb591c6be27b3fdd4ce863aba6df59f1aec88c9819b0c",
+    "reason": "reproducible python cache"
+  }
+]

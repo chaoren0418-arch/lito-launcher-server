@@ -1,0 +1,39 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-world-publication\\build\\candidate-pet-world-publication.jar",
+    "sha256": "09e3ce8c6f0fea809bdca869f9d71ab3b12c80157c595fe97045fc5e4f490361"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\candidate-weapon-break-numeric.jar",
+    "sha256": "a58a6d1f5e547d1a30d54ec562b5ee29472330a8bb2f757f2874231d2eec9eaa"
+  },
+  "changed": [
+    "local/lito381/server/BattleWeaponBreak.class"
+  ],
+  "semantic_C0_and_single_method_inverse": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\inputs\\build.py",
+      "sha256": "db8ec66bdf5c8f21a547045f88260baa99aa2c0352130b5783c679ce5fc42bf5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\inputs\\WeaponBreakNumericMethods.java",
+      "sha256": "5eed6fc1edd907b51a2faf518ae13f7d22963abd8f7c53c6b5565f95c43eaafe"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\inputs\\original\\BattleWeaponBreak.java",
+      "sha256": "dfe73d579cfab4c83ad9d76c5ce094bdc2c8939f32d7f124a1c44f1e0fee2dc8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-numeric\\build-repro\\inputs\\sources\\BattleWeaponBreak.java",
+      "sha256": "f05018253c4060d39dd4f1fdae422350ee791030ae19f331b98881a5d50d2782"
+    }
+  ]
+}

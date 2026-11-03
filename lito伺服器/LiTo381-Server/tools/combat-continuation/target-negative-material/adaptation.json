@@ -1,0 +1,25 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\SilenceMaterialMethods.java",
+      "sha256": "00418d09c96abe536e6c6964ddf720c68d66f0b9605e0edfda21e259e4b770c3"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build.py",
+      "sha256": "736edd34eef0bf81046e77ad15cb1a07577d5ab684145cc01811996ceb330117"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "f9c407f6c108769c3bf95c0f62a55153e027f9dcbb159227ca93b8f50bdd0837"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\build\\target-negative-audit\\inputs.json",
+      "sha256": "659cf944bb56c587c9da010ba830b43d1965da649e9a6cc49d5e820c399d79af"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\target-negative-material\\prepare.py",
+      "sha256": "5ed50b247e0d0d196f265c0f40844fada7a956b3d4995267f045738eaabe2de1"
+    }
+  ],
+  "scope": "173/174 shared original kind/interface body; target resolution and original side effects unchanged; no consumer or target coverage claimed before testing"
+}

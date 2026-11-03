@@ -1,0 +1,62 @@
+{
+  "version": "0.6.48",
+  "baseline_server_sha256": "ae063385dcdf3898aeb003137f807e6c3365073aece62b8531fb7e86886dcd06",
+  "published_sha256": "9c97f86821738cd4e039f20bf69cae286bb1f095bdda77e3305799a77f5c1a23",
+  "native_dll_sha256": "039843354097f7f7ff36e4bc977a23c7267918d14127c92f6040133f7aabe43d",
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "2b92b4e038723a147fdd47c1b74765cd71c0df22ae218d24c1e5d57a887140fa"
+  },
+  "previous_source_hashes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "97b2cdf4d291cddfc3be0d9ec1556c35aa6b95570654097b4b1d84976a9d1890"
+  },
+  "rollback_archive": "backups/before-dragon-presentation-0.6.47.zip",
+  "rollback_archive_sha256": "6c2bc5e0e966ff105f345c01885d3510d74e15d638d3cc59b285f0932f480595",
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "server_regression_passed": true,
+  "server_regression_log": "runtime/dragon-combat-regression.log",
+  "native_fixture_run": "class-lobby-fixture-1791798271074766400",
+  "native_fixture_passed": true,
+  "native_combo_test": {
+    "input_duration_ms": 800,
+    "burst_duration_ms": 267,
+    "normal_duration_ms": 800,
+    "actions": [
+      21,
+      5,
+      12,
+      51,
+      25,
+      84,
+      47
+    ],
+    "effect7020_counter": 3,
+    "effect4394_counter": 4
+  },
+  "native_status_icon": 3080,
+  "reference_evidence": "tools/class_compat/dragon-presentation-reference.json",
+  "reference_evidence_sha256": "1b8a820db098cfb2dac8c41036cc2193c1ce70d15ab35dc6161e287ecf51d59a",
+  "no_player_sql_writes": true,
+  "manual_test_pending": false,
+  "notes": [
+    "Three physical hits and weakness consumption retained; only extra casting action omitted.",
+    "Shared status icon3080 from effectlist2.xml effect107, not spell icon3079.",
+    "Earlier owned fixture startup exited 0x0019FFCC before login; clean retry passed."
+  ],
+  "formal_smoke_run": "cleanup-smoke-1791798358998475000",
+  "formal_smoke_passed": true,
+  "deployment_pins_verified": true,
+  "project_layout_verified": true,
+  "manual_validation": {
+    "date": "2026-10-12",
+    "timezone": "Asia/Taipei",
+    "source": "user confirmation in this chat",
+    "foe_slayer_rapid_combo": "passed",
+    "dragon_skin_original_status_icon": "passed",
+    "user_report": [
+      "屠宰者：測試成功",
+      "龍之護鎧：正確顯示"
+    ]
+  }
+}

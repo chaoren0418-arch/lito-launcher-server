@@ -1,0 +1,18 @@
+{
+  "version": "0.6.63",
+  "resource_tables": 10,
+  "resource_rows": 651,
+  "unified_notes": 22,
+  "runtime_rows_compared": 629,
+  "archive_sha256": "ffa06a7c9a48f50d1c72f764382c8a4e4dfc5490cf52445f4cb4c89e8e157ed1",
+  "server_sha256": "d7222dedd44d55ca7849ea320ca8bd73aedbc6590f9f9b4b158cf10f60a73afc",
+  "formal_sql_startup_accepted": true,
+  "native_manual_gameplay_verified": false,
+  "regressions": [
+    "ResourceRegression",
+    "RoomRulesRegression",
+    "FlowRegression",
+    "VerifyImported",
+    "VerifyCompact"
+  ]
+}

@@ -1,0 +1,542 @@
+{
+  "updated_at": "2026-10-06T10:22:53.412538+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract.json",
+    "bytes": 18472,
+    "sha256": "15DEFCD0A45EF3EDC020C72BE6ED048CBE306EFF6DB79CD8B6FF1389CF9C59C0"
+  },
+  "all_match": true,
+  "check_count": 132,
+  "checks": [
+    {
+      "name": "ownoutput existing-resolver-ASM.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput fixed-PE-resolver-and-route-cells.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput remaining-provider-evidence-contract.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput route-function-contract.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput route-handoff.md",
+      "match": true
+    },
+    {
+      "name": "ownoutput source-arithmetic-route-examples.json",
+      "match": true
+    },
+    {
+      "name": "fixedPESHA",
+      "match": true
+    },
+    {
+      "name": "exactraw resolver",
+      "match": true
+    },
+    {
+      "name": "exactraw cells",
+      "match": true
+    },
+    {
+      "name": "all35instructionbytescover65",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFC7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFCA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFCC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFCE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD0",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD2",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD4",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD7",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFD9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFDB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFDE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFE1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFE3",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFE5",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFE6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFE8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFEA",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFEB",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFED",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFEF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFF1",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFF6",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFF8",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFF9",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFFC",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFFD",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFFE",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 0043FFFF",
+      "match": true
+    },
+    {
+      "name": "instructionbytes 00440000",
+      "match": true
+    },
+    {
+      "name": "leafnohelpers",
+      "match": true
+    },
+    {
+      "name": "unsignedbytezeroextend",
+      "match": true
+    },
+    {
+      "name": "signedmod16pattern",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 0",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 1",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 2",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 3",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 4",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 5",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 6",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 7",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 8",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 9",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 10",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 11",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 12",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 13",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 14",
+      "match": true
+    },
+    {
+      "name": "qualifiedroutecell 15",
+      "match": true
+    },
+    {
+      "name": "16cellsrange64",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 0.png",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79.png",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 809.png",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79.img",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79e.img",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79c.img",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79j.img",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 79h.img",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 0.PNG",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 19.png",
+      "match": true
+    },
+    {
+      "name": "offlinearithwitness 91.png",
+      "match": true
+    },
+    {
+      "name": "domainbounds542697",
+      "match": true
+    },
+    {
+      "name": "no namespace/providerclaim",
+      "match": true
+    },
+    {
+      "name": "before/content/after PE",
+      "match": true
+    },
+    {
+      "name": "before/content/after existingASM",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved 79-source-qualified-suffix-lookup.json",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved bank-boundary-handoff.md",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved direct-bank-source-facts.json",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved existing-ASM-boundary-navigation.json",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved fixed-PE-bank-boundaries.json",
+      "match": true
+    },
+    {
+      "name": "Batch36outputpreserved minimum-missing-resource-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "priorpin ranges.json",
+      "match": true
+    },
+    {
+      "name": "priorpin snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "priorpin native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-character-ui-reachability-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-selection-resource-gap-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-image-bank-boundary-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixedsource LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "fixedsource LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "fixedsource full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "38priorpins",
+      "match": true
+    },
+    {
+      "name": "zeroactions",
+      "match": true
+    },
+    {
+      "name": "R527scopeunchanged",
+      "match": true
+    },
+    {
+      "name": "packetimmutable",
+      "match": true
+    },
+    {
+      "name": "incidentimmutableopen",
+      "match": true
+    }
+  ],
+  "scope": "Newfixed65byteleaf/64bytenonnegativecells, sourcearithmeticwitnesses, owncontract/immutablepins. No targetfunction/Native/Modern/model/build/test/GUIexecution;oldbank/index/PASSnotreplayed.",
+  "runtime_acceptance": false
+}

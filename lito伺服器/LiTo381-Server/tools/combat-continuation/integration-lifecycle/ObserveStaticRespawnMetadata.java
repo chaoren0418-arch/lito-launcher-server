@@ -1,0 +1,5 @@
+import java.nio.file.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+/** Audit-only bootstrap probe port; original method instructions remain intact. */
+public final class ObserveStaticRespawnMetadata {
+ public static void main(String[]args)throws Exception {String n="local/lito381/server/NativeSkillTargetMetadata";try(var j=new JarFile(args[0])){var c=new ClassNode();new ClassReader(j.getInputStream(j.getJarEntry(n+".class"))).accept(c,0);int count=0;for(var m:c.methods)if(m.name.equals("read")){var b=new InsnList();b.add(new VarInsnNode(ALOAD,0));b.add(new MethodInsnNode(INVOKESTATIC,"local/lito381/server/StaticRespawnMetadataAuditProbe","inspect","(Ljava/sql/Connection;)V",false));m.instructions.insert(b);count++;}if(count!=1)throw new AssertionError("one static metadata bootstrap");var w=new ClassWriter(ClassWriter.COMPUTE_MAXS);c.accept(w);var p=Path.of(args[1]).resolve(n+".class");Files.createDirectories(p.getParent());Files.write(p,w.toByteArray());}}
+}

@@ -1,0 +1,17 @@
+import java.nio.file.*;import java.net.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+/** Curse target identity also includes the existing native role token. No global actor map or new lock. */
+public final class PoisonOwnerMethods {
+ static final String P="local/lito381/server/",T=P+"CombatCurseLifecycle$Target",FIELD="nativeRoleOwner";
+ static ClassNode transform(JarFile jar,ClassLoader loader)throws Exception{
+  var c=NativeSkillConsumptionMethods.read(jar.getInputStream(jar.getJarEntry(T+".class")).readAllBytes());
+  if(c.fields.stream().anyMatch(f->f.name.equals(FIELD)))throw new AssertionError();c.fields.add(new FieldNode(ACC_PRIVATE|ACC_VOLATILE,FIELD,"Ljava/lang/Object;",null,null));
+  var take=c.methods.stream().filter(m->m.name.equals("take")).findFirst().orElseThrow();int count=0;
+  for(var n:take.instructions.toArray())if(n.getOpcode()==ARETURN){var i=new InsnList();i.add(new InsnNode(DUP));i.add(new VarInsnNode(ALOAD,0));i.add(new MethodInsnNode(INVOKESTATIC,P+"NativePlayerCommit","owner","(L"+P+"ClientSession;)Ljava/lang/Object;",false));i.add(new FieldInsnNode(PUTFIELD,T,FIELD,"Ljava/lang/Object;"));take.instructions.insertBefore(n,i);count++;}if(count!=1)throw new AssertionError();
+  var valid=c.methods.stream().filter(m->m.name.equals("valid")).findFirst().orElseThrow();var i=new InsnList();var same=new LabelNode();i.add(new VarInsnNode(ALOAD,0));i.add(new FieldInsnNode(GETFIELD,T,FIELD,"Ljava/lang/Object;"));i.add(new VarInsnNode(ALOAD,1));i.add(new MethodInsnNode(INVOKESTATIC,P+"NativePlayerCommit","owner","(L"+P+"ClientSession;)Ljava/lang/Object;",false));i.add(new JumpInsnNode(IF_ACMPEQ,same));i.add(new InsnNode(ICONST_0));i.add(new InsnNode(IRETURN));i.add(same);valid.instructions.insert(i);
+  var framed=NativeSkillConsumptionMethods.frames(c,List.of(take,valid),loader);for(var m:List.of(take,valid))c.methods.set(c.methods.indexOf(m),NativeSkillConsumptionMethods.method(framed,m.name,m.desc));return c;
+ }
+ public static void main(String[]args)throws Exception{try(var old=new JarFile(args[1]);var loader=new URLClassLoader(new URL[]{Path.of(args[1]).toUri().toURL()},ClassLoader.getPlatformClassLoader())){
+  var expected=transform(old,loader);if(args[0].equals("splice")){var out=Path.of(args[2]).resolve(T+".class");Files.createDirectories(out.getParent());Files.write(out,NativeSkillConsumptionMethods.bytes(expected,false));return;}
+  try(var next=new JarFile(args[2])){var actual=NativeSkillConsumptionMethods.read(next.getInputStream(next.getJarEntry(T+".class")).readAllBytes());if(!Arrays.equals(NativeSkillConsumptionMethods.bytes(actual,true),NativeSkillConsumptionMethods.bytes(expected,true)))throw new AssertionError("unexpected transformed target");var parent=NativeSkillConsumptionMethods.read(old.getInputStream(old.getJarEntry(T+".class")).readAllBytes());actual.fields.removeIf(f->f.name.equals(FIELD));for(var name:List.of("take","valid")){var a=actual.methods.stream().filter(m->m.name.equals(name)).findFirst().orElseThrow();var b=parent.methods.stream().filter(m->m.name.equals(name)).findFirst().orElseThrow();actual.methods.set(actual.methods.indexOf(a),b);}if(!Arrays.equals(NativeSkillConsumptionMethods.bytes(actual,true),NativeSkillConsumptionMethods.bytes(parent,true)))throw new AssertionError("unrelated target method changed");System.out.println("PASS role token field and take/valid inverse; no other target or lifecycle methods changed");}
+ }}
+}

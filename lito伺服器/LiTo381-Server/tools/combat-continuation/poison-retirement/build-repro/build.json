@@ -1,0 +1,33 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-tick\\build\\candidate-poison-tick.jar",
+    "sha256": "9aba1a29e557e56de13db2a4648d48755fb8ff11df424658bb0bff9cb58df794"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-retirement\\build-repro\\candidate-poison-retirement.jar",
+    "sha256": "40d97436a4a90efe3aff87d33f15d85cd23da08242b3d8aeeaa73df8b0162930"
+  },
+  "changed": [
+    "local/lito381/server/CombatCurseLifecycle$Removal.class"
+  ],
+  "added": [],
+  "inverse_byte_equal": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-retirement\\build-repro\\inputs\\build.py",
+      "sha256": "549e6e0d76159e213c813358fb2dc6c39bbd11f916ac337cac30a241c3728b89"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-retirement\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-retirement\\build-repro\\inputs\\PoisonRetirementMethods.java",
+      "sha256": "67bed1e10d58f5681413aa393ca3d04fa492cf2d15569e58fb8fe48dc37ad644"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "sources": {
+    "BYTE64AF9D": {
+      "location": {
+        "va": "0064AF9D",
+        "rva": "0024AF9D",
+        "section": "   \u0000    ",
+        "file_offset": "0024AF9D",
+        "raw_backed": true
+      },
+      "width_bytes": 1,
+      "snapshot_hex": "00",
+      "snapshot_level": "raw fixedPE snapshot only, not proof executed initialization/loader default/current state",
+      "direct_write": {
+        "at": {
+          "va": "00481447",
+          "rva": "00081447",
+          "section": "   \u0000    ",
+          "file_offset": "00081447",
+          "raw_backed": true
+        },
+        "value": 1,
+        "condition": "inline case-sensitive bytewise NUL equality with literal62D25C lteventsvr; equal EAX0 at481443, else branch481453",
+        "phase": "startup ClientApplication_Run conditional switch-token island; no numeric64AF98/room/owner gate here",
+        "source": "EBP-1C pointer; earlier480C9C stores EDI+1 after slash/hyphen leading-char branch. tokenizer480C0D→47EC50 unknown STOP;480C9F indirectEDI loaded[4F72E4] firstunknown STOP. Laterinlinecompare independent, no success bridge asserted."
+      },
+      "direct_clear_found": false,
+      "direct_inventory": {
+        "direct_read": 11,
+        "direct_write": 1,
+        "address_argument": 0,
+        "definition": 1
+      },
+      "lifetime": "No named direct clear in finiteASMliteral inventory. Does not exclude alias/bulk writes or reinitialization; do not reset per-room/ready automatically.",
+      "qualified_meaning": "local startup literal-match flag / local guard input only; actual tokenizer/input/entry execution unknown. Not owner/mode/ready authority, serverevent status or wireversion."
+    },
+    "protected_selector": {
+      "object": {
+        "va": "008316B0",
+        "rva": "004316B0",
+        "section": "   \u0000    ",
+        "file_offset": "004316B0",
+        "raw_backed": true
+      },
+      "encoded_index": {
+        "va": "008316B0",
+        "rva": "004316B0",
+        "section": "   \u0000    ",
+        "file_offset": "004316B0",
+        "raw_backed": true
+      },
+      "storage_pointer": {
+        "va": "008316B4",
+        "rva": "004316B4",
+        "section": "   \u0000    ",
+        "file_offset": "004316B4",
+        "raw_backed": true
+      },
+      "xor_key": {
+        "va": "008316B8",
+        "rva": "004316B8",
+        "section": "   \u0000    ",
+        "file_offset": "004316B8",
+        "raw_backed": true
+      },
+      "widths_bytes": [
+        4,
+        4,
+        4
+      ],
+      "reader_formula": "index=DWORD[8316B0] XOR B104FA87; result=DWORD[DWORD[8316B4]+index*4] XOR DWORD[8316B8] (32bits); ready guard only tests result==0",
+      "snapshot_hex": "000000000000000000000000",
+      "fixed_snapshot_decodable": false,
+      "snapshot_warning": "Pointer0 and encoded index0 would produce XORindexB104FA87, not valid initialized storage. Do not dereference/synthesize a live value from snapshot.",
+      "ASM_definition_only": {
+        "encoded": "B104FA84",
+        "pointer": "057E0D48",
+        "key": "2FE3681D",
+        "fixed_PE_equal": false,
+        "authority": "different recovered initialization inASM, no currentPE runtime adoption"
+      },
+      "initialization": {
+        "caller": {
+          "va": "004C3760",
+          "rva": "000C3760",
+          "section": "   \u0000    ",
+          "file_offset": "000C3760",
+          "raw_backed": true
+        },
+        "object_arg": {
+          "va": "004C3770",
+          "rva": "000C3770",
+          "section": "   \u0000    ",
+          "file_offset": "000C3770",
+          "raw_backed": true
+        },
+        "first_unknown": {
+          "at": {
+            "va": "004C3775",
+            "rva": "000C3775",
+            "section": "   \u0000    ",
+            "file_offset": "000C3775",
+            "raw_backed": true
+          },
+          "target": "004C3CC0"
+        },
+        "helper_body_opened": false,
+        "runtime_invocation_allocation_storage_lifetime": "unknown"
+      },
+      "cleanup": {
+        "callback_arg": {
+          "va": "004C3780",
+          "rva": "000C3780",
+          "section": "   \u0000    ",
+          "file_offset": "000C3780",
+          "raw_backed": true
+        },
+        "registration_first_unknown": {
+          "at": {
+            "va": "004C3785",
+            "rva": "000C3785",
+            "section": "   \u0000    ",
+            "file_offset": "000C3785",
+            "raw_backed": true
+          },
+          "target": "004F10E0"
+        },
+        "object_arg": {
+          "va": "004C3790",
+          "rva": "000C3790",
+          "section": "   \u0000    ",
+          "file_offset": "000C3790",
+          "raw_backed": true
+        },
+        "first_unknown": {
+          "at": {
+            "va": "004C3795",
+            "rva": "000C3795",
+            "section": "   \u0000    ",
+            "file_offset": "000C3795",
+            "raw_backed": true
+          },
+          "target": "004C3D20"
+        },
+        "helper_body_opened": false,
+        "registered_executed_or_cleared": "not qualified"
+      },
+      "overwrite_calls": [
+        {
+          "at": {
+            "va": "00492E72",
+            "rva": "00092E72",
+            "section": "   \u0000    ",
+            "file_offset": "00092E72",
+            "raw_backed": true
+          },
+          "argument_u32": 0,
+          "object_arg": "008316B0",
+          "condition": "independent join island492E6B within existing character selection callback; prior unknown dependencies retained"
+        },
+        {
+          "at": {
+            "va": "00492E9E",
+            "rva": "00092E9E",
+            "section": "   \u0000    ",
+            "file_offset": "00092E9E",
+            "raw_backed": true
+          },
+          "argument_u32": 1,
+          "object_arg": "008316B0",
+          "condition": "selected record BYTE[EBX+3E]!=0; compareBYTE7 only writes separate64AFBF viaSETZ, does not gate setter1"
+        }
+      ],
+      "selected_record_source": "Conditional EAX index after unknown494120; inline LEAs EAX*5 thenEDX*9 thenEBX=62FAA0+index*180. Existing characterselection/source, not currentroom orserverD1/D5 record. BYTE+3E field meaning/provenance unresolved; recordproducer not expanded.",
+      "selection_first_unknown": "4928E8→4C8790 entry firstunknown; row query492914→494120 STOP; afterrow conditionalsource島492958→49A510 STOP. Laterconstantsetters independent islands, no fullUI/ownercreation bridge.",
+      "setter_adoption": {
+        "body": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+          "bytes": 91,
+          "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+        },
+        "state_layout": "object+4 points to16DWORD storage; object+8 is XORkey; object+0 is encoded index (XOR B104FA87). Not a plain MP global.",
+        "visible_order": "Calls4C3CA0 for key; initializes16 slots; external773DC650 result selects opaque index; XORs exact32bit signed-extended input with key into selected slot; encoded index stored; returns object pointer, ret4.",
+        "live_preconditions": "Protected object and object+4 storage valid; no NULL or allocation/init guard in this setter. External/helper completion and valid index unproven.",
+        "maximum_update_dependency": "4AEFC2/C6 reached only after setter returns; static decode of both fields is not native whole-message completion."
+      },
+      "setter_conditional": "Existing4C3E90 code accepts full32bitarg and stores keyedslot + encodedindex only if validobject/storage/keyhelpers/externalindex return. Firstunknown4C3E97→4C3CA0 (repeat4C3EA1);external4C3EB6→773DC650 remainsSTOP; no new bodies/PASS or execution.",
+      "direct_inventory": {
+        "dword_8316B0": {
+          "direct_read": 45,
+          "direct_write": 0,
+          "address_argument": 4,
+          "definition": 1
+        },
+        "dword_8316B4": {
+          "direct_read": 47,
+          "direct_write": 0,
+          "address_argument": 0,
+          "definition": 1
+        },
+        "dword_8316B8": {
+          "direct_read": 47,
+          "direct_write": 0,
+          "address_argument": 0,
+          "definition": 1
+        }
+      },
+      "direct_global_store_found": false,
+      "alias_or_other_object_setter_callers_complete": false,
+      "qualified_meaning": "local protected selector and character-record-conditioned setter request0/1 only; not owner identity, room mode, version, ready membership or server admission."
+    },
+    "ready_writer_use": {
+      "existing_state1_guard": "64AF9D==0 skips selector dereference and reachesD201 island; nonzero requires validselector memory. decoded0→sameD201; decodednonzero→458BB0 firstunknown then independent virtualcallbackregistration; no executed acceptance.",
+      "phase": "No64AF98/version/room/owner numericgate in this59byteguard; caller eligibility unknown, not wholeclientabsence.",
+      "Modern": "Do not manufacture XOR object/flag or map either toowner/ready authorization. Explicit authorized localready intent and currentepoch/room/join/alias state remain independent of servercommit/D1/E1 receipts and GUI acceptance.",
+      "existing_CE_D1_D5": "CE/SD0/CDD already read same selector for notification/layout; these are consumption proofs, not producer initialization. D1/E1 selfphase and D5 stores remain their exact prior contracts; none grants a semantic name tothese inputs. No transitivealias absence claimed.",
+      "no_new_wire": "Known state1D201 body2/frame4 retained from Batch29; Batch30 adds directsource evidence only."
+    }
+  },
+  "unknowns": [
+    "Tokenizer47EC50 andindirect[4F72E4] response/input/entry execution unknown; no startup/runtime command run.",
+    "Protected object initialization4C3CC0,cleanup4C3D20 andregistration4F10E0 firstunknown STOP; noallocation/helperbody/virtual/external expansion.",
+    "Selectedrecord+3E BYTEmeaning/origin unresolved;row query494120/selectionentry4C8790 and49A510 firstunknown retained; no owner/player/ready semantics fabricated.",
+    "FixedPEzero snapshots differASMconstants; no validpointer/key/index/runtime value grant. No alias/bulk/directxref global completeness.",
+    "CurrentNativeopcodeonly/UI/transport/owner/mode authority andD1/E1/WORLDgap fromBatch29 retained; no JavaSQL/Native/GUI/oldPASS.",
+    "Externalpyc cleanup priorpolicyrejection remainsopen; no retry/reframe/alternate mechanism/delegation. Python-B,dont_write_bytecode used."
+  ],
+  "new_wire_differences": 0
+}

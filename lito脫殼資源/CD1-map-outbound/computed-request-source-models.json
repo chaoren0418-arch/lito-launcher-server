@@ -1,0 +1,443 @@
+{
+  "selected_lookup": [
+    {
+      "flags": [],
+      "selected_index_u32": 4294967295,
+      "instruction_trace": [
+        "00450B90",
+        "00450B93",
+        "00450B95",
+        "00450B96",
+        "00450B97",
+        "00450B99",
+        "00450BAF",
+        "00450BB2",
+        "00450BB3",
+        "00450BB4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    },
+    {
+      "flags": [
+        0,
+        0
+      ],
+      "selected_index_u32": 4294967295,
+      "instruction_trace": [
+        "00450B90",
+        "00450B93",
+        "00450B95",
+        "00450B96",
+        "00450B97",
+        "00450B99",
+        "00450B9B",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BA7",
+        "00450BA8",
+        "00450BAB",
+        "00450BAD",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BA7",
+        "00450BA8",
+        "00450BAB",
+        "00450BAD",
+        "00450BAF",
+        "00450BB2",
+        "00450BB3",
+        "00450BB4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    },
+    {
+      "flags": [
+        0,
+        1,
+        1
+      ],
+      "selected_index_u32": 1,
+      "instruction_trace": [
+        "00450B90",
+        "00450B93",
+        "00450B95",
+        "00450B96",
+        "00450B97",
+        "00450B99",
+        "00450B9B",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BA7",
+        "00450BA8",
+        "00450BAB",
+        "00450BAD",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BB2",
+        "00450BB3",
+        "00450BB4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    },
+    {
+      "flags": [
+        128,
+        0
+      ],
+      "selected_index_u32": 0,
+      "instruction_trace": [
+        "00450B90",
+        "00450B93",
+        "00450B95",
+        "00450B96",
+        "00450B97",
+        "00450B99",
+        "00450B9B",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BB2",
+        "00450BB3",
+        "00450BB4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    },
+    {
+      "flags": [
+        0,
+        255
+      ],
+      "selected_index_u32": 1,
+      "instruction_trace": [
+        "00450B90",
+        "00450B93",
+        "00450B95",
+        "00450B96",
+        "00450B97",
+        "00450B99",
+        "00450B9B",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BA7",
+        "00450BA8",
+        "00450BAB",
+        "00450BAD",
+        "00450B9E",
+        "00450BA0",
+        "00450BA3",
+        "00450BA5",
+        "00450BB2",
+        "00450BB3",
+        "00450BB4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    }
+  ],
+  "map_request": [
+    {
+      "item_key_u32": 14,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        514
+      ],
+      "map_u16LE": 514,
+      "body_hex": "d1030202",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d1030202",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E16",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 64,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        564
+      ],
+      "map_u16LE": 564,
+      "body_hex": "d1033402",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d1033402",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E16",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 4294967295,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        4294967295
+      ],
+      "map_u16LE": 65535,
+      "body_hex": "d103ffff",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d103ffff",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 4294967196,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        4294967196
+      ],
+      "map_u16LE": 65436,
+      "body_hex": "d1039cff",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d1039cff",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 4294967294,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        498
+      ],
+      "map_u16LE": 498,
+      "body_hex": "d103f201",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d103f201",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E16",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 65535,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        66035
+      ],
+      "map_u16LE": 499,
+      "body_hex": "d103f301",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d103f301",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E16",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    },
+    {
+      "item_key_u32": 305419896,
+      "stack_order_format_opcode_subtype_value": [
+        6471800,
+        209,
+        3,
+        305420396
+      ],
+      "map_u16LE": 22636,
+      "body_hex": "d1036c58",
+      "body_bytes": 4,
+      "frame_bytes": 6,
+      "clear_frame_hex": "0600d1036c58",
+      "trace": [
+        "00464E0C",
+        "00464E0F",
+        "00464E11",
+        "00464E14",
+        "00464E16",
+        "00464E1B",
+        "00464E1C",
+        "00464E1E",
+        "00464E23",
+        "00464E28"
+      ],
+      "computed_only": true,
+      "Native_executed": false,
+      "serialization_basis": "Accepted Batch26 c/h contract; no serializer/cipher PASS replay."
+    }
+  ],
+  "conditional_table_composition": [
+    {
+      "table_key_u32": 514,
+      "conditional_item_key_u32": 14,
+      "map_u16LE": 514,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    },
+    {
+      "table_key_u32": 564,
+      "conditional_item_key_u32": 64,
+      "map_u16LE": 564,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    },
+    {
+      "table_key_u32": 499,
+      "conditional_item_key_u32": 4294967295,
+      "map_u16LE": 65535,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    },
+    {
+      "table_key_u32": 400,
+      "conditional_item_key_u32": 4294967196,
+      "map_u16LE": 65436,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    },
+    {
+      "table_key_u32": 65535,
+      "conditional_item_key_u32": 65035,
+      "map_u16LE": 65535,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    },
+    {
+      "table_key_u32": 2147483649,
+      "conditional_item_key_u32": 2147483149,
+      "map_u16LE": 1,
+      "computed_only": true,
+      "allocation_ctor_insert_selection_not_bridged": true
+    }
+  ],
+  "adjacent_mode": [
+    {
+      "input_ECX": 0,
+      "args": [
+        5253324,
+        209,
+        2,
+        2
+      ],
+      "body_hex": "d10202",
+      "body_bytes": 3,
+      "frame_bytes": 5,
+      "trace": [
+        "0046B9E6",
+        "0046B9E8",
+        "0046B9EA",
+        "0046B9EF",
+        "0046B9F4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    },
+    {
+      "input_ECX": 1,
+      "args": [
+        5253324,
+        209,
+        2,
+        1
+      ],
+      "body_hex": "d10201",
+      "body_bytes": 3,
+      "frame_bytes": 5,
+      "trace": [
+        "0046B9E2",
+        "0046B9E4",
+        "0046B9E8",
+        "0046B9EA",
+        "0046B9EF",
+        "0046B9F4"
+      ],
+      "computed_only": true,
+      "Native_executed": false
+    }
+  ],
+  "qualification": "Only new request-source arithmetic/varargs models; accepted serializer referenced, no GUI/runtime/capture/old PASS replay."
+}

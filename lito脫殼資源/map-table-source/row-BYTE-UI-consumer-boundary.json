@@ -1,0 +1,8 @@
+{
+  "selected_row": "4658B0 complete108 gatedUI68==0; selectedindexmustnonnegative. Calls46A540(lowWORDrow+4), thenattributeshelper, re-readselection/array, thenrow+74 AL→4687D0→preview64A98C+0F BYTE. NOreversekeylookup/mapresourceassignment. Callback/reentry andactualobjectunknown.",
+  "preview_text_island": "4681AF..4681F5 readsBYTE+0F; CMP AL,FF followedSIGNEDJLE means80..FF goto4681F6 (version7794comparisonthenSTOP), 00..7F fallthrough conditionalrecordpointer+36*signedbyte at+0→preparedformatterargs. Noexplicittablecount/boundscheck inthisisland.",
+  "preview_boundary": "Preparedargsjumpto4683F6 callEDI; loadedfrom4F7314,diskvalue773F5200 only, runtimeIAT/provider/module/formatterreturnsunknown. renderentry468020 runtime834BD4 lookup; errorpath46804F private05AD0986 STOP. Otherbranches/virtualrender/GUI notfollowed.",
+  "separate_UIselector_island": "46B926..46B9D0 iteratesrecordstride36/count, compares+4 tozeroextendedWORD64ACCA, conditional+20 filters; takes+0 pointerandkey-500 into465110 UI64A968. STOPdirectcallee465110; mode/trigger/UIresource/runtimeunknown, nootherroomsettingsactionqualified.",
+  "BYTE_interpretation": "NewCClookupindex>=128truncatedBYTE mayenterpreviewnegativecodebranch; >=256collideslow8. Conditionalstaticpredicateonly; noactualNativeversions/index/boundsoverrun claim.",
+  "map_resourceID": "Noqualifiedimage/mapresourceconsumerfromtheseboundedchains. Labelpointer/UIcode/index/BYTE/rawWORD remainseparate; startupandrenderunknowns blockactualbinding."
+}

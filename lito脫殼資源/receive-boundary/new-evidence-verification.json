@@ -1,0 +1,160 @@
+{
+  "updated_at": "2026-10-05T23:04:18.069218+08:00",
+  "fixed_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "asserted_instructions": [
+    {
+      "va": "004B3868",
+      "bytes": "e803f1ffff",
+      "mnemonic": "call",
+      "operands": "0x4b2970"
+    },
+    {
+      "va": "004B38B4",
+      "bytes": "e8a9c50300",
+      "mnemonic": "call",
+      "operands": "0x4efe62"
+    },
+    {
+      "va": "004C7062",
+      "bytes": "e859c7feff",
+      "mnemonic": "call",
+      "operands": "0x4b37c0"
+    },
+    {
+      "va": "004C704A",
+      "bytes": "e81f8e0200",
+      "mnemonic": "call",
+      "operands": "0x4efe6e"
+    },
+    {
+      "va": "0047F365",
+      "bytes": "e8c6770400",
+      "mnemonic": "call",
+      "operands": "0x4c6b30"
+    },
+    {
+      "va": "0047FFB8",
+      "bytes": "e8736b0400",
+      "mnemonic": "call",
+      "operands": "0x4c6b30"
+    },
+    {
+      "va": "004802B9",
+      "bytes": "c745d840f34700",
+      "mnemonic": "mov",
+      "operands": "dword ptr [ebp - 0x28], 0x47f340"
+    },
+    {
+      "va": "00492AD4",
+      "bytes": "a294f67500",
+      "mnemonic": "mov",
+      "operands": "byte ptr [0x75f694], al"
+    },
+    {
+      "va": "00492B9F",
+      "bytes": "890d805b6300",
+      "mnemonic": "mov",
+      "operands": "dword ptr [0x635b80], ecx"
+    },
+    {
+      "va": "00492B61",
+      "bytes": "e85aa60300",
+      "mnemonic": "call",
+      "operands": "0x4cd1c0"
+    },
+    {
+      "va": "00492B69",
+      "bytes": "e9fd020000",
+      "mnemonic": "jmp",
+      "operands": "0x492e6b"
+    },
+    {
+      "va": "00492D80",
+      "bytes": "e80b640300",
+      "mnemonic": "call",
+      "operands": "0x4c9190"
+    },
+    {
+      "va": "00492D8A",
+      "bytes": "33c0",
+      "mnemonic": "xor",
+      "operands": "eax, eax"
+    },
+    {
+      "va": "00492D91",
+      "bytes": "a388488300",
+      "mnemonic": "mov",
+      "operands": "dword ptr [0x834888], eax"
+    },
+    {
+      "va": "00492F02",
+      "bytes": "e8d93b0300",
+      "mnemonic": "call",
+      "operands": "0x4c6ae0"
+    },
+    {
+      "va": "00492F42",
+      "bytes": "bf54ad6400",
+      "mnemonic": "mov",
+      "operands": "edi, 0x64ad54"
+    },
+    {
+      "va": "004934E9",
+      "bytes": "e9d2f3ffff",
+      "mnemonic": "jmp",
+      "operands": "0x4928c0"
+    },
+    {
+      "va": "004A76B2",
+      "bytes": "e829f40100",
+      "mnemonic": "call",
+      "operands": "0x4c6ae0"
+    },
+    {
+      "va": "004C6B27",
+      "bytes": "e844fcffff",
+      "mnemonic": "call",
+      "operands": "0x4c6770"
+    },
+    {
+      "va": "004C67D0",
+      "bytes": "e8cf960200",
+      "mnemonic": "call",
+      "operands": "0x4efea4"
+    },
+    {
+      "va": "00414C45",
+      "bytes": "ff6024",
+      "mnemonic": "jmp",
+      "operands": "dword ptr [eax + 0x24]"
+    }
+  ],
+  "network_event_switch_target_verified": true,
+  "callback_pointer_values": {
+    "004F7314": "773F5200",
+    "004F7450": "05AE0922",
+    "004F7454": "05AE0B08",
+    "004F7458": "05AE0ED1",
+    "004F745C": "05AF0000",
+    "004F7460": "05AF0194",
+    "004F7464": "05AF04D8",
+    "00630E08": "004934A0",
+    "00630E44": "004934A0",
+    "00630E80": "004934A0",
+    "00630EBC": "004934A0",
+    "00630F34": "004928C0",
+    "00631ECC": "00630DF8",
+    "004F7B80": "00414A80",
+    "004F7BA0": "00414C40",
+    "004F7C88": "00415CF0",
+    "004F7CA8": "00415C90"
+  },
+  "range_output_hashes_and_fixed_PE_bytes_match": true,
+  "accepted_batch3_primary_pins_and_snapshot_manifest_unchanged": true,
+  "old_tests_replayed": false,
+  "runtime_assertions": false
+}

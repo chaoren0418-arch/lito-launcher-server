@@ -1,0 +1,133 @@
+{
+  "captures": [
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 68,
+      "frame_1based": 69,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 208,
+      "body_hex": "d0010000004172656e61426f7400",
+      "body_bytes": 14,
+      "frame_bytes": 16,
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LE",
+          "body_offset": 1,
+          "bytes": 4,
+          "value": 1
+        },
+        {
+          "index": 2,
+          "type": "NUL terminated opaque 8-bit bytes",
+          "body_offset": 5,
+          "bytes": 9,
+          "raw_hex": "4172656e61426f74",
+          "ASCII_capture_label": "ArenaBot"
+        }
+      ],
+      "consumed": 14,
+      "remaining": 0,
+      "prior_same_epoch_CD_ordinals": [],
+      "following_same_epoch_CD_ordinals": [
+        70,
+        71
+      ],
+      "C_D0_in_trace": false,
+      "native_execution_or_table_authority": false,
+      "classification": "Known sealed S_D0 corroboration; no new packet/capture"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-skill-network-f0bd3a9dfbf741628b39792b065ff7ba\\evidence\\frames.json",
+        "bytes": 23508,
+        "sha256": "A9BCA0ECC611F76EE1BD2D6BE6F3B512DC5ABD169C60DACEB6FC74C6D7E0D69F"
+      },
+      "capture": "5ED",
+      "array_index_zero_based": 136,
+      "frame_1based": 137,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 208,
+      "body_hex": "d001000000426174746c65486f737428426174746c654d6f6f6e2900",
+      "body_bytes": 28,
+      "frame_bytes": 30,
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LE",
+          "body_offset": 1,
+          "bytes": 4,
+          "value": 1
+        },
+        {
+          "index": 2,
+          "type": "NUL terminated opaque 8-bit bytes",
+          "body_offset": 5,
+          "bytes": 23,
+          "raw_hex": "426174746c65486f737428426174746c654d6f6f6e29",
+          "ASCII_capture_label": "BattleHost(BattleMoon)"
+        }
+      ],
+      "consumed": 28,
+      "remaining": 0,
+      "prior_same_epoch_CD_ordinals": [
+        72,
+        73
+      ],
+      "following_same_epoch_CD_ordinals": [],
+      "C_D0_in_trace": false,
+      "native_execution_or_table_authority": false,
+      "classification": "Known sealed S_D0 corroboration; no new packet/capture"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\battle-return-skill-network-c66ddebd66a74679bcb88a01516eff5f\\evidence\\frames.json",
+        "bytes": 26710,
+        "sha256": "283A3DBFA77668FDAA0D55CF67239218CF34D546B53968DFFFBD973A8D093004"
+      },
+      "capture": "49A",
+      "array_index_zero_based": 69,
+      "frame_1based": 70,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 208,
+      "body_hex": "d0010000004172656e61426f7400",
+      "body_bytes": 14,
+      "frame_bytes": 16,
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LE",
+          "body_offset": 1,
+          "bytes": 4,
+          "value": 1
+        },
+        {
+          "index": 2,
+          "type": "NUL terminated opaque 8-bit bytes",
+          "body_offset": 5,
+          "bytes": 9,
+          "raw_hex": "4172656e61426f74",
+          "ASCII_capture_label": "ArenaBot"
+        }
+      ],
+      "consumed": 14,
+      "remaining": 0,
+      "prior_same_epoch_CD_ordinals": [],
+      "following_same_epoch_CD_ordinals": [
+        71,
+        72
+      ],
+      "C_D0_in_trace": false,
+      "native_execution_or_table_authority": false,
+      "classification": "Known sealed S_D0 corroboration; no new packet/capture"
+    }
+  ]
+}

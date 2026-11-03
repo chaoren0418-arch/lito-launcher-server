@@ -1,0 +1,2103 @@
+{
+  "package_status": "未匯入、未接線",
+  "maps": [
+    {
+      "map_id": 500,
+      "standing_cell_count": 12219,
+      "cardinal_component_count": 9,
+      "component_sizes": [
+        12190,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        2,
+        2
+      ]
+    },
+    {
+      "map_id": 525,
+      "standing_cell_count": 8689,
+      "cardinal_component_count": 6,
+      "component_sizes": [
+        8192,
+        320,
+        9,
+        83,
+        2,
+        83
+      ]
+    },
+    {
+      "map_id": 532,
+      "standing_cell_count": 8072,
+      "cardinal_component_count": 4,
+      "component_sizes": [
+        3,
+        8053,
+        7,
+        9
+      ]
+    },
+    {
+      "map_id": 535,
+      "standing_cell_count": 24410,
+      "cardinal_component_count": 18,
+      "component_sizes": [
+        24300,
+        3,
+        3,
+        3,
+        2,
+        2,
+        2,
+        3,
+        3,
+        2,
+        2,
+        2,
+        2,
+        3,
+        57,
+        4,
+        13,
+        4
+      ]
+    },
+    {
+      "map_id": 547,
+      "standing_cell_count": 6880,
+      "cardinal_component_count": 3,
+      "component_sizes": [
+        6817,
+        31,
+        32
+      ]
+    },
+    {
+      "map_id": 548,
+      "standing_cell_count": 10632,
+      "cardinal_component_count": 12,
+      "component_sizes": [
+        4160,
+        6355,
+        3,
+        33,
+        2,
+        2,
+        9,
+        21,
+        9,
+        5,
+        31,
+        2
+      ]
+    },
+    {
+      "map_id": 549,
+      "standing_cell_count": 27791,
+      "cardinal_component_count": 15,
+      "component_sizes": [
+        9,
+        25748,
+        4,
+        1806,
+        2,
+        3,
+        3,
+        55,
+        49,
+        52,
+        4,
+        49,
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "map_id": 550,
+      "standing_cell_count": 27794,
+      "cardinal_component_count": 15,
+      "component_sizes": [
+        9,
+        25751,
+        4,
+        1806,
+        2,
+        3,
+        3,
+        55,
+        49,
+        52,
+        4,
+        49,
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "map_id": 554,
+      "standing_cell_count": 4400,
+      "cardinal_component_count": 3,
+      "component_sizes": [
+        3448,
+        456,
+        496
+      ]
+    },
+    {
+      "map_id": 555,
+      "standing_cell_count": 3969,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        3969
+      ]
+    },
+    {
+      "map_id": 560,
+      "standing_cell_count": 14032,
+      "cardinal_component_count": 7,
+      "component_sizes": [
+        2,
+        4232,
+        2,
+        3,
+        5694,
+        3,
+        4096
+      ]
+    },
+    {
+      "map_id": 562,
+      "standing_cell_count": 20872,
+      "cardinal_component_count": 5,
+      "component_sizes": [
+        20397,
+        2,
+        415,
+        38,
+        20
+      ]
+    },
+    {
+      "map_id": 563,
+      "standing_cell_count": 20872,
+      "cardinal_component_count": 5,
+      "component_sizes": [
+        20397,
+        2,
+        415,
+        38,
+        20
+      ]
+    },
+    {
+      "map_id": 573,
+      "standing_cell_count": 6833,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        6833
+      ]
+    },
+    {
+      "map_id": 574,
+      "standing_cell_count": 6835,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        6835
+      ]
+    },
+    {
+      "map_id": 16384,
+      "standing_cell_count": 193,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        193
+      ]
+    },
+    {
+      "map_id": 16896,
+      "standing_cell_count": 234,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        234
+      ]
+    },
+    {
+      "map_id": 17408,
+      "standing_cell_count": 153,
+      "cardinal_component_count": 1,
+      "component_sizes": [
+        153
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "source_map": 500,
+      "source_x": 32762,
+      "source_y": 32824,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32760,
+      "source_y": 32826,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32758,
+      "source_y": 32828,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32758,
+      "source_y": 32837,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32760,
+      "source_y": 32839,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32762,
+      "source_y": 32841,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32719,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32721,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32723,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32726,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32728,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32730,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32737,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32739,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32741,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32744,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32746,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32788,
+      "source_y": 32748,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32771,
+      "source_y": 32824,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32773,
+      "source_y": 32826,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32775,
+      "source_y": 32828,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32771,
+      "source_y": 32841,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32773,
+      "source_y": 32839,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 500,
+      "source_x": 32775,
+      "source_y": 32837,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32722,
+      "source_y": 32924,
+      "target_map": 525,
+      "source_component": 2,
+      "target_component": 6,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32723,
+      "source_y": 32924,
+      "target_map": 525,
+      "source_component": 2,
+      "target_component": 6,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32723,
+      "source_y": 32902,
+      "target_map": 525,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32722,
+      "source_y": 32902,
+      "target_map": 525,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32734,
+      "source_y": 32985,
+      "target_map": 525,
+      "source_component": 1,
+      "target_component": 6,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32748,
+      "source_y": 32999,
+      "target_map": 525,
+      "source_component": 1,
+      "target_component": null,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32803,
+      "source_y": 32806,
+      "target_map": 525,
+      "source_component": 6,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32804,
+      "source_y": 32805,
+      "target_map": 525,
+      "source_component": 6,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32794,
+      "source_y": 32795,
+      "target_map": 525,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 525,
+      "source_x": 32793,
+      "source_y": 32796,
+      "target_map": 525,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 532,
+      "source_x": 32758,
+      "source_y": 32831,
+      "target_map": 532,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 532,
+      "source_x": 32767,
+      "source_y": 32841,
+      "target_map": 532,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 532,
+      "source_x": 32770,
+      "source_y": 32783,
+      "target_map": 532,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 532,
+      "source_x": 32813,
+      "source_y": 32829,
+      "target_map": 532,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32654,
+      "source_y": 32853,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32686,
+      "source_y": 32881,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32687,
+      "source_y": 33000,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32719,
+      "source_y": 32881,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32753,
+      "source_y": 32974,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32719,
+      "source_y": 32974,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32784,
+      "source_y": 32854,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 535,
+      "source_x": 32817,
+      "source_y": 33000,
+      "target_map": 535,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32741,
+      "source_y": 32779,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32726,
+      "source_y": 32786,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32741,
+      "source_y": 32815,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32726,
+      "source_y": 32806,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32722,
+      "source_y": 32777,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32723,
+      "source_y": 32774,
+      "target_map": 547,
+      "source_component": 2,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32722,
+      "source_y": 32812,
+      "target_map": 547,
+      "source_component": 1,
+      "target_component": 3,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 547,
+      "source_x": 32723,
+      "source_y": 32809,
+      "target_map": 547,
+      "source_component": 3,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32719,
+      "source_y": 32795,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32730,
+      "source_y": 32809,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32755,
+      "source_y": 32795,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32748,
+      "source_y": 32810,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32721,
+      "source_y": 32815,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32725,
+      "source_y": 32814,
+      "target_map": 548,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32757,
+      "source_y": 32815,
+      "target_map": 548,
+      "source_component": 2,
+      "target_component": 11,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 548,
+      "source_x": 32761,
+      "source_y": 32814,
+      "target_map": 548,
+      "source_component": 11,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32693,
+      "source_y": 33003,
+      "target_map": 549,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32696,
+      "source_y": 32985,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32753,
+      "source_y": 32918,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32746,
+      "source_y": 32905,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 8,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32748,
+      "source_y": 32901,
+      "target_map": 549,
+      "source_component": 8,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32746,
+      "source_y": 32922,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 8,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32748,
+      "source_y": 32918,
+      "target_map": 549,
+      "source_component": 8,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32753,
+      "source_y": 32958,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32746,
+      "source_y": 32959,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 9,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32748,
+      "source_y": 32956,
+      "target_map": 549,
+      "source_component": 9,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32746,
+      "source_y": 32976,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 9,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32748,
+      "source_y": 32973,
+      "target_map": 549,
+      "source_component": 9,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32753,
+      "source_y": 32981,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 10,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32757,
+      "source_y": 32979,
+      "target_map": 549,
+      "source_component": 10,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32731,
+      "source_y": 33005,
+      "target_map": 549,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32748,
+      "source_y": 33008,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32719,
+      "source_y": 32993,
+      "target_map": 549,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32720,
+      "source_y": 32979,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32745,
+      "source_y": 33034,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32725,
+      "source_y": 33038,
+      "target_map": 549,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32771,
+      "source_y": 32907,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32778,
+      "source_y": 32940,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32788,
+      "source_y": 32950,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32819,
+      "source_y": 32957,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32769,
+      "source_y": 32974,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32771,
+      "source_y": 32981,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 10,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32775,
+      "source_y": 32979,
+      "target_map": 549,
+      "source_component": 10,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32809,
+      "source_y": 32974,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32815,
+      "source_y": 32981,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 12,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32819,
+      "source_y": 32979,
+      "target_map": 549,
+      "source_component": 12,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32827,
+      "source_y": 32981,
+      "target_map": 549,
+      "source_component": 2,
+      "target_component": 12,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 549,
+      "source_x": 32831,
+      "source_y": 32979,
+      "target_map": 549,
+      "source_component": 12,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32693,
+      "source_y": 33003,
+      "target_map": 550,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32696,
+      "source_y": 32985,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32746,
+      "source_y": 32905,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 8,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32748,
+      "source_y": 32901,
+      "target_map": 550,
+      "source_component": 8,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32753,
+      "source_y": 32918,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32746,
+      "source_y": 32922,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 8,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32748,
+      "source_y": 32918,
+      "target_map": 550,
+      "source_component": 8,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32753,
+      "source_y": 32958,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32746,
+      "source_y": 32959,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 9,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32748,
+      "source_y": 32956,
+      "target_map": 550,
+      "source_component": 9,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32746,
+      "source_y": 32976,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 9,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32748,
+      "source_y": 32973,
+      "target_map": 550,
+      "source_component": 9,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32753,
+      "source_y": 32981,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 10,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32757,
+      "source_y": 32979,
+      "target_map": 550,
+      "source_component": 10,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32719,
+      "source_y": 32993,
+      "target_map": 550,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32720,
+      "source_y": 32979,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32731,
+      "source_y": 33005,
+      "target_map": 550,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32748,
+      "source_y": 33008,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32725,
+      "source_y": 33038,
+      "target_map": 550,
+      "source_component": 4,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32745,
+      "source_y": 33034,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 4,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32771,
+      "source_y": 32907,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32778,
+      "source_y": 32940,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32788,
+      "source_y": 32950,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32819,
+      "source_y": 32957,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32771,
+      "source_y": 32981,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 10,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32775,
+      "source_y": 32979,
+      "target_map": 550,
+      "source_component": 10,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32769,
+      "source_y": 32974,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32809,
+      "source_y": 32974,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 2,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32815,
+      "source_y": 32981,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 12,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32819,
+      "source_y": 32979,
+      "target_map": 550,
+      "source_component": 12,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32827,
+      "source_y": 32981,
+      "target_map": 550,
+      "source_component": 2,
+      "target_component": 12,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 550,
+      "source_x": 32831,
+      "source_y": 32979,
+      "target_map": 550,
+      "source_component": 12,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 554,
+      "source_x": 32746,
+      "source_y": 32926,
+      "target_map": 554,
+      "source_component": 2,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 554,
+      "source_x": 32747,
+      "source_y": 32926,
+      "target_map": 554,
+      "source_component": 2,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 554,
+      "source_x": 32788,
+      "source_y": 32926,
+      "target_map": 554,
+      "source_component": 3,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 554,
+      "source_x": 32789,
+      "source_y": 32926,
+      "target_map": 554,
+      "source_component": 3,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 555,
+      "source_x": 32738,
+      "source_y": 32781,
+      "target_map": 555,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 555,
+      "source_x": 32735,
+      "source_y": 32786,
+      "target_map": 555,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32734,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32736,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32738,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32740,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32751,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32754,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32757,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32760,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32771,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32774,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32777,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32780,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32795,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32797,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32799,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32251,
+      "source_y": 32783,
+      "target_map": 560,
+      "source_component": 2,
+      "target_component": 5,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32287,
+      "source_y": 32748,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32291,
+      "source_y": 32752,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32287,
+      "source_y": 32756,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32283,
+      "source_y": 32752,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32306,
+      "source_y": 32804,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32302,
+      "source_y": 32800,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32306,
+      "source_y": 32796,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32309,
+      "source_y": 32802,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32354,
+      "source_y": 32747,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32358,
+      "source_y": 32751,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32354,
+      "source_y": 32755,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32350,
+      "source_y": 32751,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32339,
+      "source_y": 32801,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32335,
+      "source_y": 32805,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32331,
+      "source_y": 32801,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 560,
+      "source_x": 32335,
+      "source_y": 32796,
+      "target_map": 560,
+      "source_component": 5,
+      "target_component": 2,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32714,
+      "source_y": 32898,
+      "target_map": 562,
+      "source_component": 3,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32705,
+      "source_y": 32907,
+      "target_map": 562,
+      "source_component": 1,
+      "target_component": 3,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32729,
+      "source_y": 32943,
+      "target_map": 562,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32813,
+      "source_y": 32874,
+      "target_map": 562,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32799,
+      "source_y": 32910,
+      "target_map": 562,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 562,
+      "source_x": 32789,
+      "source_y": 32969,
+      "target_map": 562,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32714,
+      "source_y": 32898,
+      "target_map": 563,
+      "source_component": 3,
+      "target_component": 1,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32705,
+      "source_y": 32907,
+      "target_map": 563,
+      "source_component": 1,
+      "target_component": 3,
+      "same_static_component": false,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32729,
+      "source_y": 32943,
+      "target_map": 563,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32813,
+      "source_y": 32874,
+      "target_map": 563,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32799,
+      "source_y": 32910,
+      "target_map": 563,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 563,
+      "source_x": 32789,
+      "source_y": 32969,
+      "target_map": 563,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 573,
+      "source_x": 32755,
+      "source_y": 32792,
+      "target_map": 573,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 573,
+      "source_x": 32742,
+      "source_y": 32797,
+      "target_map": 573,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 574,
+      "source_x": 32755,
+      "source_y": 32792,
+      "target_map": 574,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 574,
+      "source_x": 32742,
+      "source_y": 32797,
+      "target_map": 574,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": true,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 16384,
+      "source_x": 32812,
+      "source_y": 32800,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 16384,
+      "source_x": 32812,
+      "source_y": 32801,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 16896,
+      "source_x": 32809,
+      "source_y": 32806,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 16896,
+      "source_x": 32809,
+      "source_y": 32807,
+      "target_map": 500,
+      "source_component": 1,
+      "target_component": 1,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 17408,
+      "source_x": 32803,
+      "source_y": 32803,
+      "target_map": 560,
+      "source_component": 1,
+      "target_component": 5,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    },
+    {
+      "source_map": 17408,
+      "source_x": 32802,
+      "source_y": 32803,
+      "target_map": 560,
+      "source_component": 1,
+      "target_component": 5,
+      "same_static_component": null,
+      "original_dynamic_admission_verified": false
+    }
+  ],
+  "unknown_layer8_tails": [],
+  "limitations": "cardinal bit0 resource graph; portal can intentionally bridge disconnected components; no original dynamic blockers, diagonal timing, room admission or live gameplay proof"
+}

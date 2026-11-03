@@ -1,0 +1,100 @@
+{
+  "formula": "q=floor((D5*(31-a)+S5*a)/31), a/D5/S5=0..31",
+  "native_integer_reciprocal_model_matches_all_entries": true,
+  "source_initializer_inherited": {
+    "index": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\ranges.json",
+      "bytes": 150741,
+      "sha256": "1511453D863AB7D857300977F8A75C673C0ED5C133D6A1A164B11A23649231E6"
+    },
+    "label": "dispatch_and_timed_table_initializer",
+    "range": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization\\ranges\\004C18E0.bin",
+      "bytes": 2030,
+      "sha256": "C7CE39458EFC0B08E0F65F01D662B4F7D31B11674E0A53403E5A6DB358142DA4"
+    },
+    "bytes_reused_without_old_case_replay": true
+  },
+  "initialization_requires_4F1592_returns_for_prior_screen_table_step": true,
+  "conditional_live_tables": true,
+  "tables": [
+    {
+      "format": "RGB555",
+      "color": "blue",
+      "channel_shift": 0,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB555\\933-alpha-blue.LE16.bin",
+        "bytes": 65536,
+        "sha256": "579E68D286D1E6AB5300E7424103A6D9B8752DF69983E3D83F4916965F152B8E"
+      }
+    },
+    {
+      "format": "RGB555",
+      "color": "green",
+      "channel_shift": 5,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB555\\933-alpha-green.LE16.bin",
+        "bytes": 65536,
+        "sha256": "1200D2B46623DDB4435B4237B9675FACCA5877638DE508FA1EC87CEC232FBA15"
+      }
+    },
+    {
+      "format": "RGB555",
+      "color": "red",
+      "channel_shift": 10,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB555\\933-alpha-red.LE16.bin",
+        "bytes": 65536,
+        "sha256": "058BDFA24A5807D17BA4173EDEEBE310084F16AB285B6CA6158B6EF80B6AC111"
+      }
+    },
+    {
+      "format": "RGB565",
+      "color": "blue",
+      "channel_shift": 0,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB565\\933-alpha-blue.LE16.bin",
+        "bytes": 65536,
+        "sha256": "579E68D286D1E6AB5300E7424103A6D9B8752DF69983E3D83F4916965F152B8E"
+      }
+    },
+    {
+      "format": "RGB565",
+      "color": "green",
+      "channel_shift": 6,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB565\\933-alpha-green.LE16.bin",
+        "bytes": 65536,
+        "sha256": "210E5D5B973AB9F388B96D5D280B1D9045AB9385DA71C92285E22FBD74C22CAA"
+      }
+    },
+    {
+      "format": "RGB565",
+      "color": "red",
+      "channel_shift": 11,
+      "alpha_count": 32,
+      "entries_per_alpha": 1024,
+      "index": "alpha*1024+destination5*32+source5",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\RGB565\\933-alpha-red.LE16.bin",
+        "bytes": 65536,
+        "sha256": "2E1FF62D295A924A1ADB78A6964FDE0697C8E0341CFFAF1E82CD97B4C5D594CB"
+      }
+    }
+  ]
+}

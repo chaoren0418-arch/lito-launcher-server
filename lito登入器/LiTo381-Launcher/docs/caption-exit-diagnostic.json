@@ -1,0 +1,35 @@
+{
+  "run": "multi-window-1791857361654064100",
+  "no_player_sql_writes": true,
+  "helper_exit": 0,
+  "cleanup_verified": true,
+  "additional_clients": [
+    {
+      "run": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\app\\runs\\multi-window-1791857361654064100\\client-2",
+      "cleanup_verified": true,
+      "unique_native_mutex": "LiTo6bffcd5187ac",
+      "existing_window_guard": "0x480326:7409->EB09",
+      "mutex_guard": "0x480AB3:7407->EB07",
+      "probe_lifetime_identity": {
+        "pid": 35544,
+        "birth_filetime": 134363309868758011,
+        "identity_source": "retained Popen process handle"
+      },
+      "probe_identity": {
+        "pid": 35544,
+        "birth_filetime": 134363309868758011,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+      },
+      "native_identity": {
+        "pid": 28508,
+        "parent_pid": 35544,
+        "path": "D:\\lineage\u958b\u767c\\0-\u5ba2\u6236\u7aef\\LiTo.bin",
+        "filetime": 134363309871475106,
+        "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+      },
+      "failure": "Additional native exited before resources loaded",
+      "exit_code": 0
+    }
+  ]
+}

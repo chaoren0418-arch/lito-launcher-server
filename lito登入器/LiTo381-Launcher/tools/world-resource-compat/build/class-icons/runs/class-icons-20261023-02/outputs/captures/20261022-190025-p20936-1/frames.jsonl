@@ -1,0 +1,8 @@
+{"time":"2026-10-22T19:00:28.806526500Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 BF EE 1F CC","note":"S_KEY"}
+{"time":"2026-10-22T19:00:28.812511300Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 D1 CE 55 77","note":"S_KEY"}
+{"time":"2026-10-22T19:00:49.674784900Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 55 B6 DA 95","note":"S_KEY"}
+{"time":"2026-10-22T19:00:49.675782300Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:00:50.486515100Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}
+{"time":"2026-10-22T19:01:29.506154900Z","direction":"server_to_client","opcode":"0x01","wire_length":7,"plain":"01 A0 00 BF D5","note":"S_KEY"}
+{"time":"2026-10-22T19:01:29.506154900Z","direction":"client_to_server","opcode":"0x00","wire_length":12,"plain":"00 33 80 B6 03 00 00 00 F8 14","note":"C opcode 0x00"}
+{"time":"2026-10-22T19:01:30.257045400Z","direction":"server_to_client","opcode":"0x3A","wire_length":32,"plain":"3A 00 0D 33 FD 34 07 30 FD 34 07 BA 6E CF 77 31 FD 34 07 00 00 00 00 00 00 03 82 7D 07 00","note":"S_VERSION_CHECK accepted"}

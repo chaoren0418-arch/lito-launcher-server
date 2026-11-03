@@ -1,0 +1,193 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+    "bytes": 6119,
+    "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+  },
+  "captured_content_sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_source_identity.rs",
+    "bytes": 6119,
+    "sha256": "444F150957272E4D81ED85DAC65B8BE7EF093DAB9E144E2B41EBDB4E0722886F"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T09:11:34.558583+08:00",
+  "adoption": "source/metadata only; non-atomic; no GUI/test/build",
+  "ranges": [
+    [
+      7,
+      11
+    ],
+    [
+      50,
+      62
+    ],
+    [
+      69,
+      90
+    ]
+  ],
+  "line_count": 91,
+  "implementation_lines": [
+    {
+      "line": 7,
+      "text": "pub const SLOT_COUNT: usize = 4;"
+    },
+    {
+      "line": 8,
+      "text": "pub const JAVA_ROW_BOUND:usize=8;"
+    },
+    {
+      "line": 9,
+      "text": "#[path=\"native_character_directory_fields.rs\"]pub mod fields;"
+    },
+    {
+      "line": 10,
+      "text": "const FORMAT: &[u8] = b\"sscchhhcccccccccddddddddddcdddddc\";"
+    },
+    {
+      "line": 11,
+      "text": "const OFFSETS: [usize; 30] = [0x2d,0x2e,0x30,0x32,0x34,0x36,0x37,0x38,0x39,0x3a,0x3b,0x3c,0x3d,0x3e,0x40,0x48,0x44,0x4c,0x50,0x54,0x58,0x60,0x64,0x68,0x5c,0x84,0x80,0x88,0x8c,0x90];"
+    },
+    {
+      "line": 50,
+      "text": "pub(crate) fn decode(body:&[u8])->Result<Packet> {"
+    },
+    {
+      "line": 51,
+      "text": "    ensure!(body.len()<=155,\"Native roster body exceeds bound\");"
+    },
+    {
+      "line": 52,
+      "text": "    if body.first()==Some(&3) { ensure!(body.len()==2 && (body[1] as i8)>=0 && usize::from(body[1])<=JAVA_ROW_BOUND,\"roster count outside bounded signed-byte rows\");return Ok(Packet::Start(body[1])); }"
+    },
+    {
+      "line": 53,
+      "text": "    ensure!(body.first()==Some(&203),\"not a Native roster body\");"
+    },
+    {
+      "line": 54,
+      "text": "    let mut r=Reader{body,at:1};let mut bytes=[0;180];"
+    },
+    {
+      "line": 55,
+      "text": "    for (offset,cap) in [(0,28),(0x1c,17)] { let s=r.string(cap)?;bytes[offset..offset+s.len()].copy_from_slice(s); }"
+    },
+    {
+      "line": 56,
+      "text": "    let suffix=r.at;"
+    },
+    {
+      "line": 57,
+      "text": "    for (code,offset) in FORMAT[2..32].iter().zip(OFFSETS) {"
+    },
+    {
+      "line": 58,
+      "text": "        let n=match code { b'c'=>1,b'h'=>2,b'd'=>4,_=>unreachable!() };let b=r.take(n)?;bytes[offset..offset+n].copy_from_slice(b);"
+    },
+    {
+      "line": 59,
+      "text": "    }"
+    },
+    {
+      "line": 60,
+      "text": "    let opcode_write_byte=r.take(1)?[0];ensure!(r.at==body.len(),\"trailing Native roster bytes\");"
+    },
+    {
+      "line": 61,
+      "text": "    let fields=fields::Fields::decode(&body[suffix..])?;"
+    },
+    {
+      "line": 62,
+      "text": "    Ok(Packet::Record(Record{bytes,opcode_write_byte,fields}))"
+    },
+    {
+      "line": 69,
+      "text": "impl State {"
+    },
+    {
+      "line": 70,
+      "text": "    pub fn records(&self)->&[Record] { &self.records }"
+    },
+    {
+      "line": 71,
+      "text": "    pub fn selected(&self)->Option<&SelectedIdentity> { self.selected.as_ref() }"
+    },
+    {
+      "line": 72,
+      "text": "    pub fn complete(&self)->bool { self.complete }"
+    },
+    {
+      "line": 73,
+      "text": "    pub fn expected(&self)->Option<u8> { self.expected }"
+    },
+    {
+      "line": 74,
+      "text": "    pub(crate) fn prepare_packet(&self,body:&[u8])->Result<(Self,Change)> {"
+    },
+    {
+      "line": 75,
+      "text": "        let packet=decode(body)?;let mut next=self.clone();"
+    },
+    {
+      "line": 76,
+      "text": "        let change=match packet {"
+    },
+    {
+      "line": 77,
+      "text": "            Packet::Start(count)=> { next=Self{expected:Some(count),complete:count==0,..Self::default()};Change::Started{count} }"
+    },
+    {
+      "line": 78,
+      "text": "            Packet::Record(record)=> { let count=next.expected.context(\"roster203 before count3\")?;ensure!(!next.complete && next.records.len()<usize::from(count),\"unsolicited or excess roster203\");let slot=next.records.len();next.records.push(record);next.complete=next.records.len()==usize::from(count);Change::Appended{slot,complete:next.complete} }"
+    },
+    {
+      "line": 79,
+      "text": "        };Ok((next,change))"
+    },
+    {
+      "line": 80,
+      "text": "    }"
+    },
+    {
+      "line": 81,
+      "text": "    ///NativeBack retains raw62FAA0 roster bytes;Modern retireslogicalselected binding."
+    },
+    {
+      "line": 82,
+      "text": "    pub(crate) fn without_selected(&self)->Self{let mut next=self.clone();next.selected=None;next}"
+    },
+    {
+      "line": 83,
+      "text": "    pub(crate) fn prepare_select(&self,slot:usize)->Result<Self> {"
+    },
+    {
+      "line": 84,
+      "text": "        self.prepare_select_bounded(slot,SLOT_COUNT)"
+    },
+    {
+      "line": 85,
+      "text": "    }"
+    },
+    {
+      "line": 86,
+      "text": "    pub(crate) fn prepare_select_bounded(&self,slot:usize,bound:usize)->Result<Self> {"
+    },
+    {
+      "line": 87,
+      "text": "        ensure!(self.complete && slot<bound&&bound<=JAVA_ROW_BOUND,\"roster selection not ready\");let r=self.records.get(slot).context(\"unreceived roster slot\")?;"
+    },
+    {
+      "line": 88,
+      "text": "        ensure!(r.class_byte()!=255 && r.variant_byte()!=255 && r.selection_guard_byte()!=0,\"Native selected record refused\");"
+    },
+    {
+      "line": 89,
+      "text": "        let mut next=self.clone();next.selected=Some(SelectedIdentity{slot,actor_alias:r.name().to_vec(),class_byte:r.class_byte(),variant_byte:r.variant_byte(),arena_bound_byte:r.arena_bound_byte()});Ok(next)"
+    },
+    {
+      "line": 90,
+      "text": "    }"
+    }
+  ]
+}

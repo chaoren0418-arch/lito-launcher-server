@@ -1,0 +1,1866 @@
+{
+  "version": "0.6.66",
+  "removed_files": 464,
+  "removed_bytes": 574631461,
+  "completed": "2026-10-14T18:35:31.576153+08:00",
+  "receipt_recovered_after": "Windows PowerShell 5 Measure-Object could not read Hashtable bytes; deletion completed, all immutable plan paths confirmed absent. Script now uses PSCustomObject.",
+  "plan_sha256": "246f81756ee9baf83a20b49a851ff86e28f3e201e1420bb8b27a8761c6defd03",
+  "removed": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\__pycache__\\extract_validate.cpython-312.pyc",
+      "bytes": 53899
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\Audit.class",
+      "bytes": 2647
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\candidate.jar",
+      "bytes": 6242453
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\BattleDragonSkinStatus$Snapshot.class",
+      "bytes": 2000
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\BattleDragonSkinStatus.class",
+      "bytes": 2041
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\local\\lito381\\server\\DragonCombat.class",
+      "bytes": 5810
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\Patch.class",
+      "bytes": 7903
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-combat\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-presentation\\build\\candidate.jar",
+      "bytes": 6242437
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-presentation\\build\\Patch.class",
+      "bytes": 5501
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\Audit.class",
+      "bytes": 2761
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\candidate.jar",
+      "bytes": 6239420
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\local\\lito381\\server\\DisconnectedBattleResult.class",
+      "bytes": 3189
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\local\\lito381\\server\\DragonSkillRequests.class",
+      "bytes": 7317
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\Patch.class",
+      "bytes": 8322
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 16132
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\dragon-skill-dispatch\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\candidate.jar",
+      "bytes": 6290590
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DisconnectedBattleResult.class",
+      "bytes": 3628
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement$Context.class",
+      "bytes": 1355
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement$Ticket.class",
+      "bytes": 1201
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\DurableBattleSettlement.class",
+      "bytes": 21320
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal$Entry.class",
+      "bytes": 3631
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal$Sink.class",
+      "bytes": 484
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementJournal.class",
+      "bytes": 8183
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SettlementSql.class",
+      "bytes": 13497
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SharedDatabase$Route.class",
+      "bytes": 3296
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\SharedDatabase.class",
+      "bytes": 16465
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\local\\lito381\\server\\TeamDisconnectSettlement.class",
+      "bytes": 6629
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\durable-settlement\\build\\Patch.class",
+      "bytes": 10693
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\candidate.jar",
+      "bytes": 6246774
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\local\\lito381\\server\\EmptyMelee.class",
+      "bytes": 8007
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\Patch.class",
+      "bytes": 5477
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\EmptyMeleeRegression.class",
+      "bytes": 10253
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\empty-melee\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\candidate.jar",
+      "bytes": 6249809
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\local\\lito381\\server\\EmptyMelee.class",
+      "bytes": 8004
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\local\\lito381\\server\\IllusionStatusIcons.class",
+      "bytes": 5139
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\Patch.class",
+      "bytes": 4924
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\EmptyMeleeRegression.class",
+      "bytes": 10253
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\IllusionRegression.class",
+      "bytes": 9095
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-presentation\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\candidate.jar",
+      "bytes": 6252869
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\local\\lito381\\server\\DragonSkillRequests.class",
+      "bytes": 7474
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\local\\lito381\\server\\IllusionSkillRequests.class",
+      "bytes": 5739
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\Patch.class",
+      "bytes": 7801
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\IllusionRegression.class",
+      "bytes": 9101
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\illusion-targets\\build\\tests\\local\\lito381\\server\\TargetRegression.class",
+      "bytes": 11425
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\candidate.jar",
+      "bytes": 6263873
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\local\\lito381\\server\\NativeRoomAdmission.class",
+      "bytes": 2983
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+      "bytes": 3981
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\Patch.class",
+      "bytes": 7047
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\AdmissionRegression.class",
+      "bytes": 9872
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+      "bytes": 1785
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+      "bytes": 14800
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-admission\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\candidate.jar",
+      "bytes": 6261992
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeActorTail.class",
+      "bytes": 386
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeBattleVisibility.class",
+      "bytes": 7106
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeMovement.class",
+      "bytes": 1373
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+      "bytes": 3711
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\Patch.class",
+      "bytes": 8752
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\MovementRegression.class",
+      "bytes": 8413
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+      "bytes": 1785
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+      "bytes": 14800
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\native-room-state\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\base-061.jar",
+      "bytes": 6297359
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\candidate.jar",
+      "bytes": 6313307
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\EquipmentTransitions.class",
+      "bytes": 933
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomDirectoryRow.class",
+      "bytes": 4627
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomRules$Policy.class",
+      "bytes": 1441
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\NativeRoomRules.class",
+      "bytes": 11277
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase$Key.class",
+      "bytes": 1538
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase$Snapshot.class",
+      "bytes": 4869
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\classes\\local\\lito381\\server\\ResourceDatabase.class",
+      "bytes": 14529
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\archive-verification.json",
+      "bytes": 349
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\data.jsonl",
+      "bytes": 14044883
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\deployment-before-063.zip",
+      "bytes": 5934461
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\legacy-tools-062.zip",
+      "bytes": 7494
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\local\\lito381\\server\\CompactResources.class",
+      "bytes": 13994
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\original-counts.tsv",
+      "bytes": 690
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\pending-inserts.sql",
+      "bytes": 25334
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\restore.sql",
+      "bytes": 33064017
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\schema.jsonl",
+      "bytes": 15853
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\compact-063\\snapshot.tsv",
+      "bytes": 2226
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-062.zip",
+      "bytes": 24000
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-064.zip",
+      "bytes": 5934809
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-065.zip",
+      "bytes": 5950285
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\deployment-before-066.zip",
+      "bytes": 5951063
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\EquipmentRegression.class",
+      "bytes": 14565
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+      "bytes": 1785
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+      "bytes": 14815
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-toggle\\ClientSession.javap",
+      "bytes": 16703811
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\equipment-toggle\\LegacyMySqlRepository.javap",
+      "bytes": 2159385
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\EquipmentPatch.class",
+      "bytes": 5392
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\local\\lito381\\server\\ImportResources.class",
+      "bytes": 9389
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\MovementLockPatch.class",
+      "bytes": 3777
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\Patch.class",
+      "bytes": 12281
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\CompactResources.class",
+      "bytes": 13994
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\FlowRegression.class",
+      "bytes": 10000
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\MovementLockRegression.class",
+      "bytes": 9782
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\MovementRegression.class",
+      "bytes": 8413
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+      "bytes": 1785
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+      "bytes": 14815
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\ResourceRegression.class",
+      "bytes": 9434
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\RoomRulesRegression.class",
+      "bytes": 13755
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\VerifyCompact.class",
+      "bytes": 6347
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\tests\\local\\lito381\\server\\VerifyImported.class",
+      "bytes": 5426
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\candidate.jar",
+      "bytes": 6254854
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\local\\lito381\\server\\LobbyRoomDirectory.class",
+      "bytes": 3538
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\Patch.class",
+      "bytes": 6223
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\DirectoryRegression.class",
+      "bytes": 10645
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-directory\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\candidate.jar",
+      "bytes": 6297359
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement$Context.class",
+      "bytes": 1482
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement$Ticket.class",
+      "bytes": 1201
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\DurableBattleSettlement.class",
+      "bytes": 21560
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\NativeRoomRules$Policy.class",
+      "bytes": 1441
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\classes\\local\\lito381\\server\\NativeRoomRules.class",
+      "bytes": 11059
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\ClientSession.javap.txt",
+      "bytes": 16408024
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\DurableBattleSettlement.javap.txt",
+      "bytes": 97857
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\GameHub$Room.javap.txt",
+      "bytes": 17054
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\GameHub.javap.txt",
+      "bytes": 2390144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\Patch.class",
+      "bytes": 12447
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\FlowRegression.class",
+      "bytes": 10000
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression$Row.class",
+      "bytes": 1785
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\NativeDirectoryRegression.class",
+      "bytes": 14800
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 17919
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\RoomPolicySql.class",
+      "bytes": 4148
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\RoomRulesRegression.class",
+      "bytes": 12350
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\room-rules\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\candidate.jar",
+      "bytes": 6234416
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration$Grant.class",
+      "bytes": 1698
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration$Slot.class",
+      "bytes": 481
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\SourceAdministration.class",
+      "bytes": 3810
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration$1.class",
+      "bytes": 1242
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration$Source.class",
+      "bytes": 1689
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\local\\lito381\\server\\UnifiedConfiguration.class",
+      "bytes": 15168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\Patch.class",
+      "bytes": 9754
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\CommandRoutingRegression.class",
+      "bytes": 4719
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\Regression.class",
+      "bytes": 13475
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\SourceLoginRegression$Fixture.class",
+      "bytes": 4136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\source-administration\\build\\tests\\local\\lito381\\server\\SourceLoginRegression.class",
+      "bytes": 11332
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\__pycache__\\Start-Shared-Formal.cpython-312.pyc",
+      "bytes": 51494
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+      "bytes": 260209898
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\__pycache__\\development_startup.cpython-312.pyc",
+      "bytes": 44655
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\__pycache__\\development_startup.cpython-312.pyc",
+      "bytes": 44643
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Accessibility.dll",
+      "bytes": 20816
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clretwrc.dll",
+      "bytes": 317736
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clrgc.dll",
+      "bytes": 442152
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\clrjit.dll",
+      "bytes": 1710376
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\coreclr.dll",
+      "bytes": 3785512
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\createdump.exe",
+      "bytes": 59224
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 269096
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\cs\\System.Windows.Forms.resources.dll",
+      "bytes": 369960
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 270160
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\de\\System.Windows.Forms.resources.dll",
+      "bytes": 378704
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\development_startup.py",
+      "bytes": 26889
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 269608
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\es\\System.Windows.Forms.resources.dll",
+      "bytes": 370472
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 270632
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\fr\\System.Windows.Forms.resources.dll",
+      "bytes": 377640
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\hostfxr.dll",
+      "bytes": 312104
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\hostpolicy.dll",
+      "bytes": 315216
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 270632
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\it\\System.Windows.Forms.resources.dll",
+      "bytes": 373032
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25896
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 276264
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ja\\System.Windows.Forms.resources.dll",
+      "bytes": 413992
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 271696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ko\\System.Windows.Forms.resources.dll",
+      "bytes": 375592
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.deps.json",
+      "bytes": 32269
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.dll",
+      "bytes": 407552
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.exe",
+      "bytes": 132096
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.pdb",
+      "bytes": 75852
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.runtimeconfig.json",
+      "bytes": 527
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.CSharp.dll",
+      "bytes": 927528
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.DiaSymReader.Native.x86.dll",
+      "bytes": 2146344
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.Core.dll",
+      "bytes": 1156944
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.dll",
+      "bytes": 18768
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.VisualBasic.Forms.dll",
+      "bytes": 235304
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Primitives.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Registry.AccessControl.dll",
+      "bytes": 34600
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.Registry.dll",
+      "bytes": 108328
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\Microsoft.Win32.SystemEvents.dll",
+      "bytes": 112424
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordaccore.dll",
+      "bytes": 1233240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordaccore_x86_x86_10.0.826.23019.dll",
+      "bytes": 1233240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscordbi.dll",
+      "bytes": 1185624
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscorlib.dll",
+      "bytes": 59688
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\mscorrc.dll",
+      "bytes": 133968
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\msquic.dll",
+      "bytes": 602696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\netstandard.dll",
+      "bytes": 100648
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 269096
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pl\\System.Windows.Forms.resources.dll",
+      "bytes": 371024
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 269136
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\pt-BR\\System.Windows.Forms.resources.dll",
+      "bytes": 363816
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 26408
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 285992
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\ru\\System.Windows.Forms.resources.dll",
+      "bytes": 482600
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\server-profiles\\lito-shared.json",
+      "bytes": 511
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.AppContext.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Buffers.dll",
+      "bytes": 15184
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.CodeDom.dll",
+      "bytes": 440104
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Concurrent.dll",
+      "bytes": 218920
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.dll",
+      "bytes": 280360
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Immutable.dll",
+      "bytes": 898896
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.NonGeneric.dll",
+      "bytes": 96040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Collections.Specialized.dll",
+      "bytes": 91944
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.Annotations.dll",
+      "bytes": 190240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.DataAnnotations.dll",
+      "bytes": 16680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.dll",
+      "bytes": 30544
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.EventBasedAsync.dll",
+      "bytes": 46888
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.Primitives.dll",
+      "bytes": 75560
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ComponentModel.TypeConverter.dll",
+      "bytes": 714536
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Configuration.ConfigurationManager.dll",
+      "bytes": 976680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Configuration.dll",
+      "bytes": 19240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Console.dll",
+      "bytes": 157480
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Core.dll",
+      "bytes": 23336
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.Common.dll",
+      "bytes": 2656040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.DataSetExtensions.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Data.dll",
+      "bytes": 25424
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Design.dll",
+      "bytes": 23336
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Contracts.dll",
+      "bytes": 16208
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Debug.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.DiagnosticSource.dll",
+      "bytes": 476968
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.EventLog.dll",
+      "bytes": 345936
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.EventLog.Messages.dll",
+      "bytes": 800552
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.FileVersionInfo.dll",
+      "bytes": 42792
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.PerformanceCounter.dll",
+      "bytes": 284456
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Process.dll",
+      "bytes": 304976
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.StackTrace.dll",
+      "bytes": 46928
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.TextWriterTraceListener.dll",
+      "bytes": 63272
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Tools.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.TraceSource.dll",
+      "bytes": 132904
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Diagnostics.Tracing.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.DirectoryServices.dll",
+      "bytes": 960296
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.dll",
+      "bytes": 50472
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Common.dll",
+      "bytes": 870184
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Design.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.dll",
+      "bytes": 20816
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Drawing.Primitives.dll",
+      "bytes": 128808
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Dynamic.Runtime.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Asn1.dll",
+      "bytes": 218960
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Nrbf.dll",
+      "bytes": 128848
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Formats.Tar.dll",
+      "bytes": 255784
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.Calendars.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Globalization.Extensions.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.Brotli.dll",
+      "bytes": 75560
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.dll",
+      "bytes": 403240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.FileSystem.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.Native.dll",
+      "bytes": 846672
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Compression.ZipFile.dll",
+      "bytes": 91944
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.AccessControl.dll",
+      "bytes": 96040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.DriveInfo.dll",
+      "bytes": 51024
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.Primitives.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.FileSystem.Watcher.dll",
+      "bytes": 79656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.IsolatedStorage.dll",
+      "bytes": 83752
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.MemoryMappedFiles.dll",
+      "bytes": 75600
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Packaging.dll",
+      "bytes": 304936
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipelines.dll",
+      "bytes": 182056
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipes.AccessControl.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.Pipes.dll",
+      "bytes": 157480
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.IO.UnmanagedMemoryStream.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.AsyncEnumerable.dll",
+      "bytes": 1242920
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.dll",
+      "bytes": 644944
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Expressions.dll",
+      "bytes": 3372840
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Parallel.dll",
+      "bytes": 730920
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Linq.Queryable.dll",
+      "bytes": 177960
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Memory.dll",
+      "bytes": 157480
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.dll",
+      "bytes": 17192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Http.dll",
+      "bytes": 1652520
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Http.Json.dll",
+      "bytes": 116560
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.HttpListener.dll",
+      "bytes": 505680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Mail.dll",
+      "bytes": 452392
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.NameResolution.dll",
+      "bytes": 112464
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.NetworkInformation.dll",
+      "bytes": 145192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Ping.dll",
+      "bytes": 87888
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Primitives.dll",
+      "bytes": 202576
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Quic.dll",
+      "bytes": 337704
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Requests.dll",
+      "bytes": 354088
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Security.dll",
+      "bytes": 632616
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.ServerSentEvents.dll",
+      "bytes": 79696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.ServicePoint.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.Sockets.dll",
+      "bytes": 493352
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebClient.dll",
+      "bytes": 157480
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebHeaderCollection.dll",
+      "bytes": 59176
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebProxy.dll",
+      "bytes": 42792
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebSockets.Client.dll",
+      "bytes": 91984
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Net.WebSockets.dll",
+      "bytes": 231208
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Numerics.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Numerics.Vectors.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ObjectModel.dll",
+      "bytes": 71504
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.CoreLib.dll",
+      "bytes": 15599440
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.DataContractSerialization.dll",
+      "bytes": 1939240
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Uri.dll",
+      "bytes": 247592
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Windows.Core.dll",
+      "bytes": 1787688
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Windows.GdiPlus.dll",
+      "bytes": 325416
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Xml.dll",
+      "bytes": 7386960
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Private.Xml.Linq.dll",
+      "bytes": 366376
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.DispatchProxy.dll",
+      "bytes": 71464
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.dll",
+      "bytes": 292688
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.ILGeneration.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Emit.Lightweight.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Extensions.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Metadata.dll",
+      "bytes": 1120080
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.Primitives.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Reflection.TypeExtensions.dll",
+      "bytes": 42832
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Extensions.dll",
+      "bytes": 186152
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Reader.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.ResourceManager.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Resources.Writer.dll",
+      "bytes": 50984
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.CompilerServices.Unsafe.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.CompilerServices.VisualC.dll",
+      "bytes": 30504
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.dll",
+      "bytes": 44840
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Extensions.dll",
+      "bytes": 17704
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Handles.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.dll",
+      "bytes": 108368
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.JavaScript.dll",
+      "bytes": 51024
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.InteropServices.RuntimeInformation.dll",
+      "bytes": 15184
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Intrinsics.dll",
+      "bytes": 17232
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Loader.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Numerics.dll",
+      "bytes": 349992
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.dll",
+      "bytes": 17192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Formatters.dll",
+      "bytes": 120616
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Json.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Primitives.dll",
+      "bytes": 38696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Runtime.Serialization.Xml.dll",
+      "bytes": 16680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.AccessControl.dll",
+      "bytes": 210728
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Claims.dll",
+      "bytes": 96040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Algorithms.dll",
+      "bytes": 17192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Cng.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Csp.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.dll",
+      "bytes": 2357032
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Encoding.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.OpenSsl.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Pkcs.dll",
+      "bytes": 718672
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Primitives.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.ProtectedData.dll",
+      "bytes": 59176
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.X509Certificates.dll",
+      "bytes": 16720
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Cryptography.Xml.dll",
+      "bytes": 423760
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.dll",
+      "bytes": 18216
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Permissions.dll",
+      "bytes": 186192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Principal.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.Principal.Windows.dll",
+      "bytes": 165672
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Security.SecureString.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ServiceModel.Web.dll",
+      "bytes": 16680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ServiceProcess.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.CodePages.dll",
+      "bytes": 857896
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encoding.Extensions.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Encodings.Web.dll",
+      "bytes": 120616
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.Json.dll",
+      "bytes": 1787688
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Text.RegularExpressions.dll",
+      "bytes": 984912
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.AccessControl.dll",
+      "bytes": 71504
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Channels.dll",
+      "bytes": 149288
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.dll",
+      "bytes": 79656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Overlapped.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Dataflow.dll",
+      "bytes": 444200
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.dll",
+      "bytes": 16680
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Extensions.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Tasks.Parallel.dll",
+      "bytes": 120616
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Thread.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.ThreadPool.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Threading.Timer.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Transactions.dll",
+      "bytes": 16720
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Transactions.Local.dll",
+      "bytes": 608040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.ValueTuple.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Web.dll",
+      "bytes": 15144
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Web.HttpUtility.dll",
+      "bytes": 63312
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Extensions.dll",
+      "bytes": 116520
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Design.dll",
+      "bytes": 5875536
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Design.Editors.dll",
+      "bytes": 16208
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.dll",
+      "bytes": 13162320
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Windows.Forms.Primitives.dll",
+      "bytes": 3200848
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.dll",
+      "bytes": 23376
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.Linq.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.ReaderWriter.dll",
+      "bytes": 21800
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.Serialization.dll",
+      "bytes": 16208
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XDocument.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XmlDocument.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XmlSerializer.dll",
+      "bytes": 17704
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XPath.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\System.Xml.XPath.XDocument.dll",
+      "bytes": 30504
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 25384
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 268584
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\tr\\System.Windows.Forms.resources.dll",
+      "bytes": 365864
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\WindowsBase.dll",
+      "bytes": 16168
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 24912
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 263976
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15696
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hans\\System.Windows.Forms.resources.dll",
+      "bytes": 323408
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\Microsoft.VisualBasic.Forms.resources.dll",
+      "bytes": 24872
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.Design.resources.dll",
+      "bytes": 264528
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.Primitives.resources.dll",
+      "bytes": 15656
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\bin\\Release\\net10.0-windows\\win-x86\\zh-Hant\\System.Windows.Forms.resources.dll",
+      "bytes": 329040
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.dgspec.json",
+      "bytes": 23480
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.g.props",
+      "bytes": 1139
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\LiTo381Launcher.csproj.nuget.g.targets",
+      "bytes": 150
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\project.assets.json",
+      "bytes": 22745
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\project.nuget.cache",
+      "bytes": 859
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs",
+      "bytes": 200
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\apphost.exe",
+      "bytes": 132096
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381L.2AB26466.Up2Date",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.AssemblyInfo.cs",
+      "bytes": 1142
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.AssemblyInfoInputs.cache",
+      "bytes": 66
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.assets.cache",
+      "bytes": 154
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.csproj.CoreCompileInputs.cache",
+      "bytes": 66
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.csproj.FileListAbsolute.txt",
+      "bytes": 37849
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.dll",
+      "bytes": 407552
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.GeneratedMSBuildEditorConfig.editorconfig",
+      "bytes": 1192
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.genruntimeconfig.cache",
+      "bytes": 66
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.GlobalUsings.g.cs",
+      "bytes": 305
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\LiTo381Launcher.pdb",
+      "bytes": 75852
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\PublishOutputs.a6344582af.txt",
+      "bytes": 29967
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\ref\\LiTo381Launcher.dll",
+      "bytes": 83456
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\src\\obj\\Release\\net10.0-windows\\win-x86\\refint\\LiTo381Launcher.dll",
+      "bytes": 83456
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\class_compat\\__pycache__\\verify_live.cpython-312.pyc",
+      "bytes": 4270
+    }
+  ]
+}

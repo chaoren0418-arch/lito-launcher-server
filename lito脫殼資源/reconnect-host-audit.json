@@ -1,0 +1,193 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "buffer": {
+    "va": "0064AD74",
+    "rva": "0024AD74",
+    "section": "   \u0000    ",
+    "file_offset": "0024AD74",
+    "raw_backed": true
+  },
+  "raw_buffer_bytes": 256,
+  "raw_buffer_all_zero": true,
+  "ASM_exact_name_references": [
+    {
+      "line": 226495,
+      "text": "mov     edi, offset dword_64AD74",
+      "context": [
+        "",
+        "test    al, al",
+        "jz      short loc_469BC4",
+        "",
+        "push    edi",
+        "mov     edi, offset dword_64AD74",
+        "or      ecx, 0FFFFFFFFh",
+        "xor     eax, eax",
+        "repne scasb",
+        "not     ecx",
+        "sub     edi, ecx",
+        "mov     byte_64AFBD, 1",
+        "mov     eax, ecx",
+        "mov     esi, edi"
+      ]
+    },
+    {
+      "line": 236740,
+      "text": "mov     edi, offset dword_64AD74",
+      "context": [
+        "mov     ecx, edx",
+        "xor     eax, eax",
+        "and     ecx, 3",
+        "push    0Fh",
+        "rep movsb",
+        "mov     edi, offset dword_64AD74",
+        "or      ecx, 0FFFFFFFFh",
+        "repne scasb",
+        "not     ecx",
+        "sub     edi, ecx",
+        "push    offset dword_5025A8",
+        "mov     edx, ecx",
+        "mov     esi, edi",
+        "mov     edi, offset dword_64AE74"
+      ]
+    },
+    {
+      "line": 253206,
+      "text": "push    offset dword_64AD74",
+      "context": [
+        "jmp     loc_476190",
+        "",
+        "; ---------------------------------------------------------------------------",
+        "",
+        "loc_4760FF:                             ; CODE XREF: sub_475F40+19F↑j",
+        "push    offset dword_64AD74",
+        "call    sub_4EFE56",
+        "",
+        "; ---------------------------------------------------------------------------",
+        "cmp     eax, 0FFFFFFFFh",
+        "mov     dword_64B0C0, eax",
+        "jnz     short loc_476138",
+        "",
+        "push    offset dword_64AD74"
+      ]
+    },
+    {
+      "line": 253214,
+      "text": "push    offset dword_64AD74",
+      "context": [
+        "; ---------------------------------------------------------------------------",
+        "cmp     eax, 0FFFFFFFFh",
+        "mov     dword_64B0C0, eax",
+        "jnz     short loc_476138",
+        "",
+        "push    offset dword_64AD74",
+        "call    sub_4EFE5C",
+        "",
+        "; ---------------------------------------------------------------------------",
+        "test    eax, eax",
+        "jnz     short loc_47612C",
+        "",
+        "pop     edi",
+        "pop     esi"
+      ]
+    },
+    {
+      "line": 266561,
+      "text": "dd 0F92BD1F7h, 0F78BD18Bh, 64AD74BFh, 2E9C100h, 0CA8BA5F3h, 0F303E183h, 0AB9A4h, 2CBF0000h, 0F30064ADh",
+      "context": [
+        "dd offset aLtdesc                       ; \"LTdesc\"",
+        "dd 834B80B9h, 7AD2E800h, 0C0840005h, 12F840Fh, 0D8680000h, 0B90062CDh, 834BB0h, 57ABBE8h, 0FC08400h",
+        "dd 11884h, 0BA575600h",
+        "dd offset aNpscanDll                    ; \"npscan.dll\"",
+        "dd 0FEEC8D8Dh, 71E8FFFFh, 8DFFFB19h, 0FFFEEC8Dh, 0E89051FFh, 5593EC9h, 64B7E4BFh, 0FFC98300h, 0AEF2C033h",
+        "dd 0F92BD1F7h, 0F78BD18Bh, 64AD74BFh, 2E9C100h, 0CA8BA5F3h, 0F303E183h, 0AB9A4h, 2CBF0000h, 0F30064ADh",
+        "dd 23AEE8ABh, 506AFFFCh, 74793E8h, 4C48300h, 5FF04589h, 0FC45C7h, 85000000h, 9745EC0h, 4DE8C88Bh, 0EB000702h",
+        "dd 0B1C03302h, 0FC45C701h, 0FFFFFFFFh, 836B8CA3h, 0BF46E800h, 1B1FFFFh, 19C6FE8h, 0BBECA100h, 6A0064h",
+        "dd 1CFE268h, 3786800h, 0E8500000h, 55D438Ah, 40D8B90h, 8B0064B9h, 64B90015h, 0FFE18100h, 810000FFh, 0FFFFE2h",
+        "dd 10E1C100h, 0E8A3CA0Bh, 0A10064B8h, 64BBECh, 68006A51h, 200h, 9E89050h, 8B056339h, 64B8FC0Dh, 0AEE85100h",
+        "dd 90055C41h, 0B8FC05C7h, 64h, 0A5E80000h, 0E8FFFC9Eh, 58D0h, 1B8h, 0F44D8B00h, 0D8964h, 8B000000h, 4C25DE5h",
+        "db 0",
+        "; ---------------------------------------------------------------------------",
+        ""
+      ]
+    },
+    {
+      "line": 559684,
+      "text": "dword_64AD74 dd 40h dup(0)              ; DATA XREF: sub_469B10+3C↑o",
+      "context": [
+        "                                        ; sub_455330+19DE6↑r",
+        "                                        ; sub_455330+19E46↑w",
+        "                                        ; sub_455330+19EE7↑r",
+        "                                        ; sub_4C6B30+18F↑r",
+        "align 4",
+        "dword_64AD74 dd 40h dup(0)              ; DATA XREF: sub_469B10+3C↑o",
+        "                                        ; sub_455330+19E0B↑o",
+        "                                        ; sub_475F40:loc_4760FF↑o",
+        "                                        ; sub_475F40+1D3↑o",
+        "dword_64AE74 dd 40h dup(0)              ; DATA XREF: sub_469B10+57↑o",
+        "                                        ; sub_469B10+8B↑o",
+        "                                        ; sub_469BD0+57↑o",
+        "                                        ; sub_469BD0+90↑o",
+        "                                        ; ___:0046EEAF↑o"
+      ]
+    }
+  ],
+  "PE_literal_candidates": [
+    {
+      "file_offset": "00069B4D",
+      "mapped_va": "00469B4D",
+      "preceding_bytes": "ffff84c0747957bf",
+      "following_bytes": "83c9ff33c0f2aef7",
+      "classification": "raw literal candidate, not automatic code/xref proof"
+    },
+    {
+      "file_offset": "0006F13C",
+      "mapped_va": "0046F13C",
+      "preceding_bytes": "83e1036a0ff3a4bf",
+      "following_bytes": "83c9fff2aef7d12b",
+      "classification": "raw literal candidate, not automatic code/xref proof"
+    },
+    {
+      "file_offset": "00076100",
+      "mapped_va": "00476100",
+      "preceding_bytes": "ffffe99100000068",
+      "following_bytes": "e84d9d070083f8ff",
+      "classification": "raw literal candidate, not automatic code/xref proof"
+    },
+    {
+      "file_offset": "00076114",
+      "mapped_va": "00476114",
+      "preceding_bytes": "a3c0b06400752568",
+      "following_bytes": "e83f9d070085c075",
+      "classification": "raw literal candidate, not automatic code/xref proof"
+    },
+    {
+      "file_offset": "0007C9D1",
+      "mapped_va": "0047C9D1",
+      "preceding_bytes": "d12bf98bd18bf7bf",
+      "following_bytes": "c1e902f3a58bca83",
+      "classification": "raw literal candidate, not automatic code/xref proof"
+    }
+  ],
+  "meaning": "Hostname/address string: 475F40 passes it to inet_addr then gethostbyname on INADDR_NONE. It is not source-qualified as a selected character name.",
+  "known_reads": [
+    "469B4C ->64AE74",
+    "46F13B ->64AE74",
+    "4760FF inet_addr;476118 gethostbyname"
+  ],
+  "explicit_writer_proven": true,
+  "zero_scope": "Disk snapshot bytes only; not proof of original startup initial value, protected initialization, or live session value.",
+  "gaps": [
+    "Private050104CD at47C9B7 absent from fixed image; may correspond to API thunk, identity/body unknown",
+    "Other transitive init/connection/library calls not exhaustively closed",
+    "Actual host value and callback execution in T73 unobserved"
+  ],
+  "writer_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+    "bytes": 8125,
+    "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644"
+  }
+}

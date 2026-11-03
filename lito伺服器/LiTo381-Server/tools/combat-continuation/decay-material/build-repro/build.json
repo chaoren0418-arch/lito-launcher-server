@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\build\\candidate-silence-material.jar",
+    "sha256": "51d02d4dae284d440024956adafb5e1c69a3c3c7f4c89fb3400c90b145afe889"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\candidate-decay-material.jar",
+    "sha256": "4482daa5b713c5bf2064670c7aaaac92af9cff01121bcc7e24241ab6f7a11c29"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeDecayPotionMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\build.py",
+      "sha256": "52626a4102a2dd12dacd3a60cda80d5cab203355a05323bc128918fb8ca80428"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\DecayPotionMaterialMethods.java",
+      "sha256": "dffb9d4bc02ff2031cf0f3d0a7c65b536ba7c061e8a538562053c0dae5905a62"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "b0f82a698c8a9f016c14db99704ee87fc2109361ec6b50cf271c99d85b324159"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\sources\\NativeDecayPotionMaterialAction.java",
+      "sha256": "e16ac326221660223db76d74308c5e10d741c7198b6968e8d8556db3028aa6ba"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "f9c407f6c108769c3bf95c0f62a55153e027f9dcbb159227ca93b8f50bdd0837"
+    }
+  ]
+}

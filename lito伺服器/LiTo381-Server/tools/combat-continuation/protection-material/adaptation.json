@@ -1,0 +1,21 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\WaterLifeMethods.java",
+      "sha256": "c9904cfdb6dff9159e187a65b7ead4151d420f006e4ed1707550be547d2cda1a"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build.py",
+      "sha256": "e9a8520cc209a51f67fec0e631a0ce998503afae5e71d561518528cd54f15eca"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\NativeWaterLifeCastAction.java",
+      "sha256": "cb1b82425978b311a46e79845b37d9d0aa83dfdabf1028579637f26383cda361"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\prepare_protection.py",
+      "sha256": "93b96aaabee9c87860d4b177bc5af4afdcd948f224b902831d87bf6d086f1b90"
+    }
+  ],
+  "scope": "skill68 original target/effect retained; common pair and material commit; not qualified"
+}

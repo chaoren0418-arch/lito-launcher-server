@@ -1,0 +1,61 @@
+{
+  "new_static_models": 6,
+  "cases": [
+    {
+      "case": "host_payload255",
+      "payload_bytes": 255,
+      "copied_bytes_including_NUL": 256,
+      "region_bytes": 256,
+      "in_bounds_copy": true,
+      "overflow_bytes": 0,
+      "scope": "Arithmeticcode-derived capacity model, notnativeguard oractualinput",
+      "match": true
+    },
+    {
+      "case": "host_payload256",
+      "payload_bytes": 256,
+      "copied_bytes_including_NUL": 257,
+      "region_bytes": 256,
+      "in_bounds_copy": false,
+      "overflow_bytes": 1,
+      "scope": "Arithmeticcode-derived capacity model, notnativeguard oractualinput",
+      "match": true
+    },
+    {
+      "case": "alias_payload27",
+      "payload_bytes": 27,
+      "copied_bytes_including_NUL": 28,
+      "region_bytes": 28,
+      "in_bounds_copy": true,
+      "overflow_bytes": 0,
+      "scope": "Arithmeticcode-derived capacity model, notnativeguard oractualinput",
+      "match": true
+    },
+    {
+      "case": "alias_payload28",
+      "payload_bytes": 28,
+      "copied_bytes_including_NUL": 29,
+      "region_bytes": 28,
+      "in_bounds_copy": false,
+      "overflow_bytes": 1,
+      "scope": "Arithmeticcode-derived capacity model, notnativeguard oractualinput",
+      "match": true
+    },
+    {
+      "case": "opaque_highbytes_firstNUL",
+      "input_hex": "a44000eeee",
+      "copy_hex": "a44000",
+      "encoding_identity_not_inferred": true,
+      "match": true
+    },
+    {
+      "case": "table_clear_boundary",
+      "start": "0064AD2C",
+      "10DWORDs_bytes": 40,
+      "end_exclusive": "0064AD54",
+      "alias_untouched_by_this_clear": true,
+      "match": true
+    }
+  ],
+  "native_or_oldPASS_or_producer_runs": 0
+}

@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence_regression.py",
+      "sha256": "d26fad3bc5c3355abf910a27cb3817634dc41c49face8fe14808e203508228b4"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\census.py",
+      "sha256": "4affd238f79b0bf913ba1a5d9c107e86ecd0535b474dcbddc55977d0be22d168"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\prepare_regression.py",
+      "sha256": "66705efa7b747e39eb30d2502f49dafc84b561004a3fc9a57addbc5216fe965f"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay_regression.py",
+      "sha256": "3878a66441b0c23977ea3cb23c5735fe715ddec420c1fe8abe7cabc2c53c13a7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\census.py",
+      "sha256": "e72d458fa39761d0795fe2d43129f317a48396c67ebd32b2ff524d9d168be71f"
+    }
+  ],
+  "scope": "regression evidence destination and exact candidate only; static census removes two Decay Potion roots"
+}

@@ -1,0 +1,339 @@
+{
+  "status": "未匯入、未接線",
+  "baseline": "0.6.60",
+  "verification_date": "2026-10-14 Asia/Taipei",
+  "sources_inventory_sha256": "9a967731e491e2d61466168444132a8af1f01a1398301ba3efa7c98e912a039f",
+  "source_count": 596,
+  "counts": {
+    "maps": 47,
+    "portals": 186,
+    "skills": 214,
+    "zones": 2,
+    "map_items": 18,
+    "rental_offers": 78,
+    "npc_identities": 13,
+    "skill_phases": 12,
+    "projectiles": 1,
+    "buffs": 13,
+    "map_pages": 2,
+    "rental_mappings": 78,
+    "rental_currency": 1,
+    "map_effects": 2771,
+    "config_references": 498,
+    "item_resources": 85,
+    "npc_services": 27,
+    "skill_requests": 176,
+    "lineage_groups": 14,
+    "sources": 596,
+    "provenance": 30868
+  },
+  "checks": {
+    "package_status": "未匯入、未接線",
+    "status": "PASS (offline only)",
+    "sql_insert_rows": 35700,
+    "sql_literal_values_checked": 321201,
+    "sql_roundtrip": true,
+    "integer_and_varchar_ranges": true,
+    "all_sql_field_provenance_covered": true,
+    "unique_keys": true,
+    "native_terrain_references": true,
+    "all_source_hashes_match": true,
+    "pure_packet_fixtures_independently_decoded": 96,
+    "all_asset_source_references_resolve": true,
+    "unknown_actor_fields_not_invented": true,
+    "sql_executed": false,
+    "production_wired": false
+  },
+  "files": [
+    {
+      "file": "01-candidate-schema.sql",
+      "bytes": 9610,
+      "sha256": "f6c559d806cd624b1085a1255f280d1fa2cdab7fc7d690b645bff64d5e90f66c"
+    },
+    {
+      "file": "02-candidate-data.sql",
+      "bytes": 14738070,
+      "sha256": "141be5da8460e6e60c2eebe27eeba1a181321c3dd2dc1ae846809676f2cf8063"
+    },
+    {
+      "file": "__pycache__/extract_validate.cpython-312.pyc",
+      "bytes": 53899,
+      "sha256": "13a5e173fcd0ac21c1f1794af1f978390eca0f506899beaeb15f6c342d6deb96"
+    },
+    {
+      "file": "baseline-resolution.json",
+      "bytes": 1114,
+      "sha256": "e2b1ba7ce05cb787d63505b80812ee6f6e80698f3cf1a97f501e861de9695158"
+    },
+    {
+      "file": "candidate-data.json",
+      "bytes": 2411229,
+      "sha256": "de42826fa025c6ffae2b9d61361bff0ec2e8ca2144cb637406c4b8b44bec38f0"
+    },
+    {
+      "file": "configuration-comparison.json",
+      "bytes": 174450,
+      "sha256": "9437f68a61de9bca690d1d637d14b3a666ede59eb7bb694d8f22a0719cecb21e"
+    },
+    {
+      "file": "configuration-reference-select.json",
+      "bytes": 80291,
+      "sha256": "ea2fcbe3febe43620e3b412a045faeb8a806b89446c056d1951a5757d246df30"
+    },
+    {
+      "file": "consolidate_sql.py",
+      "bytes": 9128,
+      "sha256": "af58352b5cc3e1b852f13905c686c244c4bc683358934679c9f01807b1b8085f"
+    },
+    {
+      "file": "deployed-catalog.json",
+      "bytes": 38739,
+      "sha256": "59ccc106c4f55d389d0b6aa7282fdbaf7d0d7e79fc95a10358d78ed9c98b51c2"
+    },
+    {
+      "file": "domain-completion.json",
+      "bytes": 4057,
+      "sha256": "775a37a9b6ea4c65cab6c2033c3b3ea725ef709b9888f2022c222ecbf5e81158"
+    },
+    {
+      "file": "enrich_remaining.py",
+      "bytes": 28592,
+      "sha256": "4d66b0fb6b81786f4d492fca7d72f126e864438fdbe2440ddb850222073c90cb"
+    },
+    {
+      "file": "enrich_stage2.py",
+      "bytes": 38173,
+      "sha256": "032dd64e608ce13cb2d25f7ee386a9d778254744fe1663574c9ad80cfc71f710"
+    },
+    {
+      "file": "evidence-boundaries.json",
+      "bytes": 2081,
+      "sha256": "08e45f6419609233fcc43052bd53b9665cff912309699a5aabf694c8ca4c1733"
+    },
+    {
+      "file": "extract_validate.py",
+      "bytes": 38686,
+      "sha256": "2eb54d09d997c7fa2f9f1561bde113d7d290228310781949684ad5ddfd61b80d"
+    },
+    {
+      "file": "item-resource-evidence.json",
+      "bytes": 14019,
+      "sha256": "a040f37bdf6c21e99867a99c663ed9d6c33dc4decb97f0730353acc8a7e0f283"
+    },
+    {
+      "file": "make_final_report.py",
+      "bytes": 12395,
+      "sha256": "18513efb2ee17740af0052193f61a49510f7d06b91d6b9624758e5401e803253"
+    },
+    {
+      "file": "native-static-locators.json",
+      "bytes": 1107,
+      "sha256": "8576e6c3f4da5cddf57bf4ade9571a08e533ab065b8f550113d132e18fe7e524"
+    },
+    {
+      "file": "npc-service-evidence.json",
+      "bytes": 14600,
+      "sha256": "ed46fe6b4e2f4044baaf907cc4bc6775ca869a53a9eb31216426b74d73500a2d"
+    },
+    {
+      "file": "other-server-reference-audit.json",
+      "bytes": 7258,
+      "sha256": "29b291a7a59e6c8415c60ccd117e9f726e20ba0a08b404660b0e9556ab1f9090"
+    },
+    {
+      "file": "pending.json",
+      "bytes": 3098,
+      "sha256": "681e89a8db22b30cec452b96d9db45cca5179581c2bcd2651e761ee2fc3bf22e"
+    },
+    {
+      "file": "phase1-manifest.json",
+      "bytes": 4332,
+      "sha256": "05e885d57c51f3492ed3c0ef721a2d4db55dec434a6f5df4593c5304e2810cf1"
+    },
+    {
+      "file": "phase1-reproducibility.json",
+      "bytes": 365,
+      "sha256": "a2911021c6604a21f87363d49b1d2215a1437e8225ad0c5c594268e9be681c32"
+    },
+    {
+      "file": "pinned-inputs/LiTo381-SharedResources-0.6.60.jar",
+      "bytes": 6290590,
+      "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43"
+    },
+    {
+      "file": "provenance.json",
+      "bytes": 14223195,
+      "sha256": "bbe0a935ad62c317e71faf3c68738184799db6af325e70c523884ec7a8e5d550"
+    },
+    {
+      "file": "pure-presentation-lito-legacy.json",
+      "bytes": 33181,
+      "sha256": "2e26b7d810669abda35567cc1e16664e1c220f4dfdd38d92114464a1d47081ae"
+    },
+    {
+      "file": "pure-presentation-tw13081901-v1.json",
+      "bytes": 33183,
+      "sha256": "b7a51d7a955042bee71449deb74cacfbcc31a2682d76e8d56cde8c5ae2dcf566"
+    },
+    {
+      "file": "ReadOnlyCatalog.class",
+      "bytes": 10035,
+      "sha256": "5d73ef6d6e2dcd94ab14b90a591f2ca88cda009129b7d9fc369a9e280f350b37"
+    },
+    {
+      "file": "ReadOnlyCatalog.java",
+      "bytes": 4660,
+      "sha256": "b99a50d22693cf1ce6bc8f4605dac45641748a237d28822defdc6dcb282d5fe8"
+    },
+    {
+      "file": "ReadOnlyStage2.class",
+      "bytes": 17293,
+      "sha256": "b1cb752cfb4160b369e5aae6b84a0f9dc033a7e87c008757737b21e2e7f66575"
+    },
+    {
+      "file": "ReadOnlyStage2.java",
+      "bytes": 9999,
+      "sha256": "98c60696af0b678d2d3bb2484815b2e8c621e4062c27fc65f1856795cbded21f"
+    },
+    {
+      "file": "remaining-resource-boundaries.json",
+      "bytes": 940,
+      "sha256": "2fc7fa8601d716734157de1df5d476210b18f3fff2f6491f0f42bfb5abe09bd2"
+    },
+    {
+      "file": "remaining-stage-boundary.json",
+      "bytes": 107,
+      "sha256": "acb02091bca40f96bc4742496bbfc118cf9c944469ff025594f3e116c53a3565"
+    },
+    {
+      "file": "reproduce_all.py",
+      "bytes": 1863,
+      "sha256": "7539a8deacd0b3b4f2241d35e5f84c667938fa47f470f6f8cd3505648d189981"
+    },
+    {
+      "file": "reproducibility.json",
+      "bytes": 880,
+      "sha256": "e06c3de9f97e985f739a9cf3ca552ff64f3c227a963cda340ce2e83d22b124d9"
+    },
+    {
+      "file": "resolve_baseline.py",
+      "bytes": 3898,
+      "sha256": "74a632d2fb74a87cae21b60e985faf3dafdadd6b0b9a10795dd3ed00e4d3f07d"
+    },
+    {
+      "file": "resource-links.json",
+      "bytes": 604,
+      "sha256": "2856107837f7c1f3ae0fe974623e166710afda8f9c55853a462fcae024ae89fe"
+    },
+    {
+      "file": "restored-source-locations.json",
+      "bytes": 2884,
+      "sha256": "1f94e5e1ebeb2504150b223ffed3a11cd8b1cdede339fc9dfecd7a24625d8cd5"
+    },
+    {
+      "file": "schema-map.json",
+      "bytes": 7998,
+      "sha256": "c37746c83eca844c2cf2354478d2f5d6beb86d2bdfb87a970edeb41d6eb2d13a"
+    },
+    {
+      "file": "skill-request-evidence.json",
+      "bytes": 679,
+      "sha256": "9e8f3da972fae5971811c5c3a414e6bc5252dd9d9a4cf2cdd1ea2bda5d8ad591"
+    },
+    {
+      "file": "sources.json",
+      "bytes": 205370,
+      "sha256": "9a967731e491e2d61466168444132a8af1f01a1398301ba3efa7c98e912a039f"
+    },
+    {
+      "file": "stage2-buff-evidence.json",
+      "bytes": 1407,
+      "sha256": "77ee25326261d05bfd1098dd50ba2834a1fd074fb43fd482cb033f64f8e709b1"
+    },
+    {
+      "file": "stage2-changes.json",
+      "bytes": 1434,
+      "sha256": "f752d44fa048f8f52e736946772a8849f5a655593e147168a12862cdeec6df71"
+    },
+    {
+      "file": "stage2-jar-consumers.json",
+      "bytes": 19989,
+      "sha256": "d79eab9c6120e1619b8edca9035b4de8284fa775acd73c1e2535be619bdc21b8"
+    },
+    {
+      "file": "stage2-map-page-evidence.json",
+      "bytes": 2071,
+      "sha256": "ea3b5d818990bbf167cea5916bc92b94d62d1e8182b2bd3b2c3b503c3a598358"
+    },
+    {
+      "file": "stage2-portal-525-evidence.json",
+      "bytes": 1027,
+      "sha256": "f2128bf07b0491e07195fa1ba47f6cb57bb3b740e4858d7ce957b764b8874a71"
+    },
+    {
+      "file": "stage2-rental-evidence.json",
+      "bytes": 1095,
+      "sha256": "8e2936d90c9b538b91c881a1f1340b6ab3dba47f524ab96ab6fdaeda3540839e"
+    },
+    {
+      "file": "stage2-resource-boundaries.json",
+      "bytes": 938,
+      "sha256": "d1424cc3800dedd1e628876d5b2ac946d9e89f40bdaaba4a6dce1656f738c5d7"
+    },
+    {
+      "file": "stage2-sprite-evidence.json",
+      "bytes": 6812,
+      "sha256": "041aef49b21c185d03ff42c49f044bb88f7cf9da466ccd3fb12e5e25677bd75e"
+    },
+    {
+      "file": "static-reference-select.json",
+      "bytes": 121126,
+      "sha256": "cb4f019d984088f22e21ee899ff80de0fe291df15eca8c05a36dba64e80416fc"
+    },
+    {
+      "file": "terrain-connectivity.json",
+      "bytes": 54546,
+      "sha256": "d6ed5d0829d4405295946b59c710a3b4e74e57bb550b52b26d191e59e5cf42d3"
+    },
+    {
+      "file": "terrain-index.json",
+      "bytes": 72755,
+      "sha256": "1acd31d481087005c9568ee260452ee4d4588973ea7b0f3ad3cd8b7f29820bb9"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 10080,
+      "sha256": "81c2e229c238b1b5d8fe1b91837b9a090580559d450d0fd65a5acf16f847a88d"
+    },
+    {
+      "file": "verification-result.json",
+      "bytes": 568,
+      "sha256": "ea4275be99ce52e79ef30e0c052a157bd161d6bcc2c3a102ddeb17da9ccb9d4a"
+    },
+    {
+      "file": "verify_package.py",
+      "bytes": 11609,
+      "sha256": "ca20fa530ca8034468be704efe1743e2d706cbf0e5d7b7fe35e2f63b07b2f1f6"
+    },
+    {
+      "file": "提交報告.zh-TW.md",
+      "bytes": 13569,
+      "sha256": "2fb51c354a9a8ec1d5cd68a2e556aacca586c80abab0d0b389c42e9a1f327f38"
+    },
+    {
+      "file": "第二階段補強報告.zh-TW.md",
+      "bytes": 10442,
+      "sha256": "7ab26ac8339c68594c67e1c89e1ecac50fbef7823557baa019213f249979e08d"
+    },
+    {
+      "file": "總提交報告.zh-TW.md",
+      "bytes": 11354,
+      "sha256": "8e0b360be86370e6f34bea3a95ee50c560c6dab2e459fbbfca39178681dcc54b"
+    },
+    {
+      "file": "總目標與階段.json",
+      "bytes": 2235,
+      "sha256": "96e83185e125b3e595faf5518aacb4025307f88c87602889a26cb8ba0418dd75"
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "package_status": "未匯入、未接線",
+  "tables": {
+    "lito_cand_map": {
+      "domain": "maps",
+      "primary_key": [
+        "map_id"
+      ],
+      "fields": [
+        "map_id",
+        "raw_slot",
+        "category",
+        "name",
+        "resource_version",
+        "resource_exists",
+        "gameplay_confirmed",
+        "enabled"
+      ]
+    },
+    "lito_cand_portal": {
+      "domain": "portals",
+      "primary_key": [
+        "source_map_id",
+        "source_x",
+        "source_y"
+      ],
+      "fields": [
+        "source_map_id",
+        "source_x",
+        "source_y",
+        "target_map_id",
+        "target_x",
+        "target_y",
+        "raw_tag",
+        "resource_version",
+        "enabled"
+      ]
+    },
+    "lito_cand_skill": {
+      "domain": "skills",
+      "primary_key": [
+        "skill_id",
+        "binding"
+      ],
+      "fields": [
+        "skill_id",
+        "binding",
+        "resource_version",
+        "cast_action",
+        "cast_effect",
+        "flight_effect",
+        "hit_effect",
+        "buff_icon",
+        "target_selection",
+        "metadata",
+        "enabled",
+        "usable_skill",
+        "presentation_status"
+      ]
+    },
+    "lito_cand_zone": {
+      "domain": "zones",
+      "primary_key": [
+        "zone_key"
+      ],
+      "fields": [
+        "zone_key",
+        "color_index",
+        "map_id",
+        "min_x",
+        "min_y",
+        "max_x",
+        "max_y",
+        "red",
+        "green",
+        "blue",
+        "enabled"
+      ]
+    },
+    "lito_cand_map_item": {
+      "domain": "map_items",
+      "primary_key": [
+        "item_id"
+      ],
+      "fields": [
+        "item_id",
+        "page",
+        "icon",
+        "ground_gfx",
+        "name_id",
+        "shared_item_exists",
+        "verification",
+        "enabled",
+        "native_page_verified",
+        "native_image_resource",
+        "native_display_map_id",
+        "original_item_page_binding_confirmed",
+        "resource_text",
+        "text_source_id",
+        "text_locator",
+        "shared_icon_asset"
+      ]
+    },
+    "lito_cand_rental_offer": {
+      "domain": "rental_offers",
+      "primary_key": [
+        "resource_index"
+      ],
+      "fields": [
+        "resource_index",
+        "source_item_id",
+        "name",
+        "maximum_seconds",
+        "light_gem_price",
+        "currency_source_item_id",
+        "source_npc_id",
+        "source_group",
+        "official_exact",
+        "shared_item_exists",
+        "enabled",
+        "mapped_shared_item_id",
+        "mapping_proven"
+      ]
+    },
+    "lito_cand_npc_identity": {
+      "domain": "npc_identities",
+      "primary_key": [
+        "resource_index"
+      ],
+      "fields": [
+        "resource_index",
+        "wire_name_id",
+        "description",
+        "actor_gfx",
+        "x",
+        "y",
+        "enabled"
+      ]
+    },
+    "lito_cand_skill_phase": {
+      "domain": "skill_phases",
+      "primary_key": [
+        "presentation_id"
+      ],
+      "fields": [
+        "presentation_id",
+        "skill_id",
+        "binding",
+        "phase",
+        "profile",
+        "effect_id",
+        "role",
+        "resource_version",
+        "source_id",
+        "enabled"
+      ]
+    },
+    "lito_cand_projectile": {
+      "domain": "projectiles",
+      "primary_key": [
+        "projectile_key"
+      ],
+      "fields": [
+        "projectile_key",
+        "skill_id",
+        "projectile_gfx",
+        "packet_opcode",
+        "flight_type",
+        "resource_version",
+        "impact_gfx",
+        "enabled"
+      ]
+    },
+    "lito_cand_buff": {
+      "domain": "buffs",
+      "primary_key": [
+        "skill_id"
+      ],
+      "fields": [
+        "skill_id",
+        "icon_id",
+        "skill_panel_icon",
+        "status_slot",
+        "packet_opcode",
+        "packet_selector",
+        "server_duration_seconds",
+        "resource_duration_seconds",
+        "off_icon_id",
+        "clear_duration_seconds",
+        "mapping_kind",
+        "verification",
+        "resource_version",
+        "asset",
+        "resource_named_icon",
+        "semantic_conflict",
+        "enabled"
+      ]
+    },
+    "lito_cand_map_page": {
+      "domain": "map_pages",
+      "primary_key": [
+        "wire_page"
+      ],
+      "fields": [
+        "wire_page",
+        "zero_based_index",
+        "image_resource_id",
+        "display_map_id",
+        "asset",
+        "pe_source_id",
+        "table_virtual_address",
+        "enabled"
+      ]
+    },
+    "lito_cand_rental_mapping": {
+      "domain": "rental_mappings",
+      "primary_key": [
+        "resource_index"
+      ],
+      "fields": [
+        "resource_index",
+        "retained_source_item_id",
+        "native_description",
+        "native_wire_name_id",
+        "icon_asset",
+        "same_name_candidates",
+        "mapped_shared_item_id",
+        "mapping_proven",
+        "enabled"
+      ]
+    },
+    "lito_cand_rental_currency": {
+      "domain": "rental_currency",
+      "primary_key": [
+        "currency_key"
+      ],
+      "fields": [
+        "currency_key",
+        "retained_item_id",
+        "native_resource_index",
+        "native_wire_name_id",
+        "native_description",
+        "mapped_shared_item_id",
+        "same_name_shared_candidates",
+        "official_crosswalk_confirmed",
+        "enabled"
+      ]
+    },
+    "lito_cand_config_reference": {
+      "domain": "config_references",
+      "primary_key": [
+        "reference_id"
+      ],
+      "fields": [
+        "reference_id",
+        "target_table",
+        "target_key",
+        "observed_at_utc",
+        "payload",
+        "origin_kind",
+        "validation",
+        "source_id",
+        "enabled"
+      ]
+    },
+    "lito_cand_map_effect": {
+      "domain": "map_effects",
+      "primary_key": [
+        "effect_record_id"
+      ],
+      "fields": [
+        "effect_record_id",
+        "map_id",
+        "sector",
+        "sprite_id",
+        "raw_x",
+        "raw_y",
+        "x",
+        "y",
+        "extended_value",
+        "actor_role",
+        "record_offset",
+        "source_id",
+        "verification",
+        "enabled"
+      ]
+    },
+    "lito_cand_item_resource": {
+      "domain": "item_resources",
+      "primary_key": [
+        "resource_index"
+      ],
+      "fields": [
+        "resource_index",
+        "wire_name_id",
+        "native_description",
+        "icon_asset",
+        "mapped_shared_item_id",
+        "classification",
+        "shared_name_text",
+        "source_id",
+        "enabled"
+      ]
+    },
+    "lito_cand_npc_service": {
+      "domain": "npc_services",
+      "primary_key": [
+        "service_id"
+      ],
+      "fields": [
+        "service_id",
+        "npc_resource_index",
+        "role",
+        "html_member",
+        "action_text",
+        "native_description",
+        "service_status",
+        "actor_gfx",
+        "x",
+        "y",
+        "source_id",
+        "enabled"
+      ]
+    },
+    "lito_cand_skill_request": {
+      "domain": "skill_requests",
+      "primary_key": [
+        "skill_id"
+      ],
+      "fields": [
+        "skill_id",
+        "raw_selector_index",
+        "dispatch_class",
+        "handler_va",
+        "packet_shape",
+        "target_route",
+        "direct_cast_conditional",
+        "availability_verified",
+        "source_id",
+        "resource_version",
+        "enabled"
+      ]
+    },
+    "lito_cand_lineage_group": {
+      "domain": "lineage_groups",
+      "primary_key": [
+        "group_id"
+      ],
+      "fields": [
+        "group_id",
+        "target_table",
+        "group_name",
+        "field_name",
+        "interpretation"
+      ]
+    }
+  },
+  "sql_executed": false
+}

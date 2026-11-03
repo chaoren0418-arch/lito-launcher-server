@@ -1,0 +1,1448 @@
+{
+  "package_status": "未匯入、未接線",
+  "profile": "tw13081901-v1",
+  "presentation_duration_records": [
+    {
+      "skillId": 2,
+      "effectGfx": 2510,
+      "durationSeconds": 3600,
+      "key": "light",
+      "binding": "LIGHT_SPELLS"
+    },
+    {
+      "skillId": 3,
+      "effectGfx": 221,
+      "durationSeconds": 1800,
+      "iconType": 5,
+      "key": "shield",
+      "binding": "SHIELD_SPELLS"
+    },
+    {
+      "skillId": 8,
+      "effectGfx": 2165,
+      "durationSeconds": 1200,
+      "key": "holy-weapon",
+      "binding": "WEAPON_BUFF_SPELLS"
+    },
+    {
+      "skillId": 11,
+      "effectGfx": 745,
+      "durationSeconds": 30,
+      "key": "curse-poison",
+      "binding": "POISON_SPELLS"
+    },
+    {
+      "skillId": 12,
+      "effectGfx": 747,
+      "durationSeconds": 1800,
+      "key": "enchant-weapon",
+      "binding": "ITEM_WEAPON_ENCHANT_SPELLS"
+    },
+    {
+      "skillId": 14,
+      "effectGfx": 2170,
+      "durationSeconds": 1800,
+      "key": "decrease-weight",
+      "binding": "WEIGHT_SPELLS"
+    },
+    {
+      "skillId": 20,
+      "effectGfx": 746,
+      "durationSeconds": 16,
+      "key": "curse-blind",
+      "binding": "BLIND_SPELLS"
+    },
+    {
+      "skillId": 21,
+      "effectGfx": 748,
+      "durationSeconds": 1800,
+      "key": "blessed-armor",
+      "binding": "ITEM_ARMOR_ENCHANT_SPELLS"
+    },
+    {
+      "skillId": 24,
+      "durationSeconds": 0,
+      "castGfx": 189,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 26,
+      "effectGfx": 750,
+      "durationSeconds": 1200,
+      "key": "physical-enchant-dexterity",
+      "binding": "ABILITY_BUFF_SPELLS"
+    },
+    {
+      "skillId": 29,
+      "effectGfx": 752,
+      "durationSeconds": 64,
+      "key": "slow",
+      "binding": "ENTANGLE_SPELLS"
+    },
+    {
+      "skillId": 31,
+      "effectGfx": 10701,
+      "durationSeconds": 16,
+      "key": "counter-magic",
+      "binding": "COUNTER_MAGIC_SPELLS"
+    },
+    {
+      "skillId": 32,
+      "effectGfx": 2173,
+      "durationSeconds": 640,
+      "key": "meditation",
+      "binding": "REGEN_SPELLS"
+    },
+    {
+      "skillId": 36,
+      "effectGfx": 228,
+      "durationSeconds": 3600,
+      "key": "taming-monster",
+      "binding": "TAMING_SPELLS"
+    },
+    {
+      "skillId": 40,
+      "effectGfx": 2175,
+      "durationSeconds": 32,
+      "key": "darkness",
+      "binding": "BLIND_SPELLS"
+    },
+    {
+      "skillId": 42,
+      "effectGfx": 6342,
+      "durationSeconds": 1200,
+      "key": "physical-enchant-strength",
+      "binding": "ABILITY_BUFF_SPELLS"
+    },
+    {
+      "skillId": 43,
+      "effectGfx": 755,
+      "durationSeconds": 1200,
+      "key": "haste",
+      "binding": "HASTE_SPELLS"
+    },
+    {
+      "skillId": 47,
+      "effectGfx": 2228,
+      "durationSeconds": 64,
+      "key": "weakness",
+      "binding": "WEAKNESS_SPELLS"
+    },
+    {
+      "skillId": 48,
+      "effectGfx": 2176,
+      "durationSeconds": 1200,
+      "key": "bless-weapon",
+      "binding": "WEAPON_BUFF_SPELLS"
+    },
+    {
+      "skillId": 50,
+      "effectGfx": 756,
+      "durationSeconds": 16,
+      "key": "ice-lance",
+      "binding": "FREEZE_ATTACK_SPELLS"
+    },
+    {
+      "skillId": 52,
+      "effectGfx": 3936,
+      "durationSeconds": 32,
+      "key": "holy-walk",
+      "binding": "MOVEMENT_BUFF_SPELLS"
+    },
+    {
+      "skillId": 54,
+      "effectGfx": 3104,
+      "durationSeconds": 2400,
+      "key": "greater-haste",
+      "binding": "SELF_HASTE_SPELLS"
+    },
+    {
+      "skillId": 55,
+      "effectGfx": 3943,
+      "durationSeconds": 320,
+      "key": "berserkers",
+      "binding": "COMBAT_BUFF_SPELLS"
+    },
+    {
+      "skillId": 56,
+      "effectGfx": 2230,
+      "durationSeconds": 64,
+      "key": "disease",
+      "binding": "WEAKNESS_SPELLS"
+    },
+    {
+      "skillId": 58,
+      "effectGfx": 168,
+      "durationSeconds": 10,
+      "key": "fire-wall",
+      "binding": "GROUND_SPELLS"
+    },
+    {
+      "skillId": 60,
+      "effectGfx": 0,
+      "durationSeconds": 0,
+      "key": "invisibility",
+      "binding": "INVISIBILITY_SPELLS"
+    },
+    {
+      "skillId": 63,
+      "effectGfx": 2231,
+      "durationSeconds": 320,
+      "key": "life-stream",
+      "binding": "GROUND_SPELLS"
+    },
+    {
+      "skillId": 64,
+      "effectGfx": 2177,
+      "durationSeconds": 16,
+      "key": "silence",
+      "binding": "SILENCE_SPELLS"
+    },
+    {
+      "skillId": 66,
+      "effectGfx": 760,
+      "durationSeconds": 32,
+      "key": "fog-of-sleeping",
+      "binding": "SLEEP_SPELLS"
+    },
+    {
+      "skillId": 67,
+      "effectGfx": 230,
+      "durationSeconds": 7200,
+      "key": "shape-change",
+      "binding": "POLYMORPH_SPELLS"
+    },
+    {
+      "skillId": 68,
+      "effectGfx": 228,
+      "durationSeconds": 32,
+      "key": "immune-to-harm",
+      "binding": "DAMAGE_PROTECTION_SPELLS"
+    },
+    {
+      "skillId": 71,
+      "effectGfx": 2232,
+      "durationSeconds": 16,
+      "key": "decay-potion",
+      "binding": "DECAY_POTION_SPELLS"
+    },
+    {
+      "skillId": 76,
+      "effectGfx": 3932,
+      "durationSeconds": 64,
+      "key": "mass-slow",
+      "binding": "MASS_SLOW_SPELLS"
+    },
+    {
+      "skillId": 78,
+      "effectGfx": 2234,
+      "durationSeconds": 12,
+      "key": "absolute-barrier",
+      "binding": "ABSOLUTE_BARRIER_SPELLS"
+    },
+    {
+      "skillId": 79,
+      "effectGfx": 3935,
+      "durationSeconds": 1200,
+      "key": "advance-spirit",
+      "binding": "ADVANCE_SPIRIT_SPELLS"
+    },
+    {
+      "skillId": 80,
+      "effectGfx": 3933,
+      "durationSeconds": 32,
+      "key": "freezing-blizzard",
+      "binding": "FREEZE_ATTACK_SPELLS"
+    },
+    {
+      "skillId": 81,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 82,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 83,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 84,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 85,
+      "durationSeconds": 900,
+      "castGfx": 2059,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 86,
+      "durationSeconds": 30,
+      "castGfx": 760,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 88,
+      "effectGfx": 4824,
+      "durationSeconds": 192,
+      "key": "reduction-armor",
+      "binding": "REDUCTION_ARMOR_SPELLS"
+    },
+    {
+      "skillId": 89,
+      "effectGfx": 4648,
+      "durationSeconds": 64,
+      "key": "bounce-attack",
+      "binding": "BOUNCE_ATTACK_SPELLS"
+    },
+    {
+      "skillId": 90,
+      "effectGfx": 5831,
+      "durationSeconds": 64,
+      "key": "solid-carriage",
+      "binding": "SOLID_CARRIAGE_SPELLS"
+    },
+    {
+      "skillId": 91,
+      "effectGfx": 5832,
+      "durationSeconds": 64,
+      "key": "counter-barrier",
+      "binding": "COUNTER_BARRIER_SPELLS"
+    },
+    {
+      "skillId": 92,
+      "durationSeconds": 1200,
+      "castGfx": 5906,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 93,
+      "durationSeconds": 1200,
+      "castGfx": 5907,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 94,
+      "durationSeconds": 1200,
+      "castGfx": 5908,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 95,
+      "durationSeconds": 1200,
+      "castGfx": 5909,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 96,
+      "durationSeconds": 1200,
+      "castGfx": 5910,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 97,
+      "effectGfx": 2941,
+      "durationSeconds": 32,
+      "key": "blind-hiding",
+      "binding": "INVISIBILITY_SPELLS"
+    },
+    {
+      "skillId": 98,
+      "effectGfx": 2942,
+      "durationSeconds": 320,
+      "key": "enchant-venom",
+      "binding": "ENCHANT_VENOM_SPELLS"
+    },
+    {
+      "skillId": 99,
+      "effectGfx": 2943,
+      "durationSeconds": 960,
+      "iconType": 3,
+      "key": "shadow-armor",
+      "binding": "SHIELD_SPELLS"
+    },
+    {
+      "skillId": 101,
+      "effectGfx": 2945,
+      "durationSeconds": 960,
+      "key": "moving-acceleration",
+      "binding": "MOVEMENT_BUFF_SPELLS"
+    },
+    {
+      "skillId": 102,
+      "effectGfx": 2946,
+      "durationSeconds": 320,
+      "key": "burning-spirit",
+      "binding": "PHYSICAL_PROC_BUFF_SPELLS"
+    },
+    {
+      "skillId": 103,
+      "effectGfx": 2947,
+      "durationSeconds": 64,
+      "key": "dark-blind",
+      "binding": "BLIND_SPELLS"
+    },
+    {
+      "skillId": 104,
+      "effectGfx": 2948,
+      "durationSeconds": 320,
+      "key": "venom-resist",
+      "binding": "POISON_RESISTANCE_SPELLS"
+    },
+    {
+      "skillId": 105,
+      "effectGfx": 2949,
+      "durationSeconds": 192,
+      "key": "double-brake",
+      "binding": "PHYSICAL_PROC_BUFF_SPELLS"
+    },
+    {
+      "skillId": 106,
+      "effectGfx": 11765,
+      "durationSeconds": 192,
+      "key": "uncanny-dodge",
+      "binding": "DODGE_BUFF_SPELLS"
+    },
+    {
+      "skillId": 107,
+      "effectGfx": 2951,
+      "durationSeconds": 192,
+      "key": "shadow-fang",
+      "binding": "ITEM_WEAPON_ENCHANT_SPELLS"
+    },
+    {
+      "skillId": 109,
+      "effectGfx": 3909,
+      "durationSeconds": 960,
+      "key": "dress-mighty",
+      "binding": "ABILITY_BUFF_SPELLS"
+    },
+    {
+      "skillId": 110,
+      "effectGfx": 3910,
+      "durationSeconds": 960,
+      "key": "dress-dexterity",
+      "binding": "ABILITY_BUFF_SPELLS"
+    },
+    {
+      "skillId": 111,
+      "effectGfx": 11766,
+      "durationSeconds": 32,
+      "key": "dress-evasion",
+      "binding": "RANGED_EVASION_BUFF_SPELLS"
+    },
+    {
+      "skillId": 112,
+      "effectGfx": 3400,
+      "durationSeconds": 8,
+      "key": "armor-break",
+      "binding": "ARMOR_BREAK_SPELLS"
+    },
+    {
+      "skillId": 113,
+      "effectGfx": 1765,
+      "durationSeconds": 0,
+      "key": "true-target",
+      "binding": "TRUE_TARGET_SPELLS"
+    },
+    {
+      "skillId": 114,
+      "effectGfx": 2277,
+      "durationSeconds": 640,
+      "key": "glowing-aura",
+      "binding": "ROYAL_AURA_SPELLS"
+    },
+    {
+      "skillId": 115,
+      "effectGfx": 3941,
+      "durationSeconds": 640,
+      "key": "shining-aura",
+      "binding": "ROYAL_AURA_SPELLS"
+    },
+    {
+      "skillId": 117,
+      "effectGfx": 3942,
+      "durationSeconds": 640,
+      "key": "brave-aura",
+      "binding": "ROYAL_AURA_SPELLS"
+    },
+    {
+      "skillId": 119,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 120,
+      "durationSeconds": 0,
+      "castGfx": 2280,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 121,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 122,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 123,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 124,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 125,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 126,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 127,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 128,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 129,
+      "effectGfx": 2186,
+      "durationSeconds": 1200,
+      "key": "resist-magic",
+      "binding": "MAGIC_RESISTANCE_SPELLS"
+    },
+    {
+      "skillId": 130,
+      "effectGfx": 2179,
+      "durationSeconds": 0,
+      "key": "body-to-mind",
+      "binding": "BODY_TO_MIND_SPELLS"
+    },
+    {
+      "skillId": 131,
+      "effectGfx": 169,
+      "durationSeconds": 0,
+      "key": "world-tree-call",
+      "binding": "WORLD_TREE_CALL_SPELLS"
+    },
+    {
+      "skillId": 132,
+      "effectGfx": 4394,
+      "durationSeconds": 0,
+      "key": "triple-arrow",
+      "binding": "TRIPLE_ARROW_SPELLS"
+    },
+    {
+      "skillId": 133,
+      "effectGfx": 4396,
+      "durationSeconds": 32,
+      "key": "elemental-fall-down",
+      "binding": "ELEMENTAL_FALL_DOWN_SPELLS"
+    },
+    {
+      "skillId": 134,
+      "effectGfx": 4395,
+      "durationSeconds": 16,
+      "key": "counter-mirror",
+      "binding": "COUNTER_MIRROR_SPELLS"
+    },
+    {
+      "skillId": 135,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 136,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 137,
+      "effectGfx": 2180,
+      "durationSeconds": 1200,
+      "key": "clear-mind",
+      "binding": "CLEAR_MIND_SPELLS"
+    },
+    {
+      "skillId": 138,
+      "effectGfx": 2184,
+      "durationSeconds": 1200,
+      "key": "resist-elemental",
+      "binding": "RESIST_ELEMENTAL_SPELLS"
+    },
+    {
+      "skillId": 139,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 140,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 141,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 142,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 143,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 144,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 145,
+      "effectGfx": 2245,
+      "durationSeconds": 0,
+      "key": "return-to-nature",
+      "binding": "RETURN_TO_NATURE_SPELLS"
+    },
+    {
+      "skillId": 146,
+      "effectGfx": 2178,
+      "durationSeconds": 0,
+      "key": "bloody-soul",
+      "binding": "BODY_TO_MIND_SPELLS"
+    },
+    {
+      "skillId": 147,
+      "effectGfx": 2285,
+      "durationSeconds": 64,
+      "key": "elemental-protection",
+      "binding": "ELEMENTAL_PROTECTION_SPELLS"
+    },
+    {
+      "skillId": 148,
+      "effectGfx": 2182,
+      "durationSeconds": 960,
+      "key": "fire-weapon",
+      "binding": "FIRE_WEAPON_SPELLS"
+    },
+    {
+      "skillId": 149,
+      "effectGfx": 2246,
+      "durationSeconds": 960,
+      "key": "wind-shot",
+      "binding": "WIND_SHOT_SPELLS"
+    },
+    {
+      "skillId": 150,
+      "effectGfx": 2247,
+      "durationSeconds": 960,
+      "key": "wind-walk",
+      "binding": "MOVEMENT_BUFF_SPELLS"
+    },
+    {
+      "skillId": 151,
+      "effectGfx": 2249,
+      "durationSeconds": 960,
+      "iconType": 6,
+      "key": "earth-skin",
+      "binding": "SHIELD_SPELLS"
+    },
+    {
+      "skillId": 152,
+      "effectGfx": 2250,
+      "durationSeconds": 64,
+      "key": "entangle",
+      "binding": "ENTANGLE_SPELLS"
+    },
+    {
+      "skillId": 153,
+      "effectGfx": 10706,
+      "durationSeconds": 32,
+      "key": "erase-magic",
+      "binding": "ERASE_MAGIC_SPELLS"
+    },
+    {
+      "skillId": 155,
+      "effectGfx": 2286,
+      "durationSeconds": 960,
+      "key": "fire-bless",
+      "binding": "FIRE_BLESS_SPELLS"
+    },
+    {
+      "skillId": 156,
+      "effectGfx": 2288,
+      "durationSeconds": 960,
+      "key": "storm-eye",
+      "binding": "STORM_EYE_SPELLS"
+    },
+    {
+      "skillId": 157,
+      "effectGfx": 2251,
+      "durationSeconds": 16,
+      "key": "earth-bind",
+      "binding": "BIND_SPELLS"
+    },
+    {
+      "skillId": 158,
+      "effectGfx": 2243,
+      "durationSeconds": 320,
+      "key": "natures-touch",
+      "binding": "NATURES_TOUCH_SPELLS"
+    },
+    {
+      "skillId": 159,
+      "effectGfx": 2287,
+      "durationSeconds": 960,
+      "legacyIconType": 7,
+      "key": "earth-bless",
+      "binding": "EARTH_BLESS_SPELLS"
+    },
+    {
+      "skillId": 160,
+      "effectGfx": 5829,
+      "durationSeconds": 960,
+      "key": "aqua-protecter",
+      "binding": "AQUA_PROTECT_SPELLS"
+    },
+    {
+      "skillId": 161,
+      "effectGfx": 2241,
+      "durationSeconds": 16,
+      "key": "area-of-silence",
+      "binding": "AREA_SILENCE_SPELLS"
+    },
+    {
+      "skillId": 163,
+      "effectGfx": 2242,
+      "durationSeconds": 960,
+      "key": "burning-weapon",
+      "binding": "FIRE_WEAPON_SPELLS"
+    },
+    {
+      "skillId": 166,
+      "effectGfx": 2248,
+      "durationSeconds": 960,
+      "key": "storm-shot",
+      "binding": "STORM_SHOT_SPELLS"
+    },
+    {
+      "skillId": 167,
+      "effectGfx": 1799,
+      "durationSeconds": 16,
+      "key": "wind-shackle",
+      "binding": "WIND_SHACKLE_SPELLS"
+    },
+    {
+      "skillId": 168,
+      "effectGfx": 2252,
+      "durationSeconds": 960,
+      "legacyIconType": 10,
+      "key": "iron-skin",
+      "binding": "IRON_SKIN_SPELLS"
+    },
+    {
+      "skillId": 169,
+      "effectGfx": 4400,
+      "durationSeconds": 960,
+      "key": "exotic-vitalize",
+      "binding": "EXOTIC_VITALIZE_SPELLS"
+    },
+    {
+      "skillId": 170,
+      "effectGfx": 4401,
+      "durationSeconds": 64,
+      "key": "water-life",
+      "binding": "WATER_LIFE_SPELLS"
+    },
+    {
+      "skillId": 171,
+      "effectGfx": 4402,
+      "durationSeconds": 192,
+      "key": "elemental-fire",
+      "binding": "PHYSICAL_PROC_BUFF_SPELLS"
+    },
+    {
+      "skillId": 172,
+      "effectGfx": 0,
+      "durationSeconds": 0,
+      "key": "storm-walk",
+      "binding": "OTHER_NO_EFFECT_SPELLS"
+    },
+    {
+      "skillId": 173,
+      "effectGfx": 5830,
+      "durationSeconds": 192,
+      "key": "pollute-water",
+      "binding": "POLLUTE_WATER_SPELLS"
+    },
+    {
+      "skillId": 174,
+      "effectGfx": 5826,
+      "durationSeconds": 192,
+      "key": "striker-gale",
+      "binding": "STRIKER_GALE_SPELLS"
+    },
+    {
+      "skillId": 175,
+      "effectGfx": 5833,
+      "durationSeconds": 64,
+      "key": "soul-of-flame",
+      "binding": "PHYSICAL_PROC_BUFF_SPELLS"
+    },
+    {
+      "skillId": 176,
+      "effectGfx": 5825,
+      "durationSeconds": 960,
+      "key": "additional-fire",
+      "binding": "ADDITIONAL_FIRE_SPELLS"
+    },
+    {
+      "skillId": 177,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 178,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 179,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 180,
+      "durationSeconds": 0,
+      "castGfx": 0,
+      "binding": "RESERVED_SKILL_SLOTS"
+    },
+    {
+      "skillId": 181,
+      "effectGfx": 6531,
+      "durationSeconds": 1200,
+      "key": "dragon-skin",
+      "binding": "DRAGON_SKIN_SPELLS"
+    },
+    {
+      "skillId": 182,
+      "effectGfx": 6590,
+      "durationSeconds": 60,
+      "key": "burning-slash",
+      "binding": "BURNING_SLASH_SPELLS"
+    },
+    {
+      "skillId": 183,
+      "effectGfx": 6508,
+      "durationSeconds": 60,
+      "key": "guard-brake",
+      "binding": "GUARD_BRAKE_SPELLS"
+    },
+    {
+      "skillId": 185,
+      "effectGfx": 6975,
+      "durationSeconds": 0,
+      "key": "awaken-antharas",
+      "binding": "AWAKEN_SPELLS"
+    },
+    {
+      "skillId": 186,
+      "effectGfx": 6523,
+      "durationSeconds": 60,
+      "key": "bloodlust",
+      "binding": "BLOODLUST_SPELLS"
+    },
+    {
+      "skillId": 187,
+      "effectGfx": 0,
+      "durationSeconds": 0,
+      "key": "foe-slayer",
+      "binding": "FOE_SLAYER_SPELLS"
+    },
+    {
+      "skillId": 188,
+      "effectGfx": 6586,
+      "durationSeconds": 60,
+      "key": "resist-fear",
+      "binding": "RESIST_FEAR_SPELLS"
+    },
+    {
+      "skillId": 190,
+      "effectGfx": 6976,
+      "durationSeconds": 0,
+      "key": "awaken-fafurion",
+      "binding": "AWAKEN_SPELLS"
+    },
+    {
+      "skillId": 191,
+      "effectGfx": 6519,
+      "durationSeconds": 300,
+      "key": "mortal-body",
+      "binding": "MORTAL_BODY_SPELLS"
+    },
+    {
+      "skillId": 193,
+      "effectGfx": 6588,
+      "durationSeconds": 60,
+      "key": "horror-of-death",
+      "binding": "GUARD_BRAKE_SPELLS"
+    },
+    {
+      "skillId": 194,
+      "effectGfx": 6988,
+      "durationSeconds": 3,
+      "key": "freezing-breath",
+      "binding": "FREEZE_ATTACK_SPELLS"
+    },
+    {
+      "skillId": 195,
+      "effectGfx": 6922,
+      "durationSeconds": 0,
+      "key": "awaken-valakas",
+      "binding": "AWAKEN_SPELLS"
+    },
+    {
+      "skillId": 201,
+      "effectGfx": 6813,
+      "durationSeconds": 1200,
+      "key": "mirror-image",
+      "binding": "DODGE_BUFF_SPELLS"
+    },
+    {
+      "skillId": 204,
+      "effectGfx": 6578,
+      "durationSeconds": 64,
+      "key": "illusion-ogre",
+      "binding": "ILLUSION_OGRE_SPELLS"
+    },
+    {
+      "skillId": 205,
+      "durationSeconds": 20,
+      "key": "cube-ignition",
+      "binding": "CUBE_IGNITION_SPELLS"
+    },
+    {
+      "skillId": 206,
+      "effectGfx": 6527,
+      "durationSeconds": 600,
+      "key": "concentration",
+      "binding": "REGEN_SPELLS"
+    },
+    {
+      "skillId": 209,
+      "effectGfx": 6577,
+      "durationSeconds": 64,
+      "key": "illusion-lich",
+      "binding": "ILLUSION_LICH_SPELLS"
+    },
+    {
+      "skillId": 210,
+      "durationSeconds": 20,
+      "key": "cube-quake",
+      "binding": "CUBE_QUAKE_SPELLS"
+    },
+    {
+      "skillId": 211,
+      "effectGfx": 6507,
+      "durationSeconds": 600,
+      "key": "patience",
+      "binding": "PATIENCE_SPELLS"
+    },
+    {
+      "skillId": 212,
+      "effectGfx": 6530,
+      "durationSeconds": 5,
+      "key": "phantasm",
+      "binding": "PHANTASM_SPELLS"
+    },
+    {
+      "skillId": 214,
+      "effectGfx": 6576,
+      "durationSeconds": 64,
+      "key": "illusion-diamond-golem",
+      "binding": "DIAMOND_GOLEM_SPELLS"
+    },
+    {
+      "skillId": 215,
+      "durationSeconds": 20,
+      "key": "cube-shock",
+      "binding": "CUBE_SHOCK_SPELLS"
+    },
+    {
+      "skillId": 216,
+      "effectGfx": 6505,
+      "durationSeconds": 600,
+      "key": "insight",
+      "binding": "INSIGHT_SPELLS"
+    },
+    {
+      "skillId": 217,
+      "effectGfx": 6506,
+      "durationSeconds": 64,
+      "key": "panic",
+      "binding": "PANIC_SPELLS"
+    },
+    {
+      "skillId": 218,
+      "effectGfx": 6528,
+      "durationSeconds": 2,
+      "key": "joy-of-pain",
+      "binding": "JOY_OF_PAIN_SPELLS"
+    },
+    {
+      "skillId": 219,
+      "effectGfx": 6575,
+      "durationSeconds": 64,
+      "key": "illusion-avatar",
+      "binding": "ILLUSION_AVATAR_SPELLS"
+    },
+    {
+      "skillId": 220,
+      "effectGfx": 6727,
+      "durationSeconds": 20,
+      "key": "cube-harmony",
+      "binding": "CUBE_HARMONY_SPELLS"
+    }
+  ],
+  "pure_packet_fixtures": [
+    {
+      "builder": "attackSpell",
+      "input_gfx": 167,
+      "hex": "23120100000002000000000001000000a7000000800080028002800000"
+    },
+    {
+      "builder": "attackSpell",
+      "input_gfx": 1797,
+      "hex": "2312010000000200000000000100000005070000800080028002800000"
+    },
+    {
+      "builder": "attackSpell",
+      "input_gfx": 1799,
+      "hex": "2312010000000200000000000100000007070000800080028002800000"
+    },
+    {
+      "builder": "attackSpell",
+      "input_gfx": 1583,
+      "hex": "231201000000020000000000010000002f060000800080028002800000"
+    },
+    {
+      "builder": "attackSpell",
+      "input_gfx": 11738,
+      "hex": "23120100000002000000000001000000da2d0000800080028002800000"
+    },
+    {
+      "builder": "attackSpell",
+      "input_gfx": 11746,
+      "hex": "23120100000002000000000001000000e22d0000800080028002800000"
+    },
+    {
+      "builder": "effectObject",
+      "input_gfx": 754,
+      "hex": "3701000000f202"
+    },
+    {
+      "builder": "effectObject",
+      "input_gfx": 2941,
+      "hex": "37010000007d0b"
+    },
+    {
+      "builder": "effectObject",
+      "input_gfx": 11722,
+      "hex": "3701000000ca2d"
+    },
+    {
+      "builder": "rangedPhysicalAttack",
+      "input_gfx": 66,
+      "hex": "2301010000000200000000000100000042007f00800080028002800000"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 181,
+      "duration": 64,
+      "hex": "6d4000b5"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 181,
+      "duration": 0,
+      "hex": "6d0000b5"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 201,
+      "duration": 64,
+      "hex": "6d4000c9"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 201,
+      "duration": 0,
+      "hex": "6d0000c9"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 204,
+      "duration": 64,
+      "hex": "6d4000cc"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 204,
+      "duration": 0,
+      "hex": "6d0000cc"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 206,
+      "duration": 64,
+      "hex": "6d4000ce"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 206,
+      "duration": 0,
+      "hex": "6d0000ce"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 209,
+      "duration": 64,
+      "hex": "6d4000d1"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 209,
+      "duration": 0,
+      "hex": "6d0000d1"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 211,
+      "duration": 64,
+      "hex": "6d4000d3"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 211,
+      "duration": 0,
+      "hex": "6d0000d3"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 214,
+      "duration": 64,
+      "hex": "6d4000d6"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 214,
+      "duration": 0,
+      "hex": "6d0000d6"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 216,
+      "duration": 64,
+      "hex": "6d4000d8"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 216,
+      "duration": 0,
+      "hex": "6d0000d8"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 217,
+      "duration": 64,
+      "hex": "6d4000d9"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 217,
+      "duration": 0,
+      "hex": "6d0000d9"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 219,
+      "duration": 64,
+      "hex": "6d4000db"
+    },
+    {
+      "builder": "mageShield",
+      "selector": 219,
+      "duration": 0,
+      "hex": "6d0000db"
+    },
+    {
+      "builder": "showMap",
+      "page": 1,
+      "hex": "6e0100000001"
+    },
+    {
+      "builder": "showMap",
+      "page": 2,
+      "hex": "6e0100000002"
+    },
+    {
+      "builder": "showMap",
+      "page": 3,
+      "hex": "6e0100000003"
+    },
+    {
+      "builder": "showMap",
+      "page": 4,
+      "hex": "6e0100000004"
+    },
+    {
+      "builder": "showMap",
+      "page": 5,
+      "hex": "6e0100000005"
+    },
+    {
+      "builder": "showMap",
+      "page": 6,
+      "hex": "6e0100000006"
+    },
+    {
+      "builder": "showMap",
+      "page": 7,
+      "hex": "6e0100000007"
+    },
+    {
+      "builder": "showMap",
+      "page": 8,
+      "hex": "6e0100000008"
+    },
+    {
+      "builder": "showMap",
+      "page": 9,
+      "hex": "6e0100000009"
+    },
+    {
+      "builder": "showMap",
+      "page": 10,
+      "hex": "6e010000000a"
+    },
+    {
+      "builder": "showMap",
+      "page": 11,
+      "hex": "6e010000000b"
+    },
+    {
+      "builder": "showMap",
+      "page": 12,
+      "hex": "6e010000000c"
+    },
+    {
+      "builder": "showMap",
+      "page": 13,
+      "hex": "6e010000000d"
+    },
+    {
+      "builder": "showMap",
+      "page": 14,
+      "hex": "6e010000000e"
+    },
+    {
+      "builder": "showMap",
+      "page": 15,
+      "hex": "6e010000000f"
+    },
+    {
+      "builder": "showMap",
+      "page": 16,
+      "hex": "6e0100000010"
+    },
+    {
+      "builder": "showMap",
+      "page": 17,
+      "hex": "6e0100000011"
+    },
+    {
+      "builder": "showMap",
+      "page": 18,
+      "hex": "6e0100000012"
+    }
+  ],
+  "npc_resource_services": [
+    {
+      "resourceIndex": 0,
+      "name": "指導員-潘塔休",
+      "startHtml": "Phan_Start",
+      "endHtml": "Phan_End_k",
+      "role": "GUIDE",
+      "action": "request LTC light jewel",
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 1,
+      "name": "血盟管理員-蘇耳",
+      "startHtml": "Soul_Start",
+      "endHtml": "Soul_End",
+      "role": "EMBLEM",
+      "action": "request LTC emblem of authority",
+      "emblemResourceIndex": 6,
+      "emblemName": "權威的象徵"
+    },
+    {
+      "resourceIndex": 2,
+      "name": "武器商人-瑪雅",
+      "startHtml": "Maya_Start",
+      "endHtml": "Maya_End",
+      "role": "EMBLEM",
+      "action": "request LTC emblem of craftsman",
+      "emblemResourceIndex": 7,
+      "emblemName": "工匠的象徵"
+    },
+    {
+      "resourceIndex": 3,
+      "name": "首席傳送師-伊奇",
+      "startHtml": "Ezee_Start",
+      "endHtml": "Ezee_End",
+      "role": "EMBLEM",
+      "action": "request LTC emblem of delight",
+      "emblemResourceIndex": 8,
+      "emblemName": "歡喜的象徵"
+    },
+    {
+      "resourceIndex": 4,
+      "name": "旅館主人-阿里亞",
+      "startHtml": "Aria_Start",
+      "endHtml": "Aria_End",
+      "role": "EMBLEM",
+      "action": "request LTC emblem of peace",
+      "emblemResourceIndex": 9,
+      "emblemName": "和平的象徵"
+    },
+    {
+      "resourceIndex": 10,
+      "name": "防具商人-菲佛",
+      "startHtml": "Paper_start",
+      "endHtml": null,
+      "role": "RENTAL_MERCHANT",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 11,
+      "name": "防具商人-克里",
+      "startHtml": "Click_Start",
+      "endHtml": null,
+      "role": "RENTAL_MERCHANT",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 12,
+      "name": "飾品商人-勒夫",
+      "startHtml": "Love_Start",
+      "endHtml": null,
+      "role": "RENTAL_MERCHANT",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 91,
+      "name": "旅館服務生-席巴",
+      "startHtml": "inn",
+      "endHtml": null,
+      "role": "HOTEL_SERVICE",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 92,
+      "name": "傳送師-尤依琳",
+      "startHtml": "TeleportMe",
+      "endHtml": null,
+      "role": "TELEPORT_SERVICE",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 93,
+      "name": "傳送師-艾恩",
+      "startHtml": "TeleportMe",
+      "endHtml": null,
+      "role": "TELEPORT_SERVICE",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 94,
+      "name": "傳送師-尤蘿雅",
+      "startHtml": "TeleportMe",
+      "endHtml": null,
+      "role": "TELEPORT_SERVICE",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    },
+    {
+      "resourceIndex": 95,
+      "name": "傳送師-阿霞",
+      "startHtml": "TeleportMe",
+      "endHtml": null,
+      "role": "TELEPORT_SERVICE",
+      "action": null,
+      "emblemResourceIndex": -1,
+      "emblemName": null
+    }
+  ],
+  "network_opened": false,
+  "database_used": false
+}

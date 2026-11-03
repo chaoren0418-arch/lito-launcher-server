@@ -1,0 +1,219 @@
+{
+  "captures": [
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-removal-reset-network-c97280618d4c4240ad89e7aad5385fee\\evidence\\frames.json",
+        "bytes": 14834,
+        "sha256": "626B77E8C057A34CAF01871B5DBEC45F151C930CAAFC9AC0411829E51BEC8914"
+      },
+      "array_index_zero_based": 74,
+      "frame_1based": 75,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 207,
+      "body_hex": "cf02000000",
+      "body_bytes": 5,
+      "frame_bytes": 7,
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LEcatalogroom",
+          "body_offset": 1,
+          "bytes": 4,
+          "value": 2
+        }
+      ],
+      "consumed": 5,
+      "remaining": 0,
+      "source58_version": null,
+      "role_reference": "Existingnondefaultroom2 catalogdelete tocurrentchannel; nativeUI/ownleaveACK notproved",
+      "classification": "Knownwire newsealedtrace corroboration, nonewpacket/schema correction/nativeexecution"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-removal-reset-network-c97280618d4c4240ad89e7aad5385fee\\evidence\\frames.json",
+        "bytes": 14834,
+        "sha256": "626B77E8C057A34CAF01871B5DBEC45F151C930CAAFC9AC0411829E51BEC8914"
+      },
+      "array_index_zero_based": 75,
+      "frame_1based": 76,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 207,
+      "body_hex": "cf02000000",
+      "body_bytes": 5,
+      "frame_bytes": 7,
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LEcatalogroom",
+          "body_offset": 1,
+          "bytes": 4,
+          "value": 2
+        }
+      ],
+      "consumed": 5,
+      "remaining": 0,
+      "source58_version": null,
+      "role_reference": "Existingnondefaultroom2 catalogdelete tocurrentchannel; nativeUI/ownleaveACK notproved",
+      "classification": "Knownwire newsealedtrace corroboration, nonewpacket/schema correction/nativeexecution"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-removal-reset-network-c97280618d4c4240ad89e7aad5385fee\\evidence\\frames.json",
+        "bytes": 14834,
+        "sha256": "626B77E8C057A34CAF01871B5DBEC45F151C930CAAFC9AC0411829E51BEC8914"
+      },
+      "array_index_zero_based": 79,
+      "frame_1based": 80,
+      "epoch": "Host-GAME",
+      "direction": "S",
+      "opcode": 204,
+      "body_hex": "cc00010000004c6f63616c204c6f626279000001000800000001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "d",
+          "body_offset": 2,
+          "bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "type": "s",
+          "body_offset": 6,
+          "bytes": 12,
+          "value": "4c6f63616c204c6f626279",
+          "wire_hex": "4c6f63616c204c6f62627900"
+        },
+        {
+          "index": 3,
+          "type": "c",
+          "body_offset": 18,
+          "bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "type": "h",
+          "body_offset": 19,
+          "bytes": 2,
+          "value": 1,
+          "wire_hex": "0100"
+        },
+        {
+          "index": 5,
+          "type": "h",
+          "body_offset": 21,
+          "bytes": 2,
+          "value": 8,
+          "wire_hex": "0800"
+        },
+        {
+          "index": 6,
+          "type": "h",
+          "body_offset": 23,
+          "bytes": 2,
+          "value": 0,
+          "wire_hex": "0000"
+        },
+        {
+          "index": 7,
+          "type": "c",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "source58_version": 120913203,
+      "role_reference": "Hostpeerdefaultreset basedonacceptedservercontext, notpayloadrolebit",
+      "classification": "Knownwire newsealedtrace corroboration, nonewpacket/schema correction/nativeexecution"
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-removal-reset-network-c97280618d4c4240ad89e7aad5385fee\\evidence\\frames.json",
+        "bytes": 14834,
+        "sha256": "626B77E8C057A34CAF01871B5DBEC45F151C930CAAFC9AC0411829E51BEC8914"
+      },
+      "array_index_zero_based": 80,
+      "frame_1based": 81,
+      "epoch": "Guest-GAME",
+      "direction": "S",
+      "opcode": 204,
+      "body_hex": "cc00010000004c6f63616c204c6f626279000001000800000001",
+      "body_bytes": 26,
+      "frame_bytes": 28,
+      "fields": [
+        {
+          "index": 1,
+          "type": "d",
+          "body_offset": 2,
+          "bytes": 4,
+          "value": 1,
+          "wire_hex": "01000000"
+        },
+        {
+          "index": 2,
+          "type": "s",
+          "body_offset": 6,
+          "bytes": 12,
+          "value": "4c6f63616c204c6f626279",
+          "wire_hex": "4c6f63616c204c6f62627900"
+        },
+        {
+          "index": 3,
+          "type": "c",
+          "body_offset": 18,
+          "bytes": 1,
+          "value": 0,
+          "wire_hex": "00"
+        },
+        {
+          "index": 4,
+          "type": "h",
+          "body_offset": 19,
+          "bytes": 2,
+          "value": 1,
+          "wire_hex": "0100"
+        },
+        {
+          "index": 5,
+          "type": "h",
+          "body_offset": 21,
+          "bytes": 2,
+          "value": 8,
+          "wire_hex": "0800"
+        },
+        {
+          "index": 6,
+          "type": "h",
+          "body_offset": 23,
+          "bytes": 2,
+          "value": 0,
+          "wire_hex": "0000"
+        },
+        {
+          "index": 7,
+          "type": "c",
+          "body_offset": 25,
+          "bytes": 1,
+          "value": 1,
+          "wire_hex": "01"
+        }
+      ],
+      "consumed": 26,
+      "remaining": 0,
+      "source58_version": 120913203,
+      "role_reference": "Guestselfroomlist basedonacceptedservercontext, notpayloadrolebit",
+      "classification": "Knownwire newsealedtrace corroboration, nonewpacket/schema correction/nativeexecution"
+    }
+  ],
+  "same_CC_payload_roles_differ_by_context": true
+}

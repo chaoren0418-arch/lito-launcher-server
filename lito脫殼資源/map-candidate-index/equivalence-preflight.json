@@ -1,0 +1,30 @@
+{
+  "complete_parsed_rows_equivalent_found": false,
+  "inspected": [
+    {
+      "pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source\\existing-map-resource-candidates.json",
+        "bytes": 10163,
+        "sha256": "64813E07FB43F5D843AD6B5947FD1BD4D5DF243314DE52EB40269DE1C4CDDB45"
+      },
+      "finding": "Five pinned source files; first six nonempty lines only. No complete rows, token boundaries, comment flags or queries."
+    },
+    {
+      "pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+        "bytes": 760029,
+        "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+      },
+      "finding": "Archive membership/raw/decoded and assumed-codepage display references only. No full physical-row parse."
+    },
+    {
+      "pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\extract_resources.py",
+        "bytes": 9779,
+        "sha256": "3BB6482C9EAA4DDA11F12C2280ADC0ED612D7F7219902BC7BEBA9E255E8E171E"
+      },
+      "finding": "Resource decode and optional cp950 display creation, no full # token parser/index. Not executed."
+    }
+  ],
+  "gap_filled": "Full byte-preserving rows/tokens/counts, separated candidates and explicit-key-only query interface."
+}

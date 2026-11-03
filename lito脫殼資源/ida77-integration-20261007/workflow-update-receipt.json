@@ -1,0 +1,28 @@
+{
+  "before": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 169837,
+      "sha256": "207DD51EDDA55A6D61FD2EC3AD39D7BBB716189ED6A23CB4CDB25E5C726178EB"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 80590,
+      "sha256": "3A1B75B91A7A925FD5F648F36F95D1EF02E10BB23967E935697DFD99DA105B7A"
+    }
+  },
+  "after": {
+    "progress": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 169948,
+      "sha256": "3ED05099428363CA6B087B1C4D8CAC31C840C42E564E9E2BCD946EE561487110"
+    },
+    "queue": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 81558,
+      "sha256": "20BB601658E9D3DBE878ED734F33395954686179063A2DE72E8B0D6BFBBB03C9"
+    }
+  },
+  "task_state": "review",
+  "execution_result": "blocked_platform"
+}

@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\build\\candidate-blind-material.jar",
+    "sha256": "dd9c336f14976831ac8c7a91b660a0fb2e4e775f66385688a59848fcbe774b91"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\candidate-resurrection-material.jar",
+    "sha256": "39f6129de5c1571c8a8c31413908f883636f737dec3b099af1235c5ba00dce59"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeResurrectionMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\build.py",
+      "sha256": "3883f57e29b3ff5887d54690b7643b6927d03d70cf14f584d842f29eb8d6275e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\ResurrectionMaterialMethods.java",
+      "sha256": "822f2175682893647952929d9d0c0ba20ba3fd5bb3fcea91dfafc678005cf356"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "8991f7dc8bdf3aad4d8d473aaa2d18a4f67ce3cabfe5a39aef3af13f0a760646"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "2532b3ba1ae1a1de08258d6c51dc0e190131a12ef50c67b4d73fa37506a9888e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\build-repro\\inputs\\sources\\NativeResurrectionMaterialAction.java",
+      "sha256": "cd11b29267379583009c3bd3e87dfb507201ec53b35fa606eeb4531677c96bbb"
+    }
+  ]
+}

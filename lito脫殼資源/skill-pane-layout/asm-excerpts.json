@@ -1,0 +1,45 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "warning": "Different recovered PE fingerprint; fixed PE bytes authoritative.",
+  "excerpts": [
+    {
+      "first_line": 269471,
+      "last_line": 269480,
+      "text": "269471: loc_47E571:                             ; CODE XREF: sub_47E4B0+B3↑j\n269472: mov     ecx, dword_834884\n269473: cmp     ecx, ebx\n269474: jz      short loc_47E587\n269475: \n269476: mov     edx, [ecx]\n269477: push    1\n269478: call    dword ptr [edx]\n269479: \n269480: mov     dword_834884, ebx"
+    },
+    {
+      "first_line": 427132,
+      "last_line": 427213,
+      "text": "427132: sub_4CC7B0 proc near                    ; DATA XREF: ___:off_4FA568↓o\n427133: \n427134: arg_0= byte ptr  8\n427135: \n427136: push    ebp\n427137: mov     ebp, esp\n427138: push    esi\n427139: mov     esi, ecx\n427140: call    sub_4CC7E0\n427141: \n427142: test    [ebp+arg_0], 1\n427143: jz      short loc_4CC7CA\n427144: \n427145: push    esi\n427146: call    sub_4F103C\n427147: \n427148: add     esp, 4\n427149: \n427150: \n427151: loc_4CC7CA:                             ; CODE XREF: sub_4CC7B0+F↑j\n427152: mov     eax, esi\n427153: pop     esi\n427154: pop     ebp\n427155: retn    4\n427156: \n427157: sub_4CC7B0 endp\n427158: \n427159: ; ---------------------------------------------------------------------------\n427160: align 10h\n427161: \n427162: ; =============== S U B R O U T I N E =======================================\n427163: \n427164: ; Attributes: bp-based frame\n427165: \n427166: sub_4CC7E0 proc near                    ; CODE XREF: sub_4CC7B0+6↑p\n427167: \n427168: var_10= dword ptr -10h\n427169: var_C= dword ptr -0Ch\n427170: var_4= dword ptr -4\n427171: \n427172: push    ebp\n427173: mov     ebp, esp\n427174: push    0FFFFFFFFh\n427175: push    offset dword_4F5C78\n427176: mov     eax, large fs:0\n427177: push    eax\n427178: mov     large fs:0, esp\n427179: push    ecx\n427180: push    esi\n427181: mov     esi, ecx\n427182: push    edi\n427183: mov     [ebp+var_10], esi\n427184: mov     dword ptr [esi], offset off_4FA568\n427185: mov     edi, [esi+10h]\n427186: mov     [ebp+var_4], 0\n427187: test    edi, edi\n427188: jz      short loc_4CC82B\n427189: \n427190: mov     ecx, edi\n427191: call    sub_41B3B0\n427192: \n427193: push    edi\n427194: call    sub_4F103C\n427195: \n427196: add     esp, 4\n427197: mov     dword ptr [esi+10h], 0\n427198: \n427199: \n427200: loc_4CC82B:                             ; CODE XREF: sub_4CC7E0+32↑j\n427201: mov     ecx, esi\n427202: mov     [ebp+var_4], 0FFFFFFFFh\n427203: call    sub_4EB430\n427204: \n427205: mov     ecx, [ebp+var_C]\n427206: pop     edi\n427207: pop     esi\n427208: mov     large fs:0, ecx\n427209: mov     esp, ebp\n427210: pop     ebp\n427211: retn\n427212: \n427213: sub_4CC7E0 endp"
+    },
+    {
+      "first_line": 420737,
+      "last_line": 420783,
+      "text": "420737: sub_4C91E0 proc near                    ; DATA XREF: ___:off_4FA50C↓o\n420738: \n420739: arg_0= byte ptr  8\n420740: \n420741: push    ebp\n420742: mov     ebp, esp\n420743: push    esi\n420744: mov     esi, ecx\n420745: call    sub_4C9210\n420746: \n420747: test    [ebp+arg_0], 1\n420748: jz      short loc_4C91FA\n420749: \n420750: push    esi\n420751: call    sub_4F103C\n420752: \n420753: add     esp, 4\n420754: \n420755: \n420756: loc_4C91FA:                             ; CODE XREF: sub_4C91E0+F↑j\n420757: mov     eax, esi\n420758: pop     esi\n420759: pop     ebp\n420760: retn    4\n420761: \n420762: sub_4C91E0 endp\n420763: \n420764: ; ---------------------------------------------------------------------------\n420765: align 10h\n420766: \n420767: ; =============== S U B R O U T I N E =======================================\n420768: \n420769: ; Attributes: thunk\n420770: \n420771: sub_4C9210 proc near                    ; CODE XREF: sub_4C91E0+6↑p\n420772: jmp     sub_4CD000\n420773: \n420774: sub_4C9210 endp\n420775: \n420776: ; ---------------------------------------------------------------------------\n420777: align 10h\n420778: \n420779: ; =============== S U B R O U T I N E =======================================\n420780: \n420781: ; Attributes: bp-based frame\n420782: \n420783: sub_4C9220 proc near                    ; CODE XREF: sub_4AEE70+8A↑p"
+    },
+    {
+      "first_line": 309479,
+      "last_line": 309541,
+      "text": "309479: sub     esp, 10h\n309480: mov     ecx, 25h ; '%'\n309481: mov     esi, esp\n309482: mov     edx, 2Bh ; '+'\n309483: mov     edi, 0AEh\n309484: mov     [esi], ecx\n309485: mov     ecx, 0F8h\n309486: mov     [esi+4], edx\n309487: mov     [esi+8], edi\n309488: mov     [esi+0Ch], ecx\n309489: mov     ecx, eax\n309490: call    sub_4C9190\n309491: \n309492: ; ---------------------------------------------------------------------------\n309493: or      esi, 0FFFFFFFFh\n309494: jmp     short loc_492D8C\n309495: \n309496: ; ---------------------------------------------------------------------------\n309497: \n309498: loc_492D8A:                             ; CODE XREF: sub_4928C0+498↑j\n309499: xor     eax, eax\n309500: \n309501: \n309502: loc_492D8C:                             ; CODE XREF: sub_4928C0+4C8↑j\n309503: push    14h\n309504: mov     [ebp+var_4], esi\n309505: mov     dword_834888, eax\n309506: call    sub_4F118C\n309507: \n309508: ; ---------------------------------------------------------------------------\n309509: add     esp, 4\n309510: mov     [ebp+var_10], eax\n309511: test    eax, eax\n309512: mov     [ebp+var_4], 5\n309513: jz      short loc_492DBE\n309514: \n309515: mov     ecx, dword_834888\n309516: push    ecx\n309517: push    14h\n309518: mov     ecx, eax\n309519: call    sub_4CC3B0\n309520: \n309521: ; ---------------------------------------------------------------------------\n309522: jmp     short loc_492DC0\n309523: \n309524: ; ---------------------------------------------------------------------------\n309525: \n309526: loc_492DBE:                             ; CODE XREF: sub_4928C0+4EA↑j\n309527: xor     eax, eax\n309528: \n309529: \n309530: loc_492DC0:                             ; CODE XREF: sub_4928C0+4FC↑j\n309531: mov     ecx, dword_648EB8\n309532: mov     dword_834884, eax\n309533: push    1\n309534: mov     [ebp+var_4], esi\n309535: mov     edx, [ecx]\n309536: call    dword ptr [edx+4]\n309537: \n309538: mov     ecx, dword_834884\n309539: push    1\n309540: mov     eax, [ecx]\n309541: call    dword ptr [eax+4]"
+    },
+    {
+      "first_line": 293790,
+      "last_line": 293809,
+      "text": "293790: loc_48A9E4:                             ; CODE XREF: sub_488860+2178↑j\n293791: mov     eax, [ebp+var_40]\n293792: mov     esi, 0Ch\n293793: add     eax, 1E0h\n293794: mov     [ebp+var_38], eax\n293795: \n293796: \n293797: loc_48A9F4:                             ; CODE XREF: sub_488860+21A9↓j\n293798: mov     ecx, dword_836B54[esi]\n293799: test    ecx, ecx\n293800: jz      short loc_48AA03\n293801: \n293802: mov     edx, [ecx]\n293803: call    dword ptr [edx+8]\n293804: \n293805: \n293806: loc_48AA03:                             ; CODE XREF: sub_488860+219C↑j\n293807: sub     esi, 4\n293808: cmp     esi, 0FFFFFFFCh\n293809: jg      short loc_48A9F4"
+    },
+    {
+      "first_line": 426005,
+      "last_line": 426018,
+      "text": "426005: sub_4CBDB0 proc near                    ; DATA XREF: ___:004FA530↓o\n426006: \n426007: var_100= byte ptr -100h\n426008: \n426009: push    ebp\n426010: mov     ebp, esp\n426011: sub     esp, 100h\n426012: push    ebx\n426013: push    esi\n426014: push    edi\n426015: mov     esi, ecx\n426016: call    sub_4CD290\n426017: \n426018: call    sub_4C8C80"
+    },
+    {
+      "first_line": 428774,
+      "last_line": 428785,
+      "text": "428774: sub_4CD290 proc near                    ; CODE XREF: sub_4CBDB0+E↑p\n428775:                                         ; DATA XREF: ___:004FA5C0↓o\n428776: \n428777: var_18= dword ptr -18h\n428778: var_14= dword ptr -14h\n428779: var_10= dword ptr -10h\n428780: var_C= dword ptr -0Ch\n428781: var_8= dword ptr -8\n428782: var_4= dword ptr -4\n428783: \n428784: push    ebp\n428785: mov     ebp, esp"
+    }
+  ]
+}

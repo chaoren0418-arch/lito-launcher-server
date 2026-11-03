@@ -1,0 +1,179 @@
+{
+  "updated_at": "2026-10-06T14:55:58.427888+08:00",
+  "generator": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\background_scene_boundary.py",
+    "bytes": 18869,
+    "sha256": "B038B399FB8A21A72ECFA914AEE203E29DBA2183E4D95CCB136D1B66722B8038"
+  },
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "facts": {
+    "flag": {
+      "VA": "0064AFA0",
+      "RVA": "0024AFA0",
+      "disk_value": 0,
+      "live_value_known": false,
+      "writers": [
+        {
+          "VA": "00481519",
+          "RVA": "00081519",
+          "value": 1,
+          "comparison_literal": "ltcharsvr",
+          "literal_VA": "0062D234",
+          "condition": "Reaches byte-for-byte NUL-terminated comparison at4814DA with readable pre-existing ECX buffer and equality EAX0; companion64AF9E set1 at481512."
+        },
+        {
+          "VA": "00481563",
+          "RVA": "00081563",
+          "value": 1,
+          "comparison_literal": "lteventcsvr",
+          "literal_VA": "0062D228",
+          "condition": "Reaches comparison with pointer from[EBP-1C] at481525; equality EAX0; companion64AF9F set1 at48155C."
+        }
+      ],
+      "input_origin": "Not followed before this direct writer island; not assigned a command-line, server, language or sex policy",
+      "reset_writer": "No other named direct store in the searched ASM; indirect/raw alternate initialization and actual runtime reset remain unknown"
+    },
+    "background_call": {
+      "VA": "00496F28",
+      "RVA": "00096F28",
+      "target": "00495520",
+      "selector_load": "00496F05",
+      "selector_test": "zero/nonzero only",
+      "id_when_zero": 6314,
+      "id_when_nonzero": 7482,
+      "arguments": {
+        "ECX": "[00631ECC], fixed data value00630DF8",
+        "EDX": "[00631EC8], fixed data value8",
+        "stack_push_order": [
+          "selected_image_id",
+          "7"
+        ]
+      },
+      "result": "Normal return EAX moved into EDI at496F2D; if75F750 nonzero, direct loop indexes0..3 via41B410 and calls virtual+38/+3C. Then ECX=EDI/DL1 call495230 at496F63.",
+      "calling_convention_or_constructor_semantics": "No new495520 body inspected; 7 is source argument, descriptor count8 is fixed data, neither proves scene enum or character capacity",
+      "draw_position": null,
+      "position_limit": "No direct x/y for the backdrop at this callsite. Existing child descriptor coordinates do not prove backdrop origin/crop/transform."
+    },
+    "owner_prefix": {
+      "global": "0075F6E8",
+      "load_VA": "00496EB0",
+      "tested_field_offset": "0C",
+      "compared_value": 5,
+      "condition": "The first cmp dereferences the loaded owner with no preceding null guard in this prefix. Value!=5 branches directly to496F05. Value5 calls opaque helpers, then495520 at496EFB withECX631E38/EDX5/push310/push0 and writes normal return EAX to75F6E8 at496F00.",
+      "named_scene_owner": null,
+      "limit": "This is source object/global and numeric field discrimination only; type5/name/creation-success and live initialized ownership not proved"
+    },
+    "one_hop_callers": [
+      {
+        "entry_VA": "004A7450",
+        "entry_RVA": "000A7450",
+        "inherited_handler": "S03 with signed countBYTE; established by existing CD2 producer contract, dispatch not reopened",
+        "call_VA": "004A74CB",
+        "call_RVA": "000A74CB",
+        "source_predicate": "Decoded signed count is0; reached count-zero branch and49A510(ECX1) returned normally; signed[63D54C]<0x785B(30811) and[64AFA3]==0.",
+        "other_path": "count!=0 bypasses setup; count0 with threshold>=0x785B or64AFA3 nonzero calls497010 at4A74DB; body not inspected.",
+        "following_store": "64AFA3=1 at4A74D0 if496EB0 returns normally",
+        "callback_stores": [
+          "4A74A7:62C9BC=4962B0",
+          "4A74B6:62C9B8=496200"
+        ],
+        "position_or_named_scene": null
+      },
+      {
+        "entry_VA": "004AACF0",
+        "entry_RVA": "000AACF0",
+        "transfer_VA": "004AAD02",
+        "transfer_RVA": "000AAD02",
+        "source_predicate": "Both64AFBC and64AFBD are0 at their direct reads; otherwise return4AAD07.",
+        "transfer": "tailjmp496EB0, not a count/scene-name contract",
+        "opcode_or_flag_meaning": null
+      }
+    ],
+    "state_values": {
+      "selector": [
+        0,
+        "nonzero"
+      ],
+      "owner_field_0C_test": 5,
+      "factory_stack_constant": 7,
+      "descriptor_count": 8,
+      "existing_S03_count_gate": 0,
+      "state_helper_call_argument": "49A510 receivesECX1 on inherited S03 count0 path; helper semantics and state storage not inspected",
+      "named_scene_enum": null,
+      "Directory_assigned": false,
+      "sex_assigned": false
+    },
+    "minimum_missing_evidence": [
+      "An accepted mapping from the numeric owner/factory/caller context to a named UI scene; S03 count0 setup association alone cannot justify naming this general Directory.",
+      "An accepted existing495520(kind7,imageID) result-to-backdrop coordinates/transform/clip/draw-mode contract, or already-qualified saved instance record. No x/y arguments are present here.",
+      "An accepted initialized owner/flag lifecycle record for the relevant version/epoch before treating static branch conditions as live state."
+    ],
+    "stop": "STOP at495520 constructor semantics / unknown owner and helper names. No follow-up private layer, no new_native_capture.42E550/42E6D0/42EA50 remain stopped.",
+    "receiver": "Modern UI组＋監製；本組只交付這些數值路徑與未知，不授背景default scene binding",
+    "wire_differences": [],
+    "server_notification_requested": false
+  },
+  "source_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\fixed-source-evidence.json",
+    "bytes": 29120,
+    "sha256": "ED9137FCA5A15B4D418F0DD12C54064D39CC108A858CA966BDA629BC4087C61D"
+  },
+  "ASM_navigation": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene\\ASM-navigation.json",
+    "bytes": 10511,
+    "sha256": "D75DCD57994FA6F7B9E4EC4E6970BBDD2661007CFD00436431CD332AFE609D7A"
+  },
+  "reused_contracts": {
+    "Native-provider-writer-contract.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract.json",
+      "bytes": 18807,
+      "sha256": "F989981DFF8FF08C98E6B880CD88BD69C0DB420388FF41F957BCB1D06AA027B8"
+    },
+    "resources/modern-rgba/manifest.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\modern-rgba\\manifest.json",
+      "bytes": 5799,
+      "sha256": "D25BED57BE58F0AB3EB17F6A716F8202329B4E02BEE98F63B50D84ADA8218540"
+    },
+    "server-packet-delta.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "CD1-mode-step/scope-write-correction.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "bytes": 1454,
+      "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4"
+    },
+    "Native-selection-resource-gap/Native-background-branch-reference.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-selection-resource-gap\\Native-background-branch-reference.json",
+      "bytes": 2900,
+      "sha256": "07E8BA7601005C320BE28463EFD8070B5A1CAF7682B5C87FA7A7371310004057"
+    },
+    "CD2-selected-record-source/producer-copy-clear-and-field-contract.json": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\producer-copy-clear-and-field-contract.json",
+      "bytes": 16239,
+      "sha256": "3DF6C29A5AA8472DF3CF8AC314F13BC3F28C0B0870653840A0D5277C409AEE31"
+    },
+    "CD2-selected-record-source/004A7450-52.bin": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-selected-record-source\\004A7450-52.bin",
+      "bytes": 82,
+      "sha256": "C34EC303B46715F31ECDA03F29C267F4A0870980671D76D4CE40F407D41DF3E8"
+    },
+    "receive-boundary/VA-00631EC8.bin": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-00631EC8.bin",
+      "bytes": 8,
+      "sha256": "7E350789D55B8E23FD66249F7CE9B51C5E9376A173513832BBB54287EADD6BC8"
+    }
+  },
+  "new_private_callee_bodies": 0,
+  "Native_capture_or_runtime": 0,
+  "Modern_edits_builds_tests": 0,
+  "scene_mapping_complete": false,
+  "draw_position_complete": false,
+  "private_backing_branches_stopped": true,
+  "finite_source_contract_complete": true
+}

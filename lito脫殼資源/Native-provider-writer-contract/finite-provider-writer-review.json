@@ -1,0 +1,786 @@
+{
+  "updated_at": "2026-10-06T10:39:14.894316+08:00",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract.json",
+    "bytes": 18807,
+    "sha256": "F989981DFF8FF08C98E6B880CD88BD69C0DB420388FF41F957BCB1D06AA027B8"
+  },
+  "all_match": true,
+  "check_count": 193,
+  "checks": [
+    {
+      "name": "ownoutput direct-writer-ASM-navigation.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput existing-matching-stem-candidates.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput fixed-PE-provider-writer-boundaries.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput provider-writer-handoff.md",
+      "match": true
+    },
+    {
+      "name": "ownoutput provider-writer-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "ownoutput terminal-provider-identity-gap.json",
+      "match": true
+    },
+    {
+      "name": "fixedPESHA",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode Sprite_loader_input_and_cache",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECBA",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECBC",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECC1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECC4",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECC6",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECC8",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECCA",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECCF",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECD1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECD3",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECD8",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECDA",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECDF",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECE1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECE6",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECE8",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECEA",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECEC",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ECED",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode fallback_wrapper_and_writer",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED22",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED24",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED29",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED2C",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED2E",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED30",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED32",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED37",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED39",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED3B",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED41",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED42",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED44",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED49",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED4B",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED50",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED52",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED54",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED56",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED57",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode bucket_stem_loader_and_writer",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED8E",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED8F",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED90",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED96",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED98",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED99",
+      "match": true
+    },
+    {
+      "name": "instruction 0042ED9C",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDA1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDA2",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDA4",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDA6",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDAB",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDAE",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDB0",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDB2",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDB4",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDB9",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDBB",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDBD",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDC0",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDC1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDC3",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDC8",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDCF",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDD1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDD6",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDD9",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDDB",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDDD",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDDF",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDE4",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDE6",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDE8",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDEF",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDF1",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDF2",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EDF7",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode same_loop_tail_bound16",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE17",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE1E",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE1F",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE21",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE26",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE2D",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE2E",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EE31",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode cleanup_zero_register_only",
+      "match": true
+    },
+    {
+      "name": "instruction 0042EF48",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode fallback_clear_statement_only",
+      "match": true
+    },
+    {
+      "name": "instruction 0042F01F",
+      "match": true
+    },
+    {
+      "name": "boundedfixedcode bucket_clear_statement_only",
+      "match": true
+    },
+    {
+      "name": "instruction 0042F0C1",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata literal_Sprite",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata literal_Sprite_02d",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata Sprite_source_object_cache_disk",
+      "match": true
+    },
+    {
+      "name": "boundedfixeddata Sprite_r_source_objects_disk",
+      "match": true
+    },
+    {
+      "name": "factanchor P01 0042ECD3",
+      "match": true
+    },
+    {
+      "name": "factanchor P01 0042ECDA",
+      "match": true
+    },
+    {
+      "name": "factanchor P01 0042ECDF",
+      "match": true
+    },
+    {
+      "name": "factanchor P01 0042ECE1",
+      "match": true
+    },
+    {
+      "name": "factanchor P01 0042ECE6",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED3B",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED41",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED44",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED49",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED4B",
+      "match": true
+    },
+    {
+      "name": "factanchor P02 0042ED50",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042ED96",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042ED98",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042ED9C",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDA2",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDC3",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDC8",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDE8",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDF2",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EDF7",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EE2D",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EE2E",
+      "match": true
+    },
+    {
+      "name": "factanchor P03 0042EE31",
+      "match": true
+    },
+    {
+      "name": "factanchor P05 0042EF48",
+      "match": true
+    },
+    {
+      "name": "factanchor P05 0042F01F",
+      "match": true
+    },
+    {
+      "name": "factanchor P05 0042F0C1",
+      "match": true
+    },
+    {
+      "name": "two source literals",
+      "match": true
+    },
+    {
+      "name": "selecteddisk sourcecachezero",
+      "match": true
+    },
+    {
+      "name": "onecallerdomain16",
+      "match": true
+    },
+    {
+      "name": "not.readerbody",
+      "match": true
+    },
+    {
+      "name": "candidate only",
+      "match": true
+    },
+    {
+      "name": "before/content/after PE",
+      "match": true
+    },
+    {
+      "name": "before/content/after ASM",
+      "match": true
+    },
+    {
+      "name": "before/content/after ownedmanifest",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved existing-resolver-ASM.json",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved fixed-PE-resolver-and-route-cells.json",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved remaining-provider-evidence-contract.json",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved route-function-contract.json",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved route-handoff.md",
+      "match": true
+    },
+    {
+      "name": "Batch37 preserved source-arithmetic-route-examples.json",
+      "match": true
+    },
+    {
+      "name": "priorpin class4-slot-provenance.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-initialization-gates.json",
+      "match": true
+    },
+    {
+      "name": "priorpin ranges.json",
+      "match": true
+    },
+    {
+      "name": "priorpin snapshot-manifest.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S1E-receive-selection-boundary.json",
+      "match": true
+    },
+    {
+      "name": "priorpin native-icon-draw-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layout-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-render-initialization-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin server-packet-delta.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-frame-coordinate-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin skill-pane-layer-composition-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S0C-status-owner-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin S4D-mana-point-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin status-family-50-51-52-56-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin reconnect-source-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCE-navigation-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCD-member-comparison-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SD0-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D1-E1-prestart-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-CF-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin SCC-catalog-lifecycle-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-table-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin map-candidate-index-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-settings-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-mode-map-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin D5-scalar-receive-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CDD-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-map-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD1-mode-step-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-outbound-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-ready-guard-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-selected-record-source-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin CD2-directory-index-storage-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-ready-directory-adoption-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Modern-character-ui-reachability-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-selection-resource-gap-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-image-bank-boundary-contract.json",
+      "match": true
+    },
+    {
+      "name": "priorpin Native-filename-route-contract.json",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin LiTo.unpacked-oep-current.exe",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin LiTo.bin",
+      "match": true
+    },
+    {
+      "name": "fixedsourcepin full-disassembly.asm",
+      "match": true
+    },
+    {
+      "name": "39prior/code264/data86/87rows",
+      "match": true
+    },
+    {
+      "name": "terminal branch explicit",
+      "match": true
+    },
+    {
+      "name": "zeroactions",
+      "match": true
+    },
+    {
+      "name": "R527noGUIclaim",
+      "match": true
+    },
+    {
+      "name": "packet immutable",
+      "match": true
+    },
+    {
+      "name": "incident immutableopen",
+      "match": true
+    }
+  ],
+  "scope": "Onlynewboundedwriter/oneinitializerbytes/literalparameters/ownedmanifestcandidatequalification andimmutablepins. No42EA50/factorybody/index/oldPASS/Native/Modernfunction execution oractualfilebindingadoption.",
+  "runtime_acceptance": false
+}

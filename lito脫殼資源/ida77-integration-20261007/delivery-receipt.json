@@ -1,0 +1,240 @@
+{
+  "schema": "finite-IDA77-integration-delivery-v1",
+  "task_id": "bin_resources-ida77-isolated-export-integration-20261007",
+  "result": "BLOCKED_PLATFORM_NATIVE_LPAC_CREATION",
+  "pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\appcontainer_launcher.py",
+      "bytes": 7308,
+      "sha256": "C2D13B5C522DF84FAD58007CCED3B06D0CA886BEBF5D8836F220ED139106DB09"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\dependency-inventory.json",
+      "bytes": 12127,
+      "sha256": "14DDF3D47F629F7CF02EF6D0FD5494EB43CDA9784E91561EB37DF541E063FE32"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\finalize_integration.py",
+      "bytes": 12340,
+      "sha256": "0DBE3BA21E54B3971C01FB9AF6A7FB44D35F19798458B3EC7ADEC7884F0AC841"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\finite-verification.json",
+      "bytes": 1809,
+      "sha256": "A89826DA0102621ADEEEEE4256BE8E8EACF375731C415C65279AD84A17A4425B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\ida77_export_draft.py",
+      "bytes": 7325,
+      "sha256": "26419AAF7AEC24305560B4C3C5CBA09ABA8B3219AA1F06C160F94365374E6B4A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\ida77_request.py",
+      "bytes": 7516,
+      "sha256": "90904C006A1060C891277D1DADB04630EE76FFBC6CB261ED5F1F64E1E9B5AC40"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\immutable-baseline.json",
+      "bytes": 124163,
+      "sha256": "566495BAD88000E3CC4AE062D1F10EDAEFE100CEBB250EA2C206AB6446B2ED43"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\isolation-qualification.json",
+      "bytes": 1476,
+      "sha256": "B05AB74723AE61CBD08301A1DE1A7A05E0BC3342CC10046FC23F5098CDB48A2A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\outside-private-canary.txt",
+      "bytes": 58,
+      "sha256": "E3319B58581131381A5EB056D074478A8D65CF08725D327868A3BA78411DA6C6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\owned_process.py",
+      "bytes": 31683,
+      "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\platform-diagnostic.json",
+      "bytes": 8182,
+      "sha256": "9CEDA0609526CEA403E246C3B477B35A83DE9B4CC1CF3D8E84C0C40770458819"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\platform_diagnostic.py",
+      "bytes": 2978,
+      "sha256": "5A0850599E76D7CC8AAE09230BE73A05313B189985A44EDE6147249CD42E6726"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\prelaunch-authoring-failures.json",
+      "bytes": 732,
+      "sha256": "F391F6BE04B5929328D070225F29A9227D63604480465A1F1155375FFE74900A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\prepare-receipt.json",
+      "bytes": 926,
+      "sha256": "1CB6938A601E156D012EC7D42F14816975FE6D827652127025B774BCB575A089"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\prepare_integration.py",
+      "bytes": 4785,
+      "sha256": "A6B9742ED3BE42AAD2533282D07AEE329A26FE1E81A793C346C2AE98E6348D91"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-profile-candidate.json",
+      "bytes": 5756,
+      "sha256": "736FE49E12137A4E40BB31EC1618DBD4CF6330F8F642285558351659F3E20A04"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_ctypes.pyd",
+      "bytes": 127152,
+      "sha256": "820E840759EED12E19F3C485FD819B065B49D9DC704AE3599A63077416D63324"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_hashlib.pyd",
+      "bytes": 47280,
+      "sha256": "A30CF1A40E0B09610E34BE187F1396AC5A44DCFB27BC7FF9B450D1318B694C1B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_socket.pyd",
+      "bytes": 80048,
+      "sha256": "87832A3B89E2ADA8F704A8F066013660D591D9CE01CE901CC57A3B973F0858BA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\isolation_probe.py",
+      "bytes": 1214,
+      "sha256": "61C73D9597D6094F69842E7E8DB10F543637F2BF5D94A84B4013F931F8A4D80F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\libcrypto-1_1.dll",
+      "bytes": 3406016,
+      "sha256": "296426E7CE11BC3D1CFA9F2AEB42F60C974DA4AF3B3EFBEB0BA40E92E5299FDF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\libffi-7.dll",
+      "bytes": 32792,
+      "sha256": "F60DD9F2FCBD495674DFC1555EFFB710EB081FC7D4CAE5FA58C438AB50405081"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python.exe",
+      "bytes": 101552,
+      "sha256": "5275C42F7359FA2C7EC473BE3240E57D5CE5B9301A26BD2E98E89BB9DB074581"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python3.dll",
+      "bytes": 59568,
+      "sha256": "074B06AE1D0A0B5C26F0CE097C91E2F24A5D38B279849115495FC40C6C10117E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38._pth",
+      "bytes": 48,
+      "sha256": "3E27BCF6F5B785B69E1E2CDA13BC0B898C6CE8BB2038628AF11E1F9EA1F7EF2E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38.dll",
+      "bytes": 4211376,
+      "sha256": "2F3E368F5BCC1DDA5E951682008A509751E6395F7328FD0F02C4E1A11F67C128"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38.zip",
+      "bytes": 2465341,
+      "sha256": "613E0D63B54ED995273EDA446EB09E51066E486F1E72B94F1C338A83DCA3A021"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\select.pyd",
+      "bytes": 27824,
+      "sha256": "FCC2E09A2355A5546922874FB4CAC92EE00A33C0ED6ADBC440D128D1E9F4EC28"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\vcruntime140.dll",
+      "bytes": 96144,
+      "sha256": "92D50F7C4055718812CD3D823AA2821D6718EB55D2AB2BAC55C2E47260C25A76"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\vcruntime140_1.dll",
+      "bytes": 36752,
+      "sha256": "922124BA0821AA864A0261ED88BD25F8E40F94C24D00D389E23CD9AB2BFC6BA4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private_profile.py",
+      "bytes": 5442,
+      "sha256": "17EBABFBD7D7B9FAE761594A6C274CD06092AB6EEA03B7ABB8E14C53F58CD445"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\queue-validation.json",
+      "bytes": 144,
+      "sha256": "6180F0B577615A43AFDACF0BA6476D219135EADD45CD6966A8972D51D3971EC0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\run_integration.py",
+      "bytes": 2297,
+      "sha256": "28F826D83ECA708EE926DD6D5CEC341C0B3C0EED1F7D651CB01CB8F7D86466C7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\native-launch.json",
+      "bytes": 4555,
+      "sha256": "48CDF64B00CE636CA88E9D13D7641250B995DDE7F2C7540173F8E835182982CF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\runtime.json",
+      "bytes": 8630,
+      "sha256": "7C8F1A9EA73FACFA1AAD4243AF786D14DA2260619E7393090C6E6503C5EE1B67"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\stderr.bin",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\runs\\probe\\stdout.bin",
+      "bytes": 339,
+      "sha256": "FF3B928FC08199064E67CD9A0BFFB90A6580743415381F669759F6ADAD9BBD61"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\seal_delivery.py",
+      "bytes": 2877,
+      "sha256": "DFE4BFC65ACD57D6FB74D1F459B78879B13D5F75B599EDC71A69F2E6B183BB41"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\syntax-verification.json",
+      "bytes": 2715,
+      "sha256": "33046034C79125C6172E4D92068EEE2472FB1934D938FC3E4DB55EBF1372479B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\task-at-read.json",
+      "bytes": 4170,
+      "sha256": "8D643B04946194302EF64934B9491E61AE6BEFEE657EB88C68DC94037015531E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\workflow-seal-receipt.json",
+      "bytes": 960,
+      "sha256": "75801E54FF125EA8A53F11D919C538A189724C97C8AA5FCBBEC13C4F4B4289F0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\workflow-update-receipt.json",
+      "bytes": 965,
+      "sha256": "9F8AF10D9CADE85E281E9BE0F7D6677D2F77606F2820516C00FBD6141A8B8D28"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\IDA77-Isolated-Export-Integration-20261007.json",
+      "bytes": 16972,
+      "sha256": "C846F9090687AFD1A319C004FEB720C751DB703B80F6F23A63E7D1EE81BC5146"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 169948,
+      "sha256": "4B3909A3D51952A0EE4DDAF7AD73EE8819A71FFED70B71320B9259D941336907"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+      "bytes": 81558,
+      "sha256": "9C9873FF92FEB70FAD0CD7EFC3DC1A09F466D7BE4D7CA82269D9A1F03B270E48"
+    }
+  ],
+  "pin_count": 45,
+  "report": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\IDA77-Isolated-Export-Integration-20261007.json",
+    "bytes": 16972,
+    "sha256": "C846F9090687AFD1A319C004FEB720C751DB703B80F6F23A63E7D1EE81BC5146"
+  },
+  "old_immutable_pins_verified": 491,
+  "new_LITO_analysis_request": "none"
+}

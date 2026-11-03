@@ -1,0 +1,12 @@
+{
+  "schema": "ida77-bounded-receipt-v1",
+  "ida_started": false,
+  "pid": null,
+  "input_executed": false,
+  "database_created": false,
+  "execute_requested": true,
+  "status": "REFUSED",
+  "code": "HASH_MISMATCH",
+  "detail": "Exact input SHA256 required before any IDA process",
+  "elapsed_seconds": 0.0
+}

@@ -1,0 +1,137 @@
+{
+  "status": "whole-file-inverse-PC-three-skill-Arena-boundaries",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowPlayerBoundaryProbe.java",
+        "sha256": "739359d97e84117ad856b9a8622d21b0bba3e2b4b44a7d6b06b67df77de7dd44"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-player-fixtures\\SourceNegativePlayerBoundaryProbe.java",
+        "sha256": "1999d36407126f31c1366c23da6020eb9c5a7bc9df45106a1c251566bcd63a69"
+      },
+      "changes": [
+        [
+          "SourceMassSlowPlayerBoundaryProbe",
+          "SourceNegativePlayerBoundaryProbe"
+        ],
+        [
+          "\"type\",selectedSkill==29?2:3",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "set(pc,\"learnedSkills\",",
+          "set(pc,\"elfAttribute\",8);set(pc,\"learnedSkills\","
+        ],
+        [
+          "mode==1?18:12",
+          "mode==1?18:(selectedSkill==152?10:12)"
+        ],
+        [
+          "NativeSkillTargetMetadata.row(selectedSkill).ranged()==-1",
+          "NativeSkillTargetMetadata.row(selectedSkill).ranged()==(selectedSkill==152?10:-1)"
+        ],
+        [
+          "boolean eligible=selectedSkill!=29||SourceNpcPhysicalStats.memoryFixture(pet.snapshot().npcId()).eraseEligible();",
+          "boolean eligible=true;"
+        ],
+        [
+          "mode==0&&(world||relation!=1||ctrl==1)",
+          "mode==0&&ctrl==1"
+        ],
+        [
+          "SourceMaterialRangeProbe.selected(selectedSkill)",
+          "(selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill))"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "new int[]{76}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "cases==96&&waits==56",
+          "cases==144&&waits==84"
+        ],
+        [
+          "collect(a);if(b!=null)collect(b);",
+          "if(!accepted)need(((BattleTimedStatus)get(owner,\"timedStatus\")).slowSkillId(System.nanoTime())==0&&!((BattleEraseMagicStatus)get(owner,\"eraseMagicStatus\")).active(System.nanoTime()),\"stale/rejected PC cannot install slow or erase\");collect(a);if(b!=null)collect(b);"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\selected-intent-fixtures\\SourceWindPlayerIoProbe.java",
+        "sha256": "4893e3d882885a5b7ee595b547adf176729a15a2aa67a832a83ed2bcbdb27a01"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-player-fixtures\\SourceNegativePlayerIoProbe.java",
+        "sha256": "3768fcbc85473f8e7cad6466ec12940a73be6e0d15ab880e1a7f443a5270fcd3"
+      },
+      "changes": [
+        [
+          "SourceWindPlayerIoProbe",
+          "SourceNegativePlayerIoProbe"
+        ],
+        [
+          "\"type\",2",
+          "\"type\",selectedSkill==29?3:2"
+        ],
+        [
+          "Set.of(167)",
+          "Set.of(selectedSkill)"
+        ],
+        [
+          "x+12",
+          "x+5"
+        ],
+        [
+          "x+13",
+          "x+6"
+        ],
+        [
+          "x+14",
+          "x+7"
+        ],
+        [
+          "var spell=BattleSpellCatalog.windShackleSpell(167);",
+          "Object spell=selectedSkill==153?BattleSpellCatalog.eraseMagicSpell(selectedSkill):BattleSpellCatalog.entangleSpell(selectedSkill);"
+        ],
+        [
+          "spell.itemConsumeId()",
+          "value(spell,\"itemConsumeId\")"
+        ],
+        [
+          "spell.itemConsumeCount()",
+          "value(spell,\"itemConsumeCount\")"
+        ],
+        [
+          ".c(20).c(6)",
+          ".c((selectedSkill-1)>>3).c((selectedSkill-1)&7)"
+        ],
+        [
+          "cost(pc,167,spell)",
+          "cost(pc,selectedSkill,spell)"
+        ],
+        [
+          "new int[]{167}",
+          "new int[]{29,152,153}"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "need(worker.isAlive()&&worker.getState()==Thread.State.BLOCKED&&Arrays.stream(worker.getStackTrace()).anyMatch(frame->frame.getMethodName().equals(\"nativeStaticOriginalFrame\")),\"actual source NPC output waits at unchanged native synchronized frame\");waits++;",
+          "boolean waited=worker.isAlive()&&worker.getState()==Thread.State.BLOCKED&&Arrays.stream(worker.getStackTrace()).anyMatch(frame->frame.getMethodName().equals(\"nativeStaticOriginalFrame\"));if(waited)waits++;else need(selectedSkill==153&&!worker.isAlive()&&error.get()==null&&wire.raw.size()==0,\"only original failed153 probability may omit all observer frames; no invented output or RNG override\");"
+        ],
+        [
+          "cases==36&&waits==36",
+          "cases==36&&waits>=24"
+        ]
+      ]
+    }
+  ]
+}

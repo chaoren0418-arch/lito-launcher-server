@@ -1,0 +1,127 @@
+{
+  "phase_split": {
+    "read": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A90DD",
+      "rva": "000A90DD",
+      "section": "   \u0000    ",
+      "file_offset": "000A90DD",
+      "raw_backed": true,
+      "raw_hex": "a198af6400",
+      "mnemonic": "mov",
+      "operands": "eax, dword ptr [0x64af98]",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+        "bytes": 1216,
+        "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+      }
+    },
+    "preview_phases": [
+      1,
+      6
+    ],
+    "preview_target": "004A9472",
+    "common_phases": "all other numeric phases; no local allowed-phase whitelist"
+  },
+  "common_room_gate": {
+    "incoming": "EBP-0C",
+    "current": "64ABF4",
+    "reject": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A9100",
+      "rva": "000A9100",
+      "section": "   \u0000    ",
+      "file_offset": "000A9100",
+      "raw_backed": true,
+      "raw_hex": "0f8543040000",
+      "mnemonic": "jne",
+      "operands": "0x4a9549",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+        "bytes": 1216,
+        "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+      }
+    },
+    "occurs_before_name_compare": true
+  },
+  "self_name_gate": {
+    "left": "64ABF8 global selected/member display name",
+    "right": "incoming EBP-7C",
+    "comparator": "004D3A80",
+    "call": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A910F",
+      "rva": "000A910F",
+      "section": "   \u0000    ",
+      "file_offset": "000A910F",
+      "raw_backed": true,
+      "raw_hex": "e86ca90200",
+      "mnemonic": "call",
+      "operands": "0x4d3a80",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+        "bytes": 1216,
+        "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+      }
+    },
+    "zero_means": "native self branch only under actual qualified tables/state",
+    "pending_C_D0_checked": false,
+    "room_list_presence_required": false,
+    "identity_note": "64ABF8 is presentation state also writable by S_CD before its gate; not independent physical/source/owner authority."
+  },
+  "self_branch": {
+    "phase_call": {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004A911D",
+      "rva": "000A911D",
+      "section": "   \u0000    ",
+      "file_offset": "000A911D",
+      "raw_backed": true,
+      "raw_hex": "e87e0bfcff",
+      "mnemonic": "call",
+      "operands": "0x469ca0",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive\\004A9090-4C0.bin",
+        "bytes": 1216,
+        "sha256": "078BF3A1A000D6D12EEFFC26971EF383F3316630133DBD1E60F071D3932D3F7E"
+      }
+    },
+    "argument": 1,
+    "next": "450B90 lookup selected row64A958, twice if index>=0; row+4 WORD to46A540 else argument0",
+    "order": "469CA0(1) returns before selected-row lookup and46A540; its callbacks may alter UI/selection first",
+    "row_value": "low16bits zeroextended outboundDWORD; do not assume selected row exists or is owned",
+    "native_atomic_commit_proven": false,
+    "ordinary_exit_intent_correlation": "not a native check; server adapter policy requires separate emitted intent and qualified own display bytes"
+  },
+  "peer_branch": {
+    "combatant": "begin64AB64/end64AB68; ECX UI64A950",
+    "other": "begin64AB54/end64AB58; ECX UI64A94C",
+    "key": "4D3A80(incoming alias, record+4)==0 within each vector; no kind carried by D0",
+    "record_stride": 140,
+    "record_removal": "first match per vector, call465370(record+4), forward compact following140byte records using35DWORD copies, end-=140; no allocator/free in common roster compaction",
+    "both_vectors_scanned": true,
+    "cross_category_same_name": "may remove first match in BOTH vectors; not globally stop after combatant match",
+    "absent_name": "no vector writes/UI calls/navigation; returns before phase4/5 effects when neither vector matches; requires coherent initialized vector boundaries and comparison authority",
+    "navigation_on_peer_match": false,
+    "additional_effects": "if any removal succeeded and phase==4/5, separate formatting/opaque collection branch occurs; depth stopped"
+  },
+  "preview_branch": {
+    "room_gate": "incoming DWORD must0; ignores64ABF4 here",
+    "compare": "same4D3A80 incoming name vs64ACF4 record+4",
+    "UI": "64A954 via465370",
+    "remove": "first previewrecord; compact140bytes,4B3B80RET8 then end64ACF8-=140",
+    "room1_ArenaBot_in_phase6": "rejected by room0 gate, not ordinaryroom peer no-op; actualnativephase not observed in5ED/49A",
+    "self_or_navigation_test": false
+  },
+  "comparison_authority": {
+    "inherited_contract": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SCD-member-comparison-contract.json",
+      "bytes": 98702,
+      "sha256": "1C2519F9F1B88C9E68FDF963FFAFF85366CEC755254613C1926A68E7ED9BC192"
+    },
+    "implementation_bytes": 93,
+    "table_guard_retained": true,
+    "actual_initialized_tables_qualified": false,
+    "zero_disk_or_ASCII_equality_is_authority": false
+  }
+}

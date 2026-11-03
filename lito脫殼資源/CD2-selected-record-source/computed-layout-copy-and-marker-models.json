@@ -1,0 +1,141 @@
+{
+  "models": [
+    {
+      "kind": "known_CB_variable_string_layout",
+      "name_bytes": 1,
+      "clan_bytes": 0,
+      "field3E_body_offset": 20,
+      "body_bytes": 83,
+      "frame_bytes": 85,
+      "reserved_AD368_value": 0,
+      "qualification": "pure layout arithmetic; no newwire/capture/Nativeexecution"
+    },
+    {
+      "kind": "known_CB_variable_string_layout",
+      "name_bytes": 27,
+      "clan_bytes": 16,
+      "field3E_body_offset": 62,
+      "body_bytes": 125,
+      "frame_bytes": 127,
+      "reserved_AD368_value": 0,
+      "qualification": "pure layout arithmetic; no newwire/capture/Nativeexecution"
+    },
+    {
+      "kind": "known_CB_variable_string_layout",
+      "name_bytes": 5,
+      "clan_bytes": 3,
+      "field3E_body_offset": 27,
+      "body_bytes": 90,
+      "frame_bytes": 92,
+      "reserved_AD368_value": 0,
+      "qualification": "pure layout arithmetic; no newwire/capture/Nativeexecution"
+    },
+    {
+      "kind": "four_slot_marker_reset",
+      "writes_VA": [
+        "0062FACD",
+        "0062FACE",
+        "0062FB81",
+        "0062FB82",
+        "0062FC35",
+        "0062FC36",
+        "0062FCE9",
+        "0062FCEA"
+      ],
+      "values_hex": "FF",
+      "field3E_preserved_in_this_loop": true,
+      "native_capacity_inferred": false,
+      "qualification": "conditional exactloop only, notbulk/reset/runtime guarantee"
+    },
+    {
+      "kind": "countBYTE_projection",
+      "input_u8": 0,
+      "native_signed_DWORD": 0,
+      "marker_reset_slots": 4,
+      "AD368_producer_allows": true,
+      "qualification": "nativeMOVSX source only; no validruntime/capacity conclusion"
+    },
+    {
+      "kind": "countBYTE_projection",
+      "input_u8": 1,
+      "native_signed_DWORD": 1,
+      "marker_reset_slots": 4,
+      "AD368_producer_allows": true,
+      "qualification": "nativeMOVSX source only; no validruntime/capacity conclusion"
+    },
+    {
+      "kind": "countBYTE_projection",
+      "input_u8": 8,
+      "native_signed_DWORD": 8,
+      "marker_reset_slots": 4,
+      "AD368_producer_allows": true,
+      "qualification": "nativeMOVSX source only; no validruntime/capacity conclusion"
+    },
+    {
+      "kind": "countBYTE_projection",
+      "input_u8": 255,
+      "native_signed_DWORD": -1,
+      "marker_reset_slots": 4,
+      "AD368_producer_allows": false,
+      "qualification": "nativeMOVSX source only; no validruntime/capacity conclusion"
+    },
+    {
+      "kind": "alias_matched_clan_copy_span",
+      "strlen_bytes": 0,
+      "copy_includes_NUL": true,
+      "destination_start_offset": 28,
+      "last_written_offset": 28,
+      "field3E_touched": false,
+      "example_field3E_after": "preserved",
+      "AD368_clan_bound_satisfied": true,
+      "qualification": "symbolicvalidmemory only;caller/epoch/inputvalidation unknown,noNative invocation"
+    },
+    {
+      "kind": "alias_matched_clan_copy_span",
+      "strlen_bytes": 16,
+      "copy_includes_NUL": true,
+      "destination_start_offset": 28,
+      "last_written_offset": 44,
+      "field3E_touched": false,
+      "example_field3E_after": "preserved",
+      "AD368_clan_bound_satisfied": true,
+      "qualification": "symbolicvalidmemory only;caller/epoch/inputvalidation unknown,noNative invocation"
+    },
+    {
+      "kind": "alias_matched_clan_copy_span",
+      "strlen_bytes": 33,
+      "copy_includes_NUL": true,
+      "destination_start_offset": 28,
+      "last_written_offset": 61,
+      "field3E_touched": false,
+      "example_field3E_after": "preserved",
+      "AD368_clan_bound_satisfied": false,
+      "qualification": "symbolicvalidmemory only;caller/epoch/inputvalidation unknown,noNative invocation"
+    },
+    {
+      "kind": "alias_matched_clan_copy_span",
+      "strlen_bytes": 34,
+      "copy_includes_NUL": true,
+      "destination_start_offset": 28,
+      "last_written_offset": 62,
+      "field3E_touched": true,
+      "example_field3E_after": 0,
+      "AD368_clan_bound_satisfied": false,
+      "qualification": "symbolicvalidmemory only;caller/epoch/inputvalidation unknown,noNative invocation"
+    },
+    {
+      "kind": "alias_matched_clan_copy_span",
+      "strlen_bytes": 35,
+      "copy_includes_NUL": true,
+      "destination_start_offset": 28,
+      "last_written_offset": 63,
+      "field3E_touched": true,
+      "example_field3E_after": 65,
+      "AD368_clan_bound_satisfied": false,
+      "qualification": "symbolicvalidmemory only;caller/epoch/inputvalidation unknown,noNative invocation"
+    }
+  ],
+  "count": 13,
+  "oldmodels_or_PASS_replayed": false,
+  "Native_runtime_or_memory_written": false
+}

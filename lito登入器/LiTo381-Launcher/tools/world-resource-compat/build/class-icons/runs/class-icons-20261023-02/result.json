@@ -1,0 +1,269 @@
+{
+  "task_id": "development-sql-login-repair-20261011",
+  "accepted_source_task_id": "server-memory-entry-terminal-cleanup-fix-20261010",
+  "source_task_id": "server-isolated-memory-rental-startup-restore-20261010",
+  "started_at": "2026-10-22T19:00:24.615217+00:00",
+  "run_id": "class-icons-20261023-02",
+  "product_complete": false,
+  "scope": "formal standard Main; shared read-only source databases; character_lito results only; single JVM; retained owned cleanup",
+  "state": "sealed-success",
+  "instances": [
+    {
+      "role": "standard",
+      "argv": [
+        "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "-Xms512m",
+        "-Xmx2048m",
+        "-XX:ActiveProcessorCount=4",
+        "-Dlito.resourceProfile=tw13081901-v1",
+        "-Dlito.extendedItemDetails=true",
+        "-Dlito.commonCatalog=D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\common_catalog.bin",
+        "-jar",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\LiTo381-SharedPresentation-candidate.jar",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\runs\\class-icons-20261023-02\\config\\server.dev.standard.properties",
+        "--service-mode=standard"
+      ],
+      "cwd": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+      "identity": {
+        "pid": 20936,
+        "birth_filetime": 134371692246288639,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "full7": {
+          "pid": 20936,
+          "filetime": "134371692246288639",
+          "path": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+          "image_sha256": "0D3815053960E0B7695A09E8C26406C53D92B13C71E946CCB6EB84E6A8028EDE",
+          "command_sha256": "5AC8E46F007C46DEC9F34AD681D1692E2749244F64FD851F7FB5899351A2A6A6",
+          "command_argv_digest": "AD07097C220195B564A5952B63E669EFB0D068D2CE328256E4CDADD4BC1BFD17",
+          "parent_pid": 14852
+        }
+      },
+      "config": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\runs\\class-icons-20261023-02\\config\\server.dev.standard.properties",
+        "bytes": 281,
+        "sha256": "DAE9B6834DCFBBEDBD020069B98E8C9F3C7C954B92623B4C4A28468486A33962"
+      },
+      "launch_at": "2026-10-22T19:00:24.636163+00:00",
+      "ready_timeout_seconds": 15,
+      "stdout": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\runs\\class-icons-20261023-02\\standard.stdout.log",
+      "stderr": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\runs\\class-icons-20261023-02\\standard.stderr.log",
+      "ready": true,
+      "ready_at": "2026-10-22T19:00:28.620024+00:00",
+      "ready_elapsed_seconds": 4.0,
+      "ready_marker": "[LiTo] ready",
+      "descriptors_required": [
+        "[LiTo] resource-profile=tw13081901-v1 catalog-sha256=b64ed920792805c3380ad0e50b1ae089a8779b4adddec2fbf3780c2fa88a3c01 sprites=30285",
+        "LiTo381 Server 0.7.864",
+        "[LiTo] login-listen=127.0.0.1:32000",
+        "[LiTo] game-listen=127.0.0.2:[32000] shared-channel-endpoint",
+        "[LiTo] state=memory(non-persistent)",
+        "dynamic-database=380_ac_1, resource-database=380_db, read-only=true",
+        "dynamic-database=380_ac_2, resource-database=380_db, read-only=true",
+        "shared-source=380_ac_1 controls=380_lito source-read-only=true write-table=character_lito",
+        "shared-source=380_ac_2 controls=380_lito source-read-only=true write-table=character_lito"
+      ]
+    }
+  ],
+  "endpoint_checks": [
+    {
+      "role": "standard",
+      "kind": "LOGIN",
+      "host": "127.0.0.1",
+      "port": 32000,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.1",
+        "local_port": 32000,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "connect": true,
+      "payload_bytes_sent": 0,
+      "elapsed_seconds": 0.0,
+      "at": "2026-10-22T19:00:28.647949+00:00"
+    },
+    {
+      "role": "standard",
+      "kind": "GAME",
+      "host": "127.0.0.2",
+      "port": 32000,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.2",
+        "local_port": 32000,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "connect": true,
+      "payload_bytes_sent": 0,
+      "elapsed_seconds": 0.0,
+      "at": "2026-10-22T19:00:28.648946+00:00"
+    }
+  ],
+  "cleanup": [
+    {
+      "role": "standard",
+      "at": "2026-10-22T19:01:31.176042+00:00",
+      "retained_handle": true,
+      "expected_identity": {
+        "pid": 20936,
+        "birth_filetime": 134371692246288639,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "full7": {
+          "pid": 20936,
+          "filetime": "134371692246288639",
+          "path": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+          "image_sha256": "0D3815053960E0B7695A09E8C26406C53D92B13C71E946CCB6EB84E6A8028EDE",
+          "command_sha256": "5AC8E46F007C46DEC9F34AD681D1692E2749244F64FD851F7FB5899351A2A6A6",
+          "command_argv_digest": "AD07097C220195B564A5952B63E669EFB0D068D2CE328256E4CDADD4BC1BFD17",
+          "parent_pid": 14852
+        }
+      },
+      "terminated_by_owner": true,
+      "observed_lifetime_identity": {
+        "pid": 20936,
+        "birth_filetime": 134371692246288639,
+        "identity_source": "retained Popen process handle"
+      },
+      "observed_identity": {
+        "pid": 20936,
+        "birth_filetime": 134371692246288639,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe"
+      },
+      "exit_code": 1,
+      "exited": true,
+      "post_exit_lifetime_identity": {
+        "pid": 20936,
+        "birth_filetime": 134371692246288639,
+        "identity_source": "retained Popen process handle"
+      },
+      "handle_closed": true
+    }
+  ],
+  "sql_started": false,
+  "sql_connected": true,
+  "native_started": false,
+  "payload_bytes_sent": 0,
+  "preflight": {
+    "at": "2026-10-22T19:00:24.623197+00:00",
+    "listeners": [],
+    "exclusive_bind_checks": [
+      {
+        "host": "127.0.0.1",
+        "port": 32000,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 32001,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 32002,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32000,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32001,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32002,
+        "exclusive_bind_available": true
+      }
+    ]
+  },
+  "source_endpoint_checks": [
+    {
+      "source_id": 1,
+      "kind": "LOGIN",
+      "host": "127.0.0.1",
+      "port": 32001,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.1",
+        "local_port": 32001,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "native_key_received": true
+    },
+    {
+      "source_id": 1,
+      "kind": "GAME",
+      "host": "127.0.0.2",
+      "port": 32001,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.2",
+        "local_port": 32001,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "native_key_received": true
+    },
+    {
+      "source_id": 2,
+      "kind": "LOGIN",
+      "host": "127.0.0.1",
+      "port": 32002,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.1",
+        "local_port": 32002,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "native_key_received": true
+    },
+    {
+      "source_id": 2,
+      "kind": "GAME",
+      "host": "127.0.0.2",
+      "port": 32002,
+      "owner": {
+        "family": 2,
+        "local_host": "127.0.0.2",
+        "local_port": 32002,
+        "remote_host": "0.0.0.0",
+        "remote_port": 0,
+        "state": 2,
+        "pid": 20936
+      },
+      "native_key_received": true
+    }
+  ],
+  "pair_ready_at": "2026-10-22T19:00:28.836445+00:00",
+  "startup_ready_verified": true,
+  "startup_elapsed_seconds": 4.219,
+  "cleanup_errors": [],
+  "cleanup_order": [
+    "standard"
+  ],
+  "owned_listeners_remaining": [],
+  "target_listeners_after_cleanup": [],
+  "cleanup_verified": true,
+  "finished_at": "2026-10-22T19:01:31.236879+00:00",
+  "elapsed_seconds": 66.625,
+  "accepted": true
+}

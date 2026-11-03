@@ -1,0 +1,85 @@
+{
+  "version": "0.6.52",
+  "native_dll_sha256": "e83e8f12abe07dd02ac45d53a37a69fc12f432bfef15bbe274f53dcc52388362",
+  "previous_native_dll_sha256": "03534ce362e10c2a29994d98319149e80d3a87651019132d2ca7b592231e0a8e",
+  "server_sha256_unchanged": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0",
+  "native_sources": {
+    "native/profile_location.inc": "dda9e7e159c540bbea2f9a46955581e4a9d9602d05d69733dcbd031d0ab7c0b9",
+    "native/class_compat.inc": "201f1336b138d235747321cdee13bb84181148cbb123130c55ef834247cee60f",
+    "native/ddraw_proxy.cpp": "9ffd03b0adf73d7cf46c1029ec9fdcf7c1f6b274a2423f29967a08492e1bac33"
+  },
+  "rollback_archive": "backups/before-profile-location-0.6.51.zip",
+  "rollback_archive_sha256": "8d6940057f7d62d712720d076a2763d184059490185a6f9ef271b73b0db79fb9",
+  "native_test": {
+    "run": "class-lobby-fixture-1791852053709872400",
+    "locations": [
+      {
+        "phase": 1,
+        "context_room": 0,
+        "display_room": 0,
+        "peer_room": 37
+      },
+      {
+        "phase": 2,
+        "context_room": 1,
+        "display_room": 1,
+        "peer_room": 37
+      },
+      {
+        "phase": 1,
+        "context_room": 1,
+        "display_room": 0,
+        "peer_room": 37
+      },
+      {
+        "phase": 1,
+        "context_room": 1,
+        "display_room": 0,
+        "peer_room": 37
+      }
+    ],
+    "summary_cycles": [
+      {
+        "result": 5,
+        "summary": 2,
+        "native_confirm_lobby": 1,
+        "world": 4
+      },
+      {
+        "result": 5,
+        "summary": 2,
+        "native_confirm_lobby": 1,
+        "world": 4
+      }
+    ],
+    "native_draw_hook": true,
+    "no_player_sql_writes": true
+  },
+  "manual_test_pending": true,
+  "cause": "Original profile renderer reads copied participant room dword. Native S_D0 switches phase but deliberately leaves room protocol context at 0x64ABF4.",
+  "change": "Resolve only the drawn location for self: phase1 lobby=0; phase2 room=active room context. Other participants retain row room. Native room state, resource strings, format and colors unchanged.",
+  "prior_manual_validation": "User confirmed illusion targeted casting works in 0.6.51.",
+  "formal_startup_test": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791852140948916500"
+  }
+}

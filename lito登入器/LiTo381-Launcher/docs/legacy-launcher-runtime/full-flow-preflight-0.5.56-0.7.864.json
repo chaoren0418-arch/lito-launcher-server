@@ -1,0 +1,193 @@
+{
+  "canLaunch": true,
+  "mode": "ProtectedClient",
+  "clientSha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+  "items": [
+    {
+      "name": "\u4E00\u822C\u6B0A\u9650\u63A7\u5236\u4ECB\u9762",
+      "passed": true,
+      "detail": "\u76EE\u524D\u7531\u5DF2\u63D0\u5347\u7A0B\u5E8F\u555F\u52D5\uFF1B\u529F\u80FD\u76F8\u5BB9\uFF0C\u4F46\u4E00\u822C\u4F7F\u7528\u4E0D\u9700\u8981\u7CFB\u7D71\u7BA1\u7406\u54E1\u6B0A\u9650"
+    },
+    {
+      "name": "\u76F8\u5BB9\u555F\u52D5\u5DE5\u5177",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\tools\\lito_runtime_probe.py"
+    },
+    {
+      "name": "\u6587\u5B57\u7D22\u5F15",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\0-\u5BA2\u6236\u7AEF\\Text.idx"
+    },
+    {
+      "name": "\u6587\u5B57\u8CC7\u6599",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\0-\u5BA2\u6236\u7AEF\\Text.pak"
+    },
+    {
+      "name": "\u904A\u6232\u5BA2\u6236\u7AEF",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\0-\u5BA2\u6236\u7AEF\\LiTo.bin"
+    },
+    {
+      "name": "\u555F\u52D5\u8173\u672C",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\tools\\Start-LiTo381.ps1"
+    },
+    {
+      "name": "Python runtime",
+      "passed": true,
+      "detail": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+    },
+    {
+      "name": "LiTo.bin \u539F\u7248\u96DC\u6E4A",
+      "passed": true,
+      "detail": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+    },
+    {
+      "name": "LITO \u5C08\u7528 LT \u8CC7\u6E90",
+      "passed": true,
+      "detail": "5 \u7D44 LT IDX/PAK\u3001LTmap \u8207 LTsound \u5B8C\u6574"
+    },
+    {
+      "name": "TW/LITO \u5171\u7528\u5C01\u5305\u914D\u5C0D",
+      "passed": true,
+      "detail": "Sprite\u3001Text\u3001Tile \u8207 Sprite00-15 \u5171 19 \u7D44 IDX/PAK \u5747\u6210\u5C0D\u5B58\u5728\uFF1B\u53EA\u6AA2\u6E2C\u3001\u4E0D\u66FF\u63DB"
+    },
+    {
+      "name": "TW13081901 \u5171\u5B58\u4FDD\u8B77",
+      "passed": true,
+      "detail": "\u5DF2\u5075\u6E2C 3,113,320 bytes\uFF0CSHA-256 1FE1D8F9529A0982\uFF1BLITO \u6D41\u7A0B\u4E0D\u4FEE\u6539\u6B64\u6A94"
+    },
+    {
+      "name": "\u76F8\u5BB9\u5C64\u9084\u539F\u72C0\u614B",
+      "passed": true,
+      "detail": "\u6C92\u6709\u4E0A\u6B21\u7570\u5E38\u4E2D\u65B7\u7559\u4E0B\u7684\u539F\u6A94\u5099\u4EFD"
+    },
+    {
+      "name": "\u5171\u4EAB\u8CC7\u6E90\u7248\u672C\u6307\u7D0B",
+      "passed": true,
+      "detail": "E7CBD33626E33B8E\uFF08\u8A18\u9304\u73FE\u6CC1\uFF0C\u4E0D\u8207\u5B98\u65B9\u7248\u672C\u6BD4\u5C0D\u3001\u4E0D\u81EA\u52D5\u964D\u7248\uFF09"
+    },
+    {
+      "name": "\u9078\u5B9A\u5BA2\u6236\u7AEF\u8CC7\u6E90\u4E16\u4EE3\u6AA2\u6E2C",
+      "passed": true,
+      "detail": "\u5075\u6E2C\u5230 40 \u500B\u65B0\u7248\u6216\u7F3A\u5C11\u8CC7\u6E90\uFF1BLiTo \u5C07\u4F7F\u7528\u9694\u96E2\u76F8\u5BB9\u526F\u672C\uFF0C\u4E0D\u6539\u5BEB\u6B64\u76EE\u9304"
+    },
+    {
+      "name": "\u5929\u5802\u5C0F\u5E6B\u624B\u9818\u734E UI",
+      "passed": true,
+      "detail": "\u9694\u96E2 LTtext \u5DF2\u56FA\u5B9A\u5305\u542B pc_action \u8207 send_s_0\uFF5E4\uFF1B\u52D5\u4F5C\u50C5\u958B\u653E SQL-first \u9818\u734E\u6D41\u7A0B"
+    },
+    {
+      "name": "LiTo \u9694\u96E2\u76F8\u5BB9\u8CC7\u6E90",
+      "passed": true,
+      "detail": "\u5DF2\u901A\u904E Text/Tile/Sprite00-15\u3001Mss32\u3001\u555F\u52D5 UI\u30015 \u7D44 LiTo\\LT* \u8207\u539F\u751F 62 \u500B LTmap \u76EE\u9304\u6AA2\u6E2C\uFF1AD:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\runtime\\client-full"
+    },
+    {
+      "name": "\u5BA2\u6236\u7AEF\u76F8\u5BB9\u908A\u754C",
+      "passed": true,
+      "detail": "\u50C5\u652F\u63F4\u6307\u5B9A LiTo.bin\uFF1A\u767B\u5165\uFF0F\u6230\u9B25 opcode \u72C0\u614B\u6A5F\u300132-bit x86 \u8A18\u61B6\u9AD4\u4F4D\u5740\u3001Numeric Schema 4 \u8207 LT \u8CC7\u6E90\u7DE8\u865F\u7686\u70BA\u6210\u5957\u5951\u7D04\uFF1B\u66F4\u63DB bin/exe \u6216\u8CC7\u6E90\u4E16\u4EE3\u6703\u88AB\u62D2\u7D55\uFF0C\u4E0D\u6703\u5192\u96AA\u555F\u52D5\u3002"
+    },
+    {
+      "name": "TW/LiTo \u57F7\u884C\u9694\u96E2",
+      "passed": true,
+      "detail": "TW \u76E3\u6E2C\u76EE\u9304\uFF1AD:\\lineage\u958B\u767C\\0-\u5BA2\u6236\u7AEF\uFF1BLiTo \u57F7\u884C\u76EE\u9304\uFF1AD:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\runtime\\client-full"
+    },
+    {
+      "name": "\u986F\u793A\u6A21\u5F0F",
+      "passed": true,
+      "detail": "\u8996\u7A97\u5316\uFF08DDSCL_NORMAL\uFF1B\u9810\u8A2D\uFF09"
+    },
+    {
+      "name": "LiTo 32-bit \u6578\u503C\u5951\u7D04",
+      "passed": true,
+      "detail": "schema 4\uFF1A\u76F8\u5BB9\u5C64\u8207\u672C\u6A5F Server \u540C\u6B65\u555F\u7528 HP\uFF0FMP\uFF0FAC\uFF0F\u7B49\u7D1A\uFF0F\u516D\u7D20\u8CEA\uFF0FSP\uFF0FMR\uFF0F\u56DB\u5C6C\u6027\u6297\u6027 dword"
+    },
+    {
+      "name": "\u539F\u751F\u670D\u52D9\u5165\u53E3",
+      "passed": true,
+      "detail": "\u4E00\u822C\u7121\u754C\u64C2\u53F0\uFF1BLiTo.bin \u5F15\u6578\uFF1A\uFF08\u7121\uFF09\uFF08\u9810\u8A2D\uFF09"
+    },
+    {
+      "name": "LiTo DirectDraw proxy",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-Compat\\publish\\ddraw.dll"
+    },
+    {
+      "name": "LiTo \u7D50\u7B97\u8FD4\u56DE\u76F8\u5BB9\u5C64",
+      "passed": true,
+      "detail": "\u7248\u672C\u6307\u7D0B FAB11934D6377BB253525330A8B1E490906CFACD641394F13906167D9A593D7B\uFF1B\u542B\u539F\u751F phase 5\u21922 \u7D50\u7B97 Confirm \u7684 C_D0 \u6A4B\u63A5"
+    },
+    {
+      "name": "LiTo window compatibility config",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-Compat\\publish\\lito381-compat.ini"
+    },
+    {
+      "name": "\u8996\u7A97\u7E2E\u653E",
+      "passed": true,
+      "detail": "100%\uFF08\u865B\u64EC\u5EA7\u6A19\u56FA\u5B9A 640\u00D7480\uFF09"
+    },
+    {
+      "name": "Server profile",
+      "passed": true,
+      "detail": "LiTo \u2014 \u592A\u967D\u795E / \u6708\u4EAE\u795E: source=lito-shared/LiTo \u5171\u7528\u8CC7\u6599\u67B6\u69CB, endpoint=127.0.0.1:32000"
+    },
+    {
+      "name": "LiTo local server",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-Server\\LiTo381-Server.jar"
+    },
+    {
+      "name": "LiTo local server 0.7.864",
+      "passed": true,
+      "detail": "\u7248\u672C\u6307\u7D0B 3025E3DF1C28F55019E79D5F21F9C1587B7268FB6417D6A75A591B6AECACB4B4"
+    },
+    {
+      "name": "\u5B8C\u6574\u7D20\u8CEA\u6A4B\u63A5\u89E3\u6790\u5668",
+      "passed": true,
+      "detail": "LiTo-Extended-Stats schema v2"
+    },
+    {
+      "name": "LiTo server config (server.properties)",
+      "passed": true,
+      "detail": "D:\\lineage\u958B\u767C\\LiTo381-Server\\config\\server.properties"
+    },
+    {
+      "name": "Java 17 runtime",
+      "passed": true,
+      "detail": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe"
+    },
+    {
+      "name": "\u4E00\u822C\u64C2\u53F0\u4F3A\u670D\u5668\u5951\u7D04",
+      "passed": true,
+      "detail": "\u4E00\u822C\u64C2\u53F0:server.properties [\u4E00\u822C\u64C2\u53F0/LOGIN=127.0.0.1:32000, \u4E00\u822C\u64C2\u53F0/GAME=127.0.0.2:32000]"
+    }
+  ],
+  "launchArguments": [
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "D:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\tools\\Start-LiTo381.ps1",
+    "-ClientDirectory",
+    "D:\\lineage\u958B\u767C\\0-\u5BA2\u6236\u7AEF",
+    "-TimeoutSeconds",
+    "0",
+    "-DisplayMode",
+    "Windowed",
+    "-WindowScalePercent",
+    "100",
+    "-SelectionFlow",
+    "Native",
+    "-NumericBreakthrough",
+    "-NumericBreakthroughSchema",
+    "4",
+    "-CompatDirectory",
+    "D:\\lineage\u958B\u767C\\LiTo381-Compat\\publish",
+    "-LiToRuntimeDirectory",
+    "D:\\lineage\u958B\u767C\\LiTo381-\u958B\u767C\\runtime\\client-full",
+    "-ServerProfile",
+    "D:\\lineage\u958B\u767C\\LiTo381-Launcher\\server-profiles\\lito-shared.json"
+  ]
+}

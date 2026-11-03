@@ -1,0 +1,153 @@
+{
+  "scope": "Nine descriptive source-policy cases0..8, conditional on valid exactN Java-projected rows/current epoch/seed/dormant navigation and Directory stage. No Modern function execution, no test PASS and no Native capacity inference. Count0 has no row/selection.",
+  "rows": [
+    {
+      "count": 0,
+      "owned_rows_preserved": 0,
+      "complete_after_exact_valid_rows": 0,
+      "directory_list_source_indices": [],
+      "Directory_visibility_under_other_current_guards": false,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 1,
+      "owned_rows_preserved": 1,
+      "complete_after_exact_valid_rows": 1,
+      "directory_list_source_indices": [
+        0
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 2,
+      "owned_rows_preserved": 2,
+      "complete_after_exact_valid_rows": 2,
+      "directory_list_source_indices": [
+        0,
+        1
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 3,
+      "owned_rows_preserved": 3,
+      "complete_after_exact_valid_rows": 3,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 4,
+      "owned_rows_preserved": 4,
+      "complete_after_exact_valid_rows": 4,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 5,
+      "owned_rows_preserved": 5,
+      "complete_after_exact_valid_rows": 5,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [
+        4
+      ],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 6,
+      "owned_rows_preserved": 6,
+      "complete_after_exact_valid_rows": 6,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [
+        4,
+        5
+      ],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 7,
+      "owned_rows_preserved": 7,
+      "complete_after_exact_valid_rows": 7,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [
+        4,
+        5,
+        6
+      ],
+      "source_proof_only_not_model_execution": true
+    },
+    {
+      "count": 8,
+      "owned_rows_preserved": 8,
+      "complete_after_exact_valid_rows": 8,
+      "directory_list_source_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "Directory_visibility_under_other_current_guards": true,
+      "fixed_four_buttons_visible_in_Directory": false,
+      "indices4_to7_selectable_via_directory_source": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "source_proof_only_not_model_execution": true
+    }
+  ]
+}

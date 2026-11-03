@@ -1,0 +1,39 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build\\candidate-area-sleep-slow.jar",
+    "sha256": "8d44fac4fb8e02cf9d7bee84a770a4b01a31a043620b796529a9cded47ed445f"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "Resolve combat controls from existing configuration.base.file; targeted qualification pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\combat-config-origin\\build-repro\\candidate-combat-config-origin.jar",
+    "sha256": "aae91ba8c0c729e4b5ec9b028b29f8bd93d320c8ffe8e370f49c271d239958d1"
+  },
+  "exact_combat_config_path_inverse": true,
+  "changed": [
+    "local/lito381/server/CombatRules.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCombatConfigOrigin.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\combat-config-origin\\build-repro\\inputs\\build.py",
+      "sha256": "9de17c91540310eb02928f26440bf507e779067df4419aa37f11f838cb6dbe14"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\combat-config-origin\\build-repro\\inputs\\CombatConfigOriginMethods.java",
+      "sha256": "7c7c0d8b5b14400a4c16de6bcc181295e2422cb64b3167ae9e3c799813490a65"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\combat-config-origin\\build-repro\\inputs\\NativeCombatConfigOrigin.java",
+      "sha256": "51c95ab5e676dd0261466871f85e3b118a3c5a0fffe2279a06c55af40a3f9f22"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\combat-config-origin\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

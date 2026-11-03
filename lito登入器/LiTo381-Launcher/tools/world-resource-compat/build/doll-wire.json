@@ -1,0 +1,775 @@
+{
+  "status": "receiver-gap-qualified",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\經典版UI資源\\證據原檔\\TW13081901.memory.bin",
+      "sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\inputs\\effectlist2.xml",
+      "sha256": "07efd481dd89b63da0be8af0f1643416a3e875b69f4b7fffb8be0683ec05c130"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\presentation-contract.json",
+      "sha256": "c01f65b8e786eb69fc7ae1968eb838fe5ae2df8414be048a6fee08767d828379"
+    }
+  ],
+  "native_tw_replays": [
+    {
+      "subcode": 56,
+      "seconds": 0,
+      "graphic": 0,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "clear",
+          82,
+          0
+        ],
+        [
+          "clear",
+          92,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 0,
+      "graphic": 3103,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "clear",
+          82,
+          0
+        ],
+        [
+          "clear",
+          92,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 0,
+      "graphic": 3104,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "clear",
+          82,
+          0
+        ],
+        [
+          "clear",
+          92,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 0,
+      "graphic": 3113,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "clear",
+          82,
+          0
+        ],
+        [
+          "clear",
+          92,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 0,
+      "graphic": 3114,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "clear",
+          82,
+          0
+        ],
+        [
+          "clear",
+          92,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 512,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "clear",
+          512,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 513,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "clear",
+          513,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 514,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "clear",
+          514,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 515,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "clear",
+          515,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 516,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "clear",
+          516,
+          0
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 0,
+      "graphic": 65535,
+      "body_bytes_consumed": 6,
+      "calls": []
+    },
+    {
+      "subcode": 56,
+      "seconds": 1,
+      "graphic": 0,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          1,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 1,
+      "graphic": 3103,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          1,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 1,
+      "graphic": 3104,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          1,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 1,
+      "graphic": 3113,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          1,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 1,
+      "graphic": 3114,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          1,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 512,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          1,
+          512,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 513,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          1,
+          513,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 514,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          1,
+          514,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 515,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          1,
+          515,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 516,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          1,
+          516,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 1,
+      "graphic": 65535,
+      "body_bytes_consumed": 6,
+      "calls": []
+    },
+    {
+      "subcode": 56,
+      "seconds": 600,
+      "graphic": 0,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          600,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 600,
+      "graphic": 3103,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          600,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 600,
+      "graphic": 3104,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          600,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 600,
+      "graphic": 3113,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          600,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 600,
+      "graphic": 3114,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          600,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 512,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          600,
+          512,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 513,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          600,
+          513,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 514,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          600,
+          514,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 515,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          600,
+          515,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 516,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          600,
+          516,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 600,
+      "graphic": 65535,
+      "body_bytes_consumed": 6,
+      "calls": []
+    },
+    {
+      "subcode": 56,
+      "seconds": 32767,
+      "graphic": 0,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          32767,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 32767,
+      "graphic": 3103,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          32767,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 32767,
+      "graphic": 3104,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          32767,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 32767,
+      "graphic": 3113,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          32767,
+          92,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 56,
+      "seconds": 32767,
+      "graphic": 3114,
+      "body_bytes_consumed": 4,
+      "calls": [
+        [
+          "apply",
+          32767,
+          82,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 512,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          32767,
+          512,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 513,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          32767,
+          513,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 514,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          32767,
+          514,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 515,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          32767,
+          515,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 516,
+      "body_bytes_consumed": 6,
+      "calls": [
+        [
+          "apply",
+          32767,
+          516,
+          0,
+          4294967295
+        ]
+      ]
+    },
+    {
+      "subcode": 154,
+      "seconds": 32767,
+      "graphic": 65535,
+      "body_bytes_consumed": 6,
+      "calls": []
+    }
+  ],
+  "unmodified_lito_rejected_subcodes": [
+    56,
+    154
+  ],
+  "actual_world_opcode_dispatch": [
+    {
+      "opcode": 250,
+      "receiver": "0x4ac1c0"
+    },
+    {
+      "opcode": 123,
+      "receiver": "0x4b07c0"
+    }
+  ],
+  "binding_rows": [
+    {
+      "id": "82",
+      "icon": "2588",
+      "offIcon": "5323",
+      "duration": "3600",
+      "group": "0",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1143",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "magic doll"
+    },
+    {
+      "id": "92",
+      "icon": "2708",
+      "duration": "3600",
+      "group": "0",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1197",
+      "startMsgName": "STR_STATUS_EFFECT_LOVE_DOLL",
+      "kind": "magic doll"
+    },
+    {
+      "id": "512",
+      "icon": "8341",
+      "offIcon": "8341",
+      "duration": "1800",
+      "group": "0",
+      "graphic": "512",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1143",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "cook"
+    },
+    {
+      "id": "513",
+      "icon": "8342",
+      "offIcon": "8342",
+      "duration": "1800",
+      "group": "0",
+      "graphic": "513",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1143",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "cook"
+    },
+    {
+      "id": "514",
+      "icon": "8343",
+      "offIcon": "8343",
+      "duration": "1800",
+      "group": "0",
+      "graphic": "514",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1143",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "cook"
+    },
+    {
+      "id": "515",
+      "icon": "8344",
+      "offIcon": "8344",
+      "duration": "1800",
+      "group": "0",
+      "graphic": "515",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "1143",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "cook"
+    },
+    {
+      "id": "516",
+      "icon": "2566",
+      "offIcon": "2566",
+      "duration": "1800",
+      "group": "0",
+      "graphic": "516",
+      "remainInArea": "true",
+      "remainWhenDie": "true",
+      "startMsg": "3459",
+      "startMsgName": "STR_STATUS_EFFECT_MAGIC_DOLL",
+      "kind": "cook"
+    }
+  ],
+  "findings": [
+    "Current producer opcodeFA reaches native4AC1C0, not packet-box4B07C0. Native packet-box opcode is7B.",
+    "Protocol also reserves FA as S_LITO_CLAN. Do not globally reinterpret FA; correct only the isolated doll producer and add a7B subcode adapter together.",
+    "TW56 reads seconds and a second sprite word; 3104..3113 selects effect92, otherwise82; zero clears both.",
+    "Current LiTo server56 has only seconds. Adapter must not read the absent second word; generic82 is the evidenced existing producer contract.",
+    "TW154 reads seconds+DWORD graphic and resolves XML graphic, not XML icon; 512..516 resolve to corresponding doll effects.",
+    "Current server154 emits the DWORD as H(iconId)+H(0); its trailing removal word is not consumed by this TW branch; seconds0 removes."
+  ],
+  "limits": [
+    "Native apply/clear intercepted; UI not rendered.",
+    "Candidate DLL receiver adapter not implemented by this audit.",
+    "No assumption that arbitrary source database iconId values are graphics; source DB not read or changed."
+  ],
+  "formal_updated": false,
+  "source_database_modified": false
+}

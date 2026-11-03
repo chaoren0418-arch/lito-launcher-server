@@ -1,0 +1,443 @@
+{
+  "schema": "ida77-bounded-export-adapter-review-v1",
+  "task_id": "bin_resources-ida77-bounded-export-adapter-20261007",
+  "created_at": "2026-10-07T13:13:43.014172+08:00",
+  "proposal_state": "review",
+  "delivery_status": "PARTIAL_TOOL_DRAFT_EXECUTION_STOPPED",
+  "execution_state": "blocked",
+  "qualified_for_IDA_export": false,
+  "primary_outcome": "SHA/PE32/function range validation and fail-closed preflight delivered. Current IDA installation is refused before launch. IDAPython exporter is an unexecuted draft.",
+  "scope": {
+    "owner_write_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "synthetic_fixture_only": true,
+    "new_LITO_source_analysis": false,
+    "game_or_fixture_execution": false,
+    "process_attach_or_real_game_inspection": false,
+    "installation_readonly": "D:\\IDA_Pro_7.7",
+    "writes_outside_owner_root_by_this_tool_route": 0,
+    "supervisor_or_other_owner_writes": 0,
+    "reverse_skill_installer_start_watchdog_invoked": false,
+    "new_wire_or_server_SQL_provider_work": false,
+    "stopped_private_backing_and_next_layer_boundaries_preserved": true,
+    "STOP_boundaries": [
+      "42E550",
+      "42E6D0",
+      "42EA50",
+      "495520_constructor_and_unknown_owner"
+    ],
+    "Native_GUI_and_server_refused_actions_preserved": true
+  },
+  "sources_and_schemas": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_request.py",
+      "bytes": 7516,
+      "sha256": "90904C006A1060C891277D1DADB04630EE76FFBC6CB261ED5F1F64E1E9B5AC40"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+      "bytes": 3388,
+      "sha256": "9CBE862C49BA8726FF92E9AFB0A1CC8E95673E8F89179BD2FAA411DF0486CF3A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_export.py",
+      "bytes": 7325,
+      "sha256": "26419AAF7AEC24305560B4C3C5CBA09ABA8B3219AA1F06C160F94365374E6B4A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\prepare_and_test.py",
+      "bytes": 9779,
+      "sha256": "B37788317981C3F9C5BD9882B858F535106B7C8E477109F3176FA8973BDB96C9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\publish_review.py",
+      "bytes": 14577,
+      "sha256": "9BEDDBA33B82B764C2F513730C5BC546BE58E120D3398FC5D0539A4BC6A5F9A8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\request.schema.json",
+      "bytes": 2482,
+      "sha256": "E316051C27D75AD0853F9266EDE5AF94A1BCFFE38046351DC4387712E125E4DF"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\result.schema.json",
+      "bytes": 9296,
+      "sha256": "F0BC2BDB5EB532FBE979A38B7F75068FDAD90E7B89D4428DB9613A3F1956C75F"
+    }
+  ],
+  "prior_ROOT_tool_qualification": {
+    "pin": {
+      "path": "D:\\lineage開發\\3-lito開發\\監製工作流\\ida77-offline-qualification-20261007.json",
+      "bytes": 3260,
+      "sha256": "C3580C78F234C5648531652486A59F532D5BDA8807BEE35B2BFE4DD13668B346"
+    },
+    "decision": "accepted_component_only",
+    "historical_IDA_version": "7.7.22.0118",
+    "historical_Python_version": "3.8.10 64bit",
+    "historical_fixture_result": "disassembly + expected direct call + Hex-Rays pseudocode + exit 0",
+    "replayed": false,
+    "isolation_certificate": false,
+    "limit": "Prior fixture functionality does not qualify auto-plugin egress/write safety."
+  },
+  "fixture": {
+    "source": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\supervisor\\ida77-qualification-20261007\\fixture.exe",
+      "bytes": 1025,
+      "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+    },
+    "owned_copy": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\fixtures\\fixture.exe",
+      "bytes": 1025,
+      "sha256": "5E8BD11307A3F9F6E323062E9C7FC7F9FF536471196613A931D3F94A2F8FF1E3"
+    },
+    "image_base": 4194304,
+    "allowlist": [
+      {
+        "rva": 4096,
+        "end_rva": 4109,
+        "va": 4198400,
+        "end_va": 4198413
+      },
+      {
+        "rva": 4112,
+        "end_rva": 4121,
+        "va": 4198416,
+        "end_va": 4198425
+      }
+    ],
+    "synthetic_fixture_executions": 0
+  },
+  "actual_new_test_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\new-tests.json",
+    "bytes": 12772,
+    "sha256": "EC1B33081BD81C0F738D259ED47C5744E0510E5C3BD7249A1915F61F57685FC1"
+  },
+  "actual_receipts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_input.json",
+      "bytes": 6233,
+      "sha256": "4BA657EAA97AA96936F18864D459A6230ACF9EA39481C437D7412293B8051D01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_execute_gate.json",
+      "bytes": 6361,
+      "sha256": "58D9859B0C6058D551BDB1C0F97DDB62BC0596536489735F4DD38EF4BD24AAD7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_sha.json",
+      "bytes": 308,
+      "sha256": "03CF63A67119DC44D4B66752424B83951AA01772260906F64E45BD84AFED23F8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\out_of_range.json",
+      "bytes": 285,
+      "sha256": "B7B8452C91814C0FF3246B5FAF0B9A285114A89392126AB1CF5F477A90A9DB8F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\empty_allowlist.json",
+      "bytes": 300,
+      "sha256": "F3938AC3AE450B182CA3757600C641B0CDE4217E3A30BAB27ABB9ACBA3BA5F6B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_base.json",
+      "bytes": 300,
+      "sha256": "BB0AC545AB6C0336F149539EAC072ECF06D4FE7F81E18589C2D5ECBEF41BC47B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\overlap.json",
+      "bytes": 297,
+      "sha256": "8225F469C832519D8C5A74F85D550725B6956B06A7313259D0C328AA612AD757"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\non_code_range.json",
+      "bytes": 307,
+      "sha256": "E687F52E7F8D8A5C56BE8A58EE8F080726D703E16D79D71314465E6183EAA467"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\excess_time_budget.json",
+      "bytes": 274,
+      "sha256": "D3B1B00F71429DDE051BF78620383C78488D3DA9FDE5187D3A3A5BF2AC3367E5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\unauthorized_scope.json",
+      "bytes": 315,
+      "sha256": "864C1801545DACF9D4C82671E31D8A455B58467B479934DEFCA427BD8C98D330"
+    }
+  ],
+  "actual_commands": {
+    "test_driver_argv": [
+      "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-B",
+      "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\prepare_and_test.py"
+    ],
+    "test_driver_exit_code": 0,
+    "runner_commands": [
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_input.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_input.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"status\": \"VALIDATED_INPUT_ONLY\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\positive_execute_gate.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\positive_execute_gate.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"STOPPED_UNSAFE_AUTOPLUGINS\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_sha.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_sha.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\out_of_range.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\out_of_range.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\empty_allowlist.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\empty_allowlist.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\wrong_base.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\wrong_base.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\overlap.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\overlap.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\non_code_range.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\non_code_range.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\excess_time_budget.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\excess_time_budget.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      },
+      {
+        "argv": [
+          "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+          "-B",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\ida77_runner.py",
+          "--request",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\requests\\unauthorized_scope.json",
+          "--receipt",
+          "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\receipts\\unauthorized_scope.json",
+          "--execute"
+        ],
+        "exit_code": 2,
+        "stdout": "{\"status\": \"REFUSED\", \"ida_started\": false}",
+        "stderr": "",
+        "ida_launches": 0
+      }
+    ],
+    "IDA_commands_executed": [],
+    "IDA_launches": 0
+  },
+  "required_case_results": {
+    "positive_request_validation": "PASS",
+    "positive_IDA_export": "NOT_RUN_UNSAFE_AUTOPLUGINS; not counted as an export PASS",
+    "positive_execute_preflight": "STOPPED_UNSAFE_AUTOPLUGINS; exit 2, PID null, no DB",
+    "wrong_SHA": "REFUSED/HASH_MISMATCH before IDA",
+    "out_of_range": "REFUSED/OUT_OF_RANGE before IDA",
+    "empty_allowlist": "REFUSED/EMPTY_ALLOWLIST before IDA",
+    "missing_decompiler": "Controlled classification tests PASS; installed IDA availability not retested"
+  },
+  "environment_audit": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-bounded-20261007\\environment-audit.json",
+    "bytes": 10017,
+    "sha256": "65E620DCCAC707316BFA4FF7922631D68EB8CE29B39CA08D6D5C9B20E3D9D75C"
+  },
+  "budgets": {
+    "declared_caps": {
+      "timeout_seconds": 60,
+      "max_functions": 8,
+      "max_function_bytes": 4096,
+      "max_instructions_per_function": 512,
+      "max_xrefs_per_function": 64,
+      "max_pseudocode_chars": 8192,
+      "max_output_bytes": 262144,
+      "max_job_disk_bytes": 67108864
+    },
+    "default_limits": {
+      "timeout_seconds": 30,
+      "max_functions": 8,
+      "max_function_bytes": 4096,
+      "max_instructions_per_function": 512,
+      "max_xrefs_per_function": 64,
+      "max_pseudocode_chars": 8192,
+      "max_output_bytes": 262144,
+      "max_job_disk_bytes": 67108864
+    },
+    "validated_before_launch": [
+      "file <=16MiB",
+      "PE32 i386 image <=64MiB",
+      "SHA256",
+      "imagebase",
+      "1..8 half-open non-overlapping executable raw-backed function ranges",
+      "allowlist byte cap",
+      "budget values"
+    ],
+    "receipt_output_limit_enforced_bytes": 262144,
+    "draft_exporter_limits": [
+      "cooperative time check",
+      "function/chunk/item/xref caps",
+      "pseudocode character cap",
+      "serialized output cap",
+      "loaded byte fingerprint checks"
+    ],
+    "external_hard_wall_timeout": "NOT_IMPLEMENTED_OR_TESTED; runner never launches IDA",
+    "max_job_disk_bytes": "DECLARED_NOT_ENFORCED; runner never creates a DB/job",
+    "native_autoanalysis_or_decompiler_call_duration_bound": "UNQUALIFIED",
+    "network_and_external_write_isolation": "UNQUALIFIED; no launch"
+  },
+  "export_policy": {
+    "only_listed_functions": true,
+    "xref_endpoints_metadata_only": true,
+    "incoming_xrefs": "direct references to listed function starts only",
+    "outgoing_xrefs": "direct references from listed items, excluding fallthrough",
+    "xref_target_function_body_traversal": false,
+    "row_provenance": [
+      "source_sha256",
+      "VA",
+      "RVA",
+      "IDA_version",
+      "evidence_level"
+    ],
+    "evidence_level": "synthetic_static_IDA_analysis_not_execution_or_GUI",
+    "IDA_API_and_HexRays_compatibility": "UNVERIFIED_DRAFT_NOT_RUN"
+  },
+  "fresh_database_policy": {
+    "old_IDB_overwrite": false,
+    "databases_created": 0,
+    "implementation": "Launch route absent; accepted future runner must create a fresh owned job/DB using -c/-o and refuse existing outputs.",
+    "candidate_argv_template_not_executed": [
+      "D:/IDA_Pro_7.7/idat.exe",
+      "-A",
+      "-c",
+      "-L<fresh-owned-job>/ida.log",
+      "-S<owned-exporter>",
+      "-o<fresh-owned-job>/fixture.idb",
+      "<owned-pinned-fixture>"
+    ],
+    "template_is_not_an_approved_launch_command": true
+  },
+  "documentation_context": [
+    {
+      "title": "Hex-Rays environment variables (8.4; not installed 7.7 isolation proof)",
+      "url": "https://docs.hex-rays.com/8.4/user-guide/user-interface/menu-bar/windows/environment-variables"
+    },
+    {
+      "title": "Hex-Rays command switches (9.0sp1; not installed 7.7 isolation proof)",
+      "url": "https://docs.hex-rays.com/9.0sp1/user-guide/configuration/command-line-switches"
+    }
+  ],
+  "minimal_next_input": "An accepted isolated plugin/egress/owned-write runtime profile plus an independently tested process-tree watchdog and disk budget. This requires a separate tool qualification; it does not authorize LITO re-analysis.",
+  "acceptance_limit": "Review the finite preflight/code handoff only. Do not mark the bounded IDA export tool or LITO analysis accepted/complete.",
+  "scope_write_correction_retained": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+    "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4",
+    "prior_automatic_cleanup_rejection": "blocked by policy",
+    "retry_or_external_cache_access": false
+  }
+}

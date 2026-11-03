@@ -1,0 +1,25 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\DecayPotionMaterialMethods.java",
+      "sha256": "dffb9d4bc02ff2031cf0f3d0a7c65b536ba7c061e8a538562053c0dae5905a62"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\NativeDecayPotionMaterialAction.java",
+      "sha256": "e16ac326221660223db76d74308c5e10d741c7198b6968e8d8556db3028aa6ba"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build.py",
+      "sha256": "52626a4102a2dd12dacd3a60cda80d5cab203355a05323bc128918fb8ca80428"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\build\\blind-material-audit\\inputs.json",
+      "sha256": "5abf4b755fcbdcddc6f332fdecdc46f44d0cfbf6711cb49421d5405634cf0ecb"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\prepare.py",
+      "sha256": "67923218ae4dbcfa52d6345474b676d6cf71fe2682b2a6c0d38e6700fff18d52"
+    }
+  ],
+  "scope": "two existing Blind40/103 roots; exact monitor/local layout from candidate bytecode; paired Source admission and transactional materials; no target eligibility redesign"
+}

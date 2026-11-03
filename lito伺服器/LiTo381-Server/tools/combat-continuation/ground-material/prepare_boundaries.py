@@ -1,0 +1,21 @@
+from pathlib import Path
+import json,hashlib
+R=Path(__file__).resolve().parent;W=R.parent/'weakness-material'
+t=(W/'WeaknessFaultProbe.java').read_text('utf-8').replace('Weakness','Ground')
+t=t.replace('static ClientSession active,recipient;', 'static ClientSession active,recipient;static GameHub activeHub;static boolean activeWorld;')
+t=t.replace('GroundMaterialProbe.selectedMode=0;probability(skill);','GroundMaterialProbe.selectedMode=0;activeHub=hub;activeWorld=world;')
+t=t.replace('!active(recipient,skill)', '(active(active,activeHub,activeWorld)>0)==before')
+t=t.replace('!active(peer,skill)', '(active(pc,hub,world)>0)==before')
+t=t.replace('for(int selectedSkill:SKILLS)', 'for(int selectedSkill:new int[]{63})')
+t=t.replace('faults==16','faults==8').replace('BattleTimedStatus.class','BattleGroundEffects.class')
+t=t.replace('"original target effect follows successful material save"','"legacy live ground lease precedes failed save; candidate has no provisional live lease"')
+t=t.replace('"failed material cannot activate target status"','"failed material leaves no ground lease in candidate"')
+t=t.replace('Map.of("weaknessFixturePercentileRoll",1,','Map.of(')
+t=t.replace('need(state.economy(key).inventory().get((long)material)==2,"retry memory ledger matches canonical inventory");','need(state.economy(key).inventory().get((long)material)==2,"retry memory ledger matches canonical inventory");need(active(pc,hub,world)>0,"retry installs ground lease after committed material");')
+(R/'GroundFaultProbe.java').write_text(t,encoding='utf-8')
+t=(W/'test_boundaries.py').read_text('utf-8').replace('Weakness','Ground')
+t=t.replace("('Fault','before',old,16),('Fault','after',jar,16),('Lifecycle','after',jar,112)","('Fault','before',old,8),('Fault','after',jar,8),('Lifecycle','after',jar,96)")
+t=t.replace("row['actual_memory_faults']==16","row['actual_memory_faults']==8").replace("(16 if mode=='before' else 0)","(8 if mode=='before' else 0)")
+(R/'test_boundaries.py').write_text(t,encoding='utf-8')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+(R/'boundary-adaptation.json').write_text(json.dumps(dict(inputs=[dict(path=str(p),sha256=sha(p))for p in[W/'WeaknessFaultProbe.java',W/'test_boundaries.py',Path(__file__)]],scope='native58/63 ground packets; memory commit fault63; scene/role/STOPPED/output, exact live-lease expiry/pulses, concurrent duplicate packets'),indent=2),encoding='utf-8')

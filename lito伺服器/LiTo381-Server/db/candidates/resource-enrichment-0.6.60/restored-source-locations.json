@@ -1,0 +1,46 @@
+{
+  "package_status": "未匯入、未接線",
+  "changes": [
+    {
+      "source_id": 1,
+      "original_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "resolved_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "resolved_member": null,
+      "pin_retained": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+      "already_restored": true
+    },
+    {
+      "source_id": 510,
+      "original_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "resolved_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "resolved_member": "local/lito381/server/BattleSpellCatalog.class",
+      "pin_retained": "2bd685d0320b2e3efee7f7ff12f05d79070078438558db2400bfeadb9630ff71",
+      "already_restored": true
+    },
+    {
+      "source_id": 511,
+      "original_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "resolved_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "resolved_member": "battle/spr-action-tw13081901.csv",
+      "pin_retained": "781991acb930bb3f1d831bed003b343080661b4492c9941437f7d6fd4be4f2bc",
+      "already_restored": true
+    },
+    {
+      "source_id": 518,
+      "original_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "resolved_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "resolved_member": "local/lito381/server/NativeMapItemCatalog.class",
+      "pin_retained": "1a5d4f301c7cc344baa51b00754522173acb2371ffb5b5fbd6ae8249a2461bd3",
+      "already_restored": true
+    },
+    {
+      "source_id": 519,
+      "original_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "resolved_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+      "resolved_member": "rental/retained-lito-rental-merchant-2010.tsv",
+      "pin_retained": "d1944b0b62c35f3abc59b8b10489ac90711db9010b1bb7b6f8275664b4bf0eb9",
+      "already_restored": true
+    }
+  ],
+  "old_hashes_preserved": true
+}

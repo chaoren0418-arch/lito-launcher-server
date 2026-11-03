@@ -1,0 +1,141 @@
+{
+  "task_id": "development-sql-login-repair-20261011",
+  "accepted_source_task_id": "server-memory-entry-terminal-cleanup-fix-20261010",
+  "source_task_id": "server-isolated-memory-rental-startup-restore-20261010",
+  "started_at": "2026-10-20T13:20:42.589730+00:00",
+  "run_id": "world-shared-test-20261020-01",
+  "product_complete": false,
+  "scope": "formal standard Main; shared read-only source databases; character_lito results only; single JVM; retained owned cleanup",
+  "state": "sealed-failed",
+  "instances": [
+    {
+      "role": "standard",
+      "argv": [
+        "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "-Xms512m",
+        "-Xmx2048m",
+        "-XX:ActiveProcessorCount=4",
+        "-Dlito.resourceProfile=tw13081901-v1",
+        "-Dlito.extendedItemDetails=true",
+        "-Dlito.commonCatalog=D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\common_catalog.bin",
+        "-jar",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\LiTo381-SharedPresentation-candidate.jar",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\runs\\world-shared-test-20261020-01\\config\\server.dev.standard.properties",
+        "--service-mode=standard"
+      ],
+      "cwd": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server",
+      "identity": {
+        "pid": 110760,
+        "birth_filetime": 134369760426281005,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "full7": {
+          "pid": 110760,
+          "filetime": "134369760426281005",
+          "path": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+          "image_sha256": "0D3815053960E0B7695A09E8C26406C53D92B13C71E946CCB6EB84E6A8028EDE",
+          "command_sha256": "AC93935FCA9308C4EF4AFBE1D310FC227C9A95DE3B35A74F3A0769E438B4E4A1",
+          "command_argv_digest": "C85C369D5EC47917BC154AD885627097281E7E80D9B88B2369C0D38B7EBF1EA3",
+          "parent_pid": 107276
+        }
+      },
+      "config": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\runs\\world-shared-test-20261020-01\\config\\server.dev.standard.properties",
+        "bytes": 285,
+        "sha256": "BF0DF5F2FEA485910C8D99AA9EA53EC86DA16B88271911B491A86F68969ACF1D"
+      },
+      "launch_at": "2026-10-20T13:20:42.633222+00:00",
+      "ready_timeout_seconds": 15,
+      "stdout": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\runs\\world-shared-test-20261020-01\\standard.stdout.log",
+      "stderr": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\candidate\\runs\\world-shared-test-20261020-01\\standard.stderr.log",
+      "ready": false
+    }
+  ],
+  "endpoint_checks": [],
+  "cleanup": [
+    {
+      "role": "standard",
+      "at": "2026-10-20T13:20:43.018378+00:00",
+      "retained_handle": true,
+      "expected_identity": {
+        "pid": 110760,
+        "birth_filetime": 134369760426281005,
+        "identity_source": "retained Popen process handle",
+        "image": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+        "full7": {
+          "pid": 110760,
+          "filetime": "134369760426281005",
+          "path": "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
+          "image_sha256": "0D3815053960E0B7695A09E8C26406C53D92B13C71E946CCB6EB84E6A8028EDE",
+          "command_sha256": "AC93935FCA9308C4EF4AFBE1D310FC227C9A95DE3B35A74F3A0769E438B4E4A1",
+          "command_argv_digest": "C85C369D5EC47917BC154AD885627097281E7E80D9B88B2369C0D38B7EBF1EA3",
+          "parent_pid": 107276
+        }
+      },
+      "terminated_by_owner": false,
+      "observed_lifetime_identity": {
+        "pid": 110760,
+        "birth_filetime": 134369760426281005,
+        "identity_source": "retained Popen process handle"
+      },
+      "exit_code": 1,
+      "exited": true,
+      "post_exit_lifetime_identity": {
+        "pid": 110760,
+        "birth_filetime": 134369760426281005,
+        "identity_source": "retained Popen process handle"
+      },
+      "handle_closed": true
+    }
+  ],
+  "sql_started": false,
+  "sql_connected": false,
+  "native_started": false,
+  "payload_bytes_sent": 0,
+  "preflight": {
+    "at": "2026-10-20T13:20:42.591979+00:00",
+    "listeners": [],
+    "exclusive_bind_checks": [
+      {
+        "host": "127.0.0.1",
+        "port": 32000,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 32001,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.1",
+        "port": 32002,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32000,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32001,
+        "exclusive_bind_available": true
+      },
+      {
+        "host": "127.0.0.2",
+        "port": 32002,
+        "exclusive_bind_available": true
+      }
+    ]
+  },
+  "cleanup_errors": [],
+  "cleanup_order": [
+    "standard"
+  ],
+  "owned_listeners_remaining": [],
+  "target_listeners_after_cleanup": [],
+  "cleanup_verified": true,
+  "finished_at": "2026-10-20T13:20:43.022368+00:00",
+  "elapsed_seconds": 0.437,
+  "accepted": false
+}

@@ -1,0 +1,125 @@
+{
+  "version": "0.6.70",
+  "status": "published-and-verified",
+  "at": "2026-10-23T03:45:32.785039+08:00",
+  "user_acceptance": {
+    "lobby": [
+      "dragon knight",
+      "illusionist"
+    ],
+    "room": [
+      "dragon knight",
+      "illusionist"
+    ],
+    "result_screen": "native fixture verified; no new manual confirmation"
+  },
+  "runtime": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\LiTo381Launcher.exe",
+      "bytes": 132096,
+      "sha256": "8d9202e7f75d36c6bb520086fda29b118cb017ec2e409a6d12ac00a368ecd1fa"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\LiTo381Launcher.dll",
+      "bytes": 407552,
+      "sha256": "b841df420cdc97582a280ac6baede9c87a170448a3a5c85eda768e19a35aa6e0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\release\\current\\development_startup.py",
+      "bytes": 29572,
+      "sha256": "3670f1ec927fd548babd534cde9efd13c93bd24903c88eac16f14574d5735fd4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\litoddraw.dll",
+      "bytes": 269824,
+      "sha256": "e47bd6c6ec9979c8747a523e4457133802d19f673c8dc1e67707abfa96216a8a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+      "bytes": 20049056,
+      "sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\Start-Shared-World.py",
+      "bytes": 29817,
+      "sha256": "b93cf124aca916f904d9790c1f16b226385632aa0285d674f8352434edbda2b3"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\lito_runtime_probe_named.py",
+      "bytes": 442021,
+      "sha256": "16311c07dda9fd06118d628609e58faa20d352fdf5ec65cff29a16cf3c78f136"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\compat\\shared_status.bin",
+      "bytes": 1924,
+      "sha256": "ba91b436034ce04c5a77bc626af1355ede8766dd72a353b0ad0ec5aaf069b198"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.idx",
+      "bytes": 6640,
+      "sha256": "f7fc014fb3c2c723fa11b86e1929c24d325995055cb0e2889ea61c3cdc25ad9f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.pak",
+      "bytes": 276228,
+      "sha256": "23db693b33e03b576483ed572a58350dfc7a6caf31d10ac364c223341eff37b7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\deployment\\release-inputs.json",
+      "bytes": 387,
+      "sha256": "d0cdc9b716298a7b2b7ee89fff58ee9e60c55069e274e913280f8a414ad00d43"
+    }
+  ],
+  "candidate": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\qualification.json",
+    "bytes": 6778,
+    "sha256": "2307668ea520c5167c3d134e8ca4e1fa8bbbd7f901f9d415a7cbb540bbf23c79"
+  },
+  "rollback": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\pre-0.6.70-changed-files.zip",
+    "bytes": 11116928,
+    "sha256": "fb438d918cdc37f10ba1dad60846c304f0f41fe887697b4b589c58fa4c12a8c8"
+  },
+  "native_validation": {
+    "pins": true,
+    "server_release_verified": true,
+    "formal_input_gate_verified": true,
+    "hash_case_and_mismatch_regression": true,
+    "footer_removed": true,
+    "class_compatibility": {
+      "png_objects": 1128,
+      "seven_class_hooks": true,
+      "lobby_draw_hook": true,
+      "new_class_names": [
+        "龍騎士",
+        "龍騎士",
+        "幻術士",
+        "幻術士"
+      ],
+      "class_skill_hooks": true,
+      "forced_combat_send_hook": "0x709233a0"
+    },
+    "class_icons": {
+      "count": 243,
+      "exact_new_icon_pixels": 10,
+      "render_hooks": 3,
+      "formal_archive": true,
+      "no_generic_client_ddraw": true
+    },
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1792698175013332000"
+  },
+  "bat_sql_preflight": true,
+  "historical_candidate_preflight": true,
+  "client_bin_modified": false,
+  "original_client_archives_modified": false,
+  "source_database_modified": false,
+  "baseline_retained": "0.6.66",
+  "shortcut": "C:\\Users\\CHAOREN\\Desktop\\LiTo 0.6.70 正式啟動器.lnk",
+  "limits": [
+    "This publication does not certify completion of all combat-skill development.",
+    "Native UI smoke used owned stop cleanup; manual logout is not inferred."
+  ]
+}

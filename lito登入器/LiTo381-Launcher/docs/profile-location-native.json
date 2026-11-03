@@ -1,0 +1,45 @@
+{
+  "run": "class-lobby-fixture-1791852053709872400",
+  "locations": [
+    {
+      "phase": 1,
+      "context_room": 0,
+      "display_room": 0,
+      "peer_room": 37
+    },
+    {
+      "phase": 2,
+      "context_room": 1,
+      "display_room": 1,
+      "peer_room": 37
+    },
+    {
+      "phase": 1,
+      "context_room": 1,
+      "display_room": 0,
+      "peer_room": 37
+    },
+    {
+      "phase": 1,
+      "context_room": 1,
+      "display_room": 0,
+      "peer_room": 37
+    }
+  ],
+  "summary_cycles": [
+    {
+      "result": 5,
+      "summary": 2,
+      "native_confirm_lobby": 1,
+      "world": 4
+    },
+    {
+      "result": 5,
+      "summary": 2,
+      "native_confirm_lobby": 1,
+      "world": 4
+    }
+  ],
+  "native_draw_hook": true,
+  "no_player_sql_writes": true
+}

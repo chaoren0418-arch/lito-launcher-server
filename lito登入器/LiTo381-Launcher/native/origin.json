@@ -1,0 +1,5 @@
+{
+  "source": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Compat\\ddraw_proxy.cpp",
+  "sha256": "c1461c7841feb610cfdf9c361aa2ab1603246c6ce0e0f29a8628546f4079a7a9",
+  "change": "optional startup gate before Initialize; existing rendering implementation retained"
+}

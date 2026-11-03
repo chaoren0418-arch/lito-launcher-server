@@ -1,0 +1,185 @@
+{
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+    "bytes": 35225,
+    "sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2"
+  },
+  "all_match": true,
+  "new_code_ranges": 24,
+  "new_data_ranges": 7,
+  "inherited_raw_slices": 3,
+  "instruction_assertions": 67,
+  "aligned_in_slice_branch_targets": 20,
+  "branches": [
+    {
+      "va": "0046F8C4",
+      "target": "0046F8CD",
+      "aligned": true
+    },
+    {
+      "va": "0046F91B",
+      "target": "0046F93C",
+      "aligned": true
+    },
+    {
+      "va": "004D3DC8",
+      "target": "004D3DDA",
+      "aligned": true
+    },
+    {
+      "va": "004D3DDF",
+      "target": "004D3DF1",
+      "aligned": true
+    },
+    {
+      "va": "004D43DD",
+      "target": "004D43FA",
+      "aligned": true
+    },
+    {
+      "va": "004658B8",
+      "target": "0046591A",
+      "aligned": true
+    },
+    {
+      "va": "004658C1",
+      "target": "00465913",
+      "aligned": true
+    },
+    {
+      "va": "0046B94B",
+      "target": "0046B9BF",
+      "aligned": true
+    },
+    {
+      "va": "0046B953",
+      "target": "0046B969",
+      "aligned": true
+    },
+    {
+      "va": "0046B95F",
+      "target": "0046B9BF",
+      "aligned": true
+    },
+    {
+      "va": "0046B967",
+      "target": "0046B991",
+      "aligned": true
+    },
+    {
+      "va": "0046B96C",
+      "target": "0046B9A0",
+      "aligned": true
+    },
+    {
+      "va": "0046B978",
+      "target": "0046B9BF",
+      "aligned": true
+    },
+    {
+      "va": "0046B980",
+      "target": "0046B9BF",
+      "aligned": true
+    },
+    {
+      "va": "0046B98A",
+      "target": "0046B991",
+      "aligned": true
+    },
+    {
+      "va": "0046B991",
+      "target": "0046B9BF",
+      "aligned": true
+    },
+    {
+      "va": "0046B99E",
+      "target": "0046B9AF",
+      "aligned": true
+    },
+    {
+      "va": "0046B9CB",
+      "target": "0046B93C",
+      "aligned": true
+    },
+    {
+      "va": "004681C3",
+      "target": "004681D0",
+      "aligned": true
+    },
+    {
+      "va": "004681CE",
+      "target": "004681D5",
+      "aligned": true
+    }
+  ],
+  "locale_models": [
+    {
+      "selector": 932,
+      "expected": "j",
+      "computed": "j"
+    },
+    {
+      "selector": 936,
+      "expected": "h",
+      "computed": "h"
+    },
+    {
+      "selector": 949,
+      "expected": "k",
+      "computed": "k"
+    },
+    {
+      "selector": 950,
+      "expected": "c",
+      "computed": "c"
+    },
+    {
+      "selector": 933,
+      "expected": "e",
+      "computed": "e"
+    },
+    {
+      "selector": -1,
+      "expected": "e",
+      "computed": "e"
+    },
+    {
+      "selector": 951,
+      "expected": "e",
+      "computed": "e"
+    }
+  ],
+  "BYTE_predicate_models": [
+    {
+      "BYTE_hex": "00",
+      "computed": "conditional-table-title-index",
+      "expected": "conditional-table-title-index"
+    },
+    {
+      "BYTE_hex": "7F",
+      "computed": "conditional-table-title-index",
+      "expected": "conditional-table-title-index"
+    },
+    {
+      "BYTE_hex": "80",
+      "computed": "negative-version-branch",
+      "expected": "negative-version-branch"
+    },
+    {
+      "BYTE_hex": "9A",
+      "computed": "negative-version-branch",
+      "expected": "negative-version-branch"
+    },
+    {
+      "BYTE_hex": "FF",
+      "computed": "negative-version-branch",
+      "expected": "negative-version-branch"
+    }
+  ],
+  "existing_resources": 5,
+  "raw_decoded_asset_pins": 10,
+  "prior_immutable_pins": 22,
+  "first_external_private_boundaries_stopped": true,
+  "actual_table_generation_locale_loaded_resource_or_NativeUI_qualified": false,
+  "Batch20_PASS_replayed": false
+}

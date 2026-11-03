@@ -1,0 +1,669 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "inventory": {
+    "0064AD74": [
+      {
+        "literal_storage": {
+          "va": "00469B4D",
+          "rva": "00069B4D",
+          "section": "   \u0000    ",
+          "file_offset": "00069B4D",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469B4C",
+          "rva": "00069B4C",
+          "section": "   \u0000    ",
+          "file_offset": "00069B4C",
+          "raw_backed": true,
+          "raw_hex": "bf74ad6400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64ad74",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-00469B10.bin",
+            "bytes": 304,
+            "sha256": "20E4398A85360CA48F3BC8F0A2CA5F9656AC36602FA071D8833A367D6528380F"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046F13C",
+          "rva": "0006F13C",
+          "section": "   \u0000    ",
+          "file_offset": "0006F13C",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046F13B",
+          "rva": "0006F13B",
+          "section": "   \u0000    ",
+          "file_offset": "0006F13B",
+          "raw_backed": true,
+          "raw_hex": "bf74ad6400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64ad74",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+            "bytes": 551,
+            "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00476100",
+          "rva": "00076100",
+          "section": "   \u0000    ",
+          "file_offset": "00076100",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004760FF",
+          "rva": "000760FF",
+          "section": "   \u0000    ",
+          "file_offset": "000760FF",
+          "raw_backed": true,
+          "raw_hex": "6874ad6400",
+          "mnemonic": "push",
+          "operands": "0x64ad74",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+            "bytes": 608,
+            "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00476114",
+          "rva": "00076114",
+          "section": "   \u0000    ",
+          "file_offset": "00076114",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00476113",
+          "rva": "00076113",
+          "section": "   \u0000    ",
+          "file_offset": "00076113",
+          "raw_backed": true,
+          "raw_hex": "6874ad6400",
+          "mnemonic": "push",
+          "operands": "0x64ad74",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+            "bytes": 608,
+            "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0047C9D1",
+          "rva": "0007C9D1",
+          "section": "   \u0000    ",
+          "file_offset": "0007C9D1",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047C9D0",
+          "rva": "0007C9D0",
+          "section": "   \u0000    ",
+          "file_offset": "0007C9D0",
+          "raw_backed": true,
+          "raw_hex": "bf74ad6400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64ad74",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+            "bytes": 533,
+            "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      }
+    ],
+    "0064AD54": [
+      {
+        "literal_storage": {
+          "va": "00492F43",
+          "rva": "00092F43",
+          "section": "   \u0000    ",
+          "file_offset": "00092F43",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00492F42",
+          "rva": "00092F42",
+          "section": "   \u0000    ",
+          "file_offset": "00092F42",
+          "raw_backed": true,
+          "raw_hex": "bf54ad6400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64ad54",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004928C0.bin",
+            "bytes": 1746,
+            "sha256": "C2E6FE5A8C6CFD8F437BEB0D35204035AB71710DED24E68312120426DD237810"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "004A76A4",
+          "rva": "000A76A4",
+          "section": "   \u0000    ",
+          "file_offset": "000A76A4",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004A76A3",
+          "rva": "000A76A3",
+          "section": "   \u0000    ",
+          "file_offset": "000A76A3",
+          "raw_backed": true,
+          "raw_hex": "6854ad6400",
+          "mnemonic": "push",
+          "operands": "0x64ad54",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004A7550.bin",
+            "bytes": 371,
+            "sha256": "620C25295EFE8F75C78D9B177674E8D7AD651B0952DF060F6F763F2A374A3F2B"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      }
+    ],
+    "0064AD70": [
+      {
+        "literal_storage": {
+          "va": "00469B7D",
+          "rva": "00069B7D",
+          "section": "   \u0000    ",
+          "file_offset": "00069B7D",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469B7A",
+          "rva": "00069B7A",
+          "section": "   \u0000    ",
+          "file_offset": "00069B7A",
+          "raw_backed": true,
+          "raw_hex": "66c70570ad6400d007",
+          "mnemonic": "mov",
+          "operands": "word ptr [0x64ad70], 0x7d0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-00469B10.bin",
+            "bytes": 304,
+            "sha256": "20E4398A85360CA48F3BC8F0A2CA5F9656AC36602FA071D8833A367D6528380F"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00469B90",
+          "rva": "00069B90",
+          "section": "   \u0000    ",
+          "file_offset": "00069B90",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469B8D",
+          "rva": "00069B8D",
+          "section": "   \u0000    ",
+          "file_offset": "00069B8D",
+          "raw_backed": true,
+          "raw_hex": "0fbf0d70ad6400",
+          "mnemonic": "movsx",
+          "operands": "ecx, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-00469B10.bin",
+            "bytes": 304,
+            "sha256": "20E4398A85360CA48F3BC8F0A2CA5F9656AC36602FA071D8833A367D6528380F"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00469C49",
+          "rva": "00069C49",
+          "section": "   \u0000    ",
+          "file_offset": "00069C49",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469C46",
+          "rva": "00069C46",
+          "section": "   \u0000    ",
+          "file_offset": "00069C46",
+          "raw_backed": true,
+          "raw_hex": "66890d70ad6400",
+          "mnemonic": "mov",
+          "operands": "word ptr [0x64ad70], cx",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00469BD0.bin",
+            "bytes": 189,
+            "sha256": "9F3BF8593BF5029CED3C686B6EA468DF44F0F2BE42DD2F079C43EABE679B4C4C"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00469C55",
+          "rva": "00069C55",
+          "section": "   \u0000    ",
+          "file_offset": "00069C55",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00469C52",
+          "rva": "00069C52",
+          "section": "   \u0000    ",
+          "file_offset": "00069C52",
+          "raw_backed": true,
+          "raw_hex": "0fbf1570ad6400",
+          "mnemonic": "movsx",
+          "operands": "edx, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00469BD0.bin",
+            "bytes": 189,
+            "sha256": "9F3BF8593BF5029CED3C686B6EA468DF44F0F2BE42DD2F079C43EABE679B4C4C"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046EEC7",
+          "rva": "0006EEC7",
+          "section": "   \u0000    ",
+          "file_offset": "0006EEC7",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046EEC5",
+          "rva": "0006EEC5",
+          "section": "   \u0000    ",
+          "file_offset": "0006EEC5",
+          "raw_backed": true,
+          "raw_hex": "66a370ad6400",
+          "mnemonic": "mov",
+          "operands": "word ptr [0x64ad70], ax",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-0046ED50.bin",
+            "bytes": 704,
+            "sha256": "9F14E1FA1CE72FE7D1421B4190B8E3EF30B1AAFE2F9924FE5F2B6263ADA2FFE3"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046EEEF",
+          "rva": "0006EEEF",
+          "section": "   \u0000    ",
+          "file_offset": "0006EEEF",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046EEED",
+          "rva": "0006EEED",
+          "section": "   \u0000    ",
+          "file_offset": "0006EEED",
+          "raw_backed": true,
+          "raw_hex": "66a170ad6400",
+          "mnemonic": "mov",
+          "operands": "ax, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-0046ED50.bin",
+            "bytes": 704,
+            "sha256": "9F14E1FA1CE72FE7D1421B4190B8E3EF30B1AAFE2F9924FE5F2B6263ADA2FFE3"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046EF6C",
+          "rva": "0006EF6C",
+          "section": "   \u0000    ",
+          "file_offset": "0006EF6C",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046EF69",
+          "rva": "0006EF69",
+          "section": "   \u0000    ",
+          "file_offset": "0006EF69",
+          "raw_backed": true,
+          "raw_hex": "0fbf1570ad6400",
+          "mnemonic": "movsx",
+          "operands": "edx, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\VA-0046ED50.bin",
+            "bytes": 704,
+            "sha256": "9F14E1FA1CE72FE7D1421B4190B8E3EF30B1AAFE2F9924FE5F2B6263ADA2FFE3"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046F118",
+          "rva": "0006F118",
+          "section": "   \u0000    ",
+          "file_offset": "0006F118",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046F116",
+          "rva": "0006F116",
+          "section": "   \u0000    ",
+          "file_offset": "0006F116",
+          "raw_backed": true,
+          "raw_hex": "66a170ad6400",
+          "mnemonic": "mov",
+          "operands": "ax, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+            "bytes": 551,
+            "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046F179",
+          "rva": "0006F179",
+          "section": "   \u0000    ",
+          "file_offset": "0006F179",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046F176",
+          "rva": "0006F176",
+          "section": "   \u0000    ",
+          "file_offset": "0006F176",
+          "raw_backed": true,
+          "raw_hex": "66c70570ad6400d007",
+          "mnemonic": "mov",
+          "operands": "word ptr [0x64ad70], 0x7d0",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+            "bytes": 551,
+            "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0046F21A",
+          "rva": "0006F21A",
+          "section": "   \u0000    ",
+          "file_offset": "0006F21A",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0046F217",
+          "rva": "0006F217",
+          "section": "   \u0000    ",
+          "file_offset": "0006F217",
+          "raw_backed": true,
+          "raw_hex": "0fbf1570ad6400",
+          "mnemonic": "movsx",
+          "operands": "edx, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-0046F010.bin",
+            "bytes": 551,
+            "sha256": "891E2048151DC3EAC2077D450CA3B85952528107D3C5F192FCEA9077C3B47F94"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "004C6CC2",
+          "rva": "000C6CC2",
+          "section": "   \u0000    ",
+          "file_offset": "000C6CC2",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004C6CBF",
+          "rva": "000C6CBF",
+          "section": "   \u0000    ",
+          "file_offset": "000C6CBF",
+          "raw_backed": true,
+          "raw_hex": "0fbf0570ad6400",
+          "mnemonic": "movsx",
+          "operands": "eax, word ptr [0x64ad70]",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6B30.bin",
+            "bytes": 1614,
+            "sha256": "A0439837221DE9F9605190A254D8224ABDA0B63E8EC90FC60C0495DF1CAEAFFB"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      }
+    ],
+    "0064B7E4": [
+      {
+        "literal_storage": {
+          "va": "0047C944",
+          "rva": "0007C944",
+          "section": "   \u0000    ",
+          "file_offset": "0007C944",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047C943",
+          "rva": "0007C943",
+          "section": "   \u0000    ",
+          "file_offset": "0007C943",
+          "raw_backed": true,
+          "raw_hex": "bae4b76400",
+          "mnemonic": "mov",
+          "operands": "edx, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+            "bytes": 533,
+            "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "0047C9BD",
+          "rva": "0007C9BD",
+          "section": "   \u0000    ",
+          "file_offset": "0007C9BD",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "0047C9BC",
+          "rva": "0007C9BC",
+          "section": "   \u0000    ",
+          "file_offset": "0007C9BC",
+          "raw_backed": true,
+          "raw_hex": "bfe4b76400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+            "bytes": 533,
+            "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "004806F7",
+          "rva": "000806F7",
+          "section": "   \u0000    ",
+          "file_offset": "000806F7",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "004806F6",
+          "rva": "000806F6",
+          "section": "   \u0000    ",
+          "file_offset": "000806F6",
+          "raw_backed": true,
+          "raw_hex": "68e4b76400",
+          "mnemonic": "push",
+          "operands": "0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-00480620.bin",
+            "bytes": 335,
+            "sha256": "856AB2861C9EE5C5C15E7829ED1F9A2B0F9824CBC078434F803C25604F0FAAEE"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00480BC2",
+          "rva": "00080BC2",
+          "section": "   \u0000    ",
+          "file_offset": "00080BC2",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00480BC1",
+          "rva": "00080BC1",
+          "section": "   \u0000    ",
+          "file_offset": "00080BC1",
+          "raw_backed": true,
+          "raw_hex": "bfe4b76400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00480A60.bin",
+            "bytes": 631,
+            "sha256": "EB9864D8467A5E4B44D02AE593B362586A2984A38F6A986D9E2D066B7B52F4B1"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00480C78",
+          "rva": "00080C78",
+          "section": "   \u0000    ",
+          "file_offset": "00080C78",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00480C77",
+          "rva": "00080C77",
+          "section": "   \u0000    ",
+          "file_offset": "00080C77",
+          "raw_backed": true,
+          "raw_hex": "bfe4b76400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00480A60.bin",
+            "bytes": 631,
+            "sha256": "EB9864D8467A5E4B44D02AE593B362586A2984A38F6A986D9E2D066B7B52F4B1"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00481862",
+          "rva": "00081862",
+          "section": "   \u0000    ",
+          "file_offset": "00081862",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00481861",
+          "rva": "00081861",
+          "section": "   \u0000    ",
+          "file_offset": "00081861",
+          "raw_backed": true,
+          "raw_hex": "bfe4b76400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00481831.bin",
+            "bytes": 70,
+            "sha256": "E416B71BB2C098B3F6FAAFB36B7F54214E7E14A37C34627891F33E2B7F3AFC12"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      },
+      {
+        "literal_storage": {
+          "va": "00481DDD",
+          "rva": "00081DDD",
+          "section": "   \u0000    ",
+          "file_offset": "00081DDD",
+          "raw_backed": true
+        },
+        "confirmed_aligned_instruction": {
+          "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+          "va": "00481DDC",
+          "rva": "00081DDC",
+          "section": "   \u0000    ",
+          "file_offset": "00081DDC",
+          "raw_backed": true,
+          "raw_hex": "bfe4b76400",
+          "mnemonic": "mov",
+          "operands": "edi, 0x64b7e4",
+          "range": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00481DC7.bin",
+            "bytes": 38,
+            "sha256": "3BB013D5DB0AC254E806C91FC8968DFB091F6C2B41827E5FF5F38A722B40D259"
+          }
+        },
+        "classification": "Confirmed instruction operand, not independent writer/clear proof"
+      }
+    ]
+  },
+  "scope": "Only these four fixed-address literal patterns; no wholeprogram decode, alias completeness or transitive callback claim",
+  "clear_result": "No confirmedliteraloperand is a direct savedhost/name clear. Other aliases,bulk clears orprivateinitialization remain unknown."
+}

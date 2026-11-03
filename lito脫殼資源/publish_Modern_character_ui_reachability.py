@@ -1,0 +1,83 @@
+"""Seal Batch34 source-reachable UI and existing original asset reuse proposal."""
+import sys
+sys.dont_write_bytecode=True
+from audit import *
+from seal_delta import seal
+
+def load(name):return json.loads((ROOT/name).read_text('utf-8'))
+def main():
+    folder=ROOT/'Modern-character-ui-reachability';p=load('Modern-character-ui-reachability-contract.json');primary=record(ROOT/'Modern-character-ui-reachability-contract.json');v=p['verification'];r=load('Modern-character-ui-reachability/finite-static-review.json')
+    assert r['all_match'] and r['primary']==primary and r['anchor_count']==47 and v['prior_primary_pins_preserved']==35
+    for q in p['outputs']+p['sources']+list(p['existing_evidence'].values()):assert record(Path(q['path']))=={k:q[k] for k in ['path','bytes','sha256']}
+    for q in p['prior_primary_pins']:assert record(Path(q['path']))['sha256']==q['expected_sha256']
+    assert record(ROOT/'server-packet-delta.json')==v['server_packet_unchanged']
+    native=load('Modern-character-ui-reachability/Native-existing-asset-metadata.json');classic=load('Modern-character-ui-reachability/Lineage-existing-selection-asset-metadata.json')
+    lines=['# 既有選角圖資與座標索引','', '只讀既有檔案／IMG header／PNG IHDR／既有 JSON 與 plist；沒有新增解圖、裁切或美術。SHA 與路徑採讀取當下前後一致的封存值，外部後續修改不要求 freeze。Native LiTo 與經典版 Lineage 是不同圖資家族。','', '|家族／用途|既有絕對路徑|Bytes|SHA256|尺寸|','|---|---|---:|---|---|']
+    for x in native['selected_native_assets']:
+        q=x['raw_read']['source_before'];d=x['dimensions_from_existing_IMG_header'];role='進入角色' if x['member']['name'] in ['6303.img','6304.img'] else '返回'
+        lines.append(f"|Native LTsurf {x['member']['name']}／{role}|{q['path']}|{q['bytes']}|{q['sha256']}|{d['width']}×{d['height']}|")
+    for x in classic['selected_preexisting_PNG_assets']:
+        q=x['read']['source_before'];d=x['PNG_IHDR_dimensions']
+        lines.append(f"|經典版 {x['frame_name']}|{q['path']}|{q['bytes']}|{q['sha256']}|{d['width']}×{d['height']}|")
+    lines+=['','Native 四個按鈕已在候選 skin binding 指定，window owner draw 有 normal/pressed 選擇及文字 fallback；本批沒有畫面驗收。SUBMIT=(497,404,51,23)，BACK=(552,404,51,23)；Modern resize 加 vertical232 並做 DPI scale。Native x19/176/333/490、y0 是四個既有控制描述，不證明 record 容量。來源函式／行號／SHA 在 character-flow-findings.json 的 U04、D03，既有 Native R498 report 的原始 pin 在 Native-existing-asset-metadata.json。','', '經典版既有 CSB 場景1280×960，Layout center640,480；ListView local(-545,-55)、1100×534；OK local(478,-339)、110×38；Cancel local(478,-374)、192×35。local position／anchor／scale 與 Modern 螢幕／Native hit coordinate 不可直接混用。','', '|經典版座標／圖集來源|Bytes|SHA256|','|---|---:|---|']
+    for q in [x['read']['source_before'] for x in classic['layout_reads']]+[classic['atlas_plist_read']['source_before']]:lines.append(f"|{q['path']}|{q['bytes']}|{q['sha256']}|")
+    lines+=['','|既有 PNG frame|plist frame|rotated|','|---|---|---|']
+    for x in classic['selected_preexisting_PNG_assets']:
+        f=x['existing_plist_frame_metadata'];lines.append(f"|{x['frame_name']}|{f['frame']}|{f['rotated']}|")
+    lines+=['','以上五個經典版 PNG 尚未在已讀 Modern window/skin closure 中載入。plist rotation 是圖集來源資料，已有 PNG 自身尺寸另由 IHDR 驗證。本批未執行裁切。Native 79/80 的既有查找缺口只限已封存 R498／精確 LTsurf index，不能說所有資源都不存在；不以經典版檔名推 Native class／sex portrait mapping。','']
+    (folder/'existing-assets-and-coordinates.md').write_text('\n'.join(lines),encoding='utf-8')
+    (folder/'READ-ME.txt').write_text('''第三十四批：選角 source reachability 與原始 UI 既有圖資最小採用建議
+
+主入口 ../Modern-character-ui-reachability-contract.json。
+character-flow-findings.json：8項，每項 source SHA／function／line／trigger／行為／資格限制。
+finite-call-chains.json：3條有限 callchain。count-slot-route-matrix.json：0..8共9個描述性來源政策例，沒有執行 Modern function/model/test。
+read-provenance-catalog.json：12 source snapshots／10 sourcefiles及既有圖資/入口 metadata，共30次前/content/後hash一致讀取；0tentative。三段 window capture 同一 SHA。每次讀取穩定，不是 atomic R526 source/build：presentation 已含新readyfield，Runtime是較早讀取時刻；不能授跨檔compile或GUI/runtime acceptance。自有capture是交接依賴，外部後續可變，不freeze、不打斷R526。
+
+核心結論：已讀 explicit R525 Java adapter candidate 的角色5～8（index4..7）有完整可達的 source 選取／詳細資料／送出路徑，沒有找到功能性四列截斷。四個slot／0x4960..4963 command只限另一套 direct buttons，在 Directory 被隱藏；不是全名單容量。
+候選入口 route37(--candidate-java-bootstrap) -> run94 -> candidate_java_entry193 -> window146/157 configures adapter；valid GAME S03／exactN CB -> Runtime148/149 StageDirectory+complete -> window refresh35/47/50..54，把全部0..N-1列插入COMBOBOX並建opaque controls。
+window155/156建立WS_TABSTOP／WS_VSCROLL／CBS_DROPDOWNLIST(ID8036)；proc130 CBN_SELCHANGE -> checked absoluteusize -> directory_controls.get -> entrycommands58..62 -> Runtime176..180 ChooseCharacter(double_click:false) -> Scene.select18(沒有4bound) -> refresh54selecteddetail／33submitToken -> proc127 -> Runtime182/183 selectionrevision再驗證 ->214bounded8 ownedrow／215rawname -> Sender30 typedC9 exactname+NUL。這是 conditional source route/local reservation，沒有 physicalsend／server ACK／GUI操作。
+count0完整empty但無可選列；完整count1..8保留全部N筆資料；missing／stale／pending／不符epoch拒絕，不自動row0，不從index/name推physicalObjectId/sourceId/self/owner。
+
+分類：4 source already reachable(U01..U04)；1 source-proven scoped render gap(G01)；3 GUI/design open(D01..D03)。
+G01：parent paint111是systembackground+Maps menu/frame+Channel background+11×11source icon；WM_DRAWITEM123僅Enter/Back/channel。Directory文字combo／STATICdetails與direct四個BS_NOTIFY文字buttons未接原生portrait/selectionbackdrop/animation。四個原始 actionbutton images已有Skin36與draw115..117路徑；不是角色5～8選取缺口，也不是Native全域GUI不存在。
+D01：正常src/main默认RoutePick/profile133..145接SessionController/login_window；explicitR525candidate另外接上述Nativeadapter。正常入口採用是後續產品決策，本批不推部署exe或TLS選角broken。
+D02：實際DPI／clip／focus／keyboard／字型／八列可見與doubleclick wording仍需GUI驗收；共用hint提到雙擊，但Directory命令explicitdouble_click:false，只有directbuttons有BN_DOUBLECLICKED。選取+明確按進入角色已提供所有列source路徑。
+D03：Native與經典版兩個圖資家族需選定座標、縮放和portraitmapping，不混用／不猜Native storage容量。
+
+existing-assets-and-coordinates.md列9個可重用檔的絕對path／SHA／bytes／dimension及來源座標。Native-existing-asset-metadata.json：既有archive manifest、LTsurfindex、R498封存metadata與四個51×23 IMG headers。Lineage-existing-selection-asset-metadata.json：經典版5個既有PNG(1280×960background、110×38OK normal/pressed、192×35Cancel normal/pressed)、CSB localgeometry與OutGames.plist crop/rotation。未解圖／生成／裁切／修改assets；經典版未在currentModernsource載入。
+minimal-original-UI-adoption-proposal.json：保留現在完整0..8 ownedlist/details與opaqueabsoluteindex/rawname，先沿用已綁Native原始Enter/Back按鈕；若要經典版風格，用同一家族既有5PNG與CSBListView做fullN呈現並保留dropdownfallback。不重寫已存在選取／送出guard，不減server8policy，不新增art或wire，不猜Nativeportrait/animationhelper。
+
+監製已派M09/M10為R526 ACTIVE；本批未打斷、執行或修改。M13監製訊息說後續corrected ready handoff SHA3F31E26FF006B132C4531BA53811597D3D8EF8581531AD04E8599B0C2B170947已處理；本批只保留message-time背景，沒有讀／升格該報告，Batch33保持原封存。
+35priorprimarypins不變，215staticchecks/47anchors只驗自有captures與immutablepins，不是Rust/NativeGUI PASS。新code/data/raw/assert/capture/wire/opcode/correction、Modernedit、art、branch/test/build/GUIrun均0，serverpacket B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C不變；不通知server。
+只寫自有ROOT、Python-B/dont_write_bytecode；沒有Native/input/injection/JavaSQL/provider/JVM或unknown/private/virtual/externalcallee bodies，沒有WORLD/bot/matching擴張，沒有oldPASS/generator/review replay。
+此前externalpyc清理被automaticapprovalreview以blocked by policy拒絕，scope-write-correction SHA B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4不變、仍open；沒有重試／改述／轉派／替代／繞過，也沒有再次查讀外部cache。
+''',encoding='utf-8')
+    summary={'evidence':primary,'finite_UI_source_reachability_complete':True,**v,'finite_static_checks':r['check_count'],'source_anchor_checks':r['anchor_count'],'GUI_runtime_acceptance':False,'original_UI_plan_only':True}
+    complete=load('completeness-audit.json');complete['Modern_character_ui_reachability_batch']=summary;write('completeness-audit.json',complete)
+    entry=ROOT/'閱讀入口.md';txt=entry.read_text('utf-8').split('\n第三十四批選角來源可達性：')[0]
+    entry.write_text(txt+'\n第三十四批選角來源可達性：Modern-character-ui-reachability-contract.json + Modern-character-ui-reachability/READ-ME.txt／character-flow-findings.json／minimal-original-UI-adoption-proposal.json／existing-assets-and-coordinates.md。Explicit candidate全0..8資料可達dropdown→details→typedrawnameC9，無5..8功能性四列截斷；4source reachable、1原始portrait/backdrop/animationrendergap、3GUI/designopen。30穩定read／12snapshots／10sourcefiles、215staticchecks／47anchors、35priorpins；4Nativebutton+5ClassicPNG既有pathSHA尺寸座標，兩個家族不混用。正常main入口採用與GUI仍open；R526ACTIVE不打斷；M13latercorrected只作監製訊息背景，Batch33不重寫。0Modernedit/art/test/build/GUI/newwire，packet不變，cachecleanup拒絕open。\n',encoding='utf-8')
+    phase='BATCH34_CHARACTER_UI_SOURCE_REACHABILITY_SEALED_R526_ACTIVE_ORIGINAL_STYLE_GUI_CACHE_CLEANUP_OPEN'
+    h=load('handoff.json');incident=h['scope_write_correction'];assert incident==v['scope_write_correction']
+    h.update(updated_at=stamp(),phase=phase,entrypoint=record(entry),Modern_character_UI_reachability_contract=primary,finite_character_UI_source_reachability_complete=True,Modern_character_UI_findings=record(folder/'character-flow-findings.json'),Modern_character_UI_minimal_original_adoption=record(folder/'minimal-original-UI-adoption-proposal.json'),Modern_character_UI_existing_assets=record(folder/'existing-assets-and-coordinates.md'))
+    added=[primary]+[record(q) for q in sorted(folder.iterdir()) if q.is_file()]
+    for group in ['modern','launcher']:
+        mapped={q['path']:q for q in h[group]};mapped.update({q['path']:q for q in added});h[group]=[mapped[k] for k in sorted(mapped)]
+    h['shared']=[record(ROOT/'completeness-audit.json') if q['path']==str(ROOT/'completeness-audit.json') else q for q in h['shared']]
+    h['server']['read_only_character_UI_source_comparison']=primary
+    h['next_steps']=[
+        'Batch34 finite source seal:explicitR525candidate completeN<=8 Directory combo -> absoluteopaquecontrols -> ChooseCharacter/details/Submit -> boundedownedrow/rawnameC9;indices4..7 source reachable. Fourdirectbuttons/Nativeanchors do notlimit this route orproveNativecapacity. No inventedfunctionalfix/server8reduction.',
+        '4source already reachable +1 scoped originalportrait/backdrop/animationrendergap +3GUI/designopen. Normal src/main profile usesSessionController/login_window; defaultpromotion is separate from candidate source reachability. No deployedexe/TLSbreakage inferred.',
+        'MinimaloriginalUIproposal reuses existingNative51x23 Enter/Backpairs; optional Classic1280x960fullNListViewpresentation usesfiveexistingPNG+CSB/plistfamily andkeepscomplete dropdownfallback/currentcommandguards. Preserve full0..8owneddata/rawname,donotmixcoordinates/generateart/guessportraitmapping/nativecapacity.',
+        '30individuallystable source/metadata reads;12snapshots/10files;215staticchecks/47anchors;35priorpins. CrossfileR526nonatomic; no compilecompatibility/GUI/runtime acceptance. Immutableownedcaptures aredependencies;externalModerncanchange,notfreeze/notinterrupt.',
+        'R526M09/M10alreadyACTIVE remainsuninterrupted. M13supervisorlatercorrectedreadySHA3F31E26FF006B132C4531BA53811597D3D8EF8581531AD04E8599B0C2B170947 ismessage-timecontextonly;reportnotread/promoted,Batch33unchanged. AwaitsupervisorR526acceptance beforelaterUI/defaultentrydecisions;no newtaskstarted.',
+        'All newcode/data/raw/assert/capture/wire/opcode/correction/Modernedits/art/branches/tests/builds/GUIruns0;packetB4C00BF1 unchanged,noservernotification. OwnROOTwritesonlyPython-B/dont_write_bytecode;noNative/input/injection/JavaSQL/provider/JVM/externalhelperimports/unknownbodies/WORLD/bot/matching/oldPASSreplay.',
+        'OriginalNativehelper/storage/portraitlifecycle/GUIacceptance remainopen. Priorexternalpyccleanup automaticapprovalreview blocked bypolicy retainedsameincidentpin;no retry/reframe/transfer/alternate/bypass/noreadexternalcache. FiniteBatch34stop.'
+    ]
+    assert h['scope_write_correction']==incident and h['server']['packet_delta']==v['server_packet_unchanged'];write('handoff.json',h)
+    progress=load('監製進度.json');progress.update(updated_at=stamp(),phase=phase,current_task='Batch34 UI source sealed:explicitcandidate all8rows reachable;originalportrait/rendergap anddefaultpromotion/GUIdesignopen;9existingassets;R526activeuninterrupted;cachecleanupopen.',Modern_character_ui_reachability_summary=summary)
+    progress['handoffs']['modern']='Modern-character-ui-reachability-contract.json + character-flow-findings.json + minimal-original-UI-adoption-proposal.json + existing-assets-and-coordinates.md:fullNselectionalreadyreachable inexplicitcandidate;reuseoriginalassets,GUI/defaultpromotionopen;R526uninterrupted/sourceonly.'
+    progress['next_steps']=h['next_steps'];write('監製進度.json',progress)
+    names=['Modern_character_ui_reachability_audit.py','review_Modern_character_ui_reachability.py','publish_Modern_character_ui_reachability.py','Modern-character-ui-reachability-contract.json','handoff.json','completeness-audit.json','閱讀入口.md']+[str(q.relative_to(ROOT)) for q in folder.iterdir() if q.is_file()]
+    count=seal(names,Path(__file__))
+    print(json.dumps({'primary':primary,'changed_files_checked':count,'delivery':record(ROOT/'delivery-verification.json'),'priorpins':35,'scope_write_correction':incident},ensure_ascii=False))
+if __name__=='__main__':main()

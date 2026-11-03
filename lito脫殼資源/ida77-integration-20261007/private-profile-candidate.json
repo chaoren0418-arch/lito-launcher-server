@@ -1,0 +1,107 @@
+{
+  "schema": "private-derived-LPAC-candidate-v1",
+  "moniker": "lito.ida77.fixture.c014d021b9b0456cb9f3",
+  "app_sid": "S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035",
+  "owner_sid": "S-1-5-21-1644292704-59536754-1411949733-1001",
+  "runtime_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+  "root_acl_at_creation": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime",
+    "creation_sddl": "D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-1644292704-59536754-1411949733-1001)(A;OICI;FRFX;;;S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035)S:(ML;OICI;NW;;;LW)",
+    "app_sid_writable": false,
+    "existing_security_descriptor_modified": false
+  },
+  "python_dependencies": [
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\python.exe",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python.exe",
+      "sha256": "5275C42F7359FA2C7EC473BE3240E57D5CE5B9301A26BD2E98E89BB9DB074581",
+      "bytes": 101552
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\python38.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38.dll",
+      "sha256": "2F3E368F5BCC1DDA5E951682008A509751E6395F7328FD0F02C4E1A11F67C128",
+      "bytes": 4211376
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\python3.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python3.dll",
+      "sha256": "074B06AE1D0A0B5C26F0CE097C91E2F24A5D38B279849115495FC40C6C10117E",
+      "bytes": 59568
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\python38.zip",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38.zip",
+      "sha256": "613E0D63B54ED995273EDA446EB09E51066E486F1E72B94F1C338A83DCA3A021",
+      "bytes": 2465341
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\vcruntime140.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\vcruntime140.dll",
+      "sha256": "92D50F7C4055718812CD3D823AA2821D6718EB55D2AB2BAC55C2E47260C25A76",
+      "bytes": 96144
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\vcruntime140_1.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\vcruntime140_1.dll",
+      "sha256": "922124BA0821AA864A0261ED88BD25F8E40F94C24D00D389E23CD9AB2BFC6BA4",
+      "bytes": 36752
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\_ctypes.pyd",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_ctypes.pyd",
+      "sha256": "820E840759EED12E19F3C485FD819B065B49D9DC704AE3599A63077416D63324",
+      "bytes": 127152
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\libffi-7.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\libffi-7.dll",
+      "sha256": "F60DD9F2FCBD495674DFC1555EFFB710EB081FC7D4CAE5FA58C438AB50405081",
+      "bytes": 32792
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\_socket.pyd",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_socket.pyd",
+      "sha256": "87832A3B89E2ADA8F704A8F066013660D591D9CE01CE901CC57A3B973F0858BA",
+      "bytes": 80048
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\select.pyd",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\select.pyd",
+      "sha256": "FCC2E09A2355A5546922874FB4CAC92EE00A33C0ED6ADBC440D128D1E9F4EC28",
+      "bytes": 27824
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\_hashlib.pyd",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\_hashlib.pyd",
+      "sha256": "A30CF1A40E0B09610E34BE187F1396AC5A44DCFB27BC7FF9B450D1318B694C1B",
+      "bytes": 47280
+    },
+    {
+      "source": "D:\\IDA_Pro_7.7\\python38\\libcrypto-1_1.dll",
+      "destination": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\libcrypto-1_1.dll",
+      "sha256": "296426E7CE11BC3D1CFA9F2AEB42F60C974DA4AF3B3EFBEB0BA40E92E5299FDF",
+      "bytes": 3406016
+    }
+  ],
+  "_pth": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\ida77-integration-20261007\\private-runtime\\python38._pth",
+  "network_capability_count": 0,
+  "LPAC_all_application_packages_opt_out_requested": true,
+  "AppContainerProfile_created_or_registered": false,
+  "before_registration_state": {
+    "selected_sid_registry_keys": [
+      {
+        "HKCU_key": "Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\AppContainer\\Mappings\\S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035",
+        "exists": false
+      },
+      {
+        "HKCU_key": "Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\AppContainer\\Storage\\S-1-15-2-1834532464-236154173-1262412588-4053942209-1887196453-3908076090-2754364035",
+        "exists": false
+      }
+    ],
+    "outside_package_directory": "C:\\Users\\CHAOREN\\AppData\\Local\\Packages\\lito.ida77.fixture.c014d021b9b0456cb9f3",
+    "outside_package_directory_exists": false
+  },
+  "original_installation_global_profile_existing_ACLs_or_firewall_changed": false,
+  "qualification": "PENDING_REAL_PROBE"
+}

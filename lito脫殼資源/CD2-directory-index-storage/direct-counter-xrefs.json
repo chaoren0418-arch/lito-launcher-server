@@ -1,0 +1,59 @@
+{
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "navigation_only": true,
+  "literal_queries": {
+    "dword_76079C": [
+      {
+        "line": 349745,
+        "text": "mov     dword_76079C, 0"
+      },
+      {
+        "line": 349852,
+        "text": "mov     eax, dword_76079C"
+      },
+      {
+        "line": 349944,
+        "text": "mov     eax, dword_76079C"
+      },
+      {
+        "line": 349947,
+        "text": "mov     dword_76079C, eax"
+      },
+      {
+        "line": 349954,
+        "text": "mov     dword_76079C, 0"
+      },
+      {
+        "line": 563403,
+        "text": "dword_76079C dd 0                       ; DATA XREF: sub_4A7450+21↑w"
+      }
+    ],
+    "dword_7607A0": [
+      {
+        "line": 349744,
+        "text": "mov     dword_7607A0, edx"
+      },
+      {
+        "line": 349853,
+        "text": "mov     ecx, dword_7607A0"
+      },
+      {
+        "line": 349946,
+        "text": "mov     ecx, dword_7607A0"
+      },
+      {
+        "line": 349953,
+        "text": "mov     dword_7607A0, 0"
+      },
+      {
+        "line": 563408,
+        "text": "dword_7607A0 dd 0                       ; DATA XREF: sub_4A7450+1B↑w"
+      }
+    ]
+  },
+  "scope": "Exactnamedglobalrefs only;notalias/privatecallee/fullprogramwriteclosure."
+}

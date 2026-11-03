@@ -1,0 +1,53 @@
+{
+  "server_parser": {
+    "opcode": "C_D1=0xD1",
+    "subtype": 3,
+    "fields": "u8 opcode,u8 subtype,u16LE unsigned mapId",
+    "body_bytes": 4,
+    "frame_bytes": 6,
+    "map_id_range": [
+      0,
+      65535
+    ],
+    "record_constructor_guard": "mapId<0 or >65535 throws; Reader.h unsigned result already falls within this range, including0xFFFF. Mode membership rejection is later.",
+    "room_id_on_wire": false,
+    "exact_remaining_after_subtype": 2,
+    "MS950_strings_present": false,
+    "invalid_length_or_subtype": "Parser throws before phase guard; not a selfsnapshot rejection. Subtype2 mode-step is the other union arm, outside this map contract."
+  },
+  "restore_difference": {
+    "status": "CONFIRMED_CONDITIONAL_STATIC_VALUE_MISMATCH_NO_DYNAMIC_CASE",
+    "condition": "An ordinary room has successfully selected a non-first map in its unchanged mode, then receives a parser-valid out-of-pool map. Restore path returns first pool map while hub match/selectedMap remain previous selected map.",
+    "counterexample": {
+      "mode": "DEATHMATCH",
+      "wire_mode": 1,
+      "first_map": 564,
+      "current_selected_map": 514,
+      "valid_prior_C_D1_body": "d1030202",
+      "invalid_request_map": 65535,
+      "invalid_C_D1_body": "d103ffff",
+      "current_selected_map_LE": "0202",
+      "returned_restore_map": 564,
+      "returned_restore_map_LE": "3402",
+      "hypothetical_room1_restore_D5_body": "d503010000003402",
+      "computed_bytes_only": true,
+      "actual_trace": false
+    },
+    "candidate_fix_requirement": "Candidate only: illegal-map restore must derive authoritative current room map from hub.roomRules(currentRoomId).mapId(), consistently with selfsnapshot, instead of BattleRules.decode(settings) default. Preserve existing packet/gate distinctions; review missing-room/race behavior separately. No source or JAR changed.",
+    "known_dynamic_evidence": false
+  },
+  "new_wire_difference": false,
+  "known_layout_corroboration": true,
+  "server_subtype2_union_outside_map_contract": true,
+  "Native_FFFF_request_possible_static": true,
+  "server_FFFF_parser_valid_but_membership_rejected": true,
+  "D5_BYTE_CC_row74_preview0F_candidateordinal_not_outbound_source": true,
+  "new_dynamic_witnesses": 0,
+  "existing_capture_hits_adopted_only": {
+    "C_D1_sub3": 0,
+    "S_D5_sub3": 0,
+    "finite_roots": 7
+  },
+  "ACK_rollback_or_resource_binding_qualified": false,
+  "Java_change_or_extra_packet_requested": false
+}

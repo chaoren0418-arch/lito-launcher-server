@@ -1,0 +1,297 @@
+{
+  "schema": "lito.public-local-guard-boundary.v1",
+  "task_id": "bin-public-4c83a0-guard-boundary-20261008",
+  "owner": "LITO BIN Analysis",
+  "thread_id": "01a11705-96c0-74a0-b56d-ed486c318c95",
+  "state": "review",
+  "generated_at": "2026-10-08T16:46:37.731971+08:00",
+  "question": "Which local return conditions in public004C83A0 can suppress the later004C8240/004C83F0 calls reached from the skill-toolbar tail chain?",
+  "scope": "Newly reached guard body only; no external/private/virtual body expansion. Parent004C8790 evidence already delivered and unchanged.",
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "parent_handoff": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+    "bytes": 20092,
+    "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+  },
+  "raw_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c83a0-guard-boundary-20261008\\raw-evidence.json",
+    "bytes": 10586,
+    "sha256": "3ED87DFB21CE8D3299A3D9B6F7824A4FED970F205F7A199E1527580DB60A4160"
+  },
+  "VA_RVA_raw_mapping": {
+    "imagebase": "00400000",
+    "va": "004C83A0",
+    "rva": "000C83A0",
+    "end_exclusive": "004C83ED",
+    "file_offset": "000C83A0",
+    "section": {
+      "index": 0,
+      "name_hex": "2020200020202020",
+      "virtual_size": 4415488,
+      "rva": 4096,
+      "raw_size": 4415488,
+      "raw_pointer": 4096
+    },
+    "bytes": 77
+  },
+  "findings": [
+    {
+      "conclusion": "IncomingECX is copied toESI. If dword[ESI] is nonzero, its value is pushed to a direct call2111A650, outside pinned PE backing. Assuming normal return, EAX==3 producesAL=1 and an early return. If[ESI] is zero, or returnedEAX differs from3, control reaches the second branch.",
+      "witnesses": [
+        {
+          "va": "004C83AE",
+          "rva": "000C83AE",
+          "file_offset": "000C83AE",
+          "size": 1,
+          "raw_hex": "90",
+          "mnemonic": "nop",
+          "operands": ""
+        },
+        {
+          "va": "004C83B4",
+          "rva": "000C83B4",
+          "file_offset": "000C83B4",
+          "size": 3,
+          "raw_hex": "83f803",
+          "mnemonic": "cmp",
+          "operands": "eax, 3"
+        },
+        {
+          "va": "004C83B7",
+          "rva": "000C83B7",
+          "file_offset": "000C83B7",
+          "size": 2,
+          "raw_hex": "7507",
+          "mnemonic": "jne",
+          "operands": "0x4c83c0"
+        },
+        {
+          "va": "004C83B9",
+          "rva": "000C83B9",
+          "file_offset": "000C83B9",
+          "size": 2,
+          "raw_hex": "b001",
+          "mnemonic": "mov",
+          "operands": "al, 1"
+        }
+      ],
+      "unknown": "External callee identity/effects, input object meaning, and validity of its pointer. No API/library/status name inferred.",
+      "falsified_by": "Different code/object, nonreturn/fault/reentry or independently supplied qualified callee behavior."
+    },
+    {
+      "conclusion": "Second branch reads[originalESI+4] as a new object pointer. NULL returnsAL=0. Nonnull invokes virtual slot+0x24 with pushed pointer to stack local[EBP-4], then pushed object pointer. Nonzero returnedEAX returnsAL=0. WithEAX zero, local low byte bit1 set returnsAL=0; otherwise AL=bool(lowbyte & 0x05).",
+      "witnesses": [
+        {
+          "va": "004C83C0",
+          "rva": "000C83C0",
+          "file_offset": "000C83C0",
+          "size": 3,
+          "raw_hex": "8b7604",
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [esi + 4]"
+        },
+        {
+          "va": "004C83C3",
+          "rva": "000C83C3",
+          "file_offset": "000C83C3",
+          "size": 2,
+          "raw_hex": "85f6",
+          "mnemonic": "test",
+          "operands": "esi, esi"
+        },
+        {
+          "va": "004C83C5",
+          "rva": "000C83C5",
+          "file_offset": "000C83C5",
+          "size": 2,
+          "raw_hex": "741f",
+          "mnemonic": "je",
+          "operands": "0x4c83e6"
+        },
+        {
+          "va": "004C83C7",
+          "rva": "000C83C7",
+          "file_offset": "000C83C7",
+          "size": 2,
+          "raw_hex": "8b06",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi]"
+        },
+        {
+          "va": "004C83C9",
+          "rva": "000C83C9",
+          "file_offset": "000C83C9",
+          "size": 3,
+          "raw_hex": "8d4dfc",
+          "mnemonic": "lea",
+          "operands": "ecx, [ebp - 4]"
+        },
+        {
+          "va": "004C83CC",
+          "rva": "000C83CC",
+          "file_offset": "000C83CC",
+          "size": 1,
+          "raw_hex": "51",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "va": "004C83CD",
+          "rva": "000C83CD",
+          "file_offset": "000C83CD",
+          "size": 1,
+          "raw_hex": "56",
+          "mnemonic": "push",
+          "operands": "esi"
+        },
+        {
+          "va": "004C83CE",
+          "rva": "000C83CE",
+          "file_offset": "000C83CE",
+          "size": 3,
+          "raw_hex": "ff5024",
+          "mnemonic": "call",
+          "operands": "dword ptr [eax + 0x24]"
+        },
+        {
+          "va": "004C83D1",
+          "rva": "000C83D1",
+          "file_offset": "000C83D1",
+          "size": 2,
+          "raw_hex": "85c0",
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "va": "004C83D3",
+          "rva": "000C83D3",
+          "file_offset": "000C83D3",
+          "size": 2,
+          "raw_hex": "7511",
+          "mnemonic": "jne",
+          "operands": "0x4c83e6"
+        },
+        {
+          "va": "004C83D5",
+          "rva": "000C83D5",
+          "file_offset": "000C83D5",
+          "size": 3,
+          "raw_hex": "8a45fc",
+          "mnemonic": "mov",
+          "operands": "al, byte ptr [ebp - 4]"
+        },
+        {
+          "va": "004C83D8",
+          "rva": "000C83D8",
+          "file_offset": "000C83D8",
+          "size": 2,
+          "raw_hex": "a802",
+          "mnemonic": "test",
+          "operands": "al, 2"
+        },
+        {
+          "va": "004C83DA",
+          "rva": "000C83DA",
+          "file_offset": "000C83DA",
+          "size": 2,
+          "raw_hex": "750a",
+          "mnemonic": "jne",
+          "operands": "0x4c83e6"
+        },
+        {
+          "va": "004C83DC",
+          "rva": "000C83DC",
+          "file_offset": "000C83DC",
+          "size": 2,
+          "raw_hex": "a805",
+          "mnemonic": "test",
+          "operands": "al, 5"
+        },
+        {
+          "va": "004C83DE",
+          "rva": "000C83DE",
+          "file_offset": "000C83DE",
+          "size": 3,
+          "raw_hex": "0f95c0",
+          "mnemonic": "setne",
+          "operands": "al"
+        },
+        {
+          "va": "004C83E6",
+          "rva": "000C83E6",
+          "file_offset": "000C83E6",
+          "size": 2,
+          "raw_hex": "32c0",
+          "mnemonic": "xor",
+          "operands": "al, al"
+        }
+      ],
+      "qualification": "Local predicate is mechanically proved, conditional on normal virtual return. The byte is read from a stack local; that virtual call initializing it is not proved without target evidence. Bit/status meanings and upper bytes are unqualified. Bit1 dominates; bits0/2 set produce true only whenbit1clear.",
+      "falsified_by": "Unknown virtual does not return, does not initialize the local, reenters/mutates state, or source bytes differ."
+    },
+    {
+      "conclusion": "Parent004C85E0 tests returnedAL and skips004C8240/004C83F0 whenAL!=0. This new local predicate qualifies the guard controlling those calls; it does not name the operations or establish a skill request.",
+      "parent_witness": "Parent raw004C8606 call004C83A0;004C860B testAL;004C860D jne004C8623. Parent handoff/source pins above.",
+      "falsified_by": "Different parent/helper implementation, nonnormal return, or different live object/epoch."
+    }
+  ],
+  "direct_send_observation": {
+    "no_direct_004C6AE0_or_004C6770_in_this_body": true,
+    "no_transitive_network_effects_proved": false,
+    "wire_opcode_fields_direction": null,
+    "actual_wire_obligation": false
+  },
+  "stops": {
+    "external": {
+      "va": "2111A650",
+      "arithmetic_rva": "20D1A650",
+      "section": null,
+      "file_offset": null,
+      "raw_backed_in_pinned_PE": false,
+      "followed": false
+    },
+    "virtual": {
+      "call_instruction": {
+        "va": "004C83CE",
+        "rva": "000C83CE",
+        "file_offset": "000C83CE",
+        "size": 3,
+        "raw_hex": "ff5024",
+        "mnemonic": "call",
+        "operands": "dword ptr [eax + 0x24]"
+      },
+      "current_vtable": null,
+      "destination": null,
+      "followed": false
+    },
+    "private_or_next_layer_followed": false,
+    "timer_followed": false
+  },
+  "consumer_action": "After Root review, distinguish guard returningtrue from registry activation and row population. If later authorized same-session evidence is collected, establish actual object/backing and returnedAL before interpreting missing downstream effects. Do not label the predicate skills-ready/playing, inject a packet, or infer packet timing from these bytes.",
+  "unknown_blocker_supplier_resume": {
+    "unknown": "External2111A650 backing/identity/effects and actual virtual+24 implementation/output-byte provenance; runtime object epochs and session phases.",
+    "supplier": "Root-qualified lawful public helper/object evidence supplier or genuinely fresh Launcher evidence session. Private/next-layer restoration and refusal routes remain prohibited.",
+    "resume": "Only a new permitted question with qualified backing or exact fresh-instance evidence; no generic-process attachment or human_ready fabrication.",
+    "next_input_complete_task": null
+  },
+  "runtime": "No fresh runtime instance supplied; no attach,monitor,process,GUI test or instrumentation. Human automation authorization does not fabricate instance/READY/nonce/claim/lease/cleanup.",
+  "native_goal_status": "blocked per actualget_goal this turn; full product objective unchanged",
+  "product_accepted": false,
+  "GUI_accepted": false,
+  "supervisor_review_pending": true,
+  "consumer_adopted": false,
+  "verification": {
+    "source_SHA_matches": true,
+    "77raw_bytes_fully_decoded": true,
+    "artifact_matches_same_source_slice": true,
+    "external_raw_backing_absent": true,
+    "exact_call_boundary_asserted": true,
+    "old_PASS_replays": 0
+  },
+  "command": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B bin-public-4c83a0-guard-boundary-20261008/derive.py",
+  "canonical_workdir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源"
+}

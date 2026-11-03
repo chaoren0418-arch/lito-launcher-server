@@ -1,0 +1,139 @@
+{
+  "status": "未匯入、未接線",
+  "baseline": "0.6.60",
+  "verification_date": "2026-10-13 Asia/Taipei",
+  "sources_inventory_sha256": "9916c75ea275d39fdc9b8966e02e60329d7c0babc7d6241ca59cc0e3f0f47a8f",
+  "source_count": 524,
+  "counts": {
+    "maps": 47,
+    "portals": 186,
+    "skills": 214,
+    "zones": 2,
+    "map_items": 18,
+    "rental_offers": 78,
+    "npc_identities": 13,
+    "sources": 524,
+    "provenance": 12119
+  },
+  "checks": {
+    "package_status": "未匯入、未接線",
+    "status": "PASS (offline only)",
+    "sql_insert_rows": 13201,
+    "sql_literal_values_checked": 116109,
+    "sql_roundtrip": true,
+    "integer_and_varchar_ranges": true,
+    "all_sql_field_provenance_covered": true,
+    "unique_keys": true,
+    "native_terrain_references": true,
+    "all_source_hashes_match": true,
+    "sql_executed": false,
+    "production_wired": false
+  },
+  "files": [
+    {
+      "file": "01-candidate-schema.sql",
+      "bytes": 3755,
+      "sha256": "a387ec0eadf29550b34630b44404cd485f26a8bee02174bec96c31365faad04d"
+    },
+    {
+      "file": "02-candidate-data.sql",
+      "bytes": 5185637,
+      "sha256": "3e29c84458758e89bca80031c4637c651676f4e3ac024d9a7496fc93145e4504"
+    },
+    {
+      "file": "__pycache__/extract_validate.cpython-312.pyc",
+      "bytes": 53899,
+      "sha256": "13a5e173fcd0ac21c1f1794af1f978390eca0f506899beaeb15f6c342d6deb96"
+    },
+    {
+      "file": "candidate-data.json",
+      "bytes": 360557,
+      "sha256": "67a891e416485f41f341a35200774b257c7757308e7ba84e2b896e3269a851fe"
+    },
+    {
+      "file": "deployed-catalog.json",
+      "bytes": 38739,
+      "sha256": "59ccc106c4f55d389d0b6aa7282fdbaf7d0d7e79fc95a10358d78ed9c98b51c2"
+    },
+    {
+      "file": "evidence-boundaries.json",
+      "bytes": 2081,
+      "sha256": "08e45f6419609233fcc43052bd53b9665cff912309699a5aabf694c8ca4c1733"
+    },
+    {
+      "file": "extract_validate.py",
+      "bytes": 38741,
+      "sha256": "e3d5e493b2b76e40de4f60428aa61c259096601b90c2ee736b602da24510348e"
+    },
+    {
+      "file": "native-static-locators.json",
+      "bytes": 1107,
+      "sha256": "8576e6c3f4da5cddf57bf4ade9571a08e533ab065b8f550113d132e18fe7e524"
+    },
+    {
+      "file": "pending.json",
+      "bytes": 1367,
+      "sha256": "ba55efd5e4c3ecf55555bc06bda4d7f9d47be3dee768c1bf014dd30fe6ca664d"
+    },
+    {
+      "file": "provenance.json",
+      "bytes": 5456697,
+      "sha256": "002f603df177514a47522eea9429dd6c5f1e0f843ca236be3f60797a063916e7"
+    },
+    {
+      "file": "ReadOnlyCatalog.class",
+      "bytes": 10035,
+      "sha256": "5d73ef6d6e2dcd94ab14b90a591f2ca88cda009129b7d9fc369a9e280f350b37"
+    },
+    {
+      "file": "ReadOnlyCatalog.java",
+      "bytes": 4660,
+      "sha256": "b99a50d22693cf1ce6bc8f4605dac45641748a237d28822defdc6dcb282d5fe8"
+    },
+    {
+      "file": "reproducibility.json",
+      "bytes": 365,
+      "sha256": "a2911021c6604a21f87363d49b1d2215a1437e8225ad0c5c594268e9be681c32"
+    },
+    {
+      "file": "resource-links.json",
+      "bytes": 604,
+      "sha256": "2856107837f7c1f3ae0fe974623e166710afda8f9c55853a462fcae024ae89fe"
+    },
+    {
+      "file": "sources.json",
+      "bytes": 175654,
+      "sha256": "9916c75ea275d39fdc9b8966e02e60329d7c0babc7d6241ca59cc0e3f0f47a8f"
+    },
+    {
+      "file": "static-reference-select.json",
+      "bytes": 121126,
+      "sha256": "cb4f019d984088f22e21ee899ff80de0fe291df15eca8c05a36dba64e80416fc"
+    },
+    {
+      "file": "terrain-index.json",
+      "bytes": 72755,
+      "sha256": "1acd31d481087005c9568ee260452ee4d4588973ea7b0f3ad3cd8b7f29820bb9"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 4472,
+      "sha256": "b75365cd82f52f880f4f7d88932b19d04be7a9b9809c44a574c17bba548e8e8b"
+    },
+    {
+      "file": "verification-result.json",
+      "bytes": 421,
+      "sha256": "6aa5f11cacb0cc2cfed7732a3c2d33048f31ec8159e42d1b0537ad6dfc222da0"
+    },
+    {
+      "file": "verify_package.py",
+      "bytes": 7400,
+      "sha256": "dcd00fa09af3c0870b86dd6c8a309acede834e44c0aefcfbd0e48451c59da28e"
+    },
+    {
+      "file": "提交報告.zh-TW.md",
+      "bytes": 13569,
+      "sha256": "2fb51c354a9a8ec1d5cd68a2e556aacca586c80abab0d0b389c42e9a1f327f38"
+    }
+  ]
+}

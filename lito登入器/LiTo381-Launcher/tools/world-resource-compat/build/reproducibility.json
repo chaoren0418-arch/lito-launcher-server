@@ -1,0 +1,79 @@
+{
+  "before": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267",
+  "after": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267",
+  "byte_identical": true,
+  "paired_before": {
+    "ddraw.dll": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267",
+    "LiTo381-SharedPresentation-candidate.jar": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "paired_after": {
+    "ddraw.dll": "e778a238fe43a24f2e47d699dc14a86d4fdb317594571fffac4b5481d9f5e267",
+    "LiTo381-SharedPresentation-candidate.jar": "e1496dc6a45cccf331ed439e28b2b4b2fb0eec99df53316d076633b446d90cb9"
+  },
+  "source_sha256": {
+    "BluePotionPresentationPatch.java": "a73d1d2166989ad5e8557cd95ef2bc44c2b67e01e2f03f27ffe439f8c840c39f",
+    "BluePotionSessionProbe.java": "8430c3e5ee60163736ade14ebdfd1b42b9e94dc0fe9a1dabc823c50c5d42f270",
+    "build_candidate.py": "1e70b9e382aeae49868728b95b08aa292e389d67427f16a6fd8f7633d1d4f673",
+    "build_presentation_server.py": "bf4f1e94d36a4f42b20ddb5a9841e02f1b7d2d933c98ed0709699eb052266dc5",
+    "candidate_server_entry.py": "8dd77ab336c723d6ffefff157647a0c25e9d495a7e3f49e9624eebf060b24e94",
+    "candidate_startup.py": "5a34c69a3e604dda1052a3043103d7831854e5a747b0a79eea0d09bcf7d3ae5f",
+    "catalog.py": "5f91157f995a5388410b84e4201950bc54dc9600fedd0ffed0cb586df49a8d21",
+    "PacketBoxProducerPatch.java": "215bc2b263b3a0b469b3a776cb249cf330bc1f33263ecf1900d002c703289c84",
+    "PresentationWireProbe.java": "eeac56dd2d44d33ef2eeecd12228d4eba1b30f3f0a5b37353901b4895360eeb3",
+    "rebuild_animation.py": "8c9ec9d9939eebfb10b3eb29e0effbe3b64bb05fe1d211d8581d27367b7a1e50",
+    "seal_candidate.py": "c2d2c74e3c7c80a69c269540bebc71f688b71c4d572e416066466dc13c81e38f",
+    "SharedDurationProbe.java": "b55cd129bcde189926a01cfa3233950191b173f407d5f3ccebbd6662ac40b128",
+    "SharedPresentationPackets.java": "f0b68b093e58824ffdc1873f4bd8ecbc0353000251326737385bad3a55f8d600",
+    "shared_frame_rate.inc": "bb8e4e0de3252cb31af80bf04c5a859cbf699fa854c40a86ff0b9280893e7bac",
+    "shared_packetbox.inc": "7ed7a31e2b37f43faf6e20b0e4f9ac527ecd8085331f7db3a96fbd999594d351",
+    "shared_status_catalog.h": "8226823b96f01ff53a43dc491e436f7b94847102b1a6d4407f0a8954ff0f93c8",
+    "shared_status_lifecycle.h": "2d51273f1906f80905a3eee37078dee90ff1f26ca01c45d24e4342a802cfe355",
+    "shared_status_lifecycle.inc": "55b70399c8cd0b1901a43c865449cbea4cf09ba9ab781e3218c5b4c2163e5426",
+    "shared_status_order.inc": "961947728f46c3bf01b64b6be36c8e5e13322405e7bd7407c04672c92097a1dd",
+    "ShieldWireProbe.java": "30694a1354a4e58db31c4fe1b79fc49539afb112d946165de62bae4e9d4b1f61",
+    "StatusFamilyProbe.java": "bf00f7e0b2b55dcbd459e8e2d32337685a96490aaa4d30e931a2731b38a02786",
+    "status_catalog_test.cpp": "d7eb9fb79e34cab83647f20a664f65487e378fb11980455d050107032121596e",
+    "status_install_test.cpp": "0ed63976c1ce03d4d6dfae2ca31573961f1f1bb94a92cccfd8058de4336afa0f",
+    "status_lifecycle_test.cpp": "7a6ca138cce87413c51f28e4dd60d320e219b08312894d975261250cd6bdf0f2",
+    "test_catalog.py": "0487f3b35d8545f77cd52b733e15cdf227bb63f277ee2a9e9a1f3ae1198ee1cf",
+    "verify_assets.py": "3f7697d445eb9b3e1971877a6c6b2193c8beb2fa5a54944ac6b572c024cb3de5",
+    "verify_blue_identity.py": "d2e40ddecd76c54b28f9d480183e04c03c439a9aee2f1caef2ed5197885d76a8",
+    "verify_brave_receiver.py": "4246f274bc22b4b3d6a86b36b63249b69441b0f1682ebb08279c1fbb3754ffec",
+    "verify_doll_wire.py": "d6c02529bd8a880d46a339d8f564c52add03458d5d9d54011ec446d1c12cf282",
+    "verify_frame_rate.py": "59af1a5fcd2185d2cd5dc6969f88fb7a6c84a711606d1e90c3485f2a94a09bb0",
+    "verify_graphic_dispatch.py": "b8fa7fa7c5655a29eaf7d6c6aa1e11d02efd1bd943a1516ce43cac87513008cc",
+    "verify_native_animation.py": "c79f24522c6ad166be709778f816abd8e8e28b94d223af890382c24c18fa3c9f",
+    "verify_native_icons.py": "467369bc6e2f092713cb7316241c2ffa19d485f26001defff3a8c18162573c43",
+    "verify_paired_startup.py": "17f25f3526eb8f654bedabf0eac777e1bf74edef6695efadb48f30032f8b7737",
+    "verify_presentation_contract.py": "96fc5715249782cb22b89a981fd7a0b2c88e4c952c1a32c0389f25bdc1e0de02",
+    "verify_rebuild.py": "43e08011fbaae5698a529112c7e245ead3a8c766c4ea6fa6f3de30744b013558",
+    "verify_server_durations.py": "efb654915e66e90352ec01ba497eb0ef964137aff4103c18253dcb7bdf80de2f",
+    "verify_shield_wire.py": "4ea3113268bf75ca892d9c849494c127f5d355807178521d20ae49e8c7deaad1",
+    "verify_status_expiry.py": "1eb76a839042009e35e298a4e184cb178e29db4f79a2ea487a9246f01fc10f8d",
+    "verify_status_families.py": "1658c45cafd33eaa88802a456d13ca7807fdea165a53621ff8f505a98fe5da48",
+    "verify_status_priority.py": "c52bc318e7e84d64c1180aafed713de7eb205bceaea6f0d455c3d8809194d6b5"
+  },
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "-X",
+        "utf8",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_presentation_server.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "-X",
+        "utf8",
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build_candidate.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "formal_updated": false
+}

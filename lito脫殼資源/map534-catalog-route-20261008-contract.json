@@ -1,0 +1,174 @@
+{
+  "task_id": "bin_resources-map534-catalog-route-20261008",
+  "owner": "bin_resources",
+  "state": "review",
+  "evidence_level": "independent_raw_archive_decode_and_static_catalog_route",
+  "updated_at": "2026-10-08T01:57:07.561721+08:00",
+  "product_gap": "Canonical geometry SHA binds map534 geometry but contains no mode. Cache/frame regression identity also requires the raw catalog/category route and complete plan authority.",
+  "conclusion": "Exact pinned LTtext member LTmapstr-k.tbl contains unique raw row22 for534#deathmatch#Lodun City (Death). Current pinned Modern category policy maps deathmatch to1, and the pinned authority row links exactly16 sectors to the regression plan.",
+  "inputs": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\inputs.json",
+    "bytes": 2145,
+    "sha256": "C091035DB8DF415B1EFBD727A11425F8CB2E8501D1B79F8D093560837E481D19"
+  },
+  "result": {
+    "identity": {
+      "mode": 1,
+      "map_id": 534,
+      "name": "Lodun City (Death)"
+    },
+    "member": {
+      "record_index": 245,
+      "decoded_index_record_range": [
+        6864,
+        6892
+      ],
+      "encrypted_index_covering_block_range": [
+        6860,
+        6892
+      ],
+      "decoded_index_row_hex": "A8E902004C546D61707374722D6B2E74626C000000000000180A0000",
+      "pak_offset": 190888,
+      "bytes": 2584,
+      "encoded_sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F",
+      "decoded_sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+    },
+    "target_row": {
+      "source_row": 22,
+      "table_byte_range": [
+        649,
+        722
+      ],
+      "line_ending_hex": "0D0A",
+      "raw_line": "534#deathmatch#Lodun City (Death)#minimap#xseg2#yseg2#xPos32831#yPos32768",
+      "raw_line_hex": "3533342364656174686D61746368234C6F64756E20436974792028446561746829236D696E696D61702378736567322379736567322378506F7333323833312379506F733332373638",
+      "map_id": 534,
+      "raw_category": "deathmatch",
+      "modern_source_policy_mode": 1,
+      "name": "Lodun City (Death)",
+      "extra_fields": [
+        "minimap",
+        "xseg2",
+        "yseg2",
+        "xPos32831",
+        "yPos32768"
+      ]
+    },
+    "declared_table_rows": 67,
+    "archive_index_rows": 353,
+    "authority_sector_count": 16,
+    "canonical_geometry_sha256_declared": "7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE",
+    "mode_is_not_encoded_in_canonical": true
+  },
+  "scope": {
+    "qualifies": "Modern static LTtext archive/category route and exact16-sector authority linkage for mode1/map534, independent of canonical geometry hash.",
+    "unknowns": [
+      "L1 cipher implementation is source-qualified existing consumer format, not newly mapped original PE cipher function.",
+      "Numeric deathmatch mode1 is checked Modern source policy; original wire/room/match admission semantics are not established.",
+      "Extra minimap/xseg/yseg/xPos/yPos text fields remain raw catalog strings; no spawn/camera/network semantics inferred.",
+      "Original authority manifest is pinned existing resource enumeration; this task checks exact list linkage, not a new native full-world scope.",
+      "Server external text CSV map parsing has a separate resource format and is not qualified by this S32/LTtext route."
+    ]
+  },
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\derive.py",
+      "bytes": 8780,
+      "sha256": "43A115F00B2A7E1BC9B59B371FAB292280ADE06892878D607F5BDAE315F80A6F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\inputs.json",
+      "bytes": 2145,
+      "sha256": "C091035DB8DF415B1EFBD727A11425F8CB2E8501D1B79F8D093560837E481D19"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stdout.txt",
+      "bytes": 1388,
+      "sha256": "5F74219C1B6C41247D13EA5CFEC2DE067012735F1C3D5790C766414C952B01D7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\route-witness.json",
+      "bytes": 1509,
+      "sha256": "0792515C8A131C99D0814F58F21FE728F930005D4934185B10C695D33567CD53"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\scope.json",
+      "bytes": 840,
+      "sha256": "A975184C6BC0BEFCCDD5C41075783B80C4CD7CD53BBFE240990AEF00D5FC024D"
+    }
+  ],
+  "reproduction": {
+    "command": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B map534-catalog-route-20261008/derive.py",
+    "workdir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "exit_code": 0,
+    "raw_stdout": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stdout.txt",
+    "raw_stderr": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stderr.txt"
+  },
+  "raw_member_mapping": {
+    "index_row": 245,
+    "decoded_index_range": [
+      6864,
+      6892
+    ],
+    "encrypted_index_covering_blocks": [
+      6860,
+      6892
+    ],
+    "pak_member_range": [
+      190888,
+      193472
+    ],
+    "decoded_table_row_range": [
+      649,
+      722
+    ],
+    "encoded_member_blocks_covering_row": [
+      648,
+      728
+    ],
+    "absolute_pak_blocks_covering_row": [
+      191536,
+      191616
+    ]
+  },
+  "source_mapping": "VA/RVA explicitly N/A for raw IDX/PAK/catalog and Rust policy. Cipher port is tied to recorded resource_cipher.rs SHA/constants; no new original fixed-PE cipher/mode function semantics or address mapping is asserted.",
+  "same_bytes_identity": "Each input is read once into a bounded byte snapshot; SHA is computed over that snapshot and the parser consumes it. The member is sliced from the hashed PAK snapshot. No second pathname read is used for parsed byte identity.",
+  "cipher_boundary": "IDX count4bytes is plaintext; a continuous8byte-block stream covers following old28 rows, so row245 begins4bytes inside an encrypted block. PAK member restarts cipher at member offset0. Final short block is preserved. Independent bitwise Python decrypts only bounded LTtext index and this one member; no old CLI/Modern executable/test suite runs.",
+  "consumer_adoption": {
+    "owner": "Modern",
+    "actions": [
+      "For the new map534 cache/frame regression, assert exact mode1,map534,source_row22,nameLodun City (Death) with catalog member index245/offset190888 and decodedSHAE7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD.",
+      "Compare complete mode-qualified plan sector names/length/SHA against the pinned16-sector authority row before load; a geometry digest alone cannot grant another mode.",
+      "Reject absent/duplicate target catalog members, wrong decoded pin or wrong route/authority identity. Use the actual full qualified catalog, without manufacturing partial authentic tables or alternate map fixtures.",
+      "Use same parsed byte snapshot for any resource hash exposed downstream; a synthetic mutation reproduction is a unit witness and must be labeled separately from authentic resource bytes."
+    ]
+  },
+  "falsifiable_acceptance": [
+    "Independent decrypt must produce exact2584bytes and decodedSHAE7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD from the pinned encoded memberSHA18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F.",
+    "Unique target row has73raw bytes[649,722), followed byCRLF; source_row22 excludes the declared67-row header. Raw fields in route-witness.json must agree exactly with catalog40 and pinned original authority manifest.",
+    "All16 authority sector names/byte lengths/SHA match mode1/map534 plan; no mode inference from numeric map ID or canonical SHA alone."
+  ],
+  "unknowns": [
+    "L1 cipher implementation is source-qualified existing consumer format, not newly mapped original PE cipher function.",
+    "Numeric deathmatch mode1 is checked Modern source policy; original wire/room/match admission semantics are not established.",
+    "Extra minimap/xseg/yseg/xPos/yPos text fields remain raw catalog strings; no spawn/camera/network semantics inferred.",
+    "Original authority manifest is pinned existing resource enumeration; this task checks exact list linkage, not a new native full-world scope.",
+    "Server external text CSV map parsing has a separate resource format and is not qualified by this S32/LTtext route.",
+    "No consumer adoption run, pixel parity, original process/GUI, current human interval or product acceptance proof. Supervisor review is pending."
+  ],
+  "reporting": {
+    "reported": false,
+    "notified": false,
+    "adopted": false,
+    "reviewed": false
+  },
+  "goal_status": "active",
+  "self_accepted": false,
+  "product_complete": false,
+  "next_required_action": "Supervisor validate and forward this mode identity supplement to Modern. Review new consumer adoption receipts or concrete consumer BIN questions; do not infer native match/clock/owner authority from catalog labels."
+}

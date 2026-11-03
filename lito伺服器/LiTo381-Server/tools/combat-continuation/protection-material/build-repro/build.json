@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build\\candidate-water-life-material.jar",
+    "sha256": "c83d82a84676a984a3d5e63e41a52f4e564359b3ba93c0ff6923e2748276fed7"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\candidate-protection-material.jar",
+    "sha256": "aa8b7c64a9f0adc07f1b32a216445c6d9686f017c2142418b7d86ea87ff729ba"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeProtectionCastAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\build.py",
+      "sha256": "4f7bff7d98ca0a02b0b05d3911e458dc716de5854cb4f52fd1efae51211bc18a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\ProtectionMethods.java",
+      "sha256": "82719d83476fcaee724438bdede0b2790050b15f2a46339cabb499a984e1ba84"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "13625031e7605d334720b73b9403f5bcc1d8cf7a40cf693d6cc975972d0edbdf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "acd825ed4e286b8c05cdb4e5c97d2078aebd4d7c911b819faad2f4f0a39878ca"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\protection-material\\build-repro\\inputs\\sources\\NativeProtectionCastAction.java",
+      "sha256": "7ab6ea14cdb2cc7e724eebb59880f58960a029a4891bfd815261c695417d96e1"
+    }
+  ]
+}

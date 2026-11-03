@@ -1,0 +1,43 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-material\\build\\candidate-summon-material.jar",
+    "sha256": "0efdc606c0d5fe1fc5511cabcac9c8b0f227a72ba34fd4183abe323dcb302a54"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\candidate-summon-parity.jar",
+    "sha256": "a90494520095ce7b8be36a150437b6be9490864d36b6a9693eda67fcfd86f6c4"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/Protocol.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\build.py",
+      "sha256": "e3aa12870531c62ddac00f79bca179105b70b919dc92297a706d0f376486cbf0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\C_UseSkill.java",
+      "sha256": "4932c6dd71b330d91b75c4fcbf02c30ffa4712c35d7cb07537626159038e168e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\SummonSelectionMethods.java",
+      "sha256": "61a693a5f604e82f891fda5a2cf15483e07c47db76ac81d6ac526e58b230a849"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build-repro\\inputs\\SUMMON_MONSTER.java",
+      "sha256": "16cdceaa1adbc8718a3cc239ead29021cc14c57e80caa094333522a84e9fdce8"
+    }
+  ]
+}

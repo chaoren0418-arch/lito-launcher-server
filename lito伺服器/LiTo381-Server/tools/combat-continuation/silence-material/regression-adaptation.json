@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground_regression.py",
+      "sha256": "c966cb1fdf43b86c1954ba69c9eb05c23f3cff9cc754e6574f2437f3382bd016"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\ground-material\\census.py",
+      "sha256": "5f8976fc04eabb65080f15d1f0ac370fd5b3bf3e6845455ffd5186661ddedb06"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\prepare_regression.py",
+      "sha256": "480ebfe4ec740e49dc1247a51f33459a64faac6d22c3fe33c37b084a3c595572"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence_regression.py",
+      "sha256": "d26fad3bc5c3355abf910a27cb3817634dc41c49face8fe14808e203508228b4"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\census.py",
+      "sha256": "4affd238f79b0bf913ba1a5d9c107e86ecd0535b474dcbddc55977d0be22d168"
+    }
+  ],
+  "scope": "regression evidence destination and exact candidate only; static census removes two single-target Silence roots; not Area Silence qualification"
+}

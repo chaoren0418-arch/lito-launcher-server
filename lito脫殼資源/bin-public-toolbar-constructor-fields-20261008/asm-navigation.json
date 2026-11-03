@@ -1,0 +1,22 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "authority": false,
+  "different_input_header": true,
+  "procedure_boundaries_in_ASM_do_not_cover_raw_epilogues": true,
+  "excerpts": [
+    {
+      "label": "sub_49E570",
+      "line": 332006,
+      "text": "sub_49E570 proc near                    ; CODE XREF: ___:004164F5↑p\n                                        ; ___:00416570↑p\n                                        ; ___:004165D4↑p\n                                        ; ___:00416627↑p\n                                        ; ___:0041667A↑p\n                                        ; ___:004166CD↑p\n                                        ; ___:00416720↑p\n                                        ; ___:00416773↑p\n                                        ; ___:004167C6↑p\n                                        ; ___:0042C0B0↑p\n                                        ; ___:0042C103↑p\n                                        ; ___:0045556A↑p\n                                        ; sub_47CF00+A91↑p\n                                        ; sub_47CF00+B24↑p\n                                        ; sub_47CF00+CA1↑p ...\n\narg_0= dword ptr  8\narg_8= dword ptr  10h\narg_C= dword ptr  14h\narg_10= dword ptr  18h\narg_14= dword ptr  1Ch\narg_18= dword ptr  20h\narg_1C= dword ptr  24h\narg_20= dword ptr  28h\n\npush    ebp\nmov     ebp, esp\nmov     eax, [ebp+arg_20]\nmov     edx, [ebp+arg_18]\npush    esi\nmov     esi, ecx\nmov     ecx, [ebp+arg_1C]\npush    eax\nmov     eax, [ebp+arg_14]\npush    ecx\nmov     ecx, [ebp+arg_10]\npush    edx\nmov     edx, [ebp+arg_C]\npush    eax\nmov     eax, [ebp+arg_8]\npush    ecx\nmov     ecx, [ebp+arg_0]\npush    edx\npush    eax\npush    ecx\nmov     ecx, esi\ncall    sub_49E110\n\nsub_49E570 endp"
+    },
+    {
+      "label": "sub_49E110",
+      "line": 331288,
+      "text": "sub_49E110 proc near                    ; CODE XREF: ___:0041331F↑p\n                                        ; ___:00416813↑p\n                                        ; ___:004192B6↑p\n                                        ; ___:004193F1↑p\n                                        ; ___:0041943F↑p\n                                        ; ___:0041948E↑p\n                                        ; ___:004194DD↑p\n                                        ; ___:0041952C↑p\n                                        ; ___:0041957B↑p\n                                        ; ___:004195CA↑p\n                                        ; ___:0042A4BB↑p\n                                        ; ___:0042A50F↑p\n                                        ; ___:0042A564↑p\n                                        ; ___:0042BF76↑p\n                                        ; ___:0042DBEF↑p ...\n\narg_0= dword ptr  8\narg_4= dword ptr  0Ch\narg_8= dword ptr  10h\narg_C= dword ptr  14h\narg_10= dword ptr  18h\narg_14= dword ptr  1Ch\narg_18= dword ptr  20h\narg_1C= dword ptr  24h\n\npush    ebp\nmov     ebp, esp\nmov     eax, [ebp+arg_1C]\nmov     edx, [ebp+arg_14]\npush    esi\nmov     esi, ecx\nmov     ecx, [ebp+arg_18]\npush    eax\nmov     eax, [ebp+arg_10]\npush    ecx\nmov     ecx, [ebp+arg_C]\npush    edx\nmov     edx, [ebp+arg_8]\npush    eax\nmov     eax, [ebp+arg_4]\npush    ecx\nmov     ecx, [ebp+arg_0]\npush    edx\npush    eax\npush    ecx\nmov     ecx, esi\ncall    sub_49CD70\n\nsub_49E110 endp"
+    }
+  ]
+}

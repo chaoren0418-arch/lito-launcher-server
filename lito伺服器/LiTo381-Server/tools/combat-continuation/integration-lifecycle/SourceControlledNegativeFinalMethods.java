@@ -1,0 +1,23 @@
+import java.nio.file.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;import static org.objectweb.asm.Opcodes.*;
+public final class SourceControlledNegativeFinalMethods {
+ static final String P="local/lito381/server/",C=P+"NativeAreaMaterialAction$Context",N=P+"NativeSourceTargetNegativeLife",W=P+"NativeSourceWeaponFinalFrame",B=P+"NativeControlledNegativeMaterial",H=P+"NativeSourceControlledNegativeFinal";
+ static final List<String> OWNERS=List.of(C,N,W,B);static void need(boolean b,String s){if(!b)throw new AssertionError(s);}
+ static void patch(ClassNode c){
+  if(c.name.equals(C)){need(c.fields.stream().noneMatch(f->f.name.equals("nativeSourceControlledNegativeFinal")),"fresh bounded producing slot");c.fields.add(new FieldNode(ACC_TRANSIENT,"nativeSourceControlledNegativeFinal","Ljava/lang/Object;",null,null));return;}
+  if(c.name.equals(N)){int closed=0;for(var m:c.methods)if(m.name.equals("close")){var x=new InsnList();x.add(new VarInsnNode(ALOAD,0));x.add(new MethodInsnNode(INVOKESTATIC,H,"close","(L"+C+";)V",false));m.instructions.insert(x);closed++;}need(closed==1,"one original proof cleanup");return;}
+  if(c.name.equals(B)){int calls=0,installed=0;for(var m:c.methods)for(var node:m.instructions.toArray())if(node instanceof MethodInsnNode call){
+   if(call.owner.equals(P+"CombatNpcDebuffs")&&call.name.equals("nativeMaterialControlledNegativeBody")){call.owner=H;call.name="produce";calls++;}
+   else if(call.owner.equals(N)&&call.name.equals("capture")){var id=FreezeAcceptedMethods.prev(call);var context=FreezeAcceptedMethods.prev(id);need(id instanceof VarInsnNode getter&&getter.getOpcode()==LLOAD&&context instanceof VarInsnNode v&&v.getOpcode()==ALOAD,"original first Context/long-target capture operands");var x=new InsnList();x.add(new VarInsnNode(ALOAD,((VarInsnNode)context).var));x.add(new MethodInsnNode(INVOKESTATIC,H,"install","(L"+C+";)V",false));m.instructions.insert(call,x);installed++;}
+  }need(calls==1&&installed==1,"one first controlled capture and one original controlled producer");return;}
+  int capture=0,frame=0,allow=0;for(var m:c.methods){
+   if(m.name.equals("capture")){var x=new InsnList();var old=new LabelNode();for(int i=0;i<3;i++)x.add(new VarInsnNode(ALOAD,i));x.add(new MethodInsnNode(INVOKESTATIC,H,"capture",m.desc,false));x.add(new JumpInsnNode(IFEQ,old));x.add(new InsnNode(ICONST_1));x.add(new InsnNode(IRETURN));x.add(old);m.instructions.insert(x);capture++;}
+   else if(m.name.equals("frame")){var x=new InsnList();var old=new LabelNode();for(int i=0;i<4;i++)x.add(new VarInsnNode(ALOAD,i));x.add(new MethodInsnNode(INVOKESTATIC,H,"frame",m.desc.replace(")V",")Z"),false));x.add(new JumpInsnNode(IFEQ,old));x.add(new InsnNode(RETURN));x.add(old);m.instructions.insert(x);frame++;}
+   else if(m.name.equals("allow")){var x=new InsnList();var old=new LabelNode();x.add(new VarInsnNode(ALOAD,2));x.add(new MethodInsnNode(INVOKESTATIC,H,"kind","(Ljava/lang/Object;)Z",false));x.add(new JumpInsnNode(IFEQ,old));for(int i=0;i<3;i++)x.add(new VarInsnNode(ALOAD,i));x.add(new MethodInsnNode(INVOKESTATIC,H,"allow",m.desc,false));x.add(new InsnNode(IRETURN));x.add(old);m.instructions.insert(x);allow++;}
+  }need(capture==1&&frame==1&&allow==1,"three original capture/router/final methods only");
+ }
+ public static void main(String[]args)throws Exception{
+  var urls=new ArrayList<java.net.URL>();urls.add(Path.of(args[1]).toUri().toURL());try(var files=Files.list(Path.of(args[3]))){for(var p:files.filter(x->x.toString().endsWith(".jar")).toList())urls.add(p.toUri().toURL());}
+  try(var loader=new java.net.URLClassLoader(urls.toArray(java.net.URL[]::new),ClassLoader.getPlatformClassLoader());var base=new JarFile(args[1])){FreezeAcceptedMethods.hierarchy=loader;for(var owner:OWNERS){var c=FreezeAcceptedMethods.read(base,owner);patch(c);var canon=new ClassNode();new ClassReader(FreezeAcceptedMethods.bytes(c,true)).accept(canon,ClassReader.SKIP_DEBUG|ClassReader.EXPAND_FRAMES);byte[] bytes=FreezeAcceptedMethods.bytes(canon,false);if(args[0].equals("splice")){var p=Path.of(args[2]).resolve(owner+".class");Files.createDirectories(p.getParent());Files.write(p,bytes);}else try(var jar=new JarFile(args[2])){need(Arrays.equals(bytes,FreezeAcceptedMethods.bytes(FreezeAcceptedMethods.read(jar,owner),false)),"bounded controlled-negative final splice "+owner);}}}
+  System.out.println("PASS controlled-negative final splice:4 original owners,1 transient producing slot,6 existing method ports,0 original sender changes; existing full sender siblings reused");
+ }
+}

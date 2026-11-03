@@ -1,0 +1,40 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build\\candidate-area-material.jar",
+    "sha256": "e1c6d4bc6b624a8f2624baf764249ed3fb64c83f2e1fb522e36770f4fb68e616"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "66/76 area material and fixed membership; targeted qualification pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build-repro\\candidate-area-sleep-slow.jar",
+    "sha256": "8d44fac4fb8e02cf9d7bee84a770a4b01a31a043620b796529a9cded47ed445f"
+  },
+  "exact_four_area_roots_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeAreaMaterialAction$Context.class",
+    "local/lito381/server/NativeAreaMaterialAction.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build-repro\\inputs\\AreaSleepSlowMethods.java",
+      "sha256": "ab262fd7392ac7f79ffc5e7619f688c1cbbf01658f93089c9f4626b9cc2c7185"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build-repro\\inputs\\build.py",
+      "sha256": "1009135bf432af5b4d3ef8e12758a5e16b69eaa13a696e595bf439e35e180d17"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build-repro\\inputs\\NativeAreaMaterialAction.java",
+      "sha256": "f570ab3699e0702779eb26cc515f04d79f01a27b1ac263577a10e0a2d940f560"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-sleep-slow\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

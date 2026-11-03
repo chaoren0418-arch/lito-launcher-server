@@ -1,0 +1,77 @@
+{
+  "resource": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\skill-frame934\\LTsurf\\row01557-934.img",
+    "bytes": 119654,
+    "sha256": "1A369143599258DEDAE971300D611CD6F82061EED0843EC6D385EA37CA9631A7"
+  },
+  "width_signed": 207,
+  "height_signed": 289,
+  "flag": 1,
+  "key_word": "324C",
+  "exact_dense_pixel_bytes": 119646,
+  "header_native_reads": [
+    {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004CC686",
+      "rva": "000CC686",
+      "section": "   \u0000    ",
+      "file_offset": "000CC686",
+      "raw_backed": true,
+      "raw_hex": "0fbf5102",
+      "mnemonic": "movsx",
+      "operands": "edx, word ptr [ecx + 2]",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+        "bytes": 401,
+        "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+      }
+    },
+    {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004CC6D5",
+      "rva": "000CC6D5",
+      "section": "   \u0000    ",
+      "file_offset": "000CC6D5",
+      "raw_backed": true,
+      "raw_hex": "0fbf1b",
+      "mnemonic": "movsx",
+      "operands": "ebx, word ptr [ebx]",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+        "bytes": 401,
+        "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+      }
+    },
+    {
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "va": "004CC757",
+      "rva": "000CC757",
+      "section": "   \u0000    ",
+      "file_offset": "000CC757",
+      "raw_backed": true,
+      "raw_hex": "0fbf08",
+      "mnemonic": "movsx",
+      "operands": "ecx, word ptr [eax]",
+      "range": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\ranges\\004CC611-191.bin",
+        "bytes": 401,
+        "sha256": "0FF7F9E03A59B453C8E4F32AA2BFCECB38F492295A0608818C94D78255C894C9"
+      }
+    }
+  ],
+  "preview": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-frame-coordinate\\frame934-source-preview.png",
+    "bytes": 16853,
+    "sha256": "6814F7FDEDB8C4036F5C55AD29D37697B1206D745BA316D107FDB681CCB10A2A"
+  },
+  "preview_policy": {
+    "width": 207,
+    "height": 289,
+    "flag": 1,
+    "key": 12876,
+    "pixel_format": "qualified RGB555; expand5 via(v<<3)|(v>>2)",
+    "mode": "color_key",
+    "rgba_sha256": "C18B820F4E1070BE4EE0C6C9F5867CB9487EA3FB0EDDCBA2E94C5D086549E516"
+  },
+  "native_GUI_oracle": false
+}

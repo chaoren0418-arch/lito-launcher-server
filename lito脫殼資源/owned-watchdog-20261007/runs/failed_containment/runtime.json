@@ -1,0 +1,40 @@
+{
+  "schema": "owned-process-runtime-v1",
+  "argv": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "normal"
+  ],
+  "job_dir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\failed_containment",
+  "controller_pid": 23296,
+  "start_monotonic": 418460.843,
+  "deadline_monotonic": 418462.843,
+  "timeout_seconds": 2,
+  "child_resumed": false,
+  "status": "CONTAINMENT_OR_CONTROL_REFUSED",
+  "disk_limit_is_hard_quota": false,
+  "disk_poll_seconds": 0.05,
+  "failure": {
+    "stage": "SetInformationJobObject",
+    "winerror": 24
+  },
+  "process_created": false,
+  "atomic_containment_requested": true,
+  "trigger": [],
+  "owned_job_empty": true,
+  "capture": {},
+  "disk_monitor": {
+    "samples": [],
+    "requested_poll_seconds": 0.05,
+    "max_observed_sample_gap_seconds": 0,
+    "final_bytes_before_receipt": 0,
+    "threshold_bytes": 1048576,
+    "final_overshoot_bytes": 0,
+    "post_cleanup_capture_bytes_included": true,
+    "hard_quota": false,
+    "limit": "Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored."
+  },
+  "finished_monotonic": 418460.843,
+  "elapsed_seconds": 0.0
+}

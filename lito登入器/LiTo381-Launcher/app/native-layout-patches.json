@@ -1,0 +1,448 @@
+{
+  "schema": 1,
+  "executable_sha256": "4271d92fb2b9a2fa8d118dde0767f6d8a67a896227bcc24127438fcb5c2ab6e9",
+  "action_slots": 143,
+  "action_limit": 100,
+  "lt_sound_base": 30000,
+  "release_ready": false,
+  "patches": [
+    {
+      "address": "0x423784",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43dd4f",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43dd7b",
+      "old": "bb47000000",
+      "new": "bb8f000000",
+      "reason": "checksum visits every allocated action slot"
+    },
+    {
+      "address": "0x43de90",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43debd",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43e74a",
+      "old": "c1e103",
+      "new": "c1e104",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43e75b",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43e7f9",
+      "old": "c1e603",
+      "new": "c1e604",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x43e99f",
+      "old": "81e210270000",
+      "new": "81e230750000",
+      "reason": "parser adds LT sound namespace base only for LT source rows"
+    },
+    {
+      "address": "0x43ea08",
+      "old": "81e210270000",
+      "new": "81e230750000",
+      "reason": "parser adds LT sound namespace base only for LT source rows"
+    },
+    {
+      "address": "0x43ea71",
+      "old": "81e210270000",
+      "new": "81e230750000",
+      "reason": "parser adds LT sound namespace base only for LT source rows"
+    },
+    {
+      "address": "0x43eb83",
+      "old": "c1e603",
+      "new": "c1e604",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x44ec96",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x44f0f4",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x44f21f",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4c731e",
+      "old": "3d10270000",
+      "new": "3d30750000",
+      "reason": "sound filename resolver selects shared versus LT namespace"
+    },
+    {
+      "address": "0x4c7325",
+      "old": "05f0d8ffff",
+      "new": "05d08affff",
+      "reason": "sound filename resolver converts LT encoded ID to local filename"
+    },
+    {
+      "address": "0x4c736f",
+      "old": "81ff10270000",
+      "new": "81ff30750000",
+      "reason": "sound filename resolver selects shared versus LT namespace"
+    },
+    {
+      "address": "0x4c737a",
+      "old": "8d87f0d8ffff",
+      "new": "8d87d08affff",
+      "reason": "sound filename resolver converts LT encoded ID to local filename"
+    },
+    {
+      "address": "0x4c75ef",
+      "old": "81ff10270000",
+      "new": "81ff30750000",
+      "reason": "sound filename resolver selects shared versus LT namespace"
+    },
+    {
+      "address": "0x4c75fa",
+      "old": "8d87f0d8ffff",
+      "new": "8d87d08affff",
+      "reason": "sound filename resolver converts LT encoded ID to local filename"
+    },
+    {
+      "address": "0x4e032d",
+      "old": "83fb47",
+      "new": "83fb64",
+      "reason": "fallback action lookup accepts source action IDs below 100"
+    },
+    {
+      "address": "0x4e0339",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e03cd",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e0541",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e0612",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e0a77",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e1458",
+      "old": "3c30",
+      "new": "3c7f",
+      "reason": "frame event consumer accepts the full signed-byte frame index range"
+    },
+    {
+      "address": "0x4e154b",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e15a9",
+      "old": "c1e203",
+      "new": "c1e204",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e16e5",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e16fc",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e1b08",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e1b48",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e21be",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e25d0",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e25eb",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e2659",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e2674",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e2736",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e2751",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e2832",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e284d",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e301c",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e3037",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e357e",
+      "old": "83f847",
+      "new": "83f864",
+      "reason": "animation consumer accepts source action IDs below 100"
+    },
+    {
+      "address": "0x4e3b4a",
+      "old": "69c954030000",
+      "new": "69c9b4060000",
+      "reason": "explicit action-table sprite stride in animation consumer"
+    },
+    {
+      "address": "0x4e3b7b",
+      "old": "69c954030000",
+      "new": "69c9b4060000",
+      "reason": "explicit action-table sprite stride in animation consumer"
+    },
+    {
+      "address": "0x4e3c16",
+      "old": "69c954030000",
+      "new": "69c9b4060000",
+      "reason": "explicit action-table sprite stride in animation consumer"
+    },
+    {
+      "address": "0x4e3f64",
+      "old": "69d254030000",
+      "new": "69d2b4060000",
+      "reason": "explicit action-table sprite stride in animation consumer"
+    },
+    {
+      "address": "0x4e3f93",
+      "old": "69c954030000",
+      "new": "69c9b4060000",
+      "reason": "explicit action-table sprite stride in animation consumer"
+    },
+    {
+      "address": "0x4e580d",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e5b6a",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e5c85",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e5cfb",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e6030",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e6087",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e60d9",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e615f",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e80d7",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e80ee",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e82bd",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8642",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8797",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8804",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8e37",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8e7c",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e8eab",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e968e",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e96a5",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    },
+    {
+      "address": "0x4e96dd",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e982a",
+      "old": "c1e003",
+      "new": "c1e004",
+      "reason": "action-table physical sprite stride: 71 to 143 slots"
+    },
+    {
+      "address": "0x4e9841",
+      "old": "fc210200",
+      "new": "7c4b0400",
+      "reason": "LT base-relative sprite164 action3 frame-pointer displacement"
+    }
+  ]
+}

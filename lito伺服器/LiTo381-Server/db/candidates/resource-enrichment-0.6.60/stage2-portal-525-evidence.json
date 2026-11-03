@@ -1,0 +1,34 @@
+{
+  "package_status": "未匯入、未接線",
+  "source_source_id": 146,
+  "source_record_offset": 98345,
+  "raw_record_hex": "043131313158270d023c001900",
+  "name_hex": "31313131",
+  "decoded_destination": {
+    "x": 32798,
+    "y": 32793,
+    "raw_x_signed_half_delta": 60,
+    "raw_y_signed_delta": 25
+  },
+  "target_source_id": 148,
+  "target_sector": "80008000",
+  "local_cell": {
+    "x": 30,
+    "y": 25
+  },
+  "layer3_attribute_offset": 39290,
+  "cardinal_attribute_words": {
+    "north": 1,
+    "east": 1,
+    "south": 1,
+    "west": 1
+  },
+  "all_four_bit0_closed": true,
+  "coordinate_changed": false,
+  "conclusion": "resource bytes and packed coordinate conversion confirmed; static geometry blocks target; no evidence of parser fault; original dynamic override or historical use unknown",
+  "native_layer7_parser": {
+    "va": "0x00484C49",
+    "asm_line": 282453
+  },
+  "standing_test_limit": "standing is server/resource-derived proxy, not original portal admission policy"
+}

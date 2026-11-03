@@ -1,0 +1,41 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-static\\build\\candidate-cancellation-npc-static.jar",
+    "sha256": "f6d98acd97684be09c502bd803816537e677bed6073335c37d38758670ea3391"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "Population replacement primitives only; cast dispatch, deadlines and publication not connected",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\candidate-cancellation-npc-replacement.jar",
+    "sha256": "51ad61a62e189503006fc04073f44c8b25bed545579413ba572d3aea2917bc4f"
+  },
+  "exact_additive_method_inverse": true,
+  "changed": [
+    "local/lito381/server/ClassicWorldMonsterPopulation.class"
+  ],
+  "added": [],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\inputs\\build.py",
+      "sha256": "acade858efdc3936512d6207b75aaf163d66105913cb6ae70f50a4e0674c55b4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\inputs\\ClassicWorldMonsterPopulation.java",
+      "sha256": "7de885dac497f767d0667938104ac2305ed65c78967afa6c2498b2c054c63ce2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\inputs\\PopulationReplacement.java.inc",
+      "sha256": "86ea361ac787ad1ea54179eb3815756a73022be8d30cebaed4d803f77677f213"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-replacement\\build-repro\\inputs\\PopulationReplacementMethods.java",
+      "sha256": "e78c4ff8bafe34556de38d56d7ffcf2a65434577316ead7c48fbef4a59d0af9f"
+    }
+  ]
+}

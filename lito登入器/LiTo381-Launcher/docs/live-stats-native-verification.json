@@ -1,0 +1,8 @@
+{
+  "native_live_stats": true,
+  "before_wins": 10,
+  "after_wins": 11,
+  "same_window": true,
+  "no_sql_writes": true,
+  "run": "same-window-fixture-1791773379123261200"
+}

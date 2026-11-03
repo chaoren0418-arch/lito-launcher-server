@@ -1,0 +1,111 @@
+[
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232025-919.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232025-919.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232025-919.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232025-919.stdout.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232039-923.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232039-923.stderr.log",
+    "sha256": "c913e1a5703e4c1bb92aa6d824934dff7cc6ca0daba7b8c19c6f3e40478084b9",
+    "bytes": 213
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232039-923.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232039-923.stdout.log",
+    "sha256": "f84a8b82dee0b8b183498610fb3b873758238cc00cbf3f5204b4e56c9a594f54",
+    "bytes": 1216
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232156-765.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232156-765.stderr.log",
+    "sha256": "c913e1a5703e4c1bb92aa6d824934dff7cc6ca0daba7b8c19c6f3e40478084b9",
+    "bytes": 213
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261011-232156-765.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261011-232156-765.stdout.log",
+    "sha256": "24432b4eb80a906372e25238763b1ab7e1498fe35161ee0c534f8d525b7afdde",
+    "bytes": 1216
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-002933-620.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-002933-620.stderr.log",
+    "sha256": "c913e1a5703e4c1bb92aa6d824934dff7cc6ca0daba7b8c19c6f3e40478084b9",
+    "bytes": 213
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-002933-620.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-002933-620.stdout.log",
+    "sha256": "a27e59285ff8b99b2aabc893810bbae54a8aaee2006c32916081f1397f48cec8",
+    "bytes": 1483
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-003358-297.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-003358-297.stderr.log",
+    "sha256": "c913e1a5703e4c1bb92aa6d824934dff7cc6ca0daba7b8c19c6f3e40478084b9",
+    "bytes": 213
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-003358-297.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-003358-297.stdout.log",
+    "sha256": "30ee842d7e4dd01d24d7d45fa2f77e8e54f69cc1f7cc0107cb1f185a66bf0bd3",
+    "bytes": 1484
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-010746-935.stderr.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-010746-935.stderr.log",
+    "sha256": "c913e1a5703e4c1bb92aa6d824934dff7cc6ca0daba7b8c19c6f3e40478084b9",
+    "bytes": 213
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\loginfo\\startup-check-20261012-010746-935.stdout.log",
+    "relative": "lito伺服器/LiTo381-Server/loginfo/startup-check-20261012-010746-935.stdout.log",
+    "sha256": "6853df81115e005ac11d2ec4940d29a3dc466538939ac07e05454304dbf50dd1",
+    "bytes": 1719
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\baseline-0.6.60-startup.log",
+    "relative": "lito登入器/LiTo381-Launcher/docs/baseline-0.6.60-startup.log",
+    "sha256": "191b8cb780a8d0052f512cf7b0670415ef2dac9fc392a10e99127bfb36cfa30d",
+    "bytes": 534
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\caption-isolation-before.log",
+    "relative": "lito登入器/LiTo381-Launcher/docs/caption-isolation-before.log",
+    "sha256": "caf23753b3a33dfe599c3411d04ac17bfd4ce15c2939a7a4166cec5e1288863b",
+    "bytes": 10139
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\multi-window.stderr.log",
+    "relative": "lito登入器/LiTo381-Launcher/docs/multi-window.stderr.log",
+    "sha256": "ab8548ed128b40a1b40d570e38062da5732a9d53ff5642991e8264b263cddc2a",
+    "bytes": 4529
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\room-admission-native-run.log",
+    "relative": "lito登入器/LiTo381-Launcher/docs/room-admission-native-run.log",
+    "sha256": "0b0e9c22e40384125f984ed53fb04e108fb1b09c997dca0be501b5928bc5edd9",
+    "bytes": 11718
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\room-state-native-run.log",
+    "relative": "lito登入器/LiTo381-Launcher/docs/room-state-native-run.log",
+    "sha256": "f4de487add1346d5bd60cd4248e025d91369f1682aa55b16601c8170e1d16003",
+    "bytes": 10540
+  },
+  {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\baseline-0.6.66-hygiene-staging\\old-analysis-README.md",
+    "relative": "lito登入器/LiTo381-Launcher/docs/baseline-0.6.66-hygiene-staging/old-analysis-README.md",
+    "sha256": "91297ba23680b66a76b6edd6e42a06361e0217f0f065c461e8aa7d8b807e87df",
+    "bytes": 236215,
+    "reason": "historical entry text preserved in maintenance archive"
+  }
+]

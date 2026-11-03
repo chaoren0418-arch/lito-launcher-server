@@ -1,0 +1,288 @@
+{
+  "qualification": "Offline conditional operand models only; no Native/string/backend/runtime execution.",
+  "phase_room_subtype_models": [
+    {
+      "phase": 6,
+      "previous_room": 1,
+      "incoming_room": 2,
+      "subtype_byte": 0,
+      "room_after_gate": 2,
+      "payload_dispatch": true,
+      "Native_executed": false
+    },
+    {
+      "phase": 6,
+      "previous_room": 1,
+      "incoming_room": 2,
+      "subtype_byte": 1,
+      "room_after_gate": 2,
+      "payload_dispatch": true,
+      "Native_executed": false
+    },
+    {
+      "phase": 6,
+      "previous_room": 1,
+      "incoming_room": 2,
+      "subtype_byte": 10,
+      "room_after_gate": 2,
+      "payload_dispatch": false,
+      "Native_executed": false
+    },
+    {
+      "phase": 6,
+      "previous_room": 1,
+      "incoming_room": 2,
+      "subtype_byte": 255,
+      "room_after_gate": 2,
+      "payload_dispatch": false,
+      "Native_executed": false
+    },
+    {
+      "phase": 5,
+      "previous_room": 1,
+      "incoming_room": 2,
+      "subtype_byte": 0,
+      "room_after_gate": 1,
+      "payload_dispatch": false,
+      "Native_executed": false
+    },
+    {
+      "phase": 5,
+      "previous_room": 1,
+      "incoming_room": 1,
+      "subtype_byte": 1,
+      "room_after_gate": 1,
+      "payload_dispatch": true,
+      "Native_executed": false
+    },
+    {
+      "phase": 2,
+      "previous_room": 1,
+      "incoming_room": 1,
+      "subtype_byte": 0,
+      "room_after_gate": 1,
+      "payload_dispatch": true,
+      "Native_executed": false
+    },
+    {
+      "phase": 5,
+      "previous_room": 1,
+      "incoming_room": 1,
+      "subtype_byte": 255,
+      "room_after_gate": 1,
+      "payload_dispatch": false,
+      "Native_executed": false
+    }
+  ],
+  "map_models": [
+    {
+      "input_mapWORD": 0,
+      "output_BYTE": 12,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 564,
+      "output_BYTE": 64,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 65535,
+      "output_BYTE": 255,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 65436,
+      "output_BYTE": 156,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 65534,
+      "output_BYTE": 10,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 32768,
+      "output_BYTE": 12,
+      "Native_executed": false
+    },
+    {
+      "input_mapWORD": 248,
+      "output_BYTE": 4,
+      "Native_executed": false
+    }
+  ],
+  "count_models": [
+    {
+      "K_unsigned": 0,
+      "K_signed": 0,
+      "reads": 0,
+      "stores8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bytes_after_8_not_adopted": 0,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 1,
+      "K_signed": 1,
+      "reads": 1,
+      "stores8": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bytes_after_8_not_adopted": 0,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 7,
+      "K_signed": 7,
+      "reads": 7,
+      "stores8": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "bytes_after_8_not_adopted": 0,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 8,
+      "K_signed": 8,
+      "reads": 8,
+      "stores8": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "bytes_after_8_not_adopted": 0,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 9,
+      "K_signed": 9,
+      "reads": 8,
+      "stores8": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "bytes_after_8_not_adopted": 1,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 127,
+      "K_signed": 127,
+      "reads": 8,
+      "stores8": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "bytes_after_8_not_adopted": 119,
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 128,
+      "K_signed": -128,
+      "reads": 0,
+      "stores8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bytes_after_8_not_adopted": "signednegative/unknownsuffix",
+      "Native_executed": false
+    },
+    {
+      "K_unsigned": 255,
+      "K_signed": -1,
+      "reads": 0,
+      "stores8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bytes_after_8_not_adopted": "signednegative/unknownsuffix",
+      "Native_executed": false
+    }
+  ],
+  "numeric_store_models": {
+    "subtype0_byte_destinations": {
+      "0064ACCA": 1,
+      "0064ACCC": 0,
+      "0064ACD0": 0,
+      "0064ACD1": 1,
+      "0064ACD2": 2,
+      "0064ACD3": 3,
+      "0064ACC9": 64
+    },
+    "subtype1_byte_destinations": {
+      "0064ABE6": 40,
+      "0064ABF0": 4,
+      "0064ACD4": 0,
+      "0064ACD5": 0,
+      "0064ACD6": 0,
+      "0064ACD7": 0,
+      "0064ACD8": 0,
+      "0064ACD9": 0,
+      "0064ACDA": 0,
+      "0064ACDB": 0,
+      "0064ACDC": 0,
+      "0064ACDD": 0,
+      "0064ACDE": 0,
+      "0064ACDF": 0
+    },
+    "subtype0_preserves_config_numeric_fields": true,
+    "two_orders_numeric_disjoint_fields_equal": true,
+    "high_byte64ACCB_preserved": true,
+    "capacity_highbytes_preserved": [
+      165,
+      165,
+      165
+    ],
+    "strings_and_coherent_pair_not_modeled": true
+  }
+}

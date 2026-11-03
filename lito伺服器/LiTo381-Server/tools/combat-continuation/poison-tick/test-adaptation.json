@@ -1,0 +1,49 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeMaterialProbe.java",
+      "sha256": "6f8d862b99c3dd1aab041a1b49365c22a7f9b82f62d93d77562a8919d2eb347d"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeFaultProbe.java",
+      "sha256": "90cf4735b523518c94199e5ac6b040eb225d6c5bfa85f691dfe298bbb5eb7f31"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeLifecycleProbe.java",
+      "sha256": "a204b4d64a1d5805a05d977ae354e0b003613bbb97660bdd7abe00d6d6974769"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeWorldNpcProbe.java",
+      "sha256": "6d96240f58f2a1fc460abf9ca57ce8af3e3788cb44a462cbb8c083f8958854a2"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeClockProbe.java",
+      "sha256": "a32e74298aa2d8b8ab2126c1b99f2134450967958450048a6efd497741810516"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\PoisonScopeTickProbe.java",
+      "sha256": "e24419b0f25bf3b5e4c6e8ea586460836f0dbb2cdaa7f4020813841d98850741"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\test.py",
+      "sha256": "00b3797a35bbe667698d7cc92355e950cb98eca5cf0ee473fe87c8464ac5055f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\test_boundaries.py",
+      "sha256": "3b8ea64d519e9ed3ce12b8313d37e56404fd4094746ecc0a075c13d6a04b4cac"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\test_world_npcs.py",
+      "sha256": "ed5ebcfb8920b5076d16c159e6dbf545dfebb82733cfb390fc38e3a9b3fba0c7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\test_clock_audit.py",
+      "sha256": "927072e094126e34f96b9adf2ecdb498ba7ad9ee095acbde265254850408f88b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\poison-scope\\test_tick_audit.py",
+      "sha256": "bf404c36b3522897d438d163892c3898d854c48a3fdc7fad73418a352a33e3df"
+    }
+  ],
+  "scope": "Already-fixed parent material and curse warning clocks. Original RI + parent damage poison first tick early8, candidate0. Retained 112 role/socket/opposite-cast cases unchanged."
+}

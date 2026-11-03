@@ -1,0 +1,63 @@
+{
+  "task_id": "bin-public-4c8790-effects-20261008",
+  "generated_at": "2026-10-08T16:42:14.745271+08:00",
+  "artifacts": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\004C85E0-45.bin",
+      "bytes": 69,
+      "sha256": "16C0D613E0F7D076BC64870CFA69D2C9B44D24A59C75535D65F4D23FCFA01296"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\004C8790-5.bin",
+      "bytes": 5,
+      "sha256": "B49C630CBB3C702C10BC0098F8B76E778A1B55177C62831F868B84EB59E98E23"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\asm-navigation.json",
+      "bytes": 3211,
+      "sha256": "3E1C386C6050BCAED9953023DE0EAF3D33352B23C838C40ED8159F99F5F160A7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\derive.py",
+      "bytes": 15156,
+      "sha256": "E32C8CAAE23CAE04DBE9F5E74CD386791DA67D6826A38CE4BEDE8FA0FF505D7A"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\disassembly.txt",
+      "bytes": 1503,
+      "sha256": "45F517DB37BCA02B05CE3E36BB9863AF417ABDA5AC066DF4D996BC9A556A965D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+      "bytes": 20092,
+      "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\raw-evidence.json",
+      "bytes": 11190,
+      "sha256": "DAA93AD2A1D3B624E682B0049898D4E45A8D81A20F1DC06F8379BB3E755DFCD2"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\verification.json",
+      "bytes": 578,
+      "sha256": "1C8C887BFF4DADF17E895C6831FD08335CF014CB8A5B392F806D00CB8C0266F5"
+    }
+  ],
+  "excluded_live_output_logs": "command stdout/stderr are captured by shell after this program exits and separately pinned in owned metadata. Manifest does not self-hash.",
+  "closed_command_logs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\command.stdout.txt",
+      "bytes": 2229,
+      "sha256": "BCDFADF398E8D473F64FBA5C2738ADCD1E94F3DEB3BC2C87B73D5B1E8D281584"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\command.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  ],
+  "execution_receipt": {
+    "tool_receipt": "002247",
+    "exit_code": 0
+  }
+}

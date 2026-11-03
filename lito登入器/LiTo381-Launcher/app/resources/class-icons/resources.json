@@ -1,0 +1,158 @@
+{
+  "status": "png-lbt-roundtrip-and-original-members-verified",
+  "assets": [
+    {
+      "id": 233,
+      "job": 5,
+      "variant": "color",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\dragon_knight\\dragon_knight_color.png",
+        "sha256": "37e861a0cd163aa9f7a5ec2ea698c586eae8d3d9aa390b0221776b113d626960"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\233.lbt",
+        "sha256": "d9c47ed30b79e676eeb4d1bd3f106bbb2b943e234b5e26018ed8584428aecf8c"
+      }
+    },
+    {
+      "id": 234,
+      "job": 5,
+      "variant": "white",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\dragon_knight\\dragon_knight_white.png",
+        "sha256": "89f139dfdb564f15cb809eca0e9c12df22e5043eedc0d2b5b1bdb38f63b3d865"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\234.lbt",
+        "sha256": "cc9365e05767c2468a5271e989e225d6a5a2c74709f2a643de4bc42d9f2ea023"
+      }
+    },
+    {
+      "id": 235,
+      "job": 5,
+      "variant": "red",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\dragon_knight\\dragon_knight_red.png",
+        "sha256": "d30a17c9c79023c1532ebe1b647a4d620071c6895cb194df77150177e250cf64"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\235.lbt",
+        "sha256": "88b686d9e9e82e4b71f22a2aa7e8dfee1dd33e1d47df59e5900c9d091fb48726"
+      }
+    },
+    {
+      "id": 236,
+      "job": 5,
+      "variant": "silver",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\dragon_knight\\dragon_knight_silver.png",
+        "sha256": "2cc00a2aa2898cc6c500607e2bfa372ab991666152a794ec367d0541a6a5c796"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\236.lbt",
+        "sha256": "a1609a3f8c21d8e9073e6f61c2cb808475d8eeafe1d0c3d58634c05538453953"
+      }
+    },
+    {
+      "id": 237,
+      "job": 5,
+      "variant": "gold",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\dragon_knight\\dragon_knight_gold.png",
+        "sha256": "fc2348c2f8a5cde8fd457e96fb6c398e69bf8b6a2c551d38b2b68d8c6d3f541c"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\237.lbt",
+        "sha256": "01fc18d16f9ecbe92c08718543475272a4e07c1a88b4bd7ba41dd1b7ff6df9c4"
+      }
+    },
+    {
+      "id": 238,
+      "job": 6,
+      "variant": "color",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\illusionist\\illusionist_color.png",
+        "sha256": "adcc85757bbf151cd7e139c7b0d15287d37d52f1b0c721d0baba944d9b23c6a1"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\238.lbt",
+        "sha256": "e5b6d4e3218793624d46c69a722bfeb4526c7277377783e858b0f0d504686442"
+      }
+    },
+    {
+      "id": 239,
+      "job": 6,
+      "variant": "white",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\illusionist\\illusionist_white.png",
+        "sha256": "878e01ab17b2dde0186b503fc7062491593707be3b9bf1a82b8b8911bf21e4e4"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\239.lbt",
+        "sha256": "6d197e1352b8385d87f868e698f009b339255d1c2ab84c192ad6c0a7cbfdd1f0"
+      }
+    },
+    {
+      "id": 240,
+      "job": 6,
+      "variant": "red",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\illusionist\\illusionist_red.png",
+        "sha256": "9d5684a9bb57357f98f2c97aaa86feca53364d14be9b22c4d48aeb2fc3b4cfa1"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\240.lbt",
+        "sha256": "b78d2d4fa66de9c0dc365c2b9ba4b99e7b5fe1a14276e67220f4b2c77c3064cd"
+      }
+    },
+    {
+      "id": 241,
+      "job": 6,
+      "variant": "silver",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\illusionist\\illusionist_silver.png",
+        "sha256": "5ab1570589807d85f1334a67466a8303be6f70ab1ed2e1ef9c514f593951042e"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\241.lbt",
+        "sha256": "ee197025e0c7f167bfd27a4ccc0b310df0ac315adaeeb4c11a38e4873449a7ca"
+      }
+    },
+    {
+      "id": 242,
+      "job": 6,
+      "variant": "gold",
+      "png": {
+        "path": "C:\\Users\\CHAOREN\\Desktop\\新增資料夾 (2)\\lito_class_icons_output\\illusionist\\illusionist_gold.png",
+        "sha256": "d6dd841a4800acb1bb91c1f389d9533600ca7bdf16a806cb0e69e82d4164edfd"
+      },
+      "lbt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\resources\\242.lbt",
+        "sha256": "8a677d9e4f27f4d540f841637ee448bb2ab8988b3e8ff8c8b4b84bb22efc5a30"
+      }
+    }
+  ],
+  "original": [
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.idx",
+      "sha256": "2ea2e48a61c246a5d4cb2820c4c3431f487705c67459290a998d9dbe9017baa7"
+    },
+    {
+      "path": "D:\\lineage開發\\0-客戶端\\LiTo\\LTicon.pak",
+      "sha256": "52fec7b547b63b75be1178d66e4c0e17ea5b48f089b47e1836edd120c79c015d"
+    }
+  ],
+  "package": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.idx",
+      "sha256": "f7fc014fb3c2c723fa11b86e1929c24d325995055cb0e2889ea61c3cdc25ad9f"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\resources\\class-icons\\LTicon.pak",
+      "sha256": "23db693b33e03b576483ed572a58350dfc7a6caf31d10ac364c223341eff37b7"
+    }
+  ],
+  "original_members_preserved": 226,
+  "native_count": 243,
+  "source_modified": false
+}

@@ -1,0 +1,227 @@
+{
+  "models": [
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e7473767200",
+      "before_BYTE": 0,
+      "comparison": 0,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e7473767200",
+      "before_BYTE": 1,
+      "comparison": 0,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "4c746576656e7473767200",
+      "before_BYTE": 0,
+      "comparison": -1,
+      "after_BYTE": 0,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "4c746576656e7473767200",
+      "before_BYTE": 1,
+      "comparison": -1,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e747376725800",
+      "before_BYTE": 0,
+      "comparison": 1,
+      "after_BYTE": 0,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e747376725800",
+      "before_BYTE": 1,
+      "comparison": 1,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e7400",
+      "before_BYTE": 0,
+      "comparison": -1,
+      "after_BYTE": 0,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e7400",
+      "before_BYTE": 1,
+      "comparison": -1,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "00",
+      "before_BYTE": 0,
+      "comparison": -1,
+      "after_BYTE": 0,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "00",
+      "before_BYTE": 1,
+      "comparison": -1,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e747376720069676e6f726564",
+      "before_BYTE": 0,
+      "comparison": 0,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "inline_literal_flag_leaf",
+      "input_hex": "6c746576656e747376720069676e6f726564",
+      "before_BYTE": 1,
+      "comparison": 0,
+      "after_BYTE": 1,
+      "qualification": "conditional validinputmemory; tokenizer/earlierindirectcallee execution not assumed"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 0,
+      "selector_decoded_u32": 0,
+      "decision": "direct_D201",
+      "selector_read_required": false,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 0,
+      "selector_decoded_u32": 1,
+      "decision": "direct_D201",
+      "selector_read_required": false,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 0,
+      "selector_decoded_u32": null,
+      "decision": "direct_D201",
+      "selector_read_required": false,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 1,
+      "selector_decoded_u32": 0,
+      "decision": "direct_D201",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 1,
+      "selector_decoded_u32": 1,
+      "decision": "notice_unknown_458BB0",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 1,
+      "selector_decoded_u32": null,
+      "decision": "memory_source_open",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 255,
+      "selector_decoded_u32": 0,
+      "decision": "direct_D201",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 255,
+      "selector_decoded_u32": 1,
+      "decision": "notice_unknown_458BB0",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "ready_guard_conditional",
+      "flag_BYTE": 255,
+      "selector_decoded_u32": null,
+      "decision": "memory_source_open",
+      "selector_read_required": true,
+      "owner_mode_ready_authority": false,
+      "qualification": "guard leaf only; no Native execution or memory/delivery grant"
+    },
+    {
+      "kind": "recordBYTE3E_constant_args",
+      "field_BYTE": 0,
+      "setter_args_u32": [
+        0
+      ],
+      "separate_64AFBF_BYTE": "branch skipped",
+      "actual_setter_completion_or_value": "unknown",
+      "qualification": "literalrequest sequence only, no recordmeaning/owner/UI"
+    },
+    {
+      "kind": "recordBYTE3E_constant_args",
+      "field_BYTE": 1,
+      "setter_args_u32": [
+        0,
+        1
+      ],
+      "separate_64AFBF_BYTE": 0,
+      "actual_setter_completion_or_value": "unknown",
+      "qualification": "literalrequest sequence only, no recordmeaning/owner/UI"
+    },
+    {
+      "kind": "recordBYTE3E_constant_args",
+      "field_BYTE": 7,
+      "setter_args_u32": [
+        0,
+        1
+      ],
+      "separate_64AFBF_BYTE": 1,
+      "actual_setter_completion_or_value": "unknown",
+      "qualification": "literalrequest sequence only, no recordmeaning/owner/UI"
+    },
+    {
+      "kind": "recordBYTE3E_constant_args",
+      "field_BYTE": 255,
+      "setter_args_u32": [
+        0,
+        1
+      ],
+      "separate_64AFBF_BYTE": 0,
+      "actual_setter_completion_or_value": "unknown",
+      "qualification": "literalrequest sequence only, no recordmeaning/owner/UI"
+    }
+  ],
+  "count": 25,
+  "Native_execution": false,
+  "oldmodels_or_PASS_replayed": false
+}

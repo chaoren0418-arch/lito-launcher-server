@@ -1,0 +1,361 @@
+{
+  "PE_read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    "content_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+      "bytes": 7094272,
+      "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:18:56.952865+08:00"
+  },
+  "resolver": {
+    "origin": {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "va": "0043FFC0",
+      "rva": "0003FFC0",
+      "file_offset": 262080,
+      "bytes": 65
+    },
+    "raw_hex": "53568bf1578bfe83c9ff33c033db33d2f2aef7d149741833c08bfe8a043283c9ff03d833c042f2aef7d1493bd172e88bc3250f00008079054883c8f0405f5e5bc3",
+    "raw_sha256": "4592389F278122C8AD97CEB3A0DDA9DFE8F3979F1AF5DFE6465D3A62E7AF5AC8",
+    "instructions": [
+      {
+        "va": "0043FFC0",
+        "bytes": "53",
+        "mnemonic": "push",
+        "operands": "ebx"
+      },
+      {
+        "va": "0043FFC1",
+        "bytes": "56",
+        "mnemonic": "push",
+        "operands": "esi"
+      },
+      {
+        "va": "0043FFC2",
+        "bytes": "8bf1",
+        "mnemonic": "mov",
+        "operands": "esi, ecx"
+      },
+      {
+        "va": "0043FFC4",
+        "bytes": "57",
+        "mnemonic": "push",
+        "operands": "edi"
+      },
+      {
+        "va": "0043FFC5",
+        "bytes": "8bfe",
+        "mnemonic": "mov",
+        "operands": "edi, esi"
+      },
+      {
+        "va": "0043FFC7",
+        "bytes": "83c9ff",
+        "mnemonic": "or",
+        "operands": "ecx, 0xffffffff"
+      },
+      {
+        "va": "0043FFCA",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "operands": "eax, eax"
+      },
+      {
+        "va": "0043FFCC",
+        "bytes": "33db",
+        "mnemonic": "xor",
+        "operands": "ebx, ebx"
+      },
+      {
+        "va": "0043FFCE",
+        "bytes": "33d2",
+        "mnemonic": "xor",
+        "operands": "edx, edx"
+      },
+      {
+        "va": "0043FFD0",
+        "bytes": "f2ae",
+        "mnemonic": "repne scasb",
+        "operands": "al, byte ptr es:[edi]"
+      },
+      {
+        "va": "0043FFD2",
+        "bytes": "f7d1",
+        "mnemonic": "not",
+        "operands": "ecx"
+      },
+      {
+        "va": "0043FFD4",
+        "bytes": "49",
+        "mnemonic": "dec",
+        "operands": "ecx"
+      },
+      {
+        "va": "0043FFD5",
+        "bytes": "7418",
+        "mnemonic": "je",
+        "operands": "0x43ffef"
+      },
+      {
+        "va": "0043FFD7",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "operands": "eax, eax"
+      },
+      {
+        "va": "0043FFD9",
+        "bytes": "8bfe",
+        "mnemonic": "mov",
+        "operands": "edi, esi"
+      },
+      {
+        "va": "0043FFDB",
+        "bytes": "8a0432",
+        "mnemonic": "mov",
+        "operands": "al, byte ptr [edx + esi]"
+      },
+      {
+        "va": "0043FFDE",
+        "bytes": "83c9ff",
+        "mnemonic": "or",
+        "operands": "ecx, 0xffffffff"
+      },
+      {
+        "va": "0043FFE1",
+        "bytes": "03d8",
+        "mnemonic": "add",
+        "operands": "ebx, eax"
+      },
+      {
+        "va": "0043FFE3",
+        "bytes": "33c0",
+        "mnemonic": "xor",
+        "operands": "eax, eax"
+      },
+      {
+        "va": "0043FFE5",
+        "bytes": "42",
+        "mnemonic": "inc",
+        "operands": "edx"
+      },
+      {
+        "va": "0043FFE6",
+        "bytes": "f2ae",
+        "mnemonic": "repne scasb",
+        "operands": "al, byte ptr es:[edi]"
+      },
+      {
+        "va": "0043FFE8",
+        "bytes": "f7d1",
+        "mnemonic": "not",
+        "operands": "ecx"
+      },
+      {
+        "va": "0043FFEA",
+        "bytes": "49",
+        "mnemonic": "dec",
+        "operands": "ecx"
+      },
+      {
+        "va": "0043FFEB",
+        "bytes": "3bd1",
+        "mnemonic": "cmp",
+        "operands": "edx, ecx"
+      },
+      {
+        "va": "0043FFED",
+        "bytes": "72e8",
+        "mnemonic": "jb",
+        "operands": "0x43ffd7"
+      },
+      {
+        "va": "0043FFEF",
+        "bytes": "8bc3",
+        "mnemonic": "mov",
+        "operands": "eax, ebx"
+      },
+      {
+        "va": "0043FFF1",
+        "bytes": "250f000080",
+        "mnemonic": "and",
+        "operands": "eax, 0x8000000f"
+      },
+      {
+        "va": "0043FFF6",
+        "bytes": "7905",
+        "mnemonic": "jns",
+        "operands": "0x43fffd"
+      },
+      {
+        "va": "0043FFF8",
+        "bytes": "48",
+        "mnemonic": "dec",
+        "operands": "eax"
+      },
+      {
+        "va": "0043FFF9",
+        "bytes": "83c8f0",
+        "mnemonic": "or",
+        "operands": "eax, 0xfffffff0"
+      },
+      {
+        "va": "0043FFFC",
+        "bytes": "40",
+        "mnemonic": "inc",
+        "operands": "eax"
+      },
+      {
+        "va": "0043FFFD",
+        "bytes": "5f",
+        "mnemonic": "pop",
+        "operands": "edi"
+      },
+      {
+        "va": "0043FFFE",
+        "bytes": "5e",
+        "mnemonic": "pop",
+        "operands": "esi"
+      },
+      {
+        "va": "0043FFFF",
+        "bytes": "5b",
+        "mnemonic": "pop",
+        "operands": "ebx"
+      },
+      {
+        "va": "00440000",
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ]
+  },
+  "admissible_nonnegative_route_cells": {
+    "origin": {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+      },
+      "va": "006479E8",
+      "rva": "002479E8",
+      "file_offset": 2390504,
+      "bytes": 64
+    },
+    "raw_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "raw_sha256": "F5A5FD42D16A20302798EF6ED309979B43003D2320D9F0E8EA9831A92759FB4B",
+    "cells": [
+      {
+        "nonnegative_route_index": 0,
+        "va": "006479E8",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 1,
+        "va": "006479EC",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 2,
+        "va": "006479F0",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 3,
+        "va": "006479F4",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 4,
+        "va": "006479F8",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 5,
+        "va": "006479FC",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 6,
+        "va": "00647A00",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 7,
+        "va": "00647A04",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 8,
+        "va": "00647A08",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 9,
+        "va": "00647A0C",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 10,
+        "va": "00647A10",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 11,
+        "va": "00647A14",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 12,
+        "va": "00647A18",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 13,
+        "va": "00647A1C",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 14,
+        "va": "00647A20",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      },
+      {
+        "nonnegative_route_index": 15,
+        "va": "00647A24",
+        "raw_u32": 0,
+        "live_provider_identity": null
+      }
+    ],
+    "qualification": "Exactly16 addresses used by current shortASCII filename domain,6479E8..647A24. Allfixedrawzero;notliveproviderabsenceorallocatedarrayextent. Generalnegative signedremainder notallowed bythis caller-domain proof."
+  },
+  "calls_within_resolver": 0,
+  "static_string_or_lookup_table_inside_resolver": false,
+  "no_reader_or_provider_writer_body_opened": true
+}

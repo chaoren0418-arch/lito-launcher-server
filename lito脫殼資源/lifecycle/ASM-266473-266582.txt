@@ -1,0 +1,110 @@
+266473: align 10h
+266474: 
+266475: ; =============== S U B R O U T I N E =======================================
+266476: 
+266477: ; Attributes: noreturn bp-based frame
+266478: 
+266479: sub_47C8A0 proc near                    ; DATA XREF: sub_47CAD0+66↓o
+266480: push    ebp
+266481: mov     ebp, esp
+266482: push    0FFFFFFFFh
+266483: push    offset byte_4F4C8B
+266484: mov     eax, large fs:0
+266485: push    eax
+266486: mov     large fs:0, esp
+266487: sub     esp, 108h
+266488: call    sub_4C8650
+266489: 
+266490: sub_47C8A0 endp
+266491: 
+266492: ; ---------------------------------------------------------------------------
+266493: call    sub_4B38D0
+266494: 
+266495: call    sub_41A240
+266496: 
+266497: call    sub_478980
+266498: 
+266499: mov     edx, offset dword_647E28
+266500: mov     ecx, offset aItemdesc           ; "ItemDesc"
+266501: call    sub_440770
+266502: 
+266503: mov     edx, offset dword_647E20
+266504: mov     ecx, offset aLtspelldesc        ; "LTSpellDesc"
+266505: mov     dword_647E2C, eax
+266506: call    sub_440910
+266507: 
+266508: mov     dword_647E24, eax
+266509: mov     al, byte_64B6DC
+266510: test    al, al
+266511: jnz     short loc_47C92A
+266512: 
+266513: mov     eax, dword_636584
+266514: cmp     eax, 3B5h
+266515: jz      short loc_47C916
+266516: 
+266517: cmp     eax, 4E4h
+266518: jnz     short loc_47C92A
+266519: 
+266520: 
+266521: loc_47C916:                             ; CODE XREF: ___:0047C90D↑j
+266522: mov     edx, offset dword_647E94
+266523: mov     ecx, offset aCampaigndesc       ; "campaignDesc"
+266524: call    sub_440770
+266525: 
+266526: mov     dword_647E18, eax
+266527: 
+266528: 
+266529: loc_47C92A:                             ; CODE XREF: ___:0047C901↑j
+266530:                                         ; ___:0047C914↑j
+266531: call    sub_42FAD0
+266532: 
+266533: test    al, al
+266534: jz      loc_47CAB5
+266535: 
+266536: mov     eax, dword_62C9D4
+266537: mov     ecx, dword_64BBEC
+266538: push    eax
+266539: mov     edx, offset a21020018214        ; "210.200.182.14"
+266540: call    sub_4C62A0
+266541: 
+266542: ; ---------------------------------------------------------------------------
+266543: test    eax, eax
+266544: jz      loc_47CAB5
+266545: 
+266546: call    sub_43F6C0
+266547: 
+266548: test    al, al
+266549: jz      loc_47CAB5
+266550: 
+266551: call    sub_4831B0
+266552: 
+266553: ; ---------------------------------------------------------------------------
+266554: db 84h
+266555: dd 46840FC0h, 68000001h
+266556: dd offset aLtdesc                       ; "LTdesc"
+266557: dd 834B80B9h, 7AD2E800h, 0C0840005h, 12F840Fh, 0D8680000h, 0B90062CDh, 834BB0h, 57ABBE8h, 0FC08400h
+266558: dd 11884h, 0BA575600h
+266559: dd offset aNpscanDll                    ; "npscan.dll"
+266560: dd 0FEEC8D8Dh, 71E8FFFFh, 8DFFFB19h, 0FFFEEC8Dh, 0E89051FFh, 5593EC9h, 64B7E4BFh, 0FFC98300h, 0AEF2C033h
+266561: dd 0F92BD1F7h, 0F78BD18Bh, 64AD74BFh, 2E9C100h, 0CA8BA5F3h, 0F303E183h, 0AB9A4h, 2CBF0000h, 0F30064ADh
+266562: dd 23AEE8ABh, 506AFFFCh, 74793E8h, 4C48300h, 5FF04589h, 0FC45C7h, 85000000h, 9745EC0h, 4DE8C88Bh, 0EB000702h
+266563: dd 0B1C03302h, 0FC45C701h, 0FFFFFFFFh, 836B8CA3h, 0BF46E800h, 1B1FFFFh, 19C6FE8h, 0BBECA100h, 6A0064h
+266564: dd 1CFE268h, 3786800h, 0E8500000h, 55D438Ah, 40D8B90h, 8B0064B9h, 64B90015h, 0FFE18100h, 810000FFh, 0FFFFE2h
+266565: dd 10E1C100h, 0E8A3CA0Bh, 0A10064B8h, 64BBECh, 68006A51h, 200h, 9E89050h, 8B056339h, 64B8FC0Dh, 0AEE85100h
+266566: dd 90055C41h, 0B8FC05C7h, 64h, 0A5E80000h, 0E8FFFC9Eh, 58D0h, 1B8h, 0F44D8B00h, 0D8964h, 8B000000h, 4C25DE5h
+266567: db 0
+266568: ; ---------------------------------------------------------------------------
+266569: 
+266570: loc_47CAB5:                             ; CODE XREF: ___:0047C931↑j
+266571:                                         ; ___:0047C94F↑j
+266572:                                         ; ___:0047C95C↑j
+266573: call    sub_47C830
+266574: 
+266575: mov     ecx, [ebp-0Ch]
+266576: xor     eax, eax
+266577: mov     large fs:0, ecx
+266578: mov     esp, ebp
+266579: pop     ebp
+266580: retn    4
+266581: 
+266582: ; ---------------------------------------------------------------------------

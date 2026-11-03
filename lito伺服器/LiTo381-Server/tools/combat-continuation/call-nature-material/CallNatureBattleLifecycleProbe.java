@@ -1,0 +1,47 @@
+package local.lito381.server;
+import java.nio.file.*;import java.util.*;import java.util.concurrent.*;
+public class CallNatureBattleLifecycleProbe extends CallNatureMaterialProbe {
+ static void exercise(ClientSession pc,ClientSession peer,GameHub hub,GameStateStore state,boolean world,int skill,int mode,boolean time)throws Exception{
+  int change=mode/2;boolean nativeEntry=mode%2==0;
+  setup(pc,peer,hub,false);set(peer,"playerHp",4000);set(pc,"learnedSkills",new HashSet<>(Set.of(2,165)));
+  long roomId=(long)get(pc,"currentRoomId");var room=((Map<?,?>)get(hub,"rooms")).get(roomId);var match=(BattleRules.MatchState)get(room,"match");var battleMode=time?BattleRules.Mode.TIME_ATTACK:BattleRules.Mode.QUEST_BATTLE;int map=battleMode.maps().get(0);var rules=copy(match.rules(),Map.of("mode",battleMode,"mapId",map,"mapPool",battleMode.maps()));set(match,"rules",rules);set(room,"selectedMapId",map);var arena=ArenaMapCatalog.forMap(map);Object encounter=get(room,time?"timeAttackEncounter":"questEncounter");
+  if(time){((BattleTimeAttackEncounter)encounter).reset(rules,arena);((BattleTimeAttackEncounter)encounter).startAfterTowerDestroyed();}else ((BattleQuestEncounter)encounter).reset(rules,arena);
+  List<?> snapshots=time?hub.visibleTimeAttackActors(roomId,pc):hub.visibleQuestMonsters(roomId,pc);need(!snapshots.isEmpty(),"real battle encounter populated");Object snapshot=snapshots.stream().filter(n->BattleSpellCatalog.npcAllowsResurrection((int)CombatAccess.call(n,"npcId","()I"))).findFirst().orElseThrow();long id=(long)call(snapshot,"objectId",new Class[]{});int x=(int)call(snapshot,"x",new Class[]{}),y=(int)call(snapshot,"y",new Class[]{});
+  for(var member:hub.roomMembers(roomId)){set(member,"positionX",x+1);set(member,"positionY",y);}
+  Object actor=CombatAccess.call(encounter,"monster","(J)Llocal/lito381/server/"+(time?"BattleTimeAttackEncounter":"BattleQuestEncounter")+"$Monster;",id);
+  var row=BattleSpellCatalog.resurrectionSpell(165);int item=(int)row.itemConsumeId(),count=row.itemConsumeCount();NativeDeItemPublication.grant(pc,item,count+3);
+  {if(time)((BattleTimeAttackEncounter)encounter).damage(id,Integer.MAX_VALUE);else ((BattleQuestEncounter)encounter).damage(id,(int)call(snapshot,"force",new Class[]{}),Integer.MAX_VALUE);}
+  Object corpse=time?hub.timeAttackCorpse(roomId,pc,id,System.nanoTime()):hub.questCorpse(roomId,pc,id,System.nanoTime());need(corpse!=null,"actual encounter corpse registry");
+
+  int force=time?0:(int)call(snapshot,"force",new Class[]{});
+  try(var self=new SourceActionPairProbe.Wire(pc,peer);var other=new SourceActionPairProbe.Wire(peer,pc)){
+   var error=new java.util.concurrent.atomic.AtomicReference<Throwable>();var clean=new java.util.concurrent.atomic.AtomicBoolean();
+   Thread worker=new Thread(()->{try{byte[] packet=new Protocol.Writer().c(Protocol.C_USE_SPELL).c(20).c(4).d(id).bytes();if(nativeEntry)call(pc,"handle",new Class[]{byte[].class},packet);else call(pc,"useCallOfNatureSpell",new Class[]{byte[].class,row.getClass()},packet,row);clean.set(NativeCallNatureMaterialAction.current.get()==null&&NativeAreaMaterialAction.current.get()==null);}catch(Throwable e){error.set(e);}},"call-nature-battle-corpse-race");
+   var lock=peer.nativePlayerActionLock();lock.lock();try{
+    worker.start();boolean waiting=false;long limit=System.nanoTime()+TimeUnit.SECONDS.toNanos(2);
+    while(worker.isAlive()&&System.nanoTime()<limit){if(Arrays.stream(worker.getStackTrace()).anyMatch(f->f.getClassName().endsWith("NativeAreaMaterialAction")&&f.getMethodName().equals("run"))){waiting=true;break;}Thread.sleep(1);}
+    need(waiting,"native corpse target captured before ownership wait");need((int)get(pc,"playerMp")==1000&&pc.nativeDeInventory(0).countCatalog(item)==count+3,"no queued material/MP debit");
+    if(change==1)NativePlayerCommit.selected(pc,pc.selectedCharacterName());
+    if(change==2){if(time)((BattleTimeAttackEncounter)encounter).consumeCorpse(id,System.nanoTime());else ((BattleQuestEncounter)encounter).consumeCorpse(id,force,System.nanoTime());}
+    if(change==3){long expired=System.nanoTime()+TimeUnit.SECONDS.toNanos(300);if(time)((BattleTimeAttackEncounter)encounter).findCorpse(id,expired);else ((BattleQuestEncounter)encounter).findCorpse(id,force,expired);}
+    if(change==4){Object revived=time?((BattleTimeAttackEncounter)encounter).resurrectCorpse(id,System.nanoTime()):((BattleQuestEncounter)encounter).resurrectCorpse(id,force,System.nanoTime());need(revived!=null,"another actual resurrection wins first");}
+    if(change==5){if(time){((BattleTimeAttackEncounter)encounter).reset(rules,arena);((BattleTimeAttackEncounter)encounter).startAfterTowerDestroyed();}else ((BattleQuestEncounter)encounter).reset(rules,arena);}
+    if(change==6)set(pc,NativeDeItemApplication.DISCONNECTED,true);
+    if(change==7)NativePlayerCommit.selected(peer,peer.selectedCharacterName());
+   }finally{lock.unlock();worker.join(3000);}
+   if(error.get()!=null)throw new AssertionError("queued battle corpse cast",error.get());need(!worker.isAlive()&&clean.get(),"bounded cast finishes and clears scoped state");
+   boolean accepted=change==0||change==7;
+   need((int)get(pc,"playerMp")==1000-(accepted?cost(pc,165,row):0),"queued battle corpse MP mode="+mode+" time="+time);
+   need(pc.nativeDeInventory(0).countCatalog(item)==count+3-(accepted?count:0),"queued battle corpse material once");
+   Object after=time?hub.timeAttackActor(roomId,id):hub.questMonster(roomId,id);
+   if(accepted)need(after!=null&&(int)call(after,"hp",new Class[]{})==(int)call(after,"maxHp",new Class[]{}),"actual NPC revived with full HP");
+   var a=collect(self);var b=collect(other);String frame=HexFormat.of().formatHex(Protocol.resurrect(id,0,id,(int)call(snapshot,"gfx",new Class[]{})));
+   need(a.contains(frame)==accepted,"stale corpse emits no resurrection packet");
+   need(self.locked+other.locked==0&&NativePlayerVitalCompletions.pending(NativePlayerLifetime.of(pc))==0,"output unlocked and receipt drained");
+  }cases++;
+ }
+ public static void main(String[]args)throws Exception{before=args[4].equals("before");var jar=Path.of(args[3]).toRealPath();for(var type:List.of(ClientSession.class,RuntimeInventory.class,NativeCastMaterial.class,NativeDeItemTransaction.class))need(Path.of(type.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar),"actual native handlers and material authority from requested JAR");var base=ServerConfig.load(Path.of(args[0]),"standard");ResourceDatabase.load(base);var templates=new NativeDeItemTemplatesResources.Owner().reload(base);var definitions=new NativeDeItemDefinitionsResources.Owner().reload(base);var root=Path.of(args[1]);Throwable primary=null;
+  try{for(boolean flag:new boolean[]{true})for(boolean world:new boolean[]{false})for(boolean app:new boolean[]{false,true})for(int skill:new int[]{165})for(boolean time:new boolean[]{false,true})for(int mode=0;mode<16;mode++){var r=root.resolve(flag+"-"+world+"-"+app+"-"+skill+"-"+time+"-"+mode);Files.createDirectories(r);var cfg=copy(base,Map.of("sleepFixturePercentileRoll",mode==7?100:1,"massSlowFixturePercentileRoll",mode==7?100:1,"massSlowFixtureDieRoll",1,"battleNaturalHpRegenEnabled",false,"battleNaturalMpRegenEnabled",false,"statePersistenceEnabled",flag,"stateFile",r.resolve("must-not-write.properties")));var state=new GameStateStore(r.resolve("must-not-write.properties"),false,true);var accounts=new MemoryAccountRepository("fixture","fixture","",0,1,40,52);
+   try(var capture=new CaptureLog(r.resolve("capture"));var hub=new GameHub(cfg,state,accounts);var f=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var p=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var m=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME);var o=new SourceLoginRegression.Fixture(cfg,accounts,state,capture,hub,0,ClientSession.Endpoint.GAME)){var clock=(ScheduledExecutorService)get(hub,"battleClock");clock.shutdownNow();need(clock.awaitTermination(2,TimeUnit.SECONDS),"unrelated clock stopped");var fixtures=List.of(f,p,m,o);init(fixtures,cfg);FlowRegression.setup(hub,f.session,p.session,m.session,o.session);if(world)world(fixtures,hub);if(app)NativeDeItemApplication.install(hub,templates,definitions);exercise(p.session,m.session,hub,state,world,skill,mode,time);}need(!Files.exists(r.resolve("must-not-write.properties")),"both flags remain memory-only");
+  }}catch(Throwable e){primary=e;throw e;}finally{try{NativePlayerCommit.closeFixture();}catch(Throwable e){if(primary!=null)primary.addSuppressed(e);else throw e;}}need(NativePlayerLifetime.allIdle(),"native lifetimes idle");var output=Path.of(args[2]);Files.writeString(output.resolveSibling("self-material-wire.txt"),String.join("\n",wires)+"\n");Files.writeString(output.resolveSibling("self-material-goldens.txt"),String.join("\n",goldens)+"\n");Files.writeString(output.resolveSibling("self-material-notes.txt"),String.join("\n",notes)+"\n");String result="{\"cases\":"+cases+",\"checks\":"+ownChecks+",\"self_skills\":2,\"material_skills\":2,\"Source_window_bypasses\":"+gaps+",\"actual_frames\":"+frames+",\"locked_write_calls\":"+lockedWrites+",\"production_PC_overlays\":0,\"full_goal_achieved\":false}";Files.writeString(output,result+"\n");System.out.println(result);}
+}

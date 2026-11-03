@@ -1,0 +1,51 @@
+{
+  "frames_source": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+    "bytes": 16142,
+    "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+  },
+  "frames": [
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 76,
+      "direction": "C",
+      "epoch": "Host-GAME",
+      "body_hex": "dd456469744166746572526f6f6d0028000400",
+      "body_bytes": 19,
+      "frame_bytes": 21,
+      "name_hex": "456469744166746572526f6f6d",
+      "attributes": 40,
+      "password_hex": "",
+      "capacity_u16LE": 4,
+      "layout": "compact",
+      "consumed": 19,
+      "remaining": 0,
+      "qualification": "Existingservertest-clientASCII witness only; NOT Native UI/outbound execution orACK/extended qualification."
+    },
+    {
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-edit-network-93ba7fa1f6254b6e856acff94f708f20\\evidence\\frames.json",
+        "bytes": 16142,
+        "sha256": "0FD252B12934E39BF42BD118BDD04A9D780D0125F2578B5483CAD7280E83E9D8"
+      },
+      "array_index_zero_based": 83,
+      "direction": "C",
+      "epoch": "Guest-GAME",
+      "body_hex": "dd52656a65637465644775657374526f6f6d0028000600",
+      "body_bytes": 23,
+      "frame_bytes": 25,
+      "name_hex": "52656a65637465644775657374526f6f6d",
+      "attributes": 40,
+      "password_hex": "",
+      "capacity_u16LE": 6,
+      "layout": "compact",
+      "consumed": 23,
+      "remaining": 0,
+      "qualification": "Existingservertest-clientASCII witness only; NOT Native UI/outbound execution orACK/extended qualification."
+    }
+  ]
+}

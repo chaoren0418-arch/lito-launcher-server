@@ -1,0 +1,12 @@
+{
+  "task_id": "bin_resources-modern-visible-working-set-input-20261008",
+  "reported": true,
+  "notified": false,
+  "adopted": false,
+  "reviewed": false,
+  "supervisor_thread": "01a116fa-dc97-7832-bdec-85d06d810ad7",
+  "send_message_result": "success",
+  "reported_at": "2026-10-08T01:37:01.139129+08:00",
+  "contract_sha256": "A64644A403F1C9444D745AF35D47515BC1DE2C6D1AA99A8D1BCDFDC60103F069",
+  "goal_status": "active"
+}

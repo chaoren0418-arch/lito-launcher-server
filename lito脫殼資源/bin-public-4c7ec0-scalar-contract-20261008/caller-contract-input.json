@@ -1,0 +1,37 @@
+{
+  "pin": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\bin-public-4c8790-effects-20261008\\handoff.json",
+    "bytes": 20092,
+    "sha256": "702A1A987D572A8D04FB3F24FBA3BC4217D18D97C6B14F80E1C604F848CFDFB2"
+  },
+  "question_gap": "Previous activation contract explicitly stopped at004EBECF->004C8790. This task qualifies that public thunk and its immediate public tail target only; previous action19/packet population analysis is not replayed.",
+  "direct_call_boundary": {
+    "tail_target": "004C85E0",
+    "helper_targets": [
+      "004C7EC0",
+      "004C83A0",
+      "004C8240",
+      "004C83F0"
+    ],
+    "expanded_helper_targets": [],
+    "private_or_refused_targets_followed": [],
+    "direct_send_found": false,
+    "no_transitive_send_proved": false,
+    "actual_wire_obligation_proved": false,
+    "direction": null,
+    "opcode": null,
+    "fields": null,
+    "encoding": null,
+    "trigger_state": null,
+    "null_wire_fields_mean": "Unqualified, not whole-program absence."
+  },
+  "unknowns": {
+    "unknown": "Direct helper implementations and any transitive virtual effects; global00635630/008343EC semantics/live state; object[ESI+8] backing/epoch; actual first-lobby/room/WORLD execution and skill pane population/draw.",
+    "supplier": "Root-qualified public fixed-PE task for a specific helper semantics question, or fresh Launcher same-session evidence with exact instance/session provenance.",
+    "resume": "A new bounded input-complete public question outside retained stops, or Root notification of a genuinely fresh qualified runtime instance. Generic process name or exited fresh2 evidence cannot authorize attachment.",
+    "next_input_complete_task": null
+  },
+  "prior_F2": "004C85E0 saves incomingECX inEAX, savesESI on the stack and loadsECX from global008343EC. Zero008343EC returns via004C8623. With nonzeroECX it loadsEDX from00635630; zeroEDX also returns. If both are nonzero, it pushes saved incomingECX and directly calls004C7EC0 withECX still008343EC.",
+  "prior_F4": "For the prior toolbar callback inputECX=0xED andEDX=0x7F, the body passes saved0xED to004C7EC0 when both global guards succeed. IncomingEDX is not read before being overwritten from00635630. The later pushed0x7F is an immediate constant in004C85E0, not data propagated from incomingEDX.",
+  "scope": "Existing accepted contract input only; old caller bytes not extracted or disassembled again."
+}

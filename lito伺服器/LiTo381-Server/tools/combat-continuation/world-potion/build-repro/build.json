@@ -1,0 +1,38 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\decay-material\\build\\candidate-decay-material.jar",
+    "sha256": "4482daa5b713c5bf2064670c7aaaac92af9cff01121bcc7e24241ab6f7a11c29"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\build-repro\\candidate-world-potion.jar",
+    "sha256": "91095e7a3d425994935e3c87210d2aafeea0cb36cebf2bd084bab4ab812afac5"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeWorldPotionPhase.class"
+  ],
+  "inverse_verified": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\build-repro\\inputs\\build.py",
+      "sha256": "aa4c092665930cf7b77cd410f6cdaacda819ed3bdef8c99559cda12bde24e091"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\build-repro\\inputs\\NativeWorldPotionPhase.java",
+      "sha256": "3a28ca2b5130b0980c340600ae30fcc228521b5f19b5d2691208b7eb0fe623a6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\world-potion\\build-repro\\inputs\\WorldPotionMethods.java",
+      "sha256": "085997b88bfb5c7c907008ef0824fbd8cf62a3a091ec25e0e07212d2789cef70"
+    }
+  ]
+}

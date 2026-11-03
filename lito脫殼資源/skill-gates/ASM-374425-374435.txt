@@ -1,0 +1,11 @@
+374425: loc_4B313F:                             ; CODE XREF: sub_4B2970+72↑j
+374426:                                         ; sub_4B2970+7F↑j
+374427: xor     eax, eax
+374428: mov     al, [esi]
+374429: cmp     eax, 0FCh                       ; switch 253 cases
+374430: ja      def_4B3156                      ; jumptable 004B2A0C cases 0,3,65,248,254
+374431:                                         ; jumptable 004B3156 default case, cases 10,11,17,18,21,27-29,32-37,39,40,42-44,46-55,57,60-71,73,74,76,78,79,83-85,87-101,105,106,110,112,113,115-119,125-199,210,211,219-222,225-228,232,233,248,250,251
+374432: 
+374433: xor     edx, edx
+374434: mov     dl, byte_4B36B4[eax]
+374435: jmp     jpt_4B3156[edx*4]               ; switch jump

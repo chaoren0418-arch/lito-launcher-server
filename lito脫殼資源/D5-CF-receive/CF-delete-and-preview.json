@@ -1,0 +1,12 @@
+{
+  "dispatch_primary": "mode4/signedphase>=3 CFslot99hex default4B3123 attemptC_QUIT0F/c literal→4C6AE0, private05AD0986(0). Rawdoesnotproveprivate termination/execution orworldeffects; legacylabelclientquit keptasnavigationonly.",
+  "dispatch_fallback": "CFslot31hex→4B31A5 call4A9040; readsDWORDd, call4659F0(UI64A958,roomID)",
+  "catalog_delete": "4659F0 complete16bytes calls450290 complete131. ScanUIcount+2C, array+58, rowDWORD+4 equalsincomingDWORD; allmatchingrows deleted throughvirtual[vtbl](1), shiftpointers via*[4F7228], count-- andselection+28clamp; noaliascomparison.",
+  "copy_snapshot": "disk*[4F7228]=77409100, actualruntimeprovider/body/operation/lifetimeunknown. UIrowdereferenceprecedesNULLguard.",
+  "after_delete": "readUI64A98C+0C WORD withMOVSXi16 andcomparetoincomingDWORD. Ifequal call46A540(0); ifnotreturn. No64ABF4activejoinedroomgate/clear andno469CA0selfexitcall.",
+  "preview_reset": "ReuseBatch16 46A540(0):450230(UI64A954), clearpreviewend64ACF8=begin64ACF4,4687B0(0); SI0skipsknownC_CDemit. UIcallbackeffects unknown.",
+  "signed_width": "SelectedpreviewWORDsignedextension meanscatalogDWORD>32767doesnotgenerallymatchsameunsigned16bits; internalUIqualification, notwirecorrection.",
+  "no_current_room_assumption": "Catalogmaydeleteanotherroom/currentchannelcontext; Nativefallbacknotroom-equalityguarded. AdapterinvalidatesactivejoinedroomseparatelywithoutownleaveACK/auth/sourcechanges.",
+  "CF_vs_CC": "NoS_CCdefaultresetcalledbyCFhandler; serverdefaultreset remainsseparateS_CCproducer. NoCFpayloadstring/result/subtypequalified.",
+  "strict_length": "Native dreader itselfnoexactendtest here. AD368S_CFexact5bytes peracceptedproducer; do notguessnon5S payloadasC_CFpassword/reset/ACK."
+}

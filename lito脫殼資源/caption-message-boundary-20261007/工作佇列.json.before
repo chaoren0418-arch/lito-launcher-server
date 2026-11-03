@@ -1,0 +1,1151 @@
+{
+  "version": 2,
+  "owner": "bin_resources",
+  "updated_at": "2026-10-07T15:10:17.518117+08:00",
+  "workflow_task_id": "bin_resources-ida77-isolated-export-integration-20261007",
+  "proposal_state": "review",
+  "execution_state": "blocked_platform",
+  "overall_product_complete": false,
+  "source_backlog": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+    "bytes": 8284,
+    "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+  },
+  "task_contract": {
+    "path": "C:\\Users\\CHAOREN\\.codex\\skills\\lito-supervisor\\references\\task-contract.md",
+    "bytes": 2807,
+    "sha256": "D24C4FECD62521841F29DA15CA7F3D5141C282452D1F01841AF295BDF57C4FBF"
+  },
+  "supervisor_index_at_read": {
+    "path": "D:\\lineage開發\\3-lito開發\\LITO-監製索引.json",
+    "bytes": 551029,
+    "sha256": "CD1EB90B1492A728C03C270F463F0D23C637C39D286BE9D57B9B1954101FF203"
+  },
+  "index_task_identity": {
+    "id": "bin_resources-workflow-v2",
+    "owner": "bin_resources",
+    "state_at_read": "running",
+    "authority": "One-time conversion and one legitimate independent implementation if available; not private or runtime scope expansion"
+  },
+  "items": [
+    {
+      "id": "bin_resources-portable-pe-receipt",
+      "owner": "bin_resources",
+      "title": "PE/OEP／可攜執行檔：接收新證據後的限定交付",
+      "priority": 80,
+      "state": "blocked",
+      "dependencies": [
+        "bin_resources-iat-version-receipt",
+        "bin_resources-host-init-receipt"
+      ],
+      "gates": [
+        {
+          "id": "bin_resources-portable-pe-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "修復候選PE的絕對來源路徑、SHA及版本；完整import/external-target與initializer清單；符合原授權條件的可重現啟動驗收報告。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "launcher／PE組經監製交付",
+          "missing_input": "修復候選PE的絕對來源路徑、SHA及版本；完整import/external-target與initializer清單；符合原授權條件的可重現啟動驗收報告。",
+          "resume_when": "交付已接受的候選/驗收artifact，且本清單IAT與host/init receipts均accepted；本組不修PE。",
+          "consumer": [
+            "launcher",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-portable-pe-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\portable-pe-receipt.json；接收候選identity/acceptance envelope並做有限來源對照；輸出portable-pe-receipt.json，附候選pin/來源版本/匯入依賴與未知，無PE修改。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\portable-pe-receipt.json",
+        "observable_change": "接收候選identity/acceptance envelope並做有限來源對照；輸出portable-pe-receipt.json，附候選pin/來源版本/匯入依賴與未知，無PE修改。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "修復候選與原BIN/OEP baseline分開pin；import/initializer引用可追蹤；提供實際啟動驗收級別或明確未驗收，不能僅parseable就寫portable。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "本組不改 PE/BIN、不執行 Native。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "交付已接受的候選/驗收artifact，且本清單IAT與host/init receipts均accepted；本組不修PE。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\pe-audit.json",
+          "bytes": 58042,
+          "sha256": "DE505DDDC39F8AC76ECA45767FC02E14120E9A08B448732605BD0D76D9C29425",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\baseline.json",
+          "bytes": 1468,
+          "sha256": "8637596022B23BDA077CD5074506A0BAE5EA9A7F3A4706A0A2EA5A8E868B4E35",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "launcher",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "PE/OEP／可攜執行檔",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "Snapshot 可解析、entryVA004F162A；37 embedded leaves 已交付。未交付可攜執行檔。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-iat-version-receipt",
+      "owner": "bin_resources",
+      "title": "IAT／外部函式：接收新證據後的限定交付",
+      "priority": 70,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-iat-version-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "Dump同期DLL檔案及SHA、module base/version、每一未解析thunk的VA/RVA與export/forwarder對應；注明未覆蓋項。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "launcher／PE組或監製的同期DLL證據供應者",
+          "missing_input": "Dump同期DLL檔案及SHA、module base/version、每一未解析thunk的VA/RVA與export/forwarder對應；注明未覆蓋項。",
+          "resume_when": "收到已接受且版本可對應固定PE的DLL/target binding artifact；本機新DLL或base+RVA猜測不足。",
+          "consumer": [
+            "launcher",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-iat-version-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\iat-version-receipt.json；輸出iat-version-receipt.json：新提交的版本化target binding、覆蓋範圍、來源pin及剩餘unknown；不執行/載入DLL。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\iat-version-receipt.json",
+        "observable_change": "輸出iat-version-receipt.json：新提交的版本化target binding、覆蓋範圍、來源pin及剩餘unknown；不執行/載入DLL。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "有限比對每一新提交target→module/export/forwarder與來源SHA；coverage明列，未提交target仍unknown；不聲稱恢復全部IAT。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "本機 DLL 不等於 dump 同期 DLL；不重跑既有 Winsock PASS。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "收到已接受且版本可對應固定PE的DLL/target binding artifact；本機新DLL或base+RVA猜測不足。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+          "bytes": 6507,
+          "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\pe-audit.json",
+          "bytes": 58042,
+          "sha256": "DE505DDDC39F8AC76ECA45767FC02E14120E9A08B448732605BD0D76D9C29425",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "launcher",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "IAT／外部函式",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "standard imports0、import directory invalid；四個 priority API 為歷史 base＋本機 exportRVA 的有限比對。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-host-init-receipt",
+      "owner": "bin_resources",
+      "title": "Host／啟動初始化：接收新證據後的限定交付",
+      "priority": 60,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-host-init-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "已接受050104CD前提/回傳契約，或已有同一期host/alias選擇、owner、初始化/clear順序記錄，附版本及來源SHA。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "launcher證據組＋監製",
+          "missing_input": "已接受050104CD前提/回傳契約，或已有同一期host/alias選擇、owner、初始化/clear順序記錄，附版本及來源SHA。",
+          "resume_when": "至少一份已接受的上述獨立artifact到達；不得自行取得Native capture或開050104CD下一層。",
+          "consumer": [
+            "launcher",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-host-init-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\host-init-receipt.json；輸出host-init-receipt.json：新初始化证據和已交付host/alias契約的對應、epoch及未知。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\host-init-receipt.json",
+        "observable_change": "輸出host-init-receipt.json：新初始化证據和已交付host/alias契約的對應、epoch及未知。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "host64AD74、alias64AD54、port64AD70仍分離；記錄epoch/owner/前提與來源；source條件及live觀察分級，缺項不升格。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "本次不展開私有body、不新增runtime capture。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "至少一份已接受的上述獨立artifact到達；不得自行取得Native capture或開050104CD下一層。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+          "bytes": 8125,
+          "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index\\host-alias-port-contract.json",
+          "bytes": 19729,
+          "sha256": "D2B94080D053C95944538609B8089D157949B9A678DE4894A853FEE8DBD6A5C9",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "launcher",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Host／啟動初始化",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "64AD74 writer、64AD54 alias 與64AD70 port已分離；私有050104CD前提與整段實際執行未閉合。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-skill-owner-receipt",
+      "owner": "bin_resources",
+      "title": "Skill／class/order/metadata owner：接收新證據後的限定交付",
+      "priority": 50,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-skill-owner-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "同版本同一期完整S1E payload、class/order/metadata/cache owner與reset/teardown順序；class4八個未闭producer槽的實際來源，均有來源SHA/epoch。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "launcher同一期初始化證據組；監製整合",
+          "missing_input": "同版本同一期完整S1E payload、class/order/metadata/cache owner與reset/teardown順序；class4八個未闭producer槽的實際來源，均有來源SHA/epoch。",
+          "resume_when": "收到已接受的同一期typed owner bundle，而非只有frame存在或另一epoch的metadata。",
+          "consumer": [
+            "launcher",
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-skill-owner-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\skill-owner-receipt.json；輸出skill-owner-receipt.json：收到的typed fields/epoch/owner、與現有metadata/order對照及逐槽未知；不重建缺失payload。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\skill-owner-receipt.json",
+        "observable_change": "輸出skill-owner-receipt.json：收到的typed fields/epoch/owner、與現有metadata/order對照及逐槽未知；不重建缺失payload。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "八槽21/22/23/29/30/37/38/39逐項來源可追蹤；176 metadata slots的非空/NULL不誤當live owner；未閉项仍unknown。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "不得把較晚frame存在提升為typed owner已驗收。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "收到已接受的同一期typed owner bundle，而非只有frame存在或另一epoch的metadata。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+          "bytes": 8570,
+          "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+          "bytes": 13337,
+          "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\launcher-skill-initialization.json",
+          "bytes": 6687,
+          "sha256": "8942749542107A698F8459DE6D586AD10A7560EFC9201838AC5FDF7D2EF94A58",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-initialization\\LTSpellDesc-c-indexed.json",
+          "bytes": 22440,
+          "sha256": "D3269DEC872A577F44A6DD0DC478250D5AAA20BB52FA3D6B17855D7BD11BA344",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "launcher",
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Skill／class/order/metadata owner",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "32個明確class4 producer與176 metadata slots已交付；147非空/29NULL；早期T73缺S1E與後續單一S1E均不是owner證據。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-native-parity-receipt",
+      "owner": "bin_resources",
+      "title": "Native 圖形／skill pane 一致性：接收新證據後的限定交付",
+      "priority": 55,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-native-parity-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "935邊界4F1593→7741AC20的同期模組/rounding契約；已接受實際initialized LUT、pitch、signed offset、alpha/blit及對照像素artifact。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "launcher／Native驗收組＋Modern渲染組，經監製審查",
+          "missing_input": "935邊界4F1593→7741AC20的同期模組/rounding契約；已接受實際initialized LUT、pitch、signed offset、alpha/blit及對照像素artifact。",
+          "resume_when": "收到具有來源版本/epoch與renderer條件的accepted parity evidence；靜態色表及現有PNG PASS不足。",
+          "consumer": [
+            "launcher",
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-native-parity-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\native-parity-receipt.json；輸出native-parity-receipt.json：限定圖形契約/像素對照及不等值和仍缺renderer條件；不開Native或重跑舊像素矩陣。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\native-parity-receipt.json",
+        "observable_change": "輸出native-parity-receipt.json：限定圖形契約/像素對照及不等值和仍缺renderer條件；不開Native或重跑舊像素矩陣。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "對限定新artifact保留pixel/layout條件、誤差或不等值；935外部rounding與liveLUT是否閉合分開；不得由component PASS宣稱GUI通過。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "參考解碼與靜態色表不等於Native GUI parity。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "收到具有來源版本/epoch與renderer條件的accepted parity evidence；靜態色表及現有PNG PASS不足。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\native-icon-draw-contract.json",
+          "bytes": 6519,
+          "sha256": "9BA690374734FECFE86CF95651E864515FFFDC78D71FE58C556974625AD95803",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-render-initialization-contract.json",
+          "bytes": 36402,
+          "sha256": "00262DDFF19C9392CFAEDDC53F38DE46725D99D0011A48F3FEF046C02754C1DE",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition-contract.json",
+          "bytes": 102995,
+          "sha256": "E288BB0EA62C8C014E50BB87542B3F800E30B18B10D96D073DFCF27EC7FF81C6",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "launcher",
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Native 圖形／skill pane 一致性",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "226 LTicon PNG、149 shared skill icons、933/934/935及座標/色表/層次契約已交付。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-missing-lticon-member",
+      "owner": "bin_resources",
+      "title": "LTicon 173..179：接收新證據後的限定交付",
+      "priority": 25,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-missing-lticon-member-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "只選173..179中一個必要ID：來源版本/namespace、確切index row/offset/length/既有qualified encoding、原始blob SHA；或監製接受的缺失/替代政策。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "監製接受的缺ID來源供應者；Modern提出consumer需求",
+          "missing_input": "只選173..179中一個必要ID：來源版本/namespace、確切index row/offset/length/既有qualified encoding、原始blob SHA；或監製接受的缺失/替代政策。",
+          "resume_when": "一個缺ID的完整qualified member contract，或正式缺失政策已接受；其他ID不搭便車。",
+          "consumer": [
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-missing-lticon-member-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\missing-lticon-member.json；輸出missing-lticon-member.json及僅一個必要原始member/既有decoder輸出至workflow-v2/artifacts/missing-lticon/；若是政策則只交政策receipt。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\missing-lticon-member.json",
+        "observable_change": "輸出missing-lticon-member.json及僅一個必要原始member/既有decoder輸出至workflow-v2/artifacts/missing-lticon/；若是政策則只交政策receipt。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "原始bytes與限定source range/hash一致；既有decoder適用時輸出尺寸/pixel格式/PNG及SHA；政策分支不得生成假原圖，剩餘6個維持unknown。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "不跨版本猜圖、不掃全archive當成進度。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "一個缺ID的完整qualified member contract，或正式缺失政策已接受；其他ID不搭便車。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\LTicon-decode-manifest.json",
+          "bytes": 253531,
+          "sha256": "B7E0DE0AEBDE51770662190DA85F53510266D12C86888D1C64DBED8DE65C6255",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+          "bytes": 760029,
+          "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "LTicon 173..179",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "LTlist.ico宣告233，qualified source實際decoded226；七個ID缺少qualified原始member。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-provider-member-delivery",
+      "owner": "bin_resources",
+      "title": "選角人物PNG／IMG79/80 provider：接收新證據後的限定交付",
+      "priority": 20,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-provider-member-delivery-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "一個PNG ordinal或IMG79/80 request的bank/filename/版本→provider→實際backing file絕對路徑/SHA→member row/offset/length/encoding→原始blob SHA與尺寸契約。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "監製接受的獨立provider-to-file binding供應者",
+          "missing_input": "一個PNG ordinal或IMG79/80 request的bank/filename/版本→provider→實際backing file絕對路徑/SHA→member row/offset/length/encoding→原始blob SHA與尺寸契約。",
+          "resume_when": "獨立binding已接受且具體consumer需要該一個member；Sprite/Sprite03 matching stem不能滿足gate。",
+          "consumer": [
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-provider-member-delivery-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\provider-member-delivery.json；輸出provider-member-delivery.json及一個qualified原始blob至workflow-v2/artifacts/provider-member/；若已有blob只交差異化來源binding，不重抽。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\provider-member-delivery.json",
+        "observable_change": "輸出provider-member-delivery.json及一個qualified原始blob至workflow-v2/artifacts/provider-member/；若已有blob只交差異化來源binding，不重抽。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "有限讀取bound範圍、verify原始SHA/header；已qualified parser才解碼；mapping保持source條件，不假定class/sex或bank capacity。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "42E550/42E6D0/42EA50保持STOPPED；不逐批向下展開。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "獨立binding已接受且具體consumer需要該一個member；Sprite/Sprite03 matching stem不能滿足gate。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-image-bank-boundary-contract.json",
+          "bytes": 18180,
+          "sha256": "DC16D6396C2DAAE64404E5D85A053B89FE71731CB168EB66BC3C1092544619A8",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-filename-route-contract.json",
+          "bytes": 18472,
+          "sha256": "15DEFCD0A45EF3EDC020C72BE6ED048CBE306EFF6DB79CD8B6FF1389CF9C59C0",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract.json",
+          "bytes": 18807,
+          "sha256": "F989981DFF8FF08C98E6B880CD88BD69C0DB420388FF41F957BCB1D06AA027B8",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-provider-writer-contract\\terminal-provider-identity-gap.json",
+          "bytes": 2276,
+          "sha256": "FDD2E5D22B41FF965338EDE89F0B0130BBF9B2DF807DE0532D35ACF4FDA21AFA",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "選角人物PNG／IMG79/80 provider",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "兩個bank建立、leaf ctor、filename route與Sprite/Sprite03 constructor stem已閉合；實際backing identity未閉合。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-background-binding-receipt",
+      "owner": "bin_resources",
+      "title": "背景／class variant／動畫生命周期：接收新證據後的限定交付",
+      "priority": 15,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-background-binding-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "數值owner/factory/caller到具名scene、495520結果到背景draw座標/transform/mode、同版本initialized owner/flag lifecycle的獨立accepted artifact；class/variant與selected+3D/timer如需採用另附契約。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "監製接受的scene/owner證據供應者；Modern UI組",
+          "missing_input": "數值owner/factory/caller到具名scene、495520結果到背景draw座標/transform/mode、同版本initialized owner/flag lifecycle的獨立accepted artifact；class/variant與selected+3D/timer如需採用另附契約。",
+          "resume_when": "已接受具名scene＋背景draw契約與同版本owner/flag條件，且提出具體consumer；直接writer或S03 count0本身不足。",
+          "consumer": [
+            "modern",
+            "launcher",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-background-binding-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\background-binding-receipt.json；輸出background-binding-receipt.json作Modern可消費的附加binding，引用兩個既有RGBA；無重產圖、writer重核或Modern code edit。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\background-binding-receipt.json",
+        "observable_change": "輸出background-binding-receipt.json作Modern可消費的附加binding，引用兩個既有RGBA；無重產圖、writer重核或Modern code edit。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "RGBA D25BED57原件不改；新binding引用原來源/row/hash、精確draw/scene/owner與artifact；未供應的class/variant/lifecycle欄位維持unknown。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "直接writer已核，具名scene與draw位置仍null；STOP在495520/owner語義，不授Directory/sex，不追private下一層。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "已接受具名scene＋背景draw契約與同版本owner/flag條件，且提出具體consumer；直接writer或S03 count0本身不足。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene-contract.json",
+          "bytes": 9015,
+          "sha256": "DDD86F5D197D53987A46DFBBBB879E8FBE0C77C1AE3B68C296EF4F62325056A7",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\modern-rgba\\manifest.json",
+          "bytes": 5799,
+          "sha256": "D25BED57BE58F0AB3EB17F6A716F8202329B4E02BEE98F63B50D84ADA8218540",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-selection-resource-gap\\Native-animation-and-slot-data.json",
+          "bytes": 46278,
+          "sha256": "DE23CD0DE026B996A918550CBA4A0F1C9F28F078623332065E102B376F3B2517",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "launcher",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "背景／class variant／動畫生命周期",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "四個按鈕、12表48states及6314/7482 raw/PNG/RGBA已交付；64AFA0兩個直接writer、owner數值檢查與一層S03/4AACF0 caller前提現已核對。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-map-runtime-binding-receipt",
+      "owner": "bin_resources",
+      "title": "Map 候選到 runtime mapping：接收新證據後的限定交付",
+      "priority": 40,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-map-runtime-binding-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "一個實際runtime key/formatter/05040E1D與773F5200輸出到已有candidate來源/確切row的accepted版本化binding，附query與SHA。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "Modern map組＋監製接受的runtime key binding供應者",
+          "missing_input": "一個實際runtime key/formatter/05040E1D與773F5200輸出到已有candidate來源/確切row的accepted版本化binding，附query與SHA。",
+          "resume_when": "精確key/row契約到達；不得只傳離線candidate名字或重跑五個表。",
+          "consumer": [
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-map-runtime-binding-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\map-runtime-binding-receipt.json；輸出map-runtime-binding-receipt.json：一個runtime key對應已解析row的source-qualified結果/未知，無private展開。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\map-runtime-binding-receipt.json",
+        "observable_change": "輸出map-runtime-binding-receipt.json：一個runtime key對應已解析row的source-qualified結果/未知，無private展開。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "只query新指定row並引用既有parsed catalog SHA；明列條件及ambiguous/無命中；不把candidate升為已載入地圖。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "離線candidate不是已載入地圖；不重跑完整候選解析。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "精確key/row契約到達；不得只傳離線candidate名字或重跑五個表。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-table-source-contract.json",
+          "bytes": 35225,
+          "sha256": "12D76285CC907373A9CBB4D19C88ADD58AB997536E5238004321F83233B803C2",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index-contract.json",
+          "bytes": 23714,
+          "sha256": "04EBECA473FF0BD0FC6A0EEDDE36AF8819EC2FE59F037D08367BF7EF38B36307",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\catalog.json",
+          "bytes": 13377,
+          "sha256": "27378DF1513390B189A6D9C735176C6375BAA1BD4C0170A660406E3CFA89E532",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Map 候選到 runtime mapping",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "五個既有LTmapstr的完整token/row與離線候選index已交付。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-modern-adoption-receipt",
+      "owner": "bin_resources",
+      "title": "Modern 採用／真連線／GUI：接收新證據後的限定交付",
+      "priority": 45,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-modern-adoption-receipt-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "最新實際採用/合併清單、default入口、封存真連線結果及授權GUI驗收artifact；用新版本替換backlog中R527未驗收歷史，不能假定其仍是最新。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "Modern組封存最新採用/真連線/GUI證據；監製驗收",
+          "missing_input": "最新實際採用/合併清單、default入口、封存真連線結果及授權GUI驗收artifact；用新版本替換backlog中R527未驗收歷史，不能假定其仍是最新。",
+          "resume_when": "Modern已封存且監製提供已接受採用/GUI evidence；本組只核對自己交接物的接收範圍。",
+          "consumer": [
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-modern-adoption-receipt-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\modern-adoption-receipt.json；輸出modern-adoption-receipt.json：本組交接→Modern採用版本/範圍→驗收級別及剩餘缺口；不讀全project或build。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\modern-adoption-receipt.json",
+        "observable_change": "輸出modern-adoption-receipt.json：本組交接→Modern採用版本/範圍→驗收級別及剩餘缺口；不讀全project或build。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "每個本組handoff注明adopted/pending/not-applicable及對應artifact/SHA；code presence、test PASS、GUI accepted分開；R526舊缺口不重開。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "本組未驗收R527完成，不編譯/改Modern、不干擾在途工作。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "Modern已封存且監製提供已接受採用/GUI evidence；本組只核對自己交接物的接收範圍。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-ready-directory-adoption-contract.json",
+          "bytes": 120669,
+          "sha256": "B746EF77645DD5BE45B005C6C1F808B0DB83963D36F019CB8368548EC088A88E",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Modern-character-ui-reachability-contract.json",
+          "bytes": 72940,
+          "sha256": "FC83ED02485F28661AC5550A8C6D8DB0F4ABA3EE06FB6B68EB26ED38CE4BDC9B",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Native-background-scene-contract.json",
+          "bytes": 9015,
+          "sha256": "DDD86F5D197D53987A46DFBBBB879E8FBE0C77C1AE3B68C296EF4F62325056A7",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Modern 採用／真連線／GUI",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "Batch33/34有限source comparison及8個候選UI可達已交付；R526 D2/E1由監製報告完成，非本組重開缺口。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-wire-delta-gate",
+      "owner": "bin_resources",
+      "title": "Server wire 接收：接收新證據後的限定交付",
+      "priority": 35,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-wire-delta-gate-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "相對已封存B4C00BF1真正新增opcode或更正wire的byte witness與typed schema；已知S1E補證/API identity/owner條件不算。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "合法既有BIN來源研究或監製提供的新typed wire證據",
+          "missing_input": "相對已封存B4C00BF1真正新增opcode或更正wire的byte witness與typed schema；已知S1E補證/API identity/owner條件不算。",
+          "resume_when": "獨立新/更正wire證據被識別；只有新artifact hash或known corroboration不喚醒本task。",
+          "consumer": [
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-wire-delta-gate-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\wire-delta-gate.json；輸出wire-delta-gate.json與新wire envelope（若真有差異才產生），保留既有server-packet-delta baseline，不自行發訊息/改Java_SQL。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\wire-delta-gate.json",
+        "observable_change": "輸出wire-delta-gate.json與新wire envelope（若真有差異才產生），保留既有server-packet-delta baseline，不自行發訊息/改Java_SQL。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "交接direction/opcode、typed widths/signedness/endian/encoding、trigger/state、VA/RVA、source SHA、證據等級與unknown；逐欄寫相對既有schema差異；由監製一次通知server，追notified/adopted/reviewed。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "沒有新wire不發通知；不承接伺服器被拒工作。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "獨立新/更正wire證據被識別；只有新artifact hash或known corroboration不喚醒本task。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+          "bytes": 26509,
+          "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+          "bytes": 3830,
+          "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+          "bytes": 13337,
+          "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "Server wire 接收",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "F3/F4已有adoption ack；後續有限wire/source契約交付且本次wire差異0。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-qualified-member-delivery",
+      "owner": "bin_resources",
+      "title": "其餘 archive／未qualified格式：接收新證據後的限定交付",
+      "priority": 10,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [
+        {
+          "id": "bin_resources-qualified-member-delivery-qualified-input",
+          "state": "missing",
+          "evidence": null,
+          "input_contract": "一個實際必要且目前未交付的member：固定來源pin、namespace/archive/row/offset/length≤16MiB、已qualified encoding/parser、所需輸出格式、consumer及預期header/用途。",
+          "lifetime": "Qualified immutable accepted artifact; no human/provider-ready lease asserted"
+        }
+      ],
+      "blockers": [
+        {
+          "reason": "尚無足以執行這個限定task的新qualified輸入；既有封存成果不重做。",
+          "supplier": "Modern提出具體consumer缺口；監製接受來源contract",
+          "missing_input": "一個實際必要且目前未交付的member：固定來源pin、namespace/archive/row/offset/length≤16MiB、已qualified encoding/parser、所需輸出格式、consumer及預期header/用途。",
+          "resume_when": "監製接受完整member request，且確定不是已有594members/後续限定輸出的重複；existing decoder適用，不依賴private backing body。",
+          "consumer": [
+            "modern",
+            "supervisor"
+          ],
+          "gate_id": "bin_resources-qualified-member-delivery-qualified-input"
+        }
+      ],
+      "next_deliverable": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\qualified-member-delivery.json；輸出qualified-member-delivery.json和僅一個新必要blob／已qualified decoder輸出至workflow-v2/artifacts/qualified-member/；具體檔名由accepted request固定，不任意抽樣。",
+      "exact_deliverable": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts\\qualified-member-delivery.json",
+        "observable_change": "輸出qualified-member-delivery.json和僅一個新必要blob／已qualified decoder輸出至workflow-v2/artifacts/qualified-member/；具體檔名由accepted request固定，不任意抽樣。",
+        "allowed_output_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\workflow-v2\\artifacts",
+        "input_cardinality": "one bounded new contract/request; not a full corpus or report-only recurring task"
+      },
+      "acceptance": "只讀新限定來源range並核對SHA/length/header；交出consumer需要的原始/decoded或RGBA與dimensions/stride/encoding provenance；未知格式即停；不掃全部305295 records。 證據等級逐項標source-qualified/accepted saved-runtime/GUI-reviewed；本組不自行授產品accepted。",
+      "boundary": "現在無其他已證明未抽取的必要member；不批量抽全部305295 records。 只寫本組ROOT；不改PE/BIN/Modern/launcher/server，不開Native/GUI/process/capture，不重跑封存矩陣，不重新核64AFA0 writer；42E550/42E6D0/42EA50及其他private下一層仍停止。既有外部pyc清理拒絕保留，不檢查/重試/轉交；不接手受攔截server工作。",
+      "resume_when": "監製接受完整member request，且確定不是已有594members/後续限定輸出的重複；existing decoder適用，不依賴private backing body。",
+      "policy_blocked": false,
+      "policy_interpretation": "This task only receives legitimate independent evidence and writes owned finite outputs; prohibited acquisition/body-expansion/blocked actions are excluded, not reauthorized by its gates.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+          "bytes": 760029,
+          "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\extract_member.py",
+          "bytes": 2246,
+          "sha256": "B5176F0956229124C699905B7FC4642E6C81C7A45B216C98AD61E52DE8E5232C",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\validation.json",
+          "bytes": 307,
+          "sha256": "3AC13EFD0D78BEF8F1006D055E629FDF6F16E961AF044441DEC0ECBBECB51895",
+          "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+        }
+      ],
+      "handoff_to": [
+        "modern",
+        "supervisor"
+      ],
+      "stop_condition": "只交付一份新限定結果後轉review，由監製驗收；輸入不完整/來源版本不一致/未知parser/越界或需要被禁body時立刻保留blocked並列具體缺口，不逐層續查。",
+      "backlog_category": "其餘 archive／未qualified格式",
+      "backlog_reference": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\original-delivery-backlog.json",
+        "bytes": 8284,
+        "sha256": "0B739E5B6E114C104C5F9F9BB39B5BCDEBEB4F63847DED5AADF870CF1F6E83C7"
+      },
+      "existing_delivery": "24 archives/305295 records範圍已驗證，594初始members/19loose＋後續限定輸出；不是全量GUI語義解碼。",
+      "conversation_completion_is_task_acceptance": false
+    },
+    {
+      "id": "bin_resources-owned-process-watchdog-20261007",
+      "owner": "bin_resources",
+      "title": "Implement owned fixture process-tree deadline and cleanup module for bounded exporter",
+      "priority": 1,
+      "state": "blocked",
+      "dependencies": [],
+      "gates": [],
+      "blockers": [
+        {
+          "reason": "Original delivered baseline remains blocked by the two reviewed error-path defects.",
+          "supplier": "bin_resources successor / supervisor review",
+          "missing_input": "Accepted review of the separately delivered corrected successor.",
+          "resume_when": "Supervisor evaluates the new successor; preserve old faulty module immutable.",
+          "consumer": "owned watchdog component / future exporter"
+        }
+      ],
+      "policy_blocked": false,
+      "continuation_of": "bin_resources-ida77-bounded-export-adapter-20261007",
+      "next_deliverable": "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Process-Watchdog-20261007.json with executable module and focused own fixture process evidence",
+      "acceptance": "Implement an external monotonic wall deadline and bounded stdout/stderr capture for a fresh owned process tree, including exact identity receipts and guaranteed ownership-scoped cleanup of own fixture children on timeout/controller failure. Refuse launch if ownership containment cannot be established before children run. Verify normal exit, hang, spawned child, output flood, controller exit, and failed containment with new harmless fixture programs. Use real process observations and preserve non-owned sentinel unchanged. Implement job-directory byte monitoring with explicit detection interval/observed overshoot; do not call polling a hard disk quota. If hard disk containment remains unavailable, report it precisely without pretending full exporter qualification. Deliver sources, compile/runtime receipts, hashes and post-exit audit. No old PASS reruns.",
+      "boundary": "Only new BIN-owned directory and existing authorized unique ASCII namespace; preserve prior adapter/fixture/report fingerprints. Execute only new harmless owned fixture helpers via installed Python or local compiled helper, hidden windows. NO IDA launch, installation/profile/global config edit, network/firewall/security changes, game/provider/SQL/shared BIN/TW/LHZ actions, external AI, process attach/memory read or native GUI. Keep original unsafe-plugin refusal and all existing private-backing/next-layer/domain/automatic-review stops intact. This is missing control implementation, not replacement analysis or a refusal workaround.",
+      "resume_when": "Missing external watchdog is an independent implementable requirement identified in reviewed adapter; no human live presence or IDA environment required.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Owned-Process-Watchdog-20261007.json",
+          "bytes": 22883,
+          "sha256": "776DBD138010A71AAA746DBE487D0D195D9B7045DAF2480FF79EA7463973DB99"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\affected-case-recheck.json",
+          "bytes": 3307,
+          "sha256": "B1155F373B775EF700732C3F0970ABEC3AE2A0DC24E4C0DAAFC21D1443D48292"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\post-exit-audit-final.json",
+          "bytes": 11240,
+          "sha256": "B95246FBFF5DA70808B6B467DF481FBA65E58E66060691E8864AA6EC4A011E63"
+        }
+      ],
+      "handoff_to": [
+        "supervisor"
+      ],
+      "stop_condition": "Deliver bounded component and new fixture evidence; do not launch IDA or declare full environment/export/product acceptance. If platform containment is unavailable, preserve exact failure and stop that action.",
+      "dispatch_receipt": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-owned-process-watchdog-20261007-send-receipt.json",
+      "execution_observed_at": "2026-10-07T13:20:59.055568+08:00",
+      "execution_turn_id": "01a114ce-4d2f-7530-890c-01df473bd3de",
+      "remaining_qualification_gaps": [
+        "Hard disk containment/quota absent; polling is detection plus tree termination only.",
+        "Plugin/egress/owned-write isolation is still unqualified; original IDA refusal remains sealed and active.",
+        "This module is runtime-tested only with harmless owned Python fixtures; no IDA/native export execution was attempted.",
+        "Job objects cover associated CreateProcess descendants, not hostile privileged/broker-created external work; not a security sandbox."
+      ],
+      "supervisor_assessment": {
+        "path": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-owned-process-watchdog-20261007-assessment.json",
+        "bytes": 2708,
+        "sha256": "96455CA62639C2FADA58465C0053B443702BE48A530E9A6755E2DB784B7BCA82"
+      }
+    },
+    {
+      "id": "bin_resources-watchdog-error-paths-20261007",
+      "owner": "bin_resources",
+      "priority": 0,
+      "title": "Repair post-create constructor cleanup evidence and durable error receipts",
+      "state": "accepted",
+      "dependencies": [],
+      "gates": [],
+      "blockers": [],
+      "policy_blocked": false,
+      "continuation_of": "bin_resources-owned-process-watchdog-20261007",
+      "next_deliverable": "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Watchdog-Error-Paths-20261007.json with preserved original baseline and corrected new module/receipts",
+      "acceptance": "Fix reviewed constructor failures after successful CreateProcess: unconditional finally closes/terminates own job even if identity/snapshots throw; bounded retained-handle/job exit audit and identity failures must be carried to caller. Never derive owned_job_empty=true from process=None. Guard final disk scan, cleanup audit and capture errors so runtime receipt persists with original failure and partial/unknown evidence. Test new post-create membership/identity/snapshot failure and final scan entry-cap/I/O plus cleanup/capture fault cases with fresh harmless owned fixtures; only changed paths, no whole old PASS replay. Record process_created/resumed, exact known identities, actual wait outcomes, unknowns and ownership-scoped cleanup; no false completed state. Preserve atomic job membership, no-breakaway/non-inherited sole job handle, bounded capture/deadline and original install refusal. No quota/sandbox claim.",
+      "boundary": "New BIN-owned successor directory only; prior owned-watchdog-20261007 and adapter receipts/sources immutable. Harmless new fixture processes hidden; only retained own job/handles for cleanup. No IDA/game/provider/SQL/globalconfig/security settings/canonical live registry/GUI/MCP/shared BIN/TW/LHZ/private backing. All policy refusals remain.",
+      "resume_when": "New independent source review identifies two concrete engineering faults with executable own-fixture corrections; no external input required.",
+      "evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\Owned-Watchdog-Error-Paths-20261007.json",
+          "bytes": 48656,
+          "sha256": "348FCE0B60DAD6F5CCE26DA0F677B82F4738DAA9C086FCCD96FD9BF5EAE23354"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\source.diff",
+          "bytes": 25184,
+          "sha256": "D0A86260212765147F2FB1C803A3236FDD12B1FBEEA4AD20DF9365B4F21E5201"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\new-error-path-tests.json",
+          "bytes": 12598,
+          "sha256": "3C35B13F22A27BEA0B9484EAC76D15C809ABC25207B26B28365847FB77987732"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\finite-verification.json",
+          "bytes": 9465,
+          "sha256": "2F2F938AF9F2EBD0A56BA42E9877B36E587A8D00FB5EC4F93A13648DD48CDCE8"
+        }
+      ],
+      "handoff_to": [
+        "supervisor"
+      ],
+      "stop_condition": "Deliver source diff, immutable baseline hashes and new affected-case evidence only. Any unavailable observation remains unknown; do not qualify full IDA export/environment.",
+      "dispatch_receipt": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-watchdog-error-paths-20261007-send-receipt.json",
+      "execution_observed_at": "2026-10-07T05:46:17.913Z",
+      "execution_turn_id": "01a114e2-a1e2-7c40-a156-6aac79555afd",
+      "supervisor_assessment": {
+        "path": "D:/lineage開發/3-lito開發/監製工作流/bin_resources-watchdog-error-paths-20261007-assessment.json",
+        "sha256": "7DFE5D518123C14879C88EFD402F2E3657E02DB3682CB7246C24D5003C35ABB7"
+      }
+    },
+    {
+      "id": "bin_resources-ida77-isolated-export-integration-20261007",
+      "owner": "bin_resources",
+      "title": "Complete isolated IDA77 runtime and execute bounded exporter integration",
+      "priority": 0,
+      "state": "review",
+      "dependencies": [
+        "bin_resources-watchdog-error-paths-20261007"
+      ],
+      "gates": [],
+      "blockers": [
+        {
+          "reason": "Actual CreateProcessW LPAC probe failure ERROR_FILE_NOT_FOUND (2); no native child token or IDA run.",
+          "supplier": "supervisor",
+          "missing_input": "Qualified compliant isolation path with no persistent writes outside BIN ownership",
+          "resume_when": "Supervisor supplies or authorizes a qualified isolation path whose persistent writes remain within the task ownership boundary; continue from this failed native creation stage without replaying accepted watchdog suites.",
+          "consumer": [
+            "bin_resources",
+            "supervisor"
+          ]
+        }
+      ],
+      "policy_blocked": false,
+      "continuation_of": "bin_resources-ida77-bounded-export-adapter-20261007",
+      "next_deliverable": "D:/lineage開發/3-lito開發/lito脫殼資源/IDA77-Isolated-Export-Integration-20261007.json; runnable isolated profile, connected accepted watchdog/exporter, actual bounded IDA disassembly/pseudocode receipts on pinned inert fixture, or one precise proven platform blocker.",
+      "acceptance": "Qualify a private, explicitly allowlisted runtime/profile without modifying original IDA installation or global/user settings. Exclude auto AI/Keypatch/unknown startup plugins and demonstrate actual loaded/startup configuration, paths and any egress/write controls with evidence. Do not equate IDAUSR or an empty plugins.cfg with isolation. Integrate accepted watchdog by pinned reuse, not a rewritten framework. Execute the draft exporter on the existing inert PE only as a NEW integration check: exact two allowed functions, real instructions/direct xrefs/pseudocode, loaded-byte fingerprints, process identity/exit/cleanup and time/disk observations. Record remaining limitations honestly; disk polling is not hard quota and hard quota is not an added prerequisite here. No repeat of 15 preflight or 11 watchdog PASS suites. Include at most one proposed, nonduplicated consumer-required static LITO analysis request with exact source SHA/ranges/question, independently outside existing stop boundaries; none if not evidenced.",
+      "boundary": "Write only fresh BIN-owned directory or original authorized BIN ASCII namespace. Read original D:/IDA_Pro_7.7 as dependency; scoped private copy/config allowed, original installation/profile and user/global settings unchanged. No network upload/external AI, unsafe MCP startup/install/downloaded watchdog, security/firewall/globalconfig edits, native GUI/game/process attach/memory read, provider/SQL/shared BIN/TW/LHZ actions. Preserve old denied private backing, 42E550/42E6D0/42EA50/050104CD next layer and 495520 constructor/unknown owner exclusions. No actual LITO target analysis in this environment-qualification task.",
+      "resume_when": "Accepted owned-watchdog/error-path component now exists; current human explicitly requests original BIN owner resume concrete work. IDA environment work is independent of active server cleanup.",
+      "evidence": [
+        {
+          "path": "D:/lineage開發/3-lito開發/監製工作流/bin_resources-watchdog-error-paths-20261007-assessment.json",
+          "sha256": "7DFE5D518123C14879C88EFD402F2E3657E02DB3682CB7246C24D5003C35ABB7"
+        },
+        {
+          "path": "D:/lineage開發/3-lito開發/lito脫殼資源/Owned-Watchdog-Error-Paths-20261007.json",
+          "sha256": "348FCE0B60DAD6F5CCE26DA0F677B82F4738DAA9C086FCCD96FD9BF5EAE23354"
+        },
+        {
+          "path": "D:/lineage開發/3-lito開發/lito脫殼資源/IDA77-Bounded-Export-Adapter-20261007.json",
+          "sha256": "A1133472ED1C0CA9C80EC84AD7573D41C3EC7D9EAEE74D9CFB3EA8D0673AA21A"
+        }
+      ],
+      "handoff_to": [
+        "supervisor"
+      ],
+      "stop_condition": "Deliver actual new integration evidence for supervisor review before any real LITO export; or stop at precise original unresolved platform restriction. No fake reverse output, repeated backlog rewrite, extra unrelated framework, or alternative tool to bypass refusal.",
+      "dispatch_receipt": "D:/lineage開發/3-lito開發/監製工作流/bin_resources-ida77-isolated-export-integration-20261007-send-receipt.json",
+      "execution_observed_at": "2026-10-07T06:48:07.745Z",
+      "execution_turn_id": "01a1151d-d789-7c62-a4de-25110e7b9af1",
+      "delivery": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\IDA77-Isolated-Export-Integration-20261007.json",
+        "bytes": 16972,
+        "sha256": "C846F9090687AFD1A319C004FEB720C751DB703B80F6F23A63E7D1EE81BC5146"
+      },
+      "execution_result": "blocked_platform"
+    }
+  ],
+  "ready_count": 0,
+  "blocked_count": 13,
+  "implementation_selected": "bin_resources-ida77-isolated-export-integration-20261007",
+  "implementation_selection": {
+    "examined": "The existing twelve categories and sealed deliverable references only; no broad re-audit",
+    "result": "No ready independent implementation with all required qualified inputs",
+    "reason": "All twelve remaining objectives have missing external source/owner/binding/parity/adoption/consumer evidence. Two RGBA buffers and direct-writer branch are already delivered; cannot invent another extraction or rerun them.",
+    "product_improvement_in_this_conversion": false
+  },
+  "next_task_id_if_unblocked": "bin_resources-qualified-member-delivery",
+  "minimum_external_unblock": {
+    "supplier": "Modern consumer＋監製",
+    "missing_input": "One accepted non-duplicate needed member request with immutable source pin, qualified namespace/row/offset/length≤16MiB/encoding/parser, output format and consumer.",
+    "resume_when": "This immutable request is accepted and it does not require stopped private backing or blocked actions.",
+    "consumer": [
+      "bin_resources",
+      "modern"
+    ],
+    "task_id": "bin_resources-qualified-member-delivery"
+  },
+  "wire_review": {
+    "baseline": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+      "bytes": 26509,
+      "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+    },
+    "relative_baseline_changed": false,
+    "new_opcodes": 0,
+    "corrected_wire_contracts": 0,
+    "known_contracts_corroborated": 3,
+    "analysis_corrections_are_wire_delta": false,
+    "adoption_ack": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+      "bytes": 3830,
+      "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95",
+      "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+    },
+    "notification_requested": false,
+    "decision": "Known corroboration only; do not renotify F3/F4 or S1E. A genuine typed new delta triggers bin_resources-wire-delta-gate; supervisor owns notification.",
+    "review_method": "Read immutable packet summary/per-packet correction flags and existing adoption metadata once; no old source/Java/SQL/test matrix replay"
+  },
+  "retained_boundaries": {
+    "private_backing": [
+      "42E550",
+      "42E6D0",
+      "42EA50"
+    ],
+    "background_direct_writer": "Already sealed DDD86F5D; never redo under this conversion",
+    "scope_write_incident": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD1-mode-step\\scope-write-correction.json",
+      "bytes": 1454,
+      "sha256": "B51ECB6CC2AD37DA279E03F71B92C6B75DA52F00027737A6AB8AC2A02C97DFE4",
+      "qualification": "Previously sealed artifact reference; body/matrix not re-audited during workflow conversion"
+    },
+    "cleanup_or_server_blocked_work_taken_over": false,
+    "current_human_ready_or_provider_ready_asserted": false
+  },
+  "update_rule": "One-time proposal; only change affected task/gate after a real new artifact, accepted handoff, or dependency change. No periodic rewrite/old PASS replay.",
+  "validation_required": "supervise.py validate --queue D:\\lineage開發\\3-lito開發\\lito脫殼資源\\工作佇列.json",
+  "review_count": 1
+}

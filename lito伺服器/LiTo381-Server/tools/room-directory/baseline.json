@@ -1,0 +1,13 @@
+{
+  "server-source/ClientSession.java": "054ee5c337ebebaea340c3f21569c8190656d89a31b21c6bc85562f13fbc32f2",
+  "server/tools/Verify-ProjectLayout.py": "4aae1f99022aae65417bf4f60829949d4da85f43ab215a34812c3be44a297ea7",
+  "server/deployment/release-inputs.json": "c097bfd81cb800566ac7a9d0903b0ded5be3fdaab55010a942d9040e0456e8ea",
+  "app/server/LiTo381-SharedResources-candidate.jar": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0",
+  "app/server/Start-Shared-Formal.py": "ca08fa735cc2604fbc5553cc1160f89d6284248cbbb59886dc8bbce465e78813",
+  "src/MainForm.cs": "a2e94c7268327d7a25760df8e0f8a975c500d18c4e7e2dd12b8692467020eb39",
+  "src/LiTo381Launcher.csproj": "0e1c630de26dfe1768ce9df88db404f845920a783ba9227ce9ce5b0dd6f9525c",
+  "tools/build_current.py": "f5a7d470199ed19f5c98d82818f8eb0bbfa0599535c90ae50a15c347db1d266e",
+  "src/DevelopmentStartup.cs": "3f4711accdee0cf4febda46b482a3e45cb1bda38d3f581bfeae29f2a186cf052",
+  "src/FormalStandardSources.cs": "c877cf2a4989ef13e89e3e3e3af106ebc38ad03b9a9dc86630e1cc07ac08defd",
+  "src/development_startup.py": "f8a3da77023c8c7ed95932378d635c9048f6669d56cc95f3a534400254ac6d15"
+}

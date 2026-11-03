@@ -1,0 +1,6 @@
+package local.lito381.server;
+import java.nio.file.*;import java.util.*;
+/** Class literals are loaded without static initialization or live fixtures. */
+public final class CandidateAreaOriginProbe {
+ public static void main(String[] args)throws Exception{var jar=Path.of(args[0]).toRealPath();int count=0;for(var name:List.of("ClientSession","NativeAreaMaterialAction","NativeAreaMaterialAction$Context","NativeCompanionArea","NativeCompanionTargets","NativeSourcePlayerActionLock","NativePlayerLifetime","NativePlayerVitalCompletions","NativeRolePublication","NativeLightAction","NativeCastMaterial","NativeDeItemTransaction","NativeWorldMaterialPolicy","NativeCombatAttacker","NativeCompanionPlacement","NativeCompanionCallbacks","NativePlayerCommit","NativeWeaponBreakTargetLifecycle","BattleCompanion","BattleTimedStatus","SourceNpcPhysicalStats")){var c=Class.forName("local.lito381.server."+name,false,CandidateAreaOriginProbe.class.getClassLoader());if(!Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toRealPath().equals(jar))throw new AssertionError("production overlay "+name+" "+c.getProtectionDomain().getCodeSource().getLocation());count++;}System.out.println("PASS candidate origin for "+count+" authoritative area/lifecycle/material classes without initializing a game fixture");}
+}

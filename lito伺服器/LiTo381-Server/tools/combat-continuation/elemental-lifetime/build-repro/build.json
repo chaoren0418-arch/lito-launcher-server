@@ -1,0 +1,34 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-material\\build\\candidate-elemental-material.jar",
+    "sha256": "b750acfc32e43963e163366e7f00cd1afcac817785f124625b012c468ea38c59"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build-repro\\candidate-elemental-lifetime.jar",
+    "sha256": "b0362026f3ec4ec105a63ed1f1da87cdb1192f69e546f86f16f88d220b6d582c"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build-repro\\inputs\\build.py",
+      "sha256": "e1e63b00908cfb12a33e6cd5091bd5d3bd1cb4417205cc9131ba2ba17903cab4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build-repro\\inputs\\ElementalLifetimeMethods.java",
+      "sha256": "974ed0e3a27c1dd00f44e331fddf96d2335cf9df89e00bdf3e494b82b3785a0a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build-repro\\inputs\\L1SummonInstance.java",
+      "sha256": "08286717c3bf5670119495b2217c44f66807cbf74c7fe0399f0ebd6d2df4a051"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\elemental-lifetime\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

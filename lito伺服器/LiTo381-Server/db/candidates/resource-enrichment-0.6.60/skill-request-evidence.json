@@ -1,0 +1,25 @@
+{
+  "package_status": "未匯入、未接線",
+  "native_rows": 176,
+  "source_id": 541,
+  "dispatcher_va": "0x004CB5F0",
+  "switch_max_zero_based": 175,
+  "byte_table_va": "0x004CBD00",
+  "jump_table_va": "0x004CBC80",
+  "handler_count": 32,
+  "source_asm_lines": {
+    "switch": 425123,
+    "selector_handler": 425828,
+    "default_handler": 425875
+  },
+  "world_tree_131_note": "original class3 differs from extension one-byte repair toclass1; no on-disk rewrite; preserve original and current-source override separately",
+  "six_picker_only_ids_remain": [
+    192,
+    202,
+    203,
+    207,
+    208,
+    213
+  ],
+  "all_candidates_disabled": true
+}

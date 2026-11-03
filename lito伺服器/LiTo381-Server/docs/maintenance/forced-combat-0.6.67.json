@@ -1,0 +1,44 @@
+{
+  "version": "0.6.67",
+  "previous": {
+    "jar": "6928a147df1e784304b9080632c56121b173bf60b172023ebd263e82fd448628",
+    "dll": "7594af6ca48722b8c207bd2c1878dacd19ab412cb512662ed259ea753d67a04d"
+  },
+  "published": {
+    "jar": "76ebe06d89dbd19cdb577e229657883c16156c77a23ede288880c25584d2e3cc",
+    "dll": "c1b9e1896a07d3872f3111f766af98d36cc6bd64cec94e8a991cbe3c8c9d038e"
+  },
+  "rollback": "LiTo381-Launcher/backups/baseline-0.6.66.zip",
+  "scope": "per-request explicit Ctrl target intent; normal faction and secondary area target rules retained",
+  "tests": {
+    "native_frame": true,
+    "forced_dispatch": true,
+    "prior_six_regressions": true,
+    "native_startup": {
+      "pins": true,
+      "server_release_verified": true,
+      "formal_input_gate_verified": true,
+      "hash_case_and_mismatch_regression": true,
+      "footer_removed": true,
+      "class_compatibility": {
+        "png_objects": 1128,
+        "seven_class_hooks": true,
+        "lobby_draw_hook": true,
+        "new_class_names": [
+          "龍騎士",
+          "龍騎士",
+          "幻術士",
+          "幻術士"
+        ],
+        "class_skill_hooks": true,
+        "forced_combat_send_hook": "0x71e91b80"
+      },
+      "native_ready": true,
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "run": "cleanup-smoke-1791987296108635300"
+    }
+  },
+  "native_startup_pending": false,
+  "manual_test_pending": true
+}

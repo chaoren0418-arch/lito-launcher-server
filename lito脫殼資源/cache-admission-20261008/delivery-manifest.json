@@ -1,0 +1,77 @@
+{
+  "task_id": "bin_resources-modern-cache-admission-input-20261008",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008-contract.json",
+    "bytes": 8746,
+    "sha256": "2AC6D313CCA261244BD0CF54182F32E436584232D95692F1A756EA7E24D51B38"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\arithmetic.json",
+      "bytes": 771,
+      "sha256": "8E3805F9992C6E6BFB3C5D43F59D39D3BCFBD6CC626D12645AEE449F5C4D7309"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\attempt1-failure.json",
+      "bytes": 86,
+      "sha256": "EA9C4E20AB7B7ADD1268D8F8269BF37A92394A6CD7D631481BBF0345E833F49F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\attempt1.stderr.txt",
+      "bytes": 1075,
+      "sha256": "4768A18DB4A0D30A81A4E0233E55283B9BFA12CADB385A868AE18169E3D2E2CE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\attempt1.stdout.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\derive.py",
+      "bytes": 10596,
+      "sha256": "4CEB845C0412BBE8C0764CA62EC850859E6EE91AD22AAF2A31826212EB07918F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\input-sources.json",
+      "bytes": 9208,
+      "sha256": "0A8A5C7E09DF61F04C105A8E01BCF86DA7D210D7F3F7A28D5328CDD459EDF83E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\members.json",
+      "bytes": 194525,
+      "sha256": "C9E60B4A2D4871BAFDB7DF4E43AEF2BDCB812B085D2027F36ACDC481F46954B6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\package.py",
+      "bytes": 6580,
+      "sha256": "E9044F8EDF65C56BCAFAE91175A4000FC268B11C199EBCF7392EBF5725A3F515"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\qualified-slots.json",
+      "bytes": 6654434,
+      "sha256": "38A18F8B5FD86DDA94D88BAB5D0765FBE247AFCF8CA3F6082BB484B612FD5FA6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\raw.stdout.txt",
+      "bytes": 804,
+      "sha256": "19268BFC4B4F08937AF63C60A355FF4FAE7A0A669472144C61651619DCC54225"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\references.csv",
+      "bytes": 9030143,
+      "sha256": "4EA5DF810A8726651C5CD53402023076C515B3F80A10F2F224D2CB5EAFC33B9D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\cache-admission-20261008\\sector-parse.json",
+      "bytes": 16309,
+      "sha256": "4434069296CFE20752ADA0CB97A6F38E2BC1E62AB5423E45185C5B7A4E6C3992"
+    }
+  ],
+  "state": "review",
+  "self_accepted": false
+}

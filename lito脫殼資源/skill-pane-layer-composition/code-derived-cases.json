@@ -1,0 +1,1101 @@
+{
+  "status": "SYNTHETIC_STATIC_MODELS_ONLY",
+  "cases": [
+    {
+      "name": "opaque_even",
+      "kind": "opaque",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 276,
+          "source_index": 0,
+          "source_word": "0000",
+          "output_word": "0000"
+        },
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "7C00"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "83E0"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "001F"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "4E73"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "FFFF"
+        }
+      ],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\opaque_even.bin",
+        "bytes": 2048,
+        "sha256": "F3B25E00D76D64CE04845BE8107DC1227651BEA54A35211C1B42E777BD17F58A"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "opaque_odd_pitch",
+      "kind": "opaque",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 19,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 276,
+          "source_index": 0,
+          "source_word": "0000",
+          "output_word": "0000"
+        },
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "7C00"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "83E0"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "001F"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "4E73"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "FFFF"
+        }
+      ],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\opaque_odd_pitch.bin",
+        "bytes": 2048,
+        "sha256": "F3B25E00D76D64CE04845BE8107DC1227651BEA54A35211C1B42E777BD17F58A"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "keyed_flag0",
+      "kind": "keyed",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "7C00"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "83E0"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "001F"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "4E73"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "FFFF"
+        }
+      ],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\keyed_flag0.bin",
+        "bytes": 2048,
+        "sha256": "9E48A4CF7A5FDCAF57B6FA7946B623DB2B7B5D20A34CEBFE0F718A76AB4D16A2"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "alpha555",
+      "kind": "alpha",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": 15,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "4CAD"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "128D"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "10BC"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "35D6"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "4E9C"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 278,
+          "word": "A55A"
+        },
+        {
+          "offset": 280,
+          "word": "A55A"
+        },
+        {
+          "offset": 294,
+          "word": "A55A"
+        },
+        {
+          "offset": 296,
+          "word": "A55A"
+        },
+        {
+          "offset": 298,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\alpha555.bin",
+        "bytes": 2048,
+        "sha256": "07C0193501C676FF2D8A978E94F97496A5D7C4266295960EE5ECDB3F1AF0AE57"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "alpha565",
+      "kind": "alpha",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 19,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB565",
+      "alpha": 15,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "8C8D"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "948D"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "529C"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "7596"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "CE5C"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 278,
+          "word": "A55A"
+        },
+        {
+          "offset": 280,
+          "word": "A55A"
+        },
+        {
+          "offset": 294,
+          "word": "A55A"
+        },
+        {
+          "offset": 296,
+          "word": "A55A"
+        },
+        {
+          "offset": 298,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\alpha565.bin",
+        "bytes": 2048,
+        "sha256": "0F3A901D179198751B0AB0EBAB1012A9346FF00ED1DE320C1BC0441C0381CD83"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "alpha_negative_lower_guard",
+      "kind": "alpha",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        -1,
+        -1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": 15,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 274,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 256,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "35D6"
+        },
+        {
+          "offset": 258,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "4E9C"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 256,
+          "word": "A55A"
+        },
+        {
+          "offset": 258,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\alpha_negative_lower_guard.bin",
+        "bytes": 2048,
+        "sha256": "C08C92185FFBC44D5579EC7599043631BEB1AE9942D344A16B83A12A3DAA4557"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "opaque_negative_origin",
+      "kind": "opaque",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        -1,
+        -1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 274,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 236,
+          "source_index": 0,
+          "source_word": "0000",
+          "output_word": "0000"
+        },
+        {
+          "offset": 238,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "7C00"
+        },
+        {
+          "offset": 240,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "83E0"
+        },
+        {
+          "offset": 254,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "001F"
+        },
+        {
+          "offset": 256,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "4E73"
+        },
+        {
+          "offset": 258,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "FFFF"
+        }
+      ],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\opaque_negative_origin.bin",
+        "bytes": 2048,
+        "sha256": "30068DA9F6E1673AE589580D2D709DD859784A32A3831128EA69E3889C029D68"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "right_edge_no_clip",
+      "kind": "keyed",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        8,
+        1
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 292,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "7C00"
+        },
+        {
+          "offset": 294,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "83E0"
+        },
+        {
+          "offset": 308,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "001F"
+        },
+        {
+          "offset": 310,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "4E73"
+        },
+        {
+          "offset": 312,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "FFFF"
+        }
+      ],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\right_edge_no_clip.bin",
+        "bytes": 2048,
+        "sha256": "DD8B7F81BAA856DC05F02E121E250B5F1F9437FDA2FDACB1685F8ACB36A82A8E"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "bottom_all_or_nothing",
+      "kind": "keyed",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        5
+      ],
+      "source_rect": null,
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 382,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": false,
+      "writes": [],
+      "destination_reads": [],
+      "screen_table_policy": null,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\bottom_all_or_nothing.bin",
+        "bytes": 2048,
+        "sha256": "53016CF47DA00C5AC6912965FA8582F7FA6AC6011DFB3E160F2C09BF93D254E0"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "screen_full_rect_seeded",
+      "kind": "screen_rect",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 19,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "format": "RGB565",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 278,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 280,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 294,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 296,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 298,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "A55A"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 278,
+          "word": "A55A"
+        },
+        {
+          "offset": 280,
+          "word": "A55A"
+        },
+        {
+          "offset": 294,
+          "word": "A55A"
+        },
+        {
+          "offset": 296,
+          "word": "A55A"
+        },
+        {
+          "offset": 298,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": "synthetic q=D, not initialized native table",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\screen_full_rect_seeded.bin",
+        "bytes": 2048,
+        "sha256": "53016CF47DA00C5AC6912965FA8582F7FA6AC6011DFB3E160F2C09BF93D254E0"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "screen_subrect_seeded",
+      "kind": "screen_rect",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        1,
+        1
+      ],
+      "source_rect": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "format": "RGB555",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 310,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 276,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "255A"
+        },
+        {
+          "offset": 278,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "255A"
+        },
+        {
+          "offset": 294,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "255A"
+        },
+        {
+          "offset": 296,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "255A"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 276,
+          "word": "A55A"
+        },
+        {
+          "offset": 278,
+          "word": "A55A"
+        },
+        {
+          "offset": 294,
+          "word": "A55A"
+        },
+        {
+          "offset": 296,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": "synthetic q=D, not initialized native table",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\screen_subrect_seeded.bin",
+        "bytes": 2048,
+        "sha256": "E85B7EE873F1E3FDBB5037FF1983326D7614695A535AC31F32106A1A32F1D052"
+      },
+      "native_GUI_oracle": false
+    },
+    {
+      "name": "screen_negative_no_lower_guard_seeded",
+      "kind": "screen_rect",
+      "source_words": [
+        "0000",
+        "7C00",
+        "83E0",
+        "001F",
+        "4E73",
+        "FFFF"
+      ],
+      "descriptor": {
+        "buffer_base": 256,
+        "height": 6,
+        "audit_width_metadata_unused_by_native_guards": 8,
+        "pitch": 18,
+        "effective_stride": 18
+      },
+      "caller_xy": [
+        -1,
+        -1
+      ],
+      "source_rect": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "format": "RGB565",
+      "alpha": null,
+      "key": "0000",
+      "bottom_guard_end_unsigned32": 274,
+      "bottom_guard_limit_unsigned32": 364,
+      "bottom_guard_accepted": true,
+      "writes": [
+        {
+          "offset": 238,
+          "source_index": 1,
+          "source_word": "7C00",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 240,
+          "source_index": 2,
+          "source_word": "83E0",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 254,
+          "source_index": 3,
+          "source_word": "001F",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 256,
+          "source_index": 4,
+          "source_word": "4E73",
+          "output_word": "A55A"
+        },
+        {
+          "offset": 258,
+          "source_index": 5,
+          "source_word": "FFFF",
+          "output_word": "A55A"
+        }
+      ],
+      "destination_reads": [
+        {
+          "offset": 238,
+          "word": "A55A"
+        },
+        {
+          "offset": 240,
+          "word": "A55A"
+        },
+        {
+          "offset": 254,
+          "word": "A55A"
+        },
+        {
+          "offset": 256,
+          "word": "A55A"
+        },
+        {
+          "offset": 258,
+          "word": "A55A"
+        }
+      ],
+      "screen_table_policy": "synthetic q=D, not initialized native table",
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-pane-layer-composition\\cases\\screen_negative_no_lower_guard_seeded.bin",
+        "bytes": 2048,
+        "sha256": "53016CF47DA00C5AC6912965FA8582F7FA6AC6011DFB3E160F2C09BF93D254E0"
+      },
+      "native_GUI_oracle": false
+    }
+  ],
+  "renderer_order_cases": [
+    {
+      "6328C0": 0,
+      "draw_sequence": [
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": true
+    },
+    {
+      "6328C0": 15,
+      "draw_sequence": [
+        {
+          "id": 933,
+          "target": "83154C",
+          "alpha": 15
+        },
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": true
+    },
+    {
+      "6328C0": 31,
+      "draw_sequence": [
+        {
+          "id": 933,
+          "target": "4B9F60",
+          "alpha": null
+        },
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": true
+    },
+    {
+      "6328C0": 65536,
+      "draw_sequence": [
+        {
+          "id": 933,
+          "target": "83154C",
+          "alpha": 0
+        },
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": true
+    },
+    {
+      "6328C0": 65567,
+      "draw_sequence": [
+        {
+          "id": 933,
+          "target": "83154C",
+          "alpha": 31
+        },
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": true
+    },
+    {
+      "6328C0": 32,
+      "draw_sequence": [
+        {
+          "id": 933,
+          "target": "83154C",
+          "alpha": 32
+        },
+        {
+          "id": 934,
+          "target": "4BA220"
+        },
+        {
+          "role": "child_controls",
+          "target": "41B690"
+        },
+        {
+          "role": "skill_grid",
+          "target": "owner virtual+24"
+        },
+        {
+          "id": 935,
+          "target": "831558"
+        }
+      ],
+      "all_payloads_present_and_initialization_success_assumed": true,
+      "alpha_valid_initialized_range": false
+    }
+  ],
+  "header_flag_not_read_by_draw_bodies": true,
+  "screen_cases_require_explicit_synthetic_LUT": true,
+  "old_PASS_icon_packet_or934_case_replay": false
+}

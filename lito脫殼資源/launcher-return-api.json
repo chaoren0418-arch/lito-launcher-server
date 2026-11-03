@@ -1,0 +1,83 @@
+{
+  "updated_at": "2026-10-05T21:44:38.337337+08:00",
+  "request": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\launcher\\observability-20261003-225704\\ui-native-hookup-20261004-051000\\t73_live_review_20261005_205601\\source-dependency-requests.json",
+    "bytes": 2296,
+    "sha256": "E3CD9AD4ADADF37AB209BBE673891F5167C4514B0A49A1840B99647F88ACBC8C"
+  },
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "historical_module_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\launch-reports\\LiTo-20260805-214334.json",
+    "bytes": 110736,
+    "sha256": "87CBE232E79DF72BAE838015F91924C3A784AB1B8F2361BA6EC8CC6F144E2369"
+  },
+  "historical_module": {
+    "first_seen_seconds": 0.0,
+    "pid": 23292,
+    "name": "msvcrt.dll",
+    "path": "C:\\WINDOWS\\SysWOW64\\msvcrt.dll",
+    "base": "0x77380000",
+    "size": 782336
+  },
+  "current_DLL": {
+    "path": "C:\\Windows\\SysWOW64\\msvcrt.dll",
+    "bytes": 776448,
+    "sha256": "C1BE919E7DE267ED2FCFBB4DA52AAD912CB468069B58B6A00198FF3C525373A0"
+  },
+  "export": {
+    "name": "rand",
+    "rva": "0005C650",
+    "ordinal": 1311,
+    "file_offset": "0005BA50"
+  },
+  "absolute_target": "773DC650",
+  "calls": [
+    {
+      "va": "0046F094",
+      "rva": "0006F094",
+      "section": "   \u0000    ",
+      "file_offset": "0006F094",
+      "raw_backed": true,
+      "bytes": "e8b7d5f676",
+      "target": "773DC650"
+    },
+    {
+      "va": "0046F1AF",
+      "rva": "0006F1AF",
+      "section": "   \u0000    ",
+      "file_offset": "0006F1AF",
+      "raw_backed": true,
+      "bytes": "e89cd4f676",
+      "target": "773DC650"
+    }
+  ],
+  "existing_IAT_slot": {
+    "va": "004F7254",
+    "rva": "000F7254",
+    "section": "   \u0000    ",
+    "file_offset": "000F7254",
+    "raw_backed": true,
+    "bytes": "50c63d77",
+    "u32": "773DC650",
+    "original_range": "004F71C8..004F73A4 from existing same-boot builder; metadata not authoritative Windows loader descriptors"
+  },
+  "current_export_bytes_128": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\external-api\\msvcrt.dll-rand.bin",
+    "bytes": 128,
+    "sha256": "D70C6903B5B21339F8B15CFA86D4FC6C83CE137436728E3A68C9BE94807DD88F"
+  },
+  "interpretation": "High-confidence msvcrt!rand, x86 cdecl no arguments -> int inEAX; code CDQ/IDIV10 adds0x1B12 => rand()%10+6930 in bothreturn_mode paths. Same absolute pointer is stored at existing4F7254.",
+  "source_complete_for_this_API_identity": true,
+  "runnable_IAT_restoration_applied": false,
+  "historical_DLL_sha256": null,
+  "limits": [
+    "Historical bases + current export RVA + fixed call/IAT bytes agree; capture-time DLL identity/hash still missing",
+    "No original execution, return_mode/UI timing or rootcause proof",
+    "Do not replace with fixed random value or reset CRT seed/session behavior",
+    "Standard PE import descriptors still invalid; one slot binding does not restore allimports"
+  ]
+}

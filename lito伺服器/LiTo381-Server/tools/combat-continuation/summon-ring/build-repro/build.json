@@ -1,0 +1,42 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-parity\\build\\candidate-summon-parity.jar",
+    "sha256": "a90494520095ce7b8be36a150437b6be9490864d36b6a9693eda67fcfd86f6c4"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\candidate-summon-ring.jar",
+    "sha256": "68f0f3381731e076d8d726938cf869d9e59f2c6f98347380611188f583aaeaa3"
+  },
+  "changed": [
+    "local/lito381/server/InventoryCatalog$Definition.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\build.py",
+      "sha256": "58a0be2af68e02eb87cbbf2de0419cd6f55db0200a38f208697450b226a4a7ce"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\C_UseSkill.java",
+      "sha256": "4932c6dd71b330d91b75c4fcbf02c30ffa4712c35d7cb07537626159038e168e"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\SummonRingMethods.java",
+      "sha256": "c12f20faa0597b4da2ed90d1744e6eb9e2ec4dd3603ff536c65d3b3f069e3a99"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build-repro\\inputs\\SUMMON_MONSTER.java",
+      "sha256": "16cdceaa1adbc8718a3cc239ead29021cc14c57e80caa094333522a84e9fdce8"
+    }
+  ]
+}

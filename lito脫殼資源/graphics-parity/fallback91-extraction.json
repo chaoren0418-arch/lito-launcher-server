@@ -1,0 +1,53 @@
+{
+  "namespace": "shared",
+  "archive": "Sprite",
+  "row": 90223,
+  "name": "91.tbt",
+  "offset": 903342224,
+  "bytes": 403,
+  "source_index": {
+    "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+    "bytes": 2585972,
+    "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+  },
+  "source_pak": {
+    "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+    "bytes": 1904012586,
+    "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62"
+  },
+  "raw": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\graphics-fallback91\\Sprite\\row90223-91.tbt",
+    "bytes": 403,
+    "sha256": "A88333B37CF5D6F51960375509A0EB34EA856361A4BF906593737D04201699FB"
+  },
+  "decoded": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\graphics-fallback91\\Sprite\\row90223-91.tbt",
+    "bytes": 403,
+    "sha256": "A88333B37CF5D6F51960375509A0EB34EA856361A4BF906593737D04201699FB"
+  },
+  "authorization": "Supervisor supplemental scope: necessary single Sprite/91.tbt extraction allowed;5 actual samples total. No other archive member read or extracted.",
+  "source_checks": [
+    {
+      "kind": "index_source",
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+      "bytes": 2585972,
+      "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B",
+      "match": true
+    },
+    {
+      "kind": "decoded_index",
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\indices\\Sprite.raw.idx",
+      "bytes": 2585972,
+      "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B",
+      "match": true
+    },
+    {
+      "kind": "pak_source",
+      "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+      "bytes": 1904012586,
+      "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62",
+      "match": true
+    }
+  ],
+  "new_archive_members_extracted": 1
+}

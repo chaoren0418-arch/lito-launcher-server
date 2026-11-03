@@ -1,0 +1,35 @@
+{
+  "status": "qualified-packet-candidate",
+  "parent": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\selection-recovery\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "920a53a265691e9c9997e1527fd0157a2496651aa33f8bd203354b6403f4a9f5"
+  },
+  "candidate": {
+    "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\LiTo381-SharedPresentation-candidate.jar",
+    "sha256": "daedec7c44e32b33e9812e8353cb25ca4ba65355c68e062db254e73c9c42c807"
+  },
+  "dependencies": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\mysql-connector-j-8.0.33.jar",
+      "sha256": "e2a3b2fc726a1ac64e998585db86b30fa8bf3f706195b78bb77c5f99bf877bd9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\protobuf-java-3.21.9.jar",
+      "sha256": "1b78b4a76a71512debfdff8f8fc5aef6bfd459f65758fecf7aff245e6e6301e4"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\HikariCP-5.1.0.jar",
+      "sha256": "a47a6ee62379694ee52c30036f0931b72f9aee2a801d590341ed82bd839e2134"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u767b\u5165\u5668\\LiTo381-Launcher\\tools\\world-resource-compat\\build\\class-icons\\lib\\slf4j-api-1.7.36.jar",
+      "sha256": "d3ef575e3e4979678dc01bf1dcce51021493b4d11fb7f1be8ad982877c16a1c0"
+    }
+  ],
+  "changed_entries": [
+    "local/lito381/server/Protocol.class",
+    "local/lito381/server/ClientSession.class"
+  ],
+  "formal_updated": false,
+  "source_database_modified": false
+}

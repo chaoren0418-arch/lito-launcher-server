@@ -1,0 +1,477 @@
+{
+  "source_handoff": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\logs\\continuation-20261003\\r509-character-selection-channel-handoff.json",
+    "bytes": 24255,
+    "sha256": "9295E24C330A358C9893ED8A52F4DAC2E29D6637C6C9D853A04BD1A4B515B72D"
+  },
+  "sealed_capture": {
+    "path": "D:\\lito-dev-runtime\\20261003-supervision\\modern\\nw-747e22a785b249aeba3ee70420370c0f\\native-captures\\20261005-170830-p16184-1\\frames.jsonl",
+    "bytes": 21132,
+    "sha256": "E6840F9A98E51188DF4651D49C7A189F77D595A3A727BEEBB381AF5B0CDD7EED"
+  },
+  "actual_existing_records": [
+    {
+      "capture_line": 43,
+      "capture_record": {
+        "time": "2026-10-05T17:08:53.091372500Z",
+        "direction": "server_to_client",
+        "opcode": "0x0C",
+        "wire_length": 39,
+        "plain": "0C D9 27 00 00 34 00 00 00 00 12 08 09 0D 12 0C C8 00 C8 00 64 00 64 00 0A 00 00 00 00 0D 00 00 00 00 00 00 00",
+        "note": "S_STATUS player=測試甲 object=10201 level=52 weight240=0 reason=battle-status"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\frames\\AD368-r509-line043.plain.bin",
+        "bytes": 37,
+        "sha256": "0A41EBF94D5C751006ECBD0D8DD6579290518306287B4A0E7B611DD66C1B2FC3"
+      },
+      "decode": [
+        {
+          "name": "object_id",
+          "body_offset": 1,
+          "raw_hex": "d9270000",
+          "unsigned_bits": 10201,
+          "server_semantic_value": 10201,
+          "native_destination": "75AA48"
+        },
+        {
+          "name": "level",
+          "body_offset": 5,
+          "raw_hex": "34",
+          "unsigned_bits": 52,
+          "server_semantic_value": 52,
+          "native_destination": "local ebp-0D→8348CA"
+        },
+        {
+          "name": "experience",
+          "body_offset": 6,
+          "raw_hex": "00000000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C4"
+        },
+        {
+          "name": "strength",
+          "body_offset": 10,
+          "raw_hex": "12",
+          "unsigned_bits": 18,
+          "server_semantic_value": 18,
+          "native_destination": "8348B0"
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 11,
+          "raw_hex": "08",
+          "unsigned_bits": 8,
+          "server_semantic_value": 8,
+          "native_destination": "8348B1"
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 12,
+          "raw_hex": "09",
+          "unsigned_bits": 9,
+          "server_semantic_value": 9,
+          "native_destination": "8348B2"
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 13,
+          "raw_hex": "0d",
+          "unsigned_bits": 13,
+          "server_semantic_value": 13,
+          "native_destination": "8348B3"
+        },
+        {
+          "name": "constitution",
+          "body_offset": 14,
+          "raw_hex": "12",
+          "unsigned_bits": 18,
+          "server_semantic_value": 18,
+          "native_destination": "8348B4"
+        },
+        {
+          "name": "charisma",
+          "body_offset": 15,
+          "raw_hex": "0c",
+          "unsigned_bits": 12,
+          "server_semantic_value": 12,
+          "native_destination": "8348B5"
+        },
+        {
+          "name": "current_hp",
+          "body_offset": 16,
+          "raw_hex": "c800",
+          "unsigned_bits": 200,
+          "server_semantic_value": 200,
+          "native_destination": "local ebp-14→protected8315F0"
+        },
+        {
+          "name": "maximum_hp",
+          "body_offset": 18,
+          "raw_hex": "c800",
+          "unsigned_bits": 200,
+          "server_semantic_value": 200,
+          "native_destination": "8348BC"
+        },
+        {
+          "name": "current_mp",
+          "body_offset": 20,
+          "raw_hex": "6400",
+          "unsigned_bits": 100,
+          "server_semantic_value": 100,
+          "native_destination": "local ebp-18→protected8315E0"
+        },
+        {
+          "name": "maximum_mp",
+          "body_offset": 22,
+          "raw_hex": "6400",
+          "unsigned_bits": 100,
+          "server_semantic_value": 100,
+          "native_destination": "8348BA"
+        },
+        {
+          "name": "armor_class",
+          "body_offset": 24,
+          "raw_hex": "0a",
+          "unsigned_bits": 10,
+          "server_semantic_value": 10,
+          "native_destination": "8348B6"
+        },
+        {
+          "name": "game_time",
+          "body_offset": 25,
+          "raw_hex": "00000000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348AC"
+        },
+        {
+          "name": "food_gauge",
+          "body_offset": 29,
+          "raw_hex": "0d",
+          "unsigned_bits": 13,
+          "server_semantic_value": 13,
+          "native_destination": "8348CC lowbyte only"
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 30,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348CB"
+        },
+        {
+          "name": "lawful",
+          "body_offset": 31,
+          "raw_hex": "0000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348B8"
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 33,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C1"
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 34,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C0"
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 35,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348BF"
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 36,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348BE"
+        }
+      ],
+      "preceding_records": [
+        {
+          "time": "2026-10-05T17:08:52.556258400Z",
+          "direction": "server_to_client",
+          "opcode": "0x7C",
+          "wire_length": 4,
+          "plain": "7C 00",
+          "note": "S_ADD_INVENTORY_BATCH items=0 source-defensive=false transfer-stone-probe=false"
+        },
+        {
+          "time": "2026-10-05T17:08:52.566472200Z",
+          "direction": "client_to_server",
+          "opcode": "0xCA",
+          "wire_length": 4,
+          "plain": "CA 02",
+          "note": "C opcode 0xCA"
+        },
+        {
+          "time": "2026-10-05T17:08:53.080810Z",
+          "direction": "server_to_client",
+          "opcode": "0xC9",
+          "wire_length": 15,
+          "plain": "C9 00 02 00 00 00 00 00 00 00 00 00 00",
+          "note": "S_LITO_ENTER_CHANNEL_RESULT accepted channel=2"
+        },
+        {
+          "time": "2026-10-05T17:08:53.083757900Z",
+          "direction": "server_to_client",
+          "opcode": "0xCA",
+          "wire_length": 8,
+          "plain": "CA 02 01 00 64 00",
+          "note": "S_LITO_CHANNEL_INFO channel=2 name=Succubus users=1 capacity=100 trigger=entered"
+        }
+      ],
+      "original_native_decoder_executed": false,
+      "Modern_R509_state": "First unsupported boundary; no status or skill owner qualification"
+    },
+    {
+      "capture_line": 73,
+      "capture_record": {
+        "time": "2026-10-05T17:09:04.980357900Z",
+        "direction": "server_to_client",
+        "opcode": "0x0C",
+        "wire_length": 39,
+        "plain": "0C 11 27 00 00 34 00 00 00 00 12 08 09 0D 12 0C C8 00 C8 00 64 00 64 00 0A 00 00 00 00 0D 00 00 00 00 00 00 00",
+        "note": "S_STATUS player=SenderA object=10001 level=52 weight240=0 reason=battle-status"
+      },
+      "body": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\frames\\AD368-r509-line073.plain.bin",
+        "bytes": 37,
+        "sha256": "E9E1C5C998B5236152CC2536BBAB6B94ACA1529AD97FFAAA046EA3FC386ABB0C"
+      },
+      "decode": [
+        {
+          "name": "object_id",
+          "body_offset": 1,
+          "raw_hex": "11270000",
+          "unsigned_bits": 10001,
+          "server_semantic_value": 10001,
+          "native_destination": "75AA48"
+        },
+        {
+          "name": "level",
+          "body_offset": 5,
+          "raw_hex": "34",
+          "unsigned_bits": 52,
+          "server_semantic_value": 52,
+          "native_destination": "local ebp-0D→8348CA"
+        },
+        {
+          "name": "experience",
+          "body_offset": 6,
+          "raw_hex": "00000000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C4"
+        },
+        {
+          "name": "strength",
+          "body_offset": 10,
+          "raw_hex": "12",
+          "unsigned_bits": 18,
+          "server_semantic_value": 18,
+          "native_destination": "8348B0"
+        },
+        {
+          "name": "intelligence",
+          "body_offset": 11,
+          "raw_hex": "08",
+          "unsigned_bits": 8,
+          "server_semantic_value": 8,
+          "native_destination": "8348B1"
+        },
+        {
+          "name": "wisdom",
+          "body_offset": 12,
+          "raw_hex": "09",
+          "unsigned_bits": 9,
+          "server_semantic_value": 9,
+          "native_destination": "8348B2"
+        },
+        {
+          "name": "dexterity",
+          "body_offset": 13,
+          "raw_hex": "0d",
+          "unsigned_bits": 13,
+          "server_semantic_value": 13,
+          "native_destination": "8348B3"
+        },
+        {
+          "name": "constitution",
+          "body_offset": 14,
+          "raw_hex": "12",
+          "unsigned_bits": 18,
+          "server_semantic_value": 18,
+          "native_destination": "8348B4"
+        },
+        {
+          "name": "charisma",
+          "body_offset": 15,
+          "raw_hex": "0c",
+          "unsigned_bits": 12,
+          "server_semantic_value": 12,
+          "native_destination": "8348B5"
+        },
+        {
+          "name": "current_hp",
+          "body_offset": 16,
+          "raw_hex": "c800",
+          "unsigned_bits": 200,
+          "server_semantic_value": 200,
+          "native_destination": "local ebp-14→protected8315F0"
+        },
+        {
+          "name": "maximum_hp",
+          "body_offset": 18,
+          "raw_hex": "c800",
+          "unsigned_bits": 200,
+          "server_semantic_value": 200,
+          "native_destination": "8348BC"
+        },
+        {
+          "name": "current_mp",
+          "body_offset": 20,
+          "raw_hex": "6400",
+          "unsigned_bits": 100,
+          "server_semantic_value": 100,
+          "native_destination": "local ebp-18→protected8315E0"
+        },
+        {
+          "name": "maximum_mp",
+          "body_offset": 22,
+          "raw_hex": "6400",
+          "unsigned_bits": 100,
+          "server_semantic_value": 100,
+          "native_destination": "8348BA"
+        },
+        {
+          "name": "armor_class",
+          "body_offset": 24,
+          "raw_hex": "0a",
+          "unsigned_bits": 10,
+          "server_semantic_value": 10,
+          "native_destination": "8348B6"
+        },
+        {
+          "name": "game_time",
+          "body_offset": 25,
+          "raw_hex": "00000000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348AC"
+        },
+        {
+          "name": "food_gauge",
+          "body_offset": 29,
+          "raw_hex": "0d",
+          "unsigned_bits": 13,
+          "server_semantic_value": 13,
+          "native_destination": "8348CC lowbyte only"
+        },
+        {
+          "name": "weight_gauge",
+          "body_offset": 30,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348CB"
+        },
+        {
+          "name": "lawful",
+          "body_offset": 31,
+          "raw_hex": "0000",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348B8"
+        },
+        {
+          "name": "fire_resistance",
+          "body_offset": 33,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C1"
+        },
+        {
+          "name": "water_resistance",
+          "body_offset": 34,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348C0"
+        },
+        {
+          "name": "wind_resistance",
+          "body_offset": 35,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348BF"
+        },
+        {
+          "name": "earth_resistance",
+          "body_offset": 36,
+          "raw_hex": "00",
+          "unsigned_bits": 0,
+          "server_semantic_value": 0,
+          "native_destination": "8348BE"
+        }
+      ],
+      "preceding_records": [
+        {
+          "time": "2026-10-05T17:09:04.468767Z",
+          "direction": "server_to_client",
+          "opcode": "0x7C",
+          "wire_length": 62,
+          "plain": "7C 01 F9 2A 00 00 0C 00 D0 01 00 03 00 00 00 01 6F 77 6E 65 64 20 6C 65 74 74 65 72 20 74 65 6D 70 6C 61 74 65 00 15 6F 77 6E 65 64 20 6C 65 74 74 65 72 20 74 65 6D 70 6C 61 74 65",
+          "note": "S_ADD_INVENTORY_BATCH items=1 source-defensive=false transfer-stone-probe=false"
+        },
+        {
+          "time": "2026-10-05T17:09:04.478465100Z",
+          "direction": "client_to_server",
+          "opcode": "0xCA",
+          "wire_length": 4,
+          "plain": "CA 01",
+          "note": "C opcode 0xCA"
+        },
+        {
+          "time": "2026-10-05T17:09:04.979357600Z",
+          "direction": "server_to_client",
+          "opcode": "0xC9",
+          "wire_length": 15,
+          "plain": "C9 00 01 00 00 00 00 00 00 00 00 00 00",
+          "note": "S_LITO_ENTER_CHANNEL_RESULT accepted channel=1"
+        },
+        {
+          "time": "2026-10-05T17:09:04.979357600Z",
+          "direction": "server_to_client",
+          "opcode": "0xCA",
+          "wire_length": 8,
+          "plain": "CA 01 01 00 64 00",
+          "note": "S_LITO_CHANNEL_INFO channel=1 name=Baphomet users=1 capacity=100 trigger=entered"
+        }
+      ],
+      "original_native_decoder_executed": false,
+      "Modern_R509_state": "First unsupported boundary; no status or skill owner qualification"
+    }
+  ],
+  "new_capture_or_fixture_execution": false,
+  "schema0_layout_matches": true,
+  "wire_difference_found": false
+}

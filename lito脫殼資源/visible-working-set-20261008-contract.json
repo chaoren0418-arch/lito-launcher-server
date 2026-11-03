@@ -1,0 +1,380 @@
+{
+  "task_id": "bin_resources-modern-visible-working-set-input-20261008",
+  "state": "review",
+  "owner": "bin_resources",
+  "evidence_level": "qualified_raw_reference_static_projection_and_cache_model",
+  "updated_at": "2026-10-08T01:35:00.664332+08:00",
+  "conclusion": "Whole-city demand exceeds16MiB; the three selected historical camera frames fit. Exact keysets plus bounded LRU arithmetic define regressions without replaying previews.",
+  "inputs": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\inputs.json",
+    "bytes": 1995,
+    "sha256": "6E0FC9717DCEC59985172BD9D3C116B32F709BBE1F3A2F38DF8A9399FA585D79"
+  },
+  "frames": {
+    "initial": {
+      "camera": [
+        5744,
+        468,
+        800,
+        600
+      ],
+      "scan_row_band": [
+        32840,
+        32952
+      ],
+      "candidate_fragments": 75960,
+      "visible_fragments": 4271,
+      "visited_index_rows": 57,
+      "unique_keys": 1709,
+      "frame_decoded_bytes": 3937536,
+      "capacity_16MiB_fits": true,
+      "keys_file": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\initial-keys.csv",
+        "bytes": 18346,
+        "sha256": "733D214B9DCB8BBAE517597C89B3138A222ADD26B1E7322E0CE91319EA4DB206"
+      },
+      "keyset_sha256_le_u16_u8": "CCAAA4D3E38E7AC139A621A896258EA1A0FEBA6FC1BAB6DC996048E37F3751E3"
+    },
+    "seam_before": {
+      "camera": [
+        3752,
+        1092,
+        800,
+        600
+      ],
+      "scan_row_band": [
+        32944,
+        33056
+      ],
+      "candidate_fragments": 68060,
+      "visible_fragments": 7218,
+      "visited_index_rows": 57,
+      "unique_keys": 2476,
+      "frame_decoded_bytes": 5704704,
+      "capacity_16MiB_fits": true,
+      "keys_file": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_before-keys.csv",
+        "bytes": 24891,
+        "sha256": "D5C60DE5884111027EFA4EC08B6826FE633B69F1C1DE3A55BABC48EA1F34C06B"
+      },
+      "keyset_sha256_le_u16_u8": "B8527CA7697E4C12DFDE25ACF99672368E839476219E089CFDFD7576D6FC016B"
+    },
+    "seam_after": {
+      "camera": [
+        3944,
+        996,
+        800,
+        600
+      ],
+      "scan_row_band": [
+        32928,
+        33040
+      ],
+      "candidate_fragments": 70594,
+      "visible_fragments": 6970,
+      "visited_index_rows": 57,
+      "unique_keys": 2488,
+      "frame_decoded_bytes": 5732352,
+      "capacity_16MiB_fits": true,
+      "keys_file": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_after-keys.csv",
+        "bytes": 25105,
+        "sha256": "652313D2E6D66B9A6E40C548FCC241F38DD15F3850C2AB74587EB5CD907007B8"
+      },
+      "keyset_sha256_le_u16_u8": "909831678057AB00F8AD65D6FC1C31745CF0E3B1A116A8EF99BBAACE1F1A3A4E"
+    },
+    "minimum": {
+      "camera": [
+        0,
+        -2304,
+        800,
+        600
+      ],
+      "scan_row_band": [
+        32378,
+        32490
+      ],
+      "candidate_fragments": 5724,
+      "visible_fragments": 0,
+      "visited_index_rows": 53,
+      "unique_keys": 0,
+      "frame_decoded_bytes": 0,
+      "capacity_16MiB_fits": true,
+      "keys_file": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\minimum-keys.csv",
+        "bytes": 38,
+        "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+      },
+      "keyset_sha256_le_u16_u8": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    "maximum": {
+      "camera": [
+        11488,
+        3240,
+        800,
+        600
+      ],
+      "scan_row_band": [
+        33302,
+        33414
+      ],
+      "candidate_fragments": 5724,
+      "visible_fragments": 0,
+      "visited_index_rows": 53,
+      "unique_keys": 0,
+      "frame_decoded_bytes": 0,
+      "capacity_16MiB_fits": true,
+      "keys_file": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\maximum-keys.csv",
+        "bytes": 38,
+        "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+      },
+      "keyset_sha256_le_u16_u8": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  },
+  "sequences": [
+    {
+      "capacity_bytes": 16777216,
+      "max_slots": 7281,
+      "peak_resident_decoded_bytes": 10241280,
+      "frames": [
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 0,
+          "misses_delta": 1709,
+          "evictions_delta": 0,
+          "resident_slots": 1709,
+          "resident_decoded_bytes": 3937536,
+          "cumulative_hits": 0,
+          "cumulative_misses": 1709,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 1709,
+          "misses_delta": 0,
+          "evictions_delta": 0,
+          "resident_slots": 1709,
+          "resident_decoded_bytes": 3937536,
+          "cumulative_hits": 1709,
+          "cumulative_misses": 1709,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "seam_before",
+          "needed_keys": 2476,
+          "hits_delta": 84,
+          "misses_delta": 2392,
+          "evictions_delta": 0,
+          "resident_slots": 4101,
+          "resident_decoded_bytes": 9448704,
+          "cumulative_hits": 1793,
+          "cumulative_misses": 4101,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "seam_after",
+          "needed_keys": 2488,
+          "hits_delta": 2144,
+          "misses_delta": 344,
+          "evictions_delta": 0,
+          "resident_slots": 4445,
+          "resident_decoded_bytes": 10241280,
+          "cumulative_hits": 3937,
+          "cumulative_misses": 4445,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 1709,
+          "misses_delta": 0,
+          "evictions_delta": 0,
+          "resident_slots": 4445,
+          "resident_decoded_bytes": 10241280,
+          "cumulative_hits": 5646,
+          "cumulative_misses": 4445,
+          "cumulative_evictions": 0
+        }
+      ]
+    },
+    {
+      "capacity_bytes": 5750784,
+      "max_slots": 2496,
+      "peak_resident_decoded_bytes": 5750784,
+      "frames": [
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 0,
+          "misses_delta": 1709,
+          "evictions_delta": 0,
+          "resident_slots": 1709,
+          "resident_decoded_bytes": 3937536,
+          "cumulative_hits": 0,
+          "cumulative_misses": 1709,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 1709,
+          "misses_delta": 0,
+          "evictions_delta": 0,
+          "resident_slots": 1709,
+          "resident_decoded_bytes": 3937536,
+          "cumulative_hits": 1709,
+          "cumulative_misses": 1709,
+          "cumulative_evictions": 0
+        },
+        {
+          "frame": "seam_before",
+          "needed_keys": 2476,
+          "hits_delta": 84,
+          "misses_delta": 2392,
+          "evictions_delta": 1605,
+          "resident_slots": 2496,
+          "resident_decoded_bytes": 5750784,
+          "cumulative_hits": 1793,
+          "cumulative_misses": 4101,
+          "cumulative_evictions": 1605
+        },
+        {
+          "frame": "seam_after",
+          "needed_keys": 2488,
+          "hits_delta": 2082,
+          "misses_delta": 406,
+          "evictions_delta": 406,
+          "resident_slots": 2496,
+          "resident_decoded_bytes": 5750784,
+          "cumulative_hits": 3875,
+          "cumulative_misses": 4507,
+          "cumulative_evictions": 2011
+        },
+        {
+          "frame": "initial",
+          "needed_keys": 1709,
+          "hits_delta": 147,
+          "misses_delta": 1562,
+          "evictions_delta": 1562,
+          "resident_slots": 2496,
+          "resident_decoded_bytes": 5750784,
+          "cumulative_hits": 4022,
+          "cumulative_misses": 6069,
+          "cumulative_evictions": 3573
+        }
+      ]
+    }
+  ],
+  "rejection": {
+    "capacity_bytes": 3935232,
+    "initial_required_bytes": 3937536,
+    "expected": "Reject visible pixel budget before eviction or decode; resident/cache counters unchanged.",
+    "valid_capacity_bounds": true
+  },
+  "evidence": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\cache-sequence-model.json",
+      "bytes": 3792,
+      "sha256": "5918A222DD67E2F2AD55298042467D3165F51A171993556FC3B520DE1276FD5C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\derive.py",
+      "bytes": 6140,
+      "sha256": "DB12EB8424E24F8B00052988F5A7CD831CD523062A06F76DC13786C1F9AE1F01"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\frame-demands.json",
+      "bytes": 3484,
+      "sha256": "EE871986DF2D51ABF0AD46F01BF180ED5293F32727DC105716B5BFECC35DAA93"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\initial-keys.csv",
+      "bytes": 18346,
+      "sha256": "733D214B9DCB8BBAE517597C89B3138A222ADD26B1E7322E0CE91319EA4DB206"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\inputs.json",
+      "bytes": 1995,
+      "sha256": "6E0FC9717DCEC59985172BD9D3C116B32F709BBE1F3A2F38DF8A9399FA585D79"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\maximum-keys.csv",
+      "bytes": 38,
+      "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\minimum-keys.csv",
+      "bytes": 38,
+      "sha256": "ACDFE171ACD8B057DE939EB0A9ADEBB3C76BFCBF99CBAA675751FD820E1F6ECA"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stdout.txt",
+      "bytes": 5792,
+      "sha256": "E0217E6A4C2EA52296AB1375ED05D72E6770CA5BBC726C672A868FA7365856F4"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\rejection-witness.json",
+      "bytes": 215,
+      "sha256": "3027CA2C827478A79C4FB1935E5EC305B80BD68100CCD54C5CDEB7E6C52DD550"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_after-keys.csv",
+      "bytes": 25105,
+      "sha256": "652313D2E6D66B9A6E40C548FCC241F38DD15F3850C2AB74587EB5CD907007B8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\seam_before-keys.csv",
+      "bytes": 24891,
+      "sha256": "D5C60DE5884111027EFA4EC08B6826FE633B69F1C1DE3A55BABC48EA1F34C06B"
+    }
+  ],
+  "reproduction": {
+    "command": "C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe -B visible-working-set-20261008/derive.py",
+    "workdir": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "exit_code": 0,
+    "raw_stdout": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stdout.txt",
+    "raw_stderr": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\visible-working-set-20261008\\raw.stderr.txt"
+  },
+  "projection": "World origin=32704+(sector-32767)*64; half_x=2*world_x-32768+x; y=world_y+y. scan_row=2*y-(half_x&~1), scan_column=((half_x+1)&~1)+2*y. Screen x=-camera_x+12*(column-anchor_column), screen y=756-camera_y+6*(row-anchor_row). Visibility uses24px rectangle strict intersection; the conservative row band uses floor division. Includes every raw floor/overlay/object reference, then deduplicates cache keys.",
+  "keyset_hash": "SHA256 of sorted keys serialized as little-endian u16 tile_id then u8 slot; CSV also records visible reference multiplicity.",
+  "model": "Deterministic static model of current PagedTiles::prepare from empty residency: sorted needed keys; missing determined before mutation; evict oldest non-needed stamp/key pairs; insert missing keys in sorted order; touch all needed keys in sorted order. Does not execute consumer code.",
+  "consumer_adoption": {
+    "owner": "Modern",
+    "actions": [
+      "At default64MiB decode ceiling plus16MiB cache, load must page; compare actual qualified count/demand to admission contract.",
+      "Render the initial/repeat/seam-before/seam-after/initial sequence and compare needed_keys and cache hits/misses/evictions/resident payload to the default sequence model. Initial4271 fragments deduplicate to1709 keys; do not budget4271 copies.",
+      "Run the same sequence with valid capacity5750784 bytes (2496 slots); eviction deltas must be0,0,1605,406,1562 and residence stay within cap, including temporary decode.",
+      "At valid capacity3935232 bytes, initial frame needs3937536 and must reject before eviction/decode without changing residence/hit/miss/eviction/completed-frame counts. Phase indicators may change before refusal.",
+      "Use the separately pinned historical initial PNG for consumer pixel regression against existing eager behavior. This task has not generated or compared RGBA pixels."
+    ]
+  },
+  "mapping": "VA/RVA N/A: raw resource-derived CSV and Rust projection/cache text; no PE target or native execution claim.",
+  "unknowns": [
+    "Exact keysets are static source-policy projections at the five specified camera coordinates; they do not establish native camera/scene/actor ownership or runtime identity.",
+    "Cache sequence values are an independent arithmetic model, not observed Modern metrics. Real cancellation/error/transient allocations and concurrency still need consumer checks.",
+    "No pixel decode/render/hash equality, GUI responsiveness, timing or product acceptance performed.",
+    "Minimum/maximum cameras have0 visible keys; these bounded witnesses do not establish continuous world/visibility coverage.",
+    "Historical canonical geometry digest remains declared in preceding contract; next task independently verifies it."
+  ],
+  "next_substantive_task": {
+    "id": "bin_resources-modern-map534-canonical-qualification-20261008",
+    "reason": "Close declared-only canonical identity using pinned sector attributes/portals and independent cross-sector direction masks; no original executable or runtime acquisition."
+  },
+  "reporting": {
+    "reported": false,
+    "notified": false,
+    "adopted": false,
+    "reviewed": false
+  },
+  "goal_status": "active",
+  "self_accepted": false,
+  "product_complete": false
+}

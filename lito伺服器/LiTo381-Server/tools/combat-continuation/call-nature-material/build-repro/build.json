@@ -1,0 +1,41 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\mass-teleport-lifetime\\build\\candidate-mass-teleport-lifetime.jar",
+    "sha256": "d8062ca1505f3aa3c4912f4b1f31add7feb47c1aa1bc70fa4e7ea5f423f8edcc"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "165 corpse-aware cast material boundary; target/lifecycle tests pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\call-nature-material\\build-repro\\candidate-call-nature-material.jar",
+    "sha256": "13118eb96554c4652ae2db2a43b0c1f43c004210651601ca3c71accd76a41748"
+  },
+  "exact_mass_teleport_root_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCallNatureMaterialAction$Target.class",
+    "local/lito381/server/NativeCallNatureMaterialAction.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\call-nature-material\\build-repro\\inputs\\build.py",
+      "sha256": "29d21be9512149d5f9d061275041bf722e0a6867c3c09cf763d6ca78857e75e8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\call-nature-material\\build-repro\\inputs\\CallNatureMethods.java",
+      "sha256": "52ba05c29ab14c83ed0b8bc376ce8159e36e31b42231f7fcda00066e31a5cfd5"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\call-nature-material\\build-repro\\inputs\\NativeCallNatureMaterialAction.java",
+      "sha256": "577fa639b873c11cbcf843a7cb4cca5fab9b3e593f7209f44ad57a91ca4d89d8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\call-nature-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

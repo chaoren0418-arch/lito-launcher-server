@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\polymorph-source\\build\\candidate-polymorph-source.jar",
+    "sha256": "32d88c6b3b82926b035831fd8f6c186d662dc311f88826b06badda8f53853465"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\candidate-pet-material.jar",
+    "sha256": "16879896610b66f48c722a9557e65b576469659bd6c063e07b3f2f0327353ab7"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativePetMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\build.py",
+      "sha256": "450cc3ebf35e8b5a92dd253ae45b0342eb5832fd3e9d1bacaa204e889200ef05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\PetMaterialMethods.java",
+      "sha256": "312d795c841f67aba361d53fd6953f642e7d77ead0266e4d32c238aab9399ecd"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "d2e3ce29facc9055fbff7b47d26e3c771a5899d6bb9569695597f6a7eb042597"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "f0b7a3f88065af6dea1d5a38f12c0484088a28583298515aaec106fdaa26d297"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\pet-material\\build-repro\\inputs\\sources\\NativePetMaterialAction.java",
+      "sha256": "e20d4a0ad70d0ea11054facaaa922b8971149ebcbe84d12dfbd683e265b3bd6d"
+    }
+  ]
+}

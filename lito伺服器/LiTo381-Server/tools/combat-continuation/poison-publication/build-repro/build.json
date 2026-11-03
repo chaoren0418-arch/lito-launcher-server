@@ -1,0 +1,37 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-retirement\\build\\candidate-poison-retirement.jar",
+    "sha256": "40d97436a4a90efe3aff87d33f15d85cd23da08242b3d8aeeaa73df8b0162930"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build-repro\\candidate-poison-publication.jar",
+    "sha256": "a53513d544124cbd1aac543f34302a15067f2a98422ed14576bcaaa6c991d4a3"
+  },
+  "changed": [
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [],
+  "C0_byte_equal": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build-repro\\inputs\\build.py",
+      "sha256": "50d40fea0911655db8e5a3860d96379b781a6a62400e8468f3af5da779abd168"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "99e2c3f40816a9ddc737c44a1f86252eab8d44aeee1d8af826bab62913375498"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\poison-publication\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "9001714250a2dd7cd6d768ba1d8b50ebfee4d22f04c2e79635b0dd97896f7e67"
+    }
+  ]
+}

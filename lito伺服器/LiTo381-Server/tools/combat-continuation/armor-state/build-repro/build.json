@@ -1,0 +1,37 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-material\\build\\candidate-armor-material.jar",
+    "sha256": "0d8296a15858f06287c088454f1988c89f43e402e85a30adf0d94c4a97cec30d"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build-repro\\candidate-armor-state.jar",
+    "sha256": "c7bae84c7a0d260186e38763c1af7dba16db643a77477d096d6540fa747a01b8"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeArmorState.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build-repro\\inputs\\ArmorStateMethods.java",
+      "sha256": "1b02eee896bf2c186949d1d755c3c2fafae7958e4befd985d8f810efdb387fd6"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build-repro\\inputs\\build.py",
+      "sha256": "2f908c514187481345be045ad0191f68fa68ab6ac2084a4944f06537154947b9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build-repro\\inputs\\NativeArmorState.java",
+      "sha256": "30ad9854a99db9d5f38065307f1d6efa042f2ca361dc48962eacbc1277d214ca"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\armor-state\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

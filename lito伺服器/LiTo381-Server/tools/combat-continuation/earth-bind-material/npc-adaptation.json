@@ -1,0 +1,14 @@
+{
+  "status": "prepared-not-qualified",
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\BlindWorldNpcProbe.java",
+      "sha256": "a06a6f38011822fefb8cd162165ea49873e7ff59b1739af6df46d5527ca12c8c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\blind-material\\test_world_npcs.py",
+      "sha256": "9e60076715b2e347e2f5fbb8bb6cd3225d4c93775c5b4be618291d7c84d2fee9"
+    }
+  ],
+  "scope": "actual world population, skill157 native earth-bind status and fixture; no production PC overlays"
+}

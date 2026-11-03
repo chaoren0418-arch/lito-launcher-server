@@ -1,0 +1,252 @@
+{
+  "version": "0.6.56",
+  "root_cause": "Decrypted-byte polling applied singleton patches after native startup had already made its exit decision. Unpacker branch is not a guaranteed entry barrier.",
+  "evidence": "additional-diagnostic-1791858074181597900: normal return reached CRT exit despite verified patches at WinMain return; confirms patch timing race.",
+  "change": "Arm one-shot WinMain execute breakpoint before initial ResumeThread. VEH clears debug registers and redirects to bounded startup gate. Verify patches while held, then release. Only additional clients use this path.",
+  "normal_pair": {
+    "run": "multi-window-1791858394480702600",
+    "no_player_sql_writes": true,
+    "first_pid": 20312,
+    "second_pid": 24120,
+    "single_server_pid": 19764,
+    "both_resources_ready": true,
+    "first_close_preserved_peer_and_server": true,
+    "all_closed_auto_cleanup": true,
+    "helper_exit": 0,
+    "cleanup_verified": true,
+    "additional_clients": [
+      {
+        "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\multi-window-1791858394480702600\\client-2",
+        "cleanup_verified": true,
+        "unique_native_mutex": "LiToe889d03aa174",
+        "existing_window_guard": "0x480326:7409->EB09",
+        "mutex_guard": "0x480AB3:7407->EB07",
+        "probe_lifetime_identity": {
+          "pid": 34888,
+          "birth_filetime": 134363320196875510,
+          "identity_source": "retained Popen process handle"
+        },
+        "probe_identity": {
+          "pid": 34888,
+          "birth_filetime": 134363320196875510,
+          "identity_source": "retained Popen process handle",
+          "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        "native_identity": {
+          "pid": 24120,
+          "parent_pid": 34888,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+          "filetime": 134363320198577295,
+          "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+        },
+        "shared_resources_ready": {
+          "pid": 24120,
+          "profile": "tw13081901-v1",
+          "base_count": 30000,
+          "total_count": 30285,
+          "native_cleanup_complete": true
+        },
+        "exit_code": 0
+      }
+    ]
+  },
+  "stress_200_percent": {
+    "run": "multi-window-1791858459006518200",
+    "no_player_sql_writes": true,
+    "first_pid": 19492,
+    "second_pid": 29660,
+    "single_server_pid": 18260,
+    "both_resources_ready": true,
+    "repeat_additions": [
+      {
+        "pid": 23992,
+        "resources_ready": true,
+        "closed": true
+      },
+      {
+        "pid": 26972,
+        "resources_ready": true,
+        "closed": true
+      }
+    ],
+    "stop_all_closed_both_clients_and_server": true,
+    "helper_exit": 0,
+    "cleanup_verified": true,
+    "additional_clients": [
+      {
+        "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-3",
+        "cleanup_verified": true,
+        "unique_native_mutex": "LiTod8b2282f9e77",
+        "existing_window_guard": "0x480326:7409->EB09",
+        "mutex_guard": "0x480AB3:7407->EB07",
+        "probe_lifetime_identity": {
+          "pid": 9624,
+          "birth_filetime": 134363321082738957,
+          "identity_source": "retained Popen process handle"
+        },
+        "probe_identity": {
+          "pid": 9624,
+          "birth_filetime": 134363321082738957,
+          "identity_source": "retained Popen process handle",
+          "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        "native_identity": {
+          "pid": 23992,
+          "parent_pid": 9624,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+          "filetime": 134363321084998634,
+          "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+        },
+        "shared_resources_ready": {
+          "pid": 23992,
+          "profile": "tw13081901-v1",
+          "base_count": 30000,
+          "total_count": 30285,
+          "native_cleanup_complete": true
+        },
+        "exit_code": 0
+      },
+      {
+        "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-4",
+        "cleanup_verified": true,
+        "unique_native_mutex": "LiToe59630d7a87a",
+        "existing_window_guard": "0x480326:7409->EB09",
+        "mutex_guard": "0x480AB3:7407->EB07",
+        "probe_lifetime_identity": {
+          "pid": 3612,
+          "birth_filetime": 134363321315880331,
+          "identity_source": "retained Popen process handle"
+        },
+        "probe_identity": {
+          "pid": 3612,
+          "birth_filetime": 134363321315880331,
+          "identity_source": "retained Popen process handle",
+          "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        "native_identity": {
+          "pid": 26972,
+          "parent_pid": 3612,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+          "filetime": 134363321317757526,
+          "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+        },
+        "shared_resources_ready": {
+          "pid": 26972,
+          "profile": "tw13081901-v1",
+          "base_count": 30000,
+          "total_count": 30285,
+          "native_cleanup_complete": true
+        },
+        "exit_code": 1
+      },
+      {
+        "run": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\runs\\multi-window-1791858459006518200\\client-2",
+        "cleanup_verified": true,
+        "unique_native_mutex": "LiTo76ed13352d18",
+        "existing_window_guard": "0x480326:7409->EB09",
+        "mutex_guard": "0x480AB3:7407->EB07",
+        "probe_lifetime_identity": {
+          "pid": 27396,
+          "birth_filetime": 134363320844837867,
+          "identity_source": "retained Popen process handle"
+        },
+        "probe_identity": {
+          "pid": 27396,
+          "birth_filetime": 134363320844837867,
+          "identity_source": "retained Popen process handle",
+          "image": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        },
+        "native_identity": {
+          "pid": 29660,
+          "parent_pid": 27396,
+          "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+          "filetime": 134363320846670081,
+          "image_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292"
+        },
+        "shared_resources_ready": {
+          "pid": 29660,
+          "profile": "tw13081901-v1",
+          "base_count": 30000,
+          "total_count": 30285,
+          "native_cleanup_complete": true
+        },
+        "exit_code": 1
+      }
+    ]
+  },
+  "refusal": {
+    "run": "app\\runs\\additional-diagnostic-1791858500308672100",
+    "status": "probe_error",
+    "gate": {
+      "target": "0x00480A60",
+      "armed_before_resume": true,
+      "status": "held",
+      "reached_seconds": 0.125
+    },
+    "resources_installed": false
+  },
+  "unchanged": [
+    "native/ddraw.dll",
+    "server JAR",
+    "LiTo.bin",
+    "SQL schemas"
+  ],
+  "files": {
+    "app/lito_runtime_probe_shared.py": "a1097e0f7617d755448e279bad27f0470b4c643ccea85415f7089f524bdd6c15",
+    "src/development_startup.py": "2acc7573be2899df4ee5c6702625374ad19aa0087f49212d2a60c952587717fb",
+    "release/current/LiTo381Launcher.dll": "9d5b34cce9d6fd44055c9e213cb78304610a3f9fd935fd8706a321aa4e7bb0c4",
+    "release/current/development_startup.py": "2acc7573be2899df4ee5c6702625374ad19aa0087f49212d2a60c952587717fb",
+    "backups/before-startup-gate-0.6.55.zip": "1db8008ba7f6cbeb57f5812f6e2e2802b1acc146fad054dcf32bd3a6e3221461",
+    "app/compat/ddraw.dll": "9f7c6cd223be34b1efdcbddc5f3287a4ba214a55c9fff1720f7581b782d2e458"
+  },
+  "gates": [
+    {
+      "pid": 24120,
+      "gate": {
+        "target": "0x00480A60",
+        "armed_before_resume": true,
+        "status": "released",
+        "reached_seconds": 0.156,
+        "patches_verified": true,
+        "released_seconds": 0.156,
+        "debug_registers_cleared_by_handler": true
+      }
+    },
+    {
+      "pid": 23992,
+      "gate": {
+        "target": "0x00480A60",
+        "armed_before_resume": true,
+        "status": "released",
+        "reached_seconds": 0.063,
+        "patches_verified": true,
+        "released_seconds": 0.063,
+        "debug_registers_cleared_by_handler": true
+      }
+    },
+    {
+      "pid": 26972,
+      "gate": {
+        "target": "0x00480A60",
+        "armed_before_resume": true,
+        "status": "released",
+        "reached_seconds": 0.063,
+        "patches_verified": true,
+        "released_seconds": 0.063,
+        "debug_registers_cleared_by_handler": true
+      }
+    },
+    {
+      "pid": 29660,
+      "final_probe_report": "not flushed during stop-all",
+      "resources_ready": {
+        "pid": 29660,
+        "profile": "tw13081901-v1",
+        "base_count": 30000,
+        "total_count": 30285,
+        "native_cleanup_complete": true
+      }
+    }
+  ],
+  "validation": "PASS: immediate 100% pair, repeated additional clients at 200%, individual close preserves peer/server, stop-all cleanup, bad signature blocks release, release pins."
+}

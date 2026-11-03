@@ -1,0 +1,50 @@
+{
+  "owned_manifest_read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+      "bytes": 760029,
+      "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+    },
+    "content_sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\archive-manifest.json",
+      "bytes": 760029,
+      "sha256": "57D933561A95F78D4EEC8ADB6327A51CE48119044E5B9CDA81D052B7914E9ECB"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:34:54.355698+08:00"
+  },
+  "candidates": [
+    {
+      "namespace": "shared",
+      "stem": "Sprite",
+      "index_source": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.idx",
+        "bytes": 2585972,
+        "sha256": "327C06372D87F6CF6D5176DA51DA5EF1F94DBF388D1588B735C5965B96B6A52B"
+      },
+      "pak_source": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite.pak",
+        "bytes": 1904012586,
+        "sha256": "4DD4E5348FBAD2E69BAE9CC388BE23D7BECEBE8423AD9F79F393C1457A69EE62"
+      },
+      "records": 92356
+    },
+    {
+      "namespace": "shared",
+      "stem": "Sprite03",
+      "index_source": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite03.idx",
+        "bytes": 288796,
+        "sha256": "A0B80671C44BDA62CF97BDA5572F9E5608CF07B527075F23600E77AEA9CA8783"
+      },
+      "pak_source": {
+        "path": "D:\\lineage開發\\0-客戶端\\Sprite03.pak",
+        "bytes": 420118015,
+        "sha256": "DB4ED6DFB165FA3D64E4A42614F3CE6100BC452DEC54C6CFCB5936744262E919"
+      },
+      "records": 10314
+    }
+  ],
+  "qualification": "Onlyexistingsealedmanifest metadata forSprite/Sprite03 matchingdirectliteralstemarguments. No sourcePAK/indexfilebody orcurrentSHAchecked;notqualifiedproof42E550opens .idx/.pak attheseabsolute paths. No guessedLTsurf/casepolicy, no index/member/803namessearch ornewfileinventory."
+}

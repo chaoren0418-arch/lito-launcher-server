@@ -1,0 +1,33 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-lifetime\\build\\candidate-weapon-break-lifetime.jar",
+    "sha256": "221518da47ac7aca5ba7c134628d3de09e2073c6c63870ab67bcace7748db9e7"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-size\\build-repro\\candidate-npc-physical-size.jar",
+    "sha256": "9636aaa68b6b3efad1b11162d24f9de6694c2d5513b4cef4409aebfb1e712c1b"
+  },
+  "changed": [
+    "local/lito381/server/NativeNpcPhysicalSource.class"
+  ],
+  "added": [],
+  "C0_byte_equal": true,
+  "all_other_entries_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-size\\build-repro\\inputs\\build.py",
+      "sha256": "63a9eb5b7dc62cf27bfcfc4957edda638ed1c8e8f0dde325b561091be6df13ef"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-size\\build-repro\\inputs\\NativeNpcPhysicalSource.java",
+      "sha256": "b1b79dab3c6922a617fdd4cb3d05664a50b2a3607d6a00afb81e06a87730a9f9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-size\\build-repro\\inputs\\original\\NativeNpcPhysicalSource.java",
+      "sha256": "4e4b3e31330c0bfded62163c72cbd283aedc82f8688b05c9abebc32ac0d6357f"
+    }
+  ]
+}

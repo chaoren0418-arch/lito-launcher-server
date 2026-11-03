@@ -1,0 +1,105 @@
+{
+  "contracts": [
+    {
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "schema": "c subtype + d room, then subtypepayload; subtype5 s",
+      "VA": "004A9E50",
+      "RVA": "000A9E50",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "owner_fields": [
+        {
+          "index": 1,
+          "type": "u8",
+          "endianness": "singlebyte",
+          "body_offset": 1,
+          "semantic": "subtype5"
+        },
+        {
+          "index": 2,
+          "type": "DWORD",
+          "endianness": "little",
+          "body_offset": 2,
+          "semantic": "roomcontext"
+        },
+        {
+          "index": 3,
+          "type": "NULterminated8bitstring",
+          "endianness": "byte stream",
+          "body_offset": 6,
+          "capacity_including_NUL": 28,
+          "encoding": "Nativebyteparsernotfixedcodecdeclaration; capturedASCII/JavaMS950producerseparate",
+          "semantic": "ownerpresentationalias, notphysical/source/sessionauthority"
+        }
+      ],
+      "body_bytes": "7+O",
+      "frame_bytes": "9+O",
+      "trigger": "Existing ordinaryROOM owner transfer publication; notown-exitACK/ready/start",
+      "native_state": "phase6assignsroomglobalbeforetype; otherphasesrequireincomingroom==64ABF4; noadditionalphasewhitelist",
+      "evidence": "fixedPEheader/type5/UIpredicate/literal plus1sealed34/36ownerpacket",
+      "unknown": [
+        "runtimecurrentroom/global/UI/resources",
+        "otherD5subtypeeffects/triggercoverage",
+        "nonASCIIencoding",
+        "nativeinputlength/exactendvalidation",
+        "serverpublicationdelivery/atomiccommitnotpacketproof"
+      ]
+    },
+    {
+      "direction": "server-to-client",
+      "opcode_hex": "CF",
+      "opcode_decimal": 207,
+      "schema": "d",
+      "VA": "004A9040",
+      "RVA": "000A9040",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "index": 1,
+          "type": "u32LEroomcatalogID",
+          "body_offset": 1,
+          "bytes": 4,
+          "encoding": "none"
+        }
+      ],
+      "body_bytes": 5,
+      "frame_bytes": 7,
+      "trigger": "Java nondefaultemptyroomdeletion source/ILonly; noS_CFexitframehere",
+      "native_state": "fallbackhandler noexplicitphase/currentjoinedroomgate; primarydefaultC_QUIT/privatecall instead",
+      "evidence": "fixedPEliteral/handler/directUIdelete +serversealedsourcecontract, zeroS_CFdynamicrecords",
+      "unknown": [
+        "NativeUIcataloglifetime/rowkeys/selectionWORD",
+        "privateprimarydefaulteffect",
+        "CFdelete/resetruntimebranch",
+        "nativecheckedread/exactend",
+        "epoch/channel/roomgeneration"
+      ]
+    },
+    {
+      "direction": "client-to-server",
+      "opcode_hex": "CF",
+      "schema": "d+s(password)",
+      "body_bytes": "6+P",
+      "frame_bytes": "8+P",
+      "classification": "Knowncounterdirectionjoin, notnewwire/newNativeproducerqualification",
+      "source": {
+        "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-exit-commit-network-b8e1783fc69d4a57b9863570ffab8037\\evidence\\frames.json",
+        "bytes": 14606,
+        "sha256": "758D2371792B77E876A6AE67D8819FFFD085AC6CED26D96D3CE0AEE4DB5DEDD6"
+      },
+      "example_array_index": 66
+    },
+    {
+      "direction": "server-to-client",
+      "opcode_hex": "CC",
+      "schema": "existingroomrowreplacement/list",
+      "classification": "Knowndefaultreset isS_CC, notS_CF/delete-recreate; nocardinality/terminator/ACKinferred",
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-D5-CF-consumer-supplement.json",
+        "bytes": 12535,
+        "sha256": "7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF"
+      }
+    }
+  ]
+}

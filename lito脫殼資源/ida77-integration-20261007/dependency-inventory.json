@@ -1,0 +1,577 @@
+{
+  "installation": "D:\\IDA_Pro_7.7",
+  "inventory": [
+    {
+      "directory": "D:\\IDA_Pro_7.7",
+      "files": [
+        {
+          "name": "build_master_patch.py",
+          "bytes": 1392
+        },
+        {
+          "name": "clp64.dll",
+          "bytes": 1071616
+        },
+        {
+          "name": "find_hits.py",
+          "bytes": 3090
+        },
+        {
+          "name": "gepetto使用修正.txt",
+          "bytes": 2500
+        },
+        {
+          "name": "ida.dll",
+          "bytes": 4313600
+        },
+        {
+          "name": "ida.exe",
+          "bytes": 4153856
+        },
+        {
+          "name": "ida.hlp",
+          "bytes": 917592
+        },
+        {
+          "name": "ida.ico",
+          "bytes": 1078
+        },
+        {
+          "name": "ida.int",
+          "bytes": 1277952
+        },
+        {
+          "name": "ida.key",
+          "bytes": 3161
+        },
+        {
+          "name": "ida64.dll",
+          "bytes": 4353536
+        },
+        {
+          "name": "ida64.exe",
+          "bytes": 4150784
+        },
+        {
+          "name": "ida64.int",
+          "bytes": 1286144
+        },
+        {
+          "name": "IDA_InitTool.exe",
+          "bytes": 12800
+        },
+        {
+          "name": "idacolor.cf",
+          "bytes": 218
+        },
+        {
+          "name": "idahelp.chm",
+          "bytes": 628167
+        },
+        {
+          "name": "idapyswitch.exe",
+          "bytes": 72704
+        },
+        {
+          "name": "idat.exe",
+          "bytes": 1522688
+        },
+        {
+          "name": "idat64.exe",
+          "bytes": 1530368
+        },
+        {
+          "name": "Keygen.7z",
+          "bytes": 2001799
+        },
+        {
+          "name": "libclang.dll",
+          "bytes": 21047296
+        },
+        {
+          "name": "libdwarf.dll",
+          "bytes": 318976
+        },
+        {
+          "name": "libSwiftDemangle.dll",
+          "bytes": 176128
+        },
+        {
+          "name": "license.txt",
+          "bytes": 4253
+        },
+        {
+          "name": "msdia140.dll",
+          "bytes": 1837944
+        },
+        {
+          "name": "qt.conf",
+          "bytes": 207
+        },
+        {
+          "name": "Qt5Core.dll",
+          "bytes": 6145536
+        },
+        {
+          "name": "Qt5Gui.dll",
+          "bytes": 6875648
+        },
+        {
+          "name": "Qt5PrintSupport.dll",
+          "bytes": 316416
+        },
+        {
+          "name": "Qt5Widgets.dll",
+          "bytes": 5583872
+        },
+        {
+          "name": "qwingraph.exe",
+          "bytes": 484352
+        },
+        {
+          "name": "README_python3.txt",
+          "bytes": 2021
+        },
+        {
+          "name": "run_analysis.bat",
+          "bytes": 158
+        },
+        {
+          "name": "run_string_analysis.py",
+          "bytes": 7943
+        },
+        {
+          "name": "run_v3.bat",
+          "bytes": 368
+        },
+        {
+          "name": "SDK77.7z",
+          "bytes": 31782490
+        },
+        {
+          "name": "setup_v3.bat",
+          "bytes": 1472
+        },
+        {
+          "name": "setup_xref_ai.bat",
+          "bytes": 2988
+        },
+        {
+          "name": "string_analyzer.py",
+          "bytes": 7461
+        },
+        {
+          "name": "symsrv.dll",
+          "bytes": 344528
+        },
+        {
+          "name": "symsrv.yes",
+          "bytes": 1
+        },
+        {
+          "name": "v3_log.txt",
+          "bytes": 300
+        },
+        {
+          "name": "v3_master_analyzer.py",
+          "bytes": 9694
+        },
+        {
+          "name": "xref_ai_analyst.py",
+          "bytes": 12084
+        },
+        {
+          "name": "使用说明.txt",
+          "bytes": 2676
+        }
+      ]
+    },
+    {
+      "directory": "D:\\IDA_Pro_7.7\\python38",
+      "files": [
+        {
+          "name": "_asyncio.pyd",
+          "bytes": 64688
+        },
+        {
+          "name": "_bz2.pyd",
+          "bytes": 87216
+        },
+        {
+          "name": "_ctypes.pyd",
+          "bytes": 127152
+        },
+        {
+          "name": "_decimal.pyd",
+          "bytes": 268976
+        },
+        {
+          "name": "_elementtree.pyd",
+          "bytes": 179888
+        },
+        {
+          "name": "_hashlib.pyd",
+          "bytes": 47280
+        },
+        {
+          "name": "_lzma.pyd",
+          "bytes": 163504
+        },
+        {
+          "name": "_msi.pyd",
+          "bytes": 40624
+        },
+        {
+          "name": "_multiprocessing.pyd",
+          "bytes": 30384
+        },
+        {
+          "name": "_overlapped.pyd",
+          "bytes": 46768
+        },
+        {
+          "name": "_queue.pyd",
+          "bytes": 29360
+        },
+        {
+          "name": "_socket.pyd",
+          "bytes": 80048
+        },
+        {
+          "name": "_sqlite3.pyd",
+          "bytes": 89264
+        },
+        {
+          "name": "_ssl.pyd",
+          "bytes": 155824
+        },
+        {
+          "name": "get-pip.py",
+          "bytes": 2609803
+        },
+        {
+          "name": "libcrypto-1_1.dll",
+          "bytes": 3406016
+        },
+        {
+          "name": "libffi-7.dll",
+          "bytes": 32792
+        },
+        {
+          "name": "libssl-1_1.dll",
+          "bytes": 690368
+        },
+        {
+          "name": "LICENSE.txt",
+          "bytes": 32628
+        },
+        {
+          "name": "pyexpat.pyd",
+          "bytes": 192176
+        },
+        {
+          "name": "python.cat",
+          "bytes": 549153
+        },
+        {
+          "name": "python.exe",
+          "bytes": 101552
+        },
+        {
+          "name": "python3.dll",
+          "bytes": 59568
+        },
+        {
+          "name": "python38._pth",
+          "bytes": 78
+        },
+        {
+          "name": "python38.dll",
+          "bytes": 4211376
+        },
+        {
+          "name": "python38.zip",
+          "bytes": 2465341
+        },
+        {
+          "name": "pythonw.exe",
+          "bytes": 100016
+        },
+        {
+          "name": "select.pyd",
+          "bytes": 27824
+        },
+        {
+          "name": "sqlite3.dll",
+          "bytes": 1504944
+        },
+        {
+          "name": "unicodedata.pyd",
+          "bytes": 1097904
+        },
+        {
+          "name": "vcruntime140.dll",
+          "bytes": 96144
+        },
+        {
+          "name": "vcruntime140_1.dll",
+          "bytes": 36752
+        },
+        {
+          "name": "winsound.pyd",
+          "bytes": 30384
+        }
+      ]
+    },
+    {
+      "directory": "D:\\IDA_Pro_7.7\\python\\3",
+      "files": [
+        {
+          "name": "ida_allins.py",
+          "bytes": 770092
+        },
+        {
+          "name": "ida_auto.py",
+          "bytes": 14032
+        },
+        {
+          "name": "ida_bitrange.py",
+          "bytes": 8502
+        },
+        {
+          "name": "ida_bytes.py",
+          "bytes": 132257
+        },
+        {
+          "name": "ida_dbg.py",
+          "bytes": 128568
+        },
+        {
+          "name": "ida_dirtree.py",
+          "bytes": 40648
+        },
+        {
+          "name": "ida_diskio.py",
+          "bytes": 16401
+        },
+        {
+          "name": "ida_entry.py",
+          "bytes": 5818
+        },
+        {
+          "name": "ida_enum.py",
+          "bytes": 18930
+        },
+        {
+          "name": "ida_expr.py",
+          "bytes": 38928
+        },
+        {
+          "name": "ida_fixup.py",
+          "bytes": 18628
+        },
+        {
+          "name": "ida_fpro.py",
+          "bytes": 8436
+        },
+        {
+          "name": "ida_frame.py",
+          "bytes": 34961
+        },
+        {
+          "name": "ida_funcs.py",
+          "bytes": 59448
+        },
+        {
+          "name": "ida_gdl.py",
+          "bytes": 24988
+        },
+        {
+          "name": "ida_graph.py",
+          "bytes": 106185
+        },
+        {
+          "name": "ida_hexrays.py",
+          "bytes": 780851
+        },
+        {
+          "name": "ida_ida.py",
+          "bytes": 99182
+        },
+        {
+          "name": "ida_idaapi.py",
+          "bytes": 41040
+        },
+        {
+          "name": "ida_idc.py",
+          "bytes": 2719
+        },
+        {
+          "name": "ida_idd.py",
+          "bytes": 79177
+        },
+        {
+          "name": "ida_idp.py",
+          "bytes": 180479
+        },
+        {
+          "name": "ida_ieee.py",
+          "bytes": 16171
+        },
+        {
+          "name": "ida_kernwin.py",
+          "bytes": 366743
+        },
+        {
+          "name": "ida_lines.py",
+          "bytes": 23000
+        },
+        {
+          "name": "ida_loader.py",
+          "bytes": 37076
+        },
+        {
+          "name": "ida_moves.py",
+          "bytes": 26650
+        },
+        {
+          "name": "ida_nalt.py",
+          "bytes": 90254
+        },
+        {
+          "name": "ida_name.py",
+          "bytes": 39624
+        },
+        {
+          "name": "ida_netnode.py",
+          "bytes": 43232
+        },
+        {
+          "name": "ida_offset.py",
+          "bytes": 11343
+        },
+        {
+          "name": "ida_pro.py",
+          "bytes": 83862
+        },
+        {
+          "name": "ida_problems.py",
+          "bytes": 6353
+        },
+        {
+          "name": "ida_range.py",
+          "bytes": 29069
+        },
+        {
+          "name": "ida_registry.py",
+          "bytes": 9716
+        },
+        {
+          "name": "ida_search.py",
+          "bytes": 7751
+        },
+        {
+          "name": "ida_segment.py",
+          "bytes": 48865
+        },
+        {
+          "name": "ida_segregs.py",
+          "bytes": 9757
+        },
+        {
+          "name": "ida_srclang.py",
+          "bytes": 5334
+        },
+        {
+          "name": "ida_strlist.py",
+          "bytes": 6429
+        },
+        {
+          "name": "ida_struct.py",
+          "bytes": 36076
+        },
+        {
+          "name": "ida_tryblks.py",
+          "bytes": 22949
+        },
+        {
+          "name": "ida_typeinf.py",
+          "bytes": 285702
+        },
+        {
+          "name": "ida_ua.py",
+          "bytes": 67685
+        },
+        {
+          "name": "ida_xref.py",
+          "bytes": 27694
+        },
+        {
+          "name": "idaapi.py",
+          "bytes": 2993
+        },
+        {
+          "name": "idadex.py",
+          "bytes": 19010
+        },
+        {
+          "name": "idautils.py",
+          "bytes": 23442
+        },
+        {
+          "name": "idc.py",
+          "bytes": 188462
+        },
+        {
+          "name": "init.py",
+          "bytes": 5643
+        }
+      ]
+    }
+  ],
+  "core_binaries": [
+    {
+      "path": "D:\\IDA_Pro_7.7\\idat.exe",
+      "bytes": 1522688,
+      "sha256": "D4345A0E6A6D04A4493D1235E89A63BBA0106C1570C2A4BF4C33B5F7F3F7D243",
+      "pe_machine": "0x8664"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\ida.dll",
+      "bytes": 4313600,
+      "sha256": "013235CBB26E7D5131B5C589C895BEAED595052254F094ECE42BC4A77FBC446B",
+      "pe_machine": "0x8664"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\plugins\\idapython3.dll",
+      "bytes": 105472,
+      "sha256": "C2171355D16B70D8B91ED737F4071F2F530504FEA475177EC1219C6BC197A150",
+      "pe_machine": "0x8664"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\plugins\\hexrays.dll",
+      "bytes": 2835944,
+      "sha256": "855F7013C8E13EB072FD9A5215195554A0BF582E63EE91A989A9649B102949DB",
+      "pe_machine": "0x8664"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\loaders\\pe.dll",
+      "bytes": 178176,
+      "sha256": "29EB4107B78391BEF00651058A00076930A04DF473FFFC27F7288FD0A6AE3474",
+      "pe_machine": "0x8664"
+    },
+    {
+      "path": "D:\\IDA_Pro_7.7\\procs\\pc.dll",
+      "bytes": 1192464,
+      "sha256": "C74804B33984C39F3CF55510B1BB1739D698EFC3E0BF5B45789D48E576ECC12A",
+      "pe_machine": "0x8664"
+    }
+  ],
+  "WindowsSandbox_executable_present": false,
+  "local_compiler": {
+    "path": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+    "bytes": 2569696,
+    "sha256": "AAE1DB57F898CA8BDA18590C56F86CED6D0EAD80C22033B76FDFE9119706F116"
+  },
+  "original_installation_or_global_settings_modified": false
+}

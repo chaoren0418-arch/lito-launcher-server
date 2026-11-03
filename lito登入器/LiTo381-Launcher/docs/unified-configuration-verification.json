@@ -1,0 +1,57 @@
+{
+  "release": "0.6.42",
+  "server_sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951",
+  "active_properties_files": [
+    "server.properties"
+  ],
+  "operator_control_count": 23,
+  "directory": "380_lito.lito_source_server",
+  "active_sources": [
+    {
+      "id": 1,
+      "name": "太陽神",
+      "database": "380_ac",
+      "port": 32001
+    },
+    {
+      "id": 2,
+      "name": "月亮神",
+      "database": "380_ac_1",
+      "port": 32002
+    },
+    {
+      "id": 3,
+      "name": "伺服器3",
+      "database": "380_ac_2",
+      "port": 32003
+    }
+  ],
+  "reserved_disabled_ids": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "weight_rate": "100.0",
+  "no_credentials_in_public_metadata": true,
+  "bat_check_after_old_file_removal": true,
+  "bat_smoke": true,
+  "native_startup_after_old_file_removal": {
+    "pins": true,
+    "server_release_verified": true,
+    "footer_removed": true,
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791775255133628200"
+  },
+  "regressions": [
+    "ConfigurationRegression",
+    "LifecycleRegression:100 rounds",
+    "Live stats/ranking Regression",
+    "StatsEngineRegression:8 engine/race cases"
+  ],
+  "player_2222_stats": "wins=1 losses=0 version=1 unchanged",
+  "backup": "server-patches/repair-042/configuration-before.zip"
+}

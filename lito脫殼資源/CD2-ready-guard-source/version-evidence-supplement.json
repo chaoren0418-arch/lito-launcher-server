@@ -1,0 +1,107 @@
+{
+  "Batch29_frozen": {
+    "primary": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\CD2-ready-outbound-contract.json",
+      "bytes": 36083,
+      "sha256": "F3867EC1B86DA3DF66A7493E92CD239E40AEC59B658EC0B588F463EFF13A2667"
+    },
+    "at_that_seal": "485Funit-only networknotyetaccepted; keeporiginalSHA andtext unchanged"
+  },
+  "Batch30_485F_accepted_supplement": {
+    "report": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-ordinary-room-settings-candidate-network.json",
+      "bytes": 16155,
+      "sha256": "8C1776AA503098E09B42EFE8CA45E07E651DD4570A07CB6A8994006421CCEF41"
+    },
+    "JAR": {
+      "path": "D:\\lito-dev-runtime\\20261003-supervision\\server\\room-settings-order-candidate-ea9eb86912ed4d1b9502bcecdc7911ec\\candidate\\C7-ordinary-settings-order-candidate.jar",
+      "bytes": 8906219,
+      "sha256": "485F599DA9BA1A13504CB48DDCA3D53C6CAD91D7BAFDF738D104E65A05E1DFD5"
+    },
+    "level": "supervisor accepted single ordinary authenticated WAITING extended→compact→nonowner settings network",
+    "settings_result": {
+      "room_id": 1,
+      "mode": 1,
+      "selected_map": 514,
+      "rules_map": 514,
+      "extended": {
+        "name": "SetExtendedRoom",
+        "password": "pw",
+        "capacity": 4,
+        "attributes": 44,
+        "mode": 1,
+        "options": [
+          2,
+          1,
+          7,
+          9
+        ],
+        "selections": [
+          3,
+          6,
+          8
+        ]
+      },
+      "compact": {
+        "name": "SetCompactRoom",
+        "password": "",
+        "capacity": 6,
+        "attributes": 40,
+        "mode": 1,
+        "options": [
+          2,
+          1,
+          7,
+          9
+        ],
+        "selections": [
+          3,
+          6,
+          8
+        ]
+      },
+      "nonowner_preserved": {
+        "name": "SetCompactRoom",
+        "password": "",
+        "capacity": 6,
+        "attributes": 40,
+        "mode": 1,
+        "options": [
+          2,
+          1,
+          7,
+          9
+        ],
+        "selections": [
+          3,
+          6,
+          8
+        ]
+      },
+      "Guest_ready_before_each_edit": true,
+      "Guest_ready_after_owner_edits": false,
+      "Guest_ready_after_nonowner_rejection": true,
+      "both_sessions_phase": "ROOM",
+      "match_phase": "WAITING",
+      "battle_started": false
+    },
+    "findings": [
+      "Actual 485F candidate normal ClientSession.run/auth establishes two ROOM members and uses one necessary owner C_D1 map514 prerequisite; no reflected product state injection.",
+      "Owner full OPTIONS C_DD sets name/password/attributes/capacity and nondefault [2,1,7,9]/[3,6,8]; subsequent COMPACT changes common fields and preserves those options/selections, option0/mode1 and selected/rules514.",
+      "Each owner edit after normal Guest ready produces per-peer Guest D1state0 then D5summary0/config1; hub/session ready cleared. Separate completed-write and independent poststates agree in this case.",
+      "Nonowner OPTIONS edit with different requested fields returns only self D5summary0/config1 of current compact settings; independent state including Guest ready is unchanged. Bounded Host response absence is not ACK/completion proof."
+    ],
+    "limited_order": "each owneredit afterGuestready:perpeerGuestD1state0→D5summary0/config1;compact preservesoptions[2,1,7,9]/selections[3,6,8]/mode1/map514;nonowner unchangedstate andselfcurrent0/1",
+    "not_qualified": [
+      "485F ready state-machine dynamic",
+      "COUNTDOWN/RUNNING failures",
+      "WORLD",
+      "Native GUI/numericphase",
+      "general race/atomic sends/ACK",
+      "othermode/codecs"
+    ],
+    "new_frame_adoption": 0,
+    "network_or_cipher_verification_replayed": false
+  },
+  "prior_versions": "AD368 finite ready/cancel testclient, C7 WAITINGmapnetwork, 485Funitorderfix remain separately scoped. Newsettingsnetwork cannot transfer to Nativeguard value orreadydynamic."
+}

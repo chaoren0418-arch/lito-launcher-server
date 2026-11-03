@@ -1,0 +1,79 @@
+{
+  "status": "whole-file-inverse-range-fixtures",
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureStateProbe.java",
+        "sha256": "d7d15df44ac140f09059c93e90cd9537e7cfa97709520f4dc79a45ffa8494996"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-range-fixtures\\SourceNegativeVisibleRangeProbe.java",
+        "sha256": "bfce5ef6d36a7a18dc4fc2e5d14d05f771e9688d50b06c132f568006cfb58d33"
+      },
+      "changes": [
+        [
+          "SourceNegativeFailureStateProbe",
+          "SourceNegativeVisibleRangeProbe"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "cases==216",
+          "cases==108"
+        ],
+        [
+          "pet.relocate(x+6,y);",
+          "int distance=selectedSkill==152?10:12;pet.relocate(x+distance,y);need(BattleSpellCatalog.isInNativeScreen(x,y,x+distance,y),\"actual Source visible selected position\");"
+        ],
+        [
+          ".h(x+6).h(y)",
+          ".h(x+distance).h(y)"
+        ]
+      ]
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-failure-fixtures\\SourceNegativeFailureStateProbe.java",
+        "sha256": "d7d15df44ac140f09059c93e90cd9537e7cfa97709520f4dc79a45ffa8494996"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source-negative-range-fixtures\\SourceNegativeScreenRejectProbe.java",
+        "sha256": "ccf492515876436109ea0efb42c15a8eb416fa60e266278912649b5e5d68f998"
+      },
+      "changes": [
+        [
+          "SourceNegativeFailureStateProbe",
+          "SourceNegativeScreenRejectProbe"
+        ],
+        [
+          "for(boolean phase:new boolean[]{false,true})",
+          "for(boolean phase:new boolean[]{false})"
+        ],
+        [
+          "cases==216",
+          "cases==108"
+        ],
+        [
+          "pet.relocate(x+6,y);",
+          "pet.relocate(x+18,y+18);need(!BattleSpellCatalog.isInNativeScreen(x,y,x+18,y+18),\"actual Source screen rejects diagonal despite Chebyshev18\");"
+        ],
+        [
+          ".h(x+6).h(y)",
+          ".h(x+18).h(y+18)"
+        ],
+        [
+          "boolean admitted=paid==cost(pc,selectedSkill,spell)&&spent==skill.reagentCount();",
+          "boolean admitted=paid==0&&spent==0&&!((Map<?,?>)get(pc,\"spellReadyNanos\")).containsKey(selectedSkill);"
+        ],
+        [
+          "Source controlled class failure still pays one admitted cast, without NPC slow mutation",
+          "Source out-of-screen rejection pays zero and reserves no reuse, preserving NPC state"
+        ]
+      ]
+    }
+  ],
+  "competition_only": true,
+  "native_cases_each": 108
+}

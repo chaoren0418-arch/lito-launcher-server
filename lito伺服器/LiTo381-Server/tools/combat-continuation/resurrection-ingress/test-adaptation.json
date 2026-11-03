@@ -1,0 +1,77 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionMaterialProbe.java",
+      "sha256": "a7b39b33a9c7163669ec3d22bbcbba8174ddbc8230fb8d4e1acf3b9189ef03a7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionFaultProbe.java",
+      "sha256": "56ecbeb1271601230680badc52e1f25c49508e946bde7df3c29bec2160f69a67"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionLifecycleProbe.java",
+      "sha256": "c2da8347ce1e9dfc63f23efcb337ea33dea8741b664f2a1f379316225c67d4bc"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionNumericProbe.java",
+      "sha256": "aacdb23491a158c290d08a31b875fe8a2aced314cda1c3fad66bd08a0e636a0b"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionAnswerLifetimeProbe.java",
+      "sha256": "8ffca20d9bc1b8b3cbbdd7b89bfa9a1368cba7674adf8302ef76fe082fa12058"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionAnswerRaceProbe.java",
+      "sha256": "1feec6435468a148bc61d5621518537f3367408bdba9385ecb7d191912052012"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionWorldNpcProbe.java",
+      "sha256": "0a33d88f0b15e2d9fa1fdbdb5b6ad618bcdd579ac36dc60188a552d2ef79092f"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionCompanionProbe.java",
+      "sha256": "d0d20ea07267614dbc21d5cd683f064e8f90eddad64668fb377bbd66c3c92224"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\ResurrectionCompanionAuditProbe.java",
+      "sha256": "09a324a75496b6388b4d7e2811ccacd54d12a1e9a459d7219dbd954e0d4c4b79"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test.py",
+      "sha256": "b269736c7e9204f57b6d1b6cc27f210cf51025d03cfc86677f8766f32fed9ee9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_boundaries.py",
+      "sha256": "ca1e59b4ee995708ec8e097847abeb8137ff728f5d02343661669e4dec22fe61"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_numeric.py",
+      "sha256": "176fd7a31285c89227c39824af43bcd9f7e80cb8a4bc4c9399478a68d65ec51e"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_answers.py",
+      "sha256": "58637330a2a99ea6bf23be86cfa4212e637b7063d0cdd389f2ebf787913ddac9"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_races.py",
+      "sha256": "44564debf2e7b669eacca636c812f93bd81b42438252400411d0aa78676b5be6"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_npc.py",
+      "sha256": "f17873c16cc58e127695178602bfdf27efcb56202b5abc2c2686ad1186728e49"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_companions.py",
+      "sha256": "5dd890508a03880cbb2bad38cd3b62671eff795d9e6bb88981af136031e86108"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-companion\\test_companion_lifetime.py",
+      "sha256": "332fdde680a2ac7c7907cb8fadc77163ed08240ec1fcc1c270aaddc0d46d7cff"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-ingress\\prepare_tests.py",
+      "sha256": "4bb44e1247472b709c28c20d7b325531f6e0a1f5548dc6619dfe1ec82adba24b"
+    }
+  ],
+  "scope": "20 queued native ingress cases capture target before first caster wait; retained material/answer/NPC/pet behavior; no full-release claim"
+}

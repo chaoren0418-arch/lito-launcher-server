@@ -1,0 +1,90 @@
+{
+  "schema": "owned-python-compilation-v1",
+  "compiler_runtime": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "runtime_executable": {
+    "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "bytes": 104952,
+    "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+  },
+  "method": "Python built-in compile in memory; no package/compiler installation, no pyc",
+  "sources": [
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\crash_controller.py",
+        "bytes": 1109,
+        "sha256": "9A6A2BA3325D2EC88DACB4CE1D511B312A8BD604DF1633B71393837AE814FB45"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "4E9A2379F82BD31CD778D41BAF28443BF8B066D238A7C1A428924A095813B3E2",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+        "bytes": 1810,
+        "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "77B9EB29BF12444B83EBF6D840C5639B1F2D756164A5299167D41967581E6640",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+        "bytes": 20925,
+        "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "C2A1AD014D324E519922F2E3924F984B7D82C152AB0355453626CD50BA3CA726",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\prepare_task.py",
+        "bytes": 3203,
+        "sha256": "34893F31246EE4B8A963028AE350423525BD235699DC2C9D9EE29546628FCD52"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "A12BCF2A583189D18026D2F5F592DB47426DEEB6F33C6ABF95624749E1CD7A12",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\publish_watchdog.py",
+        "bytes": 17551,
+        "sha256": "CBDF2A58474911A5AA1439564D0268D718734A603BE644ADF8EA0DBE50920674"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "6B5667403E91C400701FF2A261B346039B93E53672A4065EC39319F73EA34C1C",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py",
+        "bytes": 5434,
+        "sha256": "E321D86D3EF719C0709C0FF0E2BD3D387E52D59C4FD66B8CD2F4936EDE94AD9B"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "9A1F2DF87366F915F1BAF038F178A2E3C5982BBAF64F703619D84FF917D3C3B8",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    },
+    {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py",
+        "bytes": 9503,
+        "sha256": "D9316E49FA0327B8C5E214D1221122B5EFD3E96F419FB05585AB94A53FD3CD83"
+      },
+      "in_memory_compilation": "PASS",
+      "code_object_sha256": "3605FE644741B0A5D49A46878B237D651BA5459255C7735E8354331F6948CBFF",
+      "code_executed_by_compilation": false,
+      "pyc_written": false
+    }
+  ],
+  "status": "PASS"
+}

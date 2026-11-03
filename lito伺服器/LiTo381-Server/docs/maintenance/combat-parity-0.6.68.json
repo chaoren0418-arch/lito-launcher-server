@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-14",
+  "formal_jar_sha256": "c02aaae8d54a27e30460be2e3c47709ee64d35f007a8be27ac74a327268b9539",
+  "scope": "read-only formal LiTo JAR vs current source files/config and common SQL",
+  "skills_compared": 212,
+  "fields_compared": 576,
+  "matching_fields": 575,
+  "catalog_sql_differences": 1,
+  "explained_difference": "skill208: source executor also fixes stun at 2 seconds despite SQL 3",
+  "confirmed_behavior_gaps": [
+    "NATURES_BLESSING_HEAL +100",
+    "AC_REDUCTION_DIVISOR extra negative AC reduction"
+  ],
+  "deployment_modified": false,
+  "sql_written": false,
+  "full_behavior_parity_verified": false
+}

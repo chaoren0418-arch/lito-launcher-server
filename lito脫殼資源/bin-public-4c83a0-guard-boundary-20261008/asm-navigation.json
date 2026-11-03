@@ -1,0 +1,12 @@
+{
+  "authority": false,
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "header_different_input": true,
+  "line": 418510,
+  "end_line": 418586,
+  "text": "sub_4C83A0 proc near                    ; CODE XREF: sub_4C7A20+61↑p\n                                        ; sub_4C7BF0+1D↑p\n                                        ; sub_4C7C70+5E↑p\n                                        ; sub_4C7DC0+47↑p\n                                        ; sub_4C7FA0+D9↑p\n                                        ; sub_4C7FA0+E8↑p\n                                        ; sub_4C7FA0+149↑p\n                                        ; sub_4C7FA0+158↑p\n                                        ; sub_4C84F0+29↓p\n                                        ; sub_4C8560+29↓p\n                                        ; sub_4C85E0+26↓p\n                                        ; sub_4C87C0+1F↓p\n\nvar_4= byte ptr -4\n\npush    ebp\nmov     ebp, esp\npush    ecx\npush    esi\nmov     esi, ecx\nmov     eax, [esi]\ntest    eax, eax\njz      short loc_4C83C0\n\npush    eax\ncall    near ptr 2111A650h\n\nnop\ncmp     eax, 3\njnz     short loc_4C83C0\n\nmov     al, 1\npop     esi\nmov     esp, ebp\npop     ebp\nretn\n\n; ---------------------------------------------------------------------------\n\nloc_4C83C0:                             ; CODE XREF: sub_4C83A0+B↑j\n                                        ; sub_4C83A0+17↑j\nmov     esi, [esi+4]\ntest    esi, esi\njz      short loc_4C83E6\n\nmov     eax, [esi]\nlea     ecx, [ebp+var_4]\npush    ecx\npush    esi\ncall    dword ptr [eax+24h]\n\ntest    eax, eax\njnz     short loc_4C83E6\n\nmov     al, [ebp+var_4]\ntest    al, 2\njnz     short loc_4C83E6\n\ntest    al, 5\nsetnz   al\npop     esi\nmov     esp, ebp\npop     ebp\nretn\n\n; ---------------------------------------------------------------------------\n\nloc_4C83E6:                             ; CODE XREF: sub_4C83A0+25↑j\n                                        ; sub_4C83A0+33↑j\n                                        ; sub_4C83A0+3A↑j\nxor     al, al\npop     esi\nmov     esp, ebp\npop     ebp\nretn\n\nsub_4C83A0 endp"
+}

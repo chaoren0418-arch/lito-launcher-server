@@ -1,0 +1,28 @@
+{
+  "variants": [
+    {
+      "type": 5,
+      "sex": 0,
+      "lobby_rendered": true
+    },
+    {
+      "type": 5,
+      "sex": 1,
+      "lobby_rendered": true
+    },
+    {
+      "type": 6,
+      "sex": 0,
+      "lobby_rendered": true
+    },
+    {
+      "type": 6,
+      "sex": 1,
+      "lobby_rendered": true
+    }
+  ],
+  "all_14_lobby_portraits": true,
+  "same_window": true,
+  "no_player_sql_writes": true,
+  "run": "class-lobby-fixture-1791785953034379600"
+}

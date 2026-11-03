@@ -1,0 +1,292 @@
+{
+  "schema": "LTmapstr-byte-candidate-index-v1",
+  "authority_guard": "Candidate bytes only. File key, physical line, header count and token position do not qualify runtime table index, locale, label codec or map/resource ID. No cross-candidate alignment or title-column inference.",
+  "candidate_selection": "Exact filename only; five independent files, no default locale or merged key space.",
+  "candidates": [
+    {
+      "candidate": "LTmapstr-c.tbl",
+      "relative_file": "LTmapstr-c.tbl.parsed.json",
+      "parsed_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\LTmapstr-c.tbl.parsed.json",
+        "bytes": 121340,
+        "sha256": "88E0B1DAF608BF34A43D4D86B56919B0098128171AFF0FA58FCED5874B11136C"
+      },
+      "provenance": {
+        "namespace": "native",
+        "archive": "LTtext",
+        "row": 241,
+        "offset": 184806,
+        "bytes": 2458,
+        "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+        "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00241-LTmapstr-c.tbl",
+          "bytes": 2458,
+          "sha256": "DA88809E3691B365B85241802314A78BE263F5D113B7318B2A9BE135DBC6C4DD"
+        },
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00241-LTmapstr-c.tbl",
+          "bytes": 2458,
+          "sha256": "9DC26DE8BB303B9A2C63CED51EDEAF9E2D6252C450EF8801AC6B21F8B9F949E4"
+        },
+        "existing_resource_encoding_marker": "L1",
+        "marker_is_text_codec_qualification": false,
+        "qualified_text_codec": null,
+        "existing_display_reference": {
+          "assumed_code_page": 950,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\text-view\\LTtext\\row00241-LTmapstr-c.tbl.utf8.txt",
+            "bytes": 2715,
+            "sha256": "D450CF892F2F2C69E8A4706BD4E89C0CBE6AAD7379BC1C613EF1F625A05E357D"
+          },
+          "binary_authoritative": true
+        },
+        "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+      },
+      "counts": {
+        "physical_rows": 68,
+        "header_rows": 1,
+        "physical_rows_after_header": 67,
+        "nonblank_rows_after_header": 67,
+        "comment_rows_after_header": 12,
+        "noncomment_nonblank_rows_after_header": 55,
+        "hash_rows_after_header_including_comments": 67,
+        "noncomment_hash_rows_after_header": 55,
+        "noncomment_plain_rows_after_header": 0,
+        "explicit_numeric_key_rows": 47,
+        "commented_numeric_key_rows": 1,
+        "placeholder_rows_including_comments": 8,
+        "noncomment_placeholder_rows": 8,
+        "hash_delimiters": 212,
+        "tokens": 280
+      },
+      "header_declared_count": 67
+    },
+    {
+      "candidate": "LTmapstr-h.tbl",
+      "relative_file": "LTmapstr-h.tbl.parsed.json",
+      "parsed_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\LTmapstr-h.tbl.parsed.json",
+        "bytes": 68866,
+        "sha256": "B8132A22D3352BE1BDC076918BAAF0127E5B8F6BE3B1CF18B61C60AB5CA44975"
+      },
+      "provenance": {
+        "namespace": "native",
+        "archive": "LTtext",
+        "row": 242,
+        "offset": 187264,
+        "bytes": 1377,
+        "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+        "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00242-LTmapstr-h.tbl",
+          "bytes": 1377,
+          "sha256": "57D700E3709A8513E45F8F2E6D9485FB107547645D4A762BA0D928D4F47CB088"
+        },
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00242-LTmapstr-h.tbl",
+          "bytes": 1377,
+          "sha256": "F26E613B2F707E2E3E07A4210597B84F53A779ED1F0CC4A92883DC3485871E07"
+        },
+        "existing_resource_encoding_marker": "L1",
+        "marker_is_text_codec_qualification": false,
+        "qualified_text_codec": null,
+        "existing_display_reference": {
+          "assumed_code_page": 950,
+          "status": "strict decode failed; raw decoded bytes preserved"
+        },
+        "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+      },
+      "counts": {
+        "physical_rows": 43,
+        "header_rows": 1,
+        "physical_rows_after_header": 42,
+        "nonblank_rows_after_header": 42,
+        "comment_rows_after_header": 4,
+        "noncomment_nonblank_rows_after_header": 38,
+        "hash_rows_after_header_including_comments": 42,
+        "noncomment_hash_rows_after_header": 38,
+        "noncomment_plain_rows_after_header": 0,
+        "explicit_numeric_key_rows": 0,
+        "commented_numeric_key_rows": 0,
+        "placeholder_rows_including_comments": 6,
+        "noncomment_placeholder_rows": 6,
+        "hash_delimiters": 92,
+        "tokens": 135
+      },
+      "header_declared_count": 42
+    },
+    {
+      "candidate": "LTmapstr-h.txt",
+      "relative_file": "LTmapstr-h.txt.parsed.json",
+      "parsed_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\LTmapstr-h.txt.parsed.json",
+        "bytes": 34940,
+        "sha256": "DD611E924FACB724CDE2D59379DA1AD58C1F64F0B4E0AB735DC70ADB69A43832"
+      },
+      "provenance": {
+        "namespace": "native",
+        "archive": "LTtext",
+        "row": 243,
+        "offset": 188641,
+        "bytes": 396,
+        "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+        "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00243-LTmapstr-h.txt",
+          "bytes": 396,
+          "sha256": "0EF0CF1CE87D16B3A8A0F8D74F4D62E11F97537989CA1DD50B60A1272B68F3D1"
+        },
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00243-LTmapstr-h.txt",
+          "bytes": 396,
+          "sha256": "03DB043B6F19B7C44EA34293E2FD43B1751B3AAC9E4BA0EBC2C5B613637E98F3"
+        },
+        "existing_resource_encoding_marker": "L1",
+        "marker_is_text_codec_qualification": false,
+        "qualified_text_codec": null,
+        "existing_display_reference": {
+          "assumed_code_page": 950,
+          "status": "strict decode failed; raw decoded bytes preserved"
+        },
+        "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+      },
+      "counts": {
+        "physical_rows": 33,
+        "header_rows": 1,
+        "physical_rows_after_header": 32,
+        "nonblank_rows_after_header": 32,
+        "comment_rows_after_header": 0,
+        "noncomment_nonblank_rows_after_header": 32,
+        "hash_rows_after_header_including_comments": 0,
+        "noncomment_hash_rows_after_header": 0,
+        "noncomment_plain_rows_after_header": 32,
+        "explicit_numeric_key_rows": 0,
+        "commented_numeric_key_rows": 0,
+        "placeholder_rows_including_comments": 0,
+        "noncomment_placeholder_rows": 0,
+        "hash_delimiters": 0,
+        "tokens": 33
+      },
+      "header_declared_count": 32
+    },
+    {
+      "candidate": "LTmapstr-j.tbl",
+      "relative_file": "LTmapstr-j.tbl.parsed.json",
+      "parsed_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\LTmapstr-j.tbl.parsed.json",
+        "bytes": 90924,
+        "sha256": "4FA414C9E110FC4584E56AB2D496FEBDA39AD9B038108E70C68E5692FEE7AA1D"
+      },
+      "provenance": {
+        "namespace": "native",
+        "archive": "LTtext",
+        "row": 244,
+        "offset": 189037,
+        "bytes": 1851,
+        "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+        "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00244-LTmapstr-j.tbl",
+          "bytes": 1851,
+          "sha256": "3CF54B23EC8044B313FB876D1845D2B711181ADEDDEB7C1D344E2889A676A36F"
+        },
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00244-LTmapstr-j.tbl",
+          "bytes": 1851,
+          "sha256": "70EFB7A2A15A1D2B87D219365A749F42963E54FFDB55F585D8B38E56A8F1F91B"
+        },
+        "existing_resource_encoding_marker": "L1",
+        "marker_is_text_codec_qualification": false,
+        "qualified_text_codec": null,
+        "existing_display_reference": {
+          "assumed_code_page": 950,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\text-view\\LTtext\\row00244-LTmapstr-j.tbl.utf8.txt",
+            "bytes": 1906,
+            "sha256": "02B31BD806729FCE4FE6B827BFEDF46602BDF79F2184CF0A85C33822BC039481"
+          },
+          "binary_authoritative": true
+        },
+        "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+      },
+      "counts": {
+        "physical_rows": 56,
+        "header_rows": 1,
+        "physical_rows_after_header": 55,
+        "nonblank_rows_after_header": 55,
+        "comment_rows_after_header": 7,
+        "noncomment_nonblank_rows_after_header": 48,
+        "hash_rows_after_header_including_comments": 55,
+        "noncomment_hash_rows_after_header": 48,
+        "noncomment_plain_rows_after_header": 0,
+        "explicit_numeric_key_rows": 0,
+        "commented_numeric_key_rows": 0,
+        "placeholder_rows_including_comments": 14,
+        "noncomment_placeholder_rows": 14,
+        "hash_delimiters": 120,
+        "tokens": 176
+      },
+      "header_declared_count": 57
+    },
+    {
+      "candidate": "LTmapstr-k.tbl",
+      "relative_file": "LTmapstr-k.tbl.parsed.json",
+      "parsed_pin": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map-candidate-index\\LTmapstr-k.tbl.parsed.json",
+        "bytes": 122587,
+        "sha256": "8B739A6003299287B0FBB966F29287B17F82A5010A9F958FE5DA2677AD285E17"
+      },
+      "provenance": {
+        "namespace": "native",
+        "archive": "LTtext",
+        "row": 245,
+        "offset": 190888,
+        "bytes": 2584,
+        "source_index_sha256": "B8C0BB8C43AFFE59A90EBD2D26182269B6D60AF388C80963EAAEEDC8D8AE23C8",
+        "source_pak_sha256": "517D853E3FE91B504953FF4B9B2EED682A3612D063F2D18E75E39FD5580F342D",
+        "raw": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\raw\\LTtext\\row00245-LTmapstr-k.tbl",
+          "bytes": 2584,
+          "sha256": "18BECECC446D1220CC54E47AB31DED3F58FEB96DD8F2056A5831CD73883ED44F"
+        },
+        "decoded": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\decoded\\LTtext\\row00245-LTmapstr-k.tbl",
+          "bytes": 2584,
+          "sha256": "E7A5D41C7CC3678E5038121DF5AF98F5544DC418AD0C4DF2EEC88F06981114FD"
+        },
+        "existing_resource_encoding_marker": "L1",
+        "marker_is_text_codec_qualification": false,
+        "qualified_text_codec": null,
+        "existing_display_reference": {
+          "assumed_code_page": 950,
+          "output": {
+            "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\resources\\text-view\\LTtext\\row00245-LTmapstr-k.tbl.utf8.txt",
+            "bytes": 2652,
+            "sha256": "20BEEF3AC06A3B18A47B9BA702BA5762FA020746D484FB16C90CE1C51D620ADA"
+          },
+          "binary_authoritative": true
+        },
+        "existing_display_qualification": "Reference only: assumed_code_page 950 if present, not authoritative native decoding. No view created or rewritten."
+      },
+      "counts": {
+        "physical_rows": 68,
+        "header_rows": 1,
+        "physical_rows_after_header": 67,
+        "nonblank_rows_after_header": 67,
+        "comment_rows_after_header": 12,
+        "noncomment_nonblank_rows_after_header": 55,
+        "hash_rows_after_header_including_comments": 67,
+        "noncomment_hash_rows_after_header": 55,
+        "noncomment_plain_rows_after_header": 0,
+        "explicit_numeric_key_rows": 47,
+        "commented_numeric_key_rows": 1,
+        "placeholder_rows_including_comments": 8,
+        "noncomment_placeholder_rows": 8,
+        "hash_delimiters": 212,
+        "tokens": 280
+      },
+      "header_declared_count": 67
+    }
+  ]
+}

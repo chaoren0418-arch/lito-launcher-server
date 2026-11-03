@@ -1,0 +1,288 @@
+{
+  "schema": "new-successor-error-path-fixtures-v1",
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "post_create_membership",
+      "passed": true,
+      "expected_status": "CONSTRUCTOR_FAILED",
+      "actual_status": "CONSTRUCTOR_FAILED",
+      "fault_plan": {
+        "post_create_membership": "membership-query-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_membership\\runtime.json",
+        "bytes": 9804,
+        "sha256": "D0F50FF5BB791C28A3C1B7966959BBFE0948A59F804CBB289902917AB87A4896"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_membership\\independent-handle-audit.json",
+        "bytes": 762,
+        "sha256": "04711504BC2E9394917BFE0F7DF3D57AD841F97177002946D0FD7AF3EE1C1217"
+      },
+      "module_process_created": true,
+      "module_child_resumed": false,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 1
+    },
+    {
+      "name": "post_create_identity",
+      "passed": true,
+      "expected_status": "CONSTRUCTOR_FAILED",
+      "actual_status": "CONSTRUCTOR_FAILED",
+      "fault_plan": {
+        "post_create_identity": "creation-time/path-query-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_identity\\runtime.json",
+        "bytes": 9836,
+        "sha256": "3B32E6FF4C3E3C9BD49F39CF73F40D3BF6F8B0729734077914D060D8595893A4"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_identity\\independent-handle-audit.json",
+        "bytes": 760,
+        "sha256": "2CD8A141092D83FAFF22EEB279346B5C3A77132AE29104B7D6B008E9C3908642"
+      },
+      "module_process_created": true,
+      "module_child_resumed": false,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 1
+    },
+    {
+      "name": "post_create_snapshot",
+      "passed": true,
+      "expected_status": "CONSTRUCTOR_FAILED",
+      "actual_status": "CONSTRUCTOR_FAILED",
+      "fault_plan": {
+        "constructor_snapshot": "snapshot-failure",
+        "constructor_error_snapshot": "secondary-snapshot-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_snapshot\\runtime.json",
+        "bytes": 11160,
+        "sha256": "3CC0690DC0D3CF0906E0F6762A1A37ECCB42A3EEA4B2500C627ED11C84B8F569"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_snapshot\\independent-handle-audit.json",
+        "bytes": 760,
+        "sha256": "34C76F0DD134DC639771B5A8A3464355C19D45ECC9DEA5E03BA2D4FB5DA8E744"
+      },
+      "module_process_created": true,
+      "module_child_resumed": false,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 1
+    },
+    {
+      "name": "post_create_capture_setup",
+      "passed": true,
+      "expected_status": "CONSTRUCTOR_FAILED",
+      "actual_status": "CONSTRUCTOR_FAILED",
+      "fault_plan": {
+        "capture_setup": "setup-failure",
+        "constructor_error_snapshot": "exception-snapshot-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup\\runtime.json",
+        "bytes": 11153,
+        "sha256": "EADAE38B903A175C69CB101822DF98AEA6B05F2CA51BA27F1CEE0F305E2B989A"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup\\independent-handle-audit.json",
+        "bytes": 764,
+        "sha256": "1543BD9BE51E6814FF0A10D2E15C2F2A527ECBE9A161A2A42249A2E1BBF8CCD9"
+      },
+      "module_process_created": true,
+      "module_child_resumed": false,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 1
+    },
+    {
+      "name": "constructor_wait_unknown",
+      "passed": true,
+      "expected_status": "CONSTRUCTOR_FAILED",
+      "actual_status": "CONSTRUCTOR_FAILED",
+      "fault_plan": {
+        "post_create_identity": "identity-failure",
+        "cleanup_wait": "wait-observation-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\constructor_wait_unknown\\runtime.json",
+        "bytes": 10073,
+        "sha256": "939FEFBB8C2F224847597407580C53D274B96D9167677473CF8EECD85B2641A0"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\constructor_wait_unknown\\independent-handle-audit.json",
+        "bytes": 764,
+        "sha256": "44C3CD1B0B841DDA35348F8099667CE6323CDFCFD9853F1D5669A432F909B928"
+      },
+      "module_process_created": true,
+      "module_child_resumed": false,
+      "module_owned_job_empty": null,
+      "observer_exact_identities_exited": 1
+    },
+    {
+      "name": "final_scan_entrycap",
+      "passed": true,
+      "expected_status": "CONTROL_REFUSED",
+      "actual_status": "CONTROL_REFUSED",
+      "fault_plan": {},
+      "fault_injection_is_not_actual_platform_failure": false,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\final_scan_entrycap\\runtime.json",
+        "bytes": 9099,
+        "sha256": "FB21C3CC8C72D718B1223AAE9C2EC7AF5D2C1DF096B999EAF51D8FFBD264D4EC"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\final_scan_entrycap\\independent-handle-audit.json",
+        "bytes": 1162,
+        "sha256": "4756AFC650A2C0E706A98B35604C2145282E4DBCE9FA689799844B0A310D20E3"
+      },
+      "module_process_created": true,
+      "module_child_resumed": true,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 2
+    },
+    {
+      "name": "poll_and_final_scan_io",
+      "passed": true,
+      "expected_status": "CONTROLLER_EXCEPTION",
+      "actual_status": "CONTROLLER_EXCEPTION",
+      "fault_plan": {
+        "disk_poll_scan": "injected-I/O-refusal",
+        "final_disk_scan": "injected-I/O-refusal"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\poll_and_final_scan_io\\runtime.json",
+        "bytes": 9744,
+        "sha256": "84402983350D0A6624C0D19DDF944614636A131A4DCE8A3B0DC61E220BA79EB8"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\poll_and_final_scan_io\\independent-handle-audit.json",
+        "bytes": 1166,
+        "sha256": "E279345F2BC583FEDF679908A2D0EDE42A4B84E9960B881758BD97D238E6F8B2"
+      },
+      "module_process_created": true,
+      "module_child_resumed": true,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 2
+    },
+    {
+      "name": "cleanup_wait_unknown",
+      "passed": true,
+      "expected_status": "TIMEOUT",
+      "actual_status": "TIMEOUT",
+      "fault_plan": {
+        "cleanup_wait": "wait-observation-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_wait_unknown\\runtime.json",
+        "bytes": 13230,
+        "sha256": "2C8C5AE2278ED2AAE0305BEA5B22E4A47DE9A2BEA757F94C092112DCA42DBC27"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_wait_unknown\\independent-handle-audit.json",
+        "bytes": 2013,
+        "sha256": "ACF4693CB857173018EE840DD86202BF8185D48D47FE4C40D31A75630EEAC462"
+      },
+      "module_process_created": true,
+      "module_child_resumed": true,
+      "module_owned_job_empty": null,
+      "observer_exact_identities_exited": 4
+    },
+    {
+      "name": "cleanup_snapshots",
+      "passed": true,
+      "expected_status": "TIMEOUT",
+      "actual_status": "TIMEOUT",
+      "fault_plan": {
+        "cleanup_snapshot_before": "pre-snapshot-failure",
+        "cleanup_snapshot_after": "post-snapshot-failure"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_snapshots\\runtime.json",
+        "bytes": 12078,
+        "sha256": "CD8AC6A72C0ECD1863052040B512AC27CC153EBE6B0B406B0BD04AA7348F82A9"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_snapshots\\independent-handle-audit.json",
+        "bytes": 2010,
+        "sha256": "49D9AE21E7C68077409E67C39368D00EF36D3A13F11CEAC2DF71145CC78D6A77"
+      },
+      "module_process_created": true,
+      "module_child_resumed": true,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 4
+    },
+    {
+      "name": "capture_observation_failure",
+      "passed": true,
+      "expected_status": "TIMEOUT",
+      "actual_status": "TIMEOUT",
+      "fault_plan": {
+        "capture_stdout": "injected-capture-write-I/O-refusal"
+      },
+      "fault_injection_is_not_actual_platform_failure": true,
+      "runtime": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\runtime.json",
+        "bytes": 15465,
+        "sha256": "80AA5F7D87B96794A3C56C836ED914BC924669D7E1280F6038A2C5400BF70148"
+      },
+      "independent_audit": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\independent-handle-audit.json",
+        "bytes": 2020,
+        "sha256": "87D8FA32A660522BD3765B9F39D8928B7CDF33481EEFC44D062FDFACBCF5DC55"
+      },
+      "module_process_created": true,
+      "module_child_resumed": true,
+      "module_owned_job_empty": true,
+      "observer_exact_identities_exited": 4
+    },
+    {
+      "name": "sentinel_not_miskilled",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\sentinel\\sentinel-audit.json",
+        "bytes": 17186,
+        "sha256": "D2C656204C2A44E8D20A88A5E566794357C895F856C7DC0D3CC807A99C908B22"
+      }
+    }
+  ],
+  "failure": null,
+  "module_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\owned_process.py",
+    "bytes": 31683,
+    "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+  },
+  "fixture_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+    "bytes": 1425,
+    "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+  },
+  "driver_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\test_error_paths.py",
+    "bytes": 10977,
+    "sha256": "3AA8656B9306273123119D8909E614D2B114FB476D24E0CCE36FED37A48CF955"
+  },
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\test_error_paths.py"
+  ],
+  "runtime_python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "runtime_executable": {
+    "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "bytes": 104952,
+    "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+  },
+  "old_whole_PASS_or_affected_old_fixture_reexecuted": false,
+  "IDA_launches": 0,
+  "game_launches": 0
+}

@@ -1,0 +1,61 @@
+{
+  "source_before": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r494-source-stream-consumer.rs",
+    "bytes": 13622,
+    "sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830"
+  },
+  "captured_content_sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830",
+  "source_after": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\tools\\r494-source-stream-consumer.rs",
+    "bytes": 13622,
+    "sha256": "5D0C4E5C7964CD57B8D53ADC46A468B06E84BE0934E31F5156D775C09BBD7830"
+  },
+  "stable_during_read": true,
+  "read_at": "2026-10-06T08:56:20.194538+08:00",
+  "existing_test_names_only": [],
+  "function_names_only_not_test_claim": [
+    {
+      "line": 4,
+      "name": "input"
+    },
+    {
+      "line": 5,
+      "name": "wait"
+    },
+    {
+      "line": 6,
+      "name": "bytes"
+    },
+    {
+      "line": 7,
+      "name": "frame"
+    },
+    {
+      "line": 8,
+      "name": "encrypted"
+    },
+    {
+      "line": 9,
+      "name": "stamp"
+    },
+    {
+      "line": 10,
+      "name": "record"
+    },
+    {
+      "line": 11,
+      "name": "begin"
+    },
+    {
+      "line": 12,
+      "name": "seed"
+    },
+    {
+      "line": 13,
+      "name": "main"
+    }
+  ],
+  "literal_case_names_only_not_pass_claim": [],
+  "script_executed_or_imported": false,
+  "scope": "Only existing test annotations, function headers and literal name labels; no body adoption, no claim compiled/current production test pass."
+}

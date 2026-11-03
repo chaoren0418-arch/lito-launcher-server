@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 4,
+  "profileId": "lito-shared",
+  "displayName": "LiTo — 太陽神 / 月亮神",
+  "host": "127.0.0.1",
+  "port": 32000,
+  "originSourceId": "lito-shared",
+  "originSourceName": "LiTo 共用資料架構",
+  "classicSourceNames": ["太陽神", "月亮神"],
+  "staticDatabase": "lito_static",
+  "dynamicDatabases": ["380_ac_1", "380_ac_2"],
+  "localServerConfig": "server.properties",
+  "rentalSourceServerConfig": "server.properties",
+  "rentalBattleServerConfig": "server.properties"
+}

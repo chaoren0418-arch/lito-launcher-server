@@ -1,0 +1,20 @@
+ static void commitPair(ClientSession pc,ClientSession target,NativeSelfCastAction.Task body)throws IOException {
+  var targetBinding=NativePlayerCommit.Binding.capture(target);
+  var parent=ingress.get();boolean owns=parent==null||parent.pc!=pc;var accepted=owns?reserve(pc):parent;if(accepted==null)return;
+  ingress.remove();var packetContext=NativeCastTimeline.detach();
+  try{try{NativeSourcePlayerActionLock.runPairOrdered(pc,target,()->{
+   if(!accepted.binding.matches(pc)||!targetBinding.matches(target)
+    ||(boolean)CombatAccess.field(pc,NativeDeItemApplication.DISCONNECTED)||(boolean)CombatAccess.field(target,NativeDeItemApplication.DISCONNECTED)
+    ||CombatAccess.field(accepted.hub,NativeDeItemApplication.FIELD)!=accepted.application||accepted.application!=null&&accepted.application.closed)return;
+   var batch=new Batch(pc,accepted.arrival,accepted);batch.captureSelf=true;batch.target=target;batch.targetBinding=targetBinding;
+   var previous=current.get();current.set(batch);
+   try{body.run();}catch(IOException failure){throw new UncheckedIOException(failure);}
+   finally{if(previous==null)current.remove();else current.set(previous);if(!batch.outputs.isEmpty())NativePlayerVitalCompletions.enqueueLocked(accepted.receipt,batch);}
+  });}catch(UncheckedIOException failure){throw failure.getCause();}}
+  finally{NativeCastTimeline.restore(packetContext);if(parent==null)ingress.remove();else ingress.set(parent);if(owns)accepted.receipt.close();}
+ }
+ static boolean admitPair(ClientSession pc,ClientSession target,int skill,int action,int reuse){
+  var batch=current.get();if(batch==null||batch.pc!=pc||batch.target!=target||!batch.targetBinding.matches(target))return false;
+  if(!pc.nativePlayerActionLock().isHeldByCurrentThread()||!target.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("target cast requires both ordered action locks");
+  return admitSelf(pc,skill,action,reuse);
+ }

@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-probability\\build\\candidate-cancellation-probability.jar",
+    "sha256": "2ae86db74d2ba4cfbc847a97b099331ec94252ca7d9c5763351ea67f09e328d9"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "NPC cancellation startup reader and Source transform ports; scene adapters and final qualification pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\candidate-cancellation-npc.jar",
+    "sha256": "792e12b590db0d566b65f85f48e42362512bea0cbccb143f7c7fd829fad4c64f"
+  },
+  "exact_startup_method_inverse": true,
+  "changed": [
+    "local/lito381/server/CombatDatabase.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCancellationNpcRules$Rule.class",
+    "local/lito381/server/NativeCancellationNpcRules$Snapshot.class",
+    "local/lito381/server/NativeCancellationNpcRules.class",
+    "local/lito381/server/NativeCancellationNpcTransform$Name.class",
+    "local/lito381/server/NativeCancellationNpcTransform$Notice.class",
+    "local/lito381/server/NativeCancellationNpcTransform$Shape.class",
+    "local/lito381/server/NativeCancellationNpcTransform$Spawn.class",
+    "local/lito381/server/NativeCancellationNpcTransform$Target.class",
+    "local/lito381/server/NativeCancellationNpcTransform.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\inputs\\build.py",
+      "sha256": "cb244e30a616373fd7fcb5739380fed1f0b52517a8c46a8c8af3354400978a65"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\inputs\\CancellationNpcMethods.java",
+      "sha256": "8916b0cfa63586ada0d0a8d58dcbc093212c98d1eb6b55a93d427a737ce09068"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\inputs\\NativeCancellationNpcRules.java",
+      "sha256": "9b7beef60f7432181278e2a740ae8bdee5da864242196b892f0da26e9a66410c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\inputs\\NativeCancellationNpcTransform.java",
+      "sha256": "4927dc12683a617c24ebc9c982d15fa3621a55d25b40e682ca78bde91635a450"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "clear": "450230 iterates count+2C andarray+58, skipsNULL otherwise virtualslot0(1); afterloop setscount+2C=0 andselection+28=0. DoesnotzeroUI+68, changearray+58/capacity+5C, publish64A958, orclearseparate64A98C previewWORD. Callbackmayreenter/mutatecount; completionrequirescallbackreturn.",
+  "paths": [
+    {
+      "path": "46A520→450230→C_CEwriter",
+      "trigger": "direct46A520 call: read64A958 noNULLguard, clearthenattemptC_CE206 withc format. Actualsend/network/writecommitunknown.",
+      "direct_callers": [
+        "469E9D scene1 nonzero62C21C branch, afteropaqueUI/privatepresentationcallbacks",
+        "452C8C directhelper, afterotherknownwriter/previewcalls",
+        "Batch14 sealedCEfailure calls only priorreference; notrereviewed"
+      ],
+      "source_callers": [
+        "Batch16 ownD0→469CA0(1) priorstaticreference; selfalias/currentcontextunknown",
+        "451514..451546 predicate externalcomparatorcallEDI==0 andphase64AF98==1→452C20; commandproducer/token/externalfunction actualinputunknown"
+      ],
+      "bypass": "469CA0 62C21C==0 onlywritesphase64AF98 andreturns, no46A520/clear. Neednonzero andscene1dispatch plusallprecedingcallsreturn; cannotinferclearfromphase1 alone."
+    },
+    {
+      "path": "C9 result0→4A7941→46BA10",
+      "trigger": "bothdispatchmaps→4B309F→4A7850, firstheaderc decodedsigned0 selects4A7897; resultheaderparse/cleanupcallbacks mustreturn. NoC9wire/schema extension oractualNativeentryacceptance.",
+      "reuse_gate": "64A990!=0 AND64A98C!=0 AND64A930!=0 then46BA67 read64A958,46BA6D call450230; 64A958 itselfisnotNULLchecked. OtherUIbody notexpanded.",
+      "create_gate": "anyofthose3isNULL→46BC88 allocation/create →publish64A958 at46BCE2. Seventharg0; old64A958 disposal/ownershipandotherUIinitializercontinuation notqualified.",
+      "boundary": "Onlyprefixfirstcatalogclear orcatalogcreation/globalpublication, notentire46BA10 initializer orlaterotherUI/WORLD. Lastprovedcalls4A7941/46BA6D/46BCD1; actualobjects, branchstate, send/epoch/order missing."
+    },
+    {
+      "path": "diskvtablefirst465680→4656B0→450230→450170",
+      "trigger": "scalar destructor arglowbit1 additionallycalls4F103C; actualinvocation/destruction/lifetime notproved. Base450170body notexpanded.",
+      "boundary": "destructorcleardoesnotqualifya usablepostdestroycatalog orresetresponse."
+    }
+  ],
+  "row_outcomes": {
+    "unchangedexistingID": "UI68==0 andmatchingfullDWORDrow present→ignoreCC0; nofieldreplace",
+    "prior_clear_completed": "count0 meansnoexistingrowinactivescan; nextCC0 attemptsappend ifcapacityandallocationpermit. SameIDmaybeadded again, notreplacement.",
+    "new_constructor_completed": "count0,capacity256,arrayallocattempt,UI68=0; initialCC0 attemptsappend; NULL/objectexecutionunknown.",
+    "CF_delete_completed": "priorBatch18/19 fallbackdelete removesmatchingDWORDrows; a laterCC0 canattemptappend. CFprimaryprivatepath stillunknown; noCFprerequisiteproposal.",
+    "UI68_nonzero": "skipsdedup andattemptsduplicateappendwhilecount<256/capacity; noqualifiedproducerforcatalognonzero inthisfinitechain",
+    "no_clear_marker": "CC0payload hasnoclear/rebuild/listcomplete/resetbit; receivingalone doesnotinvoke450230 orswitchUI68"
+  },
+  "reset_implication": "Nativefullrowresetacceptance maydependonpriorcleared/new/absentrow state. SuppliedJavareset isknownwire; noautomaticrequestforCF/partial/CCextra, noGUIrootcauseorModernreplacementauthority."
+}

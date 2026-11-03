@@ -1,0 +1,36 @@
+{
+  "chains": [
+    {
+      "name": "Explicit adapter entry and directory publication",
+      "ordered_edges": [
+        "R525 route37 -> run94 -> candidate_java_entry193",
+        "window146 -> run_inner157 configures adapter; normal owned GAME continuation",
+        "Runtime148/149 -> Stage Directory + exactNcomplete -> character_scene.enter",
+        "window refresh35/47 -> rows50 -> full controls51/full names52 -> details54/visible63",
+        "CreateWindow155/156 -> COMBOBOX FIRST+36 with WS_VSCROLL/CBS_DROPDOWNLIST"
+      ]
+    },
+    {
+      "name": "Absolute dropdown selection through typed raw-name reservation",
+      "ordered_edges": [
+        "window proc130 CB_GETCURSEL -> checked usize -> directory_controls.get",
+        "player_entry_commands58..62 -> Runtime.choose_source_character_control176..180",
+        "Runtime171..173 bounded8 + epoch/roster/scene -> Scene.select18; no slot(index) lookup",
+        "refresh33/54/63 -> submit token/details/enabled; proc127 -> SubmitCharacter",
+        "Runtime182/183 -> handle_source_character_control173 -> prepare214/215/218",
+        "Sender30 -> bodyC9 + exact raw received name + NUL; only local reservation qualification"
+      ]
+    },
+    {
+      "name": "Scoped render closure and original button reuse",
+      "ordered_edges": [
+        "window WM_PAINT138 -> paint111 -> system background + Maps/menu/frame + Channel background + source11x11 icon",
+        "WM_DRAWITEM123 -> draw_character_button115..117 -> original Enter/Back pairs or text fallback",
+        "Directory/Details use standard COMBOBOX/STATIC; direct four character BUTTON controls use BS_NOTIFY, not portrait owner draw",
+        "Skin30/34/36 binds LTsurf index/pak and four character action buttons only; no decoded Classic selection backdrop or portrait fields"
+      ]
+    }
+  ],
+  "anchors_in": "character-flow-findings.json",
+  "stop_boundaries": "No Windows APIs executed, socket/server acceptance or original private constructor/virtual renderer bodies expanded; all edges are existing source text. Default main and R525 candidate source are separate."
+}

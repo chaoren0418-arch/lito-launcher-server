@@ -1,0 +1,138 @@
+{
+  "direction": "server_to_client",
+  "opcode": "0x4D",
+  "name_from_existing_server": "S_MANA_POINT",
+  "body_including_opcode": 5,
+  "parameter_bytes": 4,
+  "total_wire_bytes_in_existing_capture": 7,
+  "length_header_bytes": 2,
+  "fields": [
+    {
+      "name": "current_mp",
+      "body_offset": 1,
+      "width": 2,
+      "endian": "LE",
+      "wire_storage": "raw16bits",
+      "native_interpretation": "i16 sign-extended to i32",
+      "signed_range": [
+        -32768,
+        32767
+      ],
+      "native_destination": "protected object 008315E0 via 004C3E90; not direct plain DWORD at object base",
+      "load_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFB9",
+        "rva": "000AEFB9",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFB9",
+        "raw_backed": true,
+        "raw_hex": "0fbf06",
+        "mnemonic": "movsx",
+        "operands": "eax, word ptr [esi]",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      },
+      "argument_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFBC",
+        "rva": "000AEFBC",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFBC",
+        "raw_backed": true,
+        "raw_hex": "50",
+        "mnemonic": "push",
+        "operands": "eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      },
+      "setter_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFBD",
+        "rva": "000AEFBD",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFBD",
+        "raw_backed": true,
+        "raw_hex": "e8ce4e0100",
+        "mnemonic": "call",
+        "operands": "0x4c3e90",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      }
+    },
+    {
+      "name": "maximum_mp",
+      "body_offset": 3,
+      "width": 2,
+      "endian": "LE",
+      "wire_storage": "raw16bits",
+      "native_interpretation": "word load/store; no sign or zero extension establishes downstream arithmetic interpretation",
+      "raw_unsigned_range": [
+        0,
+        65535
+      ],
+      "native_destination": "WORD008348BA; exactly2 bytes written",
+      "load_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFC2",
+        "rva": "000AEFC2",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFC2",
+        "raw_backed": true,
+        "raw_hex": "668b4e02",
+        "mnemonic": "mov",
+        "operands": "cx, word ptr [esi + 2]",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      },
+      "store_witness": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFC6",
+        "rva": "000AEFC6",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFC6",
+        "raw_backed": true,
+        "raw_hex": "66890dba488300",
+        "mnemonic": "mov",
+        "operands": "word ptr [0x8348ba], cx",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      }
+    }
+  ],
+  "not_a_format_string_reader": true,
+  "string_fields": 0,
+  "object_or_owner_identity_fields": 0,
+  "length_semantics": "Body pointer ECX, then ESI=body+1. Direct WORD reads at+1/+3. No length argument, no exact-size guard, no consumed-pointer return; expected5 is structural, not a native rejection guarantee.",
+  "ordering": "Current protected setter call occurs before maximum WORD load/store. Whole native update requires that call to return.",
+  "S0C_distinction": {
+    "evidence": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner-contract.json",
+      "bytes": 85927,
+      "sha256": "EC24D44166CB1E738B6FF22C9B1AFE2E606AB6DD4B3CFECEF20FE42704074C92"
+    },
+    "S0C_current_mp": "u16 maskedFFFF at004A37B2 before same004C3E90 setter",
+    "S4D_current_mp": "i16 sign-extension at004AEFB9; no maskFFFF",
+    "same_high_bit_payload_example": {
+      "raw_word": "8000",
+      "S0C_argument_i32": 32768,
+      "S4D_argument_i32": -32768
+    },
+    "same_current_destination": "008315E0",
+    "same_maximum_destination": "WORD008348BA"
+  }
+}

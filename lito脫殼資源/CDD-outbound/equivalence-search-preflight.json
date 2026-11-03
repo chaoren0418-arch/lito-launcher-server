@@ -1,0 +1,29 @@
+{
+  "search_scope": "Owned JSON/Python/TXT/Markdown C_DD/cscsh references + fixedASM exactpush0DDh navigation; no all-UI/body census.",
+  "complete_Native_CDD_equivalent_found": false,
+  "existing_source_pins": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\D5-settings-receive-contract.json",
+      "bytes": 28849,
+      "sha256": "8A6C74A34CFAC1BC1AFF04215F80E347853069ACFA611C076269443B4671DFD8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\reconnect-source-index\\private-external-boundaries.json",
+      "bytes": 8677,
+      "sha256": "2DD8CA669160DD42E3FB93D3DC02C9701AA879864FF074D0B333827C9D29896E"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+      "bytes": 531377,
+      "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+    }
+  ],
+  "gap": "ExistingD5describesnon-ACKsnapshot, reconnect leavesformatter/stackhelper unqualified, receiveboundary recordsframe/sendprefix. NoCDDUIargument/serializerfield qualification found.",
+  "fixedASM_push0DDh_hits": 5,
+  "conditional_CDD_callsites": 3,
+  "navigation_false_candidates": [
+    "45FFADregion/430D20 UI coordinate argument",
+    "46E6DAregion/430D20 UI coordinate argument"
+  ],
+  "qualification": "FiniteASMnavigation counts, not wholePE direct/indirectcaller completeness. Rawbytesdecide."
+}

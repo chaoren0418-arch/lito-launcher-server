@@ -1,0 +1,23 @@
+{
+  "scope": "New bounded static evidence independent readback; no old matrix/test/capture replay",
+  "primary": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\SD0-receive-contract.json",
+    "bytes": 80727,
+    "sha256": "50A26C6526BC3BE8365DA435AE50117A25265EDE1AB0DC1E2F170BAEA95006C4"
+  },
+  "all_match": true,
+  "new_raw_ranges": 12,
+  "inherited_raw_ranges": 20,
+  "instruction_assertions": 75,
+  "aligned_internal_branch_targets": 45,
+  "handler_complete_bytes": 1216,
+  "UI_remove_complete_bytes": 191,
+  "scene1_branch_bytes": 506,
+  "preview_helper_complete_bytes": 132,
+  "sealed_D0_frames": 3,
+  "ArenaBot_before_any_same_epoch_CD": true,
+  "ordinary_C_D0_self_notification_roundtrip_qualified": false,
+  "ds_both_version_paths_and_unused_third_pointer_confirmed": true,
+  "native_comparison_scene_UI_authority_unqualified": true,
+  "prior_immutable_pins_match": 17
+}

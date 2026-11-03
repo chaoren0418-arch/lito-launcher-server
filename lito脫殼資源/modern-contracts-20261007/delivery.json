@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-10-07T06:16:02.078560+08:00",
+  "task_id": "bin_resources-modern-contracts-20261007",
+  "state": "review",
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-contracts-20261007.json",
+      "bytes": 41310,
+      "sha256": "DC08927CDB282EE14CD80080AD7EDB579EF8560AD98C00E83BFD5877BB39964D"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern_contracts_20261007.py",
+      "bytes": 21826,
+      "sha256": "1B35BF3D88794508ED226A46C36727FE6B7201865C8EFA9967AA1471F4B02A87"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-contracts-20261007\\bridge-verification.json",
+      "bytes": 2639,
+      "sha256": "7C15490AC55071A4AECABF5E27A9734F70944843804123FAE7325659B16E610F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\監製進度.json",
+      "bytes": 155726,
+      "sha256": "076D4667E53A1CF5674F9BF347EB7C04D36A4A69C31FB34F8AC730749552D3D0"
+    }
+  ],
+  "old_stage_reports_and_source_outputs_modified": false,
+  "product_accepted": false
+}

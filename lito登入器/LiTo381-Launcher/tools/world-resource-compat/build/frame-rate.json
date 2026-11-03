@@ -1,0 +1,66 @@
+{
+  "status": "native-tw-oracle-qualified",
+  "input": {
+    "path": "D:\\lineage\u958b\u767c\\\u7d93\u5178\u7248UI\u8cc7\u6e90\\\u8b49\u64da\u539f\u6a94\\TW13081901.memory.bin",
+    "sha256": "fd1a066edd6d0e9a317c1cb4dd191d0c7d02ee15393f49c607d14523f2b4778c"
+  },
+  "cases": 10560,
+  "total_cases": 10560,
+  "actions": [
+    0,
+    1,
+    4,
+    5,
+    11,
+    12,
+    18,
+    19,
+    20,
+    21,
+    24,
+    25,
+    40,
+    46,
+    47,
+    50,
+    51,
+    54,
+    58,
+    62,
+    83,
+    84
+  ],
+  "speed_modes": [
+    0,
+    1,
+    2,
+    17,
+    18
+  ],
+  "brave_modes": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6
+  ],
+  "durations": [
+    1,
+    41,
+    80,
+    333
+  ],
+  "own_and_peer": true,
+  "burst_counts": [
+    0,
+    3
+  ],
+  "total_frame_counts": [
+    1,
+    3
+  ],
+  "fixture_sha256": "d8312a928a3713f20825d457e5dd8124541374cac1a564520173d12cfa03a2cc",
+  "mode6_nonmovement": "TW multiplies frame time by3/4; server attack acceptance tolerance is separately0.775",
+  "limits": "Ordinary actors, no extra polymorph exemptions or TW-only ancillary flags; frame arithmetic, not wall-clock rendering."
+}

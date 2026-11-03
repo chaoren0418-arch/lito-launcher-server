@@ -1,0 +1,148 @@
+{
+  "updated_at": "2026-10-05T23:04:17.944246+08:00",
+  "current_exports": [
+    {
+      "current_DLL": {
+        "path": "C:\\Windows\\SysWOW64\\ws2_32.dll",
+        "bytes": 399848,
+        "sha256": "5D920A7A5486E7C1693334D59271F2A59A64B59A8FA87FA4BA71AACCE4CDF8A6"
+      },
+      "export": "WSAAsyncSelect",
+      "export_RVA": "000160C0",
+      "forwarder": null,
+      "current_DLL_is_historical_DLL_proven": false
+    },
+    {
+      "current_DLL": {
+        "path": "C:\\Windows\\SysWOW64\\ws2_32.dll",
+        "bytes": 399848,
+        "sha256": "5D920A7A5486E7C1693334D59271F2A59A64B59A8FA87FA4BA71AACCE4CDF8A6"
+      },
+      "export": "send",
+      "export_RVA": "000158A0",
+      "forwarder": null,
+      "current_DLL_is_historical_DLL_proven": false
+    },
+    {
+      "current_DLL": {
+        "path": "C:\\Windows\\SysWOW64\\ws2_32.dll",
+        "bytes": 399848,
+        "sha256": "5D920A7A5486E7C1693334D59271F2A59A64B59A8FA87FA4BA71AACCE4CDF8A6"
+      },
+      "export": "WSAGetLastError",
+      "export_RVA": "00005D50",
+      "forwarder": null,
+      "current_DLL_is_historical_DLL_proven": false
+    },
+    {
+      "current_DLL": {
+        "path": "C:\\Windows\\SysWOW64\\wsock32.dll",
+        "bytes": 16384,
+        "sha256": "3C6F947118F434BC2070E90BE7FC487FD413A02F58296F17024915873D15C4F8"
+      },
+      "export": "recv",
+      "export_RVA": "00001E40",
+      "forwarder": null,
+      "current_DLL_is_historical_DLL_proven": false
+    },
+    {
+      "current_DLL": {
+        "path": "C:\\Windows\\SysWOW64\\msvcrt.dll",
+        "bytes": 776448,
+        "sha256": "C1BE919E7DE267ED2FCFBB4DA52AAD912CB468069B58B6A00198FF3C525373A0"
+      },
+      "export": "sprintf",
+      "export_RVA": "00075200",
+      "forwarder": null,
+      "current_DLL_is_historical_DLL_proven": false
+    }
+  ],
+  "historical_base_support": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+    "bytes": 6507,
+    "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6"
+  },
+  "identities": [
+    {
+      "thunk_VA": "004EFE6E",
+      "branch_VA": "004EFE6F",
+      "fixed_target_VA": "759060C0",
+      "historical_WS2_base": "758F0000",
+      "current_export_RVA": "000160C0",
+      "name": "WSAAsyncSelect",
+      "status": "HIGH_CONFIDENCE_STATIC_IDENTITY; exact historical DLL hash not available"
+    },
+    {
+      "thunk_VA": "004EFEA4",
+      "fixed_target_VA": "759058A0",
+      "historical_WS2_base": "758F0000",
+      "current_export_RVA": "000158A0",
+      "name": "send",
+      "status": "HIGH_CONFIDENCE_STATIC_IDENTITY"
+    },
+    {
+      "thunk_VA": "004EFE7A",
+      "branch_VA": "004EFE7B",
+      "fixed_target_VA": "758F5D50",
+      "historical_WS2_base": "758F0000",
+      "current_export_RVA": "00005D50",
+      "name": "WSAGetLastError",
+      "status": "HIGH_CONFIDENCE_STATIC_IDENTITY"
+    },
+    {
+      "pointer_VA": "004F7314",
+      "fixed_pointer_value": "773F5200",
+      "historical_MSVCRT_base": "77380000",
+      "current_export_RVA": "00075200",
+      "name": "sprintf",
+      "status": "HIGH_CONFIDENCE_STATIC_IDENTITY; two/three cdecl formatting args, not MessageBox"
+    },
+    {
+      "thunk_VA": "004EFE62",
+      "branch_VA": "004EFE63",
+      "fixed_target_VA": "71581E40",
+      "name_candidate": "WSOCK32.recv",
+      "current_export_RVA": "00001E40",
+      "inferred_base_if_candidate_correct": "71580000",
+      "historical_report_WSOCK32_base": "71650000",
+      "matches_report_base": false,
+      "ASM_target": "70E91E40",
+      "status": "ABI_AND_CURRENT_EXPORT_RVA_CANDIDATE_ONLY; no matching historical module base pin"
+    }
+  ],
+  "private_window_calls": {
+    "window_setup_registration_call": "004802F9 -> 05AE0922",
+    "window_creation_call": "0048035A -> 05AE0000",
+    "message_pointer_values": {
+      "004F7314": "773F5200",
+      "004F7450": "05AE0922",
+      "004F7454": "05AE0B08",
+      "004F7458": "05AE0ED1",
+      "004F745C": "05AF0000",
+      "004F7460": "05AF0194",
+      "004F7464": "05AF04D8",
+      "00630E08": "004934A0",
+      "00630E44": "004934A0",
+      "00630E80": "004934A0",
+      "00630EBC": "004934A0",
+      "00630F34": "004928C0",
+      "00631ECC": "00630DF8",
+      "004F7B80": "00414A80",
+      "004F7BA0": "00414C40",
+      "004F7C88": "00415CF0",
+      "004F7CA8": "00415C90"
+    },
+    "resolved_API_bodies": false,
+    "meaning": "WNDCLASSEX/MSG-compatible call forms; private targets absent. Do not identify actual PeekMessage/DispatchMessage/RegisterClassEx implementation from signature alone."
+  },
+  "official_semantics_sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsaasyncselect",
+      "supports": "For the identified API, window message registration, nonblocking socket mode, FD_READ1/FD_WRITE2/FD_CONNECT16/FD_CLOSE32. Does not prove captured execution/thread identity."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-peekmessagea",
+      "supports": "An actual PeekMessage call can dispatch pending nonqueued messages. Private message pointer05AF04D8 not proven this API; no inferred reentry event."
+    }
+  ]
+}

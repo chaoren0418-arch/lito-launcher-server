@@ -1,0 +1,64 @@
+{
+  "row_layout": "receivedmapWORD andUIrow+74 BYTE aredifferentrepresentations. Rowadd4659A6 loadsarg7 DWORD EBP+20→4659AD pushesEDX toconstructorarg7; constructor463C47 readsONLYbyte EBP+20→463C50 DLstore. Upperarg24bitsdiscarded. Adjacent4659AA/4659B1 forwardarg6 attributes, notmap.",
+  "full0_new_version": {
+    "condition": "signed63D54C>=9EA8; mapWORDnotFFFF/FF9C",
+    "projection": "signextend16 map toESI; scan64AFD0 signedcount/64AFE0 stride36 keyDWORD+20; EDIstarts0, firstmatchingindex→EDI; absent/count<=0 remains0. PushfullEDI thenrow+74 keepsEDI&FF, indices256apartcollide.",
+    "special": "FFFF/FF9C: low8(map)-u8mode-1 modulo256 (4A7B3F/45/4F), NOT FE-modeforFF9C. UpperECX argbitsnotinitializedasnewwire; byteconstructordiscardsthem.",
+    "flags": "4A7EE0 attrsbit2→2 else1 OR4A7EF0(mode). Validmode0..5→2000/200/400/1000/800/100hex; invalidsignednegative/>5 uninitializedstackreturn remainsunknown."
+  },
+  "full0_old_version": {
+    "condition": "signed63D54C<9EA8",
+    "ordinary": "low8(map)+0C modulo256",
+    "special": "FFFF/FF9C andsignedversion>=7794→FE-u8mode modulo256; below7794→FF; rawmap specialcodescollapseonthisoldbranch"
+  },
+  "partial5": {
+    "condition": "subtype5 dhc independentof9EA8 ordinarylookup threshold",
+    "ordinary": "low8(map)+0C modulo256 (ADD AL,0C); no64AFD0/64AFE0 lookup inthisbranch",
+    "special": "FFFF/FF9C andsignedversion>=7794→FE-u8mode modulo256, otherwiseFF",
+    "store": "465C50 scansallmatchingfullDWORDIDs, calls463D70 byteargto+74. Absentnoappend; upperstack/registerbitsdiscarded.",
+    "flags": "465CD0 firstmatchingflags+78 (absentreturnsinputroomID) →ESI&FF ORmodehelper→465C90 writesallmatchingrows. Preservesonlylow8, replacesallhigherbits; duplicate rowsreceivefirstrowlowflags. Absentflagssetterhasnomatchingrow."
+  },
+  "illustrative_arithmetic_not_runtime": [
+    {
+      "case": "ordinaryWORD0101 olderfull0/partial5",
+      "BYTE_hex": "0D",
+      "reason": "(01+0C)&FF"
+    },
+    {
+      "case": "newfull0 lookupindex256",
+      "BYTE_hex": "00",
+      "reason": "256&FF; mapgeneration/resourceunknown"
+    },
+    {
+      "case": "FFFF mode1 newfull0/oldfull0/partial5",
+      "BYTE_hex": [
+        "FD",
+        "FD",
+        "FD"
+      ]
+    },
+    {
+      "case": "FF9C mode1 newfull0 vsoldfull0/partial5",
+      "BYTE_hex": [
+        "9A",
+        "FD",
+        "FD"
+      ],
+      "reason": "9C-1-1 versusFE-1"
+    },
+    {
+      "case": "sealednewfull0 WORD0000 mode1",
+      "BYTE": "lookupindex&FF ordefault0",
+      "flags_hex": "00000201",
+      "qualification": "hypotheticalvalidattrs0/mode1 staticprojectiononly; existingrowignore/storage/runtimeunproved. Partial5 map0wouldproduce0C."
+    }
+  ],
+  "not_qualified": [
+    "actual64AFD0/64AFE0 tablecontents/generation",
+    "mapresourceID orWORLD binding",
+    "selectedpreview/UIrender/use ofrowBYTE",
+    "Nativeversion/rowwriteexecuted",
+    "stableinvalidmodeflags",
+    "upperregisterpaddingaspacketfields"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "pins": true,
+  "server_release_verified": true,
+  "formal_input_gate_verified": true,
+  "hash_case_and_mismatch_regression": true,
+  "footer_removed": true
+}

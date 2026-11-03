@@ -1,0 +1,13 @@
+{
+  "package_status": "未匯入、未接線",
+  "baseline": "0.6.60",
+  "original_observed_path": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\app\\server\\LiTo381-SharedResources-candidate.jar",
+  "original_pin": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+  "currently_observed_formal_sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac",
+  "archive": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\backups\\baseline-0.6.60.zip",
+  "archive_member": "launcher/app/server/LiTo381-SharedResources-candidate.jar",
+  "archive_sha256": "7fd9eaa21ee0e65761b93fda968f439213013c4c463ddbe0391a6aa7f3ec6172",
+  "resolved_input": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\db\\candidates\\resource-enrichment-0.6.60\\pinned-inputs\\LiTo381-SharedResources-0.6.60.jar",
+  "resolved_sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43",
+  "scope": "archived published0.6.60 snapshot; latest formal JAR is a different input, not analyzed as0.6.60; no Main/network/deployment"
+}

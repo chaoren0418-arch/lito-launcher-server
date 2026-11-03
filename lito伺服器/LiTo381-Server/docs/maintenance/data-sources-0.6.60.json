@@ -1,0 +1,1378 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-13T19:44:32.678836+08:00",
+  "workspace": "D:/lineage開發",
+  "deployment": "native launcher 0.6.60",
+  "scope": "read-only provenance audit; no SQL/production binary/config changes",
+  "verification_boundary": "class presence/hash is not live feature activation; current Java source not assumed byte-identical to deployed class; old report paths may be mojibake, use indexed real path and hash",
+  "source_kind_legend": {
+    "native-code": "原生指令/封包解析",
+    "native-resource": "客戶端資源內容",
+    "resource-derived": "資源推導值",
+    "runtime-adjusted": "依執行證據校正",
+    "shared-db": "共用天堂資料庫",
+    "retained-history": "保留歷史報導/說明",
+    "retained-server": "保留其他伺服器套件",
+    "server-policy": "本專案玩法/相容預設",
+    "seed": "本專案範例SQL",
+    "operator-config": "管理者設定",
+    "server-generated": "執行期產生",
+    "catalog-projection": "待回查原始資源的程式整理",
+    "client-extension": "登入器/DLL補充",
+    "generated-resource": "生成資源"
+  },
+  "pins": [
+    {
+      "file": "3-lito開發/lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar"
+    },
+    {
+      "file": "0-客戶端/LiTo.bin"
+    },
+    {
+      "file": "3-lito開發/lito伺服器/LiTo381-Server/deployment/release-inputs.json"
+    }
+  ],
+  "deployment_hash_matches": true,
+  "jar_resources": {
+    "battle/spr-action-380.csv": {
+      "bytes": 461573,
+      "sha256": "4af7b6084abfaf0ee46c6e649480efb275999597713019e0608eb05bdf91b969"
+    },
+    "battle/spr-action-tw13081901.csv": {
+      "bytes": 897992,
+      "sha256": "781991acb930bb3f1d831bed003b343080661b4492c9941437f7d6fd4be4f2bc"
+    },
+    "battle/arena-passable-v1.bin": {
+      "bytes": 385687,
+      "sha256": "665d173742317ab023bb5effaee7ffea35e044517df21fba868ff694c430a7e7"
+    }
+  },
+  "database_snapshot": {
+    "observed_at": "2026-10-13T19:38:10.975276+08:00",
+    "queries": "SELECT only; JDBC readOnly=true; no account/character/receipt contents exported; not an atomic multi-table snapshot",
+    "tables": {
+      "commands": {
+        "engine": "InnoDB",
+        "row_count": 3,
+        "columns": [
+          {
+            "name": "name",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "access_level",
+            "type": "INT"
+          },
+          {
+            "name": "class_name",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "system",
+            "type": "TINYINT UNSIGNED"
+          }
+        ]
+      },
+      "lito_battle_object": {
+        "engine": "InnoDB",
+        "row_count": 26,
+        "columns": [
+          {
+            "name": "mode_id",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "map_id",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "role",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "x",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "y",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "gfx",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "maximum_hp",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          }
+        ],
+        "notes": [
+          {
+            "note": "Honor blue",
+            "count": 8
+          },
+          {
+            "note": "Honor red",
+            "count": 8
+          },
+          {
+            "note": "Siege inner",
+            "count": 3
+          },
+          {
+            "note": "Siege outer left",
+            "count": 3
+          },
+          {
+            "note": "Siege outer right",
+            "count": 3
+          },
+          {
+            "note": "Time Attack start tower",
+            "count": 1
+          }
+        ],
+        "seed_comparison": {
+          "seed_rows": 26,
+          "exact_rows_equal_in_seed_columns": true,
+          "live_row_sha256": "8604f48357e38ff4b0b06e87be262874a34cf22760750e1ff9a31628286614ba",
+          "seed_row_sha256": "8604f48357e38ff4b0b06e87be262874a34cf22760750e1ff9a31628286614ba",
+          "changed_or_extra_live_rows": 0,
+          "missing_or_changed_seed_rows": 0
+        }
+      },
+      "lito_battle_player_spawn": {
+        "engine": "InnoDB",
+        "row_count": 380,
+        "columns": [
+          {
+            "name": "mode_id",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "map_id",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "spawn_index",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "x",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "y",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          }
+        ],
+        "notes": [
+          {
+            "note": "原生預設出生點",
+            "count": 380
+          }
+        ],
+        "seed_comparison": {
+          "seed_rows": 380,
+          "exact_rows_equal_in_seed_columns": true,
+          "live_row_sha256": "3773a347993409495a0337f0ffc8b7a29ca7c0fa582db3d6f3b1e855b4148a11",
+          "seed_row_sha256": "3773a347993409495a0337f0ffc8b7a29ca7c0fa582db3d6f3b1e855b4148a11",
+          "changed_or_extra_live_rows": 0,
+          "missing_or_changed_seed_rows": 0
+        }
+      },
+      "lito_battle_rule": {
+        "engine": "InnoDB",
+        "row_count": 40,
+        "columns": [
+          {
+            "name": "mode_id",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "map_id",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "time_limit_seconds",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "goal",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "minimum_players",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          }
+        ],
+        "notes": [
+          {
+            "note": "Death Match",
+            "count": 15
+          },
+          {
+            "note": "Honor Match",
+            "count": 8
+          },
+          {
+            "note": "Pet Race",
+            "count": 4
+          },
+          {
+            "note": "Quest Battle",
+            "count": 9
+          },
+          {
+            "note": "Siege War",
+            "count": 3
+          },
+          {
+            "note": "Time Attack",
+            "count": 1
+          }
+        ],
+        "seed_comparison": {
+          "seed_rows": 40,
+          "exact_rows_equal_in_seed_columns": true,
+          "live_row_sha256": "eddb42fee69a1fa7178c3ad67d6a56c2e49ac214cdfe9e3dc6742ac19bb92a5a",
+          "seed_row_sha256": "eddb42fee69a1fa7178c3ad67d6a56c2e49ac214cdfe9e3dc6742ac19bb92a5a",
+          "changed_or_extra_live_rows": 0,
+          "missing_or_changed_seed_rows": 0
+        }
+      },
+      "lito_battle_settlement": {
+        "engine": "InnoDB",
+        "row_count": 0,
+        "columns": [
+          {
+            "name": "result_id",
+            "type": "CHAR"
+          },
+          {
+            "name": "sequence_id",
+            "type": "BIGINT UNSIGNED"
+          },
+          {
+            "name": "battle_id",
+            "type": "CHAR"
+          },
+          {
+            "name": "source_database",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "source_name",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "char_obj_id",
+            "type": "BIGINT UNSIGNED"
+          },
+          {
+            "name": "char_name",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "won",
+            "type": "BIT"
+          },
+          {
+            "name": "disconnected",
+            "type": "BIT"
+          },
+          {
+            "name": "applied",
+            "type": "BIT"
+          },
+          {
+            "name": "created_at",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "applied_at",
+            "type": "TIMESTAMP"
+          }
+        ]
+      },
+      "lito_battle_spawn": {
+        "engine": "InnoDB",
+        "row_count": 25,
+        "columns": [
+          {
+            "name": "mode_id",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "map_id",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "wave",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "sort_order",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "npc_id",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "quantity",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "x",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "y",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          }
+        ],
+        "seed_comparison": {
+          "seed_rows": 25,
+          "exact_rows_equal_in_seed_columns": true,
+          "live_row_sha256": "18c8d2d6b019b33fddde0061d27d9f75d5a4758a44b93aeaba8898670914bfa3",
+          "seed_row_sha256": "18c8d2d6b019b33fddde0061d27d9f75d5a4758a44b93aeaba8898670914bfa3",
+          "changed_or_extra_live_rows": 0,
+          "missing_or_changed_seed_rows": 0
+        }
+      },
+      "lito_source_server": {
+        "engine": "InnoDB",
+        "row_count": 8,
+        "columns": [
+          {
+            "name": "source_id",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "display_name",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "character_database",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          }
+        ]
+      },
+      "lito_tournament_shop": {
+        "engine": "InnoDB",
+        "row_count": 16,
+        "columns": [
+          {
+            "name": "item_id",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "sort_order",
+            "type": "SMALLINT UNSIGNED"
+          },
+          {
+            "name": "buy_price",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "sell_price",
+            "type": "INT UNSIGNED"
+          },
+          {
+            "name": "enabled",
+            "type": "TINYINT UNSIGNED"
+          },
+          {
+            "name": "note",
+            "type": "VARCHAR"
+          }
+        ],
+        "seed_comparison": {
+          "seed_rows": 16,
+          "exact_rows_equal_in_seed_columns": true,
+          "live_row_sha256": "324731080a2c94107ae9aa3217143d179d8d6d56bf13c8c71462402f0c8e531c",
+          "seed_row_sha256": "324731080a2c94107ae9aa3217143d179d8d6d56bf13c8c71462402f0c8e531c",
+          "changed_or_extra_live_rows": 0,
+          "missing_or_changed_seed_rows": 0
+        }
+      }
+    },
+    "static_counts": {
+      "weapon": 364,
+      "armor": 1422,
+      "etcitem": 3320,
+      "skills": 807,
+      "npc": 4138,
+      "spr_action": 30812,
+      "道具_物品詳細說明": 52
+    },
+    "comparison_encoding": "SELECT * for the five seed tables; reorder columns to seed column order; convert non-NULL values to strings; each row=json ensure_ascii=false separators=(comma,colon); sort row strings and join LF; SHA-256 UTF-8 without trailing LF"
+  },
+  "entries": [
+    {
+      "id": "battle-mode",
+      "title": "模式數字與地圖選擇",
+      "database_target": "380_lito.lito_battle_rule",
+      "fields": [
+        "mode_id",
+        "map_id"
+      ],
+      "source_kinds": [
+        "native-code",
+        "native-resource"
+      ],
+      "evidence": "靜態解析紀錄與程式對應",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleRules.java",
+          "line": 18,
+          "anchor": "sub_46B7D0"
+        },
+        {
+          "file": "3-lito開發/lito脫殼資源/map-table-source-contract.json"
+        }
+      ],
+      "limits": "數字與封包分支可追溯；不因此證明時間、HP 或勝負平手規則為原服值。",
+      "jar_members": {
+        "BattleRules": {
+          "present": true,
+          "sha256": "da051d7d51ed6cbeb1878a20c4c23065809bf48d107d7dea0ec0e908403be3a7"
+        },
+        "BattleRules$Mode": {
+          "present": true,
+          "sha256": "378aeba6d09f58a9541863dc4f56755ca85a54c8b06632d7c977c1382f43112c"
+        }
+      }
+    },
+    {
+      "id": "battle-policy",
+      "title": "戰鬥限時與勝利条件",
+      "database_target": "380_lito.lito_battle_rule",
+      "fields": [
+        "time_limit_seconds",
+        "goal",
+        "minimum_players",
+        "enabled"
+      ],
+      "source_kinds": [
+        "retained-history",
+        "server-policy",
+        "seed"
+      ],
+      "evidence": "現場與種子一致；來源依欄位混合",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql",
+          "line": 5,
+          "anchor": "-- 來源："
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleRules.java",
+          "line": 37,
+          "anchor": "Contemporary LiTo"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoSiegePolicy.java",
+          "line": 18,
+          "anchor": "INITIAL_2003_SOURCE_URL"
+        }
+      ],
+      "limits": "保留資料中的歷史報導本次未重新上網核驗；死亡競賽等預設數值不可概括標成 bin 原版。",
+      "jar_members": {
+        "BattleRules": {
+          "present": true,
+          "sha256": "da051d7d51ed6cbeb1878a20c4c23065809bf48d107d7dea0ec0e908403be3a7"
+        },
+        "NativeLitoSiegePolicy": {
+          "present": true,
+          "sha256": "001536707340de49dc48327b4f87af5b44452f2abc404820750efabaa0d49093"
+        }
+      }
+    },
+    {
+      "id": "player-spawn",
+      "title": "玩家出生座標",
+      "database_target": "380_lito.lito_battle_player_spawn",
+      "fields": [
+        "mode_id",
+        "map_id",
+        "spawn_index",
+        "x",
+        "y"
+      ],
+      "source_kinds": [
+        "resource-derived",
+        "runtime-adjusted",
+        "server-policy"
+      ],
+      "evidence": "地形推導／部分實測校正；未逐列找到原服座標證据",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql",
+          "line": 5,
+          "anchor": "-- 來源："
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaMapCatalog.java",
+          "line": 14,
+          "anchor": "safe spawn candidates"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleTimeAttackSpawnCatalog.java",
+          "line": 12,
+          "anchor": "unrecovered"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePetRaceCourseCatalog.java",
+          "line": 13,
+          "anchor": "Layer8"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleControlCatalog.java",
+          "line": 58,
+          "anchor": "defaultPlayerSpawns"
+        }
+      ],
+      "limits": "380列註記皆為原生預設出生點；本索引更正解讀，未改動 SQL 註記。Time Attack 明確標 provisional。",
+      "jar_members": {
+        "ArenaMapCatalog": {
+          "present": true,
+          "sha256": "ec8cdc6461de15bc47393af39f9f69210ebd6fdb4c18de4923010ec4a7e85ed9"
+        },
+        "BattleTimeAttackSpawnCatalog": {
+          "present": true,
+          "sha256": "ac757cb2531be6d54267a78d3dabe34fc0b392d0aeac165a24c82dc583eb899b"
+        },
+        "BattlePetRaceCourseCatalog": {
+          "present": true,
+          "sha256": "445f574d0af07c4a66cf0dd43e6da62d90274490c84a0803dff8db194b391515"
+        },
+        "BattleControlCatalog": {
+          "present": true,
+          "sha256": "db05e00895492d19bacdc30ab4ad259ec2e4bff0d79cc188cfc1385554e2e7c5"
+        }
+      }
+    },
+    {
+      "id": "battle-object",
+      "title": "塔與目標物",
+      "database_target": "380_lito.lito_battle_object",
+      "fields": [
+        "role",
+        "x",
+        "y",
+        "gfx",
+        "maximum_hp"
+      ],
+      "source_kinds": [
+        "seed",
+        "resource-derived",
+        "server-policy"
+      ],
+      "evidence": "範例值已部署；原服每欄精確來源未恢復",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql",
+          "line": 5,
+          "anchor": "-- 來源："
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleControlCatalog.java",
+          "line": 18,
+          "anchor": "ObjectPlacement"
+        }
+      ],
+      "limits": "26筆中 HP=3000 等預設不能當原服平衡值；角色、座標、模型與HP須分開驗證。",
+      "jar_members": {
+        "BattleControlCatalog": {
+          "present": true,
+          "sha256": "db05e00895492d19bacdc30ab4ad259ec2e4bff0d79cc188cfc1385554e2e7c5"
+        }
+      }
+    },
+    {
+      "id": "battle-spawn",
+      "title": "NPC 波次配置",
+      "database_target": "380_lito.lito_battle_spawn",
+      "fields": [
+        "wave",
+        "npc_id",
+        "quantity",
+        "x",
+        "y"
+      ],
+      "source_kinds": [
+        "seed",
+        "shared-db",
+        "server-policy"
+      ],
+      "evidence": "範例配置，NPC模板取共用庫",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql",
+          "line": 5,
+          "anchor": "-- 來源："
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleControlCatalog.java",
+          "line": 19,
+          "anchor": "record Spawn"
+        }
+      ],
+      "limits": "map_id=0 為共用配置；NULL座標依現有生成路徑，不是原版固定座標；未取得原服完整刷怪表。",
+      "jar_members": {
+        "BattleControlCatalog": {
+          "present": true,
+          "sha256": "db05e00895492d19bacdc30ab4ad259ec2e4bff0d79cc188cfc1385554e2e7c5"
+        }
+      }
+    },
+    {
+      "id": "shop",
+      "title": "擂台商店",
+      "database_target": "380_lito.lito_tournament_shop",
+      "fields": [
+        "item_id",
+        "sort_order",
+        "buy_price",
+        "sell_price"
+      ],
+      "source_kinds": [
+        "retained-history",
+        "seed",
+        "shared-db"
+      ],
+      "evidence": "16列與種子一致；程式註明同系列2003資料",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql",
+          "line": 5,
+          "anchor": "-- 來源："
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/TournamentShopCatalog.java",
+          "line": 13,
+          "anchor": "does not embed"
+        }
+      ],
+      "limits": "商品/價格不在選定3.81C bin中；同系列資料不能宣稱同版本原服商店抓包。",
+      "jar_members": {
+        "TournamentShopCatalog": {
+          "present": true,
+          "sha256": "1dd3de30c023fde18ed72c2bee8aeceada97fd61d658c8665e32f256141b67cc"
+        }
+      }
+    },
+    {
+      "id": "shared-templates",
+      "title": "物品技能NPC模板",
+      "database_target": "380_db.weapon/armor/etcitem/skills/npc",
+      "fields": [
+        "item_id",
+        "skill_id",
+        "npcid",
+        "各數值與特效欄位"
+      ],
+      "source_kinds": [
+        "shared-db"
+      ],
+      "evidence": "設定路由與唯讀表計數已確認",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/tools/shared-database/SharedDatabase.java",
+          "line": 63,
+          "anchor": "resourceTable"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/Accounts.java",
+          "line": 571,
+          "anchor": "lito_tournament_shop"
+        }
+      ],
+      "limits": "本次只讀表計數，未對共用庫所有數值作歷史溯源或平衡驗證；保持天堂為權威。",
+      "jar_members": {
+        "SharedDatabase": {
+          "present": true,
+          "sha256": "be8092957775614d8b6af49c0c178ed3bed2f8fa49eb1437408a8a2e34bd5e85"
+        },
+        "LegacyMySqlRepository": {
+          "present": true,
+          "sha256": "54f6a6a4efac8101df470b31ecdd6a5b577bcffc27a49302292e6e8403f01eb5"
+        }
+      }
+    },
+    {
+      "id": "item-detail",
+      "title": "道具擴充說明",
+      "database_target": "380_db.道具_物品詳細說明",
+      "fields": [
+        "設定文字"
+      ],
+      "source_kinds": [
+        "shared-db",
+        "client-extension"
+      ],
+      "evidence": "現場52筆；歷次擴充見維護文檔",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/README.zh-TW.md"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/SQL-PERSISTENCE-GATES.zh-TW.md"
+        }
+      ],
+      "limits": "本次未逐道具驗證顯示；不是從bin取得的完整說明文本。",
+      "jar_members": {}
+    },
+    {
+      "id": "source-list",
+      "title": "來源伺服器設定",
+      "database_target": "380_lito.lito_source_server",
+      "fields": [
+        "source_id",
+        "display_name",
+        "character_database",
+        "enabled"
+      ],
+      "source_kinds": [
+        "operator-config"
+      ],
+      "evidence": "現場8列及schema已讀取",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/lito_source_server.sql"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/tools/shared-database/UnifiedConfiguration.java"
+        }
+      ],
+      "limits": "八格是部署與原生相容限制；可填列不代表任意擴增客戶端容量。",
+      "jar_members": {
+        "UnifiedConfiguration": {
+          "present": true,
+          "sha256": "da38d670f60a1e66fc1e1549fbc7ab54a6483578bf6aaa749fc010db8afea360"
+        }
+      }
+    },
+    {
+      "id": "commands",
+      "title": "GM指令",
+      "database_target": "380_lito.commands",
+      "fields": [
+        "name",
+        "access_level",
+        "class_name",
+        "system"
+      ],
+      "source_kinds": [
+        "server-policy",
+        "operator-config"
+      ],
+      "evidence": "現場3列；處理器需程式支援",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/lito_commands.sql"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/SQL-PERSISTENCE-GATES.zh-TW.md",
+          "line": 19,
+          "anchor": "唯一來源"
+        }
+      ],
+      "limits": "不導入天堂全表冒充所有指令已接線。",
+      "jar_members": {
+        "SourceAdministration": {
+          "present": true,
+          "sha256": "e2164a7af06c8a073c78ee8b90ae75cfb393f7e213c54dfca7a375b39c336a5a"
+        }
+      }
+    },
+    {
+      "id": "settlement",
+      "title": "勝敗與結算收據",
+      "database_target": "380_lito.lito_battle_settlement + 所選來源.character_lito",
+      "fields": [
+        "result_id",
+        "battle_id",
+        "wins",
+        "losses",
+        "last_result_id"
+      ],
+      "source_kinds": [
+        "server-generated"
+      ],
+      "evidence": "0.6.60自建持久化；本次只讀收據表結構/筆數",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/db/lito_battle_settlement.sql"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/SettlementSql.java"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/SQL-PERSISTENCE-GATES.zh-TW.md",
+          "line": 37,
+          "anchor": "MyISAM"
+        }
+      ],
+      "limits": "無bin預設戰績；未讀取玩家個別戰績，保留結算限定寫入政策。",
+      "jar_members": {
+        "SettlementSql": {
+          "present": true,
+          "sha256": "8b10d1f8adf33eb4555e03c5ddd6cb59dbdd6aec28f3171ebf5f57a8b142b262"
+        },
+        "DurableBattleSettlement": {
+          "present": true,
+          "sha256": "c469225686f0fae593f53c48d72e6a693d15492e6514c23567ef0ee3dfe75452"
+        }
+      }
+    },
+    {
+      "id": "map-catalog",
+      "title": "LiTo地圖名稱分類",
+      "database_target": "尚無專用 SQL 表",
+      "fields": [
+        "map_id",
+        "category",
+        "name",
+        "source_slot"
+      ],
+      "source_kinds": [
+        "native-resource"
+      ],
+      "evidence": "程式整理LTmapstr-c.tbl；原始契約仍保留執行期綁定未知",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoMapTableCatalog.java",
+          "line": 9,
+          "anchor": "Exact active rows"
+        },
+        {
+          "file": "3-lito開發/lito脫殼資源/map-candidate-index-contract.json"
+        },
+        {
+          "file": "3-lito開發/lito脫殼資源/map-candidate-index/LTmapstr-c.tbl.parsed.json"
+        }
+      ],
+      "limits": "47列資源候選不等於47張可開放戰鬥地圖；包含城鎮與成對/事件地圖，必須保留版本/語系/分類。",
+      "jar_members": {
+        "NativeLitoMapTableCatalog": {
+          "present": true,
+          "sha256": "105cf4103de1cac8a50d0501af87ad123990cf1de45a88537b6a77ddd0999be8"
+        }
+      }
+    },
+    {
+      "id": "map-portal",
+      "title": "地圖傳送入口",
+      "database_target": "尚無專用 SQL 表",
+      "fields": [
+        "source_map",
+        "source_x",
+        "source_y",
+        "target_map",
+        "target_x",
+        "target_y",
+        "raw_tag"
+      ],
+      "source_kinds": [
+        "resource-derived",
+        "native-code"
+      ],
+      "evidence": "S32 Layer7及原生送包欄位對應",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaPortalCatalog.java",
+          "line": 9,
+          "anchor": "reconstructed from S32 Layer 7"
+        }
+      ],
+      "limits": "0x64..0x66 tag不可推定為隊伍或通行權限；建表後仍需讀取接線。",
+      "jar_members": {
+        "ArenaPortalCatalog": {
+          "present": true,
+          "sha256": "d17d45575a3dc56cceaafaf7d5a3697e19c3e4714cb2cc37c9ed74bda099bcd9"
+        }
+      }
+    },
+    {
+      "id": "map-collision",
+      "title": "八方向通行圖",
+      "database_target": "JAR battle/arena-passable-v1.bin",
+      "fields": [
+        "map",
+        "sector",
+        "directional_edges"
+      ],
+      "source_kinds": [
+        "resource-derived",
+        "native-code"
+      ],
+      "evidence": "Layer3對照sub_48B640",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaPassabilityCatalog.java",
+          "line": 14,
+          "anchor": "sub_48B640"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/resources/battle/arena-passable-v1.bin"
+        }
+      ],
+      "limits": "適合保留二進位資源與索引摘要，不宜拆成大量SQL逐格資料。",
+      "jar_members": {
+        "ArenaPassabilityCatalog": {
+          "present": true,
+          "sha256": "1c6ed745e8aa66353a13b06f2da4574c607c2621fd49ea077cb7444c7824e03d"
+        }
+      }
+    },
+    {
+      "id": "map-zone",
+      "title": "區域名稱與色彩",
+      "database_target": "尚無專用 SQL 表",
+      "fields": [
+        "zone_key",
+        "map_id",
+        "bounds",
+        "color"
+      ],
+      "source_kinds": [
+        "native-resource"
+      ],
+      "evidence": "LTzone-c.tbl的程式投影，2區2色",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoZoneCatalog.java",
+          "line": 5,
+          "anchor": "Exact active rows"
+        }
+      ],
+      "limits": "不從顏色自行推導安全區/禁戰區；新增資料表不會自動啟用城鎮。",
+      "jar_members": {
+        "NativeLitoZoneCatalog": {
+          "present": true,
+          "sha256": "db0b05da3a7a7f92743680f26364b8ab670ef0eeceea717dea2c1582f2df025e"
+        }
+      }
+    },
+    {
+      "id": "map-item",
+      "title": "地圖道具與頁碼",
+      "database_target": "尚無 LiTo 專用對應表",
+      "fields": [
+        "item_id",
+        "page",
+        "icon",
+        "ground_gfx",
+        "name_id"
+      ],
+      "source_kinds": [
+        "catalog-projection"
+      ],
+      "evidence": "現有程式18筆對應，尚未逐筆回查原始資源",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeMapItemCatalog.java",
+          "line": 7,
+          "anchor": "S_SHOW_MAP"
+        }
+      ],
+      "limits": "適合候選對應表；需核驗道具ID與18頁資源後匯入。",
+      "jar_members": {
+        "NativeMapItemCatalog": {
+          "present": true,
+          "sha256": "1a5d4f301c7cc344baa51b00754522173acb2371ffb5b5fbd6ae8249a2461bd3"
+        }
+      }
+    },
+    {
+      "id": "animation",
+      "title": "模型動作幀與速率",
+      "database_target": "380_db.spr_action + JAR CSV",
+      "fields": [
+        "gfx",
+        "action",
+        "frames",
+        "rate"
+      ],
+      "source_kinds": [
+        "shared-db",
+        "client-resource",
+        "generated-resource"
+      ],
+      "evidence": "目前正式helper預期TW13081901動畫表",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleAnimationCatalog.java",
+          "line": 21,
+          "anchor": "DEFAULT_RESOURCE"
+        },
+        {
+          "file": "3-lito開發/lito登入器/LiTo381-Launcher/app/server/Start-Shared-Formal.py"
+        },
+        {
+          "file": "3-lito開發/lito登入器/LiTo381-Launcher/app/server/test_formal.py",
+          "line": 32,
+          "anchor": "spr-action-tw13081901"
+        }
+      ],
+      "limits": "現場spr_action 30812列不等同JAR共用資源版全部動作；勿回退舊380 CSV。模型表与圖片/特效命名空間不同。",
+      "jar_members": {
+        "BattleAnimationCatalog": {
+          "present": true,
+          "sha256": "84bec829d927e1a756526e626bcdafbe973ddda4cd5fb2c81b621188e5a3b11f"
+        }
+      }
+    },
+    {
+      "id": "skill-presentation",
+      "title": "技能游標特效與BUFF圖示",
+      "database_target": "可設計 LiTo 相容覆寫表",
+      "fields": [
+        "skill_id",
+        "target_selector",
+        "cast_effect",
+        "projectile",
+        "status_icon",
+        "resource_version"
+      ],
+      "source_kinds": [
+        "shared-db",
+        "native-code",
+        "client-extension"
+      ],
+      "evidence": "已存在分散修補及靜態技能面板證据",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleSpellCatalog.java",
+          "line": 9,
+          "anchor": "C_USE_SPELL"
+        },
+        {
+          "file": "3-lito開發/lito脫殼資源/skill-pane-layout-contract.json"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/docs/maintenance/dragon-presentation-0.6.48.json"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/docs/maintenance/illusion-targets-0.6.51.json"
+        }
+      ],
+      "limits": "SQL映射需伺服器及DLL一起接線；圖片ID可用不代表技能效果/目標規則正確。",
+      "jar_members": {
+        "BattleSpellCatalog": {
+          "present": true,
+          "sha256": "2bd685d0320b2e3efee7f7ff12f05d79070078438558db2400bfeadb9630ff71"
+        }
+      }
+    },
+    {
+      "id": "rental-town",
+      "title": "租賃城鎮NPC",
+      "database_target": "尚無此部署専用 SQL 表",
+      "fields": [
+        "name",
+        "html",
+        "action",
+        "icon",
+        "actor_gfx",
+        "x",
+        "y"
+      ],
+      "source_kinds": [
+        "native-resource",
+        "retained-server",
+        "server-policy"
+      ],
+      "evidence": "名称/HTML可追溯；模型/位置是相容方案",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoRentalTownNpcCatalog.java",
+          "line": 11,
+          "anchor": "original server"
+        }
+      ],
+      "limits": "LTdesc/LTicon的20000命名空間不能直接當Sprite actor ID；未驗證0.6.60正式流程入口。",
+      "jar_members": {
+        "NativeLitoRentalTownNpcCatalog": {
+          "present": true,
+          "sha256": "c4252ce09114bc4bf18402449ae263cea4d182777b8aabd0a0bcebadade47236"
+        }
+      }
+    },
+    {
+      "id": "rental-shop",
+      "title": "租賃商店與價格",
+      "database_target": "尚無此部署專用 SQL 表",
+      "fields": [
+        "source_npc_id",
+        "item_id",
+        "price",
+        "currency"
+      ],
+      "source_kinds": [
+        "native-resource",
+        "retained-server"
+      ],
+      "evidence": "保留2010L1J資料包有hash；非原版官方價格",
+      "references": [
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoRentalMerchantCatalog.java",
+          "line": 24,
+          "anchor": "HISTORICAL_OFFICIAL_EXACT"
+        }
+      ],
+      "limits": "具備類別不代表現行大廳可用；需單獨產品/交易流程設計。",
+      "jar_members": {
+        "NativeLitoRentalMerchantCatalog": {
+          "present": true,
+          "sha256": "ef34108700d0f17969f3c2461c0260671adad88a34956c8c26fb68538db1a2db"
+        }
+      }
+    },
+    {
+      "id": "ui-protocol",
+      "title": "房間與UI狀態封包",
+      "database_target": "保留程式/協定文件",
+      "fields": [
+        "packet_fields",
+        "state_transition",
+        "native_address"
+      ],
+      "source_kinds": [
+        "native-code",
+        "client-extension"
+      ],
+      "evidence": "靜態契約及現行修補需分開",
+      "references": [
+        {
+          "file": "3-lito開發/lito脫殼資源/SCC-catalog-contract.json"
+        },
+        {
+          "file": "3-lito開發/lito伺服器/LiTo381-Server/SERVER-PROTOCOL-COVERAGE.zh-TW.md"
+        }
+      ],
+      "limits": "不適合以任意SQL數值改寫原生地址或封包布局。",
+      "jar_members": {
+        "Protocol": {
+          "present": true,
+          "sha256": "e76ade059ad61d5e95adfb3ffb6e65d098f669851c0c7c6753882c433e37c7da"
+        }
+      }
+    }
+  ],
+  "files": {
+    "3-lito開發/lito伺服器/LiTo381-Server/db/380_lito_seed_example.sql": {
+      "bytes": 26570,
+      "sha256": "e430136f5f62c165986f54995cab3499799f3f2d7d4ca3b667bfb68061d47510"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleRules.java": {
+      "bytes": 29173,
+      "sha256": "85d39762551ff8503eafc4b1e4bad56582c7c454ec73445d1ae95c0642312000"
+    },
+    "3-lito開發/lito脫殼資源/map-table-source-contract.json": {
+      "bytes": 35225,
+      "sha256": "12d76285cc907373a9cbb4d19c88add58ab997536e5238004321f83233b803c2"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoSiegePolicy.java": {
+      "bytes": 2393,
+      "sha256": "7412980e6984284c9a83940897857bdab27a9a7a84362912d0465c141884c5ba"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaMapCatalog.java": {
+      "bytes": 20722,
+      "sha256": "178d9dc2b5f88c541e93c793828cb8fd67e737383500715bcb8b090470d189b0"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleTimeAttackSpawnCatalog.java": {
+      "bytes": 4577,
+      "sha256": "5b23f062ae66a31b11b55f831d8646ea8883be4b563e1cd91ed0aa68356fd4aa"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePetRaceCourseCatalog.java": {
+      "bytes": 16320,
+      "sha256": "e467207063e68628c084a463f95a7f496c01e0e93386c3be8a6a3c740750c0e9"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleControlCatalog.java": {
+      "bytes": 13954,
+      "sha256": "5bf364457c1a37c9e83dc451d79b36a95830262ea3a6b481dc1db5a0b52bbfc5"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/TournamentShopCatalog.java": {
+      "bytes": 5239,
+      "sha256": "09c4146815ef524c6b10965e0a8429f6c980a196d1daa45986200981397224d9"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/tools/shared-database/SharedDatabase.java": {
+      "bytes": 15276,
+      "sha256": "1f6259990f1b5cca1aee259aa9c9cc64d0d61f02bc19ffd3fee283ffa01a33fa"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/Accounts.java": {
+      "bytes": 797044,
+      "sha256": "c4c8c3992a4fb67aac7ae5545ec341d4357217dff97be026a12662f45c8b09b9"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/README.zh-TW.md": {
+      "bytes": 10496,
+      "sha256": "5bcdb49984f143b03b3d642709e62536f1f0155384e2c088b1665cd4480a1a1c"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/SQL-PERSISTENCE-GATES.zh-TW.md": {
+      "bytes": 5396,
+      "sha256": "db4a32f0c0ca12fee93132da9f1dc9fcce8650f3db93b0d3fe5dc7a1e5846aa9"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/db/lito_source_server.sql": {
+      "bytes": 1465,
+      "sha256": "85f21e03ef0c538a0ab3ab7291bec2b670e30951daf13df68d28142f66102d98"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/tools/shared-database/UnifiedConfiguration.java": {
+      "bytes": 11317,
+      "sha256": "8e58a3e8552e4526ef28dead483862a1e6b9cf0c94746b0141004c34346f727f"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/db/lito_commands.sql": {
+      "bytes": 2056,
+      "sha256": "d9e2eabdc4809ac8f8dace16cb7b8b7b0726c49946375279bf33b45fa99f9815"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/db/lito_battle_settlement.sql": {
+      "bytes": 1804,
+      "sha256": "62455a8415efcf2f7a063895ada8e33341f2af9b70f6527184b5921a3ab1d1be"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/SettlementSql.java": {
+      "bytes": 6768,
+      "sha256": "e4f01a9ed8b6646b4418d380eeaa495c1e46ec20605f4681fd6e939bd48805ca"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoMapTableCatalog.java": {
+      "bytes": 5041,
+      "sha256": "f9cec2a8a2be5f85204330224ceee6fcb166b303f5f8efaa2f18cbe4dfd208be"
+    },
+    "3-lito開發/lito脫殼資源/map-candidate-index-contract.json": {
+      "bytes": 23714,
+      "sha256": "04ebeca473ff0bd0fc6a0eedde36af8819ec2fe59f037d08367bf7ef38b36307"
+    },
+    "3-lito開發/lito脫殼資源/map-candidate-index/LTmapstr-c.tbl.parsed.json": {
+      "bytes": 121340,
+      "sha256": "88e0b1daf608bf34a43d4d86b56919b0098128171aff0fa58fced5874b11136c"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaPortalCatalog.java": {
+      "bytes": 8609,
+      "sha256": "221e9b614b724f10a083f678a8a855098811c6942cf6864e3648e7264d0c1e2f"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ArenaPassabilityCatalog.java": {
+      "bytes": 7831,
+      "sha256": "1e06d6af384fbce34c0c7b3a4bb5ce355420eee481877a7d2e25ddf6353fab3a"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/resources/battle/arena-passable-v1.bin": {
+      "bytes": 385687,
+      "sha256": "665d173742317ab023bb5effaee7ffea35e044517df21fba868ff694c430a7e7"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoZoneCatalog.java": {
+      "bytes": 1104,
+      "sha256": "9c376a47af22d1f788302ae9271eaa61d12eb0190d27dd64a6f292132536a15a"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeMapItemCatalog.java": {
+      "bytes": 2504,
+      "sha256": "c09d9be411a7ceea258c78cc42bdecc7b633daf37fd745814ddf556d03cb8fb4"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleAnimationCatalog.java": {
+      "bytes": 9821,
+      "sha256": "fbe937deeff21632ed23bb090d90120b256ebc8ffcf0589f305e2b8bdb511c2d"
+    },
+    "3-lito開發/lito登入器/LiTo381-Launcher/app/server/Start-Shared-Formal.py": {
+      "bytes": 30262,
+      "sha256": "623469478b46f97a85f09ee9eb0a4a580a9c292153312aa29c362962c77b5f8a"
+    },
+    "3-lito開發/lito登入器/LiTo381-Launcher/app/server/test_formal.py": {
+      "bytes": 2211,
+      "sha256": "072ac3112b497abb085ad2d688b444deef215d2864ed18bfeb5487a38181f8e5"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleSpellCatalog.java": {
+      "bytes": 517272,
+      "sha256": "b1940d31a3be3156fa66584c4ea6e55ba20d25cfadb2a99a03815fa8b77215fb"
+    },
+    "3-lito開發/lito脫殼資源/skill-pane-layout-contract.json": {
+      "bytes": 64567,
+      "sha256": "45ebded431f925a0f38066702e67f0ad79e9139939d793e201a96eebd15e681f"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/docs/maintenance/dragon-presentation-0.6.48.json": {
+      "bytes": 2441,
+      "sha256": "669f2176984cdb699aa8a0eb31b236143ec91a80a849939d837b73cb6083865d"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/docs/maintenance/illusion-targets-0.6.51.json": {
+      "bytes": 3860,
+      "sha256": "1f80f5c4decd2ed44e3a4e98c609a7195b6dc7eccefc02b2a9baaf9e04afaf1b"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoRentalTownNpcCatalog.java": {
+      "bytes": 13614,
+      "sha256": "624f349b37bf57e96af34cf48e3434ee53fb992fc96e162cb784cff6318897da"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoRentalMerchantCatalog.java": {
+      "bytes": 12621,
+      "sha256": "9ad4079ddefca35cf29c42bdec3b447450919ce198281cbee5156251e7c2fad8"
+    },
+    "3-lito開發/lito脫殼資源/SCC-catalog-contract.json": {
+      "bytes": 64295,
+      "sha256": "e376b067f4e8bacd7f0dc01f2a615be0e2b0b71c2fa3dc59e001ec0330d3f9b5"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/SERVER-PROTOCOL-COVERAGE.zh-TW.md": {
+      "bytes": 2457,
+      "sha256": "bd3965be6405250912de317e08e7bcbb119ca4d7088f69c8294a84ea4372d7c3"
+    },
+    "3-lito開發/lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar": {
+      "bytes": 6290590,
+      "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43"
+    },
+    "0-客戶端/LiTo.bin": {
+      "bytes": 1941568,
+      "sha256": "ce6ee68ada8fd37e6c096b1a27e46cb6888f1179f85defb5007ac60287360292"
+    },
+    "3-lito開發/lito伺服器/LiTo381-Server/deployment/release-inputs.json": {
+      "bytes": 396,
+      "sha256": "877219e4b6f1ed365fa625859f7bc8bafd838a031b13d0b2c6edb1bc626b1be9"
+    }
+  },
+  "validation": {
+    "local_links_resolve": true,
+    "all_40_file_hashes_match": true,
+    "all_source_anchors_match": true,
+    "jar_class_and_resource_hashes_match": true,
+    "seed_tables_equal": 5,
+    "map_catalog_entries": 47,
+    "changes": "2 new documentation files; README and db README links; no production or SQL mutations",
+    "new_docs_bytes": 58116
+  }
+}

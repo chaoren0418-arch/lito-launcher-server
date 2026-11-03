@@ -1,0 +1,21 @@
+{
+  "new_code_ranges": 7,
+  "new_data_ranges": 0,
+  "necessary_reused_raw_ranges": 3,
+  "instruction_assertions": 21,
+  "bounded_Java_classes": 6,
+  "bounded_Java_methods": 12,
+  "source_IL_slices": 13,
+  "saved_C7_frame_rows_adopted": 18,
+  "new_capture_frames": 0,
+  "Native_dynamic_witnesses": 0,
+  "mode_step_dynamic_witnesses": 0,
+  "prior_primary_pins_preserved": 29,
+  "server_packet_unchanged": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-delta.json",
+    "bytes": 26509,
+    "sha256": "B4C00BF1C7F8D5FC17F0B819965527A63E9F9F3BDE822E1F1D4BA59A7733B54C"
+  },
+  "old_PASS_replayed": false,
+  "all_match": true
+}

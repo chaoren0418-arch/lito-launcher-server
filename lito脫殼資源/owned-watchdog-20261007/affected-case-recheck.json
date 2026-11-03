@@ -1,0 +1,90 @@
+{
+  "schema": "owned-process-affected-case-recheck-v1",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "normal",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\normal\\runtime.json",
+        "bytes": 5180,
+        "sha256": "FDD7AD4A85D65DBADF2C9C4C3D302DC2AD05D8FF3FCB0015EA13CCF64F590829"
+      }
+    },
+    {
+      "name": "hang",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\hang\\runtime.json",
+        "bytes": 8912,
+        "sha256": "A923F63059E9C01709CCA470AD6A9F303EE2B506D038B5B23975B62147F251E9"
+      }
+    },
+    {
+      "name": "spawned_child",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\spawned_child\\runtime.json",
+        "bytes": 10607,
+        "sha256": "7127902A67C0E9B2BFCFFCF300412AA6961690AFDB7767CE3C289C7A174F6081"
+      }
+    },
+    {
+      "name": "disk_poll",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\disk_poll\\runtime.json",
+        "bytes": 5304,
+        "sha256": "9E65517F3DCC93A290460315889D8347793A2CDE3D01230D4FF555057B47E95E"
+      }
+    },
+    {
+      "name": "controller_exception",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\controller_exception\\runtime.json",
+        "bytes": 6637,
+        "sha256": "CACCCAF43D783C6CF0717FFA5A3104F7B65B02CC64D4DC6521F0193C1675F8BA"
+      }
+    },
+    {
+      "name": "sentinel_not_miskilled",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs-recheck\\sentinel\\sentinel-audit.json",
+        "bytes": 7598,
+        "sha256": "9A91E6DD8EBF854D27D35A85A8AF664999C4A700B31A9872C328ECE5E5255C92"
+      }
+    }
+  ],
+  "failure": null,
+  "module_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\owned_process.py",
+    "bytes": 20925,
+    "sha256": "AE1A38A234051803CBD53B31CFFFAB4D4FD4E8DAF4AB232FF6F5ED60A90A7BDB"
+  },
+  "helper_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\fixture_helper.py",
+    "bytes": 1810,
+    "sha256": "508B9CD28D88684B336664D5ADE10D6DDAE15787CB4055EFFA0F7C599AEA793D"
+  },
+  "driver_at_execution": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py",
+    "bytes": 5434,
+    "sha256": "E321D86D3EF719C0709C0FF0E2BD3D387E52D59C4FD66B8CD2F4936EDE94AD9B"
+  },
+  "command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\recheck_failed_cases.py"
+  ],
+  "exit_code_expected": 0,
+  "unaffected_initial_PASS_cases_not_rerun": [
+    "stdout_stderr_flood",
+    "failed_containment",
+    "controller_exit"
+  ],
+  "old_LITO_PASS_replayed": false,
+  "IDA_launches": 0,
+  "game_launches": 0
+}

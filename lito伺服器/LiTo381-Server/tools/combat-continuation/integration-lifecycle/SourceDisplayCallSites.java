@@ -1,0 +1,5 @@
+import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Call-site facts only: no transformations, class initialization, Hub or SQL. */
+public final class SourceDisplayCallSites {
+ public static void main(String[]a)throws Exception{try(var jar=new JarFile(a[0])){for(var entry:Collections.list(jar.entries()))if(entry.getName().endsWith(".class")){var c=new ClassNode();new ClassReader(jar.getInputStream(entry)).accept(c,ClassReader.SKIP_DEBUG|ClassReader.SKIP_FRAMES);for(var m:c.methods){var found=new TreeSet<String>();for(var node:m.instructions)if(node instanceof MethodInsnNode call&&(call.owner.endsWith("/CombatPlayerDamage")||call.name.equals("takePlayerDamage")||call.name.equals("takeClassicWorldPlayerDamage")||call.name.equals("attackMonster")||call.name.equals("damageMonster")||call.name.equals("damageCompanion")||call.owner.endsWith("/NativePlayerCommit")&&call.name.equals("beginCalc")))found.add(call.owner+'.'+call.name+call.desc);if(!found.isEmpty())System.out.println(c.name+'\t'+m.name+'\t'+m.desc+'\t'+String.join("|",found));}}}}
+}

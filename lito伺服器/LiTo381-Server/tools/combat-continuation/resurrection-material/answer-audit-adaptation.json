@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\ResurrectionMaterialProbe.java",
+      "sha256": "a7b39b33a9c7163669ec3d22bbcbba8174ddbc8230fb8d4e1acf3b9189ef03a7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\test.py",
+      "sha256": "48f39d9ecdc012fc8eb5c4365540835278c606299f93dc4c1e368ed19423e78c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\resurrection-material\\prepare_answer_audit.py",
+      "sha256": "232e1320d129e84087150bbaa8ea53bf726c7c8ca3707973bb74f7bb9d6e2fc0"
+    }
+  ],
+  "scope": "64 observations; actual cast before Source role generation replacement; native C_ANSWER and private-root controls kept separate; no automatic parity claim"
+}

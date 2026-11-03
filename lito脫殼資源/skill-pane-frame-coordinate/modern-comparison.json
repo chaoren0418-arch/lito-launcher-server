@@ -1,0 +1,79 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\world_skill_panel.rs",
+    "bytes": 15680,
+    "sha256": "5C62C2197C1DC87E994D892856C38520A96843A43D97EABB7494055679CA5922"
+  },
+  "references": [
+    {
+      "line": 11,
+      "text": "const WIDTH: i32 = 800;"
+    },
+    {
+      "line": 13,
+      "text": "const FRAME_WIDTH: i32 = 193;"
+    },
+    {
+      "line": 14,
+      "text": "const FRAME_HEIGHT: i32 = 282;"
+    },
+    {
+      "line": 15,
+      "text": "const NUM: i32 = 5;"
+    },
+    {
+      "line": 16,
+      "text": "const DEN: i32 = 4;"
+    },
+    {
+      "line": 17,
+      "text": "pub(super) const LEFT: i32 = WIDTH - FRAME_WIDTH * NUM / DEN;"
+    },
+    {
+      "line": 18,
+      "text": "const TOP: i32 = 0;"
+    },
+    {
+      "line": 19,
+      "text": "const GRID_LEFT: i32 = 27;"
+    },
+    {
+      "line": 20,
+      "text": "const GRID_TOP: i32 = 34;"
+    },
+    {
+      "line": 21,
+      "text": "const CELL_WIDTH: i32 = 35;"
+    },
+    {
+      "line": 22,
+      "text": "const CELL_HEIGHT: i32 = 35;"
+    },
+    {
+      "line": 51,
+      "text": "    let mut archive = SharedArchive::open(root, SharedArchiveKind::SpriteShard(9))?;"
+    },
+    {
+      "line": 52,
+      "text": "    let bytes = archive.read_entry(\"2057.img\")?;"
+    },
+    {
+      "line": 54,
+      "text": "        \"shared magic 2057.img length mismatch\");"
+    },
+    {
+      "line": 60,
+      "text": "        \"shared magic 2057.img header mismatch\");"
+    },
+    {
+      "line": 311,
+      "text": "    #[ignore = \"explicit LITO_SHARED_RESOURCE_ROOT; real Sprite09 2057.img + SpellIcon.idx + list.ico\"]"
+    }
+  ],
+  "native_main_frame_size_and_hit_resource": "index934→934.img;mainframe4CCC3B→4CCC96",
+  "native_additional_draw_resource": "index933→933.img atE94; no payload extracted inthisbatch",
+  "Modern_frame": "sharedSprite09/2057.img;193x282",
+  "finding": "Modern2057 frame binding differs fromnative934 mainframe/sizing/hit and933 additionaldraw roles.934 ismainframe,butdoesnot replacealladditionalpane layers.",
+  "native_coordinate_condition": "If extractednativeLTsurf934 is successfullyloaded anddrag/G=0: childorigin=(433,0),ownerrect=(470,43,607,248),gridorigin=(470,43). Additional933 draworigin=(441,10).",
+  "Modern_policy": "800x600,5/4scale,frame193x282,inset27/34,step35;native codeuses640 rightalignment with934 width plus separate933 inset8/10 and34pxgrid."
+}

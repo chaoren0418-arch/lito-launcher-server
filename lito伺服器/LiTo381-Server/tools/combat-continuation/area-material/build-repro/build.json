@@ -1,0 +1,42 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-npc-runtime\\build\\candidate-cancellation-npc-runtime.jar",
+    "sha256": "3552cf49d52e52ca570b18b7ef8043cbbe350982a54c84eba256f5bcfe646a8d"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "scope": "161/167 area material and fixed membership; targeted qualification pending",
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build-repro\\candidate-area-material.jar",
+    "sha256": "e1c6d4bc6b624a8f2624baf764249ed3fb64c83f2e1fb522e36770f4fb68e616"
+  },
+  "exact_one_NPC_body_inverse": true,
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeAreaMaterialAction$Context.class",
+    "local/lito381/server/NativeAreaMaterialAction$Npc.class",
+    "local/lito381/server/NativeAreaMaterialAction.class"
+  ],
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build-repro\\inputs\\AreaMaterialMethods.java",
+      "sha256": "eb805ecfdc15dc046700ed6aa18073aa33603a56f7eef98fef7fb23a51fbfe7d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build-repro\\inputs\\build.py",
+      "sha256": "5019f0b2102cfea20f0893d262f1611c8f815b8235394e64e4d29cc6afecaf9c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build-repro\\inputs\\NativeAreaMaterialAction.java",
+      "sha256": "41ef0988ac3e5b83b127a50badc586664fbb33f54d3f8d0229d69e1f6a914136"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\area-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    }
+  ]
+}

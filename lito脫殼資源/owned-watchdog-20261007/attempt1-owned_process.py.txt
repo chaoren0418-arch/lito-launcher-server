@@ -1,0 +1,355 @@
+"""Windows fixture execution control. No IDA route or security sandbox.
+
+Python 3.12, standard library. Atomic JOB_LIST at CreateProcessW prevents
+the suspended/unassigned crash window. KILL_ON_JOB_CLOSE, no breakaway,
+non-inherited unnamed job handle; only an explicit stdio handle list.
+All cleanup uses that job or retained handles to its verified members.
+"""
+import sys
+sys.dont_write_bytecode=True
+import ctypes as C
+from ctypes import wintypes as W
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import threading
+import time
+from datetime import datetime, timezone
+
+HERE=Path(__file__).resolve().parent
+if os.name!='nt':raise RuntimeError('Windows atomic Job Object required; no fallback')
+K=C.WinDLL('kernel32',use_last_error=True)
+PTR=C.c_void_p
+SIZE=C.c_size_t
+
+class SECURITY_ATTRIBUTES(C.Structure):
+    _fields_=[('nLength',W.DWORD),('lpSecurityDescriptor',PTR),('bInheritHandle',W.BOOL)]
+class BASIC_LIMIT(C.Structure):
+    _fields_=[('PerProcessUserTimeLimit',C.c_longlong),('PerJobUserTimeLimit',C.c_longlong),
+              ('LimitFlags',W.DWORD),('MinimumWorkingSetSize',SIZE),('MaximumWorkingSetSize',SIZE),
+              ('ActiveProcessLimit',W.DWORD),('Affinity',SIZE),('PriorityClass',W.DWORD),('SchedulingClass',W.DWORD)]
+class IO_COUNTERS(C.Structure):
+    _fields_=[(n,C.c_ulonglong) for n in ['ReadOperationCount','WriteOperationCount','OtherOperationCount','ReadTransferCount','WriteTransferCount','OtherTransferCount']]
+class EXTENDED_LIMIT(C.Structure):
+    _fields_=[('BasicLimitInformation',BASIC_LIMIT),('IoInfo',IO_COUNTERS),
+              ('ProcessMemoryLimit',SIZE),('JobMemoryLimit',SIZE),('PeakProcessMemoryUsed',SIZE),('PeakJobMemoryUsed',SIZE)]
+class STARTUPINFO(C.Structure):
+    _fields_=[('cb',W.DWORD),('lpReserved',W.LPWSTR),('lpDesktop',W.LPWSTR),('lpTitle',W.LPWSTR),
+              *[(n,W.DWORD) for n in ['dwX','dwY','dwXSize','dwYSize','dwXCountChars','dwYCountChars','dwFillAttribute','dwFlags']],
+              ('wShowWindow',W.WORD),('cbReserved2',W.WORD),('lpReserved2',PTR),
+              ('hStdInput',W.HANDLE),('hStdOutput',W.HANDLE),('hStdError',W.HANDLE)]
+class STARTUPINFOEX(C.Structure):
+    _fields_=[('StartupInfo',STARTUPINFO),('lpAttributeList',PTR)]
+class PROCESS_INFORMATION(C.Structure):
+    _fields_=[('hProcess',W.HANDLE),('hThread',W.HANDLE),('dwProcessId',W.DWORD),('dwThreadId',W.DWORD)]
+class FILETIME(C.Structure):
+    _fields_=[('low',W.DWORD),('high',W.DWORD)]
+
+def api(name,args,result=W.BOOL):
+    f=getattr(K,name);f.argtypes=args;f.restype=result;return f
+CreateJob=api('CreateJobObjectW',[PTR,W.LPCWSTR],W.HANDLE)
+SetJob=api('SetInformationJobObject',[W.HANDLE,C.c_int,PTR,W.DWORD])
+QueryJob=api('QueryInformationJobObject',[W.HANDLE,C.c_int,PTR,W.DWORD,PTR])
+TerminateJob=api('TerminateJobObject',[W.HANDLE,W.UINT])
+Close=api('CloseHandle',[W.HANDLE])
+HandleFlags=api('GetHandleInformation',[W.HANDLE,C.POINTER(W.DWORD)])
+SetHandleFlags=api('SetHandleInformation',[W.HANDLE,W.DWORD,W.DWORD])
+CreatePipe=api('CreatePipe',[C.POINTER(W.HANDLE),C.POINTER(W.HANDLE),C.POINTER(SECURITY_ATTRIBUTES),W.DWORD])
+CreateFile=api('CreateFileW',[W.LPCWSTR,W.DWORD,W.DWORD,C.POINTER(SECURITY_ATTRIBUTES),W.DWORD,W.DWORD,W.HANDLE],W.HANDLE)
+InitAttrs=api('InitializeProcThreadAttributeList',[PTR,W.DWORD,W.DWORD,C.POINTER(SIZE)])
+UpdateAttrs=api('UpdateProcThreadAttribute',[PTR,W.DWORD,SIZE,PTR,SIZE,PTR,PTR])
+DeleteAttrs=api('DeleteProcThreadAttributeList',[PTR],None)
+CreateProcess=api('CreateProcessW',[W.LPCWSTR,W.LPWSTR,PTR,PTR,W.BOOL,W.DWORD,PTR,W.LPCWSTR,PTR,C.POINTER(PROCESS_INFORMATION)])
+ResumeThread=api('ResumeThread',[W.HANDLE],W.DWORD)
+Wait=api('WaitForSingleObject',[W.HANDLE,W.DWORD],W.DWORD)
+GetExit=api('GetExitCodeProcess',[W.HANDLE,C.POINTER(W.DWORD)])
+GetTimes=api('GetProcessTimes',[W.HANDLE,*[C.POINTER(FILETIME)]*4])
+GetPath=api('QueryFullProcessImageNameW',[W.HANDLE,W.DWORD,W.LPWSTR,C.POINTER(W.DWORD)])
+InJob=api('IsProcessInJob',[W.HANDLE,W.HANDLE,C.POINTER(W.BOOL)])
+OpenProcess=api('OpenProcess',[W.DWORD,W.BOOL,W.DWORD],W.HANDLE)
+ReadFile=api('ReadFile',[W.HANDLE,PTR,W.DWORD,C.POINTER(W.DWORD),PTR])
+
+class ControlError(RuntimeError):
+    def __init__(self,stage,winerror=None):
+        self.stage=stage;self.winerror=C.get_last_error() if winerror is None else winerror
+        super().__init__(stage+': winerror='+str(self.winerror))
+def check(ok,stage):
+    if not ok:raise ControlError(stage)
+def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest().upper()
+def owned(path):
+    p=Path(path).resolve()
+    if HERE not in p.parents:raise ControlError('OWNED_PATH_REQUIRED',0)
+    # Reject reparse points on the lexical path too; no redirected job output.
+    for a in [Path(path),*Path(path).parents]:
+        if a.exists() and a.stat(follow_symlinks=False).st_file_attributes&0x400:
+            raise ControlError('REPARSE_PATH_REFUSED',0)
+        if a==HERE:break
+    return p
+def save(path,value):
+    p=owned(path)
+    with p.open('xb') as f:f.write(json.dumps(value,ensure_ascii=False,indent=2).encode('utf-8'))
+def identity(handle,pid):
+    fs=[FILETIME() for _ in range(4)]
+    check(GetTimes(handle,*[C.byref(x) for x in fs]),'GetProcessTimes')
+    ticks=(fs[0].high<<32)|fs[0].low
+    buf=C.create_unicode_buffer(32768);n=W.DWORD(len(buf))
+    check(GetPath(handle,0,buf,C.byref(n)),'QueryFullProcessImageNameW')
+    return {'pid':int(pid),'creation_filetime_100ns':ticks,
+            'creation_time_utc':datetime.fromtimestamp((ticks-116444736000000000)/10000000,timezone.utc).isoformat(),
+            'image_path':buf.value}
+def exit_observation(handle):
+    state=Wait(handle,0);code=W.DWORD()
+    check(GetExit(handle,C.byref(code)),'GetExitCodeProcess')
+    return {'signaled':state==0,'wait_result':int(state),'exit_code':int(code.value)}
+
+class Capture:
+    """Always drain; retain at most cap bytes per stream in memory and disk."""
+    def __init__(self,handle,cap):
+        self.handle=handle;self.cap=cap;self.kept=bytearray();self.total=0;self.error=None
+        self.thread=threading.Thread(target=self.drain,daemon=True)
+        self.thread.start()
+    def drain(self):
+        buf=C.create_string_buffer(8192);n=W.DWORD()
+        try:
+            while True:
+                if not ReadFile(self.handle,buf,len(buf),C.byref(n),None):
+                    error=C.get_last_error()
+                    if error!=109:self.error=error
+                    break
+                if not n.value:break
+                self.total+=n.value
+                remaining=self.cap-len(self.kept)
+                if remaining>0:self.kept.extend(buf.raw[:min(n.value,remaining)])
+        finally:Close(self.handle)
+    def finish(self,path):
+        self.thread.join(1)
+        with owned(path).open('xb') as f:f.write(self.kept)
+        return {'observed_bytes':self.total,'retained_bytes':len(self.kept),
+                'discarded_bytes':self.total-len(self.kept),'cap_bytes':self.cap,
+                'EOF_observed':not self.thread.is_alive() and self.error is None,
+                'reader_error':self.error,'path':str(path),'sha256':digest(path)}
+
+class ContainedProcess:
+    """Atomic containment primitive. Opening a job/process does not resume it."""
+    def __init__(self,argv,job_dir,capture_bytes=8192,fail_containment=False):
+        self.job=None;self.pi=None;self.members={};self.resumed=False;self.closed=False
+        self.job_dir=owned(job_dir);self.argv=list(argv);self.captures={}
+        if not self.job_dir.is_dir():raise ControlError('JOB_DIR_REQUIRED',0)
+        if not 1<=capture_bytes<=65536:raise ControlError('CAPTURE_BUDGET',0)
+        # Delivery is fixture-only: installed Python, -B and an owned source.
+        if len(argv)<3 or Path(argv[0]).resolve()!=Path(sys.executable).resolve() or argv[1]!='-B':
+            raise ControlError('FIXTURE_PYTHON_ONLY',0)
+        source=owned(argv[2])
+        if source.suffix!='.py' or not source.is_file():raise ControlError('OWNED_FIXTURE_SOURCE_REQUIRED',0)
+        self.source={'path':str(source),'sha256':digest(source)}
+        self.started_monotonic=time.monotonic()
+        attr=None;attr_initialized=False;handles=[];readers=[]
+        try:
+            self.job=CreateJob(None,None);check(self.job,'CreateJobObjectW')
+            info=EXTENDED_LIMIT();info.BasicLimitInformation.LimitFlags=0x2000|0x8
+            info.BasicLimitInformation.ActiveProcessLimit=16
+            # Real API rejection before CreateProcess, injected only for test.
+            size=1 if fail_containment else C.sizeof(info)
+            check(SetJob(self.job,9,C.byref(info),size),'SetInformationJobObject')
+            verify=EXTENDED_LIMIT()
+            check(QueryJob(self.job,9,C.byref(verify),C.sizeof(verify),None),'QueryExtendedLimits')
+            flags=W.DWORD();check(HandleFlags(self.job,C.byref(flags)),'GetJobHandleFlags')
+            if verify.BasicLimitInformation.LimitFlags!=0x2008 or flags.value&1:
+                raise ControlError('JOB_POLICY_MISMATCH',0)
+            self.policy={'atomic_job_assignment':'PROC_THREAD_ATTRIBUTE_JOB_LIST',
+                         'limit_flags':int(verify.BasicLimitInformation.LimitFlags),
+                         'kill_on_last_handle_close':True,'breakaway_allowed':False,
+                         'job_handle_inheritable':False,'active_process_limit':16,
+                         'hidden_window':True,'only_explicit_stdio_handles_inherited':True}
+            sa=SECURITY_ATTRIBUTES(C.sizeof(SECURITY_ATTRIBUTES),None,True)
+            writes=[]
+            for _ in range(2):
+                r=W.HANDLE();w=W.HANDLE()
+                check(CreatePipe(C.byref(r),C.byref(w),C.byref(sa),0),'CreatePipe')
+                readers.append(r.value);handles.append(w.value);writes.append(w.value)
+                check(SetHandleFlags(r,1,0),'NoninheritablePipeReader')
+            null=CreateFile('NUL',0x80000000,3,C.byref(sa),3,0,None)
+            check(null and null!=C.c_void_p(-1).value,'CreateFileNUL');handles.append(null)
+            n=SIZE();InitAttrs(None,2,0,C.byref(n))
+            if not n.value:raise ControlError('AttributeListSize')
+            attr=C.create_string_buffer(n.value)
+            check(InitAttrs(attr,2,0,C.byref(n)),'InitializeAttributes');attr_initialized=True
+            stdios=(W.HANDLE*3)(null,*writes);jobs=(W.HANDLE*1)(self.job)
+            check(UpdateAttrs(attr,0,0x20002,stdios,C.sizeof(stdios),None,None),'StdioHandleList')
+            check(UpdateAttrs(attr,0,0x2000D,jobs,C.sizeof(jobs),None,None),'AtomicJobList')
+            si=STARTUPINFOEX();si.StartupInfo.cb=C.sizeof(si);si.lpAttributeList=C.cast(attr,PTR)
+            si.StartupInfo.dwFlags=0x100|1;si.StartupInfo.wShowWindow=0
+            si.StartupInfo.hStdInput=null;si.StartupInfo.hStdOutput=writes[0];si.StartupInfo.hStdError=writes[1]
+            pi=PROCESS_INFORMATION();command=C.create_unicode_buffer(subprocess.list2cmdline(argv))
+            check(CreateProcess(str(Path(argv[0]).resolve()),command,None,None,True,
+                                0x08000000|0x80000|4,None,str(self.job_dir),C.byref(si),C.byref(pi)),
+                  'CreateProcessW_atomic_job_suspended')
+            self.pi=pi
+            inside=W.BOOL();check(InJob(pi.hProcess,self.job,C.byref(inside)),'VerifyPrimaryInJob')
+            if not inside.value:raise ControlError('PRIMARY_OUTSIDE_JOB',0)
+            item=identity(pi.hProcess,pi.dwProcessId)
+            if Path(item['image_path']).resolve()!=Path(argv[0]).resolve():raise ControlError('PRIMARY_IMAGE_MISMATCH',0)
+            self.members[int(pi.dwProcessId)]={'handle':pi.hProcess,'identity':item,'first_seen_monotonic':time.monotonic(),
+                                               'membership_verified':True,'primary':True}
+            for h in handles:Close(h)
+            handles=[]
+            for name,h in zip(['stdout','stderr'],readers):self.captures[name]=Capture(h,capture_bytes)
+            readers=[]
+        except BaseException as error:
+            error.process_evidence={'process_created':self.pi is not None,'child_resumed':False,
+                                    'atomic_containment_requested':True}
+            if self.members:error.process_evidence['members']=self.snapshots()
+            if self.job:TerminateJob(self.job,0xE0000004)
+            self.close()
+            raise
+        finally:
+            if attr_initialized:DeleteAttrs(attr)
+            for h in handles+readers:Close(h)
+    def resume(self):
+        check(ResumeThread(self.pi.hThread)!=0xffffffff,'ResumeThread')
+        self.resumed=True;self.resumed_monotonic=time.monotonic()
+        Close(self.pi.hThread);self.pi.hThread=None
+    def ids(self):
+        buf=C.create_string_buffer(8+16*C.sizeof(SIZE))
+        check(QueryJob(self.job,3,buf,len(buf),None),'QueryOwnedJobProcessList')
+        count=W.DWORD.from_buffer(buf,4).value
+        if count>16:raise ControlError('JOB_MEMBER_CAP',0)
+        return list((SIZE*count).from_buffer(buf,8))
+    def observe(self):
+        ids=self.ids()
+        for pid in ids:
+            if pid in self.members:continue
+            h=OpenProcess(0x1000|0x100000,False,pid)
+            if not h:continue  # exited before observation; never cleanup by PID
+            try:
+                inside=W.BOOL();check(InJob(h,self.job,C.byref(inside)),'VerifyMemberInJob')
+                if not inside.value:continue
+                self.members[pid]={'handle':h,'identity':identity(h,pid),'first_seen_monotonic':time.monotonic(),
+                                   'membership_verified':True,'primary':False};h=None
+            finally:
+                if h:Close(h)
+        return ids
+    def snapshots(self):
+        return [{**v['identity'],'primary':v['primary'],'membership_verified':v['membership_verified'],
+                 'first_seen_monotonic':v['first_seen_monotonic'],'exit':exit_observation(v['handle'])}
+                for v in self.members.values()]
+    def kill(self,code=0xE0000001):check(TerminateJob(self.job,code),'TerminateOwnedJobObject')
+    def await_empty(self,seconds=2):
+        end=time.monotonic()+seconds
+        while time.monotonic()<end:
+            if not self.observe():return True
+            time.sleep(.01)
+        return not self.ids()
+    def close(self):
+        if self.closed:return
+        self.closed=True
+        if self.job:Close(self.job);self.job=None
+        if self.pi and self.pi.hThread:Close(self.pi.hThread);self.pi.hThread=None
+        primary_handle=self.pi.hProcess if self.pi else None
+        for v in self.members.values():Close(v['handle'])
+        if primary_handle and not any(v['handle']==primary_handle for v in self.members.values()):Close(primary_handle)
+
+def disk_bytes(directory,max_files=256):
+    total=0;count=0
+    for base,dirs,files in os.walk(directory,followlinks=False):
+        for name in dirs+files:
+            path=Path(base)/name
+            try:stat=path.stat(follow_symlinks=False)
+            except FileNotFoundError:continue
+            if stat.st_file_attributes&0x400:raise ControlError('JOB_REPARSE_REFUSED',0)
+        for name in files:
+            count+=1
+            if count>max_files:raise ControlError('DISK_SCAN_FILE_CAP',0)
+            try:total+=(Path(base)/name).stat(follow_symlinks=False).st_size
+            except FileNotFoundError:pass
+    return total
+
+def run_owned(argv,job_dir,timeout_seconds=2,capture_bytes=8192,disk_limit_bytes=1048576,
+              disk_poll_seconds=.05,fail_containment=False,on_started=None):
+    """The deadline thread is independent of stdout draining/disk scans.
+
+    Disk is polling, never a hard quota. Own directory only, bounded scans.
+    It cannot constrain writes elsewhere, egress, hostile privileged children
+    or external broker-created processes. No exporter qualification is implied.
+    """
+    job_dir=owned(job_dir)
+    if not .1<=timeout_seconds<=30 or not .01<=disk_poll_seconds<=.5 or not 1<=disk_limit_bytes<=16*1024*1024:
+        raise ControlError('INVALID_BUDGET',0)
+    if job_dir.exists():raise ControlError('FRESH_JOB_REQUIRED',0)
+    job_dir.mkdir(parents=True)
+    start=time.monotonic();deadline=start+timeout_seconds
+    receipt={'schema':'owned-process-runtime-v1','argv':argv,'job_dir':str(job_dir),
+             'controller_pid':os.getpid(),'start_monotonic':start,'deadline_monotonic':deadline,
+             'timeout_seconds':timeout_seconds,'child_resumed':False,'status':'NOT_STARTED',
+             'disk_limit_is_hard_quota':False,'disk_poll_seconds':disk_poll_seconds}
+    process=None;stop=threading.Event();trigger=[];watcher=None;samples=[];next_disk=start
+    def timeout_watchdog():
+        while not stop.wait(max(0,min(.01,deadline-time.monotonic()))):
+            now=time.monotonic()
+            if now>=deadline:
+                trigger.append({'reason':'WALL_DEADLINE','trigger_monotonic':now,'deadline_overshoot_seconds':now-deadline})
+                try:process.kill()
+                except Exception as e:trigger[-1]['kill_error']=str(e)
+                return
+    try:
+        process=ContainedProcess(argv,job_dir,capture_bytes,fail_containment)
+        receipt['source']=process.source;receipt['containment']=process.policy
+        receipt['primary_identity']=process.members[int(process.pi.dwProcessId)]['identity']
+        if time.monotonic()>=deadline:raise ControlError('DEADLINE_BEFORE_RESUME',0)
+        watcher=threading.Thread(target=timeout_watchdog,daemon=True);watcher.start()
+        process.resume();receipt['child_resumed']=True;receipt['resume_monotonic']=process.resumed_monotonic
+        if on_started:on_started(process)
+        while True:
+            process.observe()
+            if trigger:receipt['status']='TIMEOUT';break
+            if exit_observation(process.pi.hProcess)['signaled']:
+                receipt['status']='PRIMARY_EXITED';break
+            now=time.monotonic()
+            if now>=next_disk:
+                size=disk_bytes(job_dir);finished=time.monotonic()
+                samples.append({'scan_start_monotonic':now,'scan_end_monotonic':finished,'bytes':size})
+                if len(samples)>4096:raise ControlError('MONITOR_SAMPLE_CAP',0)
+                next_disk=finished+disk_poll_seconds
+                if size>disk_limit_bytes:
+                    trigger.append({'reason':'DISK_POLL_THRESHOLD','trigger_monotonic':finished,
+                                    'observed_bytes':size,'observed_overshoot_bytes':size-disk_limit_bytes})
+                    receipt['status']='DISK_THRESHOLD';break
+            time.sleep(.005)
+    except ControlError as e:
+        receipt.update(status='CONTAINMENT_OR_CONTROL_REFUSED',failure={'stage':e.stage,'winerror':e.winerror})
+        receipt.update(getattr(e,'process_evidence',{}))
+    except BaseException as e:
+        receipt.update(status='CONTROLLER_EXCEPTION',failure={'type':type(e).__name__,'message':str(e)})
+    finally:
+        stop.set()
+        if watcher:watcher.join(1)
+        receipt['trigger']=trigger
+        if process:
+            try:
+                receipt['pre_cleanup_members']=process.snapshots()
+                remaining=process.observe()
+                receipt['cleanup_required_active_PIDs']=remaining
+                if remaining:
+                    process.kill(0xE0000002)
+                    receipt['cleanup_method']='TerminateJobObject on retained owned unnamed job handle'
+                else:receipt['cleanup_method']='No active members; close owned handles'
+                receipt['owned_job_empty']=process.await_empty()
+                receipt['post_exit_members']=process.snapshots()
+                receipt['capture']={n:c.finish(job_dir/(n+'.bin')) for n,c in process.captures.items()}
+            finally:
+                # Even an audit/capture exception closes the sole job handle.
+                process.close()
+        else:
+            receipt['owned_job_empty']=True;receipt['capture']={};receipt.setdefault('process_created',False)
+        final_size=disk_bytes(job_dir)
+        receipt['disk_monitor']={'samples':samples,'requested_poll_seconds':disk_poll_seconds,
+              'max_observed_sample_gap_seconds':max([samples[i]['scan_start_monotonic']-samples[i-1]['scan_start_monotonic'] for i in range(1,len(samples))] or [0]),
+              'final_bytes_before_receipt':final_size,'threshold_bytes':disk_limit_bytes,
+              'final_overshoot_bytes':max(0,final_size-disk_limit_bytes),
+              'post_cleanup_capture_bytes_included':True,'hard_quota':False,
+              'limit':'Writes may exceed threshold between polls, during scan and cleanup; other directories are not monitored.'}
+        receipt['finished_monotonic']=time.monotonic();receipt['elapsed_seconds']=receipt['finished_monotonic']-start
+        save(job_dir/'runtime.json',receipt)
+    return receipt

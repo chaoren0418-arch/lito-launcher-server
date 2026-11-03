@@ -1,0 +1,562 @@
+{
+  "schema": 1,
+  "batch": "BATCH2_SERVER_PACKET_HANDOFF",
+  "updated_at": "2026-10-05T23:06:46.280132+08:00",
+  "generator": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\package_server_delta.py",
+    "bytes": 11933,
+    "sha256": "241B4BE717FB9548734B28A7CCA2D0EA361EDB7AF0007D4D23B8C34CBA78C8C8"
+  },
+  "summary": {
+    "new_opcodes": 0,
+    "corrected_wire_contracts": 0,
+    "known_contracts_corroborated": 3,
+    "no_established_new_packet_delta": true,
+    "meaning": "F3/F4採用已確認。S1E新增接收／選角邊界：完整frame直接分派，一般C9在owner處理之後，返回保存名稱C9分支無本地初始化。source-only普遍安全送出邊界未建立；新增opcode0、wire更正0。",
+    "analysis_corrections_not_wire_changes": 1,
+    "additional_known_contract_handoffs": 1,
+    "receive_selection_boundary_corroboration": 1
+  },
+  "consumer_status": {
+    "server_chat_id": "01a1020a-733e-74e2-9fd1-923830ac5278",
+    "handoff_status": "DELIVERED_CONFIRMED",
+    "notification_status": "DELIVERED_CONFIRMED_BY_SERVER_ADOPTION",
+    "sync_status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE",
+    "adoption_status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE",
+    "delivery_method": "Supervisor reads this directory and notifies server chat; this script sends no messages.",
+    "Java_SQL_modified_by_unpacker": false,
+    "restricted_server_work_taken_over_or_bypassed": false,
+    "adoption_evidence": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+      "bytes": 3830,
+      "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95"
+    },
+    "adopted_submitted_sha256": "A60D0CC4B356C882203E21A7280A2A66A4B30E5274C765A41711CE3977544CC5",
+    "adoption_scope_opcodes": [
+      243,
+      244
+    ],
+    "additional_known_contracts_pending": [
+      30
+    ],
+    "scope_note": "F3/F4採用已確認；S1E新增補證待總監製查核及伺服器獨立時機比較，不重新等待F3/F4轉交。"
+  },
+  "existing_Modern_contract": {
+    "source_at_read": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\src\\modern_lito\\native_entry_transfer.rs",
+      "bytes": 13477,
+      "sha256": "2EE7E34CB922EAD8DE01003FC94CDBE39FD2B186E4C2B2B49106148372DE235C"
+    },
+    "snapshot": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\native_entry_transfer-adoption-snapshot.rs",
+      "bytes": 13477,
+      "sha256": "2EE7E34CB922EAD8DE01003FC94CDBE39FD2B186E4C2B2B49106148372DE235C"
+    },
+    "observation": "Source already decodes S_F3(243), S_F4(244), F4 cdh with h16 and LE integer fields; added bounded count/index guards. R506 header records API identity adoption. Source presence only, no rerun or runtime acceptance claimed."
+  },
+  "packets": [
+    {
+      "direction": "S",
+      "direction_meaning": "server -> client; receive dispatcher plus existing Modern decoder; no new runtime capture",
+      "classification": "KNOWN_CONTRACT_CORROBORATION",
+      "new_opcode": false,
+      "wire_contract_corrected_this_batch": false,
+      "string_encoding": {
+        "applies": false,
+        "reason": "These numeric packet bodies contain no string field; formatter letters c/d/h are ASCII analysis metadata, not wire strings."
+      },
+      "source_BIN": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+        "bytes": 1941568,
+        "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "expected_bytes": 1941568,
+        "expected_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "verified": true
+      },
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "expected_bytes": 7094272,
+        "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "verified": true
+      },
+      "source_ASM": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "java_comparison": {
+        "status": "COMPARED_BY_SERVER_CONSISTENT_VALID_PRODUCER_DOMAIN",
+        "specific_differences": [],
+        "comparison_evidence": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+          "bytes": 3830,
+          "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95"
+        },
+        "scope": "F3 count0..10 emits0/FFFFFFFF; F4 index0..9, port1..65535. Native accepts other non-sentinel DWORDs and has no local bounds clamps; producer constraints are not native rejection proof.",
+        "SQL_change_established": false
+      },
+      "dynamic_evidence": {
+        "new_capture": false,
+        "T73_F3_F4_receipt_proven": false,
+        "scope": "Existing pure API vectors do not prove wire delivery or GUI repair."
+      },
+      "opcode_hex": "0xF3",
+      "opcode_decimal": 243,
+      "dispatch": {
+        "va": "004B304B",
+        "rva": "000B304B",
+        "section": "   \u0000    ",
+        "file_offset": "000B304B",
+        "raw_backed": true
+      },
+      "handler": {
+        "va": "004AC520",
+        "rva": "000AC520",
+        "section": "   \u0000    ",
+        "file_offset": "000AC520",
+        "raw_backed": true
+      },
+      "body_length_including_opcode": "2 + 4*max(signed_count,0); no framing/encryption header included; original handler exact-length/trailing validation is not proved",
+      "fields": [
+        {
+          "order": 0,
+          "body_offset": 0,
+          "name": "opcode",
+          "bytes": 1,
+          "signed": false,
+          "endianness": "N/A"
+        },
+        {
+          "order": 1,
+          "body_offset": 1,
+          "name": "count",
+          "bytes": 1,
+          "signed": true,
+          "native_type": "int8, JLE skips loop for <=0; MOVSX for loop bound",
+          "endianness": "N/A"
+        },
+        {
+          "order": 2,
+          "body_offset": 2,
+          "name": "channel_gate_values",
+          "bytes_each": 4,
+          "repeat": "max(signed_count,0)",
+          "signed": "opaque32 bits; stored DWORD; FFFFFFFF sentinel used by F4",
+          "endianness": "little",
+          "native_destination": "0064AD2C + 4*i"
+        }
+      ],
+      "trigger_and_transition": [
+        "Receive0xF3 ->4B304B ->4AC520; parse c after opcode",
+        "For signed count>0, parse d repeatedly into channel table prefix; suffix remains unchanged",
+        "For signed count<=0, no table entries are consumed/written; no direct scene transition in bounded handler"
+      ],
+      "static_evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\ranges.json",
+          "bytes": 14489,
+          "sha256": "9942F2833F50ABBB7D37EA79F25E4B5CAD9DEC076C0D35FEBC7DC86CFCD2A89C"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\host-alias-lifecycle.json",
+          "bytes": 8125,
+          "sha256": "CA359ECAFEAA2BD97239414858F62C02C9AD9DCBEA728921C7E62EBFD66EB644"
+        }
+      ],
+      "unknowns": [
+        "Native local count bound not observed; table allocation is ten DWORDs ending64AD54. Existing Modern bounds count<=10; valid server range0..10 is a compatibility constraint, not an original clamp.",
+        "Original receive framing/truncation/trailing-byte validation is not closed by this handler audit",
+        "Java sender/serializer and actual session packet ownership not compared"
+      ],
+      "consumer_adoption_status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE"
+    },
+    {
+      "direction": "S",
+      "direction_meaning": "server -> client; receive dispatcher plus existing Modern decoder; no new runtime capture",
+      "classification": "KNOWN_CONTRACT_CORROBORATION",
+      "new_opcode": false,
+      "wire_contract_corrected_this_batch": false,
+      "string_encoding": {
+        "applies": false,
+        "reason": "These numeric packet bodies contain no string field; formatter letters c/d/h are ASCII analysis metadata, not wire strings."
+      },
+      "source_BIN": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+        "bytes": 1941568,
+        "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "expected_bytes": 1941568,
+        "expected_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "verified": true
+      },
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "expected_bytes": 7094272,
+        "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "verified": true
+      },
+      "source_ASM": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "java_comparison": {
+        "status": "COMPARED_BY_SERVER_CONSISTENT_VALID_PRODUCER_DOMAIN",
+        "specific_differences": [],
+        "comparison_evidence": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+          "bytes": 3830,
+          "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95"
+        },
+        "scope": "F3 count0..10 emits0/FFFFFFFF; F4 index0..9, port1..65535. Native accepts other non-sentinel DWORDs and has no local bounds clamps; producer constraints are not native rejection proof.",
+        "SQL_change_established": false
+      },
+      "dynamic_evidence": {
+        "new_capture": false,
+        "T73_F3_F4_receipt_proven": false,
+        "scope": "Existing pure API vectors do not prove wire delivery or GUI repair."
+      },
+      "opcode_hex": "0xF4",
+      "opcode_decimal": 244,
+      "dispatch": {
+        "va": "004B3057",
+        "rva": "000B3057",
+        "section": "   \u0000    ",
+        "file_offset": "000B3057",
+        "raw_backed": true
+      },
+      "handler": {
+        "va": "004AC570",
+        "rva": "000AC570",
+        "section": "   \u0000    ",
+        "file_offset": "000AC570",
+        "raw_backed": true
+      },
+      "format": "cdh",
+      "body_length_including_opcode": 8,
+      "length_scope": "1 opcode +1 c+4 d+2 h; original surrounding exact-length/trailing validation is not established",
+      "fields": [
+        {
+          "order": 0,
+          "body_offset": 0,
+          "name": "opcode",
+          "bytes": 1,
+          "signed": false,
+          "endianness": "N/A"
+        },
+        {
+          "order": 1,
+          "body_offset": 1,
+          "name": "channel_index",
+          "bytes": 1,
+          "signed": true,
+          "endianness": "N/A",
+          "native_use": "sign extended for64AD2C[index]"
+        },
+        {
+          "order": 2,
+          "body_offset": 2,
+          "name": "IPv4_address_word",
+          "bytes": 4,
+          "signed": "32-bit address bits; comparison not arithmetic",
+          "endianness": "little integer assembly; its four wire bytes are IPv4 network octets",
+          "example": {
+            "wire_bytes": "7F000001",
+            "native_x86_u32_hex": "0100007F",
+            "IPv4": "127.0.0.1"
+          }
+        },
+        {
+          "order": 3,
+          "body_offset": 6,
+          "name": "port_word",
+          "bytes": 2,
+          "signed": "unsigned16 wire bits; native uses/stores low16, some consumers read signed WORD",
+          "endianness": "little",
+          "example": {
+            "wire_bytes": "D007",
+            "unsigned_value": 2000
+          }
+        }
+      ],
+      "trigger_and_transition": [
+        "4AC589 parses opcode+1 using inline format cdh",
+        "4AC59B sprintf(local28, global62C6A4); fixed PE string127.0.0.1",
+        "4AC5A7 calls4EFE56 -> WS2_32 inet_addr",
+        "4AC5B0 checks64AD2C[signed_index]==FFFFFFFF: returns without transition",
+        "4AC5BD compares parsed d to inet_addr result",
+        "equal:4AC5C1 ->46EB30",
+        "different:4AC5CA loadsEDX=localport,ECX stillpacketIPv4 ->46ED50",
+        "46ED50 usesinet_ntoa then copies address into64AE74 and64A9C4; low16port ->64AD70/64A9C0; arms callback469B10",
+        "return_mode2:46F010 copies64AD74 host to64AE74, port2000 and later arms469BD0"
+      ],
+      "static_evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\modern-F4-contract.json",
+          "bytes": 2573,
+          "sha256": "82EC141E5FCACA2A6D09F1AFBE1D3BC9A3A1116BF165C02F31BE5F1BA5510CA6"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-complete-tails.json",
+          "bytes": 146704,
+          "sha256": "732F2DD84B1EB178A93C662AAB94527B85E7F55349168569D95393A4795F1570"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+          "bytes": 6507,
+          "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-packet-evidence\\ranges.json",
+          "bytes": 14489,
+          "sha256": "9942F2833F50ABBB7D37EA79F25E4B5CAD9DEC076C0D35FEBC7DC86CFCD2A89C"
+        }
+      ],
+      "unknowns": [
+        "No proof T73 receivedF4 or that F4 fixes GUI failures",
+        "Signed index bounds depend on native packet trust; do not treat malformed packets as valid input",
+        "Export identities match historical module bases plus current RVAs; dump-time DLL hashes absent",
+        "Direct host copy and startup inputs established; private/transitive execution and actual runtime host remain unproved.",
+        "Original handler has no local signed-index bounds check; server must remain within ten-cell valid indices0..9",
+        "Dump-time DLL hash/private branch execution and native same-epoch transition outcomes are not established",
+        "Java sender port width/endian/IP conversion unexamined"
+      ],
+      "analysis_corrections_not_wire_changes": [
+        "502F2C contains inline ASCII cdh+NUL; an IDA dd rendering is not an indirect format pointer",
+        "inet_addr/inet_ntoa/sprintf identity evidence resolves interpretation and equality branch; it does not create a new opcode or change field widths"
+      ],
+      "consumer_adoption_status": "ADOPTED_EXISTING_CONTRACT_NO_PRODUCT_CHANGE"
+    },
+    {
+      "direction": "S",
+      "direction_meaning": "server -> client",
+      "opcode_hex": "0x1E",
+      "opcode_decimal": 30,
+      "classification": "KNOWN_CONTRACT_CORROBORATION_WITH_ANALYSIS_CORRECTION",
+      "new_opcode": false,
+      "wire_contract_corrected_this_batch": false,
+      "dispatch": {
+        "va": "004B2AD3",
+        "rva": "000B2AD3",
+        "section": "   \u0000    ",
+        "file_offset": "000B2AD3",
+        "raw_backed": true
+      },
+      "handler": {
+        "va": "004AEE70",
+        "rva": "000AEE70",
+        "section": "   \u0000    ",
+        "file_offset": "000AEE70",
+        "raw_backed": true
+      },
+      "source_BIN": {
+        "path": "D:\\lineage開發\\0-客戶端\\LiTo.bin",
+        "bytes": 1941568,
+        "sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "expected_bytes": 1941568,
+        "expected_sha256": "CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
+        "verified": true
+      },
+      "source_PE": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+        "bytes": 7094272,
+        "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "expected_bytes": 7094272,
+        "expected_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "verified": true
+      },
+      "source_ASM": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+        "bytes": 41179755,
+        "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "expected_bytes": 41179755,
+        "expected_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+        "verified": true
+      },
+      "body_length_including_opcode": "2+N (native opcode+unsigned count byte+N bitmap bytes; surrounding exact-length checks unclosed)",
+      "fields": [
+        {
+          "order": 0,
+          "body_offset": 0,
+          "name": "opcode",
+          "bytes": 1,
+          "signed": false,
+          "endianness": "N/A"
+        },
+        {
+          "order": 1,
+          "body_offset": 1,
+          "name": "bitmap_byte_count_N",
+          "bytes": 1,
+          "signed": false,
+          "endianness": "N/A",
+          "evidence": "count maskedFFh; N0 skipsupdate; no signed-count rule fromF3 copiedhere"
+        },
+        {
+          "order": 2,
+          "body_offset": 2,
+          "name": "bitmap",
+          "bytes": "N",
+          "signed": "bitfield; lowbit-first across8bitsperbyte",
+          "endianness": "N/A; index=group*8+bit; native SAR still examines8 original bits"
+        }
+      ],
+      "string_encoding": {
+        "applies": false,
+        "reason": "No wire strings. Metadata text fromLTSpellDesc is downstreamresource; CP950 view remains source-qualifiedresource assumption."
+      },
+      "trigger_and_transition": [
+        "Both auditeddispatch maps admit1E; no directfirst-lobby orowner-readiness gate",
+        "Each setbit resolvesmetadata/icon, orfallsback91/unknownspell, thenunconditionallycalls4C9220 withglobalowner",
+        "Existing index preventsreplacement; count>=256 preventsnewcall",
+        "4CD050 usescurrentclasscount/order and replacesallmatchingicon slots, noappend; nomatch leavesexistingrows",
+        "ZeroN/unsetbits do not clear. S1F removesmatchingindex toplaceholder; SDA reconstructs class-count placeholders independentlyoforder values"
+      ],
+      "static_evidence": [
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+          "bytes": 8570,
+          "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+          "bytes": 86352,
+          "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+          "bytes": 136990,
+          "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C"
+        },
+        {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+          "bytes": 13337,
+          "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E"
+        }
+      ],
+      "dynamic_evidence": {
+        "V9_timeline": {
+          "path": "D:\\lito-dev-runtime\\20261003-supervision\\launcher\\observability-20261003-225704\\ui-native-hookup-20261004-051000\\t69_skill_evidence\\V9-S1E-timeline.json",
+          "bytes": 11128,
+          "sha256": "C4AD64373E3B838A645C99846BAC671137198C798DB44C820C53046701C7CD4F"
+        },
+        "pid": 16684,
+        "filetime": "134356500167557627",
+        "S1E": {
+          "time": "2026-10-05T05:07:31.572775400Z",
+          "direction": "server_to_client",
+          "opcode": "0x1E",
+          "version_accepted": false
+        },
+        "interpretation": "One S1E occurs immediately after S_D2 near phase 3->4 WORLD transition; no later S1E in this archive. Sampling is not a decoder/reset execution trace.",
+        "payload_available": false,
+        "selected_class_observed": false,
+        "skill_owner_epoch_observed": false,
+        "version_accepted_flag": "Archive flagfalse is not a native decoder-return observation; no newruntimeacceptanceclaim",
+        "T73": "Existing142frames containnoS1E andno typedskillowner; cannot close first-lobby gate execution"
+      },
+      "analysis_correction": {
+        "previous_shorthand": "only validmetadata/icon couldreachskillconsumer; rebuilds placeholders fromcurrentorder",
+        "corrected": "MetadataNULL/outofrange doesnotlocallydropbit: fallback91 reachesconsumer. Placeholdercount derivesclassbyte;4CD1C0 doesnotreadorderpointer. Successful iconmatch/liveowner, notresource existence, determinesrowreplacement.",
+        "wire_change": false
+      },
+      "java_comparison": {
+        "status": "NOT_COMPARED_BY_UNPACKER_THIS_BATCH",
+        "specific_differences": null,
+        "scope": "Server independently comparingS1E sender timing; no producer timing/result inferred here."
+      },
+      "consumer_adoption_status": "PENDING_SERVER_S1E_TIMING_COMPARISON",
+      "notification_status": "AVAILABLE_TO_SUPERVISOR_AS_KNOWN_CONTRACT_CORROBORATION",
+      "unknowns": [
+        "SamePID/FILETIME/owner epoch:8class4DWORDs after43F6 table block and4928 classselection",
+        "For actualS1E:payloadN/bitmap/index, mode/phase,75F694,635B80,647E20/24 pointerandindexedmetadata,834888 owner/count/table/rows atdispatch andafter4CD050",
+        "Orderrelative toownerpublication/resetS1F/SDA; actual receivedframe mustnotbe equatedwithdecodercompletion",
+        "Upstream receive pump/queue may affect when a frame reaches dispatcher; no first-lobby execution timing closure here",
+        "If rowsfilled butGUIempty, separately observebinding/render; resourceexistencealone doesnot answerit"
+      ],
+      "receive_selection_boundary": {
+        "evidence": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-receive-selection-boundary.json",
+          "bytes": 13337,
+          "sha256": "3B5357B9D193EC9A93F93611FE5C33AC8761F7BB9B6CBA584FD87D517114440E"
+        },
+        "immediate_complete_frame_dispatch": true,
+        "ordinary_C9_program_order_supported": true,
+        "return_saved_alias_C9_skips_ordinary_local_init": true,
+        "unconditional_server_send_boundary_established": false,
+        "actual_same_thread_or_no_reentry_proven": false,
+        "dynamic_requirements": [
+          {
+            "need": "Sameconnection/character/owner epoch and threadidentity",
+            "points": [
+              "47F340 entry uMsg401",
+              "4C7062/4B3868",
+              "4928C0 or4934A0 entry",
+              "4A769A/4A76B2 returnbranch"
+            ],
+            "fields": [
+              "PID+creationFILETIME",
+              "OSthreadID",
+              "HWND",
+              "connectionID",
+              "selectedalias/pathorigin",
+              "monotonicsequence/timestamp"
+            ]
+          },
+          {
+            "need": "Readiness andordering, not justpointerpresence",
+            "points": [
+              "492AD4/classorder branch",
+              "before/after492B61 reset",
+              "before/after492D80 then492D91",
+              "492F02 or4A76B2",
+              "4AEEF3/4C9220 and4CD050"
+            ],
+            "fields": [
+              "75F694",
+              "635B80",
+              "834888",
+              "owner+2C",
+              "owner+58",
+              "ownerallocation/result/epoch",
+              "sameowner reset counter",
+              "metadata647E20/647E24 availability"
+            ]
+          },
+          {
+            "need": "S1E semantic inputs/output andnestedcall evidence",
+            "fields": [
+              "rawopcode/count/bitmap andbodylength",
+              "setbitindex/icon/fallback/duplicate decision",
+              "rowsbefore/aftermatch",
+              "allS1F/SDA/reset ordering",
+              "nested callstack-depth vsnormalWndProc dispatch",
+              "returnAFBC/AFBD/AFBE flagstates"
+            ],
+            "purpose": "Separate early delivery, failed ownerallocation, inheritedreturnowner, duplicateindex/nomatch, resetafterfill, andactualreentry. Timer/sleep/resourcecounts cannot substitute."
+          }
+        ],
+        "status": "KNOWN_CONTRACT_BOUNDARY_CORROBORATION_FOR_INDEPENDENT_SERVER_TIMING_COMPARISON"
+      }
+    }
+  ],
+  "non_wire_evidence": [
+    "API target identities, rand port expression, saved-host writer and selected-alias lifetime are implementation evidence, not new packet opcodes.",
+    "C9 saved-alias replay remains referenced in host-alias-lifecycle.json; this batch does not add or correct its wire schema."
+  ],
+  "future_batch_rule": "Every new/corrected packet must publish direction, hex/decimal opcode, ordered widths/signedness/endian/encoding, trigger/state transitions, VA/RVA and source hashes, static/dynamic evidence, unknowns, concrete Java difference or NOT_COMPARED, and notification/adoption status.",
+  "adoption_ack": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\server-adoption-ack.json",
+    "bytes": 3830,
+    "sha256": "BCD5CB68B5B0FE04881149FE9B2246533A2A1E0D2CFB3E2C7AC915470A465D95"
+  }
+}

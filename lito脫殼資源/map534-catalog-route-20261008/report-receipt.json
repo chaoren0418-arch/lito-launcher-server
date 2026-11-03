@@ -1,0 +1,16 @@
+{
+  "task_id": "bin_resources-map534-catalog-route-20261008",
+  "reported": true,
+  "notified": false,
+  "adopted": false,
+  "reviewed": false,
+  "send_message_result": "success",
+  "supervisor_thread": "01a116fa-dc97-7832-bdec-85d06d810ad7",
+  "reported_at": "2026-10-08T02:06:55.226978+08:00",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008-contract.json",
+    "bytes": 9510,
+    "sha256": "4A45B4B7512159DC8A73FAA3B2D2B2C6E33A51932C5DA12B24EA6C0B1B474401"
+  },
+  "goal_status": "active"
+}

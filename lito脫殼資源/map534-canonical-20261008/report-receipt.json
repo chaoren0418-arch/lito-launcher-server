@@ -1,0 +1,12 @@
+{
+  "task_id": "bin_resources-modern-map534-canonical-qualification-20261008",
+  "reported": true,
+  "notified": false,
+  "adopted": false,
+  "reviewed": false,
+  "supervisor_thread": "01a116fa-dc97-7832-bdec-85d06d810ad7",
+  "send_message_result": "success",
+  "reported_at": "2026-10-08T01:45:00.002104+08:00",
+  "contract_sha256": "6ED0109CDE4ABAA8963FE69A6A57D82D4DEEDA0C0C74EF77E015A3AC26D417E2",
+  "goal_status": "active"
+}

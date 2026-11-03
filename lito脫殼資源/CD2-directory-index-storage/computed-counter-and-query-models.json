@@ -1,0 +1,212 @@
+{
+  "models": [
+    {
+      "kind": "conditional_stable_global_counter_sequence",
+      "count": 1,
+      "trace": [
+        {
+          "row_index": 0,
+          "record_VA": "0062FAA0",
+          "after_increment": 1,
+          "completion_clear_both": true
+        }
+      ],
+      "after_completion_count_cursor": [
+        0,
+        0
+      ],
+      "assumptions": "allprivate/externalhelpers returned;globalvalues stable acrosscalls;notactualNative completion/GUI/capacity proof"
+    },
+    {
+      "kind": "conditional_stable_global_counter_sequence",
+      "count": 4,
+      "trace": [
+        {
+          "row_index": 0,
+          "record_VA": "0062FAA0",
+          "after_increment": 1,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 1,
+          "record_VA": "0062FB54",
+          "after_increment": 2,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 2,
+          "record_VA": "0062FC08",
+          "after_increment": 3,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 3,
+          "record_VA": "0062FCBC",
+          "after_increment": 4,
+          "completion_clear_both": true
+        }
+      ],
+      "after_completion_count_cursor": [
+        0,
+        0
+      ],
+      "assumptions": "allprivate/externalhelpers returned;globalvalues stable acrosscalls;notactualNative completion/GUI/capacity proof"
+    },
+    {
+      "kind": "conditional_stable_global_counter_sequence",
+      "count": 8,
+      "trace": [
+        {
+          "row_index": 0,
+          "record_VA": "0062FAA0",
+          "after_increment": 1,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 1,
+          "record_VA": "0062FB54",
+          "after_increment": 2,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 2,
+          "record_VA": "0062FC08",
+          "after_increment": 3,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 3,
+          "record_VA": "0062FCBC",
+          "after_increment": 4,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 4,
+          "record_VA": "0062FD70",
+          "after_increment": 5,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 5,
+          "record_VA": "0062FE24",
+          "after_increment": 6,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 6,
+          "record_VA": "0062FED8",
+          "after_increment": 7,
+          "completion_clear_both": false
+        },
+        {
+          "row_index": 7,
+          "record_VA": "0062FF8C",
+          "after_increment": 8,
+          "completion_clear_both": true
+        }
+      ],
+      "after_completion_count_cursor": [
+        0,
+        0
+      ],
+      "assumptions": "allprivate/externalhelpers returned;globalvalues stable acrosscalls;notactualNative completion/GUI/capacity proof"
+    },
+    {
+      "kind": "CB_signed_gate",
+      "index_signed": -2,
+      "count_signed": 1,
+      "branch_to_row": true,
+      "address_u32_hex": "0062F938",
+      "valid_owned_array_proven": false,
+      "qualification": "numericbranch only;negative indexexample hypothetical/noNative memory access"
+    },
+    {
+      "kind": "CB_signed_gate",
+      "index_signed": 0,
+      "count_signed": 1,
+      "branch_to_row": true,
+      "address_u32_hex": "0062FAA0",
+      "valid_owned_array_proven": false,
+      "qualification": "numericbranch only;negative indexexample hypothetical/noNative memory access"
+    },
+    {
+      "kind": "CB_signed_gate",
+      "index_signed": 8,
+      "count_signed": 8,
+      "branch_to_row": false,
+      "address_u32_hex": null,
+      "valid_owned_array_proven": false,
+      "qualification": "numericbranch only;negative indexexample hypothetical/noNative memory access"
+    },
+    {
+      "kind": "CB_signed_gate",
+      "index_signed": 0,
+      "count_signed": -1,
+      "branch_to_row": false,
+      "address_u32_hex": null,
+      "valid_owned_array_proven": false,
+      "qualification": "numericbranch only;negative indexexample hypothetical/noNative memory access"
+    },
+    {
+      "kind": "posthelper_global_reread",
+      "row_used_index": 0,
+      "hypothetical_cursor_after_unknown_helper": 0,
+      "count_after_helper": 8,
+      "next_global_cursor": 1,
+      "same_original_index_assumed": true,
+      "qualification": "illustrateswhyatomicfrozenindexcannotbeproved;noactualhelpermutation asserted"
+    },
+    {
+      "kind": "posthelper_global_reread",
+      "row_used_index": 0,
+      "hypothetical_cursor_after_unknown_helper": 5,
+      "count_after_helper": 8,
+      "next_global_cursor": 6,
+      "same_original_index_assumed": false,
+      "qualification": "illustrateswhyatomicfrozenindexcannotbeproved;noactualhelpermutation asserted"
+    },
+    {
+      "kind": "selected_return_branch",
+      "hypothetical_EAX_signed": -1,
+      "caller_minus1_reject": true,
+      "address_if_not_rejected": null,
+      "proposed_Modern_owned_8row_index_bound": false,
+      "qualification": "EAXdomainunknown;Modernboundisadaptation andalso requirescompletecurrentgeneration,notNativeproof"
+    },
+    {
+      "kind": "selected_return_branch",
+      "hypothetical_EAX_signed": -2,
+      "caller_minus1_reject": false,
+      "address_if_not_rejected": "0062F938",
+      "proposed_Modern_owned_8row_index_bound": false,
+      "qualification": "EAXdomainunknown;Modernboundisadaptation andalso requirescompletecurrentgeneration,notNativeproof"
+    },
+    {
+      "kind": "selected_return_branch",
+      "hypothetical_EAX_signed": 0,
+      "caller_minus1_reject": false,
+      "address_if_not_rejected": "0062FAA0",
+      "proposed_Modern_owned_8row_index_bound": true,
+      "qualification": "EAXdomainunknown;Modernboundisadaptation andalso requirescompletecurrentgeneration,notNativeproof"
+    },
+    {
+      "kind": "selected_return_branch",
+      "hypothetical_EAX_signed": 7,
+      "caller_minus1_reject": false,
+      "address_if_not_rejected": "0062FF8C",
+      "proposed_Modern_owned_8row_index_bound": true,
+      "qualification": "EAXdomainunknown;Modernboundisadaptation andalso requirescompletecurrentgeneration,notNativeproof"
+    },
+    {
+      "kind": "selected_return_branch",
+      "hypothetical_EAX_signed": 8,
+      "caller_minus1_reject": false,
+      "address_if_not_rejected": "00630040",
+      "proposed_Modern_owned_8row_index_bound": false,
+      "qualification": "EAXdomainunknown;Modernboundisadaptation andalso requirescompletecurrentgeneration,notNativeproof"
+    }
+  ],
+  "count": 14,
+  "oldmodels_or_PASS_replayed": false,
+  "Native_GUI_runtime_actions": 0
+}

@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessMaterialMethods.java",
+      "sha256": "47fb92286ded6c1a9d806e8ab50a0a712dbec61d15a66c3628eac52efd2ea6d3"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\NativeWeaknessMaterialAction.java",
+      "sha256": "da7e99530f0f94234cb5dced0a1416e8b0662107ef78a4d2cf648989ccdc0267"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\build.py",
+      "sha256": "9c7613628be682ae9da2ba30894a716466e120287fcb28e5050098eee2fa917d"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeMaterialProbe.java",
+      "sha256": "579722411d1491dd3619e19c9e941a294c9be84cd4001d6c357cd3ecd0fb769e"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\test.py",
+      "sha256": "cb803b96a2b1a414335c40e0570de695409ff968f607ce42ee67097cd39084c7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessFaultProbe.java",
+      "sha256": "f87c2fd4e1c276f6652bba531d533a615ffde2887aa9c1f499efe3919575d638"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\WeaknessLifecycleProbe.java",
+      "sha256": "a8a357831a8353583f55a703654cc5e1be5cf4204bb33732ac91e959a1437a9c"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\test_boundaries.py",
+      "sha256": "e553a0a10ebd7e8301e02e16677f80594b3c2628d92b62b622e297b5b540dc12"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\silence-material\\prepare.py",
+      "sha256": "49b03936c9e8b757ae57c351e7fb5cadd842f6b4dd5ee41332a6f542fcb41053"
+    }
+  ],
+  "scope": "single-target silence64 only; preserve two original target/gate/effect bodies; area silence161 not included"
+}

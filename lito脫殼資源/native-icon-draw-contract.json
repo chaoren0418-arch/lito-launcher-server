@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "updated_at": "2026-10-05T23:35:53.086919+08:00",
+  "fixed_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "supporting_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "ASM_warning": "Recovered ASM input differs from fixed PE; raw fixed-PE bytes govern. No private API identity promoted from labels.",
+  "status": "FINITE_STATIC_DRAW_CONTRACT_AND_FIVE_ACTUAL_SAMPLE_VECTORS_COMPLETE",
+  "source_ranges": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\ranges.json",
+    "bytes": 85375,
+    "sha256": "CF2A14991A547AB1E63CDE82E7F044BD49BD6A52A03060C5F59CA4EE6E95E39D"
+  },
+  "namespace_contract": {
+    "LTicon": {
+      "filename": "%d.lbt",
+      "cache_va": "0064A964",
+      "load_range_va": "0043FA93",
+      "draw_call_va": "00493674"
+    },
+    "shared": {
+      "filename": "%d.tbt",
+      "cache_va": "00648EC8",
+      "load_range_va": "0043F91E",
+      "row_render_va": "004C8EA0",
+      "draw_call_va": "004C8F07"
+    },
+    "fallback91": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\fallback-91-namespace.json",
+      "bytes": 2653,
+      "sha256": "EAB6B95766CC0258B2434C233BF1B3A4AA317541749BDC722142DD6A200E00E5"
+    }
+  },
+  "decode_contract": {
+    "header": "four bytes: dx i8,dy i8,width byte,height i8 at native draw. All selected real samples have height1..127.",
+    "payload": "Each row: u8 span_count; each span: u8 skip_bytes, u8 word_count, word_count LE16 values. Advance x by skip_bytes>>1 then word_count.",
+    "coverage": "Each span copies exactly word_count LE16 words; all covered zero/highbit values copied by raw blitter; uncovered areas preserve destination. Coverage is not native RGBA alpha.",
+    "format_flag": "4231F0 sees7C00/03E0/001F =>641298=0; F800/07E0/001F=>641298=1. Virtual query identity and live result remain unobserved.",
+    "conversion": "43DA40 rewrites each encoded word(v+(v&7FE0))&FFFF in place when loaders see641298!=0 and cache pointer!=0. ValidRGB555→RGB565 with green6 low bit0, not green replication.",
+    "preserve_raw": "Keep original source bytes and raw555 separate from converted mutable cache; do not apply conversion twice."
+  },
+  "draw_contract": {
+    "wrapper": "4B9980 acquires surface through virtual+64, draws only when returnEAX==0, then virtual+80. Exact external implementation unclosed.",
+    "globals": "63485C destination pointer;634848 pitch_bytes. Argument+08 pointer835B3C is unused in this wrapper, not proven clip data.",
+    "caller_origin": "base + y*pitch_bytes + x*2; x=[ebp+0C], y=[ebp+10]",
+    "header_origin": "add2*(dy*(pitch_bytes>>1)+dx); pitch SAR signed. Native row increment2*(pitch_bytes>>1), equals pitch for positive even pitch.",
+    "blit": "4BE000 flag0 performs REP MOVSD/MOVSB copying every encoded word. Headerwidth ignored. No alpha/colorkey/clip/scale check in captured wrapper+blitter.",
+    "optional_mask": "4BE07F tests caller flag;4B9980 pushes0. Other branch writes01 to6476C4 mask, not alpha; selected path does not execute it.",
+    "preconditions": "Code-derived vectors assume DF=0, positive even pitch, height1..127, complete payload and in-bounds destination. Native routines do not enforce these audit safety conditions."
+  },
+  "reusable_vectors": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-106.lbt\\vector.json",
+      "bytes": 43458,
+      "sha256": "DFA64177E57DFD7862DFCC88A626D6CF0C56BAEB10EECF0F202AEE36818FA273"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-122.lbt\\vector.json",
+      "bytes": 45310,
+      "sha256": "0FEEDE1391AE39E724D2081F50815BCDFBC97F0D4439AC0FF92D13468FF96D0F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\LTicon-91.lbt\\vector.json",
+      "bytes": 55726,
+      "sha256": "1ADA6F95CE0C654B836D46112ED16CC276F07158A8950E7C36FD8B1AAC32BCA9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-383.tbt\\vector.json",
+      "bytes": 46786,
+      "sha256": "5573AAAD54679700BD7D1DCE685A5C98DC70E9C8F8172DC2C10BA073A1D0AD11"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\vectors\\shared-91.tbt\\vector.json",
+      "bytes": 22431,
+      "sha256": "BEFA644252EAAE58137912E9B7C350F0BBDBA56E0E884061287CDC819295CED8"
+    }
+  ],
+  "vector_semantics": "Raw payload, dense LE16 source/conditional565,coverage.u8,code-derived sentinel destination buffers and row/span/source/destination offsets. Binary LE16 outputs are not screenshots or RGBA-native oracles.",
+  "modern_policy_comparison": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\modern-comparison.json",
+    "bytes": 13031,
+    "sha256": "360134C4319565CE2ABABA2A0B1FADCA6E05C4602FFF7FFC404E78FA4E689BD3"
+  },
+  "new_checks": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\graphics-parity\\new-evidence-verification.json",
+    "bytes": 10810,
+    "sha256": "16C208F2CE98822B5A1D199B978A8B65A78CA39AC1E2520A26E71E72DF01E5E4"
+  },
+  "unclosed": [
+    "No observed native surface output, live pixel-format flag, pitch, placement or actual call stack; RGBA channel expansion and complete display parity not accepted.",
+    "External virtual surface methods, upstream clipping and private/error paths unclosed; captured no-clip path does not prove all native drawing lacks clipping.",
+    "Negative height, highbit pixels, odd skip, odd/negative pitch, malformed payload and DF!=0 are not validated behavioral cases.",
+    "No Modern source change or runtime comparison; overall unpacking/product/native first lobby/GUI remain unaccepted."
+  ],
+  "finite_static_contract_complete": true,
+  "overall_complete": false,
+  "native_graphics_runtime_parity_accepted": false,
+  "all_requested_actual_samples_available": true,
+  "new_opcodes": 0,
+  "wire_corrections": 0
+}

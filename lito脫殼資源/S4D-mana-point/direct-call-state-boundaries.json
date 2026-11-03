@@ -1,0 +1,201 @@
+{
+  "calls": [
+    {
+      "body": "S4D_complete_handler",
+      "call": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004AEFBD",
+        "rva": "000AEFBD",
+        "section": "   \u0000    ",
+        "file_offset": "000AEFBD",
+        "raw_backed": true,
+        "raw_hex": "e8ce4e0100",
+        "mnemonic": "call",
+        "operands": "0x4c3e90",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        }
+      },
+      "destination": {
+        "va": "004C3E90",
+        "rva": "000C3E90",
+        "section": "   \u0000    ",
+        "file_offset": "000C3E90",
+        "raw_backed": true
+      },
+      "complete_direct_body_reused": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+        "bytes": 91,
+        "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+      }
+    },
+    {
+      "body": "protected_setter_reused",
+      "call": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C3E97",
+        "rva": "000C3E97",
+        "section": "   \u0000    ",
+        "file_offset": "000C3E97",
+        "raw_backed": true,
+        "raw_hex": "e804feffff",
+        "mnemonic": "call",
+        "operands": "0x4c3ca0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+          "bytes": 91,
+          "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+        }
+      },
+      "destination": {
+        "va": "004C3CA0",
+        "rva": "000C3CA0",
+        "section": "   \u0000    ",
+        "file_offset": "000C3CA0",
+        "raw_backed": true
+      },
+      "boundary": "Second-layer helper raw-backed, deliberately not expanded; key generation semantics unknown",
+      "target_body_sha256": null,
+      "target_body_status": "Raw-backed second layer intentionally not captured",
+      "deeper_expansion": false
+    },
+    {
+      "body": "protected_setter_reused",
+      "call": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C3EA1",
+        "rva": "000C3EA1",
+        "section": "   \u0000    ",
+        "file_offset": "000C3EA1",
+        "raw_backed": true,
+        "raw_hex": "e8fafdffff",
+        "mnemonic": "call",
+        "operands": "0x4c3ca0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+          "bytes": 91,
+          "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+        }
+      },
+      "destination": {
+        "va": "004C3CA0",
+        "rva": "000C3CA0",
+        "section": "   \u0000    ",
+        "file_offset": "000C3CA0",
+        "raw_backed": true
+      },
+      "boundary": "Same second-layer helper used to populate16DWORD storage",
+      "target_body_sha256": null,
+      "target_body_status": "Raw-backed second layer intentionally not captured",
+      "deeper_expansion": false
+    },
+    {
+      "body": "protected_setter_reused",
+      "call": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C3EB6",
+        "rva": "000C3EB6",
+        "section": "   \u0000    ",
+        "file_offset": "000C3EB6",
+        "raw_backed": true,
+        "raw_hex": "e89587f176",
+        "mnemonic": "call",
+        "operands": "0x773dc650",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+          "bytes": 91,
+          "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+        }
+      },
+      "destination": {
+        "va": "773DC650",
+        "rva": "76FDC650",
+        "section": null,
+        "file_offset": null,
+        "raw_backed": false
+      },
+      "boundary": "Private/external opaque random-like target; outside fixedPE raw, no body or return-value qualification",
+      "target_body_sha256": null,
+      "target_body_status": "No body in fixedPE; body SHA unavailable",
+      "deeper_expansion": false
+    }
+  ],
+  "globals": {
+    "current_protected_object": {
+      "va": "008315E0",
+      "rva": "004315E0",
+      "section": "   \u0000    ",
+      "file_offset": "004315E0",
+      "raw_backed": true
+    },
+    "maximum_word": {
+      "va": "008348BA",
+      "rva": "004348BA",
+      "section": "   \u0000    ",
+      "file_offset": "004348BA",
+      "raw_backed": true
+    }
+  },
+  "protected_setter": {
+    "body": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+      "bytes": 91,
+      "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+    },
+    "state_layout": "object+4 points to16DWORD storage; object+8 is XORkey; object+0 is encoded index (XOR B104FA87). Not a plain MP global.",
+    "visible_order": "Calls4C3CA0 for key; initializes16 slots; external773DC650 result selects opaque index; XORs exact32bit signed-extended input with key into selected slot; encoded index stored; returns object pointer, ret4.",
+    "live_preconditions": "Protected object and object+4 storage valid; no NULL or allocation/init guard in this setter. External/helper completion and valid index unproven.",
+    "maximum_update_dependency": "4AEFC2/C6 reached only after setter returns; static decode of both fields is not native whole-message completion."
+  },
+  "owner": {
+    "explicit_skill_owner_create_test_require": false,
+    "bounded_absence": [
+      {
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004AEFB0-1F.bin",
+          "bytes": 31,
+          "sha256": "6A22B13E81559142D63345A2C3C47DAEDED7B43AFFA7C22CD9AD894B239FC783"
+        },
+        "explicit834888_operands": 0,
+        "explicit_owner_constructor4C9190_calls": 0,
+        "scope": "Only this complete bounded body; arbitrary aliases and deeper helpers not excluded"
+      },
+      {
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S4D-mana-point\\ranges\\004B2D07-C.bin",
+          "bytes": 12,
+          "sha256": "C4176A46364AD5310DF352DF6AC1855AB6A40EF6044837AA7CC5BCBAA434CDA2"
+        },
+        "explicit834888_operands": 0,
+        "explicit_owner_constructor4C9190_calls": 0,
+        "scope": "Only this complete bounded body; arbitrary aliases and deeper helpers not excluded"
+      },
+      {
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S0C-status-owner\\ranges\\004C3E90-5B.bin",
+          "bytes": 91,
+          "sha256": "3C39EDEFB882A16551B3E1A4F14817D3689E9425C81B238FCA0C32073BA9C1B4"
+        },
+        "explicit834888_operands": 0,
+        "explicit_owner_constructor4C9190_calls": 0,
+        "scope": "Only this complete bounded body; arbitrary aliases and deeper helpers not excluded"
+      }
+    ],
+    "entire_program_or_alias_absence_proven": false,
+    "owner_or_player_ready": false,
+    "S4D_has_object_identity_field": false,
+    "server_origin_correction": {
+      "source": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-skill-publication-origin-comparison.json",
+        "bytes": 6144,
+        "sha256": "A16B1FA66350D50056B78CF5B62F8ABECBC6D399D048B3409A66779C565B6963"
+      },
+      "status": "CLOSED_READ_ONLY_OVERLAY_CAUSE_NATIVE_READY_OPEN",
+      "adopted": "Ordinary first/reentry S1E is test-only overlay hook, absent from originalB1/AD368. Do not use that hook or S4D/S0C decode as native owner or publication timing evidence."
+    }
+  },
+  "receive_and_dispatch": "Inherited complete-body receive pump synchronous dispatch. Both selectors share sameS4D target. Optional diagnostics64AFA2 can invoke private/external logging before selectors; prior boundary retained.",
+  "no_other_direct_effects": "Complete11-instruction S4D handler has one direct call and one maximum word store. No direct packet send, actor lookup, effect allocation, skill owner publication or readiness gate."
+}

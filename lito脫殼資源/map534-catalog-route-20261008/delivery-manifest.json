@@ -1,0 +1,47 @@
+{
+  "task_id": "bin_resources-map534-catalog-route-20261008",
+  "contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008-contract.json",
+    "bytes": 9510,
+    "sha256": "4A45B4B7512159DC8A73FAA3B2D2B2C6E33A51932C5DA12B24EA6C0B1B474401"
+  },
+  "files": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\derive.py",
+      "bytes": 8780,
+      "sha256": "43A115F00B2A7E1BC9B59B371FAB292280ADE06892878D607F5BDAE315F80A6F"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\inputs.json",
+      "bytes": 2145,
+      "sha256": "C091035DB8DF415B1EFBD727A11425F8CB2E8501D1B79F8D093560837E481D19"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\package.py",
+      "bytes": 6943,
+      "sha256": "7CC53863366842F517E06C07DB6ABD85F40C22E4B53AE03B7924850A906402B9"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stderr.txt",
+      "bytes": 0,
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\raw.stdout.txt",
+      "bytes": 1388,
+      "sha256": "5F74219C1B6C41247D13EA5CFEC2DE067012735F1C3D5790C766414C952B01D7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\route-witness.json",
+      "bytes": 1509,
+      "sha256": "0792515C8A131C99D0814F58F21FE728F930005D4934185B10C695D33567CD53"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\map534-catalog-route-20261008\\scope.json",
+      "bytes": 840,
+      "sha256": "A975184C6BC0BEFCCDD5C41075783B80C4CD7CD53BBFE240990AEF00D5FC024D"
+    }
+  ],
+  "state": "review",
+  "self_accepted": false
+}

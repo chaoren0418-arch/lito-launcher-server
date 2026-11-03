@@ -1,0 +1,21 @@
+{
+  "inputs": [
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeFaultProbe.java",
+      "sha256": "d0e017ecd4fe52f1d0f6d55d441c9057c1ff47da0dbf5467cba34b868a089c57"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\NegativeLifecycleProbe.java",
+      "sha256": "d497e507c0e05b17275a2554ef35be641b6c8454cadb992de904165537fbd777"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\negative-material\\test_boundaries.py",
+      "sha256": "362b1f0a7cb84f67a9e0e2d3b401cc9bb5bf178208731a19ee514cc87eb6e4f7"
+    },
+    {
+      "path": "D:\\lineage\u958b\u767c\\3-lito\u958b\u767c\\lito\u4f3a\u670d\u5668\\LiTo381-Server\\tools\\combat-continuation\\weakness-material\\prepare_boundaries.py",
+      "sha256": "223f778487cf3b4e3927d8190e4cb7bb81bb9e1426152f09886543f389b902e9"
+    }
+  ],
+  "scope": "actual native47/56 packet producers, material save failure, both PC roles, scene/STOPPED/output; existing percentile fixture"
+}

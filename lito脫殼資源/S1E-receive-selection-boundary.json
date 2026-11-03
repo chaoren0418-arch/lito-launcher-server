@@ -1,0 +1,265 @@
+{
+  "updated_at": "2026-10-05T23:04:17.944246+08:00",
+  "classification": "FINITE_STATIC_RECEIVE_AND_SELECTION_BOUNDARY_CORROBORATION",
+  "source_PE": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\LiTo.unpacked-oep-current.exe",
+    "bytes": 7094272,
+    "sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9"
+  },
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "accepted_batch3_preserved": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\S1E-initialization-gates.json",
+      "bytes": 8570,
+      "sha256": "841FAE9D1234919AE6051490596AF5EB75629107D4D4A101AC93C6A25153C2DC"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\class4-slot-provenance.json",
+      "bytes": 86352,
+      "sha256": "845C8F7F6DC5834CCFC7DC2056311F596C2FF3C82CC26944744F60B54C2BA1B8"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\skill-gates\\ranges.json",
+      "bytes": 136990,
+      "sha256": "885B4699FC4A986C86E649976A563061D4402689BC543CE5A68B8AD4EE25E39C"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\sealed-batch3\\accepted-20261005\\snapshot-manifest.json",
+      "bytes": 26692,
+      "sha256": "140302D62027784D900DC628B550255F44E50F8D1275AA17B5321272C63C1DF0"
+    }
+  ],
+  "range_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\ranges.json",
+    "bytes": 531377,
+    "sha256": "2323266C417B49DFBC2C16A9979515570B4286D44679FA66438F54A29CA779D7"
+  },
+  "ASM_excerpt_manifest": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-excerpts.json",
+    "bytes": 4691,
+    "sha256": "A3B45E02DE2F48C3F1AF56034F2383A349840900BF1F9D585D8F82CAAA6992D3"
+  },
+  "API_evidence": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\api-identities.json",
+    "bytes": 5337,
+    "sha256": "CF747F48E76CE25443F154C255D92808C4AB19695D2F12224D0E5513FDB38980"
+  },
+  "receive_path": {
+    "ordered_edges": [
+      "WndProc47F340:47F365 or47FFB8 ->4C6B30",
+      "uMsg401; lParam high16 error0; low16event1 ->4C7062",
+      "4C7062 ->4B37C0",
+      "complete body ->4B3868 ->4B2970",
+      "prior accepted double opcode maps ->4B2AD3 ->4AEE70 ->4C9220 withglobal834888"
+    ],
+    "event_switch": {
+      "low16_event": 1,
+      "byte_table_VA": "004C7194",
+      "slot": 0,
+      "DWORD_target": "004C7062"
+    },
+    "frame_state": {
+      "socket": "008343E8",
+      "remaining": "007607A4",
+      "body_flag": "007607A8",
+      "destination_cursor": "007607AC",
+      "buffer": "007607B0",
+      "body_length": "00760750"
+    },
+    "init": "4B38D0 sets remaining2/bodyflag0/cursorbuffer; startupworker47C8C3 caller retained from prior evidence",
+    "frame_model": "Partial recv accumulation: first2 bytes LE total_length; remaining=total_length-2; complete body optionally decoded by4C66C0, immediately dispatched; repeat recv until<=0.",
+    "complete_frame_dispatch_synchronous_with_pump": true,
+    "skill_owner_wait_queue_found": false,
+    "buffer_is_owner_readiness_queue": false,
+    "multiple_complete_frames_can_dispatch_in_one_pump_call": true,
+    "no_queue_scope": "Full4B37C0 plus message case contain no834888/class/order-ready predicate or deferred S1E queue. OS message queue/partial-byte accumulator are distinct from skill readiness. Unknown private hooks/indirect callers remain outside scope.",
+    "exact_packet_length_and_malformed_frame_guards_closed": false
+  },
+  "thread_model": {
+    "async_registration": "4C7041 pushes eventmask23h;4C7043 message401h;4C7048 windowargument;4C7049 socket;4C704A calls4EFE6E (WSAAsyncSelect identity).",
+    "static_window_setup": "480290 creates48byteclass-like structure with47F340 at4802B9, passes at4802F9 toprivate05AE0922; creation at48035A->05AE0000 storesresult64BBEC at480362.",
+    "main_loop": "4820A7/B3 load4F7464/60/5C; private05AF04D8 invoked4820CD withMSG-like64B6B0,HWnd/filter0,remove1;4820F8/4820FF private05AF0194/05AF0000; idle4D6570 andindirect62C9C0. Call forms compatible withPeekMessage/Translate/Dispatch, bodiesunrestored.",
+    "ordinary_UI_stack": "WndProc mouse ->indirect62C9BC; lobbysetup4966A0 stores4962B0;4962B0 ->41B420/virtual+20;type2/3node constructors preservecallback/param at+24/+28;vtable mouse ->414A80 ->release+34 ->callback+40 ->414C40 or415C90;nodes630F34 confirm4928C0 and630E08/44/80/BC shortcut4934A0.",
+    "source_model": "Conditional on these registrations and object vtables being the live values, both receive and selection paths run through this WndProc call stack. This is program-path evidence, not a sampled OS thread ID or exclusive-caller proof.",
+    "rel32_candidate_scan_scope": "Fixed mapped PE RVA00001000..000F3FFF, rawE8/E9 rel32patterns checkedagainstknowncapturedinstructionboundaries. This scanexcludesindirectcalls/protectedexternalcode andisnot a wholeprogramCFG.",
+    "actual_same_thread_proven": false,
+    "private_message_API_bodies_restored": false,
+    "all_indirect_or_protected_callers_excluded": false,
+    "direct_rel32_candidates": {
+      "004B37C0": [
+        {
+          "VA": "004C7062",
+          "kind": "call",
+          "raw_hex": "e859c7feff",
+          "instruction_boundary_confirmed": true
+        }
+      ],
+      "004B2970": [
+        {
+          "VA": "004B3868",
+          "kind": "call",
+          "raw_hex": "e803f1ffff",
+          "instruction_boundary_confirmed": true
+        }
+      ],
+      "004C6B30": [
+        {
+          "VA": "0047F365",
+          "kind": "call",
+          "raw_hex": "e8c6770400",
+          "instruction_boundary_confirmed": true
+        },
+        {
+          "VA": "0047FFB8",
+          "kind": "call",
+          "raw_hex": "e8736b0400",
+          "instruction_boundary_confirmed": true
+        }
+      ],
+      "004928C0": [
+        {
+          "VA": "004934E9",
+          "kind": "jmp",
+          "raw_hex": "e9d2f3ffff",
+          "instruction_boundary_confirmed": true
+        }
+      ]
+    }
+  },
+  "selection_boundaries": [
+    {
+      "path": "ordinary_new_owner",
+      "entry": "004928C0",
+      "class_store": "00492AD4 ->75F694",
+      "class4_order_store": "00492B9F ->635B80",
+      "owner_construct_call": "00492D80 ->4C9190",
+      "owner_publish_store": "00492D91 ->834888",
+      "C9_send_call": "00492F02 ->4C6AE0",
+      "program_order": "class/order selection -> owner constructor/publish -> C9 sender call",
+      "success_guard": "No explicit readyflag test adjacent toC9. Allocationfailure492D58->492D8A zeroesEAX thenpublishesNULL at492D91. Downstream failurecontinuation reachingC9 isNOTproved; laterconstructors/calls mayabort orfault. Publisher instruction alone doesnotcertifyliveowner/table.",
+      "unconditional_safe_boundary": false
+    },
+    {
+      "path": "ordinary_reuse_owner",
+      "entry": "004928C0",
+      "preconditions": "648EBC/834888/834958 allnonzero at492B2E..492B50",
+      "reset_call": "00492B61 ->4CD1C0",
+      "join_jump": "00492B69 ->492E6B",
+      "C9_send_call": "00492F02",
+      "program_order": "class/order -> reuse/reset -> join -> C9",
+      "pointer_nonzero_proves_current_epoch_or_valid_table": false,
+      "unconditional_safe_boundary": false
+    },
+    {
+      "path": "shortcut_selection",
+      "entry": "004934A0",
+      "conditions": "selectedrow+18>=2 setsBL; laterBL true ->ECX8",
+      "tailjump": "004934E9 ->4928C0",
+      "meaning": "Shortcut reuses full ordinary callback; no localclass/owner skip inunmodifiedfixedPE path. Virtualrow/redrawcalls still requireliveobject evidence.",
+      "unconditional_safe_boundary": false
+    },
+    {
+      "path": "return_saved_alias_C9",
+      "entry": "004A7550",
+      "conditions": "64AFBC or64AFBD nonzero ->4A769A;64AFBE zero",
+      "alias_argument": "004A76A3 ->64AD54",
+      "C9_send_call": "004A76B2 ->4C6AE0",
+      "after_call": "004A76BA writes64AFBE1",
+      "same_branch_initializes_class_order_owner": false,
+      "meaning": "This localbranch skips4928C0 andcontainsnoownerconstruct/reset/readinesscheck. Priorreturn preparation/inheritedowner mustbeproved separately. C9 alone isnot a universalreadinesssignal.",
+      "unconditional_safe_boundary": false
+    }
+  ],
+  "C9_post_send_state": {
+    "ordinary_saved_alias_copy": "64AD54 onlycopiedafter492F02 at492F42/4A/51",
+    "one_shot_return_flag": "64AFBE setafter4A76B2 at4A76BA",
+    "meaning": "If actualreentry occurs during sender, savedalias orone-shotflag may still holdpriorstate. Noactualnestedreceive/duplicateC9 proved."
+  },
+  "reentrancy_audit": {
+    "explicit_pump_call_in_receiver": true,
+    "explicit_receive_pump_call_in_C9_formatter_or_send_body": false,
+    "receive_decode_and_send_encode": "4C66C0/4C6700 completeleafloops; no call-out/messagepump",
+    "send_calls": "4C6AE0 builds/frameheaders ->4C6770;4C67D0 send,partialsend loop;errorpaths sprintf through4F7314,480620,4C65F0;formatpointer is773F5200/sprintf. No directMessageBox inferred.",
+    "failure_private_call": "480764 ->05AD0986 in480620 tail; unknown body. Closepath4803A0 transitivecallbacks notfullyclosed.",
+    "selection_callouts": "4928E8 4C8790;492914 494120 (virtualselected-rowquery);492958 49A510;49299C 46EA30;492ACA 446DF0;constructors/allocator;492DD2/492DDF indirectvirtualcalls;492E72/492E9E4C3E90;priorownerpublishedbeforethese lattercalls. Fulltransitiveprivate/hookclosure notclaimed.",
+    "timer_registration": "4D65F0 stores deadline/callback/context in834C08array andincrements834C00; itdoesnot directlyinvokeregisteredcallback. Itcalls4D69F0 andallocator/copy, soabsent privatehooks cannotbeprovedfromstoreloopalone.",
+    "actual_nested_S1E_proven": false,
+    "no_reentry_proven": false,
+    "sleep_is_ordering_proof": false
+  },
+  "source_only_server_boundary": {
+    "ordinary_fresh_C9_conditional_support": true,
+    "any_C9_unconditionally_sufficient": false,
+    "startBattle_name_alone_sufficient": false,
+    "conditional_requirements": [
+      "C9 belongs toordinary/unmodified4928C0 or4934A0 tailpath, andmatches selectedcharacter/connection epoch",
+      "Allocation/reset succeeded;global834888 validwithlive+2Ccount/+58table;class75F694/order635B80 consistent",
+      "No concurrent/nested S1E orreset changesstate acrosspublication/send/receive; thread/callmodelmustbeestablished",
+      "Return4A7550 orpatchedbypass paths haveindependentlyproveninheritedowner/class/order/reset state",
+      "Metadata fallback andiconmatch gates fromacceptedbatch3 stillapply; readiness doesnotguaranteepopulatedrows"
+    ],
+    "conclusion": "Static source establishes ordinary program order and identifies return C9 exception. It does not establish an unconditional server send boundary or prove first-lobby success. Server lifecycle timing comparison must distinguish admission/return/duplicate paths; no product change requested by this evidence."
+  },
+  "minimal_dynamic_requirements": [
+    {
+      "need": "Sameconnection/character/owner epoch and threadidentity",
+      "points": [
+        "47F340 entry uMsg401",
+        "4C7062/4B3868",
+        "4928C0 or4934A0 entry",
+        "4A769A/4A76B2 returnbranch"
+      ],
+      "fields": [
+        "PID+creationFILETIME",
+        "OSthreadID",
+        "HWND",
+        "connectionID",
+        "selectedalias/pathorigin",
+        "monotonicsequence/timestamp"
+      ]
+    },
+    {
+      "need": "Readiness andordering, not justpointerpresence",
+      "points": [
+        "492AD4/classorder branch",
+        "before/after492B61 reset",
+        "before/after492D80 then492D91",
+        "492F02 or4A76B2",
+        "4AEEF3/4C9220 and4CD050"
+      ],
+      "fields": [
+        "75F694",
+        "635B80",
+        "834888",
+        "owner+2C",
+        "owner+58",
+        "ownerallocation/result/epoch",
+        "sameowner reset counter",
+        "metadata647E20/647E24 availability"
+      ]
+    },
+    {
+      "need": "S1E semantic inputs/output andnestedcall evidence",
+      "fields": [
+        "rawopcode/count/bitmap andbodylength",
+        "setbitindex/icon/fallback/duplicate decision",
+        "rowsbefore/aftermatch",
+        "allS1F/SDA/reset ordering",
+        "nested callstack-depth vsnormalWndProc dispatch",
+        "returnAFBC/AFBD/AFBE flagstates"
+      ],
+      "purpose": "Separate early delivery, failed ownerallocation, inheritedreturnowner, duplicateindex/nomatch, resetafterfill, andactualreentry. Timer/sleep/resourcecounts cannot substitute."
+    }
+  ],
+  "runtime_readiness_complete": false,
+  "new_opcode": false,
+  "wire_contract_changed": false,
+  "original_game_launched": false,
+  "process_opened": false,
+  "GUI_accepted": false,
+  "excluded_work": "No class4 closed32 producer rerun, icon/resource extraction, Java/SQL edit, sharedBIN patch, native/injection/screenshot, or server lifecycle execution."
+}

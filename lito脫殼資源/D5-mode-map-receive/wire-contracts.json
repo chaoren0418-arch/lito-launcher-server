@@ -1,0 +1,100 @@
+{
+  "known_contracts": [
+    {
+      "classification": "KNOWN_LAYOUT_CORROBORATION_NEW_FINITE_NATIVE_STORE_EFFECT_NO_WIRE_DIFFERENCE",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 2,
+      "VA": "004A9F6A",
+      "RVA": "000A9F6A",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype",
+          "destination": "localEBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext",
+          "destination": "localEBP-8 /phase6conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "mode",
+          "destination": "64ACCA BYTE"
+        }
+      ],
+      "body_bytes": 7,
+      "frame_bytes": 9,
+      "endianness": "little-endian u16/u32; u8singlebyte",
+      "encoding": "no strings/no text codec",
+      "trigger_state": "Knownservermodehelperlayout/sub3acceptedbroadcastorillegalrestore sources; inheritedNativephase6/otherroom-equalitygate. No success/ACK/transactionqualification.",
+      "evidence_level": "FixedPE reusedraw static completefinitebranches; serverexisting source/archivedIL; zero dynamic subtype3 witness",
+      "unknown": [
+        "actualNativephase/room/GUI/globalvalidity",
+        "Nativebounds/exactend",
+        "runtime table/resourcebinding",
+        "atomicity/allpeer/sendfailure",
+        "modeproducertrigger",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    },
+    {
+      "classification": "KNOWN_LAYOUT_CORROBORATION_NEW_FINITE_NATIVE_STORE_EFFECT_NO_WIRE_DIFFERENCE",
+      "direction": "server-to-client",
+      "opcode_hex": "D5",
+      "opcode_decimal": 213,
+      "subtype": 3,
+      "VA": "004A9F74",
+      "RVA": "000A9F74",
+      "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+      "fields": [
+        {
+          "body_offset": 1,
+          "type": "u8",
+          "bytes": 1,
+          "semantic": "subtype",
+          "destination": "localEBP-1"
+        },
+        {
+          "body_offset": 2,
+          "type": "u32LE",
+          "bytes": 4,
+          "semantic": "roomcontext",
+          "destination": "localEBP-8 /phase6conditional64ABF4"
+        },
+        {
+          "body_offset": 6,
+          "type": "u16LE",
+          "bytes": 2,
+          "semantic": "rawmapWORD",
+          "destination": "localEBP-4 WORD→64ACC9 BYTE projection"
+        }
+      ],
+      "body_bytes": 8,
+      "frame_bytes": 10,
+      "endianness": "little-endian u16/u32; u8singlebyte",
+      "encoding": "no strings/no text codec",
+      "trigger_state": "Knownservermodehelperlayout/sub3acceptedbroadcastorillegalrestore sources; inheritedNativephase6/otherroom-equalitygate. No success/ACK/transactionqualification.",
+      "evidence_level": "FixedPE reusedraw static completefinitebranches; serverexisting source/archivedIL; zero dynamic subtype3 witness",
+      "unknown": [
+        "actualNativephase/room/GUI/globalvalidity",
+        "Nativebounds/exactend",
+        "runtime table/resourcebinding",
+        "atomicity/allpeer/sendfailure",
+        "modeproducertrigger",
+        "owner/ready/source/physical/sessionauthority"
+      ]
+    }
+  ],
+  "new_wire": [],
+  "wire_corrections": []
+}

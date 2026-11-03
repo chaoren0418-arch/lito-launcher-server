@@ -1,0 +1,56 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\summon-ring\\build\\candidate-summon-ring.jar",
+    "sha256": "68f0f3381731e076d8d726938cf869d9e59f2c6f98347380611188f583aaeaa3"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\candidate-water-life-material.jar",
+    "sha256": "c83d82a84676a984a3d5e63e41a52f4e564359b3ba93c0ff6923e2748276fed7"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction$Batch.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeWaterLifeCastAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\build.py",
+      "sha256": "e9a8520cc209a51f67fec0e631a0ce998503afae5e71d561518528cd54f15eca"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\PairMethods.txt",
+      "sha256": "1cab89110616d575f2ab43447d2834c262f7c4be8f0dbdc985a8a8e26abd545a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\WaterLifeMethods.java",
+      "sha256": "c9904cfdb6dff9159e187a65b7ead4151d420f006e4ed1707550be547d2cda1a"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "747332ca13b7c94c840d9e8cec852fa4cbbb49f10625cf5c7b27355037f1178c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "13625031e7605d334720b73b9403f5bcc1d8cf7a40cf693d6cc975972d0edbdf"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\water-life-material\\build-repro\\inputs\\sources\\NativeWaterLifeCastAction.java",
+      "sha256": "cb1b82425978b311a46e79845b37d9d0aa83dfdabf1028579637f26383cda361"
+    }
+  ]
+}

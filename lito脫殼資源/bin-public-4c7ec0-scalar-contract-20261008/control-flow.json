@@ -1,0 +1,173 @@
+{
+  "entry": "004C7EC0",
+  "only_local_return": "004C7EEE",
+  "edges": [
+    {
+      "from": "004C7EC0",
+      "to": "004C7EC1",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EC1",
+      "to": "004C7EC3",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EC3",
+      "to": "004C7EC4",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EC4",
+      "to": "004C7EC5",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EC5",
+      "to": "004C7EC7",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EC7",
+      "to": "004C7ECC",
+      "kind": "call_normal_return_only"
+    },
+    {
+      "from": "004C7ECC",
+      "to": "004C7ECF",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7ECF",
+      "to": "004C7ED1",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7ED1",
+      "to": "004C7EE3",
+      "kind": "conditional_taken"
+    },
+    {
+      "from": "004C7ED1",
+      "to": "004C7ED3",
+      "kind": "conditional_not_taken"
+    },
+    {
+      "from": "004C7ED3",
+      "to": "004C7ED6",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7ED6",
+      "to": "004C7EEB",
+      "kind": "conditional_taken"
+    },
+    {
+      "from": "004C7ED6",
+      "to": "004C7ED8",
+      "kind": "conditional_not_taken"
+    },
+    {
+      "from": "004C7ED8",
+      "to": "004C7EDA",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EDA",
+      "to": "004C7EDF",
+      "kind": "call_normal_return_only"
+    },
+    {
+      "from": "004C7EDF",
+      "to": "004C7EE1",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EE1",
+      "to": "004C7ED3",
+      "kind": "conditional_taken"
+    },
+    {
+      "from": "004C7EE1",
+      "to": "004C7EE3",
+      "kind": "conditional_not_taken"
+    },
+    {
+      "from": "004C7EE3",
+      "to": "004C7EE4",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EE4",
+      "to": "004C7EE6",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EE6",
+      "to": "004C7EEB",
+      "kind": "call_normal_return_only"
+    },
+    {
+      "from": "004C7EEB",
+      "to": "004C7EEC",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EEC",
+      "to": "004C7EED",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EED",
+      "to": "004C7EEE",
+      "kind": "fallthrough"
+    },
+    {
+      "from": "004C7EEE",
+      "to": "caller",
+      "kind": "return",
+      "ret_immediate_bytes": 4
+    }
+  ],
+  "all_instructions_reachable_in_local_CFG": true,
+  "all_local_branches_target_instruction_starts": true,
+  "callout_edges": [
+    {
+      "va": "004C7EC7",
+      "rva": "000C7EC7",
+      "file_offset": "000C7EC7",
+      "size": 5,
+      "raw_hex": "e8e41ef5ff",
+      "mnemonic": "call",
+      "operands": "0x419db0",
+      "direct_target": "00419DB0",
+      "expanded": false,
+      "normal_return_assumed_for_local_CFG": true
+    },
+    {
+      "va": "004C7EDA",
+      "rva": "000C7EDA",
+      "file_offset": "000C7EDA",
+      "size": 5,
+      "raw_hex": "e8211ff5ff",
+      "mnemonic": "call",
+      "operands": "0x419e00",
+      "direct_target": "00419E00",
+      "expanded": false,
+      "normal_return_assumed_for_local_CFG": true
+    },
+    {
+      "va": "004C7EE6",
+      "rva": "000C7EE6",
+      "file_offset": "000C7EE6",
+      "size": 5,
+      "raw_hex": "e8d5feffff",
+      "mnemonic": "call",
+      "operands": "0x4c7dc0",
+      "direct_target": "004C7DC0",
+      "expanded": false,
+      "normal_return_assumed_for_local_CFG": true
+    }
+  ],
+  "loop": "004C7ED3 compare ->004C7EDA helper ->004C7EDF zero test ->004C7EE1 back to004C7ED3 when nonzero. No local iteration count/time bound; helper termination unknown."
+}

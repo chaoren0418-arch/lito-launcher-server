@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-source\\build\\candidate-npc-physical-source.jar",
+    "sha256": "b6a149aa1c6c467d2f8fd4ad63e950159561c30c939569c61443397e5601f72e"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\candidate-weapon-break-material.jar",
+    "sha256": "d3e31773b7388fbd93f7c6598e5f414242976bf4270186f405ef0e6e217200e9"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeWeaponBreakMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\build.py",
+      "sha256": "70125769f3eaefbee03cb6755fd7a27c62c1633ed906e3b22a99b4321f65a2da"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\WeaponBreakMaterialMethods.java",
+      "sha256": "210d05943cce2a4222195ac3412f87281d700465309dbef12c7f9cd0038edbd0"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "67dcd8087eb431fab2ab8479429490debc7ded2901fa94b40d63381186ab8497"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "297fba2e03e54f4c61cee297b34c37ec7e7f2b50709df2b3e48c6ce96fa9f784"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\weapon-break-material\\build-repro\\inputs\\sources\\NativeWeaponBreakMaterialAction.java",
+      "sha256": "4869bb62fb958b95790e35b6ff1bf031947b48378723c2461af85cac8c9d9c72"
+    }
+  ]
+}

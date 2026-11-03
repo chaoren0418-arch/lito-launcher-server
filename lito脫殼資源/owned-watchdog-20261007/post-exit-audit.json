@@ -1,0 +1,369 @@
+{
+  "status": "PASS",
+  "identity_checks": [
+    {
+      "case": "normal",
+      "self_start_matches_controller_handle": true
+    },
+    {
+      "case": "hang",
+      "self_start_matches_controller_handle": true
+    },
+    {
+      "case": "spawned_child",
+      "self_start_matches_controller_handle": true
+    },
+    {
+      "case": "disk_poll",
+      "self_start_matches_controller_handle": true
+    },
+    {
+      "case": "controller_exception",
+      "self_start_matches_controller_handle": true
+    }
+  ],
+  "exact_retained_handle_exit_observations": [
+    {
+      "pid": 8200,
+      "creation_filetime_100ns": 134358246045617498,
+      "creation_time_utc": "2026-10-07T05:30:04.561750+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15416,
+      "creation_filetime_100ns": 134358246045734618,
+      "creation_time_utc": "2026-10-07T05:30:04.573462+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.046,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 23008,
+      "creation_filetime_100ns": 134358246047971480,
+      "creation_time_utc": "2026-10-07T05:30:04.797148+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.265,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 10716,
+      "creation_filetime_100ns": 134358246048038297,
+      "creation_time_utc": "2026-10-07T05:30:04.803830+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418563.281,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 19572,
+      "creation_filetime_100ns": 134358246068215241,
+      "creation_time_utc": "2026-10-07T05:30:06.821524+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418565.296,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 14056,
+      "creation_filetime_100ns": 134358246068286721,
+      "creation_time_utc": "2026-10-07T05:30:06.828672+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418565.312,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 11056,
+      "creation_filetime_100ns": 134358246069159819,
+      "creation_time_utc": "2026-10-07T05:30:06.915982+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418565.39,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 16376,
+      "creation_filetime_100ns": 134358246069217824,
+      "creation_time_utc": "2026-10-07T05:30:06.921782+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418565.39,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096385
+      }
+    },
+    {
+      "pid": 17784,
+      "creation_filetime_100ns": 134358245020842790,
+      "creation_time_utc": "2026-10-07T05:28:22.084279+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418460.546,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 19144,
+      "creation_filetime_100ns": 134358245020913975,
+      "creation_time_utc": "2026-10-07T05:28:22.091398+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418460.578,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 10928,
+      "creation_filetime_100ns": 134358246088471167,
+      "creation_time_utc": "2026-10-07T05:30:08.847117+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.328,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 16544,
+      "creation_filetime_100ns": 134358246088541086,
+      "creation_time_utc": "2026-10-07T05:30:08.854109+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.328,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 17512,
+      "creation_filetime_100ns": 134358246090193598,
+      "creation_time_utc": "2026-10-07T05:30:09.019360+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.5,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 15836,
+      "creation_filetime_100ns": 134358246090248419,
+      "creation_time_utc": "2026-10-07T05:30:09.024842+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.515,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 2964,
+      "creation_filetime_100ns": 134358246091121972,
+      "creation_time_utc": "2026-10-07T05:30:09.112197+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.593,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 22436,
+      "creation_filetime_100ns": 134358246091178705,
+      "creation_time_utc": "2026-10-07T05:30:09.117871+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.609,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 3758096386
+      }
+    },
+    {
+      "pid": 2836,
+      "creation_filetime_100ns": 134358245025887653,
+      "creation_time_utc": "2026-10-07T05:28:22.588765+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.062,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 73
+      }
+    },
+    {
+      "pid": 22544,
+      "creation_filetime_100ns": 134358245025964256,
+      "creation_time_utc": "2026-10-07T05:28:22.596426+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.078,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 500,
+      "creation_filetime_100ns": 134358245026828953,
+      "creation_time_utc": "2026-10-07T05:28:22.682895+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.156,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15108,
+      "creation_filetime_100ns": 134358245026898441,
+      "creation_time_utc": "2026-10-07T05:28:22.689844+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.171,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 508,
+      "creation_filetime_100ns": 134358245029371081,
+      "creation_time_utc": "2026-10-07T05:28:22.937108+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.421,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 19020,
+      "creation_filetime_100ns": 134358245029462663,
+      "creation_time_utc": "2026-10-07T05:28:22.946266+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418461.421,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 15876,
+      "creation_filetime_100ns": 134358246044543775,
+      "creation_time_utc": "2026-10-07T05:30:04.454377+00:00",
+      "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "primary": true,
+      "membership_verified": true,
+      "first_seen_monotonic": 418562.921,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    },
+    {
+      "pid": 3392,
+      "creation_filetime_100ns": 134358246044612771,
+      "creation_time_utc": "2026-10-07T05:30:04.461277+00:00",
+      "image_path": "C:\\Windows\\System32\\conhost.exe",
+      "primary": false,
+      "membership_verified": true,
+      "first_seen_monotonic": 418567.703,
+      "exit": {
+        "signaled": true,
+        "wait_result": 0,
+        "exit_code": 0
+      }
+    }
+  ],
+  "queried_processes": "Only handles of this task's freshly created primaries or members verified in its unnamed jobs",
+  "global_PID_enumeration": false,
+  "PID_name_based_kills": false,
+  "process_memory_read_or_attach": false,
+  "initial_failed_immediate_exit_audits_preserved": true,
+  "old_process_retry_or_cleanup": false
+}

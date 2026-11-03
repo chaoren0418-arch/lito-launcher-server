@@ -1,0 +1,955 @@
+[
+  {
+    "x": 32766,
+    "y": 32767,
+    "world_origin": [
+      32640,
+      32704
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe7fff.s32",
+      "bytes": 109148,
+      "sha256": "AC84DB3783FA1B25358198C71D589245E314BC8E834A42E6B33BA330DEB8A618"
+    },
+    "attribute_source_byte_range": [
+      81346,
+      97730
+    ],
+    "portal_source_byte_range": [
+      109144,
+      109146
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 23,
+    "canonical_direction_range": [
+      75,
+      4171
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32766,
+    "y": 32768,
+    "world_origin": [
+      32640,
+      32768
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8000.s32",
+      "bytes": 155424,
+      "sha256": "3E4BEC3875F702B51929F1110C29828223437962C80A19209199DAA6080368D0"
+    },
+    "attribute_source_byte_range": [
+      80734,
+      97118
+    ],
+    "portal_source_byte_range": [
+      155420,
+      155422
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 4171,
+    "canonical_direction_range": [
+      4223,
+      8319
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32766,
+    "y": 32769,
+    "world_origin": [
+      32640,
+      32832
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8001.s32",
+      "bytes": 148169,
+      "sha256": "99D6D5545B4BDB8781D379D1663333C010BB7F48AB3117B2467E75EFD296D08D"
+    },
+    "attribute_source_byte_range": [
+      79486,
+      95870
+    ],
+    "portal_source_byte_range": [
+      148165,
+      148167
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 8319,
+    "canonical_direction_range": [
+      8371,
+      12467
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32766,
+    "y": 32770,
+    "world_origin": [
+      32640,
+      32896
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7ffe8002.s32",
+      "bytes": 101496,
+      "sha256": "AE8E851F1B6AEE31057AFC40EC0AC23CEB5D1CF14724A8AEE95A3250130DA9E1"
+    },
+    "attribute_source_byte_range": [
+      81922,
+      98306
+    ],
+    "portal_source_byte_range": [
+      101492,
+      101494
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 12467,
+    "canonical_direction_range": [
+      12519,
+      16615
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32767,
+    "y": 32767,
+    "world_origin": [
+      32704,
+      32704
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff7fff.s32",
+      "bytes": 131866,
+      "sha256": "05C940ACEAFD30969545E18ABE317EC56696757F1CD0A03F6993EDD011EB627B"
+    },
+    "attribute_source_byte_range": [
+      76162,
+      92546
+    ],
+    "portal_source_byte_range": [
+      131862,
+      131864
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 16615,
+    "canonical_direction_range": [
+      16667,
+      20763
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32767,
+    "y": 32768,
+    "world_origin": [
+      32704,
+      32768
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8000.s32",
+      "bytes": 188697,
+      "sha256": "E9C27D71199F06690DEBA601D77B5C3BFCB324B3AADC7E15E049E640A3AB4A87"
+    },
+    "attribute_source_byte_range": [
+      63526,
+      79910
+    ],
+    "portal_source_byte_range": [
+      188657,
+      188659
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 20763,
+    "canonical_direction_range": [
+      20815,
+      24911
+    ],
+    "direction_sha256": "965C6880AE2837B92DD9D6E7A818C6372CBD072EF05F4B20B2837A4B33FBB96C",
+    "mask_counts": {
+      "0": 2130,
+      "3": 3,
+      "4": 6,
+      "7": 5,
+      "12": 1,
+      "14": 1,
+      "15": 5,
+      "17": 1,
+      "19": 1,
+      "20": 1,
+      "21": 2,
+      "22": 1,
+      "24": 2,
+      "25": 2,
+      "27": 7,
+      "28": 4,
+      "29": 1,
+      "30": 4,
+      "31": 90,
+      "49": 2,
+      "51": 2,
+      "53": 1,
+      "54": 1,
+      "56": 5,
+      "60": 8,
+      "61": 7,
+      "62": 7,
+      "63": 25,
+      "64": 1,
+      "68": 11,
+      "70": 2,
+      "71": 4,
+      "76": 3,
+      "78": 13,
+      "81": 1,
+      "85": 1,
+      "86": 1,
+      "87": 1,
+      "89": 2,
+      "91": 1,
+      "92": 2,
+      "94": 2,
+      "95": 17,
+      "96": 3,
+      "97": 2,
+      "100": 5,
+      "102": 1,
+      "111": 2,
+      "112": 5,
+      "113": 1,
+      "116": 4,
+      "117": 3,
+      "118": 1,
+      "119": 3,
+      "120": 5,
+      "121": 2,
+      "123": 1,
+      "124": 84,
+      "125": 13,
+      "126": 16,
+      "127": 37,
+      "129": 2,
+      "135": 1,
+      "143": 3,
+      "145": 2,
+      "147": 1,
+      "149": 1,
+      "151": 8,
+      "159": 27,
+      "177": 2,
+      "179": 2,
+      "185": 4,
+      "187": 8,
+      "189": 2,
+      "191": 15,
+      "193": 2,
+      "195": 2,
+      "196": 2,
+      "197": 2,
+      "198": 1,
+      "199": 49,
+      "205": 1,
+      "206": 2,
+      "207": 20,
+      "208": 2,
+      "209": 4,
+      "211": 3,
+      "215": 9,
+      "221": 1,
+      "223": 33,
+      "225": 6,
+      "227": 11,
+      "228": 6,
+      "229": 3,
+      "231": 17,
+      "236": 1,
+      "237": 1,
+      "238": 7,
+      "239": 20,
+      "240": 6,
+      "241": 56,
+      "243": 25,
+      "244": 4,
+      "245": 7,
+      "247": 38,
+      "248": 9,
+      "249": 25,
+      "251": 17,
+      "252": 18,
+      "253": 44,
+      "254": 31,
+      "255": 958
+    }
+  },
+  {
+    "x": 32767,
+    "y": 32769,
+    "world_origin": [
+      32704,
+      32832
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8001.s32",
+      "bytes": 193623,
+      "sha256": "4C284795D39439A454D7FEDFB8738D32D2027056949104F9226CAF28972DF98C"
+    },
+    "attribute_source_byte_range": [
+      59962,
+      76346
+    ],
+    "portal_source_byte_range": [
+      193589,
+      193591
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 24911,
+    "canonical_direction_range": [
+      24963,
+      29059
+    ],
+    "direction_sha256": "0CA615C7FA879E606E083ACB26262F938B149217624237DE326E498B391F35C7",
+    "mask_counts": {
+      "0": 1275,
+      "1": 1,
+      "3": 2,
+      "4": 2,
+      "6": 2,
+      "7": 14,
+      "14": 2,
+      "15": 3,
+      "16": 2,
+      "17": 17,
+      "19": 2,
+      "21": 3,
+      "23": 2,
+      "24": 2,
+      "25": 3,
+      "27": 1,
+      "28": 11,
+      "29": 1,
+      "30": 7,
+      "31": 118,
+      "48": 5,
+      "49": 9,
+      "51": 1,
+      "52": 2,
+      "56": 7,
+      "57": 9,
+      "60": 5,
+      "61": 2,
+      "62": 14,
+      "63": 29,
+      "65": 4,
+      "67": 1,
+      "68": 5,
+      "69": 1,
+      "70": 5,
+      "71": 4,
+      "76": 3,
+      "78": 1,
+      "79": 2,
+      "80": 1,
+      "87": 3,
+      "89": 1,
+      "92": 4,
+      "94": 2,
+      "95": 12,
+      "96": 1,
+      "100": 2,
+      "102": 1,
+      "103": 1,
+      "108": 2,
+      "109": 1,
+      "110": 1,
+      "112": 9,
+      "113": 3,
+      "116": 2,
+      "118": 1,
+      "119": 2,
+      "120": 5,
+      "121": 11,
+      "123": 1,
+      "124": 64,
+      "125": 20,
+      "126": 36,
+      "127": 54,
+      "129": 2,
+      "131": 2,
+      "133": 1,
+      "135": 5,
+      "145": 2,
+      "147": 16,
+      "151": 1,
+      "157": 1,
+      "159": 27,
+      "177": 1,
+      "179": 3,
+      "187": 6,
+      "189": 1,
+      "191": 27,
+      "193": 7,
+      "195": 5,
+      "196": 4,
+      "197": 5,
+      "198": 3,
+      "199": 156,
+      "205": 1,
+      "206": 2,
+      "207": 39,
+      "208": 1,
+      "209": 3,
+      "212": 1,
+      "213": 1,
+      "215": 21,
+      "217": 1,
+      "219": 1,
+      "220": 1,
+      "221": 3,
+      "222": 1,
+      "223": 36,
+      "224": 4,
+      "225": 6,
+      "227": 4,
+      "228": 1,
+      "229": 2,
+      "230": 1,
+      "231": 34,
+      "236": 2,
+      "237": 2,
+      "238": 10,
+      "239": 22,
+      "240": 5,
+      "241": 56,
+      "243": 21,
+      "244": 2,
+      "245": 14,
+      "246": 1,
+      "247": 41,
+      "248": 11,
+      "249": 21,
+      "251": 34,
+      "252": 32,
+      "253": 55,
+      "254": 31,
+      "255": 1478
+    }
+  },
+  {
+    "x": 32767,
+    "y": 32770,
+    "world_origin": [
+      32704,
+      32896
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\7fff8002.s32",
+      "bytes": 120864,
+      "sha256": "C19A47155D6D4E42F7B2B4D82C21AA3740F8E1B9F2382E5FECD436908EBDCEFA"
+    },
+    "attribute_source_byte_range": [
+      81922,
+      98306
+    ],
+    "portal_source_byte_range": [
+      120860,
+      120862
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 29059,
+    "canonical_direction_range": [
+      29111,
+      33207
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32768,
+    "y": 32767,
+    "world_origin": [
+      32768,
+      32704
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80007fff.s32",
+      "bytes": 134266,
+      "sha256": "0415C65955783161D03F8F1194A47A109071D5A93B4284437D1E3B4C28FAD996"
+    },
+    "attribute_source_byte_range": [
+      75418,
+      91802
+    ],
+    "portal_source_byte_range": [
+      134262,
+      134264
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 33207,
+    "canonical_direction_range": [
+      33259,
+      37355
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32768,
+    "y": 32768,
+    "world_origin": [
+      32768,
+      32768
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008000.s32",
+      "bytes": 191747,
+      "sha256": "D731A274923AE27F0782C4FDBD9A8E4FF1314DF1F093BF4B2C43706BA8B90303"
+    },
+    "attribute_source_byte_range": [
+      64942,
+      81326
+    ],
+    "portal_source_byte_range": [
+      191719,
+      191721
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 37355,
+    "canonical_direction_range": [
+      37407,
+      41503
+    ],
+    "direction_sha256": "898CA3E4FCF16EDAE151B07C0CD36A1DF6655A682D63BB39CC8B9594FDA24A3A",
+    "mask_counts": {
+      "0": 2112,
+      "6": 2,
+      "7": 5,
+      "12": 1,
+      "13": 1,
+      "14": 4,
+      "15": 4,
+      "16": 7,
+      "17": 8,
+      "19": 1,
+      "23": 3,
+      "25": 1,
+      "27": 1,
+      "28": 7,
+      "30": 6,
+      "31": 81,
+      "48": 1,
+      "49": 6,
+      "51": 1,
+      "54": 1,
+      "56": 3,
+      "57": 9,
+      "59": 4,
+      "60": 3,
+      "61": 1,
+      "62": 5,
+      "63": 20,
+      "64": 10,
+      "65": 1,
+      "67": 1,
+      "68": 11,
+      "70": 1,
+      "71": 2,
+      "76": 1,
+      "77": 1,
+      "78": 8,
+      "87": 1,
+      "89": 1,
+      "93": 2,
+      "94": 1,
+      "95": 9,
+      "96": 1,
+      "97": 1,
+      "100": 7,
+      "112": 11,
+      "113": 2,
+      "115": 1,
+      "116": 6,
+      "117": 3,
+      "119": 1,
+      "120": 4,
+      "121": 4,
+      "124": 93,
+      "125": 15,
+      "126": 35,
+      "127": 28,
+      "135": 4,
+      "141": 1,
+      "143": 2,
+      "145": 1,
+      "147": 7,
+      "151": 4,
+      "157": 1,
+      "159": 18,
+      "177": 1,
+      "181": 1,
+      "185": 4,
+      "187": 1,
+      "191": 12,
+      "193": 6,
+      "195": 5,
+      "197": 1,
+      "198": 2,
+      "199": 70,
+      "205": 2,
+      "207": 22,
+      "208": 1,
+      "209": 3,
+      "211": 2,
+      "212": 1,
+      "213": 1,
+      "215": 5,
+      "217": 1,
+      "219": 1,
+      "220": 3,
+      "222": 2,
+      "223": 24,
+      "224": 3,
+      "225": 9,
+      "227": 15,
+      "228": 13,
+      "229": 1,
+      "231": 25,
+      "237": 2,
+      "238": 3,
+      "239": 9,
+      "240": 5,
+      "241": 53,
+      "243": 26,
+      "244": 1,
+      "245": 13,
+      "247": 46,
+      "248": 9,
+      "249": 25,
+      "251": 21,
+      "252": 41,
+      "253": 43,
+      "254": 6,
+      "255": 958
+    }
+  },
+  {
+    "x": 32768,
+    "y": 32769,
+    "world_origin": [
+      32768,
+      32832
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008001.s32",
+      "bytes": 214412,
+      "sha256": "6EC276177C4886E87AA97E681C8153E8BB1387FE419AA973A507C67C4CB2FF87"
+    },
+    "attribute_source_byte_range": [
+      59206,
+      75590
+    ],
+    "portal_source_byte_range": [
+      214360,
+      214362
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 41503,
+    "canonical_direction_range": [
+      41555,
+      45651
+    ],
+    "direction_sha256": "DA52861EAB9D02FB1BF644A12035F0FA9FEAAA8F5DC8E6DCD328D8BF67D27464",
+    "mask_counts": {
+      "0": 1179,
+      "1": 3,
+      "4": 1,
+      "7": 8,
+      "12": 2,
+      "13": 1,
+      "15": 11,
+      "17": 5,
+      "20": 1,
+      "22": 1,
+      "23": 1,
+      "24": 1,
+      "27": 2,
+      "28": 3,
+      "29": 1,
+      "30": 10,
+      "31": 69,
+      "49": 3,
+      "51": 1,
+      "55": 1,
+      "56": 4,
+      "57": 3,
+      "59": 2,
+      "60": 16,
+      "61": 3,
+      "62": 8,
+      "63": 19,
+      "64": 1,
+      "68": 2,
+      "70": 1,
+      "71": 1,
+      "76": 2,
+      "78": 1,
+      "86": 1,
+      "92": 1,
+      "94": 5,
+      "95": 3,
+      "96": 3,
+      "99": 2,
+      "100": 1,
+      "101": 1,
+      "103": 2,
+      "108": 2,
+      "111": 2,
+      "112": 8,
+      "113": 4,
+      "115": 1,
+      "116": 1,
+      "118": 3,
+      "119": 3,
+      "120": 7,
+      "121": 4,
+      "124": 72,
+      "125": 19,
+      "126": 37,
+      "127": 66,
+      "129": 2,
+      "131": 2,
+      "133": 1,
+      "135": 3,
+      "143": 7,
+      "145": 3,
+      "147": 6,
+      "151": 2,
+      "153": 1,
+      "155": 1,
+      "157": 1,
+      "159": 25,
+      "177": 3,
+      "179": 1,
+      "183": 2,
+      "185": 4,
+      "187": 7,
+      "189": 1,
+      "191": 30,
+      "192": 1,
+      "193": 5,
+      "195": 2,
+      "196": 2,
+      "197": 1,
+      "199": 164,
+      "205": 3,
+      "207": 41,
+      "208": 2,
+      "209": 7,
+      "211": 4,
+      "212": 1,
+      "215": 15,
+      "216": 1,
+      "219": 2,
+      "220": 1,
+      "221": 2,
+      "222": 2,
+      "223": 54,
+      "224": 2,
+      "225": 14,
+      "227": 9,
+      "228": 1,
+      "231": 37,
+      "236": 1,
+      "237": 3,
+      "238": 2,
+      "239": 23,
+      "240": 13,
+      "241": 100,
+      "243": 23,
+      "244": 3,
+      "245": 6,
+      "246": 2,
+      "247": 62,
+      "248": 12,
+      "249": 24,
+      "251": 40,
+      "252": 35,
+      "253": 72,
+      "254": 35,
+      "255": 1550
+    }
+  },
+  {
+    "x": 32768,
+    "y": 32770,
+    "world_origin": [
+      32768,
+      32896
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80008002.s32",
+      "bytes": 113627,
+      "sha256": "542A94A0704AC0FEA434EE2BCD6B09E00772F1C1E85FFF834CA8984D9E2BC3CA"
+    },
+    "attribute_source_byte_range": [
+      81922,
+      98306
+    ],
+    "portal_source_byte_range": [
+      113623,
+      113625
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 45651,
+    "canonical_direction_range": [
+      45703,
+      49799
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32769,
+    "y": 32767,
+    "world_origin": [
+      32832,
+      32704
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80017fff.s32",
+      "bytes": 109086,
+      "sha256": "0893B985BF34504E0177481FAB33D9208EE77CA3FC03CA1AC5D0766457087868"
+    },
+    "attribute_source_byte_range": [
+      80350,
+      96734
+    ],
+    "portal_source_byte_range": [
+      109082,
+      109084
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 49799,
+    "canonical_direction_range": [
+      49851,
+      53947
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32769,
+    "y": 32768,
+    "world_origin": [
+      32832,
+      32768
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018000.s32",
+      "bytes": 129275,
+      "sha256": "7AB78EB7CAAE40567BC2C2CD109FC0AAC7B2E45F4E8F3A53E05B684ECF98094C"
+    },
+    "attribute_source_byte_range": [
+      80470,
+      96854
+    ],
+    "portal_source_byte_range": [
+      129271,
+      129273
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 53947,
+    "canonical_direction_range": [
+      53999,
+      58095
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32769,
+    "y": 32769,
+    "world_origin": [
+      32832,
+      32832
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018001.s32",
+      "bytes": 124891,
+      "sha256": "D782CAA3CD9557DA5EA52AE10905FAA9C6273B4920FDF1A1D41C91452623142D"
+    },
+    "attribute_source_byte_range": [
+      77794,
+      94178
+    ],
+    "portal_source_byte_range": [
+      124887,
+      124889
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 58095,
+    "canonical_direction_range": [
+      58147,
+      62243
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  },
+  {
+    "x": 32769,
+    "y": 32770,
+    "world_origin": [
+      32832,
+      32896
+    ],
+    "source": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito重建版\\LiTo381-Modern\\target\\r482-cross-mode-batch\\native-map\\534\\80018002.s32",
+      "bytes": 99232,
+      "sha256": "69563EA46F9558A230FA89F9817EED4BCBE034DF4C312D76FEDBFABBA3E6976B"
+    },
+    "attribute_source_byte_range": [
+      81922,
+      98306
+    ],
+    "portal_source_byte_range": [
+      99228,
+      99230
+    ],
+    "portal_blocked_local_indices": [],
+    "canonical_sector_header_offset": 62243,
+    "canonical_direction_range": [
+      62295,
+      66391
+    ],
+    "direction_sha256": "AD7FACB2586FC6E966C004D7D1D16B024F5805FF7CB47C7A85DABD8B48892CA7",
+    "mask_counts": {
+      "0": 4096
+    }
+  }
+]

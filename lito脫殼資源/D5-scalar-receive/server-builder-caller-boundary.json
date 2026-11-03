@@ -1,0 +1,47 @@
+{
+  "server_contract": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\server-room-D5-CF-consumer-supplement.json",
+    "bytes": 12535,
+    "sha256": "7774EA7546EEF33CB5240A58A36FA9FFF7A465303049C3C3E238081887279BEF"
+  },
+  "adopted_scalar_layout": {
+    "subtypes": [
+      4,
+      6,
+      7,
+      8,
+      9
+    ],
+    "name": "summary scalar layouts",
+    "body": "d5 subtype + u32LE roomId + u8 value",
+    "body_bytes": 7,
+    "frame_bytes": 9,
+    "authority": "AD368 helper layouts only: summary indices0..4 map to4/6/7/8/9; source explicitly withholds production caller/effect pending trigger evidence"
+  },
+  "summary_index_mapping": {
+    "0": 4,
+    "1": 6,
+    "2": 7,
+    "3": 8,
+    "4": 9
+  },
+  "builder_qualification": "ExistingAD368 helper/source/archivedIL supports7body/9frame layouts andindex→subtype map only.",
+  "caller_qualification": "Existing7774explicitlywithholds productioncaller/effect pendingtrigger evidence. Thisbatchdoesnotsearch/executeJava orrequestnewpackets.",
+  "selected_wire_scope": {
+    "source_scope": "Existing7774selectedordinaryexit only",
+    "observed_D5_subtypes": [
+      5
+    ],
+    "scalar_dynamic_witness_adopted": false,
+    "capture_census_rerun": false
+  },
+  "Modern_controls": "Recordsubtype/value/destination asfutureguardedmetadata; noaction/controlmeaning/produceravailability/ACK/ready/GUIfrombuilderexistence. Anyfutureoutboundoperation needsitsownCprotocol/caller/triggerqualification.",
+  "do_not_infer": [
+    "Java mustsendscalarpackets",
+    "valuebool/bitmask/domain",
+    "aggregate settings accepted",
+    "ownermembership/sourceauthority",
+    "NativeGUIredraw",
+    "ACK/ready/start/rollback"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "version": "0.6.66",
+  "before_bytes": 1389441512,
+  "after_bytes": 1038579148,
+  "logical_bytes_reduced": 350862364,
+  "projects_bytes": {
+    "launcher": 653396484,
+    "server": 385182664
+  },
+  "measurement": "Logical file sizes; not a physical disk free-space measurement."
+}

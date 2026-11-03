@@ -1,0 +1,1250 @@
+{
+  "schema": "owned-watchdog-error-path-successor-review-v1",
+  "task_id": "bin_resources-watchdog-error-paths-20261007",
+  "created_at": "2026-10-07T13:56:03.270444+08:00",
+  "proposal_state": "review",
+  "component_result": "11_NEW_AFFECTED_CHECKS_PASS",
+  "overall_product_complete": false,
+  "corrected_module": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\owned_process.py",
+    "bytes": 31683,
+    "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+  },
+  "sources": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\error_fixture.py",
+      "bytes": 1425,
+      "sha256": "CCA752719AF78CE349B5EC3671272F471F41B3B3122CEC94D131026DB7552E77"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\owned_process.py",
+      "bytes": 31683,
+      "sha256": "AD639F124F953C4992605E8BAC98E282E6B9F96C71EABFCF5B8B1101DD223C4B"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\prepare_successor.py",
+      "bytes": 3311,
+      "sha256": "A4616562E87273CDE3307ABA9AF2AB1020BBA2D7803A3186402B21D948B387F7"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\publish_error_paths.py",
+      "bytes": 15666,
+      "sha256": "7C0AE64514FDE2AECAE2C2F99AA402E90F85C684F993D7EF1BCEE836C9954FDE"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\test_error_paths.py",
+      "bytes": 10977,
+      "sha256": "3AA8656B9306273123119D8909E614D2B114FB476D24E0CCE36FED37A48CF955"
+    }
+  ],
+  "source_diff": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\source.diff",
+    "bytes": 25184,
+    "sha256": "D0A86260212765147F2FB1C803A3236FDD12B1FBEEA4AD20DF9365B4F21E5201"
+  },
+  "compile_receipt": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\compile-receipt.json",
+    "bytes": 2423,
+    "sha256": "287A611C36B9AC7413FBEA7468A898739F804D59F68900077E53F8F5BEED20D4"
+  },
+  "module_source_anchors": {
+    "authoritative_create_state": 223,
+    "constructor_error": 246,
+    "raw_wait_audit": 297,
+    "unconditional_cleanup": 324,
+    "guarded_capture": 343,
+    "no_object_inference": 473,
+    "guarded_final_disk_scan": 483,
+    "durable_runtime_writer": 508
+  },
+  "task_at_read": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\task-at-read.json",
+    "bytes": 3252,
+    "sha256": "571163EEE574C6F7095AEC7DD685BCDB9703004C337655615282BCEAC55DF448"
+  },
+  "supervisor_blocked_assessment": {
+    "path": "D:\\lineage開發\\3-lito開發\\監製工作流\\bin_resources-owned-process-watchdog-20261007-assessment.json",
+    "bytes": 2708,
+    "sha256": "96455CA62639C2FADA58465C0053B443702BE48A530E9A6755E2DB784B7BCA82"
+  },
+  "immutable_baseline": {
+    "manifest": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\immutable-baseline.json",
+      "bytes": 31358,
+      "sha256": "BC51D31009F6ED7C9BFC204388F9B2197B9979B5C5365C6221059DD7533DF9DD"
+    },
+    "files": 130,
+    "all_unchanged": true,
+    "prior_watchdog_and_adapter_test_execution": false
+  },
+  "corrections": [
+    {
+      "finding": "constructor_post_create_false_empty",
+      "behavior": "Record CreateProcess success and retain primary handle immediately; fallible membership/identity/snapshot/capture setup cannot gate cleanup. Constructor packages actual cleanup/close/capture evidence in ConstructorFailure for caller.",
+      "cleanup": "Each snapshot is guarded, TerminateJobObject targets only the retained owned job, bounded raw job-query and retained-handle waits run before unconditional close. Close results are recorded separately.",
+      "unknown_policy": "Caller does not infer created=false, resumed=false or empty=true from a missing process object. Missing attached evidence remains null/unknown; failed wait observation remains null even when independent test observer confirms exit."
+    },
+    {
+      "finding": "final_disk_scan_receipt_loss",
+      "behavior": "Final scan, cleanup snapshots/audit and per-stream capture finalization are guarded individually. Original failure remains separate from secondary observation errors. Unknown disk size/overshoot are null. Runtime receipt is written after all observation phases.",
+      "durability": "Fresh runtime.json writer uses exclusive create, bounded JSON bytes, flush and fsync. An actual receipt-storage failure is returned as an explicit persistence error with in-memory evidence, never reported written.",
+      "limit": "Complete physical storage failure cannot guarantee a durable file. Receipt-write failure branch is source-handled but not fault-tested in this task; no external fallback path is used."
+    }
+  ],
+  "focused_new_tests": {
+    "summary": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\new-error-path-tests.json",
+      "bytes": 12598,
+      "sha256": "3C35B13F22A27BEA0B9484EAC76D15C809ABC25207B26B28365847FB77987732"
+    },
+    "actual_command": [
+      "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-B",
+      "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\test_error_paths.py"
+    ],
+    "actual_exit_code": 0,
+    "total": 11,
+    "passed": 11,
+    "runtime_python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "runtime_executable": {
+      "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "bytes": 104952,
+      "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+    },
+    "error_case_matrix": [
+      {
+        "case": "post_create_membership",
+        "status": "CONSTRUCTOR_FAILED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": false,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "post_create_membership",
+          "exception_stage": "post_create_membership",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: post_create_membership/membership-query-failure",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [],
+        "fault_events": [
+          {
+            "stage": "post_create_membership",
+            "kind": "membership-query-failure",
+            "monotonic": 419901.828,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 18388,
+                "creation_filetime_100ns": null,
+                "image_path": null,
+                "identity_status": "UNKNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419903.828,
+            "elapsed_seconds": 0.0,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "primary_thread",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 0
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_membership\\runtime.json",
+          "bytes": 9804,
+          "sha256": "D0F50FF5BB791C28A3C1B7966959BBFE0948A59F804CBB289902917AB87A4896"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_membership\\independent-handle-audit.json",
+          "bytes": 762,
+          "sha256": "04711504BC2E9394917BFE0F7DF3D57AD841F97177002946D0FD7AF3EE1C1217"
+        }
+      },
+      {
+        "case": "post_create_identity",
+        "status": "CONSTRUCTOR_FAILED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": false,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "post_create_identity",
+          "exception_stage": "post_create_identity",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: post_create_identity/creation-time/path-query-failure",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [],
+        "fault_events": [
+          {
+            "stage": "post_create_identity",
+            "kind": "creation-time/path-query-failure",
+            "monotonic": 419901.89,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 20780,
+                "creation_filetime_100ns": null,
+                "image_path": null,
+                "identity_status": "UNKNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419903.89,
+            "elapsed_seconds": 0.01600000000325963,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "primary_thread",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 0
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_identity\\runtime.json",
+          "bytes": 9836,
+          "sha256": "3B32E6FF4C3E3C9BD49F39CF73F40D3BF6F8B0729734077914D060D8595893A4"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_identity\\independent-handle-audit.json",
+          "bytes": 760,
+          "sha256": "2CD8A141092D83FAFF22EEB279346B5C3A77132AE29104B7D6B008E9C3908642"
+        }
+      },
+      {
+        "case": "post_create_snapshot",
+        "status": "CONSTRUCTOR_FAILED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": false,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "constructor_snapshot",
+          "exception_stage": "constructor_snapshot",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: constructor_snapshot/snapshot-failure",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [
+          {
+            "path": "constructor_failure_evidence/constructor_error_snapshot",
+            "error": {
+              "stage": "constructor_error_snapshot",
+              "exception_stage": "constructor_error_snapshot",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: constructor_error_snapshot/secondary-snapshot-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "constructor_snapshot",
+            "kind": "snapshot-failure",
+            "monotonic": 419901.984,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          },
+          {
+            "stage": "constructor_error_snapshot",
+            "kind": "secondary-snapshot-failure",
+            "monotonic": 419901.984,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 20860,
+                "creation_filetime_100ns": 134358259435026382,
+                "creation_time_utc": "2026-10-07T05:52:23.502638+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419903.984,
+            "elapsed_seconds": 0.0,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "primary_thread",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 0
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_snapshot\\runtime.json",
+          "bytes": 11160,
+          "sha256": "3CC0690DC0D3CF0906E0F6762A1A37ECCB42A3EEA4B2500C627ED11C84B8F569"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_snapshot\\independent-handle-audit.json",
+          "bytes": 760,
+          "sha256": "34C76F0DD134DC639771B5A8A3464355C19D45ECC9DEA5E03BA2D4FB5DA8E744"
+        }
+      },
+      {
+        "case": "post_create_capture_setup",
+        "status": "CONSTRUCTOR_FAILED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": false,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "capture_setup",
+          "exception_stage": "capture_setup",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: capture_setup/setup-failure",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [
+          {
+            "path": "constructor_failure_evidence/constructor_error_snapshot",
+            "error": {
+              "stage": "constructor_error_snapshot",
+              "exception_stage": "constructor_error_snapshot",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: constructor_error_snapshot/exception-snapshot-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "capture_setup",
+            "kind": "setup-failure",
+            "monotonic": 419902.078,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          },
+          {
+            "stage": "constructor_error_snapshot",
+            "kind": "exception-snapshot-failure",
+            "monotonic": 419902.078,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 5072,
+                "creation_filetime_100ns": 134358259435976182,
+                "creation_time_utc": "2026-10-07T05:52:23.597618+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419904.078,
+            "elapsed_seconds": 0.015000000013969839,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "primary_thread",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 0
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup\\runtime.json",
+          "bytes": 11153,
+          "sha256": "EADAE38B903A175C69CB101822DF98AEA6B05F2CA51BA27F1CEE0F305E2B989A"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\post_create_capture_setup\\independent-handle-audit.json",
+          "bytes": 764,
+          "sha256": "1543BD9BE51E6814FF0A10D2E15C2F2A527ECBE9A161A2A42249A2E1BBF8CCD9"
+        }
+      },
+      {
+        "case": "constructor_wait_unknown",
+        "status": "CONSTRUCTOR_FAILED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": false,
+        "owned_job_empty": null,
+        "primary_failure": {
+          "stage": "post_create_identity",
+          "exception_stage": "post_create_identity",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: post_create_identity/identity-failure",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [
+          {
+            "path": "cleanup/exit_audit",
+            "error": {
+              "stage": "cleanup_wait",
+              "exception_stage": "cleanup_wait",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: cleanup_wait/wait-observation-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          },
+          {
+            "path": "constructor_failure_evidence/cleanup/exit_audit",
+            "error": {
+              "stage": "cleanup_wait",
+              "exception_stage": "cleanup_wait",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: cleanup_wait/wait-observation-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "post_create_identity",
+            "kind": "identity-failure",
+            "monotonic": 419902.171,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          },
+          {
+            "stage": "cleanup_wait",
+            "kind": "wait-observation-failure",
+            "monotonic": 419902.171,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "ERROR",
+          "error": {
+            "stage": "cleanup_wait",
+            "exception_stage": "cleanup_wait",
+            "type": "InjectedFailure",
+            "message": "Explicit harmless-fixture fault injection: cleanup_wait/wait-observation-failure",
+            "winerror": null,
+            "origin": "controlled_test_injection"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "primary_thread",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 0
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\constructor_wait_unknown\\runtime.json",
+          "bytes": 10073,
+          "sha256": "939FEFBB8C2F224847597407580C53D274B96D9167677473CF8EECD85B2641A0"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\constructor_wait_unknown\\independent-handle-audit.json",
+          "bytes": 764,
+          "sha256": "44C3CD1B0B841DDA35348F8099667CE6323CDFCFD9853F1D5669A432F909B928"
+        }
+      },
+      {
+        "case": "final_scan_entrycap",
+        "status": "CONTROL_REFUSED",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": true,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "DISK_SCAN_ENTRY_CAP",
+          "exception_stage": "DISK_SCAN_ENTRY_CAP",
+          "type": "ControlError",
+          "message": "DISK_SCAN_ENTRY_CAP: winerror=0",
+          "winerror": 0,
+          "origin": "actual_exception_or_refusal"
+        },
+        "secondary_errors": [
+          {
+            "path": "disk_monitor/final_scan",
+            "error": {
+              "stage": "final_disk_scan",
+              "exception_stage": "DISK_SCAN_ENTRY_CAP",
+              "type": "ControlError",
+              "message": "DISK_SCAN_ENTRY_CAP: winerror=0",
+              "winerror": 0,
+              "origin": "actual_exception_or_refusal"
+            }
+          }
+        ],
+        "fault_events": [],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 1948,
+                "creation_filetime_100ns": 134358259437887941,
+                "creation_time_utc": "2026-10-07T05:52:23.788794+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              },
+              {
+                "pid": 21260,
+                "creation_filetime_100ns": 134358259438011528,
+                "creation_time_utc": "2026-10-07T05:52:23.801153+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419904.484,
+            "elapsed_seconds": 0.01600000000325963,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "ERROR",
+          "error": {
+            "stage": "final_disk_scan",
+            "exception_stage": "DISK_SCAN_ENTRY_CAP",
+            "type": "ControlError",
+            "message": "DISK_SCAN_ENTRY_CAP: winerror=0",
+            "winerror": 0,
+            "origin": "actual_exception_or_refusal"
+          }
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\final_scan_entrycap\\runtime.json",
+          "bytes": 9099,
+          "sha256": "FB21C3CC8C72D718B1223AAE9C2EC7AF5D2C1DF096B999EAF51D8FFBD264D4EC"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\final_scan_entrycap\\independent-handle-audit.json",
+          "bytes": 1162,
+          "sha256": "4756AFC650A2C0E706A98B35604C2145282E4DBCE9FA689799844B0A310D20E3"
+        }
+      },
+      {
+        "case": "poll_and_final_scan_io",
+        "status": "CONTROLLER_EXCEPTION",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": true,
+        "owned_job_empty": true,
+        "primary_failure": {
+          "stage": "disk_poll_scan",
+          "exception_stage": "disk_poll_scan",
+          "type": "InjectedFailure",
+          "message": "Explicit harmless-fixture fault injection: disk_poll_scan/injected-I/O-refusal",
+          "winerror": null,
+          "origin": "controlled_test_injection"
+        },
+        "secondary_errors": [
+          {
+            "path": "disk_monitor/final_scan",
+            "error": {
+              "stage": "final_disk_scan",
+              "exception_stage": "final_disk_scan",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: final_disk_scan/injected-I/O-refusal",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "disk_poll_scan",
+            "kind": "injected-I/O-refusal",
+            "monotonic": 419902.687,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          },
+          {
+            "stage": "final_disk_scan",
+            "kind": "injected-I/O-refusal",
+            "monotonic": 419902.703,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 20644,
+                "creation_filetime_100ns": 134358259441057303,
+                "creation_time_utc": "2026-10-07T05:52:24.105730+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              },
+              {
+                "pid": 21916,
+                "creation_filetime_100ns": 134358259441092834,
+                "creation_time_utc": "2026-10-07T05:52:24.109283+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096388
+              }
+            ],
+            "deadline_monotonic": 419904.687,
+            "elapsed_seconds": 0.01600000000325963,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "ERROR",
+          "error": {
+            "stage": "final_disk_scan",
+            "exception_stage": "final_disk_scan",
+            "type": "InjectedFailure",
+            "message": "Explicit harmless-fixture fault injection: final_disk_scan/injected-I/O-refusal",
+            "winerror": null,
+            "origin": "controlled_test_injection"
+          }
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\poll_and_final_scan_io\\runtime.json",
+          "bytes": 9744,
+          "sha256": "84402983350D0A6624C0D19DDF944614636A131A4DCE8A3B0DC61E220BA79EB8"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\poll_and_final_scan_io\\independent-handle-audit.json",
+          "bytes": 1166,
+          "sha256": "E279345F2BC583FEDF679908A2D0EDE42A4B84E9960B881758BD97D238E6F8B2"
+        }
+      },
+      {
+        "case": "cleanup_wait_unknown",
+        "status": "TIMEOUT",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": true,
+        "owned_job_empty": null,
+        "primary_failure": null,
+        "secondary_errors": [
+          {
+            "path": "cleanup/exit_audit",
+            "error": {
+              "stage": "cleanup_wait",
+              "exception_stage": "cleanup_wait",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: cleanup_wait/wait-observation-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "cleanup_wait",
+            "kind": "wait-observation-failure",
+            "monotonic": 419904.281,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "ERROR",
+          "error": {
+            "stage": "cleanup_wait",
+            "exception_stage": "cleanup_wait",
+            "type": "InjectedFailure",
+            "message": "Explicit harmless-fixture fault injection: cleanup_wait/wait-observation-failure",
+            "winerror": null,
+            "origin": "controlled_test_injection"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 1043
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_wait_unknown\\runtime.json",
+          "bytes": 13230,
+          "sha256": "2C8C5AE2278ED2AAE0305BEA5B22E4A47DE9A2BEA757F94C092112DCA42DBC27"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_wait_unknown\\independent-handle-audit.json",
+          "bytes": 2013,
+          "sha256": "ACF4693CB857173018EE840DD86202BF8185D48D47FE4C40D31A75630EEAC462"
+        }
+      },
+      {
+        "case": "cleanup_snapshots",
+        "status": "TIMEOUT",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": true,
+        "owned_job_empty": true,
+        "primary_failure": null,
+        "secondary_errors": [
+          {
+            "path": "cleanup/pre_snapshot",
+            "error": {
+              "stage": "cleanup_snapshot_before",
+              "exception_stage": "cleanup_snapshot_before",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: cleanup_snapshot_before/pre-snapshot-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          },
+          {
+            "path": "cleanup/post_snapshot",
+            "error": {
+              "stage": "cleanup_snapshot_after",
+              "exception_stage": "cleanup_snapshot_after",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: cleanup_snapshot_after/post-snapshot-failure",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "cleanup_snapshot_before",
+            "kind": "pre-snapshot-failure",
+            "monotonic": 419905.859,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          },
+          {
+            "stage": "cleanup_snapshot_after",
+            "kind": "post-snapshot-failure",
+            "monotonic": 419905.89,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 23164,
+                "creation_filetime_100ns": 134358259458892802,
+                "creation_time_utc": "2026-10-07T05:52:25.889280+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 21164,
+                "creation_filetime_100ns": 134358259458933727,
+                "creation_time_utc": "2026-10-07T05:52:25.893373+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 22668,
+                "creation_filetime_100ns": 134358259460548168,
+                "creation_time_utc": "2026-10-07T05:52:26.054817+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 17420,
+                "creation_filetime_100ns": 134358259460607125,
+                "creation_time_utc": "2026-10-07T05:52:26.060713+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              }
+            ],
+            "deadline_monotonic": 419907.859,
+            "elapsed_seconds": 0.031000000017229468,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 1043
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_snapshots\\runtime.json",
+          "bytes": 12078,
+          "sha256": "CD8AC6A72C0ECD1863052040B512AC27CC153EBE6B0B406B0BD04AA7348F82A9"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\cleanup_snapshots\\independent-handle-audit.json",
+          "bytes": 2010,
+          "sha256": "49D9AE21E7C68077409E67C39368D00EF36D3A13F11CEAC2DF71145CC78D6A77"
+        }
+      },
+      {
+        "case": "capture_observation_failure",
+        "status": "TIMEOUT",
+        "process_created": true,
+        "creation_call_returned_success": true,
+        "child_resumed": true,
+        "owned_job_empty": true,
+        "primary_failure": null,
+        "secondary_errors": [
+          {
+            "path": "capture/stdout",
+            "error": {
+              "stage": "capture_stdout",
+              "exception_stage": "capture_stdout",
+              "type": "InjectedFailure",
+              "message": "Explicit harmless-fixture fault injection: capture_stdout/injected-capture-write-I/O-refusal",
+              "winerror": null,
+              "origin": "controlled_test_injection"
+            }
+          }
+        ],
+        "fault_events": [
+          {
+            "stage": "capture_stdout",
+            "kind": "injected-capture-write-I/O-refusal",
+            "monotonic": 419907.5,
+            "origin": "controlled_test_injection",
+            "actual_API_failure_claimed": false
+          }
+        ],
+        "cleanup_exit_audit": {
+          "status": "OBSERVED",
+          "value": {
+            "owned_job_empty": true,
+            "active_job_PIDs": [],
+            "job_query_error": null,
+            "retained_handle_waits": [
+              {
+                "pid": 10720,
+                "creation_filetime_100ns": 134358259475043720,
+                "creation_time_utc": "2026-10-07T05:52:27.504372+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": true,
+                "handle_origin": "retained CreateProcess result",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 22972,
+                "creation_filetime_100ns": 134358259475076925,
+                "creation_time_utc": "2026-10-07T05:52:27.507693+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 12236,
+                "creation_filetime_100ns": 134358259476295534,
+                "creation_time_utc": "2026-10-07T05:52:27.629553+00:00",
+                "image_path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              },
+              {
+                "pid": 19948,
+                "creation_filetime_100ns": 134358259476352689,
+                "creation_time_utc": "2026-10-07T05:52:27.635269+00:00",
+                "image_path": "C:\\Windows\\System32\\conhost.exe",
+                "identity_status": "KNOWN",
+                "primary": false,
+                "handle_origin": "verified owned job member",
+                "wait_result": 0,
+                "signaled": true,
+                "exit_code": 3758096385
+              }
+            ],
+            "deadline_monotonic": 419909.468,
+            "elapsed_seconds": 0.03200000000651926,
+            "exit_evidence_status": "CONFIRMED"
+          }
+        },
+        "close": [
+          {
+            "kind": "sole_noninherited_job",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          },
+          {
+            "kind": "retained_process",
+            "status": "OBSERVED",
+            "value": true
+          }
+        ],
+        "final_disk_scan": {
+          "status": "OBSERVED",
+          "value": 1015
+        },
+        "runtime": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\runtime.json",
+          "bytes": 15465,
+          "sha256": "80AA5F7D87B96794A3C56C836ED914BC924669D7E1280F6038A2C5400BF70148"
+        },
+        "independent_audit": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\capture_observation_failure\\independent-handle-audit.json",
+          "bytes": 2020,
+          "sha256": "87D8FA32A660522BD3765B9F39D8928B7CDF33481EEFC44D062FDFACBCF5DC55"
+        }
+      }
+    ],
+    "sentinel": {
+      "name": "sentinel_not_miskilled",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\runs\\sentinel\\sentinel-audit.json",
+        "bytes": 17186,
+        "sha256": "D2C656204C2A44E8D20A88A5E566794357C895F856C7DC0D3CC807A99C908B22"
+      }
+    },
+    "finite_verification": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007\\finite-verification.json",
+      "bytes": 9465,
+      "sha256": "2F2F938AF9F2EBD0A56BA42E9877B36E587A8D00FB5EC4F93A13648DD48CDCE8"
+    },
+    "old_normal_hang_flood_controller_exit_PASS_matrix_replayed": false
+  },
+  "fault_evidence_policy": {
+    "membership_identity_snapshot_wait_and_I/O_injections": "Explicit FaultPlan errors immediately before candidate observations; no claim that the Windows API or filesystem actually failed.",
+    "real_noninjected_scan_refusal": "A new helper writes only 300 one-byte owned files; the real 256-entry scanner rejects the directory in both polling and final scan.",
+    "cleanup_actions": "Job termination and CloseHandle are real operations and are not replaced by injected successes.",
+    "independent_exit_observer": "Holds noninherited duplicate process handles only after verifying the new job membership. No job handle duplicate, process-name scan, PID-based kill or cleanup by observer.",
+    "unknowns_preserved": "Independent exit evidence is separately pinned and never rewrites candidate null outcomes."
+  },
+  "preserved_controls": {
+    "atomic_job_list": true,
+    "create_suspended_until_membership_and_identity_checks_pass": true,
+    "kill_on_job_close": true,
+    "noninherited_sole_unnamed_job_handle": true,
+    "no_breakaway": true,
+    "active_process_limit": 16,
+    "capture_cap_bytes_per_stream_in_tests": 8192,
+    "read_buffer_bytes": 8192,
+    "capture_always_drains": true,
+    "monotonic_wall_deadline_independent_of_child_and_disk_scan": true,
+    "deadline_thread_wakeup_seconds": 0.01,
+    "bounded_cleanup_wait_seconds": 2,
+    "reader_join_limit_seconds": 1,
+    "disk_poll_seconds": 0.05,
+    "monitor_samples_retained_cap": 512,
+    "observed_retained_member_cap": 64,
+    "receipt_byte_cap": 262144,
+    "hidden_windows": true,
+    "fixture_only_installed_Python_scope": true,
+    "evidence_limit": "Inherited successful component evidence is preserved by source diff and immutable pins; unchanged old paths were not requalified by replay."
+  },
+  "known_gaps": {
+    "hard_disk_quota": false,
+    "security_sandbox": false,
+    "plugin_egress_owned_write_isolation_qualified": false,
+    "IDA_export_qualified": false,
+    "physical_receipt_storage_failure_can_be_guaranteed_written": false,
+    "unknown_state_is_success": false,
+    "real_time_zero_deadline_overshoot_guarantee": false
+  },
+  "scope": {
+    "write_root": "D:\\lineage開發\\3-lito開發\\lito脫殼資源",
+    "new_successor": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\watchdog-error-paths-20261007",
+    "old_sources_and_receipts_modified": false,
+    "IDA_launches": 0,
+    "game_launches": 0,
+    "external_ASCII_runtime_created": false,
+    "process_memory_or_attach": false,
+    "global_config_plugins_firewall_security_settings_changed": false,
+    "other_owner_processes_targeted": false,
+    "provider_SQL_live_claim_GUI_MCP_shared_BIN_TW_LHZ_private_backing_actions": false,
+    "external_AI_calls": false,
+    "prior_automatic_review_refusals_and_unsafe_plugin_guard_preserved": true,
+    "old_rejected_cache_access_or_cleanup_retry": false
+  },
+  "documentation": [
+    {
+      "title": "Microsoft DuplicateHandle",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-duplicatehandle"
+    },
+    {
+      "title": "Microsoft TerminateJobObject",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-terminatejobobject"
+    }
+  ],
+  "handoff": "Review this successor against the two findings. Passing injected error paths does not qualify IDA execution, hard quota or a security sandbox."
+}

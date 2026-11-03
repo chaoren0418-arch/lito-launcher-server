@@ -1,0 +1,71 @@
+{
+  "authority_regression": true,
+  "source_login_regression": true,
+  "sql_writes": true,
+  "changed_classes": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/GameHub.class",
+    "local/lito381/server/LiToGmCommands.class",
+    "local/lito381/server/UnifiedConfiguration.class",
+    "local/lito381/server/SharedDatabase.class"
+  ],
+  "added_classes": [
+    "local/lito381/server/SourceAdministration$Grant.class",
+    "local/lito381/server/SourceAdministration$Slot.class",
+    "local/lito381/server/SourceAdministration.class"
+  ],
+  "candidate_sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542",
+  "live_sql_probe": "blocked: lito_shared cannot read source 380_ac_3",
+  "published_sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542",
+  "snapshot_policy": "source accounts.access_level; lazy authenticated-session snapshot; cleared on account/source assignment and hub disconnect",
+  "source_databases_pending_user_setup": [
+    "380_ac_3"
+  ],
+  "source_changes": {
+    "src/main/java/local/lito381/server/ClientSession.java": "24748acbeaf0ee1adb8e15c2895e7f99d85cd917403dcb08e6690e1043ca4be5",
+    "src/main/java/local/lito381/server/GameHub.java": "18884d5fdde904f0aa07cd153e57763da323d77f2599f67913a79ff74e11cf8b",
+    "src/main/java/local/lito381/server/SourceAdministration.java": "ae5905efe9bae404fa4a11c03266f52553319deb6233bf91902fd2bd9912d003"
+  },
+  "baseline_server_sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951",
+  "rollback_archive_sha256": "b7a261770882decd799fe40504684af5930d063e13f7f483bfa88c102224044a",
+  "published_jar_regression": true,
+  "launcher_pins_verified": true,
+  "bat_preflight_verified": true,
+  "project_layout_verified": true,
+  "full_live_startup_verified": false,
+  "command_table_regression": true,
+  "regression_sql_writes": false,
+  "command_table_migration": {
+    "table": "380_lito.commands",
+    "commands": [
+      "item",
+      "spawn",
+      "de"
+    ],
+    "default_access_level": 200,
+    "source_commands_modified": false,
+    "account_data_modified": false,
+    "runtime_can_write_commands": false,
+    "old_item_spawn_definitions_missing": true
+  },
+  "added_sql": {
+    "db/lito_commands.sql": "d9e2eabdc4809ac8f8dace16cb7b8b7b0726c49946375279bf33b45fa99f9815"
+  },
+  "support_changes": {
+    "tools/shared-database/SharedDatabase.java": "8e1eb0a078d5620eb20ac44c7b53b81ddd74c692045def1716ba4fa59e535965"
+  },
+  "command_table_rollback_archive_sha256": "9e843c1edf2cf985770b652d52feed3536830d282d7b60b978d9a92ffdb68002",
+  "tested_candidate_equals_published": true,
+  "latest_enabled_source_startup": {
+    "passed": true,
+    "active_databases": [
+      "380_ac_1",
+      "380_ac_2"
+    ],
+    "disabled_pending_database": "380_ac_3",
+    "source_row_retained": true,
+    "native_resources_ready": true,
+    "cleanup_verified": true,
+    "evidence": "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs\\startup-smoke.json"
+  }
+}

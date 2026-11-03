@@ -1,0 +1,11 @@
+{
+  "independent_receive_paths": true,
+  "finite_path_evidence": "Each packet re-parses its own cd header and room gate; subtype0 returns after projection, subtype1 returns afterselectionloop. No pending-pair/generation/result field, subtype wait, rollback or combined commit in these finite paths.",
+  "shared_field": "Both s parsers target64AB70 room-name buffer; later accepted message may overwrite it, actual external copy unknown.",
+  "phase6_cross_room": "Each invocation can overwrite64ABF4 independently; 0(A) then1(B) may leave summaryfieldsA/configfieldsB if providers return. Not current-room authority.",
+  "other_phase_cross_room": "Room mismatch returns before subtypepayload, retaining previous settings; Native lacks adapter epoch/ownedroom qualification.",
+  "atomicity": "No atomic pair guarantee. Separate wire frames/readers/globalstores are not coherent source snapshots, all-peer delivery or concurrency proof.",
+  "ACK": "No success/reject/result field. Server report labels owner success and nonowner rejection; saved0/1 bodies identical. D5 alone cannot acknowledge C_DD or distinguish those outcomes.",
+  "ready": "D5 finite branches do not perform D1 state0 /ready reset. Server reported D1 beforeD5 is a separate packet/state event.",
+  "Modern_requirement": "Keep each independently validated snapshot tagged by own connection/epoch/current room; preserve rawmapWORD separately from Native64ACC9 projection; keep summary/config independently qualified and do not invent pair/ACK/owner/source/physical authority."
+}

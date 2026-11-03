@@ -1,0 +1,96 @@
+{
+  "Source_pipeline_reference": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\build\\source-mass-slow-pipeline-oracle\\20261023T133415921928Z\\manifest.json",
+    "sha256": "86eda59d5b8a94c959c80c67bd120286dc243c61ee42d9440e73cfa26f528444"
+  },
+  "scope_legacy_basis": null,
+  "Source76_visual_expectations_only": true,
+  "all_cost_role_state_lifecycle_and_skill66_assertions_retained": true,
+  "rows": [
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowControlledProbe.java",
+        "sha256": "d9b510b473b3c806f69a6099ca1c00a73bccb4edcc5fcafbdd88a1792c846ce1"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-pipeline-fixtures\\SourceMassSlowControlledProbe.java",
+        "sha256": "3b4c28fb880b96d64a54e50fe8db854642cac20816cc1f56d1e7de7f5a7d7d70"
+      },
+      "changes": [
+        [
+          "if(!before)need(!self.contains(fx)&&!other.contains(fx),\"Source failed NPC is removed before effects\");",
+          "if(!before)need(Collections.frequency(self,fx)==1&&Collections.frequency(other,fx)==1,\"Source buff area retains caster entry and sends one primary visual while NPC state effects fail\");"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowStateProbe.java",
+        "sha256": "faf0ac6fc9bb77de5c5e9a7bb8630efa2a396c0bd9f9ba2970d228cb12c3173a"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-pipeline-fixtures\\SourceMassSlowStateProbe.java",
+        "sha256": "71fd38924f0281e368b697c78a711686af1a06b80d4e470f773628653966bef3"
+      },
+      "changes": [
+        [
+          "if(!before)need(!self.contains(fx)&&!other.contains(fx),\"Source failed NPC is removed before effects\");",
+          "if(!before)need(Collections.frequency(self,fx)==1&&Collections.frequency(other,fx)==1,\"Source buff area retains caster entry and sends one primary visual while NPC state effects fail\");"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowMixedProbe.java",
+        "sha256": "0a7076d42dc1471b5da2b007917ee81fba9f297545228988111833bb05d9968b"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-pipeline-fixtures\\SourceMassSlowMixedProbe.java",
+        "sha256": "45c7f70bdebcaecbbce83a70de070e59b410d1ca1a212fdde54beb7e5e441562"
+      },
+      "changes": [
+        [
+          "Collections.frequency(self,fx)==(applied?1:0)",
+          "Collections.frequency(self,fx)==1"
+        ],
+        [
+          "Collections.frequency(other,fx)==(applied?1:0)",
+          "Collections.frequency(other,fx)==1"
+        ],
+        [
+          "Source buff sendGrfx keeps one primary-target visual when a real player remains in targetList; no NPC state effect",
+          "Source buff sendGrfx retains caster entry independently of player probability success; no NPC state effect"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    },
+    {
+      "original": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\SourceMassSlowCtrlAreaProbe.java",
+        "sha256": "6143ba34cd3b8ac9063a17432b2377099340e7921bb6d61bd467da99eebaa6a1"
+      },
+      "versioned": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\integration-lifecycle\\source76-pipeline-fixtures\\SourceMassSlowCtrlAreaProbe.java",
+        "sha256": "774604779a0fb89003fcf5599d9a4b58f11109d5fa4703af76c52b4b7184003d"
+      },
+      "changes": [
+        [
+          "Collections.frequency(self,fx)==(applied?1:0)",
+          "Collections.frequency(self,fx)==(ctrl==1?1:0)"
+        ],
+        [
+          "Collections.frequency(other,fx)==(applied?1:0)",
+          "Collections.frequency(other,fx)==(ctrl==1?1:0)"
+        ],
+        [
+          "Source buff sendGrfx keeps one primary-target visual when a real player remains in targetList; no NPC state effect",
+          "Source buff sendGrfx retains caster entry independently of player probability success; no NPC state effect"
+        ]
+      ],
+      "whole_file_inverse_matches": true
+    }
+  ],
+  "full_goal_achieved": false
+}

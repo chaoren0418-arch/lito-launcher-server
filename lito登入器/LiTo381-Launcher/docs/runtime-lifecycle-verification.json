@@ -1,0 +1,33 @@
+{
+  "release": "0.6.41",
+  "server_sha256": "eeb0ba0b4c62e49cc73770b69ab67f877d3607a91ecce795a7a7b968e9c86409",
+  "native_changed": false,
+  "memory_cycles": 100,
+  "checks": [
+    "runtime cooldown/actor/session reference cleanup",
+    "result retained after cleanup",
+    "single-account CAS cache",
+    "removed source cache pruning",
+    "duplicate settlement callback",
+    "no state file",
+    "live lobby/ranking packet regression",
+    "settlement-only SQL gate with finally cleanup",
+    "invalid multiple-result delta rejected",
+    "InnoDB/MyISAM insert/update/race temporary-table tests"
+  ],
+  "native_startup": {
+    "pins": true,
+    "server_release_verified": true,
+    "footer_removed": true,
+    "native_ready": true,
+    "exit_code": 0,
+    "cleanup_verified": true,
+    "run": "cleanup-smoke-1791774184622029900"
+  },
+  "player_stats_unchanged": "380_ac_1 / 2222: wins=1 losses=0 version=1",
+  "limitations": [
+    "not a sustained production heap stress test",
+    "small ranking records retained intentionally",
+    "source template SELECT queries remain read-only"
+  ]
+}

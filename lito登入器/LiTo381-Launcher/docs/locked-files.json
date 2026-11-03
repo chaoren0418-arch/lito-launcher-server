@@ -1,0 +1,10 @@
+[
+  {
+    "error": "Access to the path 'D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_resources\\Mss32.dll' is denied.",
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_resources\\Mss32.dll"
+  },
+  {
+    "error": "Access to the path 'D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_mss\\Mss32.dll' is denied.",
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\runtime\\isolated-resource-tests\\20260806-c\\new_mss\\Mss32.dll"
+  }
+]

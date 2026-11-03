@@ -1,0 +1,240 @@
+{
+  "boundaries": [
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "0047C9B7",
+        "rva": "0007C9B7",
+        "section": "   \u0000    ",
+        "file_offset": "0007C9B7",
+        "raw_backed": true,
+        "raw_hex": "e8113bb904",
+        "mnemonic": "call",
+        "operands": "0x50104cd",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-0047C8A0.bin",
+          "bytes": 533,
+          "sha256": "8730B1065E69E2A8563A74CB12998A84BD1FA6547795CA24FFF466F05DC7A8A2"
+        }
+      },
+      "target": {
+        "va": "050104CD",
+        "rva": "04C104CD",
+        "section": null,
+        "file_offset": null,
+        "raw_backed": false
+      },
+      "body_sha256": null,
+      "unknown": "No fixedPE body; successfulreturnbeforehostcopy unobserved"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00480703",
+        "rva": "00080703",
+        "section": "   \u0000    ",
+        "file_offset": "00080703",
+        "raw_backed": true,
+        "raw_hex": "e8f84af776",
+        "mnemonic": "call",
+        "operands": "0x773f5200",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-00480620.bin",
+          "bytes": 335,
+          "sha256": "856AB2861C9EE5C5C15E7829ED1F9A2B0F9824CBC078434F803C25604F0FAAEE"
+        }
+      },
+      "target": {
+        "va": "773F5200",
+        "rva": "76FF5200",
+        "section": null,
+        "file_offset": null,
+        "raw_backed": false
+      },
+      "body_sha256": null,
+      "unknown": "Externalbody unavailable; oldsprintf identityinference only, successfulformat/read not proven"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00476104",
+        "rva": "00076104",
+        "section": "   \u0000    ",
+        "file_offset": "00076104",
+        "raw_backed": true,
+        "raw_hex": "e84d9d0700",
+        "mnemonic": "call",
+        "operands": "0x4efe56",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+          "bytes": 608,
+          "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+        }
+      },
+      "target": {
+        "va": "004EFE56",
+        "rva": "000EFE56",
+        "section": "   \u0000    ",
+        "file_offset": "000EFE56",
+        "raw_backed": true
+      },
+      "next_external": "758F57E0",
+      "external_body_sha256": null,
+      "unknown": "Oldinet_addr identityinference; no dump-timeDLLbytes/liveconversionqualification"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00476118",
+        "rva": "00076118",
+        "section": "   \u0000    ",
+        "file_offset": "00076118",
+        "raw_backed": true,
+        "raw_hex": "e83f9d0700",
+        "mnemonic": "call",
+        "operands": "0x4efe5c",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\code\\priority-00475F40.bin",
+          "bytes": 608,
+          "sha256": "508932989E392B9B71E9674BE56028E5127B9338C085200DA7B3E2E341FD24A2"
+        }
+      },
+      "target": {
+        "va": "004EFE5C",
+        "rva": "000EFE5C",
+        "section": "   \u0000    ",
+        "file_offset": "000EFE5C",
+        "raw_backed": true
+      },
+      "next_external": "7591FF10",
+      "external_body_sha256": null,
+      "unknown": "Oldgethostbyname identityinference; no DNS/nativeexecution"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C6B00",
+        "rva": "000C6B00",
+        "section": "   \u0000    ",
+        "file_offset": "000C6B00",
+        "raw_backed": true,
+        "raw_hex": "e8cbfdffff",
+        "mnemonic": "call",
+        "operands": "0x4c68d0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6AE0.bin",
+          "bytes": 80,
+          "sha256": "BACECE7FD826746CE8EE33303EFF586B2284F9D54A8E20FE05EAF1F40E8CD223"
+        }
+      },
+      "target": {
+        "va": "004C68D0",
+        "rva": "000C68D0",
+        "section": "   \u0000    ",
+        "file_offset": "000C68D0",
+        "raw_backed": true
+      },
+      "body_sha256": null,
+      "unknown": "Second-layerpacketformatter notexpanded; cs argument/source proven, encoding/bodyserialization notnewlyproved"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C6AE8",
+        "rva": "000C6AE8",
+        "section": "   \u0000    ",
+        "file_offset": "000C6AE8",
+        "raw_backed": true,
+        "raw_hex": "e8b3a60200",
+        "mnemonic": "call",
+        "operands": "0x4f11a0",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6AE0.bin",
+          "bytes": 80,
+          "sha256": "BACECE7FD826746CE8EE33303EFF586B2284F9D54A8E20FE05EAF1F40E8CD223"
+        }
+      },
+      "target": {
+        "va": "004F11A0",
+        "rva": "000F11A0",
+        "section": "   \u0000    ",
+        "file_offset": "000F11A0",
+        "raw_backed": true
+      },
+      "body_sha256": null,
+      "unknown": "Sendersecond-layerstack/probe helper notexpanded orqualified"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "004C6B27",
+        "rva": "000C6B27",
+        "section": "   \u0000    ",
+        "file_offset": "000C6B27",
+        "raw_backed": true,
+        "raw_hex": "e844fcffff",
+        "mnemonic": "call",
+        "operands": "0x4c6770",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\VA-004C6AE0.bin",
+          "bytes": 80,
+          "sha256": "BACECE7FD826746CE8EE33303EFF586B2284F9D54A8E20FE05EAF1F40E8CD223"
+        }
+      },
+      "target": {
+        "va": "004C6770",
+        "rva": "000C6770",
+        "section": "   \u0000    ",
+        "file_offset": "000C6770",
+        "raw_backed": true
+      },
+      "body_sha256": null,
+      "unknown": "Existingtransport boundary; no socket/send/private/externalexecution repeated"
+    },
+    {
+      "callsite": {
+        "fixed_PE_sha256": "4271D92FB2B9A2FA8D118DDE0767F6D8A67A896227BCC24127438FCB5C2AB6E9",
+        "va": "00481836",
+        "rva": "00081836",
+        "section": "   \u0000    ",
+        "file_offset": "00081836",
+        "raw_backed": true,
+        "raw_hex": "ffd0",
+        "mnemonic": "call",
+        "operands": "eax",
+        "range": {
+          "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\lifecycle\\VA-00481831.bin",
+          "bytes": 70,
+          "sha256": "E416B71BB2C098B3F6FAAFB36B7F54214E7E14A37C34627891F33E2B7F3AFC12"
+        }
+      },
+      "target": null,
+      "body_sha256": null,
+      "unknown": "IndirectEAX providercall output64B950; target andupstreamencoding unidentified"
+    }
+  ],
+  "prior_API_inference_index": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\priority-api-resolution.json",
+    "bytes": 6507,
+    "sha256": "D6E351E4B165296238B175D9B853BF12FFB0CA72BC38615758B71D9F1E12A2F6"
+  },
+  "inference_limits": [
+    {
+      "name": "inet_addr",
+      "historical_dll_sha256": null,
+      "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes"
+    },
+    {
+      "name": "gethostbyname",
+      "historical_dll_sha256": null,
+      "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes"
+    },
+    {
+      "name": "sprintf",
+      "historical_dll_sha256": null,
+      "confidence": "high-confidence static identity; current DLL bytes are NOT proven historical dump-time DLL bytes"
+    }
+  ],
+  "provider_boundary": "481836 indirectCALL EAX output64B950; provideridentity/body/currentbytes/codepage notqualified",
+  "selection_source_boundary": "494120selectionindex andupstreamrosterpopulation notexpanded; selectedrecord arithmetic/rawcopy provenonly"
+}

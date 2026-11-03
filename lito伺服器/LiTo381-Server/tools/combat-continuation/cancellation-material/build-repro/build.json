@@ -1,0 +1,51 @@
+{
+  "status": "built-unqualified",
+  "base": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\npc-physical-size\\build\\candidate-npc-physical-size.jar",
+    "sha256": "9636aaa68b6b3efad1b11162d24f9de6694c2d5513b4cef4409aebfb1e712c1b"
+  },
+  "formal_deployment_changed": false,
+  "full_goal_achieved": false,
+  "runtime": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\candidate-cancellation-material.jar",
+    "sha256": "08b49d26d1680f45d4e2e9fe150c677a8745aa0e375efd71cde22b288a871db9"
+  },
+  "changed": [
+    "local/lito381/server/ClientSession.class",
+    "local/lito381/server/NativeLightAction.class"
+  ],
+  "added": [
+    "local/lito381/server/NativeCancellationMaterialAction.class"
+  ],
+  "C0_byte_equal": true,
+  "inputs": [
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\build.py",
+      "sha256": "ef18b1b2a3ce34ca7b667daecaddbb1a8e8593f5ede9a18ca1b19ae8083fd91c"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\CancellationMaterialMethods.java",
+      "sha256": "28be393dd37a25a6f30cadbed132262bb81313ee769f9f2a6766b7fe495eab2d"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\NativeSkillConsumptionMethods.java",
+      "sha256": "d95743cb3a322ffabcd4dea62ea1ecfcc81c80c386d647dd2aa4a56018f2bd05"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\original\\NativeLightAction.java",
+      "sha256": "297fba2e03e54f4c61cee297b34c37ec7e7f2b50709df2b3e48c6ce96fa9f784"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\source-reference\\L1SkillUse.java",
+      "sha256": "fdf419b283b6a521750ffc82599139d49375c656adc1e199d77eba47711b1a29"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\sources\\NativeCancellationMaterialAction.java",
+      "sha256": "65f6a92dd9c7a1e210b02a57827a7aa3273907895d23e7b55a4b153c891aa3ce"
+    },
+    {
+      "path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-material\\build-repro\\inputs\\sources\\NativeLightAction.java",
+      "sha256": "76d7cbc708c6a797c040791c914ad9ea90c55c26050fa06b27fdf42745f1eecf"
+    }
+  ]
+}

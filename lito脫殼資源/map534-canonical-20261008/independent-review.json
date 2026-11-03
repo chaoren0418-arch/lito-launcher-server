@@ -1,0 +1,12 @@
+{
+  "reviewer": "/root/boundary_review",
+  "authority": "Preserved peer report; not supervisor acceptance or native geometry semantics proof.",
+  "reported_tool_receipt": "b752f5",
+  "reported_exit_code": 0,
+  "exact_inline_review_command_preserved": false,
+  "checks": {"canonical_bytes_compared":66391,"all_bytes_match":true,"sha256":"7D454156D49C03B364E1BB71A7C38BE3FE17D8C0935C0BECF5DD0701B439FACE","standing_cells":9688,"portals":0,"open_cross_sector_directed_edges":1322,"cardinal_seam_edges":444,"diagonal_seam_edges":878,"closed_outside_edges":3068},
+  "conclusion":"Independent cardinal/diagonal composition and serialization match every byte of canonical.bin.",
+  "limits":["Modern static movement/serialization policy only; original traversal/spawn/native/runtime semantics unqualified.","Canonical hash encodes map534, not mode1 identity."],
+  "supervisor_reviewed":false,
+  "product_accepted":false
+}

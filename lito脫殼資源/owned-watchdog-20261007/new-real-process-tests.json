@@ -1,0 +1,129 @@
+{
+  "schema": "new-owned-process-fixture-tests-v1",
+  "status": "FAIL",
+  "new_real_process_cases": [
+    {
+      "name": "normal",
+      "passed": false,
+      "expected_status": "PRIMARY_EXITED",
+      "actual_status": "PRIMARY_EXITED",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\normal\\runtime.json",
+        "bytes": 5192,
+        "sha256": "84B52BF2020A447144AA1490EBF915757C8F137D142C0583A3A4B48F7EDBD425"
+      },
+      "sentinel_outside_target_job": true
+    },
+    {
+      "name": "hang",
+      "passed": false,
+      "expected_status": "TIMEOUT",
+      "actual_status": "TIMEOUT",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\hang\\runtime.json",
+        "bytes": 8926,
+        "sha256": "DC410B53BE749576B2BF8A1FA02C32478839D2DEBAAA9199D880016740CCEF46"
+      },
+      "sentinel_outside_target_job": true
+    },
+    {
+      "name": "spawned_child",
+      "passed": false,
+      "expected_status": "TIMEOUT",
+      "actual_status": "TIMEOUT",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\spawned_child\\runtime.json",
+        "bytes": 10585,
+        "sha256": "4C2C8406726DCABA10B0BBE99B0622EC5B3A5D7570CB8DA65DC65C816B130161"
+      },
+      "sentinel_outside_target_job": true
+    },
+    {
+      "name": "stdout_stderr_flood",
+      "passed": true,
+      "expected_status": "PRIMARY_EXITED",
+      "actual_status": "PRIMARY_EXITED",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\stdout_stderr_flood\\runtime.json",
+        "bytes": 4963,
+        "sha256": "FDA8982413CEB8AE931B1EA86333969686852961A6A37B2A8C25FC3F1043A07D"
+      },
+      "sentinel_outside_target_job": true
+    },
+    {
+      "name": "disk_poll",
+      "passed": false,
+      "expected_status": "DISK_THRESHOLD",
+      "actual_status": "DISK_THRESHOLD",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\disk_poll\\runtime.json",
+        "bytes": 5269,
+        "sha256": "4FB2F243670F8B84A3551B7860469CCCE23F30005C67D14B9153AD1BDC4675F4"
+      },
+      "sentinel_outside_target_job": true
+    },
+    {
+      "name": "failed_containment",
+      "passed": true,
+      "expected_status": "CONTAINMENT_OR_CONTROL_REFUSED",
+      "actual_status": "CONTAINMENT_OR_CONTROL_REFUSED",
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\failed_containment\\runtime.json",
+        "bytes": 1328,
+        "sha256": "DF536AE47864176BD1A906E37BDFB2C6AF769B6E3F47D503AD8E24F4DE0C5558"
+      },
+      "sentinel_outside_target_job": false
+    },
+    {
+      "name": "controller_exception",
+      "passed": false,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exception\\runtime.json",
+        "bytes": 6627,
+        "sha256": "DF352EBD891160461BD616B8772A897D882C58502686A5C8A9C6C17F9E07A386"
+      }
+    },
+    {
+      "name": "controller_exit",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\controller_exit\\abrupt-exit-audit.json",
+        "bytes": 6648,
+        "sha256": "2C34D1142D8053801EA229E3B6A249AA58E0609500E30027869C74913E9B6371"
+      }
+    },
+    {
+      "name": "sentinel_not_miskilled",
+      "passed": true,
+      "receipt": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\runs\\sentinel\\sentinel-audit.json",
+        "bytes": 10197,
+        "sha256": "C04119E7B0BC4E57B29CCF42B3657F30FABF13FA38923962C796B5098F242361"
+      }
+    }
+  ],
+  "failure": null,
+  "runtime_python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "runtime_executable": {
+    "path": "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "bytes": 104952,
+    "sha256": "4D6F5F81A4BCA11191C4C7C6B43632694D0A4CE74E068619D8FDC161D469859A"
+  },
+  "windows_version": [
+    10,
+    0,
+    19045,
+    2,
+    ""
+  ],
+  "test_command": [
+    "C:\\Users\\CHAOREN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-B",
+    "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\owned-watchdog-20261007\\test_new_fixtures.py"
+  ],
+  "compile": "Not applicable: Python standard-library source, no local compiler or installation needed",
+  "elapsed_seconds": 5.594000000040978,
+  "IDA_launches": 0,
+  "game_launches": 0,
+  "old_PASS_replayed": false
+}

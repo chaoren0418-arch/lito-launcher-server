@@ -1,0 +1,130 @@
+{
+  "source_ASM": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "warning": "Different recovered-PE fingerprint. ASM only locates labels; fixed PE captures control claims and external targets.",
+  "excerpts": [
+    {
+      "label": "WndProc entry",
+      "first_line": 271364,
+      "last_line": 271412,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-271364-271412.txt",
+        "bytes": 1690,
+        "sha256": "26E52515EF1B7AE05D4E2D317148BC90366DD6567746DABDAED0B596B78629CF"
+      }
+    },
+    {
+      "label": "WndProc network default",
+      "first_line": 272862,
+      "last_line": 272910,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-272862-272910.txt",
+        "bytes": 2377,
+        "sha256": "1065259FFFD426C3113752C6B05D84D8A6884E84F779008D29E5785989729853"
+      }
+    },
+    {
+      "label": "Window setup",
+      "first_line": 273056,
+      "last_line": 273195,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-273056-273195.txt",
+        "bytes": 4172,
+        "sha256": "AD0207C5CA5EEFDE7714AA90354558C2A4884E78968494912439A008476F1735"
+      }
+    },
+    {
+      "label": "Message loop",
+      "first_line": 276769,
+      "last_line": 276881,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-276769-276881.txt",
+        "bytes": 4469,
+        "sha256": "2D43DC7AD0A3BA9DA3A253FBA18249FFC82F18049B123BE50DD82E91C9651802"
+      }
+    },
+    {
+      "label": "Selection entry",
+      "first_line": 309077,
+      "last_line": 309183,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-309077-309183.txt",
+        "bytes": 2985,
+        "sha256": "D3A2FDFB1EBB680611C86C2ED41873BB86D534B7B0FDF6C8765EBA19D56B0018"
+      }
+    },
+    {
+      "label": "Selection C9 and savedalias",
+      "first_line": 309630,
+      "last_line": 309716,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-309630-309716.txt",
+        "bytes": 2585,
+        "sha256": "5C9B1A6C029F3CFF002254666D16594CD51664A40C706EB5AE6A5CDAC873A22D"
+      }
+    },
+    {
+      "label": "Selection shortcut",
+      "first_line": 310368,
+      "last_line": 310428,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-310368-310428.txt",
+        "bytes": 1971,
+        "sha256": "ECFF4FA6BC13E0E062C98CF7D4BA63EC7620D0EC9786AD8B03877ADEB3EFCA09"
+      }
+    },
+    {
+      "label": "Lobby mouse",
+      "first_line": 315658,
+      "last_line": 315780,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-315658-315780.txt",
+        "bytes": 3889,
+        "sha256": "0DF87EA2993969BCBB435E718F624A4F682CD480B4E0C3B8802736327259C8B0"
+      }
+    },
+    {
+      "label": "Lobby setup",
+      "first_line": 316227,
+      "last_line": 316334,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-316227-316334.txt",
+        "bytes": 3077,
+        "sha256": "941D47AB9874DEB01438CD6BFD3E1BD4B506647C0FD1D02FC3B6BE96B30A56D2"
+      }
+    },
+    {
+      "label": "Receive pump",
+      "first_line": 374693,
+      "last_line": 374803,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-374693-374803.txt",
+        "bytes": 3379,
+        "sha256": "43EB937780CB152EB463FEE6145A89CC90FEED09B071DE5FB615074568C1E5E3"
+      }
+    },
+    {
+      "label": "Network dispatcher",
+      "first_line": 415087,
+      "last_line": 415160,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-415087-415160.txt",
+        "bytes": 1993,
+        "sha256": "D002BFBE28987CFBDB447D94D4AB0985315C8250CD82A827DCF996817606401D"
+      }
+    },
+    {
+      "label": "Return C9",
+      "first_line": 349943,
+      "last_line": 349984,
+      "output": {
+        "path": "D:\\lineage開發\\3-lito開發\\lito脫殼資源\\receive-boundary\\asm-349943-349984.txt",
+        "bytes": 1306,
+        "sha256": "05198E50D447ACDBF57D5C08447B838CACD60167403A939CC67F8537339908B8"
+      }
+    }
+  ]
+}

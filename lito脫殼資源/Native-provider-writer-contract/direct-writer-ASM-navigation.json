@@ -1,0 +1,716 @@
+{
+  "read": {
+    "before": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    "content_sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A",
+    "after": {
+      "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+      "bytes": 41179755,
+      "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+    },
+    "stable": true,
+    "read_at": "2026-10-06T10:34:53.709357+08:00"
+  },
+  "direct_global_writer_references": [
+    {
+      "line": 99303,
+      "text": "mov     dword_64798C, eax"
+    },
+    {
+      "line": 99415,
+      "text": "mov     dword_6479E8[esi*4], eax"
+    },
+    {
+      "line": 99736,
+      "text": "mov     dword_64798C, ebx"
+    },
+    {
+      "line": 99815,
+      "text": "mov     dword_6479E8[esi], ebx"
+    },
+    {
+      "line": 557516,
+      "text": "dword_64798C dd 6373158h                ; DATA XREF: sub_42EA50:loc_42EB0C↑r"
+    },
+    {
+      "line": 557575,
+      "text": "dword_6479E8 dd 58CD718h                ; DATA XREF: ___:0042EDF7↑w"
+    }
+  ],
+  "initializer_identity": {
+    "name": "fn_LoadGameData_Check",
+    "proc_line": 99163,
+    "IDA_endp_line": 99170,
+    "reachable_writer_tail_after_endp": true
+  },
+  "contexts": [
+    {
+      "name": "oneinitializerSpritecache",
+      "start_line": 99204,
+      "end_line": 99243,
+      "lines": [
+        {
+          "line": 99204,
+          "text": "loc_42ECBA:                             ; CODE XREF: ___:0042ECB2↑j"
+        },
+        {
+          "line": 99205,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99206,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99207,
+          "text": ""
+        },
+        {
+          "line": 99208,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99209,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 99210,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99211,
+          "text": "jz      short loc_42ECD1"
+        },
+        {
+          "line": 99212,
+          "text": ""
+        },
+        {
+          "line": 99213,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99214,
+          "text": "call    sub_42E4F0"
+        },
+        {
+          "line": 99215,
+          "text": ""
+        },
+        {
+          "line": 99216,
+          "text": "jmp     short loc_42ECD3"
+        },
+        {
+          "line": 99217,
+          "text": ""
+        },
+        {
+          "line": 99218,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99219,
+          "text": ""
+        },
+        {
+          "line": 99220,
+          "text": "loc_42ECD1:                             ; CODE XREF: ___:0042ECC6↑j"
+        },
+        {
+          "line": 99221,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 99222,
+          "text": ""
+        },
+        {
+          "line": 99223,
+          "text": ""
+        },
+        {
+          "line": 99224,
+          "text": "loc_42ECD3:                             ; CODE XREF: ___:0042ECCF↑j"
+        },
+        {
+          "line": 99225,
+          "text": "push    offset aSprite                  ; \"Sprite\""
+        },
+        {
+          "line": 99226,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99227,
+          "text": "call    sub_42E550"
+        },
+        {
+          "line": 99228,
+          "text": ""
+        },
+        {
+          "line": 99229,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99230,
+          "text": "mov     dword_647984, eax"
+        },
+        {
+          "line": 99231,
+          "text": "jnz     short loc_42ECEE"
+        },
+        {
+          "line": 99232,
+          "text": ""
+        },
+        {
+          "line": 99233,
+          "text": "xor     al, al"
+        },
+        {
+          "line": 99234,
+          "text": "mov     esp, ebp"
+        },
+        {
+          "line": 99235,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 99236,
+          "text": "retn"
+        },
+        {
+          "line": 99237,
+          "text": ""
+        },
+        {
+          "line": 99238,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99239,
+          "text": ""
+        },
+        {
+          "line": 99240,
+          "text": "loc_42ECEE:                             ; CODE XREF: ___:0042ECE6↑j"
+        },
+        {
+          "line": 99241,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99242,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99243,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "name": "sameinitializerfallback",
+      "start_line": 99276,
+      "end_line": 99313,
+      "lines": [
+        {
+          "line": 99276,
+          "text": "loc_42ED22:                             ; CODE XREF: ___:0042ED1A↑j"
+        },
+        {
+          "line": 99277,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99278,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99279,
+          "text": ""
+        },
+        {
+          "line": 99280,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99281,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 99282,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99283,
+          "text": "jz      short loc_42ED39"
+        },
+        {
+          "line": 99284,
+          "text": ""
+        },
+        {
+          "line": 99285,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99286,
+          "text": "call    sub_42E4F0"
+        },
+        {
+          "line": 99287,
+          "text": ""
+        },
+        {
+          "line": 99288,
+          "text": "jmp     short loc_42ED3B"
+        },
+        {
+          "line": 99289,
+          "text": ""
+        },
+        {
+          "line": 99290,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99291,
+          "text": ""
+        },
+        {
+          "line": 99292,
+          "text": "loc_42ED39:                             ; CODE XREF: ___:0042ED2E↑j"
+        },
+        {
+          "line": 99293,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 99294,
+          "text": ""
+        },
+        {
+          "line": 99295,
+          "text": ""
+        },
+        {
+          "line": 99296,
+          "text": "loc_42ED3B:                             ; CODE XREF: ___:0042ED37↑j"
+        },
+        {
+          "line": 99297,
+          "text": "mov     ecx, dword_647984"
+        },
+        {
+          "line": 99298,
+          "text": "push    ecx"
+        },
+        {
+          "line": 99299,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99300,
+          "text": "call    sub_42E6D0"
+        },
+        {
+          "line": 99301,
+          "text": ""
+        },
+        {
+          "line": 99302,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99303,
+          "text": "mov     dword_64798C, eax"
+        },
+        {
+          "line": 99304,
+          "text": "jnz     short loc_42ED58"
+        },
+        {
+          "line": 99305,
+          "text": ""
+        },
+        {
+          "line": 99306,
+          "text": "xor     al, al"
+        },
+        {
+          "line": 99307,
+          "text": "mov     esp, ebp"
+        },
+        {
+          "line": 99308,
+          "text": "pop     ebp"
+        },
+        {
+          "line": 99309,
+          "text": "retn"
+        },
+        {
+          "line": 99310,
+          "text": ""
+        },
+        {
+          "line": 99311,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99312,
+          "text": ""
+        },
+        {
+          "line": 99313,
+          "text": "loc_42ED58:                             ; CODE XREF: ___:0042ED50↑j"
+        }
+      ]
+    },
+    {
+      "name": "sameinitializerbucketstem_and_writer",
+      "start_line": 99358,
+      "end_line": 99417,
+      "lines": [
+        {
+          "line": 99358,
+          "text": "push    esi"
+        },
+        {
+          "line": 99359,
+          "text": "lea     eax, [ebp-10h]"
+        },
+        {
+          "line": 99360,
+          "text": "push    offset aSprite02d               ; \"Sprite%02d\""
+        },
+        {
+          "line": 99361,
+          "text": "push    eax"
+        },
+        {
+          "line": 99362,
+          "text": "call    edi ; dword_4F7314"
+        },
+        {
+          "line": 99363,
+          "text": ""
+        },
+        {
+          "line": 99364,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99365,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99366,
+          "text": ""
+        },
+        {
+          "line": 99367,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99368,
+          "text": "add     esp, 10h"
+        },
+        {
+          "line": 99369,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99370,
+          "text": "jz      short loc_42EDBB"
+        },
+        {
+          "line": 99371,
+          "text": ""
+        },
+        {
+          "line": 99372,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99373,
+          "text": "call    sub_42E4F0"
+        },
+        {
+          "line": 99374,
+          "text": ""
+        },
+        {
+          "line": 99375,
+          "text": "jmp     short loc_42EDBD"
+        },
+        {
+          "line": 99376,
+          "text": ""
+        },
+        {
+          "line": 99377,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99378,
+          "text": ""
+        },
+        {
+          "line": 99379,
+          "text": "loc_42EDBB:                             ; CODE XREF: ___:0042EDB0↑j"
+        },
+        {
+          "line": 99380,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 99381,
+          "text": ""
+        },
+        {
+          "line": 99382,
+          "text": ""
+        },
+        {
+          "line": 99383,
+          "text": "loc_42EDBD:                             ; CODE XREF: ___:0042EDB9↑j"
+        },
+        {
+          "line": 99384,
+          "text": "lea     ecx, [ebp-10h]"
+        },
+        {
+          "line": 99385,
+          "text": "push    ecx"
+        },
+        {
+          "line": 99386,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99387,
+          "text": "call    sub_42E550"
+        },
+        {
+          "line": 99388,
+          "text": ""
+        },
+        {
+          "line": 99389,
+          "text": "mov     dword_6479A8[esi*4], eax"
+        },
+        {
+          "line": 99390,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99391,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99392,
+          "text": ""
+        },
+        {
+          "line": 99393,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99394,
+          "text": "add     esp, 4"
+        },
+        {
+          "line": 99395,
+          "text": "test    eax, eax"
+        },
+        {
+          "line": 99396,
+          "text": "jz      short loc_42EDE6"
+        },
+        {
+          "line": 99397,
+          "text": ""
+        },
+        {
+          "line": 99398,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99399,
+          "text": "call    sub_42E4F0"
+        },
+        {
+          "line": 99400,
+          "text": ""
+        },
+        {
+          "line": 99401,
+          "text": "jmp     short loc_42EDE8"
+        },
+        {
+          "line": 99402,
+          "text": ""
+        },
+        {
+          "line": 99403,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99404,
+          "text": ""
+        },
+        {
+          "line": 99405,
+          "text": "loc_42EDE6:                             ; CODE XREF: ___:0042EDDB↑j"
+        },
+        {
+          "line": 99406,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 99407,
+          "text": ""
+        },
+        {
+          "line": 99408,
+          "text": ""
+        },
+        {
+          "line": 99409,
+          "text": "loc_42EDE8:                             ; CODE XREF: ___:0042EDE4↑j"
+        },
+        {
+          "line": 99410,
+          "text": "mov     edx, dword_6479A8[esi*4]"
+        },
+        {
+          "line": 99411,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99412,
+          "text": "push    edx"
+        },
+        {
+          "line": 99413,
+          "text": "call    sub_42E6D0"
+        },
+        {
+          "line": 99414,
+          "text": ""
+        },
+        {
+          "line": 99415,
+          "text": "mov     dword_6479E8[esi*4], eax"
+        },
+        {
+          "line": 99416,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99417,
+          "text": "call    sub_4F118C"
+        }
+      ]
+    },
+    {
+      "name": "sameinitializerloop_tail",
+      "start_line": 99429,
+      "end_line": 99449,
+      "lines": [
+        {
+          "line": 99429,
+          "text": "; ---------------------------------------------------------------------------"
+        },
+        {
+          "line": 99430,
+          "text": ""
+        },
+        {
+          "line": 99431,
+          "text": "loc_42EE15:                             ; CODE XREF: ___:0042EE0A↑j"
+        },
+        {
+          "line": 99432,
+          "text": "xor     eax, eax"
+        },
+        {
+          "line": 99433,
+          "text": ""
+        },
+        {
+          "line": 99434,
+          "text": ""
+        },
+        {
+          "line": 99435,
+          "text": "loc_42EE17:                             ; CODE XREF: ___:0042EE13↑j"
+        },
+        {
+          "line": 99436,
+          "text": "mov     ecx, dword_6479A8[esi*4]"
+        },
+        {
+          "line": 99437,
+          "text": "push    ecx"
+        },
+        {
+          "line": 99438,
+          "text": "mov     ecx, eax"
+        },
+        {
+          "line": 99439,
+          "text": "call    sub_42E6D0"
+        },
+        {
+          "line": 99440,
+          "text": ""
+        },
+        {
+          "line": 99441,
+          "text": "mov     dword_647A28[esi*4], eax"
+        },
+        {
+          "line": 99442,
+          "text": "inc     esi"
+        },
+        {
+          "line": 99443,
+          "text": "cmp     esi, 10h"
+        },
+        {
+          "line": 99444,
+          "text": "jl      loc_42ED98"
+        },
+        {
+          "line": 99445,
+          "text": ""
+        },
+        {
+          "line": 99446,
+          "text": "push    44h ; 'D'"
+        },
+        {
+          "line": 99447,
+          "text": "call    sub_4F118C"
+        },
+        {
+          "line": 99448,
+          "text": ""
+        },
+        {
+          "line": 99449,
+          "text": "; ---------------------------------------------------------------------------"
+        }
+      ]
+    }
+  ],
+  "qualification": "Writer/caller navigation only, authoritativefixedPE below. No42EA50reader/factorybody, no otherinitializer/deepercaller or completewriterabsenceclaim."
+}

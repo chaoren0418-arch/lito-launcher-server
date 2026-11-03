@@ -1,0 +1,5 @@
+import java.nio.file.*;import java.io.*;import java.util.*;import java.util.jar.*;import org.objectweb.asm.*;import org.objectweb.asm.tree.*;
+/** Static reachability locators only; no claim of semantic/material completeness. */
+public final class LegacyMaterialCallAudit {
+ public static void main(String[]a)throws Exception{var lines=new ArrayList<String>();lines.add("class\tmethod\tdescriptor\tcallee");try(var jar=new JarFile(a[0])){for(var entry:Collections.list(jar.entries()))if(entry.getName().startsWith("local/lito381/server/")&&entry.getName().endsWith(".class")){var c=new ClassNode();new ClassReader(jar.getInputStream(entry)).accept(c,ClassReader.SKIP_DEBUG|ClassReader.SKIP_FRAMES);for(var m:c.methods)for(var n:m.instructions)if(n instanceof MethodInsnNode v&&v.owner.equals("local/lito381/server/CombatDatabase")&&v.name.equals("consumeMaterial"))lines.add(c.name+"\t"+m.name+"\t"+m.desc+"\t"+v.owner+"."+v.name+v.desc);}}Files.write(Path.of(a[1]),lines);System.out.println("legacy_call_sites="+(lines.size()-1)+"; semantic_coverage_not_implied");}
+}

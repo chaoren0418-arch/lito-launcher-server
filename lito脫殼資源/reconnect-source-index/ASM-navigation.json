@@ -1,0 +1,34 @@
+{
+  "source": {
+    "path": "D:\\lineage開發\\3-lito開發\\lito登入器\\舊版分析與驗收\\ida-client-oep-v2\\full-disassembly.asm",
+    "bytes": 41179755,
+    "sha256": "2A3A6E1026EE65288C07EFF00990BDDDBEFA5ACEC9EED551F528A0CC0A7DEA9A"
+  },
+  "blocks": [
+    {
+      "label": "Additionalstartuphostreadalreadyinexistingraw",
+      "first_line": 273646,
+      "last_line": 273665,
+      "text": "273646: mov     ecx, dword_834BC4\n273647: mov     eax, [ecx+0ACh]\n273648: jmp     short loc_4806F6\n273649: \n273650: ; ---------------------------------------------------------------------------\n273651: \n273652: loc_4806F1:                             ; CODE XREF: sub_480620+C1↑j\n273653: mov     eax, offset byte_63D618\n273654: \n273655: \n273656: loc_4806F6:                             ; CODE XREF: sub_480620+CF↑j\n273657: push    offset a21020018214             ; \"210.200.182.14\"\n273658: lea     edx, [ebp+var_100]\n273659: push    eax\n273660: push    edx\n273661: nop\n273662: call    near ptr 773F5200h\n273663: \n273664: add     esp, 0Ch\n273665: jmp     short loc_48074C"
+    },
+    {
+      "label": "selectedrecordpointer",
+      "first_line": 309118,
+      "last_line": 309132,
+      "text": "309118: jz      loc_492F81\n309119: \n309120: lea     eax, [eax+eax*4]\n309121: lea     edx, [eax+eax*8]\n309122: mov     al, byte_62FACD[edx*4]\n309123: cmp     al, 0FFh\n309124: lea     ebx, ds:62FAA0h[edx*4]\n309125: jz      loc_492F6E\n309126: \n309127: cmp     byte ptr [ebx+2Eh], 0FFh\n309128: jz      loc_492F6E\n309129: \n309130: mov     al, [ebx+37h]\n309131: test    al, al\n309132: jz      loc_492F6E"
+    },
+    {
+      "label": "inlineregionboundaries",
+      "first_line": 559666,
+      "last_line": 559690,
+      "text": "559666: dword_64AD28 dd 0                       ; DATA XREF: sub_4A7850+52↑o\n559667: dword_64AD2C dd 0                       ; DATA XREF: sub_4AC520+22↑o\n559668:                                         ; ___:004AC5B0↑r\n559669: dd 9 dup(0)\n559670: dword_64AD54 dd 7 dup(0)                ; DATA XREF: sub_4928C0+682↑o\n559671:                                         ; sub_4A7550+153↑o\n559672: word_64AD70 dw 0                        ; DATA XREF: sub_469B10+6A↑w\n559673:                                         ; sub_469B10+7D↑r\n559674:                                         ; sub_469BD0+76↑w\n559675:                                         ; sub_469BD0+82↑r\n559676:                                         ; ___:0046EEC5↑w\n559677:                                         ; ___:0046EEED↑r\n559678:                                         ; ___:0046EF69↑r\n559679:                                         ; sub_455330+19DE6↑r\n559680:                                         ; sub_455330+19E46↑w\n559681:                                         ; sub_455330+19EE7↑r\n559682:                                         ; sub_4C6B30+18F↑r\n559683: align 4\n559684: dword_64AD74 dd 40h dup(0)              ; DATA XREF: sub_469B10+3C↑o\n559685:                                         ; sub_455330+19E0B↑o\n559686:                                         ; sub_475F40:loc_4760FF↑o\n559687:                                         ; sub_475F40+1D3↑o\n559688: dword_64AE74 dd 40h dup(0)              ; DATA XREF: sub_469B10+57↑o\n559689:                                         ; sub_469B10+8B↑o\n559690:                                         ; sub_469BD0+57↑o"
+    },
+    {
+      "label": "differentASMinitializedhost",
+      "first_line": 560600,
+      "last_line": 560609,
+      "text": "560600:                                         ; sub_4D4170+C6↑o\n560601: aIleNotFoundFor db 'ile not found for Teleport.txt',0Ah,0\n560602: align 4\n560603: dd 37h dup(0)\n560604: a21020018214 db '210.200.182.14',0      ; DATA XREF: ___:0047C943↑o\n560605:                                         ; sub_480620:loc_4806F6↑o\n560606:                                         ; fn_ClientApplication_Run+217↑o\n560607:                                         ; fn_ClientApplication_Run+E01↑o\n560608: align 4\n560609: dd 3Ch dup(0)"
+    }
+  ],
+  "ASMlabels_notfixedPEstate": true
+}
