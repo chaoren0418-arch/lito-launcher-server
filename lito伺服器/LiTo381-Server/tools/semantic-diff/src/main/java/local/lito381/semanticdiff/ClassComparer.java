@@ -232,7 +232,8 @@ final class ClassComparer {
                 return FirstDiff.of("method", key, null, "only " + rightLabel);
             }
             if (rm == null) {
-                if (!allow && (extraMethods.contains(lm.name + lm.desc)
+                if (!allow && ((extraMethods.contains(lm.name + lm.desc)
+                        && right.methods.stream().noneMatch(m -> m.name.equals(lm.name) && m.desc.equals(lm.desc)))
                         || implicitConstructor(left, right, lm))) continue;
                 return FirstDiff.of("method", key, null, "only left");
             }
@@ -355,7 +356,7 @@ final class ClassComparer {
             return map;
         }
         for (MethodNode method : node.methods) {
-            String name = jar.remapMethod(node.name, method.name);
+            String name = jar.remapMethod(node.name, method.name, method.desc);
             map.put(name + method.desc, method);
         }
         return map;
@@ -475,7 +476,7 @@ final class ClassComparer {
             return op + " " + n.owner + "." + n.name + ":" + n.desc;
         }
         if (insn instanceof MethodInsnNode n) {
-            return op + " " + n.owner + "." + jar.remapMethod(n.owner, n.name) + n.desc
+            return op + " " + n.owner + "." + jar.remapMethod(n.owner, n.name, n.desc) + n.desc
                     + (n.itf ? " itf" : "");
         }
         if (insn instanceof InvokeDynamicInsnNode n) {
@@ -641,7 +642,7 @@ final class ClassComparer {
     private static String handle(Handle handle, JarIndex jar) {
         return "H" + handle.getTag()
                 + " " + handle.getOwner()
-                + "." + jar.remapMethod(handle.getOwner(), handle.getName())
+                + "." + jar.remapMethod(handle.getOwner(), handle.getName(), handle.getDesc())
                 + handle.getDesc()
                 + (handle.isInterface() ? " itf" : "");
     }

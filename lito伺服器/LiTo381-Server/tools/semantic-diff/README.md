@@ -61,6 +61,8 @@ bash tools/semantic-diff/selftest-fallback.sh
 
 兩份清單接受空白行、整行／行尾註解與 UTF-8 BOM；空清單、不存在的檔案、萬用字元及範圍外類別均拒絕。JSON 與 Markdown 列出使用的例外清單，結果仍需檢查所有 DIFF／ONLY_*，不是看 CLI exit 0。
 
+extra 清單中的精確原名＋描述子在 A／B／C 三側固定原名，不參與合成名稱編號；其他合成方法依剩餘出現順序比較。呼叫與 method handle 使用同一對應。因此兩側同原名的核准方法仍比較內容，左側未核准方法不能借用核准方法的編號被消去；同名但不同描述子的 overload 不受該條目豁免。
+
 主控核准檔為 `docs/combat-merge/{extra-methods-approved,metadata-exempt,effects-approved}.txt`。批次重跑前先裁切到本批實際具備的類別／方法，不能把缺少 helper 的 Maven 原始產物套用完整 extra 清單後當作成功。#77 的 RuntimeInventory 為 3 個方法、4 處 return；ServerConfig 為 2 個 effects 方法及 1 個 extra helper。這些清單只記錄核准範圍，不保證 staged 已達 SAME_EFFECTS；若 catch、呼叫序列或其他摘要不同仍會 DIFF。
 
 ```bash

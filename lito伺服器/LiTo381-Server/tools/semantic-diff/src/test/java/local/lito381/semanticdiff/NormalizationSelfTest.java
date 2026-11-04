@@ -258,6 +258,7 @@ public final class NormalizationSelfTest implements Opcodes {
         ClassNode remapped = helper(ACC_PRIVATE | ACC_STATIC); remapped.methods.get(0).name = "lambda$work$2";
         invalidFlag("extra-exact-synthetic", remapped, clazz(), "--extra-methods",
                 approval("extra-synthetic", "Fixture#lambda$work$1()V"));
+        syntheticExtraTests();
 
         Path exempt = approval("metadata", "\uFEFF# comment\nFixture # approved: https://example.test/135\n");
         for (String metadata : List.of("synthetic", "outerClass", "outerMethod", "nestHost", "nestMembers", "innerSelf")) {
@@ -293,6 +294,77 @@ public final class NormalizationSelfTest implements Opcodes {
         Path allowList = approval("extra-overlay", "Fixture#helper()V");
         compare("extra-overlay-compare", helper, clazz(), null, "DIFF", "--extra-methods", extra.toString(),
                 "--allow-methods", allowList.toString(), "--allow-right", allowJar.toString());
+    }
+
+    private static void syntheticExtraTests() throws Exception {
+        for (String prefix : List.of("lambda$work$", "access$")) {
+            String approved = prefix + "1";
+            Path list = approval("extra-" + prefix, "Fixture#" + approved + "()I");
+            ClassNode left = clazz(), right = clazz();
+            syntheticInt(left, prefix + "0", 1);
+            syntheticInt(left, approved, 2);
+            syntheticInt(right, approved, 1);
+            compare("extra-shifted-shared-" + prefix, left, right, null, "DIFF",
+                    "--extra-methods", list.toString());
+
+            right.methods.get(0).instructions.set(right.methods.get(0).instructions.getFirst(), new LdcInsnNode(2));
+            compare("extra-unapproved-remains-" + prefix, left, right, null, "DIFF",
+                    "--extra-methods", list.toString());
+
+            left = clazz(); right = clazz();
+            syntheticInt(left, approved, 2);
+            syntheticInt(left, prefix + "2", 1);
+            syntheticInt(right, prefix + "9", 1);
+            syntheticCalls(left, prefix + "2"); syntheticCalls(right, prefix + "9");
+            compare("extra-first-renumbered-" + prefix, left, right, null, "SAME",
+                    "--extra-methods", list.toString());
+            right.methods.get(0).instructions.set(right.methods.get(0).instructions.getFirst(), new LdcInsnNode(3));
+            compare("extra-retained-body-" + prefix, left, right, null, "DIFF",
+                    "--extra-methods", list.toString());
+
+            left = clazz(); right = clazz();
+            syntheticInt(left, approved, 2);
+            syntheticInt(left, approved, 1); left.methods.get(1).desc = "(I)I";
+            syntheticInt(right, prefix + "9", 1); right.methods.get(0).desc = "(I)I";
+            compare("extra-exact-descriptor-" + prefix, left, right, null, "SAME",
+                    "--extra-methods", list.toString());
+
+            left = clazz(); right = clazz();
+            syntheticInt(left, approved, 2); syntheticInt(left, prefix + "2", 2);
+            syntheticInt(right, prefix + "9", 2);
+            syntheticCalls(left, approved); syntheticCalls(right, prefix + "9");
+            compare("extra-call-target-preserved-" + prefix, left, right, null, "DIFF",
+                    "--extra-methods", list.toString());
+
+            left = clazz(); right = clazz();
+            syntheticInt(left, approved, 2); syntheticInt(right, approved, 2);
+            compare("extra-shared-identical-" + prefix, left, right, null, "SAME",
+                    "--extra-methods", list.toString());
+            right.methods.get(0).instructions.set(right.methods.get(0).instructions.getFirst(), new LdcInsnNode(3));
+            compare("extra-shared-changed-" + prefix, left, right, null, "DIFF",
+                    "--extra-methods", list.toString());
+            compare("extra-shared-effects-changed-" + prefix, left, right,
+                    "Fixture#" + approved + "()I", "DIFF", "--extra-methods", list.toString());
+
+            Path overlay = writeJar("extra-synthetic-overlay-" + prefix, right);
+            compare("extra-synthetic-overlay-" + prefix, left, clazz(), null, "DIFF",
+                    "--extra-methods", list.toString(), "--allow-methods", list.toString(),
+                    "--allow-right", overlay.toString());
+        }
+    }
+
+    private static void syntheticInt(ClassNode c, String name, int value) {
+        MethodNode m = new MethodNode(ACC_PRIVATE | ACC_STATIC | ACC_SYNTHETIC, name, "()I", null, null);
+        m.instructions.add(new LdcInsnNode(value)); m.instructions.add(new InsnNode(IRETURN));
+        c.methods.add(m);
+    }
+
+    private static void syntheticCalls(ClassNode c, String target) {
+        MethodNode m = method(c, "()V");
+        m.instructions.add(new MethodInsnNode(INVOKESTATIC, c.name, target, "()I", false));
+        m.instructions.add(new InsnNode(POP));
+        m.instructions.add(new LdcInsnNode(new Handle(H_INVOKESTATIC, c.name, target, "()I", false)));
+        m.instructions.add(new InsnNode(POP)); m.instructions.add(new InsnNode(RETURN));
     }
 
     private static ClassNode constructor(boolean extra) {

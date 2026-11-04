@@ -25,6 +25,16 @@ RuntimeInventory 為 **3 個方法、4 處 return**，withoutObjects 有兩處�
 
 ## 已驗證
 
+### 第 3 次嘗試：修復合成方法配對審查缺口（2026-11-05）
+
+- 接續既有 `task/135`／`6c669320a7a7f58c06c0550875d4a8e3c394f97d`，沒有 checkout 或建立分支。前兩次回報雖有綠燈，仍漏掉 [PR #152 的 P2 審查意見](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152#discussion_r4474220423)：合成名稱編號可能使兩側同原名的核准方法配錯對，再錯誤豁免左側方法。
+- 先加回歸案例，在未修改比較器時確認 `extra-shifted-shared-lambda$work$ expected DIFF` 失敗，證據在 `scratch/issue-135/review-regression-before.log`。這是實際程式缺陷，不能以先前 457 項通過或 CI 綠代替修復。
+- 核准 extra 的原名＋描述子在 A／B／C 索引固定原名、排除於合成編號；其餘方法重新依出現順序編號。方法宣告、直接呼叫與 method handle 共用對應。豁免時另核對右側原名＋描述子確實不存在；allow-right 仍優先驗收。
+- 新增 lambda／access 兩種命名各 10 個情境：審查重現、未核准額外方法保留、核准方法排在前面、剩餘方法內容不同、精確 overload 描述子、呼叫目標不同、兩側同原名內容相同／不同、effects 及 allow-right 疊加。Microsoft JDK 17 重新編譯工具及自測成功，`NORMALIZATION SELFTEST ALL PASS checks=517`（新增 60 項檢查）。
+- 使用下表同 SHA-256 的完整 JAR 重新產出 `docs/server-semantic-gap.md`：仍為 **2122 SAME／427 DIFF**；與既有固定輸入的 #132 基線 JSON 對照，仍為 **2064→2122 SAME、485→427 DIFF**，58 類改善、無反向退化。既有 #77 staged 重跑仍為 **66 SAME／1 SAME_EFFECTS／2 DIFF**。
+- 本輪不重建伺服器 JAR；程式變更只在 semantic-diff 工具及自測，另外更新 README、此報告與差異快照。未改伺服器 `src/main`、機密設定、封存、正式資源或 `docs/REPORT.md`。
+- 修復提交的 CI 以 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks) 為準；下列舊提交 CI 證據僅是歷史驗證，不代表本次修復提交已通過。
+
 ### 第 2 次嘗試複驗（2026-11-05）
 
 - 於既有 worktree／`task/135` 接續 `a79461fd0aaf34bba84d391860800267c44610ac`；開始時工作樹乾淨，未切換或重建分支。Issue 回饋未提供具體程式缺陷，本次補充複驗證據並重產快照。

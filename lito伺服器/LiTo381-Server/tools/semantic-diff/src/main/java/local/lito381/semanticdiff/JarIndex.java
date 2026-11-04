@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -20,6 +21,7 @@ final class JarIndex {
     final Map<String, byte[]> classes = new TreeMap<>();
     /** owner internal name → original synthetic method name → canonical name */
     final Map<String, Map<String, String>> syntheticMethods = new TreeMap<>();
+    private Map<String, Set<String>> exactMethods = Map.of();
 
     private JarIndex(Path path) {
         this.path = path;
@@ -44,12 +46,22 @@ final class JarIndex {
             }
         }
         for (Map.Entry<String, byte[]> e : index.classes.entrySet()) {
-            index.syntheticMethods.put(e.getKey(), syntheticMap(e.getValue()));
+            index.syntheticMethods.put(e.getKey(), syntheticMap(e.getValue(), Set.of()));
         }
         return index;
     }
 
-    String remapMethod(String owner, String name) {
+    /** Approval identities must not consume or match a synthetic ordinal on any side. */
+    void preserveExactMethods(Map<String, Set<String>> methods) {
+        exactMethods = methods;
+        for (var entry : methods.entrySet()) {
+            byte[] bytes = classes.get(entry.getKey());
+            if (bytes != null) syntheticMethods.put(entry.getKey(), syntheticMap(bytes, entry.getValue()));
+        }
+    }
+
+    String remapMethod(String owner, String name, String desc) {
+        if (exactMethods.getOrDefault(owner, Set.of()).contains(name + desc)) return name;
         Map<String, String> map = syntheticMethods.get(owner);
         if (map == null) {
             return name;
@@ -69,7 +81,7 @@ final class JarIndex {
         return node;
     }
 
-    private static Map<String, String> syntheticMap(byte[] bytes) {
+    private static Map<String, String> syntheticMap(byte[] bytes, Set<String> exactMethods) {
         ClassNode node = new ClassNode();
         new ClassReader(bytes).accept(
                 node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
@@ -79,6 +91,7 @@ final class JarIndex {
             return Collections.emptyMap();
         }
         for (MethodNode method : node.methods) {
+            if (exactMethods.contains(method.name + method.desc)) continue;
             String prefix = syntheticPrefix(method.name);
             if (prefix == null) {
                 continue;

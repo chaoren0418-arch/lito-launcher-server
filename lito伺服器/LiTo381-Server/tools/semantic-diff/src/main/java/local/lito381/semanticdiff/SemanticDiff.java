@@ -70,6 +70,11 @@ public final class SemanticDiff {
         JarIndex left = JarIndex.load(parsed.left);
         JarIndex right = JarIndex.load(parsed.right);
         JarIndex allow = parsed.allowRight == null ? null : JarIndex.load(parsed.allowRight);
+        // Pin approved original identities before constructing any canonical allow keys.
+        // This also keeps calls and method handles consistent across all three JARs.
+        left.preserveExactMethods(parsed.extraMethods);
+        right.preserveExactMethods(parsed.extraMethods);
+        if (allow != null) allow.preserveExactMethods(parsed.extraMethods);
 
         Set<String> universe = new TreeSet<>();
         universe.addAll(left.classes.keySet());
@@ -236,7 +241,7 @@ public final class SemanticDiff {
                             "unmatched --allow-methods entry in --allow-right: " + owner + "#" + wanted);
                 }
                 resolved.computeIfAbsent(owner, k -> new LinkedHashSet<>())
-                        .add(allow.remapMethod(owner, method.name) + method.desc);
+                        .add(allow.remapMethod(owner, method.name, method.desc) + method.desc);
             }
         }
         return resolved;
