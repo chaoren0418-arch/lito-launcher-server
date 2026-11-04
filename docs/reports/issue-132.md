@@ -24,6 +24,19 @@
 
 本機 Maven repository 複製至本 worktree `scratch/issue-132/maven-repository` 後離線使用，避免寫原始專案／外部快取。測試 fixture 是 ASM 比較器用資料；部分反例刻意含 JVM 不可執行的 opcode 組合，只驗證結構比較，不宣稱通過 JVM verifier 或遊戲執行驗證。
 
+### 遠端 CI 證據
+
+程式提交 `bdefa7bf1342af5a4b6fb8f5225b942213c4ce62` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41920216393/job/126890425780) 已實際 SUCCESS。已核對步驟與完整日誌，不只看 non-blocking 工作流總狀態：
+
+```text
+NORMALIZATION SELFTEST ALL PASS checks=275
+=== SELFTEST ALL PASS ===
+=== FALLBACK ALL PASS ===
+SUMMARY SAME=2064 SAME_EFFECTS=0 DIFF=485 ONLY_LEFT=1380 ONLY_RIGHT=5 BYTE_SAME=1008 ALLOW_METHODS=0
+```
+
+原始證據見 [server-semantic-gap artifact](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41920216393/artifacts/13366218347)。既有 workflow 的全 JAR 比對未傳 effects 清單，所以上列為預設正規化統計；effects 的正反例由該 job 的 selftest 9 驗證，正式清單的本機結果見下表。全套建置／伺服器測試／打包的最後提交狀態以 [PR #142 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/142/checks) 為準。
+
 ### 同一對 JAR 的正規化前後比較
 
 本輪重新編譯一次伺服器 JAR，再分別用基底提交的舊比較器、新比較器預設、新比較器加核准清單，三次皆 exit 0。
@@ -98,7 +111,6 @@ java -cp "$tool/target/before:$tool/target/dependency/*" local.lito381.semanticd
 
 ## 待驗證／未驗證什麼
 
-- PR 遠端完整 CI（含既有 Bash selftest 與 fallback）於推送後檢查。
 - 未重建或驗收 #70 staged、未跑伺服器啟動／登入／遊戲、未連正式 DB。
 - SAME_EFFECTS 只證明核准摘要一致，不證明資料流、呼叫參數、分支目的地或迴圈行為等價。
 
