@@ -1,6 +1,6 @@
 # T020a：戰鬥候選與正式 0.6.71 類別差異盤點
 
-Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [class-diff.json](class-diff.json)。
+Issue #30，2026-11-04，第 3 次嘗試。完整逐 entry 證據見 [class-diff.json](class-diff.json)。
 
 **逐列來源驗收剩餘 1 筆：GmTravel 已復原完整歷史 Java 並重現相同 class；NativeArmorStatus 的最後寫入層與來源仍缺件。**
 
@@ -15,7 +15,7 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 | 第一批 8d26 | `8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8` | 2550 |
 | 第二批 50635 | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` | 3033 |
 | 正式 reference | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` | 2554 |
-| Maven target/LiTo381-Server.jar | `e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706` | 3929 |
+| Maven target/LiTo381-Server.jar | `0aefa242a7889e3dc1cad348c4d9650579325503e51c3efaa70e49e631182866` | 3929 |
 
 原始本機候選路徑以 `D:/lineage開發/3-lito開發/` 為根；正式與 Maven 以本 worktree 為根。精確路徑、收據與所有 SHA 列於 JSON。使用指定 final-frame current 收據指向的 `20261027T060934904682Z/candidate-negative-final-frame-unqualified.jar`。沒有使用 `75da69b0…` 作比較輸入。
 
@@ -38,28 +38,29 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 - 第一批 ClientSession 的最後變動層是 `cancellation-battle-runtime`，Protocol 是 `summon-parity`，兩者為 ASM。GmTravel 最後寫入層已證明為 `resource-database/build.py`（efd4bc36）；完整 Java 已復原且精確重現候選 class。NativeArmorStatus 在已銜接的全部層中保持原 bytes，歷史來源仍缺件。
 - 多頂層類別共用 Java 檔時，以 Maven class 的 `SourceFile` 屬性解析；內部類別沿用外層 Java 的 DECOMPILED 標記。
 
-### 第 2 次嘗試續查：歷史來源與驗證邊界
+### 歷史來源與第 3 次補證
 
-以下路徑以原始專案 `D:/lineage開發/3-lito開發/` 為根，`S` 表示 `lito伺服器/LiTo381-Server`；`scratch/`、`target/` 則位於本 worktree。
+以下路徑以原始專案 `D:/lineage開發/3-lito開發/` 為根，`S` 表示 `lito伺服器/LiTo381-Server`，`P` 表示 `lito登入器/LiTo381-Launcher/server-patches`；`scratch/`、`target/` 則位於本 worktree。
 
-- 三個指定輸入 SHA 再次通過，正式 blob 也符合 `d59ae2e4c56f599456e764a205a0e09a825975d3`。已 fetch `origin/task/24`，設計仍為 `e22872064e41d49dfa3f87dfd95ebf0eb4df39e2`。
-- 本輪重新執行 `mvn -B -DskipTests package`，940 個主來源與 1,413 個測試來源重新編譯成功，測試未執行。新 JAR 的 3,929 個 class bytes 與前次完全相同；上表記錄本輪產物 SHA。log 為 `scratch/issue-30/maven-package-rerun.log`。
-- 已銜接共同根 `df9464f0…` → `efd4bc36…` 的 59 條 resource-database 父鏈邊。`S/tools/resource-database/build/build-manifest.json` 證明 GmTravel 在 efd4 層由完整 Java 編譯新增，原始碼期望 SHA 為 `319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe`。
-- **GmTravel 缺件解除**：現版來源 SHA `ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99`，僅刪除 `        if (GmPolyMe.command(s,message)) return true;` 及其 CRLF 後，整份 Java SHA 精確符合上述歷史收據。復原檔是 `scratch/issue-30/recovered/sources/GmTravel.java`，JSON 標 `source_scope=worktree`，未改 src/main。
-- 使用 JDK 17.0.17，以指定 8d26 候選為 classpath、`-encoding UTF-8 -implicit:none` 隔離編譯。輸出 `S/target/issue30-source-validation/local/lito381/server/GmTravel.class` 的 SHA 為 `8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985`，與指定候選及歷史凍結 class **完全相同**。這是整檔／class 的 bytes 證據，不是語意相似推測。
-- **NativeArmorStatus 再向前補證 8 條邊**：從前次 e5f2 停止點，依 `room-directory → illusion-targets → illusion-presentation → empty-melee → dragon-presentation → dragon-combat → dragon-skill-dispatch → source-administration` 的發布收據與固定 `build/base.jar`，逐層核對父子 SHA 與 entry。加上前次 4 條，現有 12 條早期父鏈邊；沿途 class SHA 都是 `c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f`。
-- 新的連續血緣停止點是 `S/tools/source-administration/build/base.jar`，SHA `004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951`。`lito登入器/LiTo381-Launcher/docs/unified-configuration-verification.json` 將此 SHA 識別為正式 **0.6.42**，但沒有父輸入 SHA，不能當作最後寫入層。
-- 額外唯讀探查 `S/tools/shared-database/build/base-0.6.35.jar`（SHA `3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c`）也發現相同 class bytes。因缺乏與 004b 的連續父鏈，JSON 明標 `connected_to_stop=false`，未據此宣稱來源已確認。
-- 本機 Git `--all` 中兩個來源各只有初始化 commit `6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f`。限定早期工具／維護文件搜尋完整讀取 262 檔，兩個專案 docs 邊界搜尋完整讀取 178 檔；未找到可接續的新來源證據。另一次 tools 廣域搜尋達 90 秒限制後停止（97,340 個檔名），屬不完整搜尋，**不支持全專案不存在的結論**。所有搜尋排除封存與連結。
+- **GmTravel 已補齊**：59 條 resource 父鏈將共同根 `df9464f0…` 接到 `efd4bc36…`。`S/tools/resource-database/build/build-manifest.json` 釘選來源 SHA `319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe`。由現版 Java 唯一刪除 `        if (GmPolyMe.command(s,message)) return true;` 與其 CRLF，整份 Java SHA 符合歷史收據。復原檔 `scratch/issue-30/recovered/sources/GmTravel.java` 隔離編譯的 class SHA `8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985` 等於候選；本輪再次核對。重現方法在 JSON `retry_review.source_recovery`。
+- **NativeArmorStatus 新增四條父鏈邊**：前輪 12 條早期邊停止於 `004b1ba8…`；本輪讀取前輪範圍外的登入器 `server-patches`，並用既有清理收據銜接 `shared-database`，早期邊增為 16 條。
 
-復原方式可由 JSON `source_recovery` 重現：讀取 `input.path` 原始 bytes，先驗證 input SHA；將 `bytes.fromhex(remove_bytes_hex)` 唯一出現處刪除，驗證輸出 SHA 等於歷史收據後存入 `output.path`。完整歷史來源沒有另外加入 git，遵守本任務僅三份報告的範圍。可重跑 `scratch/issue-30/recover-gm.py`、`extend-armor.py` 與 `verify-current.py`；後者的驗證通過僅代表現有證據一致，**不表示剩餘來源驗收通過**。
+| 層 | 輸出 SHA 前綴 | 父輸入 SHA 前綴 | 實測不同 class 數 | 連結證據 |
+|---|---|---|---:|---|
+| repair-042 | 004b1ba8 | eeb0ba0b | 7 | candidate.jar 等於 source-administration 固定輸入；build.py、Patch.java 均釘選父 SHA |
+| repair-041 | eeb0ba0b | 8b9f0319 | 4 | candidate.jar 等於 repair-042/base.jar；雙重父 SHA pin |
+| repair-040 | 8b9f0319 | 4a3bb9be | 3 | candidate.jar 等於 repair-041/base.jar；雙重父 SHA pin |
+| shared-database/build.py | 4a3bb9be | 3f31ef32 | 10 | 清理收據的 removed entry 記錄舊 candidate.jar SHA／大小；保留的 repair-040/base.jar 完全吻合；builder 與 PatchShared.java 釘選父 SHA |
 
-### 自動重排後的本輪核對
+四條邊的 NativeArmorStatus 都未改，entry SHA 全為 `c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f`。`shared-database/build.py` 先跑 `PatchShared` 再跑 `PatchSourceLogin`，最後改名回 candidate.jar；兩支 ASM 未選取該類別。**這是未改動的證據，不能把它填成 asm-only 最後寫入層。** 未重播 patch，也未讀取清理收據所指的封存檔。
 
-- 沙箱初始化錯誤已藉經自動核准的提升權限命令恢復；三個固定 SHA 與正式 Git blob 再次符合。`mvn -B -DskipTests package` 於 2026-11-04 21:07:15 +08:00 成功，重編 940 個主來源與 1,413 個測試來源，未執行測試；產物 SHA 已更新為 `e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706`，3,929 個 class bytes 與前輪全部相同。
-- 完成限定範圍搜尋：伺服器 tools／src／docs、專案 tools、登入器 docs 共 **516,622 個檔名、2,369 個文字檔**。tools 的 513,250 個檔名沒有額外 `InventoryCatalog.java` 或 `NativeArmorStatus.java`；唯一完整 Java 是現有 src/main。排除封存、連結、執行紀錄等路徑；早期 SHA 內容搜尋另排除 combat-continuation／resource-database。7 筆 SHA 命中仍只指向已知固定輸入與收據，沒有補出新的父鏈。這是上述限定範圍的完成搜尋，不是全專案來源不存在的宣告。
-- 隔離編譯現有 `InventoryCatalog.java`（SHA `338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9`），NativeArmorStatus class SHA 為 `a93dbd3d007e9c6504667e99db85218118f95d0138b928e65d6a905a8adbc121`，**不等於候選 bytes**。以方法簽名配對並正規化常數池索引後，33 個方法指令清單相同；這提供移植線索，但未核對全部 class attributes，也不能證明最後寫入層。原始反組譯、比較方式與產物 SHA 記於 JSON `rerun_review`。
-- **仍有 1 筆歷史來源驗收阻塞，非環境執行失敗**。保留 `last_layer=null`、`source=null`、`acceptance_passed=false`；應由 Issue #30 任務擁有者／雲端主控補件，不能只因重新執行成功就標完成。
+完整 SHA、檔案路徑、builder／ASM SHA、pin 行、差異 class 清單與清理收據 JSON pointer 已內嵌於 `attempt3_review.additional_parent_edges`。可重跑 `py -3 -B -X utf8 scratch/issue-30/attempt3-trace.py`；結果 `PASS 4 earlier edges, armor unchanged; origin still missing`。手動重現：逐一計算各 JAR SHA，核對下一層輸入與 builder 的父 SHA；從各 JAR 解讀該 entry 並計算 SHA。最後一邊另按 JSON pointer 讀 `S/docs/maintenance/layout-cleanup-20261012.json` 的路徑／SHA／大小。
+
+- **新的來源邊界**：`S/tools/shared-database/build/base-0.6.35.jar`，SHA `3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c`。此前獨立探查的 0.6.35 現已接上父鏈；但它已含相同 class，仍缺更早的真正最後寫入層與完整歷史 Java／可驗證 ASM 修改證據。
+- 本輪搜尋登入器 tools／server-patches／docs，以及伺服器早期 tools／docs，共 562 個文字檔、19 個命中。排除封存、連結、執行紀錄及 combat-continuation／resource-database 等；完整根目錄、查詢及排除項在 `attempt3_review.source_search`。沒有取得 3f31ef32 之前的新父鏈或歷史 Java；此為限定範圍結果，不是全專案不存在的宣告。Git `--all` 的 InventoryCatalog.java 仍只有初始化 commit `6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f`。
+- 現有 InventoryCatalog.java SHA `338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9` 的前輪重編 class SHA `a93dbd3d007e9c6504667e99db85218118f95d0138b928e65d6a905a8adbc121` 不等於候選。33 個正規化方法指令清單相同，不能代替完整歷史來源證明；探查結果保留於 `rerun_review.armor_compile_probe`。
+- 本輪 `mvn -B -DskipTests package` 於 2026-11-04 21:30:00 +08:00 成功，重編 940 個主來源、1,413 個測試來源，測試略過；3,929 個 class bytes 與前輪全部相同。log：`scratch/issue-30/maven-package-attempt3.log`。
+- `last_layer=null`、`source=null`、`acceptance_passed=false`、`unresolved_entries=1` 保持不變。未通過逐列來源驗收；阻塞為 `historical-provenance-missing`，由任務擁有者／雲端主控補件，不能無條件自動重排。
 
 ### T029：正式功能保留清單
 
@@ -100,7 +101,7 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 | `SharedPresentationPackets.class` | ONLY_IN_FORMAL | 482 | — | -482 | — |
 | `ClientSession.class` | CHANGED | 2401065 | 2400761 | -304 | cancellation-battle-runtime |
 | `GmTravel.class` | CHANGED | 15560 | 15412 | -148 | resource-database/build.py（efd4bc36；Java 已復原驗證） |
-| `InventoryCatalog$NativeArmorStatus.class` | CHANGED | 7515 | 7507 | -8 | 未確認；已追至 0.6.42 固定輸入 004b1ba8 |
+| `InventoryCatalog$NativeArmorStatus.class` | CHANGED | 7515 | 7507 | -8 | 未確認；已追至 0.6.35 固定輸入 3f31ef32 |
 | `Protocol.class` | CHANGED | 162179 | 162174 | -5 | summon-parity |
 
 #### 50635f7e 對 8d26c9d7
@@ -220,6 +221,6 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 
 ## 待驗證
 
-- **仍有 1 筆未完成**：NativeArmorStatus 缺少 004b1ba8（正式 0.6.42）之前可銜接的最後寫入層與完整 Java／ASM 證據。GmTravel 已解除缺件。未進入封存補找；須由任務擁有者將缺件提供於允許讀取的 sources/inputs，不能把來源邊界冒充最後寫入層。
-- 未執行單元測試（依要求使用 `-DskipTests`）、候選回歸、遊戲或正式 DB。第二批 380 筆完整 Java 僅核對凍結輸出；前輪重編 GmTravel 並證明 class bytes 相同。本輪另隔離重編 InventoryCatalog，NativeArmorStatus bytes 不同，33 個正規化方法指令清單相同。
+- **仍有 1 筆未完成**：NativeArmorStatus 缺少 3f31ef32（0.6.35 固定輸入）之前可銜接的最後寫入層與完整 Java／ASM 證據。GmTravel 已解除缺件。未進入封存補找；須由任務擁有者將缺件提供於允許讀取的 sources/inputs，不能把來源邊界冒充最後寫入層。
+- 未執行單元測試（依要求使用 `-DskipTests`）、候選回歸、遊戲或正式 DB。第二批 380 筆完整 Java 僅核對凍結輸出；前輪重編 GmTravel 並證明 class bytes 相同。前輪另隔離重編 InventoryCatalog，NativeArmorStatus bytes 不同，33 個正規化方法指令清單相同。
 - T029 靜態保留清單需在合併後做行為驗證；非 class 資源、圖示／DLL 真機顯示仍屬後續驗收。
