@@ -1,5 +1,37 @@
 # Issue #45 — T020f 候選 JAR 與凍結原始碼入庫
 
+## 第二次執行：合併閘門誤判（2026-11-04）
+
+**資源驗收通過；調度器閘門仍待修正（`needs:orchestrator`）。** 本次沿用 `task/45`，沒有切換或建立分支。前次提交 `523110e3961d061539e548a15282090ea5ef9ca1` 已包含根 `.gitignore` 第 91 行的 `!lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar`；無需再改忽略規則或重新複製材料。本次僅更新本報告。
+
+### 已驗證的退回原因
+
+唯讀檢視 `D:/dev-orchestrator/orchestrator/gate.py`（SHA256 `c4886b908535aef447e0043ca8706fa709e279abac0985a79262c97c221c177e`）：
+
+- 第 13 行固定讀取 `contents/.gitignore?ref=main`，沒有使用待審分支的規則。
+- 第 20 行直接跳過 `!` 開頭的例外；第 26–43 行以自訂 `fnmatch` 取第一個匹配規則，不具 Git 的完整忽略語意。
+- 第 68–72 行據此將新增候選 JAR 判為 `*.jar`。即使改讀本任務分支，跳過否定規則仍會誤判。
+
+已以 AST 單獨取出 `_ignored` 函式，輸入依上述篩選邏輯取得的實際 `HEAD:.gitignore`，重現回傳 `*.jar`；同一工作樹以 Git 原生命令檢查，結果為未忽略。未匯入或執行整個調度器、未寫入其程式／設定／狀態。
+
+### 本次核對指令與結果
+
+在 `D:/lineage開發/3-lito開發/scratch/wt/task-45` 執行：
+
+```powershell
+py -3 -B -X utf8 scratch/issue-45/prepare.py
+py -3 -B -X utf8 scratch/issue-45/verify.py --original
+git check-ignore --no-index -- lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar
+# exit 1，無輸出：未忽略
+git check-ignore --no-index -v -- lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar
+# .gitignore:91:!lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar
+# verbose 模式 exit 0 表示找到匹配規則；此處為 ! 例外，不能當作被忽略。
+```
+
+`prepare.py` 未帶 `--write`，只核對原始 current 收據、建置 manifest、來源 JAR 與來源 Java；沒有覆寫材料。兩支腳本均 exit 0：JAR SHA 符合指定值，380 筆 manifest／原始來源／保存來源／候選 class SHA 全數通過，207 份 Java 與 217 個原始路徑吻合，212 個交付檔均未忽略且小於 100,000,000 bytes，最大檔為 JAR（22,722,734 bytes）。修改報告前亦逐一核對前次提交的 212 個 Git blob 與工作檔，全部位元組相同。
+
+雲端可使用下方「可重現的獨立核對程式」重驗材料，不需要本機原始資源。閘門維護者應以待審 commit 的 checkout 執行 `git check-ignore --no-index`，保留 Git 的否定規則及子目錄規則語意，再重跑 #45；本報告沒有宣稱外部閘門已通過。
+
 ## 做了什麼
 
 在既有 `task/45` 工作樹備妥第二階段合併輸入材料。候選 JAR 由原專案的 `source-negative-final-frame-build-current.json` 指向的固定輸出複製，複製前後 SHA256 均為：
@@ -128,5 +160,7 @@ if '--index' in sys.argv: print('PASS staged paths and all 212 Git blob bytes ma
 - `docs/reports/issue-45.md`
 
 ## 給下一棒的提示
+
+優先由調度器維護者（`needs:orchestrator`）修正上述分支選擇與 `!` 例外判定，再重跑 #45 閘門。這是外部阻塞；本資源分支無需移除 `*.jar` 防護，也不應改名候選檔或刪除材料來規避檢查。
 
 由雲端主控／Claude 審查本資源提交，合併後交 Cursor 依 #43 的 B2 → B1a–d → B3-* 批次執行。搬移 Java 時依 manifest 定位，主版本僅供移植起點；歷史變體與 asm-only 外層仍需依 T020d 與候選 JAR 做語意核對。不要把整個 merge-inputs 目錄加入 Maven 編譯，也不要將輸入候選當成已通過驗收的正式成品。
