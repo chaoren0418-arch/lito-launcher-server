@@ -3,8 +3,20 @@ function Invoke-Python([string]$Script) {
     $exe=$null
     $prefix=@()
     if (Get-Command py -ErrorAction SilentlyContinue) {
-        & py -3.12 -c 'import sys' 2>$null
-        if ($LASTEXITCODE -eq 0) { $exe='py'; $prefix=@('-3.12') }
+        # Expected failure when 3.12 is not installed: isolate from the script-wide
+        # 'Stop' so PowerShell 5.1 NativeCommandError does not skip the PATH fallback.
+        $probeOk=$false
+        $savedPreference=$ErrorActionPreference
+        $ErrorActionPreference='Continue'
+        try {
+            & py -3.12 -c 'import sys' 2>$null | Out-Null
+            $probeOk=($LASTEXITCODE -eq 0)
+        } catch {
+            $probeOk=$false
+        } finally {
+            $ErrorActionPreference=$savedPreference
+        }
+        if ($probeOk) { $exe='py'; $prefix=@('-3.12') }
     }
     if (-not $exe) {
         foreach ($name in @('python','python3')) {
