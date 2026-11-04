@@ -64,8 +64,11 @@ $($issue.body)
     Set-Content -LiteralPath $promptFile -Value $prompt -Encoding UTF8
     Push-Location -LiteralPath $dir
     try {
+        $lastFile = Join-Path $LogRoot ("{0}-{1}.last.md" -f $repo, $n)
+        if (Test-Path -LiteralPath $lastFile) { Remove-Item -LiteralPath $lastFile -Force }
         if ($Runner -eq 'codex') {
-            $out = & $codex exec --full-auto --cd $dir (Get-Content -LiteralPath $promptFile -Raw) 2>&1
+            # 這版 codex exec：--approve-for-me（自動核准）+ workspace-write 沙箱；開網路以便 git push；提示詞由 stdin 讀入
+            $out = Get-Content -LiteralPath $promptFile -Raw | & $codex exec --approve-for-me -s workspace-write -c 'sandbox_workspace_write.network_access=true' -C $dir --skip-git-repo-check --color never -o $lastFile - 2>&1
         } else {
             $out = & $claude -p (Get-Content -LiteralPath $promptFile -Raw) --permission-mode acceptEdits 2>&1
         }
@@ -74,7 +77,7 @@ $($issue.body)
     $out | Out-File -LiteralPath $log -Encoding UTF8
     $text = ($out | Out-String)
     $idx = $text.LastIndexOf('=== RESULT ===')
-    $summary = if ($idx -ge 0) { $text.Substring($idx) } else { ($out | Select-Object -Last 40) -join "`n" }
+    $summary = if (Test-Path -LiteralPath $lastFile) { Get-Content -LiteralPath $lastFile -Raw } elseif ($idx -ge 0) { $text.Substring($idx) } else { ($out | Select-Object -Last 40) -join "`n" }
     if ($summary.Length -gt 6000) { $summary = $summary.Substring(0, 6000) + "`n…(截斷，完整 log 在本機 $log)" }
     $status = if ($code -eq 0) { 'done' } else { 'failed' }
     $body = "## 本機代理結果（$status，exit $code，runner=$Runner）`n`n```````n$summary`n```````n`n完整 log：本機 ``$log``"
