@@ -21,7 +21,7 @@ final class NativeCompanionForestArea {
   var c=NativeAreaMaterialAction.current.get();if(c==null||c.pc!=pc||spell.skillId()!=161||NativeLightAction.currentMaterialProducer()!=pc||!NativeLightAction.retainedMaterial(pc))throw new IllegalStateException("area companion effect requires its original committed context");
   for(var n:new ArrayList<>(c.npcs.values()))if(n.kind()==3){var pet=(BattleCompanion)n.actor();synchronized(pet){var timed=(BattleTimedStatus)CombatAccess.field(pet,"timedStatus");synchronized(timed){var life=NativePlayerLifetime.of(c.hub);synchronized(life.admission){
    if(!c.scene()||!eligible(c,n,spell))continue;var snap=pet.snapshot();int mr=pet.effectiveMagicResistance(pet.magicResistance(),now);int chance=ClientSession.nativeForestSilenceChance(spell,level,snap.level(),intelligence,magicHit,mr,CombatProbability.bossGate(pet.boss(),spell),pc,new Object[]{pet});int roll=fixture>0?fixture:ThreadLocalRandom.current().nextInt(1,101);pet.consumeEraseMagic(now);if(chance<roll)continue;timed.activateAreaSilence(now,spell.durationSeconds());
-   var receivers=c.players.stream().filter(c::player).toList();CombatAccess.call(pc,"publishAreaSilenceEffect","(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V",receivers,n.id(),spell.effectGfx(),CombatAccess.field(pc,"phase"),c.map,c.instance);
+   var receivers=c.players.stream().filter(p->NativeSourceIndirectPlayerProof.player(c,p)).toList();CombatAccess.call(pc,"publishAreaSilenceEffect","(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V",receivers,n.id(),spell.effectGfx(),CombatAccess.field(pc,"phase"),c.map,c.instance);
   }}}}
  }
  private NativeCompanionForestArea(){}

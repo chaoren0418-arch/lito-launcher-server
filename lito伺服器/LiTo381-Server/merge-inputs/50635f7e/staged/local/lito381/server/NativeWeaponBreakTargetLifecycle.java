@@ -48,8 +48,8 @@ final class NativeWeaponBreakTargetLifecycle {
   // only after that pair and the hub/population have been released.
   NativeLightAction.deferWeaponTargetOutput(()->{var completion=new Runnable[1];NativeSourcePlayerActionLock.run(receiver,()->{
    if(binding.matches(receiver))completion[0]=NativeRolePublication.completion(receiver,()->{
-    boolean valid;synchronized(context.hub){if(context.population!=null)synchronized(context.population){valid=binding.matches(receiver)&&context.player(receiver)&&targets.stream().allMatch(context::player)&&(!npc||context.npc(id));}
-     else valid=binding.matches(receiver)&&context.player(receiver)&&targets.stream().allMatch(context::player)&&(!npc||context.npc(id));}
+    boolean valid;synchronized(context.hub){if(context.population!=null)synchronized(context.population){valid=binding.matches(receiver)&&context.player(receiver)&&targets.stream().allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));}
+     else valid=binding.matches(receiver)&&context.player(receiver)&&targets.stream().allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));}
     if(valid)try{receiver.nativeSelfOriginalSend(frozen,note);}catch(IOException e){throw new java.io.UncheckedIOException(e);}
    });
   });if(completion[0]!=null)completion[0].run();});return true;

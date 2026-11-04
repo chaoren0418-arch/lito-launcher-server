@@ -3,7 +3,21 @@ package local.lito381.server;
 import java.util.*;
 /** Actual material cube installation, using the original prewait Batch identity and cost body. */
 final class NativeSourceCubePlacement {
- record Draft(Object engine,Object epoch,Object previousScene,NativeSourceCubeOrigin.Scene scene,NativeSourceCubeOrigin.Creator creator){}
+ static final class Draft {
+  private final Object engine,epoch,previousScene;private final NativeSourceCubeOrigin.Scene scene;private final NativeSourceCubeOrigin.Creator creator;final Object nativeSourceCubeTemplate;
+  Draft(Object engine,Object epoch,Object previousScene,NativeSourceCubeOrigin.Scene scene,NativeSourceCubeOrigin.Creator creator){
+   this.engine=engine;this.epoch=epoch;this.previousScene=previousScene;this.scene=scene;this.creator=creator;
+   this.nativeSourceCubeTemplate=NativeSourceCubeTemplate.freeze(engine);
+  }
+  public Object engine(){return engine;}
+  public Object epoch(){return epoch;}
+  public Object previousScene(){return previousScene;}
+  public NativeSourceCubeOrigin.Scene scene(){return scene;}
+  public NativeSourceCubeOrigin.Creator creator(){return creator;}
+  public final boolean equals(Object o){return o instanceof Draft d&&java.util.Objects.equals(engine,d.engine)&&java.util.Objects.equals(epoch,d.epoch)&&java.util.Objects.equals(previousScene,d.previousScene)&&java.util.Objects.equals(scene,d.scene)&&java.util.Objects.equals(creator,d.creator);}
+  public final int hashCode(){return java.util.Objects.hash(engine,epoch,previousScene,scene,creator);}
+  public final String toString(){return "Draft[engine="+engine+", epoch="+epoch+", previousScene="+previousScene+", scene="+scene+", creator="+creator+"]";}
+ }
  static boolean same(Draft d){return d!=null&&d.engine()!=null&&d.epoch()!=null&&d.scene()!=null&&d.creator()!=null&&NativeSourceCubeOrigin.epoch(d.engine())==d.epoch()&&NativeSourceCubeOrigin.scene(d.engine())==d.previousScene()&&(d.previousScene()==null||d.previousScene()==d.scene());}
  static boolean scoped(GameHub hub){return CombatRules.loaded()&&Thread.holdsLock(hub)&&NativeLightAction.nativeSourceGroundPlacementBatch()!=null;}
  static Draft prepare(Object engine,long caster,ClientSession pc,GameHub hub,long roomId){

@@ -21,6 +21,6 @@ final class NativeCompanionWindAction {
    if(!NativeCompanionWindState.activate(pet,now,spell.durationSeconds()))return new int[]{1,0};publish(pc,c,id,spell.effectGfx());return new int[]{1,1};
   }}}
  }
- static void publish(ClientSession pc,NativeAreaMaterialAction.Context c,long id,int gfx){CombatAccess.call(pc,"publishWindShackleEffect","(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V",c.players.stream().filter(c::player).toList(),id,gfx,CombatAccess.field(pc,"phase"),c.map,c.instance);}
+ static void publish(ClientSession pc,NativeAreaMaterialAction.Context c,long id,int gfx){CombatAccess.call(pc,"publishWindShackleEffect","(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V",c.players.stream().filter(p->NativeSourceIndirectPlayerProof.player(c,p)).toList(),id,gfx,CombatAccess.field(pc,"phase"),c.map,c.instance);}
  private NativeCompanionWindAction(){}
 }
