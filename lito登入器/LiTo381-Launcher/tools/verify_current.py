@@ -1,12 +1,18 @@
 from pathlib import Path
 import hashlib,importlib.util,json,subprocess,sys,threading,queue,time
 L=Path(__file__).resolve().parent.parent
+REPO=L.parent.parent
+def repo_path(value):
+    path=Path(value)
+    return path if path.is_absolute() else REPO/path
 helper=L/'release/current/development_startup.py'
 spec=importlib.util.spec_from_file_location('current_helper',helper);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 m.check_source(str(m.SELECTED))
-release_inputs=L.parent.parent/'lito伺服器/LiTo381-Server/deployment/release-inputs.json'
-expected_server=json.loads(release_inputs.read_text('utf-8-sig'))['server_sha256'].lower()
-assert hashlib.sha256((L/'app/server/LiTo381-SharedResources-candidate.jar').read_bytes()).hexdigest()==expected_server
+release_inputs=REPO/'lito伺服器/LiTo381-Server/deployment/release-inputs.json'
+pins=json.loads(release_inputs.read_text('utf-8-sig'))
+expected_server=pins['server_sha256'].lower()
+jar=repo_path(pins['server_jar']) if pins.get('server_jar') else L/'app/server/LiTo381-SharedResources-candidate.jar'
+assert hashlib.sha256(jar.read_bytes()).hexdigest()==expected_server
 formal_spec=importlib.util.spec_from_file_location('formal_helper',m.ENTRY)
 formal=importlib.util.module_from_spec(formal_spec);formal_spec.loader.exec_module(formal)
 formal.verify_release_inputs()
