@@ -2,8 +2,8 @@ package local.lito381.server;
 import java.util.*;
 /** Existing accepted PC proc path for Source custom-duration scalar effects, without cast costs or new actor authority. */
 final class NativeSourceProcScalarSkills {
- static boolean supports(int id){return id==31||id==32||id==71||id==78;}
- static String expiry(int id){return switch(id){case 31->"counterMagicExpiresAtNanos";case 32->"meditationExpiresAtNanos";case 71->"decayPotionExpiresAtNanos";case 78->"absoluteBarrierExpiresAtNanos";default->throw new IllegalArgumentException("unsupported Source scalar skill "+id);};}
+ static boolean supports(int id){return NativeSourceProcScalarExtras.supports(id)||id==31||id==32||id==71||id==78;}
+ static String expiry(int id){var extra=NativeSourceProcScalarExtras.expiry(id);return extra!=null?extra:switch(id){case 31->"counterMagicExpiresAtNanos";case 32->"meditationExpiresAtNanos";case 71->"decayPotionExpiresAtNanos";case 78->"absoluteBarrierExpiresAtNanos";default->throw new IllegalArgumentException("unsupported Source scalar skill "+id);};}
  static NativeSourceEquipmentProcLife.Proof capture(ClientSession caster,ClientSession target){
   var f=NativePlayerCommit.frame();if(f==null||f.pc!=caster||!f.accepted||f.event.world()||f.queue==null||!(f.nativeSourceAcceptedPlayers instanceof NativeSourceAcceptedPlayers.Proof accepted))return null;
   var source=NativeSourceEquipmentProcLife.select(accepted,caster);var selected=NativeSourceEquipmentProcLife.select(accepted,target);if(source==null||selected==null||source.binding()==null||selected.binding()==null||!"BATTLE".equals(source.binding().phase())||!"BATTLE".equals(selected.binding().phase())||source.binding().room()!=selected.binding().room())return null;
@@ -17,7 +17,7 @@ final class NativeSourceProcScalarSkills {
  static Object state(BattleTimedStatus timed){return CombatAccess.field(timed,"sourcePoisonLifecycle");}
  static boolean queueCurrent(NativePlayerCommit.Binding binding,ClientSession pc,BattleTimedStatus timed,NativeSourceEquipmentProcLife.Proof proof,NativeProcSkillCatalog.Catalog catalog){return proof!=null&&pc==proof.target().pc()&&proof.target().binding().equals(binding)&&current(proof,timed,catalog);}
  static Object queueValue(Object queue,NativeSourceEquipmentProcLife.Proof proof){return queue!=null&&CombatAccess.field(queue,"life")==proof.lifetime()&&!Boolean.TRUE.equals(CombatAccess.field(queue,"closed"))&&CombatAccess.field(proof.hub(),"sourcePlayerCommitLifetime")==proof.lifetime()&&proof.lifetime().mode!=NativePlayerLifetime.Mode.STOPPED&&!(boolean)CombatAccess.field(proof.hub(),"nativeStaticMotionClosed")?queue:null;}
- static void activate(BattleTimedStatus timed,int id,long now,int seconds){switch(id){case 31->timed.activateCounterMagic(now,seconds);case 32->timed.activateMeditation(now,seconds);case 71->timed.nativeSourceProcActivateDecayPotion(now,seconds);case 78->timed.activateAbsoluteBarrier(now,seconds);default->throw new IllegalArgumentException("unsupported Source scalar skill "+id);}}
+ static void activate(BattleTimedStatus timed,int id,long now,int seconds){if(NativeSourceProcScalarExtras.activate(timed,id,now,seconds))return;switch(id){case 31->timed.activateCounterMagic(now,seconds);case 32->timed.activateMeditation(now,seconds);case 71->timed.nativeSourceProcActivateDecayPotion(now,seconds);case 78->timed.activateAbsoluteBarrier(now,seconds);default->throw new IllegalArgumentException("unsupported Source scalar skill "+id);}}
  static boolean handle(ClientSession caster,ClientSession target,NativeArmorProc.Rule rule){
   if(caster==null||target==null||rule==null||!supports(rule.skill())||rule.seconds()<=0||!NativeSourceEquipmentProcLife.enabled(caster))return false;
   var catalog=NativeProcSkillCatalog.catalog();if(catalog.healing(rule.skill()))return false;

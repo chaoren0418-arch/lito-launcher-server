@@ -13,6 +13,7 @@ final class NativeSourceWindTargets {
   }
   void close(){closed=true;outbound=null;if(c.nativeSourceWindAim==this)c.nativeSourceWindAim=null;}
   boolean valid(){
+   if(!NativeSourceMaterialFirstLife.valid(this))return false;
    if(lifetime.mode==NativePlayerLifetime.Mode.STOPPED||(boolean)CombatAccess.field(c.hub,"nativeStaticMotionClosed")||!c.scene()||!(pet==null?c.player(player):c.npc(target.id()))||NativePlayerCommit.integer(c.pc,"positionX")!=cx||NativePlayerCommit.integer(c.pc,"positionY")!=cy)return false;
    if(pet==null){if(NativePlayerCommit.integer(player,"positionX")!=x||NativePlayerCommit.integer(player,"positionY")!=y)return false;}else{var snapshot=pet.snapshot();if(snapshot.x()!=x||snapshot.y()!=y)return false;}
    var row=NativeSkillTargetMetadata.row(167);if(row.area()!=0||row.targetTo()!=3||row.type()!=1||row.through())throw new IllegalStateException("unqualified Source167 target metadata");

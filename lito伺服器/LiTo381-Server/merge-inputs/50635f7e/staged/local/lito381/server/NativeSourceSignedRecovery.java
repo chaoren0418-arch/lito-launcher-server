@@ -8,12 +8,13 @@ final class NativeSourceSignedRecovery {
  }
  static Intent capture(ClientSession pc,ClientSession caster){if(caster==null)return null;var c=NativeAreaMaterialAction.current.get();var targetBinding=c==null?NativePlayerCommit.Binding.capture(pc):c.bindings.get(pc);var sourceBinding=c==null?NativePlayerCommit.Binding.capture(caster):c.bindings.get(caster);if(targetBinding==null||sourceBinding==null)return null;var hub=(GameHub)CombatAccess.field(pc,"hub");var target=member(pc,targetBinding,c);var source=pc==caster?target:member(caster,sourceBinding,c);return target==null||source==null?null:new Intent(target,source,hub,NativePlayerLifetime.of(hub));}
  static NativeSourceRawDamage.Member member(ClientSession pc,NativePlayerCommit.Binding binding,NativeAreaMaterialAction.Context c){
+  if(NativeSourceHealingCast.scoped(c))return NativeSourceHealingCast.member(pc,binding,c);
   if(c!=null){if(c.nativeSourceRawAction instanceof NativeSourceRawDamage.Action a){var old=a.members.get(pc);if(old!=null)return old.binding.equals(binding)?old:null;}
    NativeSourceDamageDisplay.Actor original=null;
    if(c.nativeSourceDollAction instanceof NativeSourceDollAction.Action a&&a.stamp.caster()==pc)original=a.stamp.source();
    else if(c.nativeSourceMagicSnapshot instanceof NativeSourceMagicNpc.Snapshot snapshot&&snapshot.source().pc()==pc)original=snapshot.source();
-   if(original!=null)return original.binding().equals(binding)?new NativeSourceRawDamage.Member(pc,binding,original.life()):null;
-  }return new NativeSourceRawDamage.Member(pc,binding);
+   if(original!=null)return original.binding().equals(binding)?NativeSourceAcceptedPlayers.fromActor(pc,binding,original,original.life()):null;
+  }return NativeSourceFirstPlayers.member(pc,binding,c);
  }
  static void receive(ClientSession pc,int amount,ClientSession caster,boolean magic,boolean world){
   if(amount>=0||world||!CombatRules.loaded()){CombatPlayerRecovery.nativeSourceSignedOriginalReceive(pc,amount,caster,magic,world);return;}

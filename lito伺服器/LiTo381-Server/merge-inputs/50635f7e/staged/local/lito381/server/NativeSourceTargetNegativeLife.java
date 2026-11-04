@@ -25,6 +25,6 @@ final class NativeSourceTargetNegativeLife {
  static boolean ready(NativeAreaMaterialAction.Context c,Proof p,BattleCompanion pet,ClientSession owner){return !enabled(c)||p!=null&&p.npc()!=null&&p.npc().kind()==3&&p.npc().actor()==pet&&p.peer()==owner&&current(c,p);}
  static Object firstTimed(Object original,Proof p){return p==null?original:p.actorTimed();}
  static NativePlayerLifetime lifetime(GameHub hub,Proof p){return p==null?NativePlayerLifetime.of(hub):p.life();}
- static void close(NativeAreaMaterialAction.Context c){if(c!=null)c.nativeSourceTargetNegativeProof=null;}
+ static void close(NativeAreaMaterialAction.Context c){NativeSourceControlledNegativeFinal.close(c);if(c!=null)c.nativeSourceTargetNegativeProof=null;}
  private NativeSourceTargetNegativeLife(){}
 }
