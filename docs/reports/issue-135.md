@@ -36,6 +36,7 @@ RuntimeInventory 為 **3 個方法、4 處 return**，withoutObjects 有兩處�
 - 修復提交 `d682014c700417a3fb858d130fe90271241647c8` 的 [Semantic gap CI](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126940606612) 實際 SUCCESS，完整日誌確認 517 項正規化檢查、`SELFTEST ALL PASS`、`FALLBACK ALL PASS` 及 2122 SAME／427 DIFF；Server／Launcher 建置及打包也成功。
 - **CI 全綠尚未達成**：同一修復提交的 Server tests 兩輪皆為 6,033 項、1 failure、0 errors、117 skipped。[首輪](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126940606561) 失敗於 `ModernArmorProtectionServiceTest.missingOrUnsolicitedFreshArmorAbortsWithoutPartialPublication:53`；[只重跑失敗 job 的第二輪](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126945396948) 換成 `ModernBattleWorldProtocolTest.prepareLoadingBothAcksReadAndLeaveUseOnlyCanonicalLifecycle:77`。兩者均為離房後預期計數 0、實際 1；首輪失敗的 Armor 測試第二輪已通過。未以反覆重跑取代診斷，也未改動範圍外的伺服器程式／測試。
 - 本機完整 CI 證據保留於 `scratch/issue-135/ci-semantic-gap.log`、`ci-server-tests.log`、`ci-server-tests-retry.log`。最後報告提交的狀態見 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks)；下列舊提交 CI 綠燈僅為歷史證據。
+- 報告提交 `698de577b6434058e7fe5d47899f243d919cbc1b` 的 [Launcher job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41937835157/job/126950715467) 未啟動（steps 為空、runner_id 為 0）；GitHub annotation 明示近期帳號付款失敗或支出上限需提高。這是額外的 CI 帳號阻塞，未修改帳務或工作流設定；需主控確認可用執行額度後再驗收。
 
 ### 第 2 次嘗試複驗（2026-11-05）
 
@@ -113,6 +114,7 @@ SUMMARY SAME=2122 SAME_EFFECTS=0 DIFF=427 ONLY_LEFT=1381 ONLY_RIGHT=5 BYTE_SAME=
 ## 待驗證／未驗證什麼
 
 - 修復提交的 Server tests 未全綠，主控需另派伺服器測試／清理競態調查；#135 工具與自測已通過，但不能宣稱完整驗收完成。
+- 最新報告提交遇到 GitHub Actions 帳號付款／支出上限阻塞，無法據此驗證完整 CI；交由主控處理執行環境。
 - 本機未具 Bash；完整 shell 自測與無 Maven 冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 未重建 #77 staged、未驗收其 69 entry 全通過；ServerConfig／SourceLogin 的兩類差異仍由 #77 接手。
 - 未啟動遊戲、登入器、伺服器，未連正式 DB；真機與整合回歸留既定任務。
