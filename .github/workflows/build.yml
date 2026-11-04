@@ -16,9 +16,177 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
-      - name: Compile (no tests; tests need MySQL)
+      - name: Package (no tests)
         working-directory: lito伺服器/LiTo381-Server
-        run: mvn -B -q -DskipTests compile
+        # -DskipTests still compiles tests. Current test sources fail testCompile
+        # (T005). -Dmaven.test.skip=true skips testCompile so package stays green.
+        run: mvn -B -DskipTests -Dmaven.test.skip=true package
+      - name: Compare class lists with reference JAR
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import subprocess
+          from collections import defaultdict
+
+          server = Path("lito伺服器/LiTo381-Server")
+          ref_jar = server / "reference" / "base-0.6.71.jar"
+          tgt_jar = server / "target" / "LiTo381-Server.jar"
+          out = Path("docs/server-source-gap.md")
+
+          def class_list(jar: Path) -> set[str]:
+              text = subprocess.check_output(["jar", "tf", str(jar)], text=True)
+              return {line.strip() for line in text.splitlines() if line.endswith(".class")}
+
+          def top_name(entry: str) -> str:
+              simple = entry.rsplit("/", 1)[-1][:-6]
+              return simple.split("$", 1)[0]
+
+          def classify_only_ref(entry: str, target_classes: set[str]) -> str:
+              simple = entry.rsplit("/", 1)[-1][:-6]
+              top = simple.split("$", 1)[0]
+              if top.startswith("Modern"):
+                  return "Modern*"
+              parent = str(Path(entry).parent / f"{top}.class")
+              if "$" not in simple:
+                  return "待補"
+              if parent in target_classes:
+                  return "刻意排除"
+              return "待補"
+
+          NOTES = {
+              "local/lito381/server/NativeDeVisibilitySwitch.class":
+                  "頂層類；src/main 沒有對應 .java，reference/missing-classes.txt 已列。",
+              "local/lito381/server/BattleInvisibilityStatus$Lease.class":
+                  "現行 BattleInvisibilityStatus 把 lease 收成欄位，不再產 named inner class。",
+              "local/lito381/server/BattleInvisibilityStatus$Snapshot.class":
+                  "同上，現行原始碼不再產 Snapshot inner class。",
+              "local/lito381/server/NativeCastMaterial$Effect.class":
+                  "T002 搬入的 tools 原始碼改用 Cast + Function，不再有 Effect inner。",
+              "local/lito381/server/NativeResurrectionMaterialAction$Target.class":
+                  "現行用 private static method target()，不再產 Target inner class。",
+              "local/lito381/server/BattleDeathmatchFatalityCatalog$1.class":
+                  "外層類已在 target；現行用 enum Family/Effect，匿名 $1 不再出現。",
+              "local/lito381/server/BattleTimeAttackMagicSkillCatalog$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+              "local/lito381/server/ClassicWorldCkewCatalog$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+              "local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+              "local/lito381/server/InventoryCatalog$1.class":
+                  "外層類已在 target；現行有 enum Effect，不再產匿名 $1。",
+              "local/lito381/server/NativeDeAiState$2.class":
+                  "外層類已在 target；現行用 record/enum，匿名類編號不同。",
+              "local/lito381/server/NativeDeDeletionVisibility$1.class":
+                  "外層類已在 target；現行有 named Snapshot，匿名 $1 不再出現。",
+              "local/lito381/server/NativeDeEquipment$1.class":
+                  "外層類已在 target；現行用 record，匿名 $1 不再出現。",
+              "local/lito381/server/NativeDeWorldCore$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+              "local/lito381/server/NativeDeWorldPlayerFilter$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+              "local/lito381/server/NativeLitoRentalTownNpcCatalog$1.class":
+                  "外層類已在 target；匿名類編號／寫法與正式 JAR 不同。",
+          }
+
+          ref = class_list(ref_jar)
+          tgt = class_list(tgt_jar)
+          only_ref = sorted(ref - tgt)
+          only_tgt = sorted(tgt - ref)
+          both = ref & tgt
+
+          by_cat = defaultdict(list)
+          for entry in only_ref:
+              by_cat[classify_only_ref(entry, tgt)].append(entry)
+
+          modern_tgt = [e for e in only_tgt if top_name(e).startswith("Modern")]
+          other_tgt = [e for e in only_tgt if not top_name(e).startswith("Modern")]
+
+          def fence(entries):
+              if not entries:
+                  return "_（無）_\n"
+              return "```\n" + "\n".join(entries) + "\n```\n"
+
+          lines = [
+              "# 伺服器來源缺口（T007 / Issue #2）",
+              "",
+              "用 `jar tf` 比對 Maven 產物與正式 0.6.71 參考 JAR 的 `.class` 清單。",
+              "此檔由 CI `package` 後重寫，並以 artifact `server-source-gap` 上傳。",
+              "",
+              "## 比對基準",
+              "",
+              "| 項目 | 路徑 |",
+              "|---|---|",
+              f"| reference | `{ref_jar.as_posix()}` |",
+              f"| target | `{tgt_jar.as_posix()}` |",
+              "| 指令 | `jar tf <jar>`，只保留 `*.class` |",
+              "| 建置 | `mvn -B -DskipTests -Dmaven.test.skip=true package` |",
+              "",
+              "## 摘要",
+              "",
+              "| 集合 | 數量 |",
+              "|---|---|",
+              f"| reference `.class` | {len(ref)} |",
+              f"| target `.class` | {len(tgt)} |",
+              f"| 交集 | {len(both)} |",
+              f"| 只在 reference | {len(only_ref)} |",
+              f"| 只在 target | {len(only_tgt)} |",
+              "",
+              "### 只在 reference 分類計數",
+              "",
+              "| 類別 | 數量 | 含義 |",
+              "|---|---|---|",
+              f"| Modern* | {len(by_cat['Modern*'])} | 正式 JAR 有、現行 src 標為 Modern 候選 |",
+              f"| 刻意排除 | {len(by_cat['刻意排除'])} | 外層類已在 target；inner／匿名類形狀與正式 JAR 不同 |",
+              f"| 待補 | {len(by_cat['待補'])} | 頂層類或外層類不在 target，需補來源 |",
+              "",
+              "## 已驗證／推測／待驗證",
+              "",
+              "- **已驗證**：`unzip -p reference/base-0.6.71.jar META-INF/MANIFEST.MF` 的 `Main-Class` 為 `local.lito381.server.SharedResourceMain`；`mvn package` 產物 MANIFEST 同樣寫入此 Main-Class，`Implementation-Version` 為 `0.6.71`。本清單由 `jar tf` 對兩個 JAR 的 `.class` 路徑做集合差。",
+              "- **推測**：標「刻意排除」的 inner／匿名類是 javac 對現行原始碼（T002 反編譯或 tools 原文）編出的形狀不同，不是少了一整個頂層型別。",
+              "- **待驗證**：類別清單一致不等於位元組碼／行為一致；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。",
+              "",
+              "## 只在 reference",
+              "",
+          ]
+
+          for cat in ("待補", "刻意排除", "Modern*"):
+              entries = by_cat[cat]
+              lines.append(f"### {cat}（{len(entries)}）")
+              lines.append("")
+              if not entries:
+                  lines.append("_（無）_")
+                  lines.append("")
+                  continue
+              lines.append("| 類別 | 說明 |")
+              lines.append("|---|---|")
+              for entry in entries:
+                  note = NOTES.get(entry, "依分類規則標註；外層類已在 target 則為刻意排除，否則待補。")
+                  lines.append(f"| `{entry}` | {note} |")
+              lines.append("")
+
+          lines.extend([
+              "## 只在 target",
+              "",
+              f"### Modern*（{len(modern_tgt)}）",
+              "",
+              "現行 `src/main` 的 Modern 候選堆疊；正式 0.6.71 JAR 不含。刻意保留在 Maven 產物（另有 `LiTo381-Server-modern.jar` classifier）。",
+              "",
+              fence(modern_tgt),
+              f"### 其他非 Modern（{len(other_tgt)}）",
+              "",
+              "src/main 多出來、正式 JAR 沒有的輔助型別（裝備規則、競技場存在感、外觀依賴解析等）。",
+              "",
+              fence(other_tgt),
+          ])
+
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text("\n".join(lines), encoding="utf-8")
+          print(f"wrote {out} only_ref={len(only_ref)} only_tgt={len(only_tgt)}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: server-source-gap
+          path: docs/server-source-gap.md
 
   launcher:
     name: Launcher (.NET 10 / WinForms)

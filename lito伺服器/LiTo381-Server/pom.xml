@@ -6,7 +6,7 @@
 
     <groupId>local.lito381</groupId>
     <artifactId>lito381-server</artifactId>
-  <version>0.7.864</version>
+    <version>0.6.71</version>
     <name>LiTo 3.81C local arena server</name>
 
     <properties>
@@ -70,7 +70,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>local.lito381.server.Main</mainClass>
+                            <mainClass>local.lito381.server.SharedResourceMain</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Implementation-Version>${project.version}</Implementation-Version>
