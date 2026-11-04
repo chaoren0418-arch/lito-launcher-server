@@ -39,6 +39,12 @@ final class BattleInvisibilityStatus {
         return true;
     }
 
+    /** Official JAR 0.6.71: drop the lease captured at admission. */
+    synchronized boolean cancelCaptured(Object captured) {
+        if (captured == null || skillId == 0) return false;
+        return cancel();
+    }
+
     synchronized int expire(long nowNanos) {
         if (nowNanos < 0) throw new IllegalArgumentException("negative nano time");
         if (skillId == 0 || expiresAtNanos == 0L || nowNanos < expiresAtNanos) return 0;

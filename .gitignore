@@ -84,3 +84,6 @@ desktop.ini
 
 # ===== 機密：真實設定檔不進 git（用 server.properties.example 當範本）=====
 lito伺服器/LiTo381-Server/config/server.properties
+
+# ===== 例外：正式伺服器 JAR 參考基準（T002 來源整併用，20 MB）=====
+!lito伺服器/LiTo381-Server/reference/base-0.6.71.jar

@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 final class ClientSession implements Runnable {
     private static final AtomicLong ATTACK_SPELL_SEQUENCE = new AtomicLong(4_500_000L);
@@ -88474,5 +88475,436 @@ final class ClientSession implements Runnable {
             member.sendEncrypted(Protocol.speed(2, Protocol.SpeedMode.NORMAL, 0),
                     "S_SPEED ArenaBot haste expired");
         }
+    }
+
+    /* Official JAR 0.6.71 native bridges used by decompiled Native* classes. */
+    final ReentrantLock sourcePlayerActionLock = new ReentrantLock();
+    final NativeCastTimeline.State sourceCastTimeline = new NativeCastTimeline.State();
+
+    ReentrantLock nativePlayerActionLock() {
+        return this.sourcePlayerActionLock;
+    }
+
+    NativeCastTimeline.State nativeCastTimelineState() {
+        return this.sourceCastTimeline;
+    }
+
+    void nativeTimelineHandle(byte[] frame) throws Exception {
+        if (!NativeServerLifetime.enterPacket(this)) {
+            return;
+        }
+        try {
+            this.handle(frame);
+        } finally {
+            NativeServerLifetime.leavePacket();
+        }
+    }
+
+    boolean nativeCastLegacyWindShackleAction(int actionId, String reason) {
+        long now = System.nanoTime();
+        BattleWindShackleStatus.Snapshot snapshot = this.windShackleStatus.snapshot(now);
+        if (!snapshot.active()) {
+            return true;
+        }
+        BattleAnimationCatalog.Animation animation =
+                BattleAnimationCatalog.get().requireTimedAction(this.battleGfx(), actionId);
+        boolean accepted = this.windShackleStatus.tryAction(now, animation.durationMillis());
+        if (!accepted) {
+            System.out.println("[WindShackle] action rejected player=" + this.playerName()
+                    + " reason=" + reason
+                    + " gfx=" + this.battleGfx()
+                    + " action=" + actionId
+                    + " duration=" + animation.durationMillis()
+                    + " remaining=" + snapshot.remainingSeconds());
+        }
+        return accepted;
+    }
+
+    volatile Object nativeMassTeleportRoleToken;
+    volatile NativeMassTeleportAnswerLife.Lease nativeMassTeleportAnswerLease;
+
+    RuntimeInventory nativeDeInventory(int slot) {
+        return switch (slot) {
+            case 0 -> this.inventory;
+            case 1 -> this.rentalTownInventory;
+            case 2 -> this.rentalBattleSourceInventory;
+            case 3 -> this.warehouse;
+            default -> null;
+        };
+    }
+
+    void nativeDeSetInventory(int slot, RuntimeInventory next) {
+        switch (slot) {
+            case 0 -> this.inventory = next == null ? new RuntimeInventory() : next;
+            case 1 -> this.rentalTownInventory = next == null ? new RuntimeInventory() : next;
+            case 2 -> this.rentalBattleSourceInventory = next;
+            case 3 -> this.warehouse = next == null ? new RuntimeInventory() : next;
+            default -> throw new IllegalArgumentException("unknown native inventory slot " + slot);
+        }
+    }
+
+    void nativeSelfOriginalSend(byte[] plain, String note) throws IOException {
+        this.sendEncrypted(plain, note);
+    }
+
+    void nativeRejectMassTeleportQuestion() {
+        this.pendingMassTeleport = null;
+        this.nativeMassTeleportAnswerLease = null;
+    }
+
+    void nativeMassTeleportAnswerBody(Protocol.AskAnswer answer) throws IOException {
+        this.answerMassTeleport(answer);
+    }
+
+    void nativeSelfShieldBody(byte[] payload, BattleSpellCatalog.ShieldSpell spell) throws IOException {
+        this.useShieldSpell(payload, spell);
+    }
+
+    void nativeSelfWeightBody(byte[] payload, BattleSpellCatalog.WeightSpell spell) throws IOException {
+        this.useWeightSpell(payload, spell);
+    }
+
+    void nativeMaterialCounterMagicBody(byte[] payload, BattleSpellCatalog.CounterMagicSpell spell) throws IOException {
+        this.useCounterMagicSpell(payload, spell);
+    }
+
+    void nativeMaterialAbsoluteBarrierBody(byte[] payload, BattleSpellCatalog.AbsoluteBarrierSpell spell) throws IOException {
+        this.useAbsoluteBarrierSpell(payload, spell);
+    }
+
+    void nativeMaterialPhysicalProcBuffBody(byte[] payload, BattleSpellCatalog.PhysicalProcBuffSpell spell) throws IOException {
+        this.usePhysicalProcBuffSpell(payload, spell);
+    }
+
+    void nativeMaterialMagicResistanceBody(byte[] payload, BattleSpellCatalog.MagicResistanceSpell spell) throws IOException {
+        this.useMagicResistanceSpell(payload, spell);
+    }
+
+    void nativeMaterialExoticVitalizeBody(byte[] payload, BattleSpellCatalog.ExoticVitalizeSpell spell) throws IOException {
+        this.useExoticVitalizeSpell(payload, spell);
+    }
+
+    void nativeMaterialAdditionalFireBody(byte[] payload, BattleSpellCatalog.AdditionalFireSpell spell) throws IOException {
+        this.useAdditionalFireSpell(payload, spell);
+    }
+
+    void nativeMaterialInvisibilityBody(byte[] payload, BattleSpellCatalog.InvisibilitySpell spell) throws IOException {
+        this.useInvisibilitySpell(payload, spell);
+    }
+
+    void nativeMaterialEnchantVenomBody(byte[] payload, BattleSpellCatalog.EnchantVenomSpell spell) throws IOException {
+        this.useEnchantVenomSpell(payload, spell);
+    }
+
+    void nativeMaterialCounterMirrorBody(byte[] payload, BattleSpellCatalog.CounterMirrorSpell spell) throws IOException {
+        this.useCounterMirrorSpell(payload, spell);
+    }
+
+    void nativeMaterialClearMindBody(byte[] payload, BattleSpellCatalog.ClearMindSpell spell) throws IOException {
+        this.useClearMindSpell(payload, spell);
+    }
+
+    void nativeMaterialResistElementalBody(byte[] payload, BattleSpellCatalog.ResistElementalSpell spell) throws IOException {
+        this.useResistElementalSpell(payload, spell);
+    }
+
+    void nativeMaterialElementalProtectionBody(byte[] payload, BattleSpellCatalog.ElementalProtectionSpell spell) throws IOException {
+        this.useElementalProtectionSpell(payload, spell);
+    }
+
+    void nativeMaterialAwakenBody(byte[] payload, BattleSpellCatalog.AwakenSpell spell) throws IOException {
+        this.useAwakenSpell(payload, spell);
+    }
+
+    void nativeMaterialBloodlustBody(byte[] payload, BattleSpellCatalog.BloodlustSpell spell) throws IOException {
+        this.useBloodlustSpell(payload, spell);
+    }
+
+    void nativeMaterialMagicalWeaponBody(byte[] payload, BattleSpellCatalog.MagicalWeaponSpell spell) throws IOException {
+        this.useMagicalWeaponSpell(payload, spell);
+    }
+
+    void nativeAreaWorldSleepBody(byte[] payload, BattleSpellCatalog.SleepSpell spell) throws IOException {
+        this.useClassicWorldSleepSpell(payload, spell);
+    }
+
+    void nativeAreaBattleSleepBody(byte[] payload, BattleSpellCatalog.SleepSpell spell) throws IOException {
+        this.useSleepSpell(payload, spell);
+    }
+
+    void nativeAreaWorldSlowBody(byte[] payload, BattleSpellCatalog.MassSlowSpell spell) throws IOException {
+        this.useClassicWorldMassSlowSpell(payload, spell);
+    }
+
+    void nativeAreaBattleSlowBody(byte[] payload, BattleSpellCatalog.MassSlowSpell spell) throws IOException {
+        this.useMassSlowSpell(payload, spell);
+    }
+
+    void nativeMaterialAreaSilenceBody(byte[] payload, BattleSpellCatalog.AreaSilenceSpell spell, int fixture) throws IOException {
+        this.useAreaSilenceSpell(payload, spell, fixture);
+    }
+
+    void nativeMaterialAreaWindBody(byte[] payload, BattleSpellCatalog.WindShackleSpell spell, int fixture) throws IOException {
+        this.useWindShackleSpell(payload, spell, fixture);
+    }
+
+    void nativeMaterialReturnNatureBody(byte[] payload, BattleSpellCatalog.ReturnToNatureSpell spell, int fixture) throws IOException {
+        this.useReturnToNatureSpell(payload, spell, fixture);
+    }
+
+    void nativeMaterialSummonBody(byte[] payload, BattleSpellCatalog.SummonSpell spell) throws IOException {
+        this.useSummonSpell(payload, spell);
+    }
+
+    NativeDeItemTransaction.Change nativeDeGrantPeriodicItem(int catalogId, int count) throws IOException {
+        RuntimeInventory previous = this.inventory;
+        this.grantNativeMagicDollPeriodicItem(catalogId, count);
+        return new NativeDeItemTransaction.Change(previous, this.inventory, InventoryCatalog.find(catalogId));
+    }
+
+    void nativeDeGrantAndPublishPeriodicItem(int catalogId, int count) throws IOException {
+        NativeDeItemTransaction.grant(this, catalogId, count);
+    }
+
+    void nativeMaterialEntangleBody(byte[] payload, BattleSpellCatalog.EntangleSpell spell, int fixture) throws IOException {
+        this.useEntangleSpell(payload, spell, fixture);
+    }
+
+    void nativeMaterialEraseBody(byte[] payload, BattleSpellCatalog.EraseMagicSpell spell, int fixture) throws IOException {
+        this.useEraseMagicSpell(payload, spell, fixture);
+    }
+
+    void nativeMaterialEarthBindBody(byte[] payload, BattleSpellCatalog.BindSpell spell) throws IOException {
+        this.useBindSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldEarthBindBody(byte[] payload, BattleSpellCatalog.BindSpell spell) throws IOException {
+        this.useClassicWorldBindSpell(payload, spell);
+    }
+
+    void nativeMaterialTamingBody(byte[] payload, BattleSpellCatalog.TamingSpell spell) throws IOException {
+        this.useTamingSpell(payload, spell);
+    }
+
+    void nativeMaterialZombieBody(byte[] payload, BattleSpellCatalog.CreateZombieSpell spell) throws IOException {
+        this.useCreateZombieSpell(payload, spell);
+    }
+
+    void nativeMaterialWeaponBreakBody(byte[] payload, BattleSpellCatalog.WeaponBreakSpell spell) throws IOException {
+        this.useWeaponBreakSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldWeaponBreakBody(byte[] payload, BattleSpellCatalog.WeaponBreakSpell spell) throws IOException {
+        this.useClassicWorldWeaponBreakSpell(payload, spell);
+    }
+
+    void nativeMaterialArmorBreakBody(byte[] payload, BattleSpellCatalog.ArmorBreakSpell spell) throws IOException {
+        this.useArmorBreakSpell(payload, spell);
+    }
+
+    void nativeMaterialPoisonScopeBody(byte[] payload, BattleSpellCatalog.PoisonSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.usePoisonSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldPoisonScopeBody(byte[] payload, BattleSpellCatalog.PoisonSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useClassicWorldPoisonSpell(payload, spell);
+    }
+
+    void nativeMaterialParalysisScopeBody(byte[] payload, BattleSpellCatalog.ParalysisSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useParalysisSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldParalysisScopeBody(byte[] payload, BattleSpellCatalog.ParalysisSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useClassicWorldParalysisSpell(payload, spell);
+    }
+
+    void nativeMaterialCancellationBody(byte[] payload, BattleSpellCatalog.CancellationSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useCancellationSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldCancellationBody(Protocol.ObjectSpellRequest request, ClientSession playerTarget, BattleSpellCatalog.CancellationSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useWorldPlayerCancellation(request, playerTarget, spell);
+    }
+
+    void nativeMaterialWorldNpcCancellationBody(
+            Protocol.ObjectSpellRequest request,
+            ClientSession companionOwner,
+            BattleCompanion controlledCompanion,
+            BattleCompanion.Snapshot companionTarget,
+            ClassicWorldMonsterPopulation.Snapshot worldMonster,
+            BattleSpellCatalog.CancellationSpell spell,
+            CombatPoisonLifecycle.Scope scope) throws IOException {
+        this.useWorldNpcCancellation(request, companionOwner, controlledCompanion, companionTarget, worldMonster, spell);
+    }
+
+    void nativeMaterialWaterLifeBody(byte[] payload, BattleSpellCatalog.WaterLifeSpell spell) throws IOException {
+        this.useWaterLifeSpell(payload, spell);
+    }
+
+    void nativeMaterialDecayPotionBody(byte[] payload, BattleSpellCatalog.DecayPotionSpell spell) throws IOException {
+        this.useDecayPotionSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldDecayPotionBody(byte[] payload, BattleSpellCatalog.DecayPotionSpell spell) throws IOException {
+        this.useClassicWorldDecayPotionSpell(payload, spell);
+    }
+
+    void nativeMaterialItemWeaponEnchantBody(byte[] payload, BattleSpellCatalog.ItemWeaponEnchantSpell spell) throws IOException {
+        this.useItemWeaponEnchantSpell(payload, spell);
+    }
+
+    void nativeMaterialPolymorphBody(byte[] payload, BattleSpellCatalog.PolymorphSpell spell) throws IOException {
+        this.usePolymorphSpell(payload, spell);
+    }
+
+    void nativeMaterialWeaknessBody(byte[] payload, BattleSpellCatalog.WeaknessSpell spell) throws IOException {
+        this.useWeaknessSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldWeaknessBody(byte[] payload, BattleSpellCatalog.WeaknessSpell spell) throws IOException {
+        this.useClassicWorldWeaknessSpell(payload, spell);
+    }
+
+    void nativeMaterialGroundBody(byte[] payload, BattleSpellCatalog.GroundSpell spell) throws IOException {
+        this.useGroundSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldGroundBody(byte[] payload, BattleSpellCatalog.GroundSpell spell) throws IOException {
+        this.useClassicWorldGroundSpell(payload, spell);
+    }
+
+    void nativeMaterialResurrectionBody(byte[] payload, BattleSpellCatalog.ResurrectionSpell spell) throws IOException {
+        this.useResurrectionSpell(payload, spell);
+    }
+
+    volatile NativeResurrectionAnswerLife.Lease nativeResurrectionAnswerLease;
+
+    void nativeRejectResurrectionQuestion() {
+        this.pendingResurrection = null;
+        this.nativeResurrectionAnswerLease = null;
+    }
+
+    void nativeResurrectionAnswerBody(Protocol.AskAnswer answer) throws IOException {
+        this.answerResurrection(answer);
+    }
+
+    void nativeLightSpellDispatch(byte[] packet) throws IOException {
+        this.useSpell(packet);
+    }
+
+    Object nativeLightCommit(BattleSpellCatalog.LightSpell spell, Object phase, long now) {
+        this.timedStatus.activateLight(now, spell.durationSeconds());
+        return spell;
+    }
+
+    void nativeLightActivate(int seconds, long now, int mode) {
+        this.timedStatus.activateLight(now, seconds);
+    }
+
+    boolean nativeLightCancel() {
+        return this.timedStatus.expireLight(Long.MAX_VALUE);
+    }
+
+    void nativeLightClear() {
+        this.timedStatus.expireLight(Long.MAX_VALUE);
+    }
+
+    int nativeLightExpire(long now) {
+        return this.timedStatus.expireLight(now) ? 1 : 0;
+    }
+
+    boolean nativeLightHonorPending(long room, long token) {
+        return this.currentRoomId == room;
+    }
+
+    void nativeLightStoreReady(int skill, long ready) {
+        this.spellReadyNanos.put(skill, ready);
+    }
+
+    void nativeLightPublishReveal(String reason) throws IOException {
+        String text = reason == null || reason.isBlank() ? "light" : reason;
+        this.sendEncrypted(Protocol.systemMessage(0, text), "S_MESSAGE native-light-reveal");
+    }
+
+    void nativeLightTail(BattleSpellCatalog.LightSpell spell, boolean world, Object after) {
+    }
+
+    private volatile long nativeArmorStateExpiresAt;
+
+    boolean nativeArmorStateActivate(long now, int seconds) {
+        if (seconds <= 0) {
+            return false;
+        }
+        this.nativeArmorStateExpiresAt = now + java.util.concurrent.TimeUnit.SECONDS.toNanos(seconds);
+        return true;
+    }
+
+    boolean nativeArmorStateActive(long now) {
+        return this.nativeArmorStateExpiresAt != 0L && now < this.nativeArmorStateExpiresAt;
+    }
+
+    boolean nativeArmorStateCancel() {
+        boolean active = this.nativeArmorStateExpiresAt != 0L;
+        this.nativeArmorStateExpiresAt = 0L;
+        return active;
+    }
+
+    void nativeMaterialWorldResurrectionBody(byte[] payload, BattleSpellCatalog.ResurrectionSpell spell) throws IOException {
+        this.useClassicWorldResurrectionSpell(payload, spell);
+    }
+
+    void nativeMaterialCallNatureBody(byte[] payload, BattleSpellCatalog.ResurrectionSpell spell) throws IOException {
+        this.useClassicWorldResurrectionSpell(payload, spell);
+    }
+
+    void nativeMaterialBlindBody(byte[] payload, BattleSpellCatalog.BlindSpell spell) throws IOException {
+        this.useBlindSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldBlindBody(byte[] payload, BattleSpellCatalog.BlindSpell spell) throws IOException {
+        this.useClassicWorldBlindSpell(payload, spell);
+    }
+
+    void nativeMaterialSilenceBody(byte[] payload, BattleSpellCatalog.SilenceSpell spell) throws IOException {
+        this.useSilenceSpell(payload, spell);
+    }
+
+    void nativeMaterialWorldSilenceBody(byte[] payload, BattleSpellCatalog.SilenceSpell spell) throws IOException {
+        this.useClassicWorldSilenceSpell(payload, spell);
+    }
+
+    void nativeMaterialProtectionBody(byte[] payload, BattleSpellCatalog.DamageProtectionSpell spell) throws IOException {
+        this.useDamageProtectionSpell(payload, spell);
+    }
+
+    void nativeMaterialElementalSummonBody(byte[] payload, BattleSpellCatalog.ElementalSummonSpell spell) throws IOException {
+        this.useElementalSummonSpell(payload, spell);
+    }
+
+    void nativeCubeIgnitionBody(byte[] payload, BattleSpellCatalog.CubeIgnitionSpell spell) throws IOException {
+        this.useCubeIgnitionSpell(payload, spell);
+    }
+
+    void nativeCubeQuakeBody(byte[] payload, BattleSpellCatalog.CubeQuakeSpell spell) throws IOException {
+        this.useCubeQuakeSpell(payload, spell);
+    }
+
+    void nativeCubeShockBody(byte[] payload, BattleSpellCatalog.CubeShockSpell spell) throws IOException {
+        this.useCubeShockSpell(payload, spell);
+    }
+
+    void nativeCubeHarmonyBody(byte[] payload, BattleSpellCatalog.CubeHarmonySpell spell) throws IOException {
+        this.useCubeHarmonySpell(payload, spell);
+    }
+
+    int nativeSkillConsumptionIntelligence() {
+        return this.requiredEquipmentMagicStats().effectiveIntelligence(this.baseIntelligence());
+    }
+
+    int nativeSkillConsumptionOriginalReduction() {
+        CharacterSummary caster = this.selectedCharacterSummary();
+        return BattleSpellCatalog.originalMagicConsumeReduction(
+                caster == null ? 0 : caster.type(),
+                caster == null ? 0 : Math.max(0, caster.originalIntelligence()));
     }
 }

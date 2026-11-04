@@ -5,7 +5,7 @@ import java.util.*;
 /** WORLD physical commits freeze values after action and join the NPC target lane. */
 final class CombatWorldCommit {
  private static final String P="local/lito381/server/";
- sealed interface Plan permits Physical,Doll,CombatWorldMagic.Spell,CombatWorldMultiMagic.Multi,CombatWorldFreeze.Frozen {}
+ sealed interface Plan permits Physical,Doll,CombatWorldMagic.Spell,CombatWorldMultiMagic.Multi,CombatWorldFreeze.Frozen,NativeCombatAttacker.Reflection,NativeProcHealingWorld.Plan,NativeProcHealingCompanion.Plan,NativeProcHealingEncounter.Plan {}
  record Physical(ClassicWorldMonsterPopulation.Snapshot target,SourceNpcPhysicalStats stats,NativeMagicDollEffects.AttackProc dolls,boolean weapon,boolean hit) implements Plan {}
  record Doll(String source) implements Plan {}
  static final class Attempt {
