@@ -14,3 +14,4 @@
 - 2026-11-04 — #24 T020: 戰鬥候選併入 src/main 的合併策略（設計）＋ M3 T040 拆任務（design，claude-chat，分支 task/24）→ [報告](reports/issue-24.md)
 - 2026-11-04 — #4 T003: 登入器建置腳本去硬編路徑（code，codex-local，PR #8 已合併）→ [報告](reports/issue-4.md)
 - 2026-11-04 — #32 T040: 安裝手冊＋打包腳本（code，cursor-cloud，PR #33 已合併）→ [報告](reports/issue-32.md)
+- 2026-11-04 — #37 T012: 修不穩定測試 MonsterAggression productionWorldCompanionClearsProvenUnreachableTargetOnTwentiethRetry（code，codex-local，PR #39 已合併）→ [報告](reports/issue-37.md)
