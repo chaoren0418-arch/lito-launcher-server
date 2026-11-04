@@ -23,24 +23,23 @@
 | DIFF | 485 | 兩邊都有，正規化後仍不同 |
 | ONLY_LEFT | 1380 | 只在 left |
 | ONLY_RIGHT | 5 | 只在 right |
+| 交集 SAME+DIFF | 2549 | 兩邊都有的類別 |
+| BYTE_SAME | （見本 PR 下一輪 CI SUMMARY；本檔生成時工具尚未輸出 BYTE_SAME） | 同一交集裡 class bytes 完全相同 |
 | 比較類別 | 3934 | left∪right |
 
 ## 已驗證／推測／待驗證
 
-- **已驗證**：同一 JAR 對自己 DIFF=0；同一原始碼 `-g` 與 `-g:none` DIFF=0；故意改常數會標 DIFF。本表由本工具對上述 left／right 跑出。
-- **推測**：DIFF 是 javac／反編譯來源／後來手改造成的真實指令或結構差，不是 debug 屬性或常數池編號。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差對得上（Modern*、inner／匿名形狀、缺頂層類）。
-- **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。
+- **已驗證**：`selftest.sh` 本機已含同一 JAR、`-g` vs `-g:none`、改常數、`--exclude`、`--allow-methods`、`--classes` 副檔名／逗號／檔案／不存在類別、註解 self-vs-self、只改型別註解必須 DIFF。下表 SAME／DIFF 來自 Temurin 17 CI run 41843825080 對上表 left／right。
+- **推測**：DIFF 多半是 javac／反編譯來源／後來手改。ONLY_* 與 `docs/server-source-gap.md` 大致對得上。
+- **待驗證**：BYTE_SAME 須由含該欄位的新 CI 對**同一對 JAR**重測後寫入快照。語意相同 ≠ 行為回歸；未跑 `--check`／`--smoke`，未連 DB，未啟動遊戲。
 
 ## 與 Issue #43 javap 粗估（約 430）的關係
 
-T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `reference/base-0.6.71.jar` **class bytes 完全相同 1,008**；對位元組不同的交集類別跑 `javap -c -p` 去掉行號、常數池編號與空白後，**仍約 430 類不同**（當時當上限估計，未扣 lambda 編號等編譯器雜訊）。
+#43／T020a 的約 430 是**另一組測量**：JDK 21 編譯的 Maven 產物 vs 正式 JAR，`javap -c -p` 去行號／常數池編號／空白，**未**正規化 `lambda$`／`access$`；同一次還記 bytes 全同 1,008。那不是本表 left／right 的同一交集。
 
-本工具比 javap 粗估多做了：整段丟掉 debug 屬性、標籤改序號、`lambda$`／`access$` 依出現順序改名、略過 max_stack／max_locals；並且比較 innerClasses／nestMembers／欄位常數／註解，不只 `javap -c` 反組譯文字。本輪計數：
+**禁止**把歷史 1,008 從本輪 SAME=2064 扣除，也**禁止**把「485 − 430 = 55」逐類歸因到 innerClasses 等屬性——沒有在同一組 JAR 上逐類對照 javap 與本工具。
 
-- 交集 SAME+DIFF = **2549**（應對齊 2,538）。
-- **SAME=2064**，比 bytes 全同的 1,008 多 **1056**——這些是位元組不同但正規化後語意相同（debug／合成名／常數池編號）。
-- **DIFF=485**（第一處差異：method 343、field 27、class 屬性 115）。較 javap 粗估 430 多 55：javap 文字正規化會漏掉 innerClasses／nestMembers／access／欄位常數等；本工具把它們算進 DIFF。
-- ONLY_* 不在 430 裡：430 只估計**兩邊都有**的類別。ONLY_LEFT／ONLY_RIGHT 應對齊 `docs/server-source-gap.md`。
+本表目前能確定的只有這一對 JAR 的語意計數：交集 2549、SAME 2064、DIFF 485（第一處差異 method 343、field 27、class 屬性 115，那是本工具先看到的位置）。BYTE_SAME 與「bytes 不同但語意相同」要等本 PR 含 `BYTE_SAME=` 的 job 對同一對 JAR 重跑。430 與 485 的差屬不同編譯器／不同正規化，不可直接相減。
 
 ## DIFF 類別清單
 

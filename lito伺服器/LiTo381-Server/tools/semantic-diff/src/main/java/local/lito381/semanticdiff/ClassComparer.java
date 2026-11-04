@@ -6,6 +6,7 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 import org.objectweb.asm.ConstantDynamic;
 import org.objectweb.asm.Handle;
@@ -22,6 +23,7 @@ import org.objectweb.asm.tree.InvokeDynamicInsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.LocalVariableAnnotationNode;
 import org.objectweb.asm.tree.LookupSwitchInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -70,6 +72,17 @@ final class ClassComparer {
     }
 
     static FirstDiff compare(ClassNode left, ClassNode right, JarIndex leftJar, JarIndex rightJar) {
+        return compare(left, right, null, Set.of(), leftJar, rightJar, null);
+    }
+
+    static FirstDiff compare(
+            ClassNode left,
+            ClassNode right,
+            ClassNode allowRight,
+            Set<String> allowedMethodKeys,
+            JarIndex leftJar,
+            JarIndex rightJar,
+            JarIndex allowJar) {
         FirstDiff d;
         d = cmp("access", hex(left.access), hex(right.access));
         if (d != null) {
@@ -125,7 +138,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        return compareMethods(left, right, leftJar, rightJar);
+        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar);
     }
 
     private static FirstDiff compareFields(ClassNode left, ClassNode right) {
@@ -160,15 +173,53 @@ final class ClassComparer {
         return null;
     }
 
+    private static boolean isAllowed(
+            String remappedKey, MethodNode left, MethodNode right, Set<String> allowedMethodKeys) {
+        if (allowedMethodKeys == null || allowedMethodKeys.isEmpty()) {
+            return false;
+        }
+        if (allowedMethodKeys.contains(remappedKey)) {
+            return true;
+        }
+        if (left != null && allowedMethodKeys.contains(left.name + left.desc)) {
+            return true;
+        }
+        return right != null && allowedMethodKeys.contains(right.name + right.desc);
+    }
+
     private static FirstDiff compareMethods(
-            ClassNode left, ClassNode right, JarIndex leftJar, JarIndex rightJar) {
+            ClassNode left,
+            ClassNode right,
+            ClassNode allowRight,
+            Set<String> allowedMethodKeys,
+            JarIndex leftJar,
+            JarIndex rightJar,
+            JarIndex allowJar) {
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
+        Map<String, MethodNode> amap =
+                allowRight == null || allowJar == null ? Map.of() : methodMap(allowRight, allowJar);
         for (String key : unionKeys(lmap, rmap)) {
             MethodNode lm = lmap.get(key);
-            MethodNode rm = rmap.get(key);
+            MethodNode fromRight = rmap.get(key);
+            boolean allow = isAllowed(key, lm, fromRight, allowedMethodKeys);
+            MethodNode rm;
+            JarIndex rJar;
+            String rightLabel;
+            if (allow) {
+                if (allowRight == null || allowJar == null) {
+                    return FirstDiff.of("method", key, null, "allow-right class missing");
+                }
+                rm = amap.get(key);
+                rJar = allowJar;
+                rightLabel = "allow-right";
+            } else {
+                rm = fromRight;
+                rJar = rightJar;
+                rightLabel = "right";
+            }
             if (lm == null) {
-                return FirstDiff.of("method", key, null, "only right");
+                return FirstDiff.of("method", key, null, "only " + rightLabel);
             }
             if (rm == null) {
                 return FirstDiff.of("method", key, null, "only left");
@@ -185,23 +236,28 @@ final class ClassComparer {
             if (d != null) {
                 return d.withMember("method", key);
             }
-            d = cmp("method " + key + " annotations", methodAnns(lm, leftJar), methodAnns(rm, rightJar));
+            d = cmp(
+                    "method " + key + " annotations",
+                    methodAnns(lm, labelIds(lm), leftJar),
+                    methodAnns(rm, labelIds(rm), rJar));
             if (d != null) {
                 return d.withMember("method", key);
             }
-            d = cmp("method " + key + " annotationDefault",
-                    value(lm.annotationDefault), value(rm.annotationDefault));
+            d = cmp(
+                    "method " + key + " annotationDefault",
+                    defaultValue(lm.annotationDefault, leftJar),
+                    defaultValue(rm.annotationDefault, rJar));
             if (d != null) {
                 return d.withMember("method", key);
             }
             List<String> ltry = tryCatch(lm, leftJar);
-            List<String> rtry = tryCatch(rm, rightJar);
+            List<String> rtry = tryCatch(rm, rJar);
             d = cmpList("method " + key + " tryCatch", ltry, rtry);
             if (d != null) {
                 return d.withMember("method", key);
             }
             List<String> lins = instructions(lm, leftJar);
-            List<String> rins = instructions(rm, rightJar);
+            List<String> rins = instructions(rm, rJar);
             int n = Math.min(lins.size(), rins.size());
             for (int i = 0; i < n; i++) {
                 if (!lins.get(i).equals(rins.get(i))) {
@@ -260,7 +316,7 @@ final class ClassComparer {
             if (insn.getOpcode() < 0) {
                 continue;
             }
-            out.add(formatInsn(insn, labels, jar));
+            out.add(withInsnTypeAnns(formatInsn(insn, labels, jar), insn, jar));
         }
         return out;
     }
@@ -476,7 +532,7 @@ final class ClassComparer {
                 + "|" + typeAnns(node.invisibleTypeAnnotations, null);
     }
 
-    private static String methodAnns(MethodNode node, JarIndex jar) {
+    private static String methodAnns(MethodNode node, Map<LabelNode, Integer> labels, JarIndex jar) {
         StringBuilder sb = new StringBuilder();
         sb.append(anns(node.visibleAnnotations, jar));
         sb.append('|').append(anns(node.invisibleAnnotations, jar));
@@ -484,7 +540,52 @@ final class ClassComparer {
         sb.append('|').append(typeAnns(node.invisibleTypeAnnotations, jar));
         sb.append("|pvis=").append(paramAnns(node.visibleParameterAnnotations, jar));
         sb.append("|pinv=").append(paramAnns(node.invisibleParameterAnnotations, jar));
+        sb.append("|lvtvis=").append(localTypeAnns(node.visibleLocalVariableAnnotations, labels, jar));
+        sb.append("|lvtinv=").append(localTypeAnns(node.invisibleLocalVariableAnnotations, labels, jar));
         return sb.toString();
+    }
+
+    private static String withInsnTypeAnns(String body, AbstractInsnNode insn, JarIndex jar) {
+        String vis = typeAnns(insn.visibleTypeAnnotations, jar);
+        String inv = typeAnns(insn.invisibleTypeAnnotations, jar);
+        if (vis.isEmpty() && inv.isEmpty()) {
+            return body;
+        }
+        return body + " typeAnn={" + vis + "|" + inv + "}";
+    }
+
+    private static String localTypeAnns(
+            List<LocalVariableAnnotationNode> list, Map<LabelNode, Integer> labels, JarIndex jar) {
+        if (list == null || list.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 0) {
+                sb.append("; ");
+            }
+            LocalVariableAnnotationNode node = list.get(i);
+            sb.append("typeRef=").append(node.typeRef)
+                    .append(" path=").append(node.typePath)
+                    .append(" ranges=");
+            int n = node.start == null ? 0 : node.start.size();
+            for (int r = 0; r < n; r++) {
+                if (r > 0) {
+                    sb.append(',');
+                }
+                sb.append(labelId(labels, node.start.get(r)))
+                        .append('-')
+                        .append(labelId(labels, node.end.get(r)))
+                        .append('@')
+                        .append(node.index.get(r));
+            }
+            sb.append(' ').append(annotation(node, jar));
+        }
+        return sb.toString();
+    }
+
+    private static String defaultValue(Object value, JarIndex jar) {
+        return value == null ? "" : cst(value, jar);
     }
 
     private static String anns(List<? extends AnnotationNode> list, JarIndex jar) {
@@ -569,7 +670,9 @@ final class ClassComparer {
             sb.append(rec.name).append(':').append(rec.descriptor)
                     .append(" sig=").append(str(rec.signature))
                     .append(" anns=").append(anns(rec.visibleAnnotations, jar))
-                    .append('|').append(anns(rec.invisibleAnnotations, jar));
+                    .append('|').append(anns(rec.invisibleAnnotations, jar))
+                    .append(" typeAnns=").append(typeAnns(rec.visibleTypeAnnotations, jar))
+                    .append('|').append(typeAnns(rec.invisibleTypeAnnotations, jar));
         }
         return sb.toString();
     }
