@@ -29,6 +29,8 @@
 
 ## 怎麼驗證
 
+- **已驗證（驗收環境）**：Ubuntu / Temurin 17、無 DB／本機資源的 `mvn -B test`：**6033 run / 28 failures / 2 errors / 117 skipped**。下載全部 **1266 份 Surefire XML** 做集合比對：與下列 30 案完全相同，額外失敗 0、漏列 0；`LocalResourcesTest` 10/10 通過。Maven 真實退出 1，依核准的 job `continue-on-error`，整體 workflow SUCCESS。
+- CI 對應 PR head **`3874d174f6a0ee3b6084285bdf89e4cf7a3ee375`**；GitHub checkout 的合併 revision 為 **`821af9648df18416f83b05b4173c9657674d436e`**（artifact 內 `test-revision.txt`）。[CI 執行與三個 jobs](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41793623352)、[完整 server-test-evidence artifact](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41793623352/artifacts/13304274771)。可重現下載：`gh run download 41793623352 -n server-test-evidence`；內容含 `mvn-test.log`、`test-revision.txt`、`surefire-reports/`。
 - 已驗證：Windows Microsoft OpenJDK 17.0.17 / Maven 3.9.16，全部測試來源編譯通過；合併後 `LocalResourcesTest` 10/10 通過（本輪新增 8 案＋遠端保留 2 案）。覆蓋其他 BIN／ida 候選存在、SQL 存在但來源缺失、動態路徑缺失、錯把目錄當檔案、共享 root property／錯誤 sector。
 - 已驗證：整合前 `988d910` 測試程式碼的 Windows 全套 `mvn -o -B test`：**6021 run / 27 failures / 2 errors / 109 skipped**，8 分 44 秒。解析全部 Surefire XML 核對失敗集合為下列 30 案的子集，無缺檔錯誤。原始證據：`lito伺服器/LiTo381-Server/target/issue-12-full.log`、`target/issue-12-full-reports/`（不進 git）。本機仍有硬編碼 D: BIN，因此無本機資源的正式驗收以 Ubuntu CI 為準。快取複製至 worktree `scratch/issue-12/maven-repository`，`java.io.tmpdir`／TEMP／TMP 指向 `target/issue-12-tmp`，未啟用 DB 或共享資源環境變數。
 - 已驗證：整合後定向測試 `LocalResourcesTest,ModernStandaloneMainTest,PcActionRewardSqlFirstSourceAuditTest,ModernVipWorldTlsTest,ModernPlayerHealingTlsTest`：**20 run / 0 failures / 0 errors / 1 skipped**，另 2 類缺共享資源於 BeforeAll abort。完整 log：`target/issue-12-merge-check.log`。
@@ -36,7 +38,7 @@
 
 ## 真實失敗清單（30 案基準，本輪結果逐項核對）
 
-每行為測試類／方法／訊息。基準 28 failures + 2 errors；本機 29 個失敗全是本清單子集，第 7 案 Hell 本機通過，保留已知失敗紀錄，不把它算成本輪 failure。
+每行為測試類／方法／CI 實際失敗訊息；Ubuntu 完整驗證正好 28 failures + 2 errors。Windows 的失敗為其中 29 案，第 7 案 Hell 在 Windows 通過、Ubuntu 失敗；保留平台／時間相關差異供 T010 調查。
 
 1. `BattleCompanionTest.createdZombieUsesLevelSelectedTemplateAtFullVitals` — `expected: <81186> but was: <45065>`
 2. `BattleDisconnectTest.solePlayerDisconnectLosesToTheSyntheticArenaBot` — `expected: <[2]> but was: <[]>`
@@ -44,7 +46,7 @@
 4. `BattleSpellCatalogTest.createZombiePinsCorpseEnvelopeCostsAndNativeLevelTemplates` — `expected: <81183> but was: <45065>`
 5. `ClassicWorldMonsterMagicProtocolTest.iceConeUsesExactSelectedClientExtendedAttackLayout` — `expected: <231293150065100000000A0621AA4400DA2D00A184B57EA084B57E0000> but was: <231293150065100000000A0621AA4400110700A184B57EA084B57E0000>`
 6. `ClientSessionClassicWorldDeathPenaltyIntegrationTest.lowLevelVictimAndGmAttackerSuppressFeedAndCounters` — `expected: <0> but was: <1>`
-7. `ClientSessionClassicWorldHellIntegrationTest.firstEntryEmits552AndPortalThenExpiryReturnsThroughPortalHandshake` — completion packets=`[]` expected: `<true>` but was: `<false>`
+7. `ClientSessionClassicWorldHellIntegrationTest.firstEntryEmits552AndPortalThenExpiryReturnsThroughPortalHandshake` — `completion packets=[] ==> expected: <true> but was: <false>`
 8. `ClientSessionGmDeIntegrationTest.databaseAuthorizedDeChatCreatesReadyRoomRowsAndStartsCountdown` — `expected: <4> but was: <1>`
 9. `ClientSessionLitoCreateRoomClanIntegrationTest.compactCreateAutomaticallyJoinsAClannedCreatorAndEmitsSuccess` — `expected: <CHANNEL> but was: <RESULT>`
 10. `ClientSessionRentalBattleHandoffIntegrationTest.newGameEndpointConsumesRentalLoadoutIntoActorAttackAndResultRestore` — `expected: <true> but was: <false>`
@@ -72,7 +74,7 @@
 
 ## 未驗證什麼
 
-資源齊全時的來源一致性、正式 JAR 對這 30 案的行為、實機 --check／--smoke 均未驗證。Ubuntu CI 結果待本輪 push 後核對。
+資源齊全時的來源一致性、正式 JAR 對這 30 案的行為、實機 --check／--smoke 均未驗證。Ubuntu CI 已完成並核對，證據見上方連結。
 
 ## 產出路徑
 
@@ -82,4 +84,4 @@
 
 ## 給下一棒的提示
 
-Claude 審查守門與完整 CI artifact；T010 接手上列真實失敗，修復後移除 non-blocking。不得恢復假 skip。另須核對 `NativeExternalControlV2Fixture` 在真實 readForWorld／Work 內的 observe／hold 時點；現行 production adapter 沒有舊 callback；保留遠端以 provider hook 接回的方案，但 hook 位於 adapter 讀取 store 之前，與原回呼的精確時點及 hold 期間 revision 變更是否等價，須由隔離 MySQL 採證，不能用編譯通過代表完成。
+Claude 審查守門與上述同程式碼 CI artifact（最後補記結果僅改報告，測試／workflow 與 3874d174 完全相同）；T010 接手上列真實失敗，修復後移除 non-blocking。不得恢復假 skip。另須核對 `NativeExternalControlV2Fixture` 在真實 readForWorld／Work 內的 observe／hold 時點；現行 production adapter 沒有舊 callback；保留遠端以 provider hook 接回的方案，但 hook 位於 adapter 讀取 store 之前，與原回呼的精確時點及 hold 期間 revision 變更是否等價，須由隔離 MySQL 採證，不能用編譯通過代表完成。
