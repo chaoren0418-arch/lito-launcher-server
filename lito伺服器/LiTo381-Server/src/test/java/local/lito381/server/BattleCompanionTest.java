@@ -790,7 +790,6 @@ class BattleCompanionTest {
 
     @Test
     void createdZombieUsesLevelSelectedTemplateAtFullVitals() {
-        LocalResources.assumeNativeCatalogPins();
         BattleSpellCatalog.ZombieTemplate template =
                 BattleSpellCatalog.zombieTemplate(1, 47);
         SourceNpcPhysicalStats stats = SourceNpcPhysicalStats.memoryFixture(

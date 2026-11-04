@@ -20,19 +20,20 @@ final class ClientSessionLitoCreateRoomClanIntegrationTest {
 
     @Test void compactCreateAutomaticallyJoinsAClannedCreatorAndEmitsSuccess()
             throws Exception {
-        LocalResources.assumeClassicSourceAccounts();
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/server.selftest.properties"));
         GameStateStore state = new GameStateStore(
                 temporary.resolve("state.properties"), false);
         try (GameHub hub = new GameHub(config);
+             MemoryAccountRepository accounts =
+                     new MemoryAccountRepository("test", "test");
              ServerSocket listener = new ServerSocket(
                      0, 1, InetAddress.getByName("127.0.0.1"));
              Socket client = new Socket("127.0.0.1", listener.getLocalPort());
              Socket server = listener.accept()) {
             client.setSoTimeout(1_000);
             ClientSession session = new ClientSession(
-                    server, ClientSession.Endpoint.GAME, config, null, state,
+                    server, ClientSession.Endpoint.GAME, config, accounts, state,
                     new CaptureLog(temporary.resolve("capture")), hub);
             CharacterSummary character = new CharacterSummary(
                     "3332", "3336", 1, 0, 60, 544, 179,

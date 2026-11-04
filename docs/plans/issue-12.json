@@ -1,0 +1,10 @@
+[
+  {
+    "id": "native-pin-vs-t002",
+    "title": "對齊現行 src/main 與 T009 揭出的 30 個原生 pin／大廳斷言",
+    "stage": "code",
+    "priority": "P1",
+    "depends_on": [],
+    "text": "T009（Issue #12）拿掉 assumeNativeCatalogPins／assumeClassicSourceAccounts 之後，無 DB、無本機檔的 mvn test 為 Tests run 6002、Failures 28、Errors 2。這些案不讀 config/server.properties、380_db.sql、LiTo.bin、ida-client，失敗原因是現行 T002 反編譯 src/main 與測試 pin 不一致。T009 禁止改被測程式，故未修。完整清單與 expected/actual 見 docs/reports/issue-12.md「原有失敗」。範圍建議：src/main 對應 GameHub 大廳／matchmaking／countdown、BattleDisconnect 合成 bot、FoeSlayer／CreateZombie catalog、ProtocolBattle／RoomParticipant 校驗、裝備 status hex、租賃村莊場景、C_D9 離房 phase。做法二選一（或分批）：(1) 把 src/main 行為改回測試所 lock 的原生合約；(2) 若確認反編譯／現行實作為準，更新測試 pin。不要再加預設 false 的功能開關來 skip。驗收：這 30 案在無本機資源 CI 上綠，且 T009 的 330 類本機檔 assume 仍在。"
+  }
+]

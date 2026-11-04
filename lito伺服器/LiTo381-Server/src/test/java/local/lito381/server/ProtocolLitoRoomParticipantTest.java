@@ -47,7 +47,6 @@ final class ProtocolLitoRoomParticipantTest {
     }
 
     @Test void nativeAffiliationFieldRejectsOverlongOrInvalidRows() {
-        LocalResources.assumeNativeCatalogPins();
         assertThrows(IllegalArgumentException.class,
                 () -> Protocol.litoRoomParticipant(1, "Knight",
                         Protocol.LitoForce.FORCE_0, 0, 0,

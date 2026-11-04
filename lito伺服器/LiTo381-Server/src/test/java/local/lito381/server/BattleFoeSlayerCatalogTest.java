@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 final class BattleFoeSlayerCatalogTest {
     @Test void pinsSelectedPrimaryRowAndRetainedThreeStrikeContract() {
-        LocalResources.assumeNativeCatalogPins();
         BattleSpellCatalog.FoeSlayerSpell spell =
                 BattleSpellCatalog.foeSlayerSpell(
                         BattleSpellCatalog.FOE_SLAYER);

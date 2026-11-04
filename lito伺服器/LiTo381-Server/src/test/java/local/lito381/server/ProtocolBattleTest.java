@@ -281,7 +281,6 @@ class ProtocolBattleTest {
 
     @Test
     void battleActorUsesPcStatusAndTailFieldsFromTheExactPutObjectReceiver() {
-        LocalResources.assumeNativeCatalogPins();
         Protocol.Reader actor = new Protocol.Reader(Protocol.battleActor(
                 0x1122_3344L, 32730, 32798, 61, 4, 0, BattleTimedStatus.NORMAL,
                 "TestKnight", "Arena Hero", 4, 0, "", 1234, 0xFF, 52));
@@ -1870,7 +1869,6 @@ class ProtocolBattleTest {
 
     @Test
     void objectHealUsesNativeTargetAndEffectLayouts() {
-        LocalResources.assumeNativeCatalogPins();
         Protocol.ObjectSpellRequest request = Protocol.objectSpellRequest(
                 new Protocol.Writer().c(Protocol.C_USE_SPELL)
                         .c(0).c(0).d(0x1122_3344L).bytes());
@@ -3836,7 +3834,6 @@ class ProtocolBattleTest {
 
     @Test
     void allThreeNativeAttackProducersUseTheSameTargetCoordinateEnvelope() {
-        LocalResources.assumeNativeCatalogPins();
         for (int opcode : List.of(Protocol.C_ATTACK, Protocol.C_FAR_ATTACK,
                 Protocol.C_ALT_ATTACK)) {
             Protocol.AttackRequest request = Protocol.attackRequest(

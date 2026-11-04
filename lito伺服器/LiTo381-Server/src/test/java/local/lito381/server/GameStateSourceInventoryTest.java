@@ -411,7 +411,6 @@ final class GameStateSourceInventoryTest {
     @Test
     void mirrorsSourceArmorNativeStatusAndRetainsLiToEquippedState()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         Path file = temporary.resolve("source-armor.properties");
         SourceInventoryItem sourceArmor = sourceArmor(501, true);
         SourceEquipmentMagicStats equipment = new SourceEquipmentMagicStats(
@@ -472,7 +471,6 @@ final class GameStateSourceInventoryTest {
 
     @Test
     void retainedArmorStatusSeparatesBodyArmorFromAccessories() {
-        LocalResources.assumeNativeCatalogPins();
         InventoryCatalog.NativeArmorStatus status = new InventoryCatalog.NativeArmorStatus(
                 5, 11, 30_000, 0x7F, 6,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false,

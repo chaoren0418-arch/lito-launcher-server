@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 final class GameHubVirtualPlayerTest {
     @Test void deRosterHonorsCapacityServerNamesBalanceAndAutomaticReadiness()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = config();
         GameHub.RoomSettings settings = new GameHub.RoomSettings(
                 "GM test", "", 8, GameHub.RoomSettings.EQUAL_SIDES,
@@ -70,7 +69,6 @@ final class GameHubVirtualPlayerTest {
 
     @Test void siegeVirtualRosterSatisfiesNativeFifteenPerForceMinimum()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/"
                         + "server.pet-race-multiplayer-selftest.properties"));
@@ -104,7 +102,6 @@ final class GameHubVirtualPlayerTest {
 
     @Test void everyNativeBattleModeAndMapStartsWithDatabaseCommandVirtualRoster()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = config();
         Method countdownWork = GameHub.class.getDeclaredMethod("countdownWork", long.class);
         countdownWork.setAccessible(true);

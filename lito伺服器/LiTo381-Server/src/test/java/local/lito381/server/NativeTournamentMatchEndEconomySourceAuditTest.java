@@ -32,7 +32,6 @@ final class NativeTournamentMatchEndEconomySourceAuditTest {
     @Test
     void roomExitBattleQuitAndDisconnectRemainIdempotentSafetyNets()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         String source = Files.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);

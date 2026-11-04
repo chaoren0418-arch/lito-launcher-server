@@ -27,7 +27,6 @@ final class ClientSessionClassicWorldHellIntegrationTest {
     @Test
     void firstEntryEmits552AndPortalThenExpiryReturnsThroughPortalHandshake()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         Fixture fixture = fixture("HellFirst", 4, 33051, 32337);
         try {
             setInt(fixture.session(), "generalPkCount", 100);

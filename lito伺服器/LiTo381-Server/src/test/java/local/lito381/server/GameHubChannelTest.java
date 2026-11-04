@@ -32,7 +32,6 @@ final class GameHubChannelTest {
     }
 
     @Test void assignsAndListsRoomsInsideTheirOwningChannel() throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         GameHub.RoomSettings settings = new GameHub.RoomSettings(
                 "Baphomet Arena", "", 4, 0, 0, 0, 0, 0, List.of());
@@ -118,7 +117,6 @@ final class GameHubChannelTest {
     }
 
     @Test void matchmakingSkipsProtectedRoomsAndSelectsAnEligiblePublicRoom() throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             ClientSession occupant = session(config, hub);
@@ -135,7 +133,6 @@ final class GameHubChannelTest {
     }
 
     @Test void matchmakingRejectsWhenOnlyProtectedOrFullRoomsExist() throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             hub.createRoom(0, new GameHub.RoomSettings(
@@ -154,7 +151,6 @@ final class GameHubChannelTest {
     }
 
     @Test void matchmakingNeverSelectsTheServerGatedRentalTownMode() throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             long town = hub.createRoom(0, new GameHub.RoomSettings(
@@ -188,7 +184,6 @@ final class GameHubChannelTest {
     }
 
     @Test void matchmakingAppliesLevelAndObserverEligibilityBeforeSuccess() throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             hub.createRoom(1, new GameHub.RoomSettings(
@@ -544,7 +539,6 @@ final class GameHubChannelTest {
 
     @Test void opcodeOnlyNativeStartIsAuthorizedOnlyForTheCurrentRoomOwner()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             ClientSession owner = session(config, hub);

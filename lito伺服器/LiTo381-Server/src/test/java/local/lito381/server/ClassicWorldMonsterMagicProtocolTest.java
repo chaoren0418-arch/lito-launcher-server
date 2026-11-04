@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 final class ClassicWorldMonsterMagicProtocolTest {
     @Test
     void iceConeUsesExactSelectedClientExtendedAttackLayout() {
-        LocalResources.assumeNativeCatalogPins();
         ClassicWorldMonsterMagicSkillCatalog.Definition ice =
                 ClassicWorldMonsterMagicSkillCatalog.forNpc(45224);
         byte[] packet = Protocol.attackSpell(

@@ -20,7 +20,6 @@ final class ClientSessionLitoModeStepIntegrationTest {
 
     @Test void encryptedRightNextAndLeftPreviousEmitExactS_D5ModeMapPairs()
             throws Exception {
-        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         GameStateStore state = new GameStateStore(
                 temporary.resolve("state.properties"), false);
