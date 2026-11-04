@@ -1,5 +1,13 @@
 # Issue #44 / T020d — ASM 語意比對工具＋CI 語意差異報告
 
+## 第 3 次修正（本輪 CI 證據取得前的狀態）
+
+- 已修正只存在 allow-right 的指定方法漏比較；清單未命中及超出範圍會明確失敗。新增 5b–5f 測試。
+- 已將建置共用為 build-support.sh；校驗診斷送 stderr，依賴統一存 target/dependency。新增真實無 Maven PATH 的冷啟動與實際比較測試。
+- fixture／日誌／JSON 改放 repo scratch；測試 class/JAR 改放 target。CI 使用 `mvn -B -DskipTests package` 並保留測試、輸入 SHA 與報告證據。
+- 已驗證：本機 Microsoft Java 17 編譯成功、ASM SHA-256 符合；正式 reference 自比對 SAME=2554、DIFF=0、BYTE_SAME=2554。
+- 待驗證：本機無 Bash／Maven，完整 shell 自我測試及本輪快照待 CI 執行後更新。以下先前 CI 記錄不是本輪驗證結果。
+
 ## 做了什麼
 
 獨立工具 `lito伺服器/LiTo381-Server/tools/semantic-diff/`（Java 17＋ASM 9.7，**未改**伺服器 `pom.xml` runtime 依賴、**未改** `src/main`、**未改** `docs/REPORT.md`）。第 2 次依審查補 `--exclude`／`--allow-methods`／`--allow-right`、`--classes` 副檔名與未命中報錯、註解結構化比較。

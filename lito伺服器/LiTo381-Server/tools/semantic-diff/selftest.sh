@@ -4,12 +4,16 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SERVER="$(cd "$ROOT/../.." && pwd)"
 REF="$SERVER/reference/base-0.6.71.jar"
-BUILD="$ROOT/build/selftest"
-mkdir -p "$BUILD"
-export PATH="${PATH}"
+REPO="$(cd "$SERVER/../.." && pwd)"
+mkdir -p "$REPO/scratch" "$ROOT/target/selftest"
+BUILD="$(mktemp -d "$REPO/scratch/semantic-diff-selftest.XXXXXX")"
+BIN="$ROOT/target/selftest/$(basename "$BUILD")"
+mkdir -p "$BIN"
+echo "fixtures/reports: $BUILD"
+echo "compiled artifacts: $BIN"
 
 echo "==> build tool"
-bash "$ROOT/semantic-diff" --help >/dev/null 2>&1 || true
+bash "$ROOT/build.sh"
 if ! java -cp /dev/null -version >/dev/null 2>&1; then
   echo "java required" >&2
   exit 1
@@ -177,21 +181,20 @@ compile_jar() {
   local jar="$2"
   local gflag="$3"
   shift 3
-  rm -rf "$outdir"
   mkdir -p "$outdir"
   javac --release 17 -encoding UTF-8 $gflag -d "$outdir" "$@"
   jar cf "$jar" -C "$outdir" .
 }
 
-compile_jar "$BUILD/g-debug/classes" "$BUILD/g-debug.jar" "-g" \
+compile_jar "$BIN/g-debug/classes" "$BIN/g-debug.jar" "-g" \
   "$BUILD/Fixture.java" "$BUILD/Extra.java"
-compile_jar "$BUILD/g-none/classes" "$BUILD/g-none.jar" "-g:none" \
+compile_jar "$BIN/g-none/classes" "$BIN/g-none.jar" "-g:none" \
   "$BUILD/Fixture.java" "$BUILD/Extra.java"
-compile_jar "$BUILD/mutated/classes" "$BUILD/mutated.jar" "-g:none" \
+compile_jar "$BIN/mutated/classes" "$BIN/mutated.jar" "-g:none" \
   "$BUILD/mutated-src/Fixture.java" "$BUILD/Extra.java"
-compile_jar "$BUILD/both-mut/classes" "$BUILD/both-mut.jar" "-g:none" \
+compile_jar "$BIN/both-mut/classes" "$BIN/both-mut.jar" "-g:none" \
   "$BUILD/mutated-src/Fixture.java" "$BUILD/extra-mut-src/Extra.java"
-compile_jar "$BUILD/ann/classes" "$BUILD/ann.jar" "-g:none" \
+compile_jar "$BIN/ann/classes" "$BIN/ann.jar" "-g:none" \
   "$BUILD/ann-src/Marker.java" "$BUILD/ann-src/InnerAnn.java" \
   "$BUILD/ann-src/OuterAnn.java" "$BUILD/ann-src/AnnoHost.java" \
   "$BUILD/ann-src/Rec.java"
@@ -210,7 +213,7 @@ echo "PASS SELFTEST 1 SAME=$SAME DIFF=0"
 
 echo
 echo "=== SELFTEST 1b: fixture JAR vs itself ==="
-run_logged "$BUILD/self-fixture.log" --left "$BUILD/g-debug.jar" --right "$BUILD/g-debug.jar"
+run_logged "$BUILD/self-fixture.log" --left "$BIN/g-debug.jar" --right "$BIN/g-debug.jar"
 SUMMARY1B="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
 [[ "$DIFF" == "0" && "$ONLY_LEFT" == "0" && "$ONLY_RIGHT" == "0" ]] \
   || fail "fixture vs itself must be 0 DIFF; got $SUMMARY1B"
@@ -218,7 +221,7 @@ echo "PASS SELFTEST 1b SAME=$SAME DIFF=0"
 
 echo
 echo "=== SELFTEST 2: -g vs -g:none ==="
-run_logged "$BUILD/g-vs-none.log" --left "$BUILD/g-debug.jar" --right "$BUILD/g-none.jar" --json "$BUILD/g-vs-none.json" --md "$BUILD/g-vs-none.md"
+run_logged "$BUILD/g-vs-none.log" --left "$BIN/g-debug.jar" --right "$BIN/g-none.jar" --json "$BUILD/g-vs-none.json" --md "$BUILD/g-vs-none.md"
 SUMMARY2="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
 [[ "$DIFF" == "0" && "$ONLY_LEFT" == "0" && "$ONLY_RIGHT" == "0" ]] \
   || fail "-g vs -g:none must be 0 DIFF; got $SUMMARY2"
@@ -226,7 +229,7 @@ echo "PASS SELFTEST 2 SAME=$SAME DIFF=0"
 
 echo
 echo "=== SELFTEST 3: constant change must be detected ==="
-run_logged "$BUILD/mutated.log" --left "$BUILD/g-none.jar" --right "$BUILD/mutated.jar" --json "$BUILD/mutated.json"
+run_logged "$BUILD/mutated.log" --left "$BIN/g-none.jar" --right "$BIN/mutated.jar" --json "$BUILD/mutated.json"
 SUMMARY3="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
 [[ "$DIFF" != "0" ]] || fail "mutated constant must produce DIFF>=1; got $SUMMARY3"
 python3 - "$BUILD/mutated.json" <<'PY'
@@ -244,7 +247,7 @@ echo "PASS SELFTEST 3 DIFF=$DIFF"
 echo
 echo "=== SELFTEST 4: --exclude outer class also drops \$ inner ==="
 run_logged "$BUILD/exclude.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/mutated.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/mutated.jar" \
   --exclude "semanticdiff.fixture.Fixture" \
   --json "$BUILD/exclude.json"
 SUMMARY4="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
@@ -265,8 +268,8 @@ echo
 echo "=== SELFTEST 5: --allow-methods overlays one method; unlisted diffs remain ==="
 printf '%s\n' 'semanticdiff/fixture/Extra#extra()I' > "$BUILD/allow-methods.txt"
 run_logged "$BUILD/allow.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/both-mut.jar" \
-  --allow-methods "$BUILD/allow-methods.txt" --allow-right "$BUILD/g-none.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/both-mut.jar" \
+  --allow-methods "$BUILD/allow-methods.txt" --allow-right "$BIN/g-none.jar" \
   --json "$BUILD/allow.json"
 SUMMARY5="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
 python3 - "$BUILD/allow.json" <<'PY'
@@ -282,29 +285,126 @@ print("allow Extra=SAME Fixture=DIFF", fix.get("firstDiff"))
 PY
 echo "PASS SELFTEST 5 Extra SAME via allow-right; Fixture DIFF still caught ($SUMMARY5)"
 
+echo "=== SELFTEST 5b: allow-right-only method must not be skipped ==="
+mkdir -p "$BUILD/overlay-left" "$BUILD/overlay-right" "$BUILD/overlay-allow"
+cat > "$BUILD/overlay-left/Foo.java" <<'JAVA'
+public class Foo {
+    public int allowed() { return 1; }
+    public int unlisted() { return 10; }
+}
+JAVA
+cat > "$BUILD/overlay-right/Foo.java" <<'JAVA'
+public class Foo {
+    public int allowed() { return 2; }
+    public int unlisted() { return 20; }
+}
+JAVA
+cat > "$BUILD/overlay-allow/Foo.java" <<'JAVA'
+public class Foo {
+    public int added() { return 3; }
+    public int allowed() { return 1; }
+    public int unlisted() { return 10; }
+}
+JAVA
+for side in left right allow; do
+  compile_jar "$BIN/overlay-$side/classes" "$BIN/overlay-$side.jar" "-g:none" \
+    "$BUILD/overlay-$side/Foo.java"
+done
+printf '%s\n' 'Foo#added()I' > "$BUILD/allow-added.txt"
+run_logged "$BUILD/allow-added.log" \
+  --left "$BIN/overlay-left.jar" --right "$BIN/overlay-left.jar" \
+  --allow-methods "$BUILD/allow-added.txt" --allow-right "$BIN/overlay-allow.jar" \
+  --json "$BUILD/allow-added.json"
+python3 - "$BUILD/allow-added.json" <<'PY'
+import json, sys
+row = json.load(open(sys.argv[1], encoding="utf-8"))["classes"][0]
+assert row["status"] == "DIFF", row
+assert row["firstDiff"]["member"] == "added()I", row
+assert row["firstDiff"]["detail"] == "only allow-right", row
+assert row["byteSame"] is True, row
+PY
+echo "PASS SELFTEST 5b allow-right-only added()I DIFF=1 despite identical left/right bytes"
+
+echo "=== SELFTEST 5c: unmatched allow entry must fail ==="
+printf '%s\n' 'Foo#typo()I' > "$BUILD/allow-typo.txt"
+expect_fail "$BUILD/allow-typo.log" \
+  --left "$BIN/overlay-left.jar" --right "$BIN/overlay-left.jar" \
+  --allow-methods "$BUILD/allow-typo.txt" --allow-right "$BIN/overlay-allow.jar"
+grep -q 'unmatched --allow-methods entry in --allow-right: Foo#typo()I' "$BUILD/allow-typo.log.err" \
+  || fail "unmatched allow entry must be reported"
+! grep -q '^SUMMARY ' "$BUILD/allow-typo.log" || fail "invalid allow list must not produce success summary"
+echo "PASS SELFTEST 5c unmatched allow entry exits non-zero without SUMMARY"
+
+echo "=== SELFTEST 5d: unlisted method in SAME class still uses original right ==="
+printf '%s\n' 'Foo#allowed()I' > "$BUILD/allow-one.txt"
+run_logged "$BUILD/allow-unlisted.log" \
+  --left "$BIN/overlay-left.jar" --right "$BIN/overlay-right.jar" \
+  --allow-methods "$BUILD/allow-one.txt" --allow-right "$BIN/overlay-allow.jar" \
+  --json "$BUILD/allow-unlisted.json"
+python3 - "$BUILD/allow-unlisted.json" <<'PY'
+import json, sys
+row = json.load(open(sys.argv[1], encoding="utf-8"))["classes"][0]
+assert row["status"] == "DIFF", row
+assert row["firstDiff"]["member"] == "unlisted()I", row
+assert row["firstDiff"]["insnIndex"] == 0, row
+assert "BIPUSH 10" in row["firstDiff"]["detail"], row
+assert "BIPUSH 20" in row["firstDiff"]["detail"], row
+PY
+echo "PASS SELFTEST 5d same-class unlisted()I DIFF=1 insn=0 uses right, not allow-right"
+
+echo "=== SELFTEST 5e: overlay method absent from right but present in left matches ==="
+run_logged "$BUILD/allow-added-present.log" \
+  --left "$BIN/overlay-allow.jar" --right "$BIN/overlay-left.jar" \
+  --allow-methods "$BUILD/allow-added.txt" --allow-right "$BIN/overlay-allow.jar"
+[[ "$SAME" == "1" && "$DIFF" == "0" ]] || fail "added overlay method should be SAME after port"
+echo "PASS SELFTEST 5e added method present in left SAME=1"
+
+echo "=== SELFTEST 5f: out-of-scope allow classes must fail ==="
+for mode in absent excluded selected; do
+  flags=()
+  list="$BUILD/allow-one.txt"
+  if [[ "$mode" == absent ]]; then
+    printf '%s\n' 'Missing#allowed()I' > "$BUILD/allow-absent.txt"
+    list="$BUILD/allow-absent.txt"
+  elif [[ "$mode" == excluded ]]; then
+    flags=(--exclude Foo)
+  else
+    flags=(--classes semanticdiff.fixture.Extra)
+  fi
+  # g-none contains Extra but no Foo: selected case rejects the ignored Foo rule.
+  input="$BIN/overlay-left.jar"
+  [[ "$mode" != selected ]] || input="$BIN/g-none.jar"
+  expect_fail "$BUILD/allow-scope-$mode.log" \
+    --left "$input" --right "$input" "${flags[@]}" \
+    --allow-methods "$list" --allow-right "$BIN/overlay-allow.jar"
+  grep -q 'class outside comparison scope' "$BUILD/allow-scope-$mode.log.err" \
+    || fail "out-of-scope allow entry must be reported ($mode)"
+done
+echo "PASS SELFTEST 5f absent/excluded/unselected allow classes exit non-zero"
+
 echo
 echo "=== SELFTEST 6: --classes .class suffix, comma list, file list, missing class ==="
 run_logged "$BUILD/classes-suffix.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/g-none.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/g-none.jar" \
   --classes "semanticdiff/fixture/Fixture.class"
 [[ "$SAME" == "1" && "$DIFF" == "0" ]] || fail "Fixture.class suffix should match 1 class, got SAME=$SAME DIFF=$DIFF"
 echo "PASS SELFTEST 6a suffix SAME=$SAME"
 
 run_logged "$BUILD/classes-comma.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/g-none.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/g-none.jar" \
   --classes "semanticdiff.fixture.Fixture,semanticdiff.fixture.Extra"
 [[ "$SAME" == "2" && "$DIFF" == "0" ]] || fail "comma list should match 2 classes, got SAME=$SAME"
 echo "PASS SELFTEST 6b comma SAME=$SAME"
 
 printf '%s\n' 'semanticdiff/fixture/Fixture.class' 'semanticdiff.fixture.Extra' > "$BUILD/classes.txt"
 run_logged "$BUILD/classes-file.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/g-none.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/g-none.jar" \
   --classes "$BUILD/classes.txt"
 [[ "$SAME" == "2" && "$DIFF" == "0" ]] || fail "file list should match 2 classes, got SAME=$SAME"
 echo "PASS SELFTEST 6c file SAME=$SAME"
 
 expect_fail "$BUILD/classes-missing.log" \
-  --left "$BUILD/g-none.jar" --right "$BUILD/g-none.jar" \
+  --left "$BIN/g-none.jar" --right "$BIN/g-none.jar" \
   --classes "semanticdiff.fixture.DoesNotExist"
 grep -q "missing --classes entries: semanticdiff/fixture/DoesNotExist" "$BUILD/classes-missing.log.err" \
   || fail "missing class must be reported"
@@ -312,7 +412,7 @@ echo "PASS SELFTEST 6d missing class exits non-zero"
 
 echo
 echo "=== SELFTEST 7: enum/nested annotationDefault self-vs-self ==="
-run_logged "$BUILD/ann-self.log" --left "$BUILD/ann.jar" --right "$BUILD/ann.jar" --json "$BUILD/ann-self.json"
+run_logged "$BUILD/ann-self.log" --left "$BIN/ann.jar" --right "$BIN/ann.jar" --json "$BUILD/ann-self.json"
 SUMMARY7="SUMMARY SAME=$SAME DIFF=$DIFF ONLY_LEFT=$ONLY_LEFT ONLY_RIGHT=$ONLY_RIGHT"
 [[ "$DIFF" == "0" && "$SAME" != "0" ]] || fail "annotation jar vs itself must be SAME; got $SUMMARY7"
 echo "PASS SELFTEST 7 SAME=$SAME DIFF=0"
@@ -324,7 +424,7 @@ if [[ -d "$ROOT/target/dependency" ]]; then
   ASM_CP="$(printf '%s:' "$ROOT/target/dependency"/*.jar)"
 fi
 if [[ -z "$ASM_CP" || "$ASM_CP" == "$ROOT/target/dependency/*.jar:" ]]; then
-  ASM_CP="$ROOT/lib/asm-9.7.jar:$ROOT/lib/asm-tree-9.7.jar"
+  ASM_CP="$ROOT/target/dependency/asm-9.7.jar:$ROOT/target/dependency/asm-tree-9.7.jar"
 fi
 cat > "$BUILD/AnnPatch.java" <<'JAVA'
 import java.io.InputStream;
@@ -422,25 +522,25 @@ public final class AnnPatch {
     }
 }
 JAVA
-javac --release 17 -encoding UTF-8 -cp "$ASM_CP" -d "$BUILD" "$BUILD/AnnPatch.java"
-java -cp "$BUILD:$ASM_CP" AnnPatch method "$BUILD/ann.jar" "$BUILD/ann-method.jar" semanticdiff/fixture/AnnoHost
-java -cp "$BUILD:$ASM_CP" AnnPatch insn "$BUILD/ann.jar" "$BUILD/ann-insn.jar" semanticdiff/fixture/AnnoHost
-java -cp "$BUILD:$ASM_CP" AnnPatch record "$BUILD/ann.jar" "$BUILD/ann-record.jar" semanticdiff/fixture/Rec
+javac --release 17 -encoding UTF-8 -cp "$ASM_CP" -d "$BIN" "$BUILD/AnnPatch.java"
+java -cp "$BIN:$ASM_CP" AnnPatch method "$BIN/ann.jar" "$BIN/ann-method.jar" semanticdiff/fixture/AnnoHost
+java -cp "$BIN:$ASM_CP" AnnPatch insn "$BIN/ann.jar" "$BIN/ann-insn.jar" semanticdiff/fixture/AnnoHost
+java -cp "$BIN:$ASM_CP" AnnPatch record "$BIN/ann.jar" "$BIN/ann-record.jar" semanticdiff/fixture/Rec
 
 run_logged "$BUILD/ann-method.log" \
-  --left "$BUILD/ann.jar" --right "$BUILD/ann-method.jar" \
+  --left "$BIN/ann.jar" --right "$BIN/ann-method.jar" \
   --classes semanticdiff.fixture.AnnoHost --json "$BUILD/ann-method.json"
 [[ "$DIFF" == "1" ]] || fail "method type annotation change must DIFF; got DIFF=$DIFF"
 echo "PASS SELFTEST 8a method type-ann DIFF=1"
 
 run_logged "$BUILD/ann-insn.log" \
-  --left "$BUILD/ann.jar" --right "$BUILD/ann-insn.jar" \
+  --left "$BIN/ann.jar" --right "$BIN/ann-insn.jar" \
   --classes semanticdiff.fixture.AnnoHost --json "$BUILD/ann-insn.json"
 [[ "$DIFF" == "1" ]] || fail "insn type annotation change must DIFF; got DIFF=$DIFF"
 echo "PASS SELFTEST 8b insn type-ann DIFF=1"
 
 run_logged "$BUILD/ann-record.log" \
-  --left "$BUILD/ann.jar" --right "$BUILD/ann-record.jar" \
+  --left "$BIN/ann.jar" --right "$BIN/ann-record.jar" \
   --classes semanticdiff.fixture.Rec --json "$BUILD/ann-record.json"
 [[ "$DIFF" == "1" ]] || fail "record type annotation change must DIFF; got DIFF=$DIFF"
 echo "PASS SELFTEST 8c record type-ann DIFF=1"

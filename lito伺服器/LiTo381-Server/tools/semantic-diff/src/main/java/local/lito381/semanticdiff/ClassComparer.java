@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import org.objectweb.asm.ConstantDynamic;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Type;
@@ -173,20 +174,6 @@ final class ClassComparer {
         return null;
     }
 
-    private static boolean isAllowed(
-            String remappedKey, MethodNode left, MethodNode right, Set<String> allowedMethodKeys) {
-        if (allowedMethodKeys == null || allowedMethodKeys.isEmpty()) {
-            return false;
-        }
-        if (allowedMethodKeys.contains(remappedKey)) {
-            return true;
-        }
-        if (left != null && allowedMethodKeys.contains(left.name + left.desc)) {
-            return true;
-        }
-        return right != null && allowedMethodKeys.contains(right.name + right.desc);
-    }
-
     private static FirstDiff compareMethods(
             ClassNode left,
             ClassNode right,
@@ -199,10 +186,14 @@ final class ClassComparer {
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
         Map<String, MethodNode> amap =
                 allowRight == null || allowJar == null ? Map.of() : methodMap(allowRight, allowJar);
-        for (String key : unionKeys(lmap, rmap)) {
+        Set<String> keys = new TreeSet<>(unionKeys(lmap, rmap));
+        // CLI validates these canonical keys against allow-right before comparison.
+        // Include methods absent from BOTH left and right: these are missing ports.
+        keys.addAll(allowedMethodKeys);
+        for (String key : keys) {
             MethodNode lm = lmap.get(key);
             MethodNode fromRight = rmap.get(key);
-            boolean allow = isAllowed(key, lm, fromRight, allowedMethodKeys);
+            boolean allow = allowedMethodKeys.contains(key);
             MethodNode rm;
             JarIndex rJar;
             String rightLabel;

@@ -93,6 +93,7 @@ public final class SemanticDiff {
                 names.add(name);
             }
         }
+        Map<String, Set<String>> validatedAllow = validateAllowMethods(parsed, names, allow);
 
         List<ClassRow> rows = new ArrayList<>();
         EnumMap<Status, Integer> counts = new EnumMap<>(Status.class);
@@ -109,9 +110,7 @@ public final class SemanticDiff {
             if (bytesEqual) {
                 byteSameCount++;
             }
-            Set<String> allowedKeys = parsed.allowMethods == null
-                    ? Set.of()
-                    : parsed.allowMethods.getOrDefault(name, Set.of());
+            Set<String> allowedKeys = validatedAllow.getOrDefault(name, Set.of());
             boolean allowThis = !allowedKeys.isEmpty() && allow != null;
             if (allowThis) {
                 allowApplied++;
@@ -150,6 +149,34 @@ public final class SemanticDiff {
             System.out.println("wrote " + parsed.md);
         }
         return 0;
+    }
+
+    /** Resolve exact allow-right names before producing any successful report. */
+    private static Map<String, Set<String>> validateAllowMethods(
+            Args parsed, Set<String> names, JarIndex allow) {
+        Map<String, Set<String>> resolved = new LinkedHashMap<>();
+        if (parsed.allowMethods == null) {
+            return resolved;
+        }
+        for (var entry : parsed.allowMethods.entrySet()) {
+            String owner = entry.getKey();
+            if (!names.contains(owner)) {
+                throw new IllegalArgumentException(
+                        "--allow-methods class outside comparison scope: " + owner);
+            }
+            ClassNode node = allow.readTree(owner);
+            for (String wanted : entry.getValue()) {
+                var method = node == null ? null : node.methods.stream()
+                        .filter(m -> (m.name + m.desc).equals(wanted)).findFirst().orElse(null);
+                if (method == null) {
+                    throw new IllegalArgumentException(
+                            "unmatched --allow-methods entry in --allow-right: " + owner + "#" + wanted);
+                }
+                resolved.computeIfAbsent(owner, k -> new LinkedHashSet<>())
+                        .add(allow.remapMethod(owner, method.name) + method.desc);
+            }
+        }
+        return resolved;
     }
 
     static boolean excluded(String className, Set<String> exclude) {
