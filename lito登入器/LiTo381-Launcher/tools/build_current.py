@@ -1,8 +1,12 @@
 """Build the single current release directly from src; no historical release template."""
 from pathlib import Path
-import hashlib,importlib.util,json,re,subprocess
+import hashlib,importlib.util,json,re,shutil,subprocess
 L=Path(__file__).resolve().parent.parent
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest().upper()
+def resolve_dotnet():
+    exe=shutil.which('dotnet')
+    if not exe: raise FileNotFoundError('dotnet not found on PATH')
+    return exe
 helper=L/'src/development_startup.py'
 spec=importlib.util.spec_from_file_location('build_helper',helper);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 pins={p:sha(p) for p in m.PINS}
@@ -16,5 +20,5 @@ def refresh(match):
     path=Path(match[1]);return f'new(@"{path}", {path.stat().st_size}, "{sha(path)}")'
 t=re.sub(r'new\(@"([^"\n]+)", \d+, "[A-F0-9]+"\)',refresh,t);p.write_text(t,encoding='utf-8')
 (L/'app/runtime-pins.json').write_text(json.dumps({str(p):v for p,v in pins.items()},ensure_ascii=False,indent=2),encoding='utf-8')
-subprocess.run([r'C:\Program Files\dotnet\dotnet.exe','publish',str(L/'src/LiTo381Launcher.csproj'),'-c','Release','-r','win-x86','--self-contained','true','-o',str(L/'release/current')],check=True)
+subprocess.run([resolve_dotnet(),'publish',str(L/'src/LiTo381Launcher.csproj'),'-c','Release','-r','win-x86','--self-contained','true','-o',str(L/'release/current')],check=True)
 print('Published release/current (0.6.71).')
