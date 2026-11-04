@@ -183,239 +183,143 @@ function Write-Utf8File([string]$Path, [string]$Text, [bool]$Bom) {
     [IO.File]::WriteAllText($Path, $Text, $enc)
 }
 
-function ConvertTo-StartProcessArgumentList([string[]]$Arguments) {
-    # Start-Process joins -ArgumentList with spaces and does not keep element
-    # boundaries (MS docs; also observed on Linux pwsh). Quote each token like
-    # tools/Start-LiToServer.ps1 so paths with spaces/Chinese stay one argv.
-    $quoted = New-Object System.Collections.Generic.List[string]
-    foreach ($arg in $Arguments) {
-        [void]$quoted.Add('"' + $arg + '"')
+function Assert-SourceSmokeQuoting([string]$Ps1Path) {
+    $text = [IO.File]::ReadAllText($Ps1Path)
+    if ($text -notmatch 'ConvertTo-StartProcessArgumentList') {
+        throw "entry_missing_quoting: $Ps1Path"
     }
-    return [string[]]$quoted.ToArray()
+    if ($text -notmatch 'Start-Process -FilePath \$java -ArgumentList \$quoted') {
+        throw "entry_unquoted_start_process: $Ps1Path"
+    }
+    Write-Host ("SOURCE_SMOKE_QUOTING=ok ({0})" -f $Ps1Path)
 }
 
-function Test-StartProcessQuoting([string]$RepoRoot) {
-    # Exercises the same Start-Process -ArgumentList quoting as packaged --smoke,
-    # using a capture program. Does not start LiTo or touch DB. --check is not this path.
+function New-FakeJavaCapture([string]$FakeDir) {
+    # Prints argv then sleeps so --smoke's 8s check still sees a live process.
+    # Does not start LiTo or touch DB.
+    New-Directory $FakeDir
+    if (Test-WindowsOS) {
+        $exe = [IO.Path]::Combine($FakeDir, 'java.exe')
+        Add-Type -OutputType ConsoleApplication -OutputAssembly $exe -TypeDefinition @'
+using System;
+using System.IO;
+using System.Threading;
+public class FakeJava {
+    public static int Main(string[] args) {
+        if (args != null && args.Length >= 1 && args[0] == "-version") {
+            Console.Error.WriteLine("openjdk version \"17.0.0\"");
+            return 0;
+        }
+        string dest = Environment.GetEnvironmentVariable("LITO_QUOTE_PROBE_OUT");
+        if (string.IsNullOrEmpty(dest)) dest = "args.txt";
+        File.WriteAllLines(dest, args ?? new string[0]);
+        Thread.Sleep(12000);
+        return 0;
+    }
+}
+'@
+        return $exe
+    }
+    $java = [IO.Path]::Combine($FakeDir, 'java')
+    $script = @'
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ "${1-}" == "-version" ]]; then
+  echo 'openjdk version "17.0.0" 2026-01-01' >&2
+  exit 0
+fi
+: "${LITO_QUOTE_PROBE_OUT:?missing LITO_QUOTE_PROBE_OUT}"
+printf '%s\n' "$@" > "$LITO_QUOTE_PROBE_OUT"
+sleep 12
+exit 0
+'@
+    Write-Utf8File $java ($script.Replace("`r`n", "`n") + "`n") $false
+    & chmod +x $java
+    if ($LASTEXITCODE -ne 0) { throw "chmod_failed: $java" }
+    return $java
+}
+
+function Test-PackagedSmokeArgv([string]$RepoRoot, [string]$PackageDir) {
+    # Runs packaged --smoke with a fake java first on PATH. Two extract roots:
+    # space ('LiTo Test') and Chinese ('中文路徑'). --check is not this path.
+    $hostExe = Find-OnPath @('pwsh.exe', 'powershell.exe', 'pwsh', 'powershell')
+    if (-not $hostExe) { $hostExe = [string](Get-Process -Id $PID).Path }
     $scratch = [IO.Path]::Combine($RepoRoot, 'scratch', 'issue-32-quote-probe')
     if (Test-Path -LiteralPath $scratch) {
         Remove-Item -LiteralPath $scratch -Recurse -Force
     }
-    $dir = [IO.Path]::Combine($scratch, 'LiTo Test 測試')
-    New-Directory $dir
-    $jar = [IO.Path]::Combine($dir, 'LiTo381-Server.jar')
-    $props = [IO.Path]::Combine($dir, 'server.properties')
-    $capture = [IO.Path]::Combine($dir, 'capture.ps1')
-    $outFile = [IO.Path]::Combine($dir, 'args.txt')
-    $stdoutLog = [IO.Path]::Combine($dir, 'capture.stdout.log')
-    $stderrLog = [IO.Path]::Combine($dir, 'capture.stderr.log')
-    [IO.File]::WriteAllText($jar, 'dummy-jar')
-    [IO.File]::WriteAllText($props, 'dummy-properties')
-    $captureText = @(
-        'Set-StrictMode -Version Latest',
-        '$out = $args[0]',
-        '$rest = @()',
-        'if ($args.Count -gt 1) { $rest = $args[1..($args.Count - 1)] }',
-        '[IO.File]::WriteAllLines($out, [string[]]$rest, (New-Object Text.UTF8Encoding $false))'
-    ) -join "`n"
-    Write-Utf8File $capture $captureText $true
+    New-Directory $scratch
+    $fakeDir = [IO.Path]::Combine($scratch, 'fake-java')
+    $fakeJava = New-FakeJavaCapture $fakeDir
+    Write-Host ("QUOTE_PROBE_FAKE_JAVA={0}" -f $fakeJava)
 
-    # Same token layout as packaged --smoke (jar + properties after -jar).
-    $jvm = @(
-        '-Dfile.encoding=UTF-8',
-        '-Djava.net.preferIPv4Stack=true',
-        '-jar', $jar,
-        $props,
-        '--service-mode=standard'
+    $cases = @(
+        @{ Name = 'space'; RelDir = 'LiTo Test'; Needle = ' ' },
+        @{ Name = 'chinese'; RelDir = '中文路徑'; Needle = '中文' }
     )
-    foreach ($arg in @($jar, $props)) {
-        if ($arg.Contains(' ') -eq $false -or $arg.Contains('測試') -eq $false) {
-            throw 'quote_probe_path_must_contain_space_and_chinese'
+    $savedPath = [Environment]::GetEnvironmentVariable('PATH')
+    $sep = [IO.Path]::PathSeparator
+    foreach ($case in $cases) {
+        $dest = [IO.Path]::Combine($scratch, [string]$case.RelDir)
+        $destParent = [IO.Path]::GetDirectoryName($dest)
+        New-Directory $destParent
+        if (Test-Path -LiteralPath $dest) {
+            Remove-Item -LiteralPath $dest -Recurse -Force
         }
-    }
-    $joined = ((@($jvm | ForEach-Object { '"' + $_ + '"' })) -join ' ')
-    foreach ($arg in @($jar, $props)) {
-        $needle = '"' + $arg + '"'
-        if ($joined.IndexOf($needle, [StringComparison]::Ordinal) -lt 0) {
-            throw ("quote_join_missing: {0}" -f $arg)
+        Copy-Item -LiteralPath $PackageDir -Destination $dest -Recurse -Force
+        $serverRoot = [IO.Path]::Combine($dest, 'lito伺服器', 'LiTo381-Server')
+        $example = [IO.Path]::Combine($serverRoot, 'config', 'server.properties.example')
+        $props = [IO.Path]::Combine($serverRoot, 'config', 'server.properties')
+        Copy-Item -LiteralPath $example -Destination $props -Force
+        $outFile = [IO.Path]::Combine($scratch, ("args-{0}.txt" -f $case.Name))
+        $entry = [IO.Path]::Combine($dest, 'tools', 'Start-PackagedServer.ps1')
+        $env:LITO_QUOTE_PROBE_OUT = $outFile
+        [Environment]::SetEnvironmentVariable('PATH', ($fakeDir + $sep + $savedPath))
+        foreach ($name in @('JAVA_TOOL_OPTIONS', 'JDK_JAVA_OPTIONS', '_JAVA_OPTIONS', 'CLASSPATH')) {
+            if ([Environment]::GetEnvironmentVariable($name)) {
+                [Environment]::SetEnvironmentVariable($name, $null)
+            }
         }
-    }
-    Write-Host 'QUOTE_JOIN=ok (space-joined Start-Process command line keeps quoted paths with space+測試)'
-
-    $hostExe = Find-OnPath @('pwsh.exe', 'powershell.exe', 'pwsh', 'powershell')
-    if (-not $hostExe) { $hostExe = [string](Get-Process -Id $PID).Path }
-    $procArgs = @('-NoProfile', '-File', $capture, $outFile) + $jvm
-    $quoted = ConvertTo-StartProcessArgumentList $procArgs
-    $saved = $ErrorActionPreference
-    try {
-        $ErrorActionPreference = 'Continue'
-        $proc = Start-Process -FilePath $hostExe -ArgumentList $quoted -WorkingDirectory $dir -Wait -PassThru -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
-        $code = $proc.ExitCode
-        $proc.Dispose()
-    } finally {
-        $ErrorActionPreference = $saved
-    }
-    if ($code -ne 0) { throw "quote_probe_exit: $code" }
-    if (-not (Test-Path -LiteralPath $outFile -PathType Leaf)) { throw 'quote_probe_no_output' }
-    $got = @([IO.File]::ReadAllLines($outFile))
-    $expect = $jvm
-    if ($got.Count -ne $expect.Count) {
-        throw ("quote_probe_argc: got {0} expect {1}: {2}" -f $got.Count, $expect.Count, ($got -join ' | '))
-    }
-    for ($i = 0; $i -lt $expect.Count; $i++) {
-        if ($got[$i] -cne $expect[$i]) {
-            throw ("quote_probe_arg[{0}]: got [{1}] expect [{2}]" -f $i, $got[$i], $expect[$i])
+        Write-Host ("QUOTE_PROBE_CMD=PATH={0}{1}… {2} -NoProfile -File {3} --smoke" -f $fakeDir, $sep, $hostExe, $entry)
+        $code = 0
+        $saved = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = 'Continue'
+            & $hostExe -NoProfile -File $entry --smoke
+            $code = $LASTEXITCODE
+        } finally {
+            $ErrorActionPreference = $saved
+            [Environment]::SetEnvironmentVariable('PATH', $savedPath)
+            $env:LITO_QUOTE_PROBE_OUT = $null
         }
-    }
-    Write-Host ("QUOTE_PROBE=pass host={0} (Start-Process --smoke ArgumentList; no LiTo/DB)" -f $hostExe)
-    Write-Host ("QUOTE_PROBE_JAR={0}" -f $got[3])
-    Write-Host ("QUOTE_PROBE_PROPS={0}" -f $got[4])
-}
-
-function Assert-GeneratedSmokeQuoting([string]$GeneratedPs1) {
-    $text = [IO.File]::ReadAllText($GeneratedPs1)
-    if ($text -notmatch 'ConvertTo-StartProcessArgumentList') {
-        throw "generated_entry_missing_quoting: $GeneratedPs1"
-    }
-    if ($text -notmatch 'Start-Process -FilePath \$java -ArgumentList \$quoted') {
-        throw "generated_entry_unquoted_start_process: $GeneratedPs1"
-    }
-    Write-Host 'GENERATED_SMOKE_QUOTING=ok (Start-Process uses quoted ArgumentList)'
-}
-
-function Write-PackagedEntry([string]$PackageDir) {
-    $bat = @(
-        '@echo off',
-        'setlocal EnableExtensions',
-        'chcp 65001 >nul',
-        'cd /d "%~dp0"',
-        'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Start-PackagedServer.ps1" %*',
-        'set "LITO_EXIT=%ERRORLEVEL%"',
-        'if not "%LITO_EXIT%"=="0" if "%~1"=="" pause',
-        'exit /b %LITO_EXIT%'
-    ) -join "`r`n"
-    Write-Utf8File ([IO.Path]::Combine($PackageDir, '啟動套件伺服器.bat')) ($bat + "`r`n") $false
-
-    $ps1 = @'
-# Generated by packaging/Build-Package.ps1 into <package>/tools/Start-PackagedServer.ps1.
-# PATH java + Maven JAR. Does not replace official Start-LiToServer.ps1.
-# No param() block: `--check` must stay positional.
-Set-StrictMode -Version Latest
-$ErrorActionPreference = 'Stop'
-$ModeArg = 'standard'
-if ($args.Count -ge 1) { $ModeArg = [string]$args[0] }
-
-function Test-WindowsOS {
-    if ($env:OS -eq 'Windows_NT') { return $true }
-    try { if ($IsWindows) { return $true } } catch {}
-    return $false
-}
-function Find-OnPath([string[]]$Names) {
-    $windows = Test-WindowsOS
-    foreach ($name in $Names) {
-        $cmd = Get-Command $name -ErrorAction SilentlyContinue
-        if (-not $cmd) { continue }
-        $source = $null
-        if ($cmd.Source) { $source = [string]$cmd.Source }
-        elseif ($cmd.Path) { $source = [string]$cmd.Path }
-        if (-not $source) { continue }
-        if (-not $windows -and $source -match '\.(?i)(cmd|bat|exe)$') { continue }
-        return $source
-    }
-    return $null
-}
-function Assert-File([string]$Path, [string]$Hint) {
-    if (-not [IO.File]::Exists($Path)) { throw ("缺少檔案：{0}`n{1}" -f $Path, $Hint) }
-}
-function ConvertTo-StartProcessArgumentList([string[]]$Arguments) {
-    $quoted = New-Object System.Collections.Generic.List[string]
-    foreach ($arg in $Arguments) { [void]$quoted.Add('"' + $arg + '"') }
-    return [string[]]$quoted.ToArray()
-}
-
-$mode = 'standard'
-if ([string]::IsNullOrWhiteSpace($ModeArg) -or $ModeArg -eq 'standard') { $mode = 'standard' }
-elseif ($ModeArg -eq '--check' -or $ModeArg -eq 'check') { $mode = 'check' }
-elseif ($ModeArg -eq '--smoke' -or $ModeArg -eq 'smoke') { $mode = 'smoke' }
-else { throw "未知參數：$ModeArg（可用 --check、--smoke、或不加參數）" }
-
-$packageRoot = [IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
-$serverRoot = [IO.Path]::Combine($packageRoot, 'lito伺服器', 'LiTo381-Server')
-$jar = [IO.Path]::Combine($serverRoot, 'LiTo381-Server.jar')
-$libDir = [IO.Path]::Combine($serverRoot, 'lib')
-$example = [IO.Path]::Combine($serverRoot, 'config', 'server.properties.example')
-$properties = [IO.Path]::Combine($serverRoot, 'config', 'server.properties')
-Write-Host ("PACKAGE_ROOT={0}" -f $packageRoot)
-Write-Host ("SERVER_ROOT={0}" -f $serverRoot)
-Write-Host ("MODE={0}" -f $mode)
-
-$java = Find-OnPath @('java.exe', 'java')
-if (-not $java) { throw 'java_missing: 請把 JDK 17 的 java 放到 PATH（不要寫死安裝路徑）' }
-Write-Host ("JAVA={0}" -f $java)
-$saved = $ErrorActionPreference
-try { $ErrorActionPreference = 'Continue'; $javaVersion = (& $java -version 2>&1 | Out-String) }
-finally { $ErrorActionPreference = $saved }
-Write-Host ($javaVersion.Trim())
-if ($javaVersion -notmatch 'version "17[\."-]') {
-    Write-Host '[WARN] 建議使用 JDK 17；目前 PATH 上的 java 不是 17。'
-}
-Assert-File $jar '套件應含 lito伺服器/LiTo381-Server/LiTo381-Server.jar（Maven 產物）。'
-Assert-File $example '套件應含 config/server.properties.example。'
-if (-not (Test-Path -LiteralPath $libDir -PathType Container)) { throw "缺少 lib/：$libDir" }
-$libJars = @(Get-ChildItem -LiteralPath $libDir -File -Filter '*.jar')
-if ($libJars.Count -lt 1) { throw "lib/ 沒有 runtime JAR：$libDir" }
-Write-Host ("LIB_JAR_COUNT={0}" -f $libJars.Count)
-if (Test-Path -LiteralPath $properties -PathType Leaf) {
-    Write-Host 'CONFIG=server.properties (present; not printed)'
-} else {
-    Write-Host 'CONFIG=missing'
-    Write-Host '請複製 config/server.properties.example 為 config/server.properties 並改掉 CHANGE_ME。此檔不進 zip。'
-}
-Write-Host '[INFO] 此入口使用包內 Maven JAR，不是正式 candidate JAR。來源缺口見 docs/server-source-gap.md。'
-Write-Host '[INFO] 包內沒有 common_catalog.bin、pak/map/sprite、LiTo.bin；客戶端維持 D:\lineage開發\0-客戶端。'
-if ($mode -eq 'check') {
-    Write-Host '[PASS] 套件入口檢查完成：PATH 上的 java、Maven JAR、lib/、server.properties.example。'
-    if (-not (Test-Path -LiteralPath $properties -PathType Leaf)) {
-        Write-Host '[PASS] --check 不要求已填的 server.properties；啟動／--smoke 才需要。'
-    }
-    exit 0
-}
-if (-not (Test-Path -LiteralPath $properties -PathType Leaf)) {
-    throw 'Required file missing: config/server.properties（從 .example 複製，不要把填好的檔打回 zip）'
-}
-foreach ($name in @('JAVA_TOOL_OPTIONS', 'JDK_JAVA_OPTIONS', '_JAVA_OPTIONS', 'CLASSPATH')) {
-    if ([Environment]::GetEnvironmentVariable($name)) { throw "Unexpected Java environment override: $name" }
-}
-$jvm = @(
-    '-Dfile.encoding=UTF-8',
-    '-Djava.net.preferIPv4Stack=true',
-    '-jar', $jar,
-    $properties,
-    '--service-mode=standard'
-)
-if ($mode -eq 'smoke') {
-    Write-Host '[INFO] --smoke 會啟動包內 Maven JAR（可能連資料庫）。官方 --smoke 仍走 candidate JAR + catalog + deployment/release-inputs.json。'
-    Write-Host '[INFO] Start-Process -ArgumentList 以空白串接，路徑含空白／中文時必須逐項加引號。'
-    $quoted = ConvertTo-StartProcessArgumentList $jvm
-    $process = Start-Process -FilePath $java -ArgumentList $quoted -WorkingDirectory $serverRoot -PassThru
-    try {
-        Start-Sleep -Seconds 8
-        $process.Refresh()
-        if ($process.HasExited) {
-            throw ("Maven JAR 在 smoke 期間已退出，code={0}。此產物與正式 0.6.71 不完全等價。" -f $process.ExitCode)
+        if ($null -eq $code -or $code -ne 0) { throw "quote_probe_smoke_exit: $($case.Name) $code" }
+        if (-not (Test-Path -LiteralPath $outFile -PathType Leaf)) {
+            throw "quote_probe_no_output: $($case.Name)"
         }
-        Write-Host '[PASS] Maven JAR 行程仍在執行；正在停止 smoke 行程（未核對 login-listen）。'
-    } finally {
-        if (-not $process.HasExited) { $process.Kill(); $process.WaitForExit() }
-        $process.Dispose()
+        $got = @([IO.File]::ReadAllLines($outFile))
+        $jarGot = $null
+        $propsGot = $null
+        foreach ($line in $got) {
+            if ($line.EndsWith('LiTo381-Server.jar')) { $jarGot = $line }
+            if ($line.EndsWith('server.properties') -and -not $line.EndsWith('.example')) { $propsGot = $line }
+        }
+        if (-not $jarGot) { throw ("quote_probe_missing_jar: {0}: {1}" -f $case.Name, ($got -join ' | ')) }
+        if (-not $propsGot) { throw ("quote_probe_missing_props: {0}: {1}" -f $case.Name, ($got -join ' | ')) }
+        $needle = [string]$case.Needle
+        if ($jarGot.IndexOf($needle, [StringComparison]::Ordinal) -lt 0) {
+            throw ("quote_probe_jar_missing_needle: {0} [{1}] in [{2}]" -f $case.Name, $needle, $jarGot)
+        }
+        if ($propsGot.IndexOf($needle, [StringComparison]::Ordinal) -lt 0) {
+            throw ("quote_probe_props_missing_needle: {0} [{1}] in [{2}]" -f $case.Name, $needle, $propsGot)
+        }
+        Write-Host ("QUOTE_PROBE_{0}=pass" -f $case.Name)
+        Write-Host ("QUOTE_PROBE_{0}_JAR={1}" -f $case.Name, $jarGot)
+        Write-Host ("QUOTE_PROBE_{0}_PROPS={1}" -f $case.Name, $propsGot)
+        Write-Host ("QUOTE_PROBE_{0}_ARGV_BEGIN" -f $case.Name)
+        foreach ($line in $got) { Write-Host $line }
+        Write-Host ("QUOTE_PROBE_{0}_ARGV_END" -f $case.Name)
     }
-    exit 0
-}
-Write-Host '按 Ctrl+C 停止。本入口不會改正式 candidate JAR，也不會讀取包外的機密設定。'
-& $java @jvm
-exit $LASTEXITCODE
-'@
-    Write-Utf8File ([IO.Path]::Combine($PackageDir, 'tools', 'Start-PackagedServer.ps1')) $ps1 $true
+    Write-Host 'QUOTE_PROBE=pass (fake java on PATH; --smoke Start-Process; no LiTo/DB)'
 }
 
 function Write-ZipEvidence([string]$ZipPath, [string[]]$Names) {
@@ -486,6 +390,8 @@ $dbRel = "$serverRel/db"
 $wrapperBatRel = 'lito伺服器/1.啟動伺服器.bat'
 $startBatRel = "$serverRel/Start-LiTo381-Server.bat"
 $officialStartRel = "$serverRel/tools/Start-LiToServer.ps1"
+$packagedStartRel = 'packaging/Start-PackagedServer.ps1'
+$packagedBatRel = 'packaging/啟動套件伺服器.bat'
 $launcherRel = 'lito登入器/LiTo381-Launcher/release/current'
 $installRel = 'docs/INSTALL.md'
 
@@ -495,6 +401,8 @@ $dbPath = Resolve-RepoPath $repoRoot $dbRel
 $wrapperBatPath = Resolve-RepoPath $repoRoot $wrapperBatRel
 $startBatPath = Resolve-RepoPath $repoRoot $startBatRel
 $officialStartPath = Resolve-RepoPath $repoRoot $officialStartRel
+$packagedStartPath = Resolve-RepoPath $repoRoot $packagedStartRel
+$packagedBatPath = Resolve-RepoPath $repoRoot $packagedBatRel
 $launcherPath = Resolve-RepoPath $repoRoot $launcherRel
 $installPath = Resolve-RepoPath $repoRoot $installRel
 $secretsPath = Resolve-RepoPath $repoRoot "$serverRel/config/server.properties"
@@ -503,9 +411,10 @@ if (Test-Path -LiteralPath $secretsPath) {
     Write-Host '[INFO] 偵測到本機 config/server.properties；打包腳本不會讀取或複製該檔。'
 }
 
-foreach ($required in @($pomPath, $examplePath, $dbPath, $wrapperBatPath, $startBatPath, $officialStartPath, $installPath)) {
+foreach ($required in @($pomPath, $examplePath, $dbPath, $wrapperBatPath, $startBatPath, $officialStartPath, $packagedStartPath, $packagedBatPath, $installPath)) {
     if (-not (Test-Path -LiteralPath $required)) { throw "missing_input: $required" }
 }
+Assert-SourceSmokeQuoting $packagedStartPath
 
 $java = Find-OnPath @('java.exe', 'java')
 $mvn = Find-OnPath @('mvn.cmd', 'mvn')
@@ -588,14 +497,15 @@ Copy-FileSafe $examplePath ([IO.Path]::Combine($serverOut, 'config', 'server.pro
 Copy-FileSafe $wrapperBatPath ([IO.Path]::Combine($litoServerOut, '1.啟動伺服器.bat')) 'lito伺服器/1.啟動伺服器.bat'
 Copy-FileSafe $startBatPath ([IO.Path]::Combine($serverOut, 'Start-LiTo381-Server.bat')) 'lito伺服器/LiTo381-Server/Start-LiTo381-Server.bat'
 Copy-FileSafe $officialStartPath ([IO.Path]::Combine($serverOut, 'tools', 'Start-LiToServer.ps1')) 'lito伺服器/LiTo381-Server/tools/Start-LiToServer.ps1'
+Copy-FileSafe $packagedBatPath ([IO.Path]::Combine($packageDir, '啟動套件伺服器.bat')) '啟動套件伺服器.bat'
+Copy-FileSafe $packagedStartPath ([IO.Path]::Combine($packageDir, 'tools', 'Start-PackagedServer.ps1')) 'tools/Start-PackagedServer.ps1'
 Copy-FileSafe $installPath ([IO.Path]::Combine($packageDir, 'INSTALL.md')) 'INSTALL.md'
-Write-PackagedEntry $packageDir
 $packagedToolTarget = [IO.Path]::Combine($packageDir, 'tools', 'Start-PackagedServer.ps1')
-Assert-GeneratedSmokeQuoting $packagedToolTarget
+Assert-SourceSmokeQuoting $packagedToolTarget
 if (-not $SkipQuoteProbe) {
-    Test-StartProcessQuoting $repoRoot
+    Test-PackagedSmokeArgv $repoRoot $packageDir
 } else {
-    Write-Host '[INFO] -SkipQuoteProbe：略過 Start-Process 引號探測。'
+    Write-Host '[INFO] -SkipQuoteProbe：略過假 java --smoke 引號探測。'
 }
 
 $wrapperTarget = [IO.Path]::Combine($litoServerOut, 'LiTo381-Server', 'Start-LiTo381-Server.bat')
@@ -607,7 +517,7 @@ foreach ($link in @($wrapperTarget, $officialToolTarget, $packagedToolTarget, $p
     }
 }
 Write-Host 'STARTUP_CHAIN=ok (wrapper bat → LiTo381-Server/Start-LiTo381-Server.bat → tools/Start-LiToServer.ps1)'
-Write-Host 'PACKAGE_ENTRY=ok (generated 啟動套件伺服器.bat → tools/Start-PackagedServer.ps1 → Maven JAR)'
+Write-Host 'PACKAGE_ENTRY=ok (啟動套件伺服器.bat → tools/Start-PackagedServer.ps1 → Maven JAR)'
 
 $launcherIncluded = $false
 $launcherNote = ''
