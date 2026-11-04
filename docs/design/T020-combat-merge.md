@@ -145,3 +145,58 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 
 - T021–T028：在合併後的 `src/main` 上逐項做，不再另疊候選層。
 - T029 的非 JAR 部分（`litoddraw.dll`、LTicon／LTdesc）：另由 T029 處理。
+
+## 7. A 階段：`src/main` → 正式 0.6.71（T020e，Issue #59）
+
+依據：#44 T020d 的 `docs/server-semantic-gap.md`（CI run 41852194064，Temurin 17.0.21）。Maven 產物 vs `reference/base-0.6.71.jar`：SAME 2,064、DIFF 485、ONLY_LEFT 1,380、ONLY_RIGHT 5。
+
+### 7-1. 範圍（已驗證，`plan_a_batches.py` 產生）
+
+| 項目 | 數量 |
+|---|---:|
+| DIFF＋ONLY_RIGHT 中屬 `owned_by_B` 的 entry（交給 B，A 不處理） | 203＋2 |
+| A 的目標 entry | **285** |
+| A 的外層類別 | **224**（其中 171 個在 `src/main` 是 `// DECOMPILED`） |
+| A 的驗收 entry（正式 JAR 中這 224 類的外層＋全部 `$`） | **692** |
+| 第一處差異種類 | method 163、class 屬性 102、field 17、ONLY_RIGHT 3 |
+
+ONLY_LEFT 1,380 是 `src/main` 才有的類別（`Modern*` 等），T007 已列為刻意排除，不在 A 範圍。
+
+### 7-2. 相依分析
+
+以正式 JAR 常數池分析 224 個 A 類別：127 個 SCC，**最大 89 類**。和 B 相同，無法逐批在 `src/main` 單獨編譯。
+
+### 7-3. 做法：暫存區＋正式 JAR
+
+- 每批只把修好的原始碼放進 `lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/`，不動 `src/main`。
+- 驗證：`javac --release 17 -encoding UTF-8 -cp reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`；`semantic-diff --left <tmp 打包> --right reference/base-0.6.71.jar --classes <本批 verify_entries>`，每個 entry 都 SAME，且 tmp 中沒有清單外 entry、清單內沒有缺少的 entry。
+- 來源：
+  - `src/main` 為 `// DECOMPILED` 的類別：用 CFR（或 Vineflower）重新反編譯正式 JAR 的版本，修到能編譯且 SAME，保留 `// DECOMPILED from base-0.6.71.jar, TODO review` 標頭。
+  - `src/main` 為原始碼的類別：以 `src/main` 現檔為底，對照正式版反編譯結果修正差異（保留原始碼的可讀性與註解）。
+  - `sources` 為 null 的類別（AccountRepository、MemoryAccountRepository、SourceEquipmentPhysicalStats 由其他檔案一起定義；NativeDeVisibilitySwitch 在 `src/main` 缺）：依 Maven class 的 `SourceFile` 找到定義檔；缺檔者新增。
+- 與 B 的關係：A、B 的類別不重疊（`owned_by_B` 排除在外）。候選 `50635f7e` 對 A 類別與正式相同（候選只改了 `owned_by_B`），所以兩邊落地後互相相容；兩邊可並行。
+
+### 7-4. 批次（`docs/combat-merge/a-batches.json`）
+
+| 批次 | 外層類別 | 驗收 entry | 分類 |
+|---|---:|---:|---|
+| A01 | 49 | 185 | NativeDe*（第 1／3） |
+| A02 | 49 | 104 | NativeDe*（第 2／3） |
+| A03 | 47 | 88 | NativeDe*（第 3／3，含缺檔的 NativeDeVisibilitySwitch） |
+| A04 | 25 | 86 | Battle*／Combat* |
+| A05 | 27 | 160 | 其他（第 1／2，含 InventoryCatalog 的 T029 項 NativeArmorStatus） |
+| A06 | 27 | 69 | 其他（第 2／2） |
+
+每批的 `diff_entries` 列出 T020d 回報的第一處差異，`sources` 列出 `src/main` 對應檔與是否為 DECOMPILED。
+
+### 7-5. 每批驗收（A01–A06）
+
+| 項目 | 規則 |
+|---|---|
+| 範圍 | 只新增／修改 `merge-inputs/formal-0.6.71/staged/` 下本批類別的 `.java` 與報告；不動 `src/main`、`pom.xml`。 |
+| 編譯／語意 | 依 §7-3，指令與輸出附在報告。 |
+| 單元測試／回歸 | 不適用（未動 src/main，暫存區不執行）；在 A-land 統一處理。 |
+
+### 7-6. 落地（A-land）
+
+依賴 A01–A06 全部完成。把 staged 搬進 `src/main`（取代 224 個外層類別的定義，必要時拆／合檔以符合原檔結構）；`mvn -B test` 綠。既有測試是對著 `src/main` 現行行為寫的，改成正式版行為後若失敗，比照 T010 逐案判斷「測試過時（以正式 0.6.71 為準）／程式缺陷」並列出，不得停用或跳過；`semantic-diff` 對 Maven 產物 `--classes <A 的 692 個 verify_entries>` vs 正式全部 SAME。A-land 與 B-land 誰先都可以；後落地的一方在合入前要 rebase 並重跑兩邊的語意比對。T020-close（§6-6）依賴 A-land。
