@@ -3,7 +3,7 @@
 正式入口：桌面「LiTo 0.6.71 正式啟動器」或 `release/current/LiTo381Launcher.exe`。
 遊戲載入 `D:/lineage開發/0-客戶端/LiTo.bin`，共用該目錄的資源；伺服器設定統一位於相鄰伺服器專案的 `config/server.properties`。選服、帳密、角色、大廳與戰鬥流程沿用目前版本。
 
-0.6.71 新增 GM `.polyme 外型代號`（L1PolyMe、7200 秒），沿用 0.6.70 已實測的龍騎士／幻術師名單圖示、專用 `litoddraw.dll` 與世界資源接線，保留 BUFF 相容及八角色翻頁。圖示包位於 `app/resources/class-icons/`，原始客戶端 PAK／BIN 與來源資料庫未改動。職業圖示已通過使用者大廳／戰鬥室驗收；其他戰鬥技能項目不因本次發布一併宣告完成。[發布驗證](docs/maintenance/release-0.6.71.json)。
+0.6.71 新增 GM `.polyme 外型代號`（L1PolyMe、7200 秒），沿用已實測的龍騎士／幻術師名單圖示、專用 `litoddraw.dll` 與世界資源接線，保留 BUFF 相容及八角色翻頁。圖示包位於 `app/resources/class-icons/`，原始客戶端 PAK／BIN 與來源資料庫未改動。職業圖示已通過使用者大廳／戰鬥室驗收；其他戰鬥技能項目不因本次發布一併宣告完成。[發布驗證](docs/maintenance/release-0.6.71.json)。
 
 ## 專案結構
 
