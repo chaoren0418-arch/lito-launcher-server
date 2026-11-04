@@ -1,0 +1,8 @@
+local/lito381/server/ClientSession#exitRoom(Z)V
+local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V
+local/lito381/server/ClientSession#run()V
+local/lito381/server/ClientSession#sendRoomParticipant(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/Protocol$LitoForce;Ljava/lang/String;)V
+local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
+local/lito381/server/Protocol#litoRoomParticipant(JLjava/lang/String;Llocal/lito381/server/Protocol$LitoForce;IILlocal/lito381/server/GameStateStore$TournamentStatistics;Ljava/lang/String;IILlocal/lito381/server/Protocol$LitoParticipantState;ILlocal/lito381/server/GameStateStore$TournamentAwards;)[B
+local/lito381/server/Protocol#magicDollCustomIcon(IIZ)[B
+local/lito381/server/Protocol#magicDollIcon(I)[B

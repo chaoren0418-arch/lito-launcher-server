@@ -65,3 +65,83 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 - 候選 JAR 的實際類別差異數量（需本機 JAR，交 T020a）。
 - 正式 0.6.71 與候選根的分歧點（交 T020a）。
 - 回歸工具在非 `C:` JDK 下是否還能重現既有收據（交 T020c）。
+
+## 6. 合併批次（T020b，Issue #43；第 4 版，回應 2026-11-04 14:30 審查）
+
+> 本節取代 §2-3（先併 8d26）、§2-4 的回歸套件用法（改在 §6-6 統一執行）與 §4 任務表中 T020b 的「每批 ≤30 類別」規則（改為 §6-4 每批 ≤60）。§1–5 其餘內容不變。
+
+依據：#30 T020a 的 `docs/combat-merge/class-diff.json`（分支 `task/30` @ `31b5233`，主控以 review:pass 結案、豁免 1 筆歷史來源）。
+
+### 6-1. T020a 改寫了前提
+
+| 比較 | 結果 | 狀態 | 含意 |
+|---|---|---|---|
+| `8d26c9d7` vs 正式 `e1498871` | 4 CHANGED＋4 ONLY_IN_FORMAL | 已驗證（T020a，審查重算） | 正式 0.6.71 已包含第一批；差的 8 筆都是正式版後加的（T029 保留清單）。§2-3「先併 8d26」不必做。 |
+| `50635f7e` vs `8d26c9d7` | 623 entries → **303 個外層類別**（新 218：純 Java 156、Java＋內部 ASM 45、asm-only 17；既有改動 85：其中 19 個在 `src/main` 為 DECOMPILED） | 已驗證（T020a，審查重算） | 這是要併入的第二批。 |
+| Maven 產物 vs 正式 | class bytes 只有 1,008 相同 | 已驗證（T020a） | bytes 不同不代表語意不同（除錯資訊、編譯器版本都會影響）。 |
+| 同上，語意層級 | 雲端試算：javap 去常數池編號／空白後 2,538 共同類別中 593 筆不同，其中 162 筆解析失敗 | **推測，待 T020d 確認** | 試算用 JDK 21 編譯（正式／CI 為 17）、未正規化 lambda／合成名稱，雜訊未排除。只能說「可能有語意缺口」。 |
+
+### 6-2. 兩階段與類別歸屬
+
+- **B 階段（併入候選）擁有 303 個外層類別**（清單見 `docs/combat-merge/batches.json` 的 `owned_by_B`）。最終目標：與 `reference/candidate-50635f7e.jar` 語意相同；例外是 T029 保留方法（§6-5）。
+- **A 階段（`src/main`→正式 0.6.71）擁有其餘全部類別**。最終目標：與 `reference/base-0.6.71.jar` 語意相同。T020e 產生的 A 修補任務**不得修改** `owned_by_B` 的任何檔案；T020d 工具在 A 任務驗收時以 `--exclude owned_by_B` 執行。
+- B3 的 85 個既有類別中，有 73 個在 T020a 的 Maven vs 正式 bytes 差異裡。這些類別歸 B：B3 批次直接以候選版為目標，**不需要**先校正到正式版；若 `src/main` 現版與正式版有語意差異，該差異在 B3 批次內一併消除（因為候選 = 正式 + 戰鬥修改，正式缺口會一起補上）。
+- 因為歸屬不重疊，A 與 B 可並行；兩邊都動不到對方的檔案。整體最終目標＝「B 類別等於候選（含 T029 例外）＋其他類別等於正式」。
+
+### 6-3. 共用前置
+
+| ID | Issue | 階段 | 執行 | 內容 |
+|---|---|---|---|---|
+| T020d | #44 | code | cursor-cloud | ASM 語意比對工具（含 `--classes`、`--exclude`、方法層級 `--allow-methods`），CI 非阻斷 job 產出 `docs/server-semantic-gap.md`。 |
+| T020f | #45 | resource | codex-local | `reference/candidate-50635f7e.jar` 與 380 筆凍結 Java（`merge-inputs/50635f7e/`）入庫。 |
+| T020b-2 | #43（本 Issue 第 2 步） | design | Claude | #45 完成後，以 §6-4 的確定性程序從候選 JAR 產生固定批次，寫入 `docs/combat-merge/batches.json` 與 `docs/plans/issue-43.json`。 |
+
+### 6-4. 批次（第 3 版：相依分析結果改變做法）
+
+`tools/semantic-diff/plan_batches.py` 對候選 JAR（`50635f7e…`，`task/45`）與正式 JAR（`e1498871…`）做常數池分析，結果寫在 `docs/combat-merge/batches.json` 的 `dependency_analysis`：303 個外層類別有 16 個 SCC，**最大的一個有 282 類**；拿掉 ClientSession／Protocol／GameHub 後仍有 248 類互相依賴。候選中有 107 個既有 class entry（62 個外層類別）新增了共 518 個欄位／方法，171 個外層類別用到這些新成員。候選 JAR 中這 303 個外層類別共有 **1,384 個 class entry**（含內部類別）。
+
+結論：**不可能讓每批在 `src/main` 單獨編譯**，任何「依相依順序裝箱」或「提前帶入」都會退化成一整批。因此改成：
+
+- **每批只在暫存區工作**：移植好的原始碼放 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，不動 `src/main`。
+- **每批獨立驗證**：`javac --release 17 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔案>`。本批以外的類別由候選 JAR 提供；正式專有的 GmPolyMe／SelectionRecovery／SharedPresentationPackets 由 base 提供（候選在前）。編出的類別用 T020d 工具與候選比對。這樣**批次之間沒有順序依賴**，可以並行。
+- **最後一次落地**（B-land）：把 staged 全部搬進 `src/main`，一次合入。
+
+批次依 `class-diff.json` 分類固定分組（每批 ≤60，組內依名稱）：
+
+| 批次 | 類別數 | 分類 | 來源與做法 |
+|---|---:|---|---|
+| B01 | 17 | 新類別，asm-only | CFR 反編譯候選版，標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`，再修到能編譯且語意相同 |
+| B02–B05 | 51／51／51／48 | 新類別，完整 Java（含外層 Java＋內部 ASM 的混合者） | 從 `merge-inputs/50635f7e/sources/` 複製；混合者的內部類別由外層 Java 編出 |
+| B06 | 29 | 既有 `Battle*` | 三方移植：CFR 反編譯正式版與候選版取差異，套到 `src/main` 現有原始碼的複本（放 staged）；`src/main` 為 DECOMPILED 者可直接用候選反編譯版 |
+| B07 | 23 | 既有 `Combat*`、`ForcedCombat`、`*MaterialAction` | 同上 |
+| B08 | 30 | 其他既有類別（19 個 DECOMPILED） | 同上 |
+| B09 | 3 | ClientSession／Protocol／GameHub | 同上，加 T029 保留（§6-5） |
+
+每批清單（`batches.json` 的 `batches[]`）：
+- `classes`：外層類別。
+- `verify_entries`：**驗收範圍**。由候選 JAR 展開該批外層類別及其全部 `$` 內部類別（9 批合計 1,384）。批次輸出必須剛好是這些 entry（無缺漏、無多出），且全部與候選 SAME。
+- `history_entries`：T020a 的歷史差異列（合計 623），只供參考，不是驗收範圍。
+- `remove_entries`：正式有、候選沒有的同批 entry（目前 9 批皆 0）；B-land 時必須消失。
+
+`--classes` 一律傳 `verify_entries` 的完整清單，不依賴工具自動展開內部類別。
+
+### 6-5. 每批驗收（B01–B09）
+
+| 項目 | 規則 |
+|---|---|
+| 範圍 | 只新增／修改 `merge-inputs/50635f7e/staged/` 下該批類別的 `.java`，與 `docs/reports/issue-<N>.md`。不動 `src/main`、`pom.xml`。 |
+| 編譯 | 上述 `javac` 指令成功，指令與輸出附在報告。 |
+| 語意 | `semantic-diff --left <tmp 打包的 jar> --right reference/candidate-50635f7e.jar --classes <該批 verify_entries>`：每個 entry 都 SAME，且 tmp 中沒有清單外的 entry、清單內沒有缺少的 entry。 |
+| T029（只 B09） | `docs/combat-merge/t029-methods.txt` 列 8 個方法，由 `plan_batches.py` 以正規化 javap（去常數池編號、偏移、跳轉目標、例外表範圍）比對正式與候選後產生，分類記在 `batches.json` 的 `t029.methods`：<br>• **whole-formal（7）**：ClientSession `run()`、`exitRoom(Z)`、`sendRoomParticipant(J…ClientSession…)`、`sourcePoisonBody$useInventoryItemBeforeTravel`；Protocol `litoRoomParticipant`、`magicDollIcon`、`magicDollCustomIcon`。正式與候選在這些方法的差異**只有** T029 項（職業上限 6／4、opcode 123／250 與 `h(0)`、呼叫 SelectionRecovery.finish／SharedPresentationPackets.bluePotion／GmPolyMe.exitRoom），候選第二批沒有改動它們的戰鬥邏輯，所以整個方法採正式版。<br>• **formal-only-method（1）**：ClientSession `exitRoomBeforePolyMe(Z)`。正式版把原本的 `exitRoom(Z)` 本體改名為它，再讓 `exitRoom(Z)` 轉呼叫 `GmPolyMe.exitRoom`；已驗證正式 `exitRoomBeforePolyMe(Z)` 與候選 `exitRoom(Z)` 正規化後完全相同。<br>因此**沒有需要人工合成的方法**。驗收指令加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`：這 8 個方法必須與正式版 SAME（不在候選中的 `exitRoomBeforePolyMe` 只和正式比）；其他方法必須與候選 SAME。 |
+| 單元測試 | 不適用（未動 `src/main`）；在 B-land 統一處理。 |
+| 回歸 | 不適用，理由：暫存區不會被執行；與候選語意相同即代表行為等同候選。行為回歸在 B-land 後統一跑（§6-6）。 |
+
+### 6-6. 落地（B-land）與收尾（T020-close）
+
+- **B-land**（code，cursor-cloud）：依賴 B01–B09 全部完成。把 staged 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠。舊測試若因戰鬥行為改變而失敗，比照 T010 逐案判斷「測試過時／程式缺陷」並在報告列出，不得停用或跳過；`semantic-diff` 對 Maven 產物 `--classes <9 批 verify_entries 合併的 1,384 個 entry>` vs 候選全部 SAME（T029 依允許清單），並確認 `remove_entries` 不存在。
+- **T020-close**（test，codex-local）：依賴 B-land、#31（T020c）、**A 階段全部修補任務合併**（T020e 產生的清單全部 done）。先跑 T020d 總比對：Maven 產物中 1,384 個 B entry 對候選（T029 依允許清單對正式）、其餘 entry 對正式（`--exclude` 這 1,384 個 entry），兩者皆 0 差異；再對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24）加 `50635f7e` negative final frame 針對性案例。結果作為新基準，接 T030。
+
+### 6-7. 不在本批次的事
+
+- T021–T028：在合併後的 `src/main` 上逐項做，不再另疊候選層。
+- T029 的非 JAR 部分（`litoddraw.dll`、LTicon／LTdesc）：另由 T029 處理。
