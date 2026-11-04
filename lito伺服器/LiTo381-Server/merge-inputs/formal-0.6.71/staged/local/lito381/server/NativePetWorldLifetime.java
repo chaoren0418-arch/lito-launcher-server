@@ -1,209 +1,50 @@
-// ORIGINAL SOURCE aligned to base-0.6.71.jar (formal behavior restored from reference JAR)
+// ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/pet-world-publication/NativePetWorldLifetime.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
 package local.lito381.server;
-
-import java.io.IOException;
-import java.util.Map;
-
+import java.io.IOException;import java.util.*;
+/** WORLD-only native NPC binding. Battle encounter lifetime rules are separate. */
 final class NativePetWorldLifetime {
-   private static final String P = "local/lito381/server/";
-   private static final ThreadLocal<NativePetWorldLifetime.Target> ingress = new ThreadLocal<>();
-   private static final ThreadLocal<NativePetWorldLifetime.Target> current = new ThreadLocal<>();
-
-   private static ClassicWorldMonsterPopulation population(GameHub var0, int var1, int var2) {
-      return (ClassicWorldMonsterPopulation)CombatAccess.call(
-         var0, "classicWorldMonsterPopulation", "(II)Llocal/lito381/server/ClassicWorldMonsterPopulation;", var1, var2
-      );
-   }
-
-   private static Object actor(ClassicWorldMonsterPopulation var0, long var1) {
-      return var0 == null ? null : ((Map)CombatAccess.field(var0, "actors")).get(var1);
-   }
-
-   private static Object epoch(Object var0) {
-      return var0 == null ? null : NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(var0, "damagePoisonStatus"), false);
-   }
-
-   private static Object bindEpoch(Object var0) {
-      return var0 == null ? null : NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(var0, "damagePoisonStatus"), true);
-   }
-
-   private static NativePetWorldLifetime.Target take(ClientSession var0, byte[] var1) {
-      GameHub var2 = (GameHub)CombatAccess.field(var0, "hub");
-      int var3 = (Integer)CombatAccess.field(var0, "classicWorldMapId");
-      int var4 = (Integer)CombatAccess.field(var0, "classicWorldInstanceId");
-      long var5 = Protocol.spellSelector(var1).skillId() == 36
-         ? Protocol.attackSpellRequest(var1).targetObjectId()
-         : Protocol.objectSpellRequest(var1).targetObjectId();
-      synchronized (var2) {
-         ClassicWorldMonsterPopulation var8 = population(var2, var3, var4);
-         if (var8 == null) {
-            return new NativePetWorldLifetime.Target(var0, var2, var3, var4, var5, null, null);
-         } else {
-            NativePetWorldLifetime.Target var10000;
-            synchronized (var8) {
-               var10000 = new NativePetWorldLifetime.Target(var0, var2, var3, var4, var5, var8, actor(var8, var5));
-            }
-
-            return var10000;
-         }
-      }
-   }
-
-   static void dispatch(ClientSession var0, byte[] var1, NativeSelfCastAction.Task var2) throws IOException {
-      int var3 = Protocol.spellSelector(var1).skillId();
-      if ((var3 == 36 || var3 == 41) && String.valueOf(CombatAccess.field(var0, "phase")).equals("WORLD") && !var0.selectedCharacterName().isBlank()) {
-         NativePetWorldLifetime.Target var4 = ingress.get();
-         ingress.set(take(var0, var1));
-
-         try {
-            var2.run();
-         } finally {
-            if (var4 == null) {
-               ingress.remove();
-            } else {
-               ingress.set(var4);
-            }
-         }
-      } else {
-         var2.run();
-      }
-   }
-
-   static void run(ClientSession var0, byte[] var1, NativeSelfCastAction.Task var2) throws IOException {
-      if (!String.valueOf(CombatAccess.field(var0, "phase")).equals("WORLD")) {
-         NativeLightAction.commitPair(var0, var0, var2);
-      } else {
-         NativePetWorldLifetime.Target var3 = ingress.get();
-         NativePetWorldLifetime.Target var4 = var3 != null && var3.pc == var0 ? var3 : take(var0, var1);
-         ingress.remove();
-
-         try {
-            NativeLightAction.commitPair(
-               var0, var0, () -> NativeWorldMaterialPolicy.run(var0, var4.actor != null, Protocol.spellSelector(var1).skillId(), () -> {
-                  synchronized (var4.hub) {
-                     if (var4.population == null) {
-                        if (var4.valid()) {
-                           var2.run();
-                        }
-                     } else {
-                        synchronized (var4.population) {
-                           if (!var4.valid()) {
-                              return;
-                           }
-
-                           NativePetWorldLifetime.Target var4x = current.get();
-                           current.set(var4);
-
-                           try {
-                              var2.run();
-                           } finally {
-                              var4.publicationEpoch = bindEpoch(var4.actor);
-                              var4.publicationPresent = var4.actor != null && (Boolean)CombatAccess.field(var4.actor, "present");
-                              if (var4x == null) {
-                                 current.remove();
-                              } else {
-                                 current.set(var4x);
-                              }
-                           }
-                        }
-                     }
-                  }
-               })
-            );
-         } finally {
-            if (var3 == null) {
-               ingress.remove();
-            } else {
-               ingress.set(var3);
-            }
-         }
-      }
-   }
-
-   static boolean captureOutput(ClientSession var0, byte[] var1, String var2) {
-      NativePetWorldLifetime.Target var3 = current.get();
-      if (var3 == null) {
-         current.remove();
-         return false;
-      } else {
-         boolean var4 = var2.startsWith("S_EFFECT taming target=") || var2.startsWith("S_EFFECT create-zombie corpse=");
-         boolean var5 = var2.startsWith("S_REMOVE_OBJECT ") && (var2.endsWith(" reason=tamed") || var2.endsWith(" reason=create-zombie"));
-         if (!var4 && !var5) {
-            return false;
-         } else {
-            byte[] var6 = (byte[])var1.clone();
-            NativeLightAction.deferScoped(() -> {
-               if (var3.publication()) {
-                  var0.nativeSelfOriginalSend(var6, var2);
-               }
-            });
-            return true;
-         }
-      }
-   }
-
-   private NativePetWorldLifetime() {
-   }
-
-   private static final class Target {
-      final ClientSession pc;
-      final GameHub hub;
-      final NativePlayerCommit.Binding binding;
-      final int map;
-      final int instance;
-      final long id;
-      final Object epoch;
-      final ClassicWorldMonsterPopulation population;
-      final Object actor;
-      Object publicationEpoch;
-      boolean publicationPresent;
-
-      Target(ClientSession var1, GameHub var2, int var3, int var4, long var5, ClassicWorldMonsterPopulation var7, Object var8) {
-         this.pc = var1;
-         this.hub = var2;
-         this.map = var3;
-         this.instance = var4;
-         this.id = var5;
-         this.population = var7;
-         this.actor = var8;
-         this.binding = NativePlayerCommit.Binding.capture(var1);
-         this.epoch = NativePetWorldLifetime.bindEpoch(var8);
-         this.publicationEpoch = this.epoch;
-      }
-
-      boolean scene() {
-         return this.binding.matches(this.pc)
-            && !(Boolean)CombatAccess.field(this.pc, "sourceItemDisconnected")
-            && String.valueOf(CombatAccess.field(this.pc, "phase")).equals("WORLD")
-            && (Integer)CombatAccess.field(this.pc, "classicWorldMapId") == this.map
-            && (Integer)CombatAccess.field(this.pc, "classicWorldInstanceId") == this.instance;
-      }
-
-      boolean valid() {
-         return this.scene()
-            && NativePetWorldLifetime.population(this.hub, this.map, this.instance) == this.population
-            && NativePetWorldLifetime.actor(this.population, this.id) == this.actor
-            && NativePetWorldLifetime.epoch(this.actor) == this.epoch;
-      }
-
-      boolean publication() {
-         synchronized (this.hub) {
-            if (!this.scene() || NativePetWorldLifetime.population(this.hub, this.map, this.instance) != this.population) {
-               return false;
-            } else if (this.population == null) {
-               return true;
-            } else {
-               boolean var10000;
-               synchronized (this.population) {
-                  Object var3 = NativePetWorldLifetime.actor(this.population, this.id);
-                  var10000 = (var3 == this.actor || var3 == null)
-                     && NativePetWorldLifetime.epoch(this.actor) == this.publicationEpoch
-                     && (var3 == null || (Boolean)CombatAccess.field(var3, "present") == this.publicationPresent);
-               }
-
-               return var10000;
-            }
-         }
-      }
-   }
+ private static final String P="local/lito381/server/";
+ private static final ThreadLocal<Target> ingress=new ThreadLocal<>(),current=new ThreadLocal<>();
+ private static ClassicWorldMonsterPopulation population(GameHub hub,int map,int instance){return (ClassicWorldMonsterPopulation)CombatAccess.call(hub,"classicWorldMonsterPopulation","(II)L"+P+"ClassicWorldMonsterPopulation;",map,instance);}
+ private static Object actor(ClassicWorldMonsterPopulation population,long id){return population==null?null:((Map<?,?>)CombatAccess.field(population,"actors")).get(id);}
+ private static Object epoch(Object actor){return actor==null?null:NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(actor,"damagePoisonStatus"),false);}
+ private static Object bindEpoch(Object actor){return actor==null?null:NativeCombatAttacker.token((BattleTimedStatus)CombatAccess.field(actor,"damagePoisonStatus"),true);}
+ private static final class Target {
+  final ClientSession pc;final GameHub hub;final NativePlayerCommit.Binding binding;final int map,instance;final long id;final Object epoch;final ClassicWorldMonsterPopulation population;final Object actor;
+  Object publicationEpoch;boolean publicationPresent;
+  Target(ClientSession pc,GameHub hub,int map,int instance,long id,ClassicWorldMonsterPopulation population,Object actor){this.pc=pc;this.hub=hub;this.map=map;this.instance=instance;this.id=id;this.population=population;this.actor=actor;binding=NativePlayerCommit.Binding.capture(pc);epoch=bindEpoch(actor);publicationEpoch=epoch;}
+  boolean scene(){return binding.matches(pc)&&!(boolean)CombatAccess.field(pc,NativeDeItemApplication.DISCONNECTED)&&String.valueOf(CombatAccess.field(pc,"phase")).equals("WORLD")&&(int)CombatAccess.field(pc,"classicWorldMapId")==map&&(int)CombatAccess.field(pc,"classicWorldInstanceId")==instance;}
+  boolean valid(){return scene()&&population(hub,map,instance)==population&&actor(population,id)==actor&&epoch(actor)==epoch;}
+  boolean publication(){synchronized(hub){if(!scene()||population(hub,map,instance)!=population)return false;if(population==null)return true;synchronized(population){var live=actor(population,id);return (live==actor||live==null)&&epoch(actor)==publicationEpoch&&(live==null||((boolean)CombatAccess.field(live,"present"))==publicationPresent);}}}
+ }
+ private static Target take(ClientSession pc,byte[]packet){
+  var hub=(GameHub)CombatAccess.field(pc,"hub");int map=(int)CombatAccess.field(pc,"classicWorldMapId"),instance=(int)CombatAccess.field(pc,"classicWorldInstanceId");
+  long id=Protocol.spellSelector(packet).skillId()==36?Protocol.attackSpellRequest(packet).targetObjectId():Protocol.objectSpellRequest(packet).targetObjectId();
+  synchronized(hub){var population=population(hub,map,instance);if(population==null)return new Target(pc,hub,map,instance,id,null,null);synchronized(population){return new Target(pc,hub,map,instance,id,population,actor(population,id));}}
+ }
+ static void dispatch(ClientSession pc,byte[]packet,NativeSelfCastAction.Task body)throws IOException{
+  int skill=Protocol.spellSelector(packet).skillId();if((skill!=36&&skill!=41)||!String.valueOf(CombatAccess.field(pc,"phase")).equals("WORLD")||pc.selectedCharacterName().isBlank()){body.run();return;}
+  var prior=ingress.get();ingress.set(take(pc,packet));try{body.run();}finally{if(prior==null)ingress.remove();else ingress.set(prior);}
+ }
+ static void run(ClientSession pc,byte[]packet,NativeSelfCastAction.Task body)throws IOException{
+  if(!String.valueOf(CombatAccess.field(pc,"phase")).equals("WORLD")){NativeLightAction.commitPair(pc,pc,body);return;}
+  var inherited=ingress.get();var target=inherited!=null&&inherited.pc==pc?inherited:take(pc,packet);ingress.remove();
+  try{NativeLightAction.commitPair(pc,pc,()->{
+   // Preserve the established player -> hub -> population order. The native
+   // Light batch queues network publication until all these monitors exit.
+   NativeWorldMaterialPolicy.run(pc,target.actor!=null,Protocol.spellSelector(packet).skillId(),()->{
+   synchronized(target.hub){if(target.population==null){if(target.valid())body.run();return;}synchronized(target.population){
+    if(!target.valid())return;var prior=current.get();current.set(target);
+    try{body.run();}finally{target.publicationEpoch=bindEpoch(target.actor);target.publicationPresent=target.actor!=null&&(boolean)CombatAccess.field(target.actor,"present");if(prior==null)current.remove();else current.set(prior);}
+   }}
+   });
+  });}finally{if(inherited==null)ingress.remove();else ingress.set(inherited);}
+ }
+ static boolean captureOutput(ClientSession receiver,byte[]plain,String note){
+  var target=current.get();if(target==null){current.remove();return false;}
+  boolean effect=note.startsWith("S_EFFECT taming target=")||note.startsWith("S_EFFECT create-zombie corpse=");
+  boolean removal=note.startsWith("S_REMOVE_OBJECT ")&&(note.endsWith(" reason=tamed")||note.endsWith(" reason=create-zombie"));
+  if(!effect&&!removal)return false;byte[]snapshot=plain.clone();NativeLightAction.deferScoped(()->{if(target.publication())receiver.nativeSelfOriginalSend(snapshot,note);});return true;
+ }
+ private NativePetWorldLifetime(){}
 }

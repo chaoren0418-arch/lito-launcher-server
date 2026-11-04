@@ -24,7 +24,10 @@ public class NativeSourceSkillDelay {
    }
 
    private static ScheduledFuture<?> scheduleDelayTimer(NativeSourceSkillDelay.Lease var0, int var1) {
-      if (var0 != null && var0.isOwned()) {
+      if (var0 == null || !var0.isOwned()) {
+         SKIP_COUNT.incrementAndGet();
+         return null;
+      }
          try {
             SCHEDULED_COUNT.incrementAndGet();
             ScheduledFuture var2 = var0._cha.pcSchedule(() -> {
@@ -61,10 +64,6 @@ public class NativeSourceSkillDelay {
             _log.warn("L1SkillDelay timer submit failed: chaId={} time={}", var0.characterId(), var1, var4);
             return null;
          }
-      } else {
-         SKIP_COUNT.incrementAndGet();
-         return null;
-      }
    }
 
    public static void onSkillUse(NativeReuseActor var0, int var1) {
@@ -197,20 +196,19 @@ public class NativeSourceSkillDelay {
       }
 
       private void expire() {
-         if (this._owned && !this._terminal.get()) {
-            if (!this._committed.get()) {
-               this.reschedule(Math.max(1L, (long)this._delayMillis));
-            } else {
-               long var1 = this._deadlineNanos - System.nanoTime();
-               if (var1 > 0L) {
-                  long var3 = TimeUnit.NANOSECONDS.toMillis(var1 - 1L) + 1L;
-                  this.reschedule(var3);
-               } else {
-                  if (this._terminal.compareAndSet(false, true) && this._cha.clearSkillDelay(this._token)) {
-                     NativeSourceSkillDelay.DELAY_CLEAR_COUNT.incrementAndGet();
-                  }
-               }
-            }
+         if (!this._owned || this._terminal.get()) return;
+         if (!this._committed.get()) {
+            this.reschedule(Math.max(1L, (long)this._delayMillis));
+            return;
+         }
+         long remaining = this._deadlineNanos - System.nanoTime();
+         if (remaining > 0L) {
+            long millis = TimeUnit.NANOSECONDS.toMillis(remaining - 1L) + 1L;
+            this.reschedule(millis);
+            return;
+         }
+         if (this._terminal.compareAndSet(false, true) && this._cha.clearSkillDelay(this._token)) {
+            NativeSourceSkillDelay.DELAY_CLEAR_COUNT.incrementAndGet();
          }
       }
 
@@ -219,9 +217,9 @@ public class NativeSourceSkillDelay {
          ScheduledFuture var4 = NativeSourceSkillDelay.scheduleDelayTimer(this, var3);
          if (var4 == null) {
             NativeSourceSkillDelay._log.error("L1SkillDelay rebase timer unavailable; keeping gate closed: chaId={} delay={}", this.characterId(), var3);
-         } else {
-            this.installFuture(var4);
+            return;
          }
+         this.installFuture(var4);
       }
    }
 }

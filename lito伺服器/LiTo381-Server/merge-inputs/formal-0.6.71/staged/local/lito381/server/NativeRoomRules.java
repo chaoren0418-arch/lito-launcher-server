@@ -1,258 +1,141 @@
-// ORIGINAL SOURCE aligned to base-0.6.71.jar (formal behavior restored from reference JAR)
 package local.lito381.server;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.WeakHashMap;
+import java.sql.*;
+import java.util.*;
 
+/** SQL-owned default test room; ordinary room admission uses lito_battle_rule. */
 final class NativeRoomRules {
-   private static final Map<GameHub, NativeRoomRules.Policy> POLICIES = Collections.synchronizedMap(new WeakHashMap<>());
-
-   static Object get(Object var0, String var1) {
-      return DurableBattleSettlement.get(var0, var1);
-   }
-
-   static Object call(Object var0, String var1, Class<?>[] var2, Object... var3) {
-      return DurableBattleSettlement.call(var0, var1, var2, var3);
-   }
-
-   static NativeRoomRules.Policy read(ServerConfig var0) throws Exception {
-      Properties var1 = UnifiedConfiguration.read(var0.source());
-      String var2 = SharedDatabase.identifier(var1.getProperty("database.lito.database"));
-
-      NativeRoomRules.Policy var8;
-      try (
-         Connection var3 = DriverManager.getConnection(
-            var1.getProperty("database.jdbc.base.url") + var2 + var1.getProperty("database.jdbc.options"),
-            var1.getProperty("database.user"),
-            var1.getProperty("database.password")
-         );
-         Statement var4 = var3.createStatement();
-         ResultSet var5 = var4.executeQuery("SELECT policy_id,test_room_enabled,test_bot_enabled FROM lito_room_policy");
-      ) {
-         if (!var5.next() || var5.getInt(1) != 1) {
-            throw new IllegalStateException("lito_room_policy requires policy_id=1");
-         }
-
-         int var6 = var5.getInt(2);
-         int var7 = var5.getInt(3);
-         if (var6 != 0 && var6 != 1 || var7 != 0 && var7 != 1 || var5.next()) {
-            throw new IllegalStateException("invalid lito_room_policy; expected one row with boolean flags");
-         }
-
-         var8 = new NativeRoomRules.Policy(var6 == 1, var7 == 1);
-      }
-
-      return var8;
-   }
-
-   static void install(GameHub var0, ServerConfig var1, AccountRepository var2) {
-      try {
-         NativeRoomRules.Policy var3 = !(var2 instanceof MemoryAccountRepository) && var2 != null ? read(var1) : new NativeRoomRules.Policy(true, true);
-         if (var2 != null && !(var2 instanceof MemoryAccountRepository)) {
-            ResourceDatabase.load(var1);
-         }
-
-         POLICIES.put(var0, var3);
-      } catch (Exception var4) {
-         throw new IllegalStateException("Cannot load LiTo room policy or qualified resource tables; inspect the nested database error", var4);
-      }
-   }
-
-   static NativeRoomRules.Policy policy(GameHub var0) {
-      NativeRoomRules.Policy var1 = POLICIES.get(var0);
-      if (var1 == null) {
-         throw new IllegalStateException("room policy not initialized");
-      } else {
-         return var1;
-      }
-   }
-
-   static boolean enabled(GameHub var0) {
-      return policy(var0).testRoomEnabled();
-   }
-
-   static boolean testRoom(GameHub var0, long var1) {
-      if (var1 == 0L) {
-         return false;
-      } else {
-         synchronized (var0) {
-            for (Object var5 : ((Map)get(var0, "channels")).values()) {
-               if ((Long)get(var5, "defaultRoomId") == var1) {
-                  return true;
-               }
-            }
-
+    record Policy(boolean testRoomEnabled, boolean testBotEnabled) {}
+    private static final Map<GameHub, Policy> POLICIES = Collections.synchronizedMap(new WeakHashMap<>());
+    static Object get(Object o, String n) { return DurableBattleSettlement.get(o, n); }
+    static Object call(Object o, String n, Class<?>[] t, Object... a) {
+        return DurableBattleSettlement.call(o, n, t, a);
+    }
+    static Policy read(ServerConfig config) throws Exception {
+        var p = UnifiedConfiguration.read(config.source());
+        String database = SharedDatabase.identifier(p.getProperty("database.lito.database"));
+        try (var c = DriverManager.getConnection(p.getProperty("database.jdbc.base.url") + database
+                + p.getProperty("database.jdbc.options"), p.getProperty("database.user"), p.getProperty("database.password"));
+             var s = c.createStatement();
+             var r = s.executeQuery("SELECT policy_id,test_room_enabled,test_bot_enabled FROM lito_room_policy")) {
+            if (!r.next() || r.getInt(1) != 1) throw new IllegalStateException("lito_room_policy requires policy_id=1");
+            int enabled = r.getInt(2), bot = r.getInt(3);
+            if ((enabled != 0 && enabled != 1) || (bot != 0 && bot != 1) || r.next())
+                throw new IllegalStateException("invalid lito_room_policy; expected one row with boolean flags");
+            return new Policy(enabled == 1, bot == 1);
+        }
+    }
+    static void install(GameHub hub, ServerConfig config, AccountRepository accounts) {
+        try {
+            // Isolated protocol fixtures use no database and receive an explicit test policy.
+            Policy policy = accounts instanceof MemoryAccountRepository || accounts == null
+                    ? new Policy(true, true) : read(config);
+            if (accounts != null && !(accounts instanceof MemoryAccountRepository)) ResourceDatabase.load(config);
+            POLICIES.put(hub, policy);
+        } catch (Exception e) { throw new IllegalStateException("Cannot load LiTo room policy or qualified resource tables; inspect the nested database error", e); }
+    }
+    static Policy policy(GameHub hub) {
+        var p = POLICIES.get(hub);
+        if (p == null) throw new IllegalStateException("room policy not initialized");
+        return p;
+    }
+    static boolean enabled(GameHub hub) { return policy(hub).testRoomEnabled(); }
+    static boolean testRoom(GameHub hub, long id) {
+        if (id == 0) return false;
+        synchronized (hub) {
+            for (Object channel : ((Map<?, ?>) get(hub, "channels")).values())
+                if ((long) get(channel, "defaultRoomId") == id) return true;
             return false;
-         }
-      }
-   }
-
-   static boolean bot(BattleRules.Mode var0, GameHub var1, long var2) {
-      return var0 == BattleRules.Mode.DEATHMATCH && policy(var1).testBotEnabled() && testRoom(var1, var2);
-   }
-
-   static boolean bot(BattleRules.Mode var0, ClientSession var1) {
-      return bot(var0, (GameHub)get(var1, "hub"), (Long)get(var1, "currentRoomId"));
-   }
-
-   static boolean activeBot(GameHub var0, long var1) {
-      synchronized (var0) {
-         return bot(var0.roomRules(var1).mode(), var0, var1) && var0.roomCombatantCount(var1) == 1 && var0.roomVirtualPlayers(var1).isEmpty();
-      }
-   }
-
-   static boolean activeBot(ClientSession var0) {
-      return activeBot((GameHub)get(var0, "hub"), (Long)get(var0, "currentRoomId"));
-   }
-
-   static int botHp(Object var0, GameHub var1) {
-      return activeBot(var1, (Long)get(var0, "id")) ? 100 : 0;
-   }
-
-   static int botSingle(GameHub var0, long var1) {
-      return activeBot(var0, var1) ? 1 : -1;
-   }
-
-   static String refusal(GameHub var0, Object var1, List<ClientSession> var2) {
-      BattleRules.MatchState var3 = (BattleRules.MatchState)get(var1, "match");
-      BattleRules.RuleSet var4 = var3.rules();
-      long var5 = (Long)get(var1, "id");
-      if (!var4.mode().isBattleScene()) {
-         return "此模式不是戰鬥房。";
-      } else {
-         int var7 = var2.size();
-         if (activeBot(var0, var5)) {
-            Map var14 = (Map)get(var1, "forces");
-            return Integer.valueOf(1).equals(var14.get(var2.get(0))) ? "無法開始：單人測試請選紅隊，ArenaBot 位於藍隊。" : "";
-         } else {
-            int var8 = Math.max(var4.minimumPlayers(), var4.teamBased() ? 2 : 1);
-            if (var7 < var8) {
-               return "無法開始：至少需要 " + var8 + " 位參戰玩家，目前 " + var7 + " 位（觀戰者與假人不計）。";
-            } else {
-               if (var4.teamBased()) {
-                  Map var9 = (Map)get(var1, "forces");
-                  int var10 = 0;
-                  int var11 = 0;
-
-                  for (ClientSession var13 : var2) {
-                     if (Integer.valueOf(1).equals(var9.get(var13))) {
-                        var11++;
-                     } else {
-                        var10++;
-                     }
-                  }
-
-                  if (var10 == 0 || var11 == 0) {
-                     return "無法開始：紅隊與藍隊都必須有參戰玩家。";
-                  }
-
-                  GameHub.RoomSettings var15 = (GameHub.RoomSettings)get(var1, "settings");
-                  if ((var15.attributes() & 32) != 0 && var10 != var11) {
-                     return "無法開始：此房間要求雙方人數一致。";
-                  }
-
-                  if (var4.mode() == BattleRules.Mode.SIEGE_WAR
-                     && (Boolean)get(var0, "siegeRosterEnforced")
-                     && (var10 < 15 || var11 < 15 || var10 > 50 || var11 > 50)) {
-                     return "無法開始：攻城模式每隊需要 15～50 位參戰玩家。";
-                  }
-               }
-
-               return "";
-            }
-         }
-      }
-   }
-
-   static boolean rosterReady(GameHub var0, Object var1, List<ClientSession> var2) {
-      return refusal(var0, var1, var2).isEmpty();
-   }
-
-   static void feedback(ClientSession var0) {
-      GameHub var1 = (GameHub)get(var0, "hub");
-      long var2 = (Long)get(var0, "currentRoomId");
-      String var4;
-      synchronized (var1) {
-         Object var6 = ((Map)get(var1, "rooms")).get(var2);
-         if (var6 == null || !(Boolean)get(var0, "ready") || (Boolean)get(var6, "battleStarted")) {
-            return;
-         }
-
-         List var7 = (List)call(var6, "combatants", new Class[0]);
-         var4 = refusal(var1, var6, var7);
-      }
-
-      if (!var4.isEmpty()) {
-         call(var0, "sendEncrypted", new Class[]{byte[].class, String.class}, Protocol.systemMessage(9, var4), "S_MESSAGE room-start-refused");
-      }
-   }
-
-   static void joined(ClientSession var0) {
-      GameHub var1 = (GameHub)get(var0, "hub");
-      long var2 = (Long)get(var0, "currentRoomId");
-      if (testRoom(var1, var2)) {
-         call(
-            var0,
-            "sendEncrypted",
-            new Class[]{byte[].class, String.class},
-            Protocol.systemMessage(9, "Local Lobby 為測試房，不計勝敗戰績；死亡競賽單人測試會加入 ArenaBot。"),
-            "S_MESSAGE test-room"
-         );
-      }
-   }
-
-   static void restoreBot(ClientSession var0) {
-      GameHub var1 = (GameHub)get(var0, "hub");
-      long var2 = (Long)get(var0, "currentRoomId");
-      List<ClientSession> var4;
-      synchronized (var1) {
-         if (!activeBot(var1, var2)) {
-            return;
-         }
-
-         Object var6 = ((Map)get(var1, "rooms")).get(var2);
-         if (var6 == null || (Boolean)get(var6, "battleStarted") || (Boolean)get(var6, "resultPending")) {
-            return;
-         }
-
-         var4 = var1.roomMembers(var2);
-      }
-
-      for (ClientSession var10 : var4) {
-         if (get(var10, "phase").toString().equals("ROOM")) {
+        }
+    }
+    static boolean bot(BattleRules.Mode mode, GameHub hub, long id) {
+        return mode == BattleRules.Mode.DEATHMATCH && policy(hub).testBotEnabled() && testRoom(hub, id);
+    }
+    static boolean bot(BattleRules.Mode mode, ClientSession s) {
+        return bot(mode, (GameHub) get(s, "hub"), (long) get(s, "currentRoomId"));
+    }
+    static boolean activeBot(GameHub hub, long id) {
+        synchronized (hub) {
+            return bot(hub.roomRules(id).mode(), hub, id) && hub.roomCombatantCount(id) == 1
+                    && hub.roomVirtualPlayers(id).isEmpty();
+        }
+    }
+    static boolean activeBot(ClientSession s) {
+        return activeBot((GameHub) get(s, "hub"), (long) get(s, "currentRoomId"));
+    }
+    static int botHp(Object room, GameHub hub) {
+        return activeBot(hub, (long) get(room, "id")) ? GameHub.ARENA_BOT_MAX_HP : 0;
+    }
+    static int botSingle(GameHub hub, long id) { return activeBot(hub, id) ? 1 : -1; }
+    static String refusal(GameHub hub, Object room, List<ClientSession> players) {
+        var match = (BattleRules.MatchState) get(room, "match");
+        var rules = match.rules();
+        long id = (long) get(room, "id");
+        if (!rules.mode().isBattleScene()) return "此模式不是戰鬥房。";
+        int humans = players.size();
+        // Only the default deathmatch test room may substitute ArenaBot for an opponent.
+        if (activeBot(hub, id)) {
+            Map<?, ?> forces = (Map<?, ?>) get(room, "forces");
+            return Integer.valueOf(1).equals(forces.get(players.get(0)))
+                    ? "無法開始：單人測試請選紅隊，ArenaBot 位於藍隊。" : "";
+        }
+        int minimum = Math.max(rules.minimumPlayers(), rules.teamBased() ? 2 : 1);
+        if (humans < minimum) {
+            return "無法開始：至少需要 " + minimum + " 位參戰玩家，目前 "
+                    + humans + " 位（觀戰者與假人不計）。";
+        }
+        if (rules.teamBased()) {
+            Map<?, ?> forces = (Map<?, ?>) get(room, "forces");
+            int red = 0, blue = 0;
+            for (ClientSession p : players) { if (Integer.valueOf(1).equals(forces.get(p))) blue++; else red++; }
+            if (red == 0 || blue == 0) return "無法開始：紅隊與藍隊都必須有參戰玩家。";
+            var settings = (GameHub.RoomSettings) get(room, "settings");
+            if ((settings.attributes() & GameHub.RoomSettings.EQUAL_SIDES) != 0 && red != blue)
+                return "無法開始：此房間要求雙方人數一致。";
+            if (rules.mode() == BattleRules.Mode.SIEGE_WAR && (boolean) get(hub, "siegeRosterEnforced")
+                    && (red < 15 || blue < 15 || red > 50 || blue > 50))
+                return "無法開始：攻城模式每隊需要 15～50 位參戰玩家。";
+        }
+        return "";
+    }
+    static boolean rosterReady(GameHub hub, Object room, List<ClientSession> players) {
+        return refusal(hub, room, players).isEmpty();
+    }
+    static void feedback(ClientSession s) {
+        var hub = (GameHub) get(s, "hub"); long id = (long) get(s, "currentRoomId"); String message;
+        synchronized (hub) {
+            Object room = ((Map<?, ?>) get(hub, "rooms")).get(id);
+            if (room == null || !(boolean) get(s, "ready") || (boolean) get(room, "battleStarted")) return;
+            @SuppressWarnings("unchecked") var players = (List<ClientSession>) call(room, "combatants", new Class<?>[]{});
+            message = refusal(hub, room, players);
+        }
+        if (!message.isEmpty()) call(s, "sendEncrypted", new Class<?>[]{byte[].class, String.class},
+                Protocol.systemMessage(9, message), "S_MESSAGE room-start-refused");
+    }
+    static void joined(ClientSession s) {
+        var hub = (GameHub) get(s, "hub"); long id = (long) get(s, "currentRoomId");
+        if (testRoom(hub, id)) call(s, "sendEncrypted", new Class<?>[]{byte[].class, String.class},
+                Protocol.systemMessage(9, "Local Lobby 為測試房，不計勝敗戰績；死亡競賽單人測試會加入 ArenaBot。"), "S_MESSAGE test-room");
+    }
+    static void restoreBot(ClientSession departing) {
+        var hub = (GameHub) get(departing, "hub"); long id = (long) get(departing, "currentRoomId");
+        List<ClientSession> recipients;
+        synchronized (hub) {
+            if (!activeBot(hub, id)) return;
+            Object room = ((Map<?, ?>) get(hub, "rooms")).get(id);
+            if (room == null || (boolean) get(room, "battleStarted") || (boolean) get(room, "resultPending")) return;
+            recipients = hub.roomMembers(id);
+        }
+        for (var peer : recipients) {
+            if (!get(peer, "phase").toString().equals("ROOM")) continue;
             try {
-               call(
-                  var10,
-                  "sendRoomParticipant",
-                  new Class[]{long.class, String.class, Protocol.LitoForce.class, int.class, int.class, String.class, int.class, String.class},
-                  var2,
-                  "ArenaBot",
-                  Protocol.LitoForce.FORCE_1,
-                  0,
-                  0,
-                  "",
-                  0,
-                  "test-bot-restored"
-               );
-            } catch (IllegalStateException var8) {
-               if (!(var8.getCause() instanceof IOException)) {
-                  throw var8;
-               }
-
-               System.out.println("[LiTo] test-bot roster recipient disconnected");
+                call(peer, "sendRoomParticipant", new Class<?>[]{long.class,String.class,Protocol.LitoForce.class,
+                        int.class,int.class,String.class,int.class,String.class},
+                        id,"ArenaBot",Protocol.LitoForce.FORCE_1,0,0,"",0,"test-bot-restored");
+            } catch (IllegalStateException e) {
+                if (!(e.getCause() instanceof java.io.IOException)) throw e;
+                System.out.println("[LiTo] test-bot roster recipient disconnected");
             }
-         }
-      }
-   }
-
-   record Policy(boolean testRoomEnabled, boolean testBotEnabled) {
-   }
+        }
+    }
 }

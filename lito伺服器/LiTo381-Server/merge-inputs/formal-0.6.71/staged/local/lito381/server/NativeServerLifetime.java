@@ -1,4 +1,7 @@
 // DECOMPILED from base-0.6.71.jar, TODO review
+/*
+ * Decompiled with CFR 0.152.
+ */
 package local.lito381.server;
 
 import java.io.IOException;
@@ -17,73 +20,83 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import local.lito381.server.AccountRepository;
+import local.lito381.server.CaptureLog;
+import local.lito381.server.ClientSession;
+import local.lito381.server.CombatAccess;
+import local.lito381.server.GameHub;
+import local.lito381.server.LitoMapRepository;
+import local.lito381.server.NativePlayerLifetime;
 
 final class NativeServerLifetime {
-   static final ThreadLocal<NativeServerLifetime> main = new ThreadLocal<>();
-   static final ThreadLocal<NativeServerLifetime> session = new ThreadLocal<>();
-   static final ThreadLocal<NativeServerLifetime> accepting = new ThreadLocal<>();
-   static final ThreadLocal<Socket> acceptedSocket = new ThreadLocal<>();
-   static final Object UNOWNED = new Object();
-   static final ThreadLocal<ArrayDeque<Object>> packets = ThreadLocal.withInitial(ArrayDeque::new);
-   final GameHub hub;
-   final ExecutorService clients;
-   final List<ServerSocket> listeners;
-   final CaptureLog capture;
-   final LitoMapRepository maps;
-   final AccountRepository accounts;
-   final Object fence = new Object();
-   final Object control = new Object();
-   final Object resourceFence = new Object();
-   final Set<ClientSession> sessions = ConcurrentHashMap.newKeySet();
-   final Set<ServerSocket> sourceListeners = ConcurrentHashMap.newKeySet();
-   final Set<AutoCloseable> closeAttempted = Collections.newSetFromMap(new IdentityHashMap<>());
-   final CountDownLatch damageFinished = new CountDownLatch(1);
-   final Thread hook;
-   volatile ServerSocket login;
-   volatile boolean closing;
-   volatile boolean combatDone;
-   volatile boolean networkDone;
-   volatile boolean retryStarted;
-   volatile boolean finished;
-   int handlers;
-   int accepts;
+    static final ThreadLocal<NativeServerLifetime> main = new ThreadLocal();
+    static final ThreadLocal<NativeServerLifetime> session = new ThreadLocal();
+    static final ThreadLocal<NativeServerLifetime> accepting = new ThreadLocal();
+    static final ThreadLocal<Socket> acceptedSocket = new ThreadLocal();
+    static final Object UNOWNED = new Object();
+    static final ThreadLocal<ArrayDeque<Object>> packets = ThreadLocal.withInitial(ArrayDeque::new);
+    final GameHub hub;
+    final ExecutorService clients;
+    final List<ServerSocket> listeners;
+    final CaptureLog capture;
+    final LitoMapRepository maps;
+    final AccountRepository accounts;
+    final Object fence = new Object();
+    final Object control = new Object();
+    final Object resourceFence = new Object();
+    final Set<ClientSession> sessions = ConcurrentHashMap.newKeySet();
+    final Set<ServerSocket> sourceListeners = ConcurrentHashMap.newKeySet();
+    final Set<AutoCloseable> closeAttempted = Collections.newSetFromMap(new IdentityHashMap());
+    final CountDownLatch damageFinished = new CountDownLatch(1);
+    final Thread hook;
+    volatile ServerSocket login;
+    volatile boolean closing;
+    volatile boolean combatDone;
+    volatile boolean networkDone;
+    volatile boolean retryStarted;
+    volatile boolean finished;
+    int handlers;
+    int accepts;
 
-   private NativeServerLifetime(GameHub var1, ExecutorService var2, List<ServerSocket> var3, CaptureLog var4, LitoMapRepository var5, AccountRepository var6) {
-      this.hub = var1;
-      this.clients = var2;
-      this.listeners = var3;
-      this.capture = var4;
-      this.maps = var5;
-      this.accounts = var6;
-      this.hook = new Thread(() -> {
-         try {
-            this.closeApplication();
-            this.closeResources();
-         } catch (Throwable var2x) {
-            System.err.println("[LiTo] application shutdown fenced: " + var2x);
-         }
-      }, "LiTo-native-shutdown");
-   }
+    private NativeServerLifetime(GameHub gameHub, ExecutorService executorService, List<ServerSocket> list, CaptureLog captureLog, LitoMapRepository litoMapRepository, AccountRepository accountRepository) {
+        this.hub = gameHub;
+        this.clients = executorService;
+        this.listeners = list;
+        this.capture = captureLog;
+        this.maps = litoMapRepository;
+        this.accounts = accountRepository;
+        this.hook = new Thread(() -> {
+            try {
+                this.closeApplication();
+                this.closeResources();
+            }
+            catch (Throwable throwable) {
+                System.err.println("[LiTo] application shutdown fenced: " + String.valueOf(throwable));
+            }
+        }, "LiTo-native-shutdown");
+    }
 
-   static void install(GameHub var0, ExecutorService var1, List<ServerSocket> var2, CaptureLog var3, LitoMapRepository var4, AccountRepository var5) {
-      if (main.get() == null && NativePlayerLifetime.of(var0).application == null) {
-         NativeServerLifetime var6 = new NativeServerLifetime(var0, var1, var2, var3, var4, var5);
-         NativePlayerLifetime.of(var0).application = var6;
-         main.set(var6);
-         Runtime.getRuntime().addShutdownHook(var6.hook);
-      } else {
-         throw new IllegalStateException("native application already installed");
-      }
-   }
+    static void install(GameHub gameHub, ExecutorService executorService, List<ServerSocket> list, CaptureLog captureLog, LitoMapRepository litoMapRepository, AccountRepository accountRepository) {
+        if (main.get() != null || NativePlayerLifetime.of((GameHub)gameHub).application != null) {
+            throw new IllegalStateException("native application already installed");
+        }
+        NativeServerLifetime nativeServerLifetime = new NativeServerLifetime(gameHub, executorService, list, captureLog, litoMapRepository, accountRepository);
+        NativePlayerLifetime.of(gameHub).application = nativeServerLifetime;
+        main.set(nativeServerLifetime);
+        Runtime.getRuntime().addShutdownHook(nativeServerLifetime.hook);
+    }
 
-   static NativeServerLifetime of(GameHub var0) {
-      return NativePlayerLifetime.of(var0).application;
-   }
+    static NativeServerLifetime of(GameHub gameHub) {
+        return NativePlayerLifetime.of((GameHub)gameHub).application;
+    }
 
-   static NativeServerLifetime of(ClientSession var0) {
-      return of((GameHub)CombatAccess.field(var0, "hub"));
-   }
+    static NativeServerLifetime of(ClientSession clientSession) {
+        return NativeServerLifetime.of((GameHub)CombatAccess.field(clientSession, "hub"));
+    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static void login(GameHub var0, ServerSocket var1) {
       NativeServerLifetime var2 = of(var0);
       synchronized (var2.fence) {
@@ -96,6 +109,9 @@ final class NativeServerLifetime {
       }
    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static boolean addListener(List<ServerSocket> var0, ServerSocket var1) {
       NativeServerLifetime var2 = main.get();
       if (var2 == null) {
@@ -112,44 +128,50 @@ final class NativeServerLifetime {
       }
    }
 
-   static void bindSource(ServerSocket var0, SocketAddress var1, int var2, GameHub var3) throws IOException {
-      bind(of(var3), var0, var1, var2);
-   }
+    static void bindSource(ServerSocket serverSocket, SocketAddress socketAddress, int n, GameHub gameHub) throws IOException {
+        NativeServerLifetime.bind(NativeServerLifetime.of(gameHub), serverSocket, socketAddress, n);
+    }
 
-   static void bindMain(ServerSocket var0, SocketAddress var1, int var2) throws IOException {
-      bind(main.get(), var0, var1, var2);
-   }
+    static void bindMain(ServerSocket serverSocket, SocketAddress socketAddress, int n) throws IOException {
+        NativeServerLifetime.bind(main.get(), serverSocket, socketAddress, n);
+    }
 
-   private static void bind(NativeServerLifetime var0, ServerSocket var1, SocketAddress var2, int var3) throws IOException {
-      if (var0 == null) {
-         bindNative(var1, var2, var3);
-      } else {
-         synchronized (var0.fence) {
-            if (var0.closing) {
-               closeSocketQuiet(var1);
-               throw new IOException("listener admission closed");
-            } else {
-               bindNative(var1, var2, var3);
-               var0.sourceListeners.add(var1);
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private static void bind(NativeServerLifetime nativeServerLifetime, ServerSocket serverSocket, SocketAddress socketAddress, int n) throws IOException {
+        if (nativeServerLifetime == null) {
+            NativeServerLifetime.bindNative(serverSocket, socketAddress, n);
+            return;
+        }
+        synchronized (nativeServerLifetime.fence) {
+            if (nativeServerLifetime.closing) {
+                NativeServerLifetime.closeSocketQuiet(serverSocket);
+                throw new IOException("listener admission closed");
             }
-         }
-      }
-   }
+            NativeServerLifetime.bindNative(serverSocket, socketAddress, n);
+            nativeServerLifetime.sourceListeners.add(serverSocket);
+        }
+    }
 
-   private static void bindNative(ServerSocket var0, SocketAddress var1, int var2) throws IOException {
-      try {
-         var0.bind(var1, var2);
-      } catch (IOException var6) {
-         try {
-            var0.close();
-         } catch (IOException var5) {
-            var6.addSuppressed(var5);
-         }
+    private static void bindNative(ServerSocket serverSocket, SocketAddress socketAddress, int n) throws IOException {
+        try {
+            serverSocket.bind(socketAddress, n);
+        }
+        catch (IOException iOException) {
+            try {
+                serverSocket.close();
+            }
+            catch (IOException iOException2) {
+                iOException.addSuppressed(iOException2);
+            }
+            throw iOException;
+        }
+    }
 
-         throw var6;
-      }
-   }
-
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static Socket acceptSocket(ServerSocket var0, GameHub var1) throws IOException {
       NativeServerLifetime var2 = of(var1);
       Socket var3 = var0.accept();
@@ -181,57 +203,66 @@ final class NativeServerLifetime {
       }
    }
 
-   static Future<?> submitAccepted(ExecutorService var0, Runnable var1) {
-      boolean var2 = false;
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static Future<?> submitAccepted(ExecutorService executorService, Runnable runnable) {
+        boolean bl = false;
+        try {
+            Future<?> future = executorService.submit(runnable);
+            bl = true;
+            return future;
+        }
+        finally {
+            NativeServerLifetime.leaveAccept(bl);
+        }
+    }
 
-      Future var4;
-      try {
-         Future var3 = var0.submit(var1);
-         var2 = true;
-         var4 = var3;
-      } finally {
-         leaveAccept(var2);
-      }
+    static void abortAccept() {
+        NativeServerLifetime.leaveAccept(false);
+    }
 
-      return var4;
-   }
-
-   static void abortAccept() {
-      leaveAccept(false);
-   }
-
-   private static void leaveAccept(boolean var0) {
-      NativeServerLifetime var1 = accepting.get();
-      if (var1 != null) {
-         Socket var2 = acceptedSocket.get();
-         accepting.remove();
-         acceptedSocket.remove();
-         if (!var0) {
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private static void leaveAccept(boolean bl) {
+        NativeServerLifetime nativeServerLifetime = accepting.get();
+        if (nativeServerLifetime == null) {
+            return;
+        }
+        Socket socket = acceptedSocket.get();
+        accepting.remove();
+        acceptedSocket.remove();
+        if (!bl) {
             try {
-               var2.close();
-            } catch (IOException var6) {
+                socket.close();
             }
-         }
-
-         synchronized (var1.fence) {
-            if (--var1.accepts < 0) {
-               throw new IllegalStateException("accepted socket receipt underflow");
-            } else {
-               var1.fence.notifyAll();
+            catch (IOException iOException) {
+                // empty catch block
             }
-         }
-      }
-   }
+        }
+        synchronized (nativeServerLifetime.fence) {
+            if (--nativeServerLifetime.accepts < 0) {
+                throw new IllegalStateException("accepted socket receipt underflow");
+            }
+            nativeServerLifetime.fence.notifyAll();
+        }
+    }
 
-   static void closeSocketQuiet(ServerSocket var0) {
-      if (var0 != null) {
-         try {
-            var0.close();
-         } catch (Exception var2) {
-         }
-      }
-   }
+    static void closeSocketQuiet(ServerSocket serverSocket) {
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            }
+            catch (Exception exception) {
+                // empty catch block
+            }
+        }
+    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static boolean enterSession(ClientSession var0) {
       NativeServerLifetime var1 = of(var0);
       if (var1 == null) {
@@ -254,6 +285,9 @@ final class NativeServerLifetime {
       }
    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static void leaveSession(ClientSession var0) {
       NativeServerLifetime var1 = session.get();
       if (var1 != null) {
@@ -265,6 +299,9 @@ final class NativeServerLifetime {
       }
    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static boolean enterPacket(ClientSession var0) {
       NativeServerLifetime var1 = of(var0);
       if (var1 == null) {
@@ -285,6 +322,9 @@ final class NativeServerLifetime {
       }
    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    static void leavePacket() {
       ArrayDeque var0 = packets.get();
       Object var1 = var0.pop();
@@ -303,97 +343,97 @@ final class NativeServerLifetime {
       }
    }
 
-   static void awaitCleanup(ClientSession var0) {
-      NativeServerLifetime var1 = of(var0);
-      if (var1 != null && var1.closing) {
-         boolean var2 = false;
-
-         while (true) {
+    static void awaitCleanup(ClientSession clientSession) {
+        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(clientSession);
+        if (nativeServerLifetime == null || !nativeServerLifetime.closing) {
+            return;
+        }
+        boolean bl = false;
+        while (true) {
             try {
-               var1.damageFinished.await();
-               break;
-            } catch (InterruptedException var4) {
-               var2 = true;
+                nativeServerLifetime.damageFinished.await();
             }
-         }
-
-         if (var2) {
+            catch (InterruptedException interruptedException) {
+                bl = true;
+                continue;
+            }
+            break;
+        }
+        if (bl) {
             Thread.currentThread().interrupt();
-         }
-      }
-   }
+        }
+    }
 
-   static void closeSessionSocket(Socket var0, ClientSession var1) throws IOException {
-      awaitCleanup(var1);
-      var0.close();
-   }
+    static void closeSessionSocket(Socket socket, ClientSession clientSession) throws IOException {
+        NativeServerLifetime.awaitCleanup(clientSession);
+        socket.close();
+    }
 
-   static void closeHub(GameHub var0) {
-      abortAccept();
-      NativeServerLifetime var1 = of(var0);
-      if (var1 == null) {
-         var0.close();
-      } else {
-         var1.ensureExternal();
+    static void closeHub(GameHub gameHub) {
+        NativeServerLifetime.abortAccept();
+        NativeServerLifetime nativeServerLifetime = NativeServerLifetime.of(gameHub);
+        if (nativeServerLifetime == null) {
+            gameHub.close();
+            return;
+        }
+        nativeServerLifetime.ensureExternal();
+        try {
+            nativeServerLifetime.closeApplication();
+        }
+        catch (RuntimeException runtimeException) {
+            nativeServerLifetime.retry();
+            throw runtimeException;
+        }
+    }
 
-         try {
-            var1.closeApplication();
-         } catch (RuntimeException var3) {
-            var1.retry();
-            throw var3;
-         }
-      }
-   }
+    static void closeResource(AutoCloseable autoCloseable) throws Exception {
+        NativeServerLifetime nativeServerLifetime = main.get();
+        if (nativeServerLifetime == null) {
+            autoCloseable.close();
+            return;
+        }
+        nativeServerLifetime.closeOwned(autoCloseable);
+    }
 
-   static void closeResource(AutoCloseable var0) throws Exception {
-      NativeServerLifetime var1 = main.get();
-      if (var1 == null) {
-         var0.close();
-      } else {
-         var1.closeOwned(var0);
-      }
-   }
-
-   static List<Runnable> finishClients(ExecutorService var0) {
-      NativeServerLifetime var1 = main.get();
-      if (var1 == null) {
-         return var0.shutdownNow();
-      } else {
-         List var2;
-         try {
-            if (!var1.networkDone) {
-               var1.retry();
+    static List<Runnable> finishClients(ExecutorService executorService) {
+        NativeServerLifetime nativeServerLifetime = main.get();
+        if (nativeServerLifetime == null) {
+            return executorService.shutdownNow();
+        }
+        try {
+            if (!nativeServerLifetime.networkDone) {
+                nativeServerLifetime.retry();
             } else {
-               var1.releaseIfDone();
+                nativeServerLifetime.releaseIfDone();
             }
-
-            var2 = List.of();
-         } finally {
+            return List.of();
+        }
+        finally {
             main.remove();
-         }
+        }
+    }
 
-         return var2;
-      }
-   }
-
-   private void ensureExternal() {
-      if (accepting.get() != this && session.get() != this && !packets.get().contains(this) && !NativePlayerLifetime.onWorker(this.hub)) {
-         if (packets.get().isEmpty()) {
+    private void ensureExternal() {
+        if (accepting.get() == this || session.get() == this || packets.get().contains(this) || NativePlayerLifetime.onWorker(this.hub)) {
+            throw new IllegalStateException("application cannot synchronously close from its own accept/session/packet/combat worker");
+        }
+        if (packets.get().isEmpty()) {
             packets.remove();
-         }
-      } else {
-         throw new IllegalStateException("application cannot synchronously close from its own accept/session/packet/combat worker");
-      }
-   }
+        }
+    }
 
-   boolean safe() {
-      return this.combatDone && this.networkDone && this.clients.isTerminated();
-   }
+    boolean safe() {
+        return this.combatDone && this.networkDone && this.clients.isTerminated();
+    }
 
-   private void closeApplication() {
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private void closeApplication() {
       this.ensureExternal();
       synchronized (this.control) {
-         if (!this.networkDone) {
+         if (this.networkDone) return;
+
             synchronized (this.fence) {
                this.closing = true;
                closeSocketQuiet(this.login);
@@ -475,61 +515,71 @@ final class NativeServerLifetime {
                   Thread.currentThread().interrupt();
                }
             }
-         }
+
       }
    }
 
-   private void closeOwned(AutoCloseable var1) throws Exception {
-      synchronized (this.resourceFence) {
-         if (!this.safe()) {
-            throw new IllegalStateException("accepted work/session cleanup remains active; resource close fenced");
-         } else if (this.closeAttempted.add(var1)) {
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private void closeOwned(AutoCloseable autoCloseable) throws Exception {
+        synchronized (this.resourceFence) {
+            if (!this.safe()) {
+                throw new IllegalStateException("accepted work/session cleanup remains active; resource close fenced");
+            }
+            if (!this.closeAttempted.add(autoCloseable)) {
+                return;
+            }
             try {
-               var1.close();
-            } finally {
-               this.releaseIfDone();
+                autoCloseable.close();
             }
-         }
-      }
-   }
-
-   private void closeResources() throws Exception {
-      Exception var1 = null;
-
-      for (AutoCloseable var5 : new AutoCloseable[]{this.capture, this.maps, this.accounts}) {
-         try {
-            this.closeOwned(var5);
-         } catch (Exception var7) {
-            if (var1 == null) {
-               var1 = var7;
-            } else {
-               var1.addSuppressed(var7);
+            finally {
+                this.releaseIfDone();
             }
-         }
-      }
+        }
+    }
 
-      if (var1 != null) {
-         throw var1;
-      }
-   }
+    private void closeResources() throws Exception {
+        Exception exception = null;
+        for (AutoCloseable autoCloseable : new AutoCloseable[]{this.capture, this.maps, this.accounts}) {
+            try {
+                this.closeOwned(autoCloseable);
+            }
+            catch (Exception exception2) {
+                if (exception == null) {
+                    exception = exception2;
+                    continue;
+                }
+                exception.addSuppressed(exception2);
+            }
+        }
+        if (exception != null) {
+            throw exception;
+        }
+    }
 
-   private void releaseIfDone() {
-      synchronized (this.resourceFence) {
-         if (this.safe()
-            && this.closeAttempted.contains(this.capture)
-            && this.closeAttempted.contains(this.maps)
-            && this.closeAttempted.contains(this.accounts)) {
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    private void releaseIfDone() {
+        synchronized (this.resourceFence) {
+            if (!(this.safe() && this.closeAttempted.contains(this.capture) && this.closeAttempted.contains(this.maps) && this.closeAttempted.contains(this.accounts))) {
+                return;
+            }
             this.finished = true;
-            NativePlayerLifetime.of(this.hub).application = null;
-
+            NativePlayerLifetime.of((GameHub)this.hub).application = null;
             try {
-               Runtime.getRuntime().removeShutdownHook(this.hook);
-            } catch (IllegalStateException var4) {
+                Runtime.getRuntime().removeShutdownHook(this.hook);
             }
-         }
-      }
-   }
+            catch (IllegalStateException illegalStateException) {
+                // empty catch block
+            }
+        }
+    }
 
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
    private void retry() {
       synchronized (this.fence) {
          if (this.retryStarted || this.finished) {

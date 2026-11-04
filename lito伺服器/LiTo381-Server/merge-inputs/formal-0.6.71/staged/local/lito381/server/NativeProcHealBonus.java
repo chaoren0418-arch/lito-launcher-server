@@ -1,4 +1,7 @@
 // DECOMPILED from base-0.6.71.jar, TODO review
+/*
+ * Decompiled with CFR 0.152.
+ */
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -10,89 +13,80 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import local.lito381.server.ServerConfig;
+import local.lito381.server.SharedDatabase;
+import local.lito381.server.UnifiedConfiguration;
 
 final class NativeProcHealBonus {
-   private static volatile NativeProcHealBonus.Catalog current;
+    private static volatile Catalog current;
 
-   static NativeProcHealBonus.Catalog read(Connection var0) throws SQLException {
-      LinkedHashMap var1 = new LinkedHashMap();
-      LinkedHashMap var2 = new LinkedHashMap();
-      boolean var3 = false;
+    NativeProcHealBonus() {
+    }
 
-      try (
-         Statement var4 = var0.createStatement();
-         ResultSet var5 = var4.executeQuery("SELECT * FROM `角色_智力成長`");
-      ) {
-         ResultSetMetaData var6 = var5.getMetaData();
-
-         for (int var7 = 1; var7 <= var6.getColumnCount(); var7++) {
-            if (var6.getColumnLabel(var7).equals("治癒骰加成")) {
-               var3 = true;
+    static Catalog read(Connection connection) throws SQLException {
+        LinkedHashMap<Integer, Integer> linkedHashMap = new LinkedHashMap<Integer, Integer>();
+        LinkedHashMap<Integer, Integer> linkedHashMap2 = new LinkedHashMap<Integer, Integer>();
+        boolean bl = false;
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM `\u89d2\u8272_\u667a\u529b\u6210\u9577`");){
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            for (int n = 1; n <= resultSetMetaData.getColumnCount(); ++n) {
+                if (resultSetMetaData.getColumnLabel(n).equals("\u6cbb\u7652\u9ab0\u52a0\u6210")) { bl = true; }
             }
-         }
+            while (resultSet.next()) {
+                int n = resultSet.getInt("id");
+                int n2 = resultSet.getInt("\u9b54\u6cd5\u52a0\u6210");
+                linkedHashMap.put(n, n2);
+                linkedHashMap2.put(n, bl ? resultSet.getInt("\u6cbb\u7652\u9ab0\u52a0\u6210") : Math.min(n2, 10));
+            }
+        }
+        return new Catalog(linkedHashMap, linkedHashMap2, bl);
+    }
 
-         while (var5.next()) {
-            int var13 = var5.getInt("id");
-            int var8 = var5.getInt("魔法加成");
-            var1.put(var13, var8);
-            var2.put(var13, var3 ? var5.getInt("治癒骰加成") : Math.min(var8, 10));
-         }
-      }
-
-      return new NativeProcHealBonus.Catalog(var1, var2, var3);
-   }
-
-   static synchronized void load(ServerConfig var0) throws Exception {
-      if (current == null) {
-         Properties var1 = UnifiedConfiguration.read(var0.source());
-         String var2 = SharedDatabase.identifier(var1.getProperty("database.static.database"));
-
-         NativeProcHealBonus.Catalog var3;
-         try (Connection var4 = DriverManager.getConnection(
-               var1.getProperty("database.jdbc.base.url") + var2 + var1.getProperty("database.jdbc.options"),
-               var1.getProperty("database.user"),
-               var1.getProperty("database.password")
-            )) {
-            var4.setReadOnly(true);
-            var4.setAutoCommit(false);
-            var4.setTransactionIsolation(4);
-
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static synchronized void load(ServerConfig serverConfig) throws Exception {
+        if (current != null) {
+            return;
+        }
+        Properties properties = UnifiedConfiguration.read(serverConfig.source());
+        String string = SharedDatabase.identifier(properties.getProperty("database.static.database"));
+        Catalog catalog;
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
+            connection.setReadOnly(true);
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(4);
             try {
-               var3 = read(var4);
-            } finally {
-               var4.rollback();
+                catalog = NativeProcHealBonus.read(connection);
             }
-         }
+            finally {
+                connection.rollback();
+            }
+        }
+        current = catalog;
+    }
 
-         current = var3;
-      }
-   }
+    static Catalog catalog() {
+        Catalog catalog = current;
+        if (catalog == null) {
+            throw new IllegalStateException("Proc healing INT catalog not loaded at startup");
+        }
+        return catalog;
+    }
 
-   static NativeProcHealBonus.Catalog catalog() {
-      NativeProcHealBonus.Catalog var0 = current;
-      if (var0 == null) {
-         throw new IllegalStateException("Proc healing INT catalog not loaded at startup");
-      } else {
-         return var0;
-      }
-   }
+    record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {
+        Catalog {
+            magic = Map.copyOf(magic);
+            healing = Map.copyOf(healing);
+        }
 
-   record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {
-      Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {
-         magic = Map.copyOf(magic);
-         healing = Map.copyOf(healing);
-         this.magic = magic;
-         this.healing = healing;
-         this.explicitColumn = explicitColumn;
-      }
-
-      int bonus(int var1) {
-         if (var1 < 1) {
-            return -2;
-         } else {
-            int var2 = Math.min(var1, 127);
-            return this.healing.getOrDefault(var2, Math.min(this.magic.getOrDefault(var2, 0), 10));
-         }
-      }
-   }
+        int bonus(int n) {
+            if (n < 1) {
+                return -2;
+            }
+            int n2 = Math.min(n, 127);
+            return this.healing.getOrDefault(n2, Math.min(this.magic.getOrDefault(n2, 0), 10));
+        }
+    }
 }

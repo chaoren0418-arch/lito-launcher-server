@@ -6,7 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 final class NativePcActionAuthority {
    static <T> T item(ClientSession var0, NativeDeItemTransaction.Operation<T> var1) throws IOException {
-      Object var6;
       try (NativePlayerActionScope.Ticket var2 = NativePlayerActionScope.enter(var0)) {
          BattleTimedStatus var3 = CombatPoisonAtomic.status(var0);
          ReentrantLock var4 = var0.nativePlayerActionLock();
@@ -14,7 +13,7 @@ final class NativePcActionAuthority {
 
          try {
             synchronized (var3) {
-               var6 = NativeDeItemTransaction.nativeCall(var0, var1);
+               return NativeDeItemTransaction.nativeCall(var0, var1);
             }
          } finally {
             var4.unlock();
@@ -22,7 +21,6 @@ final class NativePcActionAuthority {
          }
       }
 
-      return (T)var6;
    }
 
    private NativePcActionAuthority() {

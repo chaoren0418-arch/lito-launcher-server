@@ -38,13 +38,12 @@ final class NativeProcNpcState {
    }
 
    static void activate(BattleTimedStatus var0, int var1, long var2, int var4) {
-      if (Set.of(164, 170, 173, 4012).contains(var1) && var2 >= 0L && var4 > 0) {
-         long var5 = Math.addExact(var2, TimeUnit.SECONDS.toNanos(var4));
-         synchronized (var0) {
-            owned(var0).deadlines.put(var1, var5);
-         }
-      } else {
+      if (!Set.of(164, 170, 173, 4012).contains(var1) || var2 < 0L || var4 <= 0) {
          throw new IllegalArgumentException("unsupported NPC Proc modifier");
+      }
+      long var5 = Math.addExact(var2, TimeUnit.SECONDS.toNanos(var4));
+      synchronized (var0) {
+         owned(var0).deadlines.put(var1, var5);
       }
    }
 

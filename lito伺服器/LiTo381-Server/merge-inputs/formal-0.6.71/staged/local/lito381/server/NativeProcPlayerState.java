@@ -1,107 +1,133 @@
 // DECOMPILED from base-0.6.71.jar, TODO review
+/*
+ * Decompiled with CFR 0.152.
+ */
 package local.lito381.server;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import local.lito381.server.BattleTimedStatus;
+import local.lito381.server.ClientSession;
+import local.lito381.server.CombatAccess;
+import local.lito381.server.CombatPoisonAtomic;
+import local.lito381.server.NativePlayerCommit;
 
 final class NativeProcPlayerState {
-   private NativeProcPlayerState.Identity identity;
-   private final Map<Integer, Long> modifiers = new HashMap<>();
-   private boolean show = true;
+    private Identity identity;
+    private final Map<Integer, Long> modifiers = new HashMap<Integer, Long>();
+    private boolean show = true;
 
-   private static NativeProcPlayerState owned(ClientSession var0) {
-      BattleTimedStatus var1 = CombatPoisonAtomic.status(var0);
-      if (!Thread.holdsLock(var1)) {
-         throw new IllegalStateException("Proc state requires player status monitor");
-      } else {
-         NativeProcPlayerState var2 = (NativeProcPlayerState)CombatAccess.field(var1, "sourceProcPlayerState");
-         if (var2 == null) {
-            var2 = new NativeProcPlayerState();
-            CombatAccess.set(var1, "sourceProcPlayerState", var2);
-         }
+    NativeProcPlayerState() {
+    }
 
-         NativeProcPlayerState.Identity var3 = new NativeProcPlayerState.Identity(
-            var0.sourceCharacterIdentity(), var0.sourceAccountIdentity(), var0.selectedCharacterName()
-         );
-         if (!var3.equals(var2.identity)) {
-            var2.modifiers.clear();
-            var2.show = true;
-            var2.identity = var3;
-         }
+    private static NativeProcPlayerState owned(ClientSession clientSession) {
+        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+        if (!Thread.holdsLock(battleTimedStatus)) {
+            throw new IllegalStateException("Proc state requires player status monitor");
+        }
+        NativeProcPlayerState nativeProcPlayerState = (NativeProcPlayerState)CombatAccess.field(battleTimedStatus, "sourceProcPlayerState");
+        if (nativeProcPlayerState == null) {
+            nativeProcPlayerState = new NativeProcPlayerState();
+            CombatAccess.set(battleTimedStatus, "sourceProcPlayerState", nativeProcPlayerState);
+        }
+        Identity identity = new Identity(clientSession.sourceCharacterIdentity(), clientSession.sourceAccountIdentity(), clientSession.selectedCharacterName());
+        if (!identity.equals(nativeProcPlayerState.identity)) {
+            nativeProcPlayerState.modifiers.clear();
+            nativeProcPlayerState.show = true;
+            nativeProcPlayerState.identity = identity;
+        }
+        return nativeProcPlayerState;
+    }
 
-         return var2;
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean active(ClientSession clientSession, int n, long l) {
+        BattleTimedStatus status = CombatPoisonAtomic.status(clientSession);
+        synchronized (status) {
+            NativeProcPlayerState nativeProcPlayerState = NativeProcPlayerState.owned(clientSession);
+            nativeProcPlayerState.modifiers.values().removeIf(l2 -> l >= l2);
+            return nativeProcPlayerState.modifiers.containsKey(n);
+        }
+    }
 
-   static boolean active(ClientSession var0, int var1, long var2) {
-      BattleTimedStatus var4 = CombatPoisonAtomic.status(var0);
-      synchronized (var4) {
-         NativeProcPlayerState var6 = owned(var0);
-         var6.modifiers.values().removeIf(var2x -> var2 >= var2x);
-         return var6.modifiers.containsKey(var1);
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean remove(ClientSession clientSession, int n) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
+            return NativeProcPlayerState.owned((ClientSession)clientSession).modifiers.remove(n) != null;
+        }
+    }
 
-   static boolean remove(ClientSession var0, int var1) {
-      synchronized (CombatPoisonAtomic.status(var0)) {
-         return owned(var0).modifiers.remove(var1) != null;
-      }
-   }
-
-   static boolean activate(ClientSession var0, NativePlayerCommit.Binding var1, int var2, long var3, int var5) {
-      if (Set.of(164, 170, 173, 4012).contains(var2) && var3 >= 0L && var5 > 0) {
-         long var6 = Math.addExact(var3, TimeUnit.SECONDS.toNanos(var5));
-         synchronized (CombatPoisonAtomic.status(var0)) {
-            if (var1 != null && var1.matches(var0)) {
-               owned(var0).modifiers.put(var2, var6);
-               return true;
-            } else {
-               return false;
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean activate(ClientSession clientSession, NativePlayerCommit.Binding binding, int n, long l, int n2) {
+        if (!Set.of(Integer.valueOf(164), Integer.valueOf(170), Integer.valueOf(173), Integer.valueOf(4012)).contains(n) || l < 0L || n2 <= 0) {
+            throw new IllegalArgumentException("unsupported Proc healing modifier");
+        }
+        long l2 = Math.addExact(l, TimeUnit.SECONDS.toNanos(n2));
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
+            if (binding == null || !binding.matches(clientSession)) {
+                return false;
             }
-         }
-      } else {
-         throw new IllegalArgumentException("unsupported Proc healing modifier");
-      }
-   }
+            NativeProcPlayerState.owned((ClientSession)clientSession).modifiers.put(n, l2);
+            return true;
+        }
+    }
 
-   static void show(ClientSession var0, boolean var1) {
-      synchronized (CombatPoisonAtomic.status(var0)) {
-         owned(var0).show = var1;
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static void show(ClientSession clientSession, boolean bl) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
+            NativeProcPlayerState.owned((ClientSession)clientSession).show = bl;
+        }
+    }
 
-   static boolean show(ClientSession var0) {
-      synchronized (CombatPoisonAtomic.status(var0)) {
-         return owned(var0).show;
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static boolean show(ClientSession clientSession) {
+        synchronized (CombatPoisonAtomic.status(clientSession)) {
+            return NativeProcPlayerState.owned((ClientSession)clientSession).show;
+        }
+    }
 
-   static void clear(BattleTimedStatus var0) {
-      synchronized (var0) {
-         NativeProcPlayerState var2 = (NativeProcPlayerState)CombatAccess.field(var0, "sourceProcPlayerState");
-         if (var2 != null) {
-            var2.modifiers.clear();
-         }
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static void clear(BattleTimedStatus battleTimedStatus) {
+        synchronized (battleTimedStatus) {
+            NativeProcPlayerState nativeProcPlayerState = (NativeProcPlayerState)CombatAccess.field(battleTimedStatus, "sourceProcPlayerState");
+            if (nativeProcPlayerState != null) {
+                nativeProcPlayerState.modifiers.clear();
+            }
+        }
+    }
 
-   static void selected(ClientSession var0) {
-      BattleTimedStatus var1 = CombatPoisonAtomic.status(var0);
-      if (var1 != null) {
-         synchronized (var1) {
-            CombatAccess.set(var1, "sourceProcPlayerState", null);
-         }
-      }
-   }
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    static void selected(ClientSession clientSession) {
+        BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+        if (battleTimedStatus == null) {
+            return;
+        }
+        synchronized (battleTimedStatus) {
+            CombatAccess.set(battleTimedStatus, "sourceProcPlayerState", null);
+        }
+    }
 
-   static void selectedField(ClientSession var0, String var1) {
-      if (var1.equals("selectedCharacter")) {
-         selected(var0);
-      }
-   }
+    static void selectedField(ClientSession clientSession, String string) {
+        if (string.equals("selectedCharacter")) {
+            NativeProcPlayerState.selected(clientSession);
+        }
+    }
 
-   private record Identity(String source, String account, String character) {
-   }
+    private record Identity(String source, String account, String character) {
+    }
 }
