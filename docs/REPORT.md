@@ -9,3 +9,4 @@
 ## 下一步
 
 - Issue #2：PR #7 CI 已綠（Server + Launcher）。下一步由 Claude 審合併，並把 `TASKS.md` T007 標 review／done；T008 補 `NativeDeVisibilitySwitch`；T005 修 testCompile 後再拿掉 `-Dmaven.test.skip=true`。
+- 2026-11-04 — #12 T009: 測試依賴本機資源的全部加 assume 守門，讓 mvn test 全綠（code，codex-local，PR #15 已合併）→ [報告](reports/issue-12.md)
