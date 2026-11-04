@@ -347,8 +347,8 @@ row = json.load(open(sys.argv[1], encoding="utf-8"))["classes"][0]
 assert row["status"] == "DIFF", row
 assert row["firstDiff"]["member"] == "unlisted()I", row
 assert row["firstDiff"]["insnIndex"] == 0, row
-assert "BIPUSH 10" in row["firstDiff"]["detail"], row
-assert "BIPUSH 20" in row["firstDiff"]["detail"], row
+assert "CONST Integer:10" in row["firstDiff"]["detail"], row
+assert "CONST Integer:20" in row["firstDiff"]["detail"], row
 PY
 echo "PASS SELFTEST 5d same-class unlisted()I DIFF=1 insn=0 uses right, not allow-right"
 
@@ -577,6 +577,12 @@ run_logged "$BUILD/ann-record.log" \
 echo "PASS SELFTEST 8c record type-ann DIFF=1"
 
 echo
+echo "=== SELFTEST 9: T020i normalization and approved effects ==="
+javac --release 17 -encoding UTF-8 -cp "$ROOT/target/classes:$ASM_CP" -d "$BIN" \
+  "$ROOT/src/test/java/local/lito381/semanticdiff/NormalizationSelfTest.java"
+java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.NormalizationSelfTest \
+  "$BUILD/normalization" "$BIN/normalization"
+
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"
 echo "SELFTEST_1b $SUMMARY1B"

@@ -1,0 +1,3 @@
+# 僅主控可新增條目；本清單依 #70 主控裁定初始化，不得自行擴大範圍。
+local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6640488851
+local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6640488851

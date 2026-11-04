@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import org.objectweb.asm.ConstantDynamic;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -84,6 +85,12 @@ final class ClassComparer {
             JarIndex leftJar,
             JarIndex rightJar,
             JarIndex allowJar) {
+        return compare(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, Set.of());
+    }
+
+    static FirstDiff compare(
+            ClassNode left, ClassNode right, ClassNode allowRight, Set<String> allowedMethodKeys,
+            JarIndex leftJar, JarIndex rightJar, JarIndex allowJar, Set<String> effectsMethods) {
         FirstDiff d;
         d = cmp("access", hex(left.access), hex(right.access));
         if (d != null) {
@@ -139,7 +146,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar);
+        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods);
     }
 
     private static FirstDiff compareFields(ClassNode left, ClassNode right) {
@@ -154,7 +161,7 @@ final class ClassComparer {
             if (rf == null) {
                 return FirstDiff.of("field", key, null, "only left");
             }
-            FirstDiff d = cmp("field " + key + " access", hex(lf.access), hex(rf.access));
+            FirstDiff d = cmp("field " + key + " access", memberAccess(lf.access), memberAccess(rf.access));
             if (d != null) {
                 return d.withMember("field", key);
             }
@@ -181,7 +188,8 @@ final class ClassComparer {
             Set<String> allowedMethodKeys,
             JarIndex leftJar,
             JarIndex rightJar,
-            JarIndex allowJar) {
+            JarIndex allowJar,
+            Set<String> effectsMethods) {
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
         Map<String, MethodNode> amap =
@@ -215,57 +223,77 @@ final class ClassComparer {
             if (rm == null) {
                 return FirstDiff.of("method", key, null, "only left");
             }
-            FirstDiff d = cmp("method " + key + " access", hex(lm.access), hex(rm.access));
+            if (effectsMethods.contains(rm.name + rm.desc) && !lm.name.equals(rm.name)) {
+                return FirstDiff.of("method", key, null, "effects approval requires exact original method name on both sides");
+            }
+            FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
+                    effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
             if (d != null) {
-                return d.withMember("method", key);
+                return d;
             }
-            d = cmp("method " + key + " signature", str(lm.signature), str(rm.signature));
-            if (d != null) {
-                return d.withMember("method", key);
-            }
-            d = cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
-            if (d != null) {
-                return d.withMember("method", key);
-            }
-            d = cmp(
-                    "method " + key + " annotations",
-                    methodAnns(lm, labelIds(lm), leftJar),
-                    methodAnns(rm, labelIds(rm), rJar));
-            if (d != null) {
-                return d.withMember("method", key);
-            }
-            d = cmp(
-                    "method " + key + " annotationDefault",
-                    defaultValue(lm.annotationDefault, leftJar),
-                    defaultValue(rm.annotationDefault, rJar));
-            if (d != null) {
-                return d.withMember("method", key);
-            }
-            List<String> ltry = tryCatch(lm, leftJar);
-            List<String> rtry = tryCatch(rm, rJar);
-            d = cmpList("method " + key + " tryCatch", ltry, rtry);
-            if (d != null) {
-                return d.withMember("method", key);
-            }
-            List<String> lins = instructions(lm, leftJar);
-            List<String> rins = instructions(rm, rJar);
-            int n = Math.min(lins.size(), rins.size());
-            for (int i = 0; i < n; i++) {
-                if (!lins.get(i).equals(rins.get(i))) {
-                    return FirstDiff.of(
-                            "method",
-                            key,
-                            i,
-                            "left=" + clip(lins.get(i)) + " right=" + clip(rins.get(i)));
-                }
-            }
-            if (lins.size() != rins.size()) {
+        }
+        return null;
+    }
+
+    static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
+            JarIndex leftJar, JarIndex rJar, boolean effects) {
+        FirstDiff d = cmp("method " + key + " access", memberAccess(lm.access), memberAccess(rm.access));
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        d = cmp("method " + key + " signature", str(lm.signature), str(rm.signature));
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        d = cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        d = cmp(
+                "method " + key + " annotations",
+                methodAnns(lm, labelIds(lm), leftJar),
+                methodAnns(rm, labelIds(rm), rJar));
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        d = cmp(
+                "method " + key + " annotationDefault",
+                defaultValue(lm.annotationDefault, leftJar),
+                defaultValue(rm.annotationDefault, rJar));
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        if (effects) {
+            d = cmpList("effects sequence", effectsSequence(lm, leftJar), effectsSequence(rm, rJar));
+            if (d == null) d = cmp("effects constants", constants(lm, leftJar).toString(), constants(rm, rJar).toString());
+            if (d == null) d = cmpList("effects tryCatch", catchTypes(lm, leftJar), catchTypes(rm, rJar));
+            if (d == null) d = cmp("effects branches", Integer.toString(branches(lm)), Integer.toString(branches(rm)));
+            return d == null ? null : FirstDiff.of("method", key, d.insnIndex, d.member + ": " + d.detail);
+        }
+        List<String> ltry = tryCatch(lm, leftJar);
+        List<String> rtry = tryCatch(rm, rJar);
+        d = cmpList("method " + key + " tryCatch", ltry, rtry);
+        if (d != null) {
+            return d.withMember("method", key);
+        }
+        List<String> lins = instructions(lm, leftJar);
+        List<String> rins = instructions(rm, rJar);
+        int n = Math.min(lins.size(), rins.size());
+        for (int i = 0; i < n; i++) {
+            if (!lins.get(i).equals(rins.get(i))) {
                 return FirstDiff.of(
                         "method",
                         key,
-                        n,
-                        "insn length left=" + lins.size() + " right=" + rins.size());
+                        i,
+                        "left=" + clip(lins.get(i)) + " right=" + clip(rins.get(i)));
             }
+        }
+        if (lins.size() != rins.size()) {
+            return FirstDiff.of(
+                    "method",
+                    key,
+                    n,
+                    "insn length left=" + lins.size() + " right=" + rins.size());
         }
         return null;
     }
@@ -326,7 +354,7 @@ final class ClassComparer {
                     + " "
                     + labelId(labels, block.handler)
                     + " "
-                    + str(block.type)
+                    + catchType(block.type)
                     + " "
                     + anns(block.visibleTypeAnnotations, jar)
                     + " "
@@ -358,6 +386,8 @@ final class ClassComparer {
     }
 
     private static String formatInsn(AbstractInsnNode insn, Map<LabelNode, Integer> labels, JarIndex jar) {
+        String constant = pushedConstant(insn, jar);
+        if (constant != null) return "CONST " + constant;
         String op = opcodeName(insn.getOpcode());
         if (insn instanceof IntInsnNode n) {
             return op + " " + n.operand;
@@ -438,6 +468,88 @@ final class ClassComparer {
         return op;
     }
 
+    /** Typed constants: keep -0.0 distinct and preserve NaN payload bits. */
+    private static String pushedConstant(AbstractInsnNode insn, JarIndex jar) {
+        int op = insn.getOpcode();
+        if (op == Opcodes.ACONST_NULL) return "null";
+        if (op >= Opcodes.ICONST_M1 && op <= Opcodes.ICONST_5) return cst(op - Opcodes.ICONST_0, jar);
+        if (op >= Opcodes.LCONST_0 && op <= Opcodes.LCONST_1) return cst((long) (op - Opcodes.LCONST_0), jar);
+        if (op >= Opcodes.FCONST_0 && op <= Opcodes.FCONST_2) return cst((float) (op - Opcodes.FCONST_0), jar);
+        if (op >= Opcodes.DCONST_0 && op <= Opcodes.DCONST_1) return cst((double) (op - Opcodes.DCONST_0), jar);
+        if (insn instanceof IntInsnNode n && (op == Opcodes.BIPUSH || op == Opcodes.SIPUSH)) return cst(n.operand, jar);
+        if (insn instanceof LdcInsnNode n) return cst(n.cst, jar);
+        return null;
+    }
+
+    private static String memberAccess(int access) {
+        return hex(access & ~Opcodes.ACC_SYNTHETIC);
+    }
+
+    private static String catchType(String type) {
+        return type == null ? "java/lang/Throwable" : type;
+    }
+
+    private static List<String> effectsSequence(MethodNode method, JarIndex jar) {
+        List<String> out = new ArrayList<>();
+        Map<LabelNode, Integer> labels = labelIds(method);
+        for (AbstractInsnNode insn : method.instructions) {
+            int op = insn.getOpcode();
+            String effect = null;
+            if (insn instanceof FieldInsnNode n) {
+                effect = opcodeName(op) + " " + n.owner + "." + n.name;
+            } else if (insn instanceof MethodInsnNode || insn instanceof InvokeDynamicInsnNode
+                    || op == Opcodes.NEW || op == Opcodes.CHECKCAST || op == Opcodes.INSTANCEOF) {
+                // invokedynamic has no owner: retain name/descriptor, bootstrap handle and arguments.
+                effect = formatInsn(insn, labels, jar);
+            } else if ((op >= Opcodes.IASTORE && op <= Opcodes.SASTORE)
+                    || op == Opcodes.ASTORE || op == Opcodes.ATHROW
+                    || op == Opcodes.MONITORENTER || op == Opcodes.MONITOREXIT
+                    || (op >= Opcodes.IRETURN && op <= Opcodes.RETURN)) {
+                // ASTORE keeps its opcode, but not the compiler-assigned local slot.
+                effect = opcodeName(op);
+            }
+            if (effect != null) out.add(withInsnTypeAnns(effect, insn, jar));
+            else if (insn.visibleTypeAnnotations != null || insn.invisibleTypeAnnotations != null) {
+                out.add(withInsnTypeAnns("ANNOTATION", insn, jar));
+            }
+        }
+        return out;
+    }
+
+    private static Map<String, Integer> constants(MethodNode method, JarIndex jar) {
+        Map<String, Integer> bag = new TreeMap<>();
+        for (AbstractInsnNode insn : method.instructions) {
+            String value = pushedConstant(insn, jar);
+            if (value != null) bag.merge(value, 1, Integer::sum);
+            if (insn instanceof IincInsnNode n) bag.merge("IINC " + cst(n.incr, jar), 1, Integer::sum);
+            if (insn instanceof LookupSwitchInsnNode n) {
+                for (int key : n.keys) bag.merge("SWITCH " + cst(key, jar), 1, Integer::sum);
+            }
+            if (insn instanceof TableSwitchInsnNode n) {
+                for (int i = 0; i < n.labels.size(); i++) bag.merge("SWITCH " + cst(n.min + i, jar), 1, Integer::sum);
+            }
+        }
+        return bag;
+    }
+
+    private static List<String> catchTypes(MethodNode method, JarIndex jar) {
+        List<String> types = new ArrayList<>();
+        for (TryCatchBlockNode block : method.tryCatchBlocks) {
+            types.add(catchType(block.type) + " " + typeAnns(block.visibleTypeAnnotations, jar)
+                    + " " + typeAnns(block.invisibleTypeAnnotations, jar));
+        }
+        return types;
+    }
+
+    private static int branches(MethodNode method) {
+        int count = 0;
+        for (AbstractInsnNode insn : method.instructions) {
+            if (insn instanceof JumpInsnNode || insn instanceof TableSwitchInsnNode
+                    || insn instanceof LookupSwitchInsnNode || insn.getOpcode() == Opcodes.RET) count++;
+        }
+        return count;
+    }
+
     private static String opcodeName(int op) {
         if (op >= 0 && op < OPCODES.length && !OPCODES[op].isEmpty()) {
             return OPCODES[op];
@@ -462,6 +574,8 @@ final class ClassComparer {
     }
 
     private static String cst(Object value, JarIndex jar) {
+        if (value instanceof Float f) return "Float:0x" + Integer.toHexString(Float.floatToRawIntBits(f));
+        if (value instanceof Double d) return "Double:0x" + Long.toHexString(Double.doubleToRawLongBits(d));
         if (value == null) {
             return "null";
         }
