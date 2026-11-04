@@ -62,22 +62,26 @@ done
 ```
 
 實際統計（本輪）：**50 / 50 BUILD SUCCESS**；每次 **Tests run: 19, Failures: 0, Errors: 0, Skipped: 0**；總牆鐘 **831 s**（約 16.6 s／次）。逐次 log 在 `target/issue-37-loop/run-1.log` … `run-50.log`（不進 git）。未改其他 18 案的斷言。
+- GitHub CI [run 41833234796](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796)（PR #39，head `b92cf51`）：三個 job 全綠。
+  - **Server tests** pass，10m51s。[job 126585472233](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796/job/126585472233)。artifact `server-test-evidence` 的 `mvn-test.log`：**Tests run: 6033, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`。目標類 **19 run / 0 failure / 0 skipped**（17.11 s）。
+  - Server (Java 17 / Maven) pass；Launcher (.NET 10 / WinForms) pass。
+  - CI 為 Temurin 17，與本機 OpenJDK 21 / `release 17` 連跑結果一致。
 
 ### 推測
 
 - CI 當次失敗是「第一次注入 tick 之後、斷言之前」插入一次 `companionTickSafely`。與原始碼及 `expected: <1> but was: <2>` 吻合，但本輪沒有把未修版本在 CI runner 上重放到失敗。
+- 未在本機重現「未修版本必現 2」；50ms 窗很窄，與「同 PR 前一個 commit 綠、下一個紅」一致。
 
 ### 待驗證
 
-- 完整 CI `Server tests`（約 6033 run）是否全綠。本輪只連跑本測試類。
-- CI 使用 Temurin 17；本輪連跑是 OpenJDK 21 編譯 `release 17`。語意應相同，仍以 GitHub job 為準。
-- 未在本機重現「未修版本必現 2」；50ms 窗很窄，與「同 PR 前一個 commit 綠、下一個紅」一致。
+- 真機進房／寵物 AI／正式伺服器排程（本任務不要求）。
 
 ## 未驗證什麼
 
 - 真機進房／寵物 AI／正式伺服器排程。
 - 產品 `retryPath` 在多執行緒同時 tick 時是否也該原子佔位（正式路徑目前只有 `battleClock` 單執行緒呼叫，不在本任務範圍）。
 - 其他仍一邊注入 `nowNanos`、一邊讓 `battleClock` 跑的 WORLD companion 測試（毒／麻痺案用 60s `defer`，本輪不斷言它們）。
+- 未把未修版本在 CI runner 上重放到 `expected: <1> but was: <2>`。
 
 ## 產出路徑
 
@@ -90,6 +94,6 @@ done
 ## 給下一棒的提示
 
 - 請 Claude 審此 PR：確認沒有放寬斷言、沒有跳過測試，且 `stopBattleClock` 發生在 `tamedCompanions.add` 之前。
-- 合併條件：GitHub `Server tests` 全綠。
+- 合併條件已滿足：GitHub `Server tests` 全綠（run 41833234796，6033 / 0 / 117 skipped）。
 - 若還要從產品側杜絕「測試執行緒 + battleClock」雙重 tick，下一步才是讓 `serverClassicWorldCompanionTick` 在 `ready()` 到 `retryPath()` 之間原子佔位；本輪不需要。
 - 之後寫同類「注入 nowNanos 的 WORLD companion 計數」測試，請先停 `battleClock`，或像毒案那樣 `defer` 到牆鐘之後再 `add`。
