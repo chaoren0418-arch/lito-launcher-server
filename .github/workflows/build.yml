@@ -216,6 +216,40 @@ jobs:
             lito伺服器/LiTo381-Server/target/mvn-test.log
             lito伺服器/LiTo381-Server/target/surefire-reports/
 
+  semantic-gap:
+    name: Semantic gap (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Self-test
+        working-directory: lito伺服器/LiTo381-Server/tools/semantic-diff
+        run: bash selftest.sh
+      - name: Package server (no tests)
+        working-directory: lito伺服器/LiTo381-Server
+        # Same flags as the Server job: testCompile is still T005.
+        run: mvn -B -DskipTests -Dmaven.test.skip=true package
+      - name: Semantic compare Maven product vs reference
+        run: |
+          bash "lito伺服器/LiTo381-Server/tools/semantic-diff/semantic-diff" \
+            --left "lito伺服器/LiTo381-Server/target/LiTo381-Server.jar" \
+            --right "lito伺服器/LiTo381-Server/reference/base-0.6.71.jar" \
+            --json docs/server-semantic-gap.json \
+            --md docs/server-semantic-gap.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-semantic-gap
+          path: |
+            docs/server-semantic-gap.md
+            docs/server-semantic-gap.json
+          if-no-files-found: warn
+
   launcher:
     name: Launcher (.NET 10 / WinForms)
     runs-on: windows-latest
