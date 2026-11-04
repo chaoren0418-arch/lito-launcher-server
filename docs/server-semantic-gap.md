@@ -1,6 +1,7 @@
 # 伺服器語意缺口（T020d / Issue #44）
 
-> 快照來源：GitHub Actions `build` run [41843825080](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080) job `Semantic gap (non-blocking)`（Temurin 17）。 artifact [`server-semantic-gap`](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080/artifacts/13329967838)。
+> 快照來源：GitHub Actions `build` run [41848202203](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203) job `Semantic gap (non-blocking)`（Temurin 17）。artifact [`server-semantic-gap`](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203/artifacts/13331293777)。
+
 
 以 ASM tree 正規化後比對兩個 JAR 的 `.class`。
 此檔由 `lito伺服器/LiTo381-Server/tools/semantic-diff` 產生。
@@ -11,9 +12,9 @@
 |---|---|
 | left | `lito伺服器/LiTo381-Server/target/LiTo381-Server.jar`（3929 類） |
 | right | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-04T14:05:12Z |
+| 產生時間 | 2026-11-04T14:31:31Z |
 | 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |
-| 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解、內部類別屬性 |
+| 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解（含 annotationDefault 結構化值、指令／區域變數／record 型別註解）、內部類別屬性 |
 
 ## 摘要
 
@@ -24,22 +25,27 @@
 | ONLY_LEFT | 1380 | 只在 left |
 | ONLY_RIGHT | 5 | 只在 right |
 | 交集 SAME+DIFF | 2549 | 兩邊都有的類別 |
-| BYTE_SAME | （見本 PR 下一輪 CI SUMMARY；本檔生成時工具尚未輸出 BYTE_SAME） | 同一交集裡 class bytes 完全相同 |
+| BYTE_SAME | 1008 | **同一交集**裡 class bytes 完全相同（本輪實測） |
+| SAME − BYTE_SAME | 1056 | 同一交集：bytes 不同但語意相同 |
 | 比較類別 | 3934 | left∪right |
 
 ## 已驗證／推測／待驗證
 
-- **已驗證**：`selftest.sh` 本機已含同一 JAR、`-g` vs `-g:none`、改常數、`--exclude`、`--allow-methods`、`--classes` 副檔名／逗號／檔案／不存在類別、註解 self-vs-self、只改型別註解必須 DIFF。下表 SAME／DIFF 來自 Temurin 17 CI run 41843825080 對上表 left／right。
-- **推測**：DIFF 多半是 javac／反編譯來源／後來手改。ONLY_* 與 `docs/server-source-gap.md` 大致對得上。
-- **待驗證**：BYTE_SAME 須由含該欄位的新 CI 對**同一對 JAR**重測後寫入快照。語意相同 ≠ 行為回歸；未跑 `--check`／`--smoke`，未連 DB，未啟動遊戲。
+- **已驗證**：自我測試見 `tools/semantic-diff/selftest.sh`（含同一 JAR、`-g` vs `-g:none`、改常數、`--exclude`、`--allow-methods`、`--classes` 副檔名／清單／不存在類別、註解 self-vs-self 與只改型別註解）。BYTE_SAME／SAME／DIFF 由本工具對上表 left／right **同一輪**量出。
+- **推測**：DIFF 多半是 javac／反編譯來源／後來手改造成的指令或結構差。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差大致對得上。
+- **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。
 
 ## 與 Issue #43 javap 粗估（約 430）的關係
 
-#43／T020a 的約 430 是**另一組測量**：JDK 21 編譯的 Maven 產物 vs 正式 JAR，`javap -c -p` 去行號／常數池編號／空白，**未**正規化 `lambda$`／`access$`；同一次還記 bytes 全同 1,008。那不是本表 left／right 的同一交集。
+#43／T020a 的約 430 是**另一組測量**：JDK 21 編譯的 Maven 產物 vs 正式 JAR，用 `javap -c -p` 去掉行號、常數池編號與空白，**未**正規化 `lambda$`／`access$`。那次同時記 class bytes 全同 1,008。那些數字**不是**本表 left／right 的同一交集，不能從本輪 SAME 扣除 1,008，也不能把「本輪 DIFF − 430」逐類歸因到 innerClasses 等屬性。
 
-**禁止**把歷史 1,008 從本輪 SAME=2064 扣除，也**禁止**把「485 − 430 = 55」逐類歸因到 innerClasses 等屬性——沒有在同一組 JAR 上逐類對照 javap 與本工具。
+本表只報告**這一對 JAR、這一輪交集**的實測：
 
-本表目前能確定的只有這一對 JAR 的語意計數：交集 2549、SAME 2064、DIFF 485（第一處差異 method 343、field 27、class 屬性 115，那是本工具先看到的位置）。BYTE_SAME 與「bytes 不同但語意相同」要等本 PR 含 `BYTE_SAME=` 的 job 對同一對 JAR 重跑。430 與 485 的差屬不同編譯器／不同正規化，不可直接相減。
+- 交集 SAME+DIFF = **2549**。
+- 其中 BYTE_SAME = **1008**（本輪 bytes 全同）。
+- SAME = **2064**，故 bytes 不同但語意相同 = **1056**（本輪實測，含 debug／合成名／常數池編號等）。
+- DIFF = **485**（第一處差異：method 343、field 27、class 屬性 115）。這是本工具先看到的位置，不是把與 430 的差拆開的因果。
+- 430 與本輪 DIFF 的數值差屬**推測／不可直接相減**：編譯器（JDK 21 vs 本輪 javac）、正規化深度、類別集合都不同。
 
 ## DIFF 類別清單
 
