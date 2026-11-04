@@ -1,11 +1,11 @@
-# 工作報告
+# REPORT
 
-本檔給調度器與下一棒交接用。同一主題的細節在 `docs/reports/`，此處只留最新摘要。
+本檔由各輪任務更新「本輪變更」與「下一步」。歷史細節見 `docs/reports/`。
 
 ## 本輪變更
 
-- Issue #5 / T004：四份入口 README 的正式版本殘句改 0.6.71；`VALIDATION.md` 只留最新一節，舊段落原文搬到 `lito伺服器/LiTo381-Server/docs/HISTORY.md`。詳見 `docs/reports/issue-5.md`。
+- Issue #2（T007）：`pom.xml` 版本改 0.6.71，預設 Main-Class 改 `local.lito381.server.SharedResourceMain`；CI 改 `mvn package` 並用 `jar tf` 產出／上傳 `docs/server-source-gap.md`。只在 reference 的 16 個類別已分類（待補 1：`NativeDeVisibilitySwitch`；刻意排除 15 個 inner／匿名類；Modern* 0）。PR #7 CI 已綠（Server + Launcher）。
 
 ## 下一步
 
-- Issue #5：Claude 審查 PR 後把 `TASKS.md` T004 標 review／done；範圍外歷史稿仍含 0.6.69／0.6.70，不要當本任務漏改。
+- Issue #2：PR #7 CI 已綠（Server + Launcher）。下一步由 Claude 審合併，並把 `TASKS.md` T007 標 review／done；T008 補 `NativeDeVisibilitySwitch`；T005 修 testCompile 後再拿掉 `-Dmaven.test.skip=true`。

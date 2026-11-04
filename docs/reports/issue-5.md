@@ -15,7 +15,9 @@
 
 未改：`releases/`、封存、`config/server.properties`、pak／map／sprite、`LiTo.bin`、正式 JAR、`PLAN.md`／`TASKS.md`／`AGENTS.md` 等範圍外文件。
 
-repo 根目錄原本沒有 `VALIDATION.md` 與 `docs/HISTORY.md`；T004 簡寫對應既有的 `lito伺服器/LiTo381-Server/` 兩檔。`docs/REPORT.md` 在 main 亦不存在，本輪新建。
+repo 根目錄原本沒有 `VALIDATION.md` 與 `docs/HISTORY.md`；T004 簡寫對應既有的 `lito伺服器/LiTo381-Server/` 兩檔。
+
+第 2 次嘗試：`main` 已合入 Issue #2（PR #7），與本分支的 `docs/REPORT.md` 發生 add/add 衝突。依調度器指示**不改** `docs/REPORT.md`，合併時保留 main 版（Issue #2 摘要）；交接寫在本檔。
 
 ## 怎麼驗證
 
@@ -36,7 +38,7 @@ repo 根目錄原本沒有 `VALIDATION.md` 與 `docs/HISTORY.md`；T004 簡寫�
 - 未啟動遊戲、登入器、伺服器，未連正式 DB。
 - 未改 `TASKS.md` T004 狀態（範圍未列）。
 - 未核對桌面捷徑或 `release/current` 視窗標題。
-- 未跑 GitHub Actions（本 PR 只動 markdown）。
+- 第 1 次推送後 PR #11 CI 已綠；本輪只解與 `main` 的文件衝突，合併後 CI 會再跑一次。
 
 ## 產出路徑
 
@@ -47,11 +49,12 @@ repo 根目錄原本沒有 `VALIDATION.md` 與 `docs/HISTORY.md`；T004 簡寫�
 - `lito伺服器/LiTo381-Server/VALIDATION.md`
 - `lito伺服器/LiTo381-Server/docs/HISTORY.md`
 - `docs/reports/issue-5.md`
-- `docs/REPORT.md`
+
+（`docs/REPORT.md` 不再由本任務改；合併後由調度器加索引。）
 
 ## 給下一棒的提示
 
-1. **Claude 審查**：核對 HISTORY 舊段落是否與搬移前 VALIDATION 一致；PR 合後把 `TASKS.md` T004 標 review／done。
-2. 若調度器要用全球 grep 當驗收：範圍外仍有約 17 個 `.md` 含 0.6.69／0.6.70（維護稿、PLAN／TASKS／AGENTS、CHECKLIST、`docs-AGENTS-history.md`）。那些不應在本任務改寫；另開任務再決定要不要做索引或加「歷史章節」標註。
-3. `docs/acceptance/CHECKLIST.md` 的「0.6.70 驗過／0.6.69 驗過」是實機核對備註，不是正式版本殘句。
-4. 使用者合併後，桌面捷徑名稱若仍寫 0.6.69／0.6.70，由本機改捷徑，不在本 repo。
+1. **使用者合併**：Claude 主控已審查通過（範圍 6 檔版本號統一、VALIDATION 舊段原文在 HISTORY）；閘門曾通過。本輪只把 `task/5` 跟上 `main`，`docs/REPORT.md` 維持 main／Issue #2 內容。
+2. 合後把 `TASKS.md` T004 標 review／done。不要再手改 `docs/REPORT.md`。
+3. 範圍外歷史稿、`PLAN.md`／`TASKS.md`／`AGENTS.md`、`docs/acceptance/CHECKLIST.md` 仍含 0.6.69／0.6.70，是當時紀錄或真實檔名（`base-0.6.70.jar`），不要當漏改。
+4. 桌面捷徑名稱若仍寫舊版，由本機改捷徑，不在本 repo。
