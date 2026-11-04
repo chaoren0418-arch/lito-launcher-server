@@ -25,6 +25,16 @@ RuntimeInventory 為 **3 個方法、4 處 return**，withoutObjects 有兩處�
 
 ## 已驗證
 
+### 第 2 次嘗試複驗（2026-11-05）
+
+- 於既有 worktree／`task/135` 接續 `a79461fd0aaf34bba84d391860800267c44610ac`；開始時工作樹乾淨，未切換或重建分支。Issue 回饋未提供具體程式缺陷，本次補充複驗證據並重產快照。
+- 以 Microsoft JDK 17 重新編譯目前工具及自測，`NORMALIZATION SELFTEST ALL PASS checks=457`。所有產物仍放本 worktree 的 `target/`、`scratch/issue-135/`。
+- 核對前版三份 Java 原始碼的 Git blob 與 `e76e1fe3009eb900cc0af3214e40ff5f1cd5bea6` 一致，重新編譯前版；共用下表 SHA-256 完全相符的既有完整 JAR 重跑，仍為 **2064→2122 SAME、485→427 DIFF**，其餘計數不變。本次沒有重建伺服器 JAR。
+- 重跑 #77 留存 staged（SHA-256 同下表），結果仍為 **66 SAME／1 SAME_EFFECTS／2 DIFF**，69 entries、missingLeft／extraLeft 皆空。剩餘 ServerConfig／SourceLogin 差異與下文一致，仍由 #77 接手。
+- 重新核對 `a79461f` 的五項 CI job 均 SUCCESS，且 [Semantic gap 完整日誌](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926799845/job/126913188338) 同時有 `NORMALIZATION SELFTEST ALL PASS checks=457`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS` 及 2122 SAME／427 DIFF。不是只看 non-blocking 工作流總狀態。
+- [Server tests 日誌](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926799845/job/126913188051) 為 6,033 項、0 failures、0 errors、117 skipped；這是既有提交的 CI 證據，本次沒有在本機重跑伺服器測試。其他 job 見 [build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926799845)、[package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926799830)。
+- 本次只更新此報告與 `docs/server-semantic-gap.md` 的產生時間；比較器、自測與核准清單沒有變更。最後提交的 CI 狀態見 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks)。
+
 ### 本機編譯與自測
 
 - 基底 `e76e1fe3009eb900cc0af3214e40ff5f1cd5bea6`，原有分支 `task/135`，未 checkout／建分支。

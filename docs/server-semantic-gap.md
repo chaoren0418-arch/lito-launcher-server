@@ -9,7 +9,7 @@
 |---|---|
 | left | `lito伺服器\LiTo381-Server\target\LiTo381-Server.jar`（3930 類） |
 | right | `lito伺服器\LiTo381-Server\reference\base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-04T22:30:46Z |
+| 產生時間 | 2026-11-04T23:10:04Z |
 | 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |
 | T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |
 | T020i-2 正規化 | InnerClasses 只比本類別及直接內部類；忽略類別 ACC_SUPER；右側無建構子時允許左側唯一的空 Object 建構子；非參數槽位依首次出現一對一重編號（含 wide 第二格） |
