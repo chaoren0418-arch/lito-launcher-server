@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# semantic-diff --left A.jar --right B.jar [--classes spec] --json out.json --md out.md
+# semantic-diff --left A.jar --right B.jar [--classes spec] [--exclude spec]
+#   [--allow-methods file --allow-right C.jar] [--json out.json] [--md out.md]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 ASM_VERSION="9.7"
