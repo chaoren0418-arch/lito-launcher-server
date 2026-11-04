@@ -4,18 +4,19 @@
 
 **未達完整回歸驗收；請勿關閉 Issue 或宣稱 8d26c9d7 本輪全套通過。**
 
-既有提交 `94decc9` 已修改八個指定入口及其直接共用工具，完成離線接線檢查與 30 個 probe 編譯。本次接續修正 seal 失敗時殘留舊成功指標的問題，重跑離線檢查及歷史收據核對；沒有重跑 probe 編譯或戰鬥行為案例，沒有新的通過收據。`seal_validation.py` 實際 exit 1，仍停在歷史正式 JAR 保護值不符。
+既有提交 `94decc9` 已參數化八個入口，`8b0338e` 已補上 seal 失敗收據。本次開始時這兩個提交均已存在，工作樹乾淨且與 origin/task/31 一致。本次只更新報告，重新驗證離線接線、候選與歷史正式檔 SHA、JDBC bytecode 和舊收據；沒有新增程式修改、沒有重跑 probe 編譯或戰鬥行為案例。實際 seal 仍 exit 1，不能宣稱完整回歸。
 
 工作分支 `task/31`；從既有 worktree 直接修改，未 checkout／另建分支。設計依據：`git fetch origin task/24` 後讀取 `origin/task/24:docs/design/T020-combat-merge.md` §2-4。
 
 ## 本次接續的已驗證結果
 
-- 工作開始時 `task/31` 已有 `94decc9`，且與 `origin/task/31` 一致、工作樹乾淨；沒有重新 checkout 或建立分支。
-- `seal_validation.py` 指定 `--out` 時，先將總收據標為 running；任何驗證例外均寫入 failed、`same_sha_backend_regression_passed=false`、錯誤類型與候選資訊，然後重新拋出原例外。避免上次成功的總收據被誤認為本次成功。未指定 `--out` 的歷史流程不增加失敗寫入。
-- `scratch/t020c/test_seal_failure.py`：2 項測試通過。缺少資源與缺少 JAR 的兩種負向子案例，都會取代測試目錄內的舊成功標記，並維持非零退出；另一測試以 AST 核對原有全部 assert 不變。測試目錄的標記僅為負向測試輸入，沒有充作戰鬥證據。
-- `scratch/t020c/test_regression_support.py`：7 項離線測試通過；`check_adapters.py`：8 入口 CLI、68 支直接子驅動語法及 JDK 轉接檢查通過。
-- `verify_baseline.py`：重新驗證下表的舊收據 SHA、組數及案例數；實際 seal 仍 exit 1，新的總收據為 failed。沒有執行戰鬥、SQL 啟動或清理套件。
-- 本次沒有取得隔離 SQL 設定，也沒有修改歷史正式檔保護基準；原本兩項阻礙仍在。`git diff --check` 通過。
+- 開始時 HEAD 為 `8b0338e`，`git rev-list --left-right --count HEAD...origin/task/31` 為 `0 0`；未 checkout／另建分支。
+- `test_regression_support.py` 的 7 項測試、`test_seal_failure.py` 的 2 項測試全部通過；`check_adapters.py` 的 8 入口 CLI 與 68 子驅動語法／JDK 轉接檢查通過。這些都是離線工具檢查，不是戰鬥案例。
+- `verify_baseline.py` 重新核對下表的歷史收據雜湊及組數／案例數。指定同一 JAR 與 `scratch/t020c/8d26c9d7/` 執行 seal，exit 1；總收據為 failed，未沿用成功標記。
+- 重新以 `javap -c -p` 讀指定候選的 `ResourceDatabase`，仍有 `UnifiedConfiguration.read` 與 `DriverManager.getConnection`；只反組譯，沒有載入設定或執行該類別。
+- 指定候選 SHA 仍為 `8d26c9d7…`，唯讀核對現行正式 JAR 為 `e1498871…`；歷史 seal 要求 `75da69b0…`，保護斷言仍保持失敗。
+- 報告所列 `scratch/t020c/isolated-test.properties` 不存在；本輪未取得其他已授權隔離 SQL 設定。未讀正式設定、未連 DB、未啟動伺服器或遊戲。
+- 兩項先前阻礙均未解除。本次沒有新的行為通過收據，也不將既有 30 組只編譯證據計為本次驗收。
 
 ## 做了什麼
 
