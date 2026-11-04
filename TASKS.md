@@ -30,9 +30,12 @@ CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製�
 統一版本號為 0.6.71；刪除「正式 0.6.69」殘句；`VALIDATION.md` 只留最新一節，舊段落移到 `docs/HISTORY.md`。
 驗收：`grep -rn "0\.6\.69\|0\.6\.70" --include=*.md` 只剩歷史章節。
 
-### T005 | todo | Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
+### T005 | done（Issue #3 關閉；由 #12/#15、#20/#22 達成）| Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
 DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"))` 守門，與 `LitoMySql*IntegrationTest` 一致。
 驗收：無 DB 環境 `mvn test` 全綠（skipped 可）；CI 加 `mvn test` job。
+**結果**：main 上 36 個 Legacy 類以 `@EnabledIfSystemProperty(lito.legacy.integration)` 預設停用（等價 opt-in）；本機資源守門見 Issue #12（PR #15）、30 案真實失敗修復與阻斷式 `Server tests` job 見 Issue #20（PR #22）。PR #10 的 332 類排除清單會隱藏真失敗，未合入。
+
+> 編號註記：Issue #12 標題「T009」、#20 標題「T010」是調度器編號，與本檔 T010（實機核對表）不同；以 Issue 號為準。
 
 ### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
 真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
