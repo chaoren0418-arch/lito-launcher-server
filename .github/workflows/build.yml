@@ -216,6 +216,57 @@ jobs:
             lito伺服器/LiTo381-Server/target/mvn-test.log
             lito伺服器/LiTo381-Server/target/surefire-reports/
 
+  semantic-gap:
+    name: Semantic gap (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Self-test
+        run: |
+          set -o pipefail
+          mkdir -p scratch
+          git rev-parse HEAD | tee scratch/semantic-diff-revision.txt
+          java -version 2>&1 | tee scratch/semantic-diff-java.txt
+          bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest.sh 2>&1 | tee scratch/semantic-diff-selftest.log
+      - name: Self-test without Maven (cold javac fallback)
+        run: |
+          set -o pipefail
+          bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest-fallback.sh 2>&1 | tee scratch/semantic-diff-fallback.log
+      - name: Package server (no tests)
+        working-directory: lito伺服器/LiTo381-Server
+        run: mvn -B -DskipTests package
+      - name: Semantic compare Maven product vs reference
+        run: |
+          set -o pipefail
+          sha256sum lito伺服器/LiTo381-Server/target/LiTo381-Server.jar lito伺服器/LiTo381-Server/reference/base-0.6.71.jar | tee scratch/semantic-diff-inputs.sha256
+          bash "lito伺服器/LiTo381-Server/tools/semantic-diff/semantic-diff" \
+            --left "lito伺服器/LiTo381-Server/target/LiTo381-Server.jar" \
+            --right "lito伺服器/LiTo381-Server/reference/base-0.6.71.jar" \
+            --json scratch/server-semantic-gap.json \
+            --md docs/server-semantic-gap.md 2>&1 | tee scratch/semantic-diff-compare.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-semantic-gap
+          path: |
+            docs/server-semantic-gap.md
+            scratch/server-semantic-gap.json
+            scratch/semantic-diff-*.txt
+            scratch/semantic-diff-*.sha256
+            scratch/semantic-diff-*.log
+            scratch/semantic-diff-selftest.*/*.json
+            scratch/semantic-diff-selftest.*/*.log*
+            scratch/semantic-diff-fallback.*/*.json
+            scratch/semantic-diff-fallback.*/*.out
+            scratch/semantic-diff-fallback.*/*.err
+          if-no-files-found: warn
+
   launcher:
     name: Launcher (.NET 10 / WinForms)
     runs-on: windows-latest

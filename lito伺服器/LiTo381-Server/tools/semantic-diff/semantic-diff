@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# semantic-diff --left A.jar --right B.jar [--classes spec] [--exclude spec]
+#   [--allow-methods file --allow-right C.jar] [--json out.json] [--md out.md]
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+source "$ROOT/build-support.sh"
+if [[ ! -f "$ROOT/target/classes/local/lito381/semanticdiff/SemanticDiff.class" ]] \
+    || [[ -n "$(find "$ROOT/src/main/java" -name '*.java' -newer "$ROOT/target/classes/local/lito381/semanticdiff/SemanticDiff.class" -print -quit)" ]]; then
+  build_tool
+fi
+CP="$(classpath)"
+exec java -cp "$CP" local.lito381.semanticdiff.SemanticDiff "$@"
