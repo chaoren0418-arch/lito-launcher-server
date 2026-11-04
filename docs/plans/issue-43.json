@@ -1,120 +1,42 @@
 [
  {
   "id": "T020d",
+  "issue": 44,
   "title": "T020d: ASM 語意比對工具＋CI 語意差異報告",
   "stage": "code",
   "priority": "P1",
   "depends_on": [],
-  "text": "見 docs/design/T020-combat-merge.md §6-3。"
+  "text": "已建 Issue #44；需加 --exclude 與 --allow-methods（§6-3、§6-5）。"
  },
  {
   "id": "T020f",
+  "issue": 45,
   "title": "T020f: 候選 50635f7e JAR 與凍結原始碼入庫（本機）",
   "stage": "resource",
   "priority": "P1",
   "depends_on": [],
-  "text": "見 §6-3。"
+  "text": "已建 Issue #45。"
+ },
+ {
+  "id": "T020b-2",
+  "issue": 43,
+  "title": "T020b 第 2 步：依 §6-4 從候選 JAR 產生固定批次與 T029 允許清單",
+  "stage": "design",
+  "priority": "P1",
+  "depends_on": [
+   "T020f"
+  ],
+  "text": "本 Issue 內完成，產出 batches.json、t029-methods.txt、plan_batches.py，並把 B 批次逐一寫成 code 任務（每批範圍為 batches.json 的固定類別清單，驗收依 §6-5）。"
  },
  {
   "id": "T020e",
-  "title": "T020e: 依語意差異訂第一階段（src/main→正式 0.6.71）修補批次（設計）",
+  "title": "T020e: 依語意差異訂 A 階段修補批次（設計，排除 owned_by_B）",
   "stage": "design",
   "priority": "P1",
   "depends_on": [
    "T020d"
   ],
-  "text": "見 §6-2。"
- },
- {
-  "id": "T020-B2",
-  "title": "T020-B2: 併入 17 個 ASM-only 新類別（反編譯）",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020d",
-   "T020f"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B1a",
-  "title": "T020-B1a: 併入有原始碼的新類別（第 1／4 批，51 類）",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B2"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B1b",
-  "title": "T020-B1b: 併入有原始碼的新類別（第 2／4 批，51 類）",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B1a"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B1c",
-  "title": "T020-B1c: 併入有原始碼的新類別（第 3／4 批，51 類）",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B1b"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B1d",
-  "title": "T020-B1d: 併入有原始碼的新類別（第 4／4 批，48 類）",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B1c"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B3-battle",
-  "title": "T020-B3-battle: 既有 Battle* 29 類三方移植",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B1d"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B3-combat-material",
-  "title": "T020-B3-combat-material: Combat*／MaterialAction 23 類三方移植",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B3-battle"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B3-native",
-  "title": "T020-B3-native: 其他 Native* 30 類三方移植",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B3-combat-material"
-  ],
-  "text": "見 §6-4。"
- },
- {
-  "id": "T020-B3-core",
-  "title": "T020-B3-core: ClientSession／Protocol／GameHub 三方移植＋T029 保留",
-  "stage": "code",
-  "priority": "P1",
-  "depends_on": [
-   "T020-B3-native"
-  ],
-  "text": "見 §6-4。"
+  "text": "讀 docs/server-semantic-gap.md，排除 owned_by_B，把其餘 DIFF 類別分批成 A 修補 code 任務；每批驗收：semantic-diff 對 reference/base-0.6.71.jar 該批類別 SAME、mvn test 綠。"
  },
  {
   "id": "T020-close",
@@ -122,8 +44,10 @@
   "stage": "test",
   "priority": "P1",
   "depends_on": [
-   "T020-B3-core"
+   "T020b-2 產生的最後一個 B 批次",
+   "T020c(#31)",
+   "T020e 產生的全部 A 修補任務"
   ],
-  "text": "見 §6-4 第二階段收尾。"
+  "text": "見 §6-6。"
  }
 ]

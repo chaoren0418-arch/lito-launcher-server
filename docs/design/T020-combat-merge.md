@@ -66,48 +66,60 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 - 正式 0.6.71 與候選根的分歧點（交 T020a）。
 - 回歸工具在非 `C:` JDK 下是否還能重現既有收據（交 T020c）。
 
-## 6. 合併批次（T020b，Issue #43）
+## 6. 合併批次（T020b，Issue #43；第 2 版，回應 2026-11-04 14:02 審查）
 
-依據：#30 T020a 的 `docs/combat-merge/class-diff.json`（分支 `task/30`，主控以 review:pass 結案，豁免 1 筆歷史來源）。批次的類別清單見 `docs/combat-merge/batches.json`。
+依據：#30 T020a 的 `docs/combat-merge/class-diff.json`（分支 `task/30` @ `31b5233`，主控以 review:pass 結案、豁免 1 筆歷史來源）。
 
-### 6-1. T020a 改寫了前提（已驗證）
+### 6-1. T020a 改寫了前提
 
-| 比較 | 結果 | 含意 |
-|---|---|---|
-| `8d26c9d7` vs 正式 `e1498871` | 只差 4 CHANGED＋4 ONLY_IN_FORMAL | **正式 0.6.71 已包含第一批**（66 層），差的 8 筆都是正式版後來加的（GmPolyMe、SelectionRecovery、SharedPresentationPackets、職業 0..6、魔法娃娃 opcode 123、NativeArmorStatus >255）。§2-3 的「先併 8d26」實際上不用做。 |
-| `50635f7e` vs `8d26c9d7` | 140 CHANGED＋483 NEW（380 筆完整 Java、243 筆 asm-only）→ **303 個外層類別** | 這才是要併入的戰鬥內容（第二批）。 |
-| Maven 產物 vs 正式 | bytes 只有 1,008 相同；雲端以 `javap -c -p` 去行號／常數池編號／空白後試算，仍約 430 類別不同（上限估計，未扣除 lambda 編號等編譯器雜訊） | **`src/main` 與正式 0.6.71 不等價**。T002／T007 只比對了類別清單。這是第一階段要補的缺口。 |
+| 比較 | 結果 | 狀態 | 含意 |
+|---|---|---|---|
+| `8d26c9d7` vs 正式 `e1498871` | 4 CHANGED＋4 ONLY_IN_FORMAL | 已驗證（T020a，審查重算） | 正式 0.6.71 已包含第一批；差的 8 筆都是正式版後加的（T029 保留清單）。§2-3「先併 8d26」不必做。 |
+| `50635f7e` vs `8d26c9d7` | 623 entries → **303 個外層類別**（新 218：純 Java 156、Java＋內部 ASM 45、asm-only 17；既有改動 85：其中 19 個在 `src/main` 為 DECOMPILED） | 已驗證（T020a，審查重算） | 這是要併入的第二批。 |
+| Maven 產物 vs 正式 | class bytes 只有 1,008 相同 | 已驗證（T020a） | bytes 不同不代表語意不同（除錯資訊、編譯器版本都會影響）。 |
+| 同上，語意層級 | 雲端試算：javap 去常數池編號／空白後 2,538 共同類別中 593 筆不同，其中 162 筆解析失敗 | **推測，待 T020d 確認** | 試算用 JDK 21 編譯（正式／CI 為 17）、未正規化 lambda／合成名稱，雜訊未排除。只能說「可能有語意缺口」。 |
 
-### 6-2. 兩階段
+### 6-2. 兩階段與類別歸屬
 
-- **第一階段（A）**：讓 `src/main` 在語意上等於正式 0.6.71。先做比對工具（T020d），依結果再訂修補批次（T020e，主控）。
-- **第二階段（B）**：把第二批 303 個外層類別併入。B 批次的驗收用同一支比對工具：**被動到的每個類別，在 Maven 產物中必須與 `50635f7e` 候選語意相同**（T029 保留清單除外，那些要等於「候選＋正式改動」的合成版）。這個驗收和第一階段無關，所以 B 可以和 A 並行；B3 動到的 85 個既有類別，在批次內一併校正到候選版。
+- **B 階段（併入候選）擁有 303 個外層類別**（清單見 `docs/combat-merge/batches.json` 的 `owned_by_B`）。最終目標：與 `reference/candidate-50635f7e.jar` 語意相同；例外是 T029 保留方法（§6-5）。
+- **A 階段（`src/main`→正式 0.6.71）擁有其餘全部類別**。最終目標：與 `reference/base-0.6.71.jar` 語意相同。T020e 產生的 A 修補任務**不得修改** `owned_by_B` 的任何檔案；T020d 工具在 A 任務驗收時以 `--exclude owned_by_B` 執行。
+- B3 的 85 個既有類別中，有 73 個在 T020a 的 Maven vs 正式 bytes 差異裡。這些類別歸 B：B3 批次直接以候選版為目標，**不需要**先校正到正式版；若 `src/main` 現版與正式版有語意差異，該差異在 B3 批次內一併消除（因為候選 = 正式 + 戰鬥修改，正式缺口會一起補上）。
+- 因為歸屬不重疊，A 與 B 可並行；兩邊都動不到對方的檔案。整體最終目標＝「B 類別等於候選（含 T029 例外）＋其他類別等於正式」。
 
 ### 6-3. 共用前置
 
-| ID | 階段 | 執行 | 內容 |
-|---|---|---|---|
-| T020d | code | cursor-cloud | ASM 語意比對工具 `lito伺服器/LiTo381-Server/tools/semantic-diff/`：去除 LineNumberTable／LocalVariableTable／SourceFile 等除錯屬性，正規化常數池、lambda 與合成方法命名後，逐類別比較；可用 `--classes` 指定範圍。CI 加一個非阻斷 job：Maven 產物 vs `reference/base-0.6.71.jar`，產出 `docs/server-semantic-gap.md`。 |
-| T020f | resource | codex-local | 把候選 `50635f7e` JAR 放進 `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar`（比照 base-0.6.71.jar 的 `.gitignore` 例外），並把 380 筆凍結 Java 原始碼匯出到 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/sources/`，附 manifest（路徑、SHA、對應 class SHA）。這樣 B 批次可以在雲端做。 |
+| ID | Issue | 階段 | 執行 | 內容 |
+|---|---|---|---|---|
+| T020d | #44 | code | cursor-cloud | ASM 語意比對工具（含 `--classes`、`--exclude`、方法層級 `--allow-methods`），CI 非阻斷 job 產出 `docs/server-semantic-gap.md`。 |
+| T020f | #45 | resource | codex-local | `reference/candidate-50635f7e.jar` 與 380 筆凍結 Java（`merge-inputs/50635f7e/`）入庫。 |
+| T020b-2 | #43（本 Issue 第 2 步） | design | Claude | #45 完成後，以 §6-4 的確定性程序從候選 JAR 產生固定批次，寫入 `docs/combat-merge/batches.json` 與 `docs/plans/issue-43.json`。 |
 
-### 6-4. 第二階段批次（每批一個 PR，依序：B2 → B1a–d → B3-*）
+### 6-4. 批次產生程序（固定、可重現）
 
-| 批次 | 外層類別數 | 來源 | 做法 |
-|---|---:|---|---|
-| B2 | 17 | asm-only 新類別 | 用 CFR 反編譯候選 JAR 中的版本，檔頭標 `// DECOMPILED from candidate-50635f7e.jar, TODO review` |
-| B1a／B1b／B1c／B1d | 51／51／51／48 | 有完整 Java 的新類別（含 45 個外層 Java＋內部 ASM 的混合類別；混合者內部類別以外層 Java 為準，與候選比對驗證） | 從 `merge-inputs/50635f7e/sources/` 搬入 `src/main/java/local/lito381/server/` |
-| B3-battle | 29 | 既有 `Battle*` 類別的 ASM 修改 | 三方移植：以正式版（= 8d26 版）為基準、候選版為目標，用 CFR 反編譯兩者取差異，套到 `src/main` 原始碼；`src/main` 本身與正式不同時，先校正到正式版再套差異 |
-| B3-combat-material | 23 | `Combat*`、`ForcedCombat`、`*MaterialAction` | 同上 |
-| B3-native | 30 | 其他 `Native*` 等（其中 19 個在 `src/main` 是 DECOMPILED） | 同上；DECOMPILED 檔可直接以候選反編譯版取代，保留標頭 |
-| B3-core | 3 | `ClientSession`、`Protocol`、`GameHub` | 同上，**加上 T029 保留項**：GmPolyMe.exitRoom、SelectionRecovery.finish、SharedPresentationPackets.bluePotion、七職業 sendRoomParticipant、Protocol 職業 0..6、魔法娃娃 opcode 123＋h(0)。這三個類別的驗收目標是「候選＋正式改動」的合成版 |
+輸入：`reference/candidate-50635f7e.jar`（SHA `50635f7e…`）、`class-diff.json` 的 303 個外層類別、腳本 `tools/semantic-diff/plan_batches.py`（T020b-2 提交）。
 
-**相依規則**：新類別會用到既有類別新增的方法，既有類別的修改也會呼叫新類別，所以某些批次單獨無法編譯。允許一個批次從後續批次**提前帶入最小必要的類別或方法**，讓它能編譯；被帶入的部分必須同樣通過語意比對，並在 PR 列出。提前帶入的類別在原批次中標為已完成。
+1. **相依圖**：對 303 個外層類別（含其 `$` 內部類別），讀候選 JAR 的常數池 `CONSTANT_Class`／`Methodref`／`Fieldref`／`InterfaceMethodref`，只保留指向另外 302 個類別的邊。
+2. **強連通分量（SCC）**：Tarjan 演算法。同一 SCC 必須在同一批，不得拆分。
+3. **拓撲排序**：依「被依賴者在前」排序 SCC；同層以類別名排序以保證可重現。
+4. **裝箱**：依拓撲順序把 SCC 依序放入批次，每批上限 **60 個外層類別**（取代 §4 的 ≤30；理由：B1 的新類別多半是小型單一職責類別，60 個仍可人工審查）；單一 SCC 超過 60 時自成一批並在 PR 標註。B3-core（ClientSession／Protocol／GameHub）不論所在 SCC 都放在最後一批。
+5. **結果**：每批是「它依賴的類別全部在前面批次或同一批」的閉包，所以**每批可單獨編譯**，不需要提前帶入。若某批仍需要尚未併入的既有類別新增的方法（候選中既有類別新增的 API），該既有類別也在相依圖中，會被排到同批或前批，不會出現「只帶入方法」的情況；**整個類別一律以最終候選版為目標**。
 
-**每批共同驗收**：`mvn -B test` 綠（不得停用、跳過或放寬測試）；T020d 工具 `--classes <本批外層類別及內部類別>` 對 `reference/candidate-50635f7e.jar` 全部語意相同（B3-core 對合成版）；PR 列出搬入／移植／提前帶入的類別。
+### 6-5. 每批驗收
 
-**第二階段收尾**（B3-core 之後）：本機對 Maven 產物跑 T020c 全套回歸（#31，`--jar` 指向 Maven 產物），各套件案例數與 `8d26c9d7` 既有收據一致，並補跑 `50635f7e` 的 negative final frame 針對性案例。結果作為新基準，接 T030。
+| 項目 | 規則 |
+|---|---|
+| 範圍 | 只動該批 `batches.json` 列出的外層類別檔案（`src/main/java/local/lito381/server/`），及為它們新增／修改的單元測試。 |
+| 來源 | 純 Java、混合：從 `merge-inputs/50635f7e/sources/` 搬入（混合類別的內部類別由外層 Java 編出，與候選比對驗證）。asm-only 新類別：CFR 反編譯候選版，標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`。asm-only 既有類別：CFR 反編譯候選版與正式版，取差異套到 `src/main`（`src/main` 為 DECOMPILED 者可直接以候選反編譯版取代）。 |
+| 語意 | `semantic-diff --left target/LiTo381-Server.jar --right reference/candidate-50635f7e.jar --classes <該批全部外層＋內部類別>` 全部 SAME。 |
+| T029 保留（只在含 ClientSession／Protocol／GameHub 的批次） | 同一指令加 `--allow-methods docs/combat-merge/t029-methods.txt`：允許清單內的方法改為和 `reference/base-0.6.71.jar` 比對且必須 SAME；清單外方法仍須等於候選。允許清單由 T020b-2 從 T020a `formal_preservation` 的 javap 證據產生並提交：ClientSession（呼叫 GmPolyMe.exitRoom、SelectionRecovery.finish、SharedPresentationPackets.bluePotion 的方法、七職業 sendRoomParticipant）、Protocol（litoRoomParticipant 職業 0..6、magicDollIcon／magicDollCustomIcon opcode 123＋h(0)）。若某方法兩邊都改（候選改了戰鬥邏輯、正式改了 T029 項），該方法列為「手動合成」，驗收改為：與正式版的差異只在戰鬥部分、與候選版的差異只在 T029 部分，PR 附兩份 javap 差異供審查。 |
+| 單元測試 | `mvn -B test` 綠，不得停用、跳過或放寬。 |
+| 回歸子集 | **新類別批次（不含任何既有類別）：無適用的戰鬥回歸**。理由：新類別在被既有類別呼叫前不會執行，行為回歸要等呼叫端併入才有意義；以語意比對＋單元測試為準。**含既有類別的批次**：本機跑 T020c（#31）的 `targeted`＋`player-cancellation`（2,400 案）對 Maven 產物，須與 `8d26c9d7` 既有收據的案例數與結果一致；批次內若沒有既有類別被戰鬥入口呼叫，報告說明並改跑 `affected_18`。前提：#31 已完成，否則該批停在等待。 |
 
-### 6-5. 不在本批次的事
+### 6-6. 收尾閘門（T020-close）
 
-- T021–T028（技能目標、Source26 自施、PET／SUMMON 語意等缺口）：在合併後的 `src/main` 上逐項做，不再另疊候選層。
+依賴：最後一個 B 批次、#31（T020c）完成、**A 階段所有修補任務合併**（T020e 產生的任務清單全部 done，不是只有 T020e 設計完成）、T020d 對 Maven 產物 vs 「B 類別取候選＋其他取正式」的總比對 0 差異（T029 允許清單除外）。執行：本機對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24），加 `50635f7e` negative final frame 針對性案例；結果寫成新基準，接 T030。
+
+### 6-7. 不在本批次的事
+
+- T021–T028：在合併後的 `src/main` 上逐項做，不再另疊候選層。
 - T029 的非 JAR 部分（`litoddraw.dll`、LTicon／LTdesc）：另由 T029 處理。

@@ -1,21 +1,26 @@
 # Issue #43 / T020b — 戰鬥合併批次（設計）
 
+## 第 2 版（回應 2026-11-04 14:02 審查退回）
+| 審查項 | 處理 |
+|---|---|
+| [P1-1] 相依閉包未固定 | 改為 §6-4 的確定性程序（常數池相依圖 → SCC → 拓撲排序 → 每批 ≤60 裝箱）；同一 SCC 不拆、整個類別以候選版為目標，取消「只帶入方法」。實際批次需要候選 JAR，在 #45 入庫後以 `tools/semantic-diff/plan_batches.py` 產生（本 Issue 第 2 步，T020b-2）。§4 的 ≤30 改為 ≤60，理由寫在 §6-4。 |
+| [P1-2] A／B 重疊 | §6-2：B 擁有 303 個外層類別（`batches.json` 的 `owned_by_B`），A 不得修改；73 個重疊類別在 B3 直接以候選版為目標。T020-close 依賴補上 #31 與「A 修補任務全部完成」（§6-6）。 |
+| [P1-3] 逐批回歸子集與 B3-core 基準 | §6-5：逐項定義範圍、來源、語意、T029、單元測試、回歸子集（新類別批次無適用並說明理由；含既有類別批次跑 targeted＋player 2,400 案）。B3-core 改用方法層級允許清單（`--allow-methods`）對正式版比對，不需要另產合成 JAR；兩邊都改的方法列為手動合成並附 javap 差異。允許清單由 T020b-2 產生。 |
+| [P2-4] 試算證據 | 試算降為「推測，待 T020d」。原始輸入與指令見下。 |
+| [P2-5] 範圍 | 任務擁有者（雲端主控）調整 Issue 範圍：加入 `docs/combat-merge/batches.json`、`docs/combat-merge/t029-methods.txt`、`tools/semantic-diff/plan_batches.py`；繼承自 `task/24` 的檔案（`TASKS.md`、`docs/plans/issue-24.json`、`docs/reports/issue-24.md`、設計 §1–5）在 PR #29 合併前隨本分支存在，PR #29 合併後本分支只剩授權差異。 |
+
 ## 做了什麼
-- `docs/design/T020-combat-merge.md` 新增 §6：依 T020a 結果改寫前提（正式已含第一批；`src/main` 與正式不等價），定兩階段做法、共用前置（T020d 比對工具、T020f 候選入庫）與第二階段 9 個批次。
-- `docs/combat-merge/batches.json`：303 個外層類別的批次歸屬。
-- `docs/plans/issue-43.json`：13 個後續任務與相依關係。
+- `docs/design/T020-combat-merge.md` §6 改寫（第 2 版）。
+- `docs/combat-merge/batches.json`：確定 `owned_by_B`（303），`batches` 待 T020b-2。
+- `docs/plans/issue-43.json`：T020d（#44）、T020f（#45）、T020b-2、T020e、T020-close。
 
 ## 怎麼驗證
-- 已驗證：批次由 `class-diff.json`（`task/30`）的 `candidate_5063_vs_8d26` 非 SAME 列（623 筆）彙整為 303 個外層類別：新類別 218（完整 Java 156、混合 45、asm-only 17）、既有類別改動 85（Battle 29、Combat 12、MaterialAction 11、Native 等 30、核心 3），其中 19 個在 `src/main` 為 DECOMPILED。`batches.json` 總數 303。
-- 已驗證：在雲端以 `mvn -B -DskipTests -Dmaven.test.skip=true package` 建出 Maven 產物，和 `reference/base-0.6.71.jar` 做 `javap -c -p -constants` 比對（去常數池編號與空白），2,538 個共同類別中約 593 筆不同；其中約 162 筆是批次解析失敗，真正不同的約 430 筆。這是上限估計，正式數字由 T020d 工具產出。
-- 推測：約 430 筆裡有一部分是 lambda 編號、合成方法等編譯器雜訊，T020d 正規化後應會下降。
+- 已驗證（審查重算）：303 個外層類別、218 新／85 既有、19 DECOMPILED。
+- 推測：Maven 產物與正式可能有語意差異。雲端試算條件：repo main @ `b6dc4e6`；`LC_ALL=C.UTF-8 mvn -B -q -DskipTests -Dmaven.test.skip=true package`（OpenJDK **21.0.12**，非 17），產物 `target/LiTo381-Server.jar` SHA256 `702194c491c831b0389188f83278c47449ae82c8e24282a8257e4c30e5b6e826`；對 `reference/base-0.6.71.jar`（`e1498871…`）以每批 200 類別執行 `javap -c -p -constants`，把 `#數字` 換成 `#`、連續空白壓成一格後逐類別比較：2,538 共同類別、593 不同、162 解析失敗。輸出僅存在雲端工作階段的暫存區，未提交（依規則，實驗輸出不進 git）。JDK 版本不同、lambda／合成名稱未正規化，因此不能當作已驗證。
 
 ## 未驗證什麼
-- 各批單獨能否編譯（設計已允許提前帶入相依類別）。
-- 第一階段實際修補量（待 T020d）。
-
-## 產出路徑
-`docs/design/T020-combat-merge.md`、`docs/combat-merge/batches.json`、`docs/plans/issue-43.json`、`docs/reports/issue-43.md`
+- 實際批次與每批可否單獨編譯（T020b-2，需候選 JAR）。
+- A 階段實際修補量（T020d）。
 
 ## 給下一棒的提示
-T020d 與 T020f 可並行；B2 起的批次都等這兩個完成。T020e 由主控在 T020d 出報告後做。
+#45 入庫後由雲端主控執行 T020b-2，產生批次與允許清單並建 B 批次 Issue；#44 需支援 `--exclude`、`--allow-methods`。
