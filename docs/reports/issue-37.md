@@ -69,12 +69,81 @@ bash docs/reports/issue-37-loop.sh
 | `run-1.log` … `run-50.log` | 各輪 `mvn -B -Dtest=ClientSessionClassicWorldMonsterAggressionIntegrationTest -Dsurefire.rerunFailingTestsCount=0 surefire:test` 完整輸出 |
 | `summary.tsv` / `summary.json` / `summary.md` | 每輪 exit_code、Tests run、Failures、Errors、Skipped、elapsed_s、PASS/FAIL |
 
-CI workflow `.github/workflows/issue-37-loop.yml`（只在 `task/37` 跑）把上述目錄上傳為 artifact **`issue-37-loop-evidence`**。合併後可刪此 workflow。逐輪統計與下載連結在該 job 完成後補進本節（不把 `target/`、`*.log` 或 zip 加進 git）。
+CI workflow `.github/workflows/issue-37-loop.yml`（只在 `task/37` 跑）把上述目錄上傳為 artifact **`issue-37-loop-evidence`**。合併後可刪此 workflow。不把 `target/`、`*.log` 或 zip 加進 git。
 
-- GitHub CI [run 41833234796](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796)（PR #39，測試修正 commit `b92cf51`）：三個 job 全綠。
-  - **Server tests** pass，10m51s。[job 126585472233](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796/job/126585472233)。artifact `server-test-evidence`（13325365446）的 `mvn-test.log`：**Tests run: 6033, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`。目標類 **19 run / 0 failure / 0 skipped**（17.11 s）。
-  - Server (Java 17 / Maven) pass；Launcher (.NET 10 / WinForms) pass。
-  - CI 為 Temurin 17。
+**50 次連跑結果（已驗證，CI Temurin 17 / Maven 3.10.0）**
+
+| 來源 | run | artifact | 受測 SHA | 結果 |
+|---|---|---|---|---|
+| PR #39 `pull_request` | [41836898186](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41836898186) | [`issue-37-loop-evidence` 13328845723](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41836898186/artifacts/13328845723) | `4a2265a`（Actions 把 `218d05b` merge 進當時 `main` 的 merge commit） | **50 / 50 PASS** |
+| `push` `task/37` | [41836893478](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41836893478) | [`issue-37-loop-evidence` 13327854133](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41836893478/artifacts/13327854133) | `218d05b5d3df64a2440004a4fa7f81d6fab4a522`（分支 head，含腳本與測試修正） | **50 / 50 PASS** |
+
+下載：
+
+```bash
+gh run download 41836898186 -n issue-37-loop-evidence
+# 或
+gh run download 41836893478 -n issue-37-loop-evidence
+```
+
+兩份 artifact 的 `summary.json` 皆為 **pass=50 fail=0**；每輪 **exit_code=0**、**Tests run=19 / Failures=0 / Errors=0 / Skipped=0**。PR 那份 `summary.tsv` 牆鐘加總 **1154 s**（22–24 s／輪）。環境見 artifact 內 `meta.txt`（`Temurin-17.0.21+9`）。
+
+PR merge commit 的逐輪表（與 artifact `summary.md` 相同）：
+
+| run | exit_code | Tests run | Failures | Errors | Skipped | elapsed_s | status |
+|---:|---:|---:|---:|---:|---:|---:|:---|
+| 1 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 2 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 3 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 4 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 5 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 6 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 7 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 8 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 9 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 10 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 11 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 12 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 13 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 14 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 15 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 16 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 17 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 18 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 19 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 20 | 0 | 19 | 0 | 0 | 0 | 22 | PASS |
+| 21 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 22 | 0 | 19 | 0 | 0 | 0 | 22 | PASS |
+| 23 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 24 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 25 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 26 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 27 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 28 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 29 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 30 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 31 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 32 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 33 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 34 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 35 | 0 | 19 | 0 | 0 | 0 | 22 | PASS |
+| 36 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 37 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 38 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 39 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 40 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 41 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 42 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 43 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 44 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 45 | 0 | 19 | 0 | 0 | 0 | 22 | PASS |
+| 46 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 47 | 0 | 19 | 0 | 0 | 0 | 24 | PASS |
+| 48 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 49 | 0 | 19 | 0 | 0 | 0 | 23 | PASS |
+| 50 | 0 | 19 | 0 | 0 | 0 | 22 | PASS |
+
+- GitHub CI [run 41836898182](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41836898182)（PR #39，head `218d05b`）：**Server tests** pass（10m32s）；Server package 與 Launcher 亦綠。前一筆測試修正 [run 41833234796](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796)（`b92cf51`）同樣全綠：**6033 run / 0 failure / 117 skipped**，目標類 19/0/0/0（17.11 s）；artifact `server-test-evidence` 13325365446。
 
 ### 推測
 
@@ -83,7 +152,6 @@ CI workflow `.github/workflows/issue-37-loop.yml`（只在 `task/37` 跑）把�
 
 ### 待驗證
 
-- 本輪 `issue-37-loop` CI 的 50 次連跑 artifact（腳本已提交；job 完成後補連結與逐輪表）。
 - 真機進房／寵物 AI／正式伺服器排程（本任務不要求）。
 
 ## 未驗證什麼
@@ -105,9 +173,9 @@ CI workflow `.github/workflows/issue-37-loop.yml`（只在 `task/37` 跑）把�
 
 ## 給下一棒的提示
 
-- 請核對 artifact `issue-37-loop-evidence`：`tested-revision.txt`、`summary.tsv` 50 列 exit_code、各 `run-N.log` 的 Surefire 行。
+- 請核對 artifact `issue-37-loop-evidence`（PR run 41836898186 / 13328845723，或 push run 41836893478 / 13327854133）：`tested-revision.txt`、`summary.tsv` 50 列 exit_code=0、各 `run-N.log` 的 Surefire 行 19/0/0/0。
 - 合併後可刪 `.github/workflows/issue-37-loop.yml`（只在 `task/37` 觸發）。
 - 請 Claude 審此 PR：確認沒有放寬斷言、沒有跳過測試，且 `stopBattleClock` 發生在 `tamedCompanions.add` 之前。
-- `b92cf51` 的 Server tests 已綠（run 41833234796，6033 / 0 / 117 skipped）。最新 head 的 Server tests 與 loop artifact 以本輪 CI 為準。
+- head `218d05b` 的 Server tests 已綠（run 41836898182）。`b92cf51` 同樣綠（run 41833234796，6033 / 0 / 117 skipped）。本報告-only commit 會再跑一次 CI，預期綠。
 - 若還要從產品側杜絕「測試執行緒 + battleClock」雙重 tick，下一步才是讓 `serverClassicWorldCompanionTick` 在 `ready()` 到 `retryPath()` 之間原子佔位；本輪不需要。
 - 之後寫同類「注入 nowNanos 的 WORLD companion 計數」測試，請先停 `battleClock`，或像毒案那樣 `defer` 到牆鐘之後再 `add`。
