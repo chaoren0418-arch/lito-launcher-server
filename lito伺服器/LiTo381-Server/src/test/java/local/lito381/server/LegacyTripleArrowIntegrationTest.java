@@ -13,11 +13,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only proof for native skill132 Triple Arrow and both retained rows. */
 final class LegacyTripleArrowIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactTripleArrowContract() throws Exception {

@@ -14,11 +14,18 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only proof for retained skill 100 and the five dark-stone tiers. */
 final class LegacyBringStoneIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactBringStoneContract() throws Exception {

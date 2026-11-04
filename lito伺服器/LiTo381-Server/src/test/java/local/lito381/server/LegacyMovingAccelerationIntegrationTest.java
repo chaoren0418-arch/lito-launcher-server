@@ -14,11 +14,18 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only proof for retained skill 101 and its mode-four movement family. */
 final class LegacyMovingAccelerationIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactMovingAccelerationContract() throws Exception {

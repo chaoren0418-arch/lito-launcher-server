@@ -11,11 +11,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Set;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only live-schema proof for retained Pollute Water skill 173. */
 final class LegacyPolluteWaterIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRoutedSourcePinsSkill173AndItsOwnCounterMagicProfile()

@@ -14,11 +14,18 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only proof for retained skill 99, its AC row and original coexist mode. */
 final class LegacyShadowArmorIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactShadowArmorContract() throws Exception {

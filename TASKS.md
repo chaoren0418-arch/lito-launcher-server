@@ -30,9 +30,10 @@ CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製�
 統一版本號為 0.6.71；刪除「正式 0.6.69」殘句；`VALIDATION.md` 只留最新一節，舊段落移到 `docs/HISTORY.md`。
 驗收：`grep -rn "0\.6\.69\|0\.6\.70" --include=*.md` 只剩歷史章節。
 
-### T005 | todo | Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
+### T005 | review | Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`, `.github/workflows/build.yml`
 DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"))` 守門，與 `LitoMySql*IntegrationTest` 一致。
 驗收：無 DB 環境 `mvn test` 全綠（skipped 可）；CI 加 `mvn test` job。
+**現況（Issue #3）**：36 個 `Legacy*IntegrationTest` 已加 `@BeforeAll` assume；CI 已加 `server-test` job。無 DB 時這 36 類不連 MySQL。全套 `mvn test` 仍紅（範圍外：缺 `config/server.properties`、本機 `1-伺服器` 來源、`LiTo.bin`）。詳見 `docs/reports/issue-3.md`。
 
 ### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
 真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
