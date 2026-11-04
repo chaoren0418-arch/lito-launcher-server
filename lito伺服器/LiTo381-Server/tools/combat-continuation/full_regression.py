@@ -30,7 +30,8 @@ try:
     for key in ['observations','log']:assert sha(Path(result[key]['path']))==result[key]['sha256']
    old=previous[index];assert old['adapted_driver']['sha256']==sha(adapted)
    row=dict(old);row['accepted_reconciliation']=pin(D/'replay-reconciliation.json');v['results'].append(row);write(run/'manifest.json',v);print('REUSE 1728 completed behavioral cases; explicit 0.6.69 formal guard reconciliation',flush=True);continue
-  if index<len(previous) and previous[index]['exit_code']==0 and previous[index]['adapted_driver']['sha256']==sha(adapted):
+  # An explicit output requests a new run, not cached qualification.
+  if not options.out and index<len(previous) and previous[index]['exit_code']==0 and previous[index]['adapted_driver']['sha256']==sha(adapted):
    old=previous[index]; assert sha(Path(old['log']['path']))==old['log']['sha256'];v['results'].append(old);write(run/'manifest.json',v);print('REUSE passed same runtime and driver '+name,flush=True);continue
   with log.open('w',encoding='utf-8')as out:result=subprocess.run([sys.executable,'-B','-X','utf8',str(adapted)],cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,timeout=900)
   row=dict(name=name,exit_code=result.returncode,original_driver=pin(original),adapted_driver=pin(adapted),adaptation='evidence destination and absolute workspace paths; four explicit bounded-worker flags if absent; fixture behavior/assertions/deadlines unchanged',log=pin(log));v['results'].append(row);write(run/'manifest.json',v)

@@ -54,7 +54,7 @@ if requested_stage in ('return-nature-transfer','pet-world-lifetime','npc-physic
     specs += [('polymorph-material','Polymorph',128,8,56),('return-nature-material','ReturnNature',136,8,36)]
 v = dict(status='running', runtime=build['runtime'], driver=pin(run/Path(__file__).name), basis=[], results=[], formal_deployment_changed=False, full_goal_achieved=False)
 previous={}
-if (D/'current.json').exists():
+if not options.out and (D/'current.json').exists():
     current=read(D/'current.json')
     ref=current['receipt']
     assert sha(Path(ref['path']))==ref['sha256']

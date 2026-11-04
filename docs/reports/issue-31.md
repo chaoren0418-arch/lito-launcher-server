@@ -4,14 +4,17 @@
 
 **未達完整回歸驗收；請勿關閉 Issue 或宣稱 8d26c9d7 本輪全套通過。**
 
-既有提交 `94decc9` 已參數化八個入口，`8b0338e` 已補上 seal 失敗收據。本次開始時這兩個提交均已存在，工作樹乾淨且與 origin/task/31 一致。本次只更新報告，重新驗證離線接線、候選與歷史正式檔 SHA、JDBC bytecode 和舊收據；沒有新增程式修改、沒有重跑 probe 編譯或戰鬥行為案例。實際 seal 仍 exit 1，不能宣稱完整回歸。
+既有提交 `94decc9` 已參數化八個入口，`8b0338e` 已補上 seal 失敗收據，本次接續 `4f31f15`。本輪修改三個入口：指定 `--out` 時不再重用 composed、existing_20、affected_18 的一般成功快取，以免設定或 JDK 改變後仍把舊結果算作新執行。未指定 `--out` 時保留既有重用行為；full 的歷史正式檔調和流程保持原樣，尚未驗證可通過。全部原有斷言與案例數保留。
+
+本輪重新驗證離線接線、候選與歷史正式檔 SHA、JDBC bytecode 和舊收據；沒有重跑 probe 編譯或戰鬥行為案例。實際 seal 仍 exit 1，不能宣稱完整回歸。
 
 工作分支 `task/31`；從既有 worktree 直接修改，未 checkout／另建分支。設計依據：`git fetch origin task/24` 後讀取 `origin/task/24:docs/design/T020-combat-merge.md` §2-4。
 
 ## 本次接續的已驗證結果
 
-- 開始時 HEAD 為 `8b0338e`，`git rev-list --left-right --count HEAD...origin/task/31` 為 `0 0`；未 checkout／另建分支。
-- `test_regression_support.py` 的 7 項測試、`test_seal_failure.py` 的 2 項測試全部通過；`check_adapters.py` 的 8 入口 CLI 與 68 子驅動語法／JDK 轉接檢查通過。這些都是離線工具檢查，不是戰鬥案例。
+- 開始時 HEAD 為 `4f31f15`，工作樹乾淨，分支為 `task/31`；未 checkout／另建分支。
+- `test_regression_support.py` 的 7 項測試、`test_seal_failure.py` 的 2 項測試全部通過；新增 `test_replay_policy.py` 的 2 項測試通過（四種 jar/out 組合 × 三入口，以及三個修改檔全部原有 `ast.Assert` 相同）。`check_adapters.py` 的 8 入口 CLI 與 68 子驅動語法／JDK 轉接檢查通過。這些都是離線工具檢查，不是戰鬥案例。
+- 現有 `JAVA_HOME` 解析到 Microsoft JDK 17.0.17。另在子程序移除 JAVA_HOME、將已解析 JDK 的 bin 放到 PATH 前端，實際呼叫工具解析後的 `java -version`／`javac -version`，兩者皆為 17.0.17。未變更系統環境；系統原始 PATH 的 `java` 實際為 Oracle 1.8.0_101，後續不能直接假設清除 JAVA_HOME 即會取得 JDK 17。
 - `verify_baseline.py` 重新核對下表的歷史收據雜湊及組數／案例數。指定同一 JAR 與 `scratch/t020c/8d26c9d7/` 執行 seal，exit 1；總收據為 failed，未沿用成功標記。
 - 重新以 `javap -c -p` 讀指定候選的 `ResourceDatabase`，仍有 `UnifiedConfiguration.read` 與 `DriverManager.getConnection`；只反組譯，沒有載入設定或執行該類別。
 - 指定候選 SHA 仍為 `8d26c9d7…`，唯讀核對現行正式 JAR 為 `e1498871…`；歷史 seal 要求 `75da69b0…`，保護斷言仍保持失敗。
@@ -89,6 +92,7 @@ seal 的 `old['protected']` 要求正式 JAR 為 `75da69b0d2f7f9d394ee6bf2fdb396
 - 本機非 git 證據：`scratch/t020c/8d26c9d7/{verification-summary.json,seal-attempt.log,qualification-current.json}`；最後一份是失敗收據，不能當作驗收通過。
 - 只編譯證據：`scratch/t020c/compile-only/summary.json` 與各組 result/log/classes。
 - 離線檢查腳本：`scratch/t020c/{check_adapters,test_regression_support,test_seal_failure,compile_probes,verify_baseline}.py`；轉接盤點 `adapter-audit.json`；JDBC bytecode 證據 `ResourceDatabase-bytecode.txt`。
+- 本輪新增離線檢查：`scratch/t020c/test_replay_policy.py`；實際 PATH JDK 17 檢查 log：`scratch/t020c/jdk-path-check.log`。scratch 證據不進 git；不是戰鬥通過收據。
 
 - `scratch/t020c/compile-only/summary.json` SHA256：`1f53df3b0ea0061094c66516234b7c9484586f0d2489085eb6c49c47369805eb`。
 - `scratch/t020c/8d26c9d7/verification-summary.json` SHA256：`36e2381a375bc9c2fa5d26e97fac4095eacc422371eec7a34b998a1f32c0c2cf`。
@@ -98,7 +102,7 @@ seal 的 `old['protected']` 要求正式 JAR 為 `75da69b0d2f7f9d394ee6bf2fdb396
 
 ## 給下一棒的提示
 
-1. **Claude 雲端主控／調度器**：本任務標 blocked／needs:local，不要以編譯成功結案。安排隔離 SQL 資源與非機密測試設定；使用者不需代跑準備工作。
+1. **Claude 雲端主控／調度器**：本任務維持未完成，不要以編譯或離線檢查成功結案。先安排隔離 SQL 資源與非機密測試設定，再派本機執行器；單純重排相同任務不會解除依賴。使用者不需代跑準備工作。
 2. **Claude 審查**：裁定歷史正式 JAR 保護基準如何有證據地銜接到正式 `e1498871…`。不得只替換常數、刪除保護或將舊結果冒充新收據。
 3. **本機執行器**：條件具備後，依下列順序跑完整套件，補上本表的新 SHA／案例數／一致性，再執行 seal。保持原斷言，失敗則保留證據。
 

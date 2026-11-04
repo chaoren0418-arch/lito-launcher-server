@@ -11,7 +11,7 @@ for prototype in (B/'de-native-item-weapon-clock-development').glob('*prototype*
   if isinstance(ref,dict) and 'path' in ref and 'sha256' in ref:assert sha(Path(ref['path']))==ref['sha256']
  shutil.copyfile(prototype,D/prototype.name)
 previous=[]
-if (D/'affected-current.json').exists():
+if not options.out and (D/'affected-current.json').exists():
  p=read(D/'affected-current.json');assert sha(Path(p['manifest']['path']))==p['manifest']['sha256'];old=read(Path(p['manifest']['path']))
  if old['runtime']==build['runtime']:previous=old['results']
 names=['timed-weapon-probe-native-cast-material-plan.py','timed-weapon-probe-native-cast-material-policy.py','timed-weapon-probe-native-cast-material-items.py','timed-weapon-probe-native-cast-material-preflight.py','timed-weapon-probe-native-cast-material-authority.py','timed-weapon-probe-native-cast-material.py','timed-weapon-probe-native-cast-material-fault.py','timed-weapon-probe-native-cast-material-stopped.py','timed-weapon-probe-native-self-material-casts.py','timed-weapon-probe-native-dragon-material-casts.py','timed-weapon-probe-native-cube-material-casts.py','timed-weapon-probe-native-cube-material-fault.py','timed-weapon-probe-native-cube-material-stopped.py','timed-weapon-probe-native-cube-material-edges.py','timed-probe-native-item-weapon-material.py','timed-probe-native-item-weapon-fault.py','timed-probe-native-item-weapon-stopped.py','timed-probe-native-item-weapon-edges.py']
