@@ -96,7 +96,7 @@ copy lito伺服器\LiTo381-Server\config\server.properties.example
 啟動套件伺服器.bat
 ```
 
-對應實作：`tools/Start-PackagedServer.ps1`（`java` 走 PATH，`-jar lito伺服器/LiTo381-Server/LiTo381-Server.jar`，設定為同目錄 `config/server.properties`）。
+對應實作由 `packaging/Build-Package.ps1` **產生**進 zip：`tools/Start-PackagedServer.ps1`（`java` 走 PATH，`-jar lito伺服器/LiTo381-Server/LiTo381-Server.jar`，設定為同目錄 `config/server.properties`）。repo 不另存這兩個入口檔。`--smoke` 經 `Start-Process` 時會對 JAR／設定路徑加引號，解壓到含空白或中文的目錄才不會被拆開。
 
 | 模式 | 行為 |
 |---|---|
