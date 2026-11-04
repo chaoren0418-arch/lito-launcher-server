@@ -18,11 +18,18 @@ import java.util.HexFormat;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Read-only proof for native skill 131 World Tree's Call. */
 final class LegacyWorldTreeCallIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     private static final String STATIC_NPC_COLUMNS = String.join("\t",
             "spawn_id", "npc_id", "x", "y", "heading", "movement_distance",
             "name_id", "impl", "gfx_id", "level", "hp", "mp", "exp", "lawful",

@@ -11,11 +11,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /** Explicitly opted-in, read-only probe against the configured legacy sources. */
 final class LegacyEquipmentPhysicalIntegrationTest {
+    @BeforeAll
+    static void requireMySqlIntegration() {
+        Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));
+    }
+
     private static final int[] ENCOUNTER_NPC_IDS = {
             45262, 45207, 45289, 45259, 45278, 45322, 45390,
             45380, 45601, 45650, 45161, 45182, 45812, 45584, 45610,
