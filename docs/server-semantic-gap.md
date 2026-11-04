@@ -1,5 +1,7 @@
 # 伺服器語意缺口（T020d / Issue #44）
 
+> 快照來源：GitHub Actions `build` run [41843825080](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080) job `Semantic gap (non-blocking)`（Temurin 17）。 artifact [`server-semantic-gap`](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080/artifacts/13329967838)。
+
 以 ASM tree 正規化後比對兩個 JAR 的 `.class`。
 此檔由 `lito伺服器/LiTo381-Server/tools/semantic-diff` 產生。
 
@@ -7,9 +9,9 @@
 
 | 項目 | 值 |
 |---|---|
-| left | `lito伺服器/LiTo381-Server/target/LiTo381-Server.jar`（3907 類） |
+| left | `lito伺服器/LiTo381-Server/target/LiTo381-Server.jar`（3929 類） |
 | right | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-04T14:03:01Z |
+| 產生時間 | 2026-11-04T14:05:12Z |
 | 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |
 | 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解、內部類別屬性 |
 
@@ -17,11 +19,11 @@
 
 | 狀態 | 數量 | 含義 |
 |---|---:|---|
-| SAME | 2042 | 兩邊都有，正規化後語意相同 |
-| DIFF | 496 | 兩邊都有，正規化後仍不同 |
-| ONLY_LEFT | 1369 | 只在 left |
-| ONLY_RIGHT | 16 | 只在 right |
-| 比較類別 | 3923 | left∪right |
+| SAME | 2064 | 兩邊都有，正規化後語意相同 |
+| DIFF | 485 | 兩邊都有，正規化後仍不同 |
+| ONLY_LEFT | 1380 | 只在 left |
+| ONLY_RIGHT | 5 | 只在 right |
+| 比較類別 | 3934 | left∪right |
 
 ## 已驗證／推測／待驗證
 
@@ -35,9 +37,9 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 
 本工具比 javap 粗估多做了：整段丟掉 debug 屬性、標籤改序號、`lambda$`／`access$` 依出現順序改名、略過 max_stack／max_locals；並且比較 innerClasses／nestMembers／欄位常數／註解，不只 `javap -c` 反組譯文字。本輪計數：
 
-- 交集 SAME+DIFF = **2538**（應對齊 2,538）。
-- **SAME=2042**，比 bytes 全同的 1,008 多 **1034**——這些是位元組不同但正規化後語意相同（debug／合成名／常數池編號）。
-- **DIFF=496**（第一處差異：method 337、field 24、class 屬性 135）。較 javap 粗估 430 多 66：javap 文字正規化會漏掉 innerClasses／nestMembers／access／欄位常數等；本工具把它們算進 DIFF。
+- 交集 SAME+DIFF = **2549**（應對齊 2,538）。
+- **SAME=2064**，比 bytes 全同的 1,008 多 **1056**——這些是位元組不同但正規化後語意相同（debug／合成名／常數池編號）。
+- **DIFF=485**（第一處差異：method 343、field 27、class 屬性 115）。較 javap 粗估 430 多 55：javap 文字正規化會漏掉 innerClasses／nestMembers／access／欄位常數等；本工具把它們算進 DIFF。
 - ONLY_* 不在 430 裡：430 只估計**兩邊都有**的類別。ONLY_LEFT／ONLY_RIGHT 應對齊 `docs/server-source-gap.md`。
 
 ## DIFF 類別清單
@@ -59,7 +61,6 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/BattleCubeIgnitionEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeIgnitionEffects$Placement;: only right |
 | `local/lito381/server/BattleCubeQuakeEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeQuakeEffects$Placement;: only right |
 | `local/lito381/server/BattleCubeShockEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeShockEffects$Placement;: only right |
-| `local/lito381/server/BattleDeathmatchFatalityCatalog` | class nestMembers: left=local/lito381/server/BattleDeathmatchFatalityCatalog$Effect,local/lito381/server/BattleDeathmatchFatalityCatalog$Family,local/lito381/server/BattleDeathmatchFatalityCatalog$Trigger right=local/lito381/server/BattleDeathmatchFatalityCatalog$1,local/lito381/server/BattleDeathmatchFatalityCatalog$Effect,local/lito381/server/BattleDeathmatchFatalityCatalog$Family,local/lito381/server/BattleDeathmatchFatalityCatalog$Trigger |
 | `local/lito381/server/BattleDragonEyeCatalog$Eye` | method buffId()I insn[2]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/BattleEarthBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleEarthBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:159 |
 | `local/lito381/server/BattleFireBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleFireBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:155 |
@@ -79,8 +80,6 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/BattleQuestEncounter` | field sourceProcEncounterGeneration:Ljava/lang/Object;: only right |
 | `local/lito381/server/BattleQuestEncounter$Monster` | method damage(IZ)Llocal/lito381/server/BattleQuestEncounter$Damage; insn[6]: left=IFEQ L1 right=ALOAD 0 |
 | `local/lito381/server/BattleRules` | method decode(Llocal/lito381/server/BattleRules$Mode;ILlocal/lito381/server/BattleControlCatalog;)Llocal/lito381/server/BattleRules$RuleSet;: only left |
-| `local/lito381/server/BattleRules$1` | class innerClasses: left=local/lito381/server/BattleRules$1\|\|\|0x1008; local/lito381/server/Protocol$LitoModeStepDirection\|local/lito381/server/Protocol\|LitoModeStepDirection\|0x4018 right=local/lito381/server/BattleRules$1\|\|\|0x1008; local/lito381/server/BattleRules$Mode\|local/lito381/server/BattleRules\|Mode\|0x4018; local/lito381/server/Protocol$LitoModeStepDirection\|local/lito381/server/Protocol\|LitoModeStepDirection\|0x4018 |
-| `local/lito381/server/BattleRules$MatchState` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleRules$MatchState\|local/lito381/server/BattleRules\|MatchState\|0x18; local/lito381/server/BattleRules$Mode\|local/lito381/server/Battl… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleRules$1\|\|\|0x1008; local/lito381/server/BattleRules$MatchState\|local/lito381/server/BattleRules\|MatchState\|0x18; local/lito381/serve… |
 | `local/lito381/server/BattleShockStunEffects` | method place(JIIJI)Llocal/lito381/server/BattleShockStunEffects$Placement; insn[21]: left=ICONST_4 right=LDC Integer:65535 |
 | `local/lito381/server/BattleSpellCatalog` | method zombieTemplate(II)Llocal/lito381/server/BattleSpellCatalog$ZombieTemplate; insn[3]: left=ICONST_3 right=ICONST_1 |
 | `local/lito381/server/BattleSpellCatalog$AbilityBuffSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
@@ -210,25 +209,19 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/BattleStrikerGale` | method damageAfterStatus(IZZ)I insn[21]: left=DMUL right=LDC str:"STRIKER_DMG2" |
 | `local/lito381/server/BattleTimeAttackEncounter` | field sourceProcEncounterGeneration:Ljava/lang/Object;: only right |
 | `local/lito381/server/BattleTimeAttackEncounter$Monster` | method damage(IZ)Llocal/lito381/server/BattleTimeAttackEncounter$Damage; insn[6]: left=IFEQ L1 right=ALOAD 0 |
-| `local/lito381/server/BattleTimeAttackMagicSkillCatalog` | class nestMembers: left=local/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition,local/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition,local/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundPattern,local/lito381/server/BattleTimeAt… right=local/lito381/server/BattleTimeAttackMagicSkillCatalog$1,local/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition,local/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition,local/lito381/server/BattleTimeAttackMagicSki… |
-| `local/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition\|local/lito381/server/BattleTimeAttackMagicSkillCatalog\|Definition\|0x18; local/lito381/server… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleTimeAttackMagicSkillCatalog$1\|\|\|0x1008; local/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition\|local/lito381/server/Batt… |
 | `local/lito381/server/BattleTimedStatus` | class innerClasses: left=local/lito381/server/BattleTimedStatus$1\|\|\|0x1008; local/lito381/server/BattleTimedStatus$Brave\|local/lito381/server/BattleTimedStatus\|Brave\|0x18; local/lito381/server/BattleTimedStatus$Breath\|local/lito381/server/BattleTimedStatus\|Breath\|0… right=local/lito381/server/BattleTimedStatus$1\|\|\|0x1008; local/lito381/server/BattleTimedStatus$Brave\|local/lito381/server/BattleTimedStatus\|Brave\|0x18; local/lito381/server/BattleTimedStatus$Breath\|local/lito381/server/BattleTimedStatus\|Breath\|0… |
 | `local/lito381/server/BattleTurnUndead` | method magicLevel(II)I insn[0]: left=ILOAD 1 right=ILOAD 0 |
 | `local/lito381/server/BattleWeaponBreak` | method damageAfterStacks(II)I insn[14]: left=ILOAD 0 right=ILOAD 1 |
 | `local/lito381/server/BattleWindShotStatus` | method snapshot(J)Llocal/lito381/server/BattleWindShotStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:149 |
 | `local/lito381/server/CaptureLog` | class nestMembers: left=local/lito381/server/CaptureLog$Connection right= |
 | `local/lito381/server/ClassicWorldAdenToiCatalog` | method <clinit>()V insn[279]: left=LDC str:"5DFCF849F13FC240637C137DECDBD146F732D24E7A82EF687F7CF80F595B182F" right=LDC str:"53F6D1C7AA4597C73DF8D1708B301B47756CCBE8FF7784448CA5A5CDEE1CBD7D" |
-| `local/lito381/server/ClassicWorldCkewCatalog` | class nestMembers: left=local/lito381/server/ClassicWorldCkewCatalog$CharacterClass,local/lito381/server/ClassicWorldCkewCatalog$Location,local/lito381/server/ClassicWorldCkewCatalog$PredecessorBridge,local/lito381/server/ClassicWorldCkewCatalog$SpawnRow,local/lit… right=local/lito381/server/ClassicWorldCkewCatalog$1,local/lito381/server/ClassicWorldCkewCatalog$CharacterClass,local/lito381/server/ClassicWorldCkewCatalog$Location,local/lito381/server/ClassicWorldCkewCatalog$PredecessorBridge,local/lito381/se… |
 | `local/lito381/server/ClassicWorldIvoryTowerCatalog` | method <clinit>()V insn[183]: left=LDC str:"34D2B2A2470E3494509B5146EB2533B5D82C182CAC50B5AE6DDD2C9C78D01657" right=LDC str:"5B0053AF99F0F66A103D8D292E68118924C5709BD9B16FBD189F7A9E460B593C" |
 | `local/lito381/server/ClassicWorldMapCatalog` | method forMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap; insn[0]: left=GETSTATIC local/lito381/server/ClassicWorldMapCatalog.MAPS:Ljava/util/Map; right=ILOAD 0 |
-| `local/lito381/server/ClassicWorldMonsterMagicSkillCatalog` | class nestMembers: left=local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Definition,local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Targeting right=local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$1,local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Definition,local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Targeting |
-| `local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Definition` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Definition\|local/lito381/server/ClassicWorldMonsterMagicSkillCatalog\|Definition\|0x18; local/lito381/… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$1\|\|\|0x1008; local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$Definition\|local/lito381/serve… |
 | `local/lito381/server/ClassicWorldMonsterPopulation` | method actionLocked(Llocal/lito381/server/ClassicWorldMonsterPopulation$Actor;J)Z insn[17]: left=IFNE L0 right=ALOAD 0 |
 | `local/lito381/server/ClassicWorldMonsterPopulation$Actor` | method snapshot()Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot; insn[57]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/ClassicWorldMonsterPopulation$Snapshot` | field sourceCombatOrigin:Ljava/lang/Object;: only right |
 | `local/lito381/server/ClassicWorldNpcCatalog` | method all(I)Ljava/util/List; insn[43]: left=ARETURN right=ILOAD 0 |
 | `local/lito381/server/ClientSession` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; java/util/concurrent/ConcurrentHashMap$KeySetView\|java/util/concurrent/ConcurrentHashMap\|KeySetView\|0x9; local/… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; java/util/concurrent/ConcurrentHashMap$KeySetView\|java/util/concurrent/ConcurrentHashMap\|KeySetView\|0x9; local/… |
-| `local/lito381/server/ClientSession$1` | class innerClasses: left=local/lito381/server/BattleDeathmatchFatalityCatalog$Effect\|local/lito381/server/BattleDeathmatchFatalityCatalog\|Effect\|0x4018; local/lito381/server/ClassicWorldDspyEscorts$TransitionKind\|local/lito381/server/ClassicWorldDspyEscorts\|Transit… right=local/lito381/server/BattleDeathmatchFatalityCatalog$Effect\|local/lito381/server/BattleDeathmatchFatalityCatalog\|Effect\|0x4018; local/lito381/server/ClassicWorldDspyEscorts$TransitionKind\|local/lito381/server/ClassicWorldDspyEscorts\|Transit… |
 | `local/lito381/server/ClientSession$PendingPetRename` | field sourceCompanionCallback:Ljava/lang/Object;: only right |
 | `local/lito381/server/ClientSession$PendingSlaveTarget` | field sourceCompanionCallback:Ljava/lang/Object;: only right |
 | `local/lito381/server/CombatCompanionSpells` | method shock(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;Ljava/util/function/IntUnaryOperator;)Z insn[178]: left=INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$ShockStunSpell.effectiveMpCost(II)I right=INVOKESTATIC local/lito381/server/NativeSkillConsumptionBridges.ShockStunSpell_effectiveMpCost_III(Llocal/lito381/server/BattleSpellCatalog$ShockStunSpell;II)I |
@@ -248,19 +241,15 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/CombatWorldCommit` | method owner(Llocal/lito381/server/CombatMonsterCurseLifecycle$Context;)Llocal/lito381/server/ClientSession; insn[7]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/CombatWorldCommit$Plan` | class innerClasses: left=local/lito381/server/CombatWorldCommit$Doll\|local/lito381/server/CombatWorldCommit\|Doll\|0x18; local/lito381/server/CombatWorldCommit$Physical\|local/lito381/server/CombatWorldCommit\|Physical\|0x18; local/lito381/server/CombatWorldCommit$Plan\|… right=local/lito381/server/CombatWorldCommit$Doll\|local/lito381/server/CombatWorldCommit\|Doll\|0x18; local/lito381/server/CombatWorldCommit$Physical\|local/lito381/server/CombatWorldCommit\|Physical\|0x18; local/lito381/server/CombatWorldCommit$Plan\|… |
 | `local/lito381/server/GameHub` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/ArenaMapCatalog$Arena\|local/lito381/server/ArenaMapCatalog\|Arena\|0x18; local/lito381/serve… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/ArenaMapCatalog$Arena\|local/lito381/server/ArenaMapCatalog\|Arena\|0x18; local/lito381/serve… |
-| `local/lito381/server/GameHub$1` | class innerClasses: left=local/lito381/server/BattleCubeHarmonyEffects$EventKind\|local/lito381/server/BattleCubeHarmonyEffects\|EventKind\|0x4018; local/lito381/server/BattleCubeIgnitionEffects$EventKind\|local/lito381/server/BattleCubeIgnitionEffects\|EventKind\|0x4018… right=local/lito381/server/BattleCubeHarmonyEffects$EventKind\|local/lito381/server/BattleCubeHarmonyEffects\|EventKind\|0x4018; local/lito381/server/BattleCubeIgnitionEffects$EventKind\|local/lito381/server/BattleCubeIgnitionEffects\|EventKind\|0x4018… |
 | `local/lito381/server/GameHub$Channel` | field members:Ljava/util/Set;: only right |
 | `local/lito381/server/GameHub$MonsterAiTick` | field sourceCombatOrigin:Ljava/lang/Object;: only right |
 | `local/lito381/server/GameHub$RentalBattleHandoff` | method inventory()Llocal/lito381/server/RuntimeInventory; insn[3]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/GameStateStore` | method ensureRankingSnapshot()V insn[1]: left=INVOKEVIRTUAL local/lito381/server/GameStateStore.currentRankingBoundary()Ljava/time/ZonedDateTime; right=INVOKESTATIC local/lito381/server/LiveBattleStats.beforeSnapshot(Llocal/lito381/server/GameStateStore;)V |
-| `local/lito381/server/GameStateStore$1` | class innerClasses: left=local/lito381/server/GameStateStore$1\|\|\|0x1008; local/lito381/server/Protocol$LitoRankingScope\|local/lito381/server/Protocol\|LitoRankingScope\|0x4018 right=local/lito381/server/GameStateStore$1\|\|\|0x1008; local/lito381/server/GameStateStore$WarehouseScope\|local/lito381/server/GameStateStore\|WarehouseScope\|0x4018; local/lito381/server/Protocol$LitoRankingScope\|local/lito381/server/Protocol\|LitoR… |
-| `local/lito381/server/InventoryCatalog` | class nestMembers: left=local/lito381/server/InventoryCatalog$Definition,local/lito381/server/InventoryCatalog$Effect,local/lito381/server/InventoryCatalog$NativeArmorStatus,local/lito381/server/InventoryCatalog$NativeProjectileStatus,local/lito381/server/Inventor… right=local/lito381/server/InventoryCatalog$1,local/lito381/server/InventoryCatalog$Definition,local/lito381/server/InventoryCatalog$Effect,local/lito381/server/InventoryCatalog$NativeArmorStatus,local/lito381/server/InventoryCatalog$NativeProjec… |
 | `local/lito381/server/InventoryCatalog$Definition` | method controlAbilityType()I insn[2]: left=LDC Long:20288 right=LDC Long:120284 |
 | `local/lito381/server/InventoryCatalog$NativeArmorStatus` | method <init>(IIIIIIIIIIIIIIIZIIIIIIIIIII)V insn[5]: left=SIPUSH 255 right=LDC Integer:2147483647 |
 | `local/lito381/server/LegacyMySqlRepository` | method <init>(Ljava/nio/file/Path;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;DZLjava/lang/String;)V insn[33]: left=INVOKEVIRTUAL java/util/Properties.load(Ljava/io/Reader;)V right=DUP2 |
-| `local/lito381/server/LiToGmCommands` | method connection(Llocal/lito381/server/AccountRepository;)Ljava/sql/Connection; insn[1]: left=INVOKEINTERFACE local/lito381/server/AccountRepository.getClass()Ljava/lang/Class; itf right=INVOKEVIRTUAL java/lang/Object.getClass()Ljava/lang/Class; |
+| `local/lito381/server/LiToGmCommands` | method handle(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Z insn[90]: left=INVOKEINTERFACE local/lito381/server/AccountRepository.accessLevel(Ljava/lang/String;)I itf right=ALOAD 0 |
 | `local/lito381/server/LiToItemDetails` | field SOURCE:Ljava/lang/reflect/Method;: only right |
-| `local/lito381/server/LiToItemTemplates` | method preload(Llocal/lito381/server/AccountRepository;)V insn[23]: left=INVOKEINTERFACE local/lito381/server/AccountRepository.getClass()Ljava/lang/Class; itf right=INVOKEVIRTUAL java/lang/Object.getClass()Ljava/lang/Class; |
 | `local/lito381/server/LitoMapRepository` | method <init>(Llocal/lito381/server/ServerConfig;)V insn[65]: left=LDC str:"URL1" right=ALOAD 2 |
 | `local/lito381/server/Main` | method accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V: length left=1 right=2 |
 | `local/lito381/server/MemoryAccountRepository` | field accessLevels:Ljava/util/concurrent/ConcurrentHashMap;: only left |
@@ -284,7 +273,7 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeCompanionMutation` | method current(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Llocal/lito381/server/BattleCompanion;)Z insn[9]: left=ASTORE 3 right=DUP |
 | `local/lito381/server/NativeDeActorState` | method acquire(Llocal/lito381/server/BattleTimedStatus;)Llocal/lito381/server/NativeDeActorState$Lease; insn[1]: left=ASTORE 1 right=DUP |
 | `local/lito381/server/NativeDeActorState$1` | field val$arrayList:Ljava/util/ArrayList;: only left |
-| `local/lito381/server/NativeDeAiState` | class nestMembers: left=local/lito381/server/NativeDeAiState$1,local/lito381/server/NativeDeAiState$Effect,local/lito381/server/NativeDeAiState$Facts,local/lito381/server/NativeDeAiState$Holder,local/lito381/server/NativeDeAiState$Kind,local/lito381/server/NativeD… right=local/lito381/server/NativeDeAiState$1,local/lito381/server/NativeDeAiState$2,local/lito381/server/NativeDeAiState$Effect,local/lito381/server/NativeDeAiState$Facts,local/lito381/server/NativeDeAiState$Holder,local/lito381/server/NativeDeAi… |
+| `local/lito381/server/NativeDeAiState` | method acquire(Llocal/lito381/server/BattleTimedStatus;)Llocal/lito381/server/NativeDeAiState$Lease; insn[1]: left=ASTORE 1 right=DUP |
 | `local/lito381/server/NativeDeAiState$1` | field val$arrayList:Ljava/util/ArrayList;: only left |
 | `local/lito381/server/NativeDeAiTimeline` | method background(Llocal/lito381/server/NativeDeAiTimeline$State;Llocal/lito381/server/NativeDeAiTimeline$Port;J)V insn[2]: left=ASTORE 4 right=DUP |
 | `local/lito381/server/NativeDeAiTimerProtocol` | method schedule(Llocal/lito381/server/NativeDeAiTimeline$State;Llocal/lito381/server/NativeDeAiTimerProtocol$Port;JIZ)Ljava/lang/Object; insn[12]: left=ASTORE 8 right=DUP |
@@ -330,10 +319,12 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeDeDeletionPorts$Services` | class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Boss\|local/lito381/server/NativeDeDeletionPorts\|Boss\|0x408; local/lito381/server/NativeDeDeletionPorts$DeWorld\|local/lito381/server/NativeDeDeletionPorts\|DeWorld\|0x408; local/lito381/server/NativeD… right=local/lito381/server/NativeDeDeletionPorts$Boss\|local/lito381/server/NativeDeDeletionPorts\|Boss\|0x408; local/lito381/server/NativeDeDeletionPorts$DeWorld\|local/lito381/server/NativeDeDeletionPorts\|DeWorld\|0x408; local/lito381/server/NativeD… |
 | `local/lito381/server/NativeDeDeletionScope` | method call(Llocal/lito381/server/NativeDeDeletionOwner;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[22]: left=ALOAD 3 right=LABEL L2 |
 | `local/lito381/server/NativeDeDeletionState` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeCharacterFields$Snapshot\|local/lito381/server/NativeDeCharacterFields\|Snapshot\|0x18; local/lito381/server/NativeDeCorpseTimers$Ow… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeCharacterFields$Snapshot\|local/lito381/server/NativeDeCharacterFields\|Snapshot\|0x18; local/lito381/server/NativeDeCorpseTimers$Ow… |
-| `local/lito381/server/NativeDeDeletionVisibility` | class nestMembers: left=local/lito381/server/NativeDeDeletionVisibility$Marker,local/lito381/server/NativeDeDeletionVisibility$Phase,local/lito381/server/NativeDeDeletionVisibility$RepairKind,local/lito381/server/NativeDeDeletionVisibility$Snapshot right=local/lito381/server/NativeDeDeletionVisibility$1,local/lito381/server/NativeDeDeletionVisibility$Marker,local/lito381/server/NativeDeDeletionVisibility$Phase,local/lito381/server/NativeDeDeletionVisibility$RepairKind,local/lito381/server/N… |
-| `local/lito381/server/NativeDeDeletionVisibility$Snapshot` | class innerClasses: left=local/lito381/server/NativeDeDeletionVisibility$Phase\|local/lito381/server/NativeDeDeletionVisibility\|Phase\|0x4019; local/lito381/server/NativeDeDeletionVisibility$Snapshot\|local/lito381/server/NativeDeDeletionVisibility\|Snapshot\|0x19 right=local/lito381/server/NativeDeDeletionVisibility$1\|\|\|0x1008; local/lito381/server/NativeDeDeletionVisibility$Phase\|local/lito381/server/NativeDeDeletionVisibility\|Phase\|0x4019; local/lito381/server/NativeDeDeletionVisibility$Snapshot\|local/l… |
-| `local/lito381/server/NativeDeEquipment` | class nestMembers: left=local/lito381/server/NativeDeEquipment$Holder,local/lito381/server/NativeDeEquipment$Lease,local/lito381/server/NativeDeEquipment$Op,local/lito381/server/NativeDeEquipment$Request,local/lito381/server/NativeDeEquipment$Template,local/lito38… right=local/lito381/server/NativeDeEquipment$1,local/lito381/server/NativeDeEquipment$Holder,local/lito381/server/NativeDeEquipment$Lease,local/lito381/server/NativeDeEquipment$Op,local/lito381/server/NativeDeEquipment$Request,local/lito381/serve… |
-| `local/lito381/server/NativeDeEquipment$Holder` | class innerClasses: left=local/lito381/server/NativeDeActorState$Lease\|local/lito381/server/NativeDeActorState\|Lease\|0x18; local/lito381/server/NativeDeEquipment$Holder\|local/lito381/server/NativeDeEquipment\|Holder\|0x1a; local/lito381/server/NativeDeEquipment$Lease… right=local/lito381/server/NativeDeActorState$Lease\|local/lito381/server/NativeDeActorState\|Lease\|0x18; local/lito381/server/NativeDeEquipment$1\|\|\|0x1008; local/lito381/server/NativeDeEquipment$Holder\|local/lito381/server/NativeDeEquipment\|Holder… |
+| `local/lito381/server/NativeDeDeletionVisibility` | method classifyRepair(Llocal/lito381/server/NativeDeDeletionVisibility$Snapshot;ZJ)Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind; insn[5]: left=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I right=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I |
+| `local/lito381/server/NativeDeDeletionVisibility$1` | field $SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I: only right |
+| `local/lito381/server/NativeDeDeletionVisibility$Snapshot` | method deletionInProgress()Z insn[0]: left=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I right=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I |
+| `local/lito381/server/NativeDeEquipment` | method bind(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/NativeDeActorState$Lease;Llocal/lito381/server/NativeDeEquipment$Values;)Llocal/lito381/server/NativeDeEquipment$Lease; insn[4]: left=ASTORE 3 right=DUP |
+| `local/lito381/server/NativeDeEquipment$1` | method <clinit>()V insn[6]: left=GETSTATIC local/lito381/server/NativeDeEquipment$Op.APPLY_WEAPON:Llocal/lito381/server/NativeDeEquipment$Op; right=GETSTATIC local/lito381/server/NativeDeEquipment$Op.TEMP_GFX:Llocal/lito381/server/NativeDeEquipment$Op; |
+| `local/lito381/server/NativeDeEquipment$Holder` | method set(Llocal/lito381/server/NativeDeEquipment$Op;I)V insn[4]: left=TABLESWITCH min=3 max=10 default=L8 labels=L0,L1,L2,L3,L4,L5,L6,L7 right=TABLESWITCH min=1 max=8 default=L8 labels=L0,L1,L2,L3,L4,L5,L6,L7 |
 | `local/lito381/server/NativeDeFactoryControls` | class innerClasses: left=java/lang/System$Logger\|java/lang/System\|Logger\|0x609; java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\|local/lito381/server/NativeDeControlCatalog\|Abili… right=java/lang/System$Logger\|java/lang/System\|Logger\|0x609; java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\|local/lito381/server/NativeDeControlCatalog\|Abili… |
 | `local/lito381/server/NativeDeInitializerKernel` | method init(Llocal/lito381/server/NativeDeInitializerKernel$Services;Llocal/lito381/server/NativeDeInitializerKernel$Actor;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V: left=TRY L3 L4 L7 java/lang/NumberFormatException   right=TRY L3 L4 L5 java/lang/NumberFormatException   |
 | `local/lito381/server/NativeDeInitializerKernel$Actor` | class innerClasses: left=local/lito381/server/NativeDeInitializerKernel$Actor\|local/lito381/server/NativeDeInitializerKernel\|Actor\|0x608; local/lito381/server/NativeDeInitializerKernel$Emblem\|local/lito381/server/NativeDeInitializerKernel\|Emblem\|0x18; local/lito381… right=local/lito381/server/NativeDeInitializerKernel$Actor\|local/lito381/server/NativeDeInitializerKernel\|Actor\|0x608; local/lito381/server/NativeDeInitializerKernel$Emblem\|local/lito381/server/NativeDeInitializerKernel\|Emblem\|0x18; local/lito381… |
@@ -443,7 +434,8 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeDeWorldContext` | class innerClasses: left=java/lang/System$Logger$Level\|java/lang/System$Logger\|Level\|0x4019; java/lang/System$Logger\|java/lang/System\|Logger\|0x609; java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/concurrent/locks/Reentran… right=java/lang/System$Logger$Level\|java/lang/System$Logger\|Level\|0x4019; java/lang/System$Logger\|java/lang/System\|Logger\|0x609; java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/concurrent/locks/Reentran… |
 | `local/lito381/server/NativeDeWorldContext$Entry` | class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\|local/lito381/server/NativeDeDeletionPorts\|ObjectRef\|0x608; local/lito381/server/NativeDeWorldContext$Entry\|local/lito381/server/NativeDeWorldContext\|Entry\|0x18 right=local/lito381/server/NativeDeWorldContext$Entry\|local/lito381/server/NativeDeWorldContext\|Entry\|0x18 |
 | `local/lito381/server/NativeDeWorldControls` | method load()I: left=TRY L2 L3 L4 java/lang/Throwable   right=TRY L3 L4 L5 java/lang/Throwable   |
-| `local/lito381/server/NativeDeWorldCore` | class nestMembers: left=local/lito381/server/NativeDeWorldCore$SpatialIndexAuditSnapshot,local/lito381/server/NativeDeWorldCore$SpatialReconcileResult,local/lito381/server/NativeDeWorldCore$VisibleBinding right=local/lito381/server/NativeDeWorldCore$1,local/lito381/server/NativeDeWorldCore$SpatialIndexAuditSnapshot,local/lito381/server/NativeDeWorldCore$SpatialReconcileResult,local/lito381/server/NativeDeWorldCore$VisibleBinding |
+| `local/lito381/server/NativeDeWorldCore` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/NativeDeDeletionPorts$Monster\|local/lito381/server/NativeDeDeletionPorts\|Monster\|0x408; lo… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/NativeDeWorldCore$1\|\|\|0x1008; local/lito381/server/NativeDeWorldCore$SpatialIndexAuditSnap… |
+| `local/lito381/server/NativeDeWorldCore$1` | field $SwitchMap$com$lineage$server$world$World$SpatialReconcileResult:[I: only right |
 | `local/lito381/server/NativeDeWorldCore$VisibleBinding` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\|local/lito381/server/NativeDeDeletionPorts\|ObjectRef\|0x608; local/lito381/server/NativeDeWorldCore$Visibl… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeWorldCore$VisibleBinding\|local/lito381/server/NativeDeWorldCore\|VisibleBinding\|0x1a |
 | `local/lito381/server/NativeDeWorldKinds` | class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Bow\|local/lito381/server/NativeDeWorldKinds\|Bow\|0x8; local/lito381/server/NativeDeWorldKinds$Doll\|local/lito381/server/NativeDeWorldKinds\|Doll\|0x8; local/lito381/server/NativeDeWorldKinds$Dwarf\|local/… right=local/lito381/server/NativeDeWorldKinds$Bow\|local/lito381/server/NativeDeWorldKinds\|Bow\|0x8; local/lito381/server/NativeDeWorldKinds$Doll\|local/lito381/server/NativeDeWorldKinds\|Doll\|0x8; local/lito381/server/NativeDeWorldKinds$Dwarf\|local/… |
 | `local/lito381/server/NativeDeWorldKinds$Item` | class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\|local/lito381/server/NativeDeDeletionPorts\|Viewer\|0x408; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019; local/lito381/serve… right=local/lito381/server/NativeDeDeletionPorts$ObjectRef\|local/lito381/server/NativeDeDeletionPorts\|ObjectRef\|0x608; local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease\|local/lito381/server/NativeDeWorldKinds$Item\|EquipmentTimerLea… |
@@ -451,7 +443,8 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeDeWorldKinds$Item$LastStatus` | class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Item$LastStatus\|local/lito381/server/NativeDeWorldKinds$Item\|LastStatus\|0x1; local/lito381/server/NativeDeWorldKinds$Item\|local/lito381/server/NativeDeWorldKinds\|Item\|0x8 right=local/lito381/server/NativeDeWorldKinds$Item$LastStatus\|local/lito381/server/NativeDeWorldKinds$Item\|LastStatus\|0x1 |
 | `local/lito381/server/NativeDeWorldLocation` | class innerClasses: left=local/lito381/server/NativeDeObjectScope$Maps\|local/lito381/server/NativeDeObjectScope\|Maps\|0x18 right= |
 | `local/lito381/server/NativeDeWorldLog` | method debug(Ljava/lang/String;)V: only left |
-| `local/lito381/server/NativeDeWorldPlayerFilter` | class nestMembers: left= right=local/lito381/server/NativeDeWorldPlayerFilter$1 |
+| `local/lito381/server/NativeDeWorldPlayerFilter` | class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\|local/lito381/server/NativeDeDeletionPorts\|ObjectRef\|0x608; local/lito381/server/NativeDeDeletionPorts$Viewer\|local/lito381/server/NativeDeDeletionPorts\|Viewer\|0x408; local/lito381/server… right=local/lito381/server/NativeDeWorldPlayerFilter$1\|\|\|0x1008 |
+| `local/lito381/server/NativeDeWorldPlayerFilter$1` | field $SwitchMap$com$lineage$server$world$PlayerFilter:[I: only right |
 | `local/lito381/server/NativeDeWorldPoint` | method isInScreen(Llocal/lito381/server/NativeDeWorldPoint;)Z insn[41]: left=GOTO L3 right=IRETURN |
 | `local/lito381/server/NativeDeWorldRegistryBow` | class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Bow\|local/lito381/server/NativeDeWorldKinds\|Bow\|0x8 right= |
 | `local/lito381/server/NativeDeWorldRegistryCrown` | class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\|local/lito381/server/NativeDeDeletionPorts\|Viewer\|0x408 right= |
@@ -475,8 +468,7 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeLightAction` | method currentMaterial(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeCastMaterial$Cast; insn[0]: left=GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal; right=ALOAD 0 |
 | `local/lito381/server/NativeLightAction$Batch` | method run()V: left=TRY L0 L2 L13 java/io/IOException   right=TRY L4 L8 L9 java/lang/Throwable   |
 | `local/lito381/server/NativeLitoMapTableCatalog` | method active()Ljava/util/List; insn[1]: left=ARETURN right=INVOKESTATIC local/lito381/server/ResourceDatabase.maps(Ljava/util/List;)Ljava/util/List; |
-| `local/lito381/server/NativeLitoRentalTownNpcCatalog` | class nestMembers: left=local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc,local/lito381/server/NativeLitoRentalTownNpcCatalog$Role right=local/lito381/server/NativeLitoRentalTownNpcCatalog$1,local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc,local/lito381/server/NativeLitoRentalTownNpcCatalog$Role |
-| `local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc\|local/lito381/server/NativeLitoRentalTownNpcCatalog\|Npc\|0x18; local/lito381/server/NativeLitoRentalTow… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeLitoRentalTownNpcCatalog$1\|\|\|0x1008; local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc\|local/lito381/server/NativeLitoRentalT… |
+| `local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc` | method name()Ljava/lang/String; insn[2]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/NativeLitoTownPortalCatalog` | method find(III)Llocal/lito381/server/NativeLitoTownPortalCatalog$Route; insn[20]: left=ARETURN right=ILOAD 0 |
 | `local/lito381/server/NativeLitoZoneCatalog` | method colors()Ljava/util/List; insn[1]: left=ARETURN right=INVOKESTATIC local/lito381/server/ResourceDatabase.colors(Ljava/util/List;)Ljava/util/List; |
 | `local/lito381/server/NativeMagicalWeaponAction` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell\|local/lito381/server/BattleSpellCatalog\|MagicalWeaponSpell\|0x18; local/lito381/server/NativeCastMat… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell\|local/lito381/server/BattleSpellCatalog\|MagicalWeaponSpell\|0x18; local/lito381/server/NativeCastMat… |
@@ -532,7 +524,6 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 | `local/lito381/server/NativeSourceSkillDelay$Lease` | class innerClasses: left=local/lito381/server/NativeReuseLog$Logger\|local/lito381/server/NativeReuseLog\|Logger\|0x608; local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/server/NativeSourceSkillDelay\|Lease\|0x19 right=local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/server/NativeSourceSkillDelay\|Lease\|0x19 |
 | `local/lito381/server/NativeWeaponBreakMaterialAction` | method battle(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V insn[1]: left=ALOAD 0 right=LDC str:"phase" |
 | `local/lito381/server/Protocol` | method attackRequest([BI)Llocal/lito381/server/Protocol$AttackRequest; insn[0]: left=ILOAD 1 right=ALOAD 0 |
-| `local/lito381/server/Protocol$1` | class innerClasses: left=local/lito381/server/GameHub$ClassicClanCreateStatus\|local/lito381/server/GameHub\|ClassicClanCreateStatus\|0x4018; local/lito381/server/Protocol$1\|\|\|0x1008 right=local/lito381/server/GameHub$ClassicClanCreateStatus\|local/lito381/server/GameHub\|ClassicClanCreateStatus\|0x4018; local/lito381/server/Protocol$1\|\|\|0x1008; local/lito381/server/Protocol$ClanWarRequestType\|local/lito381/server/Protocol\|ClanW… |
 | `local/lito381/server/ResourceDatabase` | method load(Llocal/lito381/server/ServerConfig;)V insn[0]: left=GETSTATIC local/lito381/server/ResourceDatabase.current:Llocal/lito381/server/ResourceDatabase$Snapshot; right=ALOAD 0 |
 | `local/lito381/server/RuntimeInventory` | field items:Ljava/util/LinkedHashMap;: only left |
 | `local/lito381/server/RuntimeInventory$Item` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/InventoryCatalog$Definition\|local/lito381/server/InventoryCatalog\|Definition\|0x18; local/lito381/server/InventoryCatalog$NativeArmorStatu… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/InventoryCatalog$Definition\|local/lito381/server/InventoryCatalog\|Definition\|0x18; local/lito381/server/InventoryCatalog$NativeArmorStatu… |
@@ -543,7 +534,7 @@ T007／#2 的 `jar tf` 交集是 **2,538**。T020a／#43 記：Maven 產物與 `
 
 ## ONLY_LEFT
 
-只在 left（1369）。完整類別清單見 JSON artifact；與 `docs/server-source-gap.md` 的「只在 target」應對齊。
+只在 left（1380）。完整類別清單見 JSON artifact；與 `docs/server-source-gap.md` 的「只在 target」應對齊。
 
 ```
 local/lito381/server/CaptureLog$Connection
@@ -791,6 +782,7 @@ local/lito381/server/ModernBattleEngine$VipOperation
 local/lito381/server/ModernBattleEngine$VipReplacement
 local/lito381/server/ModernBattleEngine$VipStaleCalculation
 local/lito381/server/ModernBattleEquipmentProtocol
+local/lito381/server/ModernBattleEquipmentProtocol$1
 local/lito381/server/ModernBattleEquipmentProtocol$Disposition
 local/lito381/server/ModernBattleEquipmentProtocol$Reason
 local/lito381/server/ModernBattleEquipmentProtocol$Reply
@@ -846,6 +838,7 @@ local/lito381/server/ModernBattleReadProtocol$Reply
 local/lito381/server/ModernBattleReadProtocol$Request
 local/lito381/server/ModernBattleReadProtocol$State
 local/lito381/server/ModernBattleRevivalProtocol
+local/lito381/server/ModernBattleRevivalProtocol$1
 local/lito381/server/ModernBattleRevivalProtocol$Reason
 local/lito381/server/ModernBattleRevivalProtocol$Reply
 local/lito381/server/ModernBattleRevivalProtocol$Request
@@ -873,6 +866,7 @@ local/lito381/server/ModernBattleWire$Writer
 local/lito381/server/ModernBattleWireModes
 local/lito381/server/ModernBattleWirePersonal
 local/lito381/server/ModernBattleWorldProtocol
+local/lito381/server/ModernBattleWorldProtocol$1
 local/lito381/server/ModernBattleWorldProtocol$Action
 local/lito381/server/ModernBattleWorldProtocol$Reply
 local/lito381/server/ModernBattleWorldProtocol$Request
@@ -1225,6 +1219,7 @@ local/lito381/server/ModernMatchmaking$Distance
 local/lito381/server/ModernMatchmaking$Result
 local/lito381/server/ModernMatchmaking$State
 local/lito381/server/ModernMatchmakingProtocol
+local/lito381/server/ModernMatchmakingProtocol$1
 local/lito381/server/ModernMatchmakingProtocol$Action
 local/lito381/server/ModernMatchmakingProtocol$Reply
 local/lito381/server/ModernMatchmakingProtocol$Request
@@ -1281,6 +1276,7 @@ local/lito381/server/ModernNpcBattle$Frame
 local/lito381/server/ModernNpcBattle$Reason
 local/lito381/server/ModernNpcBattle$Result
 local/lito381/server/ModernNpcCatalog
+local/lito381/server/ModernNpcCatalog$1
 local/lito381/server/ModernNpcCatalog$Catalog
 local/lito381/server/ModernNpcCatalog$Facts
 local/lito381/server/ModernNpcCatalog$Field
@@ -1492,6 +1488,7 @@ local/lito381/server/ModernRoomProtocol
 local/lito381/server/ModernRoomProtocol$1
 local/lito381/server/ModernRoomProtocol$Echo
 local/lito381/server/ModernRooms
+local/lito381/server/ModernRooms$1
 local/lito381/server/ModernRooms$Action
 local/lito381/server/ModernRooms$Binding
 local/lito381/server/ModernRooms$BotResult
@@ -1535,6 +1532,7 @@ local/lito381/server/ModernServerConfig$TlsConfig
 local/lito381/server/ModernServerConfig$WorldPolicyConfig
 local/lito381/server/ModernServerConfig$WorldPolicyInput
 local/lito381/server/ModernServerConsole
+local/lito381/server/ModernServerConsole$1
 local/lito381/server/ModernServerConsole$Command
 local/lito381/server/ModernSessionBoundary
 local/lito381/server/ModernSessionBoundary$Negotiated
@@ -1566,6 +1564,7 @@ local/lito381/server/ModernSettlementCoordinator$Token
 local/lito381/server/ModernSharedDeathmatchPreset
 local/lito381/server/ModernSharedSiegePreset
 local/lito381/server/ModernShopAuthority
+local/lito381/server/ModernShopAuthority$1
 local/lito381/server/ModernShopAuthority$Action
 local/lito381/server/ModernShopAuthority$Outcome
 local/lito381/server/ModernShopAuthority$Owned
@@ -1739,6 +1738,7 @@ local/lito381/server/ModernTimeAttackProtocol$Receipt
 local/lito381/server/ModernTimeAttackSettlement
 local/lito381/server/ModernTimeAttackSettlement$Proof
 local/lito381/server/ModernTimedEffects
+local/lito381/server/ModernTimedEffects$1
 local/lito381/server/ModernTimedEffects$Action
 local/lito381/server/ModernTimedEffects$HasteOrigin
 local/lito381/server/ModernTimedEffects$Kind
@@ -1831,6 +1831,7 @@ local/lito381/server/ModernWorldPolicyJdbc
 local/lito381/server/ModernWorldPolicyJdbc$Column
 local/lito381/server/ModernWorldPolicyReadProbe
 local/lito381/server/ModernWorldProtocol
+local/lito381/server/ModernWorldProtocol$1
 local/lito381/server/ModernWorldProtocol$AbortReason
 local/lito381/server/ModernWorldProtocol$Action
 local/lito381/server/ModernWorldProtocol$Completion
@@ -1890,6 +1891,7 @@ local/lito381/server/ModernWorldSpawns$Budget
 local/lito381/server/ModernWorldSpawns$Graph
 local/lito381/server/ModernWorldSpawns$Plan
 local/lito381/server/NativeAppearanceDependencyResolver
+local/lito381/server/NativeAppearanceDependencyResolver$1
 local/lito381/server/NativeAppearanceDependencyResolver$Action
 local/lito381/server/NativeAppearanceDependencyResolver$Binding
 local/lito381/server/NativeAppearanceDependencyResolver$Frame
@@ -1919,24 +1921,13 @@ local/lito381/server/TournamentRoomPolicy$1
 
 ## ONLY_RIGHT
 
-只在 right（16）。與 `docs/server-source-gap.md` 的「只在 reference」應對齊。
+只在 right（5）。與 `docs/server-source-gap.md` 的「只在 reference」應對齊。
 
 ```
-local/lito381/server/BattleDeathmatchFatalityCatalog$1
 local/lito381/server/BattleInvisibilityStatus$Lease
 local/lito381/server/BattleInvisibilityStatus$Snapshot
-local/lito381/server/BattleTimeAttackMagicSkillCatalog$1
-local/lito381/server/ClassicWorldCkewCatalog$1
-local/lito381/server/ClassicWorldMonsterMagicSkillCatalog$1
-local/lito381/server/InventoryCatalog$1
 local/lito381/server/NativeCastMaterial$Effect
-local/lito381/server/NativeDeAiState$2
-local/lito381/server/NativeDeDeletionVisibility$1
-local/lito381/server/NativeDeEquipment$1
 local/lito381/server/NativeDeVisibilitySwitch
-local/lito381/server/NativeDeWorldCore$1
-local/lito381/server/NativeDeWorldPlayerFilter$1
-local/lito381/server/NativeLitoRentalTownNpcCatalog$1
 local/lito381/server/NativeResurrectionMaterialAction$Target
 ```
 

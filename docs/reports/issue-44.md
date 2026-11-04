@@ -43,7 +43,7 @@ PASS SELFTEST 3 DIFF=1
 
 重跑：`bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest.sh`（需 `java`／`javac`／`jar`；有 `mvn` 則用 Maven 建工具）。
 
-### Maven 產物 vs 正式 JAR（已驗證，本輪快照）
+### Maven 產物 vs 正式 JAR（已驗證；正式快照以 CI Java 17 為準）
 
 ```bash
 mvn -B -DskipTests -Dmaven.test.skip=true package   # 在 LiTo381-Server；testCompile 仍屬 T005
@@ -54,36 +54,43 @@ bash lito伺服器/LiTo381-Server/tools/semantic-diff/semantic-diff \
   --md docs/server-semantic-gap.md
 ```
 
-輸出：`SUMMARY SAME=2042 DIFF=496 ONLY_LEFT=1369 ONLY_RIGHT=16`。  
-交集 SAME+DIFF=2538，與 T007 `jar tf` 交集一致。ONLY_RIGHT=16、ONLY_LEFT=1369 與 `docs/server-source-gap.md` 一致。
+`--classes` 抽樣（本機）：`SharedResourceMain,NativeDeVisibilitySwitch` → `SAME=1 ONLY_RIGHT=1`。
 
-`--classes` 抽樣：`SharedResourceMain,NativeDeVisibilitySwitch` → `SAME=1 ONLY_RIGHT=1`。
+本機雲端代理（OpenJDK 21、`maven.compiler.release=17`）曾跑出 `SAME=2042 DIFF=496 ONLY_LEFT=1369 ONLY_RIGHT=16`。**不採用**：javac 21 與 CI Temurin 17 產出的 inner／匿名類集合不同。已改提交 CI artifact 快照。
 
-### CI
+### CI（已驗證）
 
-Job 名稱 `Semantic gap (non-blocking)`：先 `selftest.sh`，再 `mvn -B -DskipTests -Dmaven.test.skip=true package`，再跑上列比對，上傳 artifact `server-semantic-gap`（md＋json）。本 PR 的 GitHub Actions 跑完後才算 CI 已驗證；此處標待驗證。
+- Workflow `build` run：https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080 （success）
+- Job：`Semantic gap (non-blocking)` https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41843825080/job/126622043094 （success）
+- Artifact：`server-semantic-gap` id `13329967838`
+- Self-test 在 CI 同樣三項 PASS（與本機數字相同）
+- 比對：`SUMMARY SAME=2064 DIFF=485 ONLY_LEFT=1380 ONLY_RIGHT=5`（left 3929 類／right 2554 類）
+- 其餘 job 亦綠：Server、Server tests、Launcher；另 `package` workflow 綠
 
 ## 與 #43 粗估（約 430）的關係
 
 | 口徑 | 數量 |
 |---|---:|
-| 交集（T007 `jar tf`） | 2,538 |
+| 交集（T007 `jar tf`，當時 Maven 產物 3907 類） | 2,538 |
 | class bytes 全同（T020a） | 1,008 |
 | javap 粗估仍不同 | ~430 |
-| 本工具 SAME | 2,042 |
-| 本工具 DIFF | 496 |
+| 本工具 SAME（CI Temurin 17） | 2,064 |
+| 本工具 DIFF（CI） | 485 |
+| ONLY_LEFT／ONLY_RIGHT（CI） | 1,380／5 |
+| 交集 SAME+DIFF（CI） | 2,549 |
 
-- SAME−1,008=**1,034**：位元組不同，但去掉 debug／合成名／常數池編號後語意相同。這就是「1,008 bytes 全同、javap 仍看到很多字面差」中的假差異。
-- DIFF=496，比 430 **多 66**。javap `-c` 主要看反組譯文字；本工具還比 innerClasses／nestMembers／access／欄位常數。第一處差異：method 337、field 24、class 屬性 135（innerClasses 117、nestMembers 16、access 2）。
-- 430 **不是**工作清單；T020e 應以本快照的 496 筆 DIFF 為準（其中頂層 272、inner／匿名 224）。
+- SAME−1,008=**1,056**：位元組不同，但去掉 debug／合成名／常數池編號後語意相同。
+- DIFF=485，比 430 **多 55**。javap `-c` 主要看反組譯文字；本工具還比 innerClasses／nestMembers／access／欄位常數。第一處差異：method 343、field 27、class 屬性 115。
+- CI 交集 2,549 比 T007 的 2,538 多 11：現行 src 在 Temurin 17 下編出 3,929 類（T007 當時 3,907），inner／匿名形狀有漂移。ONLY_RIGHT 只剩 5（含頂層 `NativeDeVisibilitySwitch`）；T007 的 15 個「刻意排除」inner 多數已不再只存在於 reference。
+- 430 **不是**工作清單；T020e 應以 CI 快照的 **485** 筆 DIFF 為準（頂層 265、inner／匿名 220）。
 
 ## 未驗證什麼
 
-- 本 PR 的 GitHub Actions 尚未跑（提交後才有 artifact）。
 - 語意 SAME ≠ 行為已回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。
 - 匿名類 `$1`／`$2` **沒有**依出現順序改名（任務只要求 `lambda$`／`access$`）。這類差異會落在 ONLY_* 或 outer 的 innerClasses／nestMembers。
 - 跨編譯器的區域變數槽位重編不正規化（任務未要求）；`-g` vs `-g:none` 不影響槽位，自我測試已過。
 - 未對候選 `50635f7e` JAR 跑比對（JAR 不在 repo，屬 T020f）。
+- 本機 OpenJDK 21 編出的 Maven 產物與 CI Temurin 17 **類別集合不同**；後續驗收必須用 CI 或本機 JDK 17，不能混用 21 的數字。
 
 ## 產出路徑
 
@@ -96,7 +103,7 @@ Job 名稱 `Semantic gap (non-blocking)`：先 `selftest.sh`，再 `mvn -B -Dski
 
 ## 給下一棒的提示
 
-- **Claude（T020e，design）**：用 `docs/server-semantic-gap.md` 的 DIFF 表訂第一階段（src/main→正式 0.6.71）修補批次，不要再用 430。可先把「第一處差異＝innerClasses／nestMembers」的外層類（約 135）標成 inner 形狀差，與真指令差（method 337）分開排。每批用 `--classes` 驗收。
+- **Claude（T020e，design）**：用 CI 快照 `docs/server-semantic-gap.md` 的 DIFF 表（**485**，不要再用 430 或本機 Java 21 的 496）訂第一階段修補批次。可先把「第一處差異＝class 屬性」（115，多為 innerClasses／nestMembers）與真指令差（method 343）分開排。每批用 `--classes` 驗收，JDK 對齊 Temurin 17。
 - **codex-local（T020f）**：候選 `50635f7e` JAR 入 `reference/` 後，同一支 CLI 對候選跑第二階段驗收。
 - **Cursor 後續 B 批次**：`--classes file` 支援一行一個內部名或 `Foo.class`；JSON 的 `firstDiff.member`＋`insnIndex` 可當移植起點。
 - **使用者**：不需要操作；真機驗收仍等合併批次之後。
