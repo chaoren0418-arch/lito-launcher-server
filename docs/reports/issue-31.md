@@ -1,61 +1,43 @@
-# Issue #31 — T020c 回歸入口參數化與受阻驗證
+# Issue #31 — T020c 回歸入口參數化與本機驗證
 
 ## 結論
 
-**未達完整回歸驗收；請勿關閉 Issue 或宣稱 8d26c9d7 本輪全套通過。**
+**第 3 次嘗試仍未達完整回歸驗收；不得關閉 Issue，也不得宣稱 8d26c9d7 已於本輪全套通過。**
 
-既有提交 `94decc9` 已參數化八個入口，`8b0338e` 已補上 seal 失敗收據，本次接續 `4f31f15`。本輪修改三個入口：指定 `--out` 時不再重用 composed、existing_20、affected_18 的一般成功快取，以免設定或 JDK 改變後仍把舊結果算作新執行。未指定 `--out` 時保留既有重用行為；full 的歷史正式檔調和流程保持原樣，尚未驗證可通過。全部原有斷言與案例數保留。
+本輪從 `task/31` 的 `d62625d` 接續，未 checkout／建立分支。既有參數化與快取修正保留；本輪只更新本報告與不進 git 的離線證據，沒有修改回歸程式、刪案或放寬斷言。新增行為通過收據為零。
 
-本輪重新驗證離線接線、候選與歷史正式檔 SHA、JDBC bytecode 和舊收據；沒有重跑 probe 編譯或戰鬥行為案例。實際 seal 仍 exit 1，不能宣稱完整回歸。
-
-工作分支 `task/31`；從既有 worktree 直接修改，未 checkout／另建分支。設計依據：`git fetch origin task/24` 後讀取 `origin/task/24:docs/design/T020-combat-merge.md` §2-4。
-
-## 本次接續的已驗證結果
-
-- 開始時 HEAD 為 `4f31f15`，工作樹乾淨，分支為 `task/31`；未 checkout／另建分支。
-- `test_regression_support.py` 的 7 項測試、`test_seal_failure.py` 的 2 項測試全部通過；新增 `test_replay_policy.py` 的 2 項測試通過（四種 jar/out 組合 × 三入口，以及三個修改檔全部原有 `ast.Assert` 相同）。`check_adapters.py` 的 8 入口 CLI 與 68 子驅動語法／JDK 轉接檢查通過。這些都是離線工具檢查，不是戰鬥案例。
-- 現有 `JAVA_HOME` 解析到 Microsoft JDK 17.0.17。另在子程序移除 JAVA_HOME、將已解析 JDK 的 bin 放到 PATH 前端，實際呼叫工具解析後的 `java -version`／`javac -version`，兩者皆為 17.0.17。未變更系統環境；系統原始 PATH 的 `java` 實際為 Oracle 1.8.0_101，後續不能直接假設清除 JAVA_HOME 即會取得 JDK 17。
-- `verify_baseline.py` 重新核對下表的歷史收據雜湊及組數／案例數。指定同一 JAR 與 `scratch/t020c/8d26c9d7/` 執行 seal，exit 1；總收據為 failed，未沿用成功標記。
-- 重新以 `javap -c -p` 讀指定候選的 `ResourceDatabase`，仍有 `UnifiedConfiguration.read` 與 `DriverManager.getConnection`；只反組譯，沒有載入設定或執行該類別。
-- 指定候選 SHA 仍為 `8d26c9d7…`，唯讀核對現行正式 JAR 為 `e1498871…`；歷史 seal 要求 `75da69b0…`，保護斷言仍保持失敗。
-- 報告所列 `scratch/t020c/isolated-test.properties` 不存在；本輪未取得其他已授權隔離 SQL 設定。未讀正式設定、未連 DB、未啟動伺服器或遊戲。
-- 兩項先前阻礙均未解除。本次沒有新的行為通過收據，也不將既有 30 組只編譯證據計為本次驗收。
+已讀根目錄 AGENTS.md、docs/REPORT.md、TASKS.md、伺服器 AGENTS.md 及其指定維護文件；以 `git fetch origin task/24`、`git show origin/task/24:docs/design/T020-combat-merge.md` 讀取設計。未修改 docs/REPORT.md。
 
 ## 做了什麼
 
-- `full_regression.py`、`candidate_regression.py`、`affected_regressions.py`、`replay_composed_materials.py`，以及 `cancellation-battle-runtime/{replay_targeted,replay_player_cancellation,test_curse_clock_boundary,seal_validation}.py` 均接受 `--jar`／`--out`。
-- 共用工具 `regression_support.py` 依 `JAVA_HOME/bin`、PATH 順序解析 JDK；無效的 JAVA_HOME 明確失敗。直接子驅動在既有凍結／轉接階段改寫 JDK 呼叫，歷史 JSON 中的 Java 命令也轉接。沒有批量修改 1,008 支歷史腳本或任何 `build.py`。
-- 未指定參數時保留各入口既有候選／收據位置。保留 candidate/composed 的 stage 參數；省略 stage 時採本任務的 `cancellation-battle-runtime`。
-- `--out` 下使用 `targeted/receipt.json`、`player-cancellation/receipt.json`、`composed-replay/current.json`、`regression/{qualification,affected}-current.json`、`curse-clock-boundary/receipt.json`；seal 在獨立輸出模式寫入 `qualification-current.json` 的 running／failed／成功狀態，只有全部斷言通過才寫成功。獨立輸出模式不更新全域 `continuation-current.json` 或 `control-gaps.json`。
-- 指定 JAR 或 out 時，targeted 原先重用的 replacement／fault 兩組改為重新執行，總組數仍是 27；執行失敗會留下 failed 收據，不沿用舊 passed 指標。
-- 額外 `--resources <Server 目錄>` 用於讀取 worktree 外的本機依賴，必須搭配 `--out`；`--config <隔離設定>` 讓下一棒不用引用正式設定。原始專案資源只讀，生成子驅動及 runtime 輸出指向指定 out。
-- seal 對新套件核對傳入 JAR、收據 SHA、狀態與原有案例數。SQL／重建／靜態稽核／原生準備收據仍核對其歷史候選，獨立輸出時明確標為 `historical_evidence`、`rerun=false`，不將其冒充新 JAR 的執行結果。歷史正式檔保護斷言仍保留。
+前輪提交 `94decc9`／`8b0338e`／`d62625d` 已完成八入口的 `--jar`／`--out`、JAVA_HOME／PATH 選擇、共用轉接器、seal 失敗收據及指定 out 時一般快取停用。直接呼叫的歷史子驅動在 out 內產生路徑轉接版本，不改原專案資源；各層 build.py 與 src/main 未變更。
 
-## 已驗證／怎麼驗證（含既有提交證據）
+本輪重新核對套件工具、候選 SHA、歷史案例數與 seal 失敗，並**另外獨立核對歷史 SQL 啟動／清理收據**，避免 seal 提前失敗使這項證據一直未被檢查。SQL 只核對既有收據，不執行 SQL 或重跑啟動。
 
-1. 候選 JAR 實際 SHA256：`8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`。
-2. 八個入口 `--help` 全部成功，均列出 `--jar`／`--out`。
-3. 68 個直接子驅動（27＋3＋20＋18）的轉接結果全部可解析，執行程式路徑不再硬編 JDK。逐一比較轉接前後的 `ast.Assert`，全部相同；沒有刪案或修改行為斷言。
-4. 既有提交的 30 個 targeted／player 子驅動均以同一候選執行既有 `--compile-only` 分支成功。全部收據狀態為 `compiled-only-not-qualified`。提供給它們的設定路徑不存在且未被讀取；**編譯不算行為回歸**。
-5. 七項離線測試通過：JAVA_HOME 優先、PATH 後援、無效 HOME、缺失工具、轉接保留斷言／timeout、凍結命令轉接、八入口 CLI。
-6. 核對下表的舊頂層收據 SHA、子收據／manifest SHA 與案例／組數。
-7. 以指定 JAR 及 `--out scratch/t020c/8d26c9d7/` 實際執行 seal，exit 1；完整錯誤存於 `seal-attempt.log`。沒有取得全 assert 通過。
-8. `git diff --check` 通過。
+## 已驗證／怎麼驗證
 
-### 套件對照（本輪沒有新行為通過收據）
+- `check_adapters.py`：8 入口 CLI 均有 --jar／--out；68 子驅動轉接後可解析，未殘留指定硬編 JDK 路徑。這是工具檢查，不是 68 組戰鬥通過。
+- `test_regression_support.py` 7 項、`test_seal_failure.py` 2 項、`test_replay_policy.py` 2 項：共 11 項通過，涵蓋 JDK 選擇、參數轉接、既有斷言保留、失敗 seal 不沿用成功標記、一般快取政策。
+- 子程序移除 JAVA_HOME，將已安裝 JDK 的 bin 加入該子程序 PATH，透過 `java_tool` 實跑 java／javac `-version`，均為 17.0.17。未改系統環境。
+- 同一候選實際 SHA256：`8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`。
+- `verify_baseline.py` 核對 targeted／player 子收據與 composed／20／18 manifest 的 SHA，重新取得下表案例數；以同一 --jar、`--out scratch/t020c/8d26c9d7/`、原專案 --resources 實跑 seal，**exit 1**。
+- 獨立核對歷史 SQL 收據 SHA、accepted=true、cleanup_verified=true、instances 指向歷史候選，全部通過；reproduction JAR、material census（剩 3 個 legacy calls）及 inheritance audit 亦通過原條件。僅代表歷史證據，rerun=false。
+- 前輪 30 子驅動的 compile-only 結果仍只屬前輪編譯證據，本輪未重跑，也不將其計入行為案例。
 
-| 套件 | 新收據 SHA256 | 本輪案例／組數 | 既有收據案例／組數 | 一致與否 |
+### 套件對照表
+
+| 套件 | 新通過收據 SHA256 | 本輪案例數／組數 | 既有收據案例數／組數 | 一致與否 |
 |---|---|---|---|---|
-| targeted | —（未產生） | 未執行 | 27 組；2104 案 | 待驗證 |
-| player-cancellation | —（未產生） | 未執行 | 3 組；296 案 | 待驗證 |
-| composed | —（未產生） | 未執行 | 71 組；5164 案 | 待驗證 |
-| existing_20 | —（未產生） | 未執行 | 20 組 | 待驗證 |
-| affected_18 | —（未產生） | 未執行 | 18 組 | 待驗證 |
-| curse-clock | —（未產生） | 未執行 | 24 案 | 待驗證 |
+| targeted | 無，未產生 | 未執行 | 27 組／2,104 案 | 待驗證 |
+| player-cancellation | 無，未產生 | 未執行 | 3 組／296 案 | 待驗證 |
+| composed | 無，未產生 | 未執行 | 71 組／5,164 案 | 待驗證 |
+| existing_20 | 無，未產生 | 未執行 | 20 組 | 待驗證 |
+| affected_18 | 無，未產生 | 未執行 | 18 組 | 待驗證 |
+| curse-clock | 無，未產生 | 未執行 | 24 案 | 待驗證 |
 
-既有 targeted 27 組＋player 3 組＝2,104＋296＝2,400 案；composed 71 組＝5,164 案。以上都是**舊收據基準**。
+歷史 targeted＋player 為 2,104＋296＝2,400 案。上述數字均為既有收據基準，不是本輪通過結果。
 
-| 舊收據 | SHA256 |
+| 既有收據 | SHA256 |
 |---|---|
 | targeted | `f0c9902051c1d482d000d2fe013aa45917ae0538fd743734ecbbe1ddcd62286a` |
 | player-cancellation | `6c88a681178718b19eeaa03130ca78e23a3b21b31ee8e29d8c9469aa40c4145e` |
@@ -64,49 +46,47 @@
 | affected_18 | `329f00e77a08494b24103c6169b88b21441c56df298cecd2a249b6d48f8a35c2` |
 | curse-clock | `b191689cbe55468fad6e7e2a2d3ba903c57b12b9ad257a1343ef4a3a90c9018b` |
 
-### 受阻證據
+### 阻礙與證據
 
-**戰鬥 probe 也依賴 SQL，並非只有 SQL 啟動套件需要資料庫。**
+1. **行為 probe 本身依賴 SQL。** `cancellation-probability/CancellationMaterialProbe.java` 的 main 呼叫 `ServerConfig.load`、`ResourceDatabase.load`；既有候選的 `javap -c -p` 顯示後者讀 UnifiedConfiguration 並呼叫 DriverManager.getConnection，查詢 lito_resource 表。現有 fixture 未提供可直接取代這項依賴且保持真實資料等價的離線來源。這不是只有 SQL 啟動／清理套件的依賴。
+2. **未提供可使用的隔離設定。** 只檢查本 worktree 與原專案的 `scratch/t020c/isolated-test.properties` 是否存在，兩者均不存在；沒有搜尋或讀取正式機密設定。依本任務禁止連正式 DB 的要求，未啟動依賴這項設定的 Java 行為 probe。
+3. **seal 在第 25 行歷史保護斷言失敗。** `old['protected']` 中正式 JAR 預期 `75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371`，目前正式 JAR 唯讀雜湊為 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`，與設計 §1 現行正式基準一致。沒有改常數、跳過此斷言或修改正式檔。`reconcile_replay.py` 也仍要求歷史 75da69b0，需一併處理銜接。
 
-`cancellation-probability/CancellationMaterialProbe.java` 的 main 呼叫 `ServerConfig.load(...)`、`ResourceDatabase.load(...)`。對指定候選執行 `javap -c -p`，`ResourceDatabase.load` 的 bytecode 有 `UnifiedConfiguration.read` 與 `java/sql/DriverManager.getConnection`。已檢查使用中的 fixture classpath，未找到覆蓋 ResourceDatabase 或 JDBC Driver 的隔離 fixture。本輪不讀正式 `config/server.properties`，也不嘗試正式 DB 連線。
-
-**歷史正式檔保護值已落後於目前部署檔。**
-
-seal 的 `old['protected']` 要求正式 JAR 為 `75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371`，本機唯讀計算為 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`。與設計文件所述正式基準一致，但不符合歷史 seal 斷言，因此保持失敗。既有 `reconcile_replay.py` 也仍固定歷史 `75da69b0…`，沒有自行改為接受目前正式檔。
+本輪 shell 的預設 sandbox 初始失敗（setup refresh had errors）；經工具核准以 require_escalated 執行後恢復，並非本次驗收阻礙，也未發生自動審查拒絕。
 
 ## 推測
 
-取得隔離 SQL 資源與非機密測試設定後，才有條件繼續行為回歸。30 組編譯成功不能證明其行為相容；後續仍可能暴露歷史資源、golden、外控設定或其他舊收據保護值問題。
+具備獲准的隔離 SQL 測試資源與設定後，現有入口可能可以重跑；但仍可能遇到歷史資源、golden、時序或正式檔保護差異。目前不能推定完整套件會通過，也不能以複製舊收據、編譯成功或 stub 代替驗證。
 
 ## 待驗證／未驗證什麼
 
-- 全套 2,400＋5,164＋20／18 組＋24 案的重新執行與新舊一致性，全部待驗證。
-- 全部 seal assert 通過，待解決歷史保護基準衝突及補齊新行為收據。
-- 任意不同 SHA 的 JAR 的行為通過狀態；目前只完成指定候選的編譯驗證。
-- SQL 啟動與 owned cleanup 沒有重跑；因 seal 提前停於正式檔保護，本輪也沒有宣稱其後續歷史核對全部成功。
-- 沒有啟動正式／測試伺服器、登入器、遊戲，沒有啟停 DB、部署候選、改正式 JAR、讀取機密設定、處理封存目錄或修改硬連結。沒有修改 src/main、各層 build.py、docs/REPORT.md。
+- targeted 27 組＋player 3 組的 2,400 案、composed 71 組的 5,164 案、20＋18 組、curse-clock 24 案，全部仍需實跑並比對新收據。
+- 全部 seal assert 通過；本輪僅取得 failed 收據。獨立歷史 SQL 核對通過不等於 seal 通過。
+- 任意其他 SHA JAR 的行為結果、實機 UI／登入／戰鬥驗收均未驗證。
+- 未讀 config/server.properties、未連 DB、未啟停 DB／正式或測試伺服器／遊戲、未改正式 JAR、未部署、未複製客戶端資源、未讀寫封存或修改硬連結。
 
 ## 產出路徑
 
-- 可提交：上述八入口、`tools/combat-continuation/regression_support.py`、本報告。
-- 本機非 git 證據：`scratch/t020c/8d26c9d7/{verification-summary.json,seal-attempt.log,qualification-current.json}`；最後一份是失敗收據，不能當作驗收通過。
-- 只編譯證據：`scratch/t020c/compile-only/summary.json` 與各組 result/log/classes。
-- 離線檢查腳本：`scratch/t020c/{check_adapters,test_regression_support,test_seal_failure,compile_probes,verify_baseline}.py`；轉接盤點 `adapter-audit.json`；JDBC bytecode 證據 `ResourceDatabase-bytecode.txt`。
-- 本輪新增離線檢查：`scratch/t020c/test_replay_policy.py`；實際 PATH JDK 17 檢查 log：`scratch/t020c/jdk-path-check.log`。scratch 證據不進 git；不是戰鬥通過收據。
+- 追蹤報告：`docs/reports/issue-31.md`。
+- 工具原始碼：`lito伺服器/LiTo381-Server/tools/combat-continuation/` 的既有八入口與 regression_support.py，本輪未修改。
+- 本機離線證據（不進 git）：下列 scratch 檔案；不是戰鬥通過收據。
 
-- `scratch/t020c/compile-only/summary.json` SHA256：`1f53df3b0ea0061094c66516234b7c9484586f0d2489085eb6c49c47369805eb`。
-- `scratch/t020c/8d26c9d7/verification-summary.json` SHA256：`36e2381a375bc9c2fa5d26e97fac4095eacc422371eec7a34b998a1f32c0c2cf`。
-- `scratch/t020c/8d26c9d7/seal-attempt.log` SHA256：`5da82ac119e8cfb845886d1a06c8d8e0257a1f5b43cba914efa89338a72d5516`。
+| 證據路徑 | SHA256 |
+|---|---|
+| `scratch/t020c/8d26c9d7/verification-summary.json` | `36e2381a375bc9c2fa5d26e97fac4095eacc422371eec7a34b998a1f32c0c2cf` |
+| `scratch/t020c/8d26c9d7/offline-review.json` | `0b9efd5d7c9359fec192365cd249b39abebe90255f60f566f8e55580ad4ae60a` |
+| `scratch/t020c/8d26c9d7/seal-attempt.log` | `5da82ac119e8cfb845886d1a06c8d8e0257a1f5b43cba914efa89338a72d5516` |
+| `scratch/t020c/8d26c9d7/qualification-current.json` | `26732ee8d4c519a7521cdfa0377381d7d752438d4495f003a6a2cb208c0c9b34` |
 
-- `scratch/t020c/8d26c9d7/qualification-current.json` SHA256：`26732ee8d4c519a7521cdfa0377381d7d752438d4495f003a6a2cb208c0c9b34`（failed）。
+其他工具檢查與 bytecode 證據：`scratch/t020c/{check_adapters,test_regression_support,test_seal_failure,test_replay_policy,verify_baseline}.py`、`adapter-audit.json`、`jdk-path-check.log`、`ResourceDatabase-bytecode.txt`。qualification-current.json 是 failed，不可當作資格通過。
 
 ## 給下一棒的提示
 
-1. **Claude 雲端主控／調度器**：本任務維持未完成，不要以編譯或離線檢查成功結案。先安排隔離 SQL 資源與非機密測試設定，再派本機執行器；單純重排相同任務不會解除依賴。使用者不需代跑準備工作。
-2. **Claude 審查**：裁定歷史正式 JAR 保護基準如何有證據地銜接到正式 `e1498871…`。不得只替換常數、刪除保護或將舊結果冒充新收據。
-3. **本機執行器**：條件具備後，依下列順序跑完整套件，補上本表的新 SHA／案例數／一致性，再執行 seal。保持原斷言，失敗則保留證據。
+1. **Claude 雲端主控／調度器**：維持未完成。先處理行為 probe 的 SQL 依賴與本任務禁止 DB 操作的邊界，提供可使用的隔離資源及設定，或另派建立經核對真實資料的離線 fixture；不可用空資料／stub 宣稱等價。這是主控與本機資源工作，不交給使用者準備。
+2. **Claude 審查／主控**：訂出有雜湊證據的歷史正式檔保護銜接方式，涵蓋 seal 與 reconcile_replay。設計已確認 e1498871 為現行正式版；需要明確保留舊證據與新驗證的界線，不直接刪除歷史斷言。
+3. **本機執行器**：前兩項就緒才重派完整回歸，使用下列相同 JAR／out 依序執行，逐套 exit 0 才繼續，將各新收據 SHA／案例數填回上表；最後 seal 必須全部通過。不要再把同樣的離線工具複驗回報成進展已解除。
 
-以下命令是**下一棒待執行步驟**，不是本輪已通過結果。`$isolatedConfig` 須指向準備完成的隔離設定；不可指向正式 `config/server.properties`。
+下列是接手後的執行步驟，**不是本輪已成功執行清單**。isolatedConfig 必須是主控提供的隔離設定，不是正式 config/server.properties。
 
 ```powershell
 $drivers = 'lito伺服器/LiTo381-Server/tools/combat-continuation'
