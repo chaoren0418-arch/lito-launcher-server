@@ -791,7 +791,7 @@ class BattleCompanionTest {
     @Test
     void createdZombieUsesLevelSelectedTemplateAtFullVitals() {
         BattleSpellCatalog.ZombieTemplate template =
-                BattleSpellCatalog.zombieTemplate(1, 47);
+                BattleSpellCatalog.zombieTemplate(3, 47);
         SourceNpcPhysicalStats stats = SourceNpcPhysicalStats.memoryFixture(
                 template.npcId());
         BattleCompanion companion = BattleCompanion.zombie(

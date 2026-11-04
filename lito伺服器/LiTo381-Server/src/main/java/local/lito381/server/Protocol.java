@@ -8862,6 +8862,8 @@ final class Protocol {
 
         AttackRequest request = new AttackRequest(in.d(), in.h(), in.h());
 
+        requireDwordId(request.targetObjectId(), "native attack target");
+
         if (in.remaining() != 0) {
 
             throw new IllegalArgumentException("invalid native attack layout");

@@ -40,7 +40,8 @@ final class GameHubChannelTest {
 
             assertTrue(hub.roomExists(1, baphometRoom));
             assertFalse(hub.roomExists(0, baphometRoom));
-            assertEquals(List.of("Baphomet Arena"), hub.roomSnapshots(1).stream()
+            assertEquals(List.of("Local Lobby", "Baphomet Arena"),
+                    hub.roomSnapshots(1).stream()
                     .map(room -> room.settings().name()).toList());
             assertTrue(hub.roomSnapshots(0).stream()
                     .noneMatch(room -> room.id() == baphometRoom));

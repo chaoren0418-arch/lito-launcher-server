@@ -189,8 +189,7 @@ jobs:
           path: docs/server-source-gap.md
 
   server-test:
-    name: Server tests (non-blocking until T010)
-    continue-on-error: true
+    name: Server tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

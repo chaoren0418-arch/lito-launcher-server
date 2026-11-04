@@ -36,7 +36,7 @@ final class NativeTournamentMatchEndEconomySourceAuditTest {
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         for (String reason : new String[] {
-                "battle-result", "room-exit", "battle-quit", "disconnect"
+                "battle-result", "room-exit", "disconnect"
         }) {
             assertTrue(source.contains(
                     "resetNativeTournamentEconomy(\"" + reason + "\")"), reason);

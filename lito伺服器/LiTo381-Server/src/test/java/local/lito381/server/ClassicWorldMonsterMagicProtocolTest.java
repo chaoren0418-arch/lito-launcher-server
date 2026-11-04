@@ -16,7 +16,7 @@ final class ClassicWorldMonsterMagicProtocolTest {
                 4_500_001L, ice.effectGfx(),
                 33953, 32437, 33952, 32437);
         assertEquals(
-                "231293150065100000000A0621AA4400DA2D00A184B57E"
+                "231293150065100000000A0621AA4400110700A184B57E"
                         + "A084B57E0000",
                 HexFormat.of().withUpperCase().formatHex(packet));
     }

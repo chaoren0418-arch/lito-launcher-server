@@ -1236,6 +1236,10 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
                 "GmVictim", 22, 0x7792_0214L, SOURCE_EXP);
              Peer administrator = peer(victim, "GmWinner", 22,
                      0x7792_0314L, 33314, 32339)) {
+            MemoryAccountRepository repository =
+                    (MemoryAccountRepository) field(administrator.session, "accounts");
+            repository.grantAccessLevel("test", 200);
+            SourceAdministration.clear(administrator.session);
             setField(administrator.session, "account", "test");
             victim.packets();
             administrator.packets();

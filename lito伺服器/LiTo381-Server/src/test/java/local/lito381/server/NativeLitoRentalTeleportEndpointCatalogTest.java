@@ -134,6 +134,7 @@ final class NativeLitoRentalTeleportEndpointCatalogTest {
             setField(session, "rentalTownTransferPending", false);
             setField(session, "rentalTownRoomState", true);
             setField(session, "rentalTownMapId", 500);
+            drain(client, receiver);
             handle(session, action(teleporter.objectId(),
                     NativeLitoRentalTownNpcCatalog.TELEPORT_ACTION_B, "forged"));
             assertThrows(SocketTimeoutException.class,
@@ -182,6 +183,17 @@ final class NativeLitoRentalTeleportEndpointCatalogTest {
     private static byte[] receive(Socket client, Protocol.CipherState receiver)
             throws Exception {
         return receiver.decrypt(Protocol.readFrame(client.getInputStream(), 8_192));
+    }
+
+    private static void drain(Socket client, Protocol.CipherState receiver)
+            throws Exception {
+        while (true) {
+            try {
+                receive(client, receiver);
+            } catch (SocketTimeoutException done) {
+                return;
+            }
+        }
     }
 
     private static void handle(ClientSession session, byte[] payload) throws Exception {

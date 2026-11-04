@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -152,6 +153,17 @@ final class ClientSessionRentalBattleHandoffIntegrationTest {
             assertEquals(bonuses.meleeHit(),
                     activeEquipment.physical().totalHit(false, false));
 
+            // Drain leftover handoff frames before the combat cipher takes over.
+            // autoSelect may still have START/TIMELIMIT/status bytes queued on
+            // the 0x3810_0711 stream; decrypting them with 0x3810_0809 times out.
+            battleClient.setSoTimeout(150);
+            try {
+                while (true) receive(battleClient, handoffReceiver);
+            } catch (SocketTimeoutException drained) {
+                // socket is now aligned with the battle cipher below
+            }
+            battleClient.setSoTimeout(2_000);
+
             int seed = 0x3810_0809;
             setField(battle, "outgoing", new Protocol.CipherState(seed));
             Protocol.CipherState receiver = new Protocol.CipherState(seed);
@@ -281,9 +293,13 @@ final class ClientSessionRentalBattleHandoffIntegrationTest {
     private static long startSoloBattle(GameHub hub, ClientSession session)
             throws Exception {
         hub.enterChannel(0, session);
-        long roomId = hub.createRoom(0, new GameHub.RoomSettings(
-                "Rental Handoff", "", 2,
-                BattleRules.Mode.DEATHMATCH.wireId(), 0, 0, 0, 0));
+        // ArenaBot exists only on the channel default test room with one human
+        // and no virtual roster. A user-created room cannot satisfy that.
+        long roomId = hub.roomSnapshots(0).stream()
+                .filter(room -> "Local Lobby".equals(room.settings().name()))
+                .findFirst()
+                .orElseThrow()
+                .id();
         hub.joinRoom(roomId, session);
         setField(session, "currentRoomId", roomId);
         hub.setReady(roomId, session, true);

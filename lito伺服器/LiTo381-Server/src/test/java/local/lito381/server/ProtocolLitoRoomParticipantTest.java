@@ -67,7 +67,7 @@ final class ProtocolLitoRoomParticipantTest {
                         GameStateStore.TournamentAwards.none()));
         assertThrows(IllegalArgumentException.class,
                 () -> Protocol.litoRoomParticipant(1, "Knight",
-                        Protocol.LitoForce.FORCE_0, 5, 0,
+                        Protocol.LitoForce.FORCE_0, 7, 0,
                         new GameStateStore.TournamentStatistics(0, 0, 0, 0), "", 0, 0,
                         Protocol.LitoParticipantState.NOT_READY, 0,
                         GameStateStore.TournamentAwards.none()));

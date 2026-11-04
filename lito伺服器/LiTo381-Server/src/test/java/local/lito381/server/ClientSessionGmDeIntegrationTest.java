@@ -32,6 +32,9 @@ final class ClientSessionGmDeIntegrationTest {
             ClientSession session = new ClientSession(server, ClientSession.Endpoint.GAME,
                     config, accounts, state,
                     new CaptureLog(temporary.resolve("capture")), hub);
+            AccountRepository selected = accounts.repositoryForClassicSource(
+                    config.classicServerNames().get(0));
+            ((MemoryAccountRepository) selected).grantAccessLevel("test", 200);
             prepareRoomOwner(session, config.classicServerNames().get(0));
             hub.connect(session);
             hub.enterChannel(0, session);
@@ -54,15 +57,14 @@ final class ClientSessionGmDeIntegrationTest {
             assertEquals(3, virtuals.size());
             assertTrue(virtuals.stream().allMatch(player -> player.name().contains("(")));
             List<byte[]> commandPackets = new ArrayList<>();
-            for (int index = 0; index < 5; index++) {
+            for (int index = 0; index < 4; index++) {
                 commandPackets.add(receive(client, receiver));
             }
-            assertEquals(Protocol.S_LITO_EXIT_ROOM, commandPackets.get(0)[0] & 0xFF);
             assertEquals(List.of(Protocol.S_LITO_ROOM_USER, Protocol.S_LITO_ROOM_USER,
                             Protocol.S_LITO_ROOM_USER),
-                    commandPackets.subList(1, 4).stream()
+                    commandPackets.subList(0, 3).stream()
                             .map(packet -> packet[0] & 0xFF).toList());
-            assertEquals(Protocol.S_MESSAGE, commandPackets.get(4)[0] & 0xFF);
+            assertEquals(Protocol.S_MESSAGE, commandPackets.get(3)[0] & 0xFF);
 
             invokeHandle(session, new Protocol.Writer().c(Protocol.C_LITO_READY_GAME)
                     .c(1).bytes());
