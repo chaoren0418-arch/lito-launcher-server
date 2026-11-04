@@ -1,0 +1,2208 @@
+{
+ "status": "T020e 產生",
+ "generator": {
+  "script": "lito伺服器/LiTo381-Server/tools/semantic-diff/plan_a_batches.py",
+  "gap": "docs/server-semantic-gap.md",
+  "owned": "docs/combat-merge/batches.json",
+  "formal": "lito伺服器/LiTo381-Server/reference/base-0.6.71.jar",
+  "formal_sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498",
+  "max_per_batch": 50
+ },
+ "scope": {
+  "diff_total": 485,
+  "only_right_total": 5,
+  "diff_owned_by_B": 203,
+  "target_entries": 285,
+  "target_outer": 224,
+  "decompiled_outer": 171,
+  "verify_entries_total": 692,
+  "first_difference_kind": {
+   "method": 163,
+   "class": 102,
+   "field": 17,
+   "ONLY_RIGHT（src/main缺）": 3
+  }
+ },
+ "dependency_analysis": {
+  "scc_count": 127,
+  "largest_scc": 89,
+  "conclusion": "A 範圍在正式 JAR 中也有大型 SCC，無法逐批在 src/main 單獨編譯；採暫存區＋正式 JAR classpath 驗證（§7-3）"
+ },
+ "batches": [
+  {
+   "id": "A01",
+   "category": "nativede",
+   "size": 49,
+   "classes": [
+    "NativeDeActorState",
+    "NativeDeAiState",
+    "NativeDeAiTimeline",
+    "NativeDeAiTimerProtocol",
+    "NativeDeAiTimers",
+    "NativeDeAiWorkerProtocol",
+    "NativeDeAiWorkers",
+    "NativeDeCachedFactoryServices",
+    "NativeDeCharacterActor",
+    "NativeDeCharacterControls",
+    "NativeDeCharacterFields",
+    "NativeDeChatBroadcast",
+    "NativeDeChatChat",
+    "NativeDeChatChatGlobal",
+    "NativeDeChatChatShouting",
+    "NativeDeChatJobs",
+    "NativeDeChatResources",
+    "NativeDeChatScope",
+    "NativeDeChatTable",
+    "NativeDeChatTimer",
+    "NativeDeChatWire",
+    "NativeDeClientViewer",
+    "NativeDeControlCatalog",
+    "NativeDeCorpseCore",
+    "NativeDeCorpseTimers",
+    "NativeDeDeletionDeState",
+    "NativeDeDeletionOwner",
+    "NativeDeDeletionPorts",
+    "NativeDeDeletionScope",
+    "NativeDeDeletionState",
+    "NativeDeDeletionVisibility",
+    "NativeDeEquipment",
+    "NativeDeFactoryControls",
+    "NativeDeInitializerKernel",
+    "NativeDeInstanceBroadcast",
+    "NativeDeInstanceName",
+    "NativeDeInstanceNames",
+    "NativeDeInstanceScene",
+    "NativeDeInstanceScope",
+    "NativeDeInstanceState",
+    "NativeDeItemAbility",
+    "NativeDeItemApplication",
+    "NativeDeItemBlessStatsTable",
+    "NativeDeItemCommonEnchantTable",
+    "NativeDeItemDefinitionsResources",
+    "NativeDeItemDefinitionsScope",
+    "NativeDeItemEnchantBonusTable",
+    "NativeDeItemEquipProc",
+    "NativeDeItemEquipProcTable"
+   ],
+   "verify_entries": [
+    "local/lito381/server/NativeDeActorState$1.class",
+    "local/lito381/server/NativeDeActorState$Effect.class",
+    "local/lito381/server/NativeDeActorState$Lease.class",
+    "local/lito381/server/NativeDeActorState$Profile.class",
+    "local/lito381/server/NativeDeActorState$Snapshot.class",
+    "local/lito381/server/NativeDeActorState$Transition.class",
+    "local/lito381/server/NativeDeActorState.class",
+    "local/lito381/server/NativeDeAiState$1.class",
+    "local/lito381/server/NativeDeAiState$2.class",
+    "local/lito381/server/NativeDeAiState$Effect.class",
+    "local/lito381/server/NativeDeAiState$Facts.class",
+    "local/lito381/server/NativeDeAiState$Holder.class",
+    "local/lito381/server/NativeDeAiState$Kind.class",
+    "local/lito381/server/NativeDeAiState$Lease.class",
+    "local/lito381/server/NativeDeAiState$Op.class",
+    "local/lito381/server/NativeDeAiState$Request.class",
+    "local/lito381/server/NativeDeAiState$Result.class",
+    "local/lito381/server/NativeDeAiState$View.class",
+    "local/lito381/server/NativeDeAiState.class",
+    "local/lito381/server/NativeDeAiTimeline$Port.class",
+    "local/lito381/server/NativeDeAiTimeline$State.class",
+    "local/lito381/server/NativeDeAiTimeline.class",
+    "local/lito381/server/NativeDeAiTimerProtocol$Failure.class",
+    "local/lito381/server/NativeDeAiTimerProtocol$Port.class",
+    "local/lito381/server/NativeDeAiTimerProtocol.class",
+    "local/lito381/server/NativeDeAiTimers$1.class",
+    "local/lito381/server/NativeDeAiTimers$2.class",
+    "local/lito381/server/NativeDeAiTimers$Credit.class",
+    "local/lito381/server/NativeDeAiTimers$Entry.class",
+    "local/lito381/server/NativeDeAiTimers$Live.class",
+    "local/lito381/server/NativeDeAiTimers$Registry.class",
+    "local/lito381/server/NativeDeAiTimers$Snapshot.class",
+    "local/lito381/server/NativeDeAiTimers$Work.class",
+    "local/lito381/server/NativeDeAiTimers.class",
+    "local/lito381/server/NativeDeAiWorkerProtocol$Port.class",
+    "local/lito381/server/NativeDeAiWorkerProtocol.class",
+    "local/lito381/server/NativeDeAiWorkers$1.class",
+    "local/lito381/server/NativeDeAiWorkers$Snapshot.class",
+    "local/lito381/server/NativeDeAiWorkers$Task.class",
+    "local/lito381/server/NativeDeAiWorkers$Ticket.class",
+    "local/lito381/server/NativeDeAiWorkers.class",
+    "local/lito381/server/NativeDeCachedFactoryServices.class",
+    "local/lito381/server/NativeDeCharacterActor.class",
+    "local/lito381/server/NativeDeCharacterControls.class",
+    "local/lito381/server/NativeDeCharacterFields$CombatSkillDerived.class",
+    "local/lito381/server/NativeDeCharacterFields$CurrentHpMutation.class",
+    "local/lito381/server/NativeDeCharacterFields$CurrentMpMutation.class",
+    "local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt.class",
+    "local/lito381/server/NativeDeCharacterFields$ErrorLog.class",
+    "local/lito381/server/NativeDeCharacterFields$MpDebitMutation.class",
+    "local/lito381/server/NativeDeCharacterFields$SkillEffectSnapshot.class",
+    "local/lito381/server/NativeDeCharacterFields$Snapshot.class",
+    "local/lito381/server/NativeDeCharacterFields$ViewerHpState.class",
+    "local/lito381/server/NativeDeCharacterFields.class",
+    "local/lito381/server/NativeDeChatBroadcast.class",
+    "local/lito381/server/NativeDeChatChat.class",
+    "local/lito381/server/NativeDeChatChatGlobal.class",
+    "local/lito381/server/NativeDeChatChatShouting.class",
+    "local/lito381/server/NativeDeChatJobs$Owner.class",
+    "local/lito381/server/NativeDeChatJobs$Ticket.class",
+    "local/lito381/server/NativeDeChatJobs.class",
+    "local/lito381/server/NativeDeChatResources$Snapshot.class",
+    "local/lito381/server/NativeDeChatResources.class",
+    "local/lito381/server/NativeDeChatScope$Clock.class",
+    "local/lito381/server/NativeDeChatScope$Data.class",
+    "local/lito381/server/NativeDeChatScope$Logs.class",
+    "local/lito381/server/NativeDeChatScope$Pool$ShutdownDiscardable.class",
+    "local/lito381/server/NativeDeChatScope$Pool.class",
+    "local/lito381/server/NativeDeChatScope.class",
+    "local/lito381/server/NativeDeChatTable.class",
+    "local/lito381/server/NativeDeChatTimer$RunSequenceTask.class",
+    "local/lito381/server/NativeDeChatTimer.class",
+    "local/lito381/server/NativeDeChatWire.class",
+    "local/lito381/server/NativeDeClientViewer.class",
+    "local/lito381/server/NativeDeControlCatalog$Abilities.class",
+    "local/lito381/server/NativeDeControlCatalog$Catalog.class",
+    "local/lito381/server/NativeDeControlCatalog$Definition.class",
+    "local/lito381/server/NativeDeControlCatalog$Names.class",
+    "local/lito381/server/NativeDeControlCatalog$Reporter.class",
+    "local/lito381/server/NativeDeControlCatalog$Settings.class",
+    "local/lito381/server/NativeDeControlCatalog.class",
+    "local/lito381/server/NativeDeCorpseCore$Npc.class",
+    "local/lito381/server/NativeDeCorpseCore$Port.class",
+    "local/lito381/server/NativeDeCorpseCore$Snapshot.class",
+    "local/lito381/server/NativeDeCorpseCore$Task.class",
+    "local/lito381/server/NativeDeCorpseCore.class",
+    "local/lito381/server/NativeDeCorpseTimers$Deletion.class",
+    "local/lito381/server/NativeDeCorpseTimers$Job.class",
+    "local/lito381/server/NativeDeCorpseTimers$Owner$1.class",
+    "local/lito381/server/NativeDeCorpseTimers$Owner.class",
+    "local/lito381/server/NativeDeCorpseTimers$Snapshot.class",
+    "local/lito381/server/NativeDeCorpseTimers$Ticket.class",
+    "local/lito381/server/NativeDeCorpseTimers.class",
+    "local/lito381/server/NativeDeDeletionDeState.class",
+    "local/lito381/server/NativeDeDeletionOwner.class",
+    "local/lito381/server/NativeDeDeletionPorts$Boss.class",
+    "local/lito381/server/NativeDeDeletionPorts$DeWorld.class",
+    "local/lito381/server/NativeDeDeletionPorts$DeadTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$DeleteTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$DigestTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$Doll.class",
+    "local/lito381/server/NativeDeDeletionPorts$Hate.class",
+    "local/lito381/server/NativeDeDeletionPorts$HprTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$Illusory.class",
+    "local/lito381/server/NativeDeDeletionPorts$Inventory.class",
+    "local/lito381/server/NativeDeDeletionPorts$Log.class",
+    "local/lito381/server/NativeDeDeletionPorts$MobGroup.class",
+    "local/lito381/server/NativeDeDeletionPorts$Monster.class",
+    "local/lito381/server/NativeDeDeletionPorts$MprTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$ObjectRef.class",
+    "local/lito381/server/NativeDeDeletionPorts$OtherList.class",
+    "local/lito381/server/NativeDeDeletionPorts$Packet.class",
+    "local/lito381/server/NativeDeDeletionPorts$Quest.class",
+    "local/lito381/server/NativeDeDeletionPorts$RemoveObject.class",
+    "local/lito381/server/NativeDeDeletionPorts$RestTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$Services.class",
+    "local/lito381/server/NativeDeDeletionPorts$Spawn.class",
+    "local/lito381/server/NativeDeDeletionPorts$Summon.class",
+    "local/lito381/server/NativeDeDeletionPorts$Template.class",
+    "local/lito381/server/NativeDeDeletionPorts$Viewer.class",
+    "local/lito381/server/NativeDeDeletionPorts$WorkTimer.class",
+    "local/lito381/server/NativeDeDeletionPorts$World.class",
+    "local/lito381/server/NativeDeDeletionPorts.class",
+    "local/lito381/server/NativeDeDeletionScope.class",
+    "local/lito381/server/NativeDeDeletionState.class",
+    "local/lito381/server/NativeDeDeletionVisibility$1.class",
+    "local/lito381/server/NativeDeDeletionVisibility$Marker.class",
+    "local/lito381/server/NativeDeDeletionVisibility$Phase.class",
+    "local/lito381/server/NativeDeDeletionVisibility$RepairKind.class",
+    "local/lito381/server/NativeDeDeletionVisibility$Snapshot.class",
+    "local/lito381/server/NativeDeDeletionVisibility.class",
+    "local/lito381/server/NativeDeEquipment$1.class",
+    "local/lito381/server/NativeDeEquipment$Holder.class",
+    "local/lito381/server/NativeDeEquipment$Lease.class",
+    "local/lito381/server/NativeDeEquipment$Op.class",
+    "local/lito381/server/NativeDeEquipment$Request.class",
+    "local/lito381/server/NativeDeEquipment$Template.class",
+    "local/lito381/server/NativeDeEquipment$Values.class",
+    "local/lito381/server/NativeDeEquipment$View.class",
+    "local/lito381/server/NativeDeEquipment.class",
+    "local/lito381/server/NativeDeFactoryControls$1.class",
+    "local/lito381/server/NativeDeFactoryControls$Snapshot.class",
+    "local/lito381/server/NativeDeFactoryControls.class",
+    "local/lito381/server/NativeDeInitializerKernel$Ability.class",
+    "local/lito381/server/NativeDeInitializerKernel$Actor.class",
+    "local/lito381/server/NativeDeInitializerKernel$Clan.class",
+    "local/lito381/server/NativeDeInitializerKernel$Emblem.class",
+    "local/lito381/server/NativeDeInitializerKernel$Log.class",
+    "local/lito381/server/NativeDeInitializerKernel$Name.class",
+    "local/lito381/server/NativeDeInitializerKernel$Packet.class",
+    "local/lito381/server/NativeDeInitializerKernel$Pet.class",
+    "local/lito381/server/NativeDeInitializerKernel$PetInfo.class",
+    "local/lito381/server/NativeDeInitializerKernel$Services.class",
+    "local/lito381/server/NativeDeInitializerKernel$Setting.class",
+    "local/lito381/server/NativeDeInitializerKernel$Template.class",
+    "local/lito381/server/NativeDeInitializerKernel.class",
+    "local/lito381/server/NativeDeInstanceBroadcast.class",
+    "local/lito381/server/NativeDeInstanceName.class",
+    "local/lito381/server/NativeDeInstanceNames$Services.class",
+    "local/lito381/server/NativeDeInstanceNames.class",
+    "local/lito381/server/NativeDeInstanceScene$Visual.class",
+    "local/lito381/server/NativeDeInstanceScene.class",
+    "local/lito381/server/NativeDeInstanceScope$World.class",
+    "local/lito381/server/NativeDeInstanceScope.class",
+    "local/lito381/server/NativeDeInstanceState$DeAiWorkerTask.class",
+    "local/lito381/server/NativeDeInstanceState$DeRepathThrottle.class",
+    "local/lito381/server/NativeDeInstanceState.class",
+    "local/lito381/server/NativeDeItemAbility$AbilityType.class",
+    "local/lito381/server/NativeDeItemAbility.class",
+    "local/lito381/server/NativeDeItemApplication$Owner.class",
+    "local/lito381/server/NativeDeItemApplication.class",
+    "local/lito381/server/NativeDeItemBlessStatsTable.class",
+    "local/lito381/server/NativeDeItemCommonEnchantTable.class",
+    "local/lito381/server/NativeDeItemDefinitionsResources$Owner.class",
+    "local/lito381/server/NativeDeItemDefinitionsResources$Snapshot.class",
+    "local/lito381/server/NativeDeItemDefinitionsResources.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope$Context.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope$Data.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope$Database.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope$Logs.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope$TableLog.class",
+    "local/lito381/server/NativeDeItemDefinitionsScope.class",
+    "local/lito381/server/NativeDeItemEnchantBonusTable.class",
+    "local/lito381/server/NativeDeItemEquipProc.class",
+    "local/lito381/server/NativeDeItemEquipProcTable.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/NativeDeActorState": "method acquire(Llocal/lito381/server/BattleTimedStatus;)Llocal/lito381/server/NativeDeActorState$Lease; insn[1]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeActorState$1": "field val$arrayList:Ljava/util/ArrayList;: only left",
+    "local/lito381/server/NativeDeAiState": "method acquire(Llocal/lito381/server/BattleTimedStatus;)Llocal/lito381/server/NativeDeAiState$Lease; insn[1]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeAiState$1": "field val$arrayList:Ljava/util/ArrayList;: only left",
+    "local/lito381/server/NativeDeAiTimeline": "method background(Llocal/lito381/server/NativeDeAiTimeline$State;Llocal/lito381/server/NativeDeAiTimeline$Port;J)V insn[2]: left=ASTORE 4 right=DUP",
+    "local/lito381/server/NativeDeAiTimerProtocol": "method schedule(Llocal/lito381/server/NativeDeAiTimeline$State;Llocal/lito381/server/NativeDeAiTimerProtocol$Port;JIZ)Ljava/lang/Object; insn[12]: left=ASTORE 8 right=DUP",
+    "local/lito381/server/NativeDeAiTimers": "method claimReady(Llocal/lito381/server/GameHub;)Ljava/util/List; insn[3]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeDeAiTimers$1": "field val$life:Llocal/lito381/server/NativePlayerLifetime;: only right",
+    "local/lito381/server/NativeDeAiTimers$2": "field val$gameHub:Llocal/lito381/server/GameHub;: only left",
+    "local/lito381/server/NativeDeAiTimers$Entry": "method close(Z)V insn[9]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeDeAiWorkerProtocol": "method dispatch(Llocal/lito381/server/NativeDeAiTimeline$State;Llocal/lito381/server/NativeDeAiWorkerProtocol$Port;JZ)V insn[2]: left=ASTORE 5 right=DUP",
+    "local/lito381/server/NativeDeAiWorkers": "method enable(Llocal/lito381/server/GameHub;Z)V insn[7]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeDeAiWorkers$1": "field val$atomicBoolean:Ljava/util/concurrent/atomic/AtomicBoolean;: only left",
+    "local/lito381/server/NativeDeCachedFactoryServices": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abilities\\|0x18; local/lito381/server/NativeDeControlCatalog$… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abilities\\|0x18; local/lito381/server/NativeDeControlCatalog$…",
+    "local/lito381/server/NativeDeCharacterActor": "class innerClasses: left=local/lito381/server/NativeDeCharacterFields$Snapshot\\|local/lito381/server/NativeDeCharacterFields\\|Snapshot\\|0x18; local/lito381/server/NativeDeCorpseTimers$Owner\\|local/lito381/server/NativeDeCorpseTimers\\|Owner\\|0x18; local/lito381/server/Nat… right=local/lito381/server/NativeDeCharacterFields$Snapshot\\|local/lito381/server/NativeDeCharacterFields\\|Snapshot\\|0x18; local/lito381/server/NativeDeCorpseTimers$Owner\\|local/lito381/server/NativeDeCorpseTimers\\|Owner\\|0x18; local/lito381/server/Nat…",
+    "local/lito381/server/NativeDeCharacterControls": "method clientType()I insn[9]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeCharacterFields": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeCharacterFields$CombatSkillDerived\\|local/lito381/server/NativeDeCharacterFields\\|Co… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeCharacterFields$CombatSkillDerived\\|local/lito381/server/NativeDeCharacterFields\\|Co…",
+    "local/lito381/server/NativeDeCharacterFields$CombatSkillDerived": "method compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived; insn[31]: left=ASTORE 13 right=ASTORE 9",
+    "local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt": "method <init>(Llocal/lito381/server/NativeDeCharacterFields;)V insn[6]: left=ALOAD 0 right=ALOAD 1",
+    "local/lito381/server/NativeDeCharacterFields$ViewerHpState": "class innerClasses: left=local/lito381/server/NativeDeCharacterFields$ViewerHpState\\|local/lito381/server/NativeDeCharacterFields\\|ViewerHpState\\|0x1a; local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=local/lito381/server/NativeDeCharacterFields$ViewerHpState\\|local/lito381/server/NativeDeCharacterFields\\|ViewerHpState\\|0x1a",
+    "local/lito381/server/NativeDeChatBroadcast": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Vi… right=",
+    "local/lito381/server/NativeDeChatChat": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Vi… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeChatChatGlobal": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeChatChatShouting": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeChatJobs": "method call(Llocal/lito381/server/NativeDeChatJobs$Owner;Llocal/lito381/server/NativeDeNpcConstructionState;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[20]: left=ALOAD 4 right=LABEL L2",
+    "local/lito381/server/NativeDeChatJobs$Ticket": "method discard()V insn[1]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeChatResources": "method load(Llocal/lito381/server/ServerConfig;)V insn[7]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeDeChatScope": "method call(Llocal/lito381/server/NativeDeChatJobs$Owner;Llocal/lito381/server/NativeDeNpcConstructionState;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[31]: left=ALOAD 5 right=LABEL L2",
+    "local/lito381/server/NativeDeChatTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeChatScope$Data\\|local/lito381/server/NativeDeChatScope\\|Data\\|0x18; local/lito381/server/NativeDeChatScope$Logs\\|local/lito381/server… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeChatTimer": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeChatScope$Clock\\|local/lito381/server/NativeDeChatScope\\|Clock\\|0x18; local/lito381/server/NativeDeChatScope$Logs\\|local/lito381/serv… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeChatTimer$RunSequenceTask\\|local/lito381/server/NativeDeChatTimer\\|RunSequenceTask\\|0x12",
+    "local/lito381/server/NativeDeChatTimer$RunSequenceTask": "class innerClasses: left=local/lito381/server/NativeDeChatScope$Pool$ShutdownDiscardable\\|local/lito381/server/NativeDeChatScope$Pool\\|ShutdownDiscardable\\|0x608; local/lito381/server/NativeDeChatScope$Pool\\|local/lito381/server/NativeDeChatScope\\|Pool\\|0x18; local/lito3… right=local/lito381/server/NativeDeChatScope$Pool$ShutdownDiscardable\\|local/lito381/server/NativeDeChatScope$Pool\\|ShutdownDiscardable\\|0x609; local/lito381/server/NativeDeChatTimer$RunSequenceTask\\|local/lito381/server/NativeDeChatTimer\\|RunSequence…",
+    "local/lito381/server/NativeDeChatWire": "method content(Llocal/lito381/server/NativeDeVisibilityPacket;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)[B: left=TRY L0 L6 L7    right=TRY L0 L5 L6   ",
+    "local/lito381/server/NativeDeClientViewer": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeCorpseTimers$Owner\\|local/lito381/server/NativeDeCorpseTimers\\|Owner\\|0x18; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|loc… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeCorpseTimers$Owner\\|local/lito381/server/NativeDeCorpseTimers\\|Owner\\|0x18; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|loc…",
+    "local/lito381/server/NativeDeControlCatalog": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abilities\\|0x18; local/lito381/server/NativeDeControlCatalog$… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abilities\\|0x18; local/lito381/server/NativeDeControlCatalog$…",
+    "local/lito381/server/NativeDeControlCatalog$Names": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Names\\|local/lito381/server/NativeDeControlCatalog\\|Names\\|0x18; local/lito381/server/NativeDeInitializerKernel$Name\\|… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Names\\|local/lito381/server/NativeDeControlCatalog\\|Names\\|0x18; local/lito381/server/NativeDeInitializerKernel$Name\\|…",
+    "local/lito381/server/NativeDeControlCatalog$Reporter": "class innerClasses: left=local/lito381/server/NativeDeControlCatalog$Reporter\\|local/lito381/server/NativeDeControlCatalog\\|Reporter\\|0x608; local/lito381/server/NativeDeInitializerKernel$Name\\|local/lito381/server/NativeDeInitializerKernel\\|Name\\|0x8 right=local/lito381/server/NativeDeControlCatalog$Reporter\\|local/lito381/server/NativeDeControlCatalog\\|Reporter\\|0x608; local/lito381/server/NativeDeInitializerKernel$Name\\|local/lito381/server/NativeDeInitializerKernel\\|Name\\|0x18",
+    "local/lito381/server/NativeDeCorpseCore": "method run()V: left=TRY L3 L4 L12 java/lang/RuntimeException   right=TRY L3 L4 L7 java/lang/RuntimeException  ",
+    "local/lito381/server/NativeDeCorpseCore$Task": "method run()V insn[43]: left=INVOKESTATIC java/lang/Short.valueOf(S)Ljava/lang/Short; right=INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;",
+    "local/lito381/server/NativeDeCorpseTimers": "method of(Llocal/lito381/server/NativePlayerLifetime;Llocal/lito381/server/NativeDeCorpseTimers$Deletion;Ljava/util/function/LongSupplier;)Llocal/lito381/server/NativeDeCorpseTimers$Owner; insn[4]: left=ASTORE 5 right=DUP",
+    "local/lito381/server/NativeDeCorpseTimers$Job": "method run()V insn[2]: left=DUP right=ASTORE 1",
+    "local/lito381/server/NativeDeCorpseTimers$Owner": "method <init>(Llocal/lito381/server/NativePlayerLifetime;Llocal/lito381/server/NativeDeCorpseTimers$Deletion;Ljava/util/function/LongSupplier;)V insn[34]: left=ALOAD 2 right=ALOAD 1",
+    "local/lito381/server/NativeDeCorpseTimers$Owner$1": "field val$deletion:Llocal/lito381/server/NativeDeCorpseTimers$Deletion;: only left",
+    "local/lito381/server/NativeDeCorpseTimers$Ticket": "method close(Z)V insn[3]: left=ASTORE 5 right=DUP",
+    "local/lito381/server/NativeDeDeletionDeState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$DeWorld\\|local/lito381/server/NativeDeDeletionPorts\\|DeWorld\\|0x408; local/lito381/server/NativeDeDeletionPorts$Invent… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Se…",
+    "local/lito381/server/NativeDeDeletionOwner": "method delete(Llocal/lito381/server/NativeDeCorpseState;)V insn[2]: left=IFNE L0 right=IFEQ L0",
+    "local/lito381/server/NativeDeDeletionPorts$Services": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Boss\\|local/lito381/server/NativeDeDeletionPorts\\|Boss\\|0x408; local/lito381/server/NativeDeDeletionPorts$DeWorld\\|local/lito381/server/NativeDeDeletionPorts\\|DeWorld\\|0x408; local/lito381/server/NativeD… right=local/lito381/server/NativeDeDeletionPorts$Boss\\|local/lito381/server/NativeDeDeletionPorts\\|Boss\\|0x408; local/lito381/server/NativeDeDeletionPorts$DeWorld\\|local/lito381/server/NativeDeDeletionPorts\\|DeWorld\\|0x408; local/lito381/server/NativeD…",
+    "local/lito381/server/NativeDeDeletionScope": "method call(Llocal/lito381/server/NativeDeDeletionOwner;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[22]: left=ALOAD 3 right=LABEL L2",
+    "local/lito381/server/NativeDeDeletionState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeCharacterFields$Snapshot\\|local/lito381/server/NativeDeCharacterFields\\|Snapshot\\|0x18; local/lito381/server/NativeDeCorpseTimers$Ow… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeCharacterFields$Snapshot\\|local/lito381/server/NativeDeCharacterFields\\|Snapshot\\|0x18; local/lito381/server/NativeDeCorpseTimers$Ow…",
+    "local/lito381/server/NativeDeDeletionVisibility": "method classifyRepair(Llocal/lito381/server/NativeDeDeletionVisibility$Snapshot;ZJ)Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind; insn[5]: left=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I right=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I",
+    "local/lito381/server/NativeDeDeletionVisibility$1": "field $SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I: only right",
+    "local/lito381/server/NativeDeDeletionVisibility$Snapshot": "method deletionInProgress()Z insn[0]: left=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I right=GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I",
+    "local/lito381/server/NativeDeEquipment": "method bind(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/NativeDeActorState$Lease;Llocal/lito381/server/NativeDeEquipment$Values;)Llocal/lito381/server/NativeDeEquipment$Lease; insn[4]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeDeEquipment$1": "method <clinit>()V insn[6]: left=GETSTATIC local/lito381/server/NativeDeEquipment$Op.APPLY_WEAPON:Llocal/lito381/server/NativeDeEquipment$Op; right=GETSTATIC local/lito381/server/NativeDeEquipment$Op.TEMP_GFX:Llocal/lito381/server/NativeDeEquipment$Op;",
+    "local/lito381/server/NativeDeEquipment$Holder": "method set(Llocal/lito381/server/NativeDeEquipment$Op;I)V insn[4]: left=TABLESWITCH min=3 max=10 default=L8 labels=L0,L1,L2,L3,L4,L5,L6,L7 right=TABLESWITCH min=1 max=8 default=L8 labels=L0,L1,L2,L3,L4,L5,L6,L7",
+    "local/lito381/server/NativeDeFactoryControls": "class innerClasses: left=java/lang/System$Logger\\|java/lang/System\\|Logger\\|0x609; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abili… right=java/lang/System$Logger\\|java/lang/System\\|Logger\\|0x609; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\\|local/lito381/server/NativeDeControlCatalog\\|Abili…",
+    "local/lito381/server/NativeDeInitializerKernel": "method init(Llocal/lito381/server/NativeDeInitializerKernel$Services;Llocal/lito381/server/NativeDeInitializerKernel$Actor;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V: left=TRY L3 L4 L7 java/lang/NumberFormatException   right=TRY L3 L4 L5 java/lang/NumberFormatException  ",
+    "local/lito381/server/NativeDeInitializerKernel$Actor": "class innerClasses: left=local/lito381/server/NativeDeInitializerKernel$Actor\\|local/lito381/server/NativeDeInitializerKernel\\|Actor\\|0x608; local/lito381/server/NativeDeInitializerKernel$Emblem\\|local/lito381/server/NativeDeInitializerKernel\\|Emblem\\|0x18; local/lito381… right=local/lito381/server/NativeDeInitializerKernel$Actor\\|local/lito381/server/NativeDeInitializerKernel\\|Actor\\|0x608; local/lito381/server/NativeDeInitializerKernel$Emblem\\|local/lito381/server/NativeDeInitializerKernel\\|Emblem\\|0x18; local/lito381…",
+    "local/lito381/server/NativeDeInitializerKernel$Services": "class innerClasses: left=local/lito381/server/NativeDeInitializerKernel$Ability\\|local/lito381/server/NativeDeInitializerKernel\\|Ability\\|0x18; local/lito381/server/NativeDeInitializerKernel$Actor\\|local/lito381/server/NativeDeInitializerKernel\\|Actor\\|0x608; local/lito3… right=local/lito381/server/NativeDeInitializerKernel$Ability\\|local/lito381/server/NativeDeInitializerKernel\\|Ability\\|0x18; local/lito381/server/NativeDeInitializerKernel$Actor\\|local/lito381/server/NativeDeInitializerKernel\\|Actor\\|0x608; local/lito3…",
+    "local/lito381/server/NativeDeInstanceBroadcast": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408; local/lito381/server/NativeDeInitializerKernel$Log\\|… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeInstanceName": "class innerClasses: left=local/lito381/server/NativeDeInitializerKernel$Name\\|local/lito381/server/NativeDeInitializerKernel\\|Name\\|0x8 right=",
+    "local/lito381/server/NativeDeInstanceNames": "method close(Llocal/lito381/server/NativeDeWorldContext;)V insn[1]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeInstanceScene": "method publish(Llocal/lito381/server/NativeDeInstanceState;Llocal/lito381/server/NativeDeInitializerKernel$Packet;)V insn[5]: left=IF_ACMPNE L1 right=IF_ACMPNE L0",
+    "local/lito381/server/NativeDeInstanceScope$World": "method forEachNearbyPlayer(Llocal/lito381/server/NativeDeObjectFields;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V insn[1]: left=ASTORE 6 right=ASTORE 5",
+    "local/lito381/server/NativeDeInstanceState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Pa… right=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\\|local/lito381/server/NativeDeInstanceState\\|DeAiWorkerTask\\|0x12; local/lito381/server/NativeDeInstanceState$DeRepathThrottle\\|local/lito381/server/NativeDeInstanceState\\|DeRepathThrottl…",
+    "local/lito381/server/NativeDeInstanceState$DeAiWorkerTask": "class innerClasses: left=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\\|local/lito381/server/NativeDeInstanceState\\|DeAiWorkerTask\\|0x12; local/lito381/server/NativeDeLiveAiScope$Pool$ShutdownDiscardable\\|local/lito381/server/NativeDeLiveAiScope$Pool\\|Shutdo… right=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\\|local/lito381/server/NativeDeInstanceState\\|DeAiWorkerTask\\|0x12; local/lito381/server/NativeDeLiveAiScope$Pool$ShutdownDiscardable\\|local/lito381/server/NativeDeLiveAiScope$Pool\\|Shutdo…",
+    "local/lito381/server/NativeDeItemAbility": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemMetadata$Lo… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019",
+    "local/lito381/server/NativeDeItemApplication": "method install(Llocal/lito381/server/GameHub;Llocal/lito381/server/NativeDeItemTemplatesResources$Snapshot;Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot;)Llocal/lito381/server/NativeDeItemApplication;: left=TRY L12 L15 L16    right=TRY L11 L14 L15   ",
+    "local/lito381/server/NativeDeItemApplication$Owner": "method adopt(Llocal/lito381/server/RuntimeInventory;)V insn[32]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeDeItemBlessStatsTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019",
+    "local/lito381/server/NativeDeItemCommonEnchantTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019",
+    "local/lito381/server/NativeDeItemDefinitionsResources": "method freeze(Llocal/lito381/server/NativeDeItemDefinitionsScope$Data;)V: left=TRY L0 L7 L8 java/lang/ReflectiveOperationException   right=TRY L0 L6 L7 java/lang/ReflectiveOperationException  ",
+    "local/lito381/server/NativeDeItemDefinitionsResources$Owner": "method reload(Ljava/lang/String;Llocal/lito381/server/NativeDeTerrainScope$Sql;Llocal/lito381/server/NativeDeWorldLog;)Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot; insn[0]: left=ALOAD 0 right=ALOAD 1",
+    "local/lito381/server/NativeDeItemDefinitionsScope": "method run(Llocal/lito381/server/NativeDeItemDefinitionsScope$Context;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[11]: left=ALOAD 3 right=LABEL L1",
+    "local/lito381/server/NativeDeItemEnchantBonusTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019",
+    "local/lito381/server/NativeDeItemEquipProc": "method addZeroToInclusive(IILjava/util/Random;)I: only left",
+    "local/lito381/server/NativeDeItemEquipProcTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemDefinitionsScope$Database\\|local/lito381/server/NativeDeItemDefinitionsScope\\|Database\\|0x18; local/lito381/server/NativeDeItemD… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19"
+   },
+   "sources": {
+    "NativeDeActorState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeActorState.java",
+     "decompiled": true
+    },
+    "NativeDeAiState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiState.java",
+     "decompiled": true
+    },
+    "NativeDeAiTimeline": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiTimeline.java",
+     "decompiled": true
+    },
+    "NativeDeAiTimerProtocol": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiTimerProtocol.java",
+     "decompiled": true
+    },
+    "NativeDeAiTimers": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiTimers.java",
+     "decompiled": true
+    },
+    "NativeDeAiWorkerProtocol": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiWorkerProtocol.java",
+     "decompiled": true
+    },
+    "NativeDeAiWorkers": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeAiWorkers.java",
+     "decompiled": true
+    },
+    "NativeDeCachedFactoryServices": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCachedFactoryServices.java",
+     "decompiled": true
+    },
+    "NativeDeCharacterActor": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCharacterActor.java",
+     "decompiled": true
+    },
+    "NativeDeCharacterControls": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCharacterControls.java",
+     "decompiled": true
+    },
+    "NativeDeCharacterFields": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCharacterFields.java",
+     "decompiled": true
+    },
+    "NativeDeChatBroadcast": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatBroadcast.java",
+     "decompiled": true
+    },
+    "NativeDeChatChat": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatChat.java",
+     "decompiled": true
+    },
+    "NativeDeChatChatGlobal": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatChatGlobal.java",
+     "decompiled": true
+    },
+    "NativeDeChatChatShouting": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatChatShouting.java",
+     "decompiled": true
+    },
+    "NativeDeChatJobs": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatJobs.java",
+     "decompiled": true
+    },
+    "NativeDeChatResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatResources.java",
+     "decompiled": true
+    },
+    "NativeDeChatScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatScope.java",
+     "decompiled": true
+    },
+    "NativeDeChatTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatTable.java",
+     "decompiled": true
+    },
+    "NativeDeChatTimer": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatTimer.java",
+     "decompiled": true
+    },
+    "NativeDeChatWire": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeChatWire.java",
+     "decompiled": true
+    },
+    "NativeDeClientViewer": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeClientViewer.java",
+     "decompiled": true
+    },
+    "NativeDeControlCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeControlCatalog.java",
+     "decompiled": true
+    },
+    "NativeDeCorpseCore": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCorpseCore.java",
+     "decompiled": true
+    },
+    "NativeDeCorpseTimers": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeCorpseTimers.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionDeState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionDeState.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionOwner": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionOwner.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionPorts": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionPorts.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionScope.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionState.java",
+     "decompiled": true
+    },
+    "NativeDeDeletionVisibility": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeDeletionVisibility.java",
+     "decompiled": true
+    },
+    "NativeDeEquipment": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeEquipment.java",
+     "decompiled": true
+    },
+    "NativeDeFactoryControls": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeFactoryControls.java",
+     "decompiled": true
+    },
+    "NativeDeInitializerKernel": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInitializerKernel.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceBroadcast": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceBroadcast.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceName": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceName.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceNames": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceNames.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceScene": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceScene.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceScope.java",
+     "decompiled": true
+    },
+    "NativeDeInstanceState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeInstanceState.java",
+     "decompiled": true
+    },
+    "NativeDeItemAbility": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemAbility.java",
+     "decompiled": true
+    },
+    "NativeDeItemApplication": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemApplication.java",
+     "decompiled": true
+    },
+    "NativeDeItemBlessStatsTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemBlessStatsTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemCommonEnchantTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemCommonEnchantTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemDefinitionsResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemDefinitionsResources.java",
+     "decompiled": true
+    },
+    "NativeDeItemDefinitionsScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemDefinitionsScope.java",
+     "decompiled": true
+    },
+    "NativeDeItemEnchantBonusTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemEnchantBonusTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemEquipProc": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemEquipProc.java",
+     "decompiled": true
+    },
+    "NativeDeItemEquipProcTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemEquipProcTable.java",
+     "decompiled": true
+    }
+   }
+  },
+  {
+   "id": "A02",
+   "category": "nativede",
+   "size": 49,
+   "classes": [
+    "NativeDeItemGreaterTierTable",
+    "NativeDeItemIdStatsTable",
+    "NativeDeItemInlayCardTable",
+    "NativeDeItemInventory",
+    "NativeDeItemMagicStoneTable",
+    "NativeDeItemPublication",
+    "NativeDeItemStateCopy",
+    "NativeDeItemTable",
+    "NativeDeItemTemplatesResources",
+    "NativeDeItemTemplatesScope",
+    "NativeDeItemTransaction",
+    "NativeDeItemWeaponAttrTable",
+    "NativeDeItemWeaponProc",
+    "NativeDeItemWeaponProcTable",
+    "NativeDeKnownState",
+    "NativeDeLiveAiJobs",
+    "NativeDeLiveAiPorts",
+    "NativeDeLiveAiScope",
+    "NativeDeNpcConstructionState",
+    "NativeDeNpcExecutor",
+    "NativeDeNpcHateList",
+    "NativeDeNpcInventory",
+    "NativeDeNpcKnowledge",
+    "NativeDeNpcMobSkill",
+    "NativeDeNpcMobSkillUse",
+    "NativeDeNpcMoveState",
+    "NativeDeNpcTemplate",
+    "NativeDeNpcTemplateLoadScope",
+    "NativeDeNpcTemplateMobLoader",
+    "NativeDeNpcTemplateNpcLoader",
+    "NativeDeNpcTemplateResources",
+    "NativeDeNpcTemplateState",
+    "NativeDeNpcVitalState",
+    "NativeDeObjectBindings",
+    "NativeDeObjectFields",
+    "NativeDeObjectScope",
+    "NativeDePerceptionAccess",
+    "NativeDePerceptionBadText",
+    "NativeDePerceptionControls",
+    "NativeDePerceptionEmblem",
+    "NativeDePerceptionJobs",
+    "NativeDePerceptionNPCPack_De",
+    "NativeDePerceptionOutput",
+    "NativeDePerceptionPacket",
+    "NativeDePerceptionScope",
+    "NativeDePerceptionSpeed",
+    "NativeDePerceptionState",
+    "NativeDeProfileKernel",
+    "NativeDeShopData"
+   ],
+   "verify_entries": [
+    "local/lito381/server/NativeDeItemGreaterTierTable$TierChance.class",
+    "local/lito381/server/NativeDeItemGreaterTierTable.class",
+    "local/lito381/server/NativeDeItemIdStatsTable.class",
+    "local/lito381/server/NativeDeItemInlayCardTable.class",
+    "local/lito381/server/NativeDeItemInventory$BoundItem.class",
+    "local/lito381/server/NativeDeItemInventory$EntryState.class",
+    "local/lito381/server/NativeDeItemInventory.class",
+    "local/lito381/server/NativeDeItemMagicStoneTable.class",
+    "local/lito381/server/NativeDeItemPublication$Ticket.class",
+    "local/lito381/server/NativeDeItemPublication.class",
+    "local/lito381/server/NativeDeItemStateCopy.class",
+    "local/lito381/server/NativeDeItemTable.class",
+    "local/lito381/server/NativeDeItemTemplatesResources$Owner.class",
+    "local/lito381/server/NativeDeItemTemplatesResources$Snapshot.class",
+    "local/lito381/server/NativeDeItemTemplatesResources.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Binding.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Classes.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Context.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Data.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Database.class",
+    "local/lito381/server/NativeDeItemTemplatesScope$Logs.class",
+    "local/lito381/server/NativeDeItemTemplatesScope.class",
+    "local/lito381/server/NativeDeItemTransaction$Change.class",
+    "local/lito381/server/NativeDeItemTransaction$Operation.class",
+    "local/lito381/server/NativeDeItemTransaction.class",
+    "local/lito381/server/NativeDeItemWeaponAttrTable.class",
+    "local/lito381/server/NativeDeItemWeaponProc.class",
+    "local/lito381/server/NativeDeItemWeaponProcTable.class",
+    "local/lito381/server/NativeDeKnownState.class",
+    "local/lito381/server/NativeDeLiveAiJobs$Binding.class",
+    "local/lito381/server/NativeDeLiveAiJobs$Credit.class",
+    "local/lito381/server/NativeDeLiveAiJobs$Owner.class",
+    "local/lito381/server/NativeDeLiveAiJobs$PulseCredit.class",
+    "local/lito381/server/NativeDeLiveAiJobs$Snapshot.class",
+    "local/lito381/server/NativeDeLiveAiJobs$Ticket.class",
+    "local/lito381/server/NativeDeLiveAiJobs.class",
+    "local/lito381/server/NativeDeLiveAiPorts$Combat.class",
+    "local/lito381/server/NativeDeLiveAiPorts$Config.class",
+    "local/lito381/server/NativeDeLiveAiPorts$Doll.class",
+    "local/lito381/server/NativeDeLiveAiPorts$Environment.class",
+    "local/lito381/server/NativeDeLiveAiPorts$Fishing.class",
+    "local/lito381/server/NativeDeLiveAiPorts.class",
+    "local/lito381/server/NativeDeLiveAiScope$Clock.class",
+    "local/lito381/server/NativeDeLiveAiScope$Manager.class",
+    "local/lito381/server/NativeDeLiveAiScope$Pool$ShutdownDiscardable.class",
+    "local/lito381/server/NativeDeLiveAiScope$Pool.class",
+    "local/lito381/server/NativeDeLiveAiScope$Sprites.class",
+    "local/lito381/server/NativeDeLiveAiScope$World.class",
+    "local/lito381/server/NativeDeLiveAiScope.class",
+    "local/lito381/server/NativeDeNpcConstructionState.class",
+    "local/lito381/server/NativeDeNpcExecutor.class",
+    "local/lito381/server/NativeDeNpcHateList.class",
+    "local/lito381/server/NativeDeNpcInventory.class",
+    "local/lito381/server/NativeDeNpcKnowledge.class",
+    "local/lito381/server/NativeDeNpcMobSkill.class",
+    "local/lito381/server/NativeDeNpcMobSkillUse.class",
+    "local/lito381/server/NativeDeNpcMoveState$PathFailure.class",
+    "local/lito381/server/NativeDeNpcMoveState$PathState.class",
+    "local/lito381/server/NativeDeNpcMoveState.class",
+    "local/lito381/server/NativeDeNpcTemplate.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Context.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Database.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Npcs.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Resolver.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Skill.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Skills.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Sql.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope$Timer.class",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope.class",
+    "local/lito381/server/NativeDeNpcTemplateMobLoader.class",
+    "local/lito381/server/NativeDeNpcTemplateNpcLoader.class",
+    "local/lito381/server/NativeDeNpcTemplateResources$Counts.class",
+    "local/lito381/server/NativeDeNpcTemplateResources$Snapshot.class",
+    "local/lito381/server/NativeDeNpcTemplateResources.class",
+    "local/lito381/server/NativeDeNpcTemplateState.class",
+    "local/lito381/server/NativeDeNpcVitalState$1.class",
+    "local/lito381/server/NativeDeNpcVitalState.class",
+    "local/lito381/server/NativeDeObjectBindings.class",
+    "local/lito381/server/NativeDeObjectFields.class",
+    "local/lito381/server/NativeDeObjectScope$Maps.class",
+    "local/lito381/server/NativeDeObjectScope$World.class",
+    "local/lito381/server/NativeDeObjectScope.class",
+    "local/lito381/server/NativeDePerceptionAccess.class",
+    "local/lito381/server/NativeDePerceptionBadText.class",
+    "local/lito381/server/NativeDePerceptionControls$Data.class",
+    "local/lito381/server/NativeDePerceptionControls.class",
+    "local/lito381/server/NativeDePerceptionEmblem.class",
+    "local/lito381/server/NativeDePerceptionJobs$Key.class",
+    "local/lito381/server/NativeDePerceptionJobs$Owner.class",
+    "local/lito381/server/NativeDePerceptionJobs$Snapshot.class",
+    "local/lito381/server/NativeDePerceptionJobs$Task.class",
+    "local/lito381/server/NativeDePerceptionJobs.class",
+    "local/lito381/server/NativeDePerceptionNPCPack_De.class",
+    "local/lito381/server/NativeDePerceptionOutput.class",
+    "local/lito381/server/NativeDePerceptionPacket.class",
+    "local/lito381/server/NativeDePerceptionScope.class",
+    "local/lito381/server/NativeDePerceptionSpeed$ActionType.class",
+    "local/lito381/server/NativeDePerceptionSpeed$SpeedState.class",
+    "local/lito381/server/NativeDePerceptionSpeed.class",
+    "local/lito381/server/NativeDePerceptionState.class",
+    "local/lito381/server/NativeDeProfileKernel$Combat.class",
+    "local/lito381/server/NativeDeProfileKernel$Target.class",
+    "local/lito381/server/NativeDeProfileKernel.class",
+    "local/lito381/server/NativeDeShopData.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/NativeDeItemGreaterTierTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemGreaterTier…",
+    "local/lito381/server/NativeDeItemIdStatsTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019",
+    "local/lito381/server/NativeDeItemInlayCardTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemDefinitionsScope$Database\\|local/lito381/server/NativeDeItemDefinitionsScope\\|Database\\|0x18; local/lito381/server/NativeDeItemD… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeItemInventory": "method actor(J)Llocal/lito381/server/NativeDeWorldKinds$Item; insn[2]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeDeItemInventory$BoundItem": "method apply(Llocal/lito381/server/RuntimeInventory$Item;Llocal/lito381/server/NativeDeItemTemplate;)V insn[8]: left=DUP right=ISTORE 3",
+    "local/lito381/server/NativeDeItemMagicStoneTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemDefinitionsScope$Database\\|local/lito381/server/NativeDeItemDefinitionsScope\\|Database\\|0x18; local/lito381/server/NativeDeItemD… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeItemPublication": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemPublication$Ticket\\|local/lito381/server/NativeDeItemPublication\\|Ticket\\|0x1a; local/lito381/server/NativeDeItemTransaction$Cha… right=local/lito381/server/NativeDeItemPublication$Ticket\\|local/lito381/server/NativeDeItemPublication\\|Ticket\\|0x1a; local/lito381/server/NativeDeItemTransaction$Change\\|local/lito381/server/NativeDeItemTransaction\\|Change\\|0x18",
+    "local/lito381/server/NativeDeItemStateCopy": "method copy(Llocal/lito381/server/NativeDeWorldKinds$Item;Llocal/lito381/server/NativeDeWorldKinds$Item;)V insn[74]: left=IFGE L7 right=IFLT L8",
+    "local/lito381/server/NativeDeItemTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemTemplatesScope$Classes\\|local/lito381/server/NativeDeItemTemplatesScope\\|Classes\\|0x18; local/lito381/server/NativeDeItemTemplat… right=com/lineage/server/model/item/ItemGenerationContext$Source\\|com/lineage/server/model/item/ItemGenerationContext\\|Source\\|0x4019; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeItemTemplatesResources": "method freeze(Llocal/lito381/server/NativeDeItemTable;)I insn[4]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeDeItemTemplatesResources$Owner": "method reload(Ljava/lang/String;Llocal/lito381/server/NativeDeTerrainScope$Sql;Llocal/lito381/server/NativeDeWorldLog;)Llocal/lito381/server/NativeDeItemTemplatesResources$Snapshot; insn[0]: left=ALOAD 0 right=ALOAD 1",
+    "local/lito381/server/NativeDeItemTemplatesScope": "method run(Llocal/lito381/server/NativeDeItemTemplatesScope$Context;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[11]: left=ALOAD 3 right=LABEL L1",
+    "local/lito381/server/NativeDeItemTemplatesScope$Classes": "method addList(ILjava/lang/String;I)V insn[7]: left=ASTORE 5 right=ASTORE 4",
+    "local/lito381/server/NativeDeItemTransaction": "method nativeCall(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeDeItemTransaction$Operation;)Ljava/lang/Object;: length left=2 right=1",
+    "local/lito381/server/NativeDeItemWeaponAttrTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemDefinitionsScope$Database\\|local/lito381/server/NativeDeItemDefinitionsScope\\|Database\\|0x18; local/lito381/server/NativeDeItemD… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeItemWeaponProc": "method addOneToInclusive(IILjava/util/Random;)I: only left",
+    "local/lito381/server/NativeDeItemWeaponProcTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeItemDefinitionsScope$Database\\|local/lito381/server/NativeDeItemDefinitionsScope\\|Database\\|0x18; local/lito381/server/NativeDeItemD… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeKnownState": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408",
+    "local/lito381/server/NativeDeLiveAiJobs": "method background(Llocal/lito381/server/NativeDeInstanceState;Z)V: left=TRY L5 L6 L7 java/lang/Error   right=TRY L5 L6 L7 java/lang/RuntimeException  ",
+    "local/lito381/server/NativeDeLiveAiJobs$Credit": "method release()V insn[4]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeLiveAiJobs$Ticket": "method cancel(Z)Z insn[1]: left=ASTORE 2 right=DUP",
+    "local/lito381/server/NativeDeLiveAiPorts$Config": "method load()Llocal/lito381/server/NativeDeLiveAiPorts$Config;: left=TRY L0 L2 L4 java/lang/Throwable   right=TRY L1 L3 L5 java/lang/Throwable  ",
+    "local/lito381/server/NativeDeLiveAiScope": "method call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[14]: left=ALOAD 3 right=LABEL L1",
+    "local/lito381/server/NativeDeNpcConstructionState": "class access: left=0x21 right=0x1",
+    "local/lito381/server/NativeDeNpcExecutor": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeNpcHateList": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeDeletionPorts$Hate\\|local/lito381/server/NativeDeDeletionPorts\\|Hate\\|0x608; local/li… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609",
+    "local/lito381/server/NativeDeNpcInventory": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Inventory\\|local/lito381/server/NativeDeDeletionPorts\\|Inventory\\|0x608; local/lito381/server/NativeDeNpcConstructionP… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Inventory\\|local/lito381/server/NativeDeDeletionPorts\\|Inventory\\|0x608; local/lito381/server/NativeDeNpcConstructionP…",
+    "local/lito381/server/NativeDeNpcKnowledge": "method admitted(Llocal/lito381/server/NativeDeDeletionState;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z insn[4]: left=ASTORE 3 right=ASTORE 2",
+    "local/lito381/server/NativeDeNpcMobSkill": "method isTriggerDistance(II)Z insn[18]: left=GOTO L3 right=IRETURN",
+    "local/lito381/server/NativeDeNpcMobSkillUse": "class innerClasses: left=local/lito381/server/NativeDeNpcTemplatePorts$MobSkills\\|local/lito381/server/NativeDeNpcTemplatePorts\\|MobSkills\\|0x18 right=",
+    "local/lito381/server/NativeDeNpcMoveState": "class innerClasses: left=local/lito381/server/NativeDeNpcConstructionPorts$Movement\\|local/lito381/server/NativeDeNpcConstructionPorts\\|Movement\\|0x608; local/lito381/server/NativeDeNpcConstructionPorts$Services\\|local/lito381/server/NativeDeNpcConstructionPorts\\|Servic… right=local/lito381/server/NativeDeNpcMoveState$PathFailure\\|local/lito381/server/NativeDeNpcMoveState\\|PathFailure\\|0x4019; local/lito381/server/NativeDeNpcMoveState$PathState\\|local/lito381/server/NativeDeNpcMoveState\\|PathState\\|0x1a",
+    "local/lito381/server/NativeDeNpcTemplate": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Template\\|local/lito381/server/NativeDeDeletionPorts\\|Template\\|0x608 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeNpcTemplateLoadScope": "method call(Llocal/lito381/server/NativeDeNpcTemplateLoadScope$Context;Ljava/util/function/Supplier;)Ljava/lang/Object;: length left=2 right=1",
+    "local/lito381/server/NativeDeNpcTemplateMobLoader": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeNpcTemplateLoadScope$Database\\|local/lito381/server/NativeDeNpcTemplateLoadScope\\|Database\\|0x18; local/lito381/server/NativeDeNpcTe… right=",
+    "local/lito381/server/NativeDeNpcTemplateNpcLoader": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeNpcTemplateLoadScope$Context\\|local/lito381/server/NativeDeNpcTemplateLoadScope\\|Context\\|0x18; local/lito381/server/NativeDeNpcTemp… right=local/lito381/server/NativeDeNpcTemplateLoadScope$Context\\|local/lito381/server/NativeDeNpcTemplateLoadScope\\|Context\\|0x18",
+    "local/lito381/server/NativeDeNpcTemplateResources": "method lambda$owned$#0(Ljava/util/concurrent/atomic/AtomicBoolean;Ljava/sql/Connection;Llocal/lito381/server/NativeDeNpcTemplateResources$Counts;Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object; insn[14]: left=ASTORE 8 right=ASTORE 6",
+    "local/lito381/server/NativeDeNpcTemplateState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Template\\|local/lito381/server/NativeDeDeletionPorts\\|Template\\|0x608; local/lito381/server/NativeDeNpcTemplatePorts$S… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Template\\|local/lito381/server/NativeDeDeletionPorts\\|Template\\|0x608; local/lito381/server/NativeDeNpcTemplatePorts$S…",
+    "local/lito381/server/NativeDeNpcVitalState": "method getX()I: left=0x1 right=0x4",
+    "local/lito381/server/NativeDeNpcVitalState$1": "method <clinit>()V: length left=5 right=7",
+    "local/lito381/server/NativeDeObjectBindings": "method showChanged(Llocal/lito381/server/NativeDeObjectFields;I)V insn[4]: left=DUP right=CHECKCAST local/lito381/server/NativeDeObjectFields",
+    "local/lito381/server/NativeDeObjectFields": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Vi… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Vi…",
+    "local/lito381/server/NativeDeObjectScope": "method context(Llocal/lito381/server/NativeDeObjectFields;)Llocal/lito381/server/NativeDeWorldContext; insn[4]: left=ASTORE 2 right=CHECKCAST local/lito381/server/NativeDeObjectFields",
+    "local/lito381/server/NativeDeObjectScope$World": "method updateObjectSector(Llocal/lito381/server/NativeDeObjectFields;IIIIII)V insn[2]: left=IFNE L0 right=IFEQ L0",
+    "local/lito381/server/NativeDePerceptionAccess": "method Pc_tryAddKnownObject(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z insn[2]: left=IFNE L0 right=IFEQ L0",
+    "local/lito381/server/NativeDePerceptionBadText": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDePerceptionResource$File\\|local/lito381/server/NativeDePerceptionResource\\|File\\|0x18; local/lito381/server/NativeDePerceptionResourc… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDePerceptionControls": "method load()Llocal/lito381/server/NativeDePerceptionControls$Data;: left=TRY L1 L3 L4    right=TRY L1 L3 L4 java/lang/Throwable  ",
+    "local/lito381/server/NativeDePerceptionEmblem": "class innerClasses: left= right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDePerceptionJobs": "method owner(Llocal/lito381/server/NativeDeWorldContext;)Llocal/lito381/server/NativeDePerceptionJobs$Owner; insn[5]: left=ASTORE 2 right=DUP",
+    "local/lito381/server/NativeDePerceptionJobs$Task": "method cancel()V insn[1]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDePerceptionNPCPack_De": "class innerClasses: left=local/lito381/server/NativeDePerceptionPorts$Poison\\|local/lito381/server/NativeDePerceptionPorts\\|Poison\\|0x408; local/lito381/server/NativeDePerceptionSpeed$SpeedState\\|local/lito381/server/NativeDePerceptionSpeed\\|SpeedState\\|0x19 right=local/lito381/server/NativeDePerceptionSpeed$SpeedState\\|local/lito381/server/NativeDePerceptionSpeed\\|SpeedState\\|0x19",
+    "local/lito381/server/NativeDePerceptionOutput": "method send(Llocal/lito381/server/NativeDeClientViewer;Llocal/lito381/server/NativeDePerceptionPacket;)V insn[69]: left=ASTORE 5 right=DUP",
+    "local/lito381/server/NativeDePerceptionPacket": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Log\\|local/lito381/server/NativeDeDeletionPorts\\|Log\\|0x608; local/lito381/server/NativeDeDeletionPorts$Packet\\|local/l… right=com/lineage/server/utils/TeleportTrace$PacketTrace\\|com/lineage/server/utils/TeleportTrace\\|PacketTrace\\|0x19; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDePerceptionScope": "method call(Llocal/lito381/server/NativeDePerceptionState;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[22]: left=ALOAD 3 right=LABEL L2",
+    "local/lito381/server/NativeDePerceptionSpeed": "method calculate(ILlocal/lito381/server/NativeDePerceptionSpeed$ActionType;Llocal/lito381/server/NativeDePerceptionSpeed$SpeedState;)I insn[3]: left=ISTORE 4 right=ISTORE 3",
+    "local/lito381/server/NativeDePerceptionState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Log\\|local/lito381/server/NativeDeDeletionPorts\\|Log\\|0x608; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|loca… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Services\\|local/lito381/server/NativeDeDeletionPorts\\|Services\\|0x608; local/lito381/server/NativeDeDeletionPorts$View…",
+    "local/lito381/server/NativeDeProfileKernel": "method initialize(Llocal/lito381/server/NativeDeProfileKernel$Target;)V insn[62]: left=LABEL L15 right=GOTO L15",
+    "local/lito381/server/NativeDeShopData": "method isInRange(II)Z insn[34]: left=IF_ICMPGT L3 right=IF_ICMPLE L4"
+   },
+   "sources": {
+    "NativeDeItemGreaterTierTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemGreaterTierTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemIdStatsTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemIdStatsTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemInlayCardTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemInlayCardTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemInventory": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemInventory.java",
+     "decompiled": true
+    },
+    "NativeDeItemMagicStoneTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemMagicStoneTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemPublication": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemPublication.java",
+     "decompiled": true
+    },
+    "NativeDeItemStateCopy": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemStateCopy.java",
+     "decompiled": true
+    },
+    "NativeDeItemTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemTemplatesResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemTemplatesResources.java",
+     "decompiled": true
+    },
+    "NativeDeItemTemplatesScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemTemplatesScope.java",
+     "decompiled": true
+    },
+    "NativeDeItemTransaction": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemTransaction.java",
+     "decompiled": true
+    },
+    "NativeDeItemWeaponAttrTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemWeaponAttrTable.java",
+     "decompiled": true
+    },
+    "NativeDeItemWeaponProc": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemWeaponProc.java",
+     "decompiled": true
+    },
+    "NativeDeItemWeaponProcTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeItemWeaponProcTable.java",
+     "decompiled": true
+    },
+    "NativeDeKnownState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeKnownState.java",
+     "decompiled": true
+    },
+    "NativeDeLiveAiJobs": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeLiveAiJobs.java",
+     "decompiled": true
+    },
+    "NativeDeLiveAiPorts": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeLiveAiPorts.java",
+     "decompiled": true
+    },
+    "NativeDeLiveAiScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeLiveAiScope.java",
+     "decompiled": true
+    },
+    "NativeDeNpcConstructionState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcConstructionState.java",
+     "decompiled": true
+    },
+    "NativeDeNpcExecutor": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcExecutor.java",
+     "decompiled": true
+    },
+    "NativeDeNpcHateList": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcHateList.java",
+     "decompiled": true
+    },
+    "NativeDeNpcInventory": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcInventory.java",
+     "decompiled": true
+    },
+    "NativeDeNpcKnowledge": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcKnowledge.java",
+     "decompiled": true
+    },
+    "NativeDeNpcMobSkill": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcMobSkill.java",
+     "decompiled": true
+    },
+    "NativeDeNpcMobSkillUse": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcMobSkillUse.java",
+     "decompiled": true
+    },
+    "NativeDeNpcMoveState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcMoveState.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplate": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplate.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplateLoadScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplateLoadScope.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplateMobLoader": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplateMobLoader.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplateNpcLoader": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplateNpcLoader.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplateResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplateResources.java",
+     "decompiled": true
+    },
+    "NativeDeNpcTemplateState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcTemplateState.java",
+     "decompiled": true
+    },
+    "NativeDeNpcVitalState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeNpcVitalState.java",
+     "decompiled": true
+    },
+    "NativeDeObjectBindings": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeObjectBindings.java",
+     "decompiled": true
+    },
+    "NativeDeObjectFields": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeObjectFields.java",
+     "decompiled": true
+    },
+    "NativeDeObjectScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeObjectScope.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionAccess": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionAccess.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionBadText": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionBadText.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionControls": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionControls.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionEmblem": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionEmblem.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionJobs": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionJobs.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionNPCPack_De": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionNPCPack_De.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionOutput": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionOutput.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionPacket": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionPacket.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionScope.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionSpeed": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionSpeed.java",
+     "decompiled": true
+    },
+    "NativeDePerceptionState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDePerceptionState.java",
+     "decompiled": true
+    },
+    "NativeDeProfileKernel": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeProfileKernel.java",
+     "decompiled": true
+    },
+    "NativeDeShopData": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeShopData.java",
+     "decompiled": true
+    }
+   }
+  },
+  {
+   "id": "A03",
+   "category": "nativede",
+   "size": 47,
+   "classes": [
+    "NativeDeShopResources",
+    "NativeDeShopTable",
+    "NativeDeSpriteCatalog",
+    "NativeDeTerrainPoint",
+    "NativeDeTerrainResources",
+    "NativeDeTerrainScope",
+    "NativeDeTerrainTable",
+    "NativeDeTerrainText",
+    "NativeDeTerrainV1",
+    "NativeDeTerrainWorld",
+    "NativeDeVisibilityAccess",
+    "NativeDeVisibilityCheck",
+    "NativeDeVisibilityCoordinator",
+    "NativeDeVisibilityHp",
+    "NativeDeVisibilityJobs",
+    "NativeDeVisibilityOutput",
+    "NativeDeVisibilityPacket",
+    "NativeDeVisibilityPc",
+    "NativeDeVisibilityRuntime",
+    "NativeDeVisibilityScope",
+    "NativeDeVisibilitySwitch",
+    "NativeDeVisibilityTimer",
+    "NativeDeWorldContext",
+    "NativeDeWorldControls",
+    "NativeDeWorldCore",
+    "NativeDeWorldKinds",
+    "NativeDeWorldLocation",
+    "NativeDeWorldLog",
+    "NativeDeWorldPlayerFilter",
+    "NativeDeWorldPoint",
+    "NativeDeWorldRegistryBow",
+    "NativeDeWorldRegistryCrown",
+    "NativeDeWorldRegistryDarkelf",
+    "NativeDeWorldRegistryDoll",
+    "NativeDeWorldRegistryDragonKnight",
+    "NativeDeWorldRegistryEffect",
+    "NativeDeWorldRegistryElf",
+    "NativeDeWorldRegistryIllusionist",
+    "NativeDeWorldRegistryItem",
+    "NativeDeWorldRegistryKnight",
+    "NativeDeWorldRegistryMob",
+    "NativeDeWorldRegistryPet",
+    "NativeDeWorldRegistryQuest",
+    "NativeDeWorldRegistrySummons",
+    "NativeDeWorldRegistryTrap",
+    "NativeDeWorldRegistryWizard",
+    "NativeDeWorldScope"
+   ],
+   "verify_entries": [
+    "local/lito381/server/NativeDeShopResources$Snapshot.class",
+    "local/lito381/server/NativeDeShopResources.class",
+    "local/lito381/server/NativeDeShopTable.class",
+    "local/lito381/server/NativeDeSpriteCatalog$Catalog.class",
+    "local/lito381/server/NativeDeSpriteCatalog$Mutable.class",
+    "local/lito381/server/NativeDeSpriteCatalog$Reporter.class",
+    "local/lito381/server/NativeDeSpriteCatalog$Sprite.class",
+    "local/lito381/server/NativeDeSpriteCatalog.class",
+    "local/lito381/server/NativeDeTerrainPoint.class",
+    "local/lito381/server/NativeDeTerrainResources$1.class",
+    "local/lito381/server/NativeDeTerrainResources$Definition.class",
+    "local/lito381/server/NativeDeTerrainResources$Snapshot.class",
+    "local/lito381/server/NativeDeTerrainResources.class",
+    "local/lito381/server/NativeDeTerrainScope$Asset.class",
+    "local/lito381/server/NativeDeTerrainScope$Context.class",
+    "local/lito381/server/NativeDeTerrainScope$Database.class",
+    "local/lito381/server/NativeDeTerrainScope$Logs.class",
+    "local/lito381/server/NativeDeTerrainScope$Sql.class",
+    "local/lito381/server/NativeDeTerrainScope.class",
+    "local/lito381/server/NativeDeTerrainTable.class",
+    "local/lito381/server/NativeDeTerrainText.class",
+    "local/lito381/server/NativeDeTerrainV1.class",
+    "local/lito381/server/NativeDeTerrainWorld$Domain.class",
+    "local/lito381/server/NativeDeTerrainWorld$Key.class",
+    "local/lito381/server/NativeDeTerrainWorld$Owner.class",
+    "local/lito381/server/NativeDeTerrainWorld.class",
+    "local/lito381/server/NativeDeVisibilityAccess.class",
+    "local/lito381/server/NativeDeVisibilityCheck.class",
+    "local/lito381/server/NativeDeVisibilityCoordinator.class",
+    "local/lito381/server/NativeDeVisibilityHp.class",
+    "local/lito381/server/NativeDeVisibilityJobs$Credit.class",
+    "local/lito381/server/NativeDeVisibilityJobs$Dispatch.class",
+    "local/lito381/server/NativeDeVisibilityJobs$Ticket.class",
+    "local/lito381/server/NativeDeVisibilityJobs.class",
+    "local/lito381/server/NativeDeVisibilityOutput.class",
+    "local/lito381/server/NativeDeVisibilityPacket.class",
+    "local/lito381/server/NativeDeVisibilityPc.class",
+    "local/lito381/server/NativeDeVisibilityRuntime$Owner.class",
+    "local/lito381/server/NativeDeVisibilityRuntime.class",
+    "local/lito381/server/NativeDeVisibilityScope$Logs.class",
+    "local/lito381/server/NativeDeVisibilityScope.class",
+    "local/lito381/server/NativeDeVisibilitySwitch.class",
+    "local/lito381/server/NativeDeVisibilityTimer.class",
+    "local/lito381/server/NativeDeWorldContext$1.class",
+    "local/lito381/server/NativeDeWorldContext$2.class",
+    "local/lito381/server/NativeDeWorldContext$Entry.class",
+    "local/lito381/server/NativeDeWorldContext.class",
+    "local/lito381/server/NativeDeWorldControls.class",
+    "local/lito381/server/NativeDeWorldCore$1.class",
+    "local/lito381/server/NativeDeWorldCore$SpatialIndexAuditSnapshot.class",
+    "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult.class",
+    "local/lito381/server/NativeDeWorldCore$VisibleBinding.class",
+    "local/lito381/server/NativeDeWorldCore.class",
+    "local/lito381/server/NativeDeWorldKinds$Bow.class",
+    "local/lito381/server/NativeDeWorldKinds$Doll.class",
+    "local/lito381/server/NativeDeWorldKinds$Dwarf.class",
+    "local/lito381/server/NativeDeWorldKinds$Effect.class",
+    "local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease.class",
+    "local/lito381/server/NativeDeWorldKinds$Item$LastStatus.class",
+    "local/lito381/server/NativeDeWorldKinds$Item.class",
+    "local/lito381/server/NativeDeWorldKinds$Merchant.class",
+    "local/lito381/server/NativeDeWorldKinds$Npc.class",
+    "local/lito381/server/NativeDeWorldKinds$Pet.class",
+    "local/lito381/server/NativeDeWorldKinds$Trap.class",
+    "local/lito381/server/NativeDeWorldKinds.class",
+    "local/lito381/server/NativeDeWorldLocation.class",
+    "local/lito381/server/NativeDeWorldLog.class",
+    "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+    "local/lito381/server/NativeDeWorldPlayerFilter.class",
+    "local/lito381/server/NativeDeWorldPoint.class",
+    "local/lito381/server/NativeDeWorldRegistryBow.class",
+    "local/lito381/server/NativeDeWorldRegistryCrown.class",
+    "local/lito381/server/NativeDeWorldRegistryDarkelf.class",
+    "local/lito381/server/NativeDeWorldRegistryDoll.class",
+    "local/lito381/server/NativeDeWorldRegistryDragonKnight.class",
+    "local/lito381/server/NativeDeWorldRegistryEffect.class",
+    "local/lito381/server/NativeDeWorldRegistryElf.class",
+    "local/lito381/server/NativeDeWorldRegistryIllusionist.class",
+    "local/lito381/server/NativeDeWorldRegistryItem.class",
+    "local/lito381/server/NativeDeWorldRegistryKnight.class",
+    "local/lito381/server/NativeDeWorldRegistryMob.class",
+    "local/lito381/server/NativeDeWorldRegistryPet.class",
+    "local/lito381/server/NativeDeWorldRegistryQuest.class",
+    "local/lito381/server/NativeDeWorldRegistrySummons.class",
+    "local/lito381/server/NativeDeWorldRegistryTrap$TrapCell.class",
+    "local/lito381/server/NativeDeWorldRegistryTrap.class",
+    "local/lito381/server/NativeDeWorldRegistryWizard.class",
+    "local/lito381/server/NativeDeWorldScope.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/NativeDeShopResources": "method lambda$read$#0(Ljava/lang/Object;)I: only left",
+    "local/lito381/server/NativeDeShopTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeTerrainScope$Database\\|local/lito381/server/NativeDeTerrainScope\\|Database\\|0x18; loc… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609",
+    "local/lito381/server/NativeDeSpriteCatalog": "method read(Ljava/sql/Connection;Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;Llocal/lito381/server/NativeDeSpriteCatalog$Reporter;)Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;: left=TRY L2 L12 L13    right=TRY L2 L13 L14 java/lang/Throwable  ",
+    "local/lito381/server/NativeDeTerrainPoint": "method isInScreen(Llocal/lito381/server/NativeDeTerrainPoint;)Z insn[41]: left=GOTO L3 right=IRETURN",
+    "local/lito381/server/NativeDeTerrainResources": "method assets()Ljava/util/Map;: left=TRY L3 L5 L6 java/lang/Throwable   right=TRY L3 L6 L7 java/lang/Throwable  ",
+    "local/lito381/server/NativeDeTerrainResources$1": "field val$checked:Ljava/security/DigestInputStream;: only right",
+    "local/lito381/server/NativeDeTerrainScope": "method call(Llocal/lito381/server/NativeDeTerrainScope$Context;Ljava/util/function/Supplier;)Ljava/lang/Object;: left=TRY L3 L4 L7 java/lang/Throwable   right=TRY L3 L4 L5 java/lang/Throwable  ",
+    "local/lito381/server/NativeDeTerrainTable": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeTerrainScope$Database\\|local/lito381/server/NativeDeTerrainScope\\|Database\\|0x18; local/lito381/server/NativeDeTerrainScope$Logs\\|loc… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeTerrainText": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeTerrainScope$Logs\\|local/lito381/server/NativeDeTerrainScope\\|Logs\\|0x18 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeTerrainV1": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeTerrainScope$Logs\\|local/lito381/server/NativeDeTerrainScope\\|Logs\\|0x18 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeTerrainWorld": "method call(Llocal/lito381/server/NativeDeWorldContext;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[12]: left=ALOAD 3 right=LABEL L1",
+    "local/lito381/server/NativeDeVisibilityAccess": "method L1NpcInstance$getNpcId(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)I insn[5]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeDeVisibilityCheck": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408; local/lito381/server… right=",
+    "local/lito381/server/NativeDeVisibilityCoordinator": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Vi… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeVisibilityHp": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608 right=",
+    "local/lito381/server/NativeDeVisibilityJobs": "method schedule(Llocal/lito381/server/NativeDeVisibilityRuntime$Owner;Ljava/lang/Runnable;JJ)Llocal/lito381/server/NativeDeVisibilityJobs$Ticket;: left=TRY L3 L4 L5 java/lang/Error   right=TRY L3 L4 L5 java/lang/RuntimeException  ",
+    "local/lito381/server/NativeDeVisibilityJobs$Credit": "method release()V insn[5]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeVisibilityJobs$Dispatch": "method run()V insn[36]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeDeVisibilityJobs$Ticket": "method end(ZLjava/lang/Throwable;)Z insn[1]: left=ASTORE 4 right=DUP",
+    "local/lito381/server/NativeDeVisibilityOutput": "method accepts(Llocal/lito381/server/NativeDeDeletionPorts$Packet;)Z insn[2]: left=IFEQ L0 right=IFNE L0",
+    "local/lito381/server/NativeDeVisibilityPacket": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$Packet\\|local/lito381/server/NativeDeDeletionPorts\\|Packet\\|0x8 right=com/lineage/server/utils/TeleportTrace$PacketTrace\\|com/lineage/server/utils/TeleportTrace\\|PacketTrace\\|0x19; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeVisibilityPc": "class nestMembers: left=local/lito381/server/NativeDeVisibilityPc$1 right=",
+    "local/lito381/server/NativeDeVisibilityRuntime": "method call(Llocal/lito381/server/NativeDeWorldContext;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[63]: left=DUP right=ISTORE 4",
+    "local/lito381/server/NativeDeVisibilityScope": "method call(Llocal/lito381/server/NativeDeVisibilityRuntime$Owner;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[22]: left=ALOAD 3 right=LABEL L2",
+    "local/lito381/server/NativeDeVisibilitySwitch": "ONLY_RIGHT（src/main缺）",
+    "local/lito381/server/NativeDeVisibilityTimer": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeVisibilityScope$Logs\\|local/lito381/server/NativeDeVisibilityScope\\|Logs\\|0x18 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeWorldContext": "class innerClasses: left=java/lang/System$Logger$Level\\|java/lang/System$Logger\\|Level\\|0x4019; java/lang/System$Logger\\|java/lang/System\\|Logger\\|0x609; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/concurrent/locks/Reentran… right=java/lang/System$Logger$Level\\|java/lang/System$Logger\\|Level\\|0x4019; java/lang/System$Logger\\|java/lang/System\\|Logger\\|0x609; java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/concurrent/locks/Reentran…",
+    "local/lito381/server/NativeDeWorldContext$Entry": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeWorldContext$Entry\\|local/lito381/server/NativeDeWorldContext\\|Entry\\|0x18 right=local/lito381/server/NativeDeWorldContext$Entry\\|local/lito381/server/NativeDeWorldContext\\|Entry\\|0x18",
+    "local/lito381/server/NativeDeWorldControls": "method load()I: left=TRY L2 L3 L4 java/lang/Throwable   right=TRY L3 L4 L5 java/lang/Throwable  ",
+    "local/lito381/server/NativeDeWorldCore": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeDeletionPorts$Monster\\|local/lito381/server/NativeDeDeletionPorts\\|Monster\\|0x408; lo… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/Map$Entry\\|java/util/Map\\|Entry\\|0x609; local/lito381/server/NativeDeWorldCore$1\\|\\|\\|0x1008; local/lito381/server/NativeDeWorldCore$SpatialIndexAuditSnap…",
+    "local/lito381/server/NativeDeWorldCore$1": "field $SwitchMap$com$lineage$server$world$World$SpatialReconcileResult:[I: only right",
+    "local/lito381/server/NativeDeWorldCore$VisibleBinding": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeWorldCore$Visibl… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeWorldCore$VisibleBinding\\|local/lito381/server/NativeDeWorldCore\\|VisibleBinding\\|0x1a",
+    "local/lito381/server/NativeDeWorldKinds": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Bow\\|local/lito381/server/NativeDeWorldKinds\\|Bow\\|0x8; local/lito381/server/NativeDeWorldKinds$Doll\\|local/lito381/server/NativeDeWorldKinds\\|Doll\\|0x8; local/lito381/server/NativeDeWorldKinds$Dwarf\\|local/… right=local/lito381/server/NativeDeWorldKinds$Bow\\|local/lito381/server/NativeDeWorldKinds\\|Bow\\|0x8; local/lito381/server/NativeDeWorldKinds$Doll\\|local/lito381/server/NativeDeWorldKinds\\|Doll\\|0x8; local/lito381/server/NativeDeWorldKinds$Dwarf\\|local/…",
+    "local/lito381/server/NativeDeWorldKinds$Item": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408; local/lito381/server/NativeDeItemAbility$AbilityType\\|local/lito381/server/NativeDeItemAbility\\|AbilityType\\|0x4019; local/lito381/serve… right=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease\\|local/lito381/server/NativeDeWorldKinds$Item\\|EquipmentTimerLea…",
+    "local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408; local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease\\|local/lito381/server/NativeDeWorldKinds$Item\\|EquipmentTimerLease\\|0x1… right=local/lito381/server/NativeDeWorldKinds$Item$EquipmentTimerLease\\|local/lito381/server/NativeDeWorldKinds$Item\\|EquipmentTimerLease\\|0x1a",
+    "local/lito381/server/NativeDeWorldKinds$Item$LastStatus": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Item$LastStatus\\|local/lito381/server/NativeDeWorldKinds$Item\\|LastStatus\\|0x1; local/lito381/server/NativeDeWorldKinds$Item\\|local/lito381/server/NativeDeWorldKinds\\|Item\\|0x8 right=local/lito381/server/NativeDeWorldKinds$Item$LastStatus\\|local/lito381/server/NativeDeWorldKinds$Item\\|LastStatus\\|0x1",
+    "local/lito381/server/NativeDeWorldLocation": "class innerClasses: left=local/lito381/server/NativeDeObjectScope$Maps\\|local/lito381/server/NativeDeObjectScope\\|Maps\\|0x18 right=",
+    "local/lito381/server/NativeDeWorldLog": "method debug(Ljava/lang/String;)V: only left",
+    "local/lito381/server/NativeDeWorldPlayerFilter": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408; local/lito381/server… right=local/lito381/server/NativeDeWorldPlayerFilter$1\\|\\|\\|0x1008",
+    "local/lito381/server/NativeDeWorldPlayerFilter$1": "field $SwitchMap$com$lineage$server$world$PlayerFilter:[I: only right",
+    "local/lito381/server/NativeDeWorldPoint": "method isInScreen(Llocal/lito381/server/NativeDeWorldPoint;)Z insn[41]: left=GOTO L3 right=IRETURN",
+    "local/lito381/server/NativeDeWorldRegistryBow": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Bow\\|local/lito381/server/NativeDeWorldKinds\\|Bow\\|0x8 right=",
+    "local/lito381/server/NativeDeWorldRegistryCrown": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryDarkelf": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryDoll": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Doll\\|local/lito381/server/NativeDeWorldKinds\\|Doll\\|0x8 right=",
+    "local/lito381/server/NativeDeWorldRegistryDragonKnight": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryEffect": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Effect\\|local/lito381/server/NativeDeWorldKinds\\|Effect\\|0x8 right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19",
+    "local/lito381/server/NativeDeWorldRegistryElf": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryIllusionist": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryItem": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Item\\|local/lito381/server/NativeDeWorldKinds\\|Item\\|0x8 right=",
+    "local/lito381/server/NativeDeWorldRegistryKnight": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryMob": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Monster\\|local/lito381/server/NativeDeDeletionPorts\\|Monster\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryPet": "class innerClasses: left=local/lito381/server/NativeDeWorldKinds$Pet\\|local/lito381/server/NativeDeWorldKinds\\|Pet\\|0x8 right=",
+    "local/lito381/server/NativeDeWorldRegistryQuest": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608 right=com/lineage/server/datatables/QuestInstanceTable$Definition\\|com/lineage/server/datatables/QuestInstanceTable\\|Definition\\|0x19",
+    "local/lito381/server/NativeDeWorldRegistrySummons": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Summon\\|local/lito381/server/NativeDeDeletionPorts\\|Summon\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldRegistryTrap": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/concurrent/ConcurrentHashMap$KeySetView\\|java/util/concurrent/ConcurrentHashMap\\|KeySetView\\|0x9; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; java/util/concurrent/ConcurrentHashMap$KeySetView\\|java/util/concurrent/ConcurrentHashMap\\|KeySetView\\|0x9; local/lito381/server/NativeDeWorldRegistryTrap$TrapCe…",
+    "local/lito381/server/NativeDeWorldRegistryTrap$TrapCell": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\\|local/lito381/server/NativeDeDeletionPorts\\|ObjectRef\\|0x608; local/lito381/server/NativeDeWorldKinds$Trap\\|… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeDeWorldRegistryTrap$TrapCell\\|local/lito381/server/NativeDeWorldRegistryTrap\\|TrapCell\\|0x1a",
+    "local/lito381/server/NativeDeWorldRegistryWizard": "class innerClasses: left=local/lito381/server/NativeDeDeletionPorts$Viewer\\|local/lito381/server/NativeDeDeletionPorts\\|Viewer\\|0x408 right=",
+    "local/lito381/server/NativeDeWorldScope": "method call(Llocal/lito381/server/NativeDeWorldContext;Ljava/util/function/Supplier;)Ljava/lang/Object; insn[22]: left=ALOAD 3 right=LABEL L2"
+   },
+   "sources": {
+    "NativeDeShopResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeShopResources.java",
+     "decompiled": true
+    },
+    "NativeDeShopTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeShopTable.java",
+     "decompiled": true
+    },
+    "NativeDeSpriteCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeSpriteCatalog.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainPoint": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainPoint.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainResources.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainScope.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainTable": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainTable.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainText": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainText.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainV1": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainV1.java",
+     "decompiled": true
+    },
+    "NativeDeTerrainWorld": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeTerrainWorld.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityAccess": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityAccess.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityCheck": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityCheck.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityCoordinator": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityCoordinator.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityHp": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityHp.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityJobs": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityJobs.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityOutput": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityOutput.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityPacket": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityPacket.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityPc": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityPc.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityRuntime": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityRuntime.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilityScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityScope.java",
+     "decompiled": true
+    },
+    "NativeDeVisibilitySwitch": {
+     "file": null,
+     "decompiled": null
+    },
+    "NativeDeVisibilityTimer": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeVisibilityTimer.java",
+     "decompiled": true
+    },
+    "NativeDeWorldContext": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldContext.java",
+     "decompiled": true
+    },
+    "NativeDeWorldControls": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldControls.java",
+     "decompiled": true
+    },
+    "NativeDeWorldCore": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldCore.java",
+     "decompiled": true
+    },
+    "NativeDeWorldKinds": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldKinds.java",
+     "decompiled": true
+    },
+    "NativeDeWorldLocation": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldLocation.java",
+     "decompiled": true
+    },
+    "NativeDeWorldLog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldLog.java",
+     "decompiled": true
+    },
+    "NativeDeWorldPlayerFilter": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldPlayerFilter.java",
+     "decompiled": true
+    },
+    "NativeDeWorldPoint": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldPoint.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryBow": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryBow.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryCrown": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryCrown.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryDarkelf": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryDarkelf.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryDoll": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryDoll.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryDragonKnight": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryDragonKnight.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryEffect": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryEffect.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryElf": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryElf.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryIllusionist": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryIllusionist.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryItem": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryItem.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryKnight": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryKnight.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryMob": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryMob.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryPet": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryPet.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryQuest": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryQuest.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistrySummons": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistrySummons.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryTrap": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryTrap.java",
+     "decompiled": true
+    },
+    "NativeDeWorldRegistryWizard": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldRegistryWizard.java",
+     "decompiled": true
+    },
+    "NativeDeWorldScope": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeDeWorldScope.java",
+     "decompiled": true
+    }
+   }
+  },
+  {
+   "id": "A04",
+   "category": "battle-combat",
+   "size": 25,
+   "classes": [
+    "BattleAnimationCatalog",
+    "BattleArmBreakerStatus",
+    "BattleArmorBreak",
+    "BattleClearMindStatus",
+    "BattleDragonEyeCatalog",
+    "BattleEarthBlessStatus",
+    "BattleFreezeEffects",
+    "BattleInvisibilityStatus",
+    "BattleIronSkinStatus",
+    "BattleJoyOfPain",
+    "BattleMortalBody",
+    "BattlePatienceStatus",
+    "BattlePetRaceCourseCatalog",
+    "BattlePhysicalDefense",
+    "BattlePhysicalProcBuff",
+    "BattlePolymorphCatalog",
+    "BattleRules",
+    "BattleShockStunEffects",
+    "BattleStrikerGale",
+    "BattleTurnUndead",
+    "BattleWeaponBreak",
+    "CombatCurseLifecycle",
+    "CombatMonsterCurseLifecycle",
+    "CombatNpcDamageQueue",
+    "CombatPoisonAtomic"
+   ],
+   "verify_entries": [
+    "local/lito381/server/BattleAnimationCatalog$Animation.class",
+    "local/lito381/server/BattleAnimationCatalog$Holder.class",
+    "local/lito381/server/BattleAnimationCatalog.class",
+    "local/lito381/server/BattleArmBreakerStatus$Activation.class",
+    "local/lito381/server/BattleArmBreakerStatus.class",
+    "local/lito381/server/BattleArmorBreak$Candidate.class",
+    "local/lito381/server/BattleArmorBreak.class",
+    "local/lito381/server/BattleClearMindStatus$Snapshot.class",
+    "local/lito381/server/BattleClearMindStatus.class",
+    "local/lito381/server/BattleDragonEyeCatalog$Ability.class",
+    "local/lito381/server/BattleDragonEyeCatalog$Eye.class",
+    "local/lito381/server/BattleDragonEyeCatalog.class",
+    "local/lito381/server/BattleEarthBlessStatus$Snapshot.class",
+    "local/lito381/server/BattleEarthBlessStatus.class",
+    "local/lito381/server/BattleFreezeEffects$Effect.class",
+    "local/lito381/server/BattleFreezeEffects$Placement.class",
+    "local/lito381/server/BattleFreezeEffects.class",
+    "local/lito381/server/BattleInvisibilityStatus$Lease.class",
+    "local/lito381/server/BattleInvisibilityStatus$Snapshot.class",
+    "local/lito381/server/BattleInvisibilityStatus.class",
+    "local/lito381/server/BattleIronSkinStatus$Snapshot.class",
+    "local/lito381/server/BattleIronSkinStatus.class",
+    "local/lito381/server/BattleJoyOfPain.class",
+    "local/lito381/server/BattleMortalBody$Decision.class",
+    "local/lito381/server/BattleMortalBody.class",
+    "local/lito381/server/BattlePatienceStatus$Activation.class",
+    "local/lito381/server/BattlePatienceStatus.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Course.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Panel.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$PanelTransition.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$PanelType.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Runner.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$State.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Transition.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Zone.class",
+    "local/lito381/server/BattlePetRaceCourseCatalog.class",
+    "local/lito381/server/BattlePhysicalDefense$NpcOutcome.class",
+    "local/lito381/server/BattlePhysicalDefense$PlayerOutcome.class",
+    "local/lito381/server/BattlePhysicalDefense.class",
+    "local/lito381/server/BattlePhysicalProcBuff$Outcome.class",
+    "local/lito381/server/BattlePhysicalProcBuff.class",
+    "local/lito381/server/BattlePolymorphCatalog$Catalog.class",
+    "local/lito381/server/BattlePolymorphCatalog$Form.class",
+    "local/lito381/server/BattlePolymorphCatalog.class",
+    "local/lito381/server/BattleRules$1.class",
+    "local/lito381/server/BattleRules$MatchState.class",
+    "local/lito381/server/BattleRules$Mode.class",
+    "local/lito381/server/BattleRules$Phase.class",
+    "local/lito381/server/BattleRules$Resolution.class",
+    "local/lito381/server/BattleRules$RuleSet.class",
+    "local/lito381/server/BattleRules$Snapshot.class",
+    "local/lito381/server/BattleRules.class",
+    "local/lito381/server/BattleShockStunEffects$Effect.class",
+    "local/lito381/server/BattleShockStunEffects$Placement.class",
+    "local/lito381/server/BattleShockStunEffects.class",
+    "local/lito381/server/BattleStrikerGale.class",
+    "local/lito381/server/BattleTurnUndead.class",
+    "local/lito381/server/BattleWeaponBreak.class",
+    "local/lito381/server/CombatCurseLifecycle$Context.class",
+    "local/lito381/server/CombatCurseLifecycle$Curse.class",
+    "local/lito381/server/CombatCurseLifecycle$Palette.class",
+    "local/lito381/server/CombatCurseLifecycle$Release.class",
+    "local/lito381/server/CombatCurseLifecycle$Removal.class",
+    "local/lito381/server/CombatCurseLifecycle$Scope.class",
+    "local/lito381/server/CombatCurseLifecycle$Snapshot.class",
+    "local/lito381/server/CombatCurseLifecycle$Target.class",
+    "local/lito381/server/CombatCurseLifecycle.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Actor.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Context.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Curse.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Damage.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$DamageDispatch.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$DamageTask.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$DamageUpdates.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Delivery.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Paralysis.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Recipient.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Removal.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Scope.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Token.class",
+    "local/lito381/server/CombatMonsterCurseLifecycle.class",
+    "local/lito381/server/CombatNpcDamageQueue$Event.class",
+    "local/lito381/server/CombatNpcDamageQueue$Queue.class",
+    "local/lito381/server/CombatNpcDamageQueue.class",
+    "local/lito381/server/CombatPoisonAtomic$NpcState.class",
+    "local/lito381/server/CombatPoisonAtomic.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/BattleAnimationCatalog$Animation": "method durationMillis()J insn[8]: left=LRETURN right=LSTORE 1",
+    "local/lito381/server/BattleAnimationCatalog$Holder": "method <clinit>()V insn[1]: left=INVOKESTATIC local/lito381/server/BattleAnimationCatalog.load(Ljava/lang/String;)Llocal/lito381/server/BattleAnimationCatalog; right=INVOKESTATIC local/lito381/server/SharedClientResources.animationResource(Ljava/lang/String;)Ljava/lang/String;",
+    "local/lito381/server/BattleArmBreakerStatus": "method activateIfAbsent(JI)Llocal/lito381/server/BattleArmBreakerStatus$Activation; insn[5]: left=BIPUSH 12 right=INVOKESTATIC local/lito381/server/CombatBuffLeases.validArmDuration(I)Z",
+    "local/lito381/server/BattleArmorBreak": "method supportsWeaponType(I)Z insn[1]: left=BIPUSH 20 right=INVOKESTATIC local/lito381/server/CombatRules.weaponActionType(I)I",
+    "local/lito381/server/BattleClearMindStatus": "method snapshot(J)Llocal/lito381/server/BattleClearMindStatus$Snapshot; insn[54]: left=ILOAD 7 right=LDC Integer:137",
+    "local/lito381/server/BattleDragonEyeCatalog$Eye": "method buffId()I insn[2]: left=IRETURN right=ALOAD 0",
+    "local/lito381/server/BattleEarthBlessStatus": "method snapshot(J)Llocal/lito381/server/BattleEarthBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:159",
+    "local/lito381/server/BattleFreezeEffects": "method place(JIIJI)Llocal/lito381/server/BattleFreezeEffects$Placement; insn[0]: left=LLOAD 1 right=ILOAD 7",
+    "local/lito381/server/BattleInvisibilityStatus": "class nestMembers: left= right=local/lito381/server/BattleInvisibilityStatus$Lease,local/lito381/server/BattleInvisibilityStatus$Snapshot",
+    "local/lito381/server/BattleInvisibilityStatus$Lease": "ONLY_RIGHT（src/main缺）",
+    "local/lito381/server/BattleInvisibilityStatus$Snapshot": "ONLY_RIGHT（src/main缺）",
+    "local/lito381/server/BattleIronSkinStatus": "method snapshot(J)Llocal/lito381/server/BattleIronSkinStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:168",
+    "local/lito381/server/BattleJoyOfPain": "method feedbackDamage(III)I insn[22]: left=IDIV right=LDC str:\"JOY_OF_PAIN_COUNTDMG\"",
+    "local/lito381/server/BattleMortalBody$Decision": "method <init>(ZIIZIII)V insn[40]: left=IFLE L2 right=IFLT L2",
+    "local/lito381/server/BattlePatienceStatus": "method physicalReduction(JJ)I insn[6]: left=GOTO L1 right=INVOKESTATIC local/lito381/server/CombatSourceReductions.patience(I)I",
+    "local/lito381/server/BattlePetRaceCourseCatalog$Runner": "method <init>()V: only right",
+    "local/lito381/server/BattlePetRaceCourseCatalog$State": "method begin(ILjava/util/List;JJJ)V insn[55]: left=LLOAD 3 right=INVOKESPECIAL local/lito381/server/BattlePetRaceCourseCatalog$Runner.<init>()V",
+    "local/lito381/server/BattlePhysicalDefense": "method againstPlayer(IIIIIIII)Llocal/lito381/server/BattlePhysicalDefense$PlayerOutcome; insn[70]: left=NEW local/lito381/server/BattlePhysicalDefense$PlayerOutcome right=ILOAD 14",
+    "local/lito381/server/BattlePhysicalProcBuff": "method burningSpirit(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; insn[16]: left=INVOKESTATIC local/lito381/server/BattlePhysicalProcBuff$Outcome.inactive(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; right=LDC str:\"BURNING_CHANCE\"",
+    "local/lito381/server/BattlePolymorphCatalog": "method nativePackagedRandomForm(I)Llocal/lito381/server/BattlePolymorphCatalog$Form;: only right",
+    "local/lito381/server/BattleRules": "method decode(Llocal/lito381/server/BattleRules$Mode;ILlocal/lito381/server/BattleControlCatalog;)Llocal/lito381/server/BattleRules$RuleSet;: only left",
+    "local/lito381/server/BattleShockStunEffects": "method place(JIIJI)Llocal/lito381/server/BattleShockStunEffects$Placement; insn[21]: left=ICONST_4 right=LDC Integer:65535",
+    "local/lito381/server/BattleStrikerGale": "method damageAfterStatus(IZZ)I insn[21]: left=DMUL right=LDC str:\"STRIKER_DMG2\"",
+    "local/lito381/server/BattleTurnUndead": "method magicLevel(II)I insn[0]: left=ILOAD 1 right=ILOAD 0",
+    "local/lito381/server/BattleWeaponBreak": "method damageAfterStacks(II)I insn[14]: left=ILOAD 0 right=ILOAD 1",
+    "local/lito381/server/CombatCurseLifecycle$Removal": "method drain(Z)V: left=TRY L55 L56 L57    right=TRY L57 L58 L59   ",
+    "local/lito381/server/CombatCurseLifecycle$Target": "field nativeRoleOwner:Ljava/lang/Object;: only right",
+    "local/lito381/server/CombatMonsterCurseLifecycle": "method damageOwner(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClassicWorldMonsterPopulation$PoisonUpdate;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession; insn[7]: left=ARETURN right=ALOAD 3",
+    "local/lito381/server/CombatMonsterCurseLifecycle$Context": "method valid()Z insn[7]: left=IRETURN right=ALOAD 0",
+    "local/lito381/server/CombatNpcDamageQueue$Queue": "field sourceDamageLifetime:Ljava/lang/Object;: only right",
+    "local/lito381/server/CombatPoisonAtomic": "method npc(Llocal/lito381/server/ClientSession;JIIIJLjava/lang/String;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/CombatPoisonAtomic$NpcState;: left=TRY L1 L3 L4    right=TRY L2 L4 L5   "
+   },
+   "sources": {
+    "BattleAnimationCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleAnimationCatalog.java",
+     "decompiled": false
+    },
+    "BattleArmBreakerStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleArmBreakerStatus.java",
+     "decompiled": false
+    },
+    "BattleArmorBreak": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleArmorBreak.java",
+     "decompiled": false
+    },
+    "BattleClearMindStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleClearMindStatus.java",
+     "decompiled": false
+    },
+    "BattleDragonEyeCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleDragonEyeCatalog.java",
+     "decompiled": false
+    },
+    "BattleEarthBlessStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleEarthBlessStatus.java",
+     "decompiled": false
+    },
+    "BattleFreezeEffects": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleFreezeEffects.java",
+     "decompiled": false
+    },
+    "BattleInvisibilityStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleInvisibilityStatus.java",
+     "decompiled": false
+    },
+    "BattleIronSkinStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleIronSkinStatus.java",
+     "decompiled": false
+    },
+    "BattleJoyOfPain": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleJoyOfPain.java",
+     "decompiled": false
+    },
+    "BattleMortalBody": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleMortalBody.java",
+     "decompiled": false
+    },
+    "BattlePatienceStatus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePatienceStatus.java",
+     "decompiled": false
+    },
+    "BattlePetRaceCourseCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePetRaceCourseCatalog.java",
+     "decompiled": false
+    },
+    "BattlePhysicalDefense": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePhysicalDefense.java",
+     "decompiled": false
+    },
+    "BattlePhysicalProcBuff": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePhysicalProcBuff.java",
+     "decompiled": false
+    },
+    "BattlePolymorphCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattlePolymorphCatalog.java",
+     "decompiled": false
+    },
+    "BattleRules": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleRules.java",
+     "decompiled": false
+    },
+    "BattleShockStunEffects": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleShockStunEffects.java",
+     "decompiled": false
+    },
+    "BattleStrikerGale": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleStrikerGale.java",
+     "decompiled": false
+    },
+    "BattleTurnUndead": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleTurnUndead.java",
+     "decompiled": false
+    },
+    "BattleWeaponBreak": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/BattleWeaponBreak.java",
+     "decompiled": false
+    },
+    "CombatCurseLifecycle": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/CombatCurseLifecycle.java",
+     "decompiled": false
+    },
+    "CombatMonsterCurseLifecycle": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/CombatMonsterCurseLifecycle.java",
+     "decompiled": false
+    },
+    "CombatNpcDamageQueue": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/CombatNpcDamageQueue.java",
+     "decompiled": false
+    },
+    "CombatPoisonAtomic": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/CombatPoisonAtomic.java",
+     "decompiled": false
+    }
+   }
+  },
+  {
+   "id": "A05",
+   "category": "other",
+   "size": 27,
+   "classes": [
+    "AccountRepository",
+    "CaptureLog",
+    "ClassicWorldAdenToiCatalog",
+    "ClassicWorldIvoryTowerCatalog",
+    "ClassicWorldMapCatalog",
+    "ClassicWorldNpcCatalog",
+    "GameStateStore",
+    "InventoryCatalog",
+    "LiToGmCommands",
+    "LiToItemDetails",
+    "LitoMapRepository",
+    "Main",
+    "MemoryAccountRepository",
+    "NativeAcceptedHpContext",
+    "NativeAcceptedState",
+    "NativeCancellationSpeedImmunity",
+    "NativeCastMaterialPolicy",
+    "NativeCastTimeline",
+    "NativeCompanionCallbacks",
+    "NativeCompanionCommands",
+    "NativeCompanionCommit",
+    "NativeCompanionMutation",
+    "NativeLitoMapTableCatalog",
+    "NativeLitoRentalTownNpcCatalog",
+    "NativeLitoTownPortalCatalog",
+    "NativeLitoZoneCatalog",
+    "NativeMagicalWeaponAction"
+   ],
+   "verify_entries": [
+    "local/lito381/server/AccountRepository.class",
+    "local/lito381/server/CaptureLog.class",
+    "local/lito381/server/ClassicWorldAdenToiCatalog$Door.class",
+    "local/lito381/server/ClassicWorldAdenToiCatalog$MapFlags.class",
+    "local/lito381/server/ClassicWorldAdenToiCatalog$ResourceContract.class",
+    "local/lito381/server/ClassicWorldAdenToiCatalog.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog$MapFlags.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog$ShopCatalog.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog$ShopOffer.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog$ShopRow.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog$SourceContract.class",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog.class",
+    "local/lito381/server/ClassicWorldMapCatalog$ClassicMap$ZoneType.class",
+    "local/lito381/server/ClassicWorldMapCatalog$ClassicMap.class",
+    "local/lito381/server/ClassicWorldMapCatalog.class",
+    "local/lito381/server/ClassicWorldNpcCatalog$SourceContract.class",
+    "local/lito381/server/ClassicWorldNpcCatalog$StaticNpc.class",
+    "local/lito381/server/ClassicWorldNpcCatalog.class",
+    "local/lito381/server/GameStateStore$1.class",
+    "local/lito381/server/GameStateStore$BoardTopic.class",
+    "local/lito381/server/GameStateStore$Bookmark.class",
+    "local/lito381/server/GameStateStore$CastleOwnershipState.class",
+    "local/lito381/server/GameStateStore$CastleSecurityLedger.class",
+    "local/lito381/server/GameStateStore$CastleSecuritySettlement.class",
+    "local/lito381/server/GameStateStore$CastleSecuritySettlementStatus.class",
+    "local/lito381/server/GameStateStore$CastleState.class",
+    "local/lito381/server/GameStateStore$CharacterCreation.class",
+    "local/lito381/server/GameStateStore$CharacterDeletion.class",
+    "local/lito381/server/GameStateStore$ClassicDeathPenaltyMutation.class",
+    "local/lito381/server/GameStateStore$ClassicExperienceBalance.class",
+    "local/lito381/server/GameStateStore$ClassicExperienceMutation.class",
+    "local/lito381/server/GameStateStore$ClassicKillDeathBalance.class",
+    "local/lito381/server/GameStateStore$ClassicKillDeathState.class",
+    "local/lito381/server/GameStateStore$ClassicPlayerKillMutation.class",
+    "local/lito381/server/GameStateStore$CreationFailure.class",
+    "local/lito381/server/GameStateStore$DeletionStatus.class",
+    "local/lito381/server/GameStateStore$DivorceMutation.class",
+    "local/lito381/server/GameStateStore$Economy.class",
+    "local/lito381/server/GameStateStore$ElfAttributeState.class",
+    "local/lito381/server/GameStateStore$ElfPkBalance.class",
+    "local/lito381/server/GameStateStore$ElfPkState.class",
+    "local/lito381/server/GameStateStore$FactionKarmaBalance.class",
+    "local/lito381/server/GameStateStore$FactionKarmaMutation.class",
+    "local/lito381/server/GameStateStore$GeneralPkBalance.class",
+    "local/lito381/server/GameStateStore$GeneralPkState.class",
+    "local/lito381/server/GameStateStore$HellBalance.class",
+    "local/lito381/server/GameStateStore$HellState.class",
+    "local/lito381/server/GameStateStore$HotelInventoryPersistenceHook.class",
+    "local/lito381/server/GameStateStore$HotelKeyState.class",
+    "local/lito381/server/GameStateStore$HotelLeaseState.class",
+    "local/lito381/server/GameStateStore$HotelOccupancy.class",
+    "local/lito381/server/GameStateStore$HotelRentMutation.class",
+    "local/lito381/server/GameStateStore$HotelRentStatus.class",
+    "local/lito381/server/GameStateStore$HotelReturnPersistenceHook.class",
+    "local/lito381/server/GameStateStore$HotelReturnQuote.class",
+    "local/lito381/server/GameStateStore$HouseAuction.class",
+    "local/lito381/server/GameStateStore$HouseBidMutation.class",
+    "local/lito381/server/GameStateStore$HouseBidStatus.class",
+    "local/lito381/server/GameStateStore$LawfulBalance.class",
+    "local/lito381/server/GameStateStore$LawfulMutation.class",
+    "local/lito381/server/GameStateStore$Letter.class",
+    "local/lito381/server/GameStateStore$LetterDeleteMutation.class",
+    "local/lito381/server/GameStateStore$LetterDelivery.class",
+    "local/lito381/server/GameStateStore$LetterDeliveryStatus.class",
+    "local/lito381/server/GameStateStore$LetterOpenMutation.class",
+    "local/lito381/server/GameStateStore$LetterOpenStatus.class",
+    "local/lito381/server/GameStateStore$MarriageMutation.class",
+    "local/lito381/server/GameStateStore$MarriageStatus.class",
+    "local/lito381/server/GameStateStore$MercenaryAssignment.class",
+    "local/lito381/server/GameStateStore$MercenaryRoster.class",
+    "local/lito381/server/GameStateStore$MutableCastle.class",
+    "local/lito381/server/GameStateStore$MutableCastleOwnership.class",
+    "local/lito381/server/GameStateStore$MutableHouseAuction.class",
+    "local/lito381/server/GameStateStore$MutableProfile.class",
+    "local/lito381/server/GameStateStore$MutableSourceInventory.class",
+    "local/lito381/server/GameStateStore$MutableSourceProjectile.class",
+    "local/lito381/server/GameStateStore$MutableSourceWeaponDurability.class",
+    "local/lito381/server/GameStateStore$PetState.class",
+    "local/lito381/server/GameStateStore$ProfileIdentity.class",
+    "local/lito381/server/GameStateStore$Progress.class",
+    "local/lito381/server/GameStateStore$Ranking.class",
+    "local/lito381/server/GameStateStore$RankingQuery.class",
+    "local/lito381/server/GameStateStore$SourceInventoryBinding.class",
+    "local/lito381/server/GameStateStore$SourceInventoryReconciliation.class",
+    "local/lito381/server/GameStateStore$SourceOwnerRelease.class",
+    "local/lito381/server/GameStateStore$SourceProfileRelease.class",
+    "local/lito381/server/GameStateStore$SourceProjectileBalance.class",
+    "local/lito381/server/GameStateStore$SourceProjectileReservation.class",
+    "local/lito381/server/GameStateStore$SourceWeaponDurabilityBalance.class",
+    "local/lito381/server/GameStateStore$StoryQuestState.class",
+    "local/lito381/server/GameStateStore$TimedArmorProtection.class",
+    "local/lito381/server/GameStateStore$TimedBuffPersistenceHook.class",
+    "local/lito381/server/GameStateStore$TimedBuffSnapshot.class",
+    "local/lito381/server/GameStateStore$TimedBurningWeaponBuff.class",
+    "local/lito381/server/GameStateStore$TimedEarthBlessBuff.class",
+    "local/lito381/server/GameStateStore$TimedExperienceBuff.class",
+    "local/lito381/server/GameStateStore$TimedFireBlessBuff.class",
+    "local/lito381/server/GameStateStore$TimedFireWeaponBuff.class",
+    "local/lito381/server/GameStateStore$TimedIronSkinBuff.class",
+    "local/lito381/server/GameStateStore$TimedMovementBuff.class",
+    "local/lito381/server/GameStateStore$TimedResistFearBuff.class",
+    "local/lito381/server/GameStateStore$TimedStormEyeBuff.class",
+    "local/lito381/server/GameStateStore$TimedStormShotBuff.class",
+    "local/lito381/server/GameStateStore$TimedWindShotBuff.class",
+    "local/lito381/server/GameStateStore$TournamentAwards.class",
+    "local/lito381/server/GameStateStore$TournamentProfilePersistenceHook.class",
+    "local/lito381/server/GameStateStore$TournamentProfileState.class",
+    "local/lito381/server/GameStateStore$TournamentStatistics.class",
+    "local/lito381/server/GameStateStore$Warehouse.class",
+    "local/lito381/server/GameStateStore$WarehousePasswordStatus.class",
+    "local/lito381/server/GameStateStore$WarehouseScope.class",
+    "local/lito381/server/GameStateStore$WaterDragonPassState.class",
+    "local/lito381/server/GameStateStore.class",
+    "local/lito381/server/InventoryCatalog$1.class",
+    "local/lito381/server/InventoryCatalog$Definition.class",
+    "local/lito381/server/InventoryCatalog$Effect.class",
+    "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+    "local/lito381/server/InventoryCatalog$NativeProjectileStatus.class",
+    "local/lito381/server/InventoryCatalog$NativeWeaponStatus.class",
+    "local/lito381/server/InventoryCatalog.class",
+    "local/lito381/server/LiToGmCommands.class",
+    "local/lito381/server/LiToItemDetails.class",
+    "local/lito381/server/LitoMapRepository$Definition.class",
+    "local/lito381/server/LitoMapRepository$MapLoadException.class",
+    "local/lito381/server/LitoMapRepository.class",
+    "local/lito381/server/Main.class",
+    "local/lito381/server/MemoryAccountRepository.class",
+    "local/lito381/server/NativeAcceptedHpContext.class",
+    "local/lito381/server/NativeAcceptedState$Incoming.class",
+    "local/lito381/server/NativeAcceptedState$Publication.class",
+    "local/lito381/server/NativeAcceptedState$Stale.class",
+    "local/lito381/server/NativeAcceptedState.class",
+    "local/lito381/server/NativeCancellationSpeedImmunity.class",
+    "local/lito381/server/NativeCastMaterialPolicy$Source.class",
+    "local/lito381/server/NativeCastMaterialPolicy$State.class",
+    "local/lito381/server/NativeCastMaterialPolicy.class",
+    "local/lito381/server/NativeCastTimeline$1.class",
+    "local/lito381/server/NativeCastTimeline$2.class",
+    "local/lito381/server/NativeCastTimeline$Arrival.class",
+    "local/lito381/server/NativeCastTimeline$State.class",
+    "local/lito381/server/NativeCastTimeline.class",
+    "local/lito381/server/NativeCompanionCallbacks$Stamp.class",
+    "local/lito381/server/NativeCompanionCallbacks.class",
+    "local/lito381/server/NativeCompanionCommands.class",
+    "local/lito381/server/NativeCompanionCommit.class",
+    "local/lito381/server/NativeCompanionMutation.class",
+    "local/lito381/server/NativeLitoMapTableCatalog$Entry.class",
+    "local/lito381/server/NativeLitoMapTableCatalog.class",
+    "local/lito381/server/NativeLitoRentalTownNpcCatalog$1.class",
+    "local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc.class",
+    "local/lito381/server/NativeLitoRentalTownNpcCatalog$Role.class",
+    "local/lito381/server/NativeLitoRentalTownNpcCatalog.class",
+    "local/lito381/server/NativeLitoTownPortalCatalog$Point.class",
+    "local/lito381/server/NativeLitoTownPortalCatalog$Route.class",
+    "local/lito381/server/NativeLitoTownPortalCatalog$RouteData.class",
+    "local/lito381/server/NativeLitoTownPortalCatalog.class",
+    "local/lito381/server/NativeLitoZoneCatalog$Color.class",
+    "local/lito381/server/NativeLitoZoneCatalog$Zone.class",
+    "local/lito381/server/NativeLitoZoneCatalog.class",
+    "local/lito381/server/NativeMagicalWeaponAction.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/AccountRepository": "method openLegacy(Llocal/lito381/server/ServerConfig;)Llocal/lito381/server/AccountRepository; insn[1]: left=INVOKEVIRTUAL local/lito381/server/ServerConfig.legacySourceDatabases()Ljava/util/List; right=INVOKESTATIC local/lito381/server/SharedDatabase.enabled(Llocal/lito381/server/ServerConfig;)Z",
+    "local/lito381/server/CaptureLog": "class nestMembers: left=local/lito381/server/CaptureLog$Connection right=",
+    "local/lito381/server/ClassicWorldAdenToiCatalog": "method <clinit>()V insn[279]: left=LDC str:\"5DFCF849F13FC240637C137DECDBD146F732D24E7A82EF687F7CF80F595B182F\" right=LDC str:\"53F6D1C7AA4597C73DF8D1708B301B47756CCBE8FF7784448CA5A5CDEE1CBD7D\"",
+    "local/lito381/server/ClassicWorldIvoryTowerCatalog": "method <clinit>()V insn[183]: left=LDC str:\"34D2B2A2470E3494509B5146EB2533B5D82C182CAC50B5AE6DDD2C9C78D01657\" right=LDC str:\"5B0053AF99F0F66A103D8D292E68118924C5709BD9B16FBD189F7A9E460B593C\"",
+    "local/lito381/server/ClassicWorldMapCatalog": "method forMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap; insn[0]: left=GETSTATIC local/lito381/server/ClassicWorldMapCatalog.MAPS:Ljava/util/Map; right=ILOAD 0",
+    "local/lito381/server/ClassicWorldNpcCatalog": "method all(I)Ljava/util/List; insn[43]: left=ARETURN right=ILOAD 0",
+    "local/lito381/server/GameStateStore": "method ensureRankingSnapshot()V insn[1]: left=INVOKEVIRTUAL local/lito381/server/GameStateStore.currentRankingBoundary()Ljava/time/ZonedDateTime; right=INVOKESTATIC local/lito381/server/LiveBattleStats.beforeSnapshot(Llocal/lito381/server/GameStateStore;)V",
+    "local/lito381/server/InventoryCatalog$Definition": "method controlAbilityType()I insn[2]: left=LDC Long:20288 right=LDC Long:120284",
+    "local/lito381/server/InventoryCatalog$NativeArmorStatus": "method <init>(IIIIIIIIIIIIIIIZIIIIIIIIIII)V insn[5]: left=SIPUSH 255 right=LDC Integer:2147483647",
+    "local/lito381/server/LiToGmCommands": "method handle(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Z insn[90]: left=INVOKEINTERFACE local/lito381/server/AccountRepository.accessLevel(Ljava/lang/String;)I itf right=ALOAD 0",
+    "local/lito381/server/LiToItemDetails": "field SOURCE:Ljava/lang/reflect/Method;: only right",
+    "local/lito381/server/LitoMapRepository": "method <init>(Llocal/lito381/server/ServerConfig;)V insn[65]: left=LDC str:\"URL1\" right=ALOAD 2",
+    "local/lito381/server/Main": "method accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V: length left=1 right=2",
+    "local/lito381/server/MemoryAccountRepository": "field accessLevels:Ljava/util/concurrent/ConcurrentHashMap;: only left",
+    "local/lito381/server/NativeAcceptedHpContext": "method resolve()[Ljava/lang/ThreadLocal;: left=TRY L0 L6 L7 java/lang/ReflectiveOperationException   right=TRY L0 L5 L6 java/lang/ReflectiveOperationException  ",
+    "local/lito381/server/NativeAcceptedState": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeAcceptedState$Incoming\\|local/lito381/server/NativeAcceptedState\\|Incoming\\|0x18; local/lito381/server/NativeAcceptedState$Publication… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeAcceptedState$Incoming\\|local/lito381/server/NativeAcceptedState\\|Incoming\\|0x18; local/lito381/server/NativeAcceptedState$Publication…",
+    "local/lito381/server/NativeCancellationSpeedImmunity": "method magic(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/BattleTimedStatus$MagicCancellation;: left=TRY L5 L6 L8    right=TRY L15 L16 L23   ",
+    "local/lito381/server/NativeCastMaterialPolicy": "method nativeOriginalGm(Llocal/lito381/server/ClientSession;)Z: left=TRY L11 L13 L18 java/lang/Throwable   right=TRY L9 L11 L12 java/lang/Throwable  ",
+    "local/lito381/server/NativeCastTimeline": "method admit(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$LightSpell;Llocal/lito381/server/NativeCastTimeline$Arrival;)Z insn[12]: left=ASTORE 4 right=ASTORE 3",
+    "local/lito381/server/NativeCastTimeline$1": "field val$action:Llocal/lito381/server/NativeSourceClientActionTimeline$Reservation;: only right",
+    "local/lito381/server/NativeCastTimeline$2": "field val$action:Llocal/lito381/server/NativeSourceClientActionTimeline$Reservation;: only right",
+    "local/lito381/server/NativeCompanionCallbacks": "method advance(Ljava/lang/Object;)V insn[2]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeCompanionCommands": "method registered(Llocal/lito381/server/ClientSession;)Z insn[40]: left=IF_ACMPEQ L3 right=IF_ACMPNE L3",
+    "local/lito381/server/NativeCompanionCommit": "method valid(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativePlayerCommit$Binding;)Z: left=TRY L4 L9 L10    right=TRY L4 L8 L9   ",
+    "local/lito381/server/NativeCompanionMutation": "method current(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Llocal/lito381/server/BattleCompanion;)Z insn[9]: left=ASTORE 3 right=DUP",
+    "local/lito381/server/NativeLitoMapTableCatalog": "method active()Ljava/util/List; insn[1]: left=ARETURN right=INVOKESTATIC local/lito381/server/ResourceDatabase.maps(Ljava/util/List;)Ljava/util/List;",
+    "local/lito381/server/NativeLitoRentalTownNpcCatalog$Npc": "method name()Ljava/lang/String; insn[2]: left=ARETURN right=ALOAD 0",
+    "local/lito381/server/NativeLitoTownPortalCatalog": "method find(III)Llocal/lito381/server/NativeLitoTownPortalCatalog$Route; insn[20]: left=ARETURN right=ILOAD 0",
+    "local/lito381/server/NativeLitoZoneCatalog": "method colors()Ljava/util/List; insn[1]: left=ARETURN right=INVOKESTATIC local/lito381/server/ResourceDatabase.colors(Ljava/util/List;)Ljava/util/List;",
+    "local/lito381/server/NativeMagicalWeaponAction": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell\\|local/lito381/server/BattleSpellCatalog\\|MagicalWeaponSpell\\|0x18; local/lito381/server/NativeCastMat… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/BattleSpellCatalog$MagicalWeaponSpell\\|local/lito381/server/BattleSpellCatalog\\|MagicalWeaponSpell\\|0x18; local/lito381/server/NativeCastMat…"
+   },
+   "sources": {
+    "AccountRepository": {
+     "file": null,
+     "decompiled": null
+    },
+    "CaptureLog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/CaptureLog.java",
+     "decompiled": false
+    },
+    "ClassicWorldAdenToiCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ClassicWorldAdenToiCatalog.java",
+     "decompiled": false
+    },
+    "ClassicWorldIvoryTowerCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ClassicWorldIvoryTowerCatalog.java",
+     "decompiled": false
+    },
+    "ClassicWorldMapCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ClassicWorldMapCatalog.java",
+     "decompiled": false
+    },
+    "ClassicWorldNpcCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ClassicWorldNpcCatalog.java",
+     "decompiled": false
+    },
+    "GameStateStore": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GameStateStore.java",
+     "decompiled": false
+    },
+    "InventoryCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
+     "decompiled": false
+    },
+    "LiToGmCommands": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/LiToGmCommands.java",
+     "decompiled": false
+    },
+    "LiToItemDetails": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/LiToItemDetails.java",
+     "decompiled": false
+    },
+    "LitoMapRepository": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/LitoMapRepository.java",
+     "decompiled": false
+    },
+    "Main": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/Main.java",
+     "decompiled": false
+    },
+    "MemoryAccountRepository": {
+     "file": null,
+     "decompiled": null
+    },
+    "NativeAcceptedHpContext": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeAcceptedHpContext.java",
+     "decompiled": true
+    },
+    "NativeAcceptedState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeAcceptedState.java",
+     "decompiled": true
+    },
+    "NativeCancellationSpeedImmunity": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCancellationSpeedImmunity.java",
+     "decompiled": false
+    },
+    "NativeCastMaterialPolicy": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCastMaterialPolicy.java",
+     "decompiled": true
+    },
+    "NativeCastTimeline": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCastTimeline.java",
+     "decompiled": true
+    },
+    "NativeCompanionCallbacks": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCompanionCallbacks.java",
+     "decompiled": true
+    },
+    "NativeCompanionCommands": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCompanionCommands.java",
+     "decompiled": true
+    },
+    "NativeCompanionCommit": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCompanionCommit.java",
+     "decompiled": true
+    },
+    "NativeCompanionMutation": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeCompanionMutation.java",
+     "decompiled": true
+    },
+    "NativeLitoMapTableCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoMapTableCatalog.java",
+     "decompiled": false
+    },
+    "NativeLitoRentalTownNpcCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoRentalTownNpcCatalog.java",
+     "decompiled": false
+    },
+    "NativeLitoTownPortalCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoTownPortalCatalog.java",
+     "decompiled": false
+    },
+    "NativeLitoZoneCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeLitoZoneCatalog.java",
+     "decompiled": false
+    },
+    "NativeMagicalWeaponAction": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeMagicalWeaponAction.java",
+     "decompiled": false
+    }
+   }
+  },
+  {
+   "id": "A06",
+   "category": "other",
+   "size": 27,
+   "classes": [
+    "NativeNpcPhysicalSource",
+    "NativePcActionAuthority",
+    "NativePetWorldLifetime",
+    "NativePlayerVitals",
+    "NativeProcEncounterCatalog",
+    "NativeProcEncounterPublication",
+    "NativeProcHealBonus",
+    "NativeProcHealingWorld",
+    "NativeProcNpcCatalog",
+    "NativeProcNpcState",
+    "NativeProcPlayerState",
+    "NativeReuseLog",
+    "NativeRoomRules",
+    "NativeServerLifetime",
+    "NativeSkillConsumptionBridges",
+    "NativeSourceActionIntervalCalculator",
+    "NativeSourceClientActionTimeline",
+    "NativeSourceMaterialPlan",
+    "NativeSourceSkillCastAdmission",
+    "NativeSourceSkillConsumptionMath",
+    "NativeSourceSkillDelay",
+    "ResourceDatabase",
+    "RuntimeInventory",
+    "ServerConfig",
+    "SharedClientResources",
+    "SourceEquipmentPhysicalStats",
+    "SourceLogin"
+   ],
+   "verify_entries": [
+    "local/lito381/server/NativeNpcPhysicalSource$Snapshot.class",
+    "local/lito381/server/NativeNpcPhysicalSource.class",
+    "local/lito381/server/NativePcActionAuthority.class",
+    "local/lito381/server/NativePetWorldLifetime$Target.class",
+    "local/lito381/server/NativePetWorldLifetime.class",
+    "local/lito381/server/NativePlayerVitals$Result.class",
+    "local/lito381/server/NativePlayerVitals.class",
+    "local/lito381/server/NativeProcEncounterCatalog$Catalog.class",
+    "local/lito381/server/NativeProcEncounterCatalog$Npc.class",
+    "local/lito381/server/NativeProcEncounterCatalog$Receiver.class",
+    "local/lito381/server/NativeProcEncounterCatalog$Type.class",
+    "local/lito381/server/NativeProcEncounterCatalog.class",
+    "local/lito381/server/NativeProcEncounterPublication$Context.class",
+    "local/lito381/server/NativeProcEncounterPublication$Stale.class",
+    "local/lito381/server/NativeProcEncounterPublication$Viewer.class",
+    "local/lito381/server/NativeProcEncounterPublication.class",
+    "local/lito381/server/NativeProcHealBonus$Catalog.class",
+    "local/lito381/server/NativeProcHealBonus.class",
+    "local/lito381/server/NativeProcHealingWorld$Plan.class",
+    "local/lito381/server/NativeProcHealingWorld$Target.class",
+    "local/lito381/server/NativeProcHealingWorld.class",
+    "local/lito381/server/NativeProcNpcCatalog$1.class",
+    "local/lito381/server/NativeProcNpcCatalog$Catalog.class",
+    "local/lito381/server/NativeProcNpcCatalog$Npc.class",
+    "local/lito381/server/NativeProcNpcCatalog.class",
+    "local/lito381/server/NativeProcNpcState.class",
+    "local/lito381/server/NativeProcPlayerState$Identity.class",
+    "local/lito381/server/NativeProcPlayerState.class",
+    "local/lito381/server/NativeReuseLog$Log.class",
+    "local/lito381/server/NativeReuseLog$Logger.class",
+    "local/lito381/server/NativeReuseLog.class",
+    "local/lito381/server/NativeRoomRules$Policy.class",
+    "local/lito381/server/NativeRoomRules.class",
+    "local/lito381/server/NativeServerLifetime.class",
+    "local/lito381/server/NativeSkillConsumptionBridges.class",
+    "local/lito381/server/NativeSourceActionIntervalCalculator$ActionType.class",
+    "local/lito381/server/NativeSourceActionIntervalCalculator$SpeedState.class",
+    "local/lito381/server/NativeSourceActionIntervalCalculator.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$ActionBlockSnapshot.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$ActionKind.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$CombatDeferral.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$Deadline.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$Reservation.class",
+    "local/lito381/server/NativeSourceClientActionTimeline$VisibleWindow.class",
+    "local/lito381/server/NativeSourceClientActionTimeline.class",
+    "local/lito381/server/NativeSourceMaterialPlan$ConsumeRequirement.class",
+    "local/lito381/server/NativeSourceMaterialPlan$Debit.class",
+    "local/lito381/server/NativeSourceMaterialPlan$ItemConsumeCommitResult.class",
+    "local/lito381/server/NativeSourceMaterialPlan$PlannedConsumption.class",
+    "local/lito381/server/NativeSourceMaterialPlan$Result.class",
+    "local/lito381/server/NativeSourceMaterialPlan.class",
+    "local/lito381/server/NativeSourceSkillCastAdmission$Reservation.class",
+    "local/lito381/server/NativeSourceSkillCastAdmission$Result.class",
+    "local/lito381/server/NativeSourceSkillCastAdmission.class",
+    "local/lito381/server/NativeSourceSkillConsumptionMath.class",
+    "local/lito381/server/NativeSourceSkillDelay$Lease.class",
+    "local/lito381/server/NativeSourceSkillDelay.class",
+    "local/lito381/server/ResourceDatabase$Key.class",
+    "local/lito381/server/ResourceDatabase$Snapshot.class",
+    "local/lito381/server/ResourceDatabase.class",
+    "local/lito381/server/RuntimeInventory$Item.class",
+    "local/lito381/server/RuntimeInventory$NativeArmorBonuses.class",
+    "local/lito381/server/RuntimeInventory$PersistentItem.class",
+    "local/lito381/server/RuntimeInventory.class",
+    "local/lito381/server/ServerConfig.class",
+    "local/lito381/server/SharedClientResources.class",
+    "local/lito381/server/SourceEquipmentPhysicalStats.class",
+    "local/lito381/server/SourceLogin$Binding.class",
+    "local/lito381/server/SourceLogin.class"
+   ],
+   "diff_entries": {
+    "local/lito381/server/NativeNpcPhysicalSource": "method physicalSize(Ljava/lang/String;)Ljava/lang/String;: only right",
+    "local/lito381/server/NativePcActionAuthority": "class innerClasses: left=local/lito381/server/NativeDeItemTransaction$Operation\\|local/lito381/server/NativeDeItemTransaction\\|Operation\\|0x608; local/lito381/server/NativePlayerActionScope$Ticket\\|local/lito381/server/NativePlayerActionScope\\|Ticket\\|0x18 right=local/lito381/server/NativeDeItemTransaction$Operation\\|local/lito381/server/NativeDeItemTransaction\\|Operation\\|0x608",
+    "local/lito381/server/NativePetWorldLifetime": "method lambda$run$#0(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePetWorldLifetime$Target;[BLlocal/lito381/server/NativeSelfCastAction$Task;)V: only right",
+    "local/lito381/server/NativePlayerVitals": "method calculate(IIIIZ)Llocal/lito381/server/NativePlayerVitals$Result; insn[8]: left=LSTORE 6 right=LSTORE 5",
+    "local/lito381/server/NativeProcEncounterCatalog": "method load(Llocal/lito381/server/ServerConfig;)V insn[8]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeProcEncounterPublication": "method capture(Ljava/util/List;Llocal/lito381/server/NativeProcEncounterPublication$Context;)Ljava/util/List;: left=TRY L1 L5 L6    right=TRY L1 L6 L7   ",
+    "local/lito381/server/NativeProcEncounterPublication$Context": "method valid()Z insn[6]: left=ASTORE 2 right=DUP",
+    "local/lito381/server/NativeProcHealBonus": "method load(Llocal/lito381/server/ServerConfig;)V insn[7]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeProcHealingWorld": "method allow(Llocal/lito381/server/CombatMonsterCurseLifecycle$Actor;Llocal/lito381/server/CombatNpcDamageQueue$Event;)Z insn[2]: left=ASTORE 2 right=ASTORE 3",
+    "local/lito381/server/NativeProcNpcCatalog": "method load(Llocal/lito381/server/ServerConfig;)V insn[8]: left=ASTORE 2 right=ASTORE 1",
+    "local/lito381/server/NativeProcNpcCatalog$Catalog": "method kind(I)Llocal/lito381/server/NativeProcHealingKernel$Kind; insn[3]: left=ASTORE 3 right=ASTORE 2",
+    "local/lito381/server/NativeProcNpcState": "method activate(Llocal/lito381/server/BattleTimedStatus;IJI)V insn[34]: left=ASTORE 7 right=DUP",
+    "local/lito381/server/NativeProcPlayerState": "method activate(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;IJI)Z insn[35]: left=ASTORE 8 right=DUP",
+    "local/lito381/server/NativeReuseLog$Log": "method emit(Ljava/lang/System$Logger$Level;Ljava/lang/String;[Ljava/lang/Object;)V insn[12]: left=IF_ICMPGE L4 right=IF_ICMPGE L3",
+    "local/lito381/server/NativeRoomRules": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/BattleRules$MatchState\\|local/lito381/server/BattleRules\\|MatchState\\|0x18; local/lito381/server/BattleRules$Mode\\|local/lito381/server/Battl… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/BattleRules$MatchState\\|local/lito381/server/BattleRules\\|MatchState\\|0x18; local/lito381/server/BattleRules$Mode\\|local/lito381/server/Battl…",
+    "local/lito381/server/NativeServerLifetime": "method acceptSocket(Ljava/net/ServerSocket;Llocal/lito381/server/GameHub;)Ljava/net/Socket; insn[13]: left=ASTORE 4 right=DUP",
+    "local/lito381/server/NativeSkillConsumptionBridges": "class access: left=0x30 right=0x10",
+    "local/lito381/server/NativeSourceActionIntervalCalculator": "method calculate(ILlocal/lito381/server/NativeSourceActionIntervalCalculator$ActionType;Llocal/lito381/server/NativeSourceActionIntervalCalculator$SpeedState;)I insn[3]: left=ISTORE 4 right=ISTORE 3",
+    "local/lito381/server/NativeSourceClientActionTimeline": "method canReserve(Ljava/util/concurrent/atomic/AtomicReference;Llocal/lito381/server/NativeSourceClientActionTimeline$ActionKind;Z)Z insn[6]: left=ASTORE 7 right=DUP",
+    "local/lito381/server/NativeSourceClientActionTimeline$Reservation": "method cancel()Z insn[2]: left=ASTORE 1 right=DUP",
+    "local/lito381/server/NativeSourceMaterialPlan": "method appendGeneralConsumePlan(Ljava/util/List;Llocal/lito381/server/NativeSourceMaterialPlan$ConsumeRequirement;)Llocal/lito381/server/NativeSourceMaterialPlan$ItemConsumeCommitResult; insn[2]: left=ISTORE 5 right=ISTORE 3",
+    "local/lito381/server/NativeSourceSkillCastAdmission": "method admit(Ljava/util/function/BooleanSupplier;Ljava/util/function/Supplier;Ljava/util/function/BooleanSupplier;)Llocal/lito381/server/NativeSourceSkillCastAdmission$Result;: left=TRY L1 L2 L5 java/lang/Error   right=TRY L1 L2 L5 java/lang/RuntimeException  ",
+    "local/lito381/server/NativeSourceSkillConsumptionMath": "method mpCost(IIIIZ)I insn[96]: left=LOOKUPSWITCH default=L25 keys=1,12,13,19,26,42,43,54 labels=L13,L17,L19,L15,L8,L21,L10,L23 right=LOOKUPSWITCH default=L17 keys=1,12,13,19,26,42,43,54 labels=L11,L13,L14,L12,L8,L15,L9,L16",
+    "local/lito381/server/NativeSourceSkillDelay": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeReuseLog$Logger\\|local/lito381/server/NativeReuseLog\\|Logger\\|0x608; local/lito381/server/NativeSourceSkillDelay$Lease\\|local/lito381/s… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/NativeSourceSkillDelay$Lease\\|local/lito381/server/NativeSourceSkillDelay\\|Lease\\|0x19",
+    "local/lito381/server/NativeSourceSkillDelay$Lease": "class innerClasses: left=local/lito381/server/NativeReuseLog$Logger\\|local/lito381/server/NativeReuseLog\\|Logger\\|0x608; local/lito381/server/NativeSourceSkillDelay$Lease\\|local/lito381/server/NativeSourceSkillDelay\\|Lease\\|0x19 right=local/lito381/server/NativeSourceSkillDelay$Lease\\|local/lito381/server/NativeSourceSkillDelay\\|Lease\\|0x19",
+    "local/lito381/server/ResourceDatabase": "method load(Llocal/lito381/server/ServerConfig;)V insn[0]: left=GETSTATIC local/lito381/server/ResourceDatabase.current:Llocal/lito381/server/ResourceDatabase$Snapshot; right=ALOAD 0",
+    "local/lito381/server/RuntimeInventory": "field items:Ljava/util/LinkedHashMap;: only left",
+    "local/lito381/server/RuntimeInventory$Item": "class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/InventoryCatalog$Definition\\|local/lito381/server/InventoryCatalog\\|Definition\\|0x18; local/lito381/server/InventoryCatalog$NativeArmorStatu… right=java/lang/invoke/MethodHandles$Lookup\\|java/lang/invoke/MethodHandles\\|Lookup\\|0x19; local/lito381/server/InventoryCatalog$Definition\\|local/lito381/server/InventoryCatalog\\|Definition\\|0x18; local/lito381/server/InventoryCatalog$NativeArmorStatu…",
+    "local/lito381/server/ServerConfig": "method applyExternalSourceServers(Ljava/util/Properties;Ljava/nio/file/Path;)V: left=TRY L2 L3 L4 java/lang/Throwable   right=TRY L3 L4 L5 java/lang/Throwable  ",
+    "local/lito381/server/SharedClientResources": "method loadDurations()Ljava/util/Map; insn[113]: left=IFNONNULL L7 right=IFNULL L8",
+    "local/lito381/server/SourceEquipmentPhysicalStats": "method supportsSolidCarriage()Z insn[2]: left=IFNE L0 right=ALOAD 0",
+    "local/lito381/server/SourceLogin": "method lambda$start$#0(Ljava/net/ServerSocket;Ljava/util/concurrent/ExecutorService;Llocal/lito381/server/ClientSession$Endpoint;Llocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;)V: length left=2 right=3"
+   },
+   "sources": {
+    "NativeNpcPhysicalSource": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeNpcPhysicalSource.java",
+     "decompiled": false
+    },
+    "NativePcActionAuthority": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativePcActionAuthority.java",
+     "decompiled": true
+    },
+    "NativePetWorldLifetime": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativePetWorldLifetime.java",
+     "decompiled": false
+    },
+    "NativePlayerVitals": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativePlayerVitals.java",
+     "decompiled": true
+    },
+    "NativeProcEncounterCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcEncounterCatalog.java",
+     "decompiled": true
+    },
+    "NativeProcEncounterPublication": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcEncounterPublication.java",
+     "decompiled": true
+    },
+    "NativeProcHealBonus": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcHealBonus.java",
+     "decompiled": true
+    },
+    "NativeProcHealingWorld": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcHealingWorld.java",
+     "decompiled": true
+    },
+    "NativeProcNpcCatalog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcNpcCatalog.java",
+     "decompiled": true
+    },
+    "NativeProcNpcState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcNpcState.java",
+     "decompiled": true
+    },
+    "NativeProcPlayerState": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeProcPlayerState.java",
+     "decompiled": true
+    },
+    "NativeReuseLog": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeReuseLog.java",
+     "decompiled": true
+    },
+    "NativeRoomRules": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeRoomRules.java",
+     "decompiled": false
+    },
+    "NativeServerLifetime": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeServerLifetime.java",
+     "decompiled": true
+    },
+    "NativeSkillConsumptionBridges": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSkillConsumptionBridges.java",
+     "decompiled": true
+    },
+    "NativeSourceActionIntervalCalculator": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceActionIntervalCalculator.java",
+     "decompiled": true
+    },
+    "NativeSourceClientActionTimeline": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceClientActionTimeline.java",
+     "decompiled": true
+    },
+    "NativeSourceMaterialPlan": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceMaterialPlan.java",
+     "decompiled": true
+    },
+    "NativeSourceSkillCastAdmission": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceSkillCastAdmission.java",
+     "decompiled": true
+    },
+    "NativeSourceSkillConsumptionMath": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceSkillConsumptionMath.java",
+     "decompiled": true
+    },
+    "NativeSourceSkillDelay": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/NativeSourceSkillDelay.java",
+     "decompiled": true
+    },
+    "ResourceDatabase": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ResourceDatabase.java",
+     "decompiled": false
+    },
+    "RuntimeInventory": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/RuntimeInventory.java",
+     "decompiled": false
+    },
+    "ServerConfig": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/ServerConfig.java",
+     "decompiled": false
+    },
+    "SharedClientResources": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/SharedClientResources.java",
+     "decompiled": true
+    },
+    "SourceEquipmentPhysicalStats": {
+     "file": null,
+     "decompiled": null
+    },
+    "SourceLogin": {
+     "file": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/SourceLogin.java",
+     "decompiled": false
+    }
+   }
+  }
+ ]
+}
