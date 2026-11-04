@@ -16,7 +16,7 @@
 ## 審查退回後的修正（第 2 輪）
 1. [P1] 正式基準改為不可變的 reference 檔＋commit＋完整 SHA，T020a 規定 SHA 不符即停止；歷史 `75da69b0…` 另列。
 2. [P2] T020c 範圍補上 `replay_targeted.py`、`replay_player_cancellation.py`、`replay_composed_materials.py`、`test_curse_clock_boundary.py`、`seal_validation.py` 與其子驅動／fixture；驗收改成各套件獨立收據與案例數對照（2,400／5,164／20＋18／24）；stage 改 `test`（本機）。設計 §2-4 加套件表。
-3. 分支已 rebase 到 main @ `9b9b09f`。
+3. 分支已合併 main @ `9b9b09f`（遠端不允許強制推送，故用 merge）。
 
 ## 可重現指令（來源 commit：main @ `9b9b09f` 上的 `task/24`；Linux bash，於 `lito伺服器/LiTo381-Server/tools/combat-continuation`）
 ```bash
