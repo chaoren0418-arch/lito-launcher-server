@@ -1,0 +1,129 @@
+[
+ {
+  "id": "T020d",
+  "title": "T020d: ASM 語意比對工具＋CI 語意差異報告",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [],
+  "text": "見 docs/design/T020-combat-merge.md §6-3。"
+ },
+ {
+  "id": "T020f",
+  "title": "T020f: 候選 50635f7e JAR 與凍結原始碼入庫（本機）",
+  "stage": "resource",
+  "priority": "P1",
+  "depends_on": [],
+  "text": "見 §6-3。"
+ },
+ {
+  "id": "T020e",
+  "title": "T020e: 依語意差異訂第一階段（src/main→正式 0.6.71）修補批次（設計）",
+  "stage": "design",
+  "priority": "P1",
+  "depends_on": [
+   "T020d"
+  ],
+  "text": "見 §6-2。"
+ },
+ {
+  "id": "T020-B2",
+  "title": "T020-B2: 併入 17 個 ASM-only 新類別（反編譯）",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020d",
+   "T020f"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B1a",
+  "title": "T020-B1a: 併入有原始碼的新類別（第 1／4 批，51 類）",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B2"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B1b",
+  "title": "T020-B1b: 併入有原始碼的新類別（第 2／4 批，51 類）",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B1a"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B1c",
+  "title": "T020-B1c: 併入有原始碼的新類別（第 3／4 批，51 類）",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B1b"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B1d",
+  "title": "T020-B1d: 併入有原始碼的新類別（第 4／4 批，48 類）",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B1c"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B3-battle",
+  "title": "T020-B3-battle: 既有 Battle* 29 類三方移植",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B1d"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B3-combat-material",
+  "title": "T020-B3-combat-material: Combat*／MaterialAction 23 類三方移植",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B3-battle"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B3-native",
+  "title": "T020-B3-native: 其他 Native* 30 類三方移植",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B3-combat-material"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-B3-core",
+  "title": "T020-B3-core: ClientSession／Protocol／GameHub 三方移植＋T029 保留",
+  "stage": "code",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B3-native"
+  ],
+  "text": "見 §6-4。"
+ },
+ {
+  "id": "T020-close",
+  "title": "T020 收尾：Maven 產物全套戰鬥回歸（本機）",
+  "stage": "test",
+  "priority": "P1",
+  "depends_on": [
+   "T020-B3-core"
+  ],
+  "text": "見 §6-4 第二階段收尾。"
+ }
+]
