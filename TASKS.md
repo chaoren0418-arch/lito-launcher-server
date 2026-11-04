@@ -22,11 +22,11 @@ CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製�
 驗收：CI Server job 綠；`jar tf` 類別清單與正式 JAR 一致（差異列在 PR）；`1.啟動伺服器.bat --check` 用 mvn 產物通過。
 每個步驟一個 commit；反編譯的檔案另開 commit 以便審查。
 
-### T003 | todo | Cursor | `lito登入器/LiTo381-Launcher/Build.ps1`, `tools/build_current.py`, `tools/verify_current.py`
+### T003 | done（Issue #4，PR #8）| Cursor | `lito登入器/LiTo381-Launcher/Build.ps1`, `tools/build_current.py`, `tools/verify_current.py`
 去硬編路徑：Python 改用 `py -3.12` 或 PATH 中的 `python`；dotnet 改用 PATH；伺服器 `deployment/release-inputs.json` 路徑改相對 repo 根。
 驗收：在 `D:\tmp\litotest` clone 後 `Build.ps1` 能跑到 publish 完成。
 
-### T004 | todo | Cursor | `lito登入器/README.md`, `LiTo381-Launcher/README.zh-TW.md`, `lito伺服器/README.md`, `LiTo381-Server/README.zh-TW.md`, `VALIDATION.md`, `docs/HISTORY.md`
+### T004 | done（Issue #5）| Cursor | `lito登入器/README.md`, `LiTo381-Launcher/README.zh-TW.md`, `lito伺服器/README.md`, `LiTo381-Server/README.zh-TW.md`, `VALIDATION.md`, `docs/HISTORY.md`
 統一版本號為 0.6.71；刪除「正式 0.6.69」殘句；`VALIDATION.md` 只留最新一節，舊段落移到 `docs/HISTORY.md`。
 驗收：`grep -rn "0\.6\.69\|0\.6\.70" --include=*.md` 只剩歷史章節。
 
@@ -40,9 +40,15 @@ DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integr
 ### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
 真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
 
-### T007 | todo | Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `reference/`
+### T007 | done（Issue #2，PR #7）| Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `reference/`
 T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.lito381.server.SharedResourceMain`，見 reference JAR 的 MANIFEST）；CI 加 `mvn -DskipTests package` 並用 `jar tf` 與 `reference/base-0.6.71.jar` 比對類別清單，差異寫進 `docs/server-source-gap.md`。
 驗收：CI 綠；差異清單存在且只含 Modern* 類別與刻意排除項。
+
+### T009 | done（Issue #12，PR #15；調度器編號）| 本機代理 | `lito伺服器/LiTo381-Server/src/test/java/**`
+本機資源依賴測試加守門；真實失敗 30 案由 Issue #20（PR #22）修復，Server tests 改為阻斷式。
+
+### T012 | done（Issue #37，PR #39）| Cursor | `ClientSessionClassicWorldMonsterAggressionIntegrationTest`
+修不穩定測試（隔離 battleClock），50 次連跑通過。
 
 ### T008 | done（否定結果，Issue #6）| 本機代理 | `src/main/java/**`（266 個 DECOMPILED 檔）
 **結果**：evidence.zip 內沒有這 266 個類別的原始碼（本機 Codex 三次掃描；報告 PR #14）。保留反編譯版；找到其他備份再開新任務。
@@ -54,12 +60,33 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 ### T010 | done | Claude | `docs/acceptance/CHECKLIST.md`（新建）
 實機核對表：伺服器 `--check` / `--smoke` 輸出預期、登入器登入→大廳→進房→戰鬥→結算→退出 每步截圖與 DB 核對 SQL（`SELECT ... FROM character_lito WHERE ...`）。
 
-### T011 | blocked(T002,T003,T010) | 使用者 | `docs/acceptance/0.6.71.md`
+### T011 | blocked(T020) | 使用者 | `docs/acceptance/0.6.71.md`
 照 T010 跑一次；失敗項各開 T1xx bug。
 
 ## M2 戰鬥技能同源化（每項一個 PR；先做 T020）
 
-### T020 | doing（Issue #24 設計完成，見 `docs/design/T020-combat-merge.md`；後續 T020a/b/c）| Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
+### T020 | doing | Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
+設計：`docs/design/T020-combat-merge.md`（§6 B 階段＝併入候選 50635f7e，§7 A 階段＝src/main 對齊正式 0.6.71）。子任務（2026-11-04）：
+
+| 子任務 | Issue | 狀態 |
+|---|---|---|
+| 合併策略（設計） | #24 | done |
+| T020a 類別差異盤點 | #30 | done |
+| T020b B 批次設計 | #43 | done |
+| T020c 回歸工具參數化 | #31 | done（工具）；實跑拆為 #83（隔離設定，needs:local）、#84（8d26 基準） |
+| T020d 語意比對工具 | #44 | done |
+| T020e A 批次設計 | #59 | done |
+| T020f 候選 JAR 入庫 | #45 | done |
+| T020g `@AsRecord` 轉換器 | #102 | doing |
+| T020g-2 Maven 接線 | #134 | todo（等 #102、#108） |
+| T020h 舊伺服器 stub | #108 | doing |
+| T020i 比對正規化 | #132 | doing |
+| T020i-2 比對正規化第二批 | #135 | todo（等 #132） |
+| A01–A06 對齊正式（暫存） | #72–#77 | doing |
+| A-land | #78 | todo |
+| B01–B09 併入候選（暫存） | #62–#70 | doing |
+| B-land | #138 | todo |
+| T020-close 總比對＋全套回歸 | #139 | todo |
 決定並執行合併策略：把候選 `50635f7e…` 相對正式來源的 diff 併進 `src/main`，候選工具鏈停用。Claude 先產出 diff 摘要與風險清單，Cursor 執行。
 驗收：合併後 CI 綠；`tools/combat-continuation` 既有 2,400 案可在合併後來源上重跑並通過。
 
@@ -77,7 +104,7 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 ### T032 | todo | 使用者 | 中文 MySQL 真裝備角色唯讀重載（使用者延後）
 
 ## M3 交付
-### T040 | todo（Issue #24 已拆任務）| Cursor | `docs/INSTALL.md`, `packaging/`
+### T040 | done（Issue #32，PR #33）| Cursor | `docs/INSTALL.md`, `packaging/`
 安裝手冊 + 打包腳本（JAR、`db/*.sql`、`server.properties.example`、登入器 release）。
 
 ## 登入器已知未驗（排進 M1 一起看）
