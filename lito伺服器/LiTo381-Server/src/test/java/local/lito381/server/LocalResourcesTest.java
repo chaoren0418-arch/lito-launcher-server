@@ -80,4 +80,28 @@ final class LocalResourcesTest {
         Files.writeString(map.resolve("7fff8000.s32"), "fixture");
         assertEquals(root, LocalResources.assumeSharedResourceRoot(root.toString()));
     }
+
+    // Retain the two incoming regression cases while using the exact-Path API.
+    @Test void unusedTwinCandidateDoesNotSatisfyExactPathAssume() throws Exception {
+        Path unused = Files.writeString(root.resolve("unused.asm"), "fixture");
+        Path used = root.resolve("used.asm");
+        assertTrue(Files.isRegularFile(unused));
+        assertFalse(Files.isRegularFile(used));
+        assertThrows(TestAbortedException.class, () -> LocalResources.assumeIdaClient(used));
+        assertThrows(TestAbortedException.class, () -> LocalResources.assumeLitoBin(used));
+    }
+
+    @Test void sharedResourceRootIgnoresSystemProperty() {
+        String previous = System.getProperty("lito.shared.resource.root");
+        System.setProperty("lito.shared.resource.root", root.toString());
+        try {
+            String env = System.getenv("LITO_SHARED_RESOURCE_ROOT");
+            if (env == null || env.isBlank()) {
+                assertThrows(TestAbortedException.class, () -> LocalResources.assumeSharedResourceRoot());
+            }
+        } finally {
+            if (previous == null) System.clearProperty("lito.shared.resource.root");
+            else System.setProperty("lito.shared.resource.root", previous);
+        }
+    }
 }

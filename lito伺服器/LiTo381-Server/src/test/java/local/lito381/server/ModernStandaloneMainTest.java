@@ -4,15 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class ModernStandaloneMainTest {
-    @BeforeAll
-    static void assumeLocalResourcesPresent() {
-        LocalResources.assumeServerProperties();
-    }
-
     @Test void versionHasNoInputOrConfigSideEffects() {
         var out = new ByteArrayOutputStream(); var err = new ByteArrayOutputStream();
         var input = new InputStream() { public int read() { throw new AssertionError("version read stdin"); } };

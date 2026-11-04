@@ -8,6 +8,7 @@
 - 統一 `LocalResources` 讀取 helper 也檢查動態組出的外部路徑；傳入 `Files` 的就是同一 Path。專案內檔案與測試生成檔仍保留正常 IOException／斷言行為。
 - 共享資源只用 `LITO_SHARED_RESOURCE_ROOT`，並檢查實際 map 514 sector；property 或其他 map 檔不能代替。
 - `server-test` 設 `continue-on-error: true`，名稱含 `non-blocking until T010`；Maven 仍保留真實非零退出碼。`if: always()` 上傳完整 Maven log、Surefire XML／文字與執行 revision。
+- 保留遠端 `d375d932` 的實質修正：`ModernStandaloneMainTest` 無外部依賴，移除其錯誤守門；`PcActionRewardSqlFirstSourceAuditTest` 只在 overlay 方法守門；納入 `ModernVipWorldTlsTest` resolver 與 `NativeExternalControlV2Fixture.readForWorld` 觀察 hook。後者僅靜態核對，尚未以 MySQL 驗證時點等價。兩個遠端回歸案例亦保留。
 - `docs/REPORT.md` 保留 main 版；前次越界的 `docs/plans/issue-12.json` 收回，後續建議集中本報告。
 
 ## 守門涵蓋
@@ -16,56 +17,57 @@
 
 | 類型 | 測試類 |
 |---|---:|
-| 正式 server.properties | 81 |
+| 正式 server.properties | 80 |
 | 天堂 SQL／來源檔 | 251 |
 | LiTo.bin | 93 |
 | 實際反組譯檔 | 157 |
 | 其他明列的證據檔 | 100 |
 | Windows java.exe | 3 |
-| 共享地圖 | 1 |
+| 共享地圖 | 2 |
 
-顯式類級守門 328 類；另兩個環境變數來源測試保留原環境前提，在實際讀檔處檢查來源檔。
+顯式類級守門 326 類；上表前五類去重 327 類（包含一個方法級外部依賴）；另兩個環境變數來源測試保留原環境前提，在實際讀檔處檢查來源檔。
 
 ## 怎麼驗證
 
-- 已驗證：Windows Microsoft OpenJDK 17.0.17 / Maven 3.9.16，全部測試來源編譯通過；新增 `LocalResourcesTest` 8/8 通過。覆蓋其他 BIN／ida 候選存在、SQL 存在但來源缺失、動態路徑缺失、錯把目錄當檔案、共享 root property／錯誤 sector。
-- 全套本機 `mvn -o -B test` 正在執行；本報告將以完整 Surefire 結果更新。快取複製至 worktree `scratch/issue-12/maven-repository`，`java.io.tmpdir`／TEMP／TMP 指向 `target/issue-12-tmp`，未啟用 DB 或共享資源環境變數。
+- 已驗證：Windows Microsoft OpenJDK 17.0.17 / Maven 3.9.16，全部測試來源編譯通過；合併後 `LocalResourcesTest` 10/10 通過（本輪新增 8 案＋遠端保留 2 案）。覆蓋其他 BIN／ida 候選存在、SQL 存在但來源缺失、動態路徑缺失、錯把目錄當檔案、共享 root property／錯誤 sector。
+- 已驗證：整合前 `988d910` 測試程式碼的 Windows 全套 `mvn -o -B test`：**6021 run / 27 failures / 2 errors / 109 skipped**，8 分 44 秒。解析全部 Surefire XML 核對失敗集合為下列 30 案的子集，無缺檔錯誤。原始證據：`lito伺服器/LiTo381-Server/target/issue-12-full.log`、`target/issue-12-full-reports/`（不進 git）。本機仍有硬編碼 D: BIN，因此無本機資源的正式驗收以 Ubuntu CI 為準。快取複製至 worktree `scratch/issue-12/maven-repository`，`java.io.tmpdir`／TEMP／TMP 指向 `target/issue-12-tmp`，未啟用 DB 或共享資源環境變數。
+- 已驗證：整合後定向測試 `LocalResourcesTest,ModernStandaloneMainTest,PcActionRewardSqlFirstSourceAuditTest,ModernVipWorldTlsTest,ModernPlayerHealingTlsTest`：**20 run / 0 failures / 0 errors / 1 skipped**，另 2 類缺共享資源於 BeforeAll abort。完整 log：`target/issue-12-merge-check.log`。
 - 未啟動遊戲或正式服務、未連正式 DB、未讀寫正式設定、未修改正式 BIN／封存／release。
 
-## 真實失敗清單（待本輪全套核對；遠端 d375d932 回報基準）
+## 真實失敗清單（30 案基準，本輪結果逐項核對）
 
-每行為測試類／方法／訊息；預期 28 failures + 2 errors。
+每行為測試類／方法／訊息。基準 28 failures + 2 errors；本機 29 個失敗全是本清單子集，第 7 案 Hell 本機通過，保留已知失敗紀錄，不把它算成本輪 failure。
 
-1. `BattleCompanionTest.createdZombieUsesLevelSelectedTemplateAtFullVitals` — expected: `<81186>` but was: `<45065>`
-2. `BattleDisconnectTest.solePlayerDisconnectLosesToTheSyntheticArenaBot` — expected: `<[2]>` but was: `<[]>`
-3. `BattleFoeSlayerCatalogTest.pinsSelectedPrimaryRowAndRetainedThreeStrikeContract` — expected: `<12119>` but was: `<6509>`
-4. `BattleSpellCatalogTest.createZombiePinsCorpseEnvelopeCostsAndNativeLevelTemplates` — expected: `<81183>` but was: `<45065>`
-5. `ClassicWorldMonsterMagicProtocolTest.iceConeUsesExactSelectedClientExtendedAttackLayout` — hex 差 2 bytes（`110700` vs `0A0621` 段）
-6. `ClientSessionClassicWorldDeathPenaltyIntegrationTest.lowLevelVictimAndGmAttackerSuppressFeedAndCounters` — expected: `<0>` but was: `<1>`
+1. `BattleCompanionTest.createdZombieUsesLevelSelectedTemplateAtFullVitals` — `expected: <81186> but was: <45065>`
+2. `BattleDisconnectTest.solePlayerDisconnectLosesToTheSyntheticArenaBot` — `expected: <[2]> but was: <[]>`
+3. `BattleFoeSlayerCatalogTest.pinsSelectedPrimaryRowAndRetainedThreeStrikeContract` — `expected: <12119> but was: <6509>`
+4. `BattleSpellCatalogTest.createZombiePinsCorpseEnvelopeCostsAndNativeLevelTemplates` — `expected: <81183> but was: <45065>`
+5. `ClassicWorldMonsterMagicProtocolTest.iceConeUsesExactSelectedClientExtendedAttackLayout` — `expected: <231293150065100000000A0621AA4400DA2D00A184B57EA084B57E0000> but was: <231293150065100000000A0621AA4400110700A184B57EA084B57E0000>`
+6. `ClientSessionClassicWorldDeathPenaltyIntegrationTest.lowLevelVictimAndGmAttackerSuppressFeedAndCounters` — `expected: <0> but was: <1>`
 7. `ClientSessionClassicWorldHellIntegrationTest.firstEntryEmits552AndPortalThenExpiryReturnsThroughPortalHandshake` — completion packets=`[]` expected: `<true>` but was: `<false>`
-8. `ClientSessionGmDeIntegrationTest.databaseAuthorizedDeChatCreatesReadyRoomRowsAndStartsCountdown` — expected: `<4>` but was: `<1>`
-9. `ClientSessionLitoCreateRoomClanIntegrationTest.compactCreateAutomaticallyJoinsAClannedCreatorAndEmitsSuccess` — expected: `<CHANNEL>` but was: `<RESULT>`
-10. `ClientSessionRentalBattleHandoffIntegrationTest.newGameEndpointConsumesRentalLoadoutIntoActorAttackAndResultRestore` — startSoloBattle expected: `<true>` but was: `<false>`
-11. `ClientSessionRentalTownDirectoryTest.encryptedGroupOneChainBootstrapsResourceDerivedNativeTownScene` — array lengths expected: `<9>` but was: `<5>`
-12. `ClientSessionRentalTownDirectoryTest.rentalTownPlayersShareRosterActorsMovementDirectionActionAndDeparture` — NPC expected: `<32772>` but was: `<32770>`
-13. `GameHubChannelTest.assignsAndListsRoomsInsideTheirOwningChannel` — expected: `<[Baphomet Arena]>` but was: `<[Local Lobby, Baphomet Arena]>`
-14. `GameHubChannelTest.matchmakingAppliesLevelAndObserverEligibilityBeforeSuccess` — expected: `<0>` but was: `<2>`
-15. `GameHubChannelTest.matchmakingNeverSelectsTheServerGatedRentalTownMode` — expected: `<0>` but was: `<1>`
-16. `GameHubChannelTest.matchmakingRejectsWhenOnlyProtectedOrFullRoomsExist` — expected: `<0>` but was: `<1>`
-17. `GameHubChannelTest.matchmakingSkipsProtectedRoomsAndSelectsAnEligiblePublicRoom` — expected: `<3>` but was: `<1>`
-18. `GameHubChannelTest.opcodeOnlyNativeStartIsAuthorizedOnlyForTheCurrentRoomOwner` — expected: `<COUNTDOWN_STARTED>` but was: `<NONE>`
-19. `GameHubVirtualPlayerTest.deRosterHonorsCapacityServerNamesBalanceAndAutomaticReadiness` — expected: `<COUNTDOWN_STARTED>` but was: `<NONE>`
-20. `GameHubVirtualPlayerTest.everyNativeBattleModeAndMapStartsWithDatabaseCommandVirtualRoster` — PET_RACE/565 expected: `<COUNTDOWN_STARTED>` but was: `<NONE>`
-21. `GameHubVirtualPlayerTest.siegeVirtualRosterSatisfiesNativeFifteenPerForceMinimum` — expected: `<COUNTDOWN_STARTED>` but was: `<NONE>`
-22. `GameStateSourceInventoryTest.mirrorsSourceArmorNativeStatusAndRetainsLiToEquippedState` — status hex 少 `2701`
-23. `GameStateSourceInventoryTest.retainedArmorStatusSeparatesBodyArmorFromAccessories` — status hex 少 `27`
-24. `NativeTournamentMatchEndEconomySourceAuditTest.roomExitBattleQuitAndDisconnectRemainIdempotentSafetyNets` — battle-quit expected: `<true>` but was: `<false>`
-25. `ProtocolBattleTest.allThreeNativeAttackProducersUseTheSameTargetCoordinateEnvelope` — Expected `IllegalArgumentException`, nothing thrown
-26. `ProtocolBattleTest.battleActorUsesPcStatusAndTailFieldsFromTheExactPutObjectReceiver` — expected: `<0>` but was: `<5>`
-27. `ProtocolBattleTest.objectHealUsesNativeTargetAndEffectLayouts` — expected: `<11722>` but was: `<744>`
-28. `ProtocolLitoRoomParticipantTest.nativeAffiliationFieldRejectsOverlongOrInvalidRows` — Expected `IllegalArgumentException`, nothing thrown
-29. `ClientSessionLitoModeStepIntegrationTest.encryptedRightNextAndLeftPreviousEmitExactS_D5ModeMapPairs` — `SocketTimeoutException: Read timed out`（error）
-30. `NativeLitoRentalTeleportEndpointCatalogTest.exactTeleporterActionSendsStatusThenDirectEndpoint` — `SocketTimeoutException: Read timed out`（error）
+8. `ClientSessionGmDeIntegrationTest.databaseAuthorizedDeChatCreatesReadyRoomRowsAndStartsCountdown` — `expected: <4> but was: <1>`
+9. `ClientSessionLitoCreateRoomClanIntegrationTest.compactCreateAutomaticallyJoinsAClannedCreatorAndEmitsSuccess` — `expected: <CHANNEL> but was: <RESULT>`
+10. `ClientSessionRentalBattleHandoffIntegrationTest.newGameEndpointConsumesRentalLoadoutIntoActorAttackAndResultRestore` — `expected: <true> but was: <false>`
+11. `ClientSessionRentalTownDirectoryTest.encryptedGroupOneChainBootstrapsResourceDerivedNativeTownScene` — `array lengths differ, expected: <9> but was: <5>`
+12. `ClientSessionRentalTownDirectoryTest.rentalTownPlayersShareRosterActorsMovementDirectionActionAndDeparture` — `expected: <32772> but was: <32770>`
+13. `GameHubChannelTest.assignsAndListsRoomsInsideTheirOwningChannel` — `expected: <[Baphomet Arena]> but was: <[Local Lobby, Baphomet Arena]>`
+14. `GameHubChannelTest.matchmakingAppliesLevelAndObserverEligibilityBeforeSuccess` — `expected: <0> but was: <2>`
+15. `GameHubChannelTest.matchmakingNeverSelectsTheServerGatedRentalTownMode` — `expected: <0> but was: <1>`
+16. `GameHubChannelTest.matchmakingRejectsWhenOnlyProtectedOrFullRoomsExist` — `expected: <0> but was: <1>`
+17. `GameHubChannelTest.matchmakingSkipsProtectedRoomsAndSelectsAnEligiblePublicRoom` — `expected: <3> but was: <1>`
+18. `GameHubChannelTest.opcodeOnlyNativeStartIsAuthorizedOnlyForTheCurrentRoomOwner` — `expected: <COUNTDOWN_STARTED> but was: <NONE>`
+19. `GameHubVirtualPlayerTest.deRosterHonorsCapacityServerNamesBalanceAndAutomaticReadiness` — `expected: <COUNTDOWN_STARTED> but was: <NONE>`
+20. `GameHubVirtualPlayerTest.everyNativeBattleModeAndMapStartsWithDatabaseCommandVirtualRoster` — `PET_RACE/565 ==> expected: <COUNTDOWN_STARTED> but was: <NONE>`
+21. `GameHubVirtualPlayerTest.siegeVirtualRosterSatisfiesNativeFifteenPerForceMinimum` — `expected: <COUNTDOWN_STARTED> but was: <NONE>`
+22. `GameStateSourceInventoryTest.mirrorsSourceArmorNativeStatusAndRetainsLiToEquippedState` — `expected: <1300142701000000077F0D630EFF7F207F> but was: <13001401000000077F0D630EFF7F207F>`
+23. `GameStateSourceInventoryTest.retainedArmorStatusSeparatesBodyArmorFromAccessories` — `expected: <13050B271E00000002040302077F> but was: <13050B1E00000002040302077F>`
+24. `NativeTournamentMatchEndEconomySourceAuditTest.roomExitBattleQuitAndDisconnectRemainIdempotentSafetyNets` — `battle-quit ==> expected: <true> but was: <false>`
+25. `ProtocolBattleTest.allThreeNativeAttackProducersUseTheSameTargetCoordinateEnvelope` — `Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.`
+26. `ProtocolBattleTest.battleActorUsesPcStatusAndTailFieldsFromTheExactPutObjectReceiver` — `expected: <0> but was: <5>`
+27. `ProtocolBattleTest.objectHealUsesNativeTargetAndEffectLayouts` — `expected: <11722> but was: <744>`
+28. `ProtocolLitoRoomParticipantTest.nativeAffiliationFieldRejectsOverlongOrInvalidRows` — `Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.`
+29. `ClientSessionLitoModeStepIntegrationTest.encryptedRightNextAndLeftPreviousEmitExactS_D5ModeMapPairs` — `java.net.SocketTimeoutException: Read timed out`（error）
+30. `NativeLitoRentalTeleportEndpointCatalogTest.exactTeleporterActionSendsStatusThenDirectEndpoint` — `java.net.SocketTimeoutException: Read timed out`（error）
 
 
 ## 未驗證什麼
@@ -80,4 +82,4 @@
 
 ## 給下一棒的提示
 
-Claude 審查守門與完整 CI artifact；T010 接手上列真實失敗，修復後移除 non-blocking。不得恢復假 skip。另須核對 `NativeExternalControlV2Fixture` 在真實 readForWorld／Work 內的 observe／hold 時點；現行 production adapter 沒有舊 callback，這項需要隔離 MySQL 的實際採證，不能用編譯通過代表完成。
+Claude 審查守門與完整 CI artifact；T010 接手上列真實失敗，修復後移除 non-blocking。不得恢復假 skip。另須核對 `NativeExternalControlV2Fixture` 在真實 readForWorld／Work 內的 observe／hold 時點；現行 production adapter 沒有舊 callback；保留遠端以 provider hook 接回的方案，但 hook 位於 adapter 讀取 store 之前，與原回呼的精確時點及 hold 期間 revision 變更是否等價，須由隔離 MySQL 採證，不能用編譯通過代表完成。

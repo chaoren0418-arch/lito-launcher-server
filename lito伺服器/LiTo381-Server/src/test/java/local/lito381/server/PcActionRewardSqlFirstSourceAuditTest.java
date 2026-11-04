@@ -5,22 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class PcActionRewardSqlFirstSourceAuditTest {
-    @BeforeAll
-    static void assumeLocalResourcesPresent() {
-        LocalResources.assumeFiles(
-                Path.of("../LiTo381-Launcher/src/LiToCompatibilityResources.cs"),
-                Path.of("../LiTo381-開發/resources/pc-action-html/pc_action-c.html"),
-                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_0-c.html"),
-                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_2-c.html"),
-                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_3-c.html"),
-                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_4-c.html"),
-                Path.of("../LiTo381-開發/tools/TextPakGameplayOverlay/Program.cs"));
-    }
-
     @Test
     void helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst()
             throws Exception {
@@ -67,6 +54,14 @@ final class PcActionRewardSqlFirstSourceAuditTest {
 
     @Test
     void isolatedLitoRuntimePinsTheSanitizedPcActionRewardOverlay() throws Exception {
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-Launcher/src/LiToCompatibilityResources.cs"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/pc_action-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_0-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_2-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_3-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_4-c.html"),
+                Path.of("../LiTo381-開發/tools/TextPakGameplayOverlay/Program.cs"));
         Path workspace = Path.of("..");
         Path assets = workspace.resolve("LiTo381-開發/resources/pc-action-html");
         String launcher = LocalResources.readString(
