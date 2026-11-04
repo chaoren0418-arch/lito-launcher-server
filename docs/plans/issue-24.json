@@ -4,15 +4,15 @@
     "title": "T020a: 戰鬥候選 × 正式 0.6.71 類別差異盤點（本機）",
     "stage": "resource",
     "priority": "P1",
-    "text": "**範圍**：只新增 `docs/combat-merge/class-diff.json`、`docs/combat-merge/class-diff.md`、`docs/reports/issue-N.md`；腳本放 `scratch/`。不改 `src/main`、不部署、不改正式 JAR。\n**背景**：見 `docs/design/T020-combat-merge.md`。候選 JAR 只在本機 `lito伺服器/LiTo381-Server/tools/combat-continuation/**/build/`。\n**做**：\n1. 找到三個 JAR 並記 SHA：候選 `8d26c9d7…`（`cancellation-battle-runtime/build/candidate-cancellation-battle-runtime.jar`）、候選 `50635f7e…`（`integration-lifecycle/build/` 下 negative final frame）、正式 0.6.71 `75da69b0…`（`lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`）；再用 `mvn -B -DskipTests package` 建出 `src/main` 產物。\n2. 對每個 class entry 比 bytes，分類：SAME / CHANGED / NEW_IN_CANDIDATE / ONLY_IN_FORMAL；分別做 `8d26c9d7 vs 正式`、`50635f7e vs 8d26c9d7`、`正式 vs mvn 產物`。\n3. 對每個 CHANGED／NEW 類別：依設計文件 §1 的層序，找出最後一個寫入它的層，以及該層有沒有完整原始碼（`sources/*.java`／`inputs/*.java`）或只有 ASM splice；並標出 `src/main` 對應檔是否為 `// DECOMPILED`。\n4. 列出 ONLY_IN_FORMAL 與「正式有改、候選沒改」的類別（L1PolyMe、圖示、GM7200 等），給 T029 用。\n**驗收**：`class-diff.json` 每列含 class／分類／最後層／原始碼路徑或 `asm-only`／`src/main` 是否 DECOMPILED；`class-diff.md` 有各分類計數與前 50 大差異類別；報告寫明三個 JAR 的 SHA 與 mvn 產物 SHA。",
+    "text": "**範圍**：只新增 `docs/combat-merge/class-diff.json`、`docs/combat-merge/class-diff.md`、`docs/reports/issue-N.md`；腳本放 `scratch/`。不改 `src/main`、不部署、不改正式 JAR。\n**背景**：見 `docs/design/T020-combat-merge.md`。候選 JAR 只在本機 `lito伺服器/LiTo381-Server/tools/combat-continuation/**/build/`。\n**做**：\n1. 找到三個 JAR 並記 SHA：候選 `8d26c9d7…`（`cancellation-battle-runtime/build/candidate-cancellation-battle-runtime.jar`）、候選 `50635f7e…`（`integration-lifecycle/build/` 下 negative final frame）、正式基準 = `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`（main @ `9b9b09f33639f100b7ce02f42a4722ec3f9f27cf`，blob `d59ae2e4c56f599456e764a205a0e09a825975d3`，SHA256 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`）。候選完整 SHA：`8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`、`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`。**任一檔 SHA 不符就停止比較並回報，不得改用其他檔**；`continuation-current.json` 的 `75da69b0…` 是歷史紀錄，不是比較輸入；再用 `mvn -B -DskipTests package` 建出 `src/main` 產物。\n2. 對每個 class entry 比 bytes，分類：SAME / CHANGED / NEW_IN_CANDIDATE / ONLY_IN_FORMAL；分別做 `8d26c9d7 vs 正式`、`50635f7e vs 8d26c9d7`、`正式 vs mvn 產物`。\n3. 對每個 CHANGED／NEW 類別：依設計文件 §1 的層序，找出最後一個寫入它的層，以及該層有沒有完整原始碼（`sources/*.java`／`inputs/*.java`）或只有 ASM splice；並標出 `src/main` 對應檔是否為 `// DECOMPILED`。\n4. 列出 ONLY_IN_FORMAL 與「正式有改、候選沒改」的類別（L1PolyMe、圖示、GM7200 等），給 T029 用。\n**驗收**：`class-diff.json` 每列含 class／分類／最後層／原始碼路徑或 `asm-only`／`src/main` 是否 DECOMPILED；`class-diff.md` 有各分類計數與前 50 大差異類別；報告寫明三個 JAR 的 SHA 與 mvn 產物 SHA。",
     "depends_on": []
   },
   {
     "id": "T020c",
-    "title": "T020c: 戰鬥回歸工具可指定 JAR、JDK 走 PATH",
-    "stage": "code",
+    "title": "T020c: 戰鬥回歸全套件可指定 JAR、JDK 走 PATH（本機）",
+    "stage": "test",
     "priority": "P1",
-    "text": "**範圍**：`lito伺服器/LiTo381-Server/tools/combat-continuation/full_regression.py`、`candidate_regression.py`、`affected_regressions.py` 及它們直接呼叫的回歸驅動（不改各層 `build.py`）；`docs/reports/issue-N.md`。\n**背景**：見 `docs/design/T020-combat-merge.md` §2-4。目前 1,008 支腳本硬編 `C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot`。\n**做**：回歸入口加 `--jar <path>` 參數（預設維持原行為）；JDK 改用 `JAVA_HOME` 或 PATH 中的 `java`／`javac`；輸出收據路徑可指定。\n**驗收**：本機以 `--jar` 指向候選 `8d26c9d7…` 重跑 2,400 案／5,164 組合／20＋18 組回歸，通過數與既有收據一致（報告附兩份收據 SHA 與比對結果）；不得刪案或放寬斷言。",
+    "text": "**範圍**（`lito伺服器/LiTo381-Server/tools/combat-continuation/` 下）：`full_regression.py`、`candidate_regression.py`、`affected_regressions.py`、`replay_composed_materials.py`、`cancellation-battle-runtime/{replay_targeted,replay_player_cancellation,test_curse_clock_boundary,seal_validation}.py`，以及上述入口直接呼叫的子驅動、fixture 與 probe（`.py`／`.java`）。不改各層 `build.py`、不改 `src/main`。報告 `docs/reports/issue-N.md`。\n**背景**：見 `docs/design/T020-combat-merge.md` §2-4 套件表。目前 1,008 支腳本硬編 `C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot`，且只有 20＋18 組走 `full_regression.py`；2,400 案（targeted 27 組＋player-cancellation 3 組）、5,164 組合（composed 71 組）、curse-clock 24 案各有獨立入口。\n**做**：每個入口都加 `--jar <path>` 與 `--out <dir>`（預設維持原行為與原收據路徑）；JDK 改用 `JAVA_HOME` 或 PATH 中的 `java`／`javac`；`seal_validation.py` 加 `--jar`／`--out`，改成核對 `--out` 下的新收據，SHA 檢查改為核對傳入的 JAR。\n**指令**（本機，repo 根目錄）：用同一個 `--jar` 指向候選 `8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`、同一個 `--out scratch/t020c/8d26c9d7/`，依序跑 targeted、player-cancellation、composed、existing_20／affected_18、curse-clock，最後跑 `seal_validation.py`。\n**驗收**：每個套件輸出獨立收據；報告附對照表（套件／新收據 SHA／案例數／既有收據案例數／一致與否），必須 targeted 27 組＋player 3 組＝2,400 案、composed 71 組＝5,164 案、20＋18 組、curse-clock 24 案全部一致，`seal_validation.py` 全部 assert 通過。只完成 20＋18 組不得宣稱完整回歸；不得刪案或放寬斷言。\n**禁止**：不碰 `config/server.properties`、不啟停 DB 或正式伺服器（需 SQL 啟動的收據維持既有核對，不重跑）、不改正式 JAR、不部署候選。",
     "depends_on": []
   },
   {
@@ -21,7 +21,9 @@
     "stage": "design",
     "priority": "P1",
     "text": "**範圍**：`docs/design/T020-combat-merge.md`（補第 6 節批次表）、`docs/plans/issue-N.json`。\n**做**：讀 T020a 的 `docs/combat-merge/class-diff.json`，把 CHANGED／NEW 類別依功能與相依分批（每批 ≤ 30 類別，先 `8d26c9d7` 再 `8d26c9d7→50635f7e`），每批定義：要搬的原始碼／要移植的 ASM 類別、要保留的正式功能、驗收用的回歸子集；拆成 code 任務。\n**驗收**：每批一個 code 任務，含範圍、驗收（mvn test 綠＋T020c 回歸在 mvn 產物上與候選收據一致）。",
-    "depends_on": ["T020a"]
+    "depends_on": [
+      "T020a"
+    ]
   },
   {
     "id": "T040",
