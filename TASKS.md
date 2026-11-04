@@ -41,7 +41,8 @@ DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integr
 T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.lito381.server.SharedResourceMain`，見 reference JAR 的 MANIFEST）；CI 加 `mvn -DskipTests package` 並用 `jar tf` 與 `reference/base-0.6.71.jar` 比對類別清單，差異寫進 `docs/server-source-gap.md`。
 驗收：CI 綠；差異清單存在且只含 Modern* 類別與刻意排除項。
 
-### T008 | todo | 本機代理 | `src/main/java/**`（266 個 DECOMPILED 檔）
+### T008 | done（否定結果，Issue #6）| 本機代理 | `src/main/java/**`（266 個 DECOMPILED 檔）
+**結果**：evidence.zip 內沒有這 266 個類別的原始碼（本機 Codex 三次掃描；報告 PR #14）。保留反編譯版；找到其他備份再開新任務。
 用 `backups/history/server-development-evidence.zip`（本機，164 MB）搜尋這 266 個類別的原始 .java；找到的以原始碼取代反編譯版並去掉 DECOMPILED 標頭。每批 ≤ 50 檔一個 PR。
 驗收：每批 CI 綠；`grep -l "^// DECOMPILED"` 數量下降；PR 描述列出取代／未找到清單。
 
