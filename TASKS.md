@@ -9,7 +9,7 @@ Cursor 接任務時只改「範圍」列出的路徑；PR 標題用 `ID: 摘要`
 CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製進 `src/main`）+ 登入器 `dotnet build`。
 驗收：main 分支兩個 job 綠燈。
 
-### T002 | review | Claude+Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
+### T002 | done | Claude+Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
 **現況**：`src/main` 只有 610 個檔，不是完整伺服器來源。正式 JAR = 二進位 `base-0.6.35/0.6.70.jar` + `tools/*/build.py` 逐層以 ASM patch 疊上去；缺的類別來源散在：
 - `tools/shared-database/{SharedDatabase,UnifiedConfiguration,SourceLogin}.java`
 - `lito登入器/LiTo381-Launcher/server-patches/repair-034/{LiToGmCommands,LiToGmNpcs,EnableCommands}.java` 等
@@ -36,6 +36,14 @@ DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integr
 
 ### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
 真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
+
+### T007 | todo | Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `reference/`
+T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.lito381.server.SharedResourceMain`，見 reference JAR 的 MANIFEST）；CI 加 `mvn -DskipTests package` 並用 `jar tf` 與 `reference/base-0.6.71.jar` 比對類別清單，差異寫進 `docs/server-source-gap.md`。
+驗收：CI 綠；差異清單存在且只含 Modern* 類別與刻意排除項。
+
+### T008 | todo | 本機代理 | `src/main/java/**`（266 個 DECOMPILED 檔）
+用 `backups/history/server-development-evidence.zip`（本機，164 MB）搜尋這 266 個類別的原始 .java；找到的以原始碼取代反編譯版並去掉 DECOMPILED 標頭。每批 ≤ 50 檔一個 PR。
+驗收：每批 CI 綠；`grep -l "^// DECOMPILED"` 數量下降；PR 描述列出取代／未找到清單。
 
 ## M1 正式版實機回歸
 
