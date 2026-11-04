@@ -13,60 +13,73 @@ def checked(ref,fresh=False):
  if fresh and options.out:assert Path(ref['path']).resolve().is_relative_to(options.out), 'Receipt outside --out: '+ref['path']
  p=Path(ref['path']);assert sha(p)==ref['sha256'],str(p);return read(p)
 def write(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-b=options.build('cancellation-battle-runtime');runtime=b['runtime'];assert pin(Path(runtime['path']))==runtime
-old=read(HIST/'qualification-current.json');historical_runtime=old['runtime'];assert pin(Path(historical_runtime['path']))==historical_runtime
-repro=read(R/'build-repro/build.json');assert repro['runtime']['sha256']==historical_runtime['sha256'];assert sha(Path(repro['runtime']['path']))==historical_runtime['sha256']
-for ref in old['protected']:assert pin(Path(ref['path']))==ref, 'Historical protected file changed: '+str(ref)
-rows=read(D/'targeted/receipt.json');assert rows['status']=='passed' and rows['runtime']==runtime and len(rows['tests'])==27
-counts=dict(cases=0,checks=0,socket_writes_under_locks=0,failed_material_partial_commits=0)
-player=read(D/'player-cancellation/receipt.json');assert player['status']=='passed' and player['runtime']==runtime and len(player['tests'])==3
-for row in rows['tests']+player['tests']:
- t=checked(row['result'],fresh=True);assert t['status'].startswith('passed') and t['runtime']==runtime
- values=[t['after']] if 'after'in t else [x['results']for x in t['results']if x['mode']=='after']
- assert values
- for v in values:
-  counts['cases']+=v['cases'];counts['checks']+=v['checks']
-  locked=v.get('locked_write_calls',v.get('locked_writes'));assert locked==0
-  assert v.get('failed_material_casts_with_partial_commit',0)==0 and v.get('Source_window_bypasses',0)==0
-assert counts['cases']==2400
-composed=read(D/'composed-replay/current.json');assert composed['status']=='passed' and composed['runtime']==runtime
-cm=checked(composed['receipt'],fresh=True);assert cm['status']=='passed' and cm['runtime']==runtime and len(cm['results'])==71
-assert sum(x['results']['cases']for x in cm['results'])==5164
-reg=options.out/'regression' if options.out else ROOT/'build/cancellation-battle-runtime-regression'/runtime['sha256'][:12]
-refs={}
-for key,name,count in [('existing_20','qualification-current.json',20),('affected_18','affected-current.json',18)]:
- p=reg/name;t=read(p);assert t['status'].startswith('passed');m=checked(t['manifest'],fresh=True);assert m['runtime']==runtime and len(m['results'])==count and m['status'].startswith('passed')
- refs[key]=dict(status=t['status'],receipt=pin(p),manifest=t['manifest'])
-sql=checked(old['sql_startup_and_owned_cleanup']);assert sql['accepted'] is True and sql['cleanup_verified'] is True
-assert any(old['runtime']['path']in x['argv']for x in sql['instances'])
-timing=read(D/'curse-clock-boundary/receipt.json');assert timing['status']=='passed-measured-paralysis-publication-clock-boundary' and timing['runtime']==runtime and timing['counts']['cases']==24
-census=read(HIST/'material-census/receipt.json');assert census['runtime']==historical_runtime and census['remaining_legacy_calls']==3
-inheritance=read(HIST/'inheritance-audit.json');assert inheritance['runtime']==historical_runtime and inheritance['status']=='passed-exact-inherited-class-audit'
-v=dict(old,runtime=runtime,inheritance_audit=pin(HIST/'inheritance-audit.json'),updated_utc=datetime.now(timezone.utc).isoformat(),status='backend-regressions-passed-native-validation-deferred-by-user',same_sha_backend_regression_passed=True,targeted_replay=pin(D/'targeted/receipt.json'),targeted_summary=counts,player_cancellation_replay=pin(D/'player-cancellation/receipt.json'),composed_replay=pin(D/'composed-replay/current.json'),composed_cases=5164,existing_regressions=refs['existing_20']['receipt'],affected_regressions=refs['affected_18']['receipt'],additional_publication_clock_cases=24,material_census=pin(HIST/'material-census/receipt.json'),prepared_native_entry=pin(HIST/'staging/native-entry-receipt.json'),sealing_driver=pin(Path(__file__)))
+
+# A failed isolated attempt must replace any previous successful seal pointer.
+# Default historical output retains its original behavior.
 if options.out:
- # Historical SQL/static/native evidence is audited against its own JAR, never relabelled as a new run.
- for key in ('base','parent_qualified','targeted_replacement','targeted_material_faults','additional_publication_clock','prepared_native_entry','inheritance_audit','material_census','sql_startup_and_owned_cleanup'):
-  v.pop(key,None)
- v['historical_evidence']=dict(runtime=historical_runtime,qualification=pin(HIST/'qualification-current.json'),sql_startup_and_owned_cleanup=old['sql_startup_and_owned_cleanup'],reproduction=pin(R/'build-repro/build.json'),material_census=pin(HIST/'material-census/receipt.json'),inheritance_audit=pin(HIST/'inheritance-audit.json'),prepared_native_entry=pin(HIST/'staging/native-entry-receipt.json'),rerun=False)
- v['additional_publication_clock']=pin(D/'curse-clock-boundary/receipt.json')
-v['scope']=list(dict.fromkeys(old['scope']+['276 battle replacement/native-resource/deadline/room tests;12 actual material fault/retry cases;128 battle NPC ownership/lifecycle cases;all inherited area and corpse paths replayed']))
-v['remaining']=['Static NPC type1 instance/AI isolation and full NPC factory remain outside verified supported-monster replacement scope','remaining NPC/companion material and lifecycle consumers listed in current report','manual native batch validation deferred by user; no formal publication']
-write(D/'qualification-current.json',v)
-if not options.out:
- index=ROOT/'continuation-current.json';i=read(index)
- i.update(time_utc=v['updated_utc'],status='same-sha-backend-qualified-full-objective-open',latest_candidate=runtime,latest_targeted_candidate=runtime,latest_candidate_full_regression_passed=True,targeted_candidate_full_regression_passed=True,latest_candidate_regression=refs,latest_20_plus_18_candidate=dict(runtime=runtime,regressions=refs),battle_npc_candidate=pin(D/'qualification-current.json'),candidate_under_validation=runtime)
- for key in ['latest_static_material_census','latest_targeted_material_census','remaining_material_census']:i[key]=pin(HIST/'material-census/receipt.json')
- i['remaining_material_skill_ids']=[27,36,41,44]
- i['remaining']=['NPC/static/companion consumers still listed in current report; static census is not proof of complete skill coverage','full class/target/Ctrl/area/trigger and state-lifetime qualification','final native UI and manual batch validation before formal publication']
- i['next_material_stage']='Review remaining NPC/static/companion gaps; reuse qualified NPC WORLD/BATTLE replacement, area66/76/161/167 and69/165 implementations'
- i['active_work'].update(updated_utc=v['updated_utc'],validation=pin(D/'qualification-current.json'),battle_npc_runtime=pin(D/'qualification-current.json'),next='8d26c9d7 passed 2400 targeted,5164 composed,20+18 groups and SQL startup/owned cleanup. Reuse this candidate; no intermediate manual tests. Supported type2 NPC replacement and planned area bundle are implemented. Static/companion and broader coverage scope stays open; formal unchanged.')
- write(index,i)
- controls=ROOT/'control-gaps.json';c=read(controls)
- def repin(x):
-  if isinstance(x,dict):
-   if x.get('path')==str(index.resolve()) and 'sha256'in x:x['sha256']=sha(index)
-   for value in x.values():repin(value)
-  elif isinstance(x,list):
-   for value in x:repin(value)
- repin(c);write(controls,c)
-print(json.dumps(dict(status=v['status'],runtime=runtime,targeted=counts,composed_cases=5164,existing_groups=20,affected_groups=18,formal_deployment_changed=False),ensure_ascii=False))
+ write(D/'qualification-current.json',dict(status='running',same_sha_backend_regression_passed=False,sealing_driver=pin(Path(__file__))))
+try:
+ b=options.build('cancellation-battle-runtime');runtime=b['runtime'];assert pin(Path(runtime['path']))==runtime
+ old=read(HIST/'qualification-current.json');historical_runtime=old['runtime'];assert pin(Path(historical_runtime['path']))==historical_runtime
+ repro=read(R/'build-repro/build.json');assert repro['runtime']['sha256']==historical_runtime['sha256'];assert sha(Path(repro['runtime']['path']))==historical_runtime['sha256']
+ for ref in old['protected']:assert pin(Path(ref['path']))==ref, 'Historical protected file changed: '+str(ref)
+ rows=read(D/'targeted/receipt.json');assert rows['status']=='passed' and rows['runtime']==runtime and len(rows['tests'])==27
+ counts=dict(cases=0,checks=0,socket_writes_under_locks=0,failed_material_partial_commits=0)
+ player=read(D/'player-cancellation/receipt.json');assert player['status']=='passed' and player['runtime']==runtime and len(player['tests'])==3
+ for row in rows['tests']+player['tests']:
+  t=checked(row['result'],fresh=True);assert t['status'].startswith('passed') and t['runtime']==runtime
+  values=[t['after']] if 'after'in t else [x['results']for x in t['results']if x['mode']=='after']
+  assert values
+  for v in values:
+   counts['cases']+=v['cases'];counts['checks']+=v['checks']
+   locked=v.get('locked_write_calls',v.get('locked_writes'));assert locked==0
+   assert v.get('failed_material_casts_with_partial_commit',0)==0 and v.get('Source_window_bypasses',0)==0
+ assert counts['cases']==2400
+ composed=read(D/'composed-replay/current.json');assert composed['status']=='passed' and composed['runtime']==runtime
+ cm=checked(composed['receipt'],fresh=True);assert cm['status']=='passed' and cm['runtime']==runtime and len(cm['results'])==71
+ assert sum(x['results']['cases']for x in cm['results'])==5164
+ reg=options.out/'regression' if options.out else ROOT/'build/cancellation-battle-runtime-regression'/runtime['sha256'][:12]
+ refs={}
+ for key,name,count in [('existing_20','qualification-current.json',20),('affected_18','affected-current.json',18)]:
+  p=reg/name;t=read(p);assert t['status'].startswith('passed');m=checked(t['manifest'],fresh=True);assert m['runtime']==runtime and len(m['results'])==count and m['status'].startswith('passed')
+  refs[key]=dict(status=t['status'],receipt=pin(p),manifest=t['manifest'])
+ sql=checked(old['sql_startup_and_owned_cleanup']);assert sql['accepted'] is True and sql['cleanup_verified'] is True
+ assert any(old['runtime']['path']in x['argv']for x in sql['instances'])
+ timing=read(D/'curse-clock-boundary/receipt.json');assert timing['status']=='passed-measured-paralysis-publication-clock-boundary' and timing['runtime']==runtime and timing['counts']['cases']==24
+ census=read(HIST/'material-census/receipt.json');assert census['runtime']==historical_runtime and census['remaining_legacy_calls']==3
+ inheritance=read(HIST/'inheritance-audit.json');assert inheritance['runtime']==historical_runtime and inheritance['status']=='passed-exact-inherited-class-audit'
+ v=dict(old,runtime=runtime,inheritance_audit=pin(HIST/'inheritance-audit.json'),updated_utc=datetime.now(timezone.utc).isoformat(),status='backend-regressions-passed-native-validation-deferred-by-user',same_sha_backend_regression_passed=True,targeted_replay=pin(D/'targeted/receipt.json'),targeted_summary=counts,player_cancellation_replay=pin(D/'player-cancellation/receipt.json'),composed_replay=pin(D/'composed-replay/current.json'),composed_cases=5164,existing_regressions=refs['existing_20']['receipt'],affected_regressions=refs['affected_18']['receipt'],additional_publication_clock_cases=24,material_census=pin(HIST/'material-census/receipt.json'),prepared_native_entry=pin(HIST/'staging/native-entry-receipt.json'),sealing_driver=pin(Path(__file__)))
+ if options.out:
+  # Historical SQL/static/native evidence is audited against its own JAR, never relabelled as a new run.
+  for key in ('base','parent_qualified','targeted_replacement','targeted_material_faults','additional_publication_clock','prepared_native_entry','inheritance_audit','material_census','sql_startup_and_owned_cleanup'):
+   v.pop(key,None)
+  v['historical_evidence']=dict(runtime=historical_runtime,qualification=pin(HIST/'qualification-current.json'),sql_startup_and_owned_cleanup=old['sql_startup_and_owned_cleanup'],reproduction=pin(R/'build-repro/build.json'),material_census=pin(HIST/'material-census/receipt.json'),inheritance_audit=pin(HIST/'inheritance-audit.json'),prepared_native_entry=pin(HIST/'staging/native-entry-receipt.json'),rerun=False)
+  v['additional_publication_clock']=pin(D/'curse-clock-boundary/receipt.json')
+ v['scope']=list(dict.fromkeys(old['scope']+['276 battle replacement/native-resource/deadline/room tests;12 actual material fault/retry cases;128 battle NPC ownership/lifecycle cases;all inherited area and corpse paths replayed']))
+ v['remaining']=['Static NPC type1 instance/AI isolation and full NPC factory remain outside verified supported-monster replacement scope','remaining NPC/companion material and lifecycle consumers listed in current report','manual native batch validation deferred by user; no formal publication']
+ write(D/'qualification-current.json',v)
+ if not options.out:
+  index=ROOT/'continuation-current.json';i=read(index)
+  i.update(time_utc=v['updated_utc'],status='same-sha-backend-qualified-full-objective-open',latest_candidate=runtime,latest_targeted_candidate=runtime,latest_candidate_full_regression_passed=True,targeted_candidate_full_regression_passed=True,latest_candidate_regression=refs,latest_20_plus_18_candidate=dict(runtime=runtime,regressions=refs),battle_npc_candidate=pin(D/'qualification-current.json'),candidate_under_validation=runtime)
+  for key in ['latest_static_material_census','latest_targeted_material_census','remaining_material_census']:i[key]=pin(HIST/'material-census/receipt.json')
+  i['remaining_material_skill_ids']=[27,36,41,44]
+  i['remaining']=['NPC/static/companion consumers still listed in current report; static census is not proof of complete skill coverage','full class/target/Ctrl/area/trigger and state-lifetime qualification','final native UI and manual batch validation before formal publication']
+  i['next_material_stage']='Review remaining NPC/static/companion gaps; reuse qualified NPC WORLD/BATTLE replacement, area66/76/161/167 and69/165 implementations'
+  i['active_work'].update(updated_utc=v['updated_utc'],validation=pin(D/'qualification-current.json'),battle_npc_runtime=pin(D/'qualification-current.json'),next='8d26c9d7 passed 2400 targeted,5164 composed,20+18 groups and SQL startup/owned cleanup. Reuse this candidate; no intermediate manual tests. Supported type2 NPC replacement and planned area bundle are implemented. Static/companion and broader coverage scope stays open; formal unchanged.')
+  write(index,i)
+  controls=ROOT/'control-gaps.json';c=read(controls)
+  def repin(x):
+   if isinstance(x,dict):
+    if x.get('path')==str(index.resolve()) and 'sha256'in x:x['sha256']=sha(index)
+    for value in x.values():repin(value)
+   elif isinstance(x,list):
+    for value in x:repin(value)
+  repin(c);write(controls,c)
+ print(json.dumps(dict(status=v['status'],runtime=runtime,targeted=counts,composed_cases=5164,existing_groups=20,affected_groups=18,formal_deployment_changed=False),ensure_ascii=False))
+except BaseException as error:
+ if options.out:
+  failure=dict(status='failed',same_sha_backend_regression_passed=False,error=str(error),error_type=type(error).__name__,sealing_driver=pin(Path(__file__)))
+  if 'runtime' in globals():failure['runtime']=runtime
+  if options.args.jar:failure['requested_jar']=str(options.args.jar.resolve())
+  write(D/'qualification-current.json',failure)
+ raise

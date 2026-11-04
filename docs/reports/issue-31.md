@@ -4,26 +4,35 @@
 
 **未達完整回歸驗收；請勿關閉 Issue 或宣稱 8d26c9d7 本輪全套通過。**
 
-已修改八個指定入口及其直接共用工具，完成離線接線檢查與 30 個 probe 編譯。本輪沒有執行戰鬥行為案例，沒有產生新的通過收據。`seal_validation.py` 實際 exit 1，停在歷史正式 JAR 保護值不符。
+既有提交 `94decc9` 已修改八個指定入口及其直接共用工具，完成離線接線檢查與 30 個 probe 編譯。本次接續修正 seal 失敗時殘留舊成功指標的問題，重跑離線檢查及歷史收據核對；沒有重跑 probe 編譯或戰鬥行為案例，沒有新的通過收據。`seal_validation.py` 實際 exit 1，仍停在歷史正式 JAR 保護值不符。
 
 工作分支 `task/31`；從既有 worktree 直接修改，未 checkout／另建分支。設計依據：`git fetch origin task/24` 後讀取 `origin/task/24:docs/design/T020-combat-merge.md` §2-4。
+
+## 本次接續的已驗證結果
+
+- 工作開始時 `task/31` 已有 `94decc9`，且與 `origin/task/31` 一致、工作樹乾淨；沒有重新 checkout 或建立分支。
+- `seal_validation.py` 指定 `--out` 時，先將總收據標為 running；任何驗證例外均寫入 failed、`same_sha_backend_regression_passed=false`、錯誤類型與候選資訊，然後重新拋出原例外。避免上次成功的總收據被誤認為本次成功。未指定 `--out` 的歷史流程不增加失敗寫入。
+- `scratch/t020c/test_seal_failure.py`：2 項測試通過。缺少資源與缺少 JAR 的兩種負向子案例，都會取代測試目錄內的舊成功標記，並維持非零退出；另一測試以 AST 核對原有全部 assert 不變。測試目錄的標記僅為負向測試輸入，沒有充作戰鬥證據。
+- `scratch/t020c/test_regression_support.py`：7 項離線測試通過；`check_adapters.py`：8 入口 CLI、68 支直接子驅動語法及 JDK 轉接檢查通過。
+- `verify_baseline.py`：重新驗證下表的舊收據 SHA、組數及案例數；實際 seal 仍 exit 1，新的總收據為 failed。沒有執行戰鬥、SQL 啟動或清理套件。
+- 本次沒有取得隔離 SQL 設定，也沒有修改歷史正式檔保護基準；原本兩項阻礙仍在。`git diff --check` 通過。
 
 ## 做了什麼
 
 - `full_regression.py`、`candidate_regression.py`、`affected_regressions.py`、`replay_composed_materials.py`，以及 `cancellation-battle-runtime/{replay_targeted,replay_player_cancellation,test_curse_clock_boundary,seal_validation}.py` 均接受 `--jar`／`--out`。
 - 共用工具 `regression_support.py` 依 `JAVA_HOME/bin`、PATH 順序解析 JDK；無效的 JAVA_HOME 明確失敗。直接子驅動在既有凍結／轉接階段改寫 JDK 呼叫，歷史 JSON 中的 Java 命令也轉接。沒有批量修改 1,008 支歷史腳本或任何 `build.py`。
 - 未指定參數時保留各入口既有候選／收據位置。保留 candidate/composed 的 stage 參數；省略 stage 時採本任務的 `cancellation-battle-runtime`。
-- `--out` 下使用 `targeted/receipt.json`、`player-cancellation/receipt.json`、`composed-replay/current.json`、`regression/{qualification,affected}-current.json`、`curse-clock-boundary/receipt.json`；seal 成功才寫 `qualification-current.json`。獨立輸出模式不更新全域 `continuation-current.json` 或 `control-gaps.json`。
+- `--out` 下使用 `targeted/receipt.json`、`player-cancellation/receipt.json`、`composed-replay/current.json`、`regression/{qualification,affected}-current.json`、`curse-clock-boundary/receipt.json`；seal 在獨立輸出模式寫入 `qualification-current.json` 的 running／failed／成功狀態，只有全部斷言通過才寫成功。獨立輸出模式不更新全域 `continuation-current.json` 或 `control-gaps.json`。
 - 指定 JAR 或 out 時，targeted 原先重用的 replacement／fault 兩組改為重新執行，總組數仍是 27；執行失敗會留下 failed 收據，不沿用舊 passed 指標。
 - 額外 `--resources <Server 目錄>` 用於讀取 worktree 外的本機依賴，必須搭配 `--out`；`--config <隔離設定>` 讓下一棒不用引用正式設定。原始專案資源只讀，生成子驅動及 runtime 輸出指向指定 out。
 - seal 對新套件核對傳入 JAR、收據 SHA、狀態與原有案例數。SQL／重建／靜態稽核／原生準備收據仍核對其歷史候選，獨立輸出時明確標為 `historical_evidence`、`rerun=false`，不將其冒充新 JAR 的執行結果。歷史正式檔保護斷言仍保留。
 
-## 已驗證／怎麼驗證
+## 已驗證／怎麼驗證（含既有提交證據）
 
 1. 候選 JAR 實際 SHA256：`8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`。
 2. 八個入口 `--help` 全部成功，均列出 `--jar`／`--out`。
 3. 68 個直接子驅動（27＋3＋20＋18）的轉接結果全部可解析，執行程式路徑不再硬編 JDK。逐一比較轉接前後的 `ast.Assert`，全部相同；沒有刪案或修改行為斷言。
-4. 30 個 targeted／player 子驅動均以同一候選執行既有 `--compile-only` 分支成功。全部收據狀態為 `compiled-only-not-qualified`。提供給它們的設定路徑不存在且未被讀取；**編譯不算行為回歸**。
+4. 既有提交的 30 個 targeted／player 子驅動均以同一候選執行既有 `--compile-only` 分支成功。全部收據狀態為 `compiled-only-not-qualified`。提供給它們的設定路徑不存在且未被讀取；**編譯不算行為回歸**。
 5. 七項離線測試通過：JAVA_HOME 優先、PATH 後援、無效 HOME、缺失工具、轉接保留斷言／timeout、凍結命令轉接、八入口 CLI。
 6. 核對下表的舊頂層收據 SHA、子收據／manifest SHA 與案例／組數。
 7. 以指定 JAR 及 `--out scratch/t020c/8d26c9d7/` 實際執行 seal，exit 1；完整錯誤存於 `seal-attempt.log`。沒有取得全 assert 通過。
@@ -76,13 +85,15 @@ seal 的 `old['protected']` 要求正式 JAR 為 `75da69b0d2f7f9d394ee6bf2fdb396
 ## 產出路徑
 
 - 可提交：上述八入口、`tools/combat-continuation/regression_support.py`、本報告。
-- 本機非 git 證據：`scratch/t020c/8d26c9d7/{verification-summary.json,seal-attempt.log}`。
+- 本機非 git 證據：`scratch/t020c/8d26c9d7/{verification-summary.json,seal-attempt.log,qualification-current.json}`；最後一份是失敗收據，不能當作驗收通過。
 - 只編譯證據：`scratch/t020c/compile-only/summary.json` 與各組 result/log/classes。
-- 離線檢查腳本：`scratch/t020c/{check_adapters,test_regression_support,compile_probes,verify_baseline}.py`；轉接盤點 `adapter-audit.json`；JDBC bytecode 證據 `ResourceDatabase-bytecode.txt`。
+- 離線檢查腳本：`scratch/t020c/{check_adapters,test_regression_support,test_seal_failure,compile_probes,verify_baseline}.py`；轉接盤點 `adapter-audit.json`；JDBC bytecode 證據 `ResourceDatabase-bytecode.txt`。
 
 - `scratch/t020c/compile-only/summary.json` SHA256：`1f53df3b0ea0061094c66516234b7c9484586f0d2489085eb6c49c47369805eb`。
-- `scratch/t020c/8d26c9d7/verification-summary.json` SHA256：`b0d67b508e8857d84d25968eab9f38f246ae1b12f2dba530cee28203af4c62a2`。
-- `scratch/t020c/8d26c9d7/seal-attempt.log` SHA256：`ad075ace7d454efc8693e9a3915a364eecb7a885d192d42cb5075e795cc91cb0`。
+- `scratch/t020c/8d26c9d7/verification-summary.json` SHA256：`36e2381a375bc9c2fa5d26e97fac4095eacc422371eec7a34b998a1f32c0c2cf`。
+- `scratch/t020c/8d26c9d7/seal-attempt.log` SHA256：`5da82ac119e8cfb845886d1a06c8d8e0257a1f5b43cba914efa89338a72d5516`。
+
+- `scratch/t020c/8d26c9d7/qualification-current.json` SHA256：`26732ee8d4c519a7521cdfa0377381d7d752438d4495f003a6a2cb208c0c9b34`（failed）。
 
 ## 給下一棒的提示
 
