@@ -14,11 +14,11 @@
 - 本機：`jar tf` 集合差 — reference 2554、target 3907、交集 2538、只在 reference 16、只在 target 1369。
 - 只在 reference：待補 1（`NativeDeVisibilitySwitch`）、刻意排除 15（inner／匿名類形狀不同）、Modern* 0。
 - 只在 target：Modern* 1320 + 其他非 Modern 49（EquipmentRules、TournamentPresence 等）。
+- GitHub Actions PR #7 全綠：Server（Java 17／Maven）+ Launcher（.NET 10）兩個 job 成功（run 41779799344）。
 - 未改 `config/server.properties`、未碰 releases／封存／pak／map／sprite，未啟動遊戲、未連正式 DB。
 
 ## 未驗證什麼
 
-- GitHub Actions 是否全綠（本輪只完成本機 package + 清單比對；CI 結果待 PR 跑完）。
 - 純 `-DskipTests package`（不含 `-Dmaven.test.skip=true`）會在 `testCompile` 失敗：`NativeExternalControlV2Fixture` 建構子參數不符、`GameHubChannelTest` 找不到 `assertNotEquals`。此屬 T005 範圍，本任務未修測試。
 - 類別清單一致 ≠ 位元組碼／行為一致。
 - 未跑 `1.啟動伺服器.bat --check`／`--smoke`，未做實機登入。
@@ -33,7 +33,7 @@
 
 ## 給下一棒的提示
 
-- Claude：審 PR；CI 綠後把 `TASKS.md` T007 標 review／done。
+- Claude：PR #7 CI 已綠，審合併後把 `TASKS.md` T007 標 review／done。
 - 下一棒（T008／來源補齊）：只缺頂層 `NativeDeVisibilitySwitch`（見 `reference/missing-classes.txt`）。15 個 inner／匿名差異不必為對齊 `$1` 去改現行原始碼，除非要位元組碼等同。
 - T005：先修 `testCompile`，CI 才能拿掉 `-Dmaven.test.skip=true` 並加 `mvn test`。
 - 使用者：實機 `--check`／`--smoke` 仍須等 M0 其餘項與本機代理。
