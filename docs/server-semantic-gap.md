@@ -1,6 +1,6 @@
-# 伺服器語意缺口（T020d / Issue #44）
+# 伺服器語意缺口（T020d／T020i）
 
-> 快照來源：[build run 41852194064](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064)，[Semantic gap job 126651146719](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/job/126651146719)，[artifact server-semantic-gap 13335192893](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/artifacts/13335192893)。程式提交 `ccaeb9855a37c174156ff9832d0cf5979c9da634`；Temurin 17.0.21+9。本檔僅插入此來源註記，其餘內容與 artifact Markdown 相同。
+> #132 本機快照：基底 `7c6bee713ca1422cd904f88a2ad39121977dc9e3`，JDK 17.0.17。本輪同一對 JAR 修改前後均為 SAME=2064／DIFF=485；核准 methods 仍有實際缺口。輸入 SHA-256、完整命令及前後比較見 [Issue #132 報告](reports/issue-132.md)。其餘內容由新版工具產生。
 
 以 ASM tree 正規化後比對兩個 JAR 的 `.class`。
 此檔由 `lito伺服器/LiTo381-Server/tools/semantic-diff` 產生。
@@ -9,10 +9,12 @@
 
 | 項目 | 值 |
 |---|---|
-| left | `lito伺服器/LiTo381-Server/target/LiTo381-Server.jar`（3929 類） |
-| right | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-04T14:56:35Z |
+| left | `lito伺服器\LiTo381-Server\target\LiTo381-Server.jar`（3929 類） |
+| right | `lito伺服器\LiTo381-Server\reference\base-0.6.71.jar`（2554 類） |
+| 產生時間 | 2026-11-04T21:50:16Z |
 | 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |
+| T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |
+| effects-methods | `docs\combat-merge\effects-approved.txt` |
 | 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解（含 annotationDefault 結構化值、指令／區域變數／record 型別註解）、內部類別屬性 |
 
 ## 摘要
@@ -20,12 +22,13 @@
 | 狀態 | 數量 | 含義 |
 |---|---:|---|
 | SAME | 2064 | 兩邊都有，正規化後語意相同 |
+| SAME_EFFECTS | 0 | 類別其餘比較通過，含明確核准的副作用序列比較 |
 | DIFF | 485 | 兩邊都有，正規化後仍不同 |
 | ONLY_LEFT | 1380 | 只在 left |
 | ONLY_RIGHT | 5 | 只在 right |
-| 交集 SAME+DIFF | 2549 | 兩邊都有的類別 |
+| 交集 SAME+SAME_EFFECTS+DIFF | 2549 | 兩邊都有的類別 |
 | BYTE_SAME | 1008 | **同一交集**裡 class bytes 完全相同（本輪實測） |
-| SAME − BYTE_SAME | 1056 | 同一交集：bytes 不同但語意相同 |
+| SAME 且 bytes 不同 | 1056 | 逐列計算，不含 SAME_EFFECTS |
 | 比較類別 | 3934 | left∪right |
 
 ## 已驗證／推測／待驗證
@@ -33,6 +36,16 @@
 - **已驗證**：自我測試見 `tools/semantic-diff/selftest.sh`（含同一 JAR、`-g` vs `-g:none`、改常數、`--exclude`、`--allow-methods`、`--classes` 副檔名／清單／不存在類別、註解 self-vs-self 與只改型別註解）。BYTE_SAME／SAME／DIFF 由本工具對上表 left／right **同一輪**量出。
 - **推測**：DIFF 多半是 javac／反編譯來源／後來手改造成的指令或結構差。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差大致對得上。
 - **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。
+- **SAME_EFFECTS 限制**：只確認核准摘要相同，不證明參數資料流或分支目的地等價；未列入清單的方法仍比較完整指令。
+
+## 核准方法副作用結果
+
+此表逐方法獨立比較；即使類別整體 DIFF 也列出，不能用單一方法通過代替整類驗收。
+
+| 方法 | 狀態 | 差異 |
+|---|---|---|
+| `local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V` | DIFF | method exitRoomBeforePolyMe(Z)V: effects sequence[0]: left=GETFIELD local/lito381/server/ClientSession.rentalTownRoomState right=GETFIELD local/lito381/server/ClientSession.phase |
+| `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V` | DIFF | method sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V: only effects target |
 
 ## 與 Issue #43 javap 粗估（約 430）的關係
 
@@ -40,7 +53,7 @@
 
 本表只報告**這一對 JAR、這一輪交集**的實測：
 
-- 交集 SAME+DIFF = **2549**。
+- 交集 SAME+SAME_EFFECTS+DIFF = **2549**。
 - 其中 BYTE_SAME = **1008**（本輪 bytes 全同）。
 - SAME = **2064**，故 bytes 不同但語意相同 = **1056**（本輪實測，含 debug／合成名／常數池編號等）。
 - DIFF = **485**（第一處差異：method 343、field 27、class 屬性 115）。這是本工具先看到的位置，不是把與 430 的差拆開的因果。
@@ -56,36 +69,36 @@
 | `local/lito381/server/BattleAbilityStatus$Protection` | method applyTo(I)I insn[17]: left=IDIV right=POP |
 | `local/lito381/server/BattleAnimationCatalog$Animation` | method durationMillis()J insn[8]: left=LRETURN right=LSTORE 1 |
 | `local/lito381/server/BattleAnimationCatalog$Holder` | method <clinit>()V insn[1]: left=INVOKESTATIC local/lito381/server/BattleAnimationCatalog.load(Ljava/lang/String;)Llocal/lito381/server/BattleAnimationCatalog; right=INVOKESTATIC local/lito381/server/SharedClientResources.animationResource(Ljava/lang/String;)Ljava/lang/String; |
-| `local/lito381/server/BattleArmBreakerStatus` | method activateIfAbsent(JI)Llocal/lito381/server/BattleArmBreakerStatus$Activation; insn[5]: left=BIPUSH 12 right=INVOKESTATIC local/lito381/server/CombatBuffLeases.validArmDuration(I)Z |
-| `local/lito381/server/BattleArmorBreak` | method supportsWeaponType(I)Z insn[1]: left=BIPUSH 20 right=INVOKESTATIC local/lito381/server/CombatRules.weaponActionType(I)I |
-| `local/lito381/server/BattleBurningWeaponStatus` | method snapshot(J)Llocal/lito381/server/BattleBurningWeaponStatus$Snapshot; insn[51]: left=ALOAD 0 right=LDC Integer:163 |
-| `local/lito381/server/BattleClearMindStatus` | method snapshot(J)Llocal/lito381/server/BattleClearMindStatus$Snapshot; insn[54]: left=ILOAD 7 right=LDC Integer:137 |
+| `local/lito381/server/BattleArmBreakerStatus` | method activateIfAbsent(JI)Llocal/lito381/server/BattleArmBreakerStatus$Activation; insn[5]: left=CONST Integer:12 right=INVOKESTATIC local/lito381/server/CombatBuffLeases.validArmDuration(I)Z |
+| `local/lito381/server/BattleArmorBreak` | method supportsWeaponType(I)Z insn[1]: left=CONST Integer:20 right=INVOKESTATIC local/lito381/server/CombatRules.weaponActionType(I)I |
+| `local/lito381/server/BattleBurningWeaponStatus` | method snapshot(J)Llocal/lito381/server/BattleBurningWeaponStatus$Snapshot; insn[51]: left=ALOAD 0 right=CONST Integer:163 |
+| `local/lito381/server/BattleClearMindStatus` | method snapshot(J)Llocal/lito381/server/BattleClearMindStatus$Snapshot; insn[54]: left=ILOAD 7 right=CONST Integer:137 |
 | `local/lito381/server/BattleCompanion` | method activate(IIII)V insn[29]: left=PUTFIELD local/lito381/server/BattleCompanion.active:Z right=ALOAD 0 |
 | `local/lito381/server/BattleCubeHarmonyEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeHarmonyEffects$Placement;: only right |
 | `local/lito381/server/BattleCubeIgnitionEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeIgnitionEffects$Placement;: only right |
 | `local/lito381/server/BattleCubeQuakeEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeQuakeEffects$Placement;: only right |
 | `local/lito381/server/BattleCubeShockEffects` | method nativeMaterialPlace(JIIJLlocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleCubeShockEffects$Placement;: only right |
 | `local/lito381/server/BattleDragonEyeCatalog$Eye` | method buffId()I insn[2]: left=IRETURN right=ALOAD 0 |
-| `local/lito381/server/BattleEarthBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleEarthBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:159 |
-| `local/lito381/server/BattleFireBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleFireBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:155 |
-| `local/lito381/server/BattleFireWeaponStatus` | method snapshot(J)Llocal/lito381/server/BattleFireWeaponStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:148 |
+| `local/lito381/server/BattleEarthBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleEarthBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:159 |
+| `local/lito381/server/BattleFireBlessStatus` | method snapshot(J)Llocal/lito381/server/BattleFireBlessStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:155 |
+| `local/lito381/server/BattleFireWeaponStatus` | method snapshot(J)Llocal/lito381/server/BattleFireWeaponStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:148 |
 | `local/lito381/server/BattleFreezeEffects` | method place(JIIJI)Llocal/lito381/server/BattleFreezeEffects$Placement; insn[0]: left=LLOAD 1 right=ILOAD 7 |
-| `local/lito381/server/BattleGuardBrakeStatus` | method snapshot(J)Llocal/lito381/server/BattleGuardBrakeStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:183 |
+| `local/lito381/server/BattleGuardBrakeStatus` | method snapshot(J)Llocal/lito381/server/BattleGuardBrakeStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:183 |
 | `local/lito381/server/BattleInvisibilityStatus` | class nestMembers: left= right=local/lito381/server/BattleInvisibilityStatus$Lease,local/lito381/server/BattleInvisibilityStatus$Snapshot |
-| `local/lito381/server/BattleIronSkinStatus` | method snapshot(J)Llocal/lito381/server/BattleIronSkinStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:168 |
-| `local/lito381/server/BattleJoyOfPain` | method feedbackDamage(III)I insn[22]: left=IDIV right=LDC str:"JOY_OF_PAIN_COUNTDMG" |
+| `local/lito381/server/BattleIronSkinStatus` | method snapshot(J)Llocal/lito381/server/BattleIronSkinStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:168 |
+| `local/lito381/server/BattleJoyOfPain` | method feedbackDamage(III)I insn[22]: left=IDIV right=CONST str:"JOY_OF_PAIN_COUNTDMG" |
 | `local/lito381/server/BattleMortalBody$Decision` | method <init>(ZIIZIII)V insn[40]: left=IFLE L2 right=IFLT L2 |
 | `local/lito381/server/BattlePatienceStatus` | method physicalReduction(JJ)I insn[6]: left=GOTO L1 right=INVOKESTATIC local/lito381/server/CombatSourceReductions.patience(I)I |
 | `local/lito381/server/BattlePetRaceCourseCatalog$Runner` | method <init>()V: only right |
 | `local/lito381/server/BattlePetRaceCourseCatalog$State` | method begin(ILjava/util/List;JJJ)V insn[55]: left=LLOAD 3 right=INVOKESPECIAL local/lito381/server/BattlePetRaceCourseCatalog$Runner.<init>()V |
 | `local/lito381/server/BattlePhysicalDefense` | method againstPlayer(IIIIIIII)Llocal/lito381/server/BattlePhysicalDefense$PlayerOutcome; insn[70]: left=NEW local/lito381/server/BattlePhysicalDefense$PlayerOutcome right=ILOAD 14 |
-| `local/lito381/server/BattlePhysicalProcBuff` | method burningSpirit(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; insn[16]: left=INVOKESTATIC local/lito381/server/BattlePhysicalProcBuff$Outcome.inactive(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; right=LDC str:"BURNING_CHANCE" |
+| `local/lito381/server/BattlePhysicalProcBuff` | method burningSpirit(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; insn[16]: left=INVOKESTATIC local/lito381/server/BattlePhysicalProcBuff$Outcome.inactive(ZZI)Llocal/lito381/server/BattlePhysicalProcBuff$Outcome; right=CONST str:"BURNING_CHANCE" |
 | `local/lito381/server/BattlePolymorphCatalog` | method nativePackagedRandomForm(I)Llocal/lito381/server/BattlePolymorphCatalog$Form;: only right |
 | `local/lito381/server/BattleQuestEncounter` | field sourceProcEncounterGeneration:Ljava/lang/Object;: only right |
 | `local/lito381/server/BattleQuestEncounter$Monster` | method damage(IZ)Llocal/lito381/server/BattleQuestEncounter$Damage; insn[6]: left=IFEQ L1 right=ALOAD 0 |
 | `local/lito381/server/BattleRules` | method decode(Llocal/lito381/server/BattleRules$Mode;ILlocal/lito381/server/BattleControlCatalog;)Llocal/lito381/server/BattleRules$RuleSet;: only left |
-| `local/lito381/server/BattleShockStunEffects` | method place(JIIJI)Llocal/lito381/server/BattleShockStunEffects$Placement; insn[21]: left=ICONST_4 right=LDC Integer:65535 |
-| `local/lito381/server/BattleSpellCatalog` | method zombieTemplate(II)Llocal/lito381/server/BattleSpellCatalog$ZombieTemplate; insn[3]: left=ICONST_3 right=ICONST_1 |
+| `local/lito381/server/BattleShockStunEffects` | method place(JIIJI)Llocal/lito381/server/BattleShockStunEffects$Placement; insn[21]: left=CONST Integer:4 right=CONST Integer:65535 |
+| `local/lito381/server/BattleSpellCatalog` | method zombieTemplate(II)Llocal/lito381/server/BattleSpellCatalog$ZombieTemplate; insn[3]: left=CONST Integer:3 right=CONST Integer:1 |
 | `local/lito381/server/BattleSpellCatalog$AbilityBuffSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/BattleSpellCatalog$AbsoluteBarrierSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/BattleSpellCatalog$AdditionalFireSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
@@ -208,18 +221,18 @@
 | `local/lito381/server/BattleSpellCatalog$WindShackleSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/BattleSpellCatalog$WindShotSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/BattleSpellCatalog$WorldTreeCallSpell` | method actionId()I insn[2]: left=IRETURN right=ALOAD 0 |
-| `local/lito381/server/BattleStormEyeStatus` | method snapshot(J)Llocal/lito381/server/BattleStormEyeStatus$Snapshot; insn[51]: left=ALOAD 0 right=LDC Integer:156 |
-| `local/lito381/server/BattleStormShotStatus` | method snapshot(J)Llocal/lito381/server/BattleStormShotStatus$Snapshot; insn[51]: left=ALOAD 0 right=LDC Integer:166 |
-| `local/lito381/server/BattleStrikerGale` | method damageAfterStatus(IZZ)I insn[21]: left=DMUL right=LDC str:"STRIKER_DMG2" |
+| `local/lito381/server/BattleStormEyeStatus` | method snapshot(J)Llocal/lito381/server/BattleStormEyeStatus$Snapshot; insn[51]: left=ALOAD 0 right=CONST Integer:156 |
+| `local/lito381/server/BattleStormShotStatus` | method snapshot(J)Llocal/lito381/server/BattleStormShotStatus$Snapshot; insn[51]: left=ALOAD 0 right=CONST Integer:166 |
+| `local/lito381/server/BattleStrikerGale` | method damageAfterStatus(IZZ)I insn[21]: left=DMUL right=CONST str:"STRIKER_DMG2" |
 | `local/lito381/server/BattleTimeAttackEncounter` | field sourceProcEncounterGeneration:Ljava/lang/Object;: only right |
 | `local/lito381/server/BattleTimeAttackEncounter$Monster` | method damage(IZ)Llocal/lito381/server/BattleTimeAttackEncounter$Damage; insn[6]: left=IFEQ L1 right=ALOAD 0 |
 | `local/lito381/server/BattleTimedStatus` | class innerClasses: left=local/lito381/server/BattleTimedStatus$1\|\|\|0x1008; local/lito381/server/BattleTimedStatus$Brave\|local/lito381/server/BattleTimedStatus\|Brave\|0x18; local/lito381/server/BattleTimedStatus$Breath\|local/lito381/server/BattleTimedStatus\|Breath\|0… right=local/lito381/server/BattleTimedStatus$1\|\|\|0x1008; local/lito381/server/BattleTimedStatus$Brave\|local/lito381/server/BattleTimedStatus\|Brave\|0x18; local/lito381/server/BattleTimedStatus$Breath\|local/lito381/server/BattleTimedStatus\|Breath\|0… |
 | `local/lito381/server/BattleTurnUndead` | method magicLevel(II)I insn[0]: left=ILOAD 1 right=ILOAD 0 |
 | `local/lito381/server/BattleWeaponBreak` | method damageAfterStacks(II)I insn[14]: left=ILOAD 0 right=ILOAD 1 |
-| `local/lito381/server/BattleWindShotStatus` | method snapshot(J)Llocal/lito381/server/BattleWindShotStatus$Snapshot; insn[51]: left=ILOAD 7 right=LDC Integer:149 |
+| `local/lito381/server/BattleWindShotStatus` | method snapshot(J)Llocal/lito381/server/BattleWindShotStatus$Snapshot; insn[51]: left=ILOAD 7 right=CONST Integer:149 |
 | `local/lito381/server/CaptureLog` | class nestMembers: left=local/lito381/server/CaptureLog$Connection right= |
-| `local/lito381/server/ClassicWorldAdenToiCatalog` | method <clinit>()V insn[279]: left=LDC str:"5DFCF849F13FC240637C137DECDBD146F732D24E7A82EF687F7CF80F595B182F" right=LDC str:"53F6D1C7AA4597C73DF8D1708B301B47756CCBE8FF7784448CA5A5CDEE1CBD7D" |
-| `local/lito381/server/ClassicWorldIvoryTowerCatalog` | method <clinit>()V insn[183]: left=LDC str:"34D2B2A2470E3494509B5146EB2533B5D82C182CAC50B5AE6DDD2C9C78D01657" right=LDC str:"5B0053AF99F0F66A103D8D292E68118924C5709BD9B16FBD189F7A9E460B593C" |
+| `local/lito381/server/ClassicWorldAdenToiCatalog` | method <clinit>()V insn[279]: left=CONST str:"5DFCF849F13FC240637C137DECDBD146F732D24E7A82EF687F7CF80F595B182F" right=CONST str:"53F6D1C7AA4597C73DF8D1708B301B47756CCBE8FF7784448CA5A5CDEE1CBD7D" |
+| `local/lito381/server/ClassicWorldIvoryTowerCatalog` | method <clinit>()V insn[183]: left=CONST str:"34D2B2A2470E3494509B5146EB2533B5D82C182CAC50B5AE6DDD2C9C78D01657" right=CONST str:"5B0053AF99F0F66A103D8D292E68118924C5709BD9B16FBD189F7A9E460B593C" |
 | `local/lito381/server/ClassicWorldMapCatalog` | method forMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap; insn[0]: left=GETSTATIC local/lito381/server/ClassicWorldMapCatalog.MAPS:Ljava/util/Map; right=ILOAD 0 |
 | `local/lito381/server/ClassicWorldMonsterPopulation` | method actionLocked(Llocal/lito381/server/ClassicWorldMonsterPopulation$Actor;J)Z insn[17]: left=IFNE L0 right=ALOAD 0 |
 | `local/lito381/server/ClassicWorldMonsterPopulation$Actor` | method snapshot()Llocal/lito381/server/ClassicWorldMonsterPopulation$Snapshot; insn[57]: left=ARETURN right=ALOAD 0 |
@@ -229,19 +242,19 @@
 | `local/lito381/server/ClientSession$PendingPetRename` | field sourceCompanionCallback:Ljava/lang/Object;: only right |
 | `local/lito381/server/ClientSession$PendingSlaveTarget` | field sourceCompanionCallback:Ljava/lang/Object;: only right |
 | `local/lito381/server/CombatCompanionSpells` | method shock(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;Ljava/util/function/IntUnaryOperator;)Z insn[178]: left=INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$ShockStunSpell.effectiveMpCost(II)I right=INVOKESTATIC local/lito381/server/NativeSkillConsumptionBridges.ShockStunSpell_effectiveMpCost_III(Llocal/lito381/server/BattleSpellCatalog$ShockStunSpell;II)I |
-| `local/lito381/server/CombatCurseLifecycle$Removal` | method drain(Z)V: left=TRY L55 L56 L57    right=TRY L57 L58 L59    |
+| `local/lito381/server/CombatCurseLifecycle$Removal` | method drain(Z)V: left=TRY L55 L56 L57 java/lang/Throwable   right=TRY L57 L58 L59 java/lang/Throwable   |
 | `local/lito381/server/CombatCurseLifecycle$Target` | field nativeRoleOwner:Ljava/lang/Object;: only right |
-| `local/lito381/server/CombatDatabase` | method load(Llocal/lito381/server/ServerConfig;)V insn[0]: left=GETSTATIC local/lito381/server/CombatDatabase.current:Llocal/lito381/server/CombatDatabase$Snapshot; right=ACONST_NULL |
+| `local/lito381/server/CombatDatabase` | method load(Llocal/lito381/server/ServerConfig;)V insn[0]: left=GETSTATIC local/lito381/server/CombatDatabase.current:Llocal/lito381/server/CombatDatabase$Snapshot; right=CONST null |
 | `local/lito381/server/CombatMonsterCurseLifecycle` | method damageOwner(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClassicWorldMonsterPopulation$PoisonUpdate;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/ClientSession; insn[7]: left=ARETURN right=ALOAD 3 |
 | `local/lito381/server/CombatMonsterCurseLifecycle$Context` | method valid()Z insn[7]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/CombatNpcDamageQueue$Queue` | field sourceDamageLifetime:Ljava/lang/Object;: only right |
 | `local/lito381/server/CombatNpcDebuffs` | method negative(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell;I)Z insn[287]: left=INVOKEINTERFACE local/lito381/server/BattleSpellCatalog$TargetNegativeStatusSpell.effectiveMpCost(I)I itf right=ALOAD 0 |
-| `local/lito381/server/CombatPoisonAtomic` | method npc(Llocal/lito381/server/ClientSession;JIIIJLjava/lang/String;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/CombatPoisonAtomic$NpcState;: left=TRY L1 L3 L4    right=TRY L2 L4 L5    |
-| `local/lito381/server/CombatPoisonLifecycle` | method battle(Llocal/lito381/server/ClientSession;ILlocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=TRY L4 L9 L10    right=TRY L5 L10 L11    |
+| `local/lito381/server/CombatPoisonAtomic` | method npc(Llocal/lito381/server/ClientSession;JIIIJLjava/lang/String;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/CombatPoisonAtomic$NpcState;: left=TRY L1 L3 L4 java/lang/Throwable   right=TRY L2 L4 L5 java/lang/Throwable   |
+| `local/lito381/server/CombatPoisonLifecycle` | method battle(Llocal/lito381/server/ClientSession;ILlocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)V: left=TRY L4 L9 L10 java/lang/Throwable   right=TRY L5 L10 L11 java/lang/Throwable   |
 | `local/lito381/server/CombatPoisonLifecycle$Context` | method valid()Z insn[49]: left=IRETURN right=ALOAD 0 |
 | `local/lito381/server/CombatPoisonLifecycle$Lease` | field sourceCombatOrigin:Ljava/lang/Object;: only right |
 | `local/lito381/server/CombatPoisonLifecycle$State` | field sourceNpcOwner:Ljava/lang/Object;: only right |
-| `local/lito381/server/CombatRules` | method <clinit>()V insn[0]: left=BIPUSH 28 right=BIPUSH 32 |
+| `local/lito381/server/CombatRules` | method <clinit>()V insn[0]: left=CONST Integer:28 right=CONST Integer:32 |
 | `local/lito381/server/CombatWorldCommit` | method owner(Llocal/lito381/server/CombatMonsterCurseLifecycle$Context;)Llocal/lito381/server/ClientSession; insn[7]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/CombatWorldCommit$Plan` | class innerClasses: left=local/lito381/server/CombatWorldCommit$Doll\|local/lito381/server/CombatWorldCommit\|Doll\|0x18; local/lito381/server/CombatWorldCommit$Physical\|local/lito381/server/CombatWorldCommit\|Physical\|0x18; local/lito381/server/CombatWorldCommit$Plan\|… right=local/lito381/server/CombatWorldCommit$Doll\|local/lito381/server/CombatWorldCommit\|Doll\|0x18; local/lito381/server/CombatWorldCommit$Physical\|local/lito381/server/CombatWorldCommit\|Physical\|0x18; local/lito381/server/CombatWorldCommit$Plan\|… |
 | `local/lito381/server/GameHub` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/ArenaMapCatalog$Arena\|local/lito381/server/ArenaMapCatalog\|Arena\|0x18; local/lito381/serve… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/ArenaMapCatalog$Arena\|local/lito381/server/ArenaMapCatalog\|Arena\|0x18; local/lito381/serve… |
@@ -249,12 +262,12 @@
 | `local/lito381/server/GameHub$MonsterAiTick` | field sourceCombatOrigin:Ljava/lang/Object;: only right |
 | `local/lito381/server/GameHub$RentalBattleHandoff` | method inventory()Llocal/lito381/server/RuntimeInventory; insn[3]: left=ARETURN right=ALOAD 0 |
 | `local/lito381/server/GameStateStore` | method ensureRankingSnapshot()V insn[1]: left=INVOKEVIRTUAL local/lito381/server/GameStateStore.currentRankingBoundary()Ljava/time/ZonedDateTime; right=INVOKESTATIC local/lito381/server/LiveBattleStats.beforeSnapshot(Llocal/lito381/server/GameStateStore;)V |
-| `local/lito381/server/InventoryCatalog$Definition` | method controlAbilityType()I insn[2]: left=LDC Long:20288 right=LDC Long:120284 |
-| `local/lito381/server/InventoryCatalog$NativeArmorStatus` | method <init>(IIIIIIIIIIIIIIIZIIIIIIIIIII)V insn[5]: left=SIPUSH 255 right=LDC Integer:2147483647 |
+| `local/lito381/server/InventoryCatalog$Definition` | method controlAbilityType()I insn[2]: left=CONST Long:20288 right=CONST Long:120284 |
+| `local/lito381/server/InventoryCatalog$NativeArmorStatus` | method <init>(IIIIIIIIIIIIIIIZIIIIIIIIIII)V insn[5]: left=CONST Integer:255 right=CONST Integer:2147483647 |
 | `local/lito381/server/LegacyMySqlRepository` | method <init>(Ljava/nio/file/Path;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;DZLjava/lang/String;)V insn[33]: left=INVOKEVIRTUAL java/util/Properties.load(Ljava/io/Reader;)V right=DUP2 |
 | `local/lito381/server/LiToGmCommands` | method handle(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Z insn[90]: left=INVOKEINTERFACE local/lito381/server/AccountRepository.accessLevel(Ljava/lang/String;)I itf right=ALOAD 0 |
 | `local/lito381/server/LiToItemDetails` | field SOURCE:Ljava/lang/reflect/Method;: only right |
-| `local/lito381/server/LitoMapRepository` | method <init>(Llocal/lito381/server/ServerConfig;)V insn[65]: left=LDC str:"URL1" right=ALOAD 2 |
+| `local/lito381/server/LitoMapRepository` | method <init>(Llocal/lito381/server/ServerConfig;)V insn[65]: left=CONST str:"URL1" right=ALOAD 2 |
 | `local/lito381/server/Main` | method accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V: length left=1 right=2 |
 | `local/lito381/server/MemoryAccountRepository` | field accessLevels:Ljava/util/concurrent/ConcurrentHashMap;: only left |
 | `local/lito381/server/NativeAcceptedHpCompletion` | method enqueue(Llocal/lito381/server/NativePlayerCommit$Frame;)Llocal/lito381/server/NativeAcceptedHpCompletion; insn[22]: left=ALOAD 3 right=LABEL L1 |
@@ -262,7 +275,7 @@
 | `local/lito381/server/NativeAcceptedState` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeAcceptedState$Incoming\|local/lito381/server/NativeAcceptedState\|Incoming\|0x18; local/lito381/server/NativeAcceptedState$Publication… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeAcceptedState$Incoming\|local/lito381/server/NativeAcceptedState\|Incoming\|0x18; local/lito381/server/NativeAcceptedState$Publication… |
 | `local/lito381/server/NativeAreaMaterialAction` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/BattleCompanion$Snapshot\|local/lito381/server/BattleCompanion\|Snapshot\|0x18; local/lito381… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/BattleCompanion$Snapshot\|local/lito381/server/BattleCompanion\|Snapshot\|0x18; local/lito381… |
 | `local/lito381/server/NativeCancellationMaterialAction` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$CancellationSpell\|local/lito381/server/BattleSpellCatalog\|CancellationSpell\|0x18; local/lito381/server/CombatPoisonLif… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$CancellationSpell\|local/lito381/server/BattleSpellCatalog\|CancellationSpell\|0x18; local/lito381/server/CombatPoisonLif… |
-| `local/lito381/server/NativeCancellationSpeedImmunity` | method magic(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/BattleTimedStatus$MagicCancellation;: left=TRY L5 L6 L8    right=TRY L15 L16 L23    |
+| `local/lito381/server/NativeCancellationSpeedImmunity` | method magic(Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/ClientSession;Llocal/lito381/server/CombatPoisonLifecycle$Scope;)Llocal/lito381/server/BattleTimedStatus$MagicCancellation;: left=TRY L5 L6 L8 java/lang/Throwable   right=TRY L15 L16 L23 java/lang/Throwable   |
 | `local/lito381/server/NativeCastMaterial` | class nestMembers: left=local/lito381/server/NativeCastMaterial$Cast,local/lito381/server/NativeCastMaterial$ItemView right=local/lito381/server/NativeCastMaterial$Cast,local/lito381/server/NativeCastMaterial$Effect,local/lito381/server/NativeCastMaterial$ItemView |
 | `local/lito381/server/NativeCastMaterial$Cast` | class innerClasses: left=local/lito381/server/NativeCastMaterial$Cast\|local/lito381/server/NativeCastMaterial\|Cast\|0x18; local/lito381/server/NativeDeItemApplication$Owner\|local/lito381/server/NativeDeItemApplication\|Owner\|0x18; local/lito381/server/NativeDeItemTra… right=local/lito381/server/NativeCastMaterial$Cast\|local/lito381/server/NativeCastMaterial\|Cast\|0x18; local/lito381/server/NativeCastMaterial$Effect\|local/lito381/server/NativeCastMaterial\|Effect\|0x608; local/lito381/server/NativeDeItemApplicatio… |
 | `local/lito381/server/NativeCastMaterialPolicy` | method nativeOriginalGm(Llocal/lito381/server/ClientSession;)Z: left=TRY L11 L13 L18 java/lang/Throwable   right=TRY L9 L11 L12 java/lang/Throwable   |
@@ -273,7 +286,7 @@
 | `local/lito381/server/NativeCombatOrigin` | method contextValid(ZLjava/lang/Object;)Z insn[11]: left=ASTORE 3 right=ASTORE 2 |
 | `local/lito381/server/NativeCompanionCallbacks` | method advance(Ljava/lang/Object;)V insn[2]: left=ASTORE 2 right=ASTORE 1 |
 | `local/lito381/server/NativeCompanionCommands` | method registered(Llocal/lito381/server/ClientSession;)Z insn[40]: left=IF_ACMPEQ L3 right=IF_ACMPNE L3 |
-| `local/lito381/server/NativeCompanionCommit` | method valid(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativePlayerCommit$Binding;)Z: left=TRY L4 L9 L10    right=TRY L4 L8 L9    |
+| `local/lito381/server/NativeCompanionCommit` | method valid(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativePlayerCommit$Binding;)Z: left=TRY L4 L9 L10 java/lang/Throwable   right=TRY L4 L8 L9 java/lang/Throwable   |
 | `local/lito381/server/NativeCompanionMutation` | method current(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Llocal/lito381/server/BattleCompanion;)Z insn[9]: left=ASTORE 3 right=DUP |
 | `local/lito381/server/NativeDeActorState` | method acquire(Llocal/lito381/server/BattleTimedStatus;)Llocal/lito381/server/NativeDeActorState$Lease; insn[1]: left=ASTORE 1 right=DUP |
 | `local/lito381/server/NativeDeActorState$1` | field val$arrayList:Ljava/util/ArrayList;: only left |
@@ -306,7 +319,7 @@
 | `local/lito381/server/NativeDeChatTable` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeChatScope$Data\|local/lito381/server/NativeDeChatScope\|Data\|0x18; local/lito381/server/NativeDeChatScope$Logs\|local/lito381/server… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19 |
 | `local/lito381/server/NativeDeChatTimer` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeChatScope$Clock\|local/lito381/server/NativeDeChatScope\|Clock\|0x18; local/lito381/server/NativeDeChatScope$Logs\|local/lito381/serv… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeChatTimer$RunSequenceTask\|local/lito381/server/NativeDeChatTimer\|RunSequenceTask\|0x12 |
 | `local/lito381/server/NativeDeChatTimer$RunSequenceTask` | class innerClasses: left=local/lito381/server/NativeDeChatScope$Pool$ShutdownDiscardable\|local/lito381/server/NativeDeChatScope$Pool\|ShutdownDiscardable\|0x608; local/lito381/server/NativeDeChatScope$Pool\|local/lito381/server/NativeDeChatScope\|Pool\|0x18; local/lito3… right=local/lito381/server/NativeDeChatScope$Pool$ShutdownDiscardable\|local/lito381/server/NativeDeChatScope$Pool\|ShutdownDiscardable\|0x609; local/lito381/server/NativeDeChatTimer$RunSequenceTask\|local/lito381/server/NativeDeChatTimer\|RunSequence… |
-| `local/lito381/server/NativeDeChatWire` | method content(Llocal/lito381/server/NativeDeVisibilityPacket;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)[B: left=TRY L0 L6 L7    right=TRY L0 L5 L6    |
+| `local/lito381/server/NativeDeChatWire` | method content(Llocal/lito381/server/NativeDeVisibilityPacket;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)[B: left=TRY L0 L6 L7 java/lang/Throwable   right=TRY L0 L5 L6 java/lang/Throwable   |
 | `local/lito381/server/NativeDeClientViewer` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeCorpseTimers$Owner\|local/lito381/server/NativeDeCorpseTimers\|Owner\|0x18; local/lito381/server/NativeDeDeletionPorts$ObjectRef\|loc… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeCorpseTimers$Owner\|local/lito381/server/NativeDeCorpseTimers\|Owner\|0x18; local/lito381/server/NativeDeDeletionPorts$ObjectRef\|loc… |
 | `local/lito381/server/NativeDeControlCatalog` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\|local/lito381/server/NativeDeControlCatalog\|Abilities\|0x18; local/lito381/server/NativeDeControlCatalog$… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Abilities\|local/lito381/server/NativeDeControlCatalog\|Abilities\|0x18; local/lito381/server/NativeDeControlCatalog$… |
 | `local/lito381/server/NativeDeControlCatalog$Names` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Names\|local/lito381/server/NativeDeControlCatalog\|Names\|0x18; local/lito381/server/NativeDeInitializerKernel$Name\|… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeControlCatalog$Names\|local/lito381/server/NativeDeControlCatalog\|Names\|0x18; local/lito381/server/NativeDeInitializerKernel$Name\|… |
@@ -341,7 +354,7 @@
 | `local/lito381/server/NativeDeInstanceState` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeDeletionPorts$ObjectRef\|local/lito381/server/NativeDeDeletionPorts\|ObjectRef\|0x608; local/lito381/server/NativeDeDeletionPorts$Pa… right=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\|local/lito381/server/NativeDeInstanceState\|DeAiWorkerTask\|0x12; local/lito381/server/NativeDeInstanceState$DeRepathThrottle\|local/lito381/server/NativeDeInstanceState\|DeRepathThrottl… |
 | `local/lito381/server/NativeDeInstanceState$DeAiWorkerTask` | class innerClasses: left=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\|local/lito381/server/NativeDeInstanceState\|DeAiWorkerTask\|0x12; local/lito381/server/NativeDeLiveAiScope$Pool$ShutdownDiscardable\|local/lito381/server/NativeDeLiveAiScope$Pool\|Shutdo… right=local/lito381/server/NativeDeInstanceState$DeAiWorkerTask\|local/lito381/server/NativeDeInstanceState\|DeAiWorkerTask\|0x12; local/lito381/server/NativeDeLiveAiScope$Pool$ShutdownDiscardable\|local/lito381/server/NativeDeLiveAiScope$Pool\|Shutdo… |
 | `local/lito381/server/NativeDeItemAbility` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019; local/lito381/server/NativeDeItemMetadata$Lo… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019 |
-| `local/lito381/server/NativeDeItemApplication` | method install(Llocal/lito381/server/GameHub;Llocal/lito381/server/NativeDeItemTemplatesResources$Snapshot;Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot;)Llocal/lito381/server/NativeDeItemApplication;: left=TRY L12 L15 L16    right=TRY L11 L14 L15    |
+| `local/lito381/server/NativeDeItemApplication` | method install(Llocal/lito381/server/GameHub;Llocal/lito381/server/NativeDeItemTemplatesResources$Snapshot;Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot;)Llocal/lito381/server/NativeDeItemApplication;: left=TRY L12 L15 L16 java/lang/Throwable   right=TRY L11 L14 L15 java/lang/Throwable   |
 | `local/lito381/server/NativeDeItemApplication$Owner` | method adopt(Llocal/lito381/server/RuntimeInventory;)V insn[32]: left=ASTORE 3 right=DUP |
 | `local/lito381/server/NativeDeItemBlessStatsTable` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019 |
 | `local/lito381/server/NativeDeItemCommonEnchantTable` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019; local/lito381/server/NativeDeItemDefinitions… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDeItemAbility$AbilityType\|local/lito381/server/NativeDeItemAbility\|AbilityType\|0x4019 |
@@ -398,7 +411,7 @@
 | `local/lito381/server/NativeDeObjectScope$World` | method updateObjectSector(Llocal/lito381/server/NativeDeObjectFields;IIIIII)V insn[2]: left=IFNE L0 right=IFEQ L0 |
 | `local/lito381/server/NativeDePerceptionAccess` | method Pc_tryAddKnownObject(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z insn[2]: left=IFNE L0 right=IFEQ L0 |
 | `local/lito381/server/NativeDePerceptionBadText` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeDePerceptionResource$File\|local/lito381/server/NativeDePerceptionResource\|File\|0x18; local/lito381/server/NativeDePerceptionResourc… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19 |
-| `local/lito381/server/NativeDePerceptionControls` | method load()Llocal/lito381/server/NativeDePerceptionControls$Data;: left=TRY L1 L3 L4    right=TRY L1 L3 L4 java/lang/Throwable   |
+| `local/lito381/server/NativeDePerceptionControls` | method load()Llocal/lito381/server/NativeDePerceptionControls$Data;: left=TRY L0 L6 L7 java/io/IOException   right=TRY L5 L6 L7 java/lang/Throwable   |
 | `local/lito381/server/NativeDePerceptionEmblem` | class innerClasses: left= right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19 |
 | `local/lito381/server/NativeDePerceptionJobs` | method owner(Llocal/lito381/server/NativeDeWorldContext;)Llocal/lito381/server/NativeDePerceptionJobs$Owner; insn[5]: left=ASTORE 2 right=DUP |
 | `local/lito381/server/NativeDePerceptionJobs$Task` | method cancel()V insn[1]: left=ASTORE 1 right=DUP |
@@ -412,7 +425,7 @@
 | `local/lito381/server/NativeDeShopData` | method isInRange(II)Z insn[34]: left=IF_ICMPGT L3 right=IF_ICMPLE L4 |
 | `local/lito381/server/NativeDeShopResources` | method lambda$read$#0(Ljava/lang/Object;)I: only left |
 | `local/lito381/server/NativeDeShopTable` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609; local/lito381/server/NativeDeTerrainScope$Database\|local/lito381/server/NativeDeTerrainScope\|Database\|0x18; loc… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; java/util/Map$Entry\|java/util/Map\|Entry\|0x609 |
-| `local/lito381/server/NativeDeSpriteCatalog` | method read(Ljava/sql/Connection;Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;Llocal/lito381/server/NativeDeSpriteCatalog$Reporter;)Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;: left=TRY L2 L12 L13    right=TRY L2 L13 L14 java/lang/Throwable   |
+| `local/lito381/server/NativeDeSpriteCatalog` | method read(Ljava/sql/Connection;Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;Llocal/lito381/server/NativeDeSpriteCatalog$Reporter;)Llocal/lito381/server/NativeDeSpriteCatalog$Catalog;: left=TRY L2 L12 L13 java/lang/Throwable   right=TRY L2 L13 L14 java/lang/Throwable   |
 | `local/lito381/server/NativeDeTerrainPoint` | method isInScreen(Llocal/lito381/server/NativeDeTerrainPoint;)Z insn[41]: left=GOTO L3 right=IRETURN |
 | `local/lito381/server/NativeDeTerrainResources` | method assets()Ljava/util/Map;: left=TRY L3 L5 L6 java/lang/Throwable   right=TRY L3 L6 L7 java/lang/Throwable   |
 | `local/lito381/server/NativeDeTerrainResources$1` | field val$checked:Ljava/security/DigestInputStream;: only right |
@@ -485,7 +498,7 @@
 | `local/lito381/server/NativePetMaterialAction` | method taming(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$TamingSpell;)V insn[1]: left=ALOAD 0 right=ALOAD 1 |
 | `local/lito381/server/NativePetWorldLifetime` | method lambda$run$#0(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePetWorldLifetime$Target;[BLlocal/lito381/server/NativeSelfCastAction$Task;)V: only right |
 | `local/lito381/server/NativePlayerActionScope` | method blocked(Ljava/lang/Runnable;)Llocal/lito381/server/NativePlayerActionScope$Root; insn[2]: left=IFNE L0 right=IFEQ L0 |
-| `local/lito381/server/NativePlayerActionScope$Root` | method finish()V: left=TRY L7 L15 L16    right=TRY L7 L13 L14    |
+| `local/lito381/server/NativePlayerActionScope$Root` | method finish()V: left=TRY L7 L15 L16 java/lang/Throwable   right=TRY L7 L13 L14 java/lang/Throwable   |
 | `local/lito381/server/NativePlayerCommit` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleAbilityStatus$IllusionAvatar\|local/lito381/server/BattleAbilityStatus\|IllusionAvatar\|0x18; local/lito381/server/BattleCompanion$Kin… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleAbilityStatus$IllusionAvatar\|local/lito381/server/BattleAbilityStatus\|IllusionAvatar\|0x18; local/lito381/server/BattleCompanion$Kin… |
 | `local/lito381/server/NativePlayerCommit$Binding` | method capture(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativePlayerCommit$Binding; insn[7]: left=DUP right=ASTORE 1 |
 | `local/lito381/server/NativePlayerCommit$Queue` | method claim()Llocal/lito381/server/NativePlayerCommit$Event; insn[19]: left=DUP right=ASTORE 1 |
@@ -495,7 +508,7 @@
 | `local/lito381/server/NativePlayerVitals` | method calculate(IIIIZ)Llocal/lito381/server/NativePlayerVitals$Result; insn[8]: left=LSTORE 6 right=LSTORE 5 |
 | `local/lito381/server/NativePoisonMaterialAction` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$ParalysisSpell\|local/lito381/server/BattleSpellCatalog\|ParalysisSpell\|0x18; local/lito381/server/BattleSpellCatalog$Po… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/BattleSpellCatalog$ParalysisSpell\|local/lito381/server/BattleSpellCatalog\|ParalysisSpell\|0x18; local/lito381/server/BattleSpellCatalog$Po… |
 | `local/lito381/server/NativeProcEncounterCatalog` | method load(Llocal/lito381/server/ServerConfig;)V insn[8]: left=ASTORE 2 right=ASTORE 1 |
-| `local/lito381/server/NativeProcEncounterPublication` | method capture(Ljava/util/List;Llocal/lito381/server/NativeProcEncounterPublication$Context;)Ljava/util/List;: left=TRY L1 L5 L6    right=TRY L1 L6 L7    |
+| `local/lito381/server/NativeProcEncounterPublication` | method capture(Ljava/util/List;Llocal/lito381/server/NativeProcEncounterPublication$Context;)Ljava/util/List;: left=TRY L1 L5 L6 java/lang/Throwable   right=TRY L1 L6 L7 java/lang/Throwable   |
 | `local/lito381/server/NativeProcEncounterPublication$Context` | method valid()Z insn[6]: left=ASTORE 2 right=DUP |
 | `local/lito381/server/NativeProcHealBonus` | method load(Llocal/lito381/server/ServerConfig;)V insn[7]: left=ASTORE 2 right=ASTORE 1 |
 | `local/lito381/server/NativeProcHealingCompanion` | method apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeArmorProc$Rule;)Z insn[14]: left=ASTORE 4 right=ASTORE 3 |
@@ -526,7 +539,7 @@
 | `local/lito381/server/NativeSourceSkillConsumptionMath` | method mpCost(IIIIZ)I insn[96]: left=LOOKUPSWITCH default=L25 keys=1,12,13,19,26,42,43,54 labels=L13,L17,L19,L15,L8,L21,L10,L23 right=LOOKUPSWITCH default=L17 keys=1,12,13,19,26,42,43,54 labels=L11,L13,L14,L12,L8,L15,L9,L16 |
 | `local/lito381/server/NativeSourceSkillDelay` | class innerClasses: left=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeReuseLog$Logger\|local/lito381/server/NativeReuseLog\|Logger\|0x608; local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/s… right=java/lang/invoke/MethodHandles$Lookup\|java/lang/invoke/MethodHandles\|Lookup\|0x19; local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/server/NativeSourceSkillDelay\|Lease\|0x19 |
 | `local/lito381/server/NativeSourceSkillDelay$Lease` | class innerClasses: left=local/lito381/server/NativeReuseLog$Logger\|local/lito381/server/NativeReuseLog\|Logger\|0x608; local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/server/NativeSourceSkillDelay\|Lease\|0x19 right=local/lito381/server/NativeSourceSkillDelay$Lease\|local/lito381/server/NativeSourceSkillDelay\|Lease\|0x19 |
-| `local/lito381/server/NativeWeaponBreakMaterialAction` | method battle(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V insn[1]: left=ALOAD 0 right=LDC str:"phase" |
+| `local/lito381/server/NativeWeaponBreakMaterialAction` | method battle(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;)V insn[1]: left=ALOAD 0 right=CONST str:"phase" |
 | `local/lito381/server/Protocol` | method attackRequest([BI)Llocal/lito381/server/Protocol$AttackRequest; insn[0]: left=ILOAD 1 right=ALOAD 0 |
 | `local/lito381/server/ResourceDatabase` | method load(Llocal/lito381/server/ServerConfig;)V insn[0]: left=GETSTATIC local/lito381/server/ResourceDatabase.current:Llocal/lito381/server/ResourceDatabase$Snapshot; right=ALOAD 0 |
 | `local/lito381/server/RuntimeInventory` | field items:Ljava/util/LinkedHashMap;: only left |

@@ -26,6 +26,7 @@ import org.objectweb.asm.tree.ClassNode;
 public final class SemanticDiff {
     enum Status {
         SAME,
+        SAME_EFFECTS,
         DIFF,
         ONLY_LEFT,
         ONLY_RIGHT
@@ -37,6 +38,7 @@ public final class SemanticDiff {
         final ClassComparer.FirstDiff firstDiff;
         final boolean byteSame;
         final boolean allowMethodsApplied;
+        final Map<String, ClassComparer.FirstDiff> effectsMethods = new LinkedHashMap<>();
 
         ClassRow(
                 String name,
@@ -94,6 +96,7 @@ public final class SemanticDiff {
             }
         }
         Map<String, Set<String>> validatedAllow = validateAllowMethods(parsed, names, allow);
+        validateEffectsMethods(parsed, names, right, allow);
 
         List<ClassRow> rows = new ArrayList<>();
         EnumMap<Status, Integer> counts = new EnumMap<>(Status.class);
@@ -112,6 +115,7 @@ public final class SemanticDiff {
             }
             Set<String> allowedKeys = validatedAllow.getOrDefault(name, Set.of());
             boolean allowThis = !allowedKeys.isEmpty() && allow != null;
+            Set<String> effects = parsed.effectsMethods.getOrDefault(name, Set.of());
             if (allowThis) {
                 allowApplied++;
             }
@@ -125,15 +129,25 @@ public final class SemanticDiff {
                 ClassNode rn = right.readTree(name);
                 ClassNode an = allowThis ? allow.readTree(name) : null;
                 ClassComparer.FirstDiff diff = ClassComparer.compare(
-                        ln, rn, an, allowedKeys, left, right, allowThis ? allow : null);
+                        ln, rn, an, allowedKeys, left, right, allowThis ? allow : null, effects);
                 row = diff == null
-                        ? new ClassRow(name, Status.SAME, null, bytesEqual, allowThis)
+                        ? new ClassRow(name, effects.isEmpty() ? Status.SAME : Status.SAME_EFFECTS, null, bytesEqual, allowThis)
                         : new ClassRow(name, Status.DIFF, diff, bytesEqual, allowThis);
+            }
+            // Report approved methods even if class metadata or an earlier unlisted method differs.
+            for (String method : effects) {
+                JarIndex target = effectsTarget(parsed, name, method, right, allow);
+                var lm = exactMethod(left, name, method);
+                var rm = exactMethod(target, name, method);
+                row.effectsMethods.put(method, lm == null
+                        ? ClassComparer.FirstDiff.of("method", method, null, "only effects target")
+                        : ClassComparer.compareMethod(method, lm, rm, left, target, true));
             }
             rows.add(row);
             counts.put(row.status, counts.get(row.status) + 1);
         }
         String summary = "SUMMARY SAME=" + counts.get(Status.SAME)
+                + " SAME_EFFECTS=" + counts.get(Status.SAME_EFFECTS)
                 + " DIFF=" + counts.get(Status.DIFF)
                 + " ONLY_LEFT=" + counts.get(Status.ONLY_LEFT)
                 + " ONLY_RIGHT=" + counts.get(Status.ONLY_RIGHT)
@@ -149,6 +163,30 @@ public final class SemanticDiff {
             System.out.println("wrote " + parsed.md);
         }
         return 0;
+    }
+
+    private static org.objectweb.asm.tree.MethodNode exactMethod(JarIndex jar, String owner, String wanted) {
+        ClassNode node = jar.readTree(owner);
+        return node == null ? null : node.methods.stream()
+                .filter(m -> (m.name + m.desc).equals(wanted)).findFirst().orElse(null);
+    }
+
+    private static JarIndex effectsTarget(Args parsed, String owner, String method, JarIndex right, JarIndex allow) {
+        return parsed.allowMethods != null && parsed.allowMethods.getOrDefault(owner, Set.of()).contains(method)
+                ? allow : right;
+    }
+
+    private static void validateEffectsMethods(Args parsed, Set<String> names, JarIndex right, JarIndex allow) {
+        for (var entry : parsed.effectsMethods.entrySet()) {
+            if (!names.contains(entry.getKey())) throw new IllegalArgumentException(
+                    "--effects-methods class outside comparison scope: " + entry.getKey());
+            for (String method : entry.getValue()) {
+                if (exactMethod(effectsTarget(parsed, entry.getKey(), method, right, allow), entry.getKey(), method) == null) {
+                    throw new IllegalArgumentException("unmatched --effects-methods entry in effective target: "
+                            + entry.getKey() + "#" + method);
+                }
+            }
+        }
     }
 
     /** Resolve exact allow-right names before producing any successful report. */
@@ -232,6 +270,8 @@ public final class SemanticDiff {
             w.println("  \"right\": " + json(parsed.right.toString()) + ",");
             w.println("  \"allowRight\": "
                     + (parsed.allowRight == null ? "null" : json(parsed.allowRight.toString())) + ",");
+            w.println("  \"effectsMethodsFile\": "
+                    + (parsed.effectsFile == null ? "null" : json(parsed.effectsFile.toString())) + ",");
             w.println("  \"leftClassCount\": " + left.classes.size() + ",");
             w.println("  \"rightClassCount\": " + right.classes.size() + ",");
             w.println("  \"comparedClassCount\": " + rows.size() + ",");
@@ -244,6 +284,7 @@ public final class SemanticDiff {
             w.println("  \"byteSameCount\": " + byteSameCount + ",");
             w.println("  \"counts\": {");
             w.println("    \"SAME\": " + counts.get(Status.SAME) + ",");
+            w.println("    \"SAME_EFFECTS\": " + counts.get(Status.SAME_EFFECTS) + ",");
             w.println("    \"DIFF\": " + counts.get(Status.DIFF) + ",");
             w.println("    \"ONLY_LEFT\": " + counts.get(Status.ONLY_LEFT) + ",");
             w.println("    \"ONLY_RIGHT\": " + counts.get(Status.ONLY_RIGHT) + ",");
@@ -256,6 +297,15 @@ public final class SemanticDiff {
                         + ", \"status\": " + json(row.status.name())
                         + ", \"byteSame\": " + row.byteSame
                         + ", \"allowMethodsApplied\": " + row.allowMethodsApplied);
+                w.print(", \"effectsMethods\": [");
+                int methodIndex = 0;
+                for (var entry : row.effectsMethods.entrySet()) {
+                    if (methodIndex++ > 0) w.print(", ");
+                    w.print("{\"method\": " + json(entry.getKey()) + ", \"status\": "
+                            + json(entry.getValue() == null ? "SAME_EFFECTS" : "DIFF")
+                            + ", \"detail\": " + json(entry.getValue() == null ? null : entry.getValue().oneLine()) + "}");
+                }
+                w.print("]");
                 if (row.firstDiff != null) {
                     w.print(", \"firstDiff\": {");
                     w.print("\"where\": " + json(row.firstDiff.where));
@@ -289,11 +339,12 @@ public final class SemanticDiff {
             Files.createDirectories(out.getParent());
         }
         int same = counts.get(Status.SAME);
+        int sameEffects = counts.get(Status.SAME_EFFECTS);
         int diff = counts.get(Status.DIFF);
-        int intersection = same + diff;
-        int bytesDiffSemanticSame = Math.max(0, same - byteSameCount);
+        int intersection = same + sameEffects + diff;
+        long bytesDiffSemanticSame = rows.stream().filter(r -> r.status == Status.SAME && !r.byteSame).count();
         List<String> lines = new ArrayList<>();
-        lines.add("# 伺服器語意缺口（T020d / Issue #44）");
+        lines.add("# 伺服器語意缺口（T020d／T020i）");
         lines.add("");
         lines.add("以 ASM tree 正規化後比對兩個 JAR 的 `.class`。");
         lines.add("此檔由 `lito伺服器/LiTo381-Server/tools/semantic-diff` 產生。");
@@ -309,6 +360,8 @@ public final class SemanticDiff {
         }
         lines.add("| 產生時間 | " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " |");
         lines.add("| 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |");
+        lines.add("| T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |");
+        lines.add("| effects-methods | " + (parsed.effectsFile == null ? "未啟用" : "`" + mdEscape(parsed.effectsFile.toString()) + "`") + " |");
         lines.add("| 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解（含 annotationDefault 結構化值、指令／區域變數／record 型別註解）、內部類別屬性 |");
         lines.add("");
         lines.add("## 摘要");
@@ -316,12 +369,13 @@ public final class SemanticDiff {
         lines.add("| 狀態 | 數量 | 含義 |");
         lines.add("|---|---:|---|");
         lines.add("| SAME | " + same + " | 兩邊都有，正規化後語意相同 |");
+        lines.add("| SAME_EFFECTS | " + sameEffects + " | 類別其餘比較通過，含明確核准的副作用序列比較 |");
         lines.add("| DIFF | " + diff + " | 兩邊都有，正規化後仍不同 |");
         lines.add("| ONLY_LEFT | " + counts.get(Status.ONLY_LEFT) + " | 只在 left |");
         lines.add("| ONLY_RIGHT | " + counts.get(Status.ONLY_RIGHT) + " | 只在 right |");
-        lines.add("| 交集 SAME+DIFF | " + intersection + " | 兩邊都有的類別 |");
+        lines.add("| 交集 SAME+SAME_EFFECTS+DIFF | " + intersection + " | 兩邊都有的類別 |");
         lines.add("| BYTE_SAME | " + byteSameCount + " | **同一交集**裡 class bytes 完全相同（本輪實測） |");
-        lines.add("| SAME − BYTE_SAME | " + bytesDiffSemanticSame + " | 同一交集：bytes 不同但語意相同 |");
+        lines.add("| SAME 且 bytes 不同 | " + bytesDiffSemanticSame + " | 逐列計算，不含 SAME_EFFECTS |");
         lines.add("| 比較類別 | " + rows.size() + " | left∪right"
                 + (parsed.classes != null ? "（套用 --classes）" : "")
                 + (parsed.exclude != null ? "（套用 --exclude）" : "") + " |");
@@ -331,6 +385,20 @@ public final class SemanticDiff {
         lines.add("- **已驗證**：自我測試見 `tools/semantic-diff/selftest.sh`（含同一 JAR、`-g` vs `-g:none`、改常數、`--exclude`、`--allow-methods`、`--classes` 副檔名／清單／不存在類別、註解 self-vs-self 與只改型別註解）。BYTE_SAME／SAME／DIFF 由本工具對上表 left／right **同一輪**量出。");
         lines.add("- **推測**：DIFF 多半是 javac／反編譯來源／後來手改造成的指令或結構差。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差大致對得上。");
         lines.add("- **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。");
+        lines.add("- **SAME_EFFECTS 限制**：只確認核准摘要相同，不證明參數資料流或分支目的地等價；未列入清單的方法仍比較完整指令。");
+        lines.add("");
+        lines.add("## 核准方法副作用結果");
+        lines.add("");
+        lines.add("此表逐方法獨立比較；即使類別整體 DIFF 也列出，不能用單一方法通過代替整類驗收。");
+        lines.add("");
+        lines.add("| 方法 | 狀態 | 差異 |");
+        lines.add("|---|---|---|");
+        for (ClassRow row : rows) {
+            for (var entry : row.effectsMethods.entrySet()) {
+                lines.add("| `" + row.name + "#" + entry.getKey() + "` | "
+                        + (entry.getValue() == null ? "SAME_EFFECTS | —" : "DIFF | " + mdCell(entry.getValue().oneLine())) + " |");
+            }
+        }
         lines.add("");
         if (parsed.classes != null) {
             lines.add("## --classes 左側 entry 完整性");
@@ -369,7 +437,7 @@ public final class SemanticDiff {
         lines.add("");
         lines.add("本表只報告**這一對 JAR、這一輪交集**的實測：");
         lines.add("");
-        lines.add("- 交集 SAME+DIFF = **" + intersection + "**。");
+        lines.add("- 交集 SAME+SAME_EFFECTS+DIFF = **" + intersection + "**。");
         lines.add("- 其中 BYTE_SAME = **" + byteSameCount + "**（本輪 bytes 全同）。");
         lines.add("- SAME = **" + same + "**，故 bytes 不同但語意相同 = **" + bytesDiffSemanticSame + "**（本輪實測，含 debug／合成名／常數池編號等）。");
         lines.add("- DIFF = **" + diff + "**（第一處差異：method " + methodDiff + "、field " + fieldDiff
@@ -489,6 +557,8 @@ public final class SemanticDiff {
         Set<String> classes;
         Set<String> exclude;
         Map<String, Set<String>> allowMethods;
+        Path effectsFile;
+        Map<String, Set<String>> effectsMethods = Map.of();
 
         static Args parse(String[] args) throws IOException {
             Args out = new Args();
@@ -503,6 +573,10 @@ public final class SemanticDiff {
                     case "--exclude" -> out.exclude = parseNameList(need(args, ++i, a), "--exclude");
                     case "--allow-methods" -> out.allowMethods = parseAllowMethods(Path.of(need(args, ++i, a)));
                     case "--allow-right" -> out.allowRight = Path.of(need(args, ++i, a));
+                    case "--effects-methods" -> {
+                        out.effectsFile = Path.of(need(args, ++i, a));
+                        out.effectsMethods = parseMethods(out.effectsFile, "--effects-methods");
+                    }
                     case "--help", "-h" -> {
                         usage();
                         System.exit(0);
@@ -555,12 +629,16 @@ public final class SemanticDiff {
         }
 
         private static Map<String, Set<String>> parseAllowMethods(Path file) throws IOException {
+            return parseMethods(file, "--allow-methods");
+        }
+
+        private static Map<String, Set<String>> parseMethods(Path file, String flag) throws IOException {
             if (!Files.isRegularFile(file)) {
-                throw new IllegalArgumentException("--allow-methods file not found: " + file);
+                throw new IllegalArgumentException(flag + " file not found: " + file);
             }
             Map<String, Set<String>> map = new LinkedHashMap<>();
             int n = 0;
-            for (String line : Files.readString(file, StandardCharsets.UTF_8).split("\n")) {
+            for (String line : Files.readString(file, StandardCharsets.UTF_8).replace("\uFEFF", "").split("\n")) {
                 String trimmed = line.trim();
                 if (trimmed.isEmpty() || trimmed.startsWith("#")) {
                     continue;
@@ -568,15 +646,20 @@ public final class SemanticDiff {
                 int hash = trimmed.indexOf('#');
                 if (hash <= 0 || hash == trimmed.length() - 1) {
                     throw new IllegalArgumentException(
-                            "--allow-methods line must be class#nameDescriptor: " + trimmed);
+                            flag + " line must be class#nameDescriptor: " + trimmed);
                 }
                 String cls = normalizeClassName(trimmed.substring(0, hash));
                 String method = trimmed.substring(hash + 1).trim();
+                int comment = method.indexOf('#');
+                if (comment >= 0) method = method.substring(0, comment).trim();
+                if (!method.matches("[^\\s#(]+\\([^\\s]*\\)[^\\s]+")) {
+                    throw new IllegalArgumentException(flag + " line must be class#nameDescriptor: " + trimmed);
+                }
                 map.computeIfAbsent(cls, k -> new LinkedHashSet<>()).add(method);
                 n++;
             }
             if (n == 0) {
-                throw new IllegalArgumentException("--allow-methods produced an empty set");
+                throw new IllegalArgumentException(flag + " produced an empty set");
             }
             return map;
         }
@@ -594,6 +677,7 @@ public final class SemanticDiff {
                     "usage: semantic-diff --left A.jar --right B.jar"
                             + " [--classes file-or-list] [--exclude file-or-list]"
                             + " [--allow-methods file --allow-right C.jar]"
+                            + " [--effects-methods file]"
                             + " [--json out.json] [--md out.md]");
         }
     }
