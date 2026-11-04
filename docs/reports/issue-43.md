@@ -1,33 +1,44 @@
 # Issue #43 / T020b — 戰鬥合併批次（設計）
 
-## 第 3 版（T020b-2：用候選 JAR 產生批次）
-- 從 `task/45` 取得 `reference/candidate-50635f7e.jar`（SHA256 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`，已核對），執行
-  `python3 lito伺服器/LiTo381-Server/tools/semantic-diff/plan_batches.py --candidate <jar> --owned docs/combat-merge/batches.json --diff <task/30 的 class-diff.json> --max 60 --out docs/combat-merge/batches.json`。
-- **已驗證（相依分析）**：303 個外層類別、16 個 SCC，最大 SCC 282 類；拿掉三個核心類別後最大 SCC 仍 248 類。171 個類別用到 107 個既有類別在候選中新增的 518 個成員。所以第 2 版「依相依閉包分批、每批在 src/main 單獨編譯」不可行，做法改為 §6-4 第 3 版：每批在暫存區以候選 JAR 當 classpath 編譯與比對，最後一次 B-land 落地。這也回答了審查 P1-1（跨批引用、只帶入方法的衝突）：暫存驗證下每批都可獨立編譯，整個類別以候選版為目標。
-- **已驗證（T029 允許清單）**：對正式版與候選版的 `ClientSession`、`Protocol` 執行 `javap -c -p`，取正式版中引用 GmPolyMe／SelectionRecovery／SharedPresentationPackets、或名稱為 sendRoomParticipant／litoRoomParticipant／magicDollIcon／magicDollCustomIcon 的方法共 9 個；其中 2 個 sendRoomParticipant 多載與候選相同，其餘 7 個不同，寫入 `docs/combat-merge/t029-methods.txt`（JVM 描述子取自 `javap -s -p`）。
-- 批次：B01（17，asm-only 新類別）、B02–B05（51／51／51／48，有原始碼的新類別）、B06（29，Battle*）、B07（23，Combat*／MaterialAction）、B08（30，其他既有）、B09（3，核心＋T029）。`docs/plans/issue-43.json` 每批 text 寫明範圍、做法、編譯／語意驗收與不適用理由。
+**現行版本：第 4 版**（設計 §6，`docs/combat-merge/batches.json`、`t029-methods.txt`、`docs/plans/issue-43.json`、`tools/semantic-diff/plan_batches.py`）。第 1–3 版的敘述已被取代，只留在 git 歷史。
 
-## 第 2 版（回應 2026-11-04 14:02 審查退回）
-| 審查項 | 處理 |
-|---|---|
-| [P1-1] 相依閉包未固定 | 改為 §6-4 的確定性程序（常數池相依圖 → SCC → 拓撲排序 → 每批 ≤60 裝箱）；同一 SCC 不拆、整個類別以候選版為目標，取消「只帶入方法」。實際批次需要候選 JAR，在 #45 入庫後以 `tools/semantic-diff/plan_batches.py` 產生（本 Issue 第 2 步，T020b-2）。§4 的 ≤30 改為 ≤60，理由寫在 §6-4。 |
-| [P1-2] A／B 重疊 | §6-2：B 擁有 303 個外層類別（`batches.json` 的 `owned_by_B`），A 不得修改；73 個重疊類別在 B3 直接以候選版為目標。T020-close 依賴補上 #31 與「A 修補任務全部完成」（§6-6）。 |
-| [P1-3] 逐批回歸子集與 B3-core 基準 | §6-5：逐項定義範圍、來源、語意、T029、單元測試、回歸子集（新類別批次無適用並說明理由；含既有類別批次跑 targeted＋player 2,400 案）。B3-core 改用方法層級允許清單（`--allow-methods`）對正式版比對，不需要另產合成 JAR；兩邊都改的方法列為手動合成並附 javap 差異。允許清單由 T020b-2 產生。 |
-| [P2-4] 試算證據 | 試算降為「推測，待 T020d」。原始輸入與指令見下。 |
-| [P2-5] 範圍 | 任務擁有者（雲端主控）調整 Issue 範圍：加入 `docs/combat-merge/batches.json`、`docs/combat-merge/t029-methods.txt`、`tools/semantic-diff/plan_batches.py`；繼承自 `task/24` 的檔案（`TASKS.md`、`docs/plans/issue-24.json`、`docs/reports/issue-24.md`、設計 §1–5）在 PR #29 合併前隨本分支存在，PR #29 合併後本分支只剩授權差異。 |
+## 結論
+- 第二階段（B）的 303 個外層類別（候選中共 1,384 個 class entry）分成 9 批：B01 asm-only 新類別 17、B02–B05 有原始碼的新類別 51／51／51／48、B06 Battle 29、B07 Combat／Material 23、B08 其他既有 30、B09 核心 3。
+- 每批只在暫存區 `merge-inputs/50635f7e/staged/` 工作，以候選 JAR＋正式 JAR 當 classpath 獨立編譯，並對候選做語意比對（驗收範圍為完整 `verify_entries`）；最後由 B-land 一次併入 `src/main`，再由 T020-close 跑總比對與全套戰鬥回歸。
+- T029：8 個方法整個採正式版，**沒有需要人工合成的方法**。
 
-## 做了什麼
-- `docs/design/T020-combat-merge.md` §6 改寫（第 2 版）。
-- `docs/combat-merge/batches.json`：確定 `owned_by_B`（303），`batches` 待 T020b-2。
-- `docs/plans/issue-43.json`：T020d（#44）、T020f（#45）、T020b-2、T020e、T020-close。
+## 各版審查回應
+| 審查 | 項目 | 處理（第 4 版狀態） |
+|---|---|---|
+| 14:02 | P1 相依閉包 | 相依分析顯示最大 SCC 282 類，依相依分批不可行；改為暫存區分批（§6-4）。 |
+| 14:02 | P1 A／B 重疊 | `owned_by_B` 歸 B，A 不得修改；收尾依賴 #31 與 A 修補全部完成（§6-2、§6-6）。 |
+| 14:02 | P1 逐批驗收 | 每批 text 寫明範圍、做法、編譯／語意驗收與不適用理由（plans）。 |
+| 14:02 | P2 試算證據 | 降為推測（§6-1）。 |
+| 14:02 | P2 範圍 | 任務擁有者調整 Issue 範圍。 |
+| 14:30 | P1 T029 契約互斥 | 以正規化 javap 逐方法比對後確認：7 個方法正式與候選只差 T029 項（whole-formal），`exitRoomBeforePolyMe(Z)` 只在正式版且等於候選 `exitRoom(Z)`（formal-only-method）。8 個方法都對正式比對要求 SAME，與工具契約一致（§6-5）。 |
+| 14:30 | P1 只驗歷史差異 entry | 每批改為 `verify_entries`（從候選展開外層＋全部 `$` 內部類別，合計 1,384）、`history_entries`（623，僅參考）、`remove_entries`（皆 0）；驗收要求無缺漏、無多出；B-land 與總比對使用同一展開（§6-4、§6-5、§6-6）。 |
+| 14:30 | P2 報告與數字 | 本報告改為第 4 版最終狀態；成員差異數字改由 `plan_batches.py` 計算並寫入 `batches.json`；§6 開頭明訂取代 §4 的 ≤30。 |
 
-## 怎麼驗證
-- 已驗證（審查重算）：303 個外層類別、218 新／85 既有、19 DECOMPILED。
-- 推測：Maven 產物與正式可能有語意差異。雲端試算條件：repo main @ `b6dc4e6`；`LC_ALL=C.UTF-8 mvn -B -q -DskipTests -Dmaven.test.skip=true package`（OpenJDK **21.0.12**，非 17），產物 `target/LiTo381-Server.jar` SHA256 `702194c491c831b0389188f83278c47449ae82c8e24282a8257e4c30e5b6e826`；對 `reference/base-0.6.71.jar`（`e1498871…`）以每批 200 類別執行 `javap -c -p -constants`，把 `#數字` 換成 `#`、連續空白壓成一格後逐類別比較：2,538 共同類別、593 不同、162 解析失敗。輸出僅存在雲端工作階段的暫存區，未提交（依規則，實驗輸出不進 git）。JDK 版本不同、lambda／合成名稱未正規化，因此不能當作已驗證。
+## 已驗證
+- 輸入：候選 `reference/candidate-50635f7e.jar`（取自 `task/45`，SHA256 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`）、正式 `reference/base-0.6.71.jar`（`e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`）、`class-diff.json`（`task/30` @ `31b5233`）。
+- 指令（repo 根目錄，需 JDK 的 `javap` 在 PATH、`LC_ALL=C.UTF-8`）：
+  ```bash
+  python3 lito伺服器/LiTo381-Server/tools/semantic-diff/plan_batches.py \
+    --candidate lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar \
+    --owned docs/combat-merge/batches.json --diff <task/30 的 docs/combat-merge/class-diff.json> \
+    --formal lito伺服器/LiTo381-Server/reference/base-0.6.71.jar \
+    --t029-out docs/combat-merge/t029-methods.txt --max 60 --out docs/combat-merge/batches.json
+  ```
+- 輸出（寫在 `batches.json`）：303 nodes、16 SCC、最大 282、去核心最大 248；候選 entry 1,384；既有 entry 新增成員 107 個 entry／62 個外層類別／518 個成員，171 個外層類別使用它們；各批 `verify_entries` 22／108／135／98／120／323／56／160／362（合計 1,384），`remove_entries` 皆 0；T029 8 個方法與分類。
+- 以 JDK 21 的 javap 執行。正規化規則見腳本 `javap_methods()`。
 
-## 未驗證什麼
-- 實際批次與每批可否單獨編譯（T020b-2，需候選 JAR）。
-- A 階段實際修補量（T020d）。
+## 推測／未驗證
+- Maven 產物與正式的語意差異量（待 #44 T020d）。
+- 各批能否在暫存區編譯成功、反編譯／移植後能否達到 SAME（各批任務驗證）。
+- B-land 後既有單元測試的失敗量（B-land 處理）。
+
+## 產出路徑
+`docs/design/T020-combat-merge.md` §6、`docs/combat-merge/batches.json`、`docs/combat-merge/t029-methods.txt`、`docs/plans/issue-43.json`、`lito伺服器/LiTo381-Server/tools/semantic-diff/plan_batches.py`、`docs/reports/issue-43.md`
 
 ## 給下一棒的提示
-#45 入庫後由雲端主控執行 T020b-2，產生批次與允許清單並建 B 批次 Issue；#44 需支援 `--exclude`、`--allow-methods`。
+B01–B09 等 #44（工具，需支援完整 entry 清單、`--allow-methods` 中不在 `--right` 的方法只和 `--allow-right` 比）與 #45（JAR 入庫）進 main 後由主控建 Issue，可並行。

@@ -55,7 +55,7 @@
    "NativeWeaponBreakBattleCompanion",
    "NativeWeaponBreakTargetLifecycle"
   ],
-  "text": "**本批**：B01，17 個外層類別（new-asm），清單見 `batches.json` 的 `B01`。\n**做法**：CFR 反編譯候選版（標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`），修到能編譯且語意相同。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B01，17 個外層類別（new-asm），清單見 `batches.json` 的 `B01`。\n**做法**：CFR 反編譯候選版（標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`），修到能編譯且語意相同。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B02",
@@ -119,7 +119,7 @@
    "NativeSourceCubeNpc",
    "NativeSourceCubeNpcLease"
   ],
-  "text": "**本批**：B02，51 個外層類別（new-java），清單見 `batches.json` 的 `B02`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B02，51 個外層類別（new-java），清單見 `batches.json` 的 `B02`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B03",
@@ -183,7 +183,7 @@
    "NativeSourceKiringkuPresentation",
    "NativeSourceLightPairLife"
   ],
-  "text": "**本批**：B03，51 個外層類別（new-java），清單見 `batches.json` 的 `B03`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B03，51 個外層類別（new-java），清單見 `batches.json` 的 `B03`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B04",
@@ -247,7 +247,7 @@
    "NativeSourcePlayerFactories",
    "NativeSourcePoisonAudience"
   ],
-  "text": "**本批**：B04，51 個外層類別（new-java），清單見 `batches.json` 的 `B04`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B04，51 個外層類別（new-java），清單見 `batches.json` 的 `B04`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B05",
@@ -308,7 +308,7 @@
    "NativeTamedWorldLifecycle",
    "NativeWindSourceTargets"
   ],
-  "text": "**本批**：B05，48 個外層類別（new-java），清單見 `batches.json` 的 `B05`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B05，48 個外層類別（new-java），清單見 `batches.json` 的 `B05`。\n**做法**：從 `merge-inputs/50635f7e/sources/` 複製（依 `manifest.json`）；混合類別的內部類別由外層 Java 編出。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B06",
@@ -350,7 +350,7 @@
    "BattleWindShackleStatus",
    "BattleWindShotStatus"
   ],
-  "text": "**本批**：B06，29 個外層類別（existing-battle），清單見 `batches.json` 的 `B06`。\n**做法**：三方移植：CFR 反編譯正式版（`reference/base-0.6.71.jar`）與候選版取差異，套到 `src/main` 現有原始碼的複本後放進 staged；`src/main` 為 DECOMPILED 者可直接用候選反編譯版。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B06，29 個外層類別（existing-battle），清單見 `batches.json` 的 `B06`。\n**做法**：三方移植：CFR 反編譯正式版（`reference/base-0.6.71.jar`）與候選版取差異，套到 `src/main` 現有原始碼的複本後放進 staged；`src/main` 為 DECOMPILED 者可直接用候選反編譯版。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B07",
@@ -386,7 +386,7 @@
    "NativeTargetNegativeMaterialAction",
    "NativeWeaponBreakMaterialAction"
   ],
-  "text": "**本批**：B07，23 個外層類別（existing-combat-material），清單見 `batches.json` 的 `B07`。\n**做法**：同 B06（三方移植）。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B07，23 個外層類別（existing-combat-material），清單見 `batches.json` 的 `B07`。\n**做法**：同 B06（三方移植）。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B08",
@@ -429,7 +429,7 @@
    "NativeRolePublication",
    "NativeSourcePlayerActionLock"
   ],
-  "text": "**本批**：B08，30 個外層類別（existing-native），清單見 `batches.json` 的 `B08`。\n**做法**：同 B06（三方移植）；本批 19 個 DECOMPILED 檔可直接以候選反編譯版取代並保留標頭。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
+  "text": "**本批**：B08，30 個外層類別（existing-native），清單見 `batches.json` 的 `B08`。\n**做法**：同 B06（三方移植）；本批 19 個 DECOMPILED 檔可直接以候選反編譯版取代並保留標頭。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。"
  },
  {
   "id": "T020-B09",
@@ -445,7 +445,7 @@
    "GameHub",
    "Protocol"
   ],
-  "text": "**本批**：B09，3 個外層類別（existing-core），清單見 `batches.json` 的 `B09`。\n**做法**：同 B06（三方移植），另加 T029 保留：`docs/combat-merge/t029-methods.txt` 7 個方法為手動合成。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 class_entries>` 全部 SAME。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。\n**T029**：加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`；7 個方法為手動合成，驗收依 §6-5（與正式差異只在戰鬥、與候選差異只在 T029，附兩份 javap 差異）。"
+  "text": "**本批**：B09，3 個外層類別（existing-core），清單見 `batches.json` 的 `B09`。\n**做法**：同 B06（三方移植），另加 T029：`docs/combat-merge/t029-methods.txt` 8 個方法整個採正式版。\n**範圍**：只新增／修改 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下本批類別的 `.java` 與 `docs/reports/issue-<N>.md`；不動 `src/main`、`pom.xml`。\n**編譯**：`javac --release 17 -encoding UTF-8 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔>`（Windows 用 `;`），成功並附輸出。\n**語意**：T020d `semantic-diff --left <tmp 打包> --right reference/candidate-50635f7e.jar --classes <本批 verify_entries>` 每個 entry 都 SAME；tmp 中不得有清單外 entry、清單內不得缺 entry。\n**單元測試／回歸**：不適用（未動 src/main，暫存區不執行），在 B-land 統一處理。\n**依據**：`docs/design/T020-combat-merge.md` §6-4、§6-5；類別清單 `docs/combat-merge/batches.json`。\n**T029**：加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`；清單 8 個方法整個採正式版（7 個 whole-formal＋1 個 formal-only-method `exitRoomBeforePolyMe(Z)`），必須與正式 SAME；其他方法與候選 SAME。沒有人工合成的方法（§6-5）。"
  },
  {
   "id": "T020-B-land",
@@ -463,7 +463,7 @@
    "T020-B08",
    "T020-B09"
   ],
-  "text": "把 `merge-inputs/50635f7e/staged/` 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠（舊測試失敗比照 T010 逐案判斷，不得停用／跳過）；`semantic-diff` 對 Maven 產物 `--classes owned_by_B` vs 候選全部 SAME（T029 依允許清單）。依據 §6-6。"
+  "text": "把 `merge-inputs/50635f7e/staged/` 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠（舊測試失敗比照 T010 逐案判斷，不得停用／跳過）；`semantic-diff` 對 Maven 產物 `--classes <9 批 verify_entries 共 1,384 個 entry>` vs 候選全部 SAME（T029 依允許清單對正式），`remove_entries` 不存在。依據 §6-6。"
  },
  {
   "id": "T020-close",
@@ -475,6 +475,6 @@
    "T020c(#31)",
    "T020e 產生的全部 A 修補任務"
   ],
-  "text": "依據 §6-6：先跑總比對（owned_by_B 對候選、其餘對正式，0 差異，T029 除外），再對 Maven 產物跑 #31 全套與 50635f7e negative final frame 針對性案例。"
+  "text": "依據 §6-6：先跑總比對（1,384 個 B entry 對候選、T029 對正式；其餘 entry 以 --exclude 排除 B 後對正式；皆 0 差異），再對 Maven 產物跑 #31 全套與 50635f7e negative final frame 針對性案例。"
  }
 ]

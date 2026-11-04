@@ -66,7 +66,9 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 - 正式 0.6.71 與候選根的分歧點（交 T020a）。
 - 回歸工具在非 `C:` JDK 下是否還能重現既有收據（交 T020c）。
 
-## 6. 合併批次（T020b，Issue #43；第 2 版，回應 2026-11-04 14:02 審查）
+## 6. 合併批次（T020b，Issue #43；第 4 版，回應 2026-11-04 14:30 審查）
+
+> 本節取代 §2-3（先併 8d26）、§2-4 的回歸套件用法（改在 §6-6 統一執行）與 §4 任務表中 T020b 的「每批 ≤30 類別」規則（改為 §6-4 每批 ≤60）。§1–5 其餘內容不變。
 
 依據：#30 T020a 的 `docs/combat-merge/class-diff.json`（分支 `task/30` @ `31b5233`，主控以 review:pass 結案、豁免 1 筆歷史來源）。
 
@@ -96,7 +98,7 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 
 ### 6-4. 批次（第 3 版：相依分析結果改變做法）
 
-`tools/semantic-diff/plan_batches.py` 對候選 JAR（`50635f7e…`，`task/45`）做了常數池相依分析，結果寫在 `docs/combat-merge/batches.json` 的 `dependency_analysis`：303 個外層類別有 16 個 SCC，**最大的一個有 282 類**；拿掉 ClientSession／Protocol／GameHub 後仍有 248 類互相依賴。另外有 171 個類別用到既有類別在候選中才新增的成員（共 107 個既有類別、518 個新成員）。
+`tools/semantic-diff/plan_batches.py` 對候選 JAR（`50635f7e…`，`task/45`）與正式 JAR（`e1498871…`）做常數池分析，結果寫在 `docs/combat-merge/batches.json` 的 `dependency_analysis`：303 個外層類別有 16 個 SCC，**最大的一個有 282 類**；拿掉 ClientSession／Protocol／GameHub 後仍有 248 類互相依賴。候選中有 107 個既有 class entry（62 個外層類別）新增了共 518 個欄位／方法，171 個外層類別用到這些新成員。候選 JAR 中這 303 個外層類別共有 **1,384 個 class entry**（含內部類別）。
 
 結論：**不可能讓每批在 `src/main` 單獨編譯**，任何「依相依順序裝箱」或「提前帶入」都會退化成一整批。因此改成：
 
@@ -115,7 +117,13 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 | B08 | 30 | 其他既有類別（19 個 DECOMPILED） | 同上 |
 | B09 | 3 | ClientSession／Protocol／GameHub | 同上，加 T029 保留（§6-5） |
 
-每批確切類別與 class entry 清單：`batches.json` 的 `batches[].classes`／`class_entries`。
+每批清單（`batches.json` 的 `batches[]`）：
+- `classes`：外層類別。
+- `verify_entries`：**驗收範圍**。由候選 JAR 展開該批外層類別及其全部 `$` 內部類別（9 批合計 1,384）。批次輸出必須剛好是這些 entry（無缺漏、無多出），且全部與候選 SAME。
+- `history_entries`：T020a 的歷史差異列（合計 623），只供參考，不是驗收範圍。
+- `remove_entries`：正式有、候選沒有的同批 entry（目前 9 批皆 0）；B-land 時必須消失。
+
+`--classes` 一律傳 `verify_entries` 的完整清單，不依賴工具自動展開內部類別。
 
 ### 6-5. 每批驗收（B01–B09）
 
@@ -123,15 +131,15 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 |---|---|
 | 範圍 | 只新增／修改 `merge-inputs/50635f7e/staged/` 下該批類別的 `.java`，與 `docs/reports/issue-<N>.md`。不動 `src/main`、`pom.xml`。 |
 | 編譯 | 上述 `javac` 指令成功，指令與輸出附在報告。 |
-| 語意 | `semantic-diff --left <tmp 打包的 jar> --right reference/candidate-50635f7e.jar --classes <該批 class_entries>` 全部 SAME。 |
-| T029（只 B09） | 加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`。清單 7 個方法（ClientSession：`run()`、`exitRoom(Z)`、`sendRoomParticipant(J…ClientSession…)`、`sourcePoisonBody$useInventoryItemBeforeTravel`；Protocol：`litoRoomParticipant`、`magicDollIcon`、`magicDollCustomIcon`），由正式版中引用 GmPolyMe／SelectionRecovery／SharedPresentationPackets 或指名方法、且與候選版不同者產生。這 7 個方法兩邊都改過，屬「手動合成」：驗收為 (a) 與正式版的差異只在戰鬥邏輯，(b) 與候選版的差異只在 T029 項，PR 附兩份正規化 javap 差異供審查；清單外方法必須與候選 SAME。 |
+| 語意 | `semantic-diff --left <tmp 打包的 jar> --right reference/candidate-50635f7e.jar --classes <該批 verify_entries>`：每個 entry 都 SAME，且 tmp 中沒有清單外的 entry、清單內沒有缺少的 entry。 |
+| T029（只 B09） | `docs/combat-merge/t029-methods.txt` 列 8 個方法，由 `plan_batches.py` 以正規化 javap（去常數池編號、偏移、跳轉目標、例外表範圍）比對正式與候選後產生，分類記在 `batches.json` 的 `t029.methods`：<br>• **whole-formal（7）**：ClientSession `run()`、`exitRoom(Z)`、`sendRoomParticipant(J…ClientSession…)`、`sourcePoisonBody$useInventoryItemBeforeTravel`；Protocol `litoRoomParticipant`、`magicDollIcon`、`magicDollCustomIcon`。正式與候選在這些方法的差異**只有** T029 項（職業上限 6／4、opcode 123／250 與 `h(0)`、呼叫 SelectionRecovery.finish／SharedPresentationPackets.bluePotion／GmPolyMe.exitRoom），候選第二批沒有改動它們的戰鬥邏輯，所以整個方法採正式版。<br>• **formal-only-method（1）**：ClientSession `exitRoomBeforePolyMe(Z)`。正式版把原本的 `exitRoom(Z)` 本體改名為它，再讓 `exitRoom(Z)` 轉呼叫 `GmPolyMe.exitRoom`；已驗證正式 `exitRoomBeforePolyMe(Z)` 與候選 `exitRoom(Z)` 正規化後完全相同。<br>因此**沒有需要人工合成的方法**。驗收指令加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`：這 8 個方法必須與正式版 SAME（不在候選中的 `exitRoomBeforePolyMe` 只和正式比）；其他方法必須與候選 SAME。 |
 | 單元測試 | 不適用（未動 `src/main`）；在 B-land 統一處理。 |
 | 回歸 | 不適用，理由：暫存區不會被執行；與候選語意相同即代表行為等同候選。行為回歸在 B-land 後統一跑（§6-6）。 |
 
 ### 6-6. 落地（B-land）與收尾（T020-close）
 
-- **B-land**（code，cursor-cloud）：依賴 B01–B09 全部完成。把 staged 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠。舊測試若因戰鬥行為改變而失敗，比照 T010 逐案判斷「測試過時／程式缺陷」並在報告列出，不得停用或跳過；`semantic-diff` 對 Maven 產物 `--classes owned_by_B` vs 候選全部 SAME（T029 依允許清單）。
-- **T020-close**（test，codex-local）：依賴 B-land、#31（T020c）、**A 階段全部修補任務合併**（T020e 產生的清單全部 done）。先跑 T020d 總比對：Maven 產物中 `owned_by_B` 對候選、其餘對正式，0 差異（T029 允許清單除外）；再對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24）加 `50635f7e` negative final frame 針對性案例。結果作為新基準，接 T030。
+- **B-land**（code，cursor-cloud）：依賴 B01–B09 全部完成。把 staged 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠。舊測試若因戰鬥行為改變而失敗，比照 T010 逐案判斷「測試過時／程式缺陷」並在報告列出，不得停用或跳過；`semantic-diff` 對 Maven 產物 `--classes <9 批 verify_entries 合併的 1,384 個 entry>` vs 候選全部 SAME（T029 依允許清單），並確認 `remove_entries` 不存在。
+- **T020-close**（test，codex-local）：依賴 B-land、#31（T020c）、**A 階段全部修補任務合併**（T020e 產生的清單全部 done）。先跑 T020d 總比對：Maven 產物中 1,384 個 B entry 對候選（T029 依允許清單對正式）、其餘 entry 對正式（`--exclude` 這 1,384 個 entry），兩者皆 0 差異；再對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24）加 `50635f7e` negative final frame 針對性案例。結果作為新基準，接 T030。
 
 ### 6-7. 不在本批次的事
 
