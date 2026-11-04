@@ -1,7 +1,6 @@
 # 伺服器語意缺口（T020d / Issue #44）
 
-> 快照來源：GitHub Actions `build` run [41848202203](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203) job `Semantic gap (non-blocking)`（Temurin 17）。artifact [`server-semantic-gap`](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203/artifacts/13331293777)。
-
+> 快照來源：[build run 41852194064](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064)，[Semantic gap job 126651146719](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/job/126651146719)，[artifact server-semantic-gap 13335192893](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/artifacts/13335192893)。程式提交 `ccaeb9855a37c174156ff9832d0cf5979c9da634`；Temurin 17.0.21+9。本檔僅插入此來源註記，其餘內容與 artifact Markdown 相同。
 
 以 ASM tree 正規化後比對兩個 JAR 的 `.class`。
 此檔由 `lito伺服器/LiTo381-Server/tools/semantic-diff` 產生。
@@ -12,7 +11,7 @@
 |---|---|
 | left | `lito伺服器/LiTo381-Server/target/LiTo381-Server.jar`（3929 類） |
 | right | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-04T14:31:31Z |
+| 產生時間 | 2026-11-04T14:56:35Z |
 | 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |
 | 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解（含 annotationDefault 結構化值、指令／區域變數／record 型別註解）、內部類別屬性 |
 
@@ -1935,4 +1934,3 @@ local/lito381/server/NativeCastMaterial$Effect
 local/lito381/server/NativeDeVisibilitySwitch
 local/lito381/server/NativeResurrectionMaterialAction$Target
 ```
-

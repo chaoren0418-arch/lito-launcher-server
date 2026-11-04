@@ -1,99 +1,118 @@
 # Issue #44 / T020d — ASM 語意比對工具＋CI 語意差異報告
 
-## 第 3 次修正（本輪 CI 證據取得前的狀態）
-
-- 已修正只存在 allow-right 的指定方法漏比較；清單未命中及超出範圍會明確失敗。新增 5b–5f 測試。
-- 已將建置共用為 build-support.sh；校驗診斷送 stderr，依賴統一存 target/dependency。新增真實無 Maven PATH 的冷啟動與實際比較測試。
-- fixture／日誌／JSON 改放 repo scratch；測試 class/JAR 改放 target。CI 使用 `mvn -B -DskipTests package` 並保留測試、輸入 SHA 與報告證據。
-- 已驗證：本機 Microsoft Java 17 編譯成功、ASM SHA-256 符合；正式 reference 自比對 SAME=2554、DIFF=0、BYTE_SAME=2554。
-- 待驗證：本機無 Bash／Maven，完整 shell 自我測試及本輪快照待 CI 執行後更新。以下先前 CI 記錄不是本輪驗證結果。
-
 ## 做了什麼
 
-獨立工具 `lito伺服器/LiTo381-Server/tools/semantic-diff/`（Java 17＋ASM 9.7，**未改**伺服器 `pom.xml` runtime 依賴、**未改** `src/main`、**未改** `docs/REPORT.md`）。第 2 次依審查補 `--exclude`／`--allow-methods`／`--allow-right`、`--classes` 副檔名與未命中報錯、註解結構化比較。
+本輪完成第 3 次審查修正，延續 PR #48；只改工具、CI job、此報告與語意快照。工作分支維持 `task/44`，將既有遠端提交合入目前 worktree，未重新 checkout／建立分支。
 
-| 路徑 | 作用 |
+- **允許方法不再漏比**：比較鍵包含 left／right 方法與經驗證的指定 allow-right 方法；A、B 都沒有而 C 有的指定方法判 DIFF。每項先以 C 的原始方法名稱＋描述子精確驗證，再正規化合成名稱。拼錯、C 缺少方法、類別不存在／未選取／被排除都非零退出，不輸出成功 SUMMARY。
+- **方法替換仍受比對約束**：只有指定方法改跟 C 比；同類別其他方法及類別／欄位屬性仍跟 B 比。方法只在 A、C 有而 B 沒有可判 SAME；A 與 C 不同必須 DIFF，沒有人工豁免。
+- **無 Maven fallback**：建置邏輯共用於 `build-support.sh`；下載與 SHA-256 診斷送 stderr，`classpath()` stdout 只含 classpath。冷啟動 CLI 與 build.sh 均可使用 javac。CLI 偵測 Java 原始碼較新時重建。
+- **產物路徑**：fixture／清單／日誌／JSON 位於 repo `scratch/semantic-diff-*`；工具依賴／classes 在工具 `target/dependency`／`target/classes`，測試 class/JAR 在 `target/selftest`。隔離 fallback 位於 scratch，其產物仍位於自己的 target。已同步 ASM_CP，沒有再下載到 lib 或生成 build/selftest。
+- **完整 entry 清單**：依 Issue 擁有者補充與 #43 第 4 版，`--classes` 精確選取含 `$` 的 entry、不自動展開內部類；JSON `classSelection.missingLeft`／`extraLeft` 與 Markdown 列出左側缺少／多出項目。指定 entry 兩邊都不存在仍明確報錯。
+- **CI**：保留非阻斷 `Semantic gap (non-blocking)`，加入無 Maven PATH 的真實測試，使用 `mvn -B -DskipTests package`；artifact 同時保留 JSON／Markdown、測試輸出、CI checkout SHA、JDK 與輸入 JAR SHA-256。
+
+## 怎麼驗證（已驗證）
+
+### 本輪 CI 證據
+
+- 程式提交：`ccaeb9855a37c174156ff9832d0cf5979c9da634`。
+- [build run 41852194064](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064)。
+- [Semantic gap job 126651146719](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/job/126651146719)：success；兩支自我測試、伺服器 package、比較與上傳步驟全部 success。
+- [artifact server-semantic-gap 13335192893](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41852194064/artifacts/13335192893)。ZIP SHA-256：`b21b48477b55537406ad5c07f9bc4011e38a437f743083bf75313737706c2719`；本機下載後已核對相同。
+- CI 實際 checkout 為 PR 合併 SHA `9db2c8f126fd15c747009ca03527476f48294a1f`，不是把 branch SHA 冒充執行版本；見 artifact 的 `scratch/semantic-diff-revision.txt`。
+- JDK：Temurin `17.0.21+9`；建置指令 `mvn -B -DskipTests package`。只宣稱上述 job 已成功，不把仍執行中的其他 job 當成通過。
+
+輸入與原始報告 SHA-256：
+
+| 檔案 | SHA-256 |
 |---|---|
-| `tools/semantic-diff/pom.xml` | 工具 Maven 專案 |
-| `tools/semantic-diff/semantic-diff` | CLI：`--left`／`--right`／`--classes`／`--exclude`／`--allow-methods`／`--allow-right`／`--json`／`--md` |
-| `src/main/java/local/lito381/semanticdiff/*` | JAR 載入、合成名正規化、ASM tree 比對、註解／型別註解、方法 overlay |
-| `tools/semantic-diff/selftest.sh` | 自我測試（原三項＋exclude／allow-methods／classes／註解） |
-| `.github/workflows/build.yml` | 非阻斷 job `Semantic gap (non-blocking)` |
-| `docs/server-semantic-gap.md` | Maven 產物 vs `reference/base-0.6.71.jar` 快照（CI Temurin 17） |
-| `docs/reports/issue-44.md` | 本報告 |
+| Maven `target/LiTo381-Server.jar` | `150d72e7e12f2b8dce34576bac61f41d7062af43221830cf6005caa1fe41baf6` |
+| `reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| artifact `docs/server-semantic-gap.md` | `922668f4ec50a32fa9a15c4f704c426fc9bcd39ec029086f646d3d1af39e7eac` |
+| artifact `scratch/server-semantic-gap.json` | `7f572f2ddfba8d177f8431e58850ed0aa20ce18d2d96c4897676859a86ed6c9e` |
 
-`--exclude`：清單中的外層類別名連同 `outer$…` 內部類別一併跳過。  
-`--allow-methods`：每行 `類別#方法名稱描述子`；這些方法改跟 `--allow-right` JAR 比，其餘方法仍跟 `--right` 比。類別層欄位／存取旗標仍對 `--right`。  
-`--classes`：先去掉 `.class` 後綴再把 `.` 換成 `/`；指定但兩邊都沒有的名字以 `missing --classes entries:` 非 0 結束，不再靜默空比較。
+提交快照只在 artifact Markdown 標題後插入來源註記，其餘逐字相同；JSON 有 485 個 DIFF，Markdown 的完整 DIFF 表同為 485 列。快照更新提交只包含文件，工具與 workflow 維持上述已測版本。
 
-註解：`annotationDefault` 用遞迴結構化值（enum `String[]`、巢狀 `AnnotationNode`、List），不再 `Object.toString()`。指令 `visible/invisibleTypeAnnotations`、方法 local-variable type annotations、record component type annotations 納入比較。SUMMARY 另含本輪實測 `BYTE_SAME`。
+### 自我測試輸出
 
-## 怎麼驗證
+重跑（repo 根目錄）：
 
-重跑：`bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest.sh`
-
-### 自我測試（已驗證：本機與 CI Temurin 17 同一輸出）
-
-CI：https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203/job/126637182848
-
-```text
-SELFTEST 1   正式 JAR 對自己     SAME=2554 DIFF=0 BYTE_SAME=2554
-SELFTEST 1b  fixture 對自己      SAME=3 DIFF=0
-SELFTEST 2   -g vs -g:none       SAME=3 DIFF=0 BYTE_SAME=0
-SELFTEST 3   常數 42→43          DIFF=1（Fixture field ANSWER:I）
-SELFTEST 4   --exclude Fixture   不含 Fixture／Fixture$Inner；剩下 Extra SAME
-SELFTEST 5   --allow-methods Extra#extra()I --allow-right=left
-             Extra SAME（overlay）；Fixture 仍 DIFF（未列入的常數差被抓出）
-SELFTEST 6a  --classes Fixture.class     SAME=1
-SELFTEST 6b  逗號清單 Fixture,Extra      SAME=2
-SELFTEST 6c  檔案清單                    SAME=2
-SELFTEST 6d  DoesNotExist                exit≠0，stderr 含 missing --classes entries
-SELFTEST 7   enum／巢狀 annotationDefault self-vs-self  SAME=6 DIFF=0
-SELFTEST 8   只改 method／insn／record 型別註解  各 DIFF=1
+```bash
+bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest.sh
+bash lito伺服器/LiTo381-Server/tools/semantic-diff/selftest-fallback.sh
 ```
 
-### 語意缺口快照（已驗證，同一對 JAR、同一輪）
+以下取自本輪 artifact 的 `scratch/semantic-diff-selftest.log` 與 `scratch/semantic-diff-fallback.log`；逐案 JSON、失敗輸入 stderr 也包含於 artifact。
 
-CI Temurin 17 run [41848202203](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41848202203)，artifact `server-semantic-gap` id `13331293777`：
+```text
+PASS SELFTEST 1 SAME=2554 DIFF=0
+PASS SELFTEST 1b SAME=3 DIFF=0
+PASS SELFTEST 2 SAME=3 DIFF=0
+PASS SELFTEST 3 DIFF=1
+PASS SELFTEST 4 SAME=1 DIFF=0 (Fixture+Inner excluded)
+PASS SELFTEST 5 Extra SAME via allow-right; Fixture DIFF still caught (SUMMARY SAME=2 DIFF=1 ONLY_LEFT=0 ONLY_RIGHT=0)
+PASS SELFTEST 5b allow-right-only added()I DIFF=1 despite identical left/right bytes
+PASS SELFTEST 5c unmatched allow entry exits non-zero without SUMMARY
+PASS SELFTEST 5d same-class unlisted()I DIFF=1 insn=0 uses right, not allow-right
+PASS SELFTEST 5e added method present in left SAME=1
+PASS SELFTEST 5f absent/excluded/unselected allow classes exit non-zero
+PASS SELFTEST 5g listed method differs from allow-right DIFF=1 (no waiver)
+PASS SELFTEST 6a suffix SAME=1
+PASS SELFTEST 6b comma SAME=2
+PASS SELFTEST 6c file SAME=2
+PASS SELFTEST 6d missing class exits non-zero
+PASS SELFTEST 6e exact inner SAME=1 missing-left ONLY_RIGHT=1 extra-left Fixture reported
+PASS SELFTEST 7 SAME=6 DIFF=0
+PASS SELFTEST 8a method type-ann DIFF=1
+PASS SELFTEST 8b insn type-ann DIFF=1
+PASS SELFTEST 8c record type-ann DIFF=1
+=== SELFTEST ALL PASS ===
+PASS FALLBACK 1 Maven absent from isolated PATH
+PASS FALLBACK 2 cold CLI downloads/checks ASM and compiles with javac; --help exits 0
+PASS FALLBACK 3 actual comparisons SAME=1 / DIFF=1; checksum diagnostics only on stderr
+PASS FALLBACK 4 build.sh also succeeds without Maven
+=== FALLBACK ALL PASS ===
+```
+
+fallback 測試使用不含 mvn 的獨立 PATH、沒有 target 的工具複本及含空白路徑；實際下載／校驗 ASM、javac 編譯、CLI `--help`、相同 JAR 比較、改常數比較、build.sh 皆成功。不是使用已有 Maven JAR 冒充 fallback。
+
+本機另以 Microsoft JDK `17.0.17` 編譯工具，核對兩個 ASM JAR 雜湊並執行 reference 自比對：`SAME=2554 DIFF=0 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=2554`。本機實際建置 Foo 三方 fixture，驗證 only-C 指定方法 DIFF、同類別未指定方法 DIFF、移植後 SAME、拼錯清單非零退出。完整 Bash 路徑的驗證來自上列 CI，本機未安裝 Bash／Maven。
+
+### 語意缺口計數
 
 ```text
 SUMMARY SAME=2064 DIFF=485 ONLY_LEFT=1380 ONLY_RIGHT=5 BYTE_SAME=1008 ALLOW_METHODS=0
 ```
 
-left 3929 類／right 2554 類／交集 2549。  
-`BYTE_SAME=1008` 與 `SAME=2064` 來自**同一輪、同一對 JAR**：bytes 不同但語意相同 = 2064−1008 = **1056**（本輪實測）。
+left 3929 類、right 2554 類、交集 2549。SAME 2064 與 BYTE_SAME 1008 來自同一對 JAR，bytes 不同但語意相同為 **1056**。DIFF 第一處位置：method 343、field 27、class 屬性 115。完整清單見 [語意缺口快照](../server-semantic-gap.md)。
 
-## 與 #43 粗估（約 430）的關係
+## 與 #43 粗估的關係（已驗證／推測）
 
-| 口徑 | 來源 | 與本輪關係 |
-|---|---|---|
-| javap 約 430 | T020a，JDK 21 Maven 產物，去行號／常數池編號／空白，未正規化 lambda$／access$ | **不可**與 DIFF=485 相減 |
-| T020a bytes 全同 1,008 | JDK 21 另一組 Maven 產物 | 不能當本輪依據 |
-| BYTE_SAME=1008 | **本輪** Temurin 17 vs 正式 JAR 實測 | 可與本輪 SAME 相減 |
-| SAME=2064 DIFF=485 | 同上同一輪 | 本輪語意計數 |
+- **已驗證**：#43 §6-1 記錄 JDK 21／javap 粗估：共同類別 2538、593 筆不同，其中 162 筆解析失敗，約 430 只是待確認數。該流程未正規化 lambda／access 名稱。本輪使用 JDK 17＋ASM，交集為 2549；基準、解析方式與比較項目不同。
+- **已驗證**：本工具另外比較欄位常數、註解、內部類／nest 等結構，且去除除錯資訊、常數池排序與合成名稱編號雜訊。BYTE_SAME=1008 是本輪重新量測，沒有挪用歷史值當證據。
+- **推測**：編譯器版本、反編譯後的來源形狀、正規化深度及比較範圍共同造成數量不同。尚未在相同輸入與交集逐類對照舊 javap 結果，因此不能把 485−430 歸因為 55 個特定屬性差異。1056 也沒有逐類拆成某一種雜訊。
 
-本輪確定：交集 2549、BYTE_SAME 1008、SAME 2064、DIFF 485（第一處差異 method 343、field 27、class 屬性 115）。1056 是本輪「bytes 不同、語意相同」。**不能**把 485−430=55 歸因到 innerClasses 等——沒有在同一交集上逐類對照 javap。T020e 用 **485**，不要用 430。
+## 未驗證什麼／限制
 
-## 未驗證什麼
-
-- 語意 SAME ≠ 行為回歸；未跑 `--check`／`--smoke`，未連 DB，未啟動遊戲。
-- 匿名類 `$1`／`$2` 不依出現順序改名（任務只要求 `lambda$`／`access$`）。
-- 區域變數槽位不重編號。
-- 未對候選 `50635f7e` JAR 比對（T020f）。
-- 後續批次驗收須 JDK 17，不可混用 JDK 21 編出的類別集合。
+- SAME 表示本工具正規化項目一致，不等於已做行為回歸；DIFF 也不直接等於行為缺陷。
+- 未啟動伺服器、登入器或遊戲，未執行 `--check`／`--smoke`，未連正式 DB。
+- 未對候選 `50635f7e` 執行完整比對／回歸；交後續批次。
+- 匿名類 `$1`／`$2` 不重新命名，區域變數槽位不重編號；不證明所有 JVM 程式的行為等價。
+- CLI 有差異時仍以 0 結束（報告生成成功）；驗收必須檢查 DIFF／ONLY_*，使用完整 entry 清單的批次還須檢查 missingLeft／extraLeft 均空。此約定已寫入工具 README。
 
 ## 產出路徑
 
-- `lito伺服器/LiTo381-Server/tools/semantic-diff/`
-- `.github/workflows/build.yml`
-- `docs/server-semantic-gap.md`
-- `docs/reports/issue-44.md`
+- `lito伺服器/LiTo381-Server/tools/semantic-diff/`：Java、獨立 pom、CLI、建置共用程式、兩支自我測試、README。
+- `.github/workflows/build.yml`：語意 job 與 artifact 證據。
+- `docs/server-semantic-gap.md`：本輪 CI 快照。
+- `docs/reports/issue-44.md`：本報告。
 
-未改：`src/main`、伺服器 `pom.xml`、`docs/REPORT.md`、`config/server.properties`、封存、`releases/`、`LiTo.bin`。
+未修改伺服器 `src/main`、伺服器 `pom.xml`、`docs/REPORT.md`、機密設定、封存或 releases；未提交生成 class/JAR、未新增硬連結。
 
 ## 給下一棒的提示
 
-- **Claude（T020e）**：工作清單用 CI DIFF **485**。B3-core 用 `--allow-methods`＋`--allow-right` 指向「候選＋正式改動」合成 JAR；T029 整類排除用 `--exclude`。`--classes Foo.class` 可用。指定不存在的類會失敗。
-- **codex-local（T020f）**：候選 JAR 入庫後同一 CLI 對候選跑第二階段。
-- **Cursor 後續批次**：allow-methods 格式 `local/lito381/server/ClientSession#sendRoomParticipant(...)V`（`#` 後是方法名＋描述子）。
-- **使用者**：無需操作。
+- **Claude 審查**：核對 PR #48 的本輪程式提交、上述 run／job／artifact；四項退回問題及擁有者補充皆有測試證據。由使用者決定合併，這輪未合併 PR 或關閉 Issue。
+- **T020e／A 階段**：以本輪 DIFF 485 為原始盤點，依 #43 `owned_by_B` 以 `--exclude` 排除 B 所屬外層及內部類後再安排 A 修補；485 不是全部都歸 A。
+- **B01–B09**：`--classes` 傳完整 `verify_entries`；語意計數及 `classSelection` 兩份清單都要檢查。共同允許清單先裁切成此次選取範圍，避免未比較的規則被默認接受。
+- **B09／T029**：依 #43 第 4 版，用 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`；其餘方法對候選。無需「候選＋正式改動」人工合成 JAR，也不要把 T029 整類排除。
+- **使用者**：本輪不需實機操作；後續行為驗收另依任務安排。
