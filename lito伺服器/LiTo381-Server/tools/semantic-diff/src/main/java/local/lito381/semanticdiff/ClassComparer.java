@@ -91,8 +91,17 @@ final class ClassComparer {
     static FirstDiff compare(
             ClassNode left, ClassNode right, ClassNode allowRight, Set<String> allowedMethodKeys,
             JarIndex leftJar, JarIndex rightJar, JarIndex allowJar, Set<String> effectsMethods) {
+        return compare(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar,
+                effectsMethods, Set.of(), false);
+    }
+
+    static FirstDiff compare(
+            ClassNode left, ClassNode right, ClassNode allowRight, Set<String> allowedMethodKeys,
+            JarIndex leftJar, JarIndex rightJar, JarIndex allowJar, Set<String> effectsMethods,
+            Set<String> extraMethods, boolean metadataExempt) {
         FirstDiff d;
-        d = cmp("access", hex(left.access), hex(right.access));
+        int ignoredAccess = Opcodes.ACC_SUPER | (metadataExempt ? Opcodes.ACC_SYNTHETIC : 0);
+        d = cmp("access", hex(left.access & ~ignoredAccess), hex(right.access & ~ignoredAccess));
         if (d != null) {
             return d;
         }
@@ -108,22 +117,24 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        d = cmp("outerClass", str(left.outerClass), str(right.outerClass));
-        if (d != null) {
-            return d;
-        }
-        d = cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
-                str(right.outerMethod) + str(right.outerMethodDesc));
-        if (d != null) {
-            return d;
-        }
-        d = cmp("nestHost", str(left.nestHostClass), str(right.nestHostClass));
-        if (d != null) {
-            return d;
-        }
-        d = cmp("nestMembers", joinSorted(left.nestMembers), joinSorted(right.nestMembers));
-        if (d != null) {
-            return d;
+        if (!metadataExempt) {
+            d = cmp("outerClass", str(left.outerClass), str(right.outerClass));
+            if (d != null) {
+                return d;
+            }
+            d = cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
+                    str(right.outerMethod) + str(right.outerMethodDesc));
+            if (d != null) {
+                return d;
+            }
+            d = cmp("nestHost", str(left.nestHostClass), str(right.nestHostClass));
+            if (d != null) {
+                return d;
+            }
+            d = cmp("nestMembers", joinSorted(left.nestMembers), joinSorted(right.nestMembers));
+            if (d != null) {
+                return d;
+            }
         }
         d = cmp("permittedSubclasses", joinSorted(left.permittedSubclasses),
                 joinSorted(right.permittedSubclasses));
@@ -134,7 +145,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        d = cmp("innerClasses", innerClasses(left), innerClasses(right));
+        d = cmp("innerClasses", innerClasses(left, metadataExempt), innerClasses(right, metadataExempt));
         if (d != null) {
             return d;
         }
@@ -146,7 +157,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods);
+        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods, extraMethods);
     }
 
     private static FirstDiff compareFields(ClassNode left, ClassNode right) {
@@ -189,7 +200,7 @@ final class ClassComparer {
             JarIndex leftJar,
             JarIndex rightJar,
             JarIndex allowJar,
-            Set<String> effectsMethods) {
+            Set<String> effectsMethods, Set<String> extraMethods) {
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
         Map<String, MethodNode> amap =
@@ -221,6 +232,8 @@ final class ClassComparer {
                 return FirstDiff.of("method", key, null, "only " + rightLabel);
             }
             if (rm == null) {
+                if (!allow && (extraMethods.contains(lm.name + lm.desc)
+                        || implicitConstructor(left, right, lm))) continue;
                 return FirstDiff.of("method", key, null, "only left");
             }
             if (effectsMethods.contains(rm.name + rm.desc) && !lm.name.equals(rm.name)) {
@@ -233,6 +246,33 @@ final class ClassComparer {
             }
         }
         return null;
+    }
+
+    private static boolean implicitConstructor(ClassNode left, ClassNode right, MethodNode method) {
+        if (!"<init>".equals(method.name) || !"()V".equals(method.desc)
+                || !"java/lang/Object".equals(left.superName)
+                || right.methods.stream().anyMatch(m -> "<init>".equals(m.name))
+                || left.methods.stream().filter(m -> "<init>".equals(m.name)).count() != 1
+                || (method.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED
+                        | Opcodes.ACC_SYNTHETIC)) != 0
+                || method.signature != null || !method.exceptions.isEmpty()
+                || !method.tryCatchBlocks.isEmpty() || method.annotationDefault != null
+                || !methodAnns(method, labelIds(method), null).equals(methodAnns(new MethodNode(), Map.of(), null))) {
+            return false;
+        }
+        List<AbstractInsnNode> code = new ArrayList<>();
+        for (AbstractInsnNode insn : method.instructions) {
+            if (insn.getOpcode() >= 0) {
+                if (!typeAnns(insn.visibleTypeAnnotations, null).isEmpty()
+                        || !typeAnns(insn.invisibleTypeAnnotations, null).isEmpty()) return false;
+                code.add(insn);
+            }
+        }
+        return code.size() == 3
+                && code.get(0) instanceof VarInsnNode load && load.getOpcode() == Opcodes.ALOAD && load.var == 0
+                && code.get(1) instanceof MethodInsnNode call && call.getOpcode() == Opcodes.INVOKESPECIAL
+                && "java/lang/Object".equals(call.owner) && "<init>".equals(call.name)
+                && "()V".equals(call.desc) && !call.itf && code.get(2).getOpcode() == Opcodes.RETURN;
     }
 
     static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
@@ -321,8 +361,37 @@ final class ClassComparer {
         return map;
     }
 
+    /** One bijection for physical slots; wide operands retain BOTH halves to preserve aliasing. */
+    private static final class LocalSlots {
+        private final Map<Integer, Integer> ids = new TreeMap<>();
+
+        LocalSlots(MethodNode method) {
+            int parameters = (method.access & Opcodes.ACC_STATIC) == 0 ? 1 : 0;
+            if (method.desc != null) for (Type type : Type.getArgumentTypes(method.desc)) parameters += type.getSize();
+            for (int i = 0; i < parameters; i++) ids.put(i, i);
+            for (AbstractInsnNode insn : method.instructions) {
+                if (insn instanceof VarInsnNode n) {
+                    id(n.var);
+                    if (wide(n.getOpcode())) id(n.var + 1);
+                } else if (insn instanceof IincInsnNode n) id(n.var);
+            }
+        }
+
+        int id(int slot) { return ids.computeIfAbsent(slot, k -> ids.size()); }
+
+        String operand(VarInsnNode n) {
+            return id(n.var) + (wide(n.getOpcode()) ? "/" + id(n.var + 1) : "");
+        }
+
+        private static boolean wide(int opcode) {
+            return opcode == Opcodes.LLOAD || opcode == Opcodes.LSTORE
+                    || opcode == Opcodes.DLOAD || opcode == Opcodes.DSTORE;
+        }
+    }
+
     static List<String> instructions(MethodNode method, JarIndex jar) {
         Map<LabelNode, Integer> labels = labelIds(method);
+        LocalSlots slots = new LocalSlots(method);
         List<String> out = new ArrayList<>();
         if (method.instructions == null) {
             return out;
@@ -335,7 +404,7 @@ final class ClassComparer {
             if (insn.getOpcode() < 0) {
                 continue;
             }
-            out.add(withInsnTypeAnns(formatInsn(insn, labels, jar), insn, jar));
+            out.add(withInsnTypeAnns(formatInsn(insn, labels, jar, slots), insn, jar));
         }
         return out;
     }
@@ -386,6 +455,10 @@ final class ClassComparer {
     }
 
     private static String formatInsn(AbstractInsnNode insn, Map<LabelNode, Integer> labels, JarIndex jar) {
+        return formatInsn(insn, labels, jar, null);
+    }
+
+    private static String formatInsn(AbstractInsnNode insn, Map<LabelNode, Integer> labels, JarIndex jar, LocalSlots slots) {
         String constant = pushedConstant(insn, jar);
         if (constant != null) return "CONST " + constant;
         String op = opcodeName(insn.getOpcode());
@@ -393,7 +466,7 @@ final class ClassComparer {
             return op + " " + n.operand;
         }
         if (insn instanceof VarInsnNode n) {
-            return op + " " + n.var;
+            return op + " " + (slots == null ? n.var : slots.operand(n));
         }
         if (insn instanceof TypeInsnNode n) {
             return op + " " + n.desc;
@@ -428,7 +501,7 @@ final class ClassComparer {
             return op + " " + cst(n.cst, jar);
         }
         if (insn instanceof IincInsnNode n) {
-            return op + " var=" + n.var + " incr=" + n.incr;
+            return op + " var=" + (slots == null ? n.var : slots.id(n.var)) + " incr=" + n.incr;
         }
         if (insn instanceof TableSwitchInsnNode n) {
             StringBuilder sb = new StringBuilder(op);
@@ -645,8 +718,9 @@ final class ClassComparer {
         sb.append('|').append(typeAnns(node.invisibleTypeAnnotations, jar));
         sb.append("|pvis=").append(paramAnns(node.visibleParameterAnnotations, jar));
         sb.append("|pinv=").append(paramAnns(node.invisibleParameterAnnotations, jar));
-        sb.append("|lvtvis=").append(localTypeAnns(node.visibleLocalVariableAnnotations, labels, jar));
-        sb.append("|lvtinv=").append(localTypeAnns(node.invisibleLocalVariableAnnotations, labels, jar));
+        LocalSlots slots = new LocalSlots(node);
+        sb.append("|lvtvis=").append(localTypeAnns(node.visibleLocalVariableAnnotations, labels, jar, slots));
+        sb.append("|lvtinv=").append(localTypeAnns(node.invisibleLocalVariableAnnotations, labels, jar, slots));
         return sb.toString();
     }
 
@@ -660,7 +734,7 @@ final class ClassComparer {
     }
 
     private static String localTypeAnns(
-            List<LocalVariableAnnotationNode> list, Map<LabelNode, Integer> labels, JarIndex jar) {
+            List<LocalVariableAnnotationNode> list, Map<LabelNode, Integer> labels, JarIndex jar, LocalSlots slots) {
         if (list == null || list.isEmpty()) {
             return "";
         }
@@ -682,7 +756,7 @@ final class ClassComparer {
                         .append('-')
                         .append(labelId(labels, node.end.get(r)))
                         .append('@')
-                        .append(node.index.get(r));
+                        .append(slots.id(node.index.get(r)));
             }
             sb.append(' ').append(annotation(node, jar));
         }
@@ -750,12 +824,14 @@ final class ClassComparer {
         return sb.toString();
     }
 
-    private static String innerClasses(ClassNode node) {
+    private static String innerClasses(ClassNode node, boolean metadataExempt) {
         if (node.innerClasses == null || node.innerClasses.isEmpty()) {
             return "";
         }
         List<String> rows = new ArrayList<>();
         for (InnerClassNode inner : node.innerClasses) {
+            if (!node.name.equals(inner.name) && !node.name.equals(inner.outerName)) continue;
+            if (metadataExempt && node.name.equals(inner.name)) continue;
             rows.add(str(inner.name) + "|" + str(inner.outerName) + "|" + str(inner.innerName)
                     + "|" + hex(inner.access));
         }

@@ -97,6 +97,7 @@ public final class SemanticDiff {
         }
         Map<String, Set<String>> validatedAllow = validateAllowMethods(parsed, names, allow);
         validateEffectsMethods(parsed, names, right, allow);
+        validateExemptions(parsed, names, left);
 
         List<ClassRow> rows = new ArrayList<>();
         EnumMap<Status, Integer> counts = new EnumMap<>(Status.class);
@@ -129,7 +130,8 @@ public final class SemanticDiff {
                 ClassNode rn = right.readTree(name);
                 ClassNode an = allowThis ? allow.readTree(name) : null;
                 ClassComparer.FirstDiff diff = ClassComparer.compare(
-                        ln, rn, an, allowedKeys, left, right, allowThis ? allow : null, effects);
+                        ln, rn, an, allowedKeys, left, right, allowThis ? allow : null, effects,
+                        parsed.extraMethods.getOrDefault(name, Set.of()), parsed.metadataExempt.contains(name));
                 row = diff == null
                         ? new ClassRow(name, effects.isEmpty() ? Status.SAME : Status.SAME_EFFECTS, null, bytesEqual, allowThis)
                         : new ClassRow(name, Status.DIFF, diff, bytesEqual, allowThis);
@@ -174,6 +176,29 @@ public final class SemanticDiff {
     private static JarIndex effectsTarget(Args parsed, String owner, String method, JarIndex right, JarIndex allow) {
         return parsed.allowMethods != null && parsed.allowMethods.getOrDefault(owner, Set.of()).contains(method)
                 ? allow : right;
+    }
+
+    private static void validateExemptions(Args parsed, Set<String> names, JarIndex left) {
+        for (String owner : parsed.metadataExempt) {
+            if (!names.contains(owner)) throw new IllegalArgumentException(
+                    "--metadata-exempt class outside comparison scope: " + owner);
+        }
+        for (var entry : parsed.extraMethods.entrySet()) {
+            String owner = entry.getKey();
+            if (!names.contains(owner)) throw new IllegalArgumentException(
+                    "--extra-methods class outside comparison scope: " + owner);
+            for (String key : entry.getValue()) {
+                var method = exactMethod(left, owner, key);
+                if (method == null) throw new IllegalArgumentException(
+                        "unmatched --extra-methods entry in left: " + owner + "#" + key);
+                int accessMask = org.objectweb.asm.Opcodes.ACC_PUBLIC | org.objectweb.asm.Opcodes.ACC_PROTECTED
+                        | org.objectweb.asm.Opcodes.ACC_PRIVATE | org.objectweb.asm.Opcodes.ACC_STATIC;
+                int required = org.objectweb.asm.Opcodes.ACC_PRIVATE | org.objectweb.asm.Opcodes.ACC_STATIC;
+                if ((method.access & accessMask) != required || method.name.startsWith("<")) {
+                    throw new IllegalArgumentException("--extra-methods requires private static method: " + owner + "#" + key);
+                }
+            }
+        }
     }
 
     private static void validateEffectsMethods(Args parsed, Set<String> names, JarIndex right, JarIndex allow) {
@@ -272,6 +297,12 @@ public final class SemanticDiff {
                     + (parsed.allowRight == null ? "null" : json(parsed.allowRight.toString())) + ",");
             w.println("  \"effectsMethodsFile\": "
                     + (parsed.effectsFile == null ? "null" : json(parsed.effectsFile.toString())) + ",");
+            w.println("  \"extraMethodsFile\": " + json(parsed.extraFile == null ? null : parsed.extraFile.toString()) + ",");
+            w.println("  \"metadataExemptFile\": " + json(parsed.metadataFile == null ? null : parsed.metadataFile.toString()) + ",");
+            Set<String> extraEntries = new TreeSet<>();
+            parsed.extraMethods.forEach((owner, methods) -> methods.forEach(m -> extraEntries.add(owner + "#" + m)));
+            w.println("  \"extraMethods\": " + jsonNames(extraEntries) + ",");
+            w.println("  \"metadataExempt\": " + jsonNames(parsed.metadataExempt) + ",");
             w.println("  \"leftClassCount\": " + left.classes.size() + ",");
             w.println("  \"rightClassCount\": " + right.classes.size() + ",");
             w.println("  \"comparedClassCount\": " + rows.size() + ",");
@@ -361,6 +392,9 @@ public final class SemanticDiff {
         lines.add("| 產生時間 | " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " |");
         lines.add("| 正規化 | 移除 LineNumberTable／LocalVariableTable／LocalVariableTypeTable／SourceFile／SourceDebugExtension；不比較 max_stack／max_locals／常數池順序；`lambda$xxx$N`、`access$NNN` 依出現順序正規化 |");
         lines.add("| T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |");
+        lines.add("| T020i-2 正規化 | InnerClasses 只比本類別及直接內部類；忽略類別 ACC_SUPER；右側無建構子時允許左側唯一的空 Object 建構子；非參數槽位依首次出現一對一重編號（含 wide 第二格） |");
+        lines.add("| extra-methods | " + (parsed.extraFile == null ? "未啟用" : mdEscape(parsed.extraFile.toString())) + " |");
+        lines.add("| metadata-exempt | " + (parsed.metadataFile == null ? "未啟用" : mdEscape(parsed.metadataFile.toString())) + " |");
         lines.add("| effects-methods | " + (parsed.effectsFile == null ? "未啟用" : "`" + mdEscape(parsed.effectsFile.toString()) + "`") + " |");
         lines.add("| 比較項 | 類別存取旗標、父類別、介面、欄位（名稱／描述／旗標／常數值）、方法（名稱／描述／旗標／例外／指令序列含解析後運算元、try-catch、標籤序號）、註解（含 annotationDefault 結構化值、指令／區域變數／record 型別註解）、內部類別屬性 |");
         lines.add("");
@@ -386,6 +420,15 @@ public final class SemanticDiff {
         lines.add("- **推測**：DIFF 多半是 javac／反編譯來源／後來手改造成的指令或結構差。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差大致對得上。");
         lines.add("- **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。");
         lines.add("- **SAME_EFFECTS 限制**：只確認核准摘要相同，不證明參數資料流或分支目的地等價；未列入清單的方法仍比較完整指令。");
+        lines.add("");
+        lines.add("## 受控例外清單");
+        lines.add("");
+        lines.add("只豁免左側多出的精確 private static 方法；同名方法兩側皆存在時照常比較。metadata 豁免不套用至欄位、方法或子類別。");
+        lines.add("");
+        for (var entry : parsed.extraMethods.entrySet()) {
+            for (String method : entry.getValue()) lines.add("- extra-methods：`" + entry.getKey() + "#" + method + "`");
+        }
+        for (String owner : parsed.metadataExempt) lines.add("- metadata-exempt：`" + owner + "`");
         lines.add("");
         lines.add("## 核准方法副作用結果");
         lines.add("");
@@ -557,6 +600,10 @@ public final class SemanticDiff {
         Set<String> classes;
         Set<String> exclude;
         Map<String, Set<String>> allowMethods;
+        Path extraFile;
+        Path metadataFile;
+        Map<String, Set<String>> extraMethods = Map.of();
+        Set<String> metadataExempt = Set.of();
         Path effectsFile;
         Map<String, Set<String>> effectsMethods = Map.of();
 
@@ -573,6 +620,14 @@ public final class SemanticDiff {
                     case "--exclude" -> out.exclude = parseNameList(need(args, ++i, a), "--exclude");
                     case "--allow-methods" -> out.allowMethods = parseAllowMethods(Path.of(need(args, ++i, a)));
                     case "--allow-right" -> out.allowRight = Path.of(need(args, ++i, a));
+                    case "--extra-methods" -> {
+                        out.extraFile = Path.of(need(args, ++i, a));
+                        out.extraMethods = parseMethods(out.extraFile, "--extra-methods");
+                    }
+                    case "--metadata-exempt" -> {
+                        out.metadataFile = Path.of(need(args, ++i, a));
+                        out.metadataExempt = parseMetadataExempt(out.metadataFile);
+                    }
                     case "--effects-methods" -> {
                         out.effectsFile = Path.of(need(args, ++i, a));
                         out.effectsMethods = parseMethods(out.effectsFile, "--effects-methods");
@@ -664,6 +719,21 @@ public final class SemanticDiff {
             return map;
         }
 
+        private static Set<String> parseMetadataExempt(Path file) throws IOException {
+            if (!Files.isRegularFile(file)) throw new IllegalArgumentException("--metadata-exempt file not found: " + file);
+            Set<String> names = new LinkedHashSet<>();
+            for (String line : Files.readString(file, StandardCharsets.UTF_8).replace("\uFEFF", "").split("\n")) {
+                String entry = line.split("#", 2)[0].trim();
+                if (entry.isEmpty()) continue;
+                String name = normalizeClassName(entry);
+                if (!name.matches("[\\p{L}\\p{N}_$/]+") || name.contains("//") || name.endsWith("/"))
+                    throw new IllegalArgumentException("--metadata-exempt invalid class: " + entry);
+                names.add(name);
+            }
+            if (names.isEmpty()) throw new IllegalArgumentException("--metadata-exempt produced an empty set");
+            return names;
+        }
+
         private static String specText(String spec) throws IOException {
             Path path = Path.of(spec);
             if (Files.isRegularFile(path)) {
@@ -677,7 +747,7 @@ public final class SemanticDiff {
                     "usage: semantic-diff --left A.jar --right B.jar"
                             + " [--classes file-or-list] [--exclude file-or-list]"
                             + " [--allow-methods file --allow-right C.jar]"
-                            + " [--effects-methods file]"
+                            + " [--effects-methods file] [--extra-methods file] [--metadata-exempt file]"
                             + " [--json out.json] [--md out.md]");
         }
     }

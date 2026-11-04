@@ -1,3 +1,9 @@
 # 僅主控可新增條目；本清單依 #70 主控裁定初始化，不得自行擴大範圍。
 local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6640488851
 local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6640488851
+# #135／#77：RuntimeInventory 為 3 個方法、4 處 return；未新增第四個方法。
+local/lito381/server/RuntimeInventory#copy()Llocal/lito381/server/RuntimeInventory; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257
+local/lito381/server/RuntimeInventory#sourceEquipmentOnly()Llocal/lito381/server/RuntimeInventory; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257
+local/lito381/server/RuntimeInventory#withoutObjects(Ljava/util/Set;)Llocal/lito381/server/RuntimeInventory; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257
+local/lito381/server/ServerConfig#applyExternalSourceServers(Ljava/util/Properties;Ljava/nio/file/Path;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257
+local/lito381/server/ServerConfig#load(Ljava/nio/file/Path;Ljava/lang/String;)Llocal/lito381/server/ServerConfig; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257
