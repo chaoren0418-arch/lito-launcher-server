@@ -14574,6 +14574,34 @@ final class ClientSession implements Runnable {
     }
 
     private void exitRoomBeforePolyMe(boolean notifySelf) throws IOException {
+        // Rental-town scenes reuse Phase.BATTLE without a GameHub match.
+        // Handle that directory return before ordinary arena settlement.
+        if (rentalTownRoomState) {
+            // This direct S_FB group-1 room was never inserted into GameHub.
+            // S_D0 removes the native participant row; refreshing S_FB then
+            // restores the directory that led to this room.  Keeping this
+            // branch separate prevents a fabricated room id from entering
+            // the normal ownership, membership, or S_CC room-list paths.
+            pendingWarehousePassword = null;
+            pendingShapeChange = null;
+            pendingSlaveTarget = null;
+            pendingPetRename = null;
+            pendingResurrection = null;
+            pendingHouseAuctionBid = null;
+            clearControlledCompanionTargets();
+            long departedRoom = currentRoomId;
+            notifyRentalTownDeparture("room-exit");
+            removeRentalTownSceneInventory("room-exit");
+            sendEncrypted(new Protocol.Writer().c(Protocol.S_LITO_EXIT_ROOM)
+                            .d(departedRoom).s(litoDisplayName()).bytes(),
+                    "S_LITO_EXIT_ROOM rental-town player=" + playerName());
+            clearRentalTownRoomState();
+            phase = Phase.LOBBY;
+            sendLitoServerList();
+            System.out.println("[LiTo] exited rental-town room=" + departedRoom
+                    + " player=" + playerName() + " return=group-1-directory");
+            return;
+        }
         if (phase == Phase.BATTLE) { settleRequestedBattleExit(); return; }
         pendingWarehousePassword = null;
         pendingShapeChange = null;
@@ -14600,25 +14628,6 @@ final class ClientSession implements Runnable {
         resetNativeTournamentEconomy("room-exit");
         closePersonalShopIfOpen("room-exit");
         cancelActivePlayerTrade("room-exit", true);
-        if (rentalTownRoomState) {
-            // This direct S_FB group-1 room was never inserted into GameHub.
-            // S_D0 removes the native participant row; refreshing S_FB then
-            // restores the directory that led to this room.  Keeping this
-            // branch separate prevents a fabricated room id from entering
-            // the normal ownership, membership, or S_CC room-list paths.
-            long departedRoom = currentRoomId;
-            notifyRentalTownDeparture("room-exit");
-            removeRentalTownSceneInventory("room-exit");
-            sendEncrypted(new Protocol.Writer().c(Protocol.S_LITO_EXIT_ROOM)
-                            .d(departedRoom).s(litoDisplayName()).bytes(),
-                    "S_LITO_EXIT_ROOM rental-town player=" + playerName());
-            clearRentalTownRoomState();
-            phase = Phase.LOBBY;
-            sendLitoServerList();
-            System.out.println("[LiTo] exited rental-town room=" + departedRoom
-                    + " player=" + playerName() + " return=group-1-directory");
-            return;
-        }
         if (phase == Phase.ROOM) {
             GameHub.ReadyTransition transition = hub.setReady(currentRoomId, this, false).transition();
             if (transition == GameHub.ReadyTransition.COUNTDOWN_CANCELLED) {
@@ -14880,12 +14889,13 @@ final class ClientSession implements Runnable {
     }
 
     private void quitFight() throws IOException {
-        if (phase == Phase.BATTLE) { settleRequestedBattleExit(); return; }
-        pendingWarehousePassword = null;
-        pendingSlaveTarget = null;
-        pendingPetRename = null;
-        clearControlledCompanionTargets();
+        // Rental-town teleporter handoff reuses C_D9 while the scene is still
+        // in BATTLE. Handle that transfer before ordinary arena withdrawal.
         if (rentalTownTransferPending && rentalTownRoomState) {
+            pendingWarehousePassword = null;
+            pendingSlaveTarget = null;
+            pendingPetRename = null;
+            clearControlledCompanionTargets();
             NativeLitoRentalTeleportEndpointCatalog.Endpoint destination =
                     pendingRentalTeleportEndpoint;
             if (destination != null) {
@@ -14924,10 +14934,6 @@ final class ClientSession implements Runnable {
                 }
                 return;
             }
-            // The original same-endpoint group-2 path emits C_D9, consumes S_F0,
-            // then locally sends C_CB/C_CA(0).  Move the server to LOBBY before
-            // that C_CA arrives, and clear the premium item-set discriminator so
-            // byte zero is resolved as the DeathKnight battle channel.
             rentalTownTransferPending = false;
             notifyRentalTownDeparture("battle-destination-selected");
             removeRentalTownSceneInventory("battle-destination-selected");
@@ -14942,6 +14948,11 @@ final class ClientSession implements Runnable {
                     + " next=native C_CB/C_CA(0)");
             return;
         }
+        if (phase == Phase.BATTLE) { settleRequestedBattleExit(); return; }
+        pendingWarehousePassword = null;
+        pendingSlaveTarget = null;
+        pendingPetRename = null;
+        clearControlledCompanionTargets();
         if (config.nativeTransferStoneProbeEnabled()
                 && transferStoneProbeHandoffPending) {
             // The native different-endpoint path sends C_D9 and immediately

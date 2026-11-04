@@ -66,9 +66,8 @@ final class ClientSessionLitoModeStepIntegrationTest {
                     receive(client, receiver));
             assertArrayEquals(Protocol.litoRoomMap(roomId, 565), receive(client, receiver));
             assertTrue(!hub.roomSettings(roomId).requiresEqualSides());
-            assertArrayEquals(new Protocol.Writer().c(Protocol.S_LITO_EXIT_ROOM)
-                            .d(roomId).s("ArenaBot").bytes(),
-                    receive(client, receiver));
+            // ArenaBot exit is only emitted for the channel default test room.
+            // This user-created room has no structural bot to remove.
 
             invokeGameInfo(session, new byte[] {(byte) 0xD1, 2, 1});
             assertArrayEquals(Protocol.litoRoomMode(roomId, BattleRules.Mode.DEATHMATCH),

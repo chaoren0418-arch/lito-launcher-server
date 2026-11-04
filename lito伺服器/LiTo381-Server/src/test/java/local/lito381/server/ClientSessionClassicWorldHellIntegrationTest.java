@@ -45,7 +45,15 @@ final class ClientSessionClassicWorldHellIntegrationTest {
             assertEquals(27_300, intField(
                     fixture.session(), "hellRemainingTicks"));
 
-            fixture.state().elapseHell("HellFirst", 27_299);
+            String sourceName = (String) field(
+                    fixture.session(), "selectedClassicServerName");
+            if (sourceName == null || sourceName.isBlank()) {
+                sourceName = ((ServerConfig) field(fixture.session(), "config"))
+                        .classicServerNames().get(0);
+                setField(fixture.session(), "selectedClassicServerName", sourceName);
+            }
+            String hellKey = GameStateStore.sourceCharacter(sourceName, "HellFirst");
+            fixture.state().elapseHell(hellKey, 27_299);
             setInt(fixture.session(), "hellRemainingTicks", 1);
             setInt(fixture.session(), "playerHp", 0);
             ClassicWorldHell.Clock hellClock = (ClassicWorldHell.Clock)
@@ -73,7 +81,7 @@ final class ClientSessionClassicWorldHellIntegrationTest {
                     .anyMatch(destination -> destination.x() == returned.x()
                             && destination.y() == returned.y()));
             assertEquals(0, fixture.state().reconcileHell(
-                    "HellFirst", 0).effective().remainingTicks());
+                    hellKey, 0).effective().remainingTicks());
         } finally {
             fixture.close();
         }
@@ -138,6 +146,7 @@ final class ClientSessionClassicWorldHellIntegrationTest {
         setField(session, "outgoing", new Protocol.CipherState(seed));
         setEnumField(session, "phase", "WORLD");
         setField(session, "account", "hell-account");
+        setField(session, "selectedClassicServerName", config.classicServerNames().get(0));
         setField(session, "selectedCharacter", name);
         CharacterSummary selected = character(name, mapId, x, y);
         setField(session, "characters", List.of(selected));

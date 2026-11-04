@@ -114,13 +114,15 @@ final class ClientSessionRentalTownDirectoryTest {
         GameStateStore state = new GameStateStore(
                 temporary.resolve("state.properties"), false);
         GameHub hub = new GameHub(config);
-        try (ServerSocket listener = new ServerSocket(
+        try (MemoryAccountRepository accounts =
+                    new MemoryAccountRepository("test", "test");
+             ServerSocket listener = new ServerSocket(
                     0, 1, InetAddress.getByName("127.0.0.1"));
              Socket client = new Socket("127.0.0.1", listener.getLocalPort());
              Socket server = listener.accept()) {
             client.setSoTimeout(1_000);
             ClientSession session = new ClientSession(
-                    server, ClientSession.Endpoint.GAME, config, null, state,
+                    server, ClientSession.Endpoint.GAME, config, accounts, state,
                     new CaptureLog(temporary.resolve("capture")), hub);
             hub.connect(session);
             setPhase(session, "LOBBY");
@@ -197,6 +199,7 @@ final class ClientSessionRentalTownDirectoryTest {
             assertArrayEquals(new Protocol.Writer()
                             .c(Protocol.S_LITO_START_GAME).bytes(),
                     receive(client, receiver));
+            assertEquals(Protocol.S_LITO_TIMELIMIT, receive(client, receiver)[0] & 0xFF);
             NativeLitoTownCatalog.Town town = NativeLitoTownCatalog.forMap(560);
             assertArrayEquals(Protocol.observerBox(
                             town.minX(), town.minY(), town.maxX() + 1,
@@ -612,7 +615,7 @@ final class ClientSessionRentalTownDirectoryTest {
                             first.litoDisplayName(),
                             Protocol.LitoParticipantState.READY),
                     receive(firstClient, firstReceiver));
-            for (int index = 0; index < 13; index++) receive(firstClient, firstReceiver);
+            for (int index = 0; index < 14; index++) receive(firstClient, firstReceiver);
             for (NativeLitoRentalTownNpcCatalog.Npc npc
                     : NativeLitoRentalTownNpcCatalog.forMap(500)) {
                 assertRentalTownNpc(receive(firstClient, firstReceiver), npc);
@@ -634,7 +637,7 @@ final class ClientSessionRentalTownDirectoryTest {
                             second.litoDisplayName(),
                             Protocol.LitoParticipantState.READY),
                     receive(secondClient, secondReceiver));
-            for (int index = 0; index < 13; index++) receive(secondClient, secondReceiver);
+            for (int index = 0; index < 14; index++) receive(secondClient, secondReceiver);
             for (NativeLitoRentalTownNpcCatalog.Npc npc
                     : NativeLitoRentalTownNpcCatalog.forMap(500)) {
                 assertRentalTownNpc(receive(secondClient, secondReceiver), npc);
@@ -678,9 +681,9 @@ final class ClientSessionRentalTownDirectoryTest {
                             .h(startX).h(startY).c(heading).bytes());
             assertEquals(Protocol.S_LITO_MINIMAP,
                     receive(secondClient, secondReceiver)[0] & 0xFF);
-            assertArrayEquals(new Protocol.Writer().c(Protocol.S_MOVE_OBJECT)
-                            .d(second.playerObjectId()).h(stepX).h(stepY)
-                            .c(heading).bytes(),
+            // S_12 carries the origin; the client advances one heading step.
+            assertArrayEquals(NativeMovement.destination(
+                            second.playerObjectId(), stepX, stepY, heading),
                     receive(firstClient, firstReceiver));
             assertEquals(Protocol.S_LITO_MINIMAP,
                     receive(firstClient, firstReceiver)[0] & 0xFF);

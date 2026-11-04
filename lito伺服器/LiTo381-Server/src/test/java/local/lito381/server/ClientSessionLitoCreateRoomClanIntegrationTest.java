@@ -89,9 +89,9 @@ final class ClientSessionLitoCreateRoomClanIntegrationTest {
             setField(session, "currentRoomId", battleRoomId);
             setPhase(session, "BATTLE");
             invokeHandle(session, new byte[] {(byte) Protocol.C_LITO_QUIT_FIGHT});
-            assertEquals("CHANNEL", field(session, "phase").toString());
-            assertEquals(0L, field(session, "currentRoomId"));
-            assertTrue(hub.roomMembers(battleRoomId).isEmpty());
+            assertEquals("RESULT", field(session, "phase").toString());
+            assertEquals(battleRoomId, field(session, "currentRoomId"));
+            assertEquals(List.of(session), hub.roomMembers(battleRoomId));
         }
     }
 

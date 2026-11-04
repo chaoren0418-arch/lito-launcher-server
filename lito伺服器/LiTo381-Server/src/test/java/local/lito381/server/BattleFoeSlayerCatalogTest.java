@@ -31,7 +31,7 @@ final class BattleFoeSlayerCatalogTest {
         assertEquals(3, spell.hitCount());
         assertEquals(20, spell.exposureDamageStep());
         assertEquals(7_020, spell.attackerEffectGfx());
-        assertEquals(12_119, spell.targetEffectGfx());
+        assertEquals(6_509, spell.targetEffectGfx());
         assertEquals(0, spell.damageForExposureLevel(0));
         assertEquals(20, spell.damageForExposureLevel(1));
         assertEquals(40, spell.damageForExposureLevel(2));

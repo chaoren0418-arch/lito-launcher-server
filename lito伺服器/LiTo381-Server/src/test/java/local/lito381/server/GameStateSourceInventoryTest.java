@@ -437,7 +437,7 @@ final class GameStateSourceInventoryTest {
         // LiTo sub_4A2090 only accepts tags 1..33.  Wide HP/MP are saturated
         // into the native fields instead of emitting the later-client 0x27
         // custom-string tag which made this entire description disappear.
-        assertEquals("1300142701000000077F0D630EFF7F207F",
+        assertEquals("13001401000000077F0D630EFF7F207F",
                 java.util.HexFormat.of().withUpperCase()
                         .formatHex(armor.nativeStatusDetail()));
         assertFalse(armor.transferable());
@@ -480,8 +480,8 @@ final class GameStateSourceInventoryTest {
         String accessory = java.util.HexFormat.of().withUpperCase()
                 .formatHex(status.detail(23, 1, 4, 2));
 
-        assertEquals("13050B271E00000002040302077F", body);
-        assertEquals("13050B271E000000077F", accessory);
+        assertEquals("13050B1E00000002040302077F", body);
+        assertEquals("13050B1E000000077F", accessory);
     }
 
     @Test

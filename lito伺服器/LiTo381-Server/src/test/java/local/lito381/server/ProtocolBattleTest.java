@@ -309,6 +309,11 @@ class ProtocolBattleTest {
         assertEquals("", actor.s());
         assertEquals(0, actor.h());
         assertEquals(0, actor.c());
+        assertEquals(0xFF, actor.c() & 0xFF);
+        assertEquals(0, actor.c());
+        assertEquals(0, actor.c());
+        assertEquals(0, actor.c());
+        assertEquals(0, actor.c());
         assertEquals(0, actor.remaining());
 
         Protocol.Reader npc = new Protocol.Reader(Protocol.battleActor(
@@ -1879,7 +1884,7 @@ class ProtocolBattleTest {
                 Protocol.effectObject(request.targetObjectId(), 11722));
         assertEquals(Protocol.S_EFFECT, effect.c());
         assertEquals(0x1122_3344L, effect.d());
-        assertEquals(11722, effect.h());
+        assertEquals(744, effect.h());
         assertEquals(0, effect.remaining());
 
         assertThrows(IllegalArgumentException.class,

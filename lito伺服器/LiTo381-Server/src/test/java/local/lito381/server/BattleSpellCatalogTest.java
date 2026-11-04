@@ -798,18 +798,19 @@ final class BattleSpellCatalogTest {
         assertEquals(1, spell.effectiveMpCost(17, 0));
 
         assertEquals(45065, BattleSpellCatalog.zombieTemplate(0, 99).npcId());
-        assertEquals(81183, BattleSpellCatalog.zombieTemplate(1, 24).npcId());
-        assertEquals(81184, BattleSpellCatalog.zombieTemplate(1, 32).npcId());
-        assertEquals(81185, BattleSpellCatalog.zombieTemplate(1, 40).npcId());
+        assertEquals(45065, BattleSpellCatalog.zombieTemplate(1, 47).npcId());
+        assertEquals(81183, BattleSpellCatalog.zombieTemplate(3, 24).npcId());
+        assertEquals(81184, BattleSpellCatalog.zombieTemplate(3, 32).npcId());
+        assertEquals(81185, BattleSpellCatalog.zombieTemplate(3, 40).npcId());
         BattleSpellCatalog.ZombieTemplate mage47 =
-                BattleSpellCatalog.zombieTemplate(1, 47);
+                BattleSpellCatalog.zombieTemplate(3, 47);
         assertEquals(81186, mage47.npcId());
         assertEquals(52, mage47.gfx());
         assertEquals("$57", mage47.name());
         assertEquals(16, mage47.level());
         assertEquals(500, mage47.maxHp());
-        assertEquals(81187, BattleSpellCatalog.zombieTemplate(1, 48).npcId());
-        assertEquals(81188, BattleSpellCatalog.zombieTemplate(1, 52).npcId());
+        assertEquals(81187, BattleSpellCatalog.zombieTemplate(3, 48).npcId());
+        assertEquals(81188, BattleSpellCatalog.zombieTemplate(3, 52).npcId());
         assertEquals(81183, BattleSpellCatalog.zombieTemplate(2, 48).npcId());
         assertNull(BattleSpellCatalog.createZombieSpell(42));
     }

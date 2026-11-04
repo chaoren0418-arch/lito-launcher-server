@@ -1421,6 +1421,10 @@ final class GameHub implements AutoCloseable {
         return channel.roomIds.stream().map(rooms::get)
                 .filter(java.util.Objects::nonNull)
                 .filter(room -> !room.battleStarted)
+                // Local Lobby is the per-channel default test room. It stays
+                // on the room list for direct join / ArenaBot, but S_EB
+                // quick-match must never pick it over player-created rooms.
+                .filter(room -> !NativeRoomRules.testRoom(this, room.id))
                 // Native C_E3 exposes only the six ordinary battle modes
                 // (0..5).  Server-gated mode 6 is the rental town scene and
                 // must never be selected by battle matchmaking.
@@ -1607,8 +1611,7 @@ final class GameHub implements AutoCloseable {
         room.members.add(session);
         if (room.owner == null) room.owner = session;
         room.ready.remove(session);
-        if (!session.isObserver()
-                && room.match.rules().mode() == BattleRules.Mode.SIEGE_WAR) {
+        if (!session.isObserver() && room.match.rules().teamBased()) {
             room.forces.put(session, smallerSiegeForce(room, session));
         }
         return new RoomJoinOutcome(true, new ArrayList<>(room.members), combatantsBefore,

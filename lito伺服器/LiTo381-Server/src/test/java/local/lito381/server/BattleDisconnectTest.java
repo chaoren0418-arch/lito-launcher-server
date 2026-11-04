@@ -28,7 +28,8 @@ final class BattleDisconnectTest {
         BattleRules.Resolution result = GameHub.resolveBattleDisconnect(
                 Set.of(1L), Set.of(1L));
 
-        assertEquals(Set.of(2L), result.winners());
+        assertEquals(Set.of(), result.winners());
         assertEquals(Set.of(1L), result.losers());
+        assertEquals("combatant-disconnected", result.reason());
     }
 }

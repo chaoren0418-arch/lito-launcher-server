@@ -5030,6 +5030,7 @@ final class MemoryAccountRepository implements AccountRepository {
     private final String baseAccount;
     private final String authenticationFailureAccount;
     private final ConcurrentHashMap<String, String> credentials = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Integer> accessLevels = new ConcurrentHashMap<>();
     private final Set<String> litoOwnedAccounts = ConcurrentHashMap.newKeySet();
     private final ConcurrentHashMap<String, AccountInfoSnapshot> accountInfo = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, QuizRegistrationSnapshot> registeredQuiz = new ConcurrentHashMap<>();
@@ -5260,6 +5261,16 @@ final class MemoryAccountRepository implements AccountRepository {
                 ? new GmCommandDefinition("de", 200, "L1SpawnDe",
                     "loopback equivalent of lito_static.commands", false)
                 : null;
+    }
+
+    @Override public int accessLevel(String account) {
+        if (account == null || account.isBlank()) return 0;
+        return accessLevels.getOrDefault(key(account), 0);
+    }
+
+    void grantAccessLevel(String account, int level) {
+        if (account == null || account.isBlank()) return;
+        accessLevels.put(key(account), Math.max(0, Math.min(200, level)));
     }
 
     @Override public List<RepositoryTournamentShopOffer> tournamentShopOffers() {
