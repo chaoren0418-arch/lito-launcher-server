@@ -3,7 +3,7 @@ package local.lito381.server;
 import java.io.*;import java.util.*;
 /** Source material ordering through the actual native memory/item transaction authority. */
 final class NativeCastMaterial {
- static final class Cast {final int skill;boolean resolved,consumed,bypass,transaction,placement,placementBlocked;RuntimeInventory before,after,live,staged;NativeDeItemApplication.Owner owner;NativeDeItemTransaction.Operation<?> operation;Cast(int skill){this.skill=skill;}}
+ static final class Cast {final int skill;boolean resolved,consumed,bypass,transaction,placement,placementBlocked,effectResult;RuntimeInventory before,after,live,staged;NativeDeItemApplication.Owner owner;NativeDeItemTransaction.Operation<?> operation;java.util.function.Function<RuntimeInventory,Boolean> effect;Cast(int skill){this.skill=skill;}}
  static boolean retained(ClientSession pc,NativePlayerLifetime life){return Thread.holdsLock(life.admission)&&pc.nativePlayerActionLock().isHeldByCurrentThread()&&NativeLightAction.retainedMaterial(pc);}
  static boolean active(ClientSession pc,Cast cast){return cast!=null&&cast.transaction&&cast.operation!=null&&retained(pc,NativePlayerLifetime.of(pc))&&cast.owner!=null&&cast.owner.active&&cast.owner.matches(pc)&&CombatAccess.field(pc,NativeDeItemApplication.OWNER)==cast.owner&&(pc.nativeDeInventory(0)==cast.live||pc.nativeDeInventory(0)==cast.staged);}
  static boolean ownerLifetime(NativePlayerLifetime life,NativeDeItemApplication app,ClientSession pc){if(life.admits())return true;var cast=NativeLightAction.currentMaterial(pc);return active(pc,cast)&&cast.owner.application.get()==app&&app.life==life&&!app.closed;}

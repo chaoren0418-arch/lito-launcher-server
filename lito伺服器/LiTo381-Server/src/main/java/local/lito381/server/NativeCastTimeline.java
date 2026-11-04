@@ -129,7 +129,7 @@ final class NativeCastTimeline {
                     return false;
                 }
                 long l = System.nanoTime();
-                for (Long l2 : ((Map)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
+                for (Long l2 : ((Map<?, Long>)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
                     if (l2 - l <= 0L) continue;
                     return false;
                 }
@@ -205,7 +205,7 @@ final class NativeCastTimeline {
                     return false;
                 }
                 long l = System.nanoTime();
-                for (Long l2 : ((Map)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
+                for (Long l2 : ((Map<?, Long>)CombatAccess.field(clientSession, "spellReadyNanos")).values()) {
                     if (l2 - l <= 0L) continue;
                     return false;
                 }

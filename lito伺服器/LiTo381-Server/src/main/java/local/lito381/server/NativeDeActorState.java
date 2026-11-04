@@ -227,13 +227,12 @@ final class NativeDeActorState {
 
     record Snapshot(Lease lease, Profile profile, Map<NativePlayerCommit.Binding, Integer> hate) {
         Snapshot {
-            map = Map.copyOf(map);
+            hate = Map.copyOf(hate);
         }
     }
 
-    record Transition(Lease lease, Profile profile, List<Effect> effects) {
-        Transition {
-            list = List.copyOf(list);
+    record Transition(Lease lease, Profile profile, List<Effect> effects) {Transition {
+            effects = List.copyOf(effects);
         }
     }
 

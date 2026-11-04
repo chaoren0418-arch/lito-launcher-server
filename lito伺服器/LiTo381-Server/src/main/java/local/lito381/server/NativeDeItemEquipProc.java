@@ -4,7 +4,6 @@
  */
 package local.lito381.server;
 
-import com.lineage.server.model.proc.ProcRandomHelper;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -158,21 +157,28 @@ public class NativeDeItemEquipProc {
     }
 
     public int calculateDamage() {
-        return this.hasDamageEffect() ? ProcRandomHelper.addZeroToInclusive((int)this.flatDamage, (int)this.randDamage, (Random)ThreadLocalRandom.current()) : 0;
+        return this.hasDamageEffect() ? NativeDeItemEquipProc.addZeroToInclusive(this.flatDamage, this.randDamage, ThreadLocalRandom.current()) : 0;
     }
 
     public int calculateHpRecover() {
         if (this.healHp <= 0 && this.healHpRand <= 0) {
             return 0;
         }
-        return ProcRandomHelper.addZeroToInclusive((int)this.healHp, (int)this.healHpRand, (Random)ThreadLocalRandom.current());
+        return NativeDeItemEquipProc.addZeroToInclusive(this.healHp, this.healHpRand, ThreadLocalRandom.current());
     }
 
     public int calculateMpRecover() {
         if (this.healMp <= 0 && this.healMpRand <= 0) {
             return 0;
         }
-        return ProcRandomHelper.addZeroToInclusive((int)this.healMp, (int)this.healMpRand, (Random)ThreadLocalRandom.current());
+        return NativeDeItemEquipProc.addZeroToInclusive(this.healMp, this.healMpRand, ThreadLocalRandom.current());
+    }
+
+    private static int addZeroToInclusive(int fix, int rnd, Random random) {
+        if (rnd <= 0) {
+            return Math.max(0, fix);
+        }
+        return fix + random.nextInt(rnd + 1);
     }
 
     public String toString() {

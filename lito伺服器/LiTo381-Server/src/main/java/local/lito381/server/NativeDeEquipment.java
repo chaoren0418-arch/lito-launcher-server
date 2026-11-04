@@ -193,8 +193,7 @@ final class NativeDeEquipment {
         }
     }
 
-    record Values(int tempGfx, int gfx, int weapon, int status, int rawRange, int rawBow, int attack, int move, Template template) {
-        Values {
+    record Values(int tempGfx, int gfx, int weapon, int status, int rawRange, int rawBow, int attack, int move, Template template) {Values {
             Objects.requireNonNull(template);
         }
 

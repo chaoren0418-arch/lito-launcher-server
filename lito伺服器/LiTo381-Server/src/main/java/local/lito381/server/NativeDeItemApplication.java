@@ -149,7 +149,10 @@ final class NativeDeItemApplication {
                 if (runtimeInventory != null) {
                     RuntimeInventory runtimeInventory4 = runtimeInventory;
                     synchronized (runtimeInventory4) {
-                        ((NativeDeItemInventory)runtimeInventory.nativeDeItems()).validateReplacement(runtimeInventory2);
+                        Object nativeItems = runtimeInventory.nativeDeItems();
+                        if (nativeItems instanceof NativeDeItemInventory inventory) {
+                            inventory.validateReplacement(runtimeInventory2);
+                        }
                         clientSession.nativeDeSetInventory(n, runtimeInventory);
                     }
                 } else {

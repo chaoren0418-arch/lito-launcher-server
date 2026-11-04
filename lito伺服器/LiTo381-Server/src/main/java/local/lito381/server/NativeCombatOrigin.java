@@ -175,7 +175,7 @@ final class NativeCombatOrigin {
             return new CombatPoisonAtomic.NpcState(ClassicWorldMonsterPoisonAttack.Kind.NONE, 0, false, false, false);
         }
         try {
-            return NPC_STATE.invokeExact(clientSession, l, n, n2, n3, l2, string);
+            return (CombatPoisonAtomic.NpcState) NPC_STATE.invokeExact(clientSession, l, n, n2, n3, l2, string);
         }
         catch (Throwable throwable) {
             throw new IllegalStateException("native NPC poison state failed", throwable);

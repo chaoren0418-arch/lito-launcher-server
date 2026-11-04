@@ -115,14 +115,15 @@ final class NativeProcHealingCompanion {
                         Object object4 = object2;
                         synchronized (object4) {
                             Object object3;
-                            object3 = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
-                            object = object3;
+                            BattleTimedStatus timedStatus = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
+                            object3 = timedStatus;
+                            object = timedStatus;
                             synchronized (object) {
                                 BattleCompanion.Snapshot snapshot = ((BattleCompanion)object2).snapshot();
-                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token(object3, false) != ref.owner()) {
+                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token(timedStatus, false) != ref.owner()) {
                                     return null;
                                 }
-                                return function.apply(new Live(clientSession, clientSession2, (BattleCompanion)object2, (BattleTimedStatus)object3, snapshot));
+                                return function.apply(new Live(clientSession, clientSession2, (BattleCompanion)object2, timedStatus, snapshot));
                             }
                         }
                     }

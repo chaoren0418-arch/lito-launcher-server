@@ -93,18 +93,18 @@ final class NativeProcEncounterCatalog {
         Map<String, Type> map = NativeProcEncounterCatalog.readTypes(NativeProcEncounterCatalog.class.getResourceAsStream(RESOURCE));
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string = SharedDatabase.identifier(properties.getProperty("database.static.database"));
-        try (Object object = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
-            object.setReadOnly(true);
-            object.setAutoCommit(false);
-            object.setTransactionIsolation(4);
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
+            connection.setReadOnly(true);
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(4);
             try {
-                catalog = NativeProcEncounterCatalog.read((Connection)object, string, map);
+                catalog = NativeProcEncounterCatalog.read(connection, string, map);
             }
             finally {
-                object.rollback();
+                connection.rollback();
             }
         }
-        object = NativeProcNpcCatalog.catalog();
+        Object object = NativeProcNpcCatalog.catalog();
         if (((NativeProcNpcCatalog.Catalog)object).npcs().size() != catalog.npcs().size()) {
             throw new SQLException("NPC static snapshots changed during startup");
         }
@@ -154,8 +154,8 @@ final class NativeProcEncounterCatalog {
 
     record Catalog(String database, Map<Integer, Npc> npcs, Map<String, Type> types) {
         Catalog {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
+            npcs = Map.copyOf(npcs);
+            types = Map.copyOf(types);
         }
 
         Npc find(int n) {

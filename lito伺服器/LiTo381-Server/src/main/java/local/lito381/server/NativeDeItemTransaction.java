@@ -83,10 +83,9 @@ final class NativeDeItemTransaction {
         public T call() throws IOException;
     }
 
-    record Change(RuntimeInventory previous, RuntimeInventory next, InventoryCatalog.Definition definition) {
-        Change {
-            runtimeInventory = NativeDeItemTransaction.wireCopy(runtimeInventory);
-            runtimeInventory2 = NativeDeItemTransaction.wireCopy(runtimeInventory2);
+    record Change(RuntimeInventory previous, RuntimeInventory next, InventoryCatalog.Definition definition) {        Change {
+            previous = NativeDeItemTransaction.wireCopy(previous);
+            next = NativeDeItemTransaction.wireCopy(next);
         }
     }
 }

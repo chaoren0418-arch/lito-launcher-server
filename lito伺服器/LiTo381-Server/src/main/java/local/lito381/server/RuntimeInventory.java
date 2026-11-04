@@ -1638,4 +1638,19 @@ final class RuntimeInventory {
         return NEXT_OBJECT_ID.getAndUpdate(current ->
                 current >= 0x7FFF_FFFFL ? FIRST_OBJECT_ID : current + 1);
     }
+
+    synchronized Map nativeDeItems() {
+        return this.items;
+    }
+
+    synchronized Map nativeDePhysical() {
+        return this.sourcePhysicalWeapons;
+    }
+
+    synchronized void nativeDeBind(Map bound) {
+        this.items.clear();
+        if (bound != null) {
+            this.items.putAll(bound);
+        }
+    }
 }

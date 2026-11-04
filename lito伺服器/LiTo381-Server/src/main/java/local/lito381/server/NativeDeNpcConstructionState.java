@@ -462,7 +462,7 @@ extends NativeDeNpcTemplateState {
     }
 
     @Override
-    private void cancelNpcChatTimer() {
+    void cancelNpcChatTimer() {
         NativeDeChatRuntime.cancel(this);
     }
 

@@ -47,7 +47,12 @@ final class NativeDeLiveAiPorts {
                         throw new IllegalStateException(iOException);
                     }
                 }
-                inputStream.close();
+                try {
+                    inputStream.close();
+                }
+                catch (IOException iOException) {
+                    throw new IllegalStateException(iOException);
+                }
             }
             return config;
         }

@@ -262,32 +262,32 @@ final class NativeDeAiTimers {
             @Override
             public Object install(long l, long l2, boolean bl, int n) {
                 Entry entry = NativeDeAiTimers.withTarget(gameHub, ref, object, lease, live -> {
-                    Object object2 = state2.lock;
+                    Object object2 = state.lock;
                     synchronized (object2) {
-                        if (!NativeDeAiTimeline.owns(state, l) || state2.chain != l || state2.activeTimer != l2) {
+                        if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.activeTimer != l2) {
                             return null;
                         }
-                        Object object3 = nativePlayerLifetime2.admission;
+                        Object object3 = nativePlayerLifetime.admission;
                         synchronized (object3) {
                             Credit credit;
-                            if (nativePlayerLifetime2.mode != NativePlayerLifetime.Mode.OPEN || ticket == null && nativePlayerLifetime2.pending.get() >= NativePlayerCommit.GLOBAL || ticket != null && ticket2.closed.get()) {
+                            if (nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN || ticket == null && nativePlayerLifetime.pending.get() >= NativePlayerCommit.GLOBAL || ticket != null && ticket.closed.get()) {
                                 return null;
                             }
                             if (ticket == null) {
-                                nativePlayerLifetime2.pending.incrementAndGet();
+                                nativePlayerLifetime.pending.incrementAndGet();
                                 credit = new Credit(nativePlayerLifetime);
                             } else {
-                                credit = ticket2.credit;
+                                credit = ticket.credit;
                                 if (!ticket.detach()) {
                                     return null;
                                 }
                             }
-                            Entry entry = new Entry(registry, gameHub, new Work(ref, object, lease, l, bl), state, l2, credit);
-                            registry2.entries.add(entry);
-                            tickets.put(entry.id, entry);
-                            NativeDeAiTimers.index(timelines, lease.timeline(), entry);
-                            NativeDeAiTimers.index(generations, object, entry);
-                            return entry;
+                            Entry installed = new Entry(registry, gameHub, new Work(ref, object, lease, l, bl), state, l2, credit);
+                            registry.entries.add(installed);
+                            tickets.put(installed.id, installed);
+                            NativeDeAiTimers.index(timelines, lease.timeline(), installed);
+                            NativeDeAiTimers.index(generations, object, installed);
+                            return installed;
                         }
                     }
                 });
@@ -336,7 +336,7 @@ final class NativeDeAiTimers {
                 NativeDeAiTimeline.State state = NativeDeAiTimers.state(live.status());
                 Object object = state.lock;
                 synchronized (object) {
-                    return NativeDeAiTimeline.owns(state, entry.work.owner()) && state.chain == entry.work.owner() && state.pending && state.pendingBackground == entry.work.background() ? entry.work : null;
+                    return NativeDeAiTimeline.owns(state, entry2.work.owner()) && state.chain == entry2.work.owner() && state.pending && state.pendingBackground == entry2.work.background() ? entry2.work : null;
                 }
             });
             if (work != null) {

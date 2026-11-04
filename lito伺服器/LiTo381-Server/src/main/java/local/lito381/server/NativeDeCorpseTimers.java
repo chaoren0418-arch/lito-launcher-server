@@ -124,12 +124,12 @@ final class NativeDeCorpseTimers {
                     if (closed || nativePlayerLifetime.mode != NativePlayerLifetime.Mode.OPEN) {
                         throw new RejectedExecutionException("corpse owner closed");
                     }
-                    ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.scheduleAtFixedRate(() -> this.tick(runnable), l, l2, TimeUnit.MILLISECONDS);
+                    ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.scheduleAtFixedRate(() -> Owner.this.tick(runnable), l, l2, TimeUnit.MILLISECONDS);
                     if (scheduledFuture != null) {
                         ticker.set(scheduledFuture);
                         if (closed) {
                             ticker.compareAndSet(scheduledFuture, null);
-                            this.cancel(scheduledFuture);
+                            Owner.this.cancel(scheduledFuture);
                         }
                     }
                     return scheduledFuture;
@@ -146,7 +146,7 @@ final class NativeDeCorpseTimers {
                             deferred.incrementAndGet();
                             return null;
                         }
-                        Ticket ticket = new Ticket(this);
+                        Ticket ticket = new Ticket(Owner.this);
                         nativePlayerLifetime.pending.incrementAndGet();
                         tasks.add(ticket);
                         return ticket;
@@ -243,38 +243,38 @@ final class NativeDeCorpseTimers {
                         l2 = ++ticket.epoch;
                     }
                     try {
-                        boolean bl;
-                        object = nativePlayerLifetime.retry.schedule(() -> {
-                            boolean bl;
+                        boolean scheduled;
+                        ScheduledFuture<?> scheduledFuture = nativePlayerLifetime.retry.schedule(() -> {
+                            boolean run;
                             Ticket ticket2 = ticket;
                             synchronized (ticket2) {
-                                boolean bl2 = bl = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2 && !closed && nativePlayerLifetime2.mode == NativePlayerLifetime.Mode.OPEN;
-                                if (bl) {
+                                boolean bl2 = run = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2 && !closed && nativePlayerLifetime.mode == NativePlayerLifetime.Mode.OPEN;
+                                if (run) {
                                     ticket.future = null;
                                     ticket.phase = 0;
                                 }
                             }
-                            if (bl) {
+                            if (run) {
                                 nativePlayerLifetime.executeCommitted(runnable);
                             } else {
                                 ticket.close(true);
                             }
                         }, l, TimeUnit.MILLISECONDS);
-                        if (object == null) {
+                        if (scheduledFuture == null) {
                             ticket.close(false);
                             return null;
                         }
                         Ticket ticket2 = ticket;
                         synchronized (ticket2) {
-                            boolean bl2 = bl = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2;
-                            if (bl) {
-                                ticket.future = object;
+                            boolean bl2 = scheduled = !ticket.closed && ticket.phase == 1 && ticket.epoch == l2;
+                            if (scheduled) {
+                                ticket.future = scheduledFuture;
                             }
                         }
-                        if (!bl) {
-                            this.cancel((ScheduledFuture<?>)object);
+                        if (!scheduled) {
+                            Owner.this.cancel(scheduledFuture);
                         }
-                        return object;
+                        return scheduledFuture;
                     }
                     catch (Error | RuntimeException throwable) {
                         ticket.close(false);

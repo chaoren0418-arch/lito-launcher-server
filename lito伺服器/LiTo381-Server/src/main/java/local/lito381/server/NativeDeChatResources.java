@@ -36,9 +36,9 @@ final class NativeDeChatResources {
         NativeDeChatScope.Data data = new NativeDeChatScope.Data(nativeDeWorldLog2);
         NativeDeTerrainScope.Context context = new NativeDeTerrainScope.Context(sql, null, nativeDeWorldLog2);
         NativeDeChatTable nativeDeChatTable = NativeDeTerrainScope.call(context, () -> NativeDeChatScope.loading(data, () -> {
-            NativeDeChatTable nativeDeChatTable = new NativeDeChatTable();
-            nativeDeChatTable.load();
-            return nativeDeChatTable;
+            NativeDeChatTable loaded = new NativeDeChatTable();
+            loaded.load();
+            return loaded;
         }));
         if (atomicLong.get() != 0L || counts.lifecycleFailures.get() != 0L || counts.opened.get() != 1L || counts.rolledBack.get() != 1L || counts.closed.get() != 1L) {
             throw new SQLException("source npcchat incomplete SQL/lifecycle; publication refused");

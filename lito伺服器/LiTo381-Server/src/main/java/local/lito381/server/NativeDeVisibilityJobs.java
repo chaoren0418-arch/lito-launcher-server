@@ -63,12 +63,12 @@ final class NativeDeVisibilityJobs {
             owner.tickets.add(ticket);
             if (runnable instanceof NativeDeVisibilityTimer) {
                 object = (NativeDeVisibilityTimer)runnable;
-                owner.timer = object;
+                owner.timer = (NativeDeVisibilityTimer)object;
             }
             try {
                 ticket.future(owner.context.life.retry.scheduleAtFixedRate(ticket::pulse, Math.max(0L, l), l2, TimeUnit.MILLISECONDS));
                 object = ticket;
-                return object;
+                return (Ticket)object;
             }
             catch (Error | RuntimeException throwable) {
                 ticket.cancel(false);

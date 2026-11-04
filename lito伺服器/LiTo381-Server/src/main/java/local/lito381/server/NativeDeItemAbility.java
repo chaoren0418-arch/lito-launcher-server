@@ -4,7 +4,6 @@
  */
 package local.lito381.server;
 
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
@@ -32,15 +31,15 @@ public class NativeDeItemAbility {
 
     public synchronized boolean auditIntegrity(String string) {
         int n = AbilityType.values().length;
-        ArrayList<CallSite> arrayList = new ArrayList<CallSite>();
+        ArrayList<String> arrayList = new ArrayList<String>();
         for (AbilityType abilityType : AbilityType.values()) {
             Integer n2 = this._abilities.get((Object)abilityType);
             if (n2 != null) continue;
             boolean bl = this._abilities.containsKey((Object)abilityType);
-            arrayList.add((CallSite)((Object)(abilityType.name() + (bl ? "=null" : "=missing"))));
+            arrayList.add(abilityType.name() + (bl ? "=null" : "=missing"));
         }
         if (this._abilities.size() != n) {
-            arrayList.add((CallSite)((Object)("mapSize=" + this._abilities.size() + " expected=" + n)));
+            arrayList.add("mapSize=" + this._abilities.size() + " expected=" + n);
         }
         if (!arrayList.isEmpty()) {
             _log.warn("[ItemAbility] \u80fd\u529b map \u7570\u5e38 phase={} issues=[{}] ctx={} thread={}", (Object)string, (Object)String.join((CharSequence)", ", arrayList), (Object)this._debugContext, (Object)Thread.currentThread().getName());

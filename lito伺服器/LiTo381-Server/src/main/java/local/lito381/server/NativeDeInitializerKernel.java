@@ -65,7 +65,7 @@ final class NativeDeInitializerKernel {
                     try {
                         object2 = string.split(",");
                         serializable = new ArrayList();
-                        for (Object object3 : object2) {
+                        for (Object object3 : (String[])object2) {
                             if (((String)(object3 = ((String)object3).trim())).isEmpty()) continue;
                             try {
                                 int n4 = Integer.parseInt((String)object3);
@@ -82,7 +82,7 @@ final class NativeDeInitializerKernel {
                             services.log().debug("DeInitializer: \u4f7f\u7528\u7cbe\u78ba\u6307\u5b9a\u6a21\u5f0f (Setting ID=" + setting.id + ", ClassId=" + setting.classId + ", WeaponType=" + setting.weaponType + ")");
                         } else {
                             arrayList = new ArrayList<Integer>();
-                            for (Object object3 : object2) {
+                            for (Object object3 : (String[])object2) {
                                 if (((String)(object3 = ((String)object3).trim())).isEmpty()) continue;
                                 try {
                                     int n5 = Integer.parseInt((String)object3);
@@ -104,18 +104,18 @@ final class NativeDeInitializerKernel {
                 if (object == null && ((Name[])(object2 = services.getDeNameList())).length > 0) {
                     serializable = new ArrayList();
                     if (setting != null) {
-                        for (Object object3 : object2) {
+                        for (Object object3 : (Name[])object2) {
                             if (((Name)object3).get_classId() != setting.classId) continue;
                             ((ArrayList)serializable).add(object3);
                         }
                     } else if (arrayList != null && !arrayList.isEmpty()) {
-                        for (Object object3 : object2) {
+                        for (Object object3 : (Name[])object2) {
                             if (!arrayList.contains(((Name)object3).get_classId())) continue;
                             ((ArrayList)serializable).add(object3);
                         }
                     }
                     if (((ArrayList)serializable).isEmpty()) {
-                        for (Object object3 : object2) {
+                        for (Object object3 : (Name[])object2) {
                             ((ArrayList)serializable).add(object3);
                         }
                     }
@@ -134,7 +134,7 @@ final class NativeDeInitializerKernel {
                         finally {
                             reentrantLock.unlock();
                         }
-                        object = object4;
+                        object = (Name)object4;
                     }
                 }
                 if (object == null) {

@@ -7,6 +7,7 @@ package local.lito381.server;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +38,11 @@ class NativeDeCharacterFields
 extends NativeDeObjectFields {
     static final int MAX_HP_MP_RO = 999999;
     static final int MAX_HP_MP_STANDARD = Short.MAX_VALUE;
+    static final HashMap<Integer, Integer> SKU1 = new HashMap<Integer, Integer>();
+    static final HashMap<Integer, Integer> SKU2 = new HashMap<Integer, Integer>();
+    static final HashMap<Integer, Integer> SKD1 = new HashMap<Integer, Integer>();
+    static final HashMap<Integer, Integer> SKD2 = new HashMap<Integer, Integer>();
+    static final HashMap<Integer, Integer> SKD3 = new HashMap<Integer, Integer>();
     private final int clientType;
     private final int objectId;
     private final ReentrantLock _npcVitalMutationLock;
@@ -374,7 +380,6 @@ extends NativeDeObjectFields {
                             this.reportCompletionFailure(throwable);
                         }
                     }
-                    break;
                 }
             }
             finally {
@@ -419,9 +424,9 @@ extends NativeDeObjectFields {
             return 0;
         }
         MpDebitMutation mpDebitMutation = this.withVitalMutation(() -> {
-            MpDebitMutation mpDebitMutation = this.debitCurrentMpLocked(l);
-            this.enqueueCurrentMpCompletionLocked(mpDebitMutation._mutation);
-            return mpDebitMutation;
+            MpDebitMutation debit = this.debitCurrentMpLocked(l);
+            this.enqueueCurrentMpCompletionLocked(debit._mutation);
+            return debit;
         });
         return mpDebitMutation._debited;
     }
@@ -431,9 +436,9 @@ extends NativeDeObjectFields {
             return 0;
         }
         MpDebitMutation mpDebitMutation = this.withVitalMutation(() -> {
-            MpDebitMutation mpDebitMutation = this.isDead() ? new MpDebitMutation(0, new CurrentMpMutation(this._currentMp, this._currentMp)) : this.debitCurrentMpLocked(l);
-            this.enqueueCurrentMpCompletionLocked(mpDebitMutation._mutation);
-            return mpDebitMutation;
+            MpDebitMutation debit = this.isDead() ? new MpDebitMutation(0, new CurrentMpMutation(this._currentMp, this._currentMp)) : this.debitCurrentMpLocked(l);
+            this.enqueueCurrentMpCompletionLocked(debit._mutation);
+            return debit;
         });
         return mpDebitMutation._debited;
     }
@@ -647,6 +652,10 @@ extends NativeDeObjectFields {
         return this._isDead;
     }
 
+    public boolean destroyed() {
+        return false;
+    }
+
     protected final void setCharacterDead(boolean bl) {
         this.withVitalMutation(() -> {
             boolean bl2 = this._isDead;
@@ -844,9 +853,9 @@ extends NativeDeObjectFields {
                     return null;
                 }
                 this.setDeadForResurrection(false);
-                CurrentHpMutation currentHpMutation = this.commitCurrentHpLocked(n2);
+                CurrentHpMutation mutation = this.commitCurrentHpLocked(n2);
                 this.setStatus(0);
-                return this.enqueueCurrentHpCompletionLocked(currentHpMutation);
+                return this.enqueueCurrentHpCompletionLocked(mutation);
             });
             if (currentHpMutation == null) {
                 return;
@@ -1434,9 +1443,8 @@ extends NativeDeObjectFields {
         }
     }
 
-    record Snapshot(int clientType, Map<String, Number> fields, boolean dead) {
-        Snapshot {
-            map = Map.copyOf(map);
+    record Snapshot(int clientType, Map<String, Number> fields, boolean dead) {Snapshot {
+            fields = Map.copyOf(fields);
         }
     }
 

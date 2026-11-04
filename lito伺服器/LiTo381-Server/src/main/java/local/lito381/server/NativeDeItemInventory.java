@@ -94,13 +94,13 @@ extends AbstractMap<Long, RuntimeInventory.Item> {
         if (random == null) {
             throw new IllegalArgumentException("missing inventory random");
         }
-        object = new ArrayList<Map.Entry<Long, EntryState>>(nativeDeItemInventory.entries.entrySet());
-        Collections.shuffle(object, random);
+        ArrayList<Map.Entry<Long, EntryState>> shuffled = new ArrayList<Map.Entry<Long, EntryState>>(nativeDeItemInventory.entries.entrySet());
+        Collections.shuffle(shuffled, random);
         nativeDeItemInventory.entries.clear();
-        Iterator iterator = ((ArrayList)object).iterator();
+        Iterator<Map.Entry<Long, EntryState>> iterator = shuffled.iterator();
         while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            nativeDeItemInventory.entries.put((Long)entry.getKey(), (EntryState)entry.getValue());
+            Map.Entry<Long, EntryState> entry = iterator.next();
+            nativeDeItemInventory.entries.put(entry.getKey(), entry.getValue());
         }
         ++nativeDeItemInventory.mutationRevision;
         return true;

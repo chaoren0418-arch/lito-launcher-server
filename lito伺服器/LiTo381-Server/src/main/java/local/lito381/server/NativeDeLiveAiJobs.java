@@ -239,8 +239,8 @@ final class NativeDeLiveAiJobs {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void pulse(Owner owner) {
-        Binding[] bindingArray = owner.life.admission;
-        synchronized (owner.life.admission) {
+        Object admissionLock = owner.life.admission;
+        synchronized (admissionLock) {
             if (owner.closed || !owner.life.admits()) {
                 // ** MonitorExit[var3_1] (shouldn't be in output)
                 return;

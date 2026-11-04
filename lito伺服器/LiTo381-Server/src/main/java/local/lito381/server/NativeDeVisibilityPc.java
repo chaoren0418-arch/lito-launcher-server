@@ -19,7 +19,7 @@ import local.lito381.server.NativeDeWorldKinds;
 public class NativeDeVisibilityPc {
     public static void removeOutOfRangeKnownObjects(NativeDeDeletionPorts.Viewer viewer) {
         try {
-            ArrayList arrayList = new ArrayList(NativeDeVisibilityAccess.L1PcInstance$getKnownObjects(viewer));
+            ArrayList<NativeDeDeletionPorts.ObjectRef> arrayList = new ArrayList<NativeDeDeletionPorts.ObjectRef>(NativeDeVisibilityAccess.L1PcInstance$getKnownObjects(viewer));
             short s = NativeDeVisibilityAccess.L1PcInstance$getMapId(viewer);
             int n = NativeDeVisibilityAccess.L1PcInstance$get_showId(viewer);
             for (NativeDeDeletionPorts.ObjectRef objectRef : arrayList) {

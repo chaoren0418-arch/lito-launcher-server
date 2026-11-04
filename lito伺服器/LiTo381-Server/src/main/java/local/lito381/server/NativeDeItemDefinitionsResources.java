@@ -169,7 +169,7 @@ final class NativeDeItemDefinitionsResources {
             LinkedHashMap<Object, Object> linkedHashMap = new LinkedHashMap<Object, Object>();
             Map map2 = Collections.unmodifiableMap(linkedHashMap);
             identityHashMap.put(object, map2);
-            for (Map.Entry entry : map.entrySet()) {
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>)map).entrySet()) {
                 linkedHashMap.put(NativeDeItemDefinitionsResources.freezeValue(entry.getKey(), identityHashMap), NativeDeItemDefinitionsResources.freezeValue(entry.getValue(), identityHashMap));
             }
             return map2;

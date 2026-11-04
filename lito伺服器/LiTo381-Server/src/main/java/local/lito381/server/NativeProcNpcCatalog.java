@@ -117,9 +117,9 @@ final class NativeProcNpcCatalog {
     static NativeProcHealingKernel.Kind companionKind(BattleCompanion.Kind kind) {
         return switch (Objects.requireNonNull(kind)) {
             default -> throw new IncompatibleClassChangeError();
-            case BattleCompanion.Kind.PET -> NativeProcHealingKernel.Kind.PET;
-            case BattleCompanion.Kind.SUMMON, BattleCompanion.Kind.TAMED -> NativeProcHealingKernel.Kind.SUMMON;
-            case BattleCompanion.Kind.ARENA -> NativeProcHealingKernel.Kind.NPC;
+            case PET -> NativeProcHealingKernel.Kind.PET;
+            case SUMMON, TAMED -> NativeProcHealingKernel.Kind.SUMMON;
+            case ARENA -> NativeProcHealingKernel.Kind.NPC;
         };
     }
 
@@ -128,8 +128,8 @@ final class NativeProcNpcCatalog {
 
     record Catalog(String database, Map<Integer, Npc> npcs, Map<String, NativeProcHealingKernel.Kind> implementations) {
         Catalog {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
+            npcs = Map.copyOf(npcs);
+            implementations = Map.copyOf(implementations);
         }
 
         Npc find(int n) {

@@ -19,6 +19,7 @@ import local.lito381.server.NativeDeWorldLog;
 
 public class NativeDeItemWeaponProcTable {
     private static final NativeDeWorldLog _log = NativeDeItemDefinitionsScope.Logs.getLogger(NativeDeItemWeaponProcTable.class);
+    private static NativeDeItemWeaponProcTable _instance;
     private Map<Integer, List<NativeDeItemWeaponProc>> _weaponProcs;
     final NativeDeItemDefinitionsScope.Data nativeDefinitions = NativeDeItemDefinitionsScope.loadingData();
 
@@ -29,7 +30,7 @@ public class NativeDeItemWeaponProcTable {
     public void load() {
         NativeDeItemDefinitionsScope.requireLoading(this.nativeDefinitions);
         NativeDeTerrainTimer nativeDeTerrainTimer = new NativeDeTerrainTimer();
-        HashMap<Integer, List> hashMap = new HashMap<Integer, List>();
+        HashMap<Integer, List<NativeDeItemWeaponProc>> hashMap = new HashMap<Integer, List<NativeDeItemWeaponProc>>();
         try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_weapon_\u9b54\u6cd5` ORDER BY `weapon_id`, `id`");
              ResultSet resultSet = preparedStatement.executeQuery();){

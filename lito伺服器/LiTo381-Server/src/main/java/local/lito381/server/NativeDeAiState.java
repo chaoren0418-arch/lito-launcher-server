@@ -245,7 +245,7 @@ final class NativeDeAiState {
 
     record Result(View view, long value, List<Effect> effects) {
         Result {
-            list = List.copyOf(list);
+            effects = List.copyOf(effects);
         }
     }
 

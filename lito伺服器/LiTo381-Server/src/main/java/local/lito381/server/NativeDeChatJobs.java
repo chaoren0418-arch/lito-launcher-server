@@ -282,8 +282,11 @@ final class NativeDeChatJobs {
             }
             Runnable runnable2 = this.action;
             if (runnable2 instanceof NativeDeChatScope.Pool.ShutdownDiscardable) {
-                runnable = (NativeDeChatScope.Pool.ShutdownDiscardable)runnable2;
-                NativeDeChatScope.call(this.owner, this.actor, () -> Ticket.lambda$discard$1((NativeDeChatScope.Pool.ShutdownDiscardable)runnable));
+                NativeDeChatScope.Pool.ShutdownDiscardable discardable = (NativeDeChatScope.Pool.ShutdownDiscardable)runnable2;
+                NativeDeChatScope.call(this.owner, this.actor, () -> {
+                    discardable.discardOnShutdown();
+                    return null;
+                });
             }
         }
 
@@ -376,9 +379,5 @@ final class NativeDeChatJobs {
             return null;
         }
 
-        private static /* synthetic */ Object lambda$discard$1(NativeDeChatScope.Pool.ShutdownDiscardable shutdownDiscardable) {
-            shutdownDiscardable.discardOnShutdown();
-            return null;
-        }
     }
 }

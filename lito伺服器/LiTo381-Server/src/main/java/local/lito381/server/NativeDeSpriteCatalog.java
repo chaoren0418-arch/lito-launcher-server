@@ -125,17 +125,12 @@ final class NativeDeSpriteCatalog {
                 reporter.sql(sQLException);
             }
         }
-        object = new HashMap();
-        hashMap.forEach((arg_0, arg_1) -> NativeDeSpriteCatalog.lambda$read$2((HashMap)object, arg_0, arg_1));
-        return new Catalog((Map<Integer, Sprite>)object, l2, l, bl);
+        HashMap<Integer, Sprite> sprites = new HashMap<Integer, Sprite>();
+        hashMap.forEach((n, mutable) -> sprites.put(n, mutable.snapshot()));
+        return new Catalog(sprites, l2, l, bl);
     }
 
-    private static /* synthetic */ void lambda$read$2(HashMap hashMap, Integer n, Mutable mutable) {
-        hashMap.put(n, mutable.snapshot());
-    }
-
-    record Catalog(Map<Integer, Sprite> sprites, long rows, long skipped, boolean sqlFailure) {
-        Catalog {
+    record Catalog(Map<Integer, Sprite> sprites, long rows, long skipped, boolean sqlFailure) {Catalog {
             sprites = Map.copyOf(sprites);
         }
 
@@ -234,8 +229,7 @@ final class NativeDeSpriteCatalog {
         public void sql(SQLException var1);
     }
 
-    record Sprite(Map<Integer, Integer> move, Map<Integer, Integer> attack, int damage, int dirSpell, int noDirSpell, int dirSpell30) {
-        Sprite {
+    record Sprite(Map<Integer, Integer> move, Map<Integer, Integer> attack, int damage, int dirSpell, int noDirSpell, int dirSpell30) {Sprite {
             move = Map.copyOf(move);
             attack = Map.copyOf(attack);
         }

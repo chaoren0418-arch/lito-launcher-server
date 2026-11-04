@@ -71,12 +71,10 @@ final class NativeDeItemTemplatesResources {
         }
         if (throwable != null) {
             if (throwable instanceof Error) {
-                object = (Error)throwable;
-                throw object;
+                throw (Error)throwable;
             }
             if (throwable instanceof SQLException) {
-                object = (SQLException)throwable;
-                throw object;
+                throw (SQLException)throwable;
             }
             throw new SQLException("source item template publication refused", throwable);
         }
@@ -101,8 +99,9 @@ final class NativeDeItemTemplatesResources {
         if (nativeDeItemTemplate2 != null) {
             return nativeDeItemTemplate2;
         }
-        NativeDeItemTemplate nativeDeItemTemplate3 = nativeDeItemTemplate instanceof NativeDeWeaponTemplate ? new NativeDeFrozenWeaponTemplate() : (nativeDeItemTemplate instanceof NativeDeArmorTemplate ? new NativeDeFrozenArmorTemplate() : (nativeDeFrozenWeaponTemplate = nativeDeItemTemplate instanceof NativeDeEtcItemTemplate ? new NativeDeFrozenEtcTemplate() : null));
-        if (nativeDeFrozenWeaponTemplate == null) {
+        NativeDeItemTemplate nativeDeItemTemplate3 = nativeDeItemTemplate instanceof NativeDeWeaponTemplate ? new NativeDeFrozenWeaponTemplate() : (nativeDeItemTemplate instanceof NativeDeArmorTemplate ? new NativeDeFrozenArmorTemplate() : (nativeDeItemTemplate instanceof NativeDeEtcItemTemplate ? new NativeDeFrozenEtcTemplate() : null));
+        nativeDeFrozenWeaponTemplate = nativeDeItemTemplate3 instanceof NativeDeFrozenWeaponTemplate ? (NativeDeFrozenWeaponTemplate)nativeDeItemTemplate3 : null;
+        if (nativeDeItemTemplate3 == null) {
             throw new IllegalArgumentException("unknown source item template role");
         }
         for (Class<?> clazz = nativeDeItemTemplate.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
@@ -116,11 +115,11 @@ final class NativeDeItemTemplatesResources {
                 } else if (object != null && !field.getType().isPrimitive() && !(object instanceof String)) {
                     throw new IllegalArgumentException("unexpected mutable template field " + field.getName());
                 }
-                field.set(nativeDeFrozenWeaponTemplate, object);
+                field.set(nativeDeItemTemplate3, object);
             }
         }
-        identityHashMap.put(nativeDeItemTemplate, nativeDeFrozenWeaponTemplate);
-        return nativeDeFrozenWeaponTemplate;
+        identityHashMap.put(nativeDeItemTemplate, nativeDeItemTemplate3);
+        return nativeDeItemTemplate3;
     }
 
     private static int freeze(NativeDeItemTable nativeDeItemTable) throws SQLException {
@@ -128,14 +127,14 @@ final class NativeDeItemTemplatesResources {
             NativeDeItemTemplate[] nativeDeItemTemplateArray;
             IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate> identityHashMap = new IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate>();
             for (String nativeDeItemTemplateArray22 : List.of("_etcitems", "_weapons", "_armors")) {
-                nativeDeItemTemplateArray = nativeDeItemTable.getClass().getDeclaredField(nativeDeItemTemplateArray22);
-                nativeDeItemTemplateArray.setAccessible(true);
-                Map i = (Map)nativeDeItemTemplateArray.get(nativeDeItemTable);
-                LinkedHashMap linkedHashMap = new LinkedHashMap();
-                for (Map.Entry entry : i.entrySet()) {
+                Field templateMapField = nativeDeItemTable.getClass().getDeclaredField(nativeDeItemTemplateArray22);
+                templateMapField.setAccessible(true);
+                Map<?, ?> i = (Map<?, ?>)templateMapField.get(nativeDeItemTable);
+                LinkedHashMap<Object, NativeDeItemTemplate> linkedHashMap = new LinkedHashMap<Object, NativeDeItemTemplate>();
+                for (Map.Entry<?, ?> entry : i.entrySet()) {
                     linkedHashMap.put(entry.getKey(), NativeDeItemTemplatesResources.frozen((NativeDeItemTemplate)entry.getValue(), identityHashMap));
                 }
-                nativeDeItemTemplateArray.set(nativeDeItemTable, Collections.unmodifiableMap(linkedHashMap));
+                templateMapField.set(nativeDeItemTable, Collections.unmodifiableMap(linkedHashMap));
             }
             Field field = nativeDeItemTable.getClass().getDeclaredField("_allTemplates");
             field.setAccessible(true);

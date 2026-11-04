@@ -125,11 +125,12 @@ final class NativeCompanionCallbacks {
         }
         boolean bl2 = bl = CombatAccess.field(clientSession, "battleCompanion") == battleCompanion;
         if (!bl) {
-            object2 = (List)CombatAccess.field(clientSession, "tamedCompanions");
-            List list = object2;
+            List<?> companions = (List<?>) CombatAccess.field(clientSession, "tamedCompanions");
+            object2 = companions;
+            List<?> list = companions;
             synchronized (list) {
-                for (int i = 0; i < object2.size(); ++i) {
-                    if (object2.get(i) != battleCompanion) continue;
+                for (int i = 0; i < companions.size(); ++i) {
+                    if (companions.get(i) != battleCompanion) continue;
                     bl = true;
                     break;
                 }

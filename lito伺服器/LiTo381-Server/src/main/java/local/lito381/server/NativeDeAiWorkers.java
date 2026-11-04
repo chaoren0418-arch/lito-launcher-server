@@ -251,21 +251,21 @@ final class NativeDeAiWorkers {
                 synchronized (object) {
                     Object object2 = ticket.registry.life.admission;
                     synchronized (object2) {
-                        NativeDeAiState.Result result = NativeDeAiState.perform(live.status(), work.lease(), NativeDeAiTimers.facts(live, ticket.registry.life), new NativeDeAiState.Request(NativeDeAiState.Op.FINISH, work.owner(), 0L));
-                        if (result == null) {
+                        NativeDeAiState.Result finishResult = NativeDeAiState.perform(live.status(), work.lease(), NativeDeAiTimers.facts(live, ticket.registry.life), new NativeDeAiState.Request(NativeDeAiState.Op.FINISH, work.owner(), 0L));
+                        if (finishResult == null) {
                             return null;
                         }
                         atomicBoolean.set(true);
-                        Ticket ticket2 = null;
-                        for (NativeDeAiState.Effect effect : result.effects()) {
+                        Ticket nextTicket = null;
+                        for (NativeDeAiState.Effect effect : finishResult.effects()) {
                             if (effect.kind() != NativeDeAiState.Kind.WORKER) continue;
                             if (ticket.registry.life.mode == NativePlayerLifetime.Mode.OPEN && ticket.detach()) {
-                                ticket2 = NativeDeAiWorkers.register(ticket.hub, new NativeDeAiTimers.Work(work.target(), work.generation(), work.lease(), effect.owner(), effect.background()), ticket.state, ticket.registry, ticket.credit);
+                                nextTicket = NativeDeAiWorkers.register(ticket.hub, new NativeDeAiTimers.Work(work.target(), work.generation(), work.lease(), effect.owner(), effect.background()), ticket.state, ticket.registry, ticket.credit);
                                 continue;
                             }
                             NativeDeAiTimeline.stop(ticket.state, NativeDeAiTimers.quiet(ticket.registry.life), effect.owner());
                         }
-                        return ticket2;
+                        return nextTicket;
                     }
                 }
             });

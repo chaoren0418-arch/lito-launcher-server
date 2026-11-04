@@ -2250,6 +2250,37 @@ final class ClassicWorldMonsterPopulation {
         return removed;
     }
 
+    synchronized Snapshot nativeCancellationDelete(int mapId, long objectId) {
+        Actor actor = actors.get(objectId);
+        if (actor == null || actor.definition.mapId() != mapId) {
+            return null;
+        }
+        if (!actor.alive && actor.present) {
+            return this.removeCorpse(mapId, objectId);
+        }
+        Snapshot removed = actor.snapshot();
+        actor.present = false;
+        actor.alive = false;
+        actor.actived = false;
+        activatedActors.remove(objectId);
+        wanderedActors.remove(objectId);
+        vacate(new Cell(mapId, actor.x, actor.y));
+        if (actor.oneShot) {
+            actors.remove(objectId);
+        }
+        return removed;
+    }
+
+    synchronized Snapshot nativeCancellationSpawn(
+            int mapId, long objectId, ClassicWorldMonsterCatalog.MonsterTemplate template) {
+        Snapshot origin = this.actor(mapId, objectId);
+        if (origin == null || template == null) {
+            return null;
+        }
+        return this.spawnQuestMonsterAt(
+                mapId, template.npcId(), origin.x(), origin.y(), origin.heading(), template);
+    }
+
     synchronized Resurrection resurrect(
             int mapId, long objectId, int restoredHp) {
         Actor actor = actors.get(objectId);

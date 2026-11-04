@@ -77,10 +77,9 @@ final class NativeProcHealBonus {
         return catalog;
     }
 
-    record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {
-        Catalog {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
+    record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {Catalog {
+            magic = Map.copyOf(magic);
+            healing = Map.copyOf(healing);
         }
 
         int bonus(int n) {

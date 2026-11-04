@@ -49,7 +49,12 @@ final class NativeDeWorldControls {
                     throw new IllegalStateException("World controls unavailable", iOException);
                 }
             }
-            inputStream.close();
+            try {
+                inputStream.close();
+            }
+            catch (IOException iOException) {
+                throw new IllegalStateException("World controls unavailable", iOException);
+            }
         }
         return n;
     }

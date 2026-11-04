@@ -7,6 +7,7 @@ package local.lito381.server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -99,7 +100,7 @@ implements NativeDeDeletionPorts.ObjectRef {
     }
 
     @Override
-    int get_showId() {
+    public int get_showId() {
         return this.showId;
     }
 
@@ -299,10 +300,10 @@ implements NativeDeDeletionPorts.ObjectRef {
             try {
                 if (n == 0) break block64;
                 object4 = NativeDeDeletionPorts.World.get().getVisibleObjects(this);
-                object3 = ((ArrayList)object4).iterator();
-                while (object3.hasNext()) {
+                object3 = ((ArrayList<?>)object4).iterator();
+                while (((Iterator<?>)object3).hasNext()) {
                     NativeDeDeletionState nativeDeDeletionState;
-                    object2 = (Object[])object3.next();
+                    object2 = ((Iterator<?>)object3).next();
                     if (!(object2 instanceof NativeDeDeletionState) || (nativeDeDeletionState = (NativeDeDeletionState)object2).getNpcId() != n) continue;
                     if (!nativeDeDeletionState.isDead()) {
                         this.releasePairedCorpseClaim();
@@ -426,9 +427,9 @@ implements NativeDeDeletionPorts.ObjectRef {
         catch (RuntimeException runtimeException) {
             NativeDeDeletionScope._log().error("[NpcLifecycle] world removal failed: objectId={} npcId={} map={} x={} y={}", this.getId(), this.getNpcId(), this.getMapId(), this.getX(), this.getY(), runtimeException);
         }
-        Object object6 = object4.iterator();
+        Iterator<NativeDeDeletionPorts.Viewer> object6 = ((List<NativeDeDeletionPorts.Viewer>)object4).iterator();
         while (object6.hasNext()) {
-            NativeDeDeletionPorts.Viewer viewer = (NativeDeDeletionPorts.Viewer)object6.next();
+            NativeDeDeletionPorts.Viewer viewer = object6.next();
             try {
                 if (viewer == null) continue;
                 viewer.removeKnownObject(this);
@@ -455,9 +456,9 @@ implements NativeDeDeletionPorts.ObjectRef {
         }
         try {
             if (this.getNpcTemplate().isBoss()) {
-                Object object7 = this.sourceIsCombatDeathCause() ? "COMBAT_CORPSE_CLEANUP" : (object6 = this.isDead() ? "NON_COMBAT_FORCED_DEAD_DELETE" : "NON_COMBAT_LIVE_DELETE");
+                Object object7 = this.sourceIsCombatDeathCause() ? "COMBAT_CORPSE_CLEANUP" : (this.isDead() ? "NON_COMBAT_FORCED_DEAD_DELETE" : "NON_COMBAT_LIVE_DELETE");
                 if (NativeDeDeletionScope.BOSS_DEATH_AUDIT_ENABLE()) {
-                    NativeDeDeletionScope._log().info("[BossDeathAudit] event=BOSS_REMOVE cause={} npcId={} name=\"{}\" nameId=\"{}\" objectId={} hp={}/{} dead={} mapId={} x={} y={} showId={} spawnTable={} spawnId={} spawnNumber={} timedExist={} remainingExistSeconds={}", object6, this.getNpcId(), NativeDeDeletionState.sourceAuditText(this.getName()), NativeDeDeletionState.sourceAuditText(this.getNameId()), this.getId(), this.getCurrentHp(), this.getMaxHp(), this.isDead(), this.getMapId(), this.getX(), this.getY(), this.get_showId(), this._spawn != null ? this._spawn.getSpawnConfigTable() : "none", this._spawn != null ? this._spawn.getId() : -1, this.getSpawnNumber(), this.is_spawnTime(), this.get_spawnTime());
+                    NativeDeDeletionScope._log().info("[BossDeathAudit] event=BOSS_REMOVE cause={} npcId={} name=\"{}\" nameId=\"{}\" objectId={} hp={}/{} dead={} mapId={} x={} y={} showId={} spawnTable={} spawnId={} spawnNumber={} timedExist={} remainingExistSeconds={}", object7, this.getNpcId(), NativeDeDeletionState.sourceAuditText(this.getName()), NativeDeDeletionState.sourceAuditText(this.getNameId()), this.getId(), this.getCurrentHp(), this.getMaxHp(), this.isDead(), this.getMapId(), this.getX(), this.getY(), this.get_showId(), this._spawn != null ? this._spawn.getSpawnConfigTable() : "none", this._spawn != null ? this._spawn.getId() : -1, this.getSpawnNumber(), this.is_spawnTime(), this.get_spawnTime());
                 }
                 if (this._spawn != null) {
                     NativeDeDeletionPorts.Boss.get().onBossDeath(this._spawn, this.getNameId());
@@ -468,8 +469,8 @@ implements NativeDeDeletionPorts.ObjectRef {
             NativeDeDeletionScope._log().error(exception.getLocalizedMessage(), exception);
         }
         try {
-            object6 = this.getMobGroupInfo();
-            if (object6 != null && object6.removeMember(this) == 0) {
+            NativeDeDeletionPorts.MobGroup mobGroup = this.getMobGroupInfo();
+            if (mobGroup != null && mobGroup.removeMember(this) == 0) {
                 this.setMobGroupInfo(null);
             }
         }

@@ -95,7 +95,7 @@ final class NativeDeNpcTemplateMobLoader {
             return null;
         }
         object = nativeDeNpcTemplate.get_name() + ">" + string;
-        return ((String)object).length() <= 45 ? object : ((String)object).substring(0, 45);
+        return ((String)object).length() <= 45 ? (String)object : ((String)object).substring(0, 45);
     }
 
     private static String fallbackSkillName(int n, int n2) {

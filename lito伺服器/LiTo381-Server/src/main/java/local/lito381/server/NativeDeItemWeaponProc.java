@@ -4,7 +4,6 @@
  */
 package local.lito381.server;
 
-import com.lineage.server.model.proc.ProcRandomHelper;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,14 +29,21 @@ public record NativeDeItemWeaponProc(int id, int weaponId, int minEnchant, int e
     }
 
     public int calculateHpDrain() {
-        return ProcRandomHelper.addOneToInclusive((int)this.hpDrainFix, (int)this.hpDrainRnd, (Random)ThreadLocalRandom.current());
+        return NativeDeItemWeaponProc.addOneToInclusive(this.hpDrainFix, this.hpDrainRnd, ThreadLocalRandom.current());
     }
 
     public int calculateMpDrain() {
-        return ProcRandomHelper.addOneToInclusive((int)this.mpDrainFix, (int)this.mpDrainRnd, (Random)ThreadLocalRandom.current());
+        return NativeDeItemWeaponProc.addOneToInclusive(this.mpDrainFix, this.mpDrainRnd, ThreadLocalRandom.current());
     }
 
     public int getSkillDurationMillis() {
         return this.skillTimeSec > 0 ? (int)Math.min(Integer.MAX_VALUE, (long)this.skillTimeSec * 1000L) : 0;
+    }
+
+    private static int addOneToInclusive(int fix, int rnd, Random random) {
+        if (rnd <= 0) {
+            return Math.max(0, fix);
+        }
+        return fix + 1 + random.nextInt(rnd);
     }
 }

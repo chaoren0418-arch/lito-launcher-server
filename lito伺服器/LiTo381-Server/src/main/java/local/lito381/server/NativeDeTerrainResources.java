@@ -227,7 +227,7 @@ final class NativeDeTerrainResources {
 
     record Snapshot(String database, Map<Integer, Definition> maps, long opened, long rolledBack, long closed, long errors) {
         Snapshot {
-            map = Map.copyOf(map);
+            maps = Map.copyOf(maps);
         }
     }
 }

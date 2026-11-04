@@ -54,7 +54,9 @@ final class NativeDeTerrainScope {
                 }
                 catch (Throwable illegalStateException2) {
                     if (illegalStateException == null) {
-                        illegalStateException = illegalStateException2;
+                        illegalStateException = illegalStateException2 instanceof IllegalStateException
+                                ? (IllegalStateException)illegalStateException2
+                                : new IllegalStateException(illegalStateException2);
                         continue;
                     }
                     illegalStateException.addSuppressed(illegalStateException2);

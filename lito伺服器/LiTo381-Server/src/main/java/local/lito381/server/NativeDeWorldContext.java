@@ -308,8 +308,8 @@ implements NativeDeDeletionPorts.Services {
                 throw new IllegalArgumentException("World actor requires native object identity");
             }
             if (objectRef instanceof NativeDeDeletionState) {
-                objectRef2 = (NativeDeDeletionState)objectRef;
-                if (objectRef2.deletionOwner != this.deletion) {
+                NativeDeDeletionState deletionState = (NativeDeDeletionState)objectRef;
+                if (deletionState.deletionOwner != this.deletion) {
                     throw new IllegalArgumentException("foreign NPC World owner");
                 }
             }
@@ -347,7 +347,7 @@ implements NativeDeDeletionPorts.Services {
             object = entry;
         }
         readLock.unlock();
-        return object;
+        return (Entry)object;
     }
 
     /*

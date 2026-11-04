@@ -95,12 +95,13 @@ final class NativeProcHealingWorld {
             return;
         }
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
-        ArrayList<Object> arrayList = new ArrayList<Object>();
+        ArrayList<ClientSession> arrayList = new ArrayList<ClientSession>();
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
-            object = gameHub.classicWorldMembers(binding.map(), binding.instance()).iterator();
-            while (object.hasNext()) {
-                ClientSession clientSession2 = (ClientSession)object.next();
+            java.util.Iterator<ClientSession> members = gameHub.classicWorldMembers(binding.map(), binding.instance()).iterator();
+            object = members;
+            while (members.hasNext()) {
+                ClientSession clientSession2 = members.next();
                 if (clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L) continue;
                 arrayList.add(clientSession2);
             }

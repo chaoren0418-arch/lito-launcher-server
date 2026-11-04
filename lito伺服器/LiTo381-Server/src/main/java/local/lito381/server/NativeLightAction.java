@@ -4,10 +4,11 @@ import java.io.*;import java.util.*;
 /** Actual Light commit uses Source action ordering; original reveal and original output tail retain FIFO. */
 final class NativeLightAction {
  private interface Output {void run()throws IOException;}
+ interface Completion {void finish(boolean accepted,Throwable failure);}
  private static final class Batch implements Runnable {
-  boolean captureSelf;ClientSession target;NativePlayerCommit.Binding targetBinding;NativeCastMaterial.Cast material;final ClientSession pc;final NativeCastTimeline.Arrival arrival;final List<Output> outputs=new ArrayList<>();
+  boolean captureSelf;ClientSession target;NativePlayerCommit.Binding targetBinding;NativeCastMaterial.Cast material;final ClientSession pc;final NativeCastTimeline.Arrival arrival;final List<Output> outputs=new ArrayList<>();final List<Completion> completions=new ArrayList<>();
   final Ingress accepted;Batch(ClientSession pc,NativeCastTimeline.Arrival arrival,Ingress accepted){this.pc=pc;this.arrival=arrival;this.accepted=accepted;}
-  public void run(){try{for(var output:outputs){if(!NativeRolePublication.allowPublication(pc))return;output.run();}}catch(IOException failure){throw new UncheckedIOException(failure);}}
+  public void run(){Throwable failure=null;try{for(var output:outputs){if(!NativeRolePublication.allowPublication(pc))return;output.run();}}catch(IOException error){failure=error;throw new UncheckedIOException(error);}finally{for(var completion:completions)completion.finish(failure==null,failure);}}
  }
  private static final ThreadLocal<Batch> current=new ThreadLocal<>();
  private record Ingress(ClientSession pc,NativePlayerCommit.Binding binding,GameHub hub,NativeDeItemApplication application,NativePlayerVitalCompletions.Receipt receipt,NativeCastTimeline.Arrival arrival){}
@@ -92,6 +93,16 @@ final class NativeLightAction {
   var batch=current.get();if(batch==null||batch.pc!=pc||batch.target!=target||!batch.targetBinding.matches(target))return false;
   if(!pc.nativePlayerActionLock().isHeldByCurrentThread()||!target.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("target cast requires both ordered action locks");
   return admitSelf(pc,skill,action,reuse);
+ }
+ static void finishScoped(Completion completion){
+  var batch=current.get();
+  if(batch==null||!batch.pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("scope completion requires owned cast");
+  batch.completions.add(completion);
+ }
+ static void deferScoped(NativeSelfCastAction.Task task){
+  var batch=current.get();
+  if(batch==null||!batch.pc.nativePlayerActionLock().isHeldByCurrentThread())throw new IllegalStateException("scope output requires owned cast");
+  batch.outputs.add(()->task.run());
  }
 
 }

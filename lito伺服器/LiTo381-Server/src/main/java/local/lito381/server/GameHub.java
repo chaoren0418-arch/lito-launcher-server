@@ -763,6 +763,9 @@ final class GameHub implements AutoCloseable {
     /** Short-lived NPC 81168/GFX176 freeze effects isolated by map instance. */
     private final Map<ClassicWorldEffectKey, BattleFreezeEffects>
             classicWorldFreezeEffects = new LinkedHashMap<>();
+    NativeCancellationNpcRuntime.State nativeCancellationNpcRuntime;
+    NativeCancellationBattleRuntime.State nativeCancellationBattleRuntime;
+
     /** NPC80149/GFX6706 and its target leases are isolated by map instance. */
     private final Map<ClassicWorldEffectKey, BattleCubeIgnitionEffects>
             classicWorldCubeIgnitionEffects = new LinkedHashMap<>();
@@ -7181,6 +7184,23 @@ final class GameHub implements AutoCloseable {
                 targetX, targetY, nowNanos, () -> {});
     }
 
+    BattleGroundEffects.CastResult nativeMaterialPlaceGroundSpell(
+            long roomId, ClientSession caster, BattleSpellCatalog.GroundSpell spell,
+            int sourceX, int sourceY, int targetX, int targetY, long nowNanos,
+            Runnable resourceCommit) {
+        return this.placeGroundSpell(roomId, caster, spell, sourceX, sourceY,
+                targetX, targetY, nowNanos, resourceCommit);
+    }
+
+    ClassicWorldGroundEffects.CastResult nativeMaterialPlaceWorldGroundSpell(
+            int mapId, int instanceId, ClientSession caster,
+            BattleSpellCatalog.GroundSpell spell,
+            int sourceX, int sourceY, int targetX, int targetY,
+            long nowNanos, Runnable resourceCommit) {
+        return this.placeClassicWorldGroundSpell(mapId, instanceId, caster, spell,
+                sourceX, sourceY, targetX, targetY, nowNanos, resourceCommit);
+    }
+
     synchronized BattleGroundEffects.CastResult placeGroundSpell(
             long roomId, ClientSession caster, BattleSpellCatalog.GroundSpell spell,
             int sourceX, int sourceY, int targetX, int targetY, long nowNanos,
@@ -7265,6 +7285,46 @@ final class GameHub implements AutoCloseable {
         return room.groundEffects.castPattern(skill.skillId(), caster.objectId(),
                 points, 0, skill.durationMillis(), skill.pulseIntervalMillis(),
                 arena, nowNanos);
+    }
+
+    BattleCubeIgnitionEffects.Placement nativeMaterialPlaceCubeIgnition(
+            long roomId, ClientSession caster, int x, int y, long nowNanos) {
+        return this.placeCubeIgnition(roomId, caster, x, y, nowNanos);
+    }
+
+    BattleCubeIgnitionEffects.Placement nativeMaterialPlaceClassicWorldCubeIgnition(
+            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
+        return this.placeClassicWorldCubeIgnition(caster, mapId, instanceId, x, y, nowNanos);
+    }
+
+    BattleCubeQuakeEffects.Placement nativeMaterialPlaceCubeQuake(
+            long roomId, ClientSession caster, int x, int y, long nowNanos) {
+        return this.placeCubeQuake(roomId, caster, x, y, nowNanos);
+    }
+
+    BattleCubeQuakeEffects.Placement nativeMaterialPlaceClassicWorldCubeQuake(
+            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
+        return this.placeClassicWorldCubeQuake(caster, mapId, instanceId, x, y, nowNanos);
+    }
+
+    BattleCubeShockEffects.Placement nativeMaterialPlaceCubeShock(
+            long roomId, ClientSession caster, int x, int y, long nowNanos) {
+        return this.placeCubeShock(roomId, caster, x, y, nowNanos);
+    }
+
+    BattleCubeShockEffects.Placement nativeMaterialPlaceClassicWorldCubeShock(
+            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
+        return this.placeClassicWorldCubeShock(caster, mapId, instanceId, x, y, nowNanos);
+    }
+
+    BattleCubeHarmonyEffects.Placement nativeMaterialPlaceCubeHarmony(
+            long roomId, ClientSession caster, int x, int y, long nowNanos) {
+        return this.placeCubeHarmony(roomId, caster, x, y, nowNanos);
+    }
+
+    BattleCubeHarmonyEffects.Placement nativeMaterialPlaceClassicWorldCubeHarmony(
+            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
+        return this.placeClassicWorldCubeHarmony(caster, mapId, instanceId, x, y, nowNanos);
     }
 
     synchronized BattleCubeIgnitionEffects.Placement placeCubeIgnition(

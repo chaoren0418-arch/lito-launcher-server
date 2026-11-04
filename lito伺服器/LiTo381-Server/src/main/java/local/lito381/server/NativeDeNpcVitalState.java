@@ -121,12 +121,12 @@ extends NativeDeCharacterFields {
     }
 
     @Override
-    protected int getX() {
+    public int getX() {
         return this.resurrectionEffects().x(this);
     }
 
     @Override
-    protected int getY() {
+    public int getY() {
         return this.resurrectionEffects().y(this);
     }
 

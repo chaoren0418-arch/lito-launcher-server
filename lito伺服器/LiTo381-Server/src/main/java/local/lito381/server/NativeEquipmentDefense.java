@@ -109,9 +109,10 @@ final class NativeEquipmentDefense {
                 if (!NativePlayerCommit.validFrame(clientSession) || !NativeEquipmentDefense.alive(clientSession)) break;
                 NativeArmorProc.Rule rule = effect.rule;
                 try {
-                    ClientSession clientSession3;
-                    boolean bl;
-                    boolean bl2 = ref != null ? NativeCombatAttacker.alive(clientSession, ref) : (bl = clientSession2 != null && binding2 != null && binding2.matches(clientSession2) && NativeEquipmentDefense.alive(clientSession2));
+                    boolean bl = ref != null
+                            ? NativeCombatAttacker.alive(clientSession, ref)
+                            : clientSession2 != null && binding2 != null && binding2.matches(clientSession2) && NativeEquipmentDefense.alive(clientSession2);
+                    boolean bl2 = bl;
                     if (rule.needsTarget() && !bl) continue;
                     if (effect.mpDrain > 0 && bl && (ref != null || clientSession != clientSession2)) {
                         int n;
@@ -120,7 +121,8 @@ final class NativeEquipmentDefense {
                             NativePlayerCommit.recover(clientSession, binding, 0, n, "equipment-drain");
                         }
                     }
-                    ClientSession clientSession4 = rule.selfSkill() ? clientSession : (clientSession3 = bl && ref == null ? clientSession2 : null);
+                    ClientSession clientSession3 = rule.selfSkill() ? clientSession : (bl && ref == null ? clientSession2 : null);
+                    ClientSession clientSession4 = clientSession3;
                     if (!rule.selfSkill() && ref != null && bl) {
                         if (rule.gfx() > 0) {
                             if (rule.gfxMode() == 0 || rule.gfxMode() == 2) {
@@ -218,9 +220,8 @@ final class NativeEquipmentDefense {
         return applied.get();
     }
 
-    record Resolved(int reflect, int hp, int mp, List<Effect> effects) {
-        Resolved {
-            list = List.copyOf(list);
+    record Resolved(int reflect, int hp, int mp, List<Effect> effects) {Resolved {
+            effects = List.copyOf(effects);
         }
 
         static Resolved empty() {

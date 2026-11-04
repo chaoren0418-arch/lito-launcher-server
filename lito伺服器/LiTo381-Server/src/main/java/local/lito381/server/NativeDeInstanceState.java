@@ -168,8 +168,8 @@ Runnable {
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate) {
-        this.construction = construction;
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
+        this.construction = construction;
         this._deAiScheduleLock = new Object();
         this._deAiChainToken = 0L;
         this._deAiTickPending = false;
@@ -211,9 +211,8 @@ Runnable {
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name) {
-        name = NativeDeInstanceNames.name(construction, name);
-        this.construction = construction;
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
+        this.construction = construction;
         this._deAiScheduleLock = new Object();
         this._deAiChainToken = 0L;
         this._deAiTickPending = false;
@@ -251,14 +250,13 @@ Runnable {
         this._autoBuffChance = 0;
         this._lastAutoBuffTime = 0L;
         this._deathGeneration = new AtomicLong();
-        this.deName = name;
+        this.deName = NativeDeInstanceNames.name(construction, name);
         this.startNpc();
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl) {
-        name = NativeDeInstanceNames.name(construction, name);
-        this.construction = construction;
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
+        this.construction = construction;
         this._deAiScheduleLock = new Object();
         this._deAiChainToken = 0L;
         this._deAiTickPending = false;
@@ -296,15 +294,14 @@ Runnable {
         this._autoBuffChance = 0;
         this._lastAutoBuffTime = 0L;
         this._deathGeneration = new AtomicLong();
-        this.deName = name;
+        this.deName = NativeDeInstanceNames.name(construction, name);
         this._isMorphEnable = bl;
         this.startNpc();
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl, String string) {
-        name = NativeDeInstanceNames.name(construction, name);
-        this.construction = construction;
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
+        this.construction = construction;
         this._deAiScheduleLock = new Object();
         this._deAiChainToken = 0L;
         this._deAiTickPending = false;
@@ -342,7 +339,7 @@ Runnable {
         this._autoBuffChance = 0;
         this._lastAutoBuffTime = 0L;
         this._deathGeneration = new AtomicLong();
-        this.deName = name;
+        this.deName = NativeDeInstanceNames.name(construction, name);
         this._isMorphEnable = bl;
         this._isDollEnable = false;
         this._classRestrict = string;
@@ -350,9 +347,8 @@ Runnable {
     }
 
     public NativeDeInstanceState(NativeDeInstancePorts.Construction construction, NativeDeNpcTemplate nativeDeNpcTemplate, NativeDeInitializerKernel.Name name, boolean bl, boolean bl2, String string) {
-        name = NativeDeInstanceNames.name(construction, name);
-        this.construction = construction;
         super(construction.id(), construction.effects(), construction.owner(), construction.perception(), construction.template(), construction.npc(), nativeDeNpcTemplate);
+        this.construction = construction;
         this._deAiScheduleLock = new Object();
         this._deAiChainToken = 0L;
         this._deAiTickPending = false;
@@ -390,7 +386,7 @@ Runnable {
         this._autoBuffChance = 0;
         this._lastAutoBuffTime = 0L;
         this._deathGeneration = new AtomicLong();
-        this.deName = name;
+        this.deName = NativeDeInstanceNames.name(construction, name);
         this._isMorphEnable = bl;
         this._isDollEnable = bl2;
         this._classRestrict = string;
@@ -1046,8 +1042,9 @@ Runnable {
             this.stopAiOwner(l);
             return null;
         }
-        ScheduledFuture<?> scheduledFuture = this._deAiScheduleLock;
-        synchronized (scheduledFuture) {
+        Object scheduleLock = this._deAiScheduleLock;
+        ScheduledFuture<?> scheduledFuture;
+        synchronized (scheduleLock) {
             if (!this.isAiOwner(l) || this._deAiChainToken != l || this._deAiStopRequested || !this._deAiTickPending || this._deAiPendingBackground != bl) {
                 return null;
             }

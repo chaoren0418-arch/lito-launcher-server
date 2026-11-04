@@ -48,7 +48,7 @@ final class NativeDeVisibilityOutput {
         NativeDeVisibilityPacket nativeDeVisibilityPacket = null;
         if (packet instanceof NativeDeVisibilityPacket) {
             object = (NativeDeVisibilityPacket)packet;
-            nativeDeVisibilityPacket = object;
+            nativeDeVisibilityPacket = (NativeDeVisibilityPacket) object;
             try {
                 byArray = ((NativeDeVisibilityPacket)object).prepareForWrite();
             }

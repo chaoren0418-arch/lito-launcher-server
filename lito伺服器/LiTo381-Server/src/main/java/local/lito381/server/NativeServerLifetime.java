@@ -452,12 +452,12 @@ final class NativeServerLifetime {
                     NativeServerLifetime.closeSocketQuiet(serverSocket);
                 }
             }
-            object2 = (ScheduledExecutorService)CombatAccess.field(this.hub, "battleClock");
-            object2.shutdownNow();
+            ScheduledExecutorService battleClock = (ScheduledExecutorService)CombatAccess.field(this.hub, "battleClock");
+            battleClock.shutdownNow();
             boolean bl = false;
             try {
                 long l = System.nanoTime() + TimeUnit.SECONDS.toNanos(30L);
-                ClientSession[] clientSessionArray = this.fence;
+                Object clientSessionArray = this.fence;
                 synchronized (this.fence) {
                     while (this.accepts != 0 || this.handlers != 0) {
                         long l2 = l - System.nanoTime();
@@ -467,7 +467,7 @@ final class NativeServerLifetime {
                         TimeUnit.NANOSECONDS.timedWait(this.fence, l2);
                     }
                     // ** MonitorExit[var6_9] (shouldn't be in output)
-                    if (!object2.awaitTermination(3L, TimeUnit.SECONDS)) {
+                    if (!battleClock.awaitTermination(3L, TimeUnit.SECONDS)) {
                         throw new IllegalStateException("battle clock remains active; application resources fenced");
                     }
                     if (!this.combatDone) {

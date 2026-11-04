@@ -246,7 +246,7 @@ final class NativeCombatAttacker {
      */
     static Ref encounter(ClientSession clientSession, GameHub.MonsterAiTick monsterAiTick) {
         GameHub gameHub;
-        int n;
+        int n = 0;
         if (clientSession == null || monsterAiTick == null) {
             return null;
         }

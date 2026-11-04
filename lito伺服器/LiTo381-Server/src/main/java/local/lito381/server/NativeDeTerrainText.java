@@ -45,7 +45,12 @@ public class NativeDeTerrainText {
                 }
                 ++n6;
             }
-            lineNumberReader.close();
+            try {
+                lineNumberReader.close();
+            }
+            catch (java.io.IOException iOException) {
+                throw new IllegalStateException(iOException);
+            }
         }
         catch (Exception exception) {
             _log.error("\u6307\u5b9a\u5730\u5716\u52a0\u8f09\u969c\u7919\u6578\u64da\u7570\u5e38: mapId={} fileMapId={} \u6a94\u6848={} \u539f\u56e0={}", (Object)n, (Object)n5, (Object)string, (Object)exception.toString(), (Object)exception);

@@ -58,15 +58,14 @@ final class NativeArmorProc {
         return catalog;
     }
 
-    record Catalog(String database, Map<Integer, List<Rule>> items, int rows) {
-        Catalog {
-            LinkedHashMap linkedHashMap = new LinkedHashMap();
-            map.forEach((n, list) -> linkedHashMap.put(n, List.copyOf(list)));
-            map = Map.copyOf(linkedHashMap);
+    record Catalog(String database, Map<Integer, List<Rule>> items, int rows) {Catalog {
+            LinkedHashMap<Integer, List<Rule>> linkedHashMap = new LinkedHashMap<Integer, List<Rule>>();
+            items.forEach((n, list) -> linkedHashMap.put(n, List.copyOf(list)));
+            items = Map.copyOf(linkedHashMap);
         }
 
         List<Rule> selected(int n, int n2) {
-            List list = this.items.getOrDefault(n, List.of());
+            List<Rule> list = this.items.getOrDefault(n, List.of());
             List<Rule> list2 = n2 < 0 ? List.of() : list.stream().filter(rule -> rule.enchant == n2).toList();
             return list2.isEmpty() ? list.stream().filter(rule -> rule.enchant == -1).toList() : list2;
         }

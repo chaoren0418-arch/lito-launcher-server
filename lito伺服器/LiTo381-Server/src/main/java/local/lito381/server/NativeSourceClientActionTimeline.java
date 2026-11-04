@@ -281,12 +281,14 @@ public final class NativeSourceClientActionTimeline {
     }
 
     private VisibleWindow reserveVisibleWindow(long l, long l2, ActionKind actionKind) {
-        long l3;
-        long l4;
         Deadline deadline;
         Deadline deadline2;
-        while (!this._nextVisibleActionAtNanos.compareAndSet(deadline2, deadline = new Deadline(NativeSourceClientActionTimeline.addDuration(l2, l4 = (l3 = (deadline2 = this._nextVisibleActionAtNanos.get()) == null ? 0L : Math.max(0L, deadline2.nanos() - l2)) + l), actionKind))) {
-        }
+        do {
+            deadline2 = this._nextVisibleActionAtNanos.get();
+            long l3 = deadline2 == null ? 0L : Math.max(0L, deadline2.nanos() - l2);
+            long l4 = l3 + l;
+            deadline = new Deadline(NativeSourceClientActionTimeline.addDuration(l2, l4), actionKind);
+        } while (!this._nextVisibleActionAtNanos.compareAndSet(deadline2, deadline));
         return new VisibleWindow(deadline2, deadline);
     }
 

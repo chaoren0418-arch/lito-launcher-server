@@ -18,14 +18,13 @@ final class NativeDeInstancePorts {
     private NativeDeInstancePorts() {
     }
 
-    record Construction(int id, NativeDeResurrectionEffects effects, NativeDeDeletionOwner owner, NativeDePerceptionPorts.Services perception, NativeDeNpcTemplatePorts.Services template, NativeDeNpcConstructionPorts.Services npc, NativeDeInitializerKernel.Services initialization, Scene scene) {
-        Construction {
-            Objects.requireNonNull(nativeDeResurrectionEffects);
-            Objects.requireNonNull(nativeDeDeletionOwner);
-            Objects.requireNonNull(services);
-            Objects.requireNonNull(services2);
-            Objects.requireNonNull(services3);
-            Objects.requireNonNull(services4);
+    record Construction(int id, NativeDeResurrectionEffects effects, NativeDeDeletionOwner owner, NativeDePerceptionPorts.Services perception, NativeDeNpcTemplatePorts.Services template, NativeDeNpcConstructionPorts.Services npc, NativeDeInitializerKernel.Services initialization, Scene scene) {        Construction {
+            Objects.requireNonNull(effects);
+            Objects.requireNonNull(owner);
+            Objects.requireNonNull(perception);
+            Objects.requireNonNull(template);
+            Objects.requireNonNull(npc);
+            Objects.requireNonNull(initialization);
             Objects.requireNonNull(scene);
         }
     }

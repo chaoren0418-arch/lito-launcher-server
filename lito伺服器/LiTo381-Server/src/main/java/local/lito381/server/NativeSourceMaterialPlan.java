@@ -58,7 +58,7 @@ final class NativeSourceMaterialPlan {
             n2 = nativeMaterialItem.isStackable() ? 1 : 0;
             if (bl == null) {
                 bl = n2 != 0;
-            } else if (bl != n2) {
+            } else if (bl.booleanValue() != (n2 != 0)) {
                 _log.error("\u80cc\u5305\u540c itemId \u6df7\u7528 stackable \u5c6c\u6027\uff0c\u62d2\u7d55\u6263\u6b3e charId={} itemId={}", this.ownerId(), n3);
                 return ItemConsumeCommitResult.INVALID_REQUEST;
             }

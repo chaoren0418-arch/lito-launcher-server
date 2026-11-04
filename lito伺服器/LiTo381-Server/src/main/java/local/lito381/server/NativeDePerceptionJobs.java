@@ -111,8 +111,8 @@ final class NativeDePerceptionJobs {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void stop(NativePlayerLifetime nativePlayerLifetime) {
-        Task[] taskArray = nativePlayerLifetime.admission;
-        synchronized (nativePlayerLifetime.admission) {
+        Object admissionLock = nativePlayerLifetime.admission;
+        synchronized (admissionLock) {
             Owner owner = (Owner)CombatAccess.field(nativePlayerLifetime, FIELD);
             if (owner == null) {
                 // ** MonitorExit[var3_1] (shouldn't be in output)

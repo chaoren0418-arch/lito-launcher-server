@@ -37,7 +37,7 @@ final class NativeDeShopResources {
             throw new SQLException("source shop SQL failed; publication refused");
         }
         Map map = (Map)CombatAccess.field(nativeDeShopTable, "_shopData");
-        int n = map.values().stream().mapToInt(List::size).sum();
+        int n = map.values().stream().mapToInt(value -> ((List<?>) value).size()).sum();
         return new Snapshot(string3, nativeDeShopTable, map.size(), n, counts.opened.get(), counts.rolledBack.get(), counts.closed.get(), atomicLong.get());
     }
 

@@ -77,7 +77,7 @@ final class NativeProcSkillCatalog {
 
     record Catalog(String database, Map<Integer, Skill> skills) {
         Catalog {
-            map = Map.copyOf(map);
+            skills = Map.copyOf(skills);
         }
 
         Skill find(int n) {

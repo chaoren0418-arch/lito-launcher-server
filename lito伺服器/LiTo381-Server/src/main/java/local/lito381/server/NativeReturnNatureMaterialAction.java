@@ -34,6 +34,13 @@ final class NativeReturnNatureMaterialAction {
    try{pc.nativeMaterialReturnNatureBody(packet,spell,roll);}finally{if(prior==null)current.remove();else current.set(prior);}
   });}finally{if(inherited==null)ingress.remove();else ingress.set(inherited);}
  }
+ static ClientSession caster(ClientSession owner,BattleCompanion pet){
+  var live=current.get();
+  if(live!=null&&live.owner==owner&&live.pet==pet)return live.caster;
+  var reserved=ingress.get();
+  if(reserved!=null&&reserved.owner==owner&&reserved.pet==pet)return reserved.caster;
+  return null;
+ }
  static boolean admit(ClientSession pc,ClientSession owner,int skill,int action,int reuse){
   if(skill!=145)throw new IllegalStateException("unreviewed Return to Nature skill");var target=current.get();
   if(target==null||target.caster!=pc||target.owner!=owner||!target.valid())return false;

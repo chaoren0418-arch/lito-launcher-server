@@ -107,14 +107,14 @@ final class NativeDeNpcTemplateResources {
             nativeDeWorldLog.emit(string, string2, objectArray);
         };
         HashMap<Integer, String> hashMap = new HashMap<Integer, String>();
-        try (Object object = sql.open();
-             PreparedStatement preparedStatement = object.prepareStatement("SELECT skill_id, name FROM skills");
+        try (Connection connection = sql.open();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT skill_id, name FROM skills");
              ResultSet resultSet = preparedStatement.executeQuery();){
             while (resultSet.next()) {
                 hashMap.put(resultSet.getInt("skill_id"), resultSet.getString("name"));
             }
         }
-        object = new NativeDeNpcTemplateLoadScope.Context(sql, resolver, nativeDeWorldLog2, hashMap);
+        Object object = new NativeDeNpcTemplateLoadScope.Context(sql, resolver, nativeDeWorldLog2, hashMap);
         NativeDeNpcTemplateLoadScope.call((NativeDeNpcTemplateLoadScope.Context)object, () -> {
             NativeDeNpcTemplateNpcLoader.load();
             NativeDeNpcTemplateMobLoader.load();
@@ -171,13 +171,12 @@ final class NativeDeNpcTemplateResources {
         }
     }
 
-    record Snapshot(String database, Map<Integer, NativeDeNpcTemplate> npcs, Map<Integer, NativeDeNpcMobSkill> mobSkills, Map<String, Integer> families, int orc, Set<String> requiredImplementations, Set<String> unresolvedExecutors, int suppressedBlankNameWrites, long opened, long rolledBack, long closed, long errors, boolean lifecycleFailure) {
-        Snapshot {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
-            map3 = Map.copyOf(map3);
-            set = Set.copyOf(set);
-            set2 = Set.copyOf(set2);
+    record Snapshot(String database, Map<Integer, NativeDeNpcTemplate> npcs, Map<Integer, NativeDeNpcMobSkill> mobSkills, Map<String, Integer> families, int orc, Set<String> requiredImplementations, Set<String> unresolvedExecutors, int suppressedBlankNameWrites, long opened, long rolledBack, long closed, long errors, boolean lifecycleFailure) {Snapshot {
+            npcs = Map.copyOf(npcs);
+            mobSkills = Map.copyOf(mobSkills);
+            families = Map.copyOf(families);
+            requiredImplementations = Set.copyOf(requiredImplementations);
+            unresolvedExecutors = Set.copyOf(unresolvedExecutors);
         }
     }
 }

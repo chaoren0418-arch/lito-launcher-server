@@ -171,13 +171,13 @@ final class NativeProcHealingEncounter {
                 return null;
             }
             NativeProcEncounterCatalog.Npc npc = NativeProcEncounterCatalog.catalog().require(NativePlayerCommit.integer(live.snapshot(), "npcId"));
-            Plan plan = new Plan(ref, binding, rule.skill(), NativeProcHealingEncounter.generation(live.container()), npc);
+            Plan applied = new Plan(ref, binding, rule.skill(), NativeProcHealingEncounter.generation(live.container()), npc);
             long l = System.nanoTime();
-            Target target = new Target((Live)live, plan, l);
+            Target target = new Target((Live)live, applied, l);
             NativeProcHealingKernel.apply(target, () -> NativeProcHealingKernel.calculate(skill.damageDice(), skill.damageValue(), NativeProcHealBonus.catalog().bonus(NativeProcHealingPlayer.intelligence(clientSession, l)), NativePlayerCommit.integer(clientSession, "playerLawful"), 10, n -> ThreadLocalRandom.current().nextInt(n)), (int)CombatRules.number("NATURES_BLESSING_HEAL", 0.0), () -> {
                 target.graphics = true;
             });
-            return target.graphics ? plan : null;
+            return target.graphics ? applied : null;
         });
         if (plan != null) {
             NativeProcHealingEncounter.graphics(gameHub, plan, skill.castGraphics());
@@ -278,12 +278,13 @@ final class NativeProcHealingEncounter {
         if (clientSession == null || !NativePlayerCommit.validFrame(clientSession) || !NativeProcPlayerState.show(clientSession)) {
             return;
         }
-        ArrayList<Object> arrayList = new ArrayList<Object>();
+        ArrayList<ClientSession> arrayList = new ArrayList<ClientSession>();
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
-            object = gameHub.roomMembers(plan.target().room()).iterator();
-            while (object.hasNext()) {
-                ClientSession clientSession2 = (ClientSession)object.next();
+            java.util.Iterator<ClientSession> members = gameHub.roomMembers(plan.target().room()).iterator();
+            object = members;
+            while (members.hasNext()) {
+                ClientSession clientSession2 = members.next();
                 if (clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L) continue;
                 arrayList.add(clientSession2);
             }

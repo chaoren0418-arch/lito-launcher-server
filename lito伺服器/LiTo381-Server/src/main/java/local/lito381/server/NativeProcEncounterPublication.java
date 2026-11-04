@@ -122,7 +122,7 @@ final class NativeProcEncounterPublication {
         GameHub gameHub2 = gameHub;
         synchronized (gameHub2) {
             Object object = CombatAccess.field(context.room, "guardianTowers");
-            return ((List)CombatAccess.call(object, "snapshots", "()Ljava/util/List;", new Object[0])).stream().filter(snapshot -> snapshot.force() == context.force).toList();
+            return ((List<BattleGuardianTower.Snapshot>)CombatAccess.call(object, "snapshots", "()Ljava/util/List;", new Object[0])).stream().filter(snapshot -> snapshot.force() == context.force).toList();
         }
     }
 

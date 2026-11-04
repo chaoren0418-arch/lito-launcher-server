@@ -257,10 +257,10 @@ final class NativePlayerLifetime {
         if (nativePlayerLifetime == null) {
             throw new IllegalStateException("no live PC fixture application");
         }
-        Iterator<NativePlayerLifetime> iterator = nativePlayerLifetime;
-        ((NativePlayerLifetime)((Object)iterator)).workers.execute(() -> {
+        NativePlayerLifetime selected = nativePlayerLifetime;
+        selected.workers.execute(() -> {
             NativePlayerLifetime nativePlayerLifetime2 = worker.get();
-            worker.set((NativePlayerLifetime)((Object)iterator));
+            worker.set(selected);
             try {
                 runnable.run();
             }
@@ -321,7 +321,7 @@ final class NativePlayerLifetime {
                 }
             }
         }
-        Object[] objectArray = this.admission;
+        Object objectArray = this.admission;
         synchronized (this.admission) {
             boolean bl4;
             this.mode = Mode.STOPPED;

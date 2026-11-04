@@ -57,7 +57,7 @@ final class NativeCastMaterialPolicy {
                 }
                 if (accountRepository instanceof LegacyMySqlRepository) {
                     LegacyMySqlRepository legacyMySqlRepository = (LegacyMySqlRepository)accountRepository;
-                    try (Connection connection = legacyMySqlRepository.nativeMaterialCharacterConnection();){
+                    try (Connection connection = (Connection)CombatAccess.call(legacyMySqlRepository, "nativeMaterialCharacterConnection", "()Ljava/sql/Connection;");){
                         connection.setReadOnly(true);
                         connection.setTransactionIsolation(4);
                         connection.setAutoCommit(false);

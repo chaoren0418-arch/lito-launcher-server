@@ -483,9 +483,9 @@ public class NativeDeWorldCore {
     }
 
     private void spatialIndexPutObjectAtSector(NativeDeDeletionPorts.ObjectRef object, int mapId, int sectorId) {
-        ConcurrentHashMap mapSectors = this._spatialIndex.computeIfAbsent(mapId, k -> new ConcurrentHashMap());
+        ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> mapSectors = this._spatialIndex.computeIfAbsent(mapId, k -> new ConcurrentHashMap<>());
         mapSectors.compute(sectorId, (key, bucket) -> {
-            ConcurrentHashMap target = bucket != null ? bucket : new ConcurrentHashMap();
+            ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> target = bucket != null ? bucket : new ConcurrentHashMap<>();
             target.put(NativeDeWorldAccess.L1Object$getId(object), object);
             return target;
         });
@@ -670,7 +670,7 @@ public class NativeDeWorldCore {
         for (VisibleBinding visibleBinding : this._visibleBindings.values()) {
             if (visibleBinding == null || visibleBinding.object() == null) continue;
             NativeDeDeletionPorts.ObjectRef object = visibleBinding.object();
-            Iterator iterator = object;
+            Object iterator = object;
             synchronized (iterator) {
                 ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef> bucket2;
                 VisibleBinding current = this._visibleBindings.get(NativeDeWorldAccess.L1Object$getId(object));
@@ -694,9 +694,9 @@ public class NativeDeWorldCore {
                 }
             }
         }
-        for (Map.Entry entry : this._visibleObjects.entrySet()) {
-            int indexedMapId = (Integer)entry.getKey();
-            for (NativeDeDeletionPorts.ObjectRef object : ((ConcurrentHashMap)entry.getValue()).values()) {
+        for (Map.Entry<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> entry : this._visibleObjects.entrySet()) {
+            int indexedMapId = entry.getKey();
+            for (NativeDeDeletionPorts.ObjectRef object : entry.getValue().values()) {
                 if (object == null) continue;
                 NativeDeDeletionPorts.ObjectRef actualMapId = object;
                 synchronized (actualMapId) {
@@ -715,7 +715,7 @@ public class NativeDeWorldCore {
                             }
                             continue;
                         }
-                        if (((ConcurrentHashMap)entry.getValue()).remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
+                        if (entry.getValue().remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
                             ++repaired;
                         }
                         if ((reconcile = this.reconcileVisibleObject(object, indexedMapId)) == SpatialReconcileResult.REPAIRED) {
@@ -728,11 +728,11 @@ public class NativeDeWorldCore {
                 }
             }
         }
-        for (Map.Entry entry : this._spatialIndex.entrySet()) {
-            int indexedMapId = (Integer)entry.getKey();
-            for (Map.Entry sectorEntry : ((ConcurrentHashMap)entry.getValue()).entrySet()) {
-                int indexedSectorId = (Integer)sectorEntry.getKey();
-                for (NativeDeDeletionPorts.ObjectRef object : ((ConcurrentHashMap)sectorEntry.getValue()).values()) {
+        for (Map.Entry<Integer, ConcurrentHashMap<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>>> entry : this._spatialIndex.entrySet()) {
+            int indexedMapId = entry.getKey();
+            for (Map.Entry<Integer, ConcurrentHashMap<Integer, NativeDeDeletionPorts.ObjectRef>> sectorEntry : entry.getValue().entrySet()) {
+                int indexedSectorId = sectorEntry.getKey();
+                for (NativeDeDeletionPorts.ObjectRef object : sectorEntry.getValue().values()) {
                     if (object == null) continue;
                     NativeDeDeletionPorts.ObjectRef objectRef = object;
                     synchronized (objectRef) {
@@ -751,7 +751,7 @@ public class NativeDeWorldCore {
                                 }
                                 continue;
                             }
-                            if (((ConcurrentHashMap)sectorEntry.getValue()).remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
+                            if (sectorEntry.getValue().remove(NativeDeWorldAccess.L1Object$getId(object), object)) {
                                 ++repaired;
                             }
                             if ((reconcile = this.reconcileVisibleObject(object, indexedMapId)) == SpatialReconcileResult.REPAIRED) {
@@ -763,7 +763,7 @@ public class NativeDeWorldCore {
                         }
                     }
                 }
-                ((ConcurrentHashMap)entry.getValue()).computeIfPresent(indexedSectorId, (key, bucket) -> bucket.isEmpty() ? null : bucket);
+                entry.getValue().computeIfPresent(indexedSectorId, (key, bucket) -> bucket.isEmpty() ? null : bucket);
             }
         }
         if (repaired > 0) {

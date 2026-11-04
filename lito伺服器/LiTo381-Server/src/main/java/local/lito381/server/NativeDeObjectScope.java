@@ -57,8 +57,8 @@ final class NativeDeObjectScope {
                 return entry.context;
             }
             if (nativeDeObjectFields2 instanceof NativeDeDeletionState) {
-                nativeDeCharacterFields = (NativeDeDeletionState)nativeDeObjectFields2;
-                NativeDeDeletionPorts.Services services = nativeDeCharacterFields.deletionOwner.services;
+                NativeDeDeletionState deletionState = (NativeDeDeletionState)nativeDeObjectFields2;
+                NativeDeDeletionPorts.Services services = deletionState.deletionOwner.services;
                 if (services instanceof NativeDeWorldContext) {
                     NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)services;
                     return nativeDeWorldContext;
@@ -102,8 +102,9 @@ final class NativeDeObjectScope {
         }
 
         NativeDeWorldMap getMap(short s) {
-            NativeDeWorldContext nativeDeWorldContext;
-            NativeDeWorldContext nativeDeWorldContext2 = NativeDeObjectScope.present() ? NativeDeObjectScope.context(NativeDeObjectScope.actor()) : (nativeDeWorldContext = NativeDeWorldScope.present() ? NativeDeWorldScope.owner() : null);
+            NativeDeWorldContext nativeDeWorldContext = NativeDeObjectScope.present()
+                    ? NativeDeObjectScope.context(NativeDeObjectScope.actor())
+                    : (NativeDeWorldScope.present() ? NativeDeWorldScope.owner() : null);
             if (nativeDeWorldContext == null) {
                 throw new IllegalStateException("source map lookup requires a native World binding");
             }

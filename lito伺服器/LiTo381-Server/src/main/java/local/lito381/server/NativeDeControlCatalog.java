@@ -217,10 +217,10 @@ final class NativeDeControlCatalog {
                     object = new ArrayList<Integer>();
                     while (stringTokenizer.hasMoreTokens()) {
                         try {
-                            object.add(Integer.parseInt(stringTokenizer.nextToken().trim()));
+                            ((List<Integer>) object).add(Integer.parseInt(stringTokenizer.nextToken().trim()));
                         }
                         catch (NumberFormatException numberFormatException) {
-                            object.add(0);
+                            ((List<Integer>) object).add(0);
                         }
                     }
                 } else {
@@ -240,26 +240,23 @@ final class NativeDeControlCatalog {
         return new Settings(hashMap, hashMap2, n, bl);
     }
 
-    record Names(Map<String, NativeDeInitializerKernel.Name> byName, Map<Integer, NativeDeInitializerKernel.Name> byId, List<NativeDeInitializerKernel.Name> history, List<NativeDeInitializerKernel.Name> selection, int rows, int invalid, List<Integer> duplicates, boolean sqlFailure) {
-        Names {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
-            list = List.copyOf(list);
-            list2 = List.copyOf(list2);
-            list3 = List.copyOf(list3);
+    record Names(Map<String, NativeDeInitializerKernel.Name> byName, Map<Integer, NativeDeInitializerKernel.Name> byId, List<NativeDeInitializerKernel.Name> history, List<NativeDeInitializerKernel.Name> selection, int rows, int invalid, List<Integer> duplicates, boolean sqlFailure) {Names {
+            byName = Map.copyOf(byName);
+            byId = Map.copyOf(byId);
+            history = List.copyOf(history);
+            selection = List.copyOf(selection);
+            duplicates = List.copyOf(duplicates);
         }
     }
 
-    record Abilities(Map<Integer, NativeDeInitializerKernel.Ability> values, int rows, boolean sqlFailure) {
-        Abilities {
-            map = Map.copyOf(map);
+    record Abilities(Map<Integer, NativeDeInitializerKernel.Ability> values, int rows, boolean sqlFailure) {Abilities {
+            values = Map.copyOf(values);
         }
     }
 
-    record Settings(Map<String, Definition> values, Map<Integer, Definition> byId, int rows, boolean failure) {
-        Settings {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
+    record Settings(Map<String, Definition> values, Map<Integer, Definition> byId, int rows, boolean failure) {Settings {
+            values = Map.copyOf(values);
+            byId = Map.copyOf(byId);
         }
 
         Definition find(int n, int n2) {
@@ -294,12 +291,12 @@ final class NativeDeControlCatalog {
 
     record Definition(NativeDeInitializerKernel.Setting key, String polyList, List<Integer> polyIds, String dollList, List<Integer> dollIds, List<Integer> useSkills, List<Integer> itemGfxs, List<NativeDeInitializerKernel.PetInfo> pets, List<Integer> attackSkills) {
         Definition {
-            list = List.copyOf(list);
-            list2 = List.copyOf(list2);
-            list3 = list3 == null ? null : List.copyOf(list3);
-            list4 = List.copyOf(list4);
-            list5 = List.copyOf(list5);
-            list6 = List.copyOf(list6);
+            polyIds = List.copyOf(polyIds);
+            dollIds = List.copyOf(dollIds);
+            useSkills = useSkills == null ? null : List.copyOf(useSkills);
+            itemGfxs = List.copyOf(itemGfxs);
+            pets = List.copyOf(pets);
+            attackSkills = List.copyOf(attackSkills);
         }
     }
 }

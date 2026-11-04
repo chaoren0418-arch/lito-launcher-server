@@ -26,12 +26,12 @@ import local.lito381.server.NativeDeWorldLog;
 
 public class NativeDeItemTable {
     private static final NativeDeWorldLog _log = NativeDeItemTemplatesScope.Logs.getLogger(NativeDeItemTable.class);
-    private static final Map<String, Integer> _armorTypes = new HashMap<String, Integer>();
-    private static final Map<String, Integer> _weaponTypes = new HashMap<String, Integer>();
-    private static final Map<String, Integer> _weaponId = new HashMap<String, Integer>();
-    private static final Map<String, Integer> _materialTypes = new HashMap<String, Integer>();
-    private static final Map<String, Integer> _etcItemTypes = new HashMap<String, Integer>();
-    private static final Map<String, Integer> _useTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> _armorTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> _weaponTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> _weaponId = new HashMap<String, Integer>();
+    private static Map<String, Integer> _materialTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> _etcItemTypes = new HashMap<String, Integer>();
+    private static Map<String, Integer> _useTypes = new HashMap<String, Integer>();
     private NativeDeItemTemplate[] _allTemplates;
     private Map<Integer, NativeDeEtcItemTemplate> _etcitems;
     private Map<Integer, NativeDeArmorTemplate> _armors;

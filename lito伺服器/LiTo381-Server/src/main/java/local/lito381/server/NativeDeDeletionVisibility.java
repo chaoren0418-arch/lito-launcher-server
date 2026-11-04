@@ -49,7 +49,7 @@ public final class NativeDeDeletionVisibility {
         }
         return switch (snapshot.phase()) {
             default -> throw new IncompatibleClassChangeError();
-            case Phase.DELETE_CLAIMED, Phase.DESTROYED_MARKED, Phase.VIEWERS_CAPTURED, Phase.WORLD_REMOVED -> {
+            case DELETE_CLAIMED, DESTROYED_MARKED, VIEWERS_CAPTURED, WORLD_REMOVED -> {
                 if (!deletionStarted) {
                     yield RepairKind.LEAK;
                 }
@@ -58,13 +58,13 @@ public final class NativeDeDeletionVisibility {
                 }
                 yield RepairKind.NORMAL_RACE;
             }
-            case Phase.ACTIVE -> {
+            case ACTIVE -> {
                 if (deletionStarted) {
                     yield RepairKind.NORMAL_RACE;
                 }
                 yield RepairKind.LEAK;
             }
-            case Phase.REMOVE_PUBLISHED, Phase.TERMINAL, Phase.FAILED, Phase.REGISTRATION_ABORTED -> RepairKind.LEAK;
+            case REMOVE_PUBLISHED, TERMINAL, FAILED, REGISTRATION_ABORTED -> RepairKind.LEAK;
         };
     }
 
@@ -125,7 +125,7 @@ public final class NativeDeDeletionVisibility {
 
         public boolean deletionInProgress() {
             return switch (this._phase) {
-                case Phase.DELETE_CLAIMED, Phase.DESTROYED_MARKED, Phase.VIEWERS_CAPTURED, Phase.WORLD_REMOVED, Phase.REMOVE_PUBLISHED -> true;
+                case DELETE_CLAIMED, DESTROYED_MARKED, VIEWERS_CAPTURED, WORLD_REMOVED, REMOVE_PUBLISHED -> true;
                 default -> false;
             };
         }

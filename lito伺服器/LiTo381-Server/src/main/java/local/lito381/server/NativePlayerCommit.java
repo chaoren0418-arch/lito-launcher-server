@@ -708,7 +708,7 @@ final class NativePlayerCommit {
         }
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         if (binding.phase.equals("WORLD")) {
-            for (ClientSession clientSession2 : (List)CombatAccess.call(clientSession, "classicWorldMembers", "(I)Ljava/util/List;", binding.map)) {
+            for (ClientSession clientSession2 : (List<ClientSession>)CombatAccess.call(clientSession, "classicWorldMembers", "(I)Ljava/util/List;", binding.map)) {
                 if (!binding.matches(clientSession2)) continue;
                 return clientSession2;
             }
@@ -939,7 +939,7 @@ final class NativePlayerCommit {
                 byte[] byArray = defenseVisual.gfx > 0 ? Protocol.effectObject(defenseVisual.target, defenseVisual.gfx) : Protocol.objectAction(defenseVisual.doll.objectId(), 67);
                 String string = defenseVisual.gfx > 0 ? "S_EFFECT magic-doll-proc=" + defenseVisual.power + " target=" + defenseVisual.target + " gfx=" + defenseVisual.gfx : "S_ACTION magic-doll-proc=" + defenseVisual.power + " doll=" + defenseVisual.doll.objectId() + " action=67";
                 try {
-                    for (ClientSession clientSession2 : (List)CombatAccess.call(clientSession, "nativeMagicDollRecipients", "(Llocal/lito381/server/NativeMagicDoll;)Ljava/util/List;", defenseVisual.doll)) {
+                    for (ClientSession clientSession2 : (List<ClientSession>)CombatAccess.call(clientSession, "nativeMagicDollRecipients", "(Llocal/lito381/server/NativeMagicDoll;)Ljava/util/List;", defenseVisual.doll)) {
                         if (!NativePlayerCommit.validFrame(clientSession)) continue block10;
                         NativePlayerCommit.safeSend(clientSession2, byArray, string + " defense=true reason=" + defenseVisual.reason);
                     }
@@ -1319,10 +1319,9 @@ final class NativePlayerCommit {
         }
     }
 
-    record Event(Binding target, Binding caster, int damage, boolean earth, boolean suppress, long terminal, BattleJoyOfPainStatus.Lease joy, int joyDamage, boolean world, long attackerObject, ClassicWorldMonsterPopulation.Snapshot npc, WorldPlan plan, List<DefenseVisual> defense, boolean feedbackPositive, List<NativeArmorProc.Rule> equipment, NativeCombatAttacker.Ref attacker, NativeCombatAttacker.Feedback npcFeedback, NativeAcceptedState.Incoming incoming, int minimumHp, long deadline) {
-        Event {
-            list = List.copyOf(list);
-            list2 = List.copyOf(list2);
+    record Event(Binding target, Binding caster, int damage, boolean earth, boolean suppress, long terminal, BattleJoyOfPainStatus.Lease joy, int joyDamage, boolean world, long attackerObject, ClassicWorldMonsterPopulation.Snapshot npc, WorldPlan plan, List<DefenseVisual> defense, boolean feedbackPositive, List<NativeArmorProc.Rule> equipment, NativeCombatAttacker.Ref attacker, NativeCombatAttacker.Feedback npcFeedback, NativeAcceptedState.Incoming incoming, int minimumHp, long deadline) {Event {
+            defense = List.copyOf(defense);
+            equipment = List.copyOf(equipment);
         }
     }
 
