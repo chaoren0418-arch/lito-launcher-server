@@ -1,0 +1,42 @@
+name: package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# T040 打包驗收。既有 build.yml 的 Server / Server tests / Launcher
+# 不跑 Build-Package.ps1，不能當成安裝包驗收。
+
+jobs:
+  package:
+    name: Build-Package.ps1 zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Build vendor zip
+        run: pwsh -NoProfile -File packaging/Build-Package.ps1
+      - name: Scan zip (independent of the pack script)
+        run: |
+          set -euo pipefail
+          zip=$(ls -1 release/package-*.zip | head -n 1)
+          python3 packaging/scan-zip.py "$zip" | tee release/package-scan.txt
+      - name: Package-entry --check (no DB, no game)
+        run: |
+          set -euo pipefail
+          dir=$(find release -mindepth 1 -maxdepth 1 -type d -name 'package-*' | head -n 1)
+          pwsh -NoProfile -File "$dir/tools/Start-PackagedServer.ps1" --check
+      - name: Upload package evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: lito-package
+          path: |
+            release/package-*.zip
+            release/package-*/MANIFEST.txt
+            release/package-*/ZIP-LISTING.txt
+            release/package-scan.txt

@@ -202,6 +202,9 @@ $exampleRel = "$serverRel/config/server.properties.example"
 $dbRel = "$serverRel/db"
 $wrapperBatRel = 'lito伺服器/1.啟動伺服器.bat'
 $startBatRel = "$serverRel/Start-LiTo381-Server.bat"
+$officialStartRel = "$serverRel/tools/Start-LiToServer.ps1"
+$packagedStartRel = 'packaging/Start-PackagedServer.ps1'
+$packagedBatRel = 'packaging/啟動套件伺服器.bat'
 $launcherRel = 'lito登入器/LiTo381-Launcher/release/current'
 $installRel = 'docs/INSTALL.md'
 
@@ -210,6 +213,9 @@ $examplePath = Resolve-RepoPath $repoRoot $exampleRel
 $dbPath = Resolve-RepoPath $repoRoot $dbRel
 $wrapperBatPath = Resolve-RepoPath $repoRoot $wrapperBatRel
 $startBatPath = Resolve-RepoPath $repoRoot $startBatRel
+$officialStartPath = Resolve-RepoPath $repoRoot $officialStartRel
+$packagedStartPath = Resolve-RepoPath $repoRoot $packagedStartRel
+$packagedBatPath = Resolve-RepoPath $repoRoot $packagedBatRel
 $launcherPath = Resolve-RepoPath $repoRoot $launcherRel
 $installPath = Resolve-RepoPath $repoRoot $installRel
 $secretsPath = Resolve-RepoPath $repoRoot "$serverRel/config/server.properties"
@@ -218,7 +224,7 @@ if (Test-Path -LiteralPath $secretsPath) {
     Write-Host '[INFO] 偵測到本機 config/server.properties；打包腳本不會讀取或複製該檔。'
 }
 
-foreach ($required in @($pomPath, $examplePath, $dbPath, $wrapperBatPath, $startBatPath, $installPath)) {
+foreach ($required in @($pomPath, $examplePath, $dbPath, $wrapperBatPath, $startBatPath, $officialStartPath, $packagedStartPath, $packagedBatPath, $installPath)) {
     if (-not (Test-Path -LiteralPath $required)) { throw "missing_input: $required" }
 }
 
@@ -273,14 +279,17 @@ if (Test-Path -LiteralPath $packageDir) {
 New-Directory $packageDir
 New-Directory $releaseRoot
 
-$serverOut = [IO.Path]::Combine($packageDir, 'server')
+$litoServerOut = [IO.Path]::Combine($packageDir, 'lito伺服器')
+$serverOut = [IO.Path]::Combine($litoServerOut, 'LiTo381-Server')
 New-Directory $serverOut
 New-Directory ([IO.Path]::Combine($serverOut, 'config'))
 New-Directory ([IO.Path]::Combine($serverOut, 'db'))
+New-Directory ([IO.Path]::Combine($serverOut, 'tools'))
+New-Directory ([IO.Path]::Combine($packageDir, 'tools'))
 
-Copy-FileSafe $jarPath ([IO.Path]::Combine($serverOut, 'LiTo381-Server.jar')) 'server/LiTo381-Server.jar'
+Copy-FileSafe $jarPath ([IO.Path]::Combine($serverOut, 'LiTo381-Server.jar')) 'lito伺服器/LiTo381-Server/LiTo381-Server.jar'
 if (Test-Path -LiteralPath $libDir -PathType Container) {
-    Copy-DirectoryFiltered $libDir ([IO.Path]::Combine($serverOut, 'lib')) 'server/lib'
+    Copy-DirectoryFiltered $libDir ([IO.Path]::Combine($serverOut, 'lib')) 'lito伺服器/LiTo381-Server/lib'
 } else {
     Write-Host '[WARN] 找不到 target/lib（maven-dependency-plugin copy-dependencies）；Class-Path 可能不完整。'
 }
@@ -288,7 +297,7 @@ if (Test-Path -LiteralPath $libDir -PathType Container) {
 $sqlFiles = @(Get-ChildItem -LiteralPath $dbPath -File -Filter '*.sql' | Sort-Object Name)
 if ($sqlFiles.Count -eq 0) { throw "sql_missing: $dbRel/*.sql" }
 foreach ($sql in $sqlFiles) {
-    $rel = "server/db/$($sql.Name)"
+    $rel = "lito伺服器/LiTo381-Server/db/$($sql.Name)"
     Copy-FileSafe $sql.FullName ([IO.Path]::Combine($serverOut, 'db', $sql.Name)) $rel
 }
 $candidatesDir = [IO.Path]::Combine($dbPath, 'candidates')
@@ -296,10 +305,24 @@ if (Test-Path -LiteralPath $candidatesDir) {
     Write-Host '[INFO] 已排除 db/candidates/（不打包候選 SQL／資源）。'
 }
 
-Copy-FileSafe $examplePath ([IO.Path]::Combine($serverOut, 'config', 'server.properties.example')) 'server/config/server.properties.example'
-Copy-FileSafe $wrapperBatPath ([IO.Path]::Combine($serverOut, '1.啟動伺服器.bat')) 'server/1.啟動伺服器.bat'
-Copy-FileSafe $startBatPath ([IO.Path]::Combine($serverOut, 'Start-LiTo381-Server.bat')) 'server/Start-LiTo381-Server.bat'
+Copy-FileSafe $examplePath ([IO.Path]::Combine($serverOut, 'config', 'server.properties.example')) 'lito伺服器/LiTo381-Server/config/server.properties.example'
+Copy-FileSafe $wrapperBatPath ([IO.Path]::Combine($litoServerOut, '1.啟動伺服器.bat')) 'lito伺服器/1.啟動伺服器.bat'
+Copy-FileSafe $startBatPath ([IO.Path]::Combine($serverOut, 'Start-LiTo381-Server.bat')) 'lito伺服器/LiTo381-Server/Start-LiTo381-Server.bat'
+Copy-FileSafe $officialStartPath ([IO.Path]::Combine($serverOut, 'tools', 'Start-LiToServer.ps1')) 'lito伺服器/LiTo381-Server/tools/Start-LiToServer.ps1'
+Copy-FileSafe $packagedBatPath ([IO.Path]::Combine($packageDir, '啟動套件伺服器.bat')) '啟動套件伺服器.bat'
+Copy-FileSafe $packagedStartPath ([IO.Path]::Combine($packageDir, 'tools', 'Start-PackagedServer.ps1')) 'tools/Start-PackagedServer.ps1'
 Copy-FileSafe $installPath ([IO.Path]::Combine($packageDir, 'INSTALL.md')) 'INSTALL.md'
+
+$wrapperTarget = [IO.Path]::Combine($litoServerOut, 'LiTo381-Server', 'Start-LiTo381-Server.bat')
+$officialToolTarget = [IO.Path]::Combine($serverOut, 'tools', 'Start-LiToServer.ps1')
+$packagedToolTarget = [IO.Path]::Combine($packageDir, 'tools', 'Start-PackagedServer.ps1')
+foreach ($link in @($wrapperTarget, $officialToolTarget, $packagedToolTarget)) {
+    if (-not (Test-Path -LiteralPath $link -PathType Leaf)) {
+        throw "startup_chain_missing: $link"
+    }
+}
+Write-Host 'STARTUP_CHAIN=ok (wrapper bat → LiTo381-Server/Start-LiTo381-Server.bat → tools/Start-LiToServer.ps1)'
+Write-Host 'PACKAGE_ENTRY=ok (啟動套件伺服器.bat → tools/Start-PackagedServer.ps1 → Maven JAR)'
 
 $launcherIncluded = $false
 $launcherNote = ''

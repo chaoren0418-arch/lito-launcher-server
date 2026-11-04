@@ -6,7 +6,7 @@
 
 | 工具 | 解析方式 |
 |---|---|
-| JDK 17 `java` | PATH（或 `JAVA_HOME` 已由呼叫端設定）；不寫死 `C:\Program Files\...` |
+| JDK 17 `java` | PATH；不寫死 `C:\Program Files\...` |
 | Maven 3.9 `mvn` / `mvn.cmd` | PATH |
 | `dotnet` | PATH；本腳本**不重建**登入器，只在 `release/current/` 存在時收入 |
 
@@ -20,13 +20,17 @@ Windows PowerShell 5.1：
 powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File packaging\Build-Package.ps1
 ```
 
-PowerShell 7（含 Linux CI 的 `pwsh`）：
+PowerShell 7（含 GitHub `ubuntu-latest` 的 `pwsh`）：
 
 ```powershell
 pwsh -NoProfile -File packaging/Build-Package.ps1
+python3 packaging/scan-zip.py release/package-0.6.71.zip
+pwsh -NoProfile -File release/package-0.6.71/tools/Start-PackagedServer.ps1 --check
 ```
 
 本腳本會執行 `mvn -B -DskipTests -f lito伺服器/LiTo381-Server/pom.xml package`。若只要重打包既有 `target/` 產物，可加 `-SkipMaven`（驗收仍應跑完整一次）。
+
+獨立核實：workflow **package**（`.github/workflows/package.yml`）跑上述腳本，並上傳 artifact **`lito-package`**（zip、MANIFEST、ZIP-LISTING、scan 輸出）。既有 `build.yml` 的 Server／Launcher job **不是**打包驗收。
 
 ## 產出
 
@@ -34,22 +38,36 @@ pwsh -NoProfile -File packaging/Build-Package.ps1
 release/package-<pom.version>/
   INSTALL.md
   MANIFEST.txt
-  server/
-    LiTo381-Server.jar
-    lib/                          # Maven copy-dependencies，JAR Class-Path 需要
-    db/*.sql                      # 僅 db 根層，不含 db/candidates/
-    config/server.properties.example
-    1.啟動伺服器.bat
-    Start-LiTo381-Server.bat
-  launcher/                       # 僅當 lito登入器/LiTo381-Launcher/release/current/ 存在
+  啟動套件伺服器.bat                 # 套件自帶入口（PATH java + Maven JAR）
+  tools/Start-PackagedServer.ps1
+  lito伺服器/
+    1.啟動伺服器.bat                 # 官方包裝：呼叫 LiTo381-Server\Start-LiTo381-Server.bat
+    LiTo381-Server/
+      Start-LiTo381-Server.bat       # 官方：呼叫 tools\Start-LiToServer.ps1
+      tools/Start-LiToServer.ps1     # 官方腳本原樣收入；未改內容
+      LiTo381-Server.jar
+      lib/
+      db/*.sql                       # 僅 db 根層，不含 db/candidates/
+      config/server.properties.example
+  launcher/                          # 僅當 lito登入器/LiTo381-Launcher/release/current/ 存在
 release/package-<pom.version>.zip
 ```
 
-`release/` 與 `*.zip` 不進 git。
+如何使用包內 Maven JAR、官方 BAT 的目的地與既有檔清單：見套件內／`docs/INSTALL.md` 第 4 節。
+
+## gitignore（不要把產出推進 git）
+
+根 `.gitignore`：
+
+- `/release/`：整個打包目錄不進 git（T040 補上，避免 sql／bat 副本被 `git add`）
+- `*.zip`：zip 不進 git
+- `lito登入器/LiTo381-Launcher/release/`：登入器自己的發布目錄，與本打包目錄不是同一條規則
+
+不要 `git add release/`。zip 證據放 GitHub Actions artifact `lito-package`。
 
 ## 登入器缺檔
 
-T003（Issue #4）已完成，但本雲端／CI 環境通常沒有 `release/current/`。腳本會：
+T003（Issue #4）已完成，但雲端／CI 通常沒有 `release/current/`。腳本會：
 
 - 繼續打包伺服器
 - 印出 `[WARN] 找不到登入器 … 本次只打包伺服器`
@@ -65,10 +83,11 @@ T003（Issue #4）已完成，但本雲端／CI 環境通常沒有 `release/curr
 - `pak`／`map`／`sprite` 目錄與 `*.pak`／`*.map`／`*.spr`／`*.til`／`*.idx`
 - `db/candidates/`
 
-打包後會再掃描 zip 條目；命中即失敗。
+打包後 `Assert-ZipClean` 再掃 zip；CI 另跑 `packaging/scan-zip.py`。命中即失敗。
 
-## 限制
+## 啟動鏈與相容性
 
-- Maven 產物 **不是** 正式 0.6.71 candidate JAR（來源缺口見 `docs/server-source-gap.md`）。`--check`／`--smoke` 目前仍依本機 `Start-LiToServer.ps1`（正式 JAR、`deployment/release-inputs.json`、真實 `server.properties`）。
-- 收入的批次檔保留 repo 相對路徑，解壓後不能單獨當成完整啟動器。啟動步驟見套件內／`docs/INSTALL.md`。
-- 不啟停資料庫、不啟動遊戲、不複製客戶端資源。
+- **套件自帶入口** `啟動套件伺服器.bat`：使用包內 Maven JAR。`--check` 不連 DB。
+- **官方 BAT**：相對路徑在套件內是完整的（含 `tools/Start-LiToServer.ps1`），但該腳本仍要求完整 repo 的 candidate JAR、`common_catalog.bin`、`deployment/release-inputs.json`、硬編 JDK。只解壓本包不能當成正式 `--check`／`--smoke`。
+- Maven 產物 **不是** 正式 0.6.71 candidate JAR（`docs/server-source-gap.md`）。
+- 不啟停資料庫、不啟動遊戲、不複製客戶端資源。不改正式啟動腳本、機密設定、封存或 `releases/`。
