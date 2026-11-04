@@ -1,0 +1,34 @@
+[
+  {
+    "id": "T020a",
+    "title": "T020a: 戰鬥候選 × 正式 0.6.71 類別差異盤點（本機）",
+    "stage": "resource",
+    "priority": "P1",
+    "text": "**範圍**：只新增 `docs/combat-merge/class-diff.json`、`docs/combat-merge/class-diff.md`、`docs/reports/issue-N.md`；腳本放 `scratch/`。不改 `src/main`、不部署、不改正式 JAR。\n**背景**：見 `docs/design/T020-combat-merge.md`。候選 JAR 只在本機 `lito伺服器/LiTo381-Server/tools/combat-continuation/**/build/`。\n**做**：\n1. 找到三個 JAR 並記 SHA：候選 `8d26c9d7…`（`cancellation-battle-runtime/build/candidate-cancellation-battle-runtime.jar`）、候選 `50635f7e…`（`integration-lifecycle/build/` 下 negative final frame）、正式 0.6.71 `75da69b0…`（`lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`）；再用 `mvn -B -DskipTests package` 建出 `src/main` 產物。\n2. 對每個 class entry 比 bytes，分類：SAME / CHANGED / NEW_IN_CANDIDATE / ONLY_IN_FORMAL；分別做 `8d26c9d7 vs 正式`、`50635f7e vs 8d26c9d7`、`正式 vs mvn 產物`。\n3. 對每個 CHANGED／NEW 類別：依設計文件 §1 的層序，找出最後一個寫入它的層，以及該層有沒有完整原始碼（`sources/*.java`／`inputs/*.java`）或只有 ASM splice；並標出 `src/main` 對應檔是否為 `// DECOMPILED`。\n4. 列出 ONLY_IN_FORMAL 與「正式有改、候選沒改」的類別（L1PolyMe、圖示、GM7200 等），給 T029 用。\n**驗收**：`class-diff.json` 每列含 class／分類／最後層／原始碼路徑或 `asm-only`／`src/main` 是否 DECOMPILED；`class-diff.md` 有各分類計數與前 50 大差異類別；報告寫明三個 JAR 的 SHA 與 mvn 產物 SHA。",
+    "depends_on": []
+  },
+  {
+    "id": "T020c",
+    "title": "T020c: 戰鬥回歸工具可指定 JAR、JDK 走 PATH",
+    "stage": "code",
+    "priority": "P1",
+    "text": "**範圍**：`lito伺服器/LiTo381-Server/tools/combat-continuation/full_regression.py`、`candidate_regression.py`、`affected_regressions.py` 及它們直接呼叫的回歸驅動（不改各層 `build.py`）；`docs/reports/issue-N.md`。\n**背景**：見 `docs/design/T020-combat-merge.md` §2-4。目前 1,008 支腳本硬編 `C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot`。\n**做**：回歸入口加 `--jar <path>` 參數（預設維持原行為）；JDK 改用 `JAVA_HOME` 或 PATH 中的 `java`／`javac`；輸出收據路徑可指定。\n**驗收**：本機以 `--jar` 指向候選 `8d26c9d7…` 重跑 2,400 案／5,164 組合／20＋18 組回歸，通過數與既有收據一致（報告附兩份收據 SHA 與比對結果）；不得刪案或放寬斷言。",
+    "depends_on": []
+  },
+  {
+    "id": "T020b",
+    "title": "T020b: 依類別差異訂戰鬥合併批次（設計）",
+    "stage": "design",
+    "priority": "P1",
+    "text": "**範圍**：`docs/design/T020-combat-merge.md`（補第 6 節批次表）、`docs/plans/issue-N.json`。\n**做**：讀 T020a 的 `docs/combat-merge/class-diff.json`，把 CHANGED／NEW 類別依功能與相依分批（每批 ≤ 30 類別，先 `8d26c9d7` 再 `8d26c9d7→50635f7e`），每批定義：要搬的原始碼／要移植的 ASM 類別、要保留的正式功能、驗收用的回歸子集；拆成 code 任務。\n**驗收**：每批一個 code 任務，含範圍、驗收（mvn test 綠＋T020c 回歸在 mvn 產物上與候選收據一致）。",
+    "depends_on": ["T020a"]
+  },
+  {
+    "id": "T040",
+    "title": "T040: 安裝手冊＋打包腳本",
+    "stage": "code",
+    "priority": "P2",
+    "text": "**範圍**：新增 `docs/INSTALL.md`、`packaging/Build-Package.ps1`、`packaging/README.md`；`docs/reports/issue-N.md`。\n**做**：打包腳本把 `mvn -B -DskipTests package` 的伺服器 JAR、`lito伺服器/LiTo381-Server/db/*.sql`（不含 `db/candidates/`）、`lito伺服器/LiTo381-Server/config/server.properties.example`、啟動批次檔、登入器 `release/current/`（存在才收）組成 `release/package-<version>/` 與 zip；路徑全部相對 repo 根，dotnet／java 走 PATH。**不得收入** `LiTo.bin`、`config/server.properties`、pak／map／sprite。安裝手冊寫：需求（JDK 17、MySQL、客戶端位置 `D:\\lineage開發\\0-客戶端`）、建庫、設定 `server.properties`、啟動 `--check`／`--smoke`、登入器設定、常見錯誤。\n**驗收**：CI 或本機跑腳本能產出 zip；`docs/reports/issue-N.md` 列出 zip 內容清單並證明不含上述禁止檔案。登入器 release 依賴 T003（Issue #4），若尚未完成，腳本須能在缺登入器時只打包伺服器並明確提示。",
+    "depends_on": []
+  }
+]

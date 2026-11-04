@@ -59,7 +59,7 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 
 ## M2 戰鬥技能同源化（每項一個 PR；先做 T020）
 
-### T020 | todo | Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
+### T020 | doing（Issue #24 設計完成，見 `docs/design/T020-combat-merge.md`；後續 T020a/b/c）| Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
 決定並執行合併策略：把候選 `50635f7e…` 相對正式來源的 diff 併進 `src/main`，候選工具鏈停用。Claude 先產出 diff 摘要與風險清單，Cursor 執行。
 驗收：合併後 CI 綠；`tools/combat-continuation` 既有 2,400 案可在合併後來源上重跑並通過。
 
@@ -77,7 +77,7 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 ### T032 | todo | 使用者 | 中文 MySQL 真裝備角色唯讀重載（使用者延後）
 
 ## M3 交付
-### T040 | todo | — | `docs/INSTALL.md`, `packaging/`
+### T040 | todo（Issue #24 已拆任務）| Cursor | `docs/INSTALL.md`, `packaging/`
 安裝手冊 + 打包腳本（JAR、`db/*.sql`、`server.properties.example`、登入器 release）。
 
 ## 登入器已知未驗（排進 M1 一起看）
