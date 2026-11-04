@@ -17,3 +17,4 @@
 - 2026-11-04 — #37 T012: 修不穩定測試 MonsterAggression productionWorldCompanionClearsProvenUnreachableTargetOnTwentiethRetry（code，codex-local，PR #39 已合併）→ [報告](reports/issue-37.md)
 - 2026-11-04 — #43 T020b: 依類別差異訂戰鬥合併批次（設計）（design，claude-chat，分支 task/43）→ [報告](reports/issue-43.md)
 - 2026-11-04 — #44 T020d: ASM 語意比對工具＋CI 語意差異報告（code，codex-local，PR #48 已合併）→ [報告](reports/issue-44.md)
+- 2026-11-05 — #30 T020a: 戰鬥候選 × 正式 0.6.71 類別差異盤點（本機）（resource，codex-local，PR #56 已合併）→ [報告](reports/issue-30.md)
