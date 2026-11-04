@@ -71,7 +71,16 @@ ASM fixture 只測試結構比較；部分負向 opcode 組合刻意不滿足 JV
 
 ### CI
 
-待本分支 PR 的 Linux 完整 selftest、冷啟動 fallback、Server／Launcher 建置、Server tests 與 package 工作流完成後補入實際證據；目前不宣稱 CI 綠。
+程式提交 `088edc128986c5b16c32fa17a4f792b79390e00e` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926253216/job/126911314043) 已實際 SUCCESS；已核對每步狀態及完整日誌，不只看 non-blocking 工作流總狀態：
+
+```text
+NORMALIZATION SELFTEST ALL PASS checks=457
+=== SELFTEST ALL PASS ===
+=== FALLBACK ALL PASS ===
+SUMMARY SAME=2122 SAME_EFFECTS=0 DIFF=427 ONLY_LEFT=1381 ONLY_RIGHT=5 BYTE_SAME=1008 ALLOW_METHODS=0
+```
+
+證據見 [server-semantic-gap artifact](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41926253216/artifacts/13369602199)。Server／Launcher 建置同輪已成功；此後補報告與清單 LF 行尾，沒有變更 Java 程式。最後提交的全部建置／Server tests／打包狀態以 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks) 為準。
 
 ## 推測
 
@@ -79,7 +88,7 @@ ASM fixture 只測試結構比較；部分負向 opcode 組合刻意不滿足 JV
 
 ## 待驗證／未驗證什麼
 
-- 本機未具 Bash，完整 shell 自測與無 Maven 冷啟動 fallback 交由本 PR CI 實跑。
+- 本機未具 Bash；完整 shell 自測與無 Maven 冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 未重建 #77 staged、未驗收其 69 entry 全通過；ServerConfig／SourceLogin 的兩類差異仍由 #77 接手。
 - 未啟動遊戲、登入器、伺服器，未連正式 DB；真機與整合回歸留既定任務。
 
