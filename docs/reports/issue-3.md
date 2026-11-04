@@ -5,7 +5,7 @@
 - 將既有 PR #10 的提交 `91d70d6` 接回從 main `46b6a9f` 建立的本機 `task/3`，保留最新 main 的 package／reference JAR 比對工作；不重建或切換分支，不覆寫遠端歷史。
 - 保留 36 個需要 MySQL 的 `Legacy*IntegrationTest` 的 `@BeforeAll` 守門：`Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"))`。既有方法層級 `lito.legacy.integration` 條件保留。
 - Java 17 的 testCompile 已通過，因此 package job 恢復 `mvn -B -DskipTests package`，移除暫設的 `maven.test.skip=true`。
-- CI `server-test` 執行完整 `mvn -B -Dlito.mysql.integration=false test`，不配置 DB；成功或失敗皆上傳 Surefire 報告。未使用測試排除清單、忽略失敗或 `continue-on-error`。
+- CI `server-test` 執行完整 `mvn -B -Dlito.mysql.integration=false -Dlito.workstation.tests=true test`，不配置 DB；成功或失敗皆上傳 Surefire 報告。CI 明確繞過並行提交的測試排除清單，不忽略失敗或使用 `continue-on-error`。
 - 合併保留 main 的 `docs/REPORT.md` 與 `TASKS.md`，兩者相對本輪起點沒有內容變動。
 - 既有 PR 的兩個 testCompile 修正仍保留：`GameHubChannelTest` 補 `assertNotEquals` import；`NativeExternalControlV2Fixture` 改用現行三參數 `NativePlayerLoadoutAdapter` 建構子。這兩處是前次提交內容，並非本輪新增範圍。
 
@@ -22,7 +22,7 @@ mvn -o -B '-Dtest=Legacy*IntegrationTest,LitoMySql*IntegrationTest' '-Dlito.lega
 實際執行另外將 `java.io.tmpdir` 指向 worktree `scratch/issue-3-tmp`。
 結果：**BUILD SUCCESS**；48 個測試類被發現，36 個 Legacy 類在 `@BeforeAll` 中止（Surefire 記為 tests=0），12 個 LitoMySql 類共 17 案 skipped，failures=0、errors=0。刻意開啟 legacy 舊開關，避免只驗證到舊條件停用。
 
-- 完整測試：`mvn -o -B -Dlito.mysql.integration=false test`（另指定 worktree 暫存），2026-11-04 14:58:40 +08:00 結束，耗時 9 分 46 秒，**BUILD FAILURE / exit 1**。1265 個類報告合計 **7002 tests、284 failures、528 errors、106 skipped、328 個失敗類**。錯誤分類：460 個 NoSuchFileException、63 個 NullPointerException、2 個 SocketTimeoutException、2 個 IllegalStateException、1 個 StringIndexOutOfBoundsException；另有 284 個 AssertionFailedError。
+- 完整測試（合併並行提交 `ae292ba` 前）：`mvn -o -B -Dlito.mysql.integration=false test`（另指定 worktree 暫存），2026-11-04 14:58:40 +08:00 結束，耗時 9 分 46 秒，**BUILD FAILURE / exit 1**。1265 個類報告合計 **7002 tests、284 failures、528 errors、106 skipped、328 個失敗類**。錯誤分類：460 個 NoSuchFileException、63 個 NullPointerException、2 個 SocketTimeoutException、2 個 IllegalStateException、1 個 StringIndexOutOfBoundsException；另有 284 個 AssertionFailedError。
 - package 驗證：`mvn -o -B -DskipTests package`，**BUILD SUCCESS / exit 0**，包含 1411 個測試來源檔的 testCompile；產物僅放 `target/`。
 - `git diff --check` 以 `core.whitespace=cr-at-eol` 檢查通過（沿用舊 fixture 的 CRLF）；`docs/REPORT.md`、`TASKS.md` 相對 main 無差異。
 - 舊 CI 已確認：run `41780294277`、job `126410046756`，7002 tests、232 failures、590 errors、105 skipped。除缺少本機資源外，也存在 `CaptureLog` null 與 Linux 執行 `java.exe` 等獨立問題。
@@ -40,6 +40,16 @@ mvn -o -B '-Dtest=Legacy*IntegrationTest,LitoMySql*IntegrationTest' '-Dlito.lega
 | 平台路徑 | `RentalBattleHandoffStoreTest:137` 寫死 `java.exe` | 依作業系統選正確 Java executable；Windows 本機通過仍不能證明 Linux CI 通過 |
 
 舊 CI 的完整證據：[run 41780294277 / server-test](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41780294277/job/126410046756)。以上不是完整失敗清單；完整個案見 Surefire XML，真正的斷言失敗需逐項修正。
+
+### 並行提交整合
+
+本輪首次 push 因遠端新增 `ae292ba` 而拒絕。該提交加入 `LitoCiSafeTestGuard`、JUnit 自動註冊與 332 類排除清單。已保留其提交歷史與四個新增檔案，不 force push、不刪除其他執行器的工作。
+
+清單含 `BattleCompanionTest`、`BattleFoeSlayerCatalogTest` 等已證實有真正斷言差異的測試，不能把全部被停用的類都當成工作站資源依賴。因此 CI 明確使用 `-Dlito.workstation.tests=true` 讓完整測試執行；`-Dlito.mysql.integration=false` 仍保護 DB。
+
+合併後定向驗證：`mvn -o -B "-Dtest=BattleCompanionTest,BattleFoeSlayerCatalogTest,Legacy*IntegrationTest,LitoMySql*IntegrationTest" -Dlito.mysql.integration=false -Dlito.legacy.integration=true -Dlito.workstation.tests=true test`，另指定 worktree 暫存。1412 個測試來源檔編譯通過；57 tests、2 failures、0 errors、17 skipped。兩個 failure 正是上列殭屍模板與技能契約差異，證實 CI 旗標不會把它們隱藏；Legacy／MySQL 守門仍有效。合併後未重跑整套 7002 案，待新 CI 提供 Linux 結果。
+
+**目前不帶參數的 `mvn test` 會受遠端新增的排除機制影響，其綠燈不能作為完整測試通過證據。** 本報告的 7002 案完整結果是在該機制加入前實測；現在重現全套應加 `-Dlito.workstation.tests=true`。需由 Claude／調度器審核排除清單，並在授權後改為精確的資源前置條件。
 
 ## 未驗證什麼／驗收狀態
 
@@ -93,8 +103,9 @@ mvn -o -B '-Dtest=Legacy*IntegrationTest,LitoMySql*IntegrationTest' '-Dlito.lega
 - `.github/workflows/build.yml`
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/Legacy*IntegrationTest.java`（上列 36 類）
 - 既有 PR 編譯修正：同目錄 `GameHubChannelTest.java`、`NativeExternalControlV2Fixture.java`
+- 並行提交保留：`LitoCiSafeTestGuard.java`、`src/test/resources/lito-ci-skip-classes.txt`、`src/test/resources/junit-platform.properties`、`src/test/resources/META-INF/services/org.junit.jupiter.api.extension.Extension`
 - `docs/reports/issue-3.md`（本報告）
-- 未入 git 的本機證據：`scratch/issue-3-gates.log`、`scratch/issue-3-full-test.log`、`scratch/issue-3-package.log`，及伺服器 `target/surefire-reports/`
+- 未入 git 的本機證據：`scratch/issue-3-gates.log`、`scratch/issue-3-full-test.log`、`scratch/issue-3-package.log`、`scratch/issue-3-merged-guard.log`，及伺服器 `target/surefire-reports/`
 - GitHub CI 證據：`server-test-reports` artifact。
 
 ## 給下一棒的提示

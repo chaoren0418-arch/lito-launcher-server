@@ -199,7 +199,8 @@ jobs:
           cache: maven
       - name: Test (no DB)
         working-directory: lito伺服器/LiTo381-Server
-        run: mvn -B -Dlito.mysql.integration=false test
+        # Exercise the full suite; the workstation class list also hides unit failures.
+        run: mvn -B -Dlito.mysql.integration=false -Dlito.workstation.tests=true test
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
