@@ -1,5 +1,12 @@
 # Issue #43 / T020b — 戰鬥合併批次（設計）
 
+## 第 3 版（T020b-2：用候選 JAR 產生批次）
+- 從 `task/45` 取得 `reference/candidate-50635f7e.jar`（SHA256 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`，已核對），執行
+  `python3 lito伺服器/LiTo381-Server/tools/semantic-diff/plan_batches.py --candidate <jar> --owned docs/combat-merge/batches.json --diff <task/30 的 class-diff.json> --max 60 --out docs/combat-merge/batches.json`。
+- **已驗證（相依分析）**：303 個外層類別、16 個 SCC，最大 SCC 282 類；拿掉三個核心類別後最大 SCC 仍 248 類。171 個類別用到 107 個既有類別在候選中新增的 518 個成員。所以第 2 版「依相依閉包分批、每批在 src/main 單獨編譯」不可行，做法改為 §6-4 第 3 版：每批在暫存區以候選 JAR 當 classpath 編譯與比對，最後一次 B-land 落地。這也回答了審查 P1-1（跨批引用、只帶入方法的衝突）：暫存驗證下每批都可獨立編譯，整個類別以候選版為目標。
+- **已驗證（T029 允許清單）**：對正式版與候選版的 `ClientSession`、`Protocol` 執行 `javap -c -p`，取正式版中引用 GmPolyMe／SelectionRecovery／SharedPresentationPackets、或名稱為 sendRoomParticipant／litoRoomParticipant／magicDollIcon／magicDollCustomIcon 的方法共 9 個；其中 2 個 sendRoomParticipant 多載與候選相同，其餘 7 個不同，寫入 `docs/combat-merge/t029-methods.txt`（JVM 描述子取自 `javap -s -p`）。
+- 批次：B01（17，asm-only 新類別）、B02–B05（51／51／51／48，有原始碼的新類別）、B06（29，Battle*）、B07（23，Combat*／MaterialAction）、B08（30，其他既有）、B09（3，核心＋T029）。`docs/plans/issue-43.json` 每批 text 寫明範圍、做法、編譯／語意驗收與不適用理由。
+
 ## 第 2 版（回應 2026-11-04 14:02 審查退回）
 | 審查項 | 處理 |
 |---|---|

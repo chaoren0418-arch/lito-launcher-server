@@ -94,30 +94,44 @@ T020b 完成後，T021–T029 的缺口改成在合併後的 `src/main` 上逐�
 | T020f | #45 | resource | codex-local | `reference/candidate-50635f7e.jar` 與 380 筆凍結 Java（`merge-inputs/50635f7e/`）入庫。 |
 | T020b-2 | #43（本 Issue 第 2 步） | design | Claude | #45 完成後，以 §6-4 的確定性程序從候選 JAR 產生固定批次，寫入 `docs/combat-merge/batches.json` 與 `docs/plans/issue-43.json`。 |
 
-### 6-4. 批次產生程序（固定、可重現）
+### 6-4. 批次（第 3 版：相依分析結果改變做法）
 
-輸入：`reference/candidate-50635f7e.jar`（SHA `50635f7e…`）、`class-diff.json` 的 303 個外層類別、腳本 `tools/semantic-diff/plan_batches.py`（T020b-2 提交）。
+`tools/semantic-diff/plan_batches.py` 對候選 JAR（`50635f7e…`，`task/45`）做了常數池相依分析，結果寫在 `docs/combat-merge/batches.json` 的 `dependency_analysis`：303 個外層類別有 16 個 SCC，**最大的一個有 282 類**；拿掉 ClientSession／Protocol／GameHub 後仍有 248 類互相依賴。另外有 171 個類別用到既有類別在候選中才新增的成員（共 107 個既有類別、518 個新成員）。
 
-1. **相依圖**：對 303 個外層類別（含其 `$` 內部類別），讀候選 JAR 的常數池 `CONSTANT_Class`／`Methodref`／`Fieldref`／`InterfaceMethodref`，只保留指向另外 302 個類別的邊。
-2. **強連通分量（SCC）**：Tarjan 演算法。同一 SCC 必須在同一批，不得拆分。
-3. **拓撲排序**：依「被依賴者在前」排序 SCC；同層以類別名排序以保證可重現。
-4. **裝箱**：依拓撲順序把 SCC 依序放入批次，每批上限 **60 個外層類別**（取代 §4 的 ≤30；理由：B1 的新類別多半是小型單一職責類別，60 個仍可人工審查）；單一 SCC 超過 60 時自成一批並在 PR 標註。B3-core（ClientSession／Protocol／GameHub）不論所在 SCC 都放在最後一批。
-5. **結果**：每批是「它依賴的類別全部在前面批次或同一批」的閉包，所以**每批可單獨編譯**，不需要提前帶入。若某批仍需要尚未併入的既有類別新增的方法（候選中既有類別新增的 API），該既有類別也在相依圖中，會被排到同批或前批，不會出現「只帶入方法」的情況；**整個類別一律以最終候選版為目標**。
+結論：**不可能讓每批在 `src/main` 單獨編譯**，任何「依相依順序裝箱」或「提前帶入」都會退化成一整批。因此改成：
 
-### 6-5. 每批驗收
+- **每批只在暫存區工作**：移植好的原始碼放 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，不動 `src/main`。
+- **每批獨立驗證**：`javac --release 17 -cp reference/candidate-50635f7e.jar:reference/base-0.6.71.jar:lib/* -d <tmp> <本批 staged 檔案>`。本批以外的類別由候選 JAR 提供；正式專有的 GmPolyMe／SelectionRecovery／SharedPresentationPackets 由 base 提供（候選在前）。編出的類別用 T020d 工具與候選比對。這樣**批次之間沒有順序依賴**，可以並行。
+- **最後一次落地**（B-land）：把 staged 全部搬進 `src/main`，一次合入。
+
+批次依 `class-diff.json` 分類固定分組（每批 ≤60，組內依名稱）：
+
+| 批次 | 類別數 | 分類 | 來源與做法 |
+|---|---:|---|---|
+| B01 | 17 | 新類別，asm-only | CFR 反編譯候選版，標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`，再修到能編譯且語意相同 |
+| B02–B05 | 51／51／51／48 | 新類別，完整 Java（含外層 Java＋內部 ASM 的混合者） | 從 `merge-inputs/50635f7e/sources/` 複製；混合者的內部類別由外層 Java 編出 |
+| B06 | 29 | 既有 `Battle*` | 三方移植：CFR 反編譯正式版與候選版取差異，套到 `src/main` 現有原始碼的複本（放 staged）；`src/main` 為 DECOMPILED 者可直接用候選反編譯版 |
+| B07 | 23 | 既有 `Combat*`、`ForcedCombat`、`*MaterialAction` | 同上 |
+| B08 | 30 | 其他既有類別（19 個 DECOMPILED） | 同上 |
+| B09 | 3 | ClientSession／Protocol／GameHub | 同上，加 T029 保留（§6-5） |
+
+每批確切類別與 class entry 清單：`batches.json` 的 `batches[].classes`／`class_entries`。
+
+### 6-5. 每批驗收（B01–B09）
 
 | 項目 | 規則 |
 |---|---|
-| 範圍 | 只動該批 `batches.json` 列出的外層類別檔案（`src/main/java/local/lito381/server/`），及為它們新增／修改的單元測試。 |
-| 來源 | 純 Java、混合：從 `merge-inputs/50635f7e/sources/` 搬入（混合類別的內部類別由外層 Java 編出，與候選比對驗證）。asm-only 新類別：CFR 反編譯候選版，標頭 `// DECOMPILED from candidate-50635f7e.jar, TODO review`。asm-only 既有類別：CFR 反編譯候選版與正式版，取差異套到 `src/main`（`src/main` 為 DECOMPILED 者可直接以候選反編譯版取代）。 |
-| 語意 | `semantic-diff --left target/LiTo381-Server.jar --right reference/candidate-50635f7e.jar --classes <該批全部外層＋內部類別>` 全部 SAME。 |
-| T029 保留（只在含 ClientSession／Protocol／GameHub 的批次） | 同一指令加 `--allow-methods docs/combat-merge/t029-methods.txt`：允許清單內的方法改為和 `reference/base-0.6.71.jar` 比對且必須 SAME；清單外方法仍須等於候選。允許清單由 T020b-2 從 T020a `formal_preservation` 的 javap 證據產生並提交：ClientSession（呼叫 GmPolyMe.exitRoom、SelectionRecovery.finish、SharedPresentationPackets.bluePotion 的方法、七職業 sendRoomParticipant）、Protocol（litoRoomParticipant 職業 0..6、magicDollIcon／magicDollCustomIcon opcode 123＋h(0)）。若某方法兩邊都改（候選改了戰鬥邏輯、正式改了 T029 項），該方法列為「手動合成」，驗收改為：與正式版的差異只在戰鬥部分、與候選版的差異只在 T029 部分，PR 附兩份 javap 差異供審查。 |
-| 單元測試 | `mvn -B test` 綠，不得停用、跳過或放寬。 |
-| 回歸子集 | **新類別批次（不含任何既有類別）：無適用的戰鬥回歸**。理由：新類別在被既有類別呼叫前不會執行，行為回歸要等呼叫端併入才有意義；以語意比對＋單元測試為準。**含既有類別的批次**：本機跑 T020c（#31）的 `targeted`＋`player-cancellation`（2,400 案）對 Maven 產物，須與 `8d26c9d7` 既有收據的案例數與結果一致；批次內若沒有既有類別被戰鬥入口呼叫，報告說明並改跑 `affected_18`。前提：#31 已完成，否則該批停在等待。 |
+| 範圍 | 只新增／修改 `merge-inputs/50635f7e/staged/` 下該批類別的 `.java`，與 `docs/reports/issue-<N>.md`。不動 `src/main`、`pom.xml`。 |
+| 編譯 | 上述 `javac` 指令成功，指令與輸出附在報告。 |
+| 語意 | `semantic-diff --left <tmp 打包的 jar> --right reference/candidate-50635f7e.jar --classes <該批 class_entries>` 全部 SAME。 |
+| T029（只 B09） | 加 `--allow-methods docs/combat-merge/t029-methods.txt --allow-right reference/base-0.6.71.jar`。清單 7 個方法（ClientSession：`run()`、`exitRoom(Z)`、`sendRoomParticipant(J…ClientSession…)`、`sourcePoisonBody$useInventoryItemBeforeTravel`；Protocol：`litoRoomParticipant`、`magicDollIcon`、`magicDollCustomIcon`），由正式版中引用 GmPolyMe／SelectionRecovery／SharedPresentationPackets 或指名方法、且與候選版不同者產生。這 7 個方法兩邊都改過，屬「手動合成」：驗收為 (a) 與正式版的差異只在戰鬥邏輯，(b) 與候選版的差異只在 T029 項，PR 附兩份正規化 javap 差異供審查；清單外方法必須與候選 SAME。 |
+| 單元測試 | 不適用（未動 `src/main`）；在 B-land 統一處理。 |
+| 回歸 | 不適用，理由：暫存區不會被執行；與候選語意相同即代表行為等同候選。行為回歸在 B-land 後統一跑（§6-6）。 |
 
-### 6-6. 收尾閘門（T020-close）
+### 6-6. 落地（B-land）與收尾（T020-close）
 
-依賴：最後一個 B 批次、#31（T020c）完成、**A 階段所有修補任務合併**（T020e 產生的任務清單全部 done，不是只有 T020e 設計完成）、T020d 對 Maven 產物 vs 「B 類別取候選＋其他取正式」的總比對 0 差異（T029 允許清單除外）。執行：本機對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24），加 `50635f7e` negative final frame 針對性案例；結果寫成新基準，接 T030。
+- **B-land**（code，cursor-cloud）：依賴 B01–B09 全部完成。把 staged 搬進 `src/main/java/local/lito381/server/`（覆蓋 85 個既有類別、新增 218 個）；`mvn -B test` 綠。舊測試若因戰鬥行為改變而失敗，比照 T010 逐案判斷「測試過時／程式缺陷」並在報告列出，不得停用或跳過；`semantic-diff` 對 Maven 產物 `--classes owned_by_B` vs 候選全部 SAME（T029 依允許清單）。
+- **T020-close**（test，codex-local）：依賴 B-land、#31（T020c）、**A 階段全部修補任務合併**（T020e 產生的清單全部 done）。先跑 T020d 總比對：Maven 產物中 `owned_by_B` 對候選、其餘對正式，0 差異（T029 允許清單除外）；再對 Maven 產物跑 #31 全套（2,400／5,164／20＋18／24）加 `50635f7e` negative final frame 針對性案例。結果作為新基準，接 T030。
 
 ### 6-7. 不在本批次的事
 
