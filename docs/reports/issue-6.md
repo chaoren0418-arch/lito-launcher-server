@@ -4,7 +4,19 @@
 
 **blocked（來源缺失），不是替換完成。** 266 個反編譯類別已完整盤點；指定 ZIP 內沒有同名 Java、同名變體或目標型別宣告，manifest 也沒有目標類別路徑。因此本批替換 **0 / 50** 檔，`DECOMPILED` 數量 **266 → 266**，數量下降驗收未達成。
 
-## 做了什麼／判斷依據（已驗證）
+## 第 3 次嘗試（2026-11-04，已驗證）
+
+- 延續既有 `task/6` 隔離工作樹，起點 `8c38fccfd0ced1393749d2a6c5c14959ea5b722d`；草稿 PR #14 保持開啟，Issue #6 保持未完成。
+- 一般 shell 與 Node 執行器均在 sandbox 初始化階段失敗（`helper_unknown_error: setup refresh had errors`）；經工具提權審核後可執行本機命令，因此本次阻塞原因為來源缺失，不是執行器無回應。Git 使用單次 `-c safe.directory=<worktree>`，未改家目錄或全域 Git 設定。
+- 重新唯讀掃描同一 ZIP：17,904 個 entries、2,332 個 Java、41,342 筆 manifest；同名檔、同名前綴變體、型別宣告與 manifest 路徑命中均為 **0**。未發現 ZIP／7z／tar／gz 巢狀封存。所有 Java entry 讀取完成並通過 zipfile CRC 檢查。
+- ZIP 仍為 164,341,911 bytes；掃描前後 SHA-256 均為 `bedebb29a4e1c85a5fa275593700120680332ebf7b6fbe32c8034a92710fdb51`，與前次相同。沒有新來源可供簽名或日期挑選；不是候選版本不吻合，而是候選集合為空。
+- 本報告下列 **266 個唯一檔名**與工作樹實際 DECOMPILED 集合完全一致，目標檔連結數均為 1。Java 未修改，取代 **0 / 50**、差異 **+0 / -0**、標頭數量 **266 → 266**。
+- **本輪本機編譯通過**：Java 17、Maven 3.9.16，離線重用專案內既有依賴，編譯 940 個 source files，`BUILD SUCCESS`、exit 0、33.554 秒，完成於 `2026-11-04T14:02:33+08:00`。僅有既存 unchecked／unsafe operations 提示；這是未替換來源的基準編譯。
+- 本輪命令（於隔離工作樹的伺服器目錄執行）：`mvn -o -B -s D:/lineage開發/3-lito開發/scratch/issue-6-audit/settings.xml -Dmaven.repo.local=D:/lineage開發/3-lito開發/scratch/issue-6-audit/m2 -DskipTests compile`。`JAVA_HOME=C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot`；`TEMP`、`TMP`、`java.io.tmpdir` 均指向專案內 `scratch/issue-6-audit`，產物僅進隔離工作樹 `target/`。
+- **已核對前次提交 CI**：`8c38fcc` 的 [build run 41782077961](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41782077961) 中 Server 與 Launcher 均為 SUCCESS。本輪文件提交的 CI 由推送後 [PR #14 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/14/checks) 核對，不將前次 CI 當成本輪結果。
+- **待完成**：實際來源替換及標頭數量下降；缺少正確來源前無法達成。下一棒由調度器／Claude 提供含這些類別的原始碼封存、精確路徑、SHA-256 與版本，再交本機執行器續做。本次沒有修改機密設定、封存、硬連結或發布產物，沒有啟動遊戲、伺服器或連正式 DB。
+
+## 前次做了什麼／判斷依據（已驗證）
 
 - 基準：`origin/main`，提交 `3f6c9eff1e26337a0cdd8a9fc4aad52cd8849a2d`。根目錄原工作樹仍在初始化提交 `6bb4a27b`，有既有未追蹤 `tools/`；為保留本機設定及既有檔案，使用專案內 `scratch/issue-6-worktree` 稀疏工作樹、分支 `task/6`。
 - 已讀根目錄 AGENTS.md／CLAUDE.md、遠端最新版規則、TASKS.md 的 T008、docs/REPORT.md，以及伺服器規則與共同維護規範。原工作樹沒有 docs/REPORT.md，隔離工作樹沿用遠端既有報告。
