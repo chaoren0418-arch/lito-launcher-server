@@ -30,9 +30,12 @@ CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製�
 統一版本號為 0.6.71；刪除「正式 0.6.69」殘句；`VALIDATION.md` 只留最新一節，舊段落移到 `docs/HISTORY.md`。
 驗收：`grep -rn "0\.6\.69\|0\.6\.70" --include=*.md` 只剩歷史章節。
 
-### T005 | todo | Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
+### T005 | done（Issue #3 關閉；由 #12/#15、#20/#22 達成）| Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
 DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"))` 守門，與 `LitoMySql*IntegrationTest` 一致。
 驗收：無 DB 環境 `mvn test` 全綠（skipped 可）；CI 加 `mvn test` job。
+**結果**：main 上 36 個 Legacy 類以 `@EnabledIfSystemProperty(lito.legacy.integration)` 預設停用（等價 opt-in）；本機資源守門見 Issue #12（PR #15）、30 案真實失敗修復與阻斷式 `Server tests` job 見 Issue #20（PR #22）。PR #10 的 332 類排除清單會隱藏真失敗，未合入。
+
+> 編號註記：Issue #12 標題「T009」、#20 標題「T010」是調度器編號，與本檔 T010（實機核對表）不同；以 Issue 號為準。
 
 ### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
 真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
@@ -56,7 +59,7 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 
 ## M2 戰鬥技能同源化（每項一個 PR；先做 T020）
 
-### T020 | todo | Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
+### T020 | doing（Issue #24 設計完成，見 `docs/design/T020-combat-merge.md`；後續 T020a/b/c）| Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
 決定並執行合併策略：把候選 `50635f7e…` 相對正式來源的 diff 併進 `src/main`，候選工具鏈停用。Claude 先產出 diff 摘要與風險清單，Cursor 執行。
 驗收：合併後 CI 綠；`tools/combat-continuation` 既有 2,400 案可在合併後來源上重跑並通過。
 
@@ -74,7 +77,7 @@ T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.
 ### T032 | todo | 使用者 | 中文 MySQL 真裝備角色唯讀重載（使用者延後）
 
 ## M3 交付
-### T040 | todo | — | `docs/INSTALL.md`, `packaging/`
+### T040 | todo（Issue #24 已拆任務）| Cursor | `docs/INSTALL.md`, `packaging/`
 安裝手冊 + 打包腳本（JAR、`db/*.sql`、`server.properties.example`、登入器 release）。
 
 ## 登入器已知未驗（排進 M1 一起看）
