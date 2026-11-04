@@ -1,0 +1,29 @@
+package local.lito381.server;
+import java.io.*;import java.util.*;
+/** Target-owned accepted NPC HP output. Deferred values never retain a Frame, Context, Scope or actor Ref. */
+final class NativeSourceNpcHpOutput {
+ record Viewer(ClientSession pc,NativePlayerCommit.Binding binding,Object life,boolean observer){
+  boolean current(GameHub hub){return binding!=null&&life!=null&&NativeAcceptedFreezeMutation.roleFrame(binding,pc)&&CombatAccess.field(pc,"hub")==hub&&!(boolean)CombatAccess.field(pc,"sourceItemDisconnected")&&(boolean)CombatAccess.field(pc,"observer")==observer&&NativeSourceControlledDisplay.rawLife(pc)==life;}
+ }
+ record Input(NativeSourceAcceptedPlayers.Participant target,NativePlayerLifetime lifetime,GameHub hub,List<Viewer> viewers){Input{viewers=List.copyOf(viewers);}}
+ record Accepted(NativeSourceAcceptedPlayers.Participant target,NativePlayerLifetime lifetime,GameHub hub,int hp,int maximum,List<Viewer> viewers){Accepted{viewers=List.copyOf(viewers);}}
+ record Output(Accepted proof,Viewer receiver,byte[] packet,String note){Output{packet=packet.clone();}}
+ static NativeSourceRawDamage.Member ingress(ClientSession pc){boolean observer=(boolean)CombatAccess.field(pc,"observer");var m=NativeSourceAcceptedPlayers.ingress(pc);return !CombatRules.loaded()||!m.binding.phase().equals("BATTLE")?m:new NativeSourceRawDamage.Member(pc,m.binding,m.life,m.x,m.y,observer);}
+ static void bind(NativeSourceDamageDisplay.Plan plan,NativeSourceNpcPlayer.Scope scope,ClientSession pc){var origin=scope.origin();var m=origin.members().get(pc);if(m==null||m.nativeSourceNpcHpObserver==null)return;var viewers=new ArrayList<Viewer>();for(var entry:origin.members().values())if(entry.nativeSourceNpcHpObserver!=null)viewers.add(new Viewer(entry.pc,entry.binding,entry.life,entry.nativeSourceNpcHpObserver));plan.nativeSourceNpcHpOutput=new Input(new NativeSourceAcceptedPlayers.Participant(pc,m.binding,m.life,m.x,m.y,false),scope.lifetime(),origin.hub(),viewers);}
+ static void seal(NativePlayerCommit.Frame frame){
+  if(frame==null||!frame.accepted||frame.queue==null||!frame.queue.vitalLock.isHeldByCurrentThread())return;var plan=frame.event.sourceDisplay();if(plan==null||!(plan.nativeSourceNpcHpOutput instanceof Input in)||!(frame.nativeSourceAcceptedPlayers instanceof NativeSourceAcceptedPlayers.Proof p)||p.target()==null)return;var t=p.target();var g=plan.nativeRawGuard;
+  if(t.pc()!=frame.pc||t.pc()!=in.target().pc()||!Objects.equals(t.binding(),in.target().binding())||g==null||g.source()!=null||g.target().pc!=t.pc()||g.target().life!=in.target().life()||g.lifetime()!=in.lifetime()||frame.event.world())return;
+  var viewers=new ArrayList<Viewer>();for(var v:in.viewers())viewers.add(v.pc()==t.pc()?new Viewer(v.pc(),t.binding(),t.life(),false):v);plan.nativeSourceNpcHpOutput=new Accepted(t,in.lifetime(),in.hub(),frame.after,frame.maximum,viewers);
+ }
+ static Object frameValue(){var f=NativePlayerCommit.frame();if(f==null||f.event==null||NativeSourceEquipmentOutput.scope()!=null)return null;var plan=f.event.sourceDisplay();return plan==null?null:plan.nativeSourceNpcHpOutput;}
+ static boolean target(Accepted a){var t=a.target();return a.lifetime().mode!=NativePlayerLifetime.Mode.STOPPED&&!(boolean)CombatAccess.field(a.hub(),"nativeStaticMotionClosed")&&NativeAcceptedFreezeMutation.roleFrame(t.binding(),t.pc())&&CombatAccess.field(t.pc(),"hub")==a.hub()&&!(boolean)CombatAccess.field(t.pc(),"sourceItemDisconnected")&&!(boolean)CombatAccess.field(t.pc(),"observer")&&NativeSourceControlledDisplay.rawLife(t.pc())==t.life()&&NativeSourceRawDamage.number(t.pc(),"playerHp")==a.hp()&&NativeSourceRawDamage.number(t.pc(),"playerMaxHp")==a.maximum()&&(!t.dead()||a.hp()==0);}
+ static int kind(byte[] bytes){return bytes==null||bytes.length==0?-1:switch(bytes[0]&255){case 13->0;case 104->1;default->-1;};}
+ static byte[] expected(Accepted a,int kind){return kind==0?new Protocol.Writer().c(13).h(a.hp()).h(a.maximum()).bytes():Protocol.hitRatio(a.target().binding().object(),a.hp(),a.maximum());}
+ static Output output(Accepted a,ClientSession pc,byte[] packet,String note){int kind=kind(packet);if(kind<0)return null;Viewer receiver=null;for(var v:a.viewers())if(v.pc()==pc){receiver=v;break;}if(receiver==null||kind==0&&pc!=a.target().pc())return null;var detached=new Accepted(a.target(),a.lifetime(),a.hub(),a.hp(),a.maximum(),List.of());var out=new Output(detached,receiver,packet,note);return current(out)?out:null;}
+ static boolean current(Output o){if(o==null||!target(o.proof())||!o.receiver().current(o.proof().hub()))return false;int kind=kind(o.packet());return kind>=0&&Arrays.equals(o.packet(),expected(o.proof(),kind))&&(kind==0?o.receiver().pc()==o.proof().target().pc():NativeSourceOtherControls.settings().hpbar());}
+ static List<ClientSession> members(List<ClientSession> original,ClientSession subject,long id){Object value=frameValue();if(value==null)return original;if(!(value instanceof Accepted a))return List.of();if(a.target().pc()!=subject||a.target().binding().object()!=id)return original;var kept=new ArrayList<ClientSession>();for(var pc:original)for(var v:a.viewers())if(v.pc()==pc){kept.add(pc);break;}return kept;}
+ static boolean capture(ClientSession receiver,byte[] bytes,String note)throws IOException{if(kind(bytes)<0)return false;Object value=frameValue();if(value==null)return false;if(value instanceof Accepted a){var out=output(a,receiver,bytes,note);if(out!=null&&!NativeLightAction.nativeSourceNpcHpDefer(()->send(out)))send(out);}return true;}
+ static void send(Output out)throws IOException{if(current(out))out.receiver().pc().nativeSourceNpcHpFinalFrame(out.packet(),out.note(),out);}
+ static boolean allow(ClientSession pc,byte[] bytes,Object proof){return proof instanceof Output out&&out.receiver().pc()==pc&&Arrays.equals(bytes,out.packet())&&current(out);}
+ private NativeSourceNpcHpOutput(){}
+}
