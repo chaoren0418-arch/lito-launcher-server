@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryPet {
         return (NativeDeWorldRegistryPet)NativeDeWorldScope.registry("Pet");
     }
 }
-

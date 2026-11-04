@@ -31,4 +31,3 @@ public class NativeDeVisibilityCheck {
         return true;
     }
 }
-

@@ -110,4 +110,3 @@ public class NativeDeShopTable {
         return new NativeDeShopTable();
     }
 }
-

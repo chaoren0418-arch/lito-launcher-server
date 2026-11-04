@@ -97,4 +97,3 @@ final class NativeDeWorldScope {
         return current.get() != null;
     }
 }
-

@@ -113,4 +113,3 @@ public class NativeDeVisibilityPc {
         return objectRef instanceof NativeDeVisibilityPorts.Follower;
     }
 }
-

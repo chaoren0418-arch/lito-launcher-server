@@ -262,9 +262,9 @@ public class NativeDeTerrainV1 {
                 case 6: {
                     return (n7 & 1) != 0;
                 }
-                case 1: 
-                case 3: 
-                case 5: 
+                case 1:
+                case 3:
+                case 5:
                 case 7: {
                     return (n7 & 3) != 0;
                 }
@@ -393,7 +393,7 @@ public class NativeDeTerrainV1 {
             }
             int n6 = this.accessTile(n4, n5);
             switch (n6) {
-                case 0: 
+                case 0:
                 case 3: {
                     return false;
                 }
@@ -485,4 +485,3 @@ public class NativeDeTerrainV1 {
         return false;
     }
 }
-

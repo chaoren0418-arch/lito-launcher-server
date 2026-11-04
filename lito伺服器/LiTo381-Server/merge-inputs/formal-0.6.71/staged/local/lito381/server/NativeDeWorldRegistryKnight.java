@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryKnight {
         return (NativeDeWorldRegistryKnight)NativeDeWorldScope.registry("Knight");
     }
 }
-

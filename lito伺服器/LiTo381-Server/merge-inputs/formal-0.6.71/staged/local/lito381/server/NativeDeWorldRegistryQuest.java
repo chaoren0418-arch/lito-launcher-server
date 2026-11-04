@@ -35,4 +35,3 @@ public class NativeDeWorldRegistryQuest {
         return (NativeDeWorldRegistryQuest)NativeDeWorldScope.registry("Quest");
     }
 }
-

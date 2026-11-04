@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryIllusionist {
         return (NativeDeWorldRegistryIllusionist)NativeDeWorldScope.registry("Illusionist");
     }
 }
-

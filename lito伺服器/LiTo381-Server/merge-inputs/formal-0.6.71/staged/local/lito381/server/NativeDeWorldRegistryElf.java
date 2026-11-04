@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryElf {
         return (NativeDeWorldRegistryElf)NativeDeWorldScope.registry("Elf");
     }
 }
-

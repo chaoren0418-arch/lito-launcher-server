@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryWizard {
         return (NativeDeWorldRegistryWizard)NativeDeWorldScope.registry("Wizard");
     }
 }
-

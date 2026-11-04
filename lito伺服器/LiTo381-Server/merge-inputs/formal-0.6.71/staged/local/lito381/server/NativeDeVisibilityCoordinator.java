@@ -120,4 +120,3 @@ public final class NativeDeVisibilityCoordinator {
         NativeDeVisibilityRuntime.updateSource(viewer);
     }
 }
-

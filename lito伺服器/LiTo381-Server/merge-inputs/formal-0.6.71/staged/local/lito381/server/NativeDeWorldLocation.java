@@ -101,4 +101,3 @@ extends NativeDeWorldPoint {
         this.set(n, n2, nativeDeWorldMap);
     }
 }
-

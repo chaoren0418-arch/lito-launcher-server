@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryMob {
         return (NativeDeWorldRegistryMob)NativeDeWorldScope.registry("Mob");
     }
 }
-

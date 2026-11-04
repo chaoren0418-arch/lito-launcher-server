@@ -594,7 +594,7 @@ public class NativeDeWorldCore {
                             this.logBindingRepair("traversal-reconcile", element, actualMapId, actualSectorId);
                             break;
                         }
-                        case ALREADY_CONSISTENT: 
+                        case ALREADY_CONSISTENT:
                         case NOT_REGISTERED: {
                             if (removed) break;
                             NativeDeWorldScope.SPATIAL_TRAVERSAL_STALE_READ_COUNT().incrementAndGet();
@@ -1155,4 +1155,3 @@ public class NativeDeWorldCore {
     public record SpatialIndexAuditSnapshot(long sequence, int checkedBindings, int repairedEntries) {
     }
 }
-

@@ -258,4 +258,3 @@ public final class NativeDeTerrainTable {
         return new NativeDeTerrainTable();
     }
 }
-

@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryCrown {
         return (NativeDeWorldRegistryCrown)NativeDeWorldScope.registry("Crown");
     }
 }
-

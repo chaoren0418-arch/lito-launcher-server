@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryDragonKnight {
         return (NativeDeWorldRegistryDragonKnight)NativeDeWorldScope.registry("DragonKnight");
     }
 }
-

@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryDarkelf {
         return (NativeDeWorldRegistryDarkelf)NativeDeWorldScope.registry("Darkelf");
     }
 }
-

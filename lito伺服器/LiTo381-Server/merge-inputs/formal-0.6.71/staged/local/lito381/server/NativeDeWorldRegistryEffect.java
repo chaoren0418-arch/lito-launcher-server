@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryEffect {
         return (NativeDeWorldRegistryEffect)NativeDeWorldScope.registry("Effect");
     }
 }
-

@@ -63,4 +63,3 @@ final class NativeDeShopResources {
     record Snapshot(String database, NativeDeShopTable table, int maps, int ranges, long opened, long rolledBack, long closed, long errors) {
     }
 }
-

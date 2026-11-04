@@ -44,4 +44,3 @@ extends NativeDeVisibilityPacket {
         return this.getClass().getSimpleName();
     }
 }
-

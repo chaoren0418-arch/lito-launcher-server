@@ -37,4 +37,3 @@ public class NativeDeWorldRegistryBow {
         return (NativeDeWorldRegistryBow)NativeDeWorldScope.registry("Bow");
     }
 }
-

@@ -192,4 +192,3 @@ final class NativeDeVisibilityAccess {
         NativeDeVisibilityRuntime.send((NativeDeDeletionPorts.Viewer)objectRef, packet);
     }
 }
-

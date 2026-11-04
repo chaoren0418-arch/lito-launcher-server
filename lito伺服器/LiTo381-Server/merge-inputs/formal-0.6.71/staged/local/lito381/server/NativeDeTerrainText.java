@@ -76,4 +76,3 @@ public class NativeDeTerrainText {
         return new NativeDeTerrainText().read(n, n2, n3, n4);
     }
 }
-

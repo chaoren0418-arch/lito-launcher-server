@@ -111,4 +111,3 @@ public class NativeDeWorldPoint {
         return String.format("(%d, %d)", this._x, this._y);
     }
 }
-

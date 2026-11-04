@@ -150,4 +150,3 @@ final class NativeDeTerrainScope {
         public Connection open() throws SQLException;
     }
 }
-

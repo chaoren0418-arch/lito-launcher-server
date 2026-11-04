@@ -51,4 +51,3 @@ public class NativeDeWorldRegistryDoll {
         return (NativeDeWorldRegistryDoll)NativeDeWorldScope.registry("Doll");
     }
 }
-

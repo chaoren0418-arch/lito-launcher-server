@@ -164,4 +164,3 @@ interface NativeDeWorldLog {
         emit("debug", message, new Object[]{a, b});
     }
 }
-

@@ -349,7 +349,7 @@ implements NativeDeDeletionPorts.Services {
                         throw new IllegalArgumentException("World binding is application immutable");
                     }
                     Entry entry3 = entry2;
-                    // MONITOREXIT @DISABLED, blocks:[0, 4, 8] lbl23 : MonitorExitStatement: MONITOREXIT : var11_11 /* !! */ 
+                    // MONITOREXIT @DISABLED, blocks:[0, 4, 8] lbl23 : MonitorExitStatement: MONITOREXIT : var11_11 /* !! */
                     readLock.unlock();
                     return entry3;
                 }
@@ -561,4 +561,3 @@ implements NativeDeDeletionPorts.Services {
         }
     }
 }
-

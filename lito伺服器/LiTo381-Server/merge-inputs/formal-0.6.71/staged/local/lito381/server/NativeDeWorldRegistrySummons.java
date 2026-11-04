@@ -51,4 +51,3 @@ public class NativeDeWorldRegistrySummons {
         return (NativeDeWorldRegistrySummons)NativeDeWorldScope.registry("Summons");
     }
 }
-
