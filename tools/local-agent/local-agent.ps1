@@ -89,7 +89,7 @@ $($issue.body)
 do {
     foreach ($repo in $Repos.Keys) {
         if (-not (Test-Path -LiteralPath $Repos[$repo])) { continue }
-        $json = Gh issue list -R "$Owner/$repo" -l local-task -s open --json number,title,body --limit 5
+        $json = Gh issue list -R "$Owner/$repo" -l local-task -s open --json 'number,title,body' --limit 5
         try { $issues = $json | ConvertFrom-Json } catch { Log "讀取 $repo issue 失敗：$json"; continue }
         foreach ($i in @($issues)) { Run-Task $repo $i }
     }
