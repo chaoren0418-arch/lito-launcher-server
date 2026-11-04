@@ -1,6 +1,14 @@
 # Issue #45 — T020f 候選 JAR 與凍結原始碼入庫
 
-## 第二次執行：合併閘門誤判（2026-11-04）
+## 本次重驗（2026-11-04）
+
+**資源驗收通過。** 本次開始時，既有入庫提交 `523110e` 與報告補充提交 `c49a91c` 已在 `task/45`，工作樹乾淨，遠端同為 `c49a91cabd6092202dd6d08209d187c927870cd1`。沿用既有材料，沒有重新複製或切換分支；本次只更新此報告。
+
+重新執行 `py -3 -B -X utf8 scratch/issue-45/prepare.py`（不帶 `--write`）、`py -3 -B -X utf8 scratch/issue-45/verify.py --original` 與 `git -c core.whitespace=cr-at-eol diff b6dc4e6 HEAD --check`，全部 exit 0。來源與保存 JAR 的 SHA256 符合指定值；380 筆原始來源／保存來源／候選 class SHA 全數吻合；217 個原始路徑對應 207 份保存 Java；212 個交付檔皆未忽略、皆小於 100,000,000 bytes，最大 22,722,734 bytes。下方獨立核對程式仍可供雲端重驗。
+
+已核對 #43 遠端分支為 `c10b7a8bd10ea7caa7343434f42277e890b40457`，其設計已改為 B01–B09 在 `staged/` 分批移植、最後 B-land 一次落地，故更新下方交接說明。本次未重新檢查或執行外部調度器，前次閘門診斷僅作歷史證據；目前閘門結果待調度器重跑確認。
+
+## 前次紀錄：合併閘門誤判（2026-11-04）
 
 **資源驗收通過；調度器閘門仍待修正（`needs:orchestrator`）。** 本次沿用 `task/45`，沒有切換或建立分支。前次提交 `523110e3961d061539e548a15282090ea5ef9ca1` 已包含根 `.gitignore` 第 91 行的 `!lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar`；無需再改忽略規則或重新複製材料。本次僅更新本報告。
 
@@ -161,6 +169,6 @@ if '--index' in sys.argv: print('PASS staged paths and all 212 Git blob bytes ma
 
 ## 給下一棒的提示
 
-優先由調度器維護者（`needs:orchestrator`）修正上述分支選擇與 `!` 例外判定，再重跑 #45 閘門。這是外部阻塞；本資源分支無需移除 `*.jar` 防護，也不應改名候選檔或刪除材料來規避檢查。
+由調度器重跑 #45 閘門；若仍出現前次記錄的誤判，由調度器維護者（`needs:orchestrator`）確認待審分支選擇與 `!` 例外判定。本資源分支無需移除 `*.jar` 防護，也不應改名候選檔或刪除材料來規避檢查。
 
-由雲端主控／Claude 審查本資源提交，合併後交 Cursor 依 #43 的 B2 → B1a–d → B3-* 批次執行。搬移 Java 時依 manifest 定位，主版本僅供移植起點；歷史變體與 asm-only 外層仍需依 T020d 與候選 JAR 做語意核對。不要把整個 merge-inputs 目錄加入 Maven 編譯，也不要將輸入候選當成已通過驗收的正式成品。
+由雲端主控／Claude 審查本資源提交，合併後交 Cursor 依 #43 的 `docs/combat-merge/batches.json` 執行 B01–B09：先在 `merge-inputs/50635f7e/staged/` 移植，各批以候選 JAR 為 classpath 獨立編譯與語意核對，最後由 B-land 一次搬入 `src/main`。搬移 Java 時依 manifest 的 `stored_source` 定位，主版本僅供移植起點；歷史變體與 asm-only 外層仍需依 T020d 與候選 JAR 做語意核對。不要把整個 merge-inputs 目錄加入 Maven 編譯，也不要將輸入候選當成已通過驗收的正式成品。
