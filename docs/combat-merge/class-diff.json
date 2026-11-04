@@ -17,7 +17,7 @@
     },
     {
       "path": "lito伺服器/LiTo381-Server/target/LiTo381-Server.jar",
-      "sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
+      "sha256": "e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706",
       "scope": "worktree"
     }
   ],
@@ -22270,7 +22270,8 @@
             "path": "lito伺服器/LiTo381-Server/tools/source-administration/build/base.jar",
             "sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
           },
-          "provenance_evidence": "precombat_trace.earlier_armor_chain"
+          "provenance_evidence": "precombat_trace.earlier_armor_chain",
+          "current_source_probe": "rerun_review.armor_compile_probe"
         },
         {
           "class_entry": "local/lito381/server/InventoryCatalog$NativeProjectileStatus.class",
@@ -98212,7 +98213,7 @@
       "id": "maven_vs_formal",
       "candidate": {
         "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-30\\lito伺服器\\LiTo381-Server\\target\\LiTo381-Server.jar",
-        "sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
+        "sha256": "e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706",
         "scope": "worktree"
       },
       "baseline": {
@@ -170620,13 +170621,13 @@
     "tests_executed": false,
     "cache": "scratch/issue-30/maven-repository（複製既有快取）",
     "temp": "scratch/issue-30/tmp",
-    "log": "scratch/issue-30/maven-package-current.log",
-    "log_sha256": "91f71f237c63a74a42337a886c716983e979a215c4d30ac776691bd40bb95080",
-    "previous_artifact_sha256": "b076330de235c45ae50185116d17cab4d78bd72b9d1b3a98d9ec0b188e7921a2",
-    "current_artifact_sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
+    "log": "scratch/issue-30/maven-package-rerun.log",
+    "log_sha256": "450611bc8615733fa6e28f5e4878bda031afd24917167ade5e22d8965de31288",
+    "previous_artifact_sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
+    "current_artifact_sha256": "e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706",
     "current_rebuild_verified": true,
     "class_entries_identical_to_previous_build": true,
-    "finished_local": "2026-11-04T20:47:50+08:00",
+    "finished_local": "2026-11-04T21:07:15+08:00",
     "actual_command": "mvn -B -DskipTests package",
     "environment_overrides": {
       "JAVA_HOME": "C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot",
@@ -172298,6 +172299,18 @@
     {
       "path": "scratch/issue-30/verify-current.py",
       "sha256": "90d2ad3313a838d1aac9c7831566fdeed5d826da853fc528312b5dfb921c7664"
+    },
+    {
+      "path": "scratch/issue-30/complete-source-search.py",
+      "sha256": "33c94a2c66ab70a1e57f1e7ced6647f94f5c9b0c05c929eaf97a3035ca29c651"
+    },
+    {
+      "path": "scratch/issue-30/check-armor-compile.py",
+      "sha256": "d73bcdc27a3680a541f3329780dbbc3790fe2714c31f77e610a6d138898ad0a2"
+    },
+    {
+      "path": "scratch/issue-30/update-rerun.py",
+      "sha256": "da07bc925f93fb28f7893383fd4dedabc3712b2472a2ab76fd7a24f402ca48cf"
     }
   ],
   "retry_review": {
@@ -172561,5 +172574,178 @@
     "verification_log": "scratch/issue-30/verify-current.log",
     "verification_log_sha256": "456f42c5b9c87293397c02cded2e896bf8c56424872b447ff1e7a8cbd964c08a",
     "verification_result": "PASS；現有資料一致，來源驗收仍為 false"
+  },
+  "rerun_review": {
+    "reviewed_commit": "384391e65197e1783dff2c6a5b794b75d6910d29",
+    "attempt": 2,
+    "trigger": "沙箱初始化故障後重新派工；本輪已恢復命令執行",
+    "input_sha_gates_passed": true,
+    "formal_git_blob": "d59ae2e4c56f599456e764a205a0e09a825975d3",
+    "maven_class_entries_identical_to_previous": true,
+    "complete_source_search": {
+      "roots": [
+        "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/tools",
+        "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/src",
+        "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/docs",
+        "D:/lineage開發/3-lito開發/tools",
+        "D:/lineage開發/3-lito開發/lito登入器/LiTo381-Launcher/docs"
+      ],
+      "excluded_directory_names": [
+        ".git",
+        "backups",
+        "bin",
+        "native-terrain-rust",
+        "node_modules",
+        "obj",
+        "release",
+        "releases",
+        "runs",
+        "runtime",
+        "target",
+        "wt",
+        "封存"
+      ],
+      "files_seen": 516622,
+      "text_files_read": 2369,
+      "sources": [
+        {
+          "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
+          "sha256": "338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9",
+          "contains_native_armor_status": true
+        }
+      ],
+      "pin_hits": [
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/shared-database/build.py",
+          "sha256": "84c9c31fe7041c37371972863841ae6469535190181918e861a7de81c035ee05",
+          "pins": [
+            "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+          ],
+          "lines": [
+            "if hashlib.sha256(base.read_bytes()).hexdigest()!='3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c':",
+            " assert hashlib.sha256(base.read_bytes()).hexdigest()=='3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c', 'Retained historical input mismatch'"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/shared-database/PatchShared.java",
+          "sha256": "5d70e9cf9d4e8c1179934ae84b2175b76e8026a2e34baa693dc4a7838217043c",
+          "pins": [
+            "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+          ],
+          "lines": [
+            "  if(!hash.equals(\"3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c\"))throw new IllegalArgumentException(\"Unexpected base JAR\");"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/source-administration/build.py",
+          "sha256": "20389b19c04abda0bef453136d1f5cb426fe5d6661e2803e07645e13eca22633",
+          "pins": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "assert hashlib.sha256((B/'base.jar').read_bytes()).hexdigest()=='004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951', 'Retained historical input mismatch'"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/source-administration/Patch.java",
+          "sha256": "eb174f1b64dbb97231896d849d722f5bf9ee744450bde78e4e969c4a32165dc2",
+          "pins": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "        if (!hash.equals(\"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\"))"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/layout-cleanup-20261012.json",
+          "sha256": "9ba474036e34997f8506fff3bf0e9e4da8da497744a26b8d51fd514dbf6c3597",
+          "pins": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951",
+            "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+          ],
+          "lines": [
+            "    \"production_jar\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\",",
+            "      \"sha256\": \"3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c\""
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/source-administration-validation.json",
+          "sha256": "7e95856ab0a835498ebf64efdaf35c19f5702eb5b89110deec52d06df27fc9e2",
+          "pins": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "  \"baseline_server_sha256\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\","
+          ]
+        },
+        {
+          "path": "lito登入器/LiTo381-Launcher/docs/unified-configuration-verification.json",
+          "sha256": "28a2f16a6e0732e544257552c545e120363ee0d12bfac4447022f3bd4488da5d",
+          "pins": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "  \"server_sha256\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\","
+          ]
+        }
+      ],
+      "errors": [],
+      "complete": true,
+      "elapsed_seconds": 155.7
+    },
+    "armor_compile_probe": {
+      "source": {
+        "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
+        "sha256": "338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9"
+      },
+      "compiled_class": {
+        "path": "lito伺服器/LiTo381-Server/target/issue30-armor-source-validation/local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+        "sha256": "a93dbd3d007e9c6504667e99db85218118f95d0138b928e65d6a905a8adbc121"
+      },
+      "candidate_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+      "class_bytes_equal": false,
+      "normalized_instruction_methods_compared": 33,
+      "normalized_instruction_lists_equal": true,
+      "normalization": "javap -p -c -l；按方法簽名配對指令列、將常數池索引正規化為 #CP 並合併空白；保留符號註解。沒有比較全部 class attributes、驗證行為或證明歷史來源。",
+      "javac_args": [
+        "-encoding",
+        "UTF-8",
+        "-implicit:none",
+        "-cp",
+        "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+        "-d",
+        "lito伺服器\\LiTo381-Server\\target\\issue30-armor-source-validation",
+        "lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\InventoryCatalog.java"
+      ],
+      "executed_candidate": false
+    },
+    "acceptance_passed": false,
+    "unresolved_entries": 1,
+    "blocker_kind": "historical-provenance-missing",
+    "environment_recovered": true,
+    "handoff_owner": "Issue #30 任務擁有者／雲端主控",
+    "evidence_files": [
+      {
+        "path": "scratch/issue-30/complete-source-search.json",
+        "sha256": "bb4dc2a4af8900a04bdd4f71c333c134f9d87597a32781ebfb237b72a8fa8bf3"
+      },
+      {
+        "path": "scratch/issue-30/armor-method-comparison.json",
+        "sha256": "fa7d0923b39fdab0cbeb43aa33803556dc1b47aebbfeb981b1b083479aff1f3e"
+      },
+      {
+        "path": "scratch/issue-30/armor-recompile-0.txt",
+        "sha256": "35d712ca9201319b467afdfcf5c3eb180d02f97638c50db904e7a9e849ac0fff"
+      },
+      {
+        "path": "scratch/issue-30/armor-recompile-1.txt",
+        "sha256": "392140c7f6a6cbb6437706a50e9c0a86466a56157b5f6a3ce0fcb08e32b6a27e"
+      },
+      {
+        "path": "scratch/issue-30/armor-recompile.diff",
+        "sha256": "127cc2605f1e65c7d3148919498f8b67f97e2c1aca4480dcc758751f6d7c27bb"
+      }
+    ],
+    "required_next_action": "補 NativeArmorStatus 在 004b1ba8 之前可銜接的父鏈及最後寫入來源／ASM 證據。不要將本輪判為單純環境偶發後無條件重排；現有來源的指令清單相同不證明歷史最後層。"
   }
 }

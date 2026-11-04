@@ -15,7 +15,7 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 | 第一批 8d26 | `8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8` | 2550 |
 | 第二批 50635 | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` | 3033 |
 | 正式 reference | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` | 2554 |
-| Maven target/LiTo381-Server.jar | `593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030` | 3929 |
+| Maven target/LiTo381-Server.jar | `e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706` | 3929 |
 
 原始本機候選路徑以 `D:/lineage開發/3-lito開發/` 為根；正式與 Maven 以本 worktree 為根。精確路徑、收據與所有 SHA 列於 JSON。使用指定 final-frame current 收據指向的 `20261027T060934904682Z/candidate-negative-final-frame-unqualified.jar`。沒有使用 `75da69b0…` 作比較輸入。
 
@@ -43,7 +43,7 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 以下路徑以原始專案 `D:/lineage開發/3-lito開發/` 為根，`S` 表示 `lito伺服器/LiTo381-Server`；`scratch/`、`target/` 則位於本 worktree。
 
 - 三個指定輸入 SHA 再次通過，正式 blob 也符合 `d59ae2e4c56f599456e764a205a0e09a825975d3`。已 fetch `origin/task/24`，設計仍為 `e22872064e41d49dfa3f87dfd95ebf0eb4df39e2`。
-- 本輪重新執行 `mvn -B -DskipTests package`，940 個主來源與 1,413 個測試來源重新編譯成功，測試未執行。新 JAR 的 3,929 個 class bytes 與前次完全相同；上表記錄本輪產物 SHA。log 為 `scratch/issue-30/maven-package-current.log`。
+- 本輪重新執行 `mvn -B -DskipTests package`，940 個主來源與 1,413 個測試來源重新編譯成功，測試未執行。新 JAR 的 3,929 個 class bytes 與前次完全相同；上表記錄本輪產物 SHA。log 為 `scratch/issue-30/maven-package-rerun.log`。
 - 已銜接共同根 `df9464f0…` → `efd4bc36…` 的 59 條 resource-database 父鏈邊。`S/tools/resource-database/build/build-manifest.json` 證明 GmTravel 在 efd4 層由完整 Java 編譯新增，原始碼期望 SHA 為 `319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe`。
 - **GmTravel 缺件解除**：現版來源 SHA `ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99`，僅刪除 `        if (GmPolyMe.command(s,message)) return true;` 及其 CRLF 後，整份 Java SHA 精確符合上述歷史收據。復原檔是 `scratch/issue-30/recovered/sources/GmTravel.java`，JSON 標 `source_scope=worktree`，未改 src/main。
 - 使用 JDK 17.0.17，以指定 8d26 候選為 classpath、`-encoding UTF-8 -implicit:none` 隔離編譯。輸出 `S/target/issue30-source-validation/local/lito381/server/GmTravel.class` 的 SHA 為 `8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985`，與指定候選及歷史凍結 class **完全相同**。這是整檔／class 的 bytes 證據，不是語意相似推測。
@@ -53,6 +53,13 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 - 本機 Git `--all` 中兩個來源各只有初始化 commit `6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f`。限定早期工具／維護文件搜尋完整讀取 262 檔，兩個專案 docs 邊界搜尋完整讀取 178 檔；未找到可接續的新來源證據。另一次 tools 廣域搜尋達 90 秒限制後停止（97,340 個檔名），屬不完整搜尋，**不支持全專案不存在的結論**。所有搜尋排除封存與連結。
 
 復原方式可由 JSON `source_recovery` 重現：讀取 `input.path` 原始 bytes，先驗證 input SHA；將 `bytes.fromhex(remove_bytes_hex)` 唯一出現處刪除，驗證輸出 SHA 等於歷史收據後存入 `output.path`。完整歷史來源沒有另外加入 git，遵守本任務僅三份報告的範圍。可重跑 `scratch/issue-30/recover-gm.py`、`extend-armor.py` 與 `verify-current.py`；後者的驗證通過僅代表現有證據一致，**不表示剩餘來源驗收通過**。
+
+### 自動重排後的本輪核對
+
+- 沙箱初始化錯誤已藉經自動核准的提升權限命令恢復；三個固定 SHA 與正式 Git blob 再次符合。`mvn -B -DskipTests package` 於 2026-11-04 21:07:15 +08:00 成功，重編 940 個主來源與 1,413 個測試來源，未執行測試；產物 SHA 已更新為 `e63ab991176cdc7128f10d7e43f2ebba28594411d831d99f1929066575f9b706`，3,929 個 class bytes 與前輪全部相同。
+- 完成限定範圍搜尋：伺服器 tools／src／docs、專案 tools、登入器 docs 共 **516,622 個檔名、2,369 個文字檔**。tools 的 513,250 個檔名沒有額外 `InventoryCatalog.java` 或 `NativeArmorStatus.java`；唯一完整 Java 是現有 src/main。排除封存、連結、執行紀錄等路徑；早期 SHA 內容搜尋另排除 combat-continuation／resource-database。7 筆 SHA 命中仍只指向已知固定輸入與收據，沒有補出新的父鏈。這是上述限定範圍的完成搜尋，不是全專案來源不存在的宣告。
+- 隔離編譯現有 `InventoryCatalog.java`（SHA `338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9`），NativeArmorStatus class SHA 為 `a93dbd3d007e9c6504667e99db85218118f95d0138b928e65d6a905a8adbc121`，**不等於候選 bytes**。以方法簽名配對並正規化常數池索引後，33 個方法指令清單相同；這提供移植線索，但未核對全部 class attributes，也不能證明最後寫入層。原始反組譯、比較方式與產物 SHA 記於 JSON `rerun_review`。
+- **仍有 1 筆歷史來源驗收阻塞，非環境執行失敗**。保留 `last_layer=null`、`source=null`、`acceptance_passed=false`；應由 Issue #30 任務擁有者／雲端主控補件，不能只因重新執行成功就標完成。
 
 ### T029：正式功能保留清單
 
@@ -214,5 +221,5 @@ Issue #30，2026-11-04，第 2 次嘗試續查。完整逐 entry 證據見 [clas
 ## 待驗證
 
 - **仍有 1 筆未完成**：NativeArmorStatus 缺少 004b1ba8（正式 0.6.42）之前可銜接的最後寫入層與完整 Java／ASM 證據。GmTravel 已解除缺件。未進入封存補找；須由任務擁有者將缺件提供於允許讀取的 sources/inputs，不能把來源邊界冒充最後寫入層。
-- 未執行單元測試（依要求使用 `-DskipTests`）、候選回歸、遊戲或正式 DB。第二批 380 筆完整 Java 僅核對凍結輸出；本輪僅額外重編 GmTravel 並證明 class bytes 相同。
+- 未執行單元測試（依要求使用 `-DskipTests`）、候選回歸、遊戲或正式 DB。第二批 380 筆完整 Java 僅核對凍結輸出；前輪重編 GmTravel 並證明 class bytes 相同。本輪另隔離重編 InventoryCatalog，NativeArmorStatus bytes 不同，33 個正規化方法指令清單相同。
 - T029 靜態保留清單需在合併後做行為驗證；非 class 資源、圖示／DLL 真機顯示仍屬後續驗收。
