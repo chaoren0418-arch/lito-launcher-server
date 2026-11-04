@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -162,6 +164,13 @@ final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
     void productionWorldCompanionClearsProvenUnreachableTargetOnTwentiethRetry()
             throws Exception {
         try (Fixture fixture = fixture(45278, 0, false)) {
+            // GameHub.companionTickSafely uses System.nanoTime() every 50ms.
+            // This proof injects nowNanos starting at 1e9; a live ticker that
+            // runs after the first injected retry still sees ready() because
+            // wall-clock nanos are typically far past 1.6e9, so the give-up
+            // counter jumps 0 → 2 and the attempt==1 assertion fails.
+            stopBattleClock(fixture.hub);
+
             ClassicWorldMonsterPopulation.Snapshot target =
                     fixture.candidate.actor();
             ArenaMapCatalog.Point spawn = farPassableCompanionPoint(
@@ -173,6 +182,7 @@ final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
                     SourceNpcPhysicalStats.memoryFixture(45207));
             assertTrue(companion.selectTarget(target.objectId()));
             tamedCompanions(fixture.session).add(companion);
+            assertEquals(0, companion.pathFailureCount());
 
             long nowNanos = 1_000_000_000L;
             for (int attempt = 1;
@@ -1216,6 +1226,17 @@ final class ClientSessionClassicWorldMonsterAggressionIntegrationTest {
         Field field = ClientSession.class.getDeclaredField("tamedCompanions");
         field.setAccessible(true);
         return (List<BattleCompanion>) field.get(session);
+    }
+
+    private static void stopBattleClock(GameHub hub) throws Exception {
+        Field field = GameHub.class.getDeclaredField("battleClock");
+        field.setAccessible(true);
+        ScheduledExecutorService clock =
+                (ScheduledExecutorService) field.get(hub);
+        clock.shutdownNow();
+        if (!clock.awaitTermination(3, TimeUnit.SECONDS)) {
+            throw new AssertionError("battleClock did not stop");
+        }
     }
 
 
