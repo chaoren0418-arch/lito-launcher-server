@@ -17,7 +17,7 @@
     },
     {
       "path": "lito伺服器/LiTo381-Server/target/LiTo381-Server.jar",
-      "sha256": "b076330de235c45ae50185116d17cab4d78bd72b9d1b3a98d9ec0b188e7921a2",
+      "sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
       "scope": "worktree"
     }
   ],
@@ -22117,11 +22117,11 @@
           "last_layer": "resource-database/build.py（efd4bc36，完整 Java 編譯新增）",
           "layer_jar": "lito伺服器/LiTo381-Server/tools/resource-database/build/baseline-PC-ingress-efd4-v2/candidate-efd4.jar",
           "layer_sha256": "efd4bc36b47db13cc0bd52426355a4250ea7db4b88ac724afa653a416954ab11",
-          "source": null,
-          "source_status": "最後寫入層已證實；歷史完整 Java 尚未取得。現有同路徑來源 SHA 不符 builder_inputs，不能替代；GmTravelPatch 僅掛鉤 ClientSession，不能標為 asm-only。",
+          "source": "scratch/issue-30/recovered/sources/GmTravel.java",
+          "source_status": "完整歷史 Java 已精確復原；SHA 符合 builder_inputs，隔離 javac 輸出 bytes 符合指定候選。原 src/main 未修改。",
           "source_candidates": [],
           "src_main_mapping": "Maven class SourceFile attribute",
-          "source_kind": "java-unavailable",
+          "source_kind": "java",
           "class": "local/lito381/server/GmTravel.class",
           "layer_receipt": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
           "layer_receipt_sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990",
@@ -22129,7 +22129,43 @@
           "source_historical_path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
           "frozen_class_output": "lito伺服器/LiTo381-Server/tools/resource-database/build/classes/local/lito381/server/GmTravel.class",
           "frozen_class_output_matches_candidate": true,
-          "provenance_evidence": "precombat_trace.resource_origin"
+          "provenance_evidence": "precombat_trace.resource_origin 與 source_recovery",
+          "source_scope": "worktree",
+          "source_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+          "source_recovery": {
+            "input": {
+              "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+              "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99"
+            },
+            "operation": "刪除唯一一行正式版 GmPolyMe.command 呼叫（含 CRLF），保留其他所有 bytes",
+            "remove_bytes_hex": "202020202020202069662028476d506f6c794d652e636f6d6d616e6428732c6d65737361676529292072657475726e20747275653b0d0a",
+            "output": {
+              "path": "scratch/issue-30/recovered/sources/GmTravel.java",
+              "sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe"
+            },
+            "expected_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+            "historical_receipt": {
+              "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
+              "sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990"
+            },
+            "compiled_class": {
+              "path": "lito伺服器/LiTo381-Server/target/issue30-source-validation/local/lito381/server/GmTravel.class",
+              "sha256": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985"
+            },
+            "class_matches_fixed_candidate": true,
+            "javac": "C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin/javac.exe",
+            "javac_args": [
+              "-encoding",
+              "UTF-8",
+              "-implicit:none",
+              "-cp",
+              "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+              "-d",
+              "lito伺服器/LiTo381-Server/target/issue30-source-validation",
+              "scratch/issue-30/recovered/sources/GmTravel.java"
+            ],
+            "executed_candidate": false
+          }
         },
         {
           "class_entry": "local/lito381/server/IllusionSkillRequests.class",
@@ -22225,14 +22261,14 @@
           "layer_jar": null,
           "layer_sha256": null,
           "source": null,
-          "source_status": "已證明由 base-0.6.61 繼承，並以收據與固定輸入銜接至 native-room-state/build/base.jar（e5f2e01b）；沿途 bytes 未變，真正最後寫入層與完整 Java／ASM 證據仍未取得。",
+          "source_status": "同 SHA 收據與固定輸入已銜接至 source-administration/build/base.jar（004b1ba8，正式 0.6.42）；新增 8 條、合計 12 條早期父鏈邊的 entry bytes 均未變。更早 0.6.35 固定輸入也含同 bytes，但缺可接續父鏈，不當作最後寫入層。真正最後寫入層與完整 Java／ASM 證據仍未取得。",
           "source_candidates": [],
           "src_main_mapping": "Maven class SourceFile attribute",
           "source_kind": "unresolved-historical-origin",
           "class": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
           "provenance_boundary": {
-            "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
-            "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+            "path": "lito伺服器/LiTo381-Server/tools/source-administration/build/base.jar",
+            "sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
           },
           "provenance_evidence": "precombat_trace.earlier_armor_chain"
         },
@@ -98176,7 +98212,7 @@
       "id": "maven_vs_formal",
       "candidate": {
         "path": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-30\\lito伺服器\\LiTo381-Server\\target\\LiTo381-Server.jar",
-        "sha256": "b076330de235c45ae50185116d17cab4d78bd72b9d1b3a98d9ec0b188e7921a2",
+        "sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
         "scope": "worktree"
       },
       "baseline": {
@@ -170555,7 +170591,7 @@
   "schema_version": 1,
   "issue": 30,
   "date": "2026-11-04",
-  "status": "未完成：補證確認 GmTravel 最後寫入層；2 筆完整歷史來源驗收仍阻塞，交任務擁有者補件",
+  "status": "未完成：GmTravel 歷史 Java 與編譯 bytes 已驗證；剩餘 NativeArmorStatus 最後寫入層與來源 1 筆阻塞",
   "workspace_commit": "1300366c5a73c23e91ab53518c80180e31dbd262",
   "design": {
     "ref": "origin/task/24",
@@ -170570,7 +170606,7 @@
     "comparison": "每個解壓後 .class entry 直接比較 bytes；未比較 ZIP 時戳、壓縮方式、資源或 manifest",
     "direction": "candidate 欄是待比較端、baseline 欄是參考端。第三組 candidate=Maven，baseline=正式；第二組 baseline=8d26，因此 ONLY_IN_FORMAL 是固定分類名稱，並不表示每組參考端都是正式。",
     "last_layer": "沿實際 base SHA 鏈逆走，取最後一次改變 entry bytes 的層；同 bytes 重包裝/重寫不算新的內容來源。設計列出的 66 層只是總序，8d26 止於第 65 層。",
-    "source": "完整 Java 必須位於最後變動層 sources/inputs，符合類別宣告；有 javac 參數時限於實際 runtime 編譯輸入。380 筆全部核對來源收據 SHA 與凍結 classes 輸出 SHA。ASM 可能有更早 Java，但不是最終完整來源。",
+    "source": "完整 Java 必須位於最後變動層 sources/inputs，符合類別宣告；有 javac 參數時限於實際 runtime 編譯輸入。380 筆全部核對來源收據 SHA 與凍結 classes 輸出 SHA。ASM 可能有更早 Java，但不是最終完整來源。 歷史來源可由現版精確逆轉：須整檔 SHA 符合歷史收據，復原檔置 worktree scratch 並標 source_scope；本次 GmTravel 另驗證 javac 輸出相同。",
     "src_main": "優先依本次 Maven class 的 SourceFile 屬性映射，再以外層類別檔名回退；DECOMPILED 是來源是否含 // DECOMPILED，缺檔用 null。",
     "ranking": "按 abs(candidate_size - baseline_size) 降冪，類別名稱作同值排序；大小相同仍可 CHANGED，不代表語意等價或風險排序。"
   },
@@ -170584,8 +170620,20 @@
     "tests_executed": false,
     "cache": "scratch/issue-30/maven-repository（複製既有快取）",
     "temp": "scratch/issue-30/tmp",
-    "log": "scratch/issue-30/maven-package.log",
-    "log_sha256": "13c72c6a3b9bfc0b532c8b4e724dd88ef297c4238fc136c64cd02e2637800ceb"
+    "log": "scratch/issue-30/maven-package-current.log",
+    "log_sha256": "91f71f237c63a74a42337a886c716983e979a215c4d30ac776691bd40bb95080",
+    "previous_artifact_sha256": "b076330de235c45ae50185116d17cab4d78bd72b9d1b3a98d9ec0b188e7921a2",
+    "current_artifact_sha256": "593aa88ca7468342f6d66f62d6fd9f4e79d0a83d542f21769bb6e7459442b030",
+    "current_rebuild_verified": true,
+    "class_entries_identical_to_previous_build": true,
+    "finished_local": "2026-11-04T20:47:50+08:00",
+    "actual_command": "mvn -B -DskipTests package",
+    "environment_overrides": {
+      "JAVA_HOME": "C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot",
+      "MAVEN_OPTS": "-Djava.io.tmpdir=<worktree>/scratch/issue-30/tmp -Dmaven.repo.local=<worktree>/scratch/issue-30/maven-repository",
+      "TEMP": "<worktree>/scratch/issue-30/tmp",
+      "TMP": "<worktree>/scratch/issue-30/tmp"
+    }
   },
   "formal_preservation": [
     {
@@ -170695,20 +170743,14 @@
   ],
   "provenance_exceptions": [
     {
-      "class_entry": "local/lito381/server/GmTravel.class",
-      "last_layer": "resource-database/build.py（efd4bc36，完整 Java 編譯新增）",
-      "source": null,
-      "reason": "最後寫入層已證實；歷史完整 Java 尚未取得。現有同路徑來源 SHA 不符 builder_inputs，不能替代；GmTravelPatch 僅掛鉤 ClientSession，不能標為 asm-only。"
-    },
-    {
       "class_entry": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
       "last_layer": null,
       "source": null,
-      "reason": "已證明由 base-0.6.61 繼承，並以收據與固定輸入銜接至 native-room-state/build/base.jar（e5f2e01b）；沿途 bytes 未變，真正最後寫入層與完整 Java／ASM 證據仍未取得。"
+      "reason": "同 SHA 收據與固定輸入已銜接至 source-administration/build/base.jar（004b1ba8，正式 0.6.42）；新增 8 條、合計 12 條早期父鏈邊的 entry bytes 均未變。更早 0.6.35 固定輸入也含同 bytes，但缺可接續父鏈，不當作最後寫入層。真正最後寫入層與完整 Java／ASM 證據仍未取得。"
     }
   ],
   "precombat_trace": {
-    "status": "blocked_missing_historical_sources",
+    "status": "blocked_one_historical_origin",
     "input_sha_verified": true,
     "combat_chain_nodes_verified": 68,
     "resource_parent_chain": [
@@ -171879,7 +171921,41 @@
         "path": "lito伺服器/LiTo381-Server/tools/resource-database/GmTravelPatch.java",
         "sha256": "19d49da305aea5df7551b9b3771717578042e54d171b298d77f257f41469b53f"
       },
-      "gm_hook_note": "GmTravelPatch wraps ClientSession methods; it is not a complete GmTravel source or evidence of ASM writing GmTravel.class"
+      "gm_hook_note": "GmTravelPatch wraps ClientSession methods; it is not a complete GmTravel source or evidence of ASM writing GmTravel.class",
+      "gm_source_recovery": {
+        "input": {
+          "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+          "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99"
+        },
+        "operation": "刪除唯一一行正式版 GmPolyMe.command 呼叫（含 CRLF），保留其他所有 bytes",
+        "remove_bytes_hex": "202020202020202069662028476d506f6c794d652e636f6d6d616e6428732c6d65737361676529292072657475726e20747275653b0d0a",
+        "output": {
+          "path": "scratch/issue-30/recovered/sources/GmTravel.java",
+          "sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe"
+        },
+        "expected_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+        "historical_receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
+          "sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990"
+        },
+        "compiled_class": {
+          "path": "lito伺服器/LiTo381-Server/target/issue30-source-validation/local/lito381/server/GmTravel.class",
+          "sha256": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985"
+        },
+        "class_matches_fixed_candidate": true,
+        "javac": "C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin/javac.exe",
+        "javac_args": [
+          "-encoding",
+          "UTF-8",
+          "-implicit:none",
+          "-cp",
+          "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+          "-d",
+          "lito伺服器/LiTo381-Server/target/issue30-source-validation",
+          "scratch/issue-30/recovered/sources/GmTravel.java"
+        ],
+        "executed_candidate": false
+      }
     },
     "earlier_armor_chain": [
       {
@@ -171965,11 +172041,179 @@
         },
         "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
         "armor_unchanged": true
+      },
+      {
+        "layer": "room-directory",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
+          "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/room-directory-0.6.54.json",
+          "sha256": "08604f6e6ffd142ee8f1a861a6c61177ff26ad71a0b2f71c0b0481405d1a4f65"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-directory/build.py",
+          "sha256": "5ffef35775cdefd978ec8c678a159841e9668d4ee9175c5593b5bcd3f5118033"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-directory/build/base.jar",
+          "sha256": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "illusion-targets",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-directory/build/base.jar",
+          "sha256": "c3c0fecd67510397e1436ffdaf9ad5bb5d314ff518887db13e1031683453b9f0"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/illusion-targets-0.6.51.json",
+          "sha256": "1f80f5c4decd2ed44e3a4e98c609a7195b6dc7eccefc02b2a9baaf9e04afaf1b"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-targets/build.py",
+          "sha256": "4a754495046164f59e3c1ac9760c13a1107d444a31e3f48c399477014035bfe4"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-targets/build/base.jar",
+          "sha256": "db2ef1343a85a7dc830cbc42311a43ab66e2521bf623f115894f90fd36344511"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "illusion-presentation",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-targets/build/base.jar",
+          "sha256": "db2ef1343a85a7dc830cbc42311a43ab66e2521bf623f115894f90fd36344511"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/illusion-presentation-0.6.50.json",
+          "sha256": "cee85efeab962c4563e5e414d7af7c100c7e1424c159a104c5aceafd3fa7ac81"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-presentation/build.py",
+          "sha256": "a7e9ff4b0d4f151c3e663edb75afe3d7e4c1abebf70f090f38ea62411adeee1b"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-presentation/build/base.jar",
+          "sha256": "589733435518d92c05baeeae37a686d384ec3f7b9897e975ad1ef50d67a74aa7"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "empty-melee",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/illusion-presentation/build/base.jar",
+          "sha256": "589733435518d92c05baeeae37a686d384ec3f7b9897e975ad1ef50d67a74aa7"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/empty-melee-0.6.49.json",
+          "sha256": "02d9663d0889fe99148ae5559fa40bd7274e7ee20de482894bcf9edf3cab128b"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/empty-melee/build.py",
+          "sha256": "745bda6b3204f0bf668b8f3b32a52ebfeab6a2e71403a40d31c9a5af9ce7ffe6"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/empty-melee/build/base.jar",
+          "sha256": "9c97f86821738cd4e039f20bf69cae286bb1f095bdda77e3305799a77f5c1a23"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "dragon-presentation",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/empty-melee/build/base.jar",
+          "sha256": "9c97f86821738cd4e039f20bf69cae286bb1f095bdda77e3305799a77f5c1a23"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/dragon-presentation-0.6.48.json",
+          "sha256": "669f2176984cdb699aa8a0eb31b236143ec91a80a849939d837b73cb6083865d"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-presentation/build.py",
+          "sha256": "3a2aee64344af403793ac8ab6d2a673ec3278bdd3ad24159502a2300380dcfa0"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-presentation/build/base.jar",
+          "sha256": "ae063385dcdf3898aeb003137f807e6c3365073aece62b8531fb7e86886dcd06"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "dragon-combat",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-presentation/build/base.jar",
+          "sha256": "ae063385dcdf3898aeb003137f807e6c3365073aece62b8531fb7e86886dcd06"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/dragon-combat-0.6.47.json",
+          "sha256": "08c16aa4ab4015f8353218a050c77099b494e77ea69493e0a25165aa4f3b246b"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-combat/build.py",
+          "sha256": "7bdfdeb0fa4cd8d332767a59c7ea45c1d4c74ac0f954056cc5e418bbf511fc73"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-combat/build/base.jar",
+          "sha256": "e35cb91c43a18a690cc304df8e5a9b2ba15014822261651616ae9420fa8cc5a2"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "dragon-skill-dispatch",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-combat/build/base.jar",
+          "sha256": "e35cb91c43a18a690cc304df8e5a9b2ba15014822261651616ae9420fa8cc5a2"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/dragon-skills-0.6.46.json",
+          "sha256": "dd67c44fdc1b004ee0196252eb6741d54b5456f870ee1ad745467d58dd9b500d"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-skill-dispatch/build.py",
+          "sha256": "9f695efbef8b05e5104444e32e1027852f4396baf67abe8fcb5514cfb69da86e"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-skill-dispatch/build/base.jar",
+          "sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "source-administration",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/dragon-skill-dispatch/build/base.jar",
+          "sha256": "205dc1baf5598523e67899e6c92a4b9bb07494d42dfa995cd741e67330d9b542"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/source-administration-validation.json",
+          "sha256": "7e95856ab0a835498ebf64efdaf35c19f5702eb5b89110deec52d06df27fc9e2"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/source-administration/build.py",
+          "sha256": "20389b19c04abda0bef453136d1f5cb426fe5d6661e2803e07645e13eca22633"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/source-administration/build/base.jar",
+          "sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
       }
     ],
     "armor_stop": {
-      "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
-      "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+      "path": "lito伺服器/LiTo381-Server/tools/source-administration/build/base.jar",
+      "sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
     },
     "source_search": [
       {
@@ -171978,9 +172222,16 @@
       }
     ],
     "unresolved": [
-      "GmTravel complete Java matching builder_inputs SHA",
       "InventoryCatalog$NativeArmorStatus final writer and complete Java or verifiable ASM evidence"
-    ]
+    ],
+    "earlier_disconnected_probe": {
+      "jar": {
+        "path": "lito伺服器/LiTo381-Server/tools/shared-database/build/base-0.6.35.jar",
+        "sha256": "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+      },
+      "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+      "connected_to_stop": false
+    }
   },
   "out_of_scope": [
     "未啟動伺服器/登入器/遊戲、未連 DB、未改正式 JAR 或 src/main",
@@ -172019,31 +172270,296 @@
     {
       "path": "scratch/issue-30/run-retry-verify.py",
       "sha256": "6dbcedbe9c9af600358a0253e921a25280f29fa2e75c7562c060445d52115cd6"
+    },
+    {
+      "path": "scratch/issue-30/recover-gm.py",
+      "sha256": "3afd34ea9ee1784190f1e3b88a0d093a1e03c36bfae6062b83d750464e6a9937"
+    },
+    {
+      "path": "scratch/issue-30/extend-armor.py",
+      "sha256": "556ee7cb52ce74261600989149c31f457bad4d2df5038b9d50ce27a1d562d745"
+    },
+    {
+      "path": "scratch/issue-30/current-search.py",
+      "sha256": "6a11b923b13224a6f5bdc02202cef347ec92ef42a2ce6c94db91c66791c870f3"
+    },
+    {
+      "path": "scratch/issue-30/early-search.py",
+      "sha256": "0d606c13249f36b83abdd86e9383b0a320d81ad0457a46ff3f9a4c197962e145"
+    },
+    {
+      "path": "scratch/issue-30/boundary-search.py",
+      "sha256": "e15be841d20d2bb3e6b5b7bc0c46a99240d5507a8c1a35f5a7a869d1dff05d29"
+    },
+    {
+      "path": "scratch/issue-30/refresh-build.py",
+      "sha256": "672c5820a9f4c36d0b8c0fd6d1215df3b1351a3c383a1ed9a3219464e8de4bdf"
+    },
+    {
+      "path": "scratch/issue-30/verify-current.py",
+      "sha256": "90d2ad3313a838d1aac9c7831566fdeed5d826da853fc528312b5dfb921c7664"
     }
   ],
   "retry_review": {
     "attempt": 2,
-    "reviewed_commit": "cdc81e66dd1fd5aa06689f1d6b41e96e3bc09950",
+    "reviewed_commit": "9f07c5dd609531ccbaf0db45e007c63b743bdc59",
     "acceptance_passed": false,
-    "unresolved_entries": 2,
-    "maven_artifact_rebuilt": false,
-    "maven_artifact_note": "沿用前次成功 package 的產物與 log，本輪重新核對 SHA 與全部 9,521 列；未重建或改變比較輸入。",
-    "evidence_file": "scratch/issue-30/retry-evidence.json",
-    "evidence_sha256": "406d2e5d065e59a0d9b63cb2e92a686ffdf50625dfbd89d81a9fc3f2675a04ba",
-    "verification_log": "scratch/issue-30/retry-verify.log",
-    "verification_log_sha256": "cba7fd26d60582a5323c2970b5565f94bc80f033cd2e857cae98c4cd760b62e2",
+    "unresolved_entries": 1,
+    "resolved_entries": [
+      "local/lito381/server/GmTravel.class"
+    ],
+    "maven_artifact_rebuilt": true,
+    "maven_artifact_note": "本輪重新 package；3,929 個 class bytes 與前次產物相同，JAR SHA 已更新。",
+    "additional_armor_parent_edges": 8,
+    "total_earlier_armor_parent_edges": 12,
+    "git_source_versions": [
+      {
+        "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+        "commit": "6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f",
+        "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99",
+        "matches_gm_expected": false
+      },
+      {
+        "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
+        "commit": "6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f",
+        "sha256": "338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9",
+        "matches_gm_expected": false
+      }
+    ],
+    "bounded_source_search": {
+      "fixed_inputs_verified": true,
+      "source_search_root": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools",
+      "exclusions": [
+        ".git",
+        "backups",
+        "bin",
+        "native-terrain-rust",
+        "node_modules",
+        "obj",
+        "release",
+        "releases",
+        "runs",
+        "runtime",
+        "target",
+        "封存"
+      ],
+      "sources": [],
+      "earlier_layer_pin_hits": [],
+      "files_seen": 97340,
+      "source_scan_complete": false,
+      "git_source_versions": [
+        {
+          "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+          "commit": "6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f",
+          "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99",
+          "matches_gm_expected": false
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
+          "commit": "6bb4a27bb6cfbef1639d155700b09c6e1bfbf34f",
+          "sha256": "338a3a4299bd35499cae6be58a7c71628c1cccfa0d3ee3f3ab871fdc7f444bc9",
+          "matches_gm_expected": false
+        }
+      ],
+      "stop_reason": "90 second bounded search",
+      "elapsed_seconds": 90.2
+    },
+    "early_source_search": {
+      "roots": [
+        "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/tools",
+        "D:/lineage開發/3-lito開發/lito伺服器/LiTo381-Server/docs/maintenance"
+      ],
+      "excluded_directory_names": [
+        ".git",
+        "backups",
+        "combat-continuation",
+        "native-terrain-rust",
+        "node_modules",
+        "release",
+        "releases",
+        "resource-database",
+        "runs",
+        "runtime",
+        "target",
+        "封存"
+      ],
+      "hits": [
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/gm-polyme/finalize.py",
+          "sha256": "0f6e0b4d3391e028c30b6aaae9f0e710eda1cb54dd9747637a1f6485ef07d115",
+          "matches": [
+            "GmTravel.java"
+          ],
+          "lines": [
+            "paths+=[S/'deployment/release-inputs.json',R/'inputs/base-0.6.70.jar',B/'PolyMeRegression.log',B/'TravelRegression.log',S/'db/lito_gm_polyme.sql',S/'src/main/java/local/lito381/server/GmPolyMe.java',S/'src/main/java/local/lito381/server/GmTravel.java',S/'src/main/java/local/lito381/server/ClientSession.java',R/'build.py',R/'Patch.java',R/'PolyMeRegression.java']"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build.py",
+          "sha256": "f259581744461f081b29a3e37a43705354e146fa667be0a0e7563e2a4fe3c534",
+          "matches": [
+            "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+          ],
+          "lines": [
+            "assert hashlib.sha256((B/'base.jar').read_bytes()).hexdigest()=='e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf', 'Retained historical input mismatch'"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/evidence.json",
+          "sha256": "e1f0427c6facde55203d0f4145b03660f5c5061e8b5d65155cded2075b574203",
+          "matches": [
+            "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+          ],
+          "lines": [
+            "  \"baseline_sha256\": \"e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf\","
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/Patch.java",
+          "sha256": "0cdf6d59fe1d0d3f07e54fbf15096031666e0173bd2612890206dada7b63e6d3",
+          "matches": [
+            "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+          ],
+          "lines": [
+            "  if(!HexFormat.of().formatHex(MessageDigest.getInstance(\"SHA-256\").digest(Files.readAllBytes(base))).equals(\"e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf\"))throw new IllegalStateException(\"baseline\");"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/gm-travel-0.6.68.md",
+          "sha256": "4926472a3f170adf0d1797d74b5822cef054574d1b64db2a944d48d53485cf3f",
+          "matches": [
+            "GmTravel.java"
+          ],
+          "lines": [
+            "實作 `GmTravel.java`；窄範圍修補由 `tools/resource-database/GmTravelPatch.java` 接入既有 GM／道具入口。部署 JAR 相對 0.6.67 只有 ClientSession、ResourceDatabase、GmTravel 三個 class 改變，客戶端 DLL 不變。"
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/room-directory-0.6.54.json",
+          "sha256": "08604f6e6ffd142ee8f1a861a6c61177ff26ad71a0b2f71c0b0481405d1a4f65",
+          "matches": [
+            "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+          ],
+          "lines": [
+            "  \"published_sha256\": \"e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf\","
+          ]
+        }
+      ],
+      "read_files": 262,
+      "complete": true
+    },
+    "boundary_search": {
+      "roots": [
+        "D:\\lineage開發\\3-lito開發\\lito登入器\\LiTo381-Launcher\\docs",
+        "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\docs"
+      ],
+      "files_read": 178,
+      "complete": true,
+      "hits": [
+        {
+          "path": "lito登入器/LiTo381-Launcher/docs/unified-configuration-verification.json",
+          "sha256": "28a2f16a6e0732e544257552c545e120363ee0d12bfac4447022f3bd4488da5d",
+          "matches": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "  \"server_sha256\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\","
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/layout-cleanup-20261012.json",
+          "sha256": "9ba474036e34997f8506fff3bf0e9e4da8da497744a26b8d51fd514dbf6c3597",
+          "matches": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951",
+            "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+          ],
+          "lines": [
+            "    \"production_jar\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\",",
+            "      \"sha256\": \"3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c\""
+          ]
+        },
+        {
+          "path": "lito伺服器/LiTo381-Server/docs/maintenance/source-administration-validation.json",
+          "sha256": "7e95856ab0a835498ebf64efdaf35c19f5702eb5b89110deec52d06df27fc9e2",
+          "matches": [
+            "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+          ],
+          "lines": [
+            "  \"baseline_server_sha256\": \"004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951\","
+          ]
+        }
+      ]
+    },
+    "source_recovery": {
+      "input": {
+        "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+        "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99"
+      },
+      "operation": "刪除唯一一行正式版 GmPolyMe.command 呼叫（含 CRLF），保留其他所有 bytes",
+      "remove_bytes_hex": "202020202020202069662028476d506f6c794d652e636f6d6d616e6428732c6d65737361676529292072657475726e20747275653b0d0a",
+      "output": {
+        "path": "scratch/issue-30/recovered/sources/GmTravel.java",
+        "sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe"
+      },
+      "expected_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+      "historical_receipt": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
+        "sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990"
+      },
+      "compiled_class": {
+        "path": "lito伺服器/LiTo381-Server/target/issue30-source-validation/local/lito381/server/GmTravel.class",
+        "sha256": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985"
+      },
+      "class_matches_fixed_candidate": true,
+      "javac": "C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin/javac.exe",
+      "javac_args": [
+        "-encoding",
+        "UTF-8",
+        "-implicit:none",
+        "-cp",
+        "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\combat-continuation\\cancellation-battle-runtime\\build\\candidate-cancellation-battle-runtime.jar",
+        "-d",
+        "lito伺服器/LiTo381-Server/target/issue30-source-validation",
+        "scratch/issue-30/recovered/sources/GmTravel.java"
+      ],
+      "executed_candidate": false
+    },
     "handoff_owner": "Issue #30 任務擁有者／雲端主控",
     "required_inputs": [
       {
-        "class_entry": "local/lito381/server/GmTravel.class",
-        "requirement": "提供符合建置收據 SHA 的完整歷史 GmTravel.java 至允許讀取的 sources/inputs；不得以現版或其他候選替代",
-        "source_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe"
+        "class_entry": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+        "requirement": "補齊 004b1ba8（正式 0.6.42）之前的可銜接父鏈與最後寫入層之完整 Java，或可驗證的 ASM 修改證據；已知 0.6.35 的 3f31ef32 固定輸入含相同 class，但尚未證明兩者血緣。只接收允許路徑中的補件。",
+        "class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "connected_boundary": {
+          "path": "lito伺服器/LiTo381-Server/tools/source-administration/build/base.jar",
+          "sha256": "004b1ba8cc258f2f95a04ed3e6f1cbd63c1fe7737dc3db5d6b4c0de009130951"
+        },
+        "disconnected_older_input": {
+          "path": "lito伺服器/LiTo381-Server/tools/shared-database/build/base-0.6.35.jar",
+          "sha256": "3f31ef32c8ca1ca8f9507897f03b54ca37593326ad986b5c10fcff68f695ed5c"
+        }
+      }
+    ],
+    "evidence_files": [
+      {
+        "path": "scratch/issue-30/extended-armor.json",
+        "sha256": "a796153ed8d864cd7f85c0af2dd8d06e59acca6618c3ea38c656525a50e1b5aa"
       },
       {
-        "class_entry": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
-        "requirement": "補齊 e5f2e01b 固定輸入之前的同 SHA 父鏈收據與最後寫入層之完整 Java；若只有 ASM，附可驗證修改證據",
-        "class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        "path": "scratch/issue-30/current-search.json",
+        "sha256": "d4722200b00abbe5dd30087330791d94852745be3ee2f0098ca8de4167c5da97"
+      },
+      {
+        "path": "scratch/issue-30/early-search.json",
+        "sha256": "fd73cfa6ef1d2ef68c8a6dae6a5b19f09c2b526810ff53dd74eb3de49b275a39"
+      },
+      {
+        "path": "scratch/issue-30/boundary-search.json",
+        "sha256": "0e3b1fdc6983b4bf5ec40adb40008bc6f2847d1178aa573e98167782cb372404"
       }
-    ]
+    ],
+    "verification_log": "scratch/issue-30/verify-current.log",
+    "verification_log_sha256": "456f42c5b9c87293397c02cded2e896bf8c56424872b447ff1e7a8cbd964c08a",
+    "verification_result": "PASS；現有資料一致，來源驗收仍為 false"
   }
 }
