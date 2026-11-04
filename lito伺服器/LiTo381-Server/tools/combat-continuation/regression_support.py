@@ -2,9 +2,12 @@
 
 --resources is a read-only Server directory (useful for worktrees).  It never
 changes the selected candidate.  A separate --out is required in this mode.
-No build layer, assertion, expected case count or timeout is changed here.
+Build layers, behavioral assertions, expected case counts and timeouts are unchanged.
+Isolated runs additionally measure the authorized current formal-file baseline.
 """
 import argparse
+from contextlib import contextmanager
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -15,6 +18,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 SERVER = ROOT.parents[1]
+CURRENT_FORMAL_SHA256 = 'e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498'
+HISTORICAL_FORMAL_SHA256 = '75da69b0d2f7f9d394ee6bf2fdb396b153c75d9b938069b0999ed8dac4f50371'
 
 
 def read(path):
@@ -46,7 +51,7 @@ def java_tool(name):
 
 
 class Options:
-    def __init__(self, stage=False):
+    def __init__(self, stage=False, reconcile=False):
         parser = argparse.ArgumentParser(description=__doc__)
         if stage:
             parser.add_argument('stage', nargs='?', default='cancellation-battle-runtime')
@@ -58,6 +63,8 @@ class Options:
                             help='Read-only Server directory containing historical fixtures/receipts')
         parser.add_argument('--config', type=Path,
                             help='Explicit isolated test configuration (probes require SQL resources)')
+        if reconcile:
+            parser.add_argument('--manifest', type=Path, help='Failed replay manifest inside --out')
         self.args = parser.parse_args()
         self.server = self.args.resources.resolve()
         self.root = self.server / 'tools/combat-continuation'
@@ -142,3 +149,81 @@ def prepare_regression(options, stage, default=None):
     current = dict(status='candidate-under-test', runtime=build['runtime'], manifest=pin(dest / 'preparation.json'))
     write(dest / 'build-current.json', current)
     return dest
+
+
+class FormalProtection:
+    """Read-only current-baseline guard; historical qualification remains immutable."""
+
+    def __init__(self, server):
+        self.formal = (server.parents[1] / 'lito登入器/LiTo381-Launcher/app/server/'
+                       'LiTo381-SharedResources-candidate.jar').resolve()
+        # The tracked reference belongs to this checkout; --resources supplies
+        # untracked historical fixtures and the actual deployment location.
+        self.reference = SERVER / 'reference/base-0.6.71.jar'
+        self.record = dict(status='running', expected_sha256=CURRENT_FORMAL_SHA256,
+                           historical_formal_at_candidate_qualification=HISTORICAL_FORMAL_SHA256)
+
+    def start(self):
+        self.record['started_utc'] = datetime.now(timezone.utc).isoformat()
+        self.record['before'] = pin(self.formal)
+        self.record['reference'] = pin(self.reference)
+        assert self.record['reference']['sha256'] == CURRENT_FORMAL_SHA256, 'Current formal reference SHA256 mismatch'
+        assert self.record['before']['sha256'] == CURRENT_FORMAL_SHA256, 'Current formal deployment SHA256 mismatch'
+
+    def finish(self):
+        self.record['after'] = pin(self.formal)
+        self.record['finished_utc'] = datetime.now(timezone.utc).isoformat()
+        assert self.record['before'] == self.record['after'], 'Formal deployment changed during regression'
+        assert pin(self.reference) == self.record['reference'], 'Formal reference changed during regression'
+        assert self.record['after']['sha256'] == CURRENT_FORMAL_SHA256, 'Current formal deployment SHA256 mismatch'
+        self.record['status'] = 'passed'
+
+    def is_formal(self, ref):
+        return Path(ref['path']).resolve() == self.formal
+
+    def check_historical(self, ref):
+        assert self.is_formal(ref)
+        assert ref['sha256'] == HISTORICAL_FORMAL_SHA256, 'Unexpected historical formal baseline'
+
+    def check_historical_list(self, refs):
+        assert sum(self.is_formal(ref) for ref in refs) == 1, 'Expected exactly one historical formal guard'
+
+
+@contextmanager
+def formal_protection(options, receipt):
+    """Place before/after evidence in the receipt even when the body fails."""
+    if not options.out:
+        yield None
+        return
+    guard = FormalProtection(options.server)
+    receipt['formal_protection'] = guard.record
+    started = False
+    try:
+        guard.start()
+        started = True
+        yield guard
+    finally:
+        try:
+            if started:
+                guard.finish()
+            else:
+                guard.record['status'] = 'failed'
+        except BaseException as error:
+            guard.record.update(status='failed', error=str(error))
+            raise
+        finally:
+            if 'before' in guard.record and 'after' in guard.record:
+                receipt['formal_deployment_changed'] = guard.record['before'] != guard.record['after']
+
+
+def verify_formal_protection(receipt, guard):
+    """A seal must use evidence measured around each actual suite, not just itself."""
+    proof = receipt['formal_protection']
+    assert proof['status'] == 'passed'
+    assert proof['expected_sha256'] == CURRENT_FORMAL_SHA256
+    assert proof['historical_formal_at_candidate_qualification'] == HISTORICAL_FORMAL_SHA256
+    assert proof['before'] == proof['after'] == pin(guard.formal)
+    assert proof['before']['sha256'] == CURRENT_FORMAL_SHA256
+    assert proof['reference'] == pin(guard.reference)
+    assert proof['reference']['sha256'] == CURRENT_FORMAL_SHA256
+    assert proof['started_utc'] <= proof['finished_utc']

@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from regression_support import Options, adapt_driver, write, java_tool
+from regression_support import formal_protection, Options, adapt_driver, write, java_tool
 options=Options()
 from pathlib import Path
 import json,hashlib,subprocess,os
@@ -26,11 +26,17 @@ deps=[classes,ROOT/'poison-publication/build/curse-consumer/classes',ROOT/'poiso
 cp=';'.join(map(str,deps));env=dict(os.environ,JAVA_TOOL_OPTIONS='-Xms16m -Xmx256m -XX:+UseSerialGC -XX:CICompilerCount=2 -XX:ActiveProcessorCount=2 -XX:ReservedCodeCacheSize=64m -Dfile.encoding=UTF-8 -Dlineage.damage.commitWorkers=2 -Dlineage.damage.commitDispatchCapacity=256 -Dlineage.damage.maxTargetPending=64 -Dlineage.damage.maxGlobalPending=64')
 v=dict(status='running',runtime=build['runtime'],source=pin(p),probe=pin(source),driver=pin(Path(__file__)),original_frozen_suite_modified=False,formal_deployment_changed=False)
 try:
- with (D/'probe.log').open('w',encoding='utf8')as out:
-  subprocess.run([str(java_tool('javac')),'-g:none','-implicit:none','-sourcepath','','-encoding','UTF-8','-cp',cp,'-d',str(classes),str(source)],check=True,env=env,stdout=out,stderr=subprocess.STDOUT,timeout=90)
-  subprocess.run([str(java_tool('java')),'-Xverify:all','-cp',cp,'local.lito381.server.CurseClockBoundaryProbe',str(options.config),str(D/'runtime'),str(D/'observations.json'),str(jar),'after'],cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,check=True,timeout=300)
- v['observations']=pin(D/'observations.json');v['counts']=read(D/'observations.json');assert v['counts']['cases']==24 and v['counts']['locked_writes']==0
- v['status']='passed-measured-paralysis-publication-clock-boundary'
-except BaseException as e:v.update(status='failed',error=str(e));print((D/'probe.log').read_text('utf8',errors='replace')[-3500:]);raise
-finally:v['log']=pin(D/'probe.log');(D/'receipt.json').write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+ with formal_protection(options,v):
+  with (D/'probe.log').open('w',encoding='utf8')as out:
+   subprocess.run([str(java_tool('javac')),'-g:none','-implicit:none','-sourcepath','','-encoding','UTF-8','-cp',cp,'-d',str(classes),str(source)],check=True,env=env,stdout=out,stderr=subprocess.STDOUT,timeout=90)
+   subprocess.run([str(java_tool('java')),'-Xverify:all','-cp',cp,'local.lito381.server.CurseClockBoundaryProbe',str(options.config),str(D/'runtime'),str(D/'observations.json'),str(jar),'after'],cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,check=True,timeout=300)
+  v['observations']=pin(D/'observations.json');v['counts']=read(D/'observations.json');assert v['counts']['cases']==24 and v['counts']['locked_writes']==0
+  v['status']='passed-measured-paralysis-publication-clock-boundary'
+except BaseException as e:
+ v.update(status='failed',error=str(e))
+ if (D/'probe.log').exists():print((D/'probe.log').read_text('utf8',errors='replace')[-3500:])
+ raise
+finally:
+ if (D/'probe.log').exists():v['log']=pin(D/'probe.log')
+ (D/'receipt.json').write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 print(json.dumps(dict(status=v['status'],counts=v['counts']),ensure_ascii=False))

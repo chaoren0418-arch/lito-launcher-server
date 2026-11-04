@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 import hashlib, json, os, shutil, subprocess, sys, zipfile
 
-from regression_support import Options, java_tool
+from regression_support import formal_protection, Options, java_tool
 options = Options(stage=True)
 R = options.root
 S = R.parents[1]
@@ -63,97 +63,98 @@ if not options.out and (D/'current.json').exists():
         previous={row['probe']:row for row in old['results']}
 log = None
 try:
-    for directory, prefix, material, fault, lifecycle in specs:
-        source = R/directory
-        probes = [('Material', material, 'tests'), ('Fault', fault, 'boundaries'), ('Lifecycle', lifecycle, 'boundaries')]
-        if prefix == 'Resurrection':
-            probes += [('Numeric', 48, 'numeric'), ('WorldNpc', 64, 'world-npc'), ('Companion', 80, 'companions'), ('AnswerLifetime', 64, 'answers'), ('AnswerRace', 112, 'answer-races'), ('CompanionAudit', 20, 'companion-audit')]
-        if prefix == 'WorldPotion':
-            probes = [('', 64, 'tests')]
-        if prefix == 'PoisonScope':
-            probes += [('WorldNpc', 64, 'world-npcs'), ('Clock', 8, 'clock-audit'), ('Consumer', 8, 'consumer'), ('Timer', 8, 'timers'), ('CurseConsumer', 24, 'curse-consumer')]
-        if prefix == 'EarthBind':
-            probes += [('WorldNpc', 32, 'world-npcs')]
-        if prefix == 'Polymorph':
-            probes += [('Menu',80,'menu')]
-        if prefix == 'Armor':
-            probes += [('StateLock', 12, 'state-locks'), ('Target', 64, 'targets')]
-        if prefix == 'Negative':
-            probes += [('Companion', 192, 'companions'), ('WorldNpc', 96, 'world-npcs')]
-        if prefix in ('Weakness', 'TargetNegative', 'Blind'):
-            probes += [('WorldNpc', 64, 'world-npcs')]
-        if prefix in ('Silence', 'DecayPotion'):
-            probes += [('WorldNpc', 32, 'world-npcs')]
-        if prefix == 'Ground':
-            probes += [('Clock', 48, 'clock'), ('Placement', 32, 'placement'), ('Numeric', 48, 'numeric')]
-        for name, count, folder in probes:
-            receipt = source/'build'/folder/'result.json'
-            if prefix == 'PoisonScope' and name == 'Consumer':
-                receipt = R/'earth-bind-material/build/consumer-completion/result.json'
-            original = read(receipt)
-            assert original['status'] == 'passed', str(receipt)
-            source_jar = Path(original['runtime']['path'])
-            assert sha(source_jar) == original['runtime']['sha256']
-            v['basis'].append(pin(receipt))
-            overlays = [source/'build'/folder/'classes']
-            if prefix == 'PoisonScope' and name == 'Consumer':
-                overlays = [R/'earth-bind-material/build/consumer-completion/classes']
-            if prefix == 'WorldPotion':
-                ref = read(source/'build/tests/dependency-freeze.json')['archive']
-                assert sha(Path(ref['path'])) == ref['sha256']
-                overlays.append(Path(ref['path']))
-            if prefix == 'PoisonScope' and name in ('Clock', 'Consumer', 'Timer', 'CurseConsumer'):
-                overlays.append(source/'build/boundaries/classes')
-                if name == 'CurseConsumer': overlays.insert(1, source/'build/timers/classes')
-            if prefix == 'Ground' and name in ('Clock', 'Placement', 'Numeric'):
-                overlays.append(source/'build/boundaries/classes')
-            if prefix == 'Ground' and name == 'Clock':
-                overlays.append(source/'build/boundaries/memory-observer')
-                with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
-                    assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
-            if name == 'Fault':
-                overlays.append(source/'build/boundaries/memory-observer')
-                with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
-                    assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
-            if name in ('Target', 'StateLock', 'Companion', 'WorldNpc'):
-                overlays.append(source/'build/tests/classes')
-            inputs = [pin(p) for d in overlays for p in ([d] if d.is_file() else d.rglob('*.class'))]
-            assert inputs
-            old=previous.get(prefix+name)
-            if old and old['compiled_inputs']==inputs:
-                for ref in [old['observations'],old['log']]:
-                    assert sha(Path(ref['path']))==ref['sha256']
-                v['results'].append(old)
-                print('REUSE',prefix+name,'same candidate, driver, compiled inputs and results',flush=True)
-                continue
-            dest = run/(prefix+name)
-            dest.mkdir()
-            log = dest/'probe.log'
-            cp = ';'.join(map(str, [*overlays, *deps]))
-            with log.open('w', encoding='utf-8') as out:
-                subprocess.run(list(map(str, [java_tool('java'), '-Xverify:all', '-cp', cp, 'local.lito381.server.'+prefix+name+'Probe', options.config, dest/'runtime', dest/'observations.json', jar, 'after'])), cwd=S, env=env, check=True, stdout=out, stderr=subprocess.STDOUT, timeout=300)
-            result = read(dest/'observations.json')
-            assert result['cases'] == count
-            if prefix == 'WorldPotion':
-                assert result['world_heal_gaps'] == 0
-            if name == 'StateLock':
-                assert result['Source_lock_bypasses'] == 0 and result['old_PC_monitor_blocks'] == 0
-            else:
-                assert result.get('locked_writes', result.get('locked_write_calls')) == 0
-            if name in ('Material', 'Target', 'Companion', 'WorldNpc'):
-                assert result['Source_window_bypasses'] == 0
-                assert (dest/'goldens.txt').read_bytes() == (source/'build'/folder/'after/goldens.txt').read_bytes()
-            if prefix == 'PoisonScope':
-                for key in ('early_warning_clocks', 'early_first_ticks'):
-                    if key in result: assert result[key] == 0
+    with formal_protection(options,v):
+        for directory, prefix, material, fault, lifecycle in specs:
+            source = R/directory
+            probes = [('Material', material, 'tests'), ('Fault', fault, 'boundaries'), ('Lifecycle', lifecycle, 'boundaries')]
             if prefix == 'Resurrection':
-                for key in ('signed_mp_bound_gaps','stale_native_acceptances','stale_direct_acceptances','stale_companion_acceptances'):
-                    if key in result: assert result[key] == 0
-            if name == 'Fault':
-                assert result['actual_memory_faults'] == fault and result['failed_material_casts_with_partial_commit'] == 0
-            v['results'].append(dict(probe=prefix+name, results=result, observations=pin(dest/'observations.json'), log=pin(log), compiled_inputs=inputs))
-            print('PASS', prefix+name, count, flush=True)
-    v['status'] = 'passed'
+                probes += [('Numeric', 48, 'numeric'), ('WorldNpc', 64, 'world-npc'), ('Companion', 80, 'companions'), ('AnswerLifetime', 64, 'answers'), ('AnswerRace', 112, 'answer-races'), ('CompanionAudit', 20, 'companion-audit')]
+            if prefix == 'WorldPotion':
+                probes = [('', 64, 'tests')]
+            if prefix == 'PoisonScope':
+                probes += [('WorldNpc', 64, 'world-npcs'), ('Clock', 8, 'clock-audit'), ('Consumer', 8, 'consumer'), ('Timer', 8, 'timers'), ('CurseConsumer', 24, 'curse-consumer')]
+            if prefix == 'EarthBind':
+                probes += [('WorldNpc', 32, 'world-npcs')]
+            if prefix == 'Polymorph':
+                probes += [('Menu',80,'menu')]
+            if prefix == 'Armor':
+                probes += [('StateLock', 12, 'state-locks'), ('Target', 64, 'targets')]
+            if prefix == 'Negative':
+                probes += [('Companion', 192, 'companions'), ('WorldNpc', 96, 'world-npcs')]
+            if prefix in ('Weakness', 'TargetNegative', 'Blind'):
+                probes += [('WorldNpc', 64, 'world-npcs')]
+            if prefix in ('Silence', 'DecayPotion'):
+                probes += [('WorldNpc', 32, 'world-npcs')]
+            if prefix == 'Ground':
+                probes += [('Clock', 48, 'clock'), ('Placement', 32, 'placement'), ('Numeric', 48, 'numeric')]
+            for name, count, folder in probes:
+                receipt = source/'build'/folder/'result.json'
+                if prefix == 'PoisonScope' and name == 'Consumer':
+                    receipt = R/'earth-bind-material/build/consumer-completion/result.json'
+                original = read(receipt)
+                assert original['status'] == 'passed', str(receipt)
+                source_jar = Path(original['runtime']['path'])
+                assert sha(source_jar) == original['runtime']['sha256']
+                v['basis'].append(pin(receipt))
+                overlays = [source/'build'/folder/'classes']
+                if prefix == 'PoisonScope' and name == 'Consumer':
+                    overlays = [R/'earth-bind-material/build/consumer-completion/classes']
+                if prefix == 'WorldPotion':
+                    ref = read(source/'build/tests/dependency-freeze.json')['archive']
+                    assert sha(Path(ref['path'])) == ref['sha256']
+                    overlays.append(Path(ref['path']))
+                if prefix == 'PoisonScope' and name in ('Clock', 'Consumer', 'Timer', 'CurseConsumer'):
+                    overlays.append(source/'build/boundaries/classes')
+                    if name == 'CurseConsumer': overlays.insert(1, source/'build/timers/classes')
+                if prefix == 'Ground' and name in ('Clock', 'Placement', 'Numeric'):
+                    overlays.append(source/'build/boundaries/classes')
+                if prefix == 'Ground' and name == 'Clock':
+                    overlays.append(source/'build/boundaries/memory-observer')
+                    with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
+                        assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
+                if name == 'Fault':
+                    overlays.append(source/'build/boundaries/memory-observer')
+                    with zipfile.ZipFile(source_jar) as a, zipfile.ZipFile(jar) as b:
+                        assert a.read('local/lito381/server/GameStateStore.class') == b.read('local/lito381/server/GameStateStore.class')
+                if name in ('Target', 'StateLock', 'Companion', 'WorldNpc'):
+                    overlays.append(source/'build/tests/classes')
+                inputs = [pin(p) for d in overlays for p in ([d] if d.is_file() else d.rglob('*.class'))]
+                assert inputs
+                old=previous.get(prefix+name)
+                if old and old['compiled_inputs']==inputs:
+                    for ref in [old['observations'],old['log']]:
+                        assert sha(Path(ref['path']))==ref['sha256']
+                    v['results'].append(old)
+                    print('REUSE',prefix+name,'same candidate, driver, compiled inputs and results',flush=True)
+                    continue
+                dest = run/(prefix+name)
+                dest.mkdir()
+                log = dest/'probe.log'
+                cp = ';'.join(map(str, [*overlays, *deps]))
+                with log.open('w', encoding='utf-8') as out:
+                    subprocess.run(list(map(str, [java_tool('java'), '-Xverify:all', '-cp', cp, 'local.lito381.server.'+prefix+name+'Probe', options.config, dest/'runtime', dest/'observations.json', jar, 'after'])), cwd=S, env=env, check=True, stdout=out, stderr=subprocess.STDOUT, timeout=300)
+                result = read(dest/'observations.json')
+                assert result['cases'] == count
+                if prefix == 'WorldPotion':
+                    assert result['world_heal_gaps'] == 0
+                if name == 'StateLock':
+                    assert result['Source_lock_bypasses'] == 0 and result['old_PC_monitor_blocks'] == 0
+                else:
+                    assert result.get('locked_writes', result.get('locked_write_calls')) == 0
+                if name in ('Material', 'Target', 'Companion', 'WorldNpc'):
+                    assert result['Source_window_bypasses'] == 0
+                    assert (dest/'goldens.txt').read_bytes() == (source/'build'/folder/'after/goldens.txt').read_bytes()
+                if prefix == 'PoisonScope':
+                    for key in ('early_warning_clocks', 'early_first_ticks'):
+                        if key in result: assert result[key] == 0
+                if prefix == 'Resurrection':
+                    for key in ('signed_mp_bound_gaps','stale_native_acceptances','stale_direct_acceptances','stale_companion_acceptances'):
+                        if key in result: assert result[key] == 0
+                if name == 'Fault':
+                    assert result['actual_memory_faults'] == fault and result['failed_material_casts_with_partial_commit'] == 0
+                v['results'].append(dict(probe=prefix+name, results=result, observations=pin(dest/'observations.json'), log=pin(log), compiled_inputs=inputs))
+                print('PASS', prefix+name, count, flush=True)
+        v['status'] = 'passed'
 except BaseException as error:
     v.update(status='failed', error=str(error))
     if log and log.exists():
