@@ -33,7 +33,9 @@ RuntimeInventory 為 **3 個方法、4 處 return**，withoutObjects 有兩處�
 - 新增 lambda／access 兩種命名各 10 個情境：審查重現、未核准額外方法保留、核准方法排在前面、剩餘方法內容不同、精確 overload 描述子、呼叫目標不同、兩側同原名內容相同／不同、effects 及 allow-right 疊加。Microsoft JDK 17 重新編譯工具及自測成功，`NORMALIZATION SELFTEST ALL PASS checks=517`（新增 60 項檢查）。
 - 使用下表同 SHA-256 的完整 JAR 重新產出 `docs/server-semantic-gap.md`：仍為 **2122 SAME／427 DIFF**；與既有固定輸入的 #132 基線 JSON 對照，仍為 **2064→2122 SAME、485→427 DIFF**，58 類改善、無反向退化。既有 #77 staged 重跑仍為 **66 SAME／1 SAME_EFFECTS／2 DIFF**。
 - 本輪不重建伺服器 JAR；程式變更只在 semantic-diff 工具及自測，另外更新 README、此報告與差異快照。未改伺服器 `src/main`、機密設定、封存、正式資源或 `docs/REPORT.md`。
-- 修復提交的 CI 以 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks) 為準；下列舊提交 CI 證據僅是歷史驗證，不代表本次修復提交已通過。
+- 修復提交 `d682014c700417a3fb858d130fe90271241647c8` 的 [Semantic gap CI](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126940606612) 實際 SUCCESS，完整日誌確認 517 項正規化檢查、`SELFTEST ALL PASS`、`FALLBACK ALL PASS` 及 2122 SAME／427 DIFF；Server／Launcher 建置及打包也成功。
+- **CI 全綠尚未達成**：同一修復提交的 Server tests 兩輪皆為 6,033 項、1 failure、0 errors、117 skipped。[首輪](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126940606561) 失敗於 `ModernArmorProtectionServiceTest.missingOrUnsolicitedFreshArmorAbortsWithoutPartialPublication:53`；[只重跑失敗 job 的第二輪](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41934847018/job/126945396948) 換成 `ModernBattleWorldProtocolTest.prepareLoadingBothAcksReadAndLeaveUseOnlyCanonicalLifecycle:77`。兩者均為離房後預期計數 0、實際 1；首輪失敗的 Armor 測試第二輪已通過。未以反覆重跑取代診斷，也未改動範圍外的伺服器程式／測試。
+- 本機完整 CI 證據保留於 `scratch/issue-135/ci-semantic-gap.log`、`ci-server-tests.log`、`ci-server-tests-retry.log`。最後報告提交的狀態見 [PR #152 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152/checks)；下列舊提交 CI 綠燈僅為歷史證據。
 
 ### 第 2 次嘗試複驗（2026-11-05）
 
@@ -104,10 +106,13 @@ SUMMARY SAME=2122 SAME_EFFECTS=0 DIFF=427 ONLY_LEFT=1381 ONLY_RIGHT=5 BYTE_SAME=
 
 ## 推測
 
+第 3 輪 CI 的兩個伺服器測試可能存在清理時序競態：`ModernWorldService.removeRetiredEntry` 需等待 `releaseDone` 與 `terminationDone` 才移除項目，而失敗測試在離房後立即檢查計數。這是依唯讀程式檢查與兩輪失敗位置不同所作推測，尚未以受控排程證明根因；本次未修改伺服器來源與測試，也未放寬斷言。
+
 58 個完整 JAR 類別改善符合預設 metadata／槽位正規化預期；此數字只代表本次固定輸入。剩餘 DIFF 需要各 staged 批次修正，不能以比較器放寬代替移植。SAME_EFFECTS 只驗證主控核准摘要，不證明參數資料流與分支目的地等價。
 
 ## 待驗證／未驗證什麼
 
+- 修復提交的 Server tests 未全綠，主控需另派伺服器測試／清理競態調查；#135 工具與自測已通過，但不能宣稱完整驗收完成。
 - 本機未具 Bash；完整 shell 自測與無 Maven 冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 未重建 #77 staged、未驗收其 69 entry 全通過；ServerConfig／SourceLogin 的兩類差異仍由 #77 接手。
 - 未啟動遊戲、登入器、伺服器，未連正式 DB；真機與整合回歸留既定任務。
@@ -148,6 +153,7 @@ java -cp "$tool/target/before:$tool/target/dependency/*" local.lito381.semanticd
 
 ## 產出路徑與給下一棒的提示
 
+- **優先交接主控**：第 3 次嘗試已修復 PR 的合成方法配對 P2；請 Claude 審查 `d682014`。另派超出 #135 範圍的伺服器測試調查，從上述兩個離房後計數斷言及 `ModernWorldService.removeRetiredEntry` 的終止清理時序著手，再完成 CI 全綠驗收；不要只重跑 #135 比較器驗證。
 - 程式／README／自測：`lito伺服器/LiTo381-Server/tools/semantic-diff/`。
 - 清單：`docs/combat-merge/extra-methods-approved.txt`、`metadata-exempt.txt`、`effects-approved.txt`。
 - 更新快照：`docs/server-semantic-gap.md`；任務報告：`docs/reports/issue-135.md`。
