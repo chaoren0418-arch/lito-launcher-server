@@ -1,6 +1,7 @@
 package local.lito381.server;
 
-// ported from candidate-50635f7e.jar onto src/main; T029 methods kept from formal 0.6.71
+// ported from candidate-50635f7e.jar onto src/main; T029 targets formal 0.6.71.
+// Incomplete semantic verification: see docs/reports/issue-70.md before B-land.
 
 
 
@@ -15030,40 +15031,20 @@ final class Protocol {
 
 
 
-    /** Retained S_PacketBox(DOLL=56, seconds), opcode 250. */
-
-    static byte[] magicDollIcon(int remainingSeconds) {
-
-        if (remainingSeconds < 0 || remainingSeconds > 0xFFFF) {
-
+    static byte[] magicDollIcon(int n) {
+        if (n < 0 || n > 65535) {
             throw new IllegalArgumentException("invalid magic doll icon duration");
-
         }
-
-        return new Writer().c(S_PACKET_BOX).c(56).h(remainingSeconds).bytes();
-
+        return new Writer().c(123).c(56).h(n).h(0).bytes();
     }
 
 
 
-    /** Retained S_IconConfig(SKILL_ICON=154) add/remove form. */
-
-    static byte[] magicDollCustomIcon(
-
-            int iconId, int remainingSeconds, boolean remove) {
-
-        if (iconId <= 0 || iconId > 0xFFFF || remainingSeconds < 0
-
-                || remainingSeconds > 0xFFFF) {
-
+    static byte[] magicDollCustomIcon(int n, int n2, boolean bl) {
+        if (n <= 0 || n > 65535 || n2 < 0 || n2 > 65535) {
             throw new IllegalArgumentException("invalid magic doll custom icon");
-
         }
-
-        return new Writer().c(S_PACKET_BOX).c(154)
-
-                .h(remainingSeconds).h(iconId).h(0).h(remove ? 1 : 0).bytes();
-
+        return new Writer().c(123).c(154).h(n2).h(n).h(0).h(bl ? 1 : 0).bytes();
     }
 
 
