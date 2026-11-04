@@ -1,8 +1,8 @@
 # LiTo 登入器專案
 
-目前發佈版本為 **0.6.70**，最新封存基準為 **0.6.66**；聯合基準位於 `LiTo381-Launcher/backups/baseline-0.6.66.zip`。
+目前發佈版本為 **0.6.71**，最新封存基準為 **0.6.66**；聯合基準位於 `LiTo381-Launcher/backups/baseline-0.6.66.zip`。
 
-- 啟動：`LiTo381-Launcher/release/current/LiTo381Launcher.exe`，桌面「LiTo 0.6.70 正式啟動器」指向同一檔案。
+- 啟動：`LiTo381-Launcher/release/current/LiTo381Launcher.exe`，桌面「LiTo 0.6.71 正式啟動器」指向同一檔案。
 - 開發、執行及備份：`LiTo381-Launcher/`，詳見其中的 `README.zh-TW.md`。
 - 仍被引用的原生程式、反組譯與分析契約：`舊版分析與驗收/`，保留原路徑。已完成的驗收／偵錯與多份公開參考來源集中至 `docs/history/retired-references-and-runs-20261014.zip`。
 - 舊相容層原始碼：`LiTo381-Compat/`，現行相容 DLL 原始碼以 `LiTo381-Launcher/native/` 為準。

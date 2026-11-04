@@ -22,7 +22,7 @@
 
 ## 原生資源資料庫
 
-`380_lito` 的資源表已精簡為 10 張 `lito_resource_*` 表（9 張執行表＋1 張統一待補／備註表）；有證據的技能呈現、BUFF selector、箭矢、地圖目錄與既有城鎮傳送於啟動時載入記憶體。缺證保留 NULL／停用及中文備註，查 `lito_resource_pending`。[接線範圍與驗證](docs/maintenance/resource-database-0.6.63.md)。資源資料庫基礎建置入口為 `tools/resource-database/build.py`，固定輸入為 `tools/resource-database/inputs/base-0.6.61.jar`，`build/` 內的候選與 class 檔可重建，舊修補工具不可直接覆蓋現版。0.6.70 正式 JAR 來自已驗證的世界資源／職業圖示配對候選，最終雜湊依 `deployment/release-inputs.json`；不得以較早的資源資料庫基礎輸出直接覆蓋。
+`380_lito` 的資源表已精簡為 10 張 `lito_resource_*` 表（9 張執行表＋1 張統一待補／備註表）；有證據的技能呈現、BUFF selector、箭矢、地圖目錄與既有城鎮傳送於啟動時載入記憶體。缺證保留 NULL／停用及中文備註，查 `lito_resource_pending`。[接線範圍與驗證](docs/maintenance/resource-database-0.6.63.md)。資源資料庫基礎建置入口為 `tools/resource-database/build.py`，固定輸入為 `tools/resource-database/inputs/base-0.6.61.jar`，`build/` 內的候選與 class 檔可重建，舊修補工具不可直接覆蓋現版。0.6.71 正式 JAR 來自已驗證的世界資源／職業圖示配對候選，最終雜湊依 `deployment/release-inputs.json`；不得以較早的資源資料庫基礎輸出直接覆蓋。
 
 ## 資料流
 
@@ -44,7 +44,7 @@
 
 ## 維護入口
 
-戰鬥／技能同源化候選正在實作，尚未更新正式核心。[實作、差分測試及接續項目](docs/maintenance/combat-integration-current.md)，[逐技能覆蓋矩陣](docs/maintenance/combat-coverage-current.md)。候選另以 `config/combat.properties` 指向來源職業／技能外控，正式 0.6.69 暫仍使用原有設定行為。
+戰鬥／技能同源化候選正在實作，尚未更新正式核心。[實作、差分測試及接續項目](docs/maintenance/combat-integration-current.md)，[逐技能覆蓋矩陣](docs/maintenance/combat-coverage-current.md)。候選另以 `config/combat.properties` 指向來源職業／技能外控，正式 0.6.71 暫仍使用原有設定行為。
 
 正式 JAR：`../../lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`。資源目錄與客戶端共用 `0-客戶端`；雜湊固定於 `deployment/release-inputs.json`，此檔是部署驗證資料，不是遊戲外控。
 
