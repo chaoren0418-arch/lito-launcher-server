@@ -11,3 +11,4 @@
 - Issue #2：PR #7 CI 已綠（Server + Launcher）。下一步由 Claude 審合併，並把 `TASKS.md` T007 標 review／done；T008 補 `NativeDeVisibilitySwitch`；T005 修 testCompile 後再拿掉 `-Dmaven.test.skip=true`。
 - 2026-11-04 — #12 T009: 測試依賴本機資源的全部加 assume 守門，讓 mvn test 全綠（code，codex-local，PR #15 已合併）→ [報告](reports/issue-12.md)
 - 2026-11-04 — #20 T010: 修復 T009 清單上的真實測試失敗（約 30 案）（code，cursor-cloud，PR #22 已合併）→ [報告](reports/issue-20.md)
+- 2026-11-04 — #24 T020: 戰鬥候選併入 src/main 的合併策略（設計）＋ M3 T040 拆任務（design，claude-chat，分支 task/24）→ [報告](reports/issue-24.md)
