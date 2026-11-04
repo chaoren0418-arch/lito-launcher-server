@@ -51,7 +51,25 @@
 
 ## VALIDATION.md 舊段落（原文搬移，未改寫）
 
-以下各段自 `VALIDATION.md` 原文搬出，連結仍以原檔所在目錄（`LiTo381-Server/`）為準。
+以下各段自 `VALIDATION.md` 原文搬出，原文內的相對連結保留未改寫；搬移後須由下方補充索引開啟證據。
+
+### 搬移段落的證據連結補充索引
+
+下列連結以本頁所在的 `LiTo381-Server/docs/` 為基準，依原文出現順序對應 9 個證據入口。
+
+| 原文段落／連結 | 可點擊的證據入口 |
+| --- | --- |
+| 跨角色材料技能／驗證與限制 | [跨角色材料技能驗證與限制](maintenance/native-pair-material-progress.zh-TW.md) |
+| 隱身施法外控／證據與限制 | [隱身施法外控證據與限制](maintenance/native-invisibility-cast-policy-progress.zh-TW.md) |
+| 三重矢倍率外控／證據與限制 | [三重矢倍率外控證據與限制](maintenance/native-triple-arrow-policy-progress.zh-TW.md) |
+| 奪命之雷傳送外控／證據與限制 | [奪命之雷傳送外控證據與限制](maintenance/native-thunder-teleport-policy-progress.zh-TW.md) |
+| 堅固防護外控／證據與限制 | [堅固防護外控證據與限制](maintenance/native-solid-carriage-policy-progress.zh-TW.md) |
+| 技能73材料／證據與限制 | [技能73材料證據與限制](maintenance/native-magical-weapon-material-progress.zh-TW.md) |
+| 2026-10-20 更新／主要進度表 | [戰鬥技能主要進度表](maintenance/combat-continuation-current.zh-TW.md) |
+| 已發布／發布與驗收記錄 | [BUFF 相容與八角色分頁發布與驗收記錄](maintenance/buff-schema-and-character-pages-20261018.zh-TW.md) |
+| 候選／候選索引 | [候選索引](../tools/combat-continuation/continuation-current.json) |
+
+### 搬移原文
 
 跨角色材料技能（2026-10-20，隔離候選）：技能68通過216案施放、72案Ctrl／成對鎖定／退場與IO邊界、Main10案，技能73 Main8案與1068案既有材料／Light回歸通過。材料邊界25／58，其餘33個及完整Source／範圍語意仍開放；競技與資料安全限制保留，未部署。詳見[驗證與限制](docs/maintenance/native-pair-material-progress.zh-TW.md)。
 
