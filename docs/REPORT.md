@@ -8,4 +8,4 @@
 
 ## 下一步
 
-- Issue #4：本機 test 任務在 Windows clone 後跑 `Build.ps1` 直到 publish；核對 `release/current` 產物。CI launcher job 由 PR 檢查。
+- Issue #4：CI 已綠（PR #8 launcher + server）。下一步由本機 test 在 Windows clone 後跑 `Build.ps1` 直到 publish，核對 `release/current` 產物。
