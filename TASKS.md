@@ -5,11 +5,11 @@ Cursor 接任務時只改「範圍」列出的路徑；PR 標題用 `ID: 摘要`
 
 ## M0 可重現建置
 
-### T001 | review | Claude | `.github/workflows/build.yml`
+### T001 | done | Claude | `.github/workflows/build.yml`
 CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製進 `src/main`）+ 登入器 `dotnet build`。
 驗收：main 分支兩個 job 綠燈。
 
-### T002 | todo | Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
+### T002 | review | Claude+Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
 **現況**：`src/main` 只有 610 個檔，不是完整伺服器來源。正式 JAR = 二進位 `base-0.6.35/0.6.70.jar` + `tools/*/build.py` 逐層以 ASM patch 疊上去；缺的類別來源散在：
 - `tools/shared-database/{SharedDatabase,UnifiedConfiguration,SourceLogin}.java`
 - `lito登入器/LiTo381-Launcher/server-patches/repair-034/{LiToGmCommands,LiToGmNpcs,EnableCommands}.java` 等
