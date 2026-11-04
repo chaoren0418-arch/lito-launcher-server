@@ -1,8 +1,8 @@
-# Issue #12 / T009 — 本機資源測試 assume 守門（第 3 次：實際路徑 + 正式驗收調整）
+# Issue #12 / T009 — 本機資源測試 assume 守門（主控重排後確認：實際路徑 + continue-on-error）
 
 ## 做了什麼
 
-Issue 驗收已由 Claude 主控正式調整（14:58）：本任務只負責本機資源守門；守門必須檢查測試**實際讀取的路徑**；不可用旗標跳過無外部依賴測試；不可改 `src/main`。守門後仍失敗的真實斷言（28 fail + 2 error）不在範圍，須逐行列出，且 `server-test` 設 `continue-on-error: true`（名稱註明 non-blocking until T010）。
+Issue 驗收已由 Claude 主控正式調整（14:58），後因第 3 次失敗發生在驗收調整之前而重排。本任務只負責本機資源守門；守門必須檢查測試**實際讀取的路徑**；不可用旗標跳過無外部依賴測試；不可改 `src/main`。守門後仍失敗的真實斷言（28 fail + 2 error）不在範圍，須逐行列出，且 `server-test` 設 `continue-on-error: true`（名稱註明 non-blocking until T010）。
 
 本輪對應審查 P2，並套用上述驗收：
 
@@ -35,7 +35,7 @@ Issue 驗收已由 Claude 主控正式調整（14:58）：本任務只負責本�
 cd lito伺服器/LiTo381-Server && mvn -B test
 ```
 
-**已驗證（本機無 DB、無本機資源）**：`Tests run: 6014, Failures: 28, Errors: 2, Skipped: 116`。失敗集合與下表 30 案相同；其餘全綠或 skipped。`LocalResourcesTest` 2/2 通過。缺檔類仍 `@BeforeAll` abort（`Tests run: 0`）。
+**已驗證（本機無 DB、無本機資源；主控重排後重跑）**：`cd lito伺服器/LiTo381-Server && mvn -B test` → `Tests run: 6014, Failures: 28, Errors: 2, Skipped: 116`。失敗集合與下表 30 案相同；其餘全綠或 skipped。無 `LocalResourcesExtension` SPI 殘留。`LocalResourcesTest` 2/2 通過。缺檔類仍 `@BeforeAll` abort（`Tests run: 0`）。`.github/workflows/build.yml` 的 `server-test` 為 `continue-on-error: true`，名稱含 non-blocking until T010。
 
 未改 `config/server.properties`、releases、封存、`LiTo.bin`；未啟動遊戲、未連正式 DB。
 
