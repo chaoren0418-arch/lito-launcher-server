@@ -2,9 +2,11 @@
 
 ## 結論／做了什麼
 
-已完成純 Python 掃描器、簽名清單、9 份 stub Java、PowerShell／Bash 建置入口與隔離自測。兩個指定樣本均可編譯；原版 semantic-diff 結果為 **SAME=1、DIFF=1**，因此**完整語意驗收尚未通過**，不能以本報告宣稱兩類均 SAME。
+已完成純 Python 掃描器、簽名清單、9 份 stub Java、PowerShell／Bash 建置入口與隔離自測。依 Issue #108 主控調整後的驗收裁定，**本 Issue 驗收已達成，可交閘門與審查**：兩個指定樣本編譯成功、`NativeDeItemEquipProc` 語意比對 SAME，且移除 stub 的負向對照確實編譯失敗。原版 semantic-diff 結果仍為 **SAME=1、DIFF=1**；`NativeDeVisibilitySwitch` 的合成類別結構差異與 stub 無關，由 #135 的「metadata 豁免類別」清單於 A03 處理，不屬於本 Issue 驗收範圍。
 
 工作分支沿用 `task/108`，基於既有 worktree 修改，沒有 checkout／新建分支。只提交本 Issue 範圍；`pom.xml`、`src/main`、`docs/REPORT.md` 均未改。
+
+本次裁定同步（2026-11-05）僅更新本報告，沿用 `0f8abf3` 的程式與下列既有驗證證據，未修改程式或重跑編譯／語意測試。Bash／Linux 入口實跑由 #134 的 CI 驗證，不阻擋本 Issue 交付。
 
 ## 已驗證
 
@@ -151,10 +153,10 @@ negative control: change ACTIVE field reference: method <clinit>()V insn[6]: ...
 
 合成 switch 類的差異來自既有 ASM 重映射 metadata 與 javac 對獨立 Java 類的輸出規則；這與 stub 方法簽名無關。此原因符合觀察，但本輪未重播歷史 patch 鏈，不能宣稱已驗證歷史寫入來源。
 
-## 待驗證／未完成
+## 待驗證／後續任務（不阻擋本 Issue 驗收）
 
-- **兩個類別完整 SAME 尚未達成**。已讀 [#132](https://github.com/chaoren0418-arch/lito-launcher-server/issues/132)：目前文字只承諾遮掉方法／欄位 synthetic 旗標，未涵蓋 class synthetic、enclosing／nest／InnerClasses 及新增建構子。不能聲稱等 #132 合併即可自動消除全部差異。
-- 本機沒有 Bash；`build.sh` 已撰寫但尚未在 Bash／Linux 執行，PowerShell 入口已實跑。
+- 原版工具的 `NativeDeVisibilitySwitch` DIFF 保留為實際證據；主控已裁定這是 javac 合成 switch-map 類別經 ASM 改名為頂層類別所留下的結構差異，Java 原始碼無法直接表達相同 metadata。由 [#135](https://github.com/chaoren0418-arch/lito-launcher-server/issues/135) 新增「metadata 豁免類別」清單，屬於 A03 工作，不要求本 Issue 達成兩類完整 SAME，也不再等待 #132 擴充裁定。
+- 本機沒有 Bash；`build.sh` 已撰寫但尚未在 Bash／Linux 執行，PowerShell 入口已實跑。依主控裁定，Bash／Linux 驗證交由 #134 的 CI 執行。
 - Maven 編譯接線／成品排除交 #134；本輪未執行完整 Maven package 或驗證其最終 artifact。
 - 未執行伺服器、登入器、遊戲或正式 DB；未驗證 stub 的執行期等價性，stub 本來就禁止執行或部署。
 - 未讀機密設定、封存、客戶端；未修改原始專案內容、固定 JAR 或硬連結。
@@ -169,7 +171,7 @@ negative control: change ACTIVE field reference: method <clinit>()V insn[6]: ...
 
 ## 給下一棒的提示
 
-- **Claude／主控審查**：程式交付可供批次使用，但語意驗收保留未完成。請裁定上述 switch 結構差異由 #132 擴充或另派修復；不應以人工遮罩 DIFF 宣稱 SAME。
+- **Claude／主控審查**：依已給定的主控裁定，本 Issue 調整後驗收已達成，請以既有 `0f8abf3` 程式及本次報告更新交閘門與審查；無須再改 stub 程式。原始 DIFF 與診斷證據均保留，未將人工排除結構後的診斷冒充原版工具 SAME。
 - **#134 執行器**：使用 `compile-stubs` 與 `target/legacy-stubs` 為獨立編譯依賴；不要加入一般 runtime source root，也不要打進成品。CI 實跑 Bash 入口並檢查最終 JAR 不含 `com/lineage/`。
 - **A／B 批次執行器**：可立即依 README 的 classpath 編譯。生成清單有直接引用與 switch map 推導兩種證據；不要把 metadata 推導當成部署端的完整 API。
-- **#132 或後續承接者**：先重現原始 `1 SAME / 1 DIFF`，對上表全部結構逐項裁定，再用未改寫的樣本與正式 JAR 重跑；本輪不需使用者做實機操作。
+- **#135／A03 承接者**：依主控裁定新增「metadata 豁免類別」清單，以上表及 `<clinit>` 診斷、負向對照作為證據；後續驗證須保留方法指令的比對能力。本 Issue 不再以此差異列為未完成，也不需使用者做實機操作。
