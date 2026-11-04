@@ -26,7 +26,7 @@
 
 - 已驗證：盤點前後 `^// DECOMPILED` 均為 266；下面列出完整清單。檔案所屬 package 均為 `local.lito381.server`。
 - **本機 Maven 通過**：Java 17.0.17、Maven 3.9.16，`mvn -DskipTests compile`（另加 `-B -s <scratch/settings.xml> -Dmaven.repo.local=<scratch/m2> -f <隔離工作樹/pom.xml>`，將依賴及暫存限制於專案內）。編譯 940 個 source files，`BUILD SUCCESS`，exit 0，42.741 s，完成時間 `2026-11-04T13:49:57+08:00`。log：`scratch/issue-6-audit/compile.log`。這是未替換來源的基準編譯，不是替換驗收。
-- CI：待 PR 建立後查看；即使 CI 綠，也不能視為本任務來源替換驗收通過。
+- **CI 通過**：[PR #14](https://github.com/chaoren0418-arch/lito-launcher-server/pull/14) 的 [build run 41781882982](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41781882982)，提交 `9722b667fef329b4ca0f64dc3aa31ce24c321d8e`：Server（package、類別清單比對）及 Launcher 兩個 job 均 success。本行為該次 CI 完成後的文件紀錄；後續文件提交的 CI 以 PR checks 為準。即使 CI 綠，也不能視為來源替換驗收通過。
 - 僅編譯，不執行測試／應用程式，不啟動遊戲、伺服器或正式 DB；未讀寫機密設定、玩家實表或發布產物。
 
 ## 未驗證什麼／推測
