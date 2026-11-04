@@ -5,13 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the observed-war-end persistence order to the selected server fork. */
 final class NativeClassicCastleWarPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/CastlePersistenceService.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/server/ServerWarExecutor.java"));
+    }
+
     @Test
     void sourceOrderAndSqlGatedCastlePersistenceRemainConnected() throws Exception {
-        String source = Files.readString(Path.of(
+        String source = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/timecontroller/server/ServerWarExecutor.java"),
                 StandardCharsets.UTF_8);
         int endBranch = source.indexOf("} else if (this._war_end_time[i].before(now))");
@@ -25,14 +33,14 @@ final class NativeClassicCastleWarPersistenceSourceAuditTest {
                 && advanceStart > endPacket && advanceEnd > advanceStart
                 && taxReset > advanceEnd && moneyReset > taxReset && update > moneyReset);
 
-        String persistence = Files.readString(Path.of(
+        String persistence = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/CastlePersistenceService.java"),
                 StandardCharsets.UTF_8);
         assertTrue(persistence.contains("`war_time`=?"));
         assertTrue(persistence.contains("`tax_rate`=?"));
         assertTrue(persistence.contains("`public_money`=?"));
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         int legacy = accounts.indexOf("final class LegacyMySqlRepository");
@@ -51,7 +59,7 @@ final class NativeClassicCastleWarPersistenceSourceAuditTest {
         assertTrue(legacyRepository.contains("ownerClan.leaderObjectId()"));
         assertTrue(legacyRepository.contains("ownerClan.castleId() != current.castleId()"));
 
-        String state = Files.readString(Path.of(
+        String state = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameStateStore.java"),
                 StandardCharsets.UTF_8);
         int apply = state.indexOf("synchronized CastleState applyCastleWarEnd(");
@@ -66,7 +74,7 @@ final class NativeClassicCastleWarPersistenceSourceAuditTest {
         assertTrue(state.contains("effectiveCastleWarSchedule("));
         assertTrue(state.contains("prefix + \"warTimeMillis\""));
 
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
         assertTrue(hub.contains("state.effectiveCastleWarSchedule("));
@@ -75,7 +83,7 @@ final class NativeClassicCastleWarPersistenceSourceAuditTest {
                 "deliverClassicCastleWarEvent(source, event, repaired, recipients)")
                 < hub.indexOf("state.applyCastleWarEnd("));
 
-        String main = Files.readString(Path.of(
+        String main = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Main.java"),
                 StandardCharsets.UTF_8);
         assertTrue(main.contains("GameHub hub = new GameHub(config, state, accounts)"));

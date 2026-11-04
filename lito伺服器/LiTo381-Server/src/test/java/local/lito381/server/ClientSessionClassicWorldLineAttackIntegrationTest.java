@@ -16,8 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionClassicWorldLineAttackIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -58,7 +64,7 @@ final class ClientSessionClassicWorldLineAttackIntegrationTest {
             assertEquals(intermediateAfterFirst,
                     hp(fixture.intermediate().session()));
 
-            String casterFrames = Files.readString(
+            String casterFrames = LocalResources.readString(
                     fixture.caster().log().path());
             assertTrue(casterFrames.contains(
                     "S_ATTACK_MANY classic-world area line skill=17"));

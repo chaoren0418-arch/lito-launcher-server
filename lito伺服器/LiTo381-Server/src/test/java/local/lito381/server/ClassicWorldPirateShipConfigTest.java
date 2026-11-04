@@ -9,8 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClassicWorldPirateShipConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test
     void productionUsesNativeGameClockAndIsolatedSelftestPinsOpenBoundary()
             throws Exception {
@@ -32,7 +38,7 @@ final class ClassicWorldPirateShipConfigTest {
     void fixtureRejectsValuesOutsideOneNativeDay(@TempDir Path directory)
             throws Exception {
         Path source = Path.of("src/test/resources/server-config/config/server.world-pirate-boarding-selftest.properties");
-        String base = Files.readString(source)
+        String base = LocalResources.readString(source)
                 .replace("classic.world.pirate.ship.fixture.second.of.day=5400\n", "");
         Path negative = directory.resolve("negative.properties");
         Files.writeString(negative, base

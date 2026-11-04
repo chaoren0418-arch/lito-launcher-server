@@ -8,10 +8,24 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill39 ordinary-WORLD probability and MP-transfer fidelity. */
 final class NativeWorldManaDrainSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/combat/MagicHitCommitPlan.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
     private static final Path RETAINED = Path.of("../1-伺服器/src/com/lineage/server");
@@ -19,7 +33,7 @@ final class NativeWorldManaDrainSourceAuditTest {
     @Test
     void selectedRowsNativeProducerAndRetainedTransferRuleStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (39, 0, '魔力奪取', 5, 6, 1, 50, "
@@ -29,7 +43,7 @@ final class NativeWorldManaDrainSourceAuditTest {
                 "INSERT INTO `skills_負面boss免疫` VALUES (39, '魔力奪取', 5);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (39, '魔力奪取', NULL, NULL);"));
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -48,7 +62,7 @@ final class NativeWorldManaDrainSourceAuditTest {
         assertTrue(source.eraseEligible());
         assertTrue(BattleManaDrain.eligibleNpc(source));
 
-        String assembly = Files.readString(
+        String assembly = LocalResources.readString(
                 Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int dispatch = assembly.indexOf("loc_4CB8F1:");
@@ -62,12 +76,12 @@ final class NativeWorldManaDrainSourceAuditTest {
                 assembly.indexOf("sub_4CA6E0 endp"));
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("offset aCccdhh"));
-        byte[] recovered = Files.readAllBytes(Path.of(
+        byte[] recovered = LocalResources.readAllBytes(Path.of(
                 "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
         assertEquals(500, peWordAtVirtualAddress(
                 recovered, 0x635774 + 38 * 2));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("this._skillId == MANA_DRAIN"));
@@ -76,7 +90,7 @@ final class NativeWorldManaDrainSourceAuditTest {
         assertTrue(skillUse.contains("cha.getCurrentMp() < drainMana"));
         assertTrue(skillUse.contains(
                 "(this._skillId == MANA_DRAIN) && (isManaDrain == false)"));
-        String commit = Files.readString(
+        String commit = LocalResources.readString(
                 RETAINED.resolve("model/combat/MagicHitCommitPlan.java"),
                 StandardCharsets.UTF_8);
         assertTrue(commit.contains(
@@ -87,7 +101,7 @@ final class NativeWorldManaDrainSourceAuditTest {
     @Test
     void worldDispatcherUsesAtomicMonsterMpAndPreservesAdmissionOrder()
             throws Exception {
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int worldStart = source.indexOf("if (phase == Phase.WORLD) {");
         int dispatch = source.indexOf(
                 "BattleSpellCatalog.ManaDrainSpell worldManaDrain", worldStart);
@@ -127,7 +141,7 @@ final class NativeWorldManaDrainSourceAuditTest {
         assertTrue(battle.contains("config.manaDrainFixturePercentileRoll()"));
         assertTrue(battle.contains("config.manaDrainFixtureTransferRoll()"));
 
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains(

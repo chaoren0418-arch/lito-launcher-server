@@ -6,9 +6,18 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernDisintegrateReadProbeTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/其他控制端/4-職業_技能設定表.properties"),
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test void statementAndExecutionAllowlistBlocksMutationBeforeInvokingDriver()throws Exception {
         int[] prepares={0};var delegate=ModernDisintegrateCatalogTest.proxy(Connection.class,(m,a)->{
             if(m.equals("prepareStatement")){prepares[0]++;return ModernDisintegrateCatalogTest.proxy(java.sql.PreparedStatement.class,(n,b)->{
@@ -28,13 +37,13 @@ class ModernDisintegrateReadProbeTest {
         }
     }
     @Test void selectedSourcePinsCircleTenLawfulDeltaAndCriticalConfigWithoutReadingLTAssets()throws Exception {
-        var sql=Files.readString(Path.of("../1-伺服器/db/380_db.sql"));
+        var sql=LocalResources.readString(Path.of("../1-伺服器/db/380_db.sql"));
         assertTrue(sql.contains("INSERT INTO `skills` VALUES (77, 0, '究極光裂術', 10, 4, 70, 0, 0, 0, 5000, 0, 'attack', 3, 190, 15, 8, 0, 0, 16, 64, 1, 10, 0, 0, 16, '$1485', 18, 11746, 0, 0, 0, 0);"));
         assertTrue(sql.contains("INSERT INTO `skills_item` VALUES (77, '究極光裂術', NULL, NULL);"));
         assertFalse(sql.contains("INSERT INTO `skills_buff_ability` VALUES (77,"));assertFalse(sql.contains("INSERT INTO `skills_負面技能控制` VALUES (77,"));
-        var config=Files.readString(Path.of("../1-伺服器/config/其他控制端/4-職業_技能設定表.properties"));
+        var config=LocalResources.readString(Path.of("../1-伺服器/config/其他控制端/4-職業_技能設定表.properties"));
         assertTrue(config.contains("DISINTEGRATE_CRITICAL_RND = 40"));assertTrue(config.contains("CRITICAL_SPR = 11748"));
-        var use=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        var use=LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
         assertTrue(use.contains("(this._skillId == DISINTEGRATE) && (pc.getLawful() < 500)"));
         assertTrue(use.contains("this._player.addLawful(this._skill.getLawful())"));
     }

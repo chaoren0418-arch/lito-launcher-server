@@ -10,10 +10,26 @@ import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned retained-source, selected-DB and native-client chain evidence. */
 final class NativeElf50CkewChainSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/npc/quest/Npc_CKEW50.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/npc/quest/Npc_Dicarding.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/quest/CKEWLv50_1.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/quest/ElfLv50_1.java"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+        LocalResources.assumeFiles(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/Text.idx"),
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/Text.pak"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SOURCE = RETAINED.resolve(
@@ -108,12 +124,12 @@ final class NativeElf50CkewChainSourceAuditTest {
     }
 
     private static String text(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8)
+        return LocalResources.readString(path, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
     }
 
     private static String hash(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

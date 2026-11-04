@@ -8,10 +8,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained death-feed/count authority plus selected-LiTo opcode boundary. */
 final class NativeClassicWorldKillFeedSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/其他控制端/0-廣播控制表.properties"),
+                Path.of("../1-伺服器/src/com/lineage/config/ConfigMsg.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/CharacterOtherPersistenceService.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_PacketBoxGree.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_SystemMessage.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/templates/L1PcOther.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/utils/GreenBroadcast.java"));
+        LocalResources.assumeFiles(
+                Path.of("../2-登入器/src/_aux/notification/green_msg_hook.rs"),
+                Path.of("../LiTo381-開發/analysis/NATIVE-S-DISPATCH-ALL.json"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PC = RETAINED.resolve(
@@ -58,7 +77,7 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
 
     @Test void retainedDeathOrdersWarAndFeedBeforePenaltyWithExactGates()
             throws Exception {
-        String source = Files.readString(PC).replace("\r\n", "\n");
+        String source = LocalResources.readString(PC).replace("\r\n", "\n");
         int encounter = source.indexOf("if (isEncounter())");
         int castle = source.indexOf("castleWarResult()", encounter);
         int clan = source.indexOf("simWarResult(lastAttacker)", castle);
@@ -78,28 +97,28 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
 
     @Test void retainedConfigurationAndBothAnnouncementWiresRemainExplicit()
             throws Exception {
-        String properties = Files.readString(BROADCAST_CONFIG);
+        String properties = LocalResources.readString(BROADCAST_CONFIG);
         assertTrue(properties.contains("KillMsgType=2"));
         assertTrue(properties.contains(
                 "MsgKill=\\\\fX[%s] \\\\fT擊殺 \\\\fR[%s]"));
 
-        String config = Files.readString(CONFIG);
+        String config = LocalResources.readString(CONFIG);
         assertTrue(config.contains("World.get().broadcastPacketToAll(new S_SystemMessage(msg))"));
         assertTrue(config.contains("GreenBroadcast.broadcastToAll(msg)"));
-        String greenPacket = Files.readString(GREEN_PACKET);
+        String greenPacket = LocalResources.readString(GREEN_PACKET);
         assertTrue(greenPacket.contains("writeC(S_OPCODE_PACKETBOX)"));
         assertTrue(greenPacket.contains("writeC(GREEN_MESSAGE)"));
         assertTrue(greenPacket.contains("writeC(0x02)"));
-        String systemPacket = Files.readString(SYSTEM_PACKET);
+        String systemPacket = LocalResources.readString(SYSTEM_PACKET);
         assertTrue(systemPacket.contains("writeC(S_OPCODE_GLOBALCHAT)"));
         assertTrue(systemPacket.contains("writeC(0x09)"));
     }
 
     @Test void countersAreDurableCharacterOtherColumns() throws Exception {
-        String other = Files.readString(OTHER);
+        String other = LocalResources.readString(OTHER);
         assertTrue(other.contains("add_killCount"));
         assertTrue(other.contains("add_deathCount"));
-        String persistence = Files.readString(OTHER_PERSISTENCE);
+        String persistence = LocalResources.readString(OTHER_PERSISTENCE);
         assertTrue(persistence.contains("character_other"));
         assertTrue(persistence.contains("killCount"));
         assertTrue(persistence.contains("deathCount"));
@@ -111,7 +130,7 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
                 sha256(SELECTED_CLIENT));
         assertEquals("67AD2A6593D31F821DEC4F1EF34916D2186B3841F7B1AD1578A76DADD229960E",
                 sha256(SELECTED_DISPATCH));
-        String dispatch = Files.readString(SELECTED_DISPATCH);
+        String dispatch = LocalResources.readString(SELECTED_DISPATCH);
         assertTrue(dispatch.contains("\"opcode\": \"0xFA\""));
         assertTrue(dispatch.contains("\"name\": \"S_LITO_CLAN\""));
         assertTrue(dispatch.contains("\"handler\": \"sub_4AC1C0\""));
@@ -119,7 +138,7 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
         assertTrue(dispatch.contains("\"name\": \"S_MESSAGE\""));
         assertTrue(dispatch.contains("\"handler\": \"sub_4A4190\""));
 
-        String implementation = Files.readString(Path.of("src/main/java/local/lito381/server/ClientSession.java"));
+        String implementation = LocalResources.readString(Path.of("src/main/java/local/lito381/server/ClientSession.java"));
         int begin = implementation.indexOf("private void publishClassicWorldPlayerKill(");
         int end = implementation.indexOf("private void applyClassicWorldDeathExperiencePenalty", begin);
         String method = implementation.substring(begin, end);
@@ -132,7 +151,7 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
     @Test void twGreenHookIsASeparateClientSpecificAugmentation() throws Exception {
         assertEquals("350E53600F7715FB790DBA72A0292970E03717D801F695AF2BFAF6ED57A5614D",
                 sha256(TW_GREEN_HOOK));
-        String hook = Files.readString(TW_GREEN_HOOK);
+        String hook = LocalResources.readString(TW_GREEN_HOOK);
         assertTrue(hook.contains("const OPCODE_GREEN: u32 = 0x54"));
         assertTrue(hook.contains("S_PacketBoxGree"));
         assertFalse(hook.contains("LiTo.bin"),
@@ -141,6 +160,6 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

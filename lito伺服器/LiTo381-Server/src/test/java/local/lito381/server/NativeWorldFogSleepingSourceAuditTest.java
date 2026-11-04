@@ -5,17 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill66 and the ordinary-WORLD sleep/wake lifecycle. */
 final class NativeWorldFogSleepingSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedSleepRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -25,7 +34,7 @@ final class NativeWorldFogSleepingSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_負面boss免疫` VALUES (66, '沉睡之霧', 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB989:", "loc_4CB9A3:");
@@ -56,7 +65,7 @@ final class NativeWorldFogSleepingSourceAuditTest {
     @Test
     void worldDispatcherAreaActorsAndWakeLifecycleStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String dispatch = between(session,
@@ -92,12 +101,12 @@ final class NativeWorldFogSleepingSourceAuditTest {
         assertTrue(handler.contains("classic-world-sleep-resisted"));
         assertTrue(handler.contains("classic-world-sleep-failure"));
 
-        String companion = Files.readString(Path.of(
+        String companion = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleCompanion.java"),
                 StandardCharsets.UTF_8);
         assertTrue(companion.contains("timedStatus.sleepActive(nowNanos)"));
         assertTrue(companion.contains("timedStatus.cancelSleep()"));
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains(
@@ -112,12 +121,12 @@ final class NativeWorldFogSleepingSourceAuditTest {
         assertTrue(session.contains("sleep-before="));
         assertTrue(session.contains("sleep-after="));
 
-        String config = Files.readString(Path.of(
+        String config = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ServerConfig.java"),
                 StandardCharsets.UTF_8);
         assertTrue(config.contains("int sleepFixturePercentileRoll"));
         assertTrue(config.contains("sleep.fixture.percentile.roll"));
-        String acceptanceConfig = Files.readString(Path.of(
+        String acceptanceConfig = LocalResources.readString(Path.of(
                 "src/test/resources/server-config/root/server.world-fog-sleeping-selftest.properties"),
                 StandardCharsets.UTF_8);
         assertTrue(acceptanceConfig.contains("database.read.only=true"));
@@ -126,7 +135,7 @@ final class NativeWorldFogSleepingSourceAuditTest {
     }
 
     private static String retained(String relative) throws Exception {
-        return Files.readString(RETAINED.resolve(relative).normalize(),
+        return LocalResources.readString(RETAINED.resolve(relative).normalize(),
                 StandardCharsets.UTF_8);
     }
 

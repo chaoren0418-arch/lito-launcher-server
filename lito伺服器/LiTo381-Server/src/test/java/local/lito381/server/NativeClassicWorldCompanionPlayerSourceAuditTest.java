@@ -7,10 +7,31 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained pet/summon-to-player authority plus selected LiTo wire boundary. */
 final class NativeClassicWorldCompanionPlayerSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_SelectTarget.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PetInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1SummonInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/combat/NpcPhysicalAttackFlow.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_UseArrowSkill.java"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/analysis/NATIVE-C-PRODUCERS-ALL.json"),
+                Path.of("../LiTo381-開發/analysis/NATIVE-HYPERTEXT-ACTION-EVIDENCE.json"),
+                Path.of("../LiTo381-開發/analysis/NATIVE-S-DISPATCH-ALL.json"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SELECT_TARGET = RETAINED.resolve(
@@ -295,12 +316,12 @@ final class NativeClassicWorldCompanionPlayerSourceAuditTest {
     }
 
     private static String normalized(Path path) throws Exception {
-        return Files.readString(path).replace("\r\n", "\n");
+        return LocalResources.readString(path).replace("\r\n", "\n");
     }
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

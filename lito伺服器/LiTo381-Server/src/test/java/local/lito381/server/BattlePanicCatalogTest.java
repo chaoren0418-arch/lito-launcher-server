@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattlePanicCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRow217MatchesDatabaseAndClientContract() {
         BattleSpellCatalog.PanicSpell spell =
                 BattleSpellCatalog.panicSpell(BattleSpellCatalog.PANIC);

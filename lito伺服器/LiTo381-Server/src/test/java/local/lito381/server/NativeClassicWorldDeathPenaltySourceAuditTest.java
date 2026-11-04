@@ -12,10 +12,19 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained database/source proof for ordinary WORLD EXP death loss. */
 final class NativeClassicWorldDeathPenaltySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/public-source-audit-0.7.660/tw_tpai/L1J-TW_3.80c/src/l1j/server/server/model/Instance/L1PcInstance.java"));
+    }
+
     private static final Path PRIMARY_SQL = Path.of("..", "1-伺服器", "db",
             "380_db.sql").toAbsolutePath().normalize();
     private static final Path RETAINED_PC = Path.of("..", "LiTo381-開發",
@@ -25,7 +34,7 @@ final class NativeClassicWorldDeathPenaltySourceAuditTest {
 
     @Test void everySelectedMapAndExpDeathRateMatchesRuntimeAuthority()
             throws Exception {
-        String sql = Files.readString(PRIMARY_SQL);
+        String sql = LocalResources.readString(PRIMARY_SQL);
         assertEquals(ClassicWorldDeathPenaltyCatalog.SOURCE_SHA256,
                 sha256(PRIMARY_SQL));
 
@@ -74,7 +83,7 @@ final class NativeClassicWorldDeathPenaltySourceAuditTest {
 
     @Test void retainedDeathOrdersActionBeforeExactExperienceFormula()
             throws Exception {
-        String source = Files.readString(RETAINED_PC).replace("\r\n", "\n");
+        String source = LocalResources.readString(RETAINED_PC).replace("\r\n", "\n");
         int action = source.indexOf(
                 "sendPackets(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));");
         int method = source.indexOf("public void deathPenalty() {");
@@ -118,6 +127,6 @@ final class NativeClassicWorldDeathPenaltySourceAuditTest {
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

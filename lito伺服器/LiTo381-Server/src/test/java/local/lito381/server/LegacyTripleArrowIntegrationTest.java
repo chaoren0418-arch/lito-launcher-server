@@ -15,9 +15,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for native skill132 Triple Arrow and both retained rows. */
 final class LegacyTripleArrowIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/SprTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/TRIPLE_ARROW.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/skillmode/TRIPLE_ARROW.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactTripleArrowContract() throws Exception {
@@ -144,7 +156,7 @@ final class LegacyTripleArrowIntegrationTest {
     }
 
     private static String read(Path root, String relative) throws Exception {
-        return Files.readString(root.resolve(relative.replace('/', '\\')),
+        return LocalResources.readString(root.resolve(relative.replace('/', '\\')),
                 StandardCharsets.UTF_8);
     }
 

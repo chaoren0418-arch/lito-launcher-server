@@ -5,16 +5,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill90 and its ordinary-WORLD equipment/ER lifecycle. */
 final class NativeWorldSolidCarriageSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_ItemUSe.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/SOLID_CARRIAGE.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseEquipmentAndErRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -24,7 +40,7 @@ final class NativeWorldSolidCarriageSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (90, '堅固防護', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CBAD6:");
@@ -36,43 +52,43 @@ final class NativeWorldSolidCarriageSourceAuditTest {
         assertTrue(assembly.contains("cmp     byte ptr [eax+6Ch], 19h"));
         assertTrue(assembly.contains("off_5028CC dd offset byte_636363"));
 
-        String mode = Files.readString(RETAINED.resolve(
+        String mode = LocalResources.readString(RETAINED.resolve(
                 "model/skill/skillmode/SOLID_CARRIAGE.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mode.contains("getTypeEquipped(2, 7)"));
         assertTrue(mode.contains("getTypeEquipped(2, 13)"));
         assertTrue(mode.contains("ConfigSkill.SOLID_CARRIAGE_MODE == 1"));
 
-        String itemTable = Files.readString(RETAINED.resolve(
+        String itemTable = LocalResources.readString(RETAINED.resolve(
                 "datatables/ItemTable.java"), StandardCharsets.UTF_8);
         assertTrue(itemTable.contains("_useTypes.put(\"shield\", 25)"));
         assertTrue(itemTable.contains("_useTypes.put(\"guarder\", 25)"));
         assertTrue(itemTable.contains("_armorTypes.put(\"shield\", 7)"));
         assertTrue(itemTable.contains("_armorTypes.put(\"guarder\", 13)"));
 
-        String itemUse = Files.readString(RETAINED.resolve(
+        String itemUse = LocalResources.readString(RETAINED.resolve(
                 "clientpackets/C_ItemUSe.java"), StandardCharsets.UTF_8);
         assertTrue(itemUse.contains("if (type == 7)"));
         assertTrue(itemUse.contains("removeSkillEffect(SOLID_CARRIAGE)"));
         assertTrue(itemUse.contains(
                 "type == 13 && com.lineage.config.ConfigSkill.SOLID_CARRIAGE_MODE == 1"));
 
-        String pc = Files.readString(RETAINED.resolve(
+        String pc = LocalResources.readString(RETAINED.resolve(
                 "model/Instance/L1PcInstance.java"), StandardCharsets.UTF_8);
         assertTrue(pc.contains("this.hasSkillEffect(SOLID_CARRIAGE)"));
         assertTrue(pc.contains("er += 15"));
-        String attackPc = Files.readString(RETAINED.resolve(
+        String attackPc = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackPc.java"), StandardCharsets.UTF_8);
         assertTrue(attackPc.contains("if (_weaponType == 20)"));
         assertTrue(attackPc.contains("return calcErEvasion()"));
-        String attackMode = Files.readString(RETAINED.resolve(
+        String attackMode = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackMode.java"), StandardCharsets.UTF_8);
         assertTrue(attackMode.contains("final int er = _targetPc.getEr()"));
         assertTrue(attackMode.contains(
                 "ThreadLocalRandom.current().nextInt(100) + 1"));
         assertTrue(attackMode.contains("return er < rnd"));
 
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains(
                 "REDUCTION_ARMOR, BOUNCE_ATTACK, SOLID_CARRIAGE"));
@@ -82,7 +98,7 @@ final class NativeWorldSolidCarriageSourceAuditTest {
 
     @Test
     void worldDispatcherCastErUnequipAndExpiryStayConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

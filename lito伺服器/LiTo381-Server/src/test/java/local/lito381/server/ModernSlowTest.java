@@ -5,11 +5,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSlowTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test void rawSelectedSqlColumnOrderNotTheOlderHandwrittenModelOwnsTheContract() throws Exception {
-        String sql = Files.readString(Path.of("../1-伺服器/db/380_db.sql"));
+        String sql = LocalResources.readString(Path.of("../1-伺服器/db/380_db.sql"));
         int table = sql.indexOf("CREATE TABLE `skills`  (");
         String definition = sql.substring(table, sql.indexOf(") ENGINE", table));
         var columns = new ArrayList<String>();
@@ -34,7 +44,7 @@ class ModernSlowTest {
         assertEquals(ModernSlow.DURATION_SECONDS, Integer.parseInt(actual.get("buffDuration")));
         assertEquals(ModernSlow.ACTION, Integer.parseInt(actual.get("action_id")));
         assertEquals(ModernSlow.EFFECT, Integer.parseInt(actual.get("castgfx")));
-        String use = Files.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        String use = LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
         assertTrue(use.contains("this._skill.getRanged() != -1"));
         assertTrue(use.contains("this._user.getLocation().isInScreen(this._target.getLocation())"));
         // Disagreement is explicit; this test must not bless a handwritten row
@@ -75,9 +85,9 @@ class ModernSlowTest {
     }
 
     @Test void signedMagicHitUsesTheRetainedSumAndNeverNarrowsWidePenalties() throws Exception {
-        String pc=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"));
+        String pc=LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"));
         assertTrue(pc.contains("return _magicHit + _setAbility.get(com.lineage.server.model.item.L1ItemAbility.AbilityType.MAGIC_HIT);"));
-        String magic=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"));
+        String magic=LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"));
         assertTrue(magic.contains("_pc.getMagicHit()"));
         for(long hit:new long[]{Long.MIN_VALUE,-5_000_000_000L,-90,-1,0,1,5_000_000_000L,Long.MAX_VALUE})
             for(long mr:new long[]{0,100,Long.MAX_VALUE})for(long intelligence:new long[]{0,15,Long.MAX_VALUE})

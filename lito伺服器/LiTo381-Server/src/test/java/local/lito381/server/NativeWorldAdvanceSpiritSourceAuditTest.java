@@ -5,16 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill79 and its ordinary-WORLD maximum-vital lifecycle. */
 final class NativeWorldAdvanceSpiritSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/ADVANCE_SPIRIT.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedFormulaStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -24,7 +34,7 @@ final class NativeWorldAdvanceSpiritSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_相消免疫技能` VALUES (79, '靈魂昇華');"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CB71D:");
@@ -40,7 +50,7 @@ final class NativeWorldAdvanceSpiritSourceAuditTest {
         assertTrue(sender.contains("push    14h"));
         assertTrue(sender.contains("call    sub_4C6AE0"));
 
-        String mode = Files.readString(
+        String mode = LocalResources.readString(
                 RETAINED.resolve("model/skill/skillmode/ADVANCE_SPIRIT.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mode.contains("pc.setAdvenHp(pc.getBaseMaxHp() / 5)"));
@@ -55,7 +65,7 @@ final class NativeWorldAdvanceSpiritSourceAuditTest {
 
     @Test
     void worldHandlerUsesBaseMaximumAndPublishesWorldExpiry() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int dispatchStart = session.indexOf("if (phase == Phase.WORLD) {");

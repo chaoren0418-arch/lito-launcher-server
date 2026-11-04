@@ -5,16 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill102 and its retained ordinary-WORLD damage route. */
 final class NativeWorldBurningSpiritSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void nativeProducerDatabaseAndRetainedMultiplierRulesStayExact()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         assertTrue(assembly.contains(
@@ -26,14 +36,14 @@ final class NativeWorldBurningSpiritSourceAuditTest {
         assertTrue(route.contains("push    offset off_5028CC"));
         assertTrue(assembly.contains("off_5028CC dd offset byte_636363"));
 
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (102, 0, '燃燒鬥志', 13, 5, 20, 0, 0, 0, 2990, 320, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 32, '$2509', 19, 2946, 0, 0, 0, 0);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (102, '燃燒鬥志', NULL, NULL);"));
 
-        String attack = Files.readString(RETAINED.resolve(
+        String attack = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1AttackPc.java"),
                 StandardCharsets.UTF_8);
         assertTrue(attack.contains("if (_weaponType == 20)"));
@@ -49,7 +59,7 @@ final class NativeWorldBurningSpiritSourceAuditTest {
     @Test
     void worldDispatchSharedRollMaximumFamilyAndExpiryStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

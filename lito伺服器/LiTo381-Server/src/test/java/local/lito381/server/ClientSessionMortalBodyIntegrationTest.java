@@ -14,15 +14,21 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionMortalBodyIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void battleCastConsumesHpAndAcceptedPlayerDamageReflectsOnce()
             throws Exception {
         Path configuration = temporary.resolve("server.properties");
         Files.writeString(configuration,
-                Files.readString(Path.of("config/server.properties"))
+                LocalResources.readString(Path.of("config/server.properties"))
                         + System.lineSeparator()
                         + "mortal.body.fixture.d100=1"
                         + System.lineSeparator());

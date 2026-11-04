@@ -4,9 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class ClassicWorldDropConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test
     void productionKeepsRetainedAutoLootTwoAndGroundAcceptanceUsesZero()
             throws Exception {

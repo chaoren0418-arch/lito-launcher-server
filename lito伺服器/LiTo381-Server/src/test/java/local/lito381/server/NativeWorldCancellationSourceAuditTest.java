@@ -5,10 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill44 WORLD NPC/pet/summon target fidelity. */
 final class NativeWorldCancellationSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CANCELLATION.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+    }
+
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
     private static final Path MONSTERS = Path.of(
@@ -23,7 +33,7 @@ final class NativeWorldCancellationSourceAuditTest {
     @Test
     void selectedRowAndRetainedTargetGateIncludeEveryNpcFamily()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -32,7 +42,7 @@ final class NativeWorldCancellationSourceAuditTest {
                 + "0, -1, 0, 0, 8, '$1464', 19, 870, 0, 0, 0, 280);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (44, '魔法相消術', NULL, NULL);"));
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -41,7 +51,7 @@ final class NativeWorldCancellationSourceAuditTest {
                 + "0, -1, 0, 0, 8, '$1464', 19, 870, 0, 0, 0, 280);"));
         assertTrue(secondary.contains(
                 "INSERT INTO `skills_item` VALUES (44, '魔法相消術', NULL, NULL);"));
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("L1SkillUse.java"), StandardCharsets.UTF_8);
         int gate = skillUse.indexOf("&& ((cha instanceof L1MonsterInstance)");
         String npcGate = skillUse.substring(gate, gate + 360);
@@ -49,7 +59,7 @@ final class NativeWorldCancellationSourceAuditTest {
         assertTrue(npcGate.contains("cha instanceof L1SummonInstance"));
         assertTrue(npcGate.contains("cha instanceof L1PetInstance"));
 
-        String cancellation = Files.readString(
+        String cancellation = LocalResources.readString(
                 RETAINED.resolve("skillmode/CANCELLATION.java"),
                 StandardCharsets.UTF_8);
         assertTrue(cancellation.contains("cha.curePoison();"));
@@ -69,7 +79,7 @@ final class NativeWorldCancellationSourceAuditTest {
         assertTrue(normalCast.indexOf("breakInterruptedCastEffects()")
                 < normalCast.indexOf("breakInvisibilityOnCast()"));
 
-        String catalog = Files.readString(CATALOG, StandardCharsets.UTF_8);
+        String catalog = LocalResources.readString(CATALOG, StandardCharsets.UTF_8);
         assertTrue(catalog.contains(
                 "CANCELLATION, new CancellationSpell(CANCELLATION, 5, 3, 19, 870,"));
         assertTrue(catalog.contains(
@@ -79,7 +89,7 @@ final class NativeWorldCancellationSourceAuditTest {
     @Test
     void worldDispatcherResolvesControlledAndOrdinaryActorsBeforeStaticRoi()
             throws Exception {
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int start = source.indexOf("private void useWorldRoiCancellation(");
         int end = source.indexOf("private void useWorldNpcCancellation(", start);
         String dispatcher = source.substring(start, end);
@@ -110,13 +120,13 @@ final class NativeWorldCancellationSourceAuditTest {
         assertTrue(battleMethod.contains(
                 "cancelAbsoluteBarrier(\"spell-\" + spell.skillId())"));
 
-        String monstersSource = Files.readString(
+        String monstersSource = LocalResources.readString(
                 MONSTERS, StandardCharsets.UTF_8);
         assertTrue(monstersSource.contains(
                 "synchronized MagicCancellation cancelMagicEffects("));
         assertTrue(monstersSource.contains("actor.damagePoisonStatus.cancelMagicEffects()"));
         assertTrue(monstersSource.contains("actor.weaponBreakStacks = 0;"));
-        String companionSource = Files.readString(
+        String companionSource = LocalResources.readString(
                 COMPANION, StandardCharsets.UTF_8);
         assertTrue(companionSource.contains(
                 "synchronized MagicCancellation cancelMagicEffects()"));

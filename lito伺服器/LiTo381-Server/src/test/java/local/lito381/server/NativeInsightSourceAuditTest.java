@@ -11,10 +11,31 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for selected Illusionist skill216 Insight. */
 final class NativeInsightSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CANCELLATION.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/INSIGHT.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_OwnCharStatus2.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+        LocalResources.assumeIdaClient(
+                Path.of("D:/lineage開發/LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("D:/lineage開發/LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PRIMARY = RETAINED.resolve("db/380_db.sql");
@@ -180,7 +201,7 @@ final class NativeInsightSourceAuditTest {
     }
 
     private static int readPeWordAtVa(Path path, long va) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         ByteBuffer image = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sections = Short.toUnsignedInt(image.getShort(pe + 6));
@@ -203,13 +224,13 @@ final class NativeInsightSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String sha256(Path path) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        try (var stream = Files.newInputStream(path)) {
+        try (var stream = LocalResources.newInputStream(path)) {
             byte[] buffer = new byte[64 * 1024];
             for (int count; (count = stream.read(buffer)) >= 0;) {
                 if (count > 0) digest.update(buffer, 0, count);

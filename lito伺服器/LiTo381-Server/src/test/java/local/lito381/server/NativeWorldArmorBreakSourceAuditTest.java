@@ -5,16 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks LiTo's selector-only skill112 producer and ordinary-WORLD lifecycle. */
 final class NativeWorldArmorBreakSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -26,7 +37,7 @@ final class NativeWorldArmorBreakSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_魔屏無效技能` VALUES (112, '破壞盔甲');"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producerStart = assembly.indexOf("sub_4CB5F0 proc near");
@@ -41,13 +52,13 @@ final class NativeWorldArmorBreakSourceAuditTest {
         assertTrue(route.contains("push    14h"));
         assertTrue(route.contains("push    offset off_5028CC"));
 
-        String attackPc = Files.readString(RETAINED.resolve(
+        String attackPc = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackPc.java"), StandardCharsets.UTF_8);
         assertTrue(attackPc.contains("_targetPc.hasSkillEffect(ARMOR_BREAK)"));
         assertTrue(attackPc.contains("dmg = (int) (dmg * 1.58)"));
         assertTrue(attackPc.contains(
                 "(_weaponType != 20) && (_weaponType != 62)"));
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("ARMOR_BREAK, 113"));
         assertTrue(skillUse.contains("breakInterruptedCastEffects();"));
@@ -57,7 +68,7 @@ final class NativeWorldArmorBreakSourceAuditTest {
     @Test
     void worldDispatcherTargetRecoveryStatusDamageAndCancellationStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -97,7 +108,7 @@ final class NativeWorldArmorBreakSourceAuditTest {
         assertTrue(session.contains(
                 "playerTarget.cancelClassicWorldArmorBreak()"));
 
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains("long armorBreakExpiresAtNanos;"));

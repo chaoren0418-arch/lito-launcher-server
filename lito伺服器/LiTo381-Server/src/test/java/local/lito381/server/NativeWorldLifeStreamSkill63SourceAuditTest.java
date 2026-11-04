@@ -10,10 +10,24 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Exact native/source/server contract for skill63 Life Stream. */
 final class NativeWorldLifeStreamSkill63SourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcRegenExecutor.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("D:/lineage開發/LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("D:/lineage開發/LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path UNPACKED = Path.of(
@@ -151,7 +165,7 @@ final class NativeWorldLifeStreamSkill63SourceAuditTest {
 
     private static byte[] peBytes(Path path, long va, int length)
             throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         ByteBuffer image = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sections = Short.toUnsignedInt(image.getShort(pe + 6));
@@ -175,6 +189,6 @@ final class NativeWorldLifeStreamSkill63SourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 }

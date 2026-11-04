@@ -15,8 +15,14 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionIllusionAvatarIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void battleCastRefreshesWithoutStackAndAmplifiesAcceptedPlayerDamage()

@@ -7,10 +7,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-locked retained ordering and selected-client duel boundary. */
 final class NativeClassicWorldDeathGateSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/config/ConfigOther.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1War.java"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/analysis/NATIVE-C-PRODUCERS-ALL.json"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED_PC = Path.of("..", "1-伺服器", "src",
             "com", "lineage", "server", "model", "Instance",
             "L1PcInstance.java").toAbsolutePath().normalize();
@@ -30,7 +43,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
             throws Exception {
         assertEquals("D652D175C31ED3A7D1F6682792BD447BC36AB8C0211A2C7A56B070C0D630C19F",
                 sha256(RETAINED_PC));
-        String source = Files.readString(RETAINED_PC).replace("\r\n", "\n");
+        String source = LocalResources.readString(RETAINED_PC).replace("\r\n", "\n");
         int action = source.indexOf(
                 "sendPacketsAll(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die))");
         int duel = source.indexOf("getFightId() == fightPc.getId()", action);
@@ -55,7 +68,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
     @Test void retainedEncounterDefaultIsTwenty() throws Exception {
         assertEquals("00DDAFED0C6D0FC88D7474A2F16C880C4D48E2294DD48F181FCAA6A047165235",
                 sha256(RETAINED_OTHER));
-        String source = Files.readString(RETAINED_OTHER).replace("\r\n", "\n");
+        String source = LocalResources.readString(RETAINED_OTHER).replace("\r\n", "\n");
         assertTrue(source.contains(
                 "set.getProperty(\"encounter_lv\", \"20\")"));
         assertEquals(20, ClassicWorldDeathContext.ENCOUNTER_MAX_LEVEL);
@@ -65,7 +78,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
             throws Exception {
         assertEquals("A6CBE96D34C5DCD4A14C8CF5DFC3B347DDAC2E63FCD4A468CC83F1D7A5741C6A",
                 sha256(RETAINED_WAR));
-        String pc = Files.readString(RETAINED_PC).replace("\r\n", "\n");
+        String pc = LocalResources.readString(RETAINED_PC).replace("\r\n", "\n");
         int encounter = pc.indexOf("if (isEncounter())");
         int castle = pc.indexOf("castleWarResult()", encounter);
         int simulated = pc.indexOf("simWarResult(lastAttacker)", castle);
@@ -86,7 +99,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
                 && simLeader >= 0 && simLeader < simCease
                 && simCease < capturedSameWar);
 
-        String war = Files.readString(RETAINED_WAR).replace("\r\n", "\n");
+        String war = LocalResources.readString(RETAINED_WAR).replace("\r\n", "\n");
         int typeThree = war.indexOf("case 3: // 結束",
                 war.indexOf("private void requestSimWar"));
         int firstClan = war.indexOf(
@@ -106,7 +119,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
                 sha256(SELECTED_CLIENT));
         assertEquals("C0121DF9BF5BC02656691CD16B62BE0321E4FCCF5BB95B54059071D2FB8ECE47",
                 sha256(C_PRODUCERS));
-        String producers = Files.readString(C_PRODUCERS).replace("\r\n", "\n");
+        String producers = LocalResources.readString(C_PRODUCERS).replace("\r\n", "\n");
         int duel = producers.indexOf("\"name\": \"C_DUEL\"");
         int next = producers.indexOf("\"opcode\": \"0x75\"", duel);
         assertTrue(duel >= 0 && next > duel);
@@ -118,6 +131,6 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

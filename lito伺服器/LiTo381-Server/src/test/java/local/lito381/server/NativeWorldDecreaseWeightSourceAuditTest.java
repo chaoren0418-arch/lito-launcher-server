@@ -5,22 +5,33 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill14 and its ordinary-WORLD weight-capacity lifecycle. */
 final class NativeWorldDecreaseWeightSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Icons.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedCapacityFormulaStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (14, 0, '負重強化', 2, 5, 10, 50, 0, 0, 10, 1800, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 32, '$1978', 19, 2170, 0, 0, 0, 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CBBD4:");
@@ -32,14 +43,14 @@ final class NativeWorldDecreaseWeightSourceAuditTest {
         assertTrue(route.contains("push    14h"));
         assertTrue(route.contains("call    sub_4C6AE0"));
 
-        String player = Files.readString(
+        String player = LocalResources.readString(
                 RETAINED.resolve("model/Instance/L1PcInstance.java"),
                 StandardCharsets.UTF_8);
         assertTrue(player.contains("if (hasSkillEffect(DECREASE_WEIGHT))"));
         assertTrue(player.contains("weightReductionByMagic = 180"));
         assertTrue(player.contains("maxWeight += weightReductionByMagic"));
 
-        String icons = Files.readString(
+        String icons = LocalResources.readString(
                 RETAINED.resolve("serverpackets/S_Icons.java"),
                 StandardCharsets.UTF_8);
         assertTrue(icons.contains("pc.hasSkillEffect(DECREASE_WEIGHT)"));
@@ -49,7 +60,7 @@ final class NativeWorldDecreaseWeightSourceAuditTest {
 
     @Test
     void worldDispatcherAndHandlerCommitTheSharedNativeLease() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int dispatchStart = session.indexOf(

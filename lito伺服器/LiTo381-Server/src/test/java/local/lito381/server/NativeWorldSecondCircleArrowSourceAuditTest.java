@@ -6,16 +6,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skills15/16 and their ordinary-WORLD damaging-magic route. */
 final class NativeWorldSecondCircleArrowSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/templates/L1Skills.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerSelectedRowsAndRetainedWireStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -27,7 +40,7 @@ final class NativeWorldSecondCircleArrowSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (16, '地獄之牙', '40495,40499,40505,88', '10,8,3,1');"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB989:", "loc_4CB9A3:");
@@ -40,7 +53,7 @@ final class NativeWorldSecondCircleArrowSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccdhh"));
 
-        String clientUse = Files.readString(
+        String clientUse = LocalResources.readString(
                 RETAINED.resolve("clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String coordinateCases = between(
@@ -54,7 +67,7 @@ final class NativeWorldSecondCircleArrowSourceAuditTest {
 
     @Test
     void retainedMpCounterMagicAndElementMappingStayExact() throws Exception {
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains(
@@ -68,12 +81,12 @@ final class NativeWorldSecondCircleArrowSourceAuditTest {
         assertFalse(exceptions.matches("(?s).*\\b15\\b.*"));
         assertFalse(exceptions.matches("(?s).*\\b16\\b.*"));
 
-        String skills = Files.readString(
+        String skills = LocalResources.readString(
                 RETAINED.resolve("templates/L1Skills.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skills.contains("ATTR_EARTH = 1"));
         assertTrue(skills.contains("ATTR_FIRE = 2"));
-        String magic = Files.readString(
+        String magic = LocalResources.readString(
                 RETAINED.resolve("model/L1MagicMode.java"),
                 StandardCharsets.UTF_8);
         assertTrue(magic.contains("case L1Skills.ATTR_EARTH:"));
@@ -93,7 +106,7 @@ final class NativeWorldSecondCircleArrowSourceAuditTest {
         assertTrue(fire.attribute() == BattleSpellCatalog.ATTRIBUTE_EARTH);
         assertTrue(stalac.attribute() == BattleSpellCatalog.ATTRIBUTE_FIRE);
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int dispatchStart = session.indexOf(

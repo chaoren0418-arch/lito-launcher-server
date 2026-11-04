@@ -5,17 +5,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill55 and its ordinary-WORLD combat-stat lifecycle. */
 final class NativeWorldBerserkersSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcBuffAbilityCalc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedCombatRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -27,7 +40,7 @@ final class NativeWorldBerserkersSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_buff_ability` VALUES (55, '狂暴術', 'HIT', 2);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CB71D:");
@@ -44,12 +57,12 @@ final class NativeWorldBerserkersSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccd"));
 
-        String clientUse = Files.readString(RETAINED.resolve(
+        String clientUse = LocalResources.readString(RETAINED.resolve(
                 "clientpackets/C_UseSkill.java"), StandardCharsets.UTF_8);
         assertTrue(clientUse.contains("case 55:// 狂暴術"));
         assertTrue(clientUse.contains("targetId = readD();"));
 
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("this._skillId == BERSERKERS"));
         assertTrue(skillUse.contains("pc.addAc(10)"));
@@ -57,7 +70,7 @@ final class NativeWorldBerserkersSourceAuditTest {
         assertTrue(skillUse.contains("pc.addHitup(2)"));
         assertTrue(skillUse.contains("pc.updateBuffStatus()"));
 
-        String ability = Files.readString(RETAINED.resolve(
+        String ability = LocalResources.readString(RETAINED.resolve(
                 "model/Instance/L1PcBuffAbilityCalc.java"),
                 StandardCharsets.UTF_8);
         assertTrue(ability.contains("SkillBuffAbilityLoader.get().getAbility"));
@@ -68,7 +81,7 @@ final class NativeWorldBerserkersSourceAuditTest {
         assertTrue(ability.contains("AbilityType.AC"));
         assertTrue(ability.contains("pc.addAc(v * multiplier)"));
 
-        String skillStop = Files.readString(RETAINED.resolve(
+        String skillStop = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillStop.java"), StandardCharsets.UTF_8);
         assertTrue(skillStop.contains("case BERSERKERS:"));
         assertTrue(skillStop.contains("cha.addAc(-10)"));
@@ -79,7 +92,7 @@ final class NativeWorldBerserkersSourceAuditTest {
     @Test
     void worldDispatcherPublishesAndConsumesTheSameBerserkLease()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int dispatchStart = session.indexOf(

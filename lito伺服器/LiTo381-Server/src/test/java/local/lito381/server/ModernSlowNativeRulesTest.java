@@ -7,11 +7,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Explicit retained NPC prerequisite failures through the actual engine,
  * never a fake probability roll or a free unsupported-command response. */
 class ModernSlowNativeRulesTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackList.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     static ModernNpcCatalog.Catalog catalog(int id) {
         var c=ModernNpcMeleeTest.catalog();var original=c.npcs().get(ModernNpcMeleeTest.NPC);
         var rows=new HashMap<>(c.npcs());rows.put(id,new ModernNpcCatalog.Npc(new ModernNpcCatalog.Key(c.sourceId(),c.database(),id),
@@ -25,17 +35,17 @@ class ModernSlowNativeRulesTest {
     }
     @Test void requiredEffectIdsMatchTheRetainedTableAndMagicChecksBeforeProbability()throws Exception {
         var root=Path.of("../1-伺服器/src/com/lineage/server/model");
-        var ids=Files.readString(root.resolve("skill/L1SkillId.java"));var names=new HashMap<String,Integer>();
+        var ids=LocalResources.readString(root.resolve("skill/L1SkillId.java"));var names=new HashMap<String,Integer>();
         var constants=Pattern.compile("public static final int (\\w+) = (\\d+);").matcher(ids);
         while(constants.find())names.put(constants.group(1),Integer.parseInt(constants.group(2)));
         var retained=new HashMap<Integer,Integer>();
-        var entries=Pattern.compile("SKNPC\\.put\\((\\d+), (\\w+)\\);").matcher(Files.readString(root.resolve("L1AttackList.java")));
+        var entries=Pattern.compile("SKNPC\\.put\\((\\d+), (\\w+)\\);").matcher(LocalResources.readString(root.resolve("L1AttackList.java")));
         while(entries.find())retained.put(Integer.parseInt(entries.group(1)),Objects.requireNonNull(names.get(entries.group(2))));
         assertEquals(16,retained.size());assertEquals(retained,ModernSlowNativeRules.requiredEffects());
-        String magic=Files.readString(root.resolve("L1MagicPc.java"));int guard=magic.indexOf("L1AttackList.SKNPC.get(npcId)");
+        String magic=LocalResources.readString(root.resolve("L1MagicPc.java"));int guard=magic.indexOf("L1AttackList.SKNPC.get(npcId)");
         assertTrue(guard>0&&guard<magic.indexOf("probability = calcProbability(skillId);"));
         assertTrue(magic.substring(guard,magic.indexOf("// NPC指定外型",guard)).contains("if (!_pc.hasSkillEffect(tgskill))"));
-        String use=Files.readString(root.resolve("skill/L1SkillUse.java"));int type=use.indexOf("case TYPE_NORMAL ->");
+        String use=LocalResources.readString(root.resolve("skill/L1SkillUse.java"));int type=use.indexOf("case TYPE_NORMAL ->");
         assertTrue(type>0&&use.indexOf("commitMaterialAndAcquireCastLocks()",type)<use.indexOf("runSkill();",type));
         assertTrue(use.contains("applySideEffectsAfterNormalCast();"));assertTrue(use.contains("useConsume();"));
     }

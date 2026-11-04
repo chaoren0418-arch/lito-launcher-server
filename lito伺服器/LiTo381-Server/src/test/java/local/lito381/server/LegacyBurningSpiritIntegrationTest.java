@@ -15,9 +15,18 @@ import java.sql.ResultSet;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 102, its proc and optional talent rows. */
 final class LegacyBurningSpiritIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/config/ConfigSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactBurningSpiritContract() throws Exception {
@@ -126,7 +135,7 @@ final class LegacyBurningSpiritIntegrationTest {
 
     private static void assertRetainedProcAndConfiguration() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String attack = Files.readString(retained.resolve(Path.of(
+        String attack = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "L1AttackPc.java")),
                 StandardCharsets.UTF_8);
         for (String fragment : new String[] {
@@ -140,7 +149,7 @@ final class LegacyBurningSpiritIntegrationTest {
             assertTrue(attack.contains(fragment), "missing retained proc " + fragment);
         }
 
-        String config = Files.readString(retained.resolve(Path.of(
+        String config = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "config", "ConfigSkill.java")),
                 StandardCharsets.UTF_8);
         assertTrue(config.contains(
@@ -148,7 +157,7 @@ final class LegacyBurningSpiritIntegrationTest {
         assertTrue(config.contains(
                 "BURNING_DMG = _getDouble(p, \"BURNING_DMG\", 1.5)"));
 
-        String buffs = Files.readString(retained.resolve(Path.of(
+        String buffs = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "datatables", "user",
                 "CharBuffTable.java")), StandardCharsets.UTF_8);
         assertFalse(buffs.contains("BURNING_SPIRIT"),

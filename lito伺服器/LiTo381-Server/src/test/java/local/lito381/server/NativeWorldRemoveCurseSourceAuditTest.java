@@ -8,10 +8,24 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill37 resources, native producer and retained cure boundary. */
 final class NativeWorldRemoveCurseSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/REMOVE_CURSE.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path WORKSPACE = Path.of("..");
 
     @Test
@@ -48,7 +62,7 @@ final class NativeWorldRemoveCurseSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccd"));
 
-        byte[] recovered = Files.readAllBytes(WORKSPACE.resolve(
+        byte[] recovered = LocalResources.readAllBytes(WORKSPACE.resolve(
                 "LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
         assertEquals(10, peWordAtVirtualAddress(
                 recovered, 0x635774 + 36 * 2));
@@ -131,7 +145,7 @@ final class NativeWorldRemoveCurseSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String between(String source, String start, String end) {

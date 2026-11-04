@@ -3,9 +3,15 @@ package local.lito381.server;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleCubeQuakeCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRow210MatchesDatabaseAndLiToSelectorContract() {
         BattleSpellCatalog.CubeQuakeSpell spell =
                 BattleSpellCatalog.cubeQuakeSpell(BattleSpellCatalog.CUBE_QUAKE);

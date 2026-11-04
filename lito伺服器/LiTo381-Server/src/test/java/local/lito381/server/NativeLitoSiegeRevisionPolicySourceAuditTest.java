@@ -10,10 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the 2003 launch limit, 2005 expansion, and selected production basis. */
 final class NativeLitoSiegeRevisionPolicySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/analysis/native-lito-siege-revision-sources-2003-2005.json"));
+    }
+
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",
             "native-lito-siege-revision-sources-2003-2005.json")
             .toAbsolutePath().normalize();
@@ -22,7 +29,7 @@ final class NativeLitoSiegeRevisionPolicySourceAuditTest {
     void historicalSourcesPreserveCapacityExpansionInsteadOfContradicting() throws Exception {
         assertEquals("D11A7E68D90613F31846B161866ACE6D85FDAC1128491604D0025DCD6589A2B1",
                 sha256(SOURCE));
-        String source = Files.readString(SOURCE, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SOURCE, StandardCharsets.UTF_8);
         assertTrue(source.contains("77C20FB307B076BC356382DAD677E88DF"
                 + "BC9FBFFE1C97329E3293F170CA11E7E"));
         assertTrue(source.contains("EED7A72D144CDC93C5B2BD1FB3E98C21"
@@ -67,8 +74,8 @@ final class NativeLitoSiegeRevisionPolicySourceAuditTest {
     }
 
     private static String sha256(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing retained source: " + path);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing retained source: " + path);
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

@@ -23,12 +23,12 @@ class ModernCharacterArmorReferenceTest {
         Path workspace=Path.of(root).getParent();
         Path calcPath=workspace.resolve("1-伺服器/src/com/lineage/server/utils/CalcStat.java");
         Path originalPath=workspace.resolve("1-伺服器/src/com/lineage/server/model/Instance/L1PcOriginal.java");
-        var calc=Files.readString(calcPath);var original=Files.readString(originalPath);
-        var login=Files.readString(workspace.resolve("1-伺服器/src/com/lineage/server/datatables/user/CharacterTable.java"));
+        var calc=LocalResources.readString(calcPath);var original=LocalResources.readString(originalPath);
+        var login=LocalResources.readString(workspace.resolve("1-伺服器/src/com/lineage/server/datatables/user/CharacterTable.java"));
         var load=method(login,"public L1PcInstance loadCharacter(");
         assertFalse(java.util.regex.Pattern.compile("\\brow\\.(?:ac|Ac)\\b").matcher(load).find());
         assertTrue(load.contains("pc.refresh()"));assertTrue(load.contains("pc.setOriginalDex(row.originalDex)"));
-        var pc=Files.readString(workspace.resolve("1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"));
+        var pc=LocalResources.readString(workspace.resolve("1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"));
         assertTrue(method(pc,"public void resetBaseAc()").contains("CalcStat.calcAc(this.getLevel(), this.getOriginalDex())"));
         assertTrue(method(pc,"public void resetOriginalAc()").contains("this.addAc(0 - this._originalAc)"));
         String source="public class NativeArmorReference {\n"+method(calc,"public static int calcAc(")+"\n"
@@ -59,5 +59,5 @@ class ModernCharacterArmorReferenceTest {
         while(end<source.length()&&depth>0){char ch=source.charAt(end++);if(ch=='{')depth++;else if(ch=='}')depth--;}
         assertEquals(0,depth);return source.substring(start,end);
     }
-    private static String hash(Path path)throws Exception{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));}
+    private static String hash(Path path)throws Exception{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));}
 }

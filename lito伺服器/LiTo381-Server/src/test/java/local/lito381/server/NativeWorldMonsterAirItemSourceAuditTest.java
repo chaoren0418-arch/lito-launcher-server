@@ -8,10 +8,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the retained damaged-fly potion/food landing and item-AI order. */
 final class NativeWorldMonsterAirItemSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/NpcAI.java"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
@@ -21,7 +30,7 @@ final class NativeWorldMonsterAirItemSourceAuditTest {
         assertEquals(
                 "72E8DC365DAAC1B27D3F2C92672FCC77FF512825C4B6EAF9C96A6A87EA80EAD2",
                 sha256(npcPath));
-        String npc = Files.readString(npcPath, StandardCharsets.UTF_8)
+        String npc = LocalResources.readString(npcPath, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
         String method = slice(npc, "public void searchItemFromAir()",
                 "public static void shuffle");
@@ -64,13 +73,13 @@ final class NativeWorldMonsterAirItemSourceAuditTest {
         assertEquals(
                 "F31A67C15C4C8473CC236E4E74D79B7CBE625DA807F0E40BEE715AC7640EFA41",
                 sha256(npcAi));
-        String types = Files.readString(itemTable, StandardCharsets.UTF_8);
+        String types = LocalResources.readString(itemTable, StandardCharsets.UTF_8);
         assertTrue(types.contains("_etcItemTypes.put(\"potion\", 6)"));
         assertTrue(types.contains("_etcItemTypes.put(\"food\", 7)"));
         assertTrue(types.contains(
                 "item.setType((_etcItemTypes.get(rs.getString(\"item_type\"))).intValue())"));
 
-        String ai = Files.readString(npcAi, StandardCharsets.UTF_8)
+        String ai = LocalResources.readString(npcAi, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
         String process = slice(ai, "private boolean AIProcess()",
                 "return false; // NPC AI");
@@ -82,7 +91,7 @@ final class NativeWorldMonsterAirItemSourceAuditTest {
     @Test
     void implementationCarriesNativeBranchAndWireOrder() throws Exception {
         Path root = Path.of("src/main/java/local/lito381/server");
-        String population = Files.readString(
+        String population = LocalResources.readString(
                 root.resolve("ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         ordered(population,
@@ -92,14 +101,14 @@ final class NativeWorldMonsterAirItemSourceAuditTest {
                 "actor.actorStatus = 0",
                 "actor.targetItemObjectId = item.objectId()",
                 "return new AirItemLanding(");
-        String hub = Files.readString(root.resolve("GameHub.java"),
+        String hub = LocalResources.readString(root.resolve("GameHub.java"),
                 StandardCharsets.UTF_8);
         ordered(hub, "population.revealFlyNear(",
                 "population.damagedFlyingInScreen(",
                 "population.searchItemFromAir(",
                 "serverClassicWorldMonsterAirItemLanding(",
                 "population.revealDamagedIceInScreen(");
-        String session = Files.readString(root.resolve("ClientSession.java"),
+        String session = LocalResources.readString(root.resolve("ClientSession.java"),
                 StandardCharsets.UTF_8);
         String sender = slice(session,
                 "void serverClassicWorldMonsterAirItemLanding(",
@@ -135,6 +144,6 @@ final class NativeWorldMonsterAirItemSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleIllusionAvatarCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRequestIsExactSelectorOnlyCcc() {
         byte[] request = new Protocol.Writer().c(Protocol.C_USE_SPELL)
                 .c(27).c(2).bytes();

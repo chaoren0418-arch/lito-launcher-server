@@ -17,9 +17,20 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 117 Brave Aura and party-only semantics. */
 final class LegacyBraveAuraIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcBuffAbilityCalc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactBraveAuraContract() throws Exception {
@@ -112,7 +123,7 @@ final class LegacyBraveAuraIntegrationTest {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
         Path currentSkill = retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill"));
-        String currentUse = Files.readString(
+        String currentUse = LocalResources.readString(
                 currentSkill.resolve("L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(currentUse.contains("this._skillId == BRAVE_AURA"));
         assertTrue(currentUse.contains("114, 115, 116, 117, 118"));
@@ -123,12 +134,12 @@ final class LegacyBraveAuraIntegrationTest {
         assertFalse(currentUse.contains("{ GLOWING_AURA, SHINING_AURA, BRAVE_AURA }"));
         assertTrue(currentUse.contains("pc.updateBuffStatus()"));
 
-        String currentStop = Files.readString(
+        String currentStop = LocalResources.readString(
                 currentSkill.resolve("L1SkillStop.java"), StandardCharsets.UTF_8);
         assertTrue(currentStop.contains("case BRAVE_AURA"));
         assertTrue(currentStop.contains("pc.updateBuffStatus()"));
 
-        String currentAbility = Files.readString(retained.resolve(Path.of(
+        String currentAbility = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "Instance",
                 "L1PcBuffAbilityCalc.java")), StandardCharsets.UTF_8);
         assertTrue(currentAbility.contains(
@@ -137,13 +148,13 @@ final class LegacyBraveAuraIntegrationTest {
         Path older = retained.resolve(Path.of(
                 "其他src參考用", "381n8src", "com", "lineage", "server",
                 "model", "skill"));
-        String olderUse = Files.readString(
+        String olderUse = LocalResources.readString(
                 older.resolve("L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(olderUse.contains("this._skillId == BRAVE_AURA"));
         assertTrue(olderUse.contains("pc.addDmgup(5)"));
         assertTrue(olderUse.contains("new S_PacketBoxIconAura(116"));
         assertTrue(olderUse.contains("{ GLOWING_AURA, SHINING_AURA }"));
-        String olderStop = Files.readString(
+        String olderStop = LocalResources.readString(
                 older.resolve("L1SkillStop.java"), StandardCharsets.UTF_8);
         assertTrue(olderStop.contains("case BRAVE_AURA"));
         assertTrue(olderStop.contains("cha.addDmgup(-5)"));

@@ -18,10 +18,27 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned authority for the retained magic-doll lifecycle. */
 final class NativeMagicDollSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/doll/Magic_Doll.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/DollPowerTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1DollInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1EquipmentSlot.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/drop/SetDrop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NPCPack_Doll.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_PacketBox.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcRegenExecutor.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pet/DollTimer.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/utils/CalcExp.java"));
+    }
+
     private static final Path SERVER = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path LINEAGE = SERVER.resolve("src/com/lineage");
@@ -109,7 +126,7 @@ final class NativeMagicDollSourceAuditTest {
         ordered(timer, "final int timeMillis = 1000",
                 "final int time = doll.get_time() - 1", "if (time <= 0)",
                 "outDoll(doll)");
-        String accounts = Files.readString(ACCOUNTS);
+        String accounts = LocalResources.readString(ACCOUNTS);
         assertTrue(accounts.contains("resourceTable(\"etcitem_doll_type\")"));
         assertTrue(accounts.contains("resourceTable(\"etcitem_doll_power_new\")"));
         assertTrue(accounts.contains("interval_time"));
@@ -186,7 +203,7 @@ final class NativeMagicDollSourceAuditTest {
                 "pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)",
                 "hpVal = 0");
 
-        String client = Files.readString(CLIENT);
+        String client = LocalResources.readString(CLIENT);
         assertTrue(client.contains(
                 "activeMagicDollPowers().value(\"PASSIVE_SP\")"));
         assertTrue(client.contains(
@@ -209,7 +226,7 @@ final class NativeMagicDollSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -224,6 +241,6 @@ final class NativeMagicDollSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

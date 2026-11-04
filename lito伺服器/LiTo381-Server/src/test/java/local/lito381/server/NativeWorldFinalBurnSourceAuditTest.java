@@ -6,22 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill108 and its ordinary-WORLD exceptional resource order. */
 final class NativeWorldFinalBurnSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void retainedSourcePinsCurrentMpDamageAndHpFirstAdmission() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (108, 0, '會心一擊', 14, 3, 1, 1, 0, 0, 0, 0, 'attack', 3, 0, 0, 0, 0, 0, 0, 64, 0, 1, 0, 0, 8, '$2515', 18, 2952, 0, 0, 0, 0);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (108, '會心一擊', NULL, NULL);"));
 
-        String magic = Files.readString(RETAINED.resolve(
+        String magic = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1MagicPc.java"),
                 StandardCharsets.UTF_8);
         assertTrue(magic.contains("if (skillId == FINAL_BURN)"));
@@ -29,7 +38,7 @@ final class NativeWorldFinalBurnSourceAuditTest {
         assertTrue(magic.contains("dmg -= _targetPc.getDamageReductionByArmor();"));
         assertTrue(magic.contains("damage = calcMrDefense(damage);"));
 
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("currentHp < this._hpConsume + 1"));
@@ -39,7 +48,7 @@ final class NativeWorldFinalBurnSourceAuditTest {
 
     @Test
     void worldRouteAndExceptionalCommitRemainConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

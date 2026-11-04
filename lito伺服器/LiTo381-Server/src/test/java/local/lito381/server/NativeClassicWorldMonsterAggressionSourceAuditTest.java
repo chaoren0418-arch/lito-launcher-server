@@ -13,10 +13,19 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for ordinary WORLD L1Monster target acquisition. */
 final class NativeClassicWorldMonsterAggressionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/other.properties"),
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1MonsterInstance.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path MONSTER = RETAINED.resolve(
@@ -36,7 +45,7 @@ final class NativeClassicWorldMonsterAggressionSourceAuditTest {
                 sha256(OTHER_CONFIG));
         assertEquals(ClassicWorldMonsterAggressionCatalog.RESOURCE_SHA256,
                 sha256(RESOURCE));
-        assertTrue(Files.readString(OTHER_CONFIG, StandardCharsets.UTF_8)
+        assertTrue(LocalResources.readString(OTHER_CONFIG, StandardCharsets.UTF_8)
                 .contains("kill_red = true"));
     }
 
@@ -79,7 +88,7 @@ final class NativeClassicWorldMonsterAggressionSourceAuditTest {
     @Test
     void productionAutonomousBranchDoesNotInventCompanionAcquisition()
             throws Exception {
-        String gameHub = Files.readString(Path.of(
+        String gameHub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"));
         String method = method(gameHub,
                 "private ClassicWorldTarget nearestClassicWorldMonsterTarget(",
@@ -113,7 +122,7 @@ final class NativeClassicWorldMonsterAggressionSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -128,6 +137,6 @@ final class NativeClassicWorldMonsterAggressionSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

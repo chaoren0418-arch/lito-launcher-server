@@ -16,15 +16,21 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionConfusionIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void exactSelectorPreservesProbabilityOrderAndNonRefreshingSilence()
             throws Exception {
         Path configuration = temporary.resolve("server.properties");
         Files.writeString(configuration,
-                Files.readString(Path.of("config/server.properties"))
+                LocalResources.readString(Path.of("config/server.properties"))
                         + System.lineSeparator()
                         + "confusion.fixture.d100=1"
                         + System.lineSeparator());
@@ -127,7 +133,7 @@ final class ClientSessionConfusionIntegrationTest {
             throws Exception {
         Path configuration = temporary.resolve("world-server.properties");
         Files.writeString(configuration,
-                Files.readString(Path.of("config/server.properties"))
+                LocalResources.readString(Path.of("config/server.properties"))
                         + System.lineSeparator()
                         + "confusion.fixture.d100=1"
                         + System.lineSeparator());

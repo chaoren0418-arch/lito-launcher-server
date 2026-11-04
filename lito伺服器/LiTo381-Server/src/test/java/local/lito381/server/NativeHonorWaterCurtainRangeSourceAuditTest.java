@@ -7,17 +7,24 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected 3.81C weapon-range source into Honor objective combat. */
 final class NativeHonorWaterCurtainRangeSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+    }
+
     @Test
     void map512AndSelectedSwordSpearRowsRemainExact() throws Exception {
         assertEquals(List.of(510, 528, 532, 512, 517, 524, 530, 535),
                 BattleRules.Mode.HONOR_MATCH.maps());
         assertEquals(512, ArenaMapCatalog.forMap(512).mapId());
 
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -31,7 +38,7 @@ final class NativeHonorWaterCurtainRangeSourceAuditTest {
     @Test
     void roomAttackUsesTheActiveSourceWeaponRangeBeforeDamageResolution()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int weapon = session.indexOf(

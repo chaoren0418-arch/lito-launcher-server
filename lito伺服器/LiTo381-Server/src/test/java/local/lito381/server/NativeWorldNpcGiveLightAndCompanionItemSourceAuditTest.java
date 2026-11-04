@@ -13,10 +13,23 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for C_GIVE light and pet/summon onGetItem semantics. */
 final class NativeWorldNpcGiveLightAndCompanionItemSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/Light.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_GiveItem.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PetInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1SummonInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Character.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Light.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path GIVE = source(
@@ -132,7 +145,7 @@ final class NativeWorldNpcGiveLightAndCompanionItemSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -147,6 +160,6 @@ final class NativeWorldNpcGiveLightAndCompanionItemSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

@@ -5,16 +5,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Source-order proof that the leash belongs after every committed NPC step. */
 final class NativeWorldMonsterMovementDistanceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/NpcMove.java"));
+    }
+
     @Test
     void retainedMoveBroadcastsStepBeforeMonsterHomeTeleport() throws Exception {
         Path path = Path.of("..", "1-伺服器", "src", "com", "lineage",
                 "server", "model", "Instance", "NpcMove.java")
                 .toAbsolutePath().normalize();
-        String source = Files.readString(path, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(path, StandardCharsets.UTF_8);
         int method = source.indexOf("public void setDirectionMove(final int dir)");
         int broadcast = source.indexOf(
                 "broadcastPacketAll(new S_MoveCharPacket", method);
@@ -28,7 +35,7 @@ final class NativeWorldMonsterMovementDistanceSourceAuditTest {
 
     @Test
     void runtimeAppliesSameSettlementToPursuitEscapeAndIdle() throws Exception {
-        String population = Files.readString(Path.of("src", "main", "java",
+        String population = LocalResources.readString(Path.of("src", "main", "java",
                 "local", "lito381", "server",
                 "ClassicWorldMonsterPopulation.java"));
         int toward = population.indexOf("synchronized Movement moveToward(");

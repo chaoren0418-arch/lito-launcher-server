@@ -6,17 +6,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill67, monlist ownership and ordinary-WORLD polymorph consumers. */
 final class NativeWorldShapeChangeSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseMenuAndRetainedRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -24,7 +33,7 @@ final class NativeWorldShapeChangeSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (67, '變形術', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB112:", "loc_4CB11C:");
@@ -60,7 +69,7 @@ final class NativeWorldShapeChangeSourceAuditTest {
     @Test
     void worldDispatcherTokenContextRoiAndActionConsumersStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String dispatch = between(session,
@@ -123,7 +132,7 @@ final class NativeWorldShapeChangeSourceAuditTest {
         assertTrue(session.contains(
                 "BattleActionCodes.attackForWalk(battleWalkAction())"));
 
-        String acceptance = Files.readString(Path.of(
+        String acceptance = LocalResources.readString(Path.of(
                 "tools/classic_world_shape_change_selftest.py"),
                 StandardCharsets.UTF_8);
         assertTrue(acceptance.contains("random_target"));
@@ -131,7 +140,7 @@ final class NativeWorldShapeChangeSourceAuditTest {
         assertTrue(acceptance.contains("world_attack_action"));
         assertTrue(acceptance.contains("blocked_message"));
         assertTrue(acceptance.contains("encrypted_stream_aligned"));
-        String config = Files.readString(Path.of(
+        String config = LocalResources.readString(Path.of(
                 "src/test/resources/server-config/root/server.world-shape-change-selftest.properties"),
                 StandardCharsets.UTF_8);
         assertTrue(config.contains("database.read.only=true"));
@@ -142,7 +151,7 @@ final class NativeWorldShapeChangeSourceAuditTest {
     }
 
     private static String retained(String relative) throws Exception {
-        return Files.readString(RETAINED.resolve(relative).normalize(),
+        return LocalResources.readString(RETAINED.resolve(relative).normalize(),
                 StandardCharsets.UTF_8);
     }
 

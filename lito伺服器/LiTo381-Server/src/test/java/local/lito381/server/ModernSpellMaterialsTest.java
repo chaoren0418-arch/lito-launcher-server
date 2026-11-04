@@ -6,9 +6,16 @@ import java.nio.ByteBuffer;
 import java.nio.file.*;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSpellMaterialsTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+    }
+
     static ModernShopCatalog.Template template(long weight) {
         return new ModernShopCatalog.Template(ModernCharacterData.ItemKind.ETC,"$508",235,773,weight,
                 new ModernShopCatalog.Etc("0","material","none","gemstone",1,0,0,0,0,0,0,0,0,0,0,0,127));
@@ -34,7 +41,7 @@ class ModernSpellMaterialsTest {
     static ModernSlowCatalog.Snapshot learned(int source) {return new ModernSlowCatalog.Snapshot(new TournamentPresence.CharacterKey(source,3333),ModernSlowCatalog.Status.QUALIFIED);}
 
     @Test void selectedRawEtcColumnOrderQualifiesWithoutGuessingResourceIds() throws Exception {
-        String sql=Files.readString(Path.of("../1-伺服器/db/380_db.sql")),q=Character.toString(96);
+        String sql=LocalResources.readString(Path.of("../1-伺服器/db/380_db.sql")),q=Character.toString(96);
         int start=sql.indexOf("CREATE TABLE "+q+"etcitem"+q+"  (");
         String definition=sql.substring(start,sql.indexOf(") ENGINE",start));
         var columns=new ArrayList<String>();var fields=Pattern.compile("(?m)^  "+q+"([^"+q+"]+)"+q).matcher(definition);

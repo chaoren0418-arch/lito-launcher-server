@@ -12,10 +12,21 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned source proof for retained C_GIVE item-based pet taming. */
 final class NativeWorldPetItemTamingSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_GiveItem.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/PetTypeTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PetInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/templates/L1PetType.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path GIVE = RETAINED.resolve(
@@ -121,7 +132,7 @@ final class NativeWorldPetItemTamingSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -136,6 +147,6 @@ final class NativeWorldPetItemTamingSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

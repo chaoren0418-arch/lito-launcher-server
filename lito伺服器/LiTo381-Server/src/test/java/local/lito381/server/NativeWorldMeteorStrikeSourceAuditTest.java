@@ -6,17 +6,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill74 and its ordinary-WORLD target-centred damage flow. */
 final class NativeWorldMeteorStrikeSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerSelectedRowAndRetainedTargetListStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -28,7 +38,7 @@ final class NativeWorldMeteorStrikeSourceAuditTest {
         assertFalse(database.contains(
                 "INSERT INTO `skills_負面boss免疫` VALUES (74,"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int dispatch = assembly.indexOf("loc_4CB755:");
@@ -38,7 +48,7 @@ final class NativeWorldMeteorStrikeSourceAuditTest {
         assertTrue(producer.contains("call    sub_4CA6E0"));
         assertTrue(assembly.contains("aCccdhh"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains(
@@ -50,7 +60,7 @@ final class NativeWorldMeteorStrikeSourceAuditTest {
     @Test
     void worldDispatcherAdmissionAreaDamageAndNativePacketStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

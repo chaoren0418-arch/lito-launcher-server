@@ -5,17 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill104 and both ordinary-WORLD player/monster poison gates. */
 final class NativeWorldVenomResistSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1Poison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedAdmissionOnlyRuleStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -23,7 +34,7 @@ final class NativeWorldVenomResistSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (104, '毒性抵抗', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producer = assembly.indexOf("loc_4CBBD4:");
@@ -34,7 +45,7 @@ final class NativeWorldVenomResistSourceAuditTest {
         assertTrue(route.contains("push    14h"));
         assertTrue(route.contains("push    offset off_5028CC"));
 
-        String poisonGate = Files.readString(RETAINED.resolve(
+        String poisonGate = LocalResources.readString(RETAINED.resolve(
                 "model/poison/L1Poison.java"), StandardCharsets.UTF_8);
         assertTrue(poisonGate.contains("get_venom_resist() > 0"));
         assertTrue(poisonGate.contains("hasSkillEffect(L1SkillId.VENOM_RESIST)"));
@@ -42,11 +53,11 @@ final class NativeWorldVenomResistSourceAuditTest {
         for (String family : new String[] {
                 "L1DamagePoison.java", "L1SilencePoison.java",
                 "L1ParalysisPoison.java"}) {
-            String source = Files.readString(RETAINED.resolve(
+            String source = LocalResources.readString(RETAINED.resolve(
                     "model/poison/" + family), StandardCharsets.UTF_8);
             assertTrue(source.contains("isValidTarget"));
         }
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(use.contains(
                 "cha.setSkillEffect(getEffectSkillId(), _getBuffDuration)"));
@@ -56,7 +67,7 @@ final class NativeWorldVenomResistSourceAuditTest {
     @Test
     void worldCastExpiryAndPlayerMonsterPoisonGatesStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

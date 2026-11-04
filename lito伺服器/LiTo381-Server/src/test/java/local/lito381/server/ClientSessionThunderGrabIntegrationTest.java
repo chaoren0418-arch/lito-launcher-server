@@ -15,15 +15,21 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionThunderGrabIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void exactSelectorConsumesHpDamagesAndBypassesCounterMagicThenBinds()
             throws Exception {
         Path configuration = temporary.resolve("server.properties");
         Files.writeString(configuration,
-                Files.readString(Path.of("config/server.properties")));
+                LocalResources.readString(Path.of("config/server.properties")));
         ServerConfig config = ServerConfig.load(configuration);
         GameStateStore state = new GameStateStore(
                 temporary.resolve("state.properties"), false);

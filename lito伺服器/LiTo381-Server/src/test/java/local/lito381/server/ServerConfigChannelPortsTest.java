@@ -9,8 +9,14 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ServerConfigChannelPortsTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void productionStandardModeUsesOneGamePortForFourIsolatedLobbies()
@@ -34,7 +40,7 @@ final class ServerConfigChannelPortsTest {
     }
 
     @Test void rejectsLegacyDedicatedChannelPortConfiguration() throws Exception {
-        String baseline = Files.readString(Path.of(
+        String baseline = LocalResources.readString(Path.of(
                 "src/test/resources/server-config/config/server.selftest.properties"));
         assertInvalid(baseline + "\nlito.channel.ports=32100,32101,32102,32103\n");
     }

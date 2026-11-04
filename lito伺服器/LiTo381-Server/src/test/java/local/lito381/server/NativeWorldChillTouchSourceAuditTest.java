@@ -5,19 +5,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks LiTo.bin case9, selected skill10 data and retained life-drain order. */
 final class NativeWorldChillTouchSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     @Test
     void nativeProducerSelectedRowRetainedMeaningAndServerRouteStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (10, 0, '寒冷戰慄', 2, 1, 8, 0, 0, 0, 10, 0, 'attack', 3, 8, 10, 2, 0, 0, 4, 64, -2, 3, 0, 0, 2, '$1442', 18, 252, 0, 0, 0, 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB8B4:", "loc_4CB8F1:");
@@ -31,7 +42,7 @@ final class NativeWorldChillTouchSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccdhh"));
 
-        String clientUse = Files.readString(Path.of(
+        String clientUse = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String coordinateCases = between(clientUse,
@@ -41,7 +52,7 @@ final class NativeWorldChillTouchSourceAuditTest {
         assertTrue(coordinateCases.contains("targetX = readH();"));
         assertTrue(coordinateCases.contains("targetY = readH();"));
 
-        String retained = Files.readString(Path.of(
+        String retained = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(retained.contains(
@@ -52,7 +63,7 @@ final class NativeWorldChillTouchSourceAuditTest {
         assertTrue(retained.contains(
                 "castSnapshot._user.adjustCurrentHpIfAlive(heal, 0);"));
 
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains(
@@ -62,7 +73,7 @@ final class NativeWorldChillTouchSourceAuditTest {
         assertTrue(catalog.contains(
                 "return skillId == CHILL_TOUCH || skillId == VAMPIRIC_TOUCH;"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains(

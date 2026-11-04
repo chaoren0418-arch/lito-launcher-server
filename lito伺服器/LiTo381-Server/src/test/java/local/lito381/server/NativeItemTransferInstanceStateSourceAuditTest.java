@@ -12,10 +12,23 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for timed, sealed and active magic-doll item state. */
 final class NativeItemTransferInstanceStateSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/doll/Magic_Doll.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharItemsTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharItemsTimeTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/CharItemsTimePersistenceService.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1ItemInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Character.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/server/ServerItemUserTimer.java"));
+    }
+
     private static final Path SERVER = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path LINEAGE = SERVER.resolve("src/com/lineage");
@@ -110,7 +123,7 @@ final class NativeItemTransferInstanceStateSourceAuditTest {
                 "tgpc.getInventory().removeItem(item)",
                 "CharItemsTable.get().deleteItem(item.get_char_objid(), item)");
 
-        String accounts = Files.readString(RUNTIME_ACCOUNTS);
+        String accounts = LocalResources.readString(RUNTIME_ACCOUNTS);
         assertTrue(accounts.contains(
                 "LEFT JOIN character_items_time t ON t.itemr_obj_id=i.id"));
         assertTrue(accounts.contains("i.is_sealed AS instance_sealed"));
@@ -127,7 +140,7 @@ final class NativeItemTransferInstanceStateSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -142,6 +155,6 @@ final class NativeItemTransferInstanceStateSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

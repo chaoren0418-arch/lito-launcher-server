@@ -11,10 +11,24 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected LiTo skill69 and retained ordinary-WORLD teleport rules. */
 final class NativeWorldMassTeleportSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/MASS_TELEPORT.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED_ROOT = Path.of("../1-伺服器");
     private static final Path RETAINED = RETAINED_ROOT.resolve(
             "src/com/lineage/server");
@@ -214,8 +228,8 @@ final class NativeWorldMassTeleportSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static int count(String source, String value) {
@@ -228,7 +242,7 @@ final class NativeWorldMassTeleportSourceAuditTest {
     }
 
     private static byte[] peBytes(long virtualAddress, int length) throws Exception {
-        byte[] data = Files.readAllBytes(RECOVERED);
+        byte[] data = LocalResources.readAllBytes(RECOVERED);
         ByteBuffer image = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sectionCount = Short.toUnsignedInt(image.getShort(pe + 6));

@@ -10,10 +10,23 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill64 and its ordinary-WORLD one-attempt NPC semantics. */
 final class NativeWorldSilenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
     private static final Path SELECTED_DATABASE = Path.of(
@@ -27,9 +40,9 @@ final class NativeWorldSilenceSourceAuditTest {
 
     @Test
     void selectedSecondaryPeAndExactRequestStayDistinct() throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 SELECTED_DATABASE, StandardCharsets.UTF_8);
-        String secondary = Files.readString(
+        String secondary = LocalResources.readString(
                 SECONDARY_DATABASE, StandardCharsets.UTF_8);
         assertEquals("INSERT INTO `skills` VALUES (64, 0, '魔法封印', 8, 7,"
                 + " 50, 0, 40318, 1, 500, 16, 'buff', 3, 0, 0, 0, 0, 10,"
@@ -66,7 +79,7 @@ final class NativeWorldSilenceSourceAuditTest {
     @Test
     void nativeProducerSelectedRowsBarrierAndNpcConsumptionStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -78,7 +91,7 @@ final class NativeWorldSilenceSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (64, '魔法封印', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 ASSEMBLY.toString()),
                 StandardCharsets.UTF_8);
         int dispatch = assembly.indexOf("loc_4CB938:");
@@ -93,7 +106,7 @@ final class NativeWorldSilenceSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("offset aCccdhh"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         int barrier = skillUse.indexOf(
@@ -107,7 +120,7 @@ final class NativeWorldSilenceSourceAuditTest {
     @Test
     void worldDispatcherProbabilityStatusCancellationAndAiStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -138,12 +151,12 @@ final class NativeWorldSilenceSourceAuditTest {
         assertTrue(method.contains(
                 "Protocol.messageCode(spell.failureMessage())"));
 
-        String timed = Files.readString(Path.of(
+        String timed = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleTimedStatus.java"),
                 StandardCharsets.UTF_8);
         assertTrue(timed.contains(
                 "boolean consumeSilenceForNpcSpell(long nowNanos)"));
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains("synchronized boolean silence("));
@@ -160,7 +173,7 @@ final class NativeWorldSilenceSourceAuditTest {
     @Test
     void bothPhasesRevalidateEndpointsAndCommitBeforeStatusCleanup()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String world = between(session,
@@ -218,7 +231,7 @@ final class NativeWorldSilenceSourceAuditTest {
 
     private static byte[] peBytes(Path path, long va, int length)
             throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         ByteBuffer image = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sections = Short.toUnsignedInt(image.getShort(pe + 6));

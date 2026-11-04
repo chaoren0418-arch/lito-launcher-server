@@ -8,9 +8,15 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class CloneAppearanceProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
         ServerConfig production = ServerConfig.load(Path.of("config/server.properties"));
         assertFalse(production.cloneAppearanceProbeEnabled());
@@ -53,7 +59,7 @@ final class CloneAppearanceProbeConfigTest {
 
     @Test void productionSourceHasOnlyMutationAndExactRestoreInsideFixture()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertEquals(2, occurrences(session, "Protocol.cloneAppearance("));
@@ -91,7 +97,7 @@ final class CloneAppearanceProbeConfigTest {
                             "server.clone-appearance-physical-probe.properties")
                             .contains(candidate.getFileName().toString()))
                     .toList()) {
-                String source = Files.readString(path, StandardCharsets.UTF_8);
+                String source = LocalResources.readString(path, StandardCharsets.UTF_8);
                 assertFalse(source.contains("clone.appearance.probe.enabled=true"),
                         "non-fixture config enables clone appearance: " + path);
             }

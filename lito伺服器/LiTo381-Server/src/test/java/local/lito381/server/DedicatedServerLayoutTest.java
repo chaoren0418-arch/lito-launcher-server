@@ -9,9 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class DedicatedServerLayoutTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeFiles(
+                Path.of("../../lito登入器/LiTo381-Launcher/server-profiles/lito-shared.json"));
+    }
+
     @Test void operationalConfigContainsOnlyServerAndDatabaseProperties()
             throws Exception {
         try (var files = Files.list(Path.of("config"))) {
@@ -26,7 +34,7 @@ final class DedicatedServerLayoutTest {
 
     @Test void serverConfigIsDedicatedAndDoesNotReachIntoReferenceProject()
             throws Exception {
-        String config = Files.readString(
+        String config = LocalResources.readString(
                 Path.of("config", "server.properties"), StandardCharsets.UTF_8);
         assertTrue(config.contains("database.connection.properties=database.properties"));
         assertFalse(config.contains("1-伺服器"));
@@ -51,7 +59,7 @@ final class DedicatedServerLayoutTest {
 
     @Test void launcherProfileUsesTheSameConfigForEveryServiceMode()
             throws Exception {
-        String profile = Files.readString(Path.of("..", "..", "lito登入器", "LiTo381-Launcher",
+        String profile = LocalResources.readString(Path.of("..", "..", "lito登入器", "LiTo381-Launcher",
                 "server-profiles", "lito-shared.json"), StandardCharsets.UTF_8);
         assertEquals(3, occurrences(profile, "\"server.properties\""));
         assertFalse(profile.contains("server.lito-shared.properties"));

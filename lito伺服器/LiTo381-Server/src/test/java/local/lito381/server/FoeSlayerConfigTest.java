@@ -4,9 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class FoeSlayerConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test
     void deterministicWeaknessAdvanceFixtureIsIsolatedFromNormalProfiles() throws Exception {
         assertFalse(ServerConfig.load(Path.of("config/server.properties"))

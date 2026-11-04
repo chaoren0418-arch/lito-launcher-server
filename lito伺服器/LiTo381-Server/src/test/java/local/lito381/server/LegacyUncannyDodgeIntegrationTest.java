@@ -17,9 +17,17 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 106 and the qualified 3.81 dodge formula. */
 final class LegacyUncannyDodgeIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Icons.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactUncannyDodgeContract() throws Exception {
@@ -112,7 +120,7 @@ final class LegacyUncannyDodgeIntegrationTest {
         Path secondary = retained.resolve(Path.of(
                 "其他src參考用", "0507備份", "yiwei380", "src"));
         for (Path sourceRoot : new Path[] {retained.resolve("src"), secondary}) {
-            String mode = Files.readString(sourceRoot.resolve(Path.of(
+            String mode = LocalResources.readString(sourceRoot.resolve(Path.of(
                     "com", "lineage", "server", "model", "skill", "skillmode",
                     "UNCANNY_DODGE.java")), StandardCharsets.UTF_8);
             for (String fragment : new String[] {
@@ -121,7 +129,7 @@ final class LegacyUncannyDodgeIntegrationTest {
                     "srcpc.add_dodge(5)", "cha.add_dodge(-5)"}) {
                 assertTrue(mode.contains(fragment), "missing retained lease " + fragment);
             }
-            String currentAttack = Files.readString(sourceRoot.resolve(Path.of(
+            String currentAttack = LocalResources.readString(sourceRoot.resolve(Path.of(
                     "com", "lineage", "server", "model", "L1AttackMode.java")),
                     StandardCharsets.UTF_8);
             assertTrue(currentAttack.contains("double divisor = 8.0"));
@@ -131,7 +139,7 @@ final class LegacyUncannyDodgeIntegrationTest {
         Path variants = retained.resolve("其他src參考用");
         for (String variant : new String[] {
                 "群版src", "381n8src", "rk760src", "korsrc"}) {
-            String attackMode = Files.readString(variants.resolve(Path.of(
+            String attackMode = LocalResources.readString(variants.resolve(Path.of(
                     variant, "com", "lineage", "server", "model",
                     "L1AttackMode.java")), StandardCharsets.UTF_8);
             assertTrue(attackMode.contains("attackerDice -= character.get_dodge()"),
@@ -140,19 +148,19 @@ final class LegacyUncannyDodgeIntegrationTest {
         for (String variant : new String[] {"群版src", "381n8src"}) {
             Path model = variants.resolve(Path.of(
                     variant, "com", "lineage", "server", "model"));
-            String pc = Files.readString(model.resolve("L1AttackPc.java"),
+            String pc = LocalResources.readString(model.resolve("L1AttackPc.java"),
                     StandardCharsets.UTF_8);
-            String npc = Files.readString(model.resolve("L1AttackNpc.java"),
+            String npc = LocalResources.readString(model.resolve("L1AttackNpc.java"),
                     StandardCharsets.UTF_8);
             assertTrue(pc.contains("attackerDice += attackerDice(_targetPc)"));
             assertTrue(npc.contains("attackerDice += attackerDice(_targetPc)"));
         }
 
-        String buffs = Files.readString(retained.resolve(Path.of(
+        String buffs = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "datatables", "user",
                 "CharBuffTable.java")), StandardCharsets.UTF_8);
         assertFalse(buffs.contains("UNCANNY_DODGE"));
-        String icons = Files.readString(retained.resolve(Path.of(
+        String icons = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "serverpackets",
                 "S_Icons.java")), StandardCharsets.UTF_8);
         assertFalse(icons.contains("UNCANNY_DODGE"));

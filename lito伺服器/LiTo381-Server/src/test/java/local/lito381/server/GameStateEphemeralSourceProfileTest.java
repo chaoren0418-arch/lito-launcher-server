@@ -11,8 +11,14 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class GameStateEphemeralSourceProfileTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void onlyFormalReadOnlyLitoMysqlTopologyEnablesEphemeralSources()
@@ -34,7 +40,7 @@ final class GameStateEphemeralSourceProfileTest {
         state.saveEconomyState(character, 987_654,
                 initial.inventory(), initial.itemStates());
 
-        String sidecar = Files.readString(file);
+        String sidecar = LocalResources.readString(file);
         assertFalse(sidecar.contains("SourceOnlyHero"));
         assertFalse(sidecar.contains("380_ac_1"));
 
@@ -52,11 +58,11 @@ final class GameStateEphemeralSourceProfileTest {
         GameStateStore legacy = new GameStateStore(file, true);
         long collar = legacy.importSourcePets(character, List.of(sourcePet))
                 .get(0).collarObjectId();
-        assertTrue(Files.readString(file).contains("MigratedHero"));
+        assertTrue(LocalResources.readString(file).contains("MigratedHero"));
 
         GameStateStore migrated = new GameStateStore(file, true, true);
         assertNull(migrated.petForCollar(collar));
-        String rewritten = Files.readString(file);
+        String rewritten = LocalResources.readString(file);
         assertFalse(rewritten.contains("MigratedHero"));
         assertFalse(rewritten.contains("380_ac_1"));
         assertTrue(rewritten.contains("pet.imported.count=0"));
@@ -84,7 +90,7 @@ final class GameStateEphemeralSourceProfileTest {
         assertEquals(1, released.provenanceKeys());
         assertNull(state.petForCollar(collar));
         assertEquals(initialPoints, state.economy(character).points());
-        assertFalse(Files.readString(file).contains("LogoutHero"));
+        assertFalse(LocalResources.readString(file).contains("LogoutHero"));
     }
 
     @Test void releasingOneDatabaseRouteDoesNotTouchAnotherRoute() throws Exception {
@@ -153,10 +159,10 @@ final class GameStateEphemeralSourceProfileTest {
         try (GameHub hub = new GameHub(hubConfig, state)) {
             ClientSession first = new ClientSession(null,
                     ClientSession.Endpoint.GAME, firstConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             ClientSession second = new ClientSession(null,
                     ClientSession.Endpoint.GAME, secondConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             setField(first, "selectedCharacter", "TwinHero");
             setField(second, "selectedCharacter", "TwinHero");
             setField(first, "account", "test");
@@ -201,7 +207,7 @@ final class GameStateEphemeralSourceProfileTest {
                 .inventory().get(InventoryCatalog.SHORT_SWORD));
         assertEquals(1, state.clanWarehouse(clan)
                 .inventory().get(InventoryCatalog.SHORT_SWORD));
-        assertFalse(Files.readString(file).contains("380_ac_1"));
+        assertFalse(LocalResources.readString(file).contains("380_ac_1"));
 
         GameStateStore.SourceOwnerRelease accountRelease =
                 state.releaseSourceAccount(account);
@@ -225,12 +231,12 @@ final class GameStateEphemeralSourceProfileTest {
         GameStateStore legacy = new GameStateStore(file, true);
         legacy.reconcileSqlWarehouse(
                 GameStateStore.WarehouseScope.PERSONAL, account, sqlWarehouse);
-        assertTrue(Files.readString(file).contains("380_ac_1"));
+        assertTrue(LocalResources.readString(file).contains("380_ac_1"));
 
         GameStateStore migrated = new GameStateStore(file, true, true);
         assertTrue(migrated.personalWarehouse(account, List.of())
                 .inventory().isEmpty());
-        assertFalse(Files.readString(file).contains("380_ac_1"));
+        assertFalse(LocalResources.readString(file).contains("380_ac_1"));
     }
 
     @Test void hubDisconnectReclaimsPartyWaterDragonAndClanEmblemCaches()
@@ -248,7 +254,7 @@ final class GameStateEphemeralSourceProfileTest {
         try (GameHub hub = new GameHub(hubConfig, state)) {
             ClientSession session = new ClientSession(null,
                     ClientSession.Endpoint.GAME, sourceConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             setField(session, "selectedCharacter", "ContainerHero");
             setField(session, "account", "test");
             hub.connect(session);

@@ -12,10 +12,20 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for retained combat/drop hate selection and transfer. */
 final class NativeWorldMonsterHateSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1MonsterInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/NpcAI.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1HateList.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path NPC = RETAINED.resolve(
@@ -78,7 +88,7 @@ final class NativeWorldMonsterHateSourceAuditTest {
     void implementationPromotesMaximumAndRevalidatesFallbackBeforeSearch()
             throws Exception {
         Path main = Path.of("src", "main", "java", "local", "lito381", "server");
-        String population = Files.readString(
+        String population = LocalResources.readString(
                 main.resolve("ClassicWorldMonsterPopulation.java"));
         ordered(population, "actor.contributionHate.merge(key, hate",
                 "actor.combatHate.merge(",
@@ -92,7 +102,7 @@ final class NativeWorldMonsterHateSourceAuditTest {
                 "entry.getKey().sourceObjectId() != sourceObjectId",
                 "ContributorKind.PLAYER", "maxCombatHateTarget(actor)");
 
-        String hub = Files.readString(main.resolve("GameHub.java"));
+        String hub = LocalResources.readString(main.resolve("GameHub.java"));
         ordered(hub, "findClassicWorldMonsterTarget(",
                 "while (target == null && retainedTargetId != 0)",
                 "population.clearTarget(", "population.targetObjectId(",
@@ -118,7 +128,7 @@ final class NativeWorldMonsterHateSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -133,6 +143,6 @@ final class NativeWorldMonsterHateSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

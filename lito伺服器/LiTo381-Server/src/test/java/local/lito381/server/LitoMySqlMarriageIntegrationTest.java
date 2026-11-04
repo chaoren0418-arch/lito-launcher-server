@@ -18,8 +18,16 @@ import java.util.Properties;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlMarriageIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/sql.properties"));
+    }
+
     @Test
     void partnerIdIsReciprocalSqlFirstReadOnlyAndRouteIsolated(
             @TempDir Path temporary) throws Exception {
@@ -134,7 +142,7 @@ final class LitoMySqlMarriageIntegrationTest {
     private static Properties integrationProperties(Path temporary, boolean readOnly)
             throws Exception {
         Properties properties = new Properties();
-        try (Reader reader = Files.newBufferedReader(
+        try (Reader reader = LocalResources.newBufferedReader(
                 Path.of("config", "server.properties"),
                 StandardCharsets.UTF_8)) {
             properties.load(reader);
@@ -163,7 +171,7 @@ final class LitoMySqlMarriageIntegrationTest {
 
     private static Jdbc jdbc(Properties server, String database) throws Exception {
         Properties sql = new Properties();
-        try (Reader reader = Files.newBufferedReader(Path.of(
+        try (Reader reader = LocalResources.newBufferedReader(Path.of(
                 server.getProperty("database.connection.properties")),
                 StandardCharsets.UTF_8)) {
             sql.load(reader);

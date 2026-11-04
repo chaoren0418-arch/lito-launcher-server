@@ -5,17 +5,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill116's source and ordinary-WORLD invitation/portal route. */
 final class NativeWorldCallClanSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"));
+    }
+
     @Test
     void nativeQuestionMapGeometryAndOccupancyStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (116, 0, '呼喚盟友', 15, 3, 30, 0, 0, 0, 0, 0, 'buff', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 8, '', 19, 0, 0, 0, 0, 280);"));
-        String attr = Files.readString(Path.of(
+        String attr = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"),
                 StandardCharsets.UTF_8);
         assertTrue(attr.contains("pc.consumeIncomingCallClanInvitation(callerId)"));
@@ -29,7 +37,7 @@ final class NativeWorldCallClanSourceAuditTest {
     @Test
     void worldDispatcherCapabilityRoiAndPortalRevalidationStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

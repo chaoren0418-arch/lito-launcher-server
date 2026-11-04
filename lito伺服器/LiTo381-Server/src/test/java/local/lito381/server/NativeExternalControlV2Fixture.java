@@ -67,15 +67,32 @@ final class NativeExternalControlV2Fixture implements AutoCloseable {
         Hold(int source,long object){this.source=source;this.object=object;}
         Map<String,Object> view(){var v=new LinkedHashMap<String,Object>();v.putAll(witness);v.put("hold_id",id);v.put("source",source);v.put("object",object);v.put("entered",entered);v.put("released",released.get());v.put("finished",finished);v.put("remaining_nanos_at_entry",remainingAtEntry);v.put("result",result);v.put("sql_query_started_epoch_millis",sqlQueryStarted);v.put("sql_cutoff_exclusive_epoch_millis",sqlCutoff);v.put("release_at_epoch_millis",releaseAtMillis);v.put("backend_remaining_nanos_at_release",remainingAtRelease);return v;}
     }
-    static final class Provider implements ModernEquipmentAuthority.PhysicalProvider {
+    final class Provider implements ModernEquipmentAuthority.PhysicalProvider {
         final ModernEquipmentAuthority.PhysicalProvider jdbc;final AtomicReference<Hold> next=new AtomicReference<>();
         final AtomicInteger calls=new AtomicInteger();volatile Hold hold;
         final List<Map<String,Object>> reads=Collections.synchronizedList(new ArrayList<>());
         Provider(ModernEquipmentAuthority.PhysicalProvider jdbc){this.jdbc=jdbc;}
         public ModernEquipmentAuthority.PhysicalLoaded read(ModernAccountAuthentication.Principal principal,int source,long object)throws Exception {
+            return afterSql(jdbc.read(principal,source,object),source,object);
+        }
+        public ModernEquipmentAuthority.PhysicalLoaded readForWorld(ModernAccountAuthentication.Principal principal,int source,long object,boolean armorProtection)throws Exception {
+            // capture() calls readForWorld; default PhysicalProvider delegates
+            // to read(), but the inner JDBC provider overrides it. Keep both
+            // on the same observe/hold path after the SQL the adapter uses.
+            return afterSql(jdbc.readForWorld(principal,source,object,armorProtection),source,object);
+        }
+        private ModernEquipmentAuthority.PhysicalLoaded afterSql(ModernEquipmentAuthority.PhysicalLoaded loaded,int source,long object)throws Exception {
             var work=ModernBackendScope.current();work.checkActive();calls.incrementAndGet();
-            var loaded=jdbc.read(principal,source,object);
             reads.add(Map.of("source",source,"object",object,"backend_scope_bound",true,"items",loaded.source().input().equipment().source().inventory().size(),"query_finished_at_millis",System.currentTimeMillis()));
+            ReadContext context=activeRead.get();
+            if(context!=null&&context.requested.sourceId()==source&&context.requested.objectId()==object) {
+                Object capability=field(context.session,"owner");
+                Object lease=field(context.attachment,"lease");
+                var operation=(ModernEquipmentLease.Operation)field(lease,"operation");
+                long revision=store.read(new TournamentPresence.CharacterKey(source,object),work)
+                        .map(ModernEquipmentOverrideStore.Stored::revision).orElse(0L);
+                observeEntry(context.requested,capability,operation,loaded,revision);
+            }
             work.checkActive();return loaded;
         }
         void pause(ModernEquipmentAuthority.PhysicalLoaded loaded,ReadContext context,ModernBackendScope work)throws Exception {
@@ -103,7 +120,7 @@ final class NativeExternalControlV2Fixture implements AutoCloseable {
             sources.put(c.id(),new ModernEquipmentRepository.Source(c,jdbc));data.put(c.id(),new ModernCharacterDataRepository.Source(jdbc,c.catalogDatabase()));
         }
         store=new ModernEquipmentOverrideStore(config.equipmentStoreDirectory());provider=new Provider(ModernEquipmentRepository.physicalJdbc(sources));
-        var adapter=new NativePlayerLoadoutAdapter(provider,store,System::currentTimeMillis,this::observeEntry);
+        var adapter=new NativePlayerLoadoutAdapter(provider,store,System::currentTimeMillis);
         var equipment=new ModernEquipmentAuthority(ModernEquipmentRepository.jdbc(sources),ModernEquipmentRepository.combatJdbc(sources),ModernEquipmentRepository.physicalJdbc(sources),store,System::currentTimeMillis);
         var rooms=new ModernRooms(Set.of(binding.key()));
         worlds=ModernWorldService.withNativeSourceMelee(rooms,Map.of(binding.key(),mapping),limits,adapter);

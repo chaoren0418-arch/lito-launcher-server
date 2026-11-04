@@ -11,7 +11,7 @@ final class PcActionRewardSqlFirstSourceAuditTest {
     @Test
     void helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst()
             throws Exception {
-        String session = Files.readString(Path.of("src/main/java/local/lito381/server/ClientSession.java"),
+        String session = LocalResources.readString(Path.of("src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int shape = session.indexOf("handleShapeChangeAction(request, shapeChange)");
         int reward = session.indexOf("handlePendingRewardAction(request)", shape);
@@ -25,7 +25,7 @@ final class PcActionRewardSqlFirstSourceAuditTest {
 
     @Test
     void rewardRowAndDestinationShareOneLockedMutationDomain() throws Exception {
-        String repository = Files.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
+        String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         int method = repository.indexOf("claimPendingReward(",
                 repository.indexOf("final class LegacyMySqlRepository"));
@@ -42,7 +42,7 @@ final class PcActionRewardSqlFirstSourceAuditTest {
 
     @Test
     void newLitoCharactersReceiveOnlyTheNativeHelperTemplate() throws Exception {
-        String repository = Files.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
+        String repository = LocalResources.readString(Path.of("src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         int create = repository.indexOf("createLitoCharacter(",
                 repository.indexOf("final class LegacyMySqlRepository"));
@@ -54,12 +54,20 @@ final class PcActionRewardSqlFirstSourceAuditTest {
 
     @Test
     void isolatedLitoRuntimePinsTheSanitizedPcActionRewardOverlay() throws Exception {
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-Launcher/src/LiToCompatibilityResources.cs"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/pc_action-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_0-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_2-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_3-c.html"),
+                Path.of("../LiTo381-開發/resources/pc-action-html/send_s_4-c.html"),
+                Path.of("../LiTo381-開發/tools/TextPakGameplayOverlay/Program.cs"));
         Path workspace = Path.of("..");
         Path assets = workspace.resolve("LiTo381-開發/resources/pc-action-html");
-        String launcher = Files.readString(
+        String launcher = LocalResources.readString(
                 workspace.resolve("LiTo381-Launcher/src/LiToCompatibilityResources.cs"),
                 StandardCharsets.UTF_8);
-        String overlayTool = Files.readString(
+        String overlayTool = LocalResources.readString(
                 workspace.resolve("LiTo381-開發/tools/TextPakGameplayOverlay/Program.cs"),
                 StandardCharsets.UTF_8);
         assertTrue(launcher.contains("天堂小幫手領獎 UI"));
@@ -70,26 +78,26 @@ final class PcActionRewardSqlFirstSourceAuditTest {
         assertTrue(overlayTool.contains("Expected 6 gameplay HTML assets"));
         assertTrue(overlayTool.contains("archive.IsSorted"));
 
-        String root = Files.readString(assets.resolve("pc_action-c.html"),
+        String root = LocalResources.readString(assets.resolve("pc_action-c.html"),
                 StandardCharsets.UTF_8);
         assertTrue(root.contains("action=\"long_send\""));
-        assertTrue(Files.readString(assets.resolve("send_s_0-c.html"),
+        assertTrue(LocalResources.readString(assets.resolve("send_s_0-c.html"),
                 StandardCharsets.UTF_8).contains("action=\"send_0\""));
         for (int page = 1; page <= 4; page++) {
-            String html = Files.readString(assets.resolve("send_s_" + page + "-c.html"),
+            String html = LocalResources.readString(assets.resolve("send_s_" + page + "-c.html"),
                     StandardCharsets.UTF_8);
             assertTrue(html.contains("action=\"send_1\""));
             for (int argument = 0; argument < 10; argument++) {
                 assertTrue(html.contains("<var src=\"#" + argument + "\">"));
             }
         }
-        assertTrue(Files.readString(assets.resolve("send_s_2-c.html"),
+        assertTrue(LocalResources.readString(assets.resolve("send_s_2-c.html"),
                 StandardCharsets.UTF_8).contains("action=\"send_up\""));
-        assertTrue(Files.readString(assets.resolve("send_s_2-c.html"),
+        assertTrue(LocalResources.readString(assets.resolve("send_s_2-c.html"),
                 StandardCharsets.UTF_8).contains("action=\"send_dn\""));
-        assertTrue(Files.readString(assets.resolve("send_s_3-c.html"),
+        assertTrue(LocalResources.readString(assets.resolve("send_s_3-c.html"),
                 StandardCharsets.UTF_8).contains("action=\"send_dn\""));
-        assertTrue(Files.readString(assets.resolve("send_s_4-c.html"),
+        assertTrue(LocalResources.readString(assets.resolve("send_s_4-c.html"),
                 StandardCharsets.UTF_8).contains("action=\"send_up\""));
     }
 }

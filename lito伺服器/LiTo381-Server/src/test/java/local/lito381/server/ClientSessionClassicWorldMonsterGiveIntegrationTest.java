@@ -16,8 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionClassicWorldMonsterGiveIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -147,7 +153,7 @@ final class ClientSessionClassicWorldMonsterGiveIntegrationTest {
             assertTrue(carried.equipped());
             assertEquals(InventoryCatalog.MAGIC_LANTERN,
                     carried.definition().catalogId());
-            String capture = java.nio.file.Files.readString(log.path());
+            String capture = LocalResources.readString(log.path());
             String targetLight = "S_CHANGE_LIGHT object=" + target.npc().objectId()
                     + " range=22 reason=C_GIVE-target";
             String playerLight = "S_CHANGE_LIGHT object="
@@ -519,7 +525,7 @@ final class ClientSessionClassicWorldMonsterGiveIntegrationTest {
     }
 
     private static boolean logContains(CaptureLog log, String text) throws Exception {
-        return java.nio.file.Files.readString(log.path()).contains(text);
+        return LocalResources.readString(log.path()).contains(text);
     }
 
     private static RuntimeInventory.Item sourceItem(long catalogId) {

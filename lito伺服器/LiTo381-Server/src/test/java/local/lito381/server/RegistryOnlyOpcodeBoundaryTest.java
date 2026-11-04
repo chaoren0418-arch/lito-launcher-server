@@ -19,7 +19,7 @@ final class RegistryOnlyOpcodeBoundaryTest {
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             ClientSession session = new ClientSession(null, ClientSession.Endpoint.GAME,
-                    config, null, null, null, hub);
+                    config, null, null, LocalResources.discardCapture(), hub);
             Method handle = ClientSession.class.getDeclaredMethod("handle", byte[].class);
             handle.setAccessible(true);
 

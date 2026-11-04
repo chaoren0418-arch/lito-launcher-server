@@ -1298,7 +1298,9 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         CaptureLog capture = new CaptureLog(temporary.resolve(
                 "capture-" + mapId + "-" + objectId));
         ClientSession session = new ClientSession(server,
-                ClientSession.Endpoint.GAME, config, null, state, capture, hub);
+                ClientSession.Endpoint.GAME, config,
+                new MemoryAccountRepository("test", "test"),
+                state, capture, hub);
         int seed = 0x7920_0000 | mapId;
         Protocol.CipherState receiver = new Protocol.CipherState(seed);
         setField(session, "outgoing", new Protocol.CipherState(seed));
@@ -1368,7 +1370,9 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
         ServerConfig config = (ServerConfig) field(owner.session, "config");
         GameStateStore state = (GameStateStore) field(owner.session, "state");
         ClientSession session = new ClientSession(server,
-                ClientSession.Endpoint.GAME, config, null, state, capture, owner.hub);
+                ClientSession.Endpoint.GAME, config,
+                new MemoryAccountRepository("test", "test"),
+                state, capture, owner.hub);
         int seed = (int) (0x7930_0000L | (objectId & 0xFFFF));
         Protocol.CipherState receiver = new Protocol.CipherState(seed);
         setField(session, "outgoing", new Protocol.CipherState(seed));

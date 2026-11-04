@@ -9,10 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the contemporary similar-win-rate source and the unrecovered details. */
 final class NativeLitoMatchMakingPolicySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/analysis/native-lito-matchmaking-historical-source-20031110.json"));
+    }
+
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",
             "native-lito-matchmaking-historical-source-20031110.json")
             .toAbsolutePath().normalize();
@@ -22,7 +29,7 @@ final class NativeLitoMatchMakingPolicySourceAuditTest {
             throws Exception {
         assertEquals("6C173839BB594B24B24AB85B525A28F8607B147ACEBF127FD01F19249C279AF4",
                 sha256(SOURCE));
-        String source = Files.readString(SOURCE, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SOURCE, StandardCharsets.UTF_8);
         assertTrue(source.contains("2003-11-10T19:19:00+09:00"));
         assertTrue(source.contains("2003-11-19"));
         assertTrue(source.contains("비슷한 승률을 가진 게이머"));
@@ -71,8 +78,8 @@ final class NativeLitoMatchMakingPolicySourceAuditTest {
     }
 
     private static String sha256(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing retained source: " + path);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing retained source: " + path);
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

@@ -8,15 +8,29 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill29 producer, resources, retained speed and shared routes. */
 final class NativeWorldSlowSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void selectedAndSecondaryRowsPreserveTheirReuseDifference() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (29, 0, '緩速術', 4, 4, 20, 0, 40318, 1, 500, 64, 'buff', 3, 0, 0, 0, 0, 12, 8, 1, 0, -1, 0, 0, 16, '$1455', 19, 752, 0, 277, 0, 280);"));
@@ -27,7 +41,7 @@ final class NativeWorldSlowSourceAuditTest {
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (29, '緩速術', NULL, NULL);"));
 
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -41,7 +55,7 @@ final class NativeWorldSlowSourceAuditTest {
     @Test
     void selectedClientUsesCase28CccdhhAndFiveHundredMillisecondClock()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB755:", "loc_4CBBC1:");
@@ -54,11 +68,11 @@ final class NativeWorldSlowSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccdhh"));
 
-        byte[] recovered = Files.readAllBytes(Path.of(
+        byte[] recovered = LocalResources.readAllBytes(Path.of(
                 "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
         assertEquals(500, peWordAtVirtualAddress(recovered, 0x635774 + 28 * 2));
 
-        String clientUse = Files.readString(RETAINED.resolve(
+        String clientUse = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         assertTrue(clientUse.contains("case 29:// 緩速術 1600"));
@@ -69,7 +83,7 @@ final class NativeWorldSlowSourceAuditTest {
     @Test
     void retainedSlowNeutralizesHasteOrCreatesTheNativeSpeedLease()
             throws Exception {
-        String retained = Files.readString(RETAINED.resolve(
+        String retained = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(retained.contains(
@@ -103,7 +117,7 @@ final class NativeWorldSlowSourceAuditTest {
         assertEquals(35, earthElemental.magicResistance());
         assertTrue(earthElemental.eraseEligible());
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains("useEntangleSpell(payload, worldEntangle,"));
@@ -120,7 +134,7 @@ final class NativeWorldSlowSourceAuditTest {
         assertTrue(handler.contains("hub.slowClassicWorldMonster("));
         assertTrue(handler.contains("Protocol.speed("));
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         assertTrue(accounts.contains("BattleSpellCatalog.SLOW,"));

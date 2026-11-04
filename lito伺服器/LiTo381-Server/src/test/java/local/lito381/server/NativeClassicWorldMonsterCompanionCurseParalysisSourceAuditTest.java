@@ -7,10 +7,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks retained NPC skill33 target rules, defense and independent state. */
 final class NativeClassicWorldMonsterCompanionCurseParalysisSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Character.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1CurseParalysis.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1ParalysisPoison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CURSE_PARALYZE.java"));
+    }
+
     private static final Path SOURCE = Path.of("..", "1-伺服器", "src",
             "com", "lineage", "server").toAbsolutePath().normalize();
     private static final Path MODE = SOURCE.resolve(
@@ -89,12 +100,12 @@ final class NativeClassicWorldMonsterCompanionCurseParalysisSourceAuditTest {
     }
 
     private static String normalized(Path path) throws Exception {
-        return Files.readString(path).replace("\r\n", "\n");
+        return LocalResources.readString(path).replace("\r\n", "\n");
     }
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

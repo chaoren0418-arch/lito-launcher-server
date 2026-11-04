@@ -15,8 +15,14 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionBoneBreakIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void nativeSuccessDamagesAddsLawfulAndInstallsTwoSecondActorLock()
@@ -98,7 +104,7 @@ final class ClientSessionBoneBreakIntegrationTest {
             throws Exception {
         Path configPath = temporary.resolve("world-bone-break.properties");
         Files.writeString(configPath,
-                Files.readString(Path.of("config/server.properties"))
+                LocalResources.readString(Path.of("config/server.properties"))
                         + System.lineSeparator()
                         + "bone.break.fixture.d1000=801"
                         + System.lineSeparator());

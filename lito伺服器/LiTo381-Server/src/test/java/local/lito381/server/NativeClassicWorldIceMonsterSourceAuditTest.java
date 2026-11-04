@@ -7,10 +7,21 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks retained HIDDEN_STATUS_ICE semantics and its source-profile boundary. */
 final class NativeClassicWorldIceMonsterSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attack.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1MonsterInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
     private static final Path SELECTED_CLIENT = Path.of(
             "D:/380/天堂(Lineage 3.81C) (1)");
@@ -21,7 +32,7 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
     void retainedIceLifecycleStaysExact() throws Exception {
         Path source = RETAINED.resolve(
                 "src/com/lineage/server/model/Instance/L1MonsterInstance.java");
-        String monster = Files.readString(source, StandardCharsets.UTF_8)
+        String monster = LocalResources.readString(source, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
         assertTrue(monster.contains(
                 "case 46125:// 高侖鋼鐵怪\n"
@@ -32,7 +43,7 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
                 "this.setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);"));
         assertTrue(monster.contains("this.setStatus(4);"));
 
-        String npc = Files.readString(RETAINED.resolve(
+        String npc = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/Instance/L1NpcInstance.java"),
                 StandardCharsets.UTF_8).replace("\r\n", "\n");
         assertTrue(npc.contains(
@@ -43,7 +54,7 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
                 "case HIDDEN_STATUS_SINK:\n\t\tcase HIDDEN_STATUS_ICE:"));
         assertTrue(npc.contains("ActionCodes.ACTION_Appear"));
 
-        String attack = Files.readString(RETAINED.resolve(
+        String attack = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_Attack.java"),
                 StandardCharsets.UTF_8);
         assertTrue(attack.contains(
@@ -54,9 +65,9 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
 
     @Test
     void selectedAndSecondaryEntrySourcesMustNotBeMerged() throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
 
@@ -106,7 +117,7 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
     @Test
     void serverImplementsIceWithoutActivatingCrossVersionMaps()
             throws Exception {
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains("HIDDEN_STATUS_ICE = 3"));
@@ -117,14 +128,14 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
         assertTrue(population.contains("revealDamagedIceInScreen"));
         assertTrue(population.contains("actor.currentHp >= actor.definition.template().hp()"));
 
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
         assertTrue(hub.contains("population.revealDamagedIceInScreen("));
         assertTrue(hub.contains(
                 "!= ClassicWorldMonsterPopulation.HIDDEN_STATUS_ICE"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains("hidden-ice="));

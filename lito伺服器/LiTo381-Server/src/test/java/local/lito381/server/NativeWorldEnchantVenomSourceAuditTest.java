@@ -5,17 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill98 and its ordinary-WORLD player/monster poison paths. */
 final class NativeWorldEnchantVenomSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1DamagePoison.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedPoisonRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -23,7 +34,7 @@ final class NativeWorldEnchantVenomSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (98, '附加劇毒', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         assertTrue(assembly.contains(
@@ -34,13 +45,13 @@ final class NativeWorldEnchantVenomSourceAuditTest {
         assertTrue(route.contains("push    14h"));
         assertTrue(route.contains("push    offset off_5028CC"));
 
-        String attack = Files.readString(RETAINED.resolve(
+        String attack = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackPc.java"), StandardCharsets.UTF_8);
         assertTrue(attack.contains("_pc.hasSkillEffect(ENCHANT_VENOM)"));
         assertTrue(attack.contains("if (chance <= 10)"));
         assertTrue(attack.contains(
                 "L1DamagePoison.doInfection(_pc, target, 3000, 5)"));
-        String poison = Files.readString(RETAINED.resolve(
+        String poison = LocalResources.readString(RETAINED.resolve(
                 "model/poison/L1DamagePoison.java"), StandardCharsets.UTF_8);
         assertTrue(poison.contains("_target.setSkillEffect(STATUS_POISON, 30000)"));
         assertTrue(poison.contains(
@@ -50,7 +61,7 @@ final class NativeWorldEnchantVenomSourceAuditTest {
     @Test
     void worldCastPlayerAndOrdinaryMonsterProcStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

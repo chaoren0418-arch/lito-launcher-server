@@ -9,9 +9,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.net.InetAddress;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class AttackAllProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
         assertFalse(ServerConfig.load(Path.of("config/server.properties"))
                 .attackAllProbeEnabled());
@@ -34,7 +40,7 @@ final class AttackAllProbeConfigTest {
     }
 
     @Test void rejectsUnsafeProbeConfigurationsAtLoadTime() throws Exception {
-        String fixture = Files.readString(
+        String fixture = LocalResources.readString(
                 Path.of("src/test/resources/server-config/config/server.attack-all-probe.properties"),
                 StandardCharsets.UTF_8);
         assertRejected(fixture.replace("database.mode=memory",
@@ -54,7 +60,7 @@ final class AttackAllProbeConfigTest {
     }
 
     @Test void productionSourceHasOnlyTheGuardedFixtureCallSite() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertEquals(1, occurrences(session, "Protocol.attackAll("));
@@ -78,7 +84,7 @@ final class AttackAllProbeConfigTest {
                     .filter(candidate -> !candidate.getFileName().toString()
                             .equals("server.attack-all-probe.properties"))
                     .toList()) {
-                String source = Files.readString(path, StandardCharsets.UTF_8);
+                String source = LocalResources.readString(path, StandardCharsets.UTF_8);
                 assertFalse(source.contains("attack.all.probe.enabled=true"),
                         "non-fixture config enables attack-all: " + path);
             }

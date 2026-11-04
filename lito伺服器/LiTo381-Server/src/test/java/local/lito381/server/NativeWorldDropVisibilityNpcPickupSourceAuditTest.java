@@ -12,10 +12,23 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for C_DROP gates, ground visibility and NPC onGetItem. */
 final class NativeWorldDropVisibilityNpcPickupSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/altsettings.properties"),
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/config/ConfigAlt.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_DropItem.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemDropTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1GroundInventory.java"));
+    }
+
     private static final Path SERVER = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path LINEAGE = SERVER.resolve("src/com/lineage");
@@ -148,7 +161,7 @@ final class NativeWorldDropVisibilityNpcPickupSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -163,6 +176,6 @@ final class NativeWorldDropVisibilityNpcPickupSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

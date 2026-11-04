@@ -17,9 +17,19 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 115 Shining Aura and clan/party semantics. */
 final class LegacyShiningAuraIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactShiningAuraContract() throws Exception {
@@ -110,7 +120,7 @@ final class LegacyShiningAuraIntegrationTest {
 
     private static void assertRetainedJavaSemantics() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String currentUse = Files.readString(retained.resolve(Path.of(
+        String currentUse = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(currentUse.contains("this._skillId == SHINING_AURA"));
@@ -123,7 +133,7 @@ final class LegacyShiningAuraIntegrationTest {
         assertTrue(currentUse.contains("114, 115, 116, 117, 118"));
         assertTrue(currentUse.contains("pc.updateBuffStatus()"));
 
-        String currentStop = Files.readString(retained.resolve(Path.of(
+        String currentStop = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillStop.java")), StandardCharsets.UTF_8);
         assertTrue(currentStop.contains("case SHINING_AURA"));
@@ -132,12 +142,12 @@ final class LegacyShiningAuraIntegrationTest {
         Path older = retained.resolve(Path.of(
                 "其他src參考用", "381n8src", "com", "lineage", "server",
                 "model", "skill"));
-        String olderUse = Files.readString(
+        String olderUse = LocalResources.readString(
                 older.resolve("L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(olderUse.contains("this._skillId == SHINING_AURA"));
         assertTrue(olderUse.contains("pc.addAc(-8)"));
         assertTrue(olderUse.contains("new S_PacketBoxIconAura(114"));
-        String olderStop = Files.readString(
+        String olderStop = LocalResources.readString(
                 older.resolve("L1SkillStop.java"), StandardCharsets.UTF_8);
         assertTrue(olderStop.contains("case SHINING_AURA"));
         assertTrue(olderStop.contains("cha.addAc(8)"));

@@ -17,9 +17,19 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 118 Run Clan and exact teleport semantics. */
 final class LegacyRunClanIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/RUN_CLAN.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/skillmode/RUN_CLAN.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactRunClanContract() throws Exception {
@@ -88,7 +98,7 @@ final class LegacyRunClanIntegrationTest {
 
     private static void assertRetainedJavaSemantics() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String use = Files.readString(retained.resolve(Path.of(
+        String use = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "clientpackets",
                 "C_UseSkill.java")), StandardCharsets.UTF_8);
         assertTrue(use.contains("case 118:// 援護盟友"));
@@ -97,7 +107,7 @@ final class LegacyRunClanIntegrationTest {
         assertTrue(use.contains("new S_ServerMessage(73, charName)"));
         assertTrue(use.contains("new S_ServerMessage(414)"));
 
-        String mode = Files.readString(retained.resolve(Path.of(
+        String mode = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "skillmode", "RUN_CLAN.java")), StandardCharsets.UTF_8);
         assertTrue(mode.contains("pc.getMap().isEscapable() || pc.isGm()"));
@@ -109,7 +119,7 @@ final class LegacyRunClanIntegrationTest {
         assertTrue(mode.contains("new S_ServerMessage(1192)"));
         assertTrue(mode.contains("new S_ServerMessage(647)"));
 
-        String skillUse = Files.readString(retained.resolve(Path.of(
+        String skillUse = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("114, 115, 116, 117, 118"));
@@ -117,7 +127,7 @@ final class LegacyRunClanIntegrationTest {
 
         Path olderRoot = retained.resolve(Path.of(
                 "其他src參考用", "381n8src", "com", "lineage", "server"));
-        String olderMode = Files.readString(olderRoot.resolve(Path.of(
+        String olderMode = LocalResources.readString(olderRoot.resolve(Path.of(
                 "model", "skill", "skillmode", "RUN_CLAN.java")),
                 StandardCharsets.UTF_8);
         assertTrue(olderMode.contains("L1CastleLocation.checkInAllWarArea"));

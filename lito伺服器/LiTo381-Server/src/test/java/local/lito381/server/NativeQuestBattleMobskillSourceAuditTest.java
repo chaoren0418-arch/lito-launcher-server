@@ -7,10 +7,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source guard for every selected Quest Battle mobskill-bearing species. */
 final class NativeQuestBattleMobskillSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MobSkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MobSkillUseSpawn.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
 
@@ -63,8 +72,8 @@ final class NativeQuestBattleMobskillSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8)
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
     }
 }

@@ -21,8 +21,16 @@ import java.util.Set;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlCharacterMutationIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/sql.properties"));
+    }
+
     @Test
     void createsReadsAndDeletesOnlyALitoOwnedCharacter(@TempDir Path temporary)
             throws Exception {
@@ -30,7 +38,7 @@ final class LitoMySqlCharacterMutationIntegrationTest {
         Path base = Path.of("config", "server.properties")
                 .toAbsolutePath().normalize();
         Properties properties = new Properties();
-        try (Reader reader = Files.newBufferedReader(base, StandardCharsets.UTF_8)) {
+        try (Reader reader = LocalResources.newBufferedReader(base, StandardCharsets.UTF_8)) {
             properties.load(reader);
         }
         properties.setProperty("database.read.only", "false");
@@ -132,7 +140,7 @@ final class LitoMySqlCharacterMutationIntegrationTest {
                     source.killDeathCounts(created.character().objectId()));
 
             Properties sqlProperties = new Properties();
-            try (Reader reader = Files.newBufferedReader(
+            try (Reader reader = LocalResources.newBufferedReader(
                     Path.of(properties.getProperty("database.connection.properties")),
                     StandardCharsets.UTF_8)) {
                 sqlProperties.load(reader);

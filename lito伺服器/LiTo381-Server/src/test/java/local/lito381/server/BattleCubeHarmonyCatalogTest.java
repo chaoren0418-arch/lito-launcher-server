@@ -3,9 +3,15 @@ package local.lito381.server;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleCubeHarmonyCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedPrimaryRowAndRequestShapeAreExact() {
         BattleSpellCatalog.CubeHarmonySpell spell =
                 BattleSpellCatalog.cubeHarmonySpell(

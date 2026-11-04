@@ -6,26 +6,37 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill25 producer, source metadata and shared WORLD route. */
 final class NativeWorldBurningFireballSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     @Test
     void selectedProducerRowsAndCurrentCatalogStayExact() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (25, 0, '燃燒的火球', 4, 0, 20, 0, 0, 0, 500, 0, 'attack', 3, 0, 9, 5, 0, 0, 2, 64, 0, 6, 3, 0, 1, '$1451', 18, 171, 0, 0, 0, 0);"));
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (25, '燃燒的火球', NULL, NULL);"));
 
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
                 "INSERT INTO `skills` VALUES (25, '燃燒的火球', 4, 0, 20, 0, 0, 0, 1000, 0, 'attack', 3, 0, 9, 5, 0, 0, 2, 64, 0, 6, 3, 0, 1, '$1451', 18, 171, 0, 0, 0, 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String producer = between(assembly, "loc_4CBA5C:", "loc_4CBA92:");
@@ -38,7 +49,7 @@ final class NativeWorldBurningFireballSourceAuditTest {
         assertTrue(request.contains("push    14h"));
         assertTrue(request.contains("push    offset aCccdhh"));
 
-        String retained = Files.readString(Path.of(
+        String retained = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String targetCoordinate = between(retained,
@@ -63,7 +74,7 @@ final class NativeWorldBurningFireballSourceAuditTest {
         assertEquals(18, spell.actionId());
         assertEquals(171, spell.effectGfx());
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains(

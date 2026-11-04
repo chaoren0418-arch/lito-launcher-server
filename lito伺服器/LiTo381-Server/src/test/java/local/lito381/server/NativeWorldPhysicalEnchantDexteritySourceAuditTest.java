@@ -7,15 +7,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill26/42 producers, retained semantics and shared WORLD route. */
 final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Dexup.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Strup.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void selectedAndSecondaryRowsStayExact() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (26, 0, '通暢氣脈術', 4, 1, 50, 0, 0, 0, 10, 1200, 'buff', 4, 0, 0, 0, 0, 0, 8, 2, 0, -1, 0, 0, 2, '$1452', 19, 750, 0, 294, 0, 280);"));
@@ -30,7 +46,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (42, '體魄強健術', NULL, NULL);"));
 
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -49,7 +65,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
 
     @Test
     void selectedClientProducerRemainsObjectTargetCccd() throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB741:", "loc_4CB755:");
@@ -69,7 +85,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
         assertTrue(producer.contains("push    offset aCccd"));
         assertTrue(producer.contains("push    esi"));
 
-        String packetReader = Files.readString(RETAINED.resolve(
+        String packetReader = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String targetOnly = between(packetReader,
@@ -89,7 +105,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
 
     @Test
     void retainedMpAndDexterityPacketOrderingStayExact() throws Exception {
-        String skillId = Files.readString(RETAINED.resolve(
+        String skillId = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillId.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillId.contains(
@@ -97,7 +113,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
         assertTrue(skillId.contains(
                 "public static final int PHYSICAL_ENCHANT_STR = 42;"));
 
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         String consume = between(use,
@@ -117,7 +133,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
         assertTrue(consume.indexOf("getOriginalMagicConsumeReduction()")
                 > consume.indexOf("this._mpConsume = Math.max(this._mpConsume, 1)"));
 
-        String icon = Files.readString(RETAINED.resolve(
+        String icon = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
                 StandardCharsets.UTF_8);
         String dexIcon = between(icon,
@@ -131,14 +147,14 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
                 "timeSec == 0 ? 1 : getAbility(PHYSICAL_ENCHANT_STR, AbilityType.STR, 5)"));
         assertTrue(strIcon.contains("new S_Strup(pc, value, timeSec)"));
 
-        String writer = Files.readString(RETAINED.resolve(
+        String writer = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/serverpackets/S_Dexup.java"),
                 StandardCharsets.UTF_8);
         assertTrue(writer.contains("this.writeH(time);"));
         assertTrue(writer.contains("this.writeC(pc.getDex());"));
         assertTrue(writer.contains("this.writeC(type);"));
 
-        String strengthWriter = Files.readString(RETAINED.resolve(
+        String strengthWriter = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/serverpackets/S_Strup.java"),
                 StandardCharsets.UTF_8);
         assertTrue(strengthWriter.contains("this.writeH(time);"));
@@ -170,7 +186,7 @@ final class NativeWorldPhysicalEnchantDexteritySourceAuditTest {
         assertEquals(47, spell.effectiveMpCost(15, 0, false));
         assertEquals(21, spell.effectiveMpCost(15, 2, true));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int methodStart = session.indexOf("private void useAbilityBuffSpell(");

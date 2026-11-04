@@ -2,6 +2,7 @@ package local.lito381.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
@@ -639,6 +640,6 @@ final class GameHubChannelTest {
 
     private static ClientSession session(ServerConfig config, GameHub hub) {
         return new ClientSession(null, ClientSession.Endpoint.GAME,
-                config, null, null, null, hub);
+                config, null, null, LocalResources.discardCapture(), hub);
     }
 }

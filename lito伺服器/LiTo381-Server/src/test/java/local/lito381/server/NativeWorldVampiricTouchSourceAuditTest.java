@@ -8,15 +8,29 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill28 producer, resources, retained drain and shared routes. */
 final class NativeWorldVampiricTouchSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void selectedAndSecondaryRowsPreserveTheirReuseDifference() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (28, 0, '吸血鬼之吻', 4, 3, 12, 0, 0, 0, 50, 0, 'attack', 3, 12, 10, 3, 0, 0, 4, 64, -5, 4, 0, 0, 8, '$1454', 18, 236, 0, 0, 0, 0);"));
@@ -25,7 +39,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (28, '吸血鬼之吻', NULL, NULL);"));
 
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -39,7 +53,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
     @Test
     void selectedClientUsesCase27CccdhhAndOneHundredMillisecondClock()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB938:", "loc_4CB952:");
@@ -52,11 +66,11 @@ final class NativeWorldVampiricTouchSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccdhh"));
 
-        byte[] recovered = Files.readAllBytes(Path.of(
+        byte[] recovered = LocalResources.readAllBytes(Path.of(
                 "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
         assertEquals(100, peWordAtVirtualAddress(recovered, 0x635774 + 27 * 2));
 
-        String clientUse = Files.readString(RETAINED.resolve(
+        String clientUse = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String coordinateCases = between(
@@ -69,7 +83,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
 
     @Test
     void retainedAcceptedDamageBecomesCasterHealing() throws Exception {
-        String retained = Files.readString(RETAINED.resolve(
+        String retained = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(retained.contains(
@@ -99,7 +113,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
         assertEquals(BattleSpellCatalog.ATTRIBUTE_WIND, spell.attribute());
         assertTrue(spell.drainsLife());
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains("useClassicWorldAttackSpell(payload, worldAttack)"));
@@ -108,7 +122,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
         assertTrue(session.contains("applyAcceptedLifeDrain("));
         assertTrue(session.contains("Math.addExact((long) playerHp, (long) damage)"));
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         assertTrue(accounts.contains("BattleSpellCatalog.VAMPIRIC_TOUCH,"));
@@ -116,7 +130,7 @@ final class NativeWorldVampiricTouchSourceAuditTest {
 
     @Test
     void releaseCoverageKeepsTheNativeSkill28Contract() throws Exception {
-        String coverage = Files.readString(Path.of("tools/protocol_coverage.py"),
+        String coverage = LocalResources.readString(Path.of("tools/protocol_coverage.py"),
                 StandardCharsets.UTF_8);
         assertTrue(coverage.contains(
                 "skill28 Vampiric Touch / 吸血鬼之吻 follows selected LiTo.bin"));

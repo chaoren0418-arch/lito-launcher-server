@@ -19,8 +19,14 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionNativeTournamentEconomyTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -1301,7 +1307,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             assertEquals(0, inventory(caster).catalogCounts().getOrDefault(
                     InventoryCatalog.SPIRIT_CRYSTAL, 0));
         }
-        assertFalse(Files.readString(stateFile).contains("polluteWater"));
+        assertFalse(LocalResources.readString(stateFile).contains("polluteWater"));
     }
 
     @Test
@@ -4692,7 +4698,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             assertEquals(2243, unsignedShort(receiveUntilOpcode(
                     targetClient, targetReceiver, Protocol.S_EFFECT, 8), 5));
             assertEquals(15, targetStatus.hpRegen(System.nanoTime()));
-            assertFalse(java.nio.file.Files.readString(stateFile)
+            assertFalse(LocalResources.readString(stateFile)
                     .contains("natures-touch"));
         }
     }
@@ -5033,7 +5039,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             receiveUntilOpcode(targetClient, targetReceiver, Protocol.S_ACTION, 8);
             receiveUntilOpcode(targetClient, targetReceiver, Protocol.S_EFFECT, 8);
             assertEquals(5, targetStatus.evasionRate(System.nanoTime()));
-            assertFalse(java.nio.file.Files.readString(stateFile)
+            assertFalse(LocalResources.readString(stateFile)
                     .contains("aqua-protect"));
         }
     }
@@ -5213,7 +5219,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             receiveUntilOpcode(targetClient, targetReceiver, Protocol.S_EFFECT, 64);
             assertTrue(casterTimed.areaSilenceActive(System.nanoTime()));
             assertTrue(targetTimed.areaSilenceActive(System.nanoTime()));
-            assertFalse(java.nio.file.Files.readString(stateFile)
+            assertFalse(LocalResources.readString(stateFile)
                     .contains("area-silence"));
         }
     }
@@ -5354,7 +5360,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             assertFalse(targetTimed.counterMagicActive(System.nanoTime()));
             assertEquals(0, inventory(caster).catalogCounts()
                     .getOrDefault(InventoryCatalog.SPIRIT_CRYSTAL, 0));
-            assertFalse(java.nio.file.Files.readString(stateFile)
+            assertFalse(LocalResources.readString(stateFile)
                     .contains("wind-shackle"));
         }
     }
@@ -5864,7 +5870,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             receiveUntilOpcode(client, receiver, Protocol.S_STATUS, 8);
             assertFalse(weight.snapshot(expiryNow).regenerationBypassActive());
         }
-        assertFalse(Files.readString(stateFile).contains("exoticVitalize"));
+        assertFalse(LocalResources.readString(stateFile).contains("exoticVitalize"));
     }
 
     @Test
@@ -6049,7 +6055,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             receiveUntilOpcode(client, receiver, Protocol.S_STATUS, 8);
             assertFalse(weight.snapshot(expiryNow).regenerationBypassActive());
         }
-        assertFalse(Files.readString(stateFile).contains("additionalFire"));
+        assertFalse(LocalResources.readString(stateFile).contains("additionalFire"));
     }
 
     @Test
@@ -6240,7 +6246,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                     new Class<?>[] {long.class}, expiryNow);
             assertFalse(targetStatus.active(expiryNow));
         }
-        assertFalse(Files.readString(stateFile).contains("waterLife"));
+        assertFalse(LocalResources.readString(stateFile).contains("waterLife"));
     }
 
     @Test
@@ -6372,7 +6378,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                     new Class<?>[] {long.class}, expiryNow);
             assertFalse(timed.elementalFireActive(expiryNow));
         }
-        assertFalse(Files.readString(stateFile).contains("elementalFire"));
+        assertFalse(LocalResources.readString(stateFile).contains("elementalFire"));
     }
 
     @Test
@@ -6511,7 +6517,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                     new Class<?>[] {long.class}, expiryNow);
             assertFalse(timed.soulOfFlameActive(expiryNow));
         }
-        assertFalse(Files.readString(stateFile).contains("soulOfFlame"));
+        assertFalse(LocalResources.readString(stateFile).contains("soulOfFlame"));
     }
 
     @Test
@@ -6626,7 +6632,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             assertEquals(90, unsignedShort(worldMana, 1));
             assertEquals(90, field(session, "playerMp"));
         }
-        assertFalse(Files.readString(stateFile).contains("stormWalk"));
+        assertFalse(LocalResources.readString(stateFile).contains("stormWalk"));
     }
 
     @Test
@@ -6869,7 +6875,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                 temporary.resolve("state.properties"), false);
         GameHub hub = new GameHub(config);
         ClientSession session = new ClientSession(
-                null, ClientSession.Endpoint.GAME, config, null, state, null, hub);
+                null, ClientSession.Endpoint.GAME, config, null, state, LocalResources.discardCapture(), hub);
         setField(session, "account", "native-economy-test");
         setField(session, "selectedCharacter", "NativeEconomyKnight");
         RuntimeInventory baseline = baseline();
@@ -7645,7 +7651,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             String identity = (String) invokeResult(session, "stateCharacter", new Class<?>[0]);
             store.saveEconomyState(identity, 20000, inventory(session).catalogCounts(),
                     inventory(session).catalogItemStates());
-            byte[] originalFile = Files.readAllBytes(file);
+            byte[] originalFile = LocalResources.readAllBytes(file);
             long potion = InventoryCatalog.EXTRA_HEALING_POTION;
             // The first row is affordable; the second must cancel the ENTIRE order.
             byte[][] rejected = {
@@ -7662,7 +7668,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                 assertTrue(shopNotice(client,cipher).contains(reasons[i]));
                 assertEquals(20000L,field(session,"shopPoints"));
                 assertEquals(baseline().catalogCounts(),inventory(session).catalogCounts());
-                assertTrue(java.util.Arrays.equals(originalFile,Files.readAllBytes(file)));
+                assertTrue(java.util.Arrays.equals(originalFile,LocalResources.readAllBytes(file)));
             }
             // An unwritable temp destination forces a real disk commit failure.
             Path blocked = file.resolveSibling(file.getFileName()+".tmp");
@@ -7677,7 +7683,7 @@ final class ClientSessionNativeTournamentEconomyTest {
             assertEquals(20000L,store.economy(identity).points());
             assertEquals(baseline().catalogCounts(),store.economy(identity).inventory());
             assertEquals(baseline().catalogCounts(),inventory(session).catalogCounts());
-            assertTrue(java.util.Arrays.equals(originalFile,Files.readAllBytes(file)));
+            assertTrue(java.util.Arrays.equals(originalFile,LocalResources.readAllBytes(file)));
             Files.delete(blocked);
             invoke(session,"sendBuyList",new Class<?>[0]);receive(client,cipher);
             invoke(session,"buySell",new Class<?>[]{byte[].class},buy);

@@ -5,19 +5,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill113's native producer and ordinary-WORLD L1Character route. */
 final class NativeWorldTrueTargetSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/TRUE_TARGET.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     @Test
     void nativeRequestResponseDatabaseAndAudienceStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (113, 0, '精準目標', 15, 0, 1, 0, 0, 0, 0, 0, 'buff', 3, 0, 0, 0, 0, 0, 0, 2, 0, -1, 0, 0, 1, '$1995', 19, 1765, 0, 0, 0, 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producerStart = assembly.indexOf("sub_4CADF0 proc near");
@@ -32,7 +42,7 @@ final class NativeWorldTrueTargetSourceAuditTest {
         assertTrue(receiver.contains("push    35h ; '5'"));
         assertTrue(receiver.contains("\"dhhs\""));
 
-        String mode = Files.readString(Path.of(
+        String mode = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/skillmode/TRUE_TARGET.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mode.contains("WorldClan.get().getClan"));
@@ -43,7 +53,7 @@ final class NativeWorldTrueTargetSourceAuditTest {
     @Test
     void worldPlayersCompanionsMonstersAndClanRoiRemainConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

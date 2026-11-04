@@ -165,6 +165,7 @@ class ModernEquipmentOverrideStoreTest {
     }
 
     @Test void actualWindowsLockEntryCannotBeDeletedOrRenamedWhileItsOwnerLives() throws Exception {
+        LocalResources.assumeWindowsJvm();
         assertEquals("\\", root.getFileSystem().getSeparator(), "Windows sharing regression must run on Windows");
         Path lock = root.resolve(".modern-equipment.lock");
         Path renamed = root.resolve("renamed-test-lock");
@@ -352,6 +353,7 @@ class ModernEquipmentOverrideStoreTest {
     }
 
     private String peer(String action) throws Exception {
+        LocalResources.assumeWindowsJvm();
         String exe = Path.of(System.getProperty("java.home"), "bin", "java.exe").toString();
         String cp = System.getProperty("surefire.test.class.path", System.getProperty("java.class.path"));
         var process = new ProcessBuilder(exe, "-cp", cp, ModernEquipmentStoreTestPeer.class.getName(), action, root.toString())

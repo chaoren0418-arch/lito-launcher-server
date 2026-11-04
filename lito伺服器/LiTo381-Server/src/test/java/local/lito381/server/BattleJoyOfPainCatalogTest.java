@@ -7,9 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleJoyOfPainCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRow218MatchesDatabaseAndClientContract() {
         BattleSpellCatalog.JoyOfPainSpell spell =
                 BattleSpellCatalog.joyOfPainSpell(BattleSpellCatalog.JOY_OF_PAIN);

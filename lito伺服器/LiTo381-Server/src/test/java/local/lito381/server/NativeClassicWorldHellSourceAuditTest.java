@@ -7,10 +7,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for the retained PK punishment and map666 lifecycle. */
 final class NativeClassicWorldHellSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/maps/666.txt"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_LoginToServer.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Restart.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1TownLocation.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcHellTimer.java"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PC = RETAINED.resolve(
@@ -42,7 +57,7 @@ final class NativeClassicWorldHellSourceAuditTest {
     @Test
     void retainedPkThresholdEntryMessagesAndReturnOrderRemainExact()
             throws Exception {
-        String pc = Files.readString(PC);
+        String pc = LocalResources.readString(PC);
         int warning = pc.indexOf("fightPc.get_PKcount() >= 5");
         int belowThreshold = pc.indexOf("fightPc.get_PKcount() < 100", warning);
         int message551 = pc.indexOf("new S_BlueMessage(551", belowThreshold);
@@ -76,7 +91,7 @@ final class NativeClassicWorldHellSourceAuditTest {
     @Test
     void retainedTimerLoginRestartAndDatabaseContractsRemainExact()
             throws Exception {
-        String timer = Files.readString(TIMER);
+        String timer = LocalResources.readString(TIMER);
         assertTrue(timer.contains("final int timeMillis = 1100;"));
         assertTrue(timer.contains("World.get().getAllPlayers()"));
         assertTrue(timer.contains("int time = tgpc.getHellTime();"));
@@ -84,21 +99,21 @@ final class NativeClassicWorldHellSourceAuditTest {
         assertTrue(timer.contains("tgpc.setHellTime(0);"));
         assertTrue(timer.contains("tgpc.endHell();"));
 
-        String restart = Files.readString(RESTART);
+        String restart = LocalResources.readString(RESTART);
         assertTrue(restart.contains("if (pc.getHellTime() > 0)"));
         assertTrue(restart.contains("loc[0] = 32701;"));
         assertTrue(restart.contains("loc[1] = 32777;"));
         assertTrue(restart.contains("loc[2] = 666;"));
-        String login = Files.readString(LOGIN);
+        String login = LocalResources.readString(LOGIN);
         assertTrue(login.contains("if (pc.getHellTime() > 0)"));
         assertTrue(login.contains("pc.beginHell(false);"));
 
-        String town = Files.readString(TOWN);
+        String town = LocalResources.readString(TOWN);
         assertTrue(town.contains("new Point(32750, 32435), new Point(32745, 32447)"));
         assertTrue(town.contains("new Point(32738, 32452), new Point(32741, 32436)"));
         assertTrue(town.contains("new Point(32749, 32446)"));
 
-        String database = Files.readString(DATABASE);
+        String database = LocalResources.readString(DATABASE);
         assertTrue(database.contains("INSERT INTO `mapids` VALUES (666, '地獄',"
                 + " 32640, 32831, 32704, 32895, 1, 1, 0, 0, 1, 1, 1, 1,"
                 + " 1, 1, 1, 1, 1, 1, 0, 0, -1);"));
@@ -114,7 +129,7 @@ final class NativeClassicWorldHellSourceAuditTest {
     @Test
     void independentRuntimeKeepsEncryptedMessagePortalAndRestartRoutes()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"));
         assertTrue(session.contains("Protocol.messageCode(551"));
         assertTrue(session.contains("Protocol.messageCode(552"));
@@ -128,7 +143,7 @@ final class NativeClassicWorldHellSourceAuditTest {
     private static void assertHash(String expected, Path path) throws Exception {
         String actual = HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
         assertEquals(expected, actual, path.toString());
     }
 }

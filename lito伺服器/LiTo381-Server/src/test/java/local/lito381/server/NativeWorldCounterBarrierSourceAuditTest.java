@@ -5,17 +5,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill91 and both ordinary-WORLD reflection paths. */
 final class NativeWorldCounterBarrierSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/combat/NpcPhysicalAttackFlow.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/combat/PcPhysicalAttackFlow.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseWeaponAndReflectionRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -29,7 +43,7 @@ final class NativeWorldCounterBarrierSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_負面技能控制` VALUES (91, '反擊屏障', 55, 45, 35, 0, 0, 0, 0, 0, 1, 0.05, 0, 0);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CBAF4:");
@@ -41,28 +55,28 @@ final class NativeWorldCounterBarrierSourceAuditTest {
         assertTrue(assembly.contains("jumptable 004CB66E case 90"));
         assertTrue(assembly.contains("off_5028CC dd offset byte_636363"));
 
-        String clientUse = Files.readString(RETAINED.resolve(
+        String clientUse = LocalResources.readString(RETAINED.resolve(
                 "clientpackets/C_UseSkill.java"), StandardCharsets.UTF_8);
         assertTrue(clientUse.contains("case 91:// 反擊屏障"));
         assertTrue(clientUse.contains("getTypeEquipped(1, 3) >= 1"));
-        String attackMode = Files.readString(RETAINED.resolve(
+        String attackMode = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackMode.java"), StandardCharsets.UTF_8);
         assertTrue(attackMode.contains("COUNTER_BARRIER_TRIGGER_GFX = 10710"));
         assertTrue(attackMode.contains("weapon.getItem().getType() == 3"));
         assertTrue(attackMode.contains(
                 "weapon.getItem().getDmgModifier()) << 1"));
-        String pcFlow = Files.readString(RETAINED.resolve(
+        String pcFlow = LocalResources.readString(RETAINED.resolve(
                 "model/combat/PcPhysicalAttackFlow.java"),
                 StandardCharsets.UTF_8);
         assertTrue(pcFlow.contains("targetPc.hasSkillEffect(COUNTER_BARRIER)"));
         assertTrue(pcFlow.contains("attack.commitCounterBarrier()"));
-        String npcFlow = Files.readString(RETAINED.resolve(
+        String npcFlow = LocalResources.readString(RETAINED.resolve(
                 "model/combat/NpcPhysicalAttackFlow.java"),
                 StandardCharsets.UTF_8);
         assertTrue(npcFlow.contains("targetPc.hasSkillEffect(COUNTER_BARRIER)"));
         assertTrue(npcFlow.contains("attack.isShortDistance()"));
         assertTrue(npcFlow.contains("attack.commitCounterBarrier()"));
-        String npcAttack = Files.readString(RETAINED.resolve(
+        String npcAttack = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackNpc.java"), StandardCharsets.UTF_8);
         assertTrue(npcAttack.contains("isLongRange && (bowActId > 0)"));
         assertTrue(npcAttack.contains("ConfigSkill.COUNTER_BARRIER_DMG"));
@@ -70,7 +84,7 @@ final class NativeWorldCounterBarrierSourceAuditTest {
 
     @Test
     void worldCastPlayerAndMonsterReflectionStayConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

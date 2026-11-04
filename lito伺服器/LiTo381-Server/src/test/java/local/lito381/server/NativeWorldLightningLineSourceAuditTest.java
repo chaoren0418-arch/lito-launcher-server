@@ -6,10 +6,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected LiTo skill17 and its retained ordinary-WORLD line rules. */
 final class NativeWorldLightningLineSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/world/World.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
@@ -133,7 +144,7 @@ final class NativeWorldLightningLineSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 }
