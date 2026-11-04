@@ -5,10 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected skill12 producer, database row and item-local source path. */
 final class NativeWorldEnchantWeaponSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path WORKSPACE = Path.of("..").toAbsolutePath().normalize();
     private static final Path RETAINED = WORKSPACE.resolve("1-伺服器");
 

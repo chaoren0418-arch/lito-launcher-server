@@ -7,9 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleArmBreakerActorLifecycleTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void companionOwnsNonRefreshingCancelableMeleePenalty() {
         BattleCompanion companion = new BattleCompanion(0x6000_0213L);
         companion.resetForBattle(100, 100);

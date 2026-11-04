@@ -19,8 +19,15 @@ import java.util.Properties;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlHouseAuctionIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
+    }
+
     private static final long HOUSE_ID = 262_145L;
 
     @Test

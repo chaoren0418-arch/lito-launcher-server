@@ -8,10 +8,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained death-feed/count authority plus selected-LiTo opcode boundary. */
 final class NativeClassicWorldKillFeedSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeLitoBin();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PC = RETAINED.resolve(

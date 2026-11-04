@@ -110,6 +110,7 @@ final class ClientSessionRentalTownDirectoryTest {
 
     @Test void encryptedGroupOneChainBootstrapsResourceDerivedNativeTownScene()
             throws Exception {
+        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = rentalConfig(560);
         GameStateStore state = new GameStateStore(
                 temporary.resolve("state.properties"), false);
@@ -456,6 +457,7 @@ final class ClientSessionRentalTownDirectoryTest {
 
     @Test void restartReturnClearsEveryIsolatedTownFieldWithoutGameHubMembership()
             throws Exception {
+        LocalResources.assumeClassicSourceAccounts();
         ServerConfig config = rentalConfig(500);
         GameStateStore state = new GameStateStore(
                 temporary.resolve("restart-state.properties"), false);
@@ -573,6 +575,7 @@ final class ClientSessionRentalTownDirectoryTest {
 
     @Test void rentalTownPlayersShareRosterActorsMovementDirectionActionAndDeparture()
             throws Exception {
+        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = rentalConfig(500);
         GameStateStore state = new GameStateStore(
                 temporary.resolve("town-actors-state.properties"), false);

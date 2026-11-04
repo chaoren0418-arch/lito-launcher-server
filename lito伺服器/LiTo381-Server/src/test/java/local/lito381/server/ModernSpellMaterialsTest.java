@@ -6,9 +6,15 @@ import java.nio.ByteBuffer;
 import java.nio.file.*;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSpellMaterialsTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     static ModernShopCatalog.Template template(long weight) {
         return new ModernShopCatalog.Template(ModernCharacterData.ItemKind.ETC,"$508",235,773,weight,
                 new ModernShopCatalog.Etc("0","material","none","gemstone",1,0,0,0,0,0,0,0,0,0,0,0,127));

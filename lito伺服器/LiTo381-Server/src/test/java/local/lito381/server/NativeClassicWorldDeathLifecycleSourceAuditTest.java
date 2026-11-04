@@ -13,10 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Selected retained-server proof for the complete death-policy authority. */
 final class NativeClassicWorldDeathLifecycleSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final Path ROOT = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SETTINGS = ROOT.resolve("config/charsettings.properties");

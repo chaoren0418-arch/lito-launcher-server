@@ -5,10 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks LiTo.bin case9, selected skill10 data and retained life-drain order. */
 final class NativeWorldChillTouchSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     @Test
     void nativeProducerSelectedRowRetainedMeaningAndServerRouteStayExact()
             throws Exception {

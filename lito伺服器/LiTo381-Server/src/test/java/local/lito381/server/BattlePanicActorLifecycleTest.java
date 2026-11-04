@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattlePanicActorLifecycleTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void companionLeaseIsNonRefreshingAndCancellationReportsIt() {
         BattleCompanion companion = new BattleCompanion(0x6000_0217L);
         companion.resetForBattle(100, 100);

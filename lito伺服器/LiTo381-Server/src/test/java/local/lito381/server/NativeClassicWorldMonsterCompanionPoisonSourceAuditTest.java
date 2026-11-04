@@ -7,10 +7,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained monster-to-controlled-NPC poison authority and current mapping. */
 final class NativeClassicWorldMonsterCompanionPoisonSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final Path SOURCE = Path.of("..", "1-伺服器", "src",
             "com", "lineage", "server").toAbsolutePath().normalize();
     private static final Path ATTACK = SOURCE.resolve("model/L1AttackNpc.java");

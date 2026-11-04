@@ -8,9 +8,15 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class CloneAppearanceProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
         ServerConfig production = ServerConfig.load(Path.of("config/server.properties"));
         assertFalse(production.cloneAppearanceProbeEnabled());

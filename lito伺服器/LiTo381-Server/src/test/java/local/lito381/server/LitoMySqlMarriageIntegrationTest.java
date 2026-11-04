@@ -18,8 +18,15 @@ import java.util.Properties;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlMarriageIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void partnerIdIsReciprocalSqlFirstReadOnlyAndRouteIsolated(
             @TempDir Path temporary) throws Exception {

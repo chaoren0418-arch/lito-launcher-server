@@ -13,10 +13,18 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for the selected map-4 L1Guardian native flow. */
 final class NativeClassicWorldGuardianSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeLitoBin();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path CURRENT = RETAINED.resolve("src/com/lineage/server");

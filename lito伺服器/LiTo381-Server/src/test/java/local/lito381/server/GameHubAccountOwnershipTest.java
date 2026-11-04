@@ -56,6 +56,6 @@ final class GameHubAccountOwnershipTest {
 
     private static ClientSession session(ClientSession.Endpoint endpoint,
                                          ServerConfig config, GameHub hub) {
-        return new ClientSession(null, endpoint, config, null, null, null, hub);
+        return new ClientSession(null, endpoint, config, null, null, LocalResources.discardCapture(), hub);
     }
 }

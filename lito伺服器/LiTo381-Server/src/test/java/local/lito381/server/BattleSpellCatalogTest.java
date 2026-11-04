@@ -778,6 +778,7 @@ final class BattleSpellCatalogTest {
     }
 
     @Test void createZombiePinsCorpseEnvelopeCostsAndNativeLevelTemplates() {
+        LocalResources.assumeNativeCatalogPins();
         BattleSpellCatalog.CreateZombieSpell spell =
                 BattleSpellCatalog.createZombieSpell(BattleSpellCatalog.CREATE_ZOMBIE);
         assertEquals(41, spell.skillId());

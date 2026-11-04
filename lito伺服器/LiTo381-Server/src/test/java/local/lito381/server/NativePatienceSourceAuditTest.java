@@ -12,10 +12,18 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for selected Illusionist skill211 Patience. */
 final class NativePatienceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeLitoBin();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Set<String> RETAINED_ATTACK_PC_SNAPSHOTS = Set.of(
             "1FFC0BFEDDE7C47F654FB821386FA8C85B570A9C1A286627BE0697D71936FD30",
             "3FDC94CEDC6C3EC803E731BE238093BD7FE55C432CF84BE6822A079A1627DDFC");

@@ -374,6 +374,7 @@ class ModernMatchOutboxTest {
         }
     }
     private static Process process(Path directory, String mode) throws IOException {
+        LocalResources.assumeWindowsJvm();
         String executable = Path.of(System.getProperty("java.home"), "bin", "java.exe").toString();
         String classpath = System.getProperty("surefire.test.class.path", System.getProperty("java.class.path"));
         return new ProcessBuilder(executable, "-cp", classpath, ModernMatchOutboxTestPeer.class.getName(), mode, directory.toString()).redirectErrorStream(true).start();

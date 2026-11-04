@@ -5,9 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSlowTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test void rawSelectedSqlColumnOrderNotTheOlderHandwrittenModelOwnsTheContract() throws Exception {
         String sql = Files.readString(Path.of("../1-伺服器/db/380_db.sql"));
         int table = sql.indexOf("CREATE TABLE `skills`  (");

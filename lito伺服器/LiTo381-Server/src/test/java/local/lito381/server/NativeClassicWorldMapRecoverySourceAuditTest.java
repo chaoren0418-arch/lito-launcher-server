@@ -14,10 +14,16 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned retained authority for independent map environment ticks. */
 final class NativeClassicWorldMapRecoverySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final Path SERVER = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path TABLE = SERVER.resolve(

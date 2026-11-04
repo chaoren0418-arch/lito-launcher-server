@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill114's selector-only producer and ordinary-WORLD party route. */
 final class NativeWorldGlowingAuraSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void nativeDatabasePartyHitMrAndCancellationStayExact() throws Exception {
         String database = Files.readString(

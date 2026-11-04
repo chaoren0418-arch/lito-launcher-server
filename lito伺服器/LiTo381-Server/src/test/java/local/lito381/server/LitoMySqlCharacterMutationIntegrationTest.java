@@ -21,8 +21,15 @@ import java.util.Set;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlCharacterMutationIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void createsReadsAndDeletesOnlyALitoOwnedCharacter(@TempDir Path temporary)
             throws Exception {

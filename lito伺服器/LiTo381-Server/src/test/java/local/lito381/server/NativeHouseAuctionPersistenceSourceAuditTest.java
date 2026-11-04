@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected-source clan-house bid flow to the routed SQL gate. */
 final class NativeHouseAuctionPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void nativeBidSemanticsAndSelectedDatabaseGateRemainConnected() throws Exception {
         String source = Files.readString(Path.of(

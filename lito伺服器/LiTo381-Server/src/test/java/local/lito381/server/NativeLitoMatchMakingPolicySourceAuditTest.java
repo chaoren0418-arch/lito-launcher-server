@@ -9,10 +9,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the contemporary similar-win-rate source and the unrecovered details. */
 final class NativeLitoMatchMakingPolicySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",
             "native-lito-matchmaking-historical-source-20031110.json")
             .toAbsolutePath().normalize();

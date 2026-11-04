@@ -11,10 +11,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill68 and every ordinary-WORLD player damage consumer. */
 final class NativeWorldImmuneToHarmSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path RETAINED_ROOT = Path.of("../1-伺服器");
     private static final Path RETAINED = RETAINED_ROOT.resolve(
             "src/com/lineage/server");

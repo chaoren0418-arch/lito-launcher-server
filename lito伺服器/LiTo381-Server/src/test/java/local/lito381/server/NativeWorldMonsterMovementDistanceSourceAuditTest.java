@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Source-order proof that the leash belongs after every committed NPC step. */
 final class NativeWorldMonsterMovementDistanceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void retainedMoveBroadcastsStepBeforeMonsterHomeTeleport() throws Exception {
         Path path = Path.of("..", "1-伺服器", "src", "com", "lineage",

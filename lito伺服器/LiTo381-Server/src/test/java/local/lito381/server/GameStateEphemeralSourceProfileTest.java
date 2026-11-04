@@ -11,8 +11,14 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class GameStateEphemeralSourceProfileTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void onlyFormalReadOnlyLitoMysqlTopologyEnablesEphemeralSources()
@@ -153,10 +159,10 @@ final class GameStateEphemeralSourceProfileTest {
         try (GameHub hub = new GameHub(hubConfig, state)) {
             ClientSession first = new ClientSession(null,
                     ClientSession.Endpoint.GAME, firstConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             ClientSession second = new ClientSession(null,
                     ClientSession.Endpoint.GAME, secondConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             setField(first, "selectedCharacter", "TwinHero");
             setField(second, "selectedCharacter", "TwinHero");
             setField(first, "account", "test");
@@ -248,7 +254,7 @@ final class GameStateEphemeralSourceProfileTest {
         try (GameHub hub = new GameHub(hubConfig, state)) {
             ClientSession session = new ClientSession(null,
                     ClientSession.Endpoint.GAME, sourceConfig,
-                    null, state, null, hub);
+                    null, state, LocalResources.discardCapture(), hub);
             setField(session, "selectedCharacter", "ContainerHero");
             setField(session, "account", "test");
             hub.connect(session);

@@ -6,10 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill25 producer, source metadata and shared WORLD route. */
 final class NativeWorldBurningFireballSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     @Test
     void selectedProducerRowsAndCurrentCatalogStayExact() throws Exception {
         String primary = Files.readString(

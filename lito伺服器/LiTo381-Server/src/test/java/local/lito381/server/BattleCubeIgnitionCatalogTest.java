@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleCubeIgnitionCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRequestIsExactSelectorOnly141904() {
         byte[] request = new Protocol.Writer().c(Protocol.C_USE_SPELL)
                 .c(25).c(4).bytes();

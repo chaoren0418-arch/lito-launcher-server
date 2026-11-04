@@ -20,8 +20,15 @@ import java.util.Properties;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlLetterIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void physicalLettersUseExactBackingIdsLockedCasAndRouteIsolation(
             @TempDir Path temporary) throws Exception {

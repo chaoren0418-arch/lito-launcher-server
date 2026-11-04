@@ -6,9 +6,15 @@ import static local.lito381.server.ModernCombatProfileTest.stored;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSlowEquipmentTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test void retainedFlagAndEquippedCountDoNotUseBooleanOneOrNativeIntegerNarrowing() throws Exception {
         String itemTable=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"));
         assertTrue(itemTable.contains("weapon.setHasteItem(rs.getInt(\"haste_item\") == 0 ? false : true);"));

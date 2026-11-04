@@ -11,10 +11,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Strict current-source audit for native LiTo skill67 Shape Change. */
 final class NativeWorldShapeChangeSkill67SourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
     private static final Path RECOVERED = Path.of(
             "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe");

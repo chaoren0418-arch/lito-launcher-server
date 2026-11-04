@@ -7,10 +7,16 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Target candidates and rejection by old contracts, not a cast admission/UI test. */
 class ModernSlowSpeedTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test void ordinarySlowRefreshAndExactExpiryPreserveIndependentLeases() {
         var original = apply(apply(initial(1), Kind.WISDOM, sec(1), 1, 3), Kind.BRAVE, sec(2), 2, 3);
         var slowed = applySlow(original, sec(10), 3);

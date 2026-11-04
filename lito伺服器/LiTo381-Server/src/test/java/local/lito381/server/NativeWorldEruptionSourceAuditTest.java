@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill45 source, resource and BATTLE/WORLD convergence fidelity. */
 final class NativeWorldEruptionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
 

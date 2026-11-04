@@ -31,6 +31,7 @@ final class ClientSessionRentalBattleHandoffIntegrationTest {
     @Test
     void newGameEndpointConsumesRentalLoadoutIntoActorAttackAndResultRestore()
             throws Exception {
+        LocalResources.assumeNativeCatalogPins();
         Path journal = temporary.resolve("shared-rental-handoff.properties");
         ServerConfig townConfig = config("town.properties", journal);
         ServerConfig battleConfig = config("battle.properties", journal);

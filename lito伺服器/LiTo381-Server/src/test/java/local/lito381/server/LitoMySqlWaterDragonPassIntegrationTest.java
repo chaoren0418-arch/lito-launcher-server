@@ -19,8 +19,15 @@ import java.util.Set;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlWaterDragonPassIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
+    }
+
     private static final String ROUTE_ONE = "380 角色庫 1";
     private static final String ROUTE_TWO = "380 角色庫 2";
     private static final String CHARACTER = "LitoWaterPassGate";

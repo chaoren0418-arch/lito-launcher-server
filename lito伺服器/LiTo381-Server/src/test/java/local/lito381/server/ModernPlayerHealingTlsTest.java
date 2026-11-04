@@ -24,6 +24,7 @@ class ModernPlayerHealingTlsTest {
     @TempDir Path root;
     static SSLContext serverContext,clientContext;
     @BeforeAll static void certificates()throws Exception {
+        LocalResources.assumeSharedResourceRoot();
         var directory=ModernTlsTestMaterial.defaultDirectory();ModernTlsTestMaterial.prepare(directory);
         serverContext=ModernTlsTestMaterial.serverContext(directory,false);clientContext=ModernTlsTestMaterial.clientContext(directory);
     }

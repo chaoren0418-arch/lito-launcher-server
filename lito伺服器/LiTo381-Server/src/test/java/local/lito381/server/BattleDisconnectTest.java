@@ -25,6 +25,7 @@ final class BattleDisconnectTest {
     }
 
     @Test void solePlayerDisconnectLosesToTheSyntheticArenaBot() {
+        LocalResources.assumeNativeCatalogPins();
         BattleRules.Resolution result = GameHub.resolveBattleDisconnect(
                 Set.of(1L), Set.of(1L));
 

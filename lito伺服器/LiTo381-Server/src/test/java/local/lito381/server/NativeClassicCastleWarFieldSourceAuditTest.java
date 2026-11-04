@@ -7,10 +7,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks 0.7.557's war-field and expulsion behavior to selected source files. */
 final class NativeClassicCastleWarFieldSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void selectedSourceHashesAndBeginOrderRemainExact() throws Exception {
         assertHash(ClassicWorldCastleWarField.WAR_SPAWN_SOURCE_SHA256,

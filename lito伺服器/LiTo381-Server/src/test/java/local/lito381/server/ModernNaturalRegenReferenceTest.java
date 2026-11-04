@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -13,6 +14,11 @@ import org.junit.jupiter.api.Test;
  * second-by-second model and with the older BattleNatural* implementation.
  */
 final class ModernNaturalRegenReferenceTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final long SECOND = 1_000_000_000L;
 
     private static ModernNaturalRegen.Values values(int type, long level, long con,

@@ -9,9 +9,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.net.InetAddress;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class AttackAllProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
         assertFalse(ServerConfig.load(Path.of("config/server.properties"))
                 .attackAllProbeEnabled());

@@ -7,10 +7,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source guard for the documented Time Attack random-dragon stage. */
 final class NativeTimeAttackDragonSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final Path SOURCE_DATABASE = Path.of("..", "1-伺服器", "db",
             "380_db.sql").toAbsolutePath().normalize();
     private static final Path RETAINED_MOB_SKILL_USE = Path.of("..", "1-伺服器",

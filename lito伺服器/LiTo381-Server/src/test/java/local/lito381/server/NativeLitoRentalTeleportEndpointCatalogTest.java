@@ -59,6 +59,7 @@ final class NativeLitoRentalTeleportEndpointCatalogTest {
     }
 
     @Test void exactTeleporterActionSendsStatusThenDirectEndpoint() throws Exception {
+        LocalResources.assumeNativeCatalogPins();
         String base = Files.readString(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         Path properties = temporary.resolve("rental-teleport.properties");
         Files.writeString(properties, base + "\n"

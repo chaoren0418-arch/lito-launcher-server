@@ -4,10 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Path;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Read-only proof that the deployed shared static schema backs LiTo controls. */
 final class LitoMySqlStaticControlIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test
     void liveStaticSchemaPublishesShopAndBattleControls() throws Exception {
         Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"));

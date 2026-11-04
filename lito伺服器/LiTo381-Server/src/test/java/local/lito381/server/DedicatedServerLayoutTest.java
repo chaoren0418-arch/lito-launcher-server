@@ -9,9 +9,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class DedicatedServerLayoutTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void operationalConfigContainsOnlyServerAndDatabaseProperties()
             throws Exception {
         try (var files = Files.list(Path.of("config"))) {

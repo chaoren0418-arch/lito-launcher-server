@@ -8,9 +8,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class LitoDatabaseLayoutTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     private static final Pattern CREATE_TABLE =
             Pattern.compile("(?im)^CREATE TABLE\\s");
 

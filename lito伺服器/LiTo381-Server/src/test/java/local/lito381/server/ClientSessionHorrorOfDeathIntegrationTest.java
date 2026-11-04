@@ -16,9 +16,15 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Production-path proof for selected-client selector-only skill193. */
 final class ClientSessionHorrorOfDeathIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void exact141800ConsumesWardThenAppliesAndCancellationRestoresStats()

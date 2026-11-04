@@ -6,9 +6,15 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernDisintegrateReadProbeTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test void statementAndExecutionAllowlistBlocksMutationBeforeInvokingDriver()throws Exception {
         int[] prepares={0};var delegate=ModernDisintegrateCatalogTest.proxy(Connection.class,(m,a)->{
             if(m.equals("prepareStatement")){prepares[0]++;return ModernDisintegrateCatalogTest.proxy(java.sql.PreparedStatement.class,(n,b)->{

@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the observed-war-end persistence order to the selected server fork. */
 final class NativeClassicCastleWarPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void sourceOrderAndSqlGatedCastlePersistenceRemainConnected() throws Exception {
         String source = Files.readString(Path.of(

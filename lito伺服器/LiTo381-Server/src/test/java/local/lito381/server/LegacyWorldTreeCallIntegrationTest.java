@@ -20,9 +20,15 @@ import java.util.Locale;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for native skill 131 World Tree's Call. */
 final class LegacyWorldTreeCallIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     private static final String STATIC_NPC_COLUMNS = String.join("\t",
             "spawn_id", "npc_id", "x", "y", "heading", "movement_distance",
             "name_id", "impl", "gfx_id", "level", "hp", "mp", "exp", "lawful",

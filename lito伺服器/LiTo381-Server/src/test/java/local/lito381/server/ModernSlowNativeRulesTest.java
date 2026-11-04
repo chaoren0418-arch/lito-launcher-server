@@ -7,11 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Explicit retained NPC prerequisite failures through the actual engine,
  * never a fake probability roll or a free unsupported-command response. */
 class ModernSlowNativeRulesTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     static ModernNpcCatalog.Catalog catalog(int id) {
         var c=ModernNpcMeleeTest.catalog();var original=c.npcs().get(ModernNpcMeleeTest.NPC);
         var rows=new HashMap<>(c.npcs());rows.put(id,new ModernNpcCatalog.Npc(new ModernNpcCatalog.Key(c.sourceId(),c.database(),id),

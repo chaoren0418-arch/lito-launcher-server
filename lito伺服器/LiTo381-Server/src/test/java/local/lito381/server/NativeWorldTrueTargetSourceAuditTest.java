@@ -5,10 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill113's native producer and ordinary-WORLD L1Character route. */
 final class NativeWorldTrueTargetSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     @Test
     void nativeRequestResponseDatabaseAndAudienceStayExact() throws Exception {
         String database = Files.readString(

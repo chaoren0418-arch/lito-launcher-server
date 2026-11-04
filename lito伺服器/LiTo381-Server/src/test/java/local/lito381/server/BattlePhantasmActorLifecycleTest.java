@@ -5,9 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattlePhantasmActorLifecycleTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void companionSleepLocksAiWakesOnDamageAndCancellationReportsIt() {
         BattleCompanion companion = new BattleCompanion(0x6000_0212L);
         companion.resetForBattle(100, 100);

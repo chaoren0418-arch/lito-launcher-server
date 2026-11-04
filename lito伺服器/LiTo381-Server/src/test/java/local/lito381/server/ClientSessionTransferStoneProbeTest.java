@@ -95,7 +95,7 @@ final class ClientSessionTransferStoneProbeTest {
                     server, ClientSession.Endpoint.GAME, config, null, state,
                     new CaptureLog(temporary.resolve("handoff-capture")), hub);
             ClientSession contender = new ClientSession(
-                    null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+                    null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(session);
             hub.connect(contender);
             setField(session, "account", "test");
@@ -139,7 +139,7 @@ final class ClientSessionTransferStoneProbeTest {
                     server, ClientSession.Endpoint.GAME, config, null, state,
                     new CaptureLog(temporary.resolve("atomic-handoff-capture")), hub);
             ClientSession contender = new ClientSession(
-                    null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+                    null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(active);
             hub.connect(contender);
             setField(active, "account", "test");
@@ -180,7 +180,7 @@ final class ClientSessionTransferStoneProbeTest {
                     server, ClientSession.Endpoint.GAME, config, null, state,
                     new CaptureLog(temporary.resolve("reset-handoff-capture")), hub);
             ClientSession contender = new ClientSession(
-                    null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+                    null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(active);
             hub.connect(contender);
             setField(active, "account", "test");

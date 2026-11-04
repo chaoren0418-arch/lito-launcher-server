@@ -12,10 +12,17 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained database/source proof for ordinary WORLD EXP death loss. */
 final class NativeClassicWorldDeathPenaltySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path PRIMARY_SQL = Path.of("..", "1-伺服器", "db",
             "380_db.sql").toAbsolutePath().normalize();
     private static final Path RETAINED_PC = Path.of("..", "LiTo381-開發",

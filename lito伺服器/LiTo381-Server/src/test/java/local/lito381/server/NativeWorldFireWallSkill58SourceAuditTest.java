@@ -6,10 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill58 Fire Wall producer, rows and atomic runtime contract. */
 final class NativeWorldFireWallSkill58SourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static String read(Path path) throws Exception {
         return Files.readString(path, StandardCharsets.UTF_8);
     }

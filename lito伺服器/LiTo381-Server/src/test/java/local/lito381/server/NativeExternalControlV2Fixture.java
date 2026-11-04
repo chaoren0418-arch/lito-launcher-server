@@ -103,7 +103,7 @@ final class NativeExternalControlV2Fixture implements AutoCloseable {
             sources.put(c.id(),new ModernEquipmentRepository.Source(c,jdbc));data.put(c.id(),new ModernCharacterDataRepository.Source(jdbc,c.catalogDatabase()));
         }
         store=new ModernEquipmentOverrideStore(config.equipmentStoreDirectory());provider=new Provider(ModernEquipmentRepository.physicalJdbc(sources));
-        var adapter=new NativePlayerLoadoutAdapter(provider,store,System::currentTimeMillis,this::observeEntry);
+        var adapter=new NativePlayerLoadoutAdapter(provider,store,System::currentTimeMillis);
         var equipment=new ModernEquipmentAuthority(ModernEquipmentRepository.jdbc(sources),ModernEquipmentRepository.combatJdbc(sources),ModernEquipmentRepository.physicalJdbc(sources),store,System::currentTimeMillis);
         var rooms=new ModernRooms(Set.of(binding.key()));
         worlds=ModernWorldService.withNativeSourceMelee(rooms,Map.of(binding.key(),mapping),limits,adapter);

@@ -19,6 +19,7 @@ final class ClientSessionGmDeIntegrationTest {
 
     @Test void databaseAuthorizedDeChatCreatesReadyRoomRowsAndStartsCountdown()
             throws Exception {
+        LocalResources.assumeNativeCatalogPins();
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/server.selftest.properties"));
         GameStateStore state = new GameStateStore(temporary.resolve("state.properties"), false);

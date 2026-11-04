@@ -19,8 +19,14 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionNativeTournamentEconomyTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -6869,7 +6875,7 @@ final class ClientSessionNativeTournamentEconomyTest {
                 temporary.resolve("state.properties"), false);
         GameHub hub = new GameHub(config);
         ClientSession session = new ClientSession(
-                null, ClientSession.Endpoint.GAME, config, null, state, null, hub);
+                null, ClientSession.Endpoint.GAME, config, null, state, LocalResources.discardCapture(), hub);
         setField(session, "account", "native-economy-test");
         setField(session, "selectedCharacter", "NativeEconomyKnight");
         RuntimeInventory baseline = baseline();

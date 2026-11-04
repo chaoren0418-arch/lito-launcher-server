@@ -134,6 +134,7 @@ final class RentalBattleHandoffStoreTest {
     }
 
     private static Process process(String... arguments) throws Exception {
+        LocalResources.assumeWindowsJvm();
         String java = Path.of(System.getProperty("java.home"), "bin", "java.exe")
                 .toString();
         String classPath = System.getProperty("surefire.test.class.path",

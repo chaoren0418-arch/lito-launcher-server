@@ -7,10 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the bounded photo/resource proof for Quest Battle room one. */
 final class NativeQuestFukuokaRoomOnePhotoSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLitoBin();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path EVIDENCE = Path.of(
             "D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638");
     private static final Path SELECTED_CLIENT = Path.of(

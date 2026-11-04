@@ -82,7 +82,7 @@ final class ProtocolRoomControlTest {
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         try (GameHub hub = new GameHub(config)) {
             ClientSession session = new ClientSession(null, ClientSession.Endpoint.GAME,
-                    config, null, null, null, hub);
+                    config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(session);
             hub.enterChannel(0, session);
             long roomId = hub.createRoom(0, new GameHub.RoomSettings(

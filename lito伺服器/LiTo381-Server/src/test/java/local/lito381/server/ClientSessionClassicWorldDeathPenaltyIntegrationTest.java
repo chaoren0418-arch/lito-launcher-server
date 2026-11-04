@@ -1358,6 +1358,7 @@ final class ClientSessionClassicWorldDeathPenaltyIntegrationTest {
 
     private Peer peer(Fixture owner, String name, int level, long objectId,
                       int x, int y) throws Exception {
+        LocalResources.assumeClassicSourceAccounts();
         ServerSocket listener = new ServerSocket(
                 0, 1, InetAddress.getByName("127.0.0.1"));
         Socket client = new Socket("127.0.0.1", listener.getLocalPort());

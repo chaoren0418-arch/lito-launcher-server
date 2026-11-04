@@ -5,10 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks LiTo.bin case8, selected skill9 data and retained cure semantics. */
 final class NativeWorldCurePoisonSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     @Test
     void nativeProducerSelectedRowRetainedMeaningAndServerRouteStayExact()
             throws Exception {

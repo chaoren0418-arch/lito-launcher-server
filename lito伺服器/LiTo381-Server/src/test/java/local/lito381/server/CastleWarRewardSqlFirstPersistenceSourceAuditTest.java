@@ -5,10 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks LiTo's durable castle reward producer to the retained 3.80 semantics. */
 final class CastleWarRewardSqlFirstPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @Test
     void retainedRewardInputsFeedAnIdempotentRouteLocalPendingRow() throws Exception {
         String war = Files.readString(Path.of(

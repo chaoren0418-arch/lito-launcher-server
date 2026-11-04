@@ -20,6 +20,7 @@ final class ClientSessionLitoCreateRoomClanIntegrationTest {
 
     @Test void compactCreateAutomaticallyJoinsAClannedCreatorAndEmitsSuccess()
             throws Exception {
+        LocalResources.assumeClassicSourceAccounts();
         ServerConfig config = ServerConfig.load(Path.of(
                 "src/test/resources/server-config/config/server.selftest.properties"));
         GameStateStore state = new GameStateStore(

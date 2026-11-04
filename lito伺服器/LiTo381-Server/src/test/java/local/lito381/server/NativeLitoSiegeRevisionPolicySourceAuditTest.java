@@ -10,10 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the 2003 launch limit, 2005 expansion, and selected production basis. */
 final class NativeLitoSiegeRevisionPolicySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",
             "native-lito-siege-revision-sources-2003-2005.json")
             .toAbsolutePath().normalize();

@@ -7,10 +7,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks retained HIDDEN_STATUS_ICE semantics and its source-profile boundary. */
 final class NativeClassicWorldIceMonsterSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeLitoBin();
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
     private static final Path SELECTED_CLIENT = Path.of(
             "D:/380/天堂(Lineage 3.81C) (1)");

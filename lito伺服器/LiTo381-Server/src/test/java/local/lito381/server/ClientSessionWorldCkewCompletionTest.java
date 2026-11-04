@@ -215,6 +215,7 @@ final class ClientSessionWorldCkewCompletionTest {
     @Test
     void elfRewardBowConsumesExactRuntimeArrowOverEncryptedFarAttack()
             throws Exception {
+        LocalResources.assumeClassicSourceAccounts();
         ServerConfig config = ServerConfig.load(
                 Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         GameHub hub = new GameHub(config);

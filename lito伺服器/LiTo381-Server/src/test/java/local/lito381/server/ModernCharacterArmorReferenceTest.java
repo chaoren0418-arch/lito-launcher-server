@@ -12,11 +12,17 @@ import javax.tools.ToolProvider;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Executes the two actual workspace source method bodies with only a Pc
  * identity/OriginalDex stub. Not a native executable, full classic player,
  * int-clamping, equipment, permanent-buff or client-bin equivalence claim. */
 class ModernCharacterArmorReferenceTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+    }
+
     @TempDir Path directory;
     @Test void modernI64FormulaAgreesWithActualClassicMethodsAcrossAllClassesAndBoundaries()throws Exception {
         var root=System.getenv("LITO_MODERN_TEST_SERVER_ROOT");Assumptions.assumeTrue(root!=null);

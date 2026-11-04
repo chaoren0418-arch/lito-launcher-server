@@ -9,10 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the original page-7 callback evidence and the manual runtime policy. */
 final class NativeCharacterSelectionUiContractTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLitoBin();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path CLIENT = Path.of(
             "D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin");
     private static final Path DISASSEMBLY = Path.of(

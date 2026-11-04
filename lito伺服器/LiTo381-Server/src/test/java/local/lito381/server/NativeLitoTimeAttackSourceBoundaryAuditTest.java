@@ -10,10 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the recovered LiTo Time Attack selection model and its evidence boundary. */
 final class NativeLitoTimeAttackSourceBoundaryAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path ARCHIVE = Path.of("..", "LiTo381-開發", "analysis",
             "native-lito-time-attack-source-boundary-archive")
             .toAbsolutePath().normalize();

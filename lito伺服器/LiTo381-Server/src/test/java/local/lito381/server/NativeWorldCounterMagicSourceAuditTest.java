@@ -9,10 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill31 production, source exceptions and full ward lifecycle. */
 final class NativeWorldCounterMagicSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources();
+        LocalResources.assumeIdaClient();
+    }
+
     private static final Path WORKSPACE = Path.of("..");
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
