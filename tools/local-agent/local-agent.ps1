@@ -52,12 +52,12 @@ function Run-Task($repo, $issue) {
 
     $prompt = @"
 你在本機專案目錄 $dir（GitHub repo $Owner/$repo）執行一項由雲端主控（Claude）指派的本機任務。先讀 AGENTS.md 與 TASKS.md 的規則。
-任務（來自 Issue #$n「$($issue.title)」）：
+任務（來自 Issue #${n}「$($issue.title)」）：
 $($issue.body)
 
 完成要求：
-1. 任務產出（測試結果、擷取的資料、報告）依任務指示寫入專案內指定路徑；沒指定時寫 docs/local-task/issue-$n/。
-2. 若有檔案變更：git checkout -b local-task/$n（已存在則切換），commit，push 到 origin；commit 訊息以「local-task #$n:」開頭。不可碰 config/server.properties 等機密，不可改 releases/ 與封存。
+1. 任務產出（測試結果、擷取的資料、報告）依任務指示寫入專案內指定路徑；沒指定時寫 docs/local-task/issue-${n}/。
+2. 若有檔案變更：git checkout -b local-task/${n}（已存在則切換），commit，push 到 origin；commit 訊息以「local-task #${n}:」開頭。不可碰 config/server.properties 等機密，不可改 releases/ 與封存。
 3. 最後印出一段以 `=== RESULT ===` 開頭的摘要（做了什麼、產出路徑、分支名、未完成事項），不超過 40 行。
 "@
     $promptFile = Join-Path $LogRoot ("{0}-{1}.prompt.md" -f $repo, $n)
