@@ -42,6 +42,7 @@ lito脫殼資源/handoff.json
 lito脫殼資源/priority-*.json
 
 # ===== 建置產物 =====
+/release/package-*
 **/bin/
 **/obj/
 **/target/
