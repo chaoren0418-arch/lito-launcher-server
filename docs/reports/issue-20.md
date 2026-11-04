@@ -80,7 +80,7 @@ T009（#12）把本機資源守門做好後，無 DB／無本機資源的 `mvn t
 - **已驗證**：issue-12 的 30 案定向 `mvn -B test`：**30 run / 0 failures / 0 errors / 0 skipped**。
 - **已驗證**：完整 `mvn -B test`（無 DB／無本機資源）：**6033 run / 0 failures / 0 errors / 117 skipped**，1266 份 Surefire XML。與 T009 Ubuntu 基線同規模，失敗從 28+2 降為 0。
 - **已驗證**：`server-test` 已無 `continue-on-error`，job 名稱為 `Server tests`。
-- **待驗證**：GitHub CI `server-test` job（本機已全綠，CI 為同一 `mvn -B test`）。
+- **已驗證**：GitHub CI [build 41802435693](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41802435693) 三個 job 全綠：`Server (Java 17 / Maven)`、`Server tests`、`Launcher (.NET 10 / WinForms)`。`server-test` 已擋合併且通過。
 - 未啟動遊戲或正式服務、未連正式 DB、未讀寫 `config/server.properties`、未改正式 BIN／封存／release。
 
 ## 產出路徑
@@ -97,5 +97,5 @@ Claude 審查本 PR 時請逐案核對上表判斷，重點看：
 1. `matchRoom` 排除測試房是否仍允許玩家直接加入 Local Lobby（房間列表仍含它）。
 2. `refusal` 把 GM 假人計入後，單人測試房 ArenaBot 路徑是否仍只在 `activeBot` 時繞過最低 2 人。
 3. `exitRoom`／`quitFight` 的租用城分支不可再被 `Phase.BATTLE` settle 蓋過。
-4. CI `server-test` 現在會擋合併；完整套件若出現與這 30 案無關的新失敗，屬回歸，不要再加 `continue-on-error`。
+4. CI `server-test` 已擋合併且在 [41802435693](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41802435693) 通過。不要再加 `continue-on-error`。
 5. 實機 `--check`／`--smoke`、租用城雙人離場、GM `.de` 倒數，仍須使用者跑。不得恢復假 skip。
