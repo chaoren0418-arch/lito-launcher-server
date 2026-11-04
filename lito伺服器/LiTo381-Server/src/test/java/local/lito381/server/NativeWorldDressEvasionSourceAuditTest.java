@@ -6,15 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill111, retained ER rules, and the ordinary-WORLD route. */
 final class NativeWorldDressEvasionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackMode.java"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void retainedSourcePinsErModifierBowRollAndCancellation() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (111, 0, '閃避提升', 14, 6, 20, 0, 0, 0, 0, 32, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 64, '', 19, 11766, 0, 0, 0, 0);"));
@@ -25,13 +34,13 @@ final class NativeWorldDressEvasionSourceAuditTest {
         assertFalse(database.contains(
                 "INSERT INTO `skills_相消免疫技能` VALUES (111,"));
 
-        String pc = Files.readString(RETAINED.resolve(
+        String pc = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/Instance/L1PcInstance.java"),
                 StandardCharsets.UTF_8);
         assertTrue(pc.contains("this.hasSkillEffect(DRESS_EVASION)"));
         assertTrue(pc.contains("er += 12;"));
 
-        String attack = Files.readString(RETAINED.resolve(
+        String attack = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1AttackMode.java"),
                 StandardCharsets.UTF_8);
         assertTrue(attack.contains("final int er = _targetPc.getEr()"));
@@ -41,7 +50,7 @@ final class NativeWorldDressEvasionSourceAuditTest {
 
     @Test
     void worldRouteRoiCommitAndExpiryRemainConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

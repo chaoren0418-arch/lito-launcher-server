@@ -466,7 +466,8 @@ final class ClientSessionRentalTownDirectoryTest {
              Socket server = listener.accept()) {
             client.setSoTimeout(1_000);
             ClientSession session = new ClientSession(
-                    server, ClientSession.Endpoint.GAME, config, null, state,
+                    server, ClientSession.Endpoint.GAME, config,
+                    new MemoryAccountRepository("test", "test"), state,
                     new CaptureLog(temporary.resolve("restart-capture")), hub);
             setPhase(session, "ROOM");
             setField(session, "selectedCharacter", "TestKnight");

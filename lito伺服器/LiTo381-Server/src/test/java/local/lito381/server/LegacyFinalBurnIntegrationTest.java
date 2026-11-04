@@ -16,9 +16,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for the original skill 108 current-MP sacrifice contract. */
 final class LegacyFinalBurnIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactFinalBurnContract() throws Exception {
@@ -103,7 +114,7 @@ final class LegacyFinalBurnIntegrationTest {
 
     private static void assertRetainedCurrentMpDamageAndPostConsumeOrder() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String magicPc = Files.readString(retained.resolve(Path.of(
+        String magicPc = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "L1MagicPc.java")),
                 StandardCharsets.UTF_8);
         assertTrue(magicPc.contains("if (skillId == FINAL_BURN)"));
@@ -111,12 +122,12 @@ final class LegacyFinalBurnIntegrationTest {
         assertTrue(magicPc.contains("dmg -= _targetPc.getDamageReductionByArmor();"));
         assertTrue(magicPc.contains("damage = calcMrDefense(damage);"));
 
-        String magicNpc = Files.readString(retained.resolve(Path.of(
+        String magicNpc = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "L1MagicNpc.java")),
                 StandardCharsets.UTF_8);
         assertTrue(magicNpc.contains("dmg = this._npc.getCurrentMp();"));
 
-        String skillUse = Files.readString(retained.resolve(Path.of(
+        String skillUse = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("currentHp < this._hpConsume + 1"));
@@ -129,9 +140,9 @@ final class LegacyFinalBurnIntegrationTest {
 
         Path ancient = retained.resolve(Path.of("其他src參考用", "古老src",
                 "com", "lineage", "server", "model"));
-        String ancientMagic = Files.readString(ancient.resolve("L1MagicPc.java"),
+        String ancientMagic = LocalResources.readString(ancient.resolve("L1MagicPc.java"),
                 StandardCharsets.UTF_8);
-        String ancientUse = Files.readString(ancient.resolve(Path.of(
+        String ancientUse = LocalResources.readString(ancient.resolve(Path.of(
                 "skill", "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(ancientMagic.contains("dmg = _pc.getCurrentMp();"));
         assertTrue(ancientUse.contains("this._player.setCurrentHp(1);"));

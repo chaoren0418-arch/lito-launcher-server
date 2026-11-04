@@ -13,10 +13,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Selected retained-server proof for the complete death-policy authority. */
 final class NativeClassicWorldDeathLifecycleSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/charsettings.properties"),
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/add/DeathSafe.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/DeathPenaltyItemControlTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1PcInventory.java"));
+    }
+
     private static final Path ROOT = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SETTINGS = ROOT.resolve("config/charsettings.properties");
@@ -45,7 +57,7 @@ final class NativeClassicWorldDeathLifecycleSourceAuditTest {
     }
 
     @Test void sixItemAndSkillBandsMatchSelectedCharSettings() throws Exception {
-        String settings = Files.readString(SETTINGS);
+        String settings = LocalResources.readString(SETTINGS);
         assertEquals(ClassicWorldDeathPenaltyCatalog.itemRules(),
                 rules(settings, "DeathPenaltyItem"));
         assertEquals(ClassicWorldDeathPenaltyCatalog.skillRules(),
@@ -53,7 +65,7 @@ final class NativeClassicWorldDeathLifecycleSourceAuditTest {
     }
 
     @Test void allFortyEightSelectedControlRowsMatchRuntime() throws Exception {
-        String sql = Files.readString(SQL);
+        String sql = LocalResources.readString(SQL);
         Matcher rows = Pattern.compile(
                 "^INSERT INTO `系統_死亡噴出控制` VALUES \\((\\d+), '.*?', (\\d+)\\);$",
                 Pattern.MULTILINE).matcher(sql);
@@ -71,7 +83,7 @@ final class NativeClassicWorldDeathLifecycleSourceAuditTest {
     }
 
     @Test void selectedDeathSafeRowsAndNativeOrderingRemainExplicit() throws Exception {
-        String sql = Files.readString(SQL);
+        String sql = LocalResources.readString(SQL);
         for (var safe : ClassicWorldDeathPenaltyCatalog.deathSafeItems().values()) {
             String classToken = "'add.DeathSafe " + safe.categoryMask() + " "
                     + safe.consume() + "'";
@@ -81,14 +93,14 @@ final class NativeClassicWorldDeathLifecycleSourceAuditTest {
         assertTrue(sql.contains(
                 "INSERT INTO `道具_物品時間限制` VALUES (350354, 168, '全能保護符')"));
 
-        String source = Files.readString(PC).replace("\r\n", "\n");
+        String source = LocalResources.readString(PC).replace("\r\n", "\n");
         int action = source.indexOf("new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die)");
         int item = source.indexOf("this.lostRate();", action);
         int skill = source.indexOf("this.lostSkillRate();", item);
         int experience = source.indexOf("this.expRate();", skill);
         assertTrue(action >= 0 && item > action && skill > item && experience > skill,
                 "retained action -> item -> skill -> EXP order drifted");
-        String inventory = Files.readString(INVENTORY);
+        String inventory = LocalResources.readString(INVENTORY);
         assertTrue(inventory.contains("final int rnd = random.nextInt(_items.size());"));
         assertTrue(inventory.contains("if (!isEligibleForDeathDrop(penaltyItem))"));
         assertTrue(inventory.contains("DROP_ALWAYS_VANISH"));
@@ -112,6 +124,6 @@ final class NativeClassicWorldDeathLifecycleSourceAuditTest {
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

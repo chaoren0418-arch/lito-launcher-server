@@ -6,14 +6,22 @@ import static local.lito381.server.ModernCombatProfileTest.stored;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ModernSlowEquipmentTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test void retainedFlagAndEquippedCountDoNotUseBooleanOneOrNativeIntegerNarrowing() throws Exception {
-        String itemTable=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"));
+        String itemTable=LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/datatables/ItemTable.java"));
         assertTrue(itemTable.contains("weapon.setHasteItem(rs.getInt(\"haste_item\") == 0 ? false : true);"));
         assertTrue(itemTable.contains("armor.setHasteItem(rs.getInt(\"haste_item\") == 0 ? false : true);"));
-        String use=Files.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        String use=LocalResources.readString(Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
         assertTrue(use.contains("getHasteItemEquipped() > 0"));
         for(long flag:new long[]{Long.MIN_VALUE,-1,0,1,2,1L<<32,Long.MAX_VALUE}) {
             var source=flags(ModernHasteTest.source(7,1,15,20023),Map.of(20023L,flag));

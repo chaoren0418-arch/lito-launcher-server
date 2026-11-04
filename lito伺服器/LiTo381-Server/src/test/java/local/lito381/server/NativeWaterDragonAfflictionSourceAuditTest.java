@@ -9,10 +9,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Source and selected-client proof for server-produced Water Dragon afflictions. */
 final class NativeWaterDragonAfflictionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/hp/UserAddHp.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/quest/AD80_2_Timer.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PRIMARY_SQL = RETAINED.resolve("db/380_db.sql");
@@ -81,7 +94,7 @@ final class NativeWaterDragonAfflictionSourceAuditTest {
     void selectedClientAndImportedSpriteContractContainEveryEffect() throws Exception {
         assertEquals("CE6EE68ADA8FD37E6C096B1A27E46CB6888F1179F85DEFB5007AC60287360292",
                 sha256(SELECTED_CLIENT));
-        String sprite = Files.readString(Path.of(
+        String sprite = LocalResources.readString(Path.of(
                 "src/main/resources/battle/spr-action-380.csv"),
                 StandardCharsets.UTF_8);
         assertTrue(sprite.contains("7780,0,"));
@@ -93,8 +106,8 @@ final class NativeWaterDragonAfflictionSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static void assertOrdered(String text, String... fragments) {
@@ -108,7 +121,7 @@ final class NativeWaterDragonAfflictionSourceAuditTest {
 
     private static String sha256(Path path) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        try (var input = Files.newInputStream(path)) {
+        try (var input = LocalResources.newInputStream(path)) {
             byte[] buffer = new byte[64 * 1024];
             for (int count; (count = input.read(buffer)) >= 0;) {
                 if (count > 0) digest.update(buffer, 0, count);

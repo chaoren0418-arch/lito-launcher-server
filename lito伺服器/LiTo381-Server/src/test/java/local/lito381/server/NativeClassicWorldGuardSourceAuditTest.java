@@ -17,10 +17,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for the selected live L1Guard native flow. */
 final class NativeClassicWorldGuardSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1GuardInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/Instance/L1GuardInstance.java"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path CURRENT = RETAINED.resolve("src/com/lineage/server");
@@ -153,7 +165,7 @@ final class NativeClassicWorldGuardSourceAuditTest {
         assertEquals(Protocol.S_REMOVE_OBJECT,
                 new Protocol.Reader(
                         Protocol.removeObject(guard.objectId())).c());
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"));
         assertTrue(session.contains(
                 "Protocol.effectObject(before.objectId(), 169)"));
@@ -219,7 +231,7 @@ final class NativeClassicWorldGuardSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -235,7 +247,7 @@ final class NativeClassicWorldGuardSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 
     private record NpcRow(int npcId, int hp) {}

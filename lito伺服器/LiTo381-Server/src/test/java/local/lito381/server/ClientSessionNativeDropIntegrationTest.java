@@ -17,9 +17,15 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Encrypted-session proof for retained C_DROP gates and battle visibility. */
 final class ClientSessionNativeDropIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -850,7 +856,7 @@ final class ClientSessionNativeDropIntegrationTest {
     }
 
     private static String read(CaptureLog log) throws Exception {
-        return Files.readString(log.path());
+        return LocalResources.readString(log.path());
     }
 
     private static Object field(Object target, String name) throws Exception {

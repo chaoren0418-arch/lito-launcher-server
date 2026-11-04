@@ -5,17 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill48 and both ordinary-WORLD player physical consumers. */
 final class NativeWorldBlessWeaponSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedWeaponRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -29,7 +38,7 @@ final class NativeWorldBlessWeaponSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (48, '祝福魔法武器', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB71D:", "loc_4CB741:");
@@ -66,7 +75,7 @@ final class NativeWorldBlessWeaponSourceAuditTest {
     @Test
     void worldDispatcherAdmissionLeaseAndBothConsumersStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String dispatch = between(session,
@@ -117,7 +126,7 @@ final class NativeWorldBlessWeaponSourceAuditTest {
         assertTrue(session.contains(
                 "Cancellation player cleared weapon buff target="));
 
-        String acceptance = Files.readString(Path.of(
+        String acceptance = LocalResources.readString(Path.of(
                 "tools/classic_world_bless_weapon_selftest.py"),
                 StandardCharsets.UTF_8);
         assertTrue(acceptance.contains(
@@ -128,14 +137,14 @@ final class NativeWorldBlessWeaponSourceAuditTest {
                 "pc_request = request_prefix + struct.pack"));
         assertTrue(acceptance.contains("exact_damage_delta"));
         assertTrue(acceptance.contains("encrypted_stream_aligned"));
-        String barrierAcceptance = Files.readString(Path.of(
+        String barrierAcceptance = LocalResources.readString(Path.of(
                 "tools/classic_world_bless_weapon_barrier_selftest.py"),
                 StandardCharsets.UTF_8);
         assertTrue(barrierAcceptance.contains("ABSOLUTE_BARRIER"));
         assertTrue(barrierAcceptance.contains("reason=spell-48"));
         assertTrue(barrierAcceptance.contains(
                 "REQUEST_PREFIX + struct.pack(\"<I\", TARGET_ID)"));
-        String config = Files.readString(Path.of(
+        String config = LocalResources.readString(Path.of(
                 "src/test/resources/server-config/config/server.bless-weapon-native-world-selftest.properties"),
                 StandardCharsets.UTF_8);
         assertTrue(config.contains("database.read.only=true"));
@@ -144,7 +153,7 @@ final class NativeWorldBlessWeaponSourceAuditTest {
     }
 
     private static String retained(String relative) throws Exception {
-        return Files.readString(RETAINED.resolve(relative).normalize(),
+        return LocalResources.readString(RETAINED.resolve(relative).normalize(),
                 StandardCharsets.UTF_8);
     }
 

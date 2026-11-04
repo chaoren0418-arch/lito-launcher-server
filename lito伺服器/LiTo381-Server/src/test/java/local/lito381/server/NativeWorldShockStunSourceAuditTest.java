@@ -5,16 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill87 and its ordinary-WORLD player/NPC stun lifecycle. */
 final class NativeWorldShockStunSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/SHOCK_STUN.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -28,7 +38,7 @@ final class NativeWorldShockStunSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_魔屏無效技能` VALUES (87, '衝擊之暈');"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producerStart = assembly.indexOf("sub_4CB5F0 proc near");
@@ -51,7 +61,7 @@ final class NativeWorldShockStunSourceAuditTest {
         assertTrue(sender.contains("sar     ebx, 3"));
         assertTrue(sender.contains("push    14h"));
 
-        String shock = Files.readString(RETAINED.resolve(
+        String shock = LocalResources.readString(RETAINED.resolve(
                 "model/skill/skillmode/SHOCK_STUN.java"),
                 StandardCharsets.UTF_8);
         assertTrue(shock.contains("random.nextInt(randomSec + 1)"));
@@ -65,7 +75,7 @@ final class NativeWorldShockStunSourceAuditTest {
     @Test
     void worldDispatcherTargetsAllActorKindsAndExpiresNativeEffect()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -104,13 +114,13 @@ final class NativeWorldShockStunSourceAuditTest {
         assertTrue(method.contains(
                 "Protocol.paralysis(Protocol.ParalysisMode.STUN_APPLY)"));
 
-        String companion = Files.readString(Path.of(
+        String companion = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleCompanion.java"),
                 StandardCharsets.UTF_8);
         assertTrue(companion.contains(
                 "!timedStatus.shockStunActive(nowNanos)"));
         assertTrue(companion.contains("activateShockStun("));
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains("synchronized BattleTimedStatus.ShockStunActivation shockStun("));

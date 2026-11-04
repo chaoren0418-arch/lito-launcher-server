@@ -5,16 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill88 and its ordinary-WORLD defensive damage lifecycle. */
 final class NativeWorldReductionArmorSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -24,7 +35,7 @@ final class NativeWorldReductionArmorSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (88, '增幅防禦', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producerStart = assembly.indexOf("sub_4CB5F0 proc near");
@@ -40,7 +51,7 @@ final class NativeWorldReductionArmorSourceAuditTest {
         assertTrue(route.contains("push    offset off_5028CC"));
         assertTrue(assembly.contains("off_5028CC dd offset byte_636363"));
 
-        String attackPc = Files.readString(RETAINED.resolve(
+        String attackPc = LocalResources.readString(RETAINED.resolve(
                 "model/L1AttackPc.java"), StandardCharsets.UTF_8);
         assertTrue(attackPc.contains("hasSkillEffect(REDUCTION_ARMOR)"));
         assertTrue(attackPc.contains("Math.max(_targetPc.getLevel(), 50)"));
@@ -49,12 +60,12 @@ final class NativeWorldReductionArmorSourceAuditTest {
         for (String relative : new String[] {
                 "model/L1AttackNpc.java", "model/L1MagicPc.java",
                 "model/L1MagicNpc.java"}) {
-            String source = Files.readString(RETAINED.resolve(relative),
+            String source = LocalResources.readString(RETAINED.resolve(relative),
                     StandardCharsets.UTF_8);
             assertTrue(source.contains("hasSkillEffect(REDUCTION_ARMOR)"));
             assertTrue(source.contains("dmg -= (targetPcLvl - 50) / 5 + 1"));
         }
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains(
                 "REDUCTION_ARMOR, BOUNCE_ATTACK, SOLID_CARRIAGE"));
@@ -65,7 +76,7 @@ final class NativeWorldReductionArmorSourceAuditTest {
     @Test
     void worldDispatcherActivationDamageAndExpiryStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

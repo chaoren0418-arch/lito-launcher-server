@@ -12,10 +12,26 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill65 producer, source rows and both target-area paths. */
 final class NativeWorldLightningStormSkill65SourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_RangeSkill.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+        LocalResources.assumeIdaClient(
+                Path.of("D:/lineage開發/LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("D:/lineage開發/LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SELECTED_CLIENT = Path.of(
@@ -218,7 +234,7 @@ final class NativeWorldLightningStormSkill65SourceAuditTest {
 
     private static byte[] peBytesAtVa(Path path, long va, int length)
             throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         ByteBuffer little = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         int pe = little.getInt(0x3C);
         int sectionCount = Short.toUnsignedInt(little.getShort(pe + 6));
@@ -250,12 +266,12 @@ final class NativeWorldLightningStormSkill65SourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

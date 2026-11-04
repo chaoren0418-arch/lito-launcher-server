@@ -7,10 +7,19 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Target candidates and rejection by old contracts, not a cast admission/UI test. */
 class ModernSlowSpeedTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/brave/StatusHaste.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/ActionIntervalCalculator.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/HASTE.java"));
+    }
+
     @Test void ordinarySlowRefreshAndExactExpiryPreserveIndependentLeases() {
         var original = apply(apply(initial(1), Kind.WISDOM, sec(1), 1, 3), Kind.BRAVE, sec(2), 2, 3);
         var slowed = applySlow(original, sec(10), 3);
@@ -115,9 +124,9 @@ class ModernSlowSpeedTest {
     }
     @Test void retainedSourceProvesPotionSpellAsymmetryAndSlowFirstIntervalOrder() throws Exception {
         Path root = Path.of("../1-伺服器/src/com/lineage");
-        String potion = Files.readString(root.resolve("data/item_etcitem/brave/StatusHaste.java"));
-        String spell = Files.readString(root.resolve("server/model/skill/skillmode/HASTE.java"));
-        String interval = Files.readString(root.resolve("server/model/ActionIntervalCalculator.java"));
+        String potion = LocalResources.readString(root.resolve("data/item_etcitem/brave/StatusHaste.java"));
+        String spell = LocalResources.readString(root.resolve("server/model/skill/skillmode/HASTE.java"));
+        String interval = LocalResources.readString(root.resolve("server/model/ActionIntervalCalculator.java"));
         assertTrue(potion.contains("pc.killSkillEffectTimer(SLOW)"));
         assertTrue(potion.contains("pc.setSkillEffect(STATUS_HASTE"));
         assertTrue(potion.indexOf("pc.killSkillEffectTimer(SLOW)") < potion.indexOf("pc.setSkillEffect(STATUS_HASTE"));

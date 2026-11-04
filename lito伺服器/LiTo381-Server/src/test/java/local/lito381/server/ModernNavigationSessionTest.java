@@ -315,7 +315,7 @@ class ModernNavigationSessionTest {
         var fixture = new ModernApplicationTestBackend("auth"); var presence = new TournamentPresence();
         try (var hub = new GameHub(config, null, null, presence);
              var server = new Peer(fixture, fixture.characters, presence); var client = client(server.port())) {
-            var nativePlayer = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+            var nativePlayer = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(nativePlayer);
             assertTrue(hub.selectCharacter(nativePlayer, 7, "太陽神", TournamentPresenceTest.character("Sun Knight", 3333)));
             hello(client, 7); login(client); roster(client, 3, 7, 1);
@@ -324,7 +324,7 @@ class ModernNavigationSessionTest {
             assertEquals(0, nav(client, new ModernApplicationProtocol.CharacterSelection(5, 7, 3333, 1)).status());
             var occupants = new ArrayList<ClientSession>();
             for (int i = 0; i < 100; i++) {
-                var player = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+                var player = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
                 occupants.add(player); hub.connect(player); assertNotNull(hub.enterChannel(0, player));
             }
             var full = nav(client, new ModernApplicationProtocol.ChannelEnter(6, 7, 3333, 1, 0));
@@ -336,7 +336,7 @@ class ModernNavigationSessionTest {
             var left = nav(client, new ModernApplicationProtocol.LobbyLeave(8, 7, 3333, 1));
             assertEquals(1, left.phase()); assertEquals(99, left.channels().get(0).population());
             assertEquals(99, hub.channelSnapshot(0).users());
-            var nativeReplacement = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+            var nativeReplacement = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(nativeReplacement); assertNotNull(hub.enterChannel(0, nativeReplacement));
             assertFalse(hub.selectCharacter(nativeReplacement, 7, "太陽神", TournamentPresenceTest.character("Sun Knight", 3333)),
                     "released channel capacity does not release the modern character lock");

@@ -16,8 +16,14 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class ClientSessionClassicWorldGroundIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test
@@ -76,7 +82,7 @@ final class ClientSessionClassicWorldGroundIntegrationTest {
                     4, -1, fixture.target(),
                     fixture.targetX(), fixture.y(), now));
 
-            String casterFrames = Files.readString(fixture.casterLog().path());
+            String casterFrames = LocalResources.readString(fixture.casterLog().path());
             assertTrue(casterFrames.contains(
                     "S_CHANGE_DIRECTION classic-world Fire-Wall"));
             assertTrue(casterFrames.contains(

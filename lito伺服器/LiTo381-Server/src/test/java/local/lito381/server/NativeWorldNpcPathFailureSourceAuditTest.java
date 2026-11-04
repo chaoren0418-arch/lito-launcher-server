@@ -9,10 +9,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash and ordering proof for retained NpcMove path-failure lifecycle. */
 final class NativeWorldNpcPathFailureSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/NpcMove.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path NPC = RETAINED.resolve(
@@ -62,14 +70,14 @@ final class NativeWorldNpcPathFailureSourceAuditTest {
     void implementationSeparatesLiveAndStaticPathsAndConnectsBothActors()
             throws Exception {
         Path main = Path.of("src", "main", "java", "local", "lito381", "server");
-        String pathfinder = Files.readString(
+        String pathfinder = LocalResources.readString(
                 main.resolve("ClassicWorldNpcPathfinder.java"));
         ordered(pathfinder, "Result livePath = search(",
                 "if (livePath != null) return livePath",
                 "Result staticPath = search(",
                 "Result.unreachable() : Result.transientFailure()");
 
-        String population = Files.readString(
+        String population = LocalResources.readString(
                 main.resolve("ClassicWorldMonsterPopulation.java"));
         ordered(population, "synchronized Movement moveToward(",
                 "ClassicWorldNpcPathfinder.nextStep(",
@@ -79,7 +87,7 @@ final class NativeWorldNpcPathFailureSourceAuditTest {
                 "actor.combatHate.remove(playerObjectId)",
                 "actor.targetObjectId = maxCombatHateTarget(actor)");
 
-        String companion = Files.readString(main.resolve("BattleCompanion.java"));
+        String companion = LocalResources.readString(main.resolve("BattleCompanion.java"));
         ordered(companion, "synchronized boolean retryPath(",
                 "if (sameMasterCrowding)",
                 "CROWD_RETRY_MILLIS",
@@ -89,7 +97,7 @@ final class NativeWorldNpcPathFailureSourceAuditTest {
                 "pathFailCount < PATH_FAIL_GIVE_UP",
                 "targetObjectId = 0");
 
-        String session = Files.readString(main.resolve("ClientSession.java"));
+        String session = LocalResources.readString(main.resolve("ClientSession.java"));
         ordered(session, "private void serverClassicWorldCompanionTick(",
                 "chooseClassicWorldCompanionStep(",
                 "noFreeClassicWorldCompanionApproachSlot(",
@@ -110,11 +118,11 @@ final class NativeWorldNpcPathFailureSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : new Charset[] {
                 StandardCharsets.UTF_8, Charset.forName("MS950"),
                 Charset.forName("GB18030")}) {

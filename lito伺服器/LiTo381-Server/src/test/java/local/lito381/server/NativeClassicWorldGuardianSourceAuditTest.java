@@ -13,10 +13,27 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for the selected map-4 L1Guardian native flow. */
 final class NativeClassicWorldGuardianSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1GuardianInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_ChangeHeading.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NpcChat.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NpcChatShouting.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/Instance/L1GuardianInstance.java"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+        LocalResources.assumeIdaClient(
+                Path.of("D:/lineage開發/LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path CURRENT = RETAINED.resolve("src/com/lineage/server");
@@ -123,7 +140,7 @@ final class NativeClassicWorldGuardianSourceAuditTest {
     @Test
     void selectedLiToReceiverUsesSayCodeCdshhInsteadOfRetainedTwOpcode()
             throws Exception {
-        String asm = Files.readString(ASM, StandardCharsets.UTF_8);
+        String asm = LocalResources.readString(ASM, StandardCharsets.UTF_8);
         String registration = function(asm, "sub_41E620");
         int opcode = registration.indexOf("mov     [ebp+var_1], 2Dh ; '-'");
         int name = registration.indexOf("offset aSSayCode", opcode);
@@ -133,7 +150,7 @@ final class NativeClassicWorldGuardianSourceAuditTest {
         assertEquals(0x2D, Protocol.S_SAY_CODE);
         assertEquals(0x1C, Protocol.S_CHANGE_DIRECTION);
 
-        String protocol = Files.readString(Path.of(
+        String protocol = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Protocol.java"));
         assertTrue(protocol.contains(
                 "new Writer().c(S_SAY_CODE).c(type).d(objectId).s(message).h(x).h(y)"));
@@ -164,7 +181,7 @@ final class NativeClassicWorldGuardianSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -179,6 +196,6 @@ final class NativeClassicWorldGuardianSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

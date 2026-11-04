@@ -5,17 +5,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill118's retained source and ordinary-WORLD portal capability. */
 final class NativeWorldRunClanSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/RUN_CLAN.java"));
+    }
+
     @Test
     void nativeExactTargetAndMapPolicyStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (118, 0, '援護盟友', 15, 5, 30, 0, 0, 0, 0, 0, 'buff', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 32, '', 19, 0, 0, 0, 0, 280);"));
-        String mode = Files.readString(Path.of(
+        String mode = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/skillmode/RUN_CLAN.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mode.contains("pc.getMap().isEscapable() || pc.isGm()"));
@@ -32,7 +40,7 @@ final class NativeWorldRunClanSourceAuditTest {
     @Test
     void worldDispatcherSnapshotsAndBothPortalRevalidationsStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

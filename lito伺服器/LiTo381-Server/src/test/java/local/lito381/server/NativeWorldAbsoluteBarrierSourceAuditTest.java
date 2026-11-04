@@ -6,16 +6,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill78 and its ordinary-WORLD player protection lane. */
 final class NativeWorldAbsoluteBarrierSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Character.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -25,7 +36,7 @@ final class NativeWorldAbsoluteBarrierSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_相消免疫技能` VALUES (78, '絕對屏障');"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CBBD4:");
@@ -36,7 +47,7 @@ final class NativeWorldAbsoluteBarrierSourceAuditTest {
         assertTrue(assembly.contains("off_5028CC dd offset byte_636363"));
         assertTrue(assembly.contains("byte_636363 db 0"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("if (pc.hasSkillEffect(ABSOLUTE_BARRIER))"));
@@ -52,7 +63,7 @@ final class NativeWorldAbsoluteBarrierSourceAuditTest {
         assertFalse(whitelist.contains("case TRIPLE_ARROW:"));
         assertFalse(whitelist.contains("case IRON_SKIN:"));
 
-        String character = Files.readString(
+        String character = LocalResources.readString(
                 RETAINED.resolve("model/L1Character.java"),
                 StandardCharsets.UTF_8);
         assertTrue(character.contains("activeSkillIds.contains(ABSOLUTE_BARRIER)"));
@@ -60,7 +71,7 @@ final class NativeWorldAbsoluteBarrierSourceAuditTest {
 
     @Test
     void worldHandlerCastsBroadcastsAndProtectsWorldPlayers() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int castStart = session.indexOf("private void useAbsoluteBarrierSpell(");

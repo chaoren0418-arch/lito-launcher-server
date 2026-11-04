@@ -6,15 +6,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill109 and its ordinary-WORLD replacement lifecycle. */
 final class NativeWorldDressMightySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Strup.java"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void retainedSourcePinsStrengthReplacementAndTypeTwoPackets() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (109, 0, '力量提升', 14, 4, 10, 0, 0, 0, 0, 960, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 16, '', 19, 3909, 0, 292, 293, 0);"));
@@ -23,19 +33,19 @@ final class NativeWorldDressMightySourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (109, '力量提升', NULL, NULL);"));
 
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(use.contains("{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY }"));
         assertTrue(use.contains("this._skillId == DRESS_MIGHTY"));
 
-        String icon = Files.readString(RETAINED.resolve(
+        String icon = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
                 StandardCharsets.UTF_8);
         assertTrue(icon.contains("case DRESS_MIGHTY:"));
         assertTrue(icon.contains("new S_Strup(pc, 2, timeSec)"));
 
-        String writer = Files.readString(RETAINED.resolve(
+        String writer = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/serverpackets/S_Strup.java"),
                 StandardCharsets.UTF_8);
         assertTrue(writer.contains("this.writeH(time);"));
@@ -46,7 +56,7 @@ final class NativeWorldDressMightySourceAuditTest {
 
     @Test
     void worldRouteContextRoiAndExpiryRemainConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

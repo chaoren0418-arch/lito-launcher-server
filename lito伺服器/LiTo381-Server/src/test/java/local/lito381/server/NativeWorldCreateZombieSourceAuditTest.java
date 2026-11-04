@@ -5,23 +5,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill41 and its ordinary-WORLD dead-monster conversion. */
 final class NativeWorldCreateZombieSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1SummonInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedZombieRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (41, 0, '造屍術', 6, 0, 5, 80, 40318, 1, 10, 0, 'buff', 2, 0, 0, 0, 0, 0, 1, 32, -10, -1, 0, 0, 1, '$1461', 19, 226, 0, 0, 0, 280);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (41, '造屍術', NULL, NULL);"));
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -33,7 +45,7 @@ final class NativeWorldCreateZombieSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `npc` VALUES (81188, '人形殭屍', '$57', '0', '造屍術', 'L1Monster', 52, 20, 800, 12,"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CB8A0:");
@@ -49,7 +61,7 @@ final class NativeWorldCreateZombieSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("\"cccd\""));
 
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "model/skill/L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("targetNpc.isDead()"));
         assertTrue(skillUse.contains(
@@ -59,7 +71,7 @@ final class NativeWorldCreateZombieSourceAuditTest {
         assertTrue(skillUse.contains("new S_ServerMessage(319)"));
         assertTrue(skillUse.contains("new S_ServerMessage(280)"));
 
-        String summon = Files.readString(RETAINED.resolve(
+        String summon = LocalResources.readString(RETAINED.resolve(
                 "model/Instance/L1SummonInstance.java"),
                 StandardCharsets.UTF_8);
         assertTrue(summon.contains("if (isCreateZombie)"));
@@ -73,7 +85,7 @@ final class NativeWorldCreateZombieSourceAuditTest {
     @Test
     void worldDispatcherConsumesCorpseAndPublishesControlledReplacement()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int dispatchStart = session.indexOf(
@@ -114,7 +126,7 @@ final class NativeWorldCreateZombieSourceAuditTest {
         assertTrue(handler.contains("Protocol.messageCode(319)"));
         assertTrue(handler.contains("Protocol.messageCode(spell.failureMessage())"));
 
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
         int consumeStart = hub.indexOf(

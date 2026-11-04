@@ -8,10 +8,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Source- and acceptance-pinned evidence for atomic native CKEW admission. */
 final class NativeCkewAdmissionAtomicitySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/npc/quest/Npc_CKEW50.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/data/quest/CKEWLv50_1.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/templates/L1QuestUser.java"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path SOURCE = RETAINED.resolve(
@@ -139,13 +151,13 @@ final class NativeCkewAdmissionAtomicitySourceAuditTest {
     }
 
     private static String text(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8)
+        return LocalResources.readString(path, StandardCharsets.UTF_8)
                 .replace("\r\n", "\n");
     }
 
     private static String hash(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

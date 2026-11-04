@@ -9,15 +9,33 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill27 producer, retained durability/stack rules and WORLD routes. */
 final class NativeWorldWeaponBreakSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Inventory.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void selectedAndSecondaryRowsStayExact() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (27, 0, '壞物術', 4, 2, 32, 0, 40318, 1, 3000, 0, 'buff', 3, 0, 0, 0, 0, 10, 2, 4, -10, 4, 0, 0, 4, '$1453', 19, 172, 0, 0, 0, 280);"));
@@ -28,7 +46,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (27, '壞物術', NULL, NULL);"));
 
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -42,7 +60,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
     @Test
     void selectedClientProducerRemainsCccdhhWithThreeSecondClock()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB96F:", "loc_4CB989:");
@@ -58,9 +76,9 @@ final class NativeWorldWeaponBreakSourceAuditTest {
         Path recovered = Path.of(
                 "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe");
         assertEquals(3_000, peWordAtVirtualAddress(
-                Files.readAllBytes(recovered), 0x635774 + 26 * 2));
+                LocalResources.readAllBytes(recovered), 0x635774 + 26 * 2));
 
-        String packetReader = Files.readString(RETAINED.resolve(
+        String packetReader = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         String targetOnly = between(packetReader,
@@ -73,7 +91,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
     @Test
     void retainedProbabilityPlayerDamageAndNpcStackRulesStayExact()
             throws Exception {
-        String magic = Files.readString(RETAINED.resolve(
+        String magic = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1MagicPc.java"),
                 StandardCharsets.UTF_8);
         String configured = between(magic,
@@ -88,7 +106,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
         assertTrue(configured.contains(
                 "probability -= targetMr * config.getMrMultiplier();"));
 
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         String effect = between(use,
@@ -100,7 +118,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
                 "pc.getInventory().receiveDamage(weapon, weaponDamage)"));
         assertTrue(effect.contains("((L1NpcInstance) cha).addWeaponBreakStack();"));
 
-        String inventory = Files.readString(RETAINED.resolve(
+        String inventory = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1Inventory.java"),
                 StandardCharsets.UTF_8);
         String receiveDamage = between(inventory,
@@ -111,13 +129,13 @@ final class NativeWorldWeaponBreakSourceAuditTest {
         assertTrue(receiveDamage.contains(
                 "if (durability > maxDurability)"));
 
-        String npc = Files.readString(RETAINED.resolve(
+        String npc = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/Instance/L1NpcInstance.java"),
                 StandardCharsets.UTF_8);
         assertTrue(npc.contains("if (this._weaponBreakStack < 10)"));
         assertTrue(npc.contains("this._weaponBreakStack++;"));
 
-        String attack = Files.readString(RETAINED.resolve(
+        String attack = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/L1AttackNpc.java"),
                 StandardCharsets.UTF_8);
         assertTrue(attack.contains("dmg = dmg * (100 - stacks * 5) / 100.0;"));
@@ -144,7 +162,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
         assertEquals(32, spell.effectiveMpCost(12, 0));
         assertEquals(29, spell.effectiveMpCost(15, 0));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String battle = between(session,
@@ -171,7 +189,7 @@ final class NativeWorldWeaponBreakSourceAuditTest {
 
     @Test
     void releaseCoverageContractKeepsTheWholeNativeSlice() throws Exception {
-        String coverage = Files.readString(Path.of("tools/protocol_coverage.py"),
+        String coverage = LocalResources.readString(Path.of("tools/protocol_coverage.py"),
                 StandardCharsets.UTF_8);
         assertTrue(coverage.contains(
                 "skill27 Weapon Break / 壞物術 follows selected LiTo.bin"));

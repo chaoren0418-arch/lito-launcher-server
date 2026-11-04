@@ -12,10 +12,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source proof for native LiTo selector19/0 and retained skill153. */
 final class NativeEraseMagicSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Character.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Icons.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+        LocalResources.assumeIdaClient(
+                Path.of("D:/lineage開發/LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("D:/lineage開發/LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path PRIMARY_SQL = RETAINED.resolve("db/380_db.sql");
@@ -135,7 +153,7 @@ final class NativeEraseMagicSourceAuditTest {
 
     private static int readPeWordAtVa(Path path, long virtualAddress)
             throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         ByteBuffer image = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         assertEquals(0x0000_4550, image.getInt(pe), "invalid PE signature");
@@ -161,8 +179,8 @@ final class NativeEraseMagicSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String windowAfter(Path path, String marker, int followingLines)
@@ -170,7 +188,7 @@ final class NativeEraseMagicSourceAuditTest {
         StringBuilder result = new StringBuilder();
         boolean found = false;
         int remaining = 0;
-        try (BufferedReader reader = Files.newBufferedReader(
+        try (BufferedReader reader = LocalResources.newBufferedReader(
                 path, StandardCharsets.UTF_8)) {
             for (String line; (line = reader.readLine()) != null;) {
                 if (!found && line.contains(marker)) {
@@ -189,7 +207,7 @@ final class NativeEraseMagicSourceAuditTest {
 
     private static String sha256(Path path) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        try (var stream = Files.newInputStream(path)) {
+        try (var stream = LocalResources.newInputStream(path)) {
             byte[] buffer = new byte[64 * 1024];
             for (int count; (count = stream.read(buffer)) >= 0;) {
                 if (count > 0) digest.update(buffer, 0, count);

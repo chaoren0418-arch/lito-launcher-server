@@ -9,10 +9,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks guardian-tower, crown, castle-war and selected-client evidence together. */
 final class NativeClassicCastleObjectiveSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_War.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1CrownInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1DoorInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1TowerInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1War.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_PacketBoxWar.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path SOURCE = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
@@ -148,11 +164,11 @@ final class NativeClassicCastleObjectiveSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

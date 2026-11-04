@@ -6,18 +6,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the native, retained and server boundaries for empty skill slots 81..86. */
 final class NativeReservedGeneralSkillGapSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void bothDatabasesAndRetainedSkillIdsClassify81Through86AsNone()
             throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         String[] selectedRows = {
@@ -53,7 +64,7 @@ final class NativeReservedGeneralSkillGapSourceAuditTest {
                         "INSERT INTO `" + table + "` VALUES (" + skillId + ","));
             }
         }
-        String skillIds = Files.readString(RETAINED.resolve(
+        String skillIds = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillId.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillIds.contains("// none = 81 - 86"));
@@ -62,7 +73,7 @@ final class NativeReservedGeneralSkillGapSourceAuditTest {
     @Test
     void selectedClientProducesCccButServerClassifiesEverySlotAsReserved()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int start = assembly.indexOf("sub_4CB5F0 proc near");
@@ -82,19 +93,19 @@ final class NativeReservedGeneralSkillGapSourceAuditTest {
         assertTrue(fallback.contains("push    14h"));
         assertTrue(fallback.contains("call    sub_4C6AE0"));
 
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains("RESERVED_GENERAL_81 = 81"));
         assertTrue(catalog.contains("RESERVED_GENERAL_86 = 86"));
         assertTrue(catalog.contains(
                 "&& requestShape == RequestShape.SELECTOR_ONLY"));
-        String mastery = Files.readString(Path.of(
+        String mastery = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/NativeSkillMastery.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mastery.contains(
                 "BattleSpellCatalog.reservedSkillSlot(skillId) != null"));
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains(

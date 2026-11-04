@@ -11,8 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 
 final class RentalTownDirectoryConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void remainsOffByDefaultAndAcceptsOnlyExactTownMaps() throws Exception {
@@ -23,7 +29,7 @@ final class RentalTownDirectoryConfigTest {
         assertFalse(ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"))
                 .rentalTownDirectoryEnabled());
 
-        String base = Files.readString(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
+        String base = LocalResources.readString(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         Path enabled = temporary.resolve("enabled.properties");
         Files.writeString(enabled, base + "\n"
                 + "lito.rental.town.directory.enabled=true\n"

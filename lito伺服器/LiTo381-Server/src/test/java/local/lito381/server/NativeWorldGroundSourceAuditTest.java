@@ -6,17 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected LiTo skills 58/63 and their retained ordinary-WORLD rules. */
 final class NativeWorldGroundSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1EffectInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcRegenExecutor.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/skill/EffectFirewallTimer.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/utils/L1SpawnUtil.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void selectedProducerDatabaseAndRetainedEffectRulesStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -28,7 +42,7 @@ final class NativeWorldGroundSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (63, '治癒能量風暴', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int routeStart = assembly.indexOf("loc_4CBA2C:");
@@ -42,7 +56,7 @@ final class NativeWorldGroundSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("call    sub_4C6AE0"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("case LIFE_STREAM:"));
@@ -51,7 +65,7 @@ final class NativeWorldGroundSourceAuditTest {
         assertTrue(skillUse.contains(
                 "L1SpawnUtil.doSpawnFireWall(_user, _targetX, _targetY);"));
 
-        String spawn = Files.readString(
+        String spawn = LocalResources.readString(
                 RETAINED.resolve("utils/L1SpawnUtil.java"),
                 StandardCharsets.UTF_8);
         assertTrue(spawn.contains("for (int i = 0; i < 8; i++)"));
@@ -60,7 +74,7 @@ final class NativeWorldGroundSourceAuditTest {
         assertTrue(spawn.contains("if (WorldEffect.get().isEffect(loc, npcid))"));
         assertTrue(spawn.contains("if (!map.isArrowPassable("));
 
-        String firewall = Files.readString(RETAINED.resolve(
+        String firewall = LocalResources.readString(RETAINED.resolve(
                 "timecontroller/skill/EffectFirewallTimer.java"),
                 StandardCharsets.UTF_8);
         assertTrue(firewall.contains(
@@ -75,12 +89,12 @@ final class NativeWorldGroundSourceAuditTest {
                 "19 + _random.nextInt(Math.max(user.getInt() / 2, 1))"));
         assertTrue(firewall.contains("L1AttackList.SKM0.get(key)"));
 
-        String effect = Files.readString(RETAINED.resolve(
+        String effect = LocalResources.readString(RETAINED.resolve(
                 "model/Instance/L1EffectInstance.java"),
                 StandardCharsets.UTF_8);
         assertTrue(effect.contains("FW_DAMAGE_INTERVAL = 1650"));
 
-        String regen = Files.readString(RETAINED.resolve(
+        String regen = LocalResources.readString(RETAINED.resolve(
                 "timecontroller/pc/PcRegenExecutor.java"),
                 StandardCharsets.UTF_8);
         assertTrue(regen.contains("effect.getNpcId() == 81169"));
@@ -93,7 +107,7 @@ final class NativeWorldGroundSourceAuditTest {
     @Test
     void ordinaryWorldDispatcherResourcesPulsesAndRegenAreConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -131,7 +145,7 @@ final class NativeWorldGroundSourceAuditTest {
         assertTrue(session.contains(
                 "hub.inClassicWorldLifeStream("));
 
-        String effects = Files.readString(Path.of(
+        String effects = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldGroundEffects.java"),
                 StandardCharsets.UTF_8);
         assertTrue(effects.contains(
@@ -142,7 +156,7 @@ final class NativeWorldGroundSourceAuditTest {
                 "ClassicWorldGroundEffects.ActorKind".replace(
                         "ClassicWorldGroundEffects.", "")));
 
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
         assertTrue(hub.contains("placeClassicWorldGroundSpell("));

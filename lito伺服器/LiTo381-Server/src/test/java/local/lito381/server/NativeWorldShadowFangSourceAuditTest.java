@@ -5,15 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill107 and its ordinary-WORLD item-local damage wiring. */
 final class NativeWorldShadowFangSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void retainedDatabaseKeepsTheExactItemLocalContract() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (107, 0, '暗影之牙', 14, 2, 30, 0, 40321, 1, 0, 192, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4, '$2514', 19, 2951, 0, 0, 0, 0);"));
@@ -24,7 +31,7 @@ final class NativeWorldShadowFangSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_buff_ability` VALUES (107, '暗影之牙', 'DMG', 5);"));
 
-        String status = Files.readString(Path.of(
+        String status = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleItemWeaponEnchantStatus.java"),
                 StandardCharsets.UTF_8);
         assertTrue(status.contains("LinkedHashMap<Long, Lease> leases"));
@@ -35,7 +42,7 @@ final class NativeWorldShadowFangSourceAuditTest {
     @Test
     void worldDispatchCastRoiAndBothPlayerAttackPathsStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -92,7 +99,7 @@ final class NativeWorldShadowFangSourceAuditTest {
 
     @Test
     void cancellationStillHasNoItemWeaponEnchantRemovalPath() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int cancellation = session.indexOf("private void useCancellationSpell(");

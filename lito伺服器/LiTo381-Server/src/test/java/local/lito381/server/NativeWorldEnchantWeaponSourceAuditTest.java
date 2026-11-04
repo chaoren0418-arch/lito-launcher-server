@@ -5,16 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected skill12 producer, database row and item-local source path. */
 final class NativeWorldEnchantWeaponSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/model/Instance/L1ItemInstance.java"),
+                Path.of("../1-伺服器/其他src參考用/貓大src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path WORKSPACE = Path.of("..").toAbsolutePath().normalize();
     private static final Path RETAINED = WORKSPACE.resolve("1-伺服器");
 
     @Test void selectedDatabasePinsEnchantWeaponMetadataAndImmunity()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (12, 0, '擬似魔法武器', 2, 3, 20, 0, 0, 0, 10, 1800, 'none', 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 8, '$1444', 19, 747, 0, 0, 0, 0);"));
@@ -28,7 +39,7 @@ final class NativeWorldEnchantWeaponSourceAuditTest {
 
     @Test void selectedClientOpensInventoryAndCallbackEmitsExactCccd()
             throws Exception {
-        String assembly = Files.readString(WORKSPACE.resolve(
+        String assembly = LocalResources.readString(WORKSPACE.resolve(
                 "LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         assertTrue(assembly.contains(
@@ -43,7 +54,7 @@ final class NativeWorldEnchantWeaponSourceAuditTest {
 
     @Test void olderItemLocalSourcePinsSelectedObjectReplacementAndPlusTwo()
             throws Exception {
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/貓大src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("else if (this._skillId == 12)"));
@@ -54,7 +65,7 @@ final class NativeWorldEnchantWeaponSourceAuditTest {
         assertTrue(skillUse.contains(
                 "new S_ServerMessage(161, item.getLogName(), \"$245\", \"$247\")"));
 
-        String item = Files.readString(RETAINED.resolve(
+        String item = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/古老src/com/lineage/server/model/Instance/L1ItemInstance.java"),
                 StandardCharsets.UTF_8);
         int method = item.indexOf("setSkillWeaponEnchant(");
@@ -70,7 +81,7 @@ final class NativeWorldEnchantWeaponSourceAuditTest {
 
     @Test void productionRouteUsesSharedItemLeaseAndBothPhysicalPaths()
             throws Exception {
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains("static final int ENCHANT_WEAPON = 12;"));
@@ -79,7 +90,7 @@ final class NativeWorldEnchantWeaponSourceAuditTest {
         assertTrue(catalog.contains("20, 10, 1_800, ATTRIBUTE_FIRE, 2"));
         assertTrue(catalog.contains("8, 2, 2, 79, 161, 308"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int castStart = session.indexOf("private void useItemWeaponEnchantSpell(");

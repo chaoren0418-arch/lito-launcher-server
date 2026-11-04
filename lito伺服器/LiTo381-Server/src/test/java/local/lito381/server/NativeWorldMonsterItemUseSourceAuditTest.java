@@ -12,10 +12,25 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned proof for retained ordinary-monster potion use and packets. */
 final class NativeWorldMonsterItemUseSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1MonsterInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1NpcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/NpcAI.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/item/L1ItemId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NPCPack.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_RemoveObject.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_SkillHaste.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_SkillSound.java"));
+    }
+
     private static final Path PROJECT = Path.of("").toAbsolutePath().normalize();
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
@@ -141,7 +156,7 @@ final class NativeWorldMonsterItemUseSourceAuditTest {
     @Test
     void productionSchedulerAndWriterPreserveOnItemUsePacketOrder()
             throws Exception {
-        String hub = Files.readString(PROJECT.resolve(
+        String hub = LocalResources.readString(PROJECT.resolve(
                 "src/main/java/local/lito381/server/GameHub.java"));
         String tick = method(hub, "private void classicWorldMonsterTick(",
                 "private ClassicMonsterGroundPickup");
@@ -155,7 +170,7 @@ final class NativeWorldMonsterItemUseSourceAuditTest {
                 "actor.atkspeed() <= 0", "population.attack(",
                 "population.moveToward(");
 
-        String session = Files.readString(PROJECT.resolve(
+        String session = LocalResources.readString(PROJECT.resolve(
                 "src/main/java/local/lito381/server/ClientSession.java"));
         String writer = method(session,
                 "void serverClassicWorldMonsterUsedItem(",
@@ -169,7 +184,7 @@ final class NativeWorldMonsterItemUseSourceAuditTest {
         ordered(doppelWriter, "Protocol.removeObject(",
                 "sendClassicWorldMonster(", "doppel-transform");
 
-        String protocol = Files.readString(PROJECT.resolve(
+        String protocol = LocalResources.readString(PROJECT.resolve(
                 "src/main/java/local/lito381/server/Protocol.java"));
         String pack = method(protocol,
                 "static byte[] classicWorldMonster(\n"
@@ -198,7 +213,7 @@ final class NativeWorldMonsterItemUseSourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -213,6 +228,6 @@ final class NativeWorldMonsterItemUseSourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

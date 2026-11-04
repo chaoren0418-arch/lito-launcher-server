@@ -7,10 +7,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks 0.7.557's war-field and expulsion behavior to selected source files. */
 final class NativeClassicCastleWarFieldSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1CastleLocation.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1TownLocation.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1WarSpawn.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NPCPack.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NPCPack_F.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/server/ServerWarExecutor.java"));
+    }
+
     @Test
     void selectedSourceHashesAndBeginOrderRemainExact() throws Exception {
         assertHash(ClassicWorldCastleWarField.WAR_SPAWN_SOURCE_SHA256,
@@ -24,7 +36,7 @@ final class NativeClassicCastleWarFieldSourceAuditTest {
         assertHash(ClassicWorldCastleWarField.MONSTER_PACKET_SOURCE_SHA256,
                 Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_NPCPack.java"));
 
-        String source = Files.readString(Path.of(
+        String source = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/timecontroller/server/ServerWarExecutor.java"));
         int spawnTrebuchet = source.indexOf("warspawn.SpawnTrebuchet();");
         int spawnFlag = source.indexOf("warspawn.SpawnFlag(i + 1);", spawnTrebuchet);
@@ -43,7 +55,7 @@ final class NativeClassicCastleWarFieldSourceAuditTest {
 
     @Test
     void independentServerPreservesBeginAndEndPublicationOrder() throws Exception {
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"));
         int method = hub.indexOf("private void publishClassicCastleWarEvents(");
         int helper = hub.indexOf("private static void deliverClassicCastleWarEvent(", method);
@@ -71,7 +83,7 @@ final class NativeClassicCastleWarFieldSourceAuditTest {
                 && endFieldDelivery > fieldEnd && endRepair > endFieldDelivery
                 && endDoors > endRepair);
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"));
         int expulsion = session.indexOf("boolean serverClassicCastleWarExpel(");
         int next = session.indexOf("private void sendActiveClassicCastleWars()", expulsion);
@@ -84,7 +96,7 @@ final class NativeClassicCastleWarFieldSourceAuditTest {
     }
 
     private static void assertHash(String expected, Path path) throws Exception {
-        byte[] content = Files.readAllBytes(path);
+        byte[] content = LocalResources.readAllBytes(path);
         String actual = HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256").digest(content));
         assertEquals(expected, actual, path.toString());

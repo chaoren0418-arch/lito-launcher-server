@@ -5,15 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill21 producer, rows and retained item-local armor path. */
 final class NativeWorldBlessedArmorSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/model/Instance/L1ItemInstance.java"),
+                Path.of("../1-伺服器/其他src參考用/貓大src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path WORKSPACE = Path.of("..").toAbsolutePath().normalize();
     private static final Path RETAINED = WORKSPACE.resolve("1-伺服器");
 
     @Test void selectedDatabasePinsArmorMetadataImmunityAndAc() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (21, 0, '鎧甲護持', 3, 4, 20, 0, 0, 0, 10, 1800, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 16, '$1450', 19, 748, 0, 0, 0, 0);"));
@@ -27,7 +38,7 @@ final class NativeWorldBlessedArmorSourceAuditTest {
 
     @Test void selectedClientUsesSharedInventoryCallbackAndExactCccd()
             throws Exception {
-        String assembly = Files.readString(WORKSPACE.resolve(
+        String assembly = LocalResources.readString(WORKSPACE.resolve(
                 "LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         assertTrue(assembly.contains(
@@ -41,7 +52,7 @@ final class NativeWorldBlessedArmorSourceAuditTest {
     }
 
     @Test void retainedSourceBindsMinusThreeToSelectedBodyArmor() throws Exception {
-        String skillUse = Files.readString(RETAINED.resolve(
+        String skillUse = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/貓大src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("else if (this._skillId == 21)"));
@@ -52,7 +63,7 @@ final class NativeWorldBlessedArmorSourceAuditTest {
         assertTrue(skillUse.contains(
                 "item.setSkillArmorEnchant(pc2, this._skillId, this._skill.getBuffDuration() * 1000)"));
 
-        String item = Files.readString(RETAINED.resolve(
+        String item = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/古老src/com/lineage/server/model/Instance/L1ItemInstance.java"),
                 StandardCharsets.UTF_8);
         int method = item.indexOf("setSkillArmorEnchant(");
@@ -65,7 +76,7 @@ final class NativeWorldBlessedArmorSourceAuditTest {
     }
 
     @Test void productionUsesSharedItemLeaseAndWorldDispatcher() throws Exception {
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains("static final int BLESSED_ARMOR = 21;"));
@@ -73,7 +84,7 @@ final class NativeWorldBlessedArmorSourceAuditTest {
         assertTrue(catalog.contains("20, 10, 1_800, ATTRIBUTE_UNSPECIFIED, 2"));
         assertTrue(catalog.contains("16, -3, 79, 161, 308"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int castStart = session.indexOf("private void useItemArmorEnchantSpell(");

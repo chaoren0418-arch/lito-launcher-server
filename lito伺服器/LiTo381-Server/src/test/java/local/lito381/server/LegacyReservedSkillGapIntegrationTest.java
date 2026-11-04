@@ -14,9 +14,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof that native selector slots 119..128 are not real skills. */
 final class LegacyReservedSkillGapIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
+                Path.of("../TW13081901bin拆解/analysis-final/full-disassembly.asm"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void retainedDatabasesAndNativeProducersPinTheSecondReservedGap()
@@ -87,13 +97,13 @@ final class LegacyReservedSkillGapIntegrationTest {
 
         Path retained = Path.of("..", "1-伺服器")
                 .toAbsolutePath().normalize();
-        String skillIds = Files.readString(retained.resolve(Path.of(
+        String skillIds = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillId.java")), StandardCharsets.UTF_8);
         assertTrue(skillIds.contains("unknown = 119 - 120"));
         assertTrue(skillIds.contains("none = 121 - 128"));
 
-        String selected = Files.readString(Path.of("..", "LiTo381-開發",
+        String selected = LocalResources.readString(Path.of("..", "LiTo381-開發",
                 "ida-client-oep-v2", "full-disassembly.asm")
                 .toAbsolutePath().normalize(), StandardCharsets.UTF_8);
         assertTrue(selected.contains(
@@ -101,7 +111,7 @@ final class LegacyReservedSkillGapIntegrationTest {
         assertTrue(selected.contains(
                 "jumptable 004CB10B default case, cases 23,53,80,82-95,100,105,108-111,117,120-127"));
 
-        String official = Files.readString(Path.of("..",
+        String official = LocalResources.readString(Path.of("..",
                 "TW13081901bin拆解", "analysis-final", "full-disassembly.asm")
                 .toAbsolutePath().normalize(), StandardCharsets.UTF_8);
         assertTrue(official.contains(

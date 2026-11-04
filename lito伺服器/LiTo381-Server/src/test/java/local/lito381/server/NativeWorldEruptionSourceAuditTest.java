@@ -5,17 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill45 source, resource and BATTLE/WORLD convergence fidelity. */
 final class NativeWorldEruptionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+    }
+
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
 
     @Test
     void selectedAndSecondaryRowsKeepTheirDistinctReuseValues()
             throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(selected.contains(
@@ -25,7 +35,7 @@ final class NativeWorldEruptionSourceAuditTest {
         assertTrue(selected.contains(
                 "INSERT INTO `skills_item` VALUES (45, '地裂術', NULL, NULL);"));
 
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -35,7 +45,7 @@ final class NativeWorldEruptionSourceAuditTest {
         assertTrue(secondary.contains(
                 "INSERT INTO `skills_item` VALUES (45, '地裂術', NULL, NULL);"));
 
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains(
@@ -47,7 +57,7 @@ final class NativeWorldEruptionSourceAuditTest {
     @Test
     void retainedDamageAndSuccessfulCastCleanupOrderReachEveryTargetFamily()
             throws Exception {
-        String retainedMagic = Files.readString(Path.of(
+        String retainedMagic = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
                 StandardCharsets.UTF_8);
         for (String anchor : new String[] {
@@ -62,7 +72,7 @@ final class NativeWorldEruptionSourceAuditTest {
             assertTrue(retainedMagic.contains(anchor), anchor);
         }
 
-        String retainedUse = Files.readString(Path.of(
+        String retainedUse = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         String normalCast = retainedUse.substring(
@@ -75,7 +85,7 @@ final class NativeWorldEruptionSourceAuditTest {
         assertTrue(retainedUse.contains("case L1Skills.TYPE_ATTACK"));
         assertTrue(retainedUse.contains("isUseCounterMagic(cha)"));
 
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int battleStart = source.indexOf(
                 "private void useAttackSpell(\n"
                 + "            Protocol.AttackSpellRequest request,");

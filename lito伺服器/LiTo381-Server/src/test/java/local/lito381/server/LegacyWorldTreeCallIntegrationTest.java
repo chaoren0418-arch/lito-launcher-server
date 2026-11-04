@@ -20,9 +20,34 @@ import java.util.Locale;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for native skill 131 World Tree's Call. */
 final class LegacyWorldTreeCallIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/data/item_etcitem/teleport/GoHome_Reel.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_ItemUSe.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_NPCAction.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/GetbackTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1DwarfInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1Teleport.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/npc/action/NpcTeleportExecutor.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/TELEPORT_TO_MATHER.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_RetrieveElfList.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_RetrieveList.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_RetrievePledgeList.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/utils/Teleportation.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/skillmode/TELEPORT_TO_MATHER.java"));
+    }
+
     private static final String STATIC_NPC_COLUMNS = String.join("\t",
             "spawn_id", "npc_id", "x", "y", "heading", "movement_distance",
             "name_id", "impl", "gfx_id", "level", "hp", "mp", "exp", "lawful",
@@ -1937,7 +1962,7 @@ final class LegacyWorldTreeCallIntegrationTest {
     }
 
     private static String read(Path root, String relative) throws Exception {
-        return Files.readString(root.resolve(relative.replace('/', '\\')),
+        return LocalResources.readString(root.resolve(relative.replace('/', '\\')),
                 StandardCharsets.UTF_8);
     }
 

@@ -8,15 +8,28 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill30 producer, rows and shared BATTLE/WORLD area route. */
 final class NativeWorldEarthJailSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void selectedAndSecondaryRowsPreserveTheirReuseDifference() throws Exception {
-        String primary = Files.readString(
+        String primary = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(primary.contains(
                 "INSERT INTO `skills` VALUES (30, 0, '巖牢', 4, 5, 24, 0, 0, 0, 500, 0, 'attack', 3, 0, 8, 5, 0, 0, 1, 64, 0, 8, 3, 0, 32, '$1971', 18, 1805, 0, 0, 0, 0);"));
@@ -25,7 +38,7 @@ final class NativeWorldEarthJailSourceAuditTest {
         assertTrue(primary.contains(
                 "INSERT INTO `skills_item` VALUES (30, '巖牢', NULL, NULL);"));
 
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -39,7 +52,7 @@ final class NativeWorldEarthJailSourceAuditTest {
     @Test
     void selectedClientUsesCase29CccdhhAndOneHundredMillisecondClock()
             throws Exception {
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CBA5C:", "loc_4CBA92:");
@@ -52,11 +65,11 @@ final class NativeWorldEarthJailSourceAuditTest {
         assertTrue(producer.contains("push    14h"));
         assertTrue(producer.contains("push    offset aCccdhh"));
 
-        byte[] recovered = Files.readAllBytes(Path.of(
+        byte[] recovered = LocalResources.readAllBytes(Path.of(
                 "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
         assertEquals(100, peWordAtVirtualAddress(recovered, 0x635774 + 29 * 2));
 
-        String clientUse = Files.readString(RETAINED.resolve(
+        String clientUse = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/clientpackets/C_UseSkill.java"),
                 StandardCharsets.UTF_8);
         assertTrue(clientUse.contains("case 30:// 巖牢 1600"));
@@ -83,7 +96,7 @@ final class NativeWorldEarthJailSourceAuditTest {
         assertEquals(8, spell.dieSides());
         assertEquals(BattleSpellCatalog.ATTRIBUTE_EARTH, spell.attribute());
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains("useClassicWorldAreaAttackSpell(payload, worldAreaAttack)"));
@@ -91,7 +104,7 @@ final class NativeWorldEarthJailSourceAuditTest {
         assertTrue(session.contains("publishClassicWorldAreaAttackSpellPacket("));
         assertTrue(session.contains("Protocol.attackMany("));
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         assertTrue(accounts.contains("BattleSpellCatalog.EARTH_JAIL,"));

@@ -5,17 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class NativeHouseTaxPaymentSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_NPCAction.java"));
+    }
+
     @Test
     void retainedKeeperPaymentIsAtomicAndRoutedToTheSelectedDatabase()
             throws Exception {
-        String repository = Files.readString(Path.of("src", "main", "java", "local",
+        String repository = LocalResources.readString(Path.of("src", "main", "java", "local",
                 "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8);
-        String session = Files.readString(Path.of("src", "main", "java", "local",
+        String session = LocalResources.readString(Path.of("src", "main", "java", "local",
                 "lito381", "server", "ClientSession.java"), StandardCharsets.UTF_8);
-        String retained = Files.readString(Path.of("..", "1-伺服器", "src", "com",
+        String retained = LocalResources.readString(Path.of("..", "1-伺服器", "src", "com",
                 "lineage", "server", "clientpackets", "C_NPCAction.java"),
                 StandardCharsets.UTF_8);
 

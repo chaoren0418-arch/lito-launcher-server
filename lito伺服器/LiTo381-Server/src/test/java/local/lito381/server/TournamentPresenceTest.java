@@ -271,7 +271,7 @@ class TournamentPresenceTest {
         ServerConfig config = ServerConfig.load(Path.of("src/test/resources/server-config/config/server.selftest.properties"));
         var core = new TournamentPresence();
         try (var hub = new GameHub(config, null, null, core)) {
-            var nativeSession = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, null, hub);
+            var nativeSession = new ClientSession(null, ClientSession.Endpoint.GAME, config, null, null, LocalResources.discardCapture(), hub);
             hub.connect(nativeSession);
             var row = character("Owned", 1234567890123L);
             int sourceId = config.classicServerIds().get(0); String source = config.classicServerNames().get(0);

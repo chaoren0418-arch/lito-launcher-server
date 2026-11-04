@@ -5,13 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected-source clan-house bid flow to the routed SQL gate. */
 final class NativeHouseAuctionPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Amount.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/server/ServerHouseTaxTimer.java"));
+    }
+
     @Test
     void nativeBidSemanticsAndSelectedDatabaseGateRemainConnected() throws Exception {
-        String source = Files.readString(Path.of(
+        String source = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_Amount.java"),
                 StandardCharsets.UTF_8);
         int boards = source.indexOf("AuctionBoardTable.get().getAuctionBoardTableList()");
@@ -22,7 +30,7 @@ final class NativeHouseAuctionPersistenceSourceAuditTest {
         assertTrue(boards >= 0 && price > boards && bidder > price
                 && bidderId > bidder && update > bidderId);
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         int legacy = accounts.indexOf("final class LegacyMySqlRepository");
@@ -46,7 +54,7 @@ final class NativeHouseAuctionPersistenceSourceAuditTest {
         assertTrue(repository.contains("house tax auction insert changed"));
         assertTrue(repository.contains("compensateHouseTaxExpiry("));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         assertTrue(session.contains("selectedSourceAccounts().persistHouseBid("));
@@ -55,7 +63,7 @@ final class NativeHouseAuctionPersistenceSourceAuditTest {
         assertTrue(session.contains(".houseAuctions();"));
         assertTrue(session.contains("receiveHouseAuctionRefund("));
 
-        String hub = Files.readString(Path.of(
+        String hub = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/GameHub.java"),
                 StandardCharsets.UTF_8);
         assertTrue(hub.contains("houseAuctionTickSafely"));
@@ -63,7 +71,7 @@ final class NativeHouseAuctionPersistenceSourceAuditTest {
         assertTrue(hub.contains("houseTaxTickSafely"));
         assertTrue(hub.contains("persistHouseTaxExpiry("));
 
-        String taxTimer = Files.readString(Path.of(
+        String taxTimer = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/timecontroller/server/"
                         + "ServerHouseTaxTimer.java"), StandardCharsets.UTF_8);
         int expired = taxTimer.indexOf("house.getTaxDeadline().before(getRealTime())");

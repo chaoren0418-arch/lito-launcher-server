@@ -15,9 +15,20 @@ import java.sql.ResultSet;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 103 Dark Blind and its shared blind mode. */
 final class LegacyDarkBlindIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillId.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CURSE_BLIND.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactDarkBlindContract() throws Exception {
@@ -138,7 +149,7 @@ final class LegacyDarkBlindIntegrationTest {
     }
 
     private static String read(Path root, String relative) throws Exception {
-        return Files.readString(root.resolve(relative), StandardCharsets.UTF_8);
+        return LocalResources.readString(root.resolve(relative), StandardCharsets.UTF_8);
     }
 
     private static Connection connection(AccountRepository repository) throws Exception {

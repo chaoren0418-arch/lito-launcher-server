@@ -5,22 +5,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill100 and its ordinary-WORLD inventory/ROI route. */
 final class NativeWorldBringStoneSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void nativeDatabaseAndRetainedRefinementRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (100, 0, '提煉魔石', 13, 3, 5, 0, 0, 0, 0, 0, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 8, '$2507', 19, 2944, 0, 0, 0, 0);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (100, '提煉魔石', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         assertTrue(assembly.contains(
@@ -30,7 +40,7 @@ final class NativeWorldBringStoneSourceAuditTest {
         String route = assembly.substring(producer, producerEnd);
         assertTrue(route.contains("call    sub_4C9DC0"));
 
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(use.contains("final int dark = (int) (10 + (pc.getLevel() * 0.8)"));
@@ -45,7 +55,7 @@ final class NativeWorldBringStoneSourceAuditTest {
 
     @Test
     void worldDispatchCommitInventoryAndRoiStayConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

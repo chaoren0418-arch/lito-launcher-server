@@ -14,10 +14,20 @@ import java.util.HexFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Hash-pinned retained authority for independent map environment ticks. */
 final class NativeClassicWorldMapRecoverySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/MapRecoveryTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcRegenExecutor.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/timecontroller/pc/PcRegenTimer.java"));
+    }
+
     private static final Path SERVER = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
     private static final Path TABLE = SERVER.resolve(
@@ -88,7 +98,7 @@ final class NativeClassicWorldMapRecoverySourceAuditTest {
         ordered(executor, "private void regenMp", "isNaturalMpDisabled(tgpc)",
                 "return;");
 
-        String client = Files.readString(CLIENT);
+        String client = LocalResources.readString(CLIENT);
         assertTrue(client.contains("serverClassicWorldMapRecovery(nowNanos"));
         assertTrue(client.contains("activeMagicDollUnderwaterBreath()"));
         assertTrue(client.contains("timedStatus.breath(nowNanos)"));
@@ -106,7 +116,7 @@ final class NativeClassicWorldMapRecoverySourceAuditTest {
     }
 
     private static String readLegacy(Path path) throws Exception {
-        byte[] bytes = Files.readAllBytes(path);
+        byte[] bytes = LocalResources.readAllBytes(path);
         for (Charset charset : List.of(StandardCharsets.UTF_8,
                 Charset.forName("Big5"), StandardCharsets.UTF_16)) {
             try {
@@ -121,6 +131,6 @@ final class NativeClassicWorldMapRecoverySourceAuditTest {
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

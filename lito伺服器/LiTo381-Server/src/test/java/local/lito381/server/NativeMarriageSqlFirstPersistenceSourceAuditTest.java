@@ -5,19 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class NativeMarriageSqlFirstPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"));
+    }
+
     @Test
     void nativePartnerIdAndLitoSqlFirstOrderingRemainConnected() throws Exception {
-        String original = Files.readString(Path.of(
+        String original = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"),
                 StandardCharsets.UTF_8);
         assertTrue(original.contains("setPartnerId"));
         assertTrue(original.contains("pc.save()"));
         assertTrue(original.contains("partner.save()"));
 
-        String accounts = Files.readString(Path.of(
+        String accounts = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/Accounts.java"),
                 StandardCharsets.UTF_8);
         int legacy = accounts.indexOf("final class LegacyMySqlRepository");
@@ -33,7 +40,7 @@ final class NativeMarriageSqlFirstPersistenceSourceAuditTest {
         assertTrue(accounts.contains(
                 "SELECT objid,char_name,COALESCE(PartnerID,0) AS partner_id"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int sqlMarriage = session.indexOf(

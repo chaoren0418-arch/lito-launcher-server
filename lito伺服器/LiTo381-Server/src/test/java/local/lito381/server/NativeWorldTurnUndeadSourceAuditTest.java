@@ -5,10 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill18 ordinary-WORLD target, probability and death fidelity. */
 final class NativeWorldTurnUndeadSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
     private static final Path RETAINED = Path.of("../1-伺服器/src/com/lineage/server");
@@ -16,7 +27,7 @@ final class NativeWorldTurnUndeadSourceAuditTest {
     @Test
     void selectedRowsNativeProducerAndRetainedDeathRuleStayExact()
             throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (18, 0, '起死回生術', 3, 1, 20, "
@@ -33,7 +44,7 @@ final class NativeWorldTurnUndeadSourceAuditTest {
         assertTrue(BattleTurnUndead.eligible(
                 SourceNpcPhysicalStats.memoryFixture(45065)));
 
-        String assembly = Files.readString(
+        String assembly = LocalResources.readString(
                 Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int dispatch = assembly.indexOf("loc_4CB755:");
@@ -46,14 +57,14 @@ final class NativeWorldTurnUndeadSourceAuditTest {
                 assembly.indexOf("sub_4CA6E0 endp"));
         assertTrue(producer.contains("offset aCccdhh"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("this._skillId == TURN_UNDEAD"));
         assertTrue(skillUse.contains("this._dmg = cha.getCurrentHp();"));
         assertTrue(skillUse.contains("getNpcTemplate().get_IsTU()"));
         assertTrue(skillUse.contains("(undeadType == 0) || (undeadType == 2)"));
-        String magic = Files.readString(
+        String magic = LocalResources.readString(
                 RETAINED.resolve("model/L1MagicPc.java"), StandardCharsets.UTF_8);
         assertTrue(magic.contains(
                 "diceCount2 = getMagicBonus() + getMagicLevel() + 1"));
@@ -67,7 +78,7 @@ final class NativeWorldTurnUndeadSourceAuditTest {
     @Test
     void worldDispatcherPaysOnceAndUsesOrdinaryMonsterDeathLifecycle()
             throws Exception {
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int worldStart = source.indexOf("if (phase == Phase.WORLD) {");
         int dispatch = source.indexOf(
                 "BattleSpellCatalog.TurnUndeadSpell worldTurnUndead", worldStart);
@@ -94,7 +105,7 @@ final class NativeWorldTurnUndeadSourceAuditTest {
         assertTrue(method.contains("Protocol.messageCode(spell.failureMessage())"));
         assertTrue(method.contains("classicWorldInstanceId != originInstanceId"));
 
-        String config = Files.readString(
+        String config = LocalResources.readString(
                 Path.of("src/main/java/local/lito381/server/ServerConfig.java"),
                 StandardCharsets.UTF_8);
         assertTrue(config.contains(

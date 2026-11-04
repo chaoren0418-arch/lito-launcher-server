@@ -4,9 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class BattleCubeShockCatalogTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void selectedRow215MatchesDatabaseAndLiToSelectorContract() {
         BattleSpellCatalog.CubeShockSpell spell =
                 BattleSpellCatalog.cubeShockSpell(BattleSpellCatalog.CUBE_SHOCK);

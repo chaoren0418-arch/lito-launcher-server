@@ -12,9 +12,15 @@ import java.util.Map;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only acceptance against the operator's retained 3333 source character. */
 final class LitoMySqlSourceWeaponIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     private static final String ACCOUNT = "3333";
     private static final String PASSWORD = "3333";
     private static final String CHARACTER = "3332";

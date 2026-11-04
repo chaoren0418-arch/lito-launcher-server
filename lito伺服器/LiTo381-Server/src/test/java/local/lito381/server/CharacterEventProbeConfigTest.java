@@ -12,8 +12,14 @@ import java.nio.file.Path;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class CharacterEventProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @TempDir Path temporary;
 
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
@@ -54,7 +60,7 @@ final class CharacterEventProbeConfigTest {
     }
 
     @Test void rejectsEveryUnsafeProbeConfiguration() throws Exception {
-        String source = Files.readString(
+        String source = LocalResources.readString(
                 Path.of("src/test/resources/server-config/config/server.character-event-probe.properties"),
                 StandardCharsets.UTF_8);
         assertRejected(source.replace("port=32100", "port=32000"), "wrong-port");
@@ -82,7 +88,7 @@ final class CharacterEventProbeConfigTest {
                     .filter(candidate -> candidate.getFileName().toString()
                             .endsWith(".properties"))
                     .toList()) {
-                String source = Files.readString(path, StandardCharsets.UTF_8);
+                String source = LocalResources.readString(path, StandardCharsets.UTF_8);
                 String name = path.getFileName().toString();
                 if (!characterEventFixtures.contains(name)) {
                     assertFalse(source.contains(

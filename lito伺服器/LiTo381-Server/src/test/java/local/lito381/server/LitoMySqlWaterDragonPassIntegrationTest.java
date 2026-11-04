@@ -19,8 +19,16 @@ import java.util.Set;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.BeforeAll;
 
 final class LitoMySqlWaterDragonPassIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/config/sql.properties"));
+    }
+
     private static final String ROUTE_ONE = "380 角色庫 1";
     private static final String ROUTE_TWO = "380 角色庫 2";
     private static final String CHARACTER = "LitoWaterPassGate";
@@ -32,7 +40,7 @@ final class LitoMySqlWaterDragonPassIntegrationTest {
         Path base = Path.of("config", "server.properties")
                 .toAbsolutePath().normalize();
         Properties properties = new Properties();
-        try (Reader reader = Files.newBufferedReader(base, StandardCharsets.UTF_8)) {
+        try (Reader reader = LocalResources.newBufferedReader(base, StandardCharsets.UTF_8)) {
             properties.load(reader);
         }
         properties.setProperty("database.read.only", "false");
@@ -47,7 +55,7 @@ final class LitoMySqlWaterDragonPassIntegrationTest {
         store(properties, writableConfig);
 
         Properties jdbc = new Properties();
-        try (Reader reader = Files.newBufferedReader(sqlConfig, StandardCharsets.UTF_8)) {
+        try (Reader reader = LocalResources.newBufferedReader(sqlConfig, StandardCharsets.UTF_8)) {
             jdbc.load(reader);
         }
         String jdbcUrl = jdbc.getProperty("URL1_LOGIN") + "380_ac_1"

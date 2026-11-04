@@ -17,9 +17,18 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 114 Glowing Aura and party semantics. */
 final class LegacyGlowingAuraIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactGlowingAuraContract() throws Exception {
@@ -114,7 +123,7 @@ final class LegacyGlowingAuraIntegrationTest {
 
     private static void assertRetainedJavaSemantics() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String currentUse = Files.readString(retained.resolve(Path.of(
+        String currentUse = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(currentUse.contains("this._skillId == GLOWING_AURA"));
@@ -124,7 +133,7 @@ final class LegacyGlowingAuraIntegrationTest {
         assertTrue(currentUse.contains("L1Skills.TARGET_TO_PARTY"));
         assertTrue(currentUse.contains("World.get().getVisibleObjects(this._user)"));
 
-        String currentStop = Files.readString(retained.resolve(Path.of(
+        String currentStop = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillStop.java")), StandardCharsets.UTF_8);
         assertTrue(currentStop.contains("case GLOWING_AURA"));
@@ -133,7 +142,7 @@ final class LegacyGlowingAuraIntegrationTest {
         Path older = retained.resolve(Path.of(
                 "其他src參考用", "381n8src", "com", "lineage", "server",
                 "model", "skill"));
-        String olderUse = Files.readString(
+        String olderUse = LocalResources.readString(
                 older.resolve("L1SkillUse.java"), StandardCharsets.UTF_8);
         assertTrue(olderUse.contains("pc.addHitup(5)"));
         assertTrue(olderUse.contains("pc.addBowHitup(5)"));

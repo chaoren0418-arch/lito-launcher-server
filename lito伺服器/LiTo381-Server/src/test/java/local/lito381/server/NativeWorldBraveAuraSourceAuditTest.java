@@ -5,19 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks skill117's source and ordinary-WORLD party/physical route. */
 final class NativeWorldBraveAuraSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+    }
+
     @Test
     void nativePartyIndependentLeaseAndMeleeDamageStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (117, 0, '衝擊士氣', 15, 4, 40, 0, 0, 0, 0, 640, 'none', 8, 0, 0, 0, 0, 0, 0, 2, 0, 0, -1, 0, 16, '$3178', 19, 3942, 0, 0, 0, 0);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_buff_ability` VALUES (117, '衝擊士氣', 'DMG', 5);"));
-        String use = Files.readString(Path.of(
+        String use = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(use.contains("L1Skills.TARGET_TO_PARTY"));
@@ -29,7 +37,7 @@ final class NativeWorldBraveAuraSourceAuditTest {
     @Test
     void worldDispatcherPartyRoiMonsterDamageAndExpiryStayConnected()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

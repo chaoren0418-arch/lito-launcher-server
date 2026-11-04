@@ -171,6 +171,6 @@ final class GameHubVirtualPlayerTest {
 
     private static ClientSession session(ServerConfig config, GameHub hub) {
         return new ClientSession(null, ClientSession.Endpoint.GAME,
-                config, null, null, null, hub);
+                config, null, null, LocalResources.discardCapture(), hub);
     }
 }

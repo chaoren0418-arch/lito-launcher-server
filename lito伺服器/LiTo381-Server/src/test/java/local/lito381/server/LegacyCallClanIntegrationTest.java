@@ -17,9 +17,20 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 116 Call Clan and its answer geometry. */
 final class LegacyCallClanIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_UseSkill.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CALL_CLAN.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/clientpackets/C_Attr.java"),
+                Path.of("../1-伺服器/其他src參考用/381n8src/com/lineage/server/model/skill/skillmode/CALL_CLAN.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactCallClanContract() throws Exception {
@@ -88,7 +99,7 @@ final class LegacyCallClanIntegrationTest {
 
     private static void assertRetainedJavaSemantics() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String use = Files.readString(retained.resolve(Path.of(
+        String use = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "clientpackets",
                 "C_UseSkill.java")), StandardCharsets.UTF_8);
         assertTrue(use.contains("case 116:// 呼喚盟友"));
@@ -98,14 +109,14 @@ final class LegacyCallClanIntegrationTest {
         assertTrue(use.contains("new S_ServerMessage(414)"));
         assertTrue(use.contains("pc.publishCallClanDestination(targetId)"));
 
-        String mode = Files.readString(retained.resolve(Path.of(
+        String mode = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "skillmode", "CALL_CLAN.java")), StandardCharsets.UTF_8);
         assertTrue(mode.contains("tryPublishIncomingCallClanInvitation"));
         assertTrue(mode.contains("clanPc.setTempID(srcpc.getId())"));
         assertTrue(mode.contains("new S_Message_YN(729)"));
 
-        String attr = Files.readString(retained.resolve(Path.of(
+        String attr = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "clientpackets",
                 "C_Attr.java")), StandardCharsets.UTF_8);
         assertTrue(attr.contains("case 729:"));
@@ -119,12 +130,12 @@ final class LegacyCallClanIntegrationTest {
 
         Path olderRoot = retained.resolve(Path.of(
                 "其他src參考用", "381n8src", "com", "lineage", "server"));
-        String olderMode = Files.readString(olderRoot.resolve(Path.of(
+        String olderMode = LocalResources.readString(olderRoot.resolve(Path.of(
                 "model", "skill", "skillmode", "CALL_CLAN.java")),
                 StandardCharsets.UTF_8);
         assertTrue(olderMode.contains("clanPc.setTempID(pc.getId())"));
         assertTrue(olderMode.contains("C_Attr.callClan(clanPc)"));
-        String olderAttr = Files.readString(olderRoot.resolve(Path.of(
+        String olderAttr = LocalResources.readString(olderRoot.resolve(Path.of(
                 "clientpackets", "C_Attr.java")), StandardCharsets.UTF_8);
         assertTrue(olderAttr.contains("public static void callClan"));
         assertTrue(olderAttr.contains("getCallClanHeading()"));

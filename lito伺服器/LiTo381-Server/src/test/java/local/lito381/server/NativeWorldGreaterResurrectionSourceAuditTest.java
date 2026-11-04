@@ -6,22 +6,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill75 and its complete ordinary-WORLD resurrection families. */
 final class NativeWorldGreaterResurrectionSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_Attr.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/GREATER_RESURRECTION.java"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeDatabaseAndRetainedPlayerNpcRulesStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (75, 0, '終極返生術', 10, 2, 100, 0, 40318, 1, 10, 0, 'buff', 3, 0, 0, 0, 0, 0, 0, 32, 0, -1, 0, 0, 4, '$1483', 19, 3944, 0, 0, 0, 280);"));
 
-        String mode = Files.readString(RETAINED.resolve(
+        String mode = LocalResources.readString(RETAINED.resolve(
                 "model/skill/skillmode/GREATER_RESURRECTION.java"),
                 StandardCharsets.UTF_8);
         assertTrue(mode.contains("if (cha instanceof L1PcInstance)"));
@@ -33,7 +42,7 @@ final class NativeWorldGreaterResurrectionSourceAuditTest {
         assertTrue(mode.contains("npc instanceof L1PetInstance"));
         assertTrue(mode.contains("new S_ServerMessage(592)"));
 
-        String answer = Files.readString(RETAINED.resolve(
+        String answer = LocalResources.readString(RETAINED.resolve(
                 "clientpackets/C_Attr.java"), StandardCharsets.UTF_8);
         int branch = answer.indexOf("case 322:");
         String question322 = answer.substring(branch, branch + 1_500);
@@ -43,7 +52,7 @@ final class NativeWorldGreaterResurrectionSourceAuditTest {
 
     @Test
     void worldDispatcherConnectsDeadPcCompanionAndOrdinaryMonster() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

@@ -5,16 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill80 and its ordinary-WORLD multi-actor freeze lifecycle. */
 final class NativeWorldFreezingBlizzardSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of(
             "../1-伺服器/src/com/lineage/server");
 
     @Test
     void nativeProducerDatabaseAndRetainedTargetingStayExact() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(database.contains(
@@ -26,7 +37,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (80, '冰雪颶風', NULL, NULL);"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int producerStart = assembly.indexOf("sub_4CB5F0 proc near");
@@ -46,7 +57,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
         assertTrue(tail.contains("push    14h"));
         assertTrue(tail.contains("call    sub_4C6AE0"));
 
-        String skillUse = Files.readString(
+        String skillUse = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(skillUse.contains("if (_skill.getTarget().equals(\"none\"))"));
@@ -59,7 +70,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
         assertTrue(skillUse.contains(
                 "new S_Paralysis(S_Paralysis.TYPE_FREEZE, true)"));
 
-        String stop = Files.readString(
+        String stop = LocalResources.readString(
                 RETAINED.resolve("model/skill/L1SkillStop.java"),
                 StandardCharsets.UTF_8);
         assertTrue(stop.contains("case FREEZING_BLIZZARD"));
@@ -71,7 +82,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
     @Test
     void worldDispatcherTargetsAllActorKindsAndPublishesTypeZeroLifecycle()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");
@@ -113,7 +124,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
                 "Protocol.paralysis(Protocol.ParalysisMode.FREEZE_APPLY)"));
         assertTrue(method.contains("damage > 0"));
 
-        String companion = Files.readString(Path.of(
+        String companion = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleCompanion.java"),
                 StandardCharsets.UTF_8);
         assertTrue(companion.contains("!timedStatus.freezeActive(nowNanos)"));
@@ -121,7 +132,7 @@ final class NativeWorldFreezingBlizzardSourceAuditTest {
         assertTrue(companion.contains("boolean expireFreeze("));
         assertTrue(companion.contains("boolean freeze = timedStatus.cancelFreeze()"));
 
-        String population = Files.readString(Path.of(
+        String population = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClassicWorldMonsterPopulation.java"),
                 StandardCharsets.UTF_8);
         assertTrue(population.contains(

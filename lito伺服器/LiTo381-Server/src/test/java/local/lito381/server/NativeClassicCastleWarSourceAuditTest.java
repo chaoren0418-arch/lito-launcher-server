@@ -5,20 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the selected-source war clock and gate restriction to their consumers. */
 final class NativeClassicCastleWarSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/clientpackets/C_NPCAction.java"));
+    }
+
     @Test
     void sourceAndAllRetainedGatekeepersUseTheExactDestructibleDoorRule()
             throws Exception {
-        String source = Files.readString(Path.of(
+        String source = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/clientpackets/C_NPCAction.java"),
                 StandardCharsets.UTF_8);
         assertTrue(source.contains(
                 "finalIsNowWar && (door.getMaxHp() > 1)"));
 
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int authenticate = session.indexOf("account = auth.account();");

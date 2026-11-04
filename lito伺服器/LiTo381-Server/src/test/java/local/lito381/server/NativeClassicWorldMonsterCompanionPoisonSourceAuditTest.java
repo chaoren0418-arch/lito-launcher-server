@@ -7,10 +7,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Retained monster-to-controlled-NPC poison authority and current mapping. */
 final class NativeClassicWorldMonsterCompanionPoisonSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackNpc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MobSkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1DamagePoison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1ParalysisPoison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1Poison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1SilencePoison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CANCELLATION.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/CURE_POISON.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/skillmode/REMOVE_CURSE.java"));
+    }
+
     private static final Path SOURCE = Path.of("..", "1-伺服器", "src",
             "com", "lineage", "server").toAbsolutePath().normalize();
     private static final Path ATTACK = SOURCE.resolve("model/L1AttackNpc.java");
@@ -119,12 +134,12 @@ final class NativeClassicWorldMonsterCompanionPoisonSourceAuditTest {
     }
 
     private static String normalized(Path path) throws Exception {
-        return Files.readString(path).replace("\r\n", "\n");
+        return LocalResources.readString(path).replace("\r\n", "\n");
     }
 
     private static String sha256(Path path) throws Exception {
         return HexFormat.of().withUpperCase().formatHex(
                 MessageDigest.getInstance("SHA-256")
-                        .digest(Files.readAllBytes(path)));
+                        .digest(LocalResources.readAllBytes(path)));
     }
 }

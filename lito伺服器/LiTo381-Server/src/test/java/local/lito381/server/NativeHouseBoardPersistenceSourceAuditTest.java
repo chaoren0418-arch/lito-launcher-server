@@ -5,18 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class NativeHouseBoardPersistenceSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/data/npc/other/Npc_Board.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/BoardPersistenceService.java"));
+    }
+
     @Test
     void retainedBoardTableIsTheSharedAuthorityAndUnsafeRowsStayOffWire()
             throws Exception {
-        String repository = Files.readString(Path.of("src", "main", "java", "local",
+        String repository = LocalResources.readString(Path.of("src", "main", "java", "local",
                 "lito381", "server", "Accounts.java"), StandardCharsets.UTF_8);
-        String retainedPersistence = Files.readString(Path.of("..", "1-伺服器", "src",
+        String retainedPersistence = LocalResources.readString(Path.of("..", "1-伺服器", "src",
                 "com", "lineage", "server", "model", "BoardPersistenceService.java"),
                 StandardCharsets.UTF_8);
-        String retainedNpc = Files.readString(Path.of("..", "1-伺服器", "src", "com",
+        String retainedNpc = LocalResources.readString(Path.of("..", "1-伺服器", "src", "com",
                 "lineage", "data", "npc", "other", "Npc_Board.java"),
                 StandardCharsets.UTF_8);
 

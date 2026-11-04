@@ -7,10 +7,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Pins the bounded photo/resource proof for Quest Battle room one. */
 final class NativeQuestFukuokaRoomOnePhotoSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeFiles(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/Sprite.idx"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/1649-0-f000.png"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/1649-0.spr"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/1649-1-f000.png"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/1649-1.spr"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/20050819182443_32.jpg"),
+                Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638/20050819182443_33.jpg"));
+    }
+
     private static final Path EVIDENCE = Path.of(
             "D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638");
     private static final Path SELECTED_CLIENT = Path.of(
@@ -54,8 +67,8 @@ final class NativeQuestFukuokaRoomOnePhotoSourceAuditTest {
     }
 
     private static String sha256(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
         return HexFormat.of().withUpperCase().formatHex(
-                MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(path)));
+                MessageDigest.getInstance("SHA-256").digest(LocalResources.readAllBytes(path)));
     }
 }

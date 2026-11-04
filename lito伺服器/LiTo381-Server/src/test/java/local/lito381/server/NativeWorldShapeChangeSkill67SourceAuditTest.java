@@ -11,10 +11,25 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Strict current-source audit for native LiTo skill67 Shape Change. */
 final class NativeWorldShapeChangeSkill67SourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1ActionPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1PolyMorph.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
     private static final Path RECOVERED = Path.of(
             "../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe");
@@ -149,7 +164,7 @@ final class NativeWorldShapeChangeSkill67SourceAuditTest {
     }
 
     private static byte[] peBytes(long virtualAddress, int length) throws Exception {
-        byte[] data = Files.readAllBytes(RECOVERED);
+        byte[] data = LocalResources.readAllBytes(RECOVERED);
         ByteBuffer image = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sectionCount = Short.toUnsignedInt(image.getShort(pe + 6));
@@ -177,7 +192,7 @@ final class NativeWorldShapeChangeSkill67SourceAuditTest {
     }
 
     private static String text(Path path) throws Exception {
-        return Files.readString(path, StandardCharsets.UTF_8);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static int count(String source, String value) {

@@ -267,7 +267,8 @@ final class ClientSessionWorldCkewCompletionTest {
         CaptureLog capture = new CaptureLog(
                 temporary.resolve("capture-" + name));
         ClientSession session = new ClientSession(server, ClientSession.Endpoint.GAME,
-                config, null, state, capture, hub);
+                config, new MemoryAccountRepository("test", "test"),
+                state, capture, hub);
         int seed = 0x4500_0000 + type + (int) characterObjectId;
         Protocol.CipherState receiver = new Protocol.CipherState(seed);
         setField(session, "outgoing", new Protocol.CipherState(seed));

@@ -6,15 +6,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill110 and its ordinary-WORLD replacement lifecycle. */
 final class NativeWorldDressDexteritySourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Dexup.java"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
 
     @Test
     void retainedSourcePinsDexterityReplacementAndTypeTwoPackets() throws Exception {
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (110, 0, '敏捷提升', 14, 5, 10, 0, 0, 0, 0, 960, 'none', 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 32, '', 19, 3910, 0, 294, 295, 0);"));
@@ -23,19 +33,19 @@ final class NativeWorldDressDexteritySourceAuditTest {
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (110, '敏捷提升', NULL, NULL);"));
 
-        String use = Files.readString(RETAINED.resolve(
+        String use = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(use.contains("{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY }"));
         assertTrue(use.contains("this._skillId == DRESS_DEXTERITY"));
 
-        String icon = Files.readString(RETAINED.resolve(
+        String icon = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/IndependentSkillIcon.java"),
                 StandardCharsets.UTF_8);
         assertTrue(icon.contains("case DRESS_DEXTERITY:"));
         assertTrue(icon.contains("new S_Dexup(pc, 2, timeSec)"));
 
-        String writer = Files.readString(RETAINED.resolve(
+        String writer = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/serverpackets/S_Dexup.java"),
                 StandardCharsets.UTF_8);
         assertTrue(writer.contains("this.writeH(time);"));
@@ -45,7 +55,7 @@ final class NativeWorldDressDexteritySourceAuditTest {
 
     @Test
     void worldRouteContextRoiAndExpiryRemainConnected() throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         int worldStart = session.indexOf("if (phase == Phase.WORLD) {");

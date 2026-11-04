@@ -188,6 +188,35 @@ jobs:
           name: server-source-gap
           path: docs/server-source-gap.md
 
+  server-test:
+    name: Server tests (non-blocking until T010)
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Test (MySQL and local-file tests skipped)
+        working-directory: lito伺服器/LiTo381-Server
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p target
+          git rev-parse HEAD | tee target/test-revision.txt
+          mvn -B test 2>&1 | tee target/mvn-test.log
+      - name: Upload complete test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-test-evidence
+          path: |
+            lito伺服器/LiTo381-Server/target/test-revision.txt
+            lito伺服器/LiTo381-Server/target/mvn-test.log
+            lito伺服器/LiTo381-Server/target/surefire-reports/
+
   launcher:
     name: Launcher (.NET 10 / WinForms)
     runs-on: windows-latest

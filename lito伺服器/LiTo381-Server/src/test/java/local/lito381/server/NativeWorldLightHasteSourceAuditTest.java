@@ -5,10 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the ordinary-WORLD dispatch and native actor-family speed boundary. */
 final class NativeWorldLightHasteSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+    }
+
     private static final Path RETAINED = Path.of("../1-伺服器");
     private static final Path SESSION = Path.of(
             "src/main/java/local/lito381/server/ClientSession.java");
@@ -20,7 +31,7 @@ final class NativeWorldLightHasteSourceAuditTest {
     @Test
     void worldDispatcherReachesLightHasteAndGreaterHasteBeforeUnsupportedGate()
             throws Exception {
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int worldStart = source.indexOf("if (phase == Phase.WORLD)");
         int worldEnd = source.indexOf("long spellRequestNow", worldStart);
         String world = source.substring(worldStart, worldEnd);
@@ -43,7 +54,7 @@ final class NativeWorldLightHasteSourceAuditTest {
     @Test
     void hasteResolvesEveryWorldCharacterFamilyAndOwnsServerIntervals()
             throws Exception {
-        String session = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String session = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int start = session.indexOf("private void useHasteSpell(");
         int end = session.indexOf("private void useSelfHasteSpell(", start);
         String method = session.substring(start, end);
@@ -58,13 +69,13 @@ final class NativeWorldLightHasteSourceAuditTest {
         assertTrue(method.contains("cancelAbsoluteBarrier(\"spell-\""));
         assertTrue(method.contains("commitSpellReady(spell.skillId()"));
 
-        String database = Files.readString(
+        String database = LocalResources.readString(
                 RETAINED.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
         assertTrue(database.contains(
                 "INSERT INTO `skills` VALUES (43, 0, '加速術', 6, 2, 40, 0, 0, 0, 10, 1200, 'buff', 3, 0, 0, 0, 0, 0, 8, 2, 0, -1, 0, 0, 4, '$1463', 19, 755, 0, 184, 185, 280);"));
         assertTrue(database.contains(
                 "INSERT INTO `skills_item` VALUES (43, '加速術', NULL, NULL);"));
-        String secondary = Files.readString(RETAINED.resolve(
+        String secondary = LocalResources.readString(RETAINED.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -72,7 +83,7 @@ final class NativeWorldLightHasteSourceAuditTest {
         assertTrue(secondary.contains(
                 "INSERT INTO `skills_item` VALUES (43, '加速術', NULL, NULL);"));
 
-        String retainedUse = Files.readString(RETAINED.resolve(
+        String retainedUse = LocalResources.readString(RETAINED.resolve(
                 "src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         assertTrue(retainedUse.contains("case HASTE:// 加速術"));
@@ -81,7 +92,7 @@ final class NativeWorldLightHasteSourceAuditTest {
         assertTrue(retainedUse.contains("breakInterruptedCastEffects();"));
         assertTrue(retainedUse.contains("breakInvisibilityOnCast();"));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         String dispatch = between(assembly, "loc_4CB71D:", "loc_4CB741:");
@@ -98,14 +109,14 @@ final class NativeWorldLightHasteSourceAuditTest {
         assertTrue(spell.stopMessage() == 185);
         assertTrue(sourceContainsStopRoute(session));
 
-        String monsters = Files.readString(MONSTERS, StandardCharsets.UTF_8);
+        String monsters = LocalResources.readString(MONSTERS, StandardCharsets.UTF_8);
         assertTrue(monsters.contains("synchronized boolean haste("));
         assertTrue(monsters.contains("actor.slowExpiresAtNanos = 0;"));
         assertTrue(monsters.contains(
                 "hasteActive(mapId, objectId, nowNanos)"));
         assertTrue(monsters.contains("synchronized List<Snapshot> expireHastes("));
 
-        String companion = Files.readString(COMPANION, StandardCharsets.UTF_8);
+        String companion = LocalResources.readString(COMPANION, StandardCharsets.UTF_8);
         assertTrue(companion.contains("synchronized boolean activateHaste("));
         assertTrue(companion.contains("effectiveMoveIntervalMillis()"));
         assertTrue(companion.contains("effectiveAttackIntervalMillis()"));
@@ -114,7 +125,7 @@ final class NativeWorldLightHasteSourceAuditTest {
 
     @Test
     void lightPublicationAndExpiryAreWorldAware() throws Exception {
-        String source = Files.readString(SESSION, StandardCharsets.UTF_8);
+        String source = LocalResources.readString(SESSION, StandardCharsets.UTF_8);
         int start = source.indexOf("private void useLightSpell(");
         int end = source.indexOf("private void useShieldSpell(", start);
         String method = source.substring(start, end);

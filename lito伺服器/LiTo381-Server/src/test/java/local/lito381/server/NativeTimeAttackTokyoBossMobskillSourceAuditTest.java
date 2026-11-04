@@ -5,10 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Cross-source guard for the documented Tokyo Time Attack final bosses. */
 final class NativeTimeAttackTokyoBossMobskillSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MobSkillUse.java"));
+    }
+
     private static final Path RETAINED = Path.of("..", "1-伺服器")
             .toAbsolutePath().normalize();
 
@@ -73,7 +81,7 @@ final class NativeTimeAttackTokyoBossMobskillSourceAuditTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8).replace("\r\n", "\n");
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8).replace("\r\n", "\n");
     }
 }

@@ -9,10 +9,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.HexFormat;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks the original page-7 callback evidence and the manual runtime policy. */
 final class NativeCharacterSelectionUiContractTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"),
+                Path.of("../LiTo381-開發/tools/lito_runtime_probe.py"),
+                Path.of("../LiTo381-開發/tools/lito_ui_button_probe.py"));
+        LocalResources.assumeLitoBin(
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin"));
+    }
+
     private static final Path CLIENT = Path.of(
             "D:/380/天堂(Lineage 3.81C) (1)/LiTo.bin");
     private static final Path DISASSEMBLY = Path.of(
@@ -131,7 +144,7 @@ final class NativeCharacterSelectionUiContractTest {
     @Test
     void nativeSourceOverlayUsesOneClickCallbackToProduceCC8() throws Exception {
         String assembly = read(DISASSEMBLY);
-        byte[] unpacked = Files.readAllBytes(UNPACKED_CLIENT);
+        byte[] unpacked = LocalResources.readAllBytes(UNPACKED_CLIENT);
         // IDA ended sub_498F80 early at 0x49918C and exported this valid tail
         // as raw dwords. Pin the executable bytes that create source index 0:
         // push esi(index twice), push sub_4999B0, x/y, image 0x1813, then call
@@ -343,13 +356,13 @@ final class NativeCharacterSelectionUiContractTest {
     }
 
     private static String read(Path path) throws Exception {
-        assertTrue(Files.isRegularFile(path), "missing source evidence: " + path);
-        return Files.readString(path, StandardCharsets.UTF_8);
+        assertTrue(Files.isRegularFile(LocalResources.assumeExternalFile(path)), "missing source evidence: " + path);
+        return LocalResources.readString(path, StandardCharsets.UTF_8);
     }
 
     private static String sha256(Path path) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        try (var stream = Files.newInputStream(path)) {
+        try (var stream = LocalResources.newInputStream(path)) {
             byte[] buffer = new byte[64 * 1024];
             for (int count; (count = stream.read(buffer)) >= 0;) {
                 if (count > 0) digest.update(buffer, 0, count);

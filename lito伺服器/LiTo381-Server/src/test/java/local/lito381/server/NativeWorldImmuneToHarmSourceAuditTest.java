@@ -11,10 +11,22 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks native skill68 and every ordinary-WORLD player damage consumer. */
 final class NativeWorldImmuneToHarmSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+        LocalResources.assumeIdaClient(
+                Path.of("../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"));
+        LocalResources.assumeFiles(
+                Path.of("../LiTo381-開發/runtime/LiTo.unpacked-oep-current.exe"));
+    }
+
     private static final Path RETAINED_ROOT = Path.of("../1-伺服器");
     private static final Path RETAINED = RETAINED_ROOT.resolve(
             "src/com/lineage/server");
@@ -24,9 +36,9 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
     @Test
     void nativeProducerDatabaseAndRetainedDamageRulesStayExact()
             throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 RETAINED_ROOT.resolve("db/380_db.sql"), StandardCharsets.UTF_8);
-        String secondary = Files.readString(RETAINED_ROOT.resolve(
+        String secondary = LocalResources.readString(RETAINED_ROOT.resolve(
                 "其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         String selectedRow = "INSERT INTO `skills` VALUES (68, 0, '聖結界', 9, "
@@ -41,7 +53,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
         assertEquals(1, count(selected, itemRow));
         assertEquals(1, count(secondary, itemRow));
 
-        String assembly = Files.readString(Path.of(
+        String assembly = LocalResources.readString(Path.of(
                 "../LiTo381-開發/ida-client-oep-v2/full-disassembly.asm"),
                 StandardCharsets.UTF_8);
         int dispatchStart = assembly.indexOf("loc_4CB11C:");
@@ -90,7 +102,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
     @Test
     void worldDispatcherPublishesOneLeaseAndAllDamageLanesConsumeIt()
             throws Exception {
-        String session = Files.readString(Path.of(
+        String session = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
 
@@ -196,7 +208,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
         assertTrue(session.contains(
                 "+ \" target=\" + target.playerObjectId()"));
 
-        String acceptance = Files.readString(Path.of(
+        String acceptance = LocalResources.readString(Path.of(
                 "tools/classic_world_immune_to_harm_selftest.py"),
                 StandardCharsets.UTF_8);
         assertTrue(acceptance.contains(
@@ -210,7 +222,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
         for (String name : List.of(
                 "src/test/resources/server-config/root/server.immune-to-harm-native-battle-selftest.properties",
                 "src/test/resources/server-config/root/server.world-immune-to-harm-selftest.properties")) {
-            String config = Files.readString(Path.of(name), StandardCharsets.UTF_8);
+            String config = LocalResources.readString(Path.of(name), StandardCharsets.UTF_8);
             assertTrue(config.contains("game.bind=127.0.0.2"), name);
             assertTrue(config.contains("port=32100"), name);
             assertTrue(config.contains("database.mode=memory"), name);
@@ -218,7 +230,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
             assertTrue(config.contains("state.persistence.enabled=false"), name);
             assertTrue(config.contains("spell.material.fixture.enabled=true"), name);
         }
-        String worldConfig = Files.readString(Path.of(
+        String worldConfig = LocalResources.readString(Path.of(
                 "src/test/resources/server-config/root/server.world-immune-to-harm-selftest.properties"),
                 StandardCharsets.UTF_8);
         assertTrue(worldConfig.contains("world.cancellation.fixture.enabled=true"));
@@ -233,7 +245,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
     }
 
     private static String retained(String relative) throws Exception {
-        return Files.readString(RETAINED.resolve(relative).normalize(),
+        return LocalResources.readString(RETAINED.resolve(relative).normalize(),
                 StandardCharsets.UTF_8);
     }
 
@@ -247,7 +259,7 @@ final class NativeWorldImmuneToHarmSourceAuditTest {
     }
 
     private static byte[] peBytes(long virtualAddress, int length) throws Exception {
-        byte[] data = Files.readAllBytes(RECOVERED);
+        byte[] data = LocalResources.readAllBytes(RECOVERED);
         ByteBuffer image = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
         int pe = image.getInt(0x3C);
         int sectionCount = Short.toUnsignedInt(image.getShort(pe + 6));

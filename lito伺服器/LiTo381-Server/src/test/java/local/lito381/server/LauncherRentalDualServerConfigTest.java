@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Locks the one-config service-mode overlays to the production dual-JVM contract. */
 final class LauncherRentalDualServerConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void oneProductionConfigRoutesRentalSourceToBattleJvm() throws Exception {
         Path file = Path.of("config", "server.properties");
         ServerConfig source = ServerConfig.load(file, "rental-source");

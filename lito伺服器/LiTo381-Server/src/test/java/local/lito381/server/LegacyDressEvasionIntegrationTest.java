@@ -16,9 +16,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for original skill 111 Dress Evasion and bow ER semantics. */
 final class LegacyDressEvasionIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackMode.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1AttackPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Icons.java"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/model/Instance/L1PcInstance.java"),
+                Path.of("../1-伺服器/其他src參考用/古老src/com/lineage/server/serverpackets/S_PacketBoxActiveSpells.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactDressEvasionContract() throws Exception {
@@ -104,7 +116,7 @@ final class LegacyDressEvasionIntegrationTest {
 
     private static void assertRetainedErAndBowSources() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String currentPc = Files.readString(retained.resolve(Path.of(
+        String currentPc = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "Instance",
                 "L1PcInstance.java")), StandardCharsets.UTF_8);
         assertTrue(currentPc.contains("public int getEr()"));
@@ -112,18 +124,18 @@ final class LegacyDressEvasionIntegrationTest {
         assertTrue(currentPc.contains("this.hasSkillEffect(DRESS_EVASION)"));
         assertTrue(currentPc.contains("er += 12;"));
 
-        String currentAttack = Files.readString(retained.resolve(Path.of(
+        String currentAttack = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "L1AttackPc.java")),
                 StandardCharsets.UTF_8);
         assertTrue(currentAttack.contains("if (_weaponType == 20)"));
         assertTrue(currentAttack.contains("return calcErEvasion()"));
-        String currentMode = Files.readString(retained.resolve(Path.of(
+        String currentMode = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "L1AttackMode.java")),
                 StandardCharsets.UTF_8);
         assertTrue(currentMode.contains("final int er = _targetPc.getEr()"));
         assertTrue(currentMode.contains("return er < rnd"));
 
-        String currentIcon = Files.readString(retained.resolve(Path.of(
+        String currentIcon = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "serverpackets", "S_Icons.java")),
                 StandardCharsets.UTF_8);
         assertTrue(currentIcon.contains("pc.hasSkillEffect(DRESS_EVASION)"));
@@ -131,12 +143,12 @@ final class LegacyDressEvasionIntegrationTest {
                 + " (pc.getSkillEffectTimeSec(DRESS_EVASION) / 4)"));
 
         Path ancient = retained.resolve(Path.of("其他src參考用", "古老src"));
-        String ancientPc = Files.readString(ancient.resolve(Path.of(
+        String ancientPc = LocalResources.readString(ancient.resolve(Path.of(
                 "com", "lineage", "server", "model", "Instance", "L1PcInstance.java")),
                 StandardCharsets.UTF_8);
         assertTrue(ancientPc.contains("this.hasSkillEffect(DRESS_EVASION)"));
         assertTrue(ancientPc.contains("er += 12;"));
-        String ancientIcon = Files.readString(ancient.resolve(Path.of(
+        String ancientIcon = LocalResources.readString(ancient.resolve(Path.of(
                 "com", "lineage", "server", "serverpackets",
                 "S_PacketBoxActiveSpells.java")), StandardCharsets.UTF_8);
         assertTrue(ancientIcon.contains("data[17] ="

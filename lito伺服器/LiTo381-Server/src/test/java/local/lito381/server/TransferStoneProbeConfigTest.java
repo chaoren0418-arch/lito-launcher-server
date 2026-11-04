@@ -6,9 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.InetAddress;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class TransferStoneProbeConfigTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeServerProperties();
+    }
+
     @Test void remainsDisabledOutsideTheDedicatedLoopbackFixture() throws Exception {
         assertFalse(ServerConfig.load(Path.of("config/server.properties"))
                 .nativeTransferStoneProbeEnabled());

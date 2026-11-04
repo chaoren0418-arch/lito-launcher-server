@@ -5,14 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** Locks selected skill46 source, resources and shared attack convergence. */
 final class NativeWorldSunburstSourceAuditTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/db/380_db.sql"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"));
+    }
+
     @Test
     void bothDatabasesAndCurrentCatalogAgreeOnTheSelectedReuseAndRange()
             throws Exception {
-        String selected = Files.readString(
+        String selected = LocalResources.readString(
                 Path.of("../1-伺服器/db/380_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(selected.contains(
@@ -22,7 +32,7 @@ final class NativeWorldSunburstSourceAuditTest {
         assertTrue(selected.contains(
                 "INSERT INTO `skills_item` VALUES (46, '烈炎術', NULL, NULL);"));
 
-        String secondary = Files.readString(Path.of(
+        String secondary = LocalResources.readString(Path.of(
                 "../1-伺服器/其他src參考用/0507備份/yiwei380/db/380yiwei_db.sql"),
                 StandardCharsets.UTF_8);
         assertTrue(secondary.contains(
@@ -32,7 +42,7 @@ final class NativeWorldSunburstSourceAuditTest {
         assertTrue(secondary.contains(
                 "INSERT INTO `skills_item` VALUES (46, '烈炎術', NULL, NULL);"));
 
-        String catalog = Files.readString(Path.of(
+        String catalog = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/BattleSpellCatalog.java"),
                 StandardCharsets.UTF_8);
         assertTrue(catalog.contains(
@@ -44,7 +54,7 @@ final class NativeWorldSunburstSourceAuditTest {
     @Test
     void retainedFireDamageAndCurrentSharedRoutesPreserveEveryBoundary()
             throws Exception {
-        String retainedMagic = Files.readString(Path.of(
+        String retainedMagic = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/L1MagicPc.java"),
                 StandardCharsets.UTF_8);
         for (String anchor : new String[] {
@@ -58,7 +68,7 @@ final class NativeWorldSunburstSourceAuditTest {
                 "private int calcMrDefense(int dmg)"}) {
             assertTrue(retainedMagic.contains(anchor), anchor);
         }
-        String retainedUse = Files.readString(Path.of(
+        String retainedUse = LocalResources.readString(Path.of(
                 "../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
                 StandardCharsets.UTF_8);
         String normal = retainedUse.substring(
@@ -71,7 +81,7 @@ final class NativeWorldSunburstSourceAuditTest {
         assertTrue(retainedUse.contains("case L1Skills.TYPE_ATTACK"));
         assertTrue(retainedUse.contains("isUseCounterMagic(cha)"));
 
-        String source = Files.readString(Path.of(
+        String source = LocalResources.readString(Path.of(
                 "src/main/java/local/lito381/server/ClientSession.java"),
                 StandardCharsets.UTF_8);
         String battle = interval(source,

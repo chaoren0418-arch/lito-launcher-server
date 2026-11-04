@@ -17,9 +17,20 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.BeforeAll;
 
 /** Read-only proof for retained skill 104 and the shared poison admission gate. */
 final class LegacyVenomResistIntegrationTest {
+    @BeforeAll
+    static void assumeLocalResourcesPresent() {
+        LocalResources.assumeLineageSources(
+                Path.of("../1-伺服器/src/com/lineage/server/datatables/user/CharBuffTable.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/poison/L1Poison.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillStop.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/model/skill/L1SkillUse.java"),
+                Path.of("../1-伺服器/src/com/lineage/server/serverpackets/S_Icons.java"));
+    }
+
     @Test
     @EnabledIfSystemProperty(named = "lito.legacy.integration", matches = "true")
     void everyRetainedSourceHasTheExactVenomResistContract() throws Exception {
@@ -133,7 +144,7 @@ final class LegacyVenomResistIntegrationTest {
 
     private static void assertRetainedPoisonGateAndLifecycle() throws Exception {
         Path retained = Path.of("..", "1-伺服器").toAbsolutePath().normalize();
-        String poison = Files.readString(retained.resolve(Path.of(
+        String poison = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "poison",
                 "L1Poison.java")), StandardCharsets.UTF_8);
         for (String fragment : new String[] {
@@ -145,28 +156,28 @@ final class LegacyVenomResistIntegrationTest {
         for (String file : new String[] {
                 "L1DamagePoison.java", "L1SilencePoison.java",
                 "L1ParalysisPoison.java"}) {
-            String installer = Files.readString(retained.resolve(Path.of(
+            String installer = LocalResources.readString(retained.resolve(Path.of(
                     "src", "com", "lineage", "server", "model", "poison", file)),
                     StandardCharsets.UTF_8);
             assertTrue(installer.contains("isValidTarget"),
                     "poison family bypasses common gate: " + file);
         }
-        String use = Files.readString(retained.resolve(Path.of(
+        String use = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillUse.java")), StandardCharsets.UTF_8);
         assertTrue(use.contains("cha.setSkillEffect(getEffectSkillId(), _getBuffDuration)"));
         assertFalse(use.contains("case VENOM_RESIST"),
                 "retained skill104 unexpectedly has a cure side effect");
-        String stop = Files.readString(retained.resolve(Path.of(
+        String stop = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "model", "skill",
                 "L1SkillStop.java")), StandardCharsets.UTF_8);
         assertTrue(stop.contains("getSysmsgIdStop()"));
         assertTrue(stop.contains("new S_ServerMessage(msgID)"));
-        String icons = Files.readString(retained.resolve(Path.of(
+        String icons = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "serverpackets",
                 "S_Icons.java")), StandardCharsets.UTF_8);
         assertTrue(icons.contains("data[7] = (byte) (pc.getSkillEffectTimeSec(VENOM_RESIST) / 4)"));
-        String buffs = Files.readString(retained.resolve(Path.of(
+        String buffs = LocalResources.readString(retained.resolve(Path.of(
                 "src", "com", "lineage", "server", "datatables", "user",
                 "CharBuffTable.java")), StandardCharsets.UTF_8);
         assertFalse(buffs.contains("VENOM_RESIST"));
