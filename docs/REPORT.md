@@ -20,3 +20,4 @@
 - 2026-11-05 — #30 T020a: 戰鬥候選 × 正式 0.6.71 類別差異盤點（本機）（resource，codex-local，PR #56 已合併）→ [報告](reports/issue-30.md)
 - 2026-11-05 — #45 T020f: 候選 50635f7e JAR 與凍結原始碼入庫（本機）（resource，codex-local，PR #58 已合併）→ [報告](reports/issue-45.md)
 - 2026-11-05 — #59 T020e: 依語意差異訂 A 階段（src/main→正式 0.6.71）修補批次（設計）（design，claude-chat，PR #61 已合併）→ [報告](reports/issue-59.md)
+- 2026-11-05 — #102 T020g: @AsRecord 轉換器（record 加 ASM 實例欄位的 Java 表達）＋Maven 建置接線（code，codex-local，PR 已合併）→ [報告](reports/issue-102.md)
