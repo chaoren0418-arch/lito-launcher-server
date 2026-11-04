@@ -17,7 +17,10 @@ final class NativeCharacterSelectionUiContractTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
+        LocalResources.assumeExisting("LiTo.unpacked", LocalResources.LITO_UNPACKED_RELATIVE);
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("../LiTo381-開發/tools/lito_ui_button_probe.py"));
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("../LiTo381-開發/tools/lito_runtime_probe.py"));
     }
 
     private static final Path CLIENT = Path.of(

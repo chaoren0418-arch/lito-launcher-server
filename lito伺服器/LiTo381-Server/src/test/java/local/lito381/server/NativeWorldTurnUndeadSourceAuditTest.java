@@ -13,7 +13,7 @@ final class NativeWorldTurnUndeadSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
     }
 
     private static final Path SESSION = Path.of(

@@ -14,7 +14,7 @@ final class NativeWorldCursePoisonSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
     }
 
     @Test

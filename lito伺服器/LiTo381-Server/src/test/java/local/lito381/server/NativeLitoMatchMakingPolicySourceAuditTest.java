@@ -16,7 +16,8 @@ import org.junit.jupiter.api.Test;
 final class NativeLitoMatchMakingPolicySourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis",
+            "native-lito-matchmaking-historical-source-20031110.json"));
     }
 
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",

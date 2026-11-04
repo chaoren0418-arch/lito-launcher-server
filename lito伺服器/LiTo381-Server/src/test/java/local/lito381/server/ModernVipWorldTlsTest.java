@@ -21,7 +21,7 @@ class ModernVipWorldTlsTest {
         final ModernRooms rooms;final ModernWorldMap map;final ModernWorldService worlds;final ModernEquipmentOverrideStore store;final ModernServer server;
         final AtomicInteger vipReads=new AtomicInteger();
         Fixture(Path root)throws Exception {
-            map=ModernWorldTestPeer.sharedMap(Path.of(System.getenv("LITO_SHARED_RESOURCE_ROOT")));
+            map=ModernWorldTestPeer.sharedMap(LocalResources.sharedResourceRoot());
             var binding=new ModernWorldBinding(1,514,map);rooms=new ModernRooms(Set.of(binding.key()));
             store=new ModernEquipmentOverrideStore(root);
             ModernEquipmentAuthority.PhysicalProvider physical=new ModernEquipmentAuthority.PhysicalProvider() {

@@ -17,7 +17,7 @@ final class NativeReserved139To144SourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY_ABSOLUTE);
     }
 
     private static final Path RETAINED = Path.of("..", "1-伺服器")

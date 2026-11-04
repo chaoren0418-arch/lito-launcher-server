@@ -17,7 +17,8 @@ import org.junit.jupiter.api.Test;
 final class NativeLitoTimeAttackSourceBoundaryAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis",
+            "native-lito-time-attack-source-boundary-archive"));
     }
 
     private static final Path ARCHIVE = Path.of("..", "LiTo381-開發", "analysis",

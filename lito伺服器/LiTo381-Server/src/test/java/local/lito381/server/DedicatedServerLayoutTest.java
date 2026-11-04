@@ -16,6 +16,7 @@ final class DedicatedServerLayoutTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeServerProperties();
+        LocalResources.assumeLineageSources();
     }
 
     @Test void operationalConfigContainsOnlyServerAndDatabaseProperties()

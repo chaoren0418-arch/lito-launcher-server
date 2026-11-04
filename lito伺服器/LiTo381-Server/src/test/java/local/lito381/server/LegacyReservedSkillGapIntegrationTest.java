@@ -21,7 +21,9 @@ final class LegacyReservedSkillGapIntegrationTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
+        LocalResources.assumeExisting("TW13081901bin拆解 full-disassembly.asm",
+                Path.of("..", "TW13081901bin拆解", "analysis-final", "full-disassembly.asm"));
     }
 
     @Test

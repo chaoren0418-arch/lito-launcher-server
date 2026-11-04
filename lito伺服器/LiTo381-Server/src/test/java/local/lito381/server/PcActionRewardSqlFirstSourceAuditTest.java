@@ -5,15 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 final class PcActionRewardSqlFirstSourceAuditTest {
-    @BeforeAll
-    static void assumeLocalResourcesPresent() {
-        LocalResources.assumeIdaClient();
-    }
-
     @Test
     void helperCapabilityPrecedesWorldCompanionRoutingAndClaimIsSqlFirst()
             throws Exception {
@@ -62,6 +56,11 @@ final class PcActionRewardSqlFirstSourceAuditTest {
     void isolatedLitoRuntimePinsTheSanitizedPcActionRewardOverlay() throws Exception {
         Path workspace = Path.of("..");
         Path assets = workspace.resolve("LiTo381-開發/resources/pc-action-html");
+        LocalResources.assumeExisting("pc-action html", assets);
+        LocalResources.assumeExisting("LiToCompatibilityResources.cs",
+                workspace.resolve("LiTo381-Launcher/src/LiToCompatibilityResources.cs"));
+        LocalResources.assumeExisting("TextPakGameplayOverlay",
+                workspace.resolve("LiTo381-開發/tools/TextPakGameplayOverlay/Program.cs"));
         String launcher = Files.readString(
                 workspace.resolve("LiTo381-Launcher/src/LiToCompatibilityResources.cs"),
                 StandardCharsets.UTF_8);

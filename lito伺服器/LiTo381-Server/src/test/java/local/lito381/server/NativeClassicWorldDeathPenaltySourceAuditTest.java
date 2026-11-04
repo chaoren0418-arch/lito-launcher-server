@@ -20,7 +20,8 @@ final class NativeClassicWorldDeathPenaltySourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "public-source-audit-0.7.660", "tw_tpai", "L1J-TW_3.80c", "src",
+            "l1j", "server", "server", "model", "Instance", "L1PcInstance.java"));
     }
 
     private static final Path PRIMARY_SQL = Path.of("..", "1-伺服器", "db",

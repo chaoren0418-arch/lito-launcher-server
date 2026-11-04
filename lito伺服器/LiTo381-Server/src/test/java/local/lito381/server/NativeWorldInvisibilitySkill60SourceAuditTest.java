@@ -20,7 +20,8 @@ final class NativeWorldInvisibilitySkill60SourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY_ABSOLUTE);
+        LocalResources.assumeExisting("LiTo.unpacked", LocalResources.LITO_UNPACKED);
     }
 
     private static final Path RETAINED = Path.of("..", "1-伺服器")

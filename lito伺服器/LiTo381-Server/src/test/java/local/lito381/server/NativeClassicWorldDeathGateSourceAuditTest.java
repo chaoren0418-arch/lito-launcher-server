@@ -16,7 +16,7 @@ final class NativeClassicWorldDeathGateSourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis", "NATIVE-C-PRODUCERS-ALL.json"));
     }
 
     private static final Path RETAINED_PC = Path.of("..", "1-伺服器", "src",

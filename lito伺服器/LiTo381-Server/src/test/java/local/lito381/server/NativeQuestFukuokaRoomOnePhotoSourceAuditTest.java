@@ -14,8 +14,9 @@ import org.junit.jupiter.api.Test;
 final class NativeQuestFukuokaRoomOnePhotoSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
-        LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("D:/lineage開發/LiTo381-開發/analysis/quest-fukuoka-room1-0.7.638"));
+        LocalResources.assumeExisting("selected client Sprite.idx",
+                Path.of("D:/380/天堂(Lineage 3.81C) (1)/Sprite.idx"));
     }
 
     private static final Path EVIDENCE = Path.of(

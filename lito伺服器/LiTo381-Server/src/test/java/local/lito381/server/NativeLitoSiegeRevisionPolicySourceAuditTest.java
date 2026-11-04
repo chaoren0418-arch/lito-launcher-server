@@ -17,7 +17,8 @@ import org.junit.jupiter.api.Test;
 final class NativeLitoSiegeRevisionPolicySourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis",
+            "native-lito-siege-revision-sources-2003-2005.json"));
     }
 
     private static final Path SOURCE = Path.of("..", "LiTo381-開發", "analysis",

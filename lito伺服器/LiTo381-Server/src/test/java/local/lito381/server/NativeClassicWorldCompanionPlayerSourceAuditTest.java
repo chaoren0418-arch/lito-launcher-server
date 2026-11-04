@@ -16,7 +16,9 @@ final class NativeClassicWorldCompanionPlayerSourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis", "NATIVE-C-PRODUCERS-ALL.json"));
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis", "NATIVE-S-DISPATCH-ALL.json"));
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis", "NATIVE-HYPERTEXT-ACTION-EVIDENCE.json"));
     }
 
     private static final Path RETAINED = Path.of("..", "1-伺服器")

@@ -81,7 +81,7 @@ class ModernPlayerHealingTlsTest {
             this(root,loadTimeoutMillis,b->b-1);
         }
         Fixture(Path root,int loadTimeoutMillis,ModernPhysicalCombat.BoundedRandom random)throws Exception {
-            map=ModernWorldTestPeer.sharedMap(Path.of(System.getenv("LITO_SHARED_RESOURCE_ROOT")));
+            map=ModernWorldTestPeer.sharedMap(LocalResources.sharedResourceRoot());
             var binding=new ModernWorldBinding(1,514,map);rooms=new ModernRooms(Set.of(binding.key()),Set.of(binding.key()));
             store=new ModernEquipmentOverrideStore(root);
             ModernEquipmentAuthority.PhysicalProvider physical=new ModernEquipmentAuthority.PhysicalProvider(){

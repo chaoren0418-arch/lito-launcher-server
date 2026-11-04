@@ -14,7 +14,7 @@ final class NativeWorldHolyWalkSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
     }
 
     private static String source(Path path) throws Exception {

@@ -18,7 +18,8 @@ final class NativeWorldLifeStreamSkill63SourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY_ABSOLUTE);
+        LocalResources.assumeExisting("LiTo.unpacked", LocalResources.LITO_UNPACKED);
     }
 
     private static final Path RETAINED = Path.of("..", "1-伺服器")

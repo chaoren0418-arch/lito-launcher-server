@@ -18,7 +18,7 @@ final class NativeClassicCastleObjectiveSourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
     }
 
     private static final Path SOURCE = Path.of(

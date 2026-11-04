@@ -15,7 +15,6 @@ final class NativeClassicWorldIceMonsterSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeLitoBin();
     }
 
     private static final Path RETAINED = Path.of("../1-伺服器");

@@ -21,7 +21,8 @@ final class NativePatienceSourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY_ABSOLUTE);
+        LocalResources.assumeExisting("LiTo.unpacked", LocalResources.LITO_UNPACKED);
     }
 
     private static final Set<String> RETAINED_ATTACK_PC_SNAPSHOTS = Set.of(

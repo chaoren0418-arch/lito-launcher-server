@@ -17,7 +17,7 @@ final class NativeClassicWorldKillFeedSourceAuditTest {
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
         LocalResources.assumeLitoBin();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeExisting("LiTo381-開發 local file", Path.of("..", "LiTo381-開發", "analysis", "NATIVE-S-DISPATCH-ALL.json"));
     }
 
     private static final Path RETAINED = Path.of("..", "1-伺服器")

@@ -14,7 +14,7 @@ final class NativeWorldCurseParalysisSourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
     }
 
     private static final Path WORKSPACE = Path.of("..");

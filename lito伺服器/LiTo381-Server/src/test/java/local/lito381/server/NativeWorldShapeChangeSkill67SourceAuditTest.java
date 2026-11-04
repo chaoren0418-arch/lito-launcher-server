@@ -19,7 +19,8 @@ final class NativeWorldShapeChangeSkill67SourceAuditTest {
     @BeforeAll
     static void assumeLocalResourcesPresent() {
         LocalResources.assumeLineageSources();
-        LocalResources.assumeIdaClient();
+        LocalResources.assumeIdaClient(LocalResources.IDA_DISASSEMBLY);
+        LocalResources.assumeExisting("LiTo.unpacked", LocalResources.LITO_UNPACKED_RELATIVE);
     }
 
     private static final Path RETAINED = Path.of("../1-伺服器");
