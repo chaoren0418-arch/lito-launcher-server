@@ -2,9 +2,9 @@
 
 ## 結論
 
-**2026-11-05，第 2 次嘗試：blocked／未達驗收。隔離 SQL 設定仍未就緒，完整回歸與成功 seal 均未執行；不得標為 done。**
+**2026-11-05，第 3 次嘗試：blocked／未達驗收。隔離 SQL 設定仍未就緒，完整回歸與成功 seal 均未執行；不得標為 done。**
 
-本次從既有 `task/31` 的 `44a223f` 接續，未 checkout／建立分支。前輪已完成正式檔保護銜接及 25 項離線測試，本次保留全部程式與斷言，只更新本報告。新增行為通過收據為零。
+本次從既有 `task/31` 的 `82b3328` 接續，未 checkout／建立分支。前輪已完成正式檔保護銜接及 25 項離線測試，本次保留全部程式與斷言，只更新本報告。新增行為通過收據為零。
 
 ## 本次已驗證與未完成事項
 
@@ -13,10 +13,17 @@
   - `D:/lineage開發/3-lito開發/scratch/wt/task-31/scratch/t020c/isolated-test.properties`
   - `D:/lineage開發/3-lito開發/scratch/t020c/isolated-test.properties`
 - 已確認指定隔離設定路徑受 git ignore 保護。未建立空白、假密碼或未驗權限的設定以冒充就緒。
-- Issue 留言直到本次派工（[6636295989](https://github.com/chaoren0418-arch/lito-launcher-server/issues/31#issuecomment-6636295989)）仍沒有「隔離設定已就緒」及帳號名稱的交接紀錄；[審查退回](https://github.com/chaoren0418-arch/lito-launcher-server/issues/31#issuecomment-6636219980)指出的前置缺口仍存在。查核時標籤為 `stage:test`、`task:running`、`runner:codex-local`；排入執行不代表前置完成。本次未變更工作流標籤。
+- Issue 留言直到本次派工（[6636450341](https://github.com/chaoren0418-arch/lito-launcher-server/issues/31#issuecomment-6636450341)）仍沒有「隔離設定已就緒」及帳號名稱的交接紀錄；[審查退回](https://github.com/chaoren0418-arch/lito-launcher-server/issues/31#issuecomment-6636219980)指出的前置缺口仍存在。本次讀取最新留言，未變更工作流標籤；排入執行不代表前置完成。
 - 唯讀重算候選 JAR SHA256 為 `8d26c9d791e094ab3d3cd6c8dbe4218d99f96fcbe73858be5af534106c81cfb8`；worktree reference 與原專案部署檔均為 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`。這只是前置檔案雜湊查核，**不是行為回歸前後的 formal_protection 證據**。
 - 靜態核對 regression_support.py、seal_validation.py 與 reconcile_replay.py，前輪正式檔保護銜接仍在。本次未修改程式，未重跑已由前輪及審查確認的離線測試；下節 25 項測試及 scratch 稽核檔均歸屬前輪。
 - 未執行 targeted、player、composed、20＋18 組、curse-clock 或 seal，沒有新通過收據與案例數。未讀取機密設定、未連 DB、未建立帳號或授權、未啟停任何 DB／伺服器／遊戲、未修改正式 JAR、未部署候選。
+
+### 第 3 次嘗試的增量查核
+
+- 本機 shell 與替代讀檔工具一開始均遇到 `setup refresh had errors`；改用工具核准的 `require_escalated` 完成唯讀查核，未遭自動審查拒絕。沙箱錯誤已繞過，實際阻礙仍是隔離設定與帳號交接缺漏。
+- 本次重新確認兩處指定設定皆不存在、隔離設定受 git ignore 保護；重新計算三份 JAR 的雜湊，均符合上列候選／現行正式基準。靜態核對共用保護器與 14 項正式保護測試仍在，未變更程式或重跑既有測試。
+- 最新 Issue 留言截至派工 `6636450341`，沒有新增隔離設定就緒紀錄。不能以重新派工、前輪離線測試或歷史收據取代前置與實跑驗收；本次行為案例數仍為 0，沒有新成功收據。
+- 本次僅更新本報告；`docs/REPORT.md`、正式設定、歷史收據及程式均未修改。完整回歸指令繼續保留於下節，須待 Claude 本機對話完成既定 `needs:local` 交接後執行。
 
 ### 本機前置交接依據
 
