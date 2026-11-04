@@ -22114,15 +22114,22 @@
           "size_delta": -148,
           "src_main": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
           "src_main_decompiled": false,
-          "last_layer": "inherited-before-combat-root（§1 各層皆未寫入）",
-          "layer_jar": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-item-skill-material-development/builds/20261018T052807601508Z/candidate-NATIVE-ITEM-WEAPON-MATERIAL-unqualified.jar",
-          "layer_sha256": "df9464f06c41821f3abf7c29ccc5876abe1ead66e570a40308f1274e90521a37",
+          "last_layer": "resource-database/build.py（efd4bc36，完整 Java 編譯新增）",
+          "layer_jar": "lito伺服器/LiTo381-Server/tools/resource-database/build/baseline-PC-ingress-efd4-v2/candidate-efd4.jar",
+          "layer_sha256": "efd4bc36b47db13cc0bd52426355a4250ea7db4b88ac724afa653a416954ab11",
           "source": null,
-          "source_status": "未找到此候選版本完整來源；歷史最後寫入層不明，禁止將 src/main 現版冒充候選來源",
+          "source_status": "最後寫入層已證實；歷史完整 Java 尚未取得。現有同路徑來源 SHA 不符 builder_inputs，不能替代；GmTravelPatch 僅掛鉤 ClientSession，不能標為 asm-only。",
           "source_candidates": [],
           "src_main_mapping": "Maven class SourceFile attribute",
-          "source_kind": "inherited-before-combat-root",
-          "class": "local/lito381/server/GmTravel.class"
+          "source_kind": "java-unavailable",
+          "class": "local/lito381/server/GmTravel.class",
+          "layer_receipt": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
+          "layer_receipt_sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990",
+          "source_expected_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+          "source_historical_path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+          "frozen_class_output": "lito伺服器/LiTo381-Server/tools/resource-database/build/classes/local/lito381/server/GmTravel.class",
+          "frozen_class_output_matches_candidate": true,
+          "provenance_evidence": "precombat_trace.resource_origin"
         },
         {
           "class_entry": "local/lito381/server/IllusionSkillRequests.class",
@@ -22214,15 +22221,20 @@
           "size_delta": -8,
           "src_main": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/InventoryCatalog.java",
           "src_main_decompiled": false,
-          "last_layer": "inherited-before-combat-root（§1 各層皆未寫入）",
-          "layer_jar": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-item-skill-material-development/builds/20261018T052807601508Z/candidate-NATIVE-ITEM-WEAPON-MATERIAL-unqualified.jar",
-          "layer_sha256": "df9464f06c41821f3abf7c29ccc5876abe1ead66e570a40308f1274e90521a37",
+          "last_layer": null,
+          "layer_jar": null,
+          "layer_sha256": null,
           "source": null,
-          "source_status": "未找到此候選版本完整來源；歷史最後寫入層不明，禁止將 src/main 現版冒充候選來源",
+          "source_status": "已證明由 base-0.6.61 繼承，並以收據與固定輸入銜接至 native-room-state/build/base.jar（e5f2e01b）；沿途 bytes 未變，真正最後寫入層與完整 Java／ASM 證據仍未取得。",
           "source_candidates": [],
           "src_main_mapping": "Maven class SourceFile attribute",
-          "source_kind": "inherited-before-combat-root",
-          "class": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class"
+          "source_kind": "unresolved-historical-origin",
+          "class": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+          "provenance_boundary": {
+            "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
+            "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+          },
+          "provenance_evidence": "precombat_trace.earlier_armor_chain"
         },
         {
           "class_entry": "local/lito381/server/InventoryCatalog$NativeProjectileStatus.class",
@@ -170543,7 +170555,7 @@
   "schema_version": 1,
   "issue": 30,
   "date": "2026-11-04",
-  "status": "盤點與建置已完成；2 筆戰鬥鏈前歷史來源待確認",
+  "status": "未完成：補證確認 GmTravel 最後寫入層；2 筆完整歷史來源驗收仍阻塞，交任務擁有者補件",
   "workspace_commit": "1300366c5a73c23e91ab53518c80180e31dbd262",
   "design": {
     "ref": "origin/task/24",
@@ -170684,24 +170696,1291 @@
   "provenance_exceptions": [
     {
       "class_entry": "local/lito381/server/GmTravel.class",
-      "last_layer": "inherited-before-combat-root（§1 各層皆未寫入）",
+      "last_layer": "resource-database/build.py（efd4bc36，完整 Java 編譯新增）",
       "source": null,
-      "reason": "未找到此候選版本完整來源；歷史最後寫入層不明，禁止將 src/main 現版冒充候選來源"
+      "reason": "最後寫入層已證實；歷史完整 Java 尚未取得。現有同路徑來源 SHA 不符 builder_inputs，不能替代；GmTravelPatch 僅掛鉤 ClientSession，不能標為 asm-only。"
     },
     {
       "class_entry": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
-      "last_layer": "inherited-before-combat-root（§1 各層皆未寫入）",
+      "last_layer": null,
       "source": null,
-      "reason": "未找到此候選版本完整來源；歷史最後寫入層不明，禁止將 src/main 現版冒充候選來源"
+      "reason": "已證明由 base-0.6.61 繼承，並以收據與固定輸入銜接至 native-room-state/build/base.jar（e5f2e01b）；沿途 bytes 未變，真正最後寫入層與完整 Java／ASM 證據仍未取得。"
     }
   ],
   "precombat_trace": {
-    "found": [],
-    "pending": [
-      "local/lito381/server/GmTravel.class",
-      "local/lito381/server/InventoryCatalog$NativeArmorStatus.class"
+    "status": "blocked_missing_historical_sources",
+    "input_sha_verified": true,
+    "combat_chain_nodes_verified": 68,
+    "resource_parent_chain": [
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-item-skill-material-development/builds/20261018T052807601508Z/candidate-NATIVE-ITEM-WEAPON-MATERIAL-unqualified.jar",
+          "sha256": "df9464f06c41821f3abf7c29ccc5876abe1ead66e570a40308f1274e90521a37"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-item-skill-material-development/builds/20261018T052807601508Z/manifest.json",
+          "sha256": "fc067df4dfa511d74703ef966447e5a1e0b607f70d973323c61fe3bd2b8dc1ec"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cube-material-development/builds/20261018T042438524701Z/candidate-NATIVE-CUBE-MATERIAL-unqualified.jar",
+          "sha256": "218d54c4c301fe16b7519fe1c57b5a7254ed6718a1ec0de1f7483427dac61086"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cube-material-development/builds/20261018T042438524701Z/candidate-NATIVE-CUBE-MATERIAL-unqualified.jar",
+          "sha256": "218d54c4c301fe16b7519fe1c57b5a7254ed6718a1ec0de1f7483427dac61086"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cube-material-development/builds/20261018T042438524701Z/manifest.json",
+          "sha256": "f7e75f79d3c111a74cef909c58865ba60960b8c20800ca4f77bb2a5467bcbe8f"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-material-development/builds/20261018T024730005416Z/candidate-NATIVE-CAST-MATERIAL-unqualified.jar",
+          "sha256": "a9c108568d567ae6d4304201dfb69a34c3258502a375733650842880d513e955"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-material-development/builds/20261018T024730005416Z/candidate-NATIVE-CAST-MATERIAL-unqualified.jar",
+          "sha256": "a9c108568d567ae6d4304201dfb69a34c3258502a375733650842880d513e955"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-material-development/builds/20261018T024730005416Z/manifest.json",
+          "sha256": "eb41c6be4be0e94d58748d89e18f4aace6f4ebbb3ac7c756c2335ed3d0cb2a4f"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-reuse-lease-development/objects/35853617c9b92cfba01a55e64599454c697064b6f272b6d25285c38100295e9b/candidate-NATIVE-REUSE-LEASE-experimental.jar",
+          "sha256": "35853617c9b92cfba01a55e64599454c697064b6f272b6d25285c38100295e9b"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-reuse-lease-development/objects/35853617c9b92cfba01a55e64599454c697064b6f272b6d25285c38100295e9b/candidate-NATIVE-REUSE-LEASE-experimental.jar",
+          "sha256": "35853617c9b92cfba01a55e64599454c697064b6f272b6d25285c38100295e9b"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-reuse-lease-development/reproducibility-runs/20261018T010333210661Z/manifest.json",
+          "sha256": "ff075475000b2d43c948f4588494126b24db86ae3b875a9148c7ba4c3d9b6131"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-self-cast-development/objects/71ea214a486cb7d25f5b2f01aa7a533a0dd7f4ea4d4b3cf993c251588ff8b664/candidate-NATIVE-SELF-CAST-experimental.jar",
+          "sha256": "71ea214a486cb7d25f5b2f01aa7a533a0dd7f4ea4d4b3cf993c251588ff8b664"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-self-cast-development/objects/71ea214a486cb7d25f5b2f01aa7a533a0dd7f4ea4d4b3cf993c251588ff8b664/candidate-NATIVE-SELF-CAST-experimental.jar",
+          "sha256": "71ea214a486cb7d25f5b2f01aa7a533a0dd7f4ea4d4b3cf993c251588ff8b664"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-self-cast-development/reproducibility-runs/20261018T001553546858Z/manifest.json",
+          "sha256": "3c9c8c20a362fef044e8efbf9385bb0eb77dd1de2e97e75d796daaba09515e82"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-zero-mp-development/objects/2e07efc0130d9e8d2982f1b36f81ff7b9c837c1c9624ff1efa4f9a5d90fe2228/candidate-NATIVE-ZERO-MP-experimental.jar",
+          "sha256": "2e07efc0130d9e8d2982f1b36f81ff7b9c837c1c9624ff1efa4f9a5d90fe2228"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-zero-mp-development/objects/2e07efc0130d9e8d2982f1b36f81ff7b9c837c1c9624ff1efa4f9a5d90fe2228/candidate-NATIVE-ZERO-MP-experimental.jar",
+          "sha256": "2e07efc0130d9e8d2982f1b36f81ff7b9c837c1c9624ff1efa4f9a5d90fe2228"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-zero-mp-development/reproducibility-runs/20261017T231733401309Z/manifest.json",
+          "sha256": "d77a4f17dd2a43363b44bafac6361ac613013db8600f5105940f3ef835d2b3c0"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-skill-consumption-development/objects/ca620a2df1e62704bb93ba84dce52b53557b8c9b7d59e59772a50200f854e079/candidate-NATIVE-SKILL-CONSUMPTION-experimental.jar",
+          "sha256": "ca620a2df1e62704bb93ba84dce52b53557b8c9b7d59e59772a50200f854e079"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-skill-consumption-development/objects/ca620a2df1e62704bb93ba84dce52b53557b8c9b7d59e59772a50200f854e079/candidate-NATIVE-SKILL-CONSUMPTION-experimental.jar",
+          "sha256": "ca620a2df1e62704bb93ba84dce52b53557b8c9b7d59e59772a50200f854e079"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-skill-consumption-development/reproducibility-runs/20261017T224553100553Z/manifest.json",
+          "sha256": "f9bb2accf737f3ed07a2d2b9cf0b98bd2a032fa6a6bc77dc96898fcf00ffe281"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-timeline-development/objects/aa700801efd51e049a13217c34b76b3ddcb35678b973abfb2797550ac988d2ff/candidate-NATIVE-CAST-TIMELINE-experimental.jar",
+          "sha256": "aa700801efd51e049a13217c34b76b3ddcb35678b973abfb2797550ac988d2ff"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-timeline-development/objects/aa700801efd51e049a13217c34b76b3ddcb35678b973abfb2797550ac988d2ff/candidate-NATIVE-CAST-TIMELINE-experimental.jar",
+          "sha256": "aa700801efd51e049a13217c34b76b3ddcb35678b973abfb2797550ac988d2ff"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-timeline-development/reproducibility-runs/20261017T220012139003Z/manifest.json",
+          "sha256": "0dc50d6f8e3a81d97a0e636b82e7d2cff2599ae018dfea14959c8e13a31c1439"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-action-development/objects/389663ea3259789c12206b9c7774b6dff0000dd90c27558e1c19268e8a9cb69a/candidate-NATIVE-LIGHT-ACTION-experimental.jar",
+          "sha256": "389663ea3259789c12206b9c7774b6dff0000dd90c27558e1c19268e8a9cb69a"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-action-development/objects/389663ea3259789c12206b9c7774b6dff0000dd90c27558e1c19268e8a9cb69a/candidate-NATIVE-LIGHT-ACTION-experimental.jar",
+          "sha256": "389663ea3259789c12206b9c7774b6dff0000dd90c27558e1c19268e8a9cb69a"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-native-cast-action-development/reproducibility-runs/20261017T210233114023Z/manifest.json",
+          "sha256": "c4b397feba83787369001a7d61e13b4800945835371222c50e540b601399fb59"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-role-publication-development/objects/3518be18bdb56dfe8333e2a2c637f024f864505ed2d978245b87c0d0b4f857c4/candidate-NATIVE-SOURCE-ROLE-PUBLICATION-experimental.jar",
+          "sha256": "3518be18bdb56dfe8333e2a2c637f024f864505ed2d978245b87c0d0b4f857c4"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-role-publication-development/objects/3518be18bdb56dfe8333e2a2c637f024f864505ed2d978245b87c0d0b4f857c4/candidate-NATIVE-SOURCE-ROLE-PUBLICATION-experimental.jar",
+          "sha256": "3518be18bdb56dfe8333e2a2c637f024f864505ed2d978245b87c0d0b4f857c4"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-role-publication-development/reproducibility-runs/20261017T195308572912Z/manifest.json",
+          "sha256": "3573a31c91603c82f4f6e11140346631ff90853c7ea23ada565b1c62ab389ae8"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-action-scope-development/objects/08f4b819b88299cd07a817424830c55a611f0353c443604ca69f19a5b82ef4b9/candidate-NATIVE-SOURCE-ACTION-SCOPE-experimental.jar",
+          "sha256": "08f4b819b88299cd07a817424830c55a611f0353c443604ca69f19a5b82ef4b9"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-action-scope-development/objects/08f4b819b88299cd07a817424830c55a611f0353c443604ca69f19a5b82ef4b9/candidate-NATIVE-SOURCE-ACTION-SCOPE-experimental.jar",
+          "sha256": "08f4b819b88299cd07a817424830c55a611f0353c443604ca69f19a5b82ef4b9"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-source-action-scope-development/reproducibility-runs/20261017T183206173247Z/manifest.json",
+          "sha256": "45c6ff49d36128cc66acb5fde1845ebea716820b92c7d68daab8278c56e02e5e"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-effect-completion-development/objects/5289efadaedca600b115570486d6485c096ff1ccdd53fdb78034db8c4a840f8b/candidate-NATIVE-EFFECT-COMPLETION-experimental.jar",
+          "sha256": "5289efadaedca600b115570486d6485c096ff1ccdd53fdb78034db8c4a840f8b"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-effect-completion-development/objects/5289efadaedca600b115570486d6485c096ff1ccdd53fdb78034db8c4a840f8b/candidate-NATIVE-EFFECT-COMPLETION-experimental.jar",
+          "sha256": "5289efadaedca600b115570486d6485c096ff1ccdd53fdb78034db8c4a840f8b"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-effect-completion-development/reproducibility-runs/20261017T174834243188Z/manifest.json",
+          "sha256": "c5560f7dbdb4bd5965222cddf8d3cd5f7dec094c18cbbb5c63fe820344032c36"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-completion-context-development/objects/abc447dc42a91686c374a13cdb90cf31b46c3cbf2e5c4c3470646c354639ee7d/candidate-NATIVE-COMPLETION-CONTEXT-experimental.jar",
+          "sha256": "abc447dc42a91686c374a13cdb90cf31b46c3cbf2e5c4c3470646c354639ee7d"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-completion-context-development/objects/abc447dc42a91686c374a13cdb90cf31b46c3cbf2e5c4c3470646c354639ee7d/candidate-NATIVE-COMPLETION-CONTEXT-experimental.jar",
+          "sha256": "abc447dc42a91686c374a13cdb90cf31b46c3cbf2e5c4c3470646c354639ee7d"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-completion-context-development/reproducibility-runs/20261017T171448670099Z/manifest.json",
+          "sha256": "7769918055a43a92ff55b6885c9127ea3d91c0707648ffd0d2243808da59afe8"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-accepted-hp-completion-development/objects/4d45fe23300907c08ab703c12e81c7f47b8952d7aca0da8dd9afd126da920d3e/candidate-NATIVE-ACCEPTED-HP-COMPLETION-experimental.jar",
+          "sha256": "4d45fe23300907c08ab703c12e81c7f47b8952d7aca0da8dd9afd126da920d3e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-accepted-hp-completion-development/objects/4d45fe23300907c08ab703c12e81c7f47b8952d7aca0da8dd9afd126da920d3e/candidate-NATIVE-ACCEPTED-HP-COMPLETION-experimental.jar",
+          "sha256": "4d45fe23300907c08ab703c12e81c7f47b8952d7aca0da8dd9afd126da920d3e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-accepted-hp-completion-development/reproducibility-runs/20261017T155803040472Z/manifest.json",
+          "sha256": "078a5d5ebb16dac9dbd46406479183dd72957e4baa68df0422ad597d0e2d5da0"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-completion-development/objects/c0cfcd86c41c01a877f83bc7a4c961e0295a2be2050518949d527638afc64338/candidate-NATIVE-VITAL-COMPLETIONS-experimental.jar",
+          "sha256": "c0cfcd86c41c01a877f83bc7a4c961e0295a2be2050518949d527638afc64338"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-completion-development/objects/c0cfcd86c41c01a877f83bc7a4c961e0295a2be2050518949d527638afc64338/candidate-NATIVE-VITAL-COMPLETIONS-experimental.jar",
+          "sha256": "c0cfcd86c41c01a877f83bc7a4c961e0295a2be2050518949d527638afc64338"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-completion-development/reproducibility-runs/20261017T153321427143Z/manifest.json",
+          "sha256": "bfc526e0e326a1260ba19d8ad31dcb425cbb2c194ac2244cda9251531f1d37b6"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-action-order-development/objects/792b3883148ccb20a1ef813ded7574a5ba4a01e774fe1f3f49e63799f143b277/candidate-NATIVE-ACTION-ORDER-experimental.jar",
+          "sha256": "792b3883148ccb20a1ef813ded7574a5ba4a01e774fe1f3f49e63799f143b277"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-action-order-development/objects/792b3883148ccb20a1ef813ded7574a5ba4a01e774fe1f3f49e63799f143b277/candidate-NATIVE-ACTION-ORDER-experimental.jar",
+          "sha256": "792b3883148ccb20a1ef813ded7574a5ba4a01e774fe1f3f49e63799f143b277"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-action-order-development/reproducibility-runs/20261017T150545903430Z/manifest.json",
+          "sha256": "88ff85b2c71336e353ba020e73b9b2e7d281fd1077a29390c7cad77af6e8ee23"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-player-action-development/objects/22a22fc46adfa9fe1c59e733a0a511908eff6ab5f985b6817d345a0ab3341ce0/candidate-NATIVE-PLAYER-ACTION-experimental.jar",
+          "sha256": "22a22fc46adfa9fe1c59e733a0a511908eff6ab5f985b6817d345a0ab3341ce0"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-player-action-development/objects/22a22fc46adfa9fe1c59e733a0a511908eff6ab5f985b6817d345a0ab3341ce0/candidate-NATIVE-PLAYER-ACTION-experimental.jar",
+          "sha256": "22a22fc46adfa9fe1c59e733a0a511908eff6ab5f985b6817d345a0ab3341ce0"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-player-action-development/builds/20261017T140214201315Z/manifest.json",
+          "sha256": "fa72e3badd4e2066b1fd9375ce039cc2ebaf2fa466b52be4d33c9dea8e5ad191"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-publication-development/objects/e20eef63628f7a1a8d4024a8eb6ff48deb02c320c295dff8900f7c313c3fbc3a/candidate-NATIVE-ITEM-PUBLICATION-experimental.jar",
+          "sha256": "e20eef63628f7a1a8d4024a8eb6ff48deb02c320c295dff8900f7c313c3fbc3a"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-publication-development/objects/e20eef63628f7a1a8d4024a8eb6ff48deb02c320c295dff8900f7c313c3fbc3a/candidate-NATIVE-ITEM-PUBLICATION-experimental.jar",
+          "sha256": "e20eef63628f7a1a8d4024a8eb6ff48deb02c320c295dff8900f7c313c3fbc3a"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-publication-development/builds/20261017T133407415510Z/manifest.json",
+          "sha256": "41ae5b227df81747456f50be4bc5a16f261d0c2ea89fba7bf77f3b85916d99d2"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-transaction-development/objects/64099931ddde50a9e4a8d5112a3e4d60a749b0892f7eb31cbe7ffeecae76e2d3/candidate-NATIVE-ITEM-TRANSACTION-experimental.jar",
+          "sha256": "64099931ddde50a9e4a8d5112a3e4d60a749b0892f7eb31cbe7ffeecae76e2d3"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-transaction-development/objects/64099931ddde50a9e4a8d5112a3e4d60a749b0892f7eb31cbe7ffeecae76e2d3/candidate-NATIVE-ITEM-TRANSACTION-experimental.jar",
+          "sha256": "64099931ddde50a9e4a8d5112a3e4d60a749b0892f7eb31cbe7ffeecae76e2d3"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-transaction-development/builds/20261017T125627218986Z/manifest.json",
+          "sha256": "7d5619f5f6e21efc9bad3b1b6d0064699fc3a6fb73476147381b645dbf1eeb94"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-owner-development/objects/c7c03c09ec110bd18c7ec8d9d7862f9b5fafc84f9d602fb039c7b46d884848a4/candidate-NATIVE-ITEM-OWNER-experimental.jar",
+          "sha256": "c7c03c09ec110bd18c7ec8d9d7862f9b5fafc84f9d602fb039c7b46d884848a4"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-owner-development/objects/c7c03c09ec110bd18c7ec8d9d7862f9b5fafc84f9d602fb039c7b46d884848a4/candidate-NATIVE-ITEM-OWNER-experimental.jar",
+          "sha256": "c7c03c09ec110bd18c7ec8d9d7862f9b5fafc84f9d602fb039c7b46d884848a4"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-owner-development/builds/20261017T121712195644Z/manifest.json",
+          "sha256": "ad55a93097f60d700aa1827de3fa2b8584aa6e9f77ee71e0a02ba218bbf2559b"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-binding-development/objects/6aa20dcbfb04cf490c4aead5ee995d8f5c6a296da90a2bc7d0b270d1d8d36f63/candidate-NATIVE-ITEM-BINDING-experimental.jar",
+          "sha256": "6aa20dcbfb04cf490c4aead5ee995d8f5c6a296da90a2bc7d0b270d1d8d36f63"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-binding-development/objects/6aa20dcbfb04cf490c4aead5ee995d8f5c6a296da90a2bc7d0b270d1d8d36f63/candidate-NATIVE-ITEM-BINDING-experimental.jar",
+          "sha256": "6aa20dcbfb04cf490c4aead5ee995d8f5c6a296da90a2bc7d0b270d1d8d36f63"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-binding-development/builds/20261017T103629017206Z/manifest.json",
+          "sha256": "74a3577bcceb96ae7f05dccaebfab971a4b6784fb96d8705298622e9de849e6b"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-template-development/objects/5c78dfbf5244f37f0576a85789eb1c5467cb79dfe4666c72016e79e629a95bea/candidate-NATIVE-ITEM-TEMPLATES-experimental.jar",
+          "sha256": "5c78dfbf5244f37f0576a85789eb1c5467cb79dfe4666c72016e79e629a95bea"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-template-development/objects/5c78dfbf5244f37f0576a85789eb1c5467cb79dfe4666c72016e79e629a95bea/candidate-NATIVE-ITEM-TEMPLATES-experimental.jar",
+          "sha256": "5c78dfbf5244f37f0576a85789eb1c5467cb79dfe4666c72016e79e629a95bea"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-template-development/builds/20261017T100352712713Z/manifest.json",
+          "sha256": "9545289f48da35ea828a7ad642c2be2a0c37ee68d15d972f2fe559028c881f80"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-ability-development/objects/9ee6ece29a227739fd51e0bb4011ee0caf5a8c895acf32a0e35de7f4c960f548/candidate-NATIVE-ITEM-DEFINITIONS-experimental.jar",
+          "sha256": "9ee6ece29a227739fd51e0bb4011ee0caf5a8c895acf32a0e35de7f4c960f548"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-ability-development/objects/9ee6ece29a227739fd51e0bb4011ee0caf5a8c895acf32a0e35de7f4c960f548/candidate-NATIVE-ITEM-DEFINITIONS-experimental.jar",
+          "sha256": "9ee6ece29a227739fd51e0bb4011ee0caf5a8c895acf32a0e35de7f4c960f548"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-ability-development/builds/20261017T093228454968Z/manifest.json",
+          "sha256": "615478c1216d4cdb1b49658196bccacdaaee0e2b2c0997e1310d2b1723c08f08"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-state-development/objects/3c6ba6b161f0ac55ae419e1d6a7dbfcf7f1bc9f77ba258d2479dcd2b4adf27a4/candidate-NATIVE-ITEM-STATE-experimental.jar",
+          "sha256": "3c6ba6b161f0ac55ae419e1d6a7dbfcf7f1bc9f77ba258d2479dcd2b4adf27a4"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-state-development/objects/3c6ba6b161f0ac55ae419e1d6a7dbfcf7f1bc9f77ba258d2479dcd2b4adf27a4/candidate-NATIVE-ITEM-STATE-experimental.jar",
+          "sha256": "3c6ba6b161f0ac55ae419e1d6a7dbfcf7f1bc9f77ba258d2479dcd2b4adf27a4"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-item-state-development/builds/20261017T085216830523Z/manifest.json",
+          "sha256": "82437bba4647d7178b58e7d80ac88fbf7ac6078867a57a2daa468e9420d5bf91"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-inventory-root-development/objects/cb229205ec301696c52f137fad90a37ca5d6be4467776b3643494fdd3131dd08/candidate-NATIVE-INVENTORY-ROOT-experimental.jar",
+          "sha256": "cb229205ec301696c52f137fad90a37ca5d6be4467776b3643494fdd3131dd08"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-inventory-root-development/objects/cb229205ec301696c52f137fad90a37ca5d6be4467776b3643494fdd3131dd08/candidate-NATIVE-INVENTORY-ROOT-experimental.jar",
+          "sha256": "cb229205ec301696c52f137fad90a37ca5d6be4467776b3643494fdd3131dd08"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-inventory-root-development/builds/20261017T081729151179Z/manifest.json",
+          "sha256": "43bc46a865dedb67d4447ab3e75c8d479cc212007300090ba68c21d3aa7ed92c"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-chat-development/objects/12f446420be6a56f06dc666acde94907321c30c574977a21277587116712db5b/candidate-NATIVE-NPC-CHAT-experimental.jar",
+          "sha256": "12f446420be6a56f06dc666acde94907321c30c574977a21277587116712db5b"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-chat-development/objects/12f446420be6a56f06dc666acde94907321c30c574977a21277587116712db5b/candidate-NATIVE-NPC-CHAT-experimental.jar",
+          "sha256": "12f446420be6a56f06dc666acde94907321c30c574977a21277587116712db5b"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-chat-development/builds/20261017T073624704800Z/manifest.json",
+          "sha256": "457b5b3a2cda1cb8e1af44d842c9cd1ce5a0e1815f74c602de074275bc1861d5"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-visibility-development/objects/7d370ac72ddf3d9a80f77fec6199388a93f8d47ce08ed67a6cc553c8b8d9bc0f/candidate-NATIVE-DE-VISIBILITY-experimental.jar",
+          "sha256": "7d370ac72ddf3d9a80f77fec6199388a93f8d47ce08ed67a6cc553c8b8d9bc0f"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-visibility-development/objects/7d370ac72ddf3d9a80f77fec6199388a93f8d47ce08ed67a6cc553c8b8d9bc0f/candidate-NATIVE-DE-VISIBILITY-experimental.jar",
+          "sha256": "7d370ac72ddf3d9a80f77fec6199388a93f8d47ce08ed67a6cc553c8b8d9bc0f"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-visibility-development/builds/20261017T070153675440Z/manifest.json",
+          "sha256": "3278af49347fcadc956331d0092555880bed5d4f0c5355a94a44034b69be9ff6"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-shop-development/objects/52b5e76e2dec6bd0adc00aeee3f0df2531458846b584470b6235a27340cca57a/candidate-NATIVE-DE-SHOP-experimental.jar",
+          "sha256": "52b5e76e2dec6bd0adc00aeee3f0df2531458846b584470b6235a27340cca57a"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-shop-development/objects/52b5e76e2dec6bd0adc00aeee3f0df2531458846b584470b6235a27340cca57a/candidate-NATIVE-DE-SHOP-experimental.jar",
+          "sha256": "52b5e76e2dec6bd0adc00aeee3f0df2531458846b584470b6235a27340cca57a"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-shop-development/builds/20261017T060908040370Z/manifest.json",
+          "sha256": "273a3a070757ee07a6f9a5d33a9d47fe3a8aa625d1b054dc0e11f8a07e0dcde0"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-terrain-development/objects/aef9717416bf2d7d14e21d4daef9ea9065f797bf6bc744b416d8469d4a298e2e/candidate-NATIVE-DE-TERRAIN-experimental.jar",
+          "sha256": "aef9717416bf2d7d14e21d4daef9ea9065f797bf6bc744b416d8469d4a298e2e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-terrain-development/objects/aef9717416bf2d7d14e21d4daef9ea9065f797bf6bc744b416d8469d4a298e2e/candidate-NATIVE-DE-TERRAIN-experimental.jar",
+          "sha256": "aef9717416bf2d7d14e21d4daef9ea9065f797bf6bc744b416d8469d4a298e2e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-terrain-development/builds/20261017T054426281315Z/manifest.json",
+          "sha256": "cbacb8e812e9239ccf64847536cc10a7f43332673dfe35efee323d5ac32f503e"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-live-ai-development/objects/04e228cde089b649108c77b646ce2b87bba2960c5762a866924a8b9d7cdb7d15/candidate-NATIVE-DE-LIVE-AI-experimental.jar",
+          "sha256": "04e228cde089b649108c77b646ce2b87bba2960c5762a866924a8b9d7cdb7d15"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-live-ai-development/objects/04e228cde089b649108c77b646ce2b87bba2960c5762a866924a8b9d7cdb7d15/candidate-NATIVE-DE-LIVE-AI-experimental.jar",
+          "sha256": "04e228cde089b649108c77b646ce2b87bba2960c5762a866924a8b9d7cdb7d15"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-live-ai-development/builds/20261017T050459157115Z/manifest.json",
+          "sha256": "f62b3e98bcf3a7a0253968081b3d30a030dbd0d9f222795a2b46e9e66f93e497"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-instance-development/objects/1b3002d94459d84b857f1b52a56a4d8a1b900fba1c097ea0dacf5e798ac05469/candidate-NATIVE-DE-INSTANCE-experimental.jar",
+          "sha256": "1b3002d94459d84b857f1b52a56a4d8a1b900fba1c097ea0dacf5e798ac05469"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-instance-development/objects/1b3002d94459d84b857f1b52a56a4d8a1b900fba1c097ea0dacf5e798ac05469/candidate-NATIVE-DE-INSTANCE-experimental.jar",
+          "sha256": "1b3002d94459d84b857f1b52a56a4d8a1b900fba1c097ea0dacf5e798ac05469"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-instance-development/builds/20261017T041723266648Z/manifest.json",
+          "sha256": "d150d16b8aabeb25e2b202175725e6edc8a08b8f6ac58dbba4018dd5b7b427a7"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-object-development/objects/c4a8579c4f76340c2e1331b8d14086c6e2ba515d274befbba9d16033eed5b228/candidate-NATIVE-DE-OBJECT-experimental.jar",
+          "sha256": "c4a8579c4f76340c2e1331b8d14086c6e2ba515d274befbba9d16033eed5b228"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-object-development/objects/c4a8579c4f76340c2e1331b8d14086c6e2ba515d274befbba9d16033eed5b228/candidate-NATIVE-DE-OBJECT-experimental.jar",
+          "sha256": "c4a8579c4f76340c2e1331b8d14086c6e2ba515d274befbba9d16033eed5b228"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-object-development/builds/20261017T030125116603Z/manifest.json",
+          "sha256": "00787cc1fceb6af1037073bcb7226eeda075e2b114bdcde74e24a178bc524dc1"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-construction-development/objects/6406703991d2b3bb717182728163e6348cabf52ef43ee7bc53dc4cf9d83876a5/candidate-NATIVE-DE-NPC-CONSTRUCTION-experimental.jar",
+          "sha256": "6406703991d2b3bb717182728163e6348cabf52ef43ee7bc53dc4cf9d83876a5"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-construction-development/objects/6406703991d2b3bb717182728163e6348cabf52ef43ee7bc53dc4cf9d83876a5/candidate-NATIVE-DE-NPC-CONSTRUCTION-experimental.jar",
+          "sha256": "6406703991d2b3bb717182728163e6348cabf52ef43ee7bc53dc4cf9d83876a5"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-construction-development/builds/20261017T023320051660Z/manifest.json",
+          "sha256": "2884e03a9dc6101d373609d1a8a7826935f8d48d6ce5c3add68d0513f019a78d"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-template-development/objects/b68a4887be6302774869528112e9fbbe62e27a11b125e4141bd4c8f13b40cff9/candidate-NATIVE-DE-NPC-TEMPLATE-experimental.jar",
+          "sha256": "b68a4887be6302774869528112e9fbbe62e27a11b125e4141bd4c8f13b40cff9"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-template-development/objects/b68a4887be6302774869528112e9fbbe62e27a11b125e4141bd4c8f13b40cff9/candidate-NATIVE-DE-NPC-TEMPLATE-experimental.jar",
+          "sha256": "b68a4887be6302774869528112e9fbbe62e27a11b125e4141bd4c8f13b40cff9"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-template-development/builds/20261017T013906886765Z/manifest.json",
+          "sha256": "e6496c0b9195f14f43060a4094df346492761871398797287a63ff34186cc792"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-construction-development/objects/d71a72d00e76c97f51dcce0af6ab9af39adf65162bd4e3c975f68f843aefe27e/candidate-NATIVE-DE-CONSTRUCTION-experimental.jar",
+          "sha256": "d71a72d00e76c97f51dcce0af6ab9af39adf65162bd4e3c975f68f843aefe27e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-construction-development/objects/d71a72d00e76c97f51dcce0af6ab9af39adf65162bd4e3c975f68f843aefe27e/candidate-NATIVE-DE-CONSTRUCTION-experimental.jar",
+          "sha256": "d71a72d00e76c97f51dcce0af6ab9af39adf65162bd4e3c975f68f843aefe27e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-construction-development/builds/20261017T010357818224Z/manifest.json",
+          "sha256": "303d7e66d9c83b3466eff5b693b1316f3053c6c49b559b95558dd8d63c920a25"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-perception-development/objects/d1a261d2c6e1beff45fb9fed4541ed6b79e3b076f42626331eb21694b771c0ee/candidate-NATIVE-DE-PERCEPTION-experimental.jar",
+          "sha256": "d1a261d2c6e1beff45fb9fed4541ed6b79e3b076f42626331eb21694b771c0ee"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-perception-development/objects/d1a261d2c6e1beff45fb9fed4541ed6b79e3b076f42626331eb21694b771c0ee/candidate-NATIVE-DE-PERCEPTION-experimental.jar",
+          "sha256": "d1a261d2c6e1beff45fb9fed4541ed6b79e3b076f42626331eb21694b771c0ee"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-perception-development/builds/20261017T003340077360Z/manifest.json",
+          "sha256": "28aeee762f5e3109a54bcedcc0f25eb333f15ebb916028915b8cbecf073d4a18"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-known-development/objects/877ea9ec6861276db551e0b4dde8e65e25533078654ca83117131ddc639ed8d7/candidate-NATIVE-DE-NPC-KNOWN-experimental.jar",
+          "sha256": "877ea9ec6861276db551e0b4dde8e65e25533078654ca83117131ddc639ed8d7"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-known-development/objects/877ea9ec6861276db551e0b4dde8e65e25533078654ca83117131ddc639ed8d7/candidate-NATIVE-DE-NPC-KNOWN-experimental.jar",
+          "sha256": "877ea9ec6861276db551e0b4dde8e65e25533078654ca83117131ddc639ed8d7"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-npc-known-development/builds/20261016T235256743834Z/manifest.json",
+          "sha256": "58b76ef2d47933b7bd22b4cc34210a39df7152136f2bca63ba06f90dadc6b5cd"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-world-development/objects/0ebd79079c15787f82787ec812497b67d43958829c207df83ed678975b54ed0e/candidate-NATIVE-DE-WORLD-experimental.jar",
+          "sha256": "0ebd79079c15787f82787ec812497b67d43958829c207df83ed678975b54ed0e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-world-development/objects/0ebd79079c15787f82787ec812497b67d43958829c207df83ed678975b54ed0e/candidate-NATIVE-DE-WORLD-experimental.jar",
+          "sha256": "0ebd79079c15787f82787ec812497b67d43958829c207df83ed678975b54ed0e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-world-development/builds/20261016T231823469241Z/manifest.json",
+          "sha256": "b5df8d297025544d48ac936fb593eaae7daa583c52cd10a81712fd85748aa726"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-viewer-development/objects/c36046f6c0da0bdadca4d4f3e2866f99997045b7f1d447ae589d4209b53eaef8/candidate-NATIVE-DE-VIEWER-experimental.jar",
+          "sha256": "c36046f6c0da0bdadca4d4f3e2866f99997045b7f1d447ae589d4209b53eaef8"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-viewer-development/objects/c36046f6c0da0bdadca4d4f3e2866f99997045b7f1d447ae589d4209b53eaef8/candidate-NATIVE-DE-VIEWER-experimental.jar",
+          "sha256": "c36046f6c0da0bdadca4d4f3e2866f99997045b7f1d447ae589d4209b53eaef8"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-viewer-development/builds/20261016T223924759562Z/manifest.json",
+          "sha256": "4f16d1b9177e39d05aa104c3d5b545e9599d002453029b51102a9cd5be18ea3a"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-deletion-development/objects/f608d22755096b076e7ade55a6c39e2a23d15526d0bef60b81728b140cddd11b/candidate-NATIVE-DE-DELETION-experimental.jar",
+          "sha256": "f608d22755096b076e7ade55a6c39e2a23d15526d0bef60b81728b140cddd11b"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-deletion-development/objects/f608d22755096b076e7ade55a6c39e2a23d15526d0bef60b81728b140cddd11b/candidate-NATIVE-DE-DELETION-experimental.jar",
+          "sha256": "f608d22755096b076e7ade55a6c39e2a23d15526d0bef60b81728b140cddd11b"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-deletion-development/builds/20261016T220713925313Z/manifest.json",
+          "sha256": "1a791586fa2a8bf89131b184ab2f9b62bd875955b54136f5955ba0042bd9bda5"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-corpse-development/objects/4ee494d10a1abc7079406a7eb3b037ca033d0e7f974747b50dc63febe4da1eaa/candidate-NATIVE-DE-CORPSE-experimental.jar",
+          "sha256": "4ee494d10a1abc7079406a7eb3b037ca033d0e7f974747b50dc63febe4da1eaa"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-corpse-development/objects/4ee494d10a1abc7079406a7eb3b037ca033d0e7f974747b50dc63febe4da1eaa/candidate-NATIVE-DE-CORPSE-experimental.jar",
+          "sha256": "4ee494d10a1abc7079406a7eb3b037ca033d0e7f974747b50dc63febe4da1eaa"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-corpse-development/builds/20261016T213611965111Z/manifest.json",
+          "sha256": "e6293fbe1f543cdcad39d2468953789b8d0181ed05c8ee427ae6d60ecf03d772"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-resurrection-development/objects/899b3aabd4768e3093d623200a3dd43de681ebb9112abc91df8de6618a976360/candidate-NATIVE-DE-RESURRECTION-experimental.jar",
+          "sha256": "899b3aabd4768e3093d623200a3dd43de681ebb9112abc91df8de6618a976360"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-resurrection-development/objects/899b3aabd4768e3093d623200a3dd43de681ebb9112abc91df8de6618a976360/candidate-NATIVE-DE-RESURRECTION-experimental.jar",
+          "sha256": "899b3aabd4768e3093d623200a3dd43de681ebb9112abc91df8de6618a976360"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-resurrection-development/builds/20261016T205102412363Z/manifest.json",
+          "sha256": "cfc712b6d58277cb5c515504b98e7e8aee3bb1526bc2fdd23af783cf42f23b5c"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-development/objects/00fcfbaadc23b582b2d3e2c18b3dd59ab634623b215ef53ff8929cc0ddcfefcc/candidate-NATIVE-DE-VITALS-experimental.jar",
+          "sha256": "00fcfbaadc23b582b2d3e2c18b3dd59ab634623b215ef53ff8929cc0ddcfefcc"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-development/objects/00fcfbaadc23b582b2d3e2c18b3dd59ab634623b215ef53ff8929cc0ddcfefcc/candidate-NATIVE-DE-VITALS-experimental.jar",
+          "sha256": "00fcfbaadc23b582b2d3e2c18b3dd59ab634623b215ef53ff8929cc0ddcfefcc"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-vital-development/builds/20261016T202859808247Z/manifest.json",
+          "sha256": "7b8acf22e2c4567fc12a4991eb276523c6e11991d4831711ac5511f96a3461fe"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-character-development/objects/20f2c3a5c6a5d4303d58c00c6ea57c6f0ec017c08ac3249e3e0e4d1b148063b5/candidate-NATIVE-DE-CHARACTER-experimental.jar",
+          "sha256": "20f2c3a5c6a5d4303d58c00c6ea57c6f0ec017c08ac3249e3e0e4d1b148063b5"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-character-development/objects/20f2c3a5c6a5d4303d58c00c6ea57c6f0ec017c08ac3249e3e0e4d1b148063b5/candidate-NATIVE-DE-CHARACTER-experimental.jar",
+          "sha256": "20f2c3a5c6a5d4303d58c00c6ea57c6f0ec017c08ac3249e3e0e4d1b148063b5"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-character-development/builds/20261016T200958397811Z/manifest.json",
+          "sha256": "760179c683588160cf3410e1297e52f11c85088f880587a7a062d3145e6714f1"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-control-development/objects/ecf53cba3d44c0646f53506a6a3a5fa525d6791f052a002ecc12382a944d37a4/candidate-NATIVE-DE-CONTROLS-experimental.jar",
+          "sha256": "ecf53cba3d44c0646f53506a6a3a5fa525d6791f052a002ecc12382a944d37a4"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-control-development/objects/ecf53cba3d44c0646f53506a6a3a5fa525d6791f052a002ecc12382a944d37a4/candidate-NATIVE-DE-CONTROLS-experimental.jar",
+          "sha256": "ecf53cba3d44c0646f53506a6a3a5fa525d6791f052a002ecc12382a944d37a4"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-control-development/builds/20261016T190933008436Z/manifest.json",
+          "sha256": "b8e691bb744b54ec9ca011c92442da954b2a63940282f8102fcb1e225ed287bb"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-de-equipment-development/objects/9efc01c53014dee6c92abe3253843827657bae11521d2ba8c2f9aad0eeb4010e/candidate-NATIVE-DE-EQUIPMENT-experimental.jar",
+          "sha256": "9efc01c53014dee6c92abe3253843827657bae11521d2ba8c2f9aad0eeb4010e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-de-equipment-development/objects/9efc01c53014dee6c92abe3253843827657bae11521d2ba8c2f9aad0eeb4010e/candidate-NATIVE-DE-EQUIPMENT-experimental.jar",
+          "sha256": "9efc01c53014dee6c92abe3253843827657bae11521d2ba8c2f9aad0eeb4010e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-de-equipment-development/builds/20261016T182329289276Z/manifest.json",
+          "sha256": "9fe81fad4fc25f5832b7d49fb92fc544043563a374269e1ca108937fc9302f3f"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-sprite-startup-development/objects/66b60f2573221dbe543792fabceee6c3389cb8bb32f55c0c3ea422eec6964e3f/candidate-NATIVE-SPRITE-STARTUP-experimental.jar",
+          "sha256": "66b60f2573221dbe543792fabceee6c3389cb8bb32f55c0c3ea422eec6964e3f"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-sprite-startup-development/objects/66b60f2573221dbe543792fabceee6c3389cb8bb32f55c0c3ea422eec6964e3f/candidate-NATIVE-SPRITE-STARTUP-experimental.jar",
+          "sha256": "66b60f2573221dbe543792fabceee6c3389cb8bb32f55c0c3ea422eec6964e3f"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-sprite-startup-development/builds/20261016T180300497122Z/manifest.json",
+          "sha256": "1e64cdde814a65306edbf40c98b39e384bdda0bfce7e54705b5fc47815d30aae"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-workers-development/objects/14b7f131cf94e9728ef538a7644fb75de0680745b2af469a9d5dde1494f1775c/candidate-DE-AI-WORKERS-experimental.jar",
+          "sha256": "14b7f131cf94e9728ef538a7644fb75de0680745b2af469a9d5dde1494f1775c"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-workers-development/objects/14b7f131cf94e9728ef538a7644fb75de0680745b2af469a9d5dde1494f1775c/candidate-DE-AI-WORKERS-experimental.jar",
+          "sha256": "14b7f131cf94e9728ef538a7644fb75de0680745b2af469a9d5dde1494f1775c"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-workers-development/builds/20261016T165408602503Z/manifest.json",
+          "sha256": "a08a8178e6437131701e596b2bf709de8cabba42830a7d7de8bb8f38940b7f76"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timers-development/objects/c7cbb357837b97686b612544413002d08a47e7e33f133bcce03d00d851e60e13/candidate-DE-AI-TIMERS-experimental.jar",
+          "sha256": "c7cbb357837b97686b612544413002d08a47e7e33f133bcce03d00d851e60e13"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timers-development/objects/c7cbb357837b97686b612544413002d08a47e7e33f133bcce03d00d851e60e13/candidate-DE-AI-TIMERS-experimental.jar",
+          "sha256": "c7cbb357837b97686b612544413002d08a47e7e33f133bcce03d00d851e60e13"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timers-development/builds/20261016T162708538495Z/manifest.json",
+          "sha256": "684d3a6422ec3a86c831c060828e24941717fc8b6d7fa4e2ca7e399ac64ee200"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timeline-development/objects/b6e4a57e860fd59521e03675065a85643a78bd5847354dfb772db22fefdbe74e/candidate-DE-AI-STATE-experimental.jar",
+          "sha256": "b6e4a57e860fd59521e03675065a85643a78bd5847354dfb772db22fefdbe74e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timeline-development/objects/b6e4a57e860fd59521e03675065a85643a78bd5847354dfb772db22fefdbe74e/candidate-DE-AI-STATE-experimental.jar",
+          "sha256": "b6e4a57e860fd59521e03675065a85643a78bd5847354dfb772db22fefdbe74e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-ai-timeline-development/builds/20261016T155547382974Z/manifest.json",
+          "sha256": "33b1118ca6c5582f92dfd7f57baa88de942fb77446e9002b15b22fd47964a07a"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-actor-state-development/objects/ec9461ce096d68b2657bf97fabf2023dad5eb55d97f0b1f3630cbb845ce5ecf4/candidate-DE-ACTOR-STATE-experimental.jar",
+          "sha256": "ec9461ce096d68b2657bf97fabf2023dad5eb55d97f0b1f3630cbb845ce5ecf4"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-actor-state-development/objects/ec9461ce096d68b2657bf97fabf2023dad5eb55d97f0b1f3630cbb845ce5ecf4/candidate-DE-ACTOR-STATE-experimental.jar",
+          "sha256": "ec9461ce096d68b2657bf97fabf2023dad5eb55d97f0b1f3630cbb845ce5ecf4"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/de-actor-state-development/builds/20261016T153320158567Z/manifest.json",
+          "sha256": "dfc5f630733f60255c42c537f95210f2894bf7e50cdafed62f52e57bf4d4b67f"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-follower-receiver-development/objects/4e6f77d28663ec0aa37d25081bf355fc4043a71e298d6cc5f2f3e56cd897d61d/candidate-PROC-FOLLOWER-experimental.jar",
+          "sha256": "4e6f77d28663ec0aa37d25081bf355fc4043a71e298d6cc5f2f3e56cd897d61d"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-follower-receiver-development/objects/4e6f77d28663ec0aa37d25081bf355fc4043a71e298d6cc5f2f3e56cd897d61d/candidate-PROC-FOLLOWER-experimental.jar",
+          "sha256": "4e6f77d28663ec0aa37d25081bf355fc4043a71e298d6cc5f2f3e56cd897d61d"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-follower-receiver-development/builds/20261016T150044643036Z/manifest.json",
+          "sha256": "28464d99f9c1a1bb9a6e945ea26d57bdbadd8b7e1ce8b9310a27e2fa164ffbf7"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-empty-receivers-development/objects/9395965cc2b5de8a2977009406ceac9a28cc4cd0f5f6ff635c0c0d85699114b5/candidate-PROC-EMPTY-RECEIVERS-experimental.jar",
+          "sha256": "9395965cc2b5de8a2977009406ceac9a28cc4cd0f5f6ff635c0c0d85699114b5"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-empty-receivers-development/objects/9395965cc2b5de8a2977009406ceac9a28cc4cd0f5f6ff635c0c0d85699114b5/candidate-PROC-EMPTY-RECEIVERS-experimental.jar",
+          "sha256": "9395965cc2b5de8a2977009406ceac9a28cc4cd0f5f6ff635c0c0d85699114b5"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-empty-receivers-development/builds/20261016T145116119271Z/manifest.json",
+          "sha256": "d1d2d911bdb947069dea7e841b010937fa67843550fb93291491afd9815caa18"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-encounter-development/objects/1d8c5a70378f4e218e99845af6926afe241f6673461873fa09df8f17c4036c1e/candidate-PROC-HEAL-ENCOUNTER-experimental.jar",
+          "sha256": "1d8c5a70378f4e218e99845af6926afe241f6673461873fa09df8f17c4036c1e"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-encounter-development/objects/1d8c5a70378f4e218e99845af6926afe241f6673461873fa09df8f17c4036c1e/candidate-PROC-HEAL-ENCOUNTER-experimental.jar",
+          "sha256": "1d8c5a70378f4e218e99845af6926afe241f6673461873fa09df8f17c4036c1e"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-encounter-development/builds/20261016T142945798544Z/manifest.json",
+          "sha256": "5495d27fb23a167a711739f1b8bdb881dfb18598a0c903aeb66b3a5f693786de"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-companion-development/objects/3954f218dd6efeaa01a60415b4463fac85a34f1b23cc63f4af7adc2519213db6/candidate-PROC-HEAL-COMPANION-experimental.jar",
+          "sha256": "3954f218dd6efeaa01a60415b4463fac85a34f1b23cc63f4af7adc2519213db6"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-companion-development/objects/3954f218dd6efeaa01a60415b4463fac85a34f1b23cc63f4af7adc2519213db6/candidate-PROC-HEAL-COMPANION-experimental.jar",
+          "sha256": "3954f218dd6efeaa01a60415b4463fac85a34f1b23cc63f4af7adc2519213db6"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-companion-development/builds/20261016T135015252072Z/manifest.json",
+          "sha256": "aff8eb123ba3daeb45eb5e608119cabbbebe6c76b806deceb345801cb21ac3b4"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-npc-kinds-development/objects/8f9d337b1ba10bd74f5de660a912237196526b966105c3f70a1456b38a096fac/candidate-PROC-NPC-CATALOG-experimental.jar",
+          "sha256": "8f9d337b1ba10bd74f5de660a912237196526b966105c3f70a1456b38a096fac"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-npc-kinds-development/objects/8f9d337b1ba10bd74f5de660a912237196526b966105c3f70a1456b38a096fac/candidate-PROC-NPC-CATALOG-experimental.jar",
+          "sha256": "8f9d337b1ba10bd74f5de660a912237196526b966105c3f70a1456b38a096fac"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-npc-kinds-development/runs/20261016T131915916691Z/manifest.json",
+          "sha256": "648b09e80e7b6ed5df7f0d3c7d32a47899c1e98acc9118fb2f6dd67158c38ffc"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-world-development/objects/2ed1ea2ec9844ce11bd2ac63052b022fe56be20074a918513deff3ce2b17e681/candidate-PROC-HEAL-WORLD-experimental.jar",
+          "sha256": "2ed1ea2ec9844ce11bd2ac63052b022fe56be20074a918513deff3ce2b17e681"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-world-development/objects/2ed1ea2ec9844ce11bd2ac63052b022fe56be20074a918513deff3ce2b17e681/candidate-PROC-HEAL-WORLD-experimental.jar",
+          "sha256": "2ed1ea2ec9844ce11bd2ac63052b022fe56be20074a918513deff3ce2b17e681"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-world-development/builds/20261016T123500647211Z/manifest.json",
+          "sha256": "437dfbdaa2e418dbf79acc096b6eca86b5ba13dccc8f1615c1b0ea09291b1619"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-player-development/objects/76ac48a859b1f2a5339fa2f66db626119cc34e96516f6ccad6df1d027358a3ab/candidate-PROC-HEAL-PLAYER-experimental.jar",
+          "sha256": "76ac48a859b1f2a5339fa2f66db626119cc34e96516f6ccad6df1d027358a3ab"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-player-development/objects/76ac48a859b1f2a5339fa2f66db626119cc34e96516f6ccad6df1d027358a3ab/candidate-PROC-HEAL-PLAYER-experimental.jar",
+          "sha256": "76ac48a859b1f2a5339fa2f66db626119cc34e96516f6ccad6df1d027358a3ab"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/proc-healing-player-development/builds/20261016T121749644745Z/manifest.json",
+          "sha256": "a797ef4a2241223a294b337bba46127975c7bac9395ec10a91c1cd38378e2d06"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-integrated-development/objects/2ad485b461c2ff65e96478be62dfec10c6c239c4408081ed9a561dc0b9834cfb/candidate-native-integrated.jar",
+          "sha256": "2ad485b461c2ff65e96478be62dfec10c6c239c4408081ed9a561dc0b9834cfb"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      },
+      {
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-integrated-development/objects/2ad485b461c2ff65e96478be62dfec10c6c239c4408081ed9a561dc0b9834cfb/candidate-native-integrated.jar",
+          "sha256": "2ad485b461c2ff65e96478be62dfec10c6c239c4408081ed9a561dc0b9834cfb"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/native-integrated-development/runs/20261016T105851Z-90574fec68d1/manifest.json",
+          "sha256": "3d993ff99b8ad4ef0af0628be0eabf2122db04098875aba4cad2e1430731b37a"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/baseline-PC-ingress-efd4-v2/candidate-efd4.jar",
+          "sha256": "efd4bc36b47db13cc0bd52426355a4250ea7db4b88ac724afa653a416954ab11"
+        },
+        "class_sha256": {
+          "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+          "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+        },
+        "both_entries_unchanged": true
+      }
     ],
-    "stop_path": "D:\\lineage開發\\3-lito開發\\lito伺服器\\LiTo381-Server\\tools\\resource-database\\build\\baseline-PC-ingress-efd4-v2\\candidate-efd4.jar"
+    "resource_origin": {
+      "jar": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/baseline-PC-ingress-efd4-v2/candidate-efd4.jar",
+        "sha256": "efd4bc36b47db13cc0bd52426355a4250ea7db4b88ac724afa653a416954ab11"
+      },
+      "receipt": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/build-manifest.json",
+        "sha256": "7cb3cc4ad0a2a0dcd8e370293b61074ec9fa3616ac0115c157b2f97e6bfc4990"
+      },
+      "base": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/inputs/base-0.6.61.jar",
+        "sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac"
+      },
+      "class_sha256": {
+        "local/lito381/server/GmTravel.class": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+        "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+      },
+      "base_class_sha256": {
+        "local/lito381/server/GmTravel.class": null,
+        "local/lito381/server/InventoryCatalog$NativeArmorStatus.class": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+      },
+      "gm_source_expected_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe",
+      "gm_source_historical_path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+      "gm_current_source": {
+        "path": "lito伺服器/LiTo381-Server/src/main/java/local/lito381/server/GmTravel.java",
+        "sha256": "ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99"
+      },
+      "gm_frozen_class": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/build/classes/local/lito381/server/GmTravel.class",
+        "sha256": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985"
+      },
+      "gm_change_record": {
+        "entry": "local/lito381/server/GmTravel.class",
+        "base_sha256": null,
+        "candidate_sha256": "8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985",
+        "kind": "compiled-source"
+      },
+      "builder": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/build.py",
+        "sha256": "6c2020ced7b7607d368f4975bcc438ca72b8d58cba8cb8724a8a559c1ce3106d"
+      },
+      "gm_hook_tool": {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/GmTravelPatch.java",
+        "sha256": "19d49da305aea5df7551b9b3771717578042e54d171b298d77f257f41469b53f"
+      },
+      "gm_hook_note": "GmTravelPatch wraps ClientSession methods; it is not a complete GmTravel source or evidence of ASM writing GmTravel.class"
+    },
+    "earlier_armor_chain": [
+      {
+        "layer": "room-rules",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/resource-database/inputs/base-0.6.61.jar",
+          "sha256": "9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-rules/evidence.json",
+          "sha256": "0f49cf7e48fe763999d0b4f93377d53d5956ffc76c039ba0534d57072d509a6c"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-rules/build.py",
+          "sha256": "14e212ccfe310525e578c15b744ebadc90c67522aa29ea1c0971a49af3907635"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-rules/build/base.jar",
+          "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "durable-settlement",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/room-rules/build/base.jar",
+          "sha256": "bbc59308c43df89ee5029d3b3c802be8ad55fee65c41faca99a76912dd5dce43"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/durable-settlement/evidence.json",
+          "sha256": "58cb004b5bab881c43dc6c6e8d68ca3f1701ba277347c79b87e38a53dff58305"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/durable-settlement/build.py",
+          "sha256": "295d0a0231abee2885f8ddd14883fa51bc996720693991b73341f83c477ad0dc"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/durable-settlement/build/base.jar",
+          "sha256": "ebf5ee66f051700ac4b8f524847d7372af8065c4dbb5d91b2f74e03dadff4e7b"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "native-room-admission",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/durable-settlement/build/base.jar",
+          "sha256": "ebf5ee66f051700ac4b8f524847d7372af8065c4dbb5d91b2f74e03dadff4e7b"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-admission/evidence.json",
+          "sha256": "e72a9b0d2641ac7443505472161a267ae6cbdac9afe36b0ed04c4dfec70180b3"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-admission/build.py",
+          "sha256": "354c5da54c6bb035874ca38bffa335733333bb993fc81576df9fde9a2cf4cc1d"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-admission/build/base.jar",
+          "sha256": "595245c8c3047124b1163e7c9dc2c6c9f2bd24494f41fa8a5aa5c0d78eae8838"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      },
+      {
+        "layer": "native-room-state",
+        "jar": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-admission/build/base.jar",
+          "sha256": "595245c8c3047124b1163e7c9dc2c6c9f2bd24494f41fa8a5aa5c0d78eae8838"
+        },
+        "receipt": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/evidence.json",
+          "sha256": "e1f0427c6facde55203d0f4145b03660f5c5061e8b5d65155cded2075b574203"
+        },
+        "builder": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build.py",
+          "sha256": "f259581744461f081b29a3e37a43705354e146fa667be0a0e7563e2a4fe3c534"
+        },
+        "base": {
+          "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
+          "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+        },
+        "armor_class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f",
+        "armor_unchanged": true
+      }
+    ],
+    "armor_stop": {
+      "path": "lito伺服器/LiTo381-Server/tools/native-room-state/build/base.jar",
+      "sha256": "e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf"
+    },
+    "source_search": [
+      {
+        "path": "lito伺服器/LiTo381-Server/tools/resource-database/GmTravelPatch.java",
+        "sha256": "19d49da305aea5df7551b9b3771717578042e54d171b298d77f257f41469b53f"
+      }
+    ],
+    "unresolved": [
+      "GmTravel complete Java matching builder_inputs SHA",
+      "InventoryCatalog$NativeArmorStatus final writer and complete Java or verifiable ASM evidence"
+    ]
   },
   "out_of_scope": [
     "未啟動伺服器/登入器/遊戲、未連 DB、未改正式 JAR 或 src/main",
@@ -170728,6 +172007,43 @@
     {
       "path": "scratch/issue-30/javap.py",
       "sha256": "b82ae3e5739b45ce05613255e7730b634d126edf6f34b4ff7e40c2a78632cb5e"
+    },
+    {
+      "path": "scratch/issue-30/retry_verify.py",
+      "sha256": "c817ad417fe89521e8b817bf22c2763da34c6775601dd4a90fb56c04e8f0a1a7"
+    },
+    {
+      "path": "scratch/issue-30/narrow-sources.py",
+      "sha256": "e3a631aa83c84ec5eddaf343e40e5194159ab59046cfa236cf93e7302845acfe"
+    },
+    {
+      "path": "scratch/issue-30/run-retry-verify.py",
+      "sha256": "6dbcedbe9c9af600358a0253e921a25280f29fa2e75c7562c060445d52115cd6"
     }
-  ]
+  ],
+  "retry_review": {
+    "attempt": 2,
+    "reviewed_commit": "cdc81e66dd1fd5aa06689f1d6b41e96e3bc09950",
+    "acceptance_passed": false,
+    "unresolved_entries": 2,
+    "maven_artifact_rebuilt": false,
+    "maven_artifact_note": "沿用前次成功 package 的產物與 log，本輪重新核對 SHA 與全部 9,521 列；未重建或改變比較輸入。",
+    "evidence_file": "scratch/issue-30/retry-evidence.json",
+    "evidence_sha256": "406d2e5d065e59a0d9b63cb2e92a686ffdf50625dfbd89d81a9fc3f2675a04ba",
+    "verification_log": "scratch/issue-30/retry-verify.log",
+    "verification_log_sha256": "cba7fd26d60582a5323c2970b5565f94bc80f033cd2e857cae98c4cd760b62e2",
+    "handoff_owner": "Issue #30 任務擁有者／雲端主控",
+    "required_inputs": [
+      {
+        "class_entry": "local/lito381/server/GmTravel.class",
+        "requirement": "提供符合建置收據 SHA 的完整歷史 GmTravel.java 至允許讀取的 sources/inputs；不得以現版或其他候選替代",
+        "source_sha256": "319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe"
+      },
+      {
+        "class_entry": "local/lito381/server/InventoryCatalog$NativeArmorStatus.class",
+        "requirement": "補齊 e5f2e01b 固定輸入之前的同 SHA 父鏈收據與最後寫入層之完整 Java；若只有 ASM，附可驗證修改證據",
+        "class_sha256": "c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f"
+      }
+    ]
+  }
 }

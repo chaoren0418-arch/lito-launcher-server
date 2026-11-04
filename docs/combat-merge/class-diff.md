@@ -1,6 +1,8 @@
 # T020a：戰鬥候選與正式 0.6.71 類別差異盤點
 
-Issue #30，2026-11-04。完整逐 entry 證據見 [class-diff.json](class-diff.json)。
+Issue #30，2026-11-04，第 2 次補證。完整逐 entry 證據見 [class-diff.json](class-diff.json)。
+
+**逐列來源驗收未完成：GmTravel 已確認最後寫入層，但完整歷史 Java 缺件；NativeArmorStatus 的最後寫入層與來源仍缺件。交任務擁有者補件，不宣稱驗收通過。**
 
 ## 已驗證
 
@@ -33,8 +35,32 @@ Issue #30，2026-11-04。完整逐 entry 證據見 [class-diff.json](class-diff.
 - `last_layer` 指最後一次 bytes 改變。同 bytes 的重編／重封裝不改內容來源；未聲稱已重播 patch 鏈。
 - 第二批 623 筆變動：**380 筆完整 Java、243 筆 asm-only**。380 筆來源 SHA 全部符合凍結收據，對應 `classes/` 產物 SHA 也全部等於最終候選 entry。未重新編譯這些凍結來源。
 - 第二批 29 個變動 entry 對應 19 個 `// DECOMPILED` 檔；483 個 entry 在 `src/main` 尚無對應檔。Maven 差異涉及 592 個 DECOMPILED entry、266 個不同 Java 檔。
-- 第一批 ClientSession 的最後變動層是 `cancellation-battle-runtime`，Protocol 是 `summon-parity`，兩者為 ASM。GmTravel 與 InventoryCatalog$NativeArmorStatus 在戰鬥鏈全部層中保持原 bytes；更早歷史最後寫入層與完整來源尚未確認，JSON 明列 2 筆例外，不冒稱 asm-only。
+- 第一批 ClientSession 的最後變動層是 `cancellation-battle-runtime`，Protocol 是 `summon-parity`，兩者為 ASM。GmTravel 與 InventoryCatalog$NativeArmorStatus 在戰鬥鏈全部層中保持原 bytes。此次再驗證 59 條 resource-database 父鏈邊，銜接 `efd4bc36…` 的 `build-manifest.json`：GmTravel 在該層以完整 Java 編譯新增；NativeArmorStatus 從 base-0.6.61 繼承。兩筆來源缺件詳列於下節，均未冒稱 asm-only。
 - 多頂層類別共用 Java 檔時，以 Maven class 的 `SourceFile` 屬性解析；內部類別沿用外層 Java 的 DECOMPILED 標記。
+
+### 第 2 次補證：已驗證的來源邊界與缺件
+
+以下路徑以原始專案 `D:/lineage開發/3-lito開發/` 為根，`S` 表示 `lito伺服器/LiTo381-Server`。JSON 的 `precombat_trace` 保存每條邊的 JAR／父 JAR／收據 SHA 與目標 class SHA。
+
+- 重新驗證 68 個第一批戰鬥鏈節點，兩個 entry 均維持指定候選 bytes；再驗證共同根 `df9464f0…` → `efd4bc36…` 的 **59 條父鏈邊**。沒有更換三個比較輸入。
+- `S/tools/resource-database/build/build-manifest.json` 採 `candidate_sha256`、字串 `base`、`base_sha256` 格式，前次只處理 `runtime`／物件 `base`，因而未銜接。此次核對其輸出 SHA 與 `baseline-PC-ingress-efd4-v2/candidate-efd4.jar` 相同，父 JAR 為 `S/tools/resource-database/inputs/base-0.6.61.jar`，SHA `9719f45db324206617726ce06d1a9e2184e9a3b3aefab3d50f3ebbdfbf09cfac`。
+- GmTravel 在父 JAR 不存在；收據 `changed_entries` 記為 `compiled-source`，entry SHA `8561ad6243444e94417b924e1928e90937b7b481e9eab5eabb77311a3a8dd985` 與指定候選相同。`S/tools/resource-database/build/classes/local/lito381/server/GmTravel.class` 亦同 SHA。
+- 該層完整 Java 的歷史路徑是 `S/src/main/java/local/lito381/server/GmTravel.java`，收據 `builder_inputs` 要求 SHA `319b3d460756991907cc03b3a662c15b4212a92ffbfc52109f840fd45a624ffe`。現有同路徑檔案實測 `ee071a589b972f32d36eb7f97de6cb17780768315dc26e6001bed184c4ab5b99`，**不相符，不能作候選來源**。`GmTravelPatch.java` 僅包裝 ClientSession 的 `handleGmChatCommand`／`useInventoryItem`，不能據此把 GmTravel 標為 ASM。
+- NativeArmorStatus 在 `efd4…` 與 base-0.6.61 的 entry SHA 均為 `c2da4b0cb66fcbb629090d82c2008e1ed79f16525b2bcf10cc091bd2128b7b1f`；收據未列它為變更。再透過 `room-rules/evidence.json`、`durable-settlement/evidence.json`、`native-room-admission/evidence.json`、`native-room-state/evidence.json` 與相應 `build.py` 的父 SHA，驗證 **4 條更早父鏈邊**，沿途 entry 不變。末端為 `S/tools/native-room-state/build/base.jar`，SHA `e5f2e01b6294279dc350c96d38b27bd4dc53e3a1b92535b9be7abeb7283a9fdf`；它是已證實的來源邊界，**不是已證實的最後寫入層**。
+- 限定前戰鬥 tools 目錄搜尋 `*GmTravel*.java`／`*InventoryCatalog*.java`，排除 combat-continuation、native-terrain-rust、編譯輸出及禁止路徑；只找到 `resource-database/GmTravelPatch.java`（SHA `19d49da305aea5df7551b9b3771717578042e54d171b298d77f257f41469b53f`）。這是有範圍的缺件搜尋，不宣稱全磁碟不存在來源。另一次寬範圍搜尋未完成，已停止，未用來支持不存在的結論。
+
+可重現的唯讀核對指令（先在本 worktree 執行；腳本位於 scratch，不入 git）：
+
+```powershell
+$py = 'C:\Users\CHAOREN\AppData\Local\Programs\Python\Python312\python.exe'
+& $py -B -X utf8 scratch/issue-30/retry_verify.py
+& $py -B -X utf8 scratch/issue-30/validate.py
+Get-FileHash -Algorithm SHA256 scratch/issue-30/retry_verify.py
+```
+
+第一支腳本不寫檔、不編譯、不執行候選；stdout 輸出父鏈 JSON，stderr 顯示 `PASS fixed inputs and 68 combat-chain nodes`、`PASS resource parent edges 59`、`PASS GmTravel origin; source SHA mismatch; 4 earlier armor edges`，exit 0。這裡的 PASS 只表示斷言成立，**不是來源驗收通過**；輸出 status 為 `blocked_missing_historical_sources`。第二支腳本重算 9,521 列，三組全部 PASS，並保留兩筆來源例外。腳本／輸出／log SHA 列在 JSON `scripts`、`retry_review`。
+
+本輪沿用前次已通過審查核對的 Maven package 產物與 log，重新核對 SHA 與逐 class 結果，未重建；上表 Maven SHA 不變。任務擁有者需補齊上述完整 Java 與前置收據，才能解除兩筆來源驗收阻塞。
 
 ### T029：正式功能保留清單
 
@@ -74,8 +100,8 @@ Issue #30，2026-11-04。完整逐 entry 證據見 [class-diff.json](class-diff.
 | `GmPolyMe$Forms.class` | ONLY_IN_FORMAL | 568 | — | -568 | — |
 | `SharedPresentationPackets.class` | ONLY_IN_FORMAL | 482 | — | -482 | — |
 | `ClientSession.class` | CHANGED | 2401065 | 2400761 | -304 | cancellation-battle-runtime |
-| `GmTravel.class` | CHANGED | 15560 | 15412 | -148 | inherited-before-combat-root（§1 各層皆未寫入） |
-| `InventoryCatalog$NativeArmorStatus.class` | CHANGED | 7515 | 7507 | -8 | inherited-before-combat-root（§1 各層皆未寫入） |
+| `GmTravel.class` | CHANGED | 15560 | 15412 | -148 | resource-database/build.py（efd4bc36；Java 缺件） |
+| `InventoryCatalog$NativeArmorStatus.class` | CHANGED | 7515 | 7507 | -8 | 未確認；已追至 native-room-state 固定輸入 e5f2e01b |
 | `Protocol.class` | CHANGED | 162179 | 162174 | -5 | summon-parity |
 
 #### 50635f7e 對 8d26c9d7
@@ -195,6 +221,6 @@ Issue #30，2026-11-04。完整逐 entry 證據見 [class-diff.json](class-diff.
 
 ## 待驗證
 
-- 2 個戰鬥鏈之前繼承類別的歷史最後寫入層與完整候選來源。已沿允許的 resource-database 收據向前追查至 `baseline-PC-ingress-efd4-v2/candidate-efd4.jar`，此處未找到可銜接的同 SHA 父層收據；未進入封存補找。
+- **仍有 2 筆未完成**：GmTravel 缺少符合 `319b3d46…` 的完整歷史 Java；NativeArmorStatus 缺少 `e5f2e01b…` 固定輸入之前的最後寫入層與來源。`efd4…` 的收據缺口已接回，不再把它列為停止點。未進入封存補找，須由任務擁有者提供允許路徑中的缺件；不得據此進入已驗收狀態。
 - 未執行單元測試（依要求使用 `-DskipTests`）、候選回歸、遊戲或正式 DB。完整 Java 僅核對既有凍結輸出，未重建以證明工具鏈可重現。
 - T029 靜態保留清單需在合併後做行為驗證；非 class 資源、圖示／DLL 真機顯示仍屬後續驗收。
