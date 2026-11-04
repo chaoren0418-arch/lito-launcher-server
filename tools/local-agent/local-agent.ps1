@@ -68,7 +68,7 @@ $($issue.body)
         if (Test-Path -LiteralPath $lastFile) { Remove-Item -LiteralPath $lastFile -Force }
         if ($Runner -eq 'codex') {
             # 這版 codex exec：--approve-for-me（自動核准）+ workspace-write 沙箱；開網路以便 git push；提示詞由 stdin 讀入
-            $out = Get-Content -LiteralPath $promptFile -Raw | & $codex exec --approve-for-me -s workspace-write -c 'sandbox_workspace_write.network_access=true' -C $dir --skip-git-repo-check --color never -o $lastFile - 2>&1
+            $out = Get-Content -LiteralPath $promptFile -Raw | & $codex exec --approve-for-me -c 'sandbox_workspace_write.network_access=true' -C $dir --skip-git-repo-check --color never -o $lastFile - 2>&1
         } else {
             $out = & $claude -p (Get-Content -LiteralPath $promptFile -Raw) --permission-mode acceptEdits 2>&1
         }
