@@ -3,25 +3,27 @@ from pathlib import Path
 from datetime import datetime, timezone
 import hashlib, json, os, shutil, subprocess, sys, zipfile
 
-R = Path(__file__).resolve().parent
+from regression_support import Options, java_tool
+options = Options(stage=True)
+R = options.root
 S = R.parents[1]
 B = S / 'tools/resource-database/build'
 read = lambda p: json.loads(p.read_text('utf-8'))
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 pin = lambda p: dict(path=str(p.resolve()), sha256=sha(p))
-requested_stage = sys.argv[1]
+requested_stage = options.args.stage
 # The polymorph child inherits the same complete predecessor suite as PET.
 stage = 'pet-controls' if requested_stage in ('polymorph-material','return-nature-transfer','pet-world-lifetime','npc-physical-size','cancellation-probability','area-sleep-slow','combat-config-origin','call-nature-material','cancellation-battle-runtime') else requested_stage
 assert stage in ('negative-material', 'weakness-material', 'ground-material', 'silence-material', 'decay-material', 'world-potion', 'target-negative-material', 'blind-material', 'resurrection-ingress', 'poison-publication', 'earth-bind-material', 'pet-controls')
-build = read(R / requested_stage / 'build/build.json')
+build = options.build(requested_stage)
 jar = Path(build['runtime']['path'])
 assert sha(jar) == build['runtime']['sha256']
-D = R / requested_stage / 'build/composed-replay'
+D = options.destination('composed-replay', Path(__file__).resolve().parent / requested_stage / 'build/composed-replay')
 D.mkdir(exist_ok=True)
 run = D / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
 run.mkdir()
 shutil.copyfile(__file__, run / Path(__file__).name)
-J = Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin')
+
 F = B / 'baseline-PC-ingress-efd4-v2'
 deps = [R/'elemental-material/build/lifecycle/classes', R/'elemental-material/build/boundaries/classes', R/'build/tests/classes', B/'pc-native-signed-hp-development/signed-probe-fixtures', B/'pc-native-accept-development/fixtures', F, F/'fixture-support.zip', jar, S/'lib/*']
 env = dict(os.environ, JAVA_TOOL_OPTIONS='-Xms16m -Xmx256m -XX:+UseSerialGC -XX:CICompilerCount=2 -XX:ActiveProcessorCount=2 -XX:ReservedCodeCacheSize=64m -Dfile.encoding=UTF-8 -Dlineage.damage.commitWorkers=2 -Dlineage.damage.commitDispatchCapacity=256 -Dlineage.damage.maxTargetPending=64 -Dlineage.damage.maxGlobalPending=64')
@@ -129,7 +131,7 @@ try:
             log = dest/'probe.log'
             cp = ';'.join(map(str, [*overlays, *deps]))
             with log.open('w', encoding='utf-8') as out:
-                subprocess.run(list(map(str, [J/'java.exe', '-Xverify:all', '-cp', cp, 'local.lito381.server.'+prefix+name+'Probe', S/'config/server.properties', dest/'runtime', dest/'observations.json', jar, 'after'])), cwd=S, env=env, check=True, stdout=out, stderr=subprocess.STDOUT, timeout=300)
+                subprocess.run(list(map(str, [java_tool('java'), '-Xverify:all', '-cp', cp, 'local.lito381.server.'+prefix+name+'Probe', options.config, dest/'runtime', dest/'observations.json', jar, 'after'])), cwd=S, env=env, check=True, stdout=out, stderr=subprocess.STDOUT, timeout=300)
             result = read(dest/'observations.json')
             assert result['cases'] == count
             if prefix == 'WorldPotion':

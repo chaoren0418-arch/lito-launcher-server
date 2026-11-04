@@ -1,8 +1,9 @@
 """Run existing affected material tests against the composed immutable candidate."""
 from pathlib import Path
 from datetime import datetime,timezone
-import json,hashlib,subprocess,os,shutil
-R=Path(__file__).resolve().parent;S=R.parents[1];B=S/'tools/resource-database/build';D=R/'build/integration-regression'
+import json,hashlib,subprocess,os,shutil,sys
+from regression_support import Options, adapt_driver, prepare_regression
+options=Options();R=options.root;S=options.server;B=S/'tools/resource-database/build';D=prepare_regression(options,options.args.stage or 'cancellation-battle-runtime',None if options.args.stage else Path(__file__).resolve().parent/'build/integration-regression') if options.args.jar or options.out else Path(__file__).resolve().parent/'build/integration-regression'
 read=lambda p:json.loads(p.read_text('utf-8'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();pin=lambda p:dict(path=str(p.resolve()),sha256=sha(p));write=lambda p,v:p.write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8')
 build=read(D/'build-current.json');q=read(D/'qualification-current.json');assert q['status'].startswith('passed-');assert sha(Path(build['runtime']['path']))==build['runtime']['sha256']
 for prototype in (B/'de-native-item-weapon-clock-development').glob('*prototype*.json'):
@@ -18,10 +19,10 @@ run=D/'affected'/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ');run.mkd
 try:
  for i,name in enumerate(names):
   text=(B/name).read_text('utf-8');old="S=Path(__file__).resolve().parents[3];B=Path(__file__).resolve().parent;D=B/'de-native-item-weapon-clock-development'";assert text.count(old)==1
-  text=text.replace(old,'S=Path('+repr(str(S))+');B=Path('+repr(str(B))+');D=Path('+repr(str(D))+')');adapted=inputs/name;adapted.write_text(text,encoding='utf-8');log=run/(name+'.log');print(f'RUN affected {i+1}/{len(names)} {name}',flush=True)
+  text=text.replace(old,'S=Path('+repr(str(S))+');B=Path('+repr(str(B))+');D=Path('+repr(str(D))+')');text=adapt_driver(text,options.config,D/'runtime');adapted=inputs/name;adapted.write_text(text,encoding='utf-8');log=run/(name+'.log');print(f'RUN affected {i+1}/{len(names)} {name}',flush=True)
   if i<len(previous) and previous[i]['exit_code']==0 and previous[i]['driver']['sha256']==sha(adapted):
    old=previous[i];assert sha(Path(old['log']['path']))==old['log']['sha256'];rows.append(old);write(run/'manifest.json',v);print('REUSE same candidate and fixture',flush=True);continue
-  with log.open('w',encoding='utf-8') as out:r=subprocess.run(['python','-B','-X','utf8',str(adapted)],cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,timeout=600)
+  with log.open('w',encoding='utf-8') as out:r=subprocess.run([sys.executable,'-B','-X','utf8',str(adapted)],cwd=S,env=env,stdout=out,stderr=subprocess.STDOUT,timeout=600)
   rows.append({'driver':pin(adapted),'original':pin(B/name),'log':pin(log),'exit_code':r.returncode});write(run/'manifest.json',v)
   if r.returncode:print(log.read_text('utf-8',errors='replace')[-5000:]);raise RuntimeError(name+' failed')
  v['status']='passed-existing-material-regressions'
