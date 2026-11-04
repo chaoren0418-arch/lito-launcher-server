@@ -30,7 +30,7 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
-      - name: Test (MySQL integration skipped unless -Dlito.mysql.integration=true)
+      - name: Test (no DB; workstation-only classes skipped)
         working-directory: lito伺服器/LiTo381-Server
         run: mvn -B test
 

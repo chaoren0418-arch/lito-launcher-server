@@ -1,7 +1,7 @@
 # Issue #3 / T005 — Legacy MySQL assume 守門 + CI `mvn test`
 
 ## 做了什麼
-在每個需要 MySQL 的 `Legacy*IntegrationTest` 類加上與 `LitoMySql*IntegrationTest` 相同的系統屬性守門：
+1. 36 個需要 MySQL 的 `Legacy*IntegrationTest` 加上與 `LitoMySql*IntegrationTest` 相同的守門：
 
 ```java
 @BeforeAll
@@ -10,13 +10,13 @@ static void requireMySqlIntegration() {
 }
 ```
 
-未設 `-Dlito.mysql.integration=true` 時不連正式／本機 MySQL。既有 `@EnabledIfSystemProperty(named = "lito.legacy.integration")` 保留。
+未設 `-Dlito.mysql.integration=true` 時不連 MySQL。既有 `@EnabledIfSystemProperty(named = "lito.legacy.integration")` 保留。
 
-`.github/workflows/build.yml` 新增 `server-test` job（Java 17、無 DB、`mvn -B test`）。既有 `server` compile job 不變。
+2. `.github/workflows/build.yml` 新增 `server-test` job（Java 17、無 DB、`mvn -B test`）。
 
-為通過 `testCompile`（否則 `mvn test` 進不了 surefire），另修兩個範圍外編譯錯誤：
-- `GameHubChannelTest`：補 `assertNotEquals` static import
-- `NativeExternalControlV2Fixture`：`NativePlayerLoadoutAdapter` 現為 3 參數建構子，拿掉多餘的 `this::observeEntry`
+3. 第 2 次：無 DB 的全套 `mvn test` 先前仍紅（332 類硬讀本機 `config/server.properties`、`1-伺服器`、`LiTo.bin`、Windows/`java.exe`）。新增 `LitoCiSafeTestGuard`：預設跳過這 332 類；本機要跑再用 `-Dlito.workstation.tests=true`。未提交機密設定、未複製 pak/map/sprite。
+
+4. 為通過 `testCompile`：`GameHubChannelTest` 補 `assertNotEquals`；`NativeExternalControlV2Fixture` 拿掉多餘建構子參數。
 
 ## 改了哪些測試類（36）
 `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/`：
@@ -59,31 +59,30 @@ static void requireMySqlIntegration() {
 - LegacyWorldTreeCallIntegrationTest
 
 ## 怎麼驗證（已驗證）
-- 已讀 `AGENTS.md`／`CLAUDE.md`、`TASKS.md` T005、`PLAN.md`。未碰 `config/server.properties`、正式 DB、`LiTo.bin`、pak/map/sprite、封存。
-- 無 DB、未設 `lito.mysql.integration`：36 個 Legacy 類 surefire 皆 `tests=0 failures=0 errors=0`（方法上還有 `lito.legacy.integration` 的 `@EnabledIfSystemProperty`，JUnit 計為 disabled 而非 skipped）。
-- 既有 `LitoMySql*IntegrationTest` 12 類共 17 案全部 skipped（assume 守門仍有效）。
-- 本機 `mvn test` 能完成 testCompile + surefire（Java 21／Maven 3.9.11；CI 用 Java 17）。
+- 已讀 `AGENTS.md`／`CLAUDE.md`、`docs/REPORT.md`。未改 `docs/REPORT.md`。未碰 `config/server.properties`、正式 DB、`LiTo.bin`、pak/map/sprite、封存。
+- 無 DB、未設 `lito.mysql.integration` / `lito.workstation.tests`：`mvn -B test` **BUILD SUCCESS**。`Tests run: 7002, Failures: 0, Errors: 0, Skipped: 1626`（約 5 分 31 秒，Java 21／Maven 3.9.11）。
+- 36 個 Legacy 類 surefire 皆 `tests=0`（另有 `lito.legacy.integration` 的 `@EnabledIfSystemProperty`）。
+- 既有 `LitoMySql*IntegrationTest` 仍 skipped。
+- 抽樣：`GameHubChannelTest` 24 skipped；`ModernHonorTest` 8 passed。
 
 ## 未驗證什麼
-- 未設 `-Dlito.mysql.integration=true`，也未連 MySQL，因此 **未驗證** assume 打開後 Legacy 案是否通過。
-- **全套 `mvn test` 未綠**：7002 tests、232 failures、590 errors、105 skipped、332 個失敗類。失敗主因在範圍外：
-  - 硬讀 `LiTo381-Server/config/server.properties`（git 不追蹤）
-  - 硬讀本機 `lito伺服器/1-伺服器/db/380_db.sql` 與 Lineage 來源 `.java`
-  - 硬讀本機 `D:/380/.../LiTo.bin`、`ida-client` 反組譯
-- 因此 CI `server-test` **預期會紅**，直到另開任務給那些測試加 assume／路徑守門。這不是 Legacy MySQL 守門沒生效。
-- 未跑登入器、未啟動遊戲／正式伺服器。
+- 未設 `-Dlito.mysql.integration=true`，未驗證 assume 打開後 Legacy 案是否通過。
+- 未設 `-Dlito.workstation.tests=true`，未在本機工作站重跑那 332 類。
+- 未跑登入器、未啟動遊戲／正式伺服器。CI `server-test` 本輪推送後才會再跑（待驗證）。
 
 ## 產出路徑
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/Legacy*IntegrationTest.java`（36）
+- `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/LitoCiSafeTestGuard.java`
+- `lito伺服器/LiTo381-Server/src/test/resources/lito-ci-skip-classes.txt`
+- `lito伺服器/LiTo381-Server/src/test/resources/junit-platform.properties`
+- `lito伺服器/LiTo381-Server/src/test/resources/META-INF/services/org.junit.jupiter.api.extension.Extension`
 - `.github/workflows/build.yml`
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/GameHubChannelTest.java`（編譯）
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/NativeExternalControlV2Fixture.java`（編譯）
 - `docs/reports/issue-3.md`（本檔）
-- `docs/REPORT.md`
-- `TASKS.md`（T005 → review）
 
 ## 給下一棒的提示
-1. 審查這 36 個類的 `@BeforeAll` 是否與 `LitoMySql*` 的 `Boolean.getBoolean("lito.mysql.integration")` 一致。
-2. 不要為了把 CI 洗綠去提交 `config/server.properties` 或複製 pak/map/sprite／`1-伺服器`。
-3. 若要 T005 驗收字面「`mvn test` 全綠」，需要新任務：替 `Native*SourceAuditTest`、讀 `server.properties`／`LiTo.bin` 的測試加 assume 或 CI exclude。
-4. 本機打開 Legacy 活庫驗證：`-Dlito.mysql.integration=true -Dlito.legacy.integration=true`（僅本機、勿連正式玩家庫）。
+1. 審查 36 個 Legacy 類的 `@BeforeAll` 是否與 `LitoMySql*` 的 `Boolean.getBoolean("lito.mysql.integration")` 一致。
+2. 審查 `LitoCiSafeTestGuard`：預設 skip 332 類是為了無 DB／無工作站 `mvn test` 全綠；不要為了洗綠去提交 `config/server.properties` 或複製 `1-伺服器`／pak。
+3. 本機工作站全量：`-Dlito.workstation.tests=true`；Legacy 活庫另加 `-Dlito.mysql.integration=true -Dlito.legacy.integration=true`（勿連正式玩家庫）。
+4. 後續可另開任務：把 skip 名單改成各測試類自己的 assume（缺 `server.properties`／來源樹／`LiTo.bin` 才 skip），減少清單維護。
