@@ -1,0 +1,38 @@
+# 僅在 task/37 上傳 50 次連跑證據。合併後此 workflow 不會在 main 上執行。
+name: Issue 37 companion loop
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [task/37]
+
+jobs:
+  loop:
+    name: Issue 37 companion loop
+    if: github.head_ref == 'task/37' || github.ref_name == 'task/37'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Run class 50 times with per-run logs
+        run: bash docs/reports/issue-37-loop.sh
+      - name: Upload loop evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-37-loop-evidence
+          if-no-files-found: error
+          path: |
+            lito伺服器/LiTo381-Server/target/issue-37-loop/tested-revision.txt
+            lito伺服器/LiTo381-Server/target/issue-37-loop/meta.txt
+            lito伺服器/LiTo381-Server/target/issue-37-loop/summary.tsv
+            lito伺服器/LiTo381-Server/target/issue-37-loop/summary.json
+            lito伺服器/LiTo381-Server/target/issue-37-loop/summary.md
+            lito伺服器/LiTo381-Server/target/issue-37-loop/compile.log
+            lito伺服器/LiTo381-Server/target/issue-37-loop/run-*.log

@@ -50,22 +50,31 @@ mvn -B -Dtest=ClientSessionClassicWorldMonsterAggressionIntegrationTest#producti
 
 結果：**1 run / 0 failures / 0 errors / 0 skipped**（Surefire 0.702 s；含首次編譯約 40 s）。log 出現 `reason=proven-unreachable-20`。
 
-- 全類 50 次連跑（編譯一次後只跑 Surefire）：
+- 全類 50 次連跑（審查退回後重跑；先前 `target/issue-37-loop/` 在 ephemeral 工作區、未進 git，無法核對）。
+
+實際採證指令（會編譯一次、連跑 50 輪、**每輪獨立 log**、記錄 **exit code**、解析該類 `Tests run / Failures / Errors / Skipped`，任一輪失敗則腳本 exit 1；log 不進 git）：
 
 ```bash
-# 於 lito伺服器/LiTo381-Server
-mvn -B -Dtest=ClientSessionClassicWorldMonsterAggressionIntegrationTest -Dsurefire.rerunFailingTestsCount=0 test
-for i in $(seq 1 50); do
-  mvn -B -Dtest=ClientSessionClassicWorldMonsterAggressionIntegrationTest \
-      -Dsurefire.rerunFailingTestsCount=0 surefire:test
-done
+# repo 根目錄
+bash docs/reports/issue-37-loop.sh
 ```
 
-實際統計（本輪）：**50 / 50 BUILD SUCCESS**；每次 **Tests run: 19, Failures: 0, Errors: 0, Skipped: 0**；總牆鐘 **831 s**（約 16.6 s／次）。逐次 log 在 `target/issue-37-loop/run-1.log` … `run-50.log`（不進 git）。未改其他 18 案的斷言。
-- GitHub CI [run 41833234796](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796)（PR #39，head `b92cf51`）：三個 job 全綠。
-  - **Server tests** pass，10m51s。[job 126585472233](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796/job/126585472233)。artifact `server-test-evidence` 的 `mvn-test.log`：**Tests run: 6033, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`。目標類 **19 run / 0 failure / 0 skipped**（17.11 s）。
+腳本會把證據寫到 `lito伺服器/LiTo381-Server/target/issue-37-loop/`（gitignore）：
+
+| 檔案 | 內容 |
+|---|---|
+| `tested-revision.txt` | 受測 commit SHA |
+| `meta.txt` | 時間、java/mvn 版本、hostname |
+| `compile.log` | `mvn -B -DskipTests compile test-compile` |
+| `run-1.log` … `run-50.log` | 各輪 `mvn -B -Dtest=ClientSessionClassicWorldMonsterAggressionIntegrationTest -Dsurefire.rerunFailingTestsCount=0 surefire:test` 完整輸出 |
+| `summary.tsv` / `summary.json` / `summary.md` | 每輪 exit_code、Tests run、Failures、Errors、Skipped、elapsed_s、PASS/FAIL |
+
+CI workflow `.github/workflows/issue-37-loop.yml`（只在 `task/37` 跑）把上述目錄上傳為 artifact **`issue-37-loop-evidence`**。合併後可刪此 workflow。逐輪統計與下載連結在該 job 完成後補進本節（不把 `target/`、`*.log` 或 zip 加進 git）。
+
+- GitHub CI [run 41833234796](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796)（PR #39，測試修正 commit `b92cf51`）：三個 job 全綠。
+  - **Server tests** pass，10m51s。[job 126585472233](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41833234796/job/126585472233)。artifact `server-test-evidence`（13325365446）的 `mvn-test.log`：**Tests run: 6033, Failures: 0, Errors: 0, Skipped: 117**，`BUILD SUCCESS`。目標類 **19 run / 0 failure / 0 skipped**（17.11 s）。
   - Server (Java 17 / Maven) pass；Launcher (.NET 10 / WinForms) pass。
-  - CI 為 Temurin 17，與本機 OpenJDK 21 / `release 17` 連跑結果一致。
+  - CI 為 Temurin 17。
 
 ### 推測
 
@@ -74,6 +83,7 @@ done
 
 ### 待驗證
 
+- 本輪 `issue-37-loop` CI 的 50 次連跑 artifact（腳本已提交；job 完成後補連結與逐輪表）。
 - 真機進房／寵物 AI／正式伺服器排程（本任務不要求）。
 
 ## 未驗證什麼
@@ -87,13 +97,17 @@ done
 
 - `lito伺服器/LiTo381-Server/src/test/java/local/lito381/server/ClientSessionClassicWorldMonsterAggressionIntegrationTest.java`
 - `docs/reports/issue-37.md`
+- `docs/reports/issue-37-loop.sh`
+- `.github/workflows/issue-37-loop.yml`
 - 分支：`task/37`
 
 未改 `docs/REPORT.md`、未碰 `config/server.properties`、封存、releases、`LiTo.bin`。
 
 ## 給下一棒的提示
 
+- 請核對 artifact `issue-37-loop-evidence`：`tested-revision.txt`、`summary.tsv` 50 列 exit_code、各 `run-N.log` 的 Surefire 行。
+- 合併後可刪 `.github/workflows/issue-37-loop.yml`（只在 `task/37` 觸發）。
 - 請 Claude 審此 PR：確認沒有放寬斷言、沒有跳過測試，且 `stopBattleClock` 發生在 `tamedCompanions.add` 之前。
-- 合併條件已滿足：GitHub `Server tests` 全綠（run 41833234796，6033 / 0 / 117 skipped）。
+- `b92cf51` 的 Server tests 已綠（run 41833234796，6033 / 0 / 117 skipped）。最新 head 的 Server tests 與 loop artifact 以本輪 CI 為準。
 - 若還要從產品側杜絕「測試執行緒 + battleClock」雙重 tick，下一步才是讓 `serverClassicWorldCompanionTick` 在 `ready()` 到 `retryPath()` 之間原子佔位；本輪不需要。
 - 之後寫同類「注入 nowNanos 的 WORLD companion 計數」測試，請先停 `battleClock`，或像毒案那樣 `defer` 到牆鐘之後再 `add`。
