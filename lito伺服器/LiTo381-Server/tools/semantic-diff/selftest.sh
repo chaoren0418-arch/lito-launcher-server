@@ -382,6 +382,17 @@ for mode in absent excluded selected; do
 done
 echo "PASS SELFTEST 5f absent/excluded/unselected allow classes exit non-zero"
 
+run_logged "$BUILD/allow-mismatch.log" \
+  --left "$BIN/overlay-left.jar" --right "$BIN/overlay-left.jar" \
+  --allow-methods "$BUILD/allow-one.txt" --allow-right "$BIN/overlay-right.jar" \
+  --json "$BUILD/allow-mismatch.json"
+python3 - "$BUILD/allow-mismatch.json" <<'PY'
+import json, sys
+row = json.load(open(sys.argv[1], encoding="utf-8"))["classes"][0]
+assert row["status"] == "DIFF" and row["firstDiff"]["member"] == "allowed()I", row
+PY
+echo "PASS SELFTEST 5g listed method differs from allow-right DIFF=1 (no waiver)"
+
 echo
 echo "=== SELFTEST 6: --classes .class suffix, comma list, file list, missing class ==="
 run_logged "$BUILD/classes-suffix.log" \
@@ -409,6 +420,26 @@ expect_fail "$BUILD/classes-missing.log" \
 grep -q "missing --classes entries: semanticdiff/fixture/DoesNotExist" "$BUILD/classes-missing.log.err" \
   || fail "missing class must be reported"
 echo "PASS SELFTEST 6d missing class exits non-zero"
+
+echo "=== SELFTEST 6e: exact inner entries and missing/extra left entries ==="
+jar cf "$BIN/selected-missing.jar" \
+  -C "$BIN/g-none/classes" 'semanticdiff/fixture/Fixture.class' \
+  -C "$BIN/g-none/classes" 'semanticdiff/fixture/Fixture$Inner.class'
+printf '%s\n' 'semanticdiff/fixture/Fixture$Inner.class' 'semanticdiff/fixture/Extra.class' > "$BUILD/exact-entries.txt"
+run_logged "$BUILD/classes-exact.log" \
+  --left "$BIN/selected-missing.jar" --right "$BIN/g-none.jar" \
+  --classes "$BUILD/exact-entries.txt" --json "$BUILD/classes-exact.json" --md "$BUILD/classes-exact.md"
+python3 - "$BUILD/classes-exact.json" <<'PY'
+import json, sys
+data = json.load(open(sys.argv[1], encoding="utf-8"))
+by = {c["name"]: c for c in data["classes"]}
+assert set(by) == {"semanticdiff/fixture/Fixture$Inner", "semanticdiff/fixture/Extra"}, by
+assert by["semanticdiff/fixture/Fixture$Inner"]["status"] == "SAME", by
+assert by["semanticdiff/fixture/Extra"]["status"] == "ONLY_RIGHT", by
+assert data["classSelection"]["missingLeft"] == ["semanticdiff/fixture/Extra"], data
+assert data["classSelection"]["extraLeft"] == ["semanticdiff/fixture/Fixture"], data
+PY
+echo "PASS SELFTEST 6e exact inner SAME=1 missing-left ONLY_RIGHT=1 extra-left Fixture reported"
 
 echo
 echo "=== SELFTEST 7: enum/nested annotationDefault self-vs-self ==="

@@ -194,6 +194,24 @@ public final class SemanticDiff {
         return false;
     }
 
+    private static Set<String> missingLeftSelected(Args parsed, JarIndex left) {
+        Set<String> missing = new TreeSet<>(parsed.classes);
+        missing.removeAll(left.classes.keySet());
+        missing.removeIf(name -> excluded(name, parsed.exclude));
+        return missing;
+    }
+
+    private static Set<String> extraLeftSelected(Args parsed, JarIndex left) {
+        Set<String> extra = new TreeSet<>(left.classes.keySet());
+        extra.removeAll(parsed.classes);
+        extra.removeIf(name -> excluded(name, parsed.exclude));
+        return extra;
+    }
+
+    private static String jsonNames(Set<String> names) {
+        return "[" + String.join(", ", names.stream().map(SemanticDiff::json).toList()) + "]";
+    }
+
     private static void writeJson(
             Args parsed,
             JarIndex left,
@@ -217,6 +235,12 @@ public final class SemanticDiff {
             w.println("  \"leftClassCount\": " + left.classes.size() + ",");
             w.println("  \"rightClassCount\": " + right.classes.size() + ",");
             w.println("  \"comparedClassCount\": " + rows.size() + ",");
+            if (parsed.classes != null) {
+                w.println("  \"classSelection\": {");
+                w.println("    \"missingLeft\": " + jsonNames(missingLeftSelected(parsed, left)) + ",");
+                w.println("    \"extraLeft\": " + jsonNames(extraLeftSelected(parsed, left)));
+                w.println("  },");
+            }
             w.println("  \"byteSameCount\": " + byteSameCount + ",");
             w.println("  \"counts\": {");
             w.println("    \"SAME\": " + counts.get(Status.SAME) + ",");
@@ -308,6 +332,24 @@ public final class SemanticDiff {
         lines.add("- **推測**：DIFF 多半是 javac／反編譯來源／後來手改造成的指令或結構差。ONLY_* 與 `docs/server-source-gap.md` 的類別清單差大致對得上。");
         lines.add("- **待驗證**：語意相同 ≠ 執行行為已對過回歸；未跑 `1.啟動伺服器.bat --check`／`--smoke`，未連正式 DB，未啟動遊戲。");
         lines.add("");
+        if (parsed.classes != null) {
+            lines.add("## --classes 左側 entry 完整性");
+            lines.add("");
+            lines.add("精確依清單選取，不自動展開內部類；下列清單已套用 --exclude。清單外多出不納入語意狀態計數，批次完整性驗收須另確認兩份清單皆空。");
+            lines.add("");
+            lines.add("### 清單內左側缺少（" + missingLeftSelected(parsed, left).size() + "）");
+            lines.add("");
+            lines.add("```text");
+            lines.addAll(missingLeftSelected(parsed, left));
+            lines.add("```");
+            lines.add("");
+            lines.add("### 左側清單外多出（" + extraLeftSelected(parsed, left).size() + "）");
+            lines.add("");
+            lines.add("```text");
+            lines.addAll(extraLeftSelected(parsed, left));
+            lines.add("```");
+            lines.add("");
+        }
         int methodDiff = 0;
         int fieldDiff = 0;
         int classDiff = 0;
@@ -370,7 +412,7 @@ public final class SemanticDiff {
         lines.add("只在 right（" + onlyRight.size() + "）。與 `docs/server-source-gap.md` 的「只在 reference」應對齊。");
         lines.add("");
         appendNames(lines, onlyRight);
-        Files.write(out, lines, StandardCharsets.UTF_8);
+        Files.writeString(out, String.join("\n", lines).stripTrailing() + "\n", StandardCharsets.UTF_8);
     }
 
     private static void appendNames(List<String> lines, List<ClassRow> rows) {
