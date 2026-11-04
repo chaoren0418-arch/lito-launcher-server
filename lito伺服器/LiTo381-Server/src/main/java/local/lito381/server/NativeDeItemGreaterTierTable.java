@@ -66,7 +66,7 @@ public class NativeDeItemGreaterTierTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_weapon_greater_\u985e\u578b`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n2 = -1;
                         try {
@@ -82,20 +82,14 @@ public class NativeDeItemGreaterTierTable {
                             if (string != null && !string.isEmpty()) {
                                 this._weaponTierNotes.computeIfAbsent(n2, n -> new HashMap()).put(n4, string);
                             }
-                            if ((n3 = this.readOptionalInt(resultSet, "chance")) <= 0) continue block19;
+                            if ((n3 = this.readOptionalInt(resultSet, "chance")) <= 0) continue;
                             this._weaponChances.computeIfAbsent(n4, n -> new ArrayList()).add(new TierChance(n2, n3));
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (tier_id: " + n2 + ")", exception);
                         }
                     }
-                    break block25;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
@@ -115,7 +109,7 @@ public class NativeDeItemGreaterTierTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_armor_greater_\u985e\u578b`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n2 = -1;
                         try {
@@ -140,20 +134,14 @@ public class NativeDeItemGreaterTierTable {
                             if (string != null && !string.isEmpty()) {
                                 this._armorTierNotes.computeIfAbsent(n2, n -> new HashMap()).put(n5, string);
                             }
-                            if ((n3 = this.readOptionalInt(resultSet, "chance")) <= 0) continue block19;
+                            if ((n3 = this.readOptionalInt(resultSet, "chance")) <= 0) continue;
                             this._armorChances.computeIfAbsent(n5, n -> new ArrayList()).add(new TierChance(n2, n3));
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (tier_id: " + n2 + ")", exception);
                         }
                     }
-                    break block26;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {

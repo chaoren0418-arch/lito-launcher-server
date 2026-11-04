@@ -49,7 +49,7 @@ public class NativeDeItemBlessStatsTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_weapon_bless_\u985e\u578b`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n2 = -1;
                         try {
@@ -60,18 +60,12 @@ public class NativeDeItemBlessStatsTable {
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.BASE_DMG_SMALL, resultSet, "add_dmg_small");
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.BASE_DMG_LARGE, resultSet, "add_dmg_large");
                             this._weaponBlessStats.computeIfAbsent(n2, n -> new HashMap()).put(n3, nativeDeItemAbility);
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (bless_id: " + n2 + ")", exception);
                         }
                     }
-                    break block24;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
@@ -91,7 +85,7 @@ public class NativeDeItemBlessStatsTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_armor_bless_\u985e\u578b`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n2 = -1;
                         try {
@@ -111,18 +105,12 @@ public class NativeDeItemBlessStatsTable {
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.REGIST_BLIND, resultSet, "regist_blind");
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.REGIST_SUSTAIN, resultSet, "regist_sustain");
                             this._armorBlessStats.computeIfAbsent(n2, n -> new HashMap()).put(n4, nativeDeItemAbility);
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (bless_id: " + n2 + ")", exception);
                         }
                     }
-                    break block25;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {

@@ -5,8 +5,6 @@
 package local.lito381.server;
 
 record ClanEmblemData(long emblemId, byte[] pixels) {
-    private final byte[] pixels;
-
     ClanEmblemData {
         if (emblemId <= 0L || emblemId > 0xFFFFFFFFL) {
             throw new IllegalArgumentException("clan emblem id is outside native dword range");

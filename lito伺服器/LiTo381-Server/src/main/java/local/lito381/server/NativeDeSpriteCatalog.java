@@ -5,6 +5,7 @@
 package local.lito381.server;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -39,8 +40,8 @@ final class NativeDeSpriteCatalog {
             try {
                 object = connection.prepareStatement(QUERY);
                 try {
-                    ResultSet resultSet = object.executeQuery();
-                    block22: while (true) {
+                    ResultSet resultSet = ((PreparedStatement)object).executeQuery();
+                    try {
                         while (resultSet.next()) {
                             ++l2;
                             int n2 = -1;
@@ -99,19 +100,13 @@ final class NativeDeSpriteCatalog {
                                         break;
                                     }
                                 }
-                                continue block22;
+                                continue;
                             }
                             catch (Exception exception) {
                                 ++l;
                                 reporter.row(n2, exception);
                             }
                         }
-                        break block26;
-                        {
-                            continue block22;
-                            break;
-                        }
-                        break;
                     }
                     finally {
                         if (resultSet != null) {
@@ -121,7 +116,7 @@ final class NativeDeSpriteCatalog {
                 }
                 finally {
                     if (object != null) {
-                        object.close();
+                        ((PreparedStatement)object).close();
                     }
                 }
             }
@@ -141,7 +136,7 @@ final class NativeDeSpriteCatalog {
 
     record Catalog(Map<Integer, Sprite> sprites, long rows, long skipped, boolean sqlFailure) {
         Catalog {
-            map = Map.copyOf(map);
+            sprites = Map.copyOf(sprites);
         }
 
         int exactAttack(int n, int n2) {
@@ -241,8 +236,8 @@ final class NativeDeSpriteCatalog {
 
     record Sprite(Map<Integer, Integer> move, Map<Integer, Integer> attack, int damage, int dirSpell, int noDirSpell, int dirSpell30) {
         Sprite {
-            map = Map.copyOf(map);
-            map2 = Map.copyOf(map2);
+            move = Map.copyOf(move);
+            attack = Map.copyOf(attack);
         }
     }
 }

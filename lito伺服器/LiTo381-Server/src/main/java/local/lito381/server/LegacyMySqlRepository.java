@@ -1092,77 +1092,28 @@ implements AccountRepository {
         if (l <= 0L || l > 0xFFFFFFFFL) {
             throw new IllegalArgumentException("invalid source inventory character id");
         }
-        List<Object> list2 = list == null ? List.of() : List.copyOf(list);
+        List<LitoSourceInventoryMutation> list2 = list == null ? List.of() : List.copyOf(list);
         LinkedHashSet<Long> linkedHashSet = new LinkedHashSet<Long>();
-        for (Object object2 : list2) {
-            if (object2 != null && linkedHashSet.add(((LitoSourceInventoryMutation)object2).sourceObjectId())) continue;
+        for (LitoSourceInventoryMutation object2 : list2) {
+            if (object2 != null && linkedHashSet.add(object2.sourceObjectId())) continue;
             throw new IllegalArgumentException("duplicate/null source inventory mutation");
         }
-        try (Connection connection = this.connection(this.accountUrl, this.accountLogin, this.accountPassword);){
-            Object object;
-            block28: {
-                Object object2;
-                block25: {
-                    RepositoryPersistenceResult repositoryPersistenceResult;
-                    block27: {
-                        block26: {
-                            object2 = connection.prepareStatement("SELECT 1 FROM characters WHERE objid=? LIMIT 1");
-                            object2.setLong(1, l);
-                            object = object2.executeQuery();
-                            if (object.next()) break block25;
-                            repositoryPersistenceResult = RepositoryPersistenceResult.NOT_FOUND;
-                            if (object == null) break block26;
-                            object.close();
-                        }
-                        if (object2 == null) break block27;
-                        object2.close();
-                    }
-                    return repositoryPersistenceResult;
+        try (Connection connection = this.connection(this.accountUrl, this.accountLogin, this.accountPassword);
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT 1 FROM characters WHERE objid=? LIMIT 1");){
+            preparedStatement.setLong(1, l);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return RepositoryPersistenceResult.NOT_FOUND;
                 }
-                try {
-                    block29: {
-                        if (object != null) {
-                            object.close();
-                        }
-                        break block29;
-                        {
-                            catch (Throwable throwable) {
-                                if (object != null) {
-                                    try {
-                                        object.close();
-                                    }
-                                    catch (Throwable throwable2) {
-                                        throwable.addSuppressed(throwable2);
-                                    }
-                                }
-                                throw throwable;
-                            }
-                        }
-                    }
-                    for (LitoSourceInventoryMutation litoSourceInventoryMutation : list2) {
-                        if (litoSourceInventoryMutation.delete()) {
-                            LegacyMySqlRepository.deleteSourceInventoryRow(connection, l, litoSourceInventoryMutation.sourceObjectId());
-                            continue;
-                        }
-                        LegacyMySqlRepository.updateSourceInventoryRow(connection, l, litoSourceInventoryMutation);
-                    }
-                    object = RepositoryPersistenceResult.SUCCESS;
-                    if (object2 == null) break block28;
-                }
-                catch (Throwable throwable) {
-                    if (object2 != null) {
-                        try {
-                            object2.close();
-                        }
-                        catch (Throwable throwable3) {
-                            throwable.addSuppressed(throwable3);
-                        }
-                    }
-                    throw throwable;
-                }
-                object2.close();
             }
-            return object;
+            for (LitoSourceInventoryMutation litoSourceInventoryMutation : list2) {
+                if (litoSourceInventoryMutation.delete()) {
+                    LegacyMySqlRepository.deleteSourceInventoryRow(connection, l, litoSourceInventoryMutation.sourceObjectId());
+                    continue;
+                }
+                LegacyMySqlRepository.updateSourceInventoryRow(connection, l, litoSourceInventoryMutation);
+            }
+            return RepositoryPersistenceResult.SUCCESS;
         }
     }
 
@@ -5233,12 +5184,14 @@ implements AccountRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT COALESCE(Title,'') FROM characters WHERE objid=? LIMIT 1");){
             preparedStatement.setLong(1, l);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                RepositoryCharacterTitle repositoryCharacterTitle = RepositoryCharacterTitle.missing();
+            try {
+                if (!resultSet.next()) {
+                    RepositoryCharacterTitle repositoryCharacterTitle = RepositoryCharacterTitle.missing();
+                    return repositoryCharacterTitle;
+                }
+                RepositoryCharacterTitle repositoryCharacterTitle = RepositoryCharacterTitle.present(resultSet.getString(1));
                 return repositoryCharacterTitle;
             }
-            RepositoryCharacterTitle repositoryCharacterTitle = RepositoryCharacterTitle.present(resultSet.getString(1));
-            return repositoryCharacterTitle;
             finally {
                 if (resultSet != null) {
                     resultSet.close();

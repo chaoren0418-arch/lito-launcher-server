@@ -35,7 +35,7 @@ public class NativeDeChatTable {
             try (Connection connection = NativeDeTerrainScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `npcchat`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n = -1;
                         try {
@@ -57,30 +57,24 @@ public class NativeDeChatTable {
                             nativeDeChatData.setGameTime(resultSet.getInt("game_time"));
                             if (nativeDeChatData.getChatTiming() == 0) {
                                 NativeDeChatScope._npcChatAppearance(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue block19;
+                                continue;
                             }
                             if (nativeDeChatData.getChatTiming() == 1) {
                                 NativeDeChatScope._npcChatDead(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue block19;
+                                continue;
                             }
                             if (nativeDeChatData.getChatTiming() == 2) {
                                 NativeDeChatScope._npcChatHide(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                                continue block19;
+                                continue;
                             }
-                            if (nativeDeChatData.getChatTiming() != 3) continue block19;
+                            if (nativeDeChatData.getChatTiming() != 3) continue;
                             NativeDeChatScope._npcChatGameTime(this).put(nativeDeChatData.getNpcId(), nativeDeChatData);
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             NativeDeChatScope.log().error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (npcid: " + n + ")", exception);
                         }
                     }
-                    break block27;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {

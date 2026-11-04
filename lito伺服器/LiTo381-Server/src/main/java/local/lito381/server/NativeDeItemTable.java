@@ -79,7 +79,7 @@ public class NativeDeItemTable {
             try (Connection connection = NativeDeItemTemplatesScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT e.*, a.item_id AS arrow_config_id, a.consume_on_attack AS arrow_consume_on_attack, a.dmg_small AS arrow_dmg_small, a.dmg_large AS arrow_dmg_large, a.arrow_spr AS arrow_config_spr FROM `etcitem` e LEFT JOIN `etcitem_arrow` a ON a.item_id = e.item_id");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n = -1;
                         try {
@@ -114,18 +114,12 @@ public class NativeDeItemTable {
                             if (!this.applyArrowConfig(resultSet, nativeDeEtcItemTemplate)) continue;
                             NativeDeItemTemplatesScope.Classes.get().addList(n, string, 0);
                             hashMap.put(nativeDeEtcItemTemplate.getItemId(), nativeDeEtcItemTemplate);
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeTemplates.log.error("\u8f09\u5165\u7269\u54c1\u5931\u6557\uff0c\u5df2\u8df3\u904e\u8a72\u7269\u54c1 (item_id: " + n + ")", exception);
                         }
                     }
-                    break block24;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
@@ -179,7 +173,7 @@ public class NativeDeItemTable {
             try (Connection connection = NativeDeItemTemplatesScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `weapon`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block23: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n = -1;
                         try {
@@ -276,18 +270,12 @@ public class NativeDeItemTable {
                             }
                             NativeDeItemTemplatesScope.Classes.get().addList(n, string, 1);
                             hashMap.put(nativeDeWeaponTemplate.getItemId(), nativeDeWeaponTemplate);
-                            continue block23;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeTemplates.log.error("\u8f09\u5165\u7269\u54c1\u5931\u6557\uff0c\u5df2\u8df3\u904e\u8a72\u7269\u54c1 (item_id: " + n + ")", exception);
                         }
                     }
-                    break block28;
-                    {
-                        continue block23;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
@@ -315,7 +303,7 @@ public class NativeDeItemTable {
             try (Connection connection = NativeDeItemTemplatesScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `armor`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block23: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n = -1;
                         try {
@@ -415,18 +403,12 @@ public class NativeDeItemTable {
                             }
                             NativeDeItemTemplatesScope.Classes.get().addList(n, string, 2);
                             hashMap.put(nativeDeArmorTemplate.getItemId(), nativeDeArmorTemplate);
-                            continue block23;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeTemplates.log.error("\u8f09\u5165\u7269\u54c1\u5931\u6557\uff0c\u5df2\u8df3\u904e\u8a72\u7269\u54c1 (item_id: " + n + ")", exception);
                         }
                     }
-                    break block28;
-                    {
-                        continue block23;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {

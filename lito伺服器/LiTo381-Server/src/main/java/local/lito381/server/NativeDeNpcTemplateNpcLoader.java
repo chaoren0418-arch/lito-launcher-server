@@ -34,7 +34,7 @@ final class NativeDeNpcTemplateNpcLoader {
             try (Connection connection = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `npc`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n = -1;
                         try {
@@ -118,18 +118,12 @@ final class NativeDeNpcTemplateNpcLoader {
                             nativeDeNpcTemplate.setBoss(resultSet.getBoolean("boss"));
                             this.registerConstructorCache(nativeDeNpcTemplate.getImpl());
                             NativeDeNpcTemplateLoadScope.npcs().put(n, nativeDeNpcTemplate);
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             NativeDeNpcTemplateLoadScope.log().error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (npcid: " + n + ")", exception);
                         }
                     }
-                    break block28;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {

@@ -49,7 +49,7 @@ public class NativeDeItemIdStatsTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_weapon_bless_\u6307\u5b9a`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n3 = -1;
                         try {
@@ -64,18 +64,12 @@ public class NativeDeItemIdStatsTable {
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.IGNORE_REDUCTION, resultSet, "add_ignore_reduction");
                             this._itemIdStats.computeIfAbsent(n3, n -> new HashMap()).put(n4, nativeDeItemAbility);
                             ++n2;
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (item_id: " + n3 + ")", exception);
                         }
                     }
-                    break block24;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
@@ -100,7 +94,7 @@ public class NativeDeItemIdStatsTable {
             try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_armor_bless_\u6307\u5b9a`");){
                 ResultSet resultSet = preparedStatement.executeQuery();
-                block19: while (true) {
+                try {
                     while (resultSet.next()) {
                         int n3 = -1;
                         try {
@@ -123,18 +117,12 @@ public class NativeDeItemIdStatsTable {
                             this.safeAdd(nativeDeItemAbility, NativeDeItemAbility.AbilityType.REGIST_STUN, resultSet, "regist_stun");
                             this._itemIdStats.computeIfAbsent(n3, n -> new HashMap()).put(n5, nativeDeItemAbility);
                             ++n2;
-                            continue block19;
+                            continue;
                         }
                         catch (Exception exception) {
                             this.nativeDefinitions.log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (item_id: " + n3 + ")", exception);
                         }
                     }
-                    break block25;
-                    {
-                        continue block19;
-                        break;
-                    }
-                    break;
                 }
                 finally {
                     if (resultSet != null) {
