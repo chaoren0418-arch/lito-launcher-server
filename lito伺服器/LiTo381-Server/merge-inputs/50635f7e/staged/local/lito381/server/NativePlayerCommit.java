@@ -125,49 +125,35 @@ final class NativePlayerCommit {
      * Lifted jumps to return sites
      */
     static void nativeStaticOriginalAdvance(ClientSession clientSession) {
-        CombatPoisonLifecycle.State state;
-        NativePlayerActionScope.Ticket ticket;
-        ReentrantLock reentrantLock;
-        block13: {
-            BattleTimedStatus battleTimedStatus;
-            block12: {
-                reentrantLock = clientSession.nativePlayerActionLock();
-                ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
-                try {
-                    battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-                    if (battleTimedStatus != null) break block12;
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            work: {
+                BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+                if (battleTimedStatus == null) break work;
+                synchronized (battleTimedStatus) {
+                    NativeDeClientViewer.retire(battleTimedStatus);
+                    CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
+                    if (state == null) break work;
+                    Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
+                    if (queue != null) {
+                        queue.vitalLock.lock();
+                        try {
+                            queue.drop(true);
+                            CombatAccess.set(state, "sourcePlayerQueue", null);
+                            CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
+                        } finally {
+                            queue.vitalLock.unlock();
+                        }
+                    } else {
+                        CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
+                    }
                 }
-                catch (Throwable throwable) {
-                    NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
-                    throw throwable;
-                }
-                NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-                return;
             }
-            BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-            // MONITORENTER : battleTimedStatus2
-            NativeDeClientViewer.retire(battleTimedStatus);
-            state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
-            if (state != null) break block13;
-            // MONITOREXIT : battleTimedStatus2
-            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-            return;
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
-        Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
-        if (queue != null) {
-            queue.vitalLock.lock();
-            try {
-                queue.drop(true);
-                CombatAccess.set(state, "sourcePlayerQueue", null);
-                CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
-            }
-            finally {
-                queue.vitalLock.unlock();
-            }
-        } else {
-            CombatAccess.set(state, "sourcePlayerOwner", NativeCompanionRoleIdentity.nextRole(clientSession));
-        }
-        // MONITOREXIT : battleTimedStatus2
         NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
 
@@ -175,29 +161,22 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private static void assign(ClientSession clientSession, Object object, String string) {
-        BattleTimedStatus battleTimedStatus;
-        NativePlayerActionScope.Ticket ticket;
-        ReentrantLock reentrantLock;
-        block6: {
-            reentrantLock = clientSession.nativePlayerActionLock();
-            ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
-            try {
-                battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-                if (battleTimedStatus != null) break block6;
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+            if (battleTimedStatus == null) {
                 CombatAccess.set(clientSession, string, object);
+            } else {
+                synchronized (battleTimedStatus) {
+                    NativePlayerCommit.advance(clientSession);
+                    NativeProcPlayerState.selectedField(clientSession, string);
+                    CombatAccess.set(clientSession, string, object);
+                }
             }
-            catch (Throwable throwable) {
-                NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
-                throw throwable;
-            }
-            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-            return;
-        }
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativePlayerCommit.advance(clientSession);
-            NativeProcPlayerState.selectedField(clientSession, string);
-            CombatAccess.set(clientSession, string, object);
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
         NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
@@ -289,7 +268,6 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean earlyZero(ClientSession clientSession, ClientSession clientSession2, boolean bl, long l) {
-        WorldPlan worldPlan;
         int n;
         CalcTicket calcTicket = calculation.get();
         if (calcTicket == null || !String.valueOf(CombatAccess.field(clientSession, "phase")).equals(bl ? "WORLD" : "BATTLE")) {
@@ -303,33 +281,29 @@ final class NativePlayerCommit {
         try {
             n = NativePlayerCommit.integer(clientSession, "playerHp");
             if (queue.closed || !calcTicket.target.matchesFast(clientSession)) {
-                boolean bl2 = true;
-                return bl2;
+                return true;
             }
             if (queue.terminal) {
-                boolean bl3 = true;
-                return bl3;
+                return true;
             }
             if (!bl && n <= 0 && ((Boolean)CombatAccess.field(clientSession, "deathConfirmationPending")).booleanValue()) {
                 queue.terminal = true;
-                boolean bl4 = true;
-                return bl4;
+                return true;
             }
             if (n > 0) {
-                boolean bl5 = false;
-                return bl5;
+                return false;
             }
         }
         finally {
             queue.vitalLock.unlock();
         }
         Binding binding = calcTicket.caster;
-        WorldPlan worldPlan2 = worldPlan = bl ? worldCalculation.get() : null;
+        WorldPlan worldPlan = bl ? worldCalculation.get() : null;
         long l2 = l != 0L ? l : (binding != null ? binding.object : (calcTicket.attacker == null ? 0L : calcTicket.attacker.id()));
         ClassicWorldMonsterPopulation.Snapshot snapshot = null;
         if (bl) {
             NativeCombatOrigin.Poison poison = NativeCombatOrigin.poison();
-            ClassicWorldMonsterPopulation.Snapshot snapshot2 = snapshot = poison != null ? poison.snapshot() : NativeCombatAttacker.capturedSnapshot(l2);
+            snapshot = poison != null ? poison.snapshot() : NativeCombatAttacker.capturedSnapshot(l2);
             if (snapshot == null && calcTicket.attacker != null && calcTicket.attacker.kind() == 1) {
                 snapshot = NativeCombatAttacker.worldSnapshot(clientSession, calcTicket.attacker);
             }
@@ -689,7 +663,7 @@ final class NativePlayerCommit {
         WorldPlan worldPlan2 = worldCalculation.get();
         worldCalculation.set(worldPlan);
         try {
-            CombatAccess.call(clientSession, "takeClassicWorldDirectDamage", "(DJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", n, l);
+            CombatAccess.call(clientSession, "takeClassicWorldDirectDamage", "(DJ)Llocal/lito381/server/ClientSession$ClassicWorldFatalContext;", (double)n, l);
         }
         finally {
             if (worldPlan2 == null) {
@@ -859,10 +833,11 @@ final class NativePlayerCommit {
                             if (bl2) {
                                 committed.incrementAndGet();
                             }
+                        } else {
+                            failed.incrementAndGet();
+                            System.err.println("[LiTo development] PC committed tail failed, no HP replay: " + String.valueOf(throwable));
+                            throwable.printStackTrace();
                         }
-                        failed.incrementAndGet();
-                        System.err.println("[LiTo development] PC committed tail failed, no HP replay: " + String.valueOf(throwable));
-                        throwable.printStackTrace();
                     }
                 }
                 ++n;
@@ -1214,49 +1189,35 @@ final class NativePlayerCommit {
      * Lifted jumps to return sites
      */
     static void nativeCompanionSceneOriginalAdvance(ClientSession clientSession, Object object) {
-        CombatPoisonLifecycle.State state;
-        NativePlayerActionScope.Ticket ticket;
-        ReentrantLock reentrantLock;
-        block13: {
-            BattleTimedStatus battleTimedStatus;
-            block12: {
-                reentrantLock = clientSession.nativePlayerActionLock();
-                ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
-                try {
-                    battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-                    if (battleTimedStatus != null) break block12;
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            work: {
+                BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+                if (battleTimedStatus == null) break work;
+                synchronized (battleTimedStatus) {
+                    NativeDeClientViewer.retire(battleTimedStatus);
+                    CombatPoisonLifecycle.State state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
+                    if (state == null) break work;
+                    Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
+                    if (queue != null) {
+                        queue.vitalLock.lock();
+                        try {
+                            queue.drop(true);
+                            CombatAccess.set(state, "sourcePlayerQueue", null);
+                            CombatAccess.set(state, "sourcePlayerOwner", object);
+                        } finally {
+                            queue.vitalLock.unlock();
+                        }
+                    } else {
+                        CombatAccess.set(state, "sourcePlayerOwner", object);
+                    }
                 }
-                catch (Throwable throwable) {
-                    NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
-                    throw throwable;
-                }
-                NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-                return;
             }
-            BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-            // MONITORENTER : battleTimedStatus2
-            NativeDeClientViewer.retire(battleTimedStatus);
-            state = CombatPoisonLifecycle.monsterPoisonCallbacks(battleTimedStatus, false);
-            if (state != null) break block13;
-            // MONITOREXIT : battleTimedStatus2
-            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-            return;
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
-        Queue queue = (Queue)CombatAccess.field(state, "sourcePlayerQueue");
-        if (queue != null) {
-            queue.vitalLock.lock();
-            try {
-                queue.drop(true);
-                CombatAccess.set(state, "sourcePlayerQueue", null);
-                CombatAccess.set(state, "sourcePlayerOwner", object);
-            }
-            finally {
-                queue.vitalLock.unlock();
-            }
-        } else {
-            CombatAccess.set(state, "sourcePlayerOwner", object);
-        }
-        // MONITOREXIT : battleTimedStatus2
         NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
 
@@ -1264,29 +1225,22 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private static void nativeCompanionSceneAssign(ClientSession clientSession, Object object, String string) {
-        BattleTimedStatus battleTimedStatus;
-        NativePlayerActionScope.Ticket ticket;
-        ReentrantLock reentrantLock;
-        block6: {
-            reentrantLock = clientSession.nativePlayerActionLock();
-            ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
-            try {
-                battleTimedStatus = CombatPoisonAtomic.status(clientSession);
-                if (battleTimedStatus != null) break block6;
+        ReentrantLock reentrantLock = clientSession.nativePlayerActionLock();
+        NativePlayerActionScope.Ticket ticket = NativeSourceManualScope.lock(reentrantLock, clientSession);
+        try {
+            BattleTimedStatus battleTimedStatus = CombatPoisonAtomic.status(clientSession);
+            if (battleTimedStatus == null) {
                 CombatAccess.set(clientSession, string, object);
+            } else {
+                synchronized (battleTimedStatus) {
+                    NativeStaticNpcMotion.nativeCompanionSceneAdvance(clientSession, object, string);
+                    NativeProcPlayerState.selectedField(clientSession, string);
+                    CombatAccess.set(clientSession, string, object);
+                }
             }
-            catch (Throwable throwable) {
-                NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
-                throw throwable;
-            }
-            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
-            return;
-        }
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeStaticNpcMotion.nativeCompanionSceneAdvance(clientSession, object, string);
-            NativeProcPlayerState.selectedField(clientSession, string);
-            CombatAccess.set(clientSession, string, object);
+        } catch (Throwable throwable) {
+            NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, throwable);
+            throw throwable;
         }
         NativeSourceManualScope.unlock(reentrantLock, clientSession, ticket, null);
     }
@@ -1384,24 +1338,19 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Queue nativeSourceScalarQueue(ClientSession clientSession, Binding binding, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog) {
-        BattleTimedStatus battleTimedStatus2;
-        BattleTimedStatus battleTimedStatus3 = battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus3) {
-            block6: {
-                if (NativeSourceProcScalarSkills.queueCurrent(binding, clientSession, battleTimedStatus, proof, catalog)) break block6;
-                return (Queue)NativeSourceProcScalarSkills.queueValue(null, proof);
-            }
-            Object object = NativeSourceProcScalarSkills.state(battleTimedStatus2);
-            Queue queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
-            if (queue == null || !queue.owner.equals(binding)) {
-                if (queue != null) {
-                    queue.drop(true);
+        Queue queue = null;
+        synchronized (battleTimedStatus) {
+            if (NativeSourceProcScalarSkills.queueCurrent(binding, clientSession, battleTimedStatus, proof, catalog)) {
+                Object object = NativeSourceProcScalarSkills.state(battleTimedStatus);
+                queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
+                if (queue == null || !queue.owner.equals(binding)) {
+                    if (queue != null) queue.drop(true);
+                    queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
+                    CombatAccess.set(object, "sourcePlayerQueue", queue);
                 }
-                queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
-                CombatAccess.set(object, "sourcePlayerQueue", queue);
             }
-            return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
         }
+        return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
     }
 
     /*
@@ -1430,24 +1379,19 @@ final class NativePlayerCommit {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Queue nativeSourceProc68Queue(ClientSession clientSession, Binding binding, BattleTimedStatus battleTimedStatus, NativeSourceEquipmentProcLife.Proof proof, NativeProcSkillCatalog.Catalog catalog, BattleAbilityStatus battleAbilityStatus) {
-        BattleTimedStatus battleTimedStatus2;
-        BattleTimedStatus battleTimedStatus3 = battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus3) {
-            block6: {
-                if (NativeSourceProc68FirstQueue.current(binding, clientSession, battleTimedStatus, proof, catalog, battleAbilityStatus)) break block6;
-                return (Queue)NativeSourceProcScalarSkills.queueValue(null, proof);
-            }
-            Object object = NativeSourceProcScalarSkills.state(battleTimedStatus2);
-            Queue queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
-            if (queue == null || !queue.owner.equals(binding)) {
-                if (queue != null) {
-                    queue.drop(true);
+        Queue queue = null;
+        synchronized (battleTimedStatus) {
+            if (NativeSourceProc68FirstQueue.current(binding, clientSession, battleTimedStatus, proof, catalog, battleAbilityStatus)) {
+                Object object = NativeSourceProcScalarSkills.state(battleTimedStatus);
+                queue = (Queue)CombatAccess.field(object, "sourcePlayerQueue");
+                if (queue == null || !queue.owner.equals(binding)) {
+                    if (queue != null) queue.drop(true);
+                    queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
+                    CombatAccess.set(object, "sourcePlayerQueue", queue);
                 }
-                queue = new Queue(binding, proof.lifetime(), clientSession.nativePlayerActionLock());
-                CombatAccess.set(object, "sourcePlayerQueue", queue);
             }
-            return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
         }
+        return (Queue)NativeSourceProcScalarSkills.queueValue(queue, proof);
     }
 
     /*

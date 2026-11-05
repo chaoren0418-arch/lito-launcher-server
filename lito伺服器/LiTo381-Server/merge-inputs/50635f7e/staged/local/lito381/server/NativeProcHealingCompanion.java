@@ -82,9 +82,7 @@ final class NativeProcHealingCompanion {
         if (ref == null || ref.kind() != 2 || ref.master() == null) {
             return null;
         }
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            BattleTimedStatus battleTimedStatus;
+        synchronized (gameHub) {
             ClientSession clientSession;
             ClientSession clientSession2 = NativeProcHealingCompanion.find(gameHub, ref.master());
             clientSession = bl ? NativeProcHealingCompanion.find(gameHub, plan.caster()) : null;
@@ -92,25 +90,22 @@ final class NativeProcHealingCompanion {
                 return null;
             }
             BattleTimedStatus battleTimedStatus2 = CombatPoisonAtomic.status(clientSession2);
-            BattleTimedStatus battleTimedStatus3 = battleTimedStatus = bl ? CombatPoisonAtomic.status(clientSession) : battleTimedStatus2;
+            BattleTimedStatus battleTimedStatus3 = bl ? CombatPoisonAtomic.status(clientSession) : battleTimedStatus2;
             synchronized (battleTimedStatus3) {
-                BattleTimedStatus battleTimedStatus4 = battleTimedStatus2;
-                synchronized (battleTimedStatus4) {
-                    List list;
+                synchronized (battleTimedStatus2) {
                     if (!ref.master().matches(clientSession2) || !NativeProcHealingCompanion.registered(gameHub, clientSession2, ref.master())) {
                         return null;
                     }
                     if (!(!bl || plan.caster().matches(clientSession) && NativeProcHealingCompanion.registered(gameHub, clientSession, plan.caster()) && NativeProcHealingCompanion.sameScene(plan.caster(), ref.master()))) {
                         return null;
                     }
-                    List list2 = list = (List)CombatAccess.field(clientSession2, "tamedCompanions");
-                    synchronized (list2) {
-                        Object object;
-                        Object object2 = (BattleCompanion)CombatAccess.field(clientSession2, "battleCompanion");
-                        if (((BattleCompanion)object2).snapshot().objectId() != ref.id()) {
+                    List<?> list = (List<?>)CombatAccess.field(clientSession2, "tamedCompanions");
+                    synchronized (list) {
+                        BattleCompanion object2 = (BattleCompanion)CombatAccess.field(clientSession2, "battleCompanion");
+                        if (object2.snapshot().objectId() != ref.id()) {
                             object2 = null;
                             for (Object object3 : list) {
-                                if (!(!(object3 instanceof BattleCompanion) || ((BattleCompanion)(object = (BattleCompanion)object3)).snapshot().objectId() != ref.id())) {
+                                if (object3 instanceof BattleCompanion object && object.snapshot().objectId() == ref.id()) {
                                 object2 = object;
                                 break;
 
@@ -120,17 +115,14 @@ final class NativeProcHealingCompanion {
                         if (object2 == null) {
                             return null;
                         }
-                        Object object4 = object2;
-                        synchronized (object4) {
-                            Object object3;
-                            object3 = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
-                            object = object3;
-                            synchronized (object) {
-                                BattleCompanion.Snapshot snapshot = ((BattleCompanion)object2).snapshot();
-                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token((BattleTimedStatus)object3, false) != ref.owner()) {
+                        synchronized (object2) {
+                            BattleTimedStatus object3 = (BattleTimedStatus)CombatAccess.field(object2, "timedStatus");
+                            synchronized (object3) {
+                                BattleCompanion.Snapshot snapshot = object2.snapshot();
+                                if (!snapshot.active() || snapshot.hp() <= 0 || snapshot.objectId() != ref.id() || NativeCombatAttacker.token(object3, false) != ref.owner()) {
                                     return null;
                                 }
-                                return function.apply(new Live(clientSession, clientSession2, (BattleCompanion)object2, (BattleTimedStatus)object3, snapshot));
+                                return function.apply(new Live(clientSession, clientSession2, object2, object3, snapshot));
                             }
                         }
                     }
@@ -245,12 +237,12 @@ final class NativeProcHealingCompanion {
                 }
 }
         }
-        Object object = Protocol.effectObject(plan.target().id(), n);
+        byte[] object = Protocol.effectObject(plan.target().id(), n);
         for (ClientSession clientSession2 : arrayList) {
             NativePlayerCommit.Binding binding2 = NativePlayerCommit.Binding.capture(clientSession2);
             if (!NativePlayerCommit.validFrame(clientSession) || !Boolean.TRUE.equals(NativeProcHealingCompanion.withTarget(gameHub, plan, true, (Function<Live, Boolean>) live -> true))) break;
             if (!(!binding2.matches(clientSession2))) {
-            NativePlayerCommit.safeSend(clientSession2, (byte[])object, "S_EFFECT equipment-companion-healing skill=" + plan.skill() + " target=" + plan.target().id());
+            NativePlayerCommit.safeSend(clientSession2, object, "S_EFFECT equipment-companion-healing skill=" + plan.skill() + " target=" + plan.target().id());
 
             }
 }

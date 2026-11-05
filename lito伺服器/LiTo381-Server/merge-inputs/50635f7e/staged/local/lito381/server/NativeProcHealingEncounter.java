@@ -275,7 +275,6 @@ final class NativeProcHealingEncounter {
     }
 
     private static void graphics(GameHub gameHub, Plan plan, int n) {
-        Object object;
         if (n <= 0) {
             return;
         }
@@ -286,21 +285,21 @@ final class NativeProcHealingEncounter {
         ArrayList<ClientSession> arrayList = new ArrayList<ClientSession>();
         arrayList.add(clientSession);
         if (!((BattleInvisibilityStatus)CombatAccess.field(clientSession, "invisibilityStatus")).active()) {
-            object = gameHub.roomMembers(plan.target().room()).iterator();
-            while (((java.util.Iterator<?>)object).hasNext()) {
-                ClientSession clientSession2 = (ClientSession)((java.util.Iterator<?>)object).next();
+            java.util.Iterator<ClientSession> members = gameHub.roomMembers(plan.target().room()).iterator();
+            while (members.hasNext()) {
+                ClientSession clientSession2 = members.next();
                 if (!(clientSession2 == clientSession || Math.max(Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionX") - (long)NativePlayerCommit.integer(clientSession, "positionX")), Math.abs((long)NativePlayerCommit.integer(clientSession2, "positionY") - (long)NativePlayerCommit.integer(clientSession, "positionY"))) > 10L)) {
                 arrayList.add(clientSession2);
 
                 }
 }
         }
-        object = Protocol.effectObject(plan.target().id(), n);
+        byte[] object = Protocol.effectObject(plan.target().id(), n);
         for (ClientSession clientSession3 : arrayList) {
             NativePlayerCommit.Binding binding = NativePlayerCommit.Binding.capture(clientSession3);
             if (!NativePlayerCommit.validFrame(clientSession) || !Boolean.TRUE.equals(NativeProcHealingEncounter.withLive(gameHub, plan.target(), plan.caster(), plan.generation(), live -> true))) break;
             if (!(!binding.matches(clientSession3))) {
-            NativePlayerCommit.safeSend(clientSession3, (byte[])object, "S_EFFECT equipment-encounter-healing skill=" + plan.skill() + " target=" + plan.target().id());
+            NativePlayerCommit.safeSend(clientSession3, object, "S_EFFECT equipment-encounter-healing skill=" + plan.skill() + " target=" + plan.target().id());
 
             }
 }
@@ -348,13 +347,12 @@ final class NativeProcHealingEncounter {
                         continue;
                     }
                     Object object = event.physical();
-                    if (!(object instanceof Plan)) {
+                    if (!(object instanceof Plan plan)) {
                         throw new IllegalStateException("foreign encounter Proc queue plan");
                     }
-                    Plan plan = (Plan)object;
-                    object = NativeProcHealingEncounter.withLive(this.hub, plan.target(), plan.caster(), plan.generation(), live -> NativeProcHealingEncounter.commit(live, plan, event.damage()));
-                    if (object == null) continue;
-                    NativeProcEncounterPublication.publish((NativeProcEncounterPublication.Context)object);
+                    NativeProcEncounterPublication.Context context = NativeProcHealingEncounter.withLive(this.hub, plan.target(), plan.caster(), plan.generation(), live -> NativeProcHealingEncounter.commit(live, plan, event.damage()));
+                    if (context == null) continue;
+                    NativeProcEncounterPublication.publish(context);
                     continue;
                 }
                 catch (Throwable throwable) {

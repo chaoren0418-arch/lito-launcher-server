@@ -53,8 +53,7 @@ final class NativeCancellationNpcStatic {
  }
     static boolean restored(boolean bl, GameHub gameHub, ClassicWorldNpcCatalog.StaticNpc staticNpc) {
         if (bl) {
-            GameHub gameHub2 = gameHub;
-            synchronized (gameHub2) {
+            synchronized (gameHub) {
                 State state = NativeCancellationNpcStatic.state(gameHub, false);
                 if (state != null) {
                     state.actors.remove(staticNpc.objectId());
@@ -245,12 +244,11 @@ final class NativeCancellationNpcStatic {
         NativeCancellationNpcStatic.publish(clientSession, gameHub, n, n2, NativePlayerCommit.Binding.capture(clientSession), byArray, string, () -> true);
     }
     private static void sendNpc(ClientSession clientSession, GameHub gameHub, ClassicWorldNpcCatalog.StaticNpc staticNpc, byte[] byArray, String string) {
-        NativeStaticNpcScene.Actor actor;
+        Object actor;
         int n = NativeStaticNpcScene.instance(clientSession);
         int n2 = NativeStaticNpcScene.gfx(gameHub, staticNpc, clientSession);
         Appearance appearance = NativeStaticNpcScene.appearance(gameHub, staticNpc, n);
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
+        synchronized (gameHub) {
             actor = n > 0 ? NativeStaticNpcScene.actor(gameHub, staticNpc, n, false) : null;
         }
         NativeStaticNpcRespawn.publishNpc(clientSession, gameHub, staticNpc.mapId(), n, NativePlayerCommit.Binding.capture(clientSession), byArray, string, () -> ClassicWorldNpcCatalog.npc(staticNpc.mapId(), staticNpc.objectId()) == staticNpc && (n <= 0 || NativeStaticNpcScene.actor(gameHub, staticNpc, n, false) == actor) && NativeStaticNpcScene.gfx(gameHub, staticNpc, clientSession) == n2 && NativeStaticNpcScene.appearance(gameHub, staticNpc, n).equals(appearance));
@@ -276,8 +274,7 @@ final class NativeCancellationNpcStatic {
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         Object object = NativeStaticNpcScene.location(gameHub, clientSession);
         NativeLightAction.commitPair(clientSession, clientSession, () -> NativeWorldMaterialPolicy.run(clientSession, true, 44, () -> {
-            GameHub gameHub2 = gameHub;
-            synchronized (gameHub2) {
+            synchronized (gameHub) {
                 if (binding.matches(clientSession) && object != null && NativeStaticNpcScene.location(gameHub, clientSession) == object && NativeStaticNpcScene.inScene(clientSession, gameHub, n, n2) && ClassicWorldNpcCatalog.npc(n, staticNpc.objectId()) == staticNpc) {
                     NativeCancellationNpcStatic.cast(clientSession, gameHub, staticNpc, objectSpellRequest, cancellationSpell, rule);
                 }
@@ -296,8 +293,7 @@ final class NativeCancellationNpcStatic {
                 if (binding.matches(clientSession)) {
                     runnableArray[0] = NativeRolePublication.completion(clientSession, () -> {
                         boolean bl;
-                        GameHub gameHub2 = gameHub;
-                        synchronized (gameHub2) {
+                        synchronized (gameHub) {
                             bl = binding.matches(clientSession) && NativeStaticNpcScene.inScene(clientSession, gameHub, n, n2) && booleanSupplier.getAsBoolean();
                         }
                         if (bl) {

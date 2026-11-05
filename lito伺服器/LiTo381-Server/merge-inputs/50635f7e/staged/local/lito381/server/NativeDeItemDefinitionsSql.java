@@ -104,8 +104,7 @@ final class NativeDeItemDefinitionsSql {
                         resultLease.close();
                     }
                     catch (Throwable throwable) {
-                        SQLException sQLException2;
-                        sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException2 = (SQLException)throwable) : new SQLException("owned leaked-resource cleanup failed", throwable));
+                        sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException2 ? sQLException2 : new SQLException("owned leaked-resource cleanup failed", throwable));
                     }
 
                     }
@@ -116,8 +115,7 @@ final class NativeDeItemDefinitionsSql {
                     statementLease.close();
                 }
                 catch (Throwable throwable) {
-                    SQLException sQLException3;
-                    sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException3 = (SQLException)throwable) : new SQLException("owned leaked-resource cleanup failed", throwable));
+                    sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException3 ? sQLException3 : new SQLException("owned leaked-resource cleanup failed", throwable));
                 }
 
                 }
@@ -134,18 +132,16 @@ final class NativeDeItemDefinitionsSql {
             ++this.rolledBack;
         }
         catch (Throwable throwable) {
-            SQLException sQLException4;
             ++this.lifecycleFailures;
-            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException4 = (SQLException)throwable) : new SQLException("owned transaction cleanup failed", throwable));
+            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException4 ? sQLException4 : new SQLException("owned transaction cleanup failed", throwable));
         }
         try {
             this.raw.close();
             ++this.physicalClosed;
         }
         catch (Throwable throwable) {
-            SQLException sQLException5;
             ++this.lifecycleFailures;
-            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException ? (sQLException5 = (SQLException)throwable) : new SQLException("owned transaction cleanup failed", throwable));
+            sQLException = NativeDeItemDefinitionsSql.append(sQLException, throwable instanceof SQLException sQLException5 ? sQLException5 : new SQLException("owned transaction cleanup failed", throwable));
         }
         if (sQLException != null) {
             throw sQLException;
@@ -173,7 +169,6 @@ final class NativeDeItemDefinitionsSql {
         }
 
         Object call(Object object, Method method, Object[] objectArray) throws Throwable {
-            Object object2;
             if (method.getDeclaringClass() == Object.class) {
                 return NativeDeItemDefinitionsSql.objectMethod(object, method, objectArray);
             }
@@ -191,19 +186,19 @@ final class NativeDeItemDefinitionsSql {
             if (string.equals("isWrapperFor")) {
                 return false;
             }
-            if (string.equals("prepareStatement") && objectArray.length == 1 && (object2 = objectArray[0]) instanceof String) {
-                String string2 = (String)object2;
+            if (string.equals("prepareStatement") && objectArray.length == 1 && objectArray[0] instanceof String string2) {
+                PreparedStatement statement;
                 if (!NativeDeItemDefinitionsSql.this.allowedQueries.contains(string2)) {
                     throw NativeDeItemDefinitionsSql.this.forbidden("non-whitelisted query");
                 }
                 try {
-                    object2 = NativeSourceEquipmentColumns.prepare(NativeDeItemDefinitionsSql.this.raw, string2);
+                    statement = NativeSourceEquipmentColumns.prepare(NativeDeItemDefinitionsSql.this.raw, string2);
                 }
                 catch (SQLException sQLException) {
                     ++NativeDeItemDefinitionsSql.this.lifecycleFailures;
                     throw sQLException;
                 }
-                StatementLease statementLease = new StatementLease(this, string2, (PreparedStatement)object2);
+                StatementLease statementLease = new StatementLease(this, string2, statement);
                 this.statementsOwned.add(statementLease);
                 ++NativeDeItemDefinitionsSql.this.statements;
                 return statementLease.proxy;

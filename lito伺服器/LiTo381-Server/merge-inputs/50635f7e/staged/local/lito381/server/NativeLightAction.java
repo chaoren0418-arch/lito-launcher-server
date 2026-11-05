@@ -81,7 +81,7 @@ final class NativeLightAction {
          * Enabled unnecessary exception pruning
          * Enabled aggressive exception aggregation
          */
-        private void nativeSourceBatchOriginalEmit() throws IOException {
+        private void nativeSourceBatchOriginalEmit() {
             boolean accepted = false;
             Throwable failure = null;
             try {
@@ -103,7 +103,11 @@ final class NativeLightAction {
                 throw error;
             } finally {
                 Throwable completionFailure = null;
-                NativeSourceTargetIconBatch.rescue(this);
+                try {
+                    NativeSourceTargetIconBatch.rescue(this);
+                } catch (IOException failureDuringRescue) {
+                    Batch.<RuntimeException>rethrowCandidateFailure(failureDuringRescue);
+                }
                 for (Completion completion : this.completions) {
                     try {
                         completion.finish(accepted && NativeSourceControlledRoleFrame.current(this.accepted.binding, this.pc)
@@ -127,17 +131,27 @@ final class NativeLightAction {
 
         private void emit() {
             try {
-            try {
                 this.nativeSourceBatchOriginalEmit();
             }
             catch (Throwable throwable) {
-                NativeSourceTargetIconBatch.finish(this, throwable);
+                try {
+                    NativeSourceTargetIconBatch.finish(this, throwable);
+                } catch (Throwable failure) {
+                    Batch.<RuntimeException>rethrowCandidateFailure(failure);
+                }
                 throw throwable;
             }
-            NativeSourceTargetIconBatch.finish(this, null);
+            try {
+                NativeSourceTargetIconBatch.finish(this, null);
             } catch (Throwable failure) {
-                NativeLightAction.<RuntimeException>rethrowCandidateFailure(failure);
+                Batch.<RuntimeException>rethrowCandidateFailure(failure);
             }
+        }
+
+        // Approved in issue #69: preserve the original throwable without wrapping it.
+        @SuppressWarnings("unchecked")
+        private static <E extends Throwable> void rethrowCandidateFailure(Throwable failure) throws E {
+            throw (E) failure;
         }
     }
  private static final ThreadLocal<Batch> current=new ThreadLocal<>();
@@ -356,10 +370,10 @@ final class NativeLightAction {
                     if (!NativeSourceMaterialMain.locked(ingress2, clientSession)) {
                         return;
                     }
-                    if (!NativeSourceSelfFinalFrame.matches(ingress.binding, clientSession, task) || ((Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected")).booleanValue() || CombatAccess.field(ingress.hub, "sourceItemApplication") != ingress.application || ingress.application != null && ingress.application.closed) {
+                    if (!NativeSourceSelfFinalFrame.matches(ingress2.binding, clientSession, task) || ((Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected")).booleanValue() || CombatAccess.field(ingress2.hub, "sourceItemApplication") != ingress2.application || ingress2.application != null && ingress2.application.closed) {
                         return;
                     }
-                    Batch batch = new Batch(clientSession, ingress.arrival, ingress2);
+                    Batch batch = new Batch(clientSession, ingress2.arrival, ingress2);
                     NativeSourceSelfFinalFrame.install(batch, task);
                     batch.captureSelf = true;
                     Batch batch2 = current.get();
@@ -379,7 +393,7 @@ final class NativeLightAction {
                             current.set(batch2);
                         }
                         if (!batch.outputs.isEmpty() || !batch.completions.isEmpty()) {
-                            NativePlayerVitalCompletions.enqueueLocked(ingress.receipt, batch);
+                            NativePlayerVitalCompletions.enqueueLocked(ingress2.receipt, batch);
                         }
                     }
                 });
@@ -675,10 +689,5 @@ final class NativeLightAction {
             return true;
         }
         return batch.accepted.binding.matches(clientSession) && batch.targetBinding.matches(batch.target) && clientSession.nativePlayerActionLock().isHeldByCurrentThread() && batch.target.nativePlayerActionLock().isHeldByCurrentThread() && CombatAccess.field(batch.target, "hub") == batch.accepted.hub && CombatAccess.field(batch.accepted.hub, "sourceItemApplication") == batch.accepted.application && (batch.accepted.application == null || !batch.accepted.application.closed) && (Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected") == false && (Boolean)CombatAccess.field(batch.target, "sourceItemDisconnected") == false;
-    }
-    // Candidate ASM omits checked exception declarations; pending controller approval.
-    @SuppressWarnings("unchecked")
-    private static <E extends Throwable> void rethrowCandidateFailure(Throwable failure) throws E {
-        throw (E) failure;
     }
 }

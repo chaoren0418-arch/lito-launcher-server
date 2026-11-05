@@ -200,8 +200,7 @@ final class NativeEquipmentDefense {
         BattleAbilityStatus battleAbilityStatus = (BattleAbilityStatus)CombatAccess.field(clientSession2, "abilityStatus");
         BattleSpellCatalog.DamageProtectionSpell damageProtectionSpell = BattleSpellCatalog.damageProtectionSpell(68);
         boolean bl = NativeSourceEquipmentProcLife.nativeSourceTimedRefreshMutateOwned(clientSession2, NativePlayerCommit.frameBinding(clientSession2), () -> {
-            BattleAbilityStatus battleAbilityStatus2 = battleAbilityStatus;
-            synchronized (battleAbilityStatus2) {
+            synchronized (battleAbilityStatus) {
                 if (rule.selfSkill() && battleAbilityStatus.immuneToHarm(l).remainingSeconds() > 0) {
                     return false;
                 }

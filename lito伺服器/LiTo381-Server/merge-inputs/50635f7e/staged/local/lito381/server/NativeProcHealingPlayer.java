@@ -36,16 +36,8 @@ final class NativeProcHealingPlayer {
         return sourceEquipmentMagicStats.effectiveIntelligence(CombatAccess.integerCall(clientSession, "baseIntelligence", "(J)I", l));
     }
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * Enabled aggressive block sorting
-     * Enabled unnecessary exception pruning
-     * Enabled aggressive exception aggregation
-     */
     static boolean nativeSourceEquipmentProcOriginalApply(ClientSession clientSession, ClientSession clientSession2, int n2) {
-        if (clientSession == null) return false;
-        if (clientSession2 == null) return false;
-        if (n2 <= 0) {
+        if (clientSession == null || clientSession2 == null || n2 <= 0) {
             return false;
         }
         NativeProcSkillCatalog.Catalog catalog = NativeProcSkillCatalog.catalog();
@@ -54,12 +46,10 @@ final class NativeProcHealingPlayer {
         }
         NativePlayerCommit.Binding binding = NativePlayerCommit.frameBinding(clientSession);
         NativePlayerCommit.Binding binding2 = NativePlayerCommit.frameBinding(clientSession2);
-        if (binding == null) return true;
-        if (binding2 == null) return true;
-        if (!NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)) return true;
-        if (!binding.matches(clientSession)) return true;
-        if (!binding2.matches(clientSession2)) return true;
-        if (NativePlayerCommit.integer(clientSession2, "playerHp") <= 0) {
+        if (binding == null || binding2 == null
+                || !NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)
+                || !binding.matches(clientSession) || !binding2.matches(clientSession2)
+                || NativePlayerCommit.integer(clientSession2, "playerHp") <= 0) {
             return true;
         }
         NativeProcSkillCatalog.Skill skill = catalog.find(n2);
@@ -80,41 +70,28 @@ final class NativeProcHealingPlayer {
             return true;
         }
         try {
-            BattleWaterLifeStatus battleWaterLifeStatus2;
             queue.vitalLock.lock();
-            BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-            synchronized (battleTimedStatus2) {
-                if (!binding2.matches(clientSession2) || !NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)) {
-                    boolean bl = true;
-                    // MONITOREXIT @DISABLED, blocks:[0, 17, 1, 10] lbl38 : MonitorExitStatement: MONITOREXIT : var16_14
-                    queue.vitalLock.unlock();
-                    return bl;
-                }
-                battleWaterLifeStatus2 = battleWaterLifeStatus;
-            }
-            {
-                synchronized (battleWaterLifeStatus2) {
-                    if (queue.closed || !binding2.matchesFast(clientSession2) || NativePlayerCommit.integer(clientSession2, "playerHp") <= 0 || !NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)) {
-                        boolean bl = true;
-                        // MONITOREXIT @DISABLED, blocks:[0, 16, 10, 11] lbl45 : MonitorExitStatement: MONITOREXIT : var17_17
-                        // MONITOREXIT @DISABLED, blocks:[0, 16, 10] lbl46 : MonitorExitStatement: MONITOREXIT : var16_14
-                        queue.vitalLock.unlock();
-                        return bl;
+            try {
+                synchronized (battleTimedStatus) {
+                    if (!binding2.matches(clientSession2) || !NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)) {
+                        return true;
                     }
-                    try {
+                    synchronized (battleWaterLifeStatus) {
+                        if (queue.closed || !binding2.matchesFast(clientSession2) || NativePlayerCommit.integer(clientSession2, "playerHp") <= 0 || !NativeSourceEquipmentProcLife.lockedFrame(clientSession, clientSession2)) {
+                            return true;
+                        }
                         Target target = new Target(clientSession2, battleTimedStatus, battleWaterLifeStatus, l);
                         NativeProcHealingKernel.apply(target, () -> n4, (int)CombatRules.number("NATURES_BLESSING_HEAL", 0.0), () -> {
                             target.graphics = true;
                         });
                         NativeEffectCompletions.healing(receipt, clientSession, binding, clientSession2, binding2, n2, skill.castGraphics(), target);
                     }
-                    finally {
-                        queue.vitalLock.unlock();
-                    }
                 }
             }
-            boolean bl = true;
-            return bl;
+            finally {
+                queue.vitalLock.unlock();
+            }
+            return true;
         }
         finally {
             receipt.close();
@@ -140,12 +117,12 @@ final class NativeProcHealingPlayer {
                 }
 }
         }
-        Object object = Protocol.effectObject(clientSession2.playerObjectId(), n2);
+        byte[] object = Protocol.effectObject(clientSession2.playerObjectId(), n2);
         for (ClientSession clientSession3 : arrayList) {
             NativePlayerCommit.Binding binding3 = NativePlayerCommit.Binding.capture(clientSession3);
             if (!NativeSourceEquipmentOutput.graphicsFrame(clientSession, clientSession2) || !binding.matches(clientSession) || !binding2.matches(clientSession2) || NativePlayerCommit.integer(clientSession2, "playerHp") <= 0) break;
             if (!(!binding3.matches(clientSession3))) {
-            NativePlayerCommit.safeSend(clientSession3, (byte[])object, "S_EFFECT equipment-healing skill=" + n + " target=" + clientSession2.playerObjectId());
+            NativePlayerCommit.safeSend(clientSession3, object, "S_EFFECT equipment-healing skill=" + n + " target=" + clientSession2.playerObjectId());
 
             }
 }
