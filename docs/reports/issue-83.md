@@ -1,113 +1,92 @@
-# Issue #83 隔離 SQL 設定準備
+# Issue #83 測試資料來源與前輪產物盤點
 
 ## 結論
 
-2026-11-06 第 2 次嘗試目前阻塞。已完成本機實例候選盤點、設定讀取路徑核對與清理腳本。管理連線在認證階段遭拒，隔離帳號、schema、測試資料與可用設定仍待建立。
+2026-11-05 UTC，依重新派工 [6668529427](https://github.com/chaoren0418-arch/lito-launcher-server/issues/83#issuecomment-6668529427) 及本輪委派的較窄範圍，**部分唯讀盤點完成；隔離設定 blocked，尚未就緒**。本報告取代先前 943657d 的現況描述，舊版保留在 Git 歷史。
 
-本輪以使用者直接提供的選項 A 作為操作授權，依其六項限定操作執行。已向使用者詢問可用的本機管理憑證入口，等待回覆。
+P24Lab 有既有 SQL 檔、datadir 與冷備份候選，不能宣稱「沒有測試資料」。但目前僅驗證檔案與程式依賴，未證明結構、內容版本、受限帳號及寫回隔離可用。未執行 #84／#225 的依賴驗收。
 
-另已確認目前程式的設定與連線共用方式無法僅以 properties 達成資源唯讀帳號與實驗角色寫入帳號分流。此項需由主控安排程式支援後續處理。
+重要發現：前輪本機紀錄顯示已從正式 3306 匯出兩個庫並匯入 3307；本輪未執行這些操作。20:47:59Z 被動查詢仍見 127.0.0.1:3307 由 PID 7632 監聽，程序路徑與本 task/83 的 MariaDB 相符。這是前輪殘留，交主控處理，本輪不連線、不停止、不刪資料。
 
-## 工作位置與範圍
+## 範圍與去重
 
-- 工作目錄為 `D:\lineage開發\3-lito開發\scratch\wt\task-83`。
-- 沿用分支 `task/83`，檢查起點為 `295c19c14b06c73fdb4dc1d8e151dbd84e217bce`。
-- 已讀根目錄 `AGENTS.md`、`docs/REPORT.md`、`TASKS.md`，並核對 GitHub #83、#84、#225 的需求。
-- 檔案產出限於本 worktree 的指定報告與 `scratch/t020c/`。
+- 工作目錄：`D:\lineage開發\3-lito開發\scratch\wt\task-83`；沿用 `task/83`。
+- 起點及 GitHub 遠端 SHA：`943657d8c1556a8a41bca798da282434ce68b8e4`。
+- 已讀工作根目錄及 task/83 的 AGENTS.md／CLAUDE.md、TASKS.md 相關 T020 項，以及 P24Lab 所屬 `D:\BinEngine\CLAUDE.md`。所查專案／父層 `.agents/skills` 不存在，未改記憶。
+- Issue 為 open／runner:dot／task:running；最新派工後尚無本輪 RESULT。調度器有終止 PID 25000 的留言，本機 Get-Process 未找到該 PID。
+- 未發現可識別的重複執行工作，但不能完整排除：Win32_Process 命令列盤點遭作業系統拒絕存取，未重試或提升權限。3307 殘留程序不等於另一代理仍在執行。
+- 工作樹原有 `D scratch/t020c/cleanup-exp-db.sql`，本輪不復原、不暫存、不提交此刪除。
+- 不讀寫正式設定、docs/REPORT.md、原 BIN／正式客戶端或封存目錄；不連正式 3306／2000；不建立帳號、GRANT、schema、角色或持續存取設定；不啟動 3307／遊戲；不刪資料、不還原備份、不重做孤兒紀錄清除。
 
-## 已驗證
+## 已驗證：environments 資料候選
 
-### 本機實例候選識別
+本次定位到 `D:\BinEngine\environments\p24`。以下日期為檔案系統 UTC 修改時間，並非已證實的資料抽取時間。
 
-透過 Windows 服務、程序與監聽埠的唯讀查詢取得下列結果。
-
-| 欄位 | 觀察結果 |
-| --- | --- |
-| 連線候選 host | `127.0.0.1` |
-| 連線候選 port | `3306` |
-| 監聽位址 | `::` |
-| 程序 PID | `4188` |
-| 服務名稱／狀態 | `MySQL`／`Running` |
-| 服務執行檔 | `C:\Program Files\MySQL\MySQL Server 5.5\bin\mysqld` |
-| 服務參數指向的設定檔 | `C:\Program Files\MySQL\MySQL Server 5.5\my.ini`，僅由服務命令列取得路徑 |
-| `@@server_uuid` | 待驗證，認證失敗 |
-| `@@datadir` | 待驗證，認證失敗 |
-| `@@version` | 待驗證，認證失敗，服務路徑名稱只能作為線索 |
-| 三個既有 schema 是否在此實例 | 待驗證，認證失敗 |
-
-另外觀察到 `127.0.0.1:43324` 的 MySQL 程序 PID `24452`，執行檔位於 `D:\BinEngine\environments\p24\mysql\bin\mysqld.exe`。本輪只盤點其程序資訊，尚無證據將它識別為選項 A 的目標。
-
-已嘗試透過本機 MySQL client 以 TCP 連至 `127.0.0.1:3306`。認證回應為 `ERROR 1045 (28000)`，程序 exit code 為 `1`。管理帳號識別資訊從本報告省略。
-
-已檢查標準 MySQL login-path 檔案是否存在、目前執行中的常見 DB 管理工具，以及 Windows 已存憑證的入口名稱。這些檢查未找到可用的 MySQL 管理憑證入口。GitHub CLI 的沙箱內認證錯誤，經沙箱外使用既有 keyring 登入後已排除。
-
-### SQL 執行紀錄
-
-本輪唯一交給 client 的查詢如下。client 在認證階段遭拒，SQL 尚未送達伺服器執行。
-
-```sql
-SELECT @@server_uuid, @@datadir, @@version;
-```
-
-| 項目 | 結果 |
-| --- | --- |
-| 成功執行 SQL 數 | 0 |
-| `CREATE USER`／`GRANT` | 待執行 |
-| `CREATE DATABASE`／複製結構 | 待執行 |
-| 實驗帳號與角色 `INSERT` | 待執行 |
-| ro 的 `SELECT COUNT(*)` | 待驗證 |
-| ro 的 `INSERT` 拒絕測試 | 待驗證 |
-| rw 權限範圍 | 待驗證 |
-
-清理腳本內的 SQL 是未執行的交付內容，與本節執行紀錄分開管理。
-
-### 設定與程式讀取路徑
-
-以下路徑均以 `lito伺服器/LiTo381-Server/` 為根。
-
-| 程式位置 | 已核對行為 | 對本任務的影響 |
+| 候選 | 日期／大小 | 來源與可用性 |
 | --- | --- | --- |
-| `src/main/java/local/lito381/server/UnifiedConfiguration.java` 的 `KEYS`、`validate` | 接受單一 `database.user`／`database.password`，拒絕未知鍵，要求完整的統一設定鍵集合 | 自行新增 ro／rw 設定鍵會被拒絕 |
-| 同檔 `aliases` | 將同一帳密同時寫入 `Login_LOGIN`／`Login`、`Password_LOGIN`／`Password` | 別名亦共用帳密 |
-| 同檔 `sources`、`apply` | 在 `database.lito.database` 查詢 `lito_source_server`，且要求至少一個啟用來源 | 只複製結構後的空表不足以通過來源載入 |
-| `src/main/java/local/lito381/server/ServerConfig.java:293-299,378-399` | `database.connection.properties` 是共用連線設定來源，另指定動態庫與靜態庫 | 有 schema 分類，仍需檢查實際連線與權限分流 |
-| `src/main/java/local/lito381/server/ResourceDatabase.java:16,22-25` | 用 `database.user`／`database.password` 連 `database.lito.database`，讀 `lito_resource_release`，要求 `qualified_version='0.6.61'` | 改指向只有空結構的 `380_lito_exp` 將無法通過此資源檢查 |
-| `src/main/java/local/lito381/server/SharedDatabase.java:41-51` | 來源 repository 與寫回 Route 都從同一份 `legacySqlProperties` 取得憑證 | 尚無獨立寫回憑證設定 |
-| 同檔 `Route` 建構式及 `connection`，約 159-168 行 | JDBC URL 用來源 `database` 組成，帳密取 `Login_LOGIN`／`Password_LOGIN` | `database.lito.database` 的 controls 值未成為角色寫回連線的預設 schema |
-| 同檔 `persist` | 在上述 Route 連線對未限定 schema 的 `character_lito` 執行寫入 | 僅修改 controls schema 無法把既有來源角色的寫入轉到實驗庫 |
+| `sql/380_db.sql` | 2026-10-25 15:59:58Z；9,552,749 bytes | P24 現有檔；識別為 HardLink，只讀檔案資訊，未讀內容或追查另一連結，原始匯出來源待核實 |
+| `sql/380_lito.sql` | 2026-10-25 15:59:58Z；271,713 bytes | 同上；不能僅以檔名判斷結構完整 |
+| `sql/380_ac.sql`、`380_cross.sql`、`380_transit.sql` | 2026-10-25 | 另有帳號／跨服／轉移候選，僅盤點名稱；未輸出資料列 |
+| `db-data/` | 目錄 2026-11-05 19:41:19Z | 現有 P24 datadir；存在 p24_world、p24_accounts、p24_lito、p24_cross、p24_transit |
+| `backups/issue-23-current-20261105-040643/` | 2026-11-04 20:07:07Z | 備份候選，含 db-data、db-logs、mysql、server、manifest 等；未還原或重驗完整性 |
+| `backups/issue-71-before-demo/db-data/` | 2026-11-05 19:18:21Z | 存在上述 p24_* 庫；既有 #71 報告稱為啟動前冷備份，893 檔 SHA-256 相符；本輪只核對目錄，未重驗 893 檔 |
 
-另以 `javap` 唯讀檢查 `reference/base-0.6.71.jar` 的 `ResourceDatabase`，確認同樣讀取 `database.lito.database` 與單一帳密。未啟動伺服器。
+既有備份來源證據：[tw-bin-engine #71 報告](https://github.com/chaoren0418-arch/tw-bin-engine/blob/c09cc75231248750eea9976d66ca7bb7dda35559/docs/reports/issue-71.md)。該歷史報告的實例身分及關閉紀錄不當成本輪線上驗證。
 
-## 推測與待驗證
+### 三個庫與必要表
 
-- `127.0.0.1:3306` 是選項 A 的實例候選，仍須成功登入並核對三個 schema、datadir、版本及實例識別。
-- 真實 `380_lito` 的表結構、帳號密碼格式、角色登入必需欄位尚待唯讀結構查詢確認，避免先產生無法登入的實驗資料。
-- 空結構與測試帳號以外，來源目錄及必要資源資料的取得方式需配合程式分流設計。現有授權限定複製結構與建立少量實驗帳號角色，後續應沿用既有資源庫唯讀資料。
-- #84 指定的 `8d26c9d7…` 候選與 #225 的最終 JAR，仍須分別確認設定讀取路徑。當前 worktree 缺少 `docs/reports/issue-31.md`，可由主控提供該分支的交接資料。
-- 登入、大廳、戰鬥回歸及畫面驗收仍待各後續任務執行。
+| 需求 | 本輪靜態證據 | 缺口／限制 |
+| --- | --- | --- |
+| 380_db 資源／角色來源 | SQL 檔存在；p24_world 目錄有 npc、skills、weapon、armor、etcitem、mapids 等表檔 | p24_world 不見 character_lito；角色資料實際位於另一 p24_accounts 候選，不能直接用庫名替換判定相容 |
+| 380_lito 與角色寫回 | p24_lito 有 lito_source_server、lito_battle_*、lito_room_policy 等表檔；p24_accounts 有 accounts、characters、character_lito、character_items、character_skills 表檔 | p24_lito 未見 character_lito；需核對來源路由與寫回位置。檔名存在不證明欄位、資料或存取權限 |
+| lito_resource | 未見同名 SQL／datadir；p24_lito 有十個 lito_resource_* 表檔 | 不是已證實缺庫阻塞；目前 ResourceDatabase 使用 database.lito.database，不要求獨立 lito_resource schema |
 
-## 產出與清理方式
+已在本分支 `ResourceDatabase.java` 核對：資源表應為 `lito_resource_skill_value`、`buff`、`projectile`、`map`、`zone`、`portal`、`npc_identity`、`map_page`、`release`、`pending`（後九項均加相同前綴）。p24_lito 目錄有這十個表檔。
 
-| 產出 | 狀態 |
+程式另要求 `lito_resource_release.release_id=1` 的 `qualified_version='0.6.61'`、剛好十個資源表、必需欄位及 qualified 資料；這些條件都未在線驗證。來源目錄 `lito_source_server` 與角色寫回 `character_lito` 仍需在同一套安全設定中核對，不能僅複製空表宣稱就緒。
+
+### 版本、字元集與登入方式
+
+- P24 的 mysql/bin/mysqld.exe 檔案版本為 8.0.40.0；這是二進位檔版本，未查詢 `@@version`。
+- P24 mysql.ini 的非秘密欄位為 port 43324、bind-address 127.0.0.1、datadir 指向 environments/p24/db-data、character-set-server=utf8mb4、collation-server=utf8mb4_unicode_ci。
+- 本分支 pom.xml 使用 mysql-connector-j 8.0.33。版本與字元集表面上可作候選；尚未驗證 JDBC options、各表 collation、字元往返及真實連線。
+- 既有 private-root.cnf／private-game.cnf 入口存在；本輪未讀內容、未測登入，無法聲稱已具備可用的受限帳號。未要求、建立、傳送或配置新秘密。
+- P24 本輪未啟動，未發出 SQL。被動 netstat 未見 43324／42061 監聽，因此無本輪啟動殘留。線上結構盤點保留未驗證。
+
+## 已驗證：前輪 task/83 產物及風險
+
+以下為本地既有檔案所記載的結果，不是本輪重跑，也不能單靠紀錄證明正式環境完全沒有其他變更。
+
+| 產物 | 靜態核對結果 |
 | --- | --- |
-| `docs/reports/issue-83.md` | 本報告 |
-| `scratch/t020c/cleanup-exp-db.sql` | 已寫入，尚未執行，精確指定兩個 localhost 帳號與實驗 schema |
-| `scratch/t020c/isolated-test.properties` | 待建立，需可用憑證與程式支援，該路徑已確認由 `.gitignore` 排除 |
+| `export-production.ps1` | 匯出命令明確指定 127.0.0.1:3306、mysqldump 與三個庫；未執行此腳本 |
+| `export-status.json`，20:14:37Z | 380_db、380_lito 為 complete／exitCode 0；lito_resource 為 absent-skipped／exitCode 2 |
+| `dump/380_db.sql` | 5,782,453 bytes；SHA-256 AF0C983356780F392795B7AA4A2CFC1F9C987706462CA2D116A93AA2E46334C8，重算與 status 一致；未輸出內容 |
+| `dump/380_lito.sql` | 211,899 bytes；SHA-256 55242638AF8EEF517CA22D3526F4A6ECABA796C58D2F7694CCB58F9FB4504975，重算與 status 一致；未輸出內容 |
+| `import-status.json`，20:18:45Z | 上述兩庫均 imported／exitCode 0，記錄的輸入 SHA 相符 |
+| `mysql-exp/` | MariaDB 10.11.15 套件、data、start.cmd、stop.cmd、控制腳本及設定入口存在；秘密設定未讀取 |
+| `isolated-test.properties`、`combat.properties`、`test-accounts-private.properties` | 已存在，與舊報告「待建立」不同；只查檔案資訊，不公開或使用憑證 |
+| `test-seed-status.json` | 記錄來源 380_db、建立來源表、兩筆帳號及兩筆角色；未公開帳號／角色內容 |
+| `compatibility-status.json`、`set-card-compatibility-status.json` | 前輪相容別名處理紀錄存在；未重跑 SQL／腳本 |
+| `java-probe.log`，20:26:21Z | 記錄設定讀取、結構檢查與兩組測試登入 lookup 通過；最後失敗：`source map physical asset not packaged: 12000 -> 12000`。不是完整啟動或驗收通過 |
 
-本輪尚未建立 DB 物件。後續建立完成並結束實驗後，由獲授權的本機執行者先核對實例識別與物件歸屬，再以管理連線執行清理腳本。其內容如下。
+上述腳本、status、dump 雜湊與匯入紀錄共同支持「前輪曾對 3306 進行匯出，並建立／使用實驗資料」的判斷；原始授權及正式環境完整影響範圍仍須主控稽核。本輪不得把這兩份新匯出當作重新獲授權的測試來源，也未重用它們。
 
-```sql
-DROP USER 'lito_exp_ro'@'localhost';
-DROP USER 'lito_exp_rw'@'localhost';
-DROP DATABASE `380_lito_exp`;
-```
+### 前輪殘留程序
 
-本輪未讀寫 `config/server.properties`、未修改既有資料庫、未複製玩家資料、未啟停 MySQL 或遊戲服務、未修改 `docs/REPORT.md`。
+- 被動 netstat：`127.0.0.1:3307 LISTENING PID 7632`。
+- Get-Process：mariadbd，路徑位於本 worktree 的 `scratch/t020c/mysql-exp/mariadb-10.11.15-winx64/bin/mariadbd.exe`，啟動時間 2026-11-05 20:17:12Z。
+- `mysql-exp/mysql-exp.pid` 內容亦為 7632。
+- 未連線核對其線上 datadir、帳號、schema 或權限；未執行 stop.cmd。不能將「PID 25000 已終止」寫成「資料庫已停止」。
+- 早先 Get-NetTCPConnection 沒有可用輸出，不能作為無監聽證據；以上以 netstat 與程序路徑交叉核對為準。
 
-## 給下一棒的提示
+## 未驗證與下一步
 
-1. 本機對話取得可用的管理憑證入口後，先執行實例識別與 schema 核對，將結果補入本報告。憑證留在本機，SQL 紀錄遮蔽密碼。若實際版本不支援 `@@server_uuid`，記錄原錯誤並取得可用的版本及 datadir 識別證據。
-2. 主控安排 code 任務處理資源讀取與實驗帳號角色寫回的連線分流，涵蓋 `UnifiedConfiguration`、`ResourceDatabase`、`SharedDatabase.Route` 及其他共用連線消費端。維持 ro 僅有 SELECT、rw 僅可操作 `380_lito_exp.*` 的權限需求。
-3. 本機執行者確認既有同名使用者與 schema 狀態後，依原授權建立帳號、複製結構、建立 1～2 組最小實驗帳號角色，逐條補記實際 SQL。若同名物件已存在，先核對歸屬與權限。
-4. ro 除了指定的兩個資源庫，如確實需要額外 SELECT 範圍，先在本報告列出實際程式查詢依據。rw 維持 `SELECT, INSERT, UPDATE, DELETE ON 380_lito_exp.*`。
-5. 以實際設定讀取入口驗證 properties、ro 的資源計數與實驗庫 INSERT 拒絕，再發布就緒留言並關閉 #83。#84 與 #225 繼續等待此前置。
+1. **主控先處理前輪 3307 殘留及 3306 匯出稽核**：由明確獲授權的執行者核對 PID 7632 歸屬後安排正常關閉，保留證據；本輪無關閉／刪除授權，不執行清理。不得為稽核而再連正式 3306。
+2. **資料缺口是相容性證據，不是宣稱三個庫全缺**：確認 P24 的 p24_world／p24_accounts／p24_lito 路由、必需欄位、資源版本及測試角色所需非私人資料。若補資料，使用既有授權且去識別的 P24／快照來源，不新增正式匯出步驟。
+3. **帳號與隔離設定仍 blocked**：未確認可用的既有受限登入、SELECT 範圍及寫回隔離；新增 DB 帳號、GRANT、schema／副本、測試帳號角色或持續使用憑證均不在本輪委派範圍。主控應提供已備妥且可驗證的受限入口，或另取得具體目標及操作的必要授權後再派工。
+4. **線上盤點待續派**：若沿用合法既有登入入口，先核對 43324 的身分再只查結構／版本；若需要新憑證／權限則停下回報。P24 若啟動，結束須正常關閉並核對 43324／42061。
+5. **驗收缺口**：前輪 probe 的 map 12000 資產錯誤未解；本輪不重跑 probe、伺服器、遊戲或 #84／#225。主控需指定實際候選 JAR／來源版本，另行確認資料與 map 資產相容性。
+6. 只提交本報告；dump、秘密設定、玩家資料、完整執行紀錄均不公開。Issue 保持 open，RESULT 明確標示 blocked，不發布「隔離設定已就緒」。
+
+本輪沒有資料庫操作遭核准系統拒絕，因為未提出 DB 操作；程序命令列查詢是作業系統存取拒絕。Git 遠端查詢曾遇 executor transport 中斷，未重開工作環境，改以 GitHub API 確認遠端 SHA。此限制與任務仍未獲准的隔離建置範圍分開記錄。
