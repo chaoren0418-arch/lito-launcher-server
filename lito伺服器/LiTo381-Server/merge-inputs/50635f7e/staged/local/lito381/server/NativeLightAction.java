@@ -130,6 +130,8 @@ final class NativeLightAction {
         }
 
         private void emit() {
+            // Candidate exception range is [0, 4): only the original emit call.
+            // Keep both finish calls outside it so their failures never trigger a second finish.
             try {
                 this.nativeSourceBatchOriginalEmit();
             }
@@ -505,14 +507,18 @@ final class NativeLightAction {
                         if (!NativeSourceMaterialMain.locked(ingress, clientSession)) {
                             return;
                         }
-                        if (!NativeSourceMaterialPairGuard.matches(ingress.binding, clientSession, task) || !NativeSourceMaterialPairGuard.matches(binding, clientSession2, task) || CombatAccess.field(clientSession2, "hub") != ingress.hub || ((Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected")).booleanValue() || ((Boolean)CombatAccess.field(clientSession2, "sourceItemDisconnected")).booleanValue() || CombatAccess.field(ingress.hub, "sourceItemApplication") != ingress.application || ingress.application != null && ingress.application.closed) {
+                        // Match candidate capture order without reordering guard calls.
+                        NativePlayerCommit.Binding capturedBinding = binding;
+                        ClientSession capturedTarget = clientSession2;
+                        NativePlayerVitalCompletions.Receipt capturedReceipt = receipt;
+                        if (!NativeSourceMaterialPairGuard.matches(ingress.binding, clientSession, task) || !NativeSourceMaterialPairGuard.matches(capturedBinding, capturedTarget, task) || CombatAccess.field(capturedTarget, "hub") != ingress.hub || ((Boolean)CombatAccess.field(clientSession, "sourceItemDisconnected")).booleanValue() || ((Boolean)CombatAccess.field(capturedTarget, "sourceItemDisconnected")).booleanValue() || CombatAccess.field(ingress.hub, "sourceItemApplication") != ingress.application || ingress.application != null && ingress.application.closed) {
                             return;
                         }
                         Batch batch = new Batch(clientSession, ingress.arrival, ingress);
                         batch.captureSelf = true;
-                        batch.target = clientSession2;
-                        batch.targetBinding = binding;
-                        batch.targetReceipt = receipt;
+                        batch.target = capturedTarget;
+                        batch.targetBinding = capturedBinding;
+                        batch.targetReceipt = capturedReceipt;
                         Batch batch2 = current.get();
                         current.set(batch);
                         try {
@@ -528,12 +534,12 @@ final class NativeLightAction {
                                 current.set(batch2);
                             }
                             if (!batch.outputs.isEmpty() || !batch.completions.isEmpty()) {
-                                NativePairedCastSafety.transfer(clientSession, clientSession2, receipt);
+                                NativePairedCastSafety.transfer(clientSession, capturedTarget, capturedReceipt);
                                 try {
                                     NativePlayerVitalCompletions.enqueueLocked(ingress.receipt, batch);
                                 }
-                                catch (Error | RuntimeException throwable) {
-                                    NativePairedCastSafety.abandon(receipt);
+                                catch (RuntimeException | Error throwable) {
+                                    NativePairedCastSafety.abandon(capturedReceipt);
                                     throw throwable;
                                 }
                             }
@@ -579,11 +585,7 @@ final class NativeLightAction {
         if (batch == null || !batch.pc.nativePlayerActionLock().isHeldByCurrentThread()) {
             throw new IllegalStateException("scope output requires owned cast");
         }
-        batch.outputs.add(() -> {
-            if (batch.accepted.binding.matches(batch.pc)) {
-                task.run();
-            }
-        });
+        batch.outputs.add(() -> lambda$deferWeaponTargetOutput$0(batch, task));
     }
 
     static ClientSession currentMaterialProducer() {
@@ -598,12 +600,15 @@ final class NativeLightAction {
         if (batch == null || !batch.pc.nativePlayerActionLock().isHeldByCurrentThread()) {
             throw new IllegalStateException("scope output requires owned cast");
         }
-        batch.outputs.add(() -> {
-            if (batch.accepted.binding.matches(batch.pc)) {
-                task.run();
-            }
-        });
+        batch.outputs.add(() -> lambda$deferWeaponTargetOutput$0(batch, task));
     }
+    // The candidate shares one lambda between both defer callsites.
+    private static void lambda$deferWeaponTargetOutput$0(Batch batch, NativeSelfCastAction.Task task) throws IOException {
+        if (batch.accepted.binding.matches(batch.pc)) {
+            task.run();
+        }
+    }
+
     private static void dispatchResurrectionOriginal(ClientSession clientSession, byte[] byArray) throws IOException {
         int n = Protocol.spellSelector(byArray).skillId();
         String string = String.valueOf(CombatAccess.field(clientSession, "phase"));

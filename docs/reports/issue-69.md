@@ -2,66 +2,50 @@
 
 ## 本輪結論（2026-11-06，Asia/Taipei）
 
-**已完成 #203／#216 合併後的重新編譯與全批重驗；仍有 4 個 DIFF，B08 尚未通過驗收，不可交付 B-land。**
+**已合併 #254、修正 lambda 並重編全部 30 份 Java；160 個 entry 中 159 個可接受，仍有 1 個 DIFF，B08 尚未通過，不可 B-land。**
 
-本輪結果為 **141 SAME、10 SAME_PATHS、5 SAME_CFG、4 DIFF**；30 個外層類別產出 **160 個 entry，missing=0、extra=0、ONLY_LEFT=0、ONLY_RIGHT=0**。共 156 個 entry 符合[主控接受狀態](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373)。方法級仍有未配對 lambda 的 ONLY_LEFT／ONLY_RIGHT，不能把類別集合無缺漏誤讀為每個方法都通過。
+正式結果：**141 SAME、10 SAME_PATHS、7 SAME_CFG、1 LAMBDA_PAIRED_BY_CALLSITE、1 DIFF**。missing=0、extra=0；類別及方法級 ONLY_LEFT／ONLY_RIGHT 均為 0。唯一剩餘項是 `NativeLightAction$Batch#emit()V`。
 
-Issue #69 已加上 `needs:claude`。本輪不再以「等 #203／#216 合併」列為阻塞；兩項工具已取得，剩餘差異需主控依下列新證據裁定來源修補或工具後續工作。沒有新增豁免或將 DIFF 改列通過。
+此項已核對 javap：核心 try 的範圍兩側皆是 `[0,4)`，只保護 `nativeSourceBatchOriginalEmit()`。本輪診斷定位到核准 helper 正規化的**實體指令排列限制**；未自行修改工具、增加豁免或改寫正式驗收結果。依[本輪主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6670460666)交 `needs:claude`，完整差異如下。
 
 ## 已驗證：做了什麼
 
-- 沿用 worktree `D:/lineage開發/3-lito開發/scratch/wt/task-69` 與 `task/69`，起點 `b05465a2bf04a048ccf2454a3ccdabd7ec69a4b3`；未 checkout／建分支。
-- `git fetch origin main` 後，以 `13682bb88c12efad235a0de1ed6bba8a9563b802` 合併 `origin/main` 的 `54c908ab43d048ca6b9fe5e069c15734d8f9e8b4`，無衝突。包含 #203／PR #215（merge `5ae1eac2`）與 #216／PR #238（merge `54c908a`）。
-- semantic-diff 最新程式提交 `743c55ee924dd4942bfc0bd717e53081fd319fdd`，工具 tree `84e51c810a643288d978b476bde46a0c8acba999`；AsRecord 最近提交 `ff50cca6df1eb87c931b3d155ea0bfd72a65897b`。由當前工作樹原始碼重新編譯工具。
-- 先完成一般重驗，再用全新 `target/issue-69/recheck-216/` 重建工具、註解與 30 份 staged Java，執行 AsRecord 並打包。兩次完整 `classes` JSON、`counts`、`classSelection` 一致；160 個 class bytes 亦逐筆一致。全新目錄的結果是本報告的正式收據。
-- `git diff b05465a HEAD -- <B08 的 30 個 staged 檔>` 無差異。本輪未再修改 Java，保留前次修好的 `NativeProcHealingPlayer` 巢狀 monitor／vitalLock finally、`NativeLightAction.Output` package-private、六個 AsRecord 轉換及 helper／Exceptions 核准條目。治療類別與 Output 本輪仍為 SAME。
-- 本輪手工修改只有本報告；PR 累計差異仍為 B08 的 30 份 staged Java 與本報告。合併 main 帶入的其他已核准變更不是本輪手工編輯；`src/main`、`pom.xml`、`docs/REPORT.md` 相對合併主線無任務差異。
-- `git diff --check` 通過；以本輪合併的主線 `54c908a` 核對上述三個禁止修改路徑，差異為空。
-- 沒有執行 staged 程式、啟動伺服器／登入器／遊戲、連正式 DB，亦未讀取機密設定或封存。原始專案工作檔只讀；必要 Git 操作更新 worktree 共用 `.git` 中繼資料。
-
-### 前次 10 個 DIFF 的本輪結果
-
-| entry（省略 local/lito381/server/） | 本輪狀態 |
-|---|---|
-| `ClassicWorldMonsterPopulation` | SAME_CFG |
-| `NativeCancellationNpcStatic` | SAME_CFG |
-| `NativeCombatAttacker` | SAME_PATHS |
-| `NativeEquipmentDefense` | SAME_CFG |
-| `NativeLightAction` | DIFF |
-| `NativeLightAction$Batch` | DIFF |
-| `NativePlayerCommit` | DIFF |
-| `NativePlayerLifetime` | SAME_CFG |
-| `NativePlayerVitalCompletions` | SAME_CFG |
-| `NativeProcHealingEncounter$Dispatch` | DIFF |
-
-`NativeCombatAttacker.calculated` 本輪不再列出差異；沒有改寫其 equals owner。方法級另有 **14 個 SAME_CFG**，不可把這個數量混作類別數。
+- 沿用既有 worktree 與 `task/69`，從 `5434695aefe5ee91a874c7a6bf26c044f566d009` 開始，未 checkout／建分支。
+- fetch 後合併 main `8df7c89c3a9b4dbdb8eb01b40a5b53462dbac0f8`，合併提交 `47e6d398ad659f97148a0e5c99128bcb2da6abd5`，無衝突；包含 #254／PR #260 的 merge `5de170c`。semantic-diff 程式提交為 `45bbbe4cfd4f21b0080caa2726ac2928d0b8cc1c`，由本工作樹重建工具。
+- `commitPair` 在原有 locked 守門之後，先將 binding、target、receipt 複製到 lambda 內部別名，再引用 task；捕獲順序變為 `Ingress, ClientSession, Binding, ClientSession, Receipt, Task`，與候選一致。只讀區域參照，沒有提前執行 getter、守門、鎖或任務。
+- 同一 lambda 的 multi-catch 對齊為 `RuntimeException | Error`。兩型別互不隸屬、共用同一 handler，副作用不變；原先反向排序會造成工具保留的有序例外邊不同。本體以 423 條路徑證明後，成功按呼叫點配對。
+- `deferScoped`／`deferWeaponTargetOutput` 明確共用候選既有名稱 `lambda$deferWeaponTargetOutput$0` 的 private static 本體。Java lambda 只轉呼叫，既有正規化可還原為同一 handle；沒有新增核准。其邏輯依實際 bootstrap 目標，只檢查 accepted binding 後執行 task。候選舊 `lambda$deferScoped$10` 含 target 檢查，但已無引用，正式工具列 ORPHAN_IGNORED，沒有將舊邏輯帶回。
+- 共用 defer 本體與候選差異只剩候選多餘的 `GOTO`；正式工具以 6 條路徑證明後按呼叫點配對。外層 `NativeLightAction` 整類為 LAMBDA_PAIRED_BY_CALLSITE。
+- `Batch.emit` 完整比對後確認既有核心 try 涵蓋已一致，因此保留執行邏輯並加註解標出範圍。沒有把正常 `finish(null)` 納入該 catch，避免 finish 失敗時再執行一次 finish。**本項未達到 DIFF=0，不能宣稱已完成修復。**
+- `NativePlayerCommit`、`NativeProcHealingEncounter` 依裁定未改 Java。#254 已使 drain、acceptedTail、Dispatch.run 為 SAME_CFG；nativeManaTransferRecover 不再列方法差異，按線性／既有正規化通過。
+- 30 份來源相對起點逐檔比對，只有 `NativeLightAction.java` 改動；其他 29 份完全一致。保留六個 `@AsRecord`、治療巢狀 monitor／vitalLock finally、package-private Output、核准轉拋 helper 及 Exceptions 條目。`NativeProcHealingPlayer` 與 Output 仍為 SAME。
+- 最終 JAR 相對前輪僅 NativeLightAction、Batch、Ingress 三個 class bytes 變更（含來源行號變動）；其餘 157 個相同。沒有以容器雜湊代替 class 比對。
+- 本輪手工交付僅指定 Java 與本報告；`src/main`、`pom.xml`、`docs/REPORT.md` 相對本輪合併 main 無差異，`git diff --check` 通過。main 帶入其他批次不算本輪手工修改。
 
 ## 怎麼驗證
 
-JDK 為 Microsoft OpenJDK **17.0.17**。ASM／asm-tree／asm-analysis 為 **9.7**；前兩項只讀 Maven 快取，asm-analysis 沿用本 worktree `target/issue-69/asm-analysis-9.7.jar`。worktree 沒有 lib/，因此另外只讀既有 HikariCP 5.1.0 快取供編譯；未加 stub 或修改 pom。
+Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。前兩項使用既有 Maven 快取；asm-analysis 使用 worktree `target/issue-69/asm-analysis-9.7.jar`；HikariCP 5.1.0 使用既有 Maven 快取，沒有新增 stub。
 
-下列命令以伺服器目錄為基準，`<repo>` 指本 worktree，`<W>` 為 `<repo>/scratch/issue-69/recheck-216`，`<T>` 為 `target/issue-69/recheck-216`，`<ASM>` 為上述三個 JAR 以分號串接。每個 argfile 都是 UTF-8 無 BOM、絕對路徑逐行加雙引號；`staged.args` 從本輪 B08.classes 產生 30 行，`entries.txt` 從 B08.verify_entries 產生全部 160 行。未沿用前次診斷工具覆寫過的 argfile。
+先用 #254 重建原來源取得 **141 SAME＋10 SAME_PATHS＋7 SAME_CFG＋2 DIFF**；修正後在全新 `target/issue-69/final-254/` 重建工具、註解與全部 30 份 Java，AsRecord `scanned=160 converted=6`。最後核對 ZIP 集合恰好等於 B08.verify_entries 的 160 個 class。
+
+以下以伺服器目錄為基準，`<W>` 為本 worktree `scratch/issue-69/final-254`，`<T>` 為 `target/issue-69/final-254`；`<ASM>` 為三個 ASM 9.7 JAR 以分號串接。argfile 是 UTF-8 無 BOM，每行雙引號包住絕對路徑；30 個來源及 160 個 entry 均從 batches.json 的 B08 產生。
 
 ```text
 javac -J-Dfile.encoding=UTF-8 --release 17 -encoding UTF-8 -cp "<ASM>"
   -d <T>/tools @<W>/tools.args
-# tools.args = tools/semantic-diff/src/main/java 與 tools/as-record/src/main/java 全部 Java
-
+# semantic-diff 與 as-record 的 main Java，退出碼 0
 javac -J-Dfile.encoding=UTF-8 --release 17 -encoding UTF-8 -cp ""
   -d <T>/annotations @<W>/annotations.args
-# annotations.args = AsRecord.java、AsmFinal.java
-
+# AsRecord.java、AsmFinal.java，退出碼 0
 javac -J-Dfile.encoding=UTF-8 --release 17 -encoding UTF-8
   -cp "reference/candidate-50635f7e.jar;reference/base-0.6.71.jar;<T>/annotations;lib/*;D:/dev-cache/maven/repository/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
   -d <T>/classes @<W>/staged.args
 Note: Some input files use unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
-# 三次 javac 退出碼皆 0
-
+# 退出碼 0
 java -cp "<T>/tools;<ASM>" local.lito381.asrecord.AsRecord <T>/classes
 as-record: scanned=160 converted=6
-# 退出碼 0；只將 classes 下的 class 打包到 <T>/b08.jar，不放入註解或工具
-
+# 退出碼 0；只打包 classes 下 class，排序 entry 並固定 ZIP 時間
 java -Dfile.encoding=UTF-8 -Xmx2g -cp "<T>/tools;<ASM>" local.lito381.semanticdiff.SemanticDiff
   --left <T>/b08.jar --left-classpath reference/candidate-50635f7e.jar
   --right reference/candidate-50635f7e.jar --classes <W>/entries.txt
@@ -69,20 +53,19 @@ java -Dfile.encoding=UTF-8 -Xmx2g -cp "<T>/tools;<ASM>" local.lito381.semanticdi
   --extra-methods <W>/extra-methods-approved.txt
   --exceptions-exempt <W>/exceptions-exempt.txt
   --json <W>/semantic.json --md <W>/semantic.md
-SUMMARY SAME=141 SAME_EFFECTS=0 SAME_PATHS=10 ORPHAN_IGNORED=0 SAME_CFG=5 LAMBDA_PAIRED_BY_CALLSITE=0 VISIBILITY_BRIDGE=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=4 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=1 ALLOW_METHODS=0
-# 退出碼 0 表示工具完成，不代表 B08 通過
-classSelection.missingLeft=[]
-classSelection.extraLeft=[]
+SUMMARY SAME=141 SAME_EFFECTS=0 SAME_PATHS=10 ORPHAN_IGNORED=0 SAME_CFG=7 LAMBDA_PAIRED_BY_CALLSITE=1 VISIBILITY_BRIDGE=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=1 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=1 ALLOW_METHODS=0
+# 工具退出碼 0 不代表驗收通過；DIFF 仍為 1
 ZIP entries=160; expected=160; missing=0; extra=0
+classSelection.missingLeft=[]; classSelection.extraLeft=[]
 ```
 
-本輪核准僅 access-widen 1 條、extra-method 1 條、Exceptions 3 條；無 effects、layout、deviation、metadata 或 allow-methods 豁免。以下保留前次 checked-exception 編譯失敗證據與精確核准內容，並非宣稱本輪重做該 probe；本輪確認 staged 未變且實際套用相同清單。
+方法級另有 17 SAME_CFG、2 LAMBDA_PAIRED_BY_CALLSITE；不是額外 class 數。
 
-### 核准清單與 checked exception 證據
+### 原核准清單（全部套用，沒有新增）
 
-任務限定只交付 staged Java 與本報告，所以沒有改共用核准清單。下列精確條目依主控核准連結寫入 scratch 的同名清單，且完整保留於本報告，供重驗及 B-land 併入共用清單。沒有新增 effects／layout／deviation／metadata 豁免。
+任務只交付 staged Java 與本報告，因此未修改共用清單；下列精確條目存於 scratch，供 B-land 接手。access-widen 只取 B08 owner，避免整份跨批清單被工具拒絕。無 effects、layout、deviation、metadata 或 allow-methods 豁免。
 
-`access-widen-approved.txt` 是 `docs/combat-merge/access-widen-approved.txt` 的 B08 適用條目；整份清單包含其他批次，直接傳入會因未選取類別而被工具拒絕。
+`access-widen-approved.txt`：
 
 ```text
 local/lito381/server/NativeLightAction$Output # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/64#issuecomment-6654963452
@@ -94,7 +77,7 @@ local/lito381/server/NativeLightAction$Output # approved: https://github.com/cha
 local/lito381/server/NativeLightAction$Batch#rethrowCandidateFailure(Ljava/lang/Throwable;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373
 ```
 
-`exceptions-exempt.txt`（只豁免 throws 屬性，方法本體仍完整比對）：
+`exceptions-exempt.txt`：
 
 ```text
 local/lito381/server/LegacyMySqlRepository#healthCheck()V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373
@@ -102,355 +85,19 @@ local/lito381/server/LegacyMySqlRepository#persistTournamentProfile(JLjava/lang/
 local/lito381/server/LegacyMySqlRepository#tournamentProfiles()Llocal/lito381/server/RepositoryTournamentRoster; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373
 ```
 
-把三個方法宣告暫改回候選的 `throws SQLException`，只在 scratch 副本執行 javac，取得下列失敗；正式 staged 保留可編譯的 `throws Exception`。沒有將 probe 產物放入驗收 JAR。
+Exceptions 三條只豁免 throws 屬性，仍比對方法本體；前輪已記錄移除 throws 會產生三個 unreported exception 編譯錯誤，本輪沒有重做該 probe。LegacyMySqlRepository 仍為 SAME_PATHS。
 
-```text
-D:\lineage開發\3-lito開發\scratch\wt\task-69\scratch\issue-69\checked-probe\LegacyMySqlRepository.java:239: error: unreported exception Exception; must be caught or declared to be thrown
-        SharedDatabase.check(this);
-                            ^
-D:\lineage開發\3-lito開發\scratch\wt\task-69\scratch\issue-69\checked-probe\LegacyMySqlRepository.java:5202: error: unreported exception Exception; must be caught or declared to be thrown
-        if (SharedDatabase.registered(this)) return SharedDatabase.profiles(this);
-                                                                           ^
-D:\lineage開發\3-lito開發\scratch\wt\task-69\scratch\issue-69\checked-probe\LegacyMySqlRepository.java:5246: error: unreported exception Exception; must be caught or declared to be thrown
-        if (SharedDatabase.registered(this)) return SharedDatabase.persist(this, characterObjectId, characterName, expected, replacement);
-                                                                          ^
-3 errors
-javac exit code 1
-```
-
-套用三個精確 Exceptions 條目後，`LegacyMySqlRepository` 整個類別為 SAME_PATHS，沒有剩餘方法 DIFF。helper 經工具核准，Batch 的方法差異仍保留，未藉核准 helper 略過本體。
-
-
-### 輸入與本輪產物 SHA-256
+### 輸入與最終產物 SHA-256
 
 - `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar`：`e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`
 - `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar`：`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`
-- `lito伺服器/LiTo381-Server/target/issue-69/recheck-216/b08.jar`：`de96b8890030b3bc1c993f8a97273a41cd702781d07b3557b98278b44653dea9`
-- `scratch/issue-69/recheck-216/semantic.json`：`3941759d1949139f31352bf094983fc9413781472d2e4efa37e94389735ce7bc`
+- `lito伺服器/LiTo381-Server/target/issue-69/final-254/b08.jar`：`fc7697767d2da777f8e6bfd21bf8297701da1a2698f2795367f724c23859066f`
+- `scratch/issue-69/final-254/semantic.json`：`9988a5f60ca25f2c73f0fd357c734c1c6e8f1fde88f0ca800ace0ae1e12ec0f1`
+- `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/NativeLightAction.java`：`8561ad87c710bb8ce8faccbf634f221e8dad128a498bcfee3654802a1ed60ca8`
 
-本輪 JAR 以排序 entry 與固定 ZIP 時間打包，故容器 SHA 不同於前次 JAR，不能據此推斷 class 有變；已核對與本輪第一次編譯的 160 個 class bytes 全部一致。`audit.json` 另存 30 份來源 SHA 與每一步的完整 argv／退出碼。
+## 唯一剩餘差異與診斷（已驗證）
 
-## 剩餘差異分類（已觀測；等價性待裁定）
-
-| 類型 | 代表與範圍 | 新工具實際結果 |
-|---|---|---|
-| lambda 捕獲、內容與共用配對 | `NativeLightAction.commitPair`、`deferScoped`、`deferWeaponTargetOutput` | commitPair 捕獲 Task 位置不同；兩個 defer 的同一側共用 lambda，但左右內容身分不同；方法仍有 ONLY_LEFT／ONLY_RIGHT，外層 paths／CFG 未證明。 |
-| 例外 handler 與核准轉拋 helper | `NativeLightAction$Batch.emit` | 已套用精確 helper 核准，仍回報 path event multisets differ／labelled CFGs differ。不能因 helper 符合規則就略過整個 emit。 |
-| 迴圈與 finally 區塊排列 | `NativePlayerCommit.drain`、`acceptedTail`、`NativeProcHealingEncounter$Dispatch.run` | drain／run 有 cycle，acceptedTail 超過 paths 4096；三者 CFG 仍不同。Dispatch 的多個 continue 會展開多份 complete，候選共用正常出口。 |
-| 未使用值與指令搬移 | `NativePlayerCommit.nativeManaTransferRecover` | 候選保留額外 `ALOAD 1; POP`；paths 超過 4096，CFG 仍不同。其他偏移／handler 編號隨指令數不同，完整差異見下方。 |
-
-## 推測
-
-部分差異可能是 Java 與 ASM 的控制流程表達不同，例如 Dispatch 的多份 finally 與 nativeManaTransferRecover 的未使用值；這些只是檢查方向。**本輪沒有證明四個類別等價，也沒有裁定全部是工具誤報。** lambda 內容、捕獲值、例外邊及完成順序仍須逐項核實。
-
-## 待驗證／給下一棒的提示
-
-1. **Claude 主控**：審查本報告四類新證據，分清應修 staged Java 或需工具新增證明的部分。#203／#216 已合併，不應再次以這兩項尚未完成為由重派相同工作。Issue 已標 `needs:claude`。
-2. **後續本機執行器**：依裁定處理剩餘 4 個 DIFF，修改後重編全部 30 份、轉換並重驗全部 160 entries；必須 DIFF=0、missing=0、extra=0 且狀態均在核准範圍，才能宣告 B08 完成。
-3. **B-land 整合者**：保留本報告的 helper 與 Exceptions 精確核准；任務路徑限制下它們只存 scratch 與本報告，未修改共用核准檔。B03 可繼續引用 package-private `NativeLightAction.Output`，不代表 B08 整批已過。
-4. 單元測試及遊戲回歸依 §6-5 不適用本 staged 批次，交 B-land 統一處理；本輪未部署、未做實機驗收。
-
-## 產出路徑
-
-- Git 交付：`docs/reports/issue-69.md`；既有 B08 來源保留於 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`。
-- 本機重現腳本：`scratch/issue-69/recheck_216.py`；argfiles、UTF-8 logs、核准清單、完整 semantic JSON／Markdown、audit 與方法 dump：`scratch/issue-69/recheck-216/`。
-- 本機建置產物：`lito伺服器/LiTo381-Server/target/issue-69/recheck-216/`，未入 git。
-- PR：[#94](https://github.com/chaoren0418-arch/lito-launcher-server/pull/94)。
-
-## 方法級診斷與完整差異
-
-以下是**本輪新工具**的四個 DIFF entry 與全部 methodResults；接著附全部仍有 DIFF 的非 lambda 方法之完整 unified diff（無截斷），並保留涉及未配對 lambda 的兩側完整方法內容。dump 使用本輪工具的 `JarIndex`、`ClassComparer.methodIdentity/tryCatch/instructions` 讀取 JAR，屬正規化診斷視圖；沒有套用跨兩側的 owner／呼叫點配對／核准 handler 刪除，**不以 dump 文本差異覆蓋 semantic.json 的裁定**。例如 emit dump 仍顯示核准 helper 的 catch，正是供主控檢查本體與涵蓋。
-
-### NativeLightAction
-
-<details>
-<summary>本輪全部方法診斷</summary>
-
-```json
-{
-  "name": "local/lito381/server/NativeLightAction",
-  "status": "DIFF",
-  "byteSame": false,
-  "allowMethodsApplied": false,
-  "methodResults": [
-    {
-      "method": "lambda$commitPair$9(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "ONLY_RIGHT",
-      "detail": "only right"
-    },
-    {
-      "method": "lambda$deferScoped$10(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "ONLY_LEFT",
-      "detail": "only left"
-    },
-    {
-      "method": "lambda$deferWeaponTargetOutput$0(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "ONLY_RIGHT",
-      "detail": "only right"
-    },
-    {
-      "method": "activate(Llocal/lito381/server/ClientSession;IJI)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    },
-    {
-      "method": "cancel(Llocal/lito381/server/ClientSession;)Z",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    },
-    {
-      "method": "clear(Llocal/lito381/server/ClientSession;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    },
-    {
-      "method": "commitPair(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "DIFF",
-      "detail": "method commitPair(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)V: left=28:[124:java/lang/Throwable  ] right=28:[120:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ"
-    },
-    {
-      "method": "deferScoped(Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "DIFF",
-      "detail": "method deferScoped(Llocal/lito381/server/NativeSelfCastAction$Task;)V insn[20]: left=INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodH… right=INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodH…; path event multisets differ (left=15, right=15); labelled CFGs differ"
-    },
-    {
-      "method": "deferWeaponTargetOutput(Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-      "status": "DIFF",
-      "detail": "method deferWeaponTargetOutput(Llocal/lito381/server/NativeSelfCastAction$Task;)V insn[20]: left=INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodH… right=INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodH…; path event multisets differ (left=15, right=15); labelled CFGs differ"
-    },
-    {
-      "method": "expire(Llocal/lito381/server/ClientSession;J)I",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    },
-    {
-      "method": "honorPending(Llocal/lito381/server/ClientSession;JJ)Z",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    },
-    {
-      "method": "lambda$commitPair$9(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V",
-      "status": "ONLY_LEFT",
-      "detail": "only left"
-    },
-    {
-      "method": "storeReady(Llocal/lito381/server/ClientSession;IJ)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (5)"
-    }
-  ],
-  "effectsMethods": [],
-  "approvedMethods": [],
-  "firstDiff": {
-    "where": "method",
-    "member": "commitPair(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)V",
-    "insnIndex": null,
-    "detail": "left=28:[124:java/lang/Throwable  ] right=28:[120:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>commitPair：完整正規化差異</summary>
-
-```diff
---- staged/NativeLightAction/commitPair(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-+++ candidate/NativeLightAction/commitPair(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-@@ -5,36 +5,36 @@
- java/io/IOException
- ||||pvis=|pinv=|lvtvis=|lvtinv=
-
--TRY 28:[124:java/lang/Throwable  ]
--TRY 29:[124:java/lang/Throwable  ]
--TRY 30:[124:java/lang/Throwable  ]
--TRY 35:[124:java/lang/Throwable  ]
--TRY 46:[124:java/lang/Throwable  ]
--TRY 47:[124:java/lang/Throwable  ]
--TRY 58:[124:java/lang/Throwable  ]
--TRY 59:[124:java/lang/Throwable  ]
--TRY 60:[124:java/lang/Throwable  ]
--TRY 70:[73:java/io/UncheckedIOException  , 97:java/lang/Throwable  , 124:java/lang/Throwable  ]
--TRY 71:[73:java/io/UncheckedIOException  , 97:java/lang/Throwable  , 124:java/lang/Throwable  ]
--TRY 75:[97:java/lang/Throwable  , 124:java/lang/Throwable  ]
--TRY 76:[97:java/lang/Throwable  , 124:java/lang/Throwable  ]
--TRY 78:[124:java/lang/Throwable  ]
--TRY 81:[124:java/lang/Throwable  ]
--TRY 82:[124:java/lang/Throwable  ]
--TRY 84:[124:java/lang/Throwable  ]
--TRY 86:[124:java/lang/Throwable  ]
--TRY 90:[124:java/lang/Throwable  ]
--TRY 93:[124:java/lang/Throwable  ]
--TRY 95:[124:java/lang/Throwable  ]
--TRY 99:[124:java/lang/Throwable  ]
--TRY 102:[124:java/lang/Throwable  ]
--TRY 103:[124:java/lang/Throwable  ]
--TRY 105:[124:java/lang/Throwable  ]
--TRY 107:[124:java/lang/Throwable  ]
--TRY 111:[124:java/lang/Throwable  ]
--TRY 114:[124:java/lang/Throwable  ]
--TRY 116:[124:java/lang/Throwable  ]
--TRY 118:[124:java/lang/Throwable  ]
-+TRY 28:[120:java/lang/Throwable  ]
-+TRY 29:[120:java/lang/Throwable  ]
-+TRY 30:[120:java/lang/Throwable  ]
-+TRY 35:[120:java/lang/Throwable  ]
-+TRY 46:[120:java/lang/Throwable  ]
-+TRY 47:[120:java/lang/Throwable  ]
-+TRY 58:[120:java/lang/Throwable  ]
-+TRY 59:[120:java/lang/Throwable  ]
-+TRY 60:[120:java/lang/Throwable  ]
-+TRY 70:[73:java/io/UncheckedIOException  , 95:java/lang/Throwable  , 120:java/lang/Throwable  ]
-+TRY 71:[73:java/io/UncheckedIOException  , 95:java/lang/Throwable  , 120:java/lang/Throwable  ]
-+TRY 75:[95:java/lang/Throwable  , 120:java/lang/Throwable  ]
-+TRY 76:[95:java/lang/Throwable  , 120:java/lang/Throwable  ]
-+TRY 78:[120:java/lang/Throwable  ]
-+TRY 81:[120:java/lang/Throwable  ]
-+TRY 82:[120:java/lang/Throwable  ]
-+TRY 84:[120:java/lang/Throwable  ]
-+TRY 86:[120:java/lang/Throwable  ]
-+TRY 90:[120:java/lang/Throwable  ]
-+TRY 92:[120:java/lang/Throwable  ]
-+TRY 93:[120:java/lang/Throwable  ]
-+TRY 97:[120:java/lang/Throwable  ]
-+TRY 100:[120:java/lang/Throwable  ]
-+TRY 101:[120:java/lang/Throwable  ]
-+TRY 103:[120:java/lang/Throwable  ]
-+TRY 105:[120:java/lang/Throwable  ]
-+TRY 109:[120:java/lang/Throwable  ]
-+TRY 111:[120:java/lang/Throwable  ]
-+TRY 112:[120:java/lang/Throwable  ]
-+TRY 114:[120:java/lang/Throwable  ]
- ALOAD 0
- ALOAD 1
- ALOAD 2
-@@ -101,11 +101,11 @@
- ALOAD 1
- ALOAD 8
- ALOAD 0
--ALOAD 3
- ALOAD 4
- ALOAD 1
- ALOAD 5
--INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$af63fe6e68cfd3899283fefbe1d7b62e0a0f81208c854f8311239d75af7c1a51(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V, type:()V]
-+ALOAD 3
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/NativeSelfCastAction$Task;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$6b68235d2c8d50e26cae1ba81014eacf934e85f556cc515212e7a3bda2b6efa6(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/NativeSelfCastAction$Task;)V, type:()V]
- INVOKESTATIC local/lito381/server/NativePairedCastSafety.run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Ljava/lang/Runnable;)V
- GOTO L77
- ASTORE 10
-@@ -123,47 +123,43 @@
- ALOAD 6
- INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
- ILOAD 7
--IFEQ L119
-+IFEQ L115
- ALOAD 8
- GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
--ASTORE 11
- ALOAD 8
- INVOKESTATIC local/lito381/server/NativeSourceSelfFinalFrame.retire(Ljava/lang/Object;)V
--ALOAD 11
- INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
--GOTO L119
--ASTORE 12
-+GOTO L115
-+ASTORE 11
- ALOAD 9
- INVOKESTATIC local/lito381/server/NativeCastTimeline.restore(Llocal/lito381/server/NativeCastTimeline$Arrival;)V
- ALOAD 6
--IFNONNULL L105
-+IFNONNULL L103
- GETSTATIC local/lito381/server/NativeLightAction.ingress:Ljava/lang/ThreadLocal;
- INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L108
-+GOTO L106
- GETSTATIC local/lito381/server/NativeLightAction.ingress:Ljava/lang/ThreadLocal;
- ALOAD 6
- INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
- ILOAD 7
--IFEQ L117
-+IFEQ L113
- ALOAD 8
- GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
--ASTORE 13
- ALOAD 8
- INVOKESTATIC local/lito381/server/NativeSourceSelfFinalFrame.retire(Ljava/lang/Object;)V
--ALOAD 13
-+INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
-+ALOAD 11
-+ATHROW
-+ALOAD 5
-+IFNULL L127
-+ALOAD 5
-+INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
-+GOTO L127
-+ASTORE 12
-+ALOAD 5
-+IFNULL L125
-+ALOAD 5
- INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
- ALOAD 12
- ATHROW
--ALOAD 5
--IFNULL L131
--ALOAD 5
--INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
--GOTO L131
--ASTORE 14
--ALOAD 5
--IFNULL L129
--ALOAD 5
--INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
--ALOAD 14
--ATHROW
- RETURN
-```
-
-</details>
-
-<details>
-<summary>deferScoped：完整正規化差異</summary>
-
-```diff
---- staged/NativeLightAction/deferScoped(Llocal/lito381/server/NativeSelfCastAction$Task;)V
-+++ candidate/NativeLightAction/deferScoped(Llocal/lito381/server/NativeSelfCastAction$Task;)V
-@@ -26,7 +26,7 @@
- GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
- ALOAD 1
- ALOAD 0
--INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$b93037e7b70cc60f32950364f5b80c1fc077fc616c9138dff25da83806318b36(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V, type:()V]
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$feb21681a7a728f6083a06149f5c2fd605497b164c3f5581edc8c1a2fe120f3c(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V, type:()V]
- INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
- POP
- RETURN
-```
-
-</details>
-
-<details>
-<summary>deferWeaponTargetOutput：完整正規化差異</summary>
-
-```diff
---- staged/NativeLightAction/deferWeaponTargetOutput(Llocal/lito381/server/NativeSelfCastAction$Task;)V
-+++ candidate/NativeLightAction/deferWeaponTargetOutput(Llocal/lito381/server/NativeSelfCastAction$Task;)V
-@@ -26,7 +26,7 @@
- GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
- ALOAD 1
- ALOAD 0
--INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$b93037e7b70cc60f32950364f5b80c1fc077fc616c9138dff25da83806318b36(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V, type:()V]
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)Llocal/lito381/server/NativeLightAction$Output; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeLightAction.lambda$content$feb21681a7a728f6083a06149f5c2fd605497b164c3f5581edc8c1a2fe120f3c(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V, type:()V]
- INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
- POP
- RETURN
-```
-
-</details>
-
-### NativeLightAction$Batch
-
-<details>
-<summary>本輪全部方法診斷</summary>
+正式工具的完整 Batch 方法結果：
 
 ```json
 {
@@ -481,15 +128,82 @@ javac exit code 1
 }
 ```
 
-</details>
+### javap 完整 emit 與例外表
 
-<details>
-<summary>emit：完整正規化差異</summary>
+命令：`javap -p -c -s -classpath <staged 或 candidate JAR> 'local.lito381.server.NativeLightAction$Batch'`。以下從最終產物直接取得，未改寫 bytecode。
+
+**staged**：
+
+```text
+  private void emit();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokevirtual #144                // Method nativeSourceBatchOriginalEmit:()V
+       4: goto          23
+       7: astore_1
+       8: aload_0
+       9: aload_1
+      10: invokestatic  #147                // Method local/lito381/server/NativeSourceTargetIconBatch.finish:(Ljava/lang/Object;Ljava/lang/Throwable;)V
+      13: goto          21
+      16: astore_2
+      17: aload_2
+      18: invokestatic  #111                // Method rethrowCandidateFailure:(Ljava/lang/Throwable;)V
+      21: aload_1
+      22: athrow
+      23: aload_0
+      24: aconst_null
+      25: invokestatic  #147                // Method local/lito381/server/NativeSourceTargetIconBatch.finish:(Ljava/lang/Object;Ljava/lang/Throwable;)V
+      28: goto          36
+      31: astore_1
+      32: aload_1
+      33: invokestatic  #111                // Method rethrowCandidateFailure:(Ljava/lang/Throwable;)V
+      36: return
+    Exception table:
+       from    to  target type
+           0     4     7   Class java/lang/Throwable
+           8    13    16   Class java/lang/Throwable
+          23    28    31   Class java/lang/Throwable
+```
+
+**candidate**：
+
+```text
+  private void emit();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #191                // Method nativeSourceBatchOriginalEmit:()V
+       4: aload_0
+       5: aconst_null
+       6: invokestatic  #194                // Method local/lito381/server/NativeSourceTargetIconBatch.finish:(Ljava/lang/Object;Ljava/lang/Throwable;)V
+       9: return
+      10: astore_1
+      11: aload_0
+      12: aload_1
+      13: invokestatic  #194                // Method local/lito381/server/NativeSourceTargetIconBatch.finish:(Ljava/lang/Object;Ljava/lang/Throwable;)V
+      16: aload_1
+      17: athrow
+    Exception table:
+       from    to  target type
+           0     4    10   Class java/lang/Throwable
+```
+
+
+核心 Throwable handler 的 from/to 兩側都是 0/4；target staged=7、candidate=10 是區塊排列差異。staged 的額外 `[8,13)` 與 `[23,28)` 只保護兩個 finish 呼叫，handler 呼叫核准的原樣轉拋 helper。candidate 的 finish 宣告 `throws Throwable`，因此 Java 需要此編譯期橋接。
+
+### 完整正規化 unified diff
+
+dump 使用 JarIndex 與 ClassComparer 的 methodIdentity／tryCatch／instructions；此單側 dump 尚未套用兩側的核准 helper 消除，不可覆蓋正式結果。
 
 ```diff
---- staged/NativeLightAction$Batch/emit()V
-+++ candidate/NativeLightAction$Batch/emit()V
-@@ -5,27 +5,16 @@
+--- staged/emit
++++ candidate/emit
+@@ -1,31 +1,20 @@
+ emit()V
+ ()V
+ 0x2
+
 
  ||||pvis=|pinv=|lvtvis=|lvtinv=
 
@@ -524,1660 +238,208 @@ javac exit code 1
 -RETURN
 ```
 
-</details>
+### helper 消除為何沒有生效
 
-### NativePlayerCommit
+`RethrowHandlers.normalize` 先辨識核准原樣轉拋 handler，再以實體順序逐一對齊可能拋例外的 events。兩個 helper handler 都通過既有 body 證明；但移除後的左側順序是 `originalEmit, finish(error), ATHROW, finish(null)`，候選為 `originalEmit, finish(null), finish(error), ATHROW`，在第三項拒絕，因此整個 normalize 回傳原方法。
 
-<details>
-<summary>本輪全部方法診斷</summary>
-
-```json
-{
-  "name": "local/lito381/server/NativePlayerCommit",
-  "status": "DIFF",
-  "byteSame": false,
-  "allowMethodsApplied": false,
-  "methodResults": [
-    {
-      "method": "acceptedTail(Llocal/lito381/server/NativePlayerCommit$Frame;)V",
-      "status": "DIFF",
-      "detail": "method acceptedTail(Llocal/lito381/server/NativePlayerCommit$Frame;)V: left=23:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ] right=23:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ"
-    },
-    {
-      "method": "assign(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (18)"
-    },
-    {
-      "method": "captureBattleDefense(Llocal/lito381/server/ClientSession;IZLjava/lang/String;)I",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (96)"
-    },
-    {
-      "method": "captureWorldDefense(Llocal/lito381/server/ClientSession;IZLjava/lang/String;DLlocal/lito381/server/BattleAbilityStatus$IllusionAvatar;)I",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (386)"
-    },
-    {
-      "method": "drain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V",
-      "status": "DIFF",
-      "detail": "method drain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V: left=10:[259:java/lang/Throwable  ] right=10:[248:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ"
-    },
-    {
-      "method": "drawDefense(Llocal/lito381/server/ClientSession;Ljava/lang/String;)Llocal/lito381/server/NativeMagicDollEffects$DefenseProc;",
-      "status": "SAME_CFG",
-      "detail": "entry-rooted labelled CFGs equal"
-    },
-    {
-      "method": "nativeCompanionSceneAssign(Llocal/lito381/server/ClientSession;Ljava/lang/Object;Ljava/lang/String;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (18)"
-    },
-    {
-      "method": "nativeCompanionSceneOriginalAdvance(Llocal/lito381/server/ClientSession;Ljava/lang/Object;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (42)"
-    },
-    {
-      "method": "nativeManaTransferRecover(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;IILjava/lang/String;)V",
-      "status": "DIFF",
-      "detail": "method nativeManaTransferRecover(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;IILjava/lang/String;)V: left=30:[144:java/lang/Throwable  ] right=32:[146:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ"
-    },
-    {
-      "method": "nativeSourceProc68Queue(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/NativeSourceEquipmentProcLife$Proof;Llocal/lito381/server/NativeProcSkillCatalog$Catalog;Llocal/lito381/server/BattleAbilityStatus;)Llocal/lito381/server/NativePlayerCommit$Queue;",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (47)"
-    },
-    {
-      "method": "nativeSourceScalarQueue(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/BattleTimedStatus;Llocal/lito381/server/NativeSourceEquipmentProcLife$Proof;Llocal/lito381/server/NativeProcSkillCatalog$Catalog;)Llocal/lito381/server/NativePlayerCommit$Queue;",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (47)"
-    },
-    {
-      "method": "nativeStaticOriginalAdvance(Llocal/lito381/server/ClientSession;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (48)"
-    },
-    {
-      "method": "publishDefense(Llocal/lito381/server/ClientSession;)V",
-      "status": "SAME_CFG",
-      "detail": "entry-rooted labelled CFGs equal"
-    },
-    {
-      "method": "selected(Llocal/lito381/server/ClientSession;Ljava/lang/String;)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (14)"
-    },
-    {
-      "method": "worldPlayer(Llocal/lito381/server/ClientSession;ILlocal/lito381/server/ClientSession;ZZ)V",
-      "status": "SAME_PATHS",
-      "detail": "path multisets equal (210)"
-    }
-  ],
-  "effectsMethods": [],
-  "approvedMethods": [],
-  "firstDiff": {
-    "where": "method",
-    "member": "acceptedTail(Llocal/lito381/server/NativePlayerCommit$Frame;)V",
-    "insnIndex": null,
-    "detail": "left=23:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ] right=23:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]; paths rejected: path limit 4096 exceeded; labelled CFGs differ"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>acceptedTail：完整正規化差異</summary>
-
-```diff
---- staged/NativePlayerCommit/acceptedTail(Llocal/lito381/server/NativePlayerCommit$Frame;)V
-+++ candidate/NativePlayerCommit/acceptedTail(Llocal/lito381/server/NativePlayerCommit$Frame;)V
-@@ -5,59 +5,59 @@
-
- ||||pvis=|pinv=|lvtvis=|lvtinv=
-
--TRY 23:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 28:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 34:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 38:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 39:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 40:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 44:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 48:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 49:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 50:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 54:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 55:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 56:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 60:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 61:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 62:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 66:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 67:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 71:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 72:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 73:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 74:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 78:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 79:[133:local/lito381/server/NativeAcceptedState$Stale  , 191:java/lang/Throwable  ]
--TRY 93:[103:java/lang/Throwable  , 121:java/lang/Throwable  ]
--TRY 95:[103:java/lang/Throwable  , 121:java/lang/Throwable  ]
--TRY 98:[121:java/lang/Throwable  ]
--TRY 100:[121:java/lang/Throwable  ]
--TRY 101:[121:java/lang/Throwable  ]
--TRY 106:[121:java/lang/Throwable  ]
--TRY 108:[121:java/lang/Throwable  ]
--TRY 109:[121:java/lang/Throwable  ]
--TRY 111:[121:java/lang/Throwable  ]
--TRY 136:[191:java/lang/Throwable  ]
--TRY 137:[191:java/lang/Throwable  ]
--TRY 151:[161:java/lang/Throwable  , 179:java/lang/Throwable  ]
--TRY 153:[161:java/lang/Throwable  , 179:java/lang/Throwable  ]
--TRY 156:[179:java/lang/Throwable  ]
--TRY 158:[179:java/lang/Throwable  ]
--TRY 159:[179:java/lang/Throwable  ]
--TRY 164:[179:java/lang/Throwable  ]
--TRY 166:[179:java/lang/Throwable  ]
--TRY 167:[179:java/lang/Throwable  ]
--TRY 169:[179:java/lang/Throwable  ]
--TRY 204:[214:java/lang/Throwable  , 232:java/lang/Throwable  ]
--TRY 206:[214:java/lang/Throwable  , 232:java/lang/Throwable  ]
--TRY 209:[232:java/lang/Throwable  ]
--TRY 211:[232:java/lang/Throwable  ]
--TRY 212:[232:java/lang/Throwable  ]
--TRY 217:[232:java/lang/Throwable  ]
--TRY 219:[232:java/lang/Throwable  ]
--TRY 220:[232:java/lang/Throwable  ]
--TRY 222:[232:java/lang/Throwable  ]
-+TRY 23:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 28:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 34:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 38:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 39:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 40:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 44:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 48:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 49:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 50:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 54:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 55:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 56:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 60:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 61:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 62:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 66:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 67:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 71:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 72:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 73:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 74:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 78:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 79:[124:local/lito381/server/NativeAcceptedState$Stale  , 173:java/lang/Throwable  ]
-+TRY 84:[94:java/lang/Throwable  , 112:java/lang/Throwable  ]
-+TRY 86:[94:java/lang/Throwable  , 112:java/lang/Throwable  ]
-+TRY 89:[112:java/lang/Throwable  ]
-+TRY 91:[112:java/lang/Throwable  ]
-+TRY 92:[112:java/lang/Throwable  ]
-+TRY 97:[112:java/lang/Throwable  ]
-+TRY 99:[112:java/lang/Throwable  ]
-+TRY 100:[112:java/lang/Throwable  ]
-+TRY 102:[112:java/lang/Throwable  ]
-+TRY 127:[173:java/lang/Throwable  ]
-+TRY 128:[173:java/lang/Throwable  ]
-+TRY 133:[143:java/lang/Throwable  , 161:java/lang/Throwable  ]
-+TRY 135:[143:java/lang/Throwable  , 161:java/lang/Throwable  ]
-+TRY 138:[161:java/lang/Throwable  ]
-+TRY 140:[161:java/lang/Throwable  ]
-+TRY 141:[161:java/lang/Throwable  ]
-+TRY 146:[161:java/lang/Throwable  ]
-+TRY 148:[161:java/lang/Throwable  ]
-+TRY 149:[161:java/lang/Throwable  ]
-+TRY 151:[161:java/lang/Throwable  ]
-+TRY 177:[187:java/lang/Throwable  , 205:java/lang/Throwable  ]
-+TRY 179:[187:java/lang/Throwable  , 205:java/lang/Throwable  ]
-+TRY 182:[205:java/lang/Throwable  ]
-+TRY 184:[205:java/lang/Throwable  ]
-+TRY 185:[205:java/lang/Throwable  ]
-+TRY 190:[205:java/lang/Throwable  ]
-+TRY 192:[205:java/lang/Throwable  ]
-+TRY 193:[205:java/lang/Throwable  ]
-+TRY 195:[205:java/lang/Throwable  ]
- GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
- INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativePlayerCommit$Frame
-@@ -140,16 +140,7 @@
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
- POP2
- ILOAD 6
--IFNE L92
--ALOAD 1
--IFNONNULL L88
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L245
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L245
-+IFEQ L103
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativePlayerCommit.publishDefense(Llocal/lito381/server/ClientSession;)V
- ALOAD 0
-@@ -160,7 +151,7 @@
- ALOAD 5
- GETFIELD local/lito381/server/NativePlayerCommit$Event.npcFeedback:Llocal/lito381/server/NativeCombatAttacker$Feedback;
- INVOKESTATIC local/lito381/server/NativeCombatAttacker.acceptedFeedback(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeCombatAttacker$Feedback;)V
--GOTO L112
-+GOTO L103
- ASTORE 7
- ALOAD 2
- ALOAD 5
-@@ -171,43 +162,34 @@
- ALOAD 7
- ATHROW
- ALOAD 1
--IFNONNULL L117
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L132
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L132
-+IFNONNULL L108
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-+GOTO L123
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+ALOAD 1
-+INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-+GOTO L123
- ASTORE 8
- ALOAD 1
--IFNONNULL L127
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L130
-+IFNONNULL L118
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-+GOTO L121
- GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
- ALOAD 1
- INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
- ALOAD 8
- ATHROW
--GOTO L245
-+GOTO L218
- ASTORE 9
- ILOAD 6
--IFEQ L139
-+IFEQ L130
- GETSTATIC local/lito381/server/NativePlayerCommit.committed:Ljava/util/concurrent/atomic/AtomicLong;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
- POP2
- ILOAD 6
--IFNE L150
--ALOAD 1
--IFNONNULL L146
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L245
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L245
-+IFEQ L152
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativePlayerCommit.publishDefense(Llocal/lito381/server/ClientSession;)V
- ALOAD 0
-@@ -218,49 +200,40 @@
- ALOAD 5
- GETFIELD local/lito381/server/NativePlayerCommit$Event.npcFeedback:Llocal/lito381/server/NativeCombatAttacker$Feedback;
- INVOKESTATIC local/lito381/server/NativeCombatAttacker.acceptedFeedback(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeCombatAttacker$Feedback;)V
-+GOTO L152
-+ASTORE 10
-+ALOAD 2
-+ALOAD 5
-+GETFIELD local/lito381/server/NativePlayerCommit$Event.attacker:Llocal/lito381/server/NativeCombatAttacker$Ref;
-+ALOAD 5
-+GETFIELD local/lito381/server/NativePlayerCommit$Event.npcFeedback:Llocal/lito381/server/NativeCombatAttacker$Feedback;
-+INVOKESTATIC local/lito381/server/NativeCombatAttacker.acceptedFeedback(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeCombatAttacker$Feedback;)V
-+ALOAD 10
-+ATHROW
-+ALOAD 1
-+IFNONNULL L157
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-+GOTO L172
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+ALOAD 1
-+INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-+GOTO L172
-+ASTORE 11
-+ALOAD 1
-+IFNONNULL L167
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
- GOTO L170
--ASTORE 10
--ALOAD 2
--ALOAD 5
--GETFIELD local/lito381/server/NativePlayerCommit$Event.attacker:Llocal/lito381/server/NativeCombatAttacker$Ref;
--ALOAD 5
--GETFIELD local/lito381/server/NativePlayerCommit$Event.npcFeedback:Llocal/lito381/server/NativeCombatAttacker$Feedback;
--INVOKESTATIC local/lito381/server/NativeCombatAttacker.acceptedFeedback(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeCombatAttacker$Feedback;)V
--ALOAD 10
--ATHROW
--ALOAD 1
--IFNONNULL L175
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L190
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L190
--ASTORE 11
--ALOAD 1
--IFNONNULL L185
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L188
- GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
- ALOAD 1
- INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
- ALOAD 11
- ATHROW
--GOTO L245
-+GOTO L218
- ASTORE 12
- ILOAD 6
--IFNE L203
--ALOAD 1
--IFNONNULL L199
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L243
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L243
-+IFEQ L196
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativePlayerCommit.publishDefense(Llocal/lito381/server/ClientSession;)V
- ALOAD 0
-@@ -271,7 +244,7 @@
- ALOAD 5
- GETFIELD local/lito381/server/NativePlayerCommit$Event.npcFeedback:Llocal/lito381/server/NativeCombatAttacker$Feedback;
- INVOKESTATIC local/lito381/server/NativeCombatAttacker.acceptedFeedback(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCombatAttacker$Ref;Llocal/lito381/server/NativeCombatAttacker$Feedback;)V
--GOTO L223
-+GOTO L196
- ASTORE 13
- ALOAD 2
- ALOAD 5
-@@ -282,20 +255,20 @@
- ALOAD 13
- ATHROW
- ALOAD 1
--IFNONNULL L228
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L243
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--ALOAD 1
--INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
--GOTO L243
-+IFNONNULL L201
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-+GOTO L216
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+ALOAD 1
-+INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-+GOTO L216
- ASTORE 14
- ALOAD 1
--IFNONNULL L238
--GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
--INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
--GOTO L241
-+IFNONNULL L211
-+GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
-+INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-+GOTO L214
- GETSTATIC local/lito381/server/NativePlayerCommit.current:Ljava/lang/ThreadLocal;
- ALOAD 1
- INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-```
-
-</details>
-
-<details>
-<summary>drain：完整正規化差異</summary>
-
-```diff
---- staged/NativePlayerCommit/drain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
-+++ candidate/NativePlayerCommit/drain(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
-@@ -5,75 +5,75 @@
-
- ||||pvis=|pinv=|lvtvis=|lvtinv=
-
--TRY 10:[259:java/lang/Throwable  ]
--TRY 19:[259:java/lang/Throwable  ]
--TRY 27:[259:java/lang/Throwable  ]
--TRY 41:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 42:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 47:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 50:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 55:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 58:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 61:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 63:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 67:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 72:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 74:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 75:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 77:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 80:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 81:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 86:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 91:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 94:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 97:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 99:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 103:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 104:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 106:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 111:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 117:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 121:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 125:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 135:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 136:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 137:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 140:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 142:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 149:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 151:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 153:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 156:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 165:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 169:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 171:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 172:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 176:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 177:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 184:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 185:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 186:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 196:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 199:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 201:[208:java/lang/Throwable  , 229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 204:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 206:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 210:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 212:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 214:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 216:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 218:[229:java/lang/Throwable  , 259:java/lang/Throwable  ]
--TRY 231:[259:java/lang/Throwable  ]
--TRY 233:[259:java/lang/Throwable  ]
--TRY 237:[259:java/lang/Throwable  ]
--TRY 238:[259:java/lang/Throwable  ]
--TRY 241:[259:java/lang/Throwable  ]
--TRY 242:[259:java/lang/Throwable  ]
--TRY 244:[259:java/lang/Throwable  ]
--TRY 246:[259:java/lang/Throwable  ]
--TRY 247:[259:java/lang/Throwable  ]
--TRY 248:[259:java/lang/Throwable  ]
--TRY 250:[259:java/lang/Throwable  ]
-+TRY 10:[248:java/lang/Throwable  ]
-+TRY 19:[248:java/lang/Throwable  ]
-+TRY 22:[248:java/lang/Throwable  ]
-+TRY 31:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 32:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 37:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 40:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 45:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 48:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 51:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 53:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 57:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 62:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 64:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 65:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 67:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 70:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 71:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 76:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 81:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 84:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 87:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 89:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 93:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 94:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 96:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 101:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 104:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 105:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 106:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 109:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 111:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 117:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 121:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 125:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 138:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 140:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 142:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 145:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 154:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 158:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 160:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 161:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 165:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 166:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 173:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 174:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 175:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 185:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 188:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 190:[197:java/lang/Throwable  , 218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 193:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 195:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 199:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 201:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 203:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 205:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 207:[218:java/lang/Throwable  , 248:java/lang/Throwable  ]
-+TRY 220:[248:java/lang/Throwable  ]
-+TRY 222:[248:java/lang/Throwable  ]
-+TRY 226:[248:java/lang/Throwable  ]
-+TRY 227:[248:java/lang/Throwable  ]
-+TRY 230:[248:java/lang/Throwable  ]
-+TRY 231:[248:java/lang/Throwable  ]
-+TRY 233:[248:java/lang/Throwable  ]
-+TRY 235:[248:java/lang/Throwable  ]
-+TRY 236:[248:java/lang/Throwable  ]
-+TRY 237:[248:java/lang/Throwable  ]
-+TRY 239:[248:java/lang/Throwable  ]
- CONST null
- ASTORE 2
- CONST Integer:0
-@@ -82,35 +82,25 @@
- ISTORE 4
- ILOAD 4
- CONST Integer:256
--IF_ICMPGE L253
-+IF_ICMPGE L242
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Queue.waitNanos()J
- LSTORE 5/6
- LLOAD 5/6
- CONST Long:0
- LCMP
--IFLE L26
-+IFLE L21
- ALOAD 0
- ALOAD 1
- LLOAD 5/6
- INVOKESTATIC local/lito381/server/NativePlayerLifetime.deadline(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;J)V
--ILOAD 3
--IFNE L25
--ALOAD 0
--ALOAD 1
--INVOKESTATIC local/lito381/server/NativePlayerCommit.resumeAccepted(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
--RETURN
-+GOTO L242
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Queue.claim()Llocal/lito381/server/NativePlayerCommit$Event;
- ASTORE 7
- ALOAD 7
--IFNONNULL L37
--ILOAD 3
--IFNE L36
--ALOAD 0
--ALOAD 1
--INVOKESTATIC local/lito381/server/NativePlayerCommit.resumeAccepted(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
--RETURN
-+IFNONNULL L27
-+GOTO L242
- CONST Integer:0
- ISTORE 8
- ALOAD 0
-@@ -127,22 +117,22 @@
- INVOKESTATIC local/lito381/server/NativePlayerVitals.gm(Llocal/lito381/server/ClientSession;)Z
- ISTORE 11
- ILOAD 10
--IFEQ L77
-+IFEQ L67
- ALOAD 1
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.closed:Z
--IFNE L77
-+IFNE L67
- ALOAD 1
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.terminal:Z
--IFNE L77
-+IFNE L67
- ALOAD 7
- GETFIELD local/lito381/server/NativePlayerCommit$Event.target:Llocal/lito381/server/NativePlayerCommit$Binding;
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matchesFast(Llocal/lito381/server/ClientSession;)Z
--IFEQ L77
-+IFEQ L67
- ALOAD 0
- CONST str:"playerHp"
- INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
--IFLE L77
-+IFLE L67
- ALOAD 0
- ALOAD 9
- ALOAD 7
-@@ -150,7 +140,7 @@
- ALOAD 7
- GETFIELD local/lito381/server/NativePlayerCommit$Event.attacker:Llocal/lito381/server/NativeCombatAttacker$Ref;
- INVOKESTATIC local/lito381/server/NativeEquipmentDefense.resolve(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Ljava/util/List;Llocal/lito381/server/NativeCombatAttacker$Ref;)Llocal/lito381/server/NativeEquipmentDefense$Resolved;
--GOTO L78
-+GOTO L68
- INVOKESTATIC local/lito381/server/NativeEquipmentDefense$Resolved.empty()Llocal/lito381/server/NativeEquipmentDefense$Resolved;
- ASTORE 12
- ALOAD 1
-@@ -163,51 +153,30 @@
- INVOKESTATIC local/lito381/server/NativeHpCompletionAdmission.reserve(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
- ASTORE 13
- ALOAD 13
--IFNULL L134
-+IFNULL L103
- ALOAD 1
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.closed:Z
--IFNE L134
-+IFNE L103
- ALOAD 1
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.terminal:Z
--IFNE L134
-+IFNE L103
- ALOAD 7
- GETFIELD local/lito381/server/NativePlayerCommit$Event.target:Llocal/lito381/server/NativePlayerCommit$Binding;
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matchesFast(Llocal/lito381/server/ClientSession;)Z
--IFEQ L134
-+IFEQ L103
- ALOAD 0
- CONST str:"phase"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- INVOKESTATIC java/lang/String.valueOf(Ljava/lang/Object;)Ljava/lang/String;
- ALOAD 7
- GETFIELD local/lito381/server/NativePlayerCommit$Event.world:Z
--IFEQ L110
-+IFEQ L100
- CONST str:"WORLD"
--GOTO L111
-+GOTO L101
- CONST str:"BATTLE"
- INVOKEVIRTUAL java/lang/String.equals(Ljava/lang/Object;)Z
--IFEQ L134
--ALOAD 0
--ALOAD 7
--ALOAD 9
--ILOAD 10
--INVOKESTATIC local/lito381/server/NativeSourceGroundQueued.beforeEvent(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Event;Llocal/lito381/server/ClientSession;Z)Z
--IFEQ L134
--ALOAD 0
--CONST str:"playerMaxHp"
--INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
--ISTORE 14
--ALOAD 0
--CONST str:"playerHp"
--INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
--ISTORE 15
--ILOAD 15
--IFLE L131
--CONST Integer:1
--GOTO L132
--CONST Integer:0
--ISTORE 8
--GOTO L144
-+IFNE L113
- ALOAD 7
- INVOKESTATIC local/lito381/server/NativeAcceptedFreezeMutation.abandon(Llocal/lito381/server/NativePlayerCommit$Event;)V
- GETSTATIC local/lito381/server/NativePlayerCommit.dropped:Ljava/util/concurrent/atomic/AtomicLong;
-@@ -217,9 +186,29 @@
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.vitalLock:Ljava/util/concurrent/locks/ReentrantLock;
- ALOAD 13
- INVOKESTATIC local/lito381/server/NativeHpCompletionAdmission.unlock(Ljava/util/concurrent/locks/ReentrantLock;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
--GOTO L251
-+GOTO L240
-+ALOAD 0
-+ALOAD 7
-+ALOAD 9
-+ILOAD 10
-+INVOKESTATIC local/lito381/server/NativeSourceGroundQueued.beforeEvent(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Event;Llocal/lito381/server/ClientSession;Z)Z
-+IFEQ L103
-+ALOAD 0
-+CONST str:"playerMaxHp"
-+INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
-+ISTORE 14
-+ALOAD 0
-+CONST str:"playerHp"
-+INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
-+ISTORE 15
-+ILOAD 15
-+IFLE L131
-+CONST Integer:1
-+GOTO L132
-+CONST Integer:0
-+ISTORE 8
- ILOAD 8
--IFEQ L159
-+IFEQ L148
- ILOAD 15
- ILOAD 14
- ALOAD 7
-@@ -232,11 +221,11 @@
- ALOAD 16
- INVOKEVIRTUAL local/lito381/server/NativePlayerVitals$Result.after()I
- ISTORE 17
--GOTO L174
-+GOTO L163
- ILOAD 11
--IFEQ L163
--ILOAD 15
--GOTO L164
-+IFEQ L152
-+ILOAD 15
-+GOTO L153
- CONST Integer:0
- ISTORE 17
- NEW local/lito381/server/NativePlayerVitals$Result
-@@ -254,7 +243,7 @@
- PUTFIELD local/lito381/server/NativePlayerCommit$Queue.terminal:Z
- ILOAD 17
- ILOAD 15
--IF_ICMPEQ L186
-+IF_ICMPEQ L175
- ALOAD 0
- CONST str:"playerHp"
- ILOAD 17
-@@ -281,7 +270,7 @@
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.vitalLock:Ljava/util/concurrent/locks/ReentrantLock;
- ALOAD 13
- INVOKESTATIC local/lito381/server/NativeHpCompletionAdmission.unlock(Ljava/util/concurrent/locks/ReentrantLock;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
--GOTO L215
-+GOTO L204
- ASTORE 19
- ALOAD 1
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.vitalLock:Ljava/util/concurrent/locks/ReentrantLock;
-@@ -293,28 +282,28 @@
- INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.drain(Llocal/lito381/server/ClientSession;)V
- ALOAD 18
- INVOKEVIRTUAL local/lito381/server/NativeAcceptedHpCompletion.suspend()Z
--IFEQ L228
-+IFEQ L217
- CONST Integer:1
- ISTORE 20
- ILOAD 20
--IFNE L227
-+IFNE L216
- ALOAD 0
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativePlayerCommit.resumeAccepted(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
- RETURN
--GOTO L251
-+GOTO L240
- ASTORE 21
- ALOAD 7
- INVOKESTATIC local/lito381/server/NativeAcceptedFreezeMutation.abandon(Llocal/lito381/server/NativePlayerCommit$Event;)V
- ALOAD 21
- INVOKESTATIC local/lito381/server/NativeAcceptedState.isStale(Ljava/lang/Throwable;)Z
--IFEQ L241
-+IFEQ L230
- ILOAD 8
--IFEQ L251
-+IFEQ L229
- GETSTATIC local/lito381/server/NativePlayerCommit.committed:Ljava/util/concurrent/atomic/AtomicLong;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
- POP2
--GOTO L251
-+GOTO L240
- GETSTATIC local/lito381/server/NativePlayerCommit.failed:Ljava/util/concurrent/atomic/AtomicLong;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
- POP2
-@@ -328,16 +317,17 @@
- IINC var=4 incr=1
- GOTO L6
- ILOAD 3
--IFNE L258
-+IFNE L256
- ALOAD 0
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativePlayerCommit.resumeAccepted(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
--RETURN
-+GOTO L256
- ASTORE 22
- ILOAD 3
--IFNE L265
-+IFNE L254
- ALOAD 0
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativePlayerCommit.resumeAccepted(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Queue;)V
- ALOAD 22
- ATHROW
-+RETURN
-```
-
-</details>
-
-<details>
-<summary>nativeManaTransferRecover：完整正規化差異</summary>
-
-```diff
---- staged/NativePlayerCommit/nativeManaTransferRecover(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;IILjava/lang/String;)V
-+++ candidate/NativePlayerCommit/nativeManaTransferRecover(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;IILjava/lang/String;)V
-@@ -5,27 +5,27 @@
-
- ||||pvis=|pinv=|lvtvis=|lvtinv=
-
--TRY 30:[144:java/lang/Throwable  ]
--TRY 31:[144:java/lang/Throwable  ]
--TRY 33:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 37:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 41:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 45:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 49:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 53:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 57:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 68:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 82:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 106:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 107:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 113:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 114:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 128:[133:java/lang/Throwable  , 144:java/lang/Throwable  ]
--TRY 130:[144:java/lang/Throwable  ]
--TRY 131:[144:java/lang/Throwable  ]
--TRY 135:[144:java/lang/Throwable  ]
--TRY 136:[144:java/lang/Throwable  ]
--TRY 138:[144:java/lang/Throwable  ]
-+TRY 32:[146:java/lang/Throwable  ]
-+TRY 33:[146:java/lang/Throwable  ]
-+TRY 35:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 39:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 43:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 47:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 51:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 55:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 59:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 70:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 84:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 108:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 109:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 115:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 116:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 130:[135:java/lang/Throwable  , 146:java/lang/Throwable  ]
-+TRY 132:[146:java/lang/Throwable  ]
-+TRY 133:[146:java/lang/Throwable  ]
-+TRY 137:[146:java/lang/Throwable  ]
-+TRY 138:[146:java/lang/Throwable  ]
-+TRY 140:[146:java/lang/Throwable  ]
- ILOAD 3
- IFGT L5
- ILOAD 4
-@@ -38,10 +38,12 @@
- ALOAD 6
- IFNONNULL L12
- RETURN
-+ALOAD 1
-+POP
- ALOAD 0
- ASTORE 7
- ALOAD 7
--IFNONNULL L17
-+IFNONNULL L19
- RETURN
- CONST Integer:0
- ISTORE 8
-@@ -60,15 +62,15 @@
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.lock()V
- ALOAD 6
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.closed:Z
--IFNE L129
-+IFNE L131
- ALOAD 2
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matchesFast(Llocal/lito381/server/ClientSession;)Z
--IFEQ L129
-+IFEQ L131
- ALOAD 1
- CONST str:"playerHp"
- INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
--IFLE L129
-+IFLE L131
- ALOAD 1
- CONST str:"playerHp"
- INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
-@@ -86,7 +88,7 @@
- INVOKESTATIC local/lito381/server/NativePlayerCommit.integer(Ljava/lang/Object;Ljava/lang/String;)I
- ISTORE 17
- ILOAD 3
--IFLE L71
-+IFLE L73
- ILOAD 16
- I2L
- ILOAD 14
-@@ -96,11 +98,11 @@
- LADD
- INVOKESTATIC java/lang/Math.min(JJ)J
- L2I
--GOTO L72
-+GOTO L74
- ILOAD 14
- ISTORE 18
- ILOAD 4
--IFLE L85
-+IFLE L87
- ILOAD 17
- I2L
- ILOAD 15
-@@ -110,41 +112,41 @@
- LADD
- INVOKESTATIC java/lang/Math.min(JJ)J
- L2I
--GOTO L86
-+GOTO L88
- ILOAD 15
- ISTORE 19
- ILOAD 18
- ILOAD 14
--IF_ICMPEQ L92
-+IF_ICMPEQ L94
- CONST Integer:1
--GOTO L93
-+GOTO L95
- CONST Integer:0
- ISTORE 20
- ILOAD 19
- ILOAD 15
--IF_ICMPEQ L99
-+IF_ICMPEQ L101
- CONST Integer:1
--GOTO L100
-+GOTO L102
- CONST Integer:0
- ISTORE 21
- ILOAD 20
--IFEQ L108
-+IFEQ L110
- ALOAD 1
- CONST str:"playerHp"
- ILOAD 18
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- INVOKESTATIC local/lito381/server/CombatAccess.set(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V
- ILOAD 21
--IFEQ L115
-+IFEQ L117
- ALOAD 1
- CONST str:"playerMp"
- ILOAD 19
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- INVOKESTATIC local/lito381/server/CombatAccess.set(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V
- ILOAD 20
--IFNE L119
-+IFNE L121
- ILOAD 21
--IFEQ L129
-+IFEQ L131
- ALOAD 7
- ALOAD 2
- ILOAD 18
-@@ -158,7 +160,7 @@
- ALOAD 6
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.vitalLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L139
-+GOTO L141
- ASTORE 22
- ALOAD 6
- GETFIELD local/lito381/server/NativePlayerCommit$Queue.vitalLock:Ljava/util/concurrent/locks/ReentrantLock;
-@@ -169,7 +171,7 @@
- INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.drain(Llocal/lito381/server/ClientSession;)V
--GOTO L151
-+GOTO L153
- ASTORE 23
- ALOAD 7
- INVOKEVIRTUAL local/lito381/server/NativePlayerVitalCompletions$Receipt.close()V
-```
-
-</details>
-
-### NativeProcHealingEncounter$Dispatch
-
-<details>
-<summary>本輪全部方法診斷</summary>
-
-```json
-{
-  "name": "local/lito381/server/NativeProcHealingEncounter$Dispatch",
-  "status": "DIFF",
-  "byteSame": false,
-  "allowMethodsApplied": false,
-  "methodResults": [
-    {
-      "method": "run()V",
-      "status": "DIFF",
-      "detail": "method run()V: left=13:[91:java/lang/Throwable  , 99:java/lang/Throwable  ] right=13:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ"
-    }
-  ],
-  "effectsMethods": [],
-  "approvedMethods": [],
-  "firstDiff": {
-    "where": "method",
-    "member": "run()V",
-    "insnIndex": null,
-    "detail": "left=13:[91:java/lang/Throwable  , 99:java/lang/Throwable  ] right=13:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]; paths rejected: normal control-flow cycle; labelled CFGs differ"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>run：完整正規化差異</summary>
-
-```diff
---- staged/NativeProcHealingEncounter$Dispatch/run()V
-+++ candidate/NativeProcHealingEncounter$Dispatch/run()V
-@@ -5,35 +5,35 @@
-
- ||||pvis=|pinv=|lvtvis=|lvtinv=
-
--TRY 13:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 15:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 17:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 25:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 27:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 29:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 37:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 39:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 41:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 49:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 52:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 55:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 58:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 61:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 62:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 64:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 66:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 68:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 70:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 73:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 74:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 75:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 85:[91:java/lang/Throwable  , 99:java/lang/Throwable  ]
--TRY 93:[99:java/lang/Throwable  ]
-+TRY 13:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 15:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 17:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 21:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 23:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 25:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 29:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 31:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 33:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 37:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 40:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 43:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 46:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 49:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 50:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 52:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 54:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 56:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 58:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 61:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 62:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 63:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 68:[74:java/lang/Throwable  , 82:java/lang/Throwable  ]
-+TRY 76:[82:java/lang/Throwable  ]
- CONST Integer:0
- ISTORE 1
- ILOAD 1
- CONST Integer:256
--IF_ICMPGE L108
-+IF_ICMPGE L91
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.claim()Llocal/lito381/server/CombatNpcDamageQueue$Event;
-@@ -47,46 +47,34 @@
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativeSourcePoisonNpc.consume(Llocal/lito381/server/GameHub;Llocal/lito381/server/CombatNpcDamageQueue$Queue;Llocal/lito381/server/CombatNpcDamageQueue$Event;)Z
--IFEQ L24
--ALOAD 0
--GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+IFEQ L20
-+GOTO L69
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativeSourcePhysicalNpc.consume(Llocal/lito381/server/GameHub;Llocal/lito381/server/CombatNpcDamageQueue$Queue;Llocal/lito381/server/CombatNpcDamageQueue$Event;)Z
--IFEQ L36
--ALOAD 0
--GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+IFEQ L28
-+GOTO L69
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.hub:Llocal/lito381/server/GameHub;
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- ALOAD 2
- INVOKESTATIC local/lito381/server/NativeSourceCubeNpcQueue.consume(Llocal/lito381/server/GameHub;Llocal/lito381/server/CombatNpcDamageQueue$Queue;Llocal/lito381/server/CombatNpcDamageQueue$Event;)Z
--IFEQ L48
--ALOAD 0
--GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+IFEQ L36
-+GOTO L69
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Event.physical()Llocal/lito381/server/CombatWorldCommit$Plan;
- ASTORE 3
- ALOAD 3
- INSTANCEOF local/lito381/server/NativeProcHealingEncounter$Plan
--IFEQ L58
-+IFEQ L46
- ALOAD 3
- CHECKCAST local/lito381/server/NativeProcHealingEncounter$Plan
- ASTORE 4
--GOTO L63
-+GOTO L51
- NEW java/lang/IllegalStateException
- DUP
- CONST str:"foreign encounter Proc queue plan"
-@@ -107,19 +95,14 @@
- CHECKCAST local/lito381/server/NativeProcEncounterPublication$Context
- ASTORE 5
- ALOAD 5
--IFNONNULL L84
--ALOAD 0
--GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+IFNULL L69
- ALOAD 5
- INVOKESTATIC local/lito381/server/NativeProcEncounterPublication.publish(Llocal/lito381/server/NativeProcEncounterPublication$Context;)V
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+GOTO L89
- ASTORE 6
- ALOAD 6
- INVOKESTATIC local/lito381/server/CombatNpcDamageQueue.failed(Ljava/lang/Throwable;)V
-@@ -127,7 +110,7 @@
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/CombatNpcDamageQueue$Queue.complete(Llocal/lito381/server/CombatNpcDamageQueue$Event;)V
--GOTO L106
-+GOTO L89
- ASTORE 7
- ALOAD 0
- GETFIELD local/lito381/server/NativeProcHealingEncounter$Dispatch.queue:Llocal/lito381/server/CombatNpcDamageQueue$Queue;
-```
-
-</details>
-
-### 未配對 lambda 的完整方法內容
-
-<details>
-<summary>left／NativeLightAction／lambda$content$af63fe6e68cfd3899283fefbe1d7b62e0a0f81208c854f8311239d75af7c1a51</summary>
+scratch 的 EmitProbe254 直接呼叫既有 handler body 檢查，僅在記憶體複本移除其核准的兩個 handler，再交既有完整方法比較器，得到 SAME_PATHS（4）。它沒有修改 Java、JAR、工具來源或核准清單，**這是定位證據，不能作為本批正式通過收據**。完整診斷輸出：
 
 ```text
-lambda$content$af63fe6e68cfd3899283fefbe1d7b62e0a0f81208c854f8311239d75af7c1a51(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-0xa
-
-
-||||pvis=|pinv=|lvtvis=|lvtinv=
-
-TRY 77:[108:java/io/IOException  , 114:java/lang/Throwable  ]
-TRY 99:[103:java/lang/Error  , 103:java/lang/RuntimeException  ]
-TRY 101:[103:java/lang/Error  , 103:java/lang/RuntimeException  ]
-TRY 109:[114:java/lang/Throwable  ]
-TRY 112:[114:java/lang/Throwable  ]
-TRY 113:[114:java/lang/Throwable  ]
-TRY 136:[140:java/lang/Error  , 140:java/lang/RuntimeException  ]
-TRY 138:[140:java/lang/Error  , 140:java/lang/RuntimeException  ]
-ALOAD 0
-ALOAD 1
-INVOKESTATIC local/lito381/server/NativeSourceMaterialMain.locked(Ljava/lang/Object;Llocal/lito381/server/ClientSession;)Z
-IFNE L5
-RETURN
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.binding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 1
-ALOAD 2
-INVOKESTATIC local/lito381/server/NativeSourceMaterialPairGuard.matches(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)Z
-IFEQ L48
-ALOAD 3
-ALOAD 4
-ALOAD 2
-INVOKESTATIC local/lito381/server/NativeSourceMaterialPairGuard.matches(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)Z
-IFEQ L48
-ALOAD 4
-CONST str:"hub"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.hub:Llocal/lito381/server/GameHub;
-IF_ACMPNE L48
-ALOAD 1
-CONST str:"sourceItemDisconnected"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-CHECKCAST java/lang/Boolean
-INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
-IFNE L48
-ALOAD 4
-CONST str:"sourceItemDisconnected"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-CHECKCAST java/lang/Boolean
-INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
-IFNE L48
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.hub:Llocal/lito381/server/GameHub;
-CONST str:"sourceItemApplication"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-IF_ACMPNE L48
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-IFNULL L49
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-GETFIELD local/lito381/server/NativeDeItemApplication.closed:Z
-IFEQ L49
-RETURN
-NEW local/lito381/server/NativeLightAction$Batch
-DUP
-ALOAD 1
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.arrival:Llocal/lito381/server/NativeCastTimeline$Arrival;
-ALOAD 0
-INVOKESPECIAL local/lito381/server/NativeLightAction$Batch.<init>(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCastTimeline$Arrival;Llocal/lito381/server/NativeLightAction$Ingress;)V
-ASTORE 6
-ALOAD 6
-CONST Integer:1
-PUTFIELD local/lito381/server/NativeLightAction$Batch.captureSelf:Z
-ALOAD 6
-ALOAD 4
-PUTFIELD local/lito381/server/NativeLightAction$Batch.target:Llocal/lito381/server/ClientSession;
-ALOAD 6
-ALOAD 3
-PUTFIELD local/lito381/server/NativeLightAction$Batch.targetBinding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 6
-ALOAD 5
-PUTFIELD local/lito381/server/NativeLightAction$Batch.targetReceipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
-CHECKCAST local/lito381/server/NativeLightAction$Batch
-ASTORE 7
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 6
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 2
-INVOKEINTERFACE local/lito381/server/NativeSelfCastAction$Task.run()V itf
-ALOAD 7
-IFNONNULL L83
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-GOTO L86
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 7
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFEQ L94
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.completions:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFNE L147
-ALOAD 1
-ALOAD 4
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.transfer(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-ALOAD 6
-INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.enqueueLocked(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Ljava/lang/Runnable;)V
-GOTO L147
-ASTORE 8
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.abandon(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 8
-ATHROW
-ASTORE 9
-NEW java/io/UncheckedIOException
-DUP
-ALOAD 9
-INVOKESPECIAL java/io/UncheckedIOException.<init>(Ljava/io/IOException;)V
-ATHROW
-ASTORE 10
-ALOAD 7
-IFNONNULL L120
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-GOTO L123
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 7
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFEQ L131
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.completions:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFNE L145
-ALOAD 1
-ALOAD 4
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.transfer(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-ALOAD 6
-INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.enqueueLocked(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Ljava/lang/Runnable;)V
-GOTO L145
-ASTORE 11
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.abandon(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 11
-ATHROW
-ALOAD 10
-ATHROW
-RETURN
+official normalization returns original=true
+handler 5 approved identity rethrow=false
+handler 13 approved identity rethrow=true
+handler 24 approved identity rethrow=true
+diagnostic left events=[INVOKESPECIAL local/lito381/server/NativeLightAction$Batch.nativeSourceBatchOriginalEmit()V, INVOKESTATIC local/lito381/server/NativeSourceTargetIconBatch.finish(Ljava/lang/Object;Ljava/lang/Throwable;)V, ATHROW, INVOKESTATIC local/lito381/server/NativeSourceTargetIconBatch.finish(Ljava/lang/Object;Ljava/lang/Throwable;)V]
+candidate right events=[INVOKESPECIAL local/lito381/server/NativeLightAction$Batch.nativeSourceBatchOriginalEmit()V, INVOKESTATIC local/lito381/server/NativeSourceTargetIconBatch.finish(Ljava/lang/Object;Ljava/lang/Throwable;)V, INVOKESTATIC local/lito381/server/NativeSourceTargetIconBatch.finish(Ljava/lang/Object;Ljava/lang/Throwable;)V, ATHROW]
+after approved handler removal=equivalent
+diagnostic results={local/lito381/server/NativeLightAction$Batch={emit()V=MethodResult[status=SAME_PATHS, detail=path multisets equal (4)]}}
 ```
 
-</details>
+## 推測
+
+證據支持剩餘差異位於 helper 消除的實體事件排列限制，而非核心 try 範圍。建議主控裁定工具後續：保留 handler 原樣轉拋與覆蓋證明，改以控制流程對應驗證 coverage，之後再執行完整比較；不能只刪除事件排序檢查而省略覆蓋安全條件。此方向未實作、未由主控核准，正式 DIFF 保留。
+
+## 待驗證／給下一棒的提示
+
+1. **Claude 主控**：依完整 emit 證據裁定剩餘工具缺口；Issue #69 加 `needs:claude`。#254 已合併且指定四個方法已過，不再等待或重派同一依賴。不要擴大 emit 的核心 try 來追求字面形狀相同。
+2. **工具後續執行器**：檢查 `RethrowHandlers.normalize` 的事件對齊與 coverage 證明，加入正常／例外區塊順序互換的正例及錯誤涵蓋反例；修好工具後再由 B08 重編全部 30 份、轉換並重驗 160 entries。正式 DIFF=0 才可交 B-land。
+3. **B-land 整合者**：保留上述 helper／Exceptions 核准、六個 AsRecord 與 Output 可見性；本輪沒有新增豁免。單元測試／遊戲回歸依指定留 B-land 統一處理。
+4. 本輪未執行 staged 應用程式、未做實機驗收、未部署，未啟停正式程序、連 DB 或讀取機密設定／封存／releases。Git 操作僅必要地更新 worktree 共用 `.git`；原專案工作檔未寫入。
+
+## 產出路徑
+
+- Git 交付：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/NativeLightAction.java`、`docs/reports/issue-69.md`。PR 累計範圍仍是 B08 的 30 個 Java 與報告。
+- 重現腳本：`scratch/issue-69/final_254.py`；診斷與保留檢查：`scratch/issue-69/evidence_254.py`、`EmitProbe254.java`。
+- 最終核准檔／argfile／完整 argv 與退出碼 audit／來源雜湊／semantic JSON、Markdown／方法 dump／javap：`scratch/issue-69/final-254/`。
+- 最終建置產物：`lito伺服器/LiTo381-Server/target/issue-69/final-254/`，不入 git。
+- [PR #94](https://github.com/chaoren0418-arch/lito-launcher-server/pull/94)。
+
+## 全部 160 個 entry 正式結果
 
 <details>
-<summary>left／NativeLightAction／lambda$content$b93037e7b70cc60f32950364f5b80c1fc077fc616c9138dff25da83806318b36</summary>
+<summary>完整 class 清單（省略 local/lito381/server/ 前綴與 .class）</summary>
 
-```text
-lambda$content$b93037e7b70cc60f32950364f5b80c1fc077fc616c9138dff25da83806318b36(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-0xa
-
-java/io/IOException
-||||pvis=|pinv=|lvtvis=|lvtinv=
-
-TRY
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Batch.accepted:Llocal/lito381/server/NativeLightAction$Ingress;
-GETFIELD local/lito381/server/NativeLightAction$Ingress.binding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Batch.pc:Llocal/lito381/server/ClientSession;
-INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matches(Llocal/lito381/server/ClientSession;)Z
-IFEQ L9
-ALOAD 1
-INVOKEINTERFACE local/lito381/server/NativeSelfCastAction$Task.run()V itf
-RETURN
-```
-
-</details>
-
-<details>
-<summary>right／NativeLightAction／lambda$content$6b68235d2c8d50e26cae1ba81014eacf934e85f556cc515212e7a3bda2b6efa6</summary>
-
-```text
-lambda$content$6b68235d2c8d50e26cae1ba81014eacf934e85f556cc515212e7a3bda2b6efa6(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-(Llocal/lito381/server/NativeLightAction$Ingress;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-0xa
-
-
-||||pvis=|pinv=|lvtvis=|lvtinv=
-
-TRY 77:[108:java/io/IOException  , 114:java/lang/Throwable  ]
-TRY 99:[103:java/lang/RuntimeException  , 103:java/lang/Error  ]
-TRY 101:[103:java/lang/RuntimeException  , 103:java/lang/Error  ]
-TRY 109:[114:java/lang/Throwable  ]
-TRY 112:[114:java/lang/Throwable  ]
-TRY 113:[114:java/lang/Throwable  ]
-TRY 136:[140:java/lang/RuntimeException  , 140:java/lang/Error  ]
-TRY 138:[140:java/lang/RuntimeException  , 140:java/lang/Error  ]
-ALOAD 0
-ALOAD 1
-INVOKESTATIC local/lito381/server/NativeSourceMaterialMain.locked(Ljava/lang/Object;Llocal/lito381/server/ClientSession;)Z
-IFNE L5
-RETURN
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.binding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 1
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativeSourceMaterialPairGuard.matches(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)Z
-IFEQ L48
-ALOAD 2
-ALOAD 3
-ALOAD 5
-INVOKESTATIC local/lito381/server/NativeSourceMaterialPairGuard.matches(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSelfCastAction$Task;)Z
-IFEQ L48
-ALOAD 3
-CONST str:"hub"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.hub:Llocal/lito381/server/GameHub;
-IF_ACMPNE L48
-ALOAD 1
-CONST str:"sourceItemDisconnected"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-CHECKCAST java/lang/Boolean
-INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
-IFNE L48
-ALOAD 3
-CONST str:"sourceItemDisconnected"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-CHECKCAST java/lang/Boolean
-INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
-IFNE L48
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.hub:Llocal/lito381/server/GameHub;
-CONST str:"sourceItemApplication"
-INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-IF_ACMPNE L48
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-IFNULL L49
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.application:Llocal/lito381/server/NativeDeItemApplication;
-GETFIELD local/lito381/server/NativeDeItemApplication.closed:Z
-IFEQ L49
-RETURN
-NEW local/lito381/server/NativeLightAction$Batch
-DUP
-ALOAD 1
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.arrival:Llocal/lito381/server/NativeCastTimeline$Arrival;
-ALOAD 0
-INVOKESPECIAL local/lito381/server/NativeLightAction$Batch.<init>(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeCastTimeline$Arrival;Llocal/lito381/server/NativeLightAction$Ingress;)V
-ASTORE 6
-ALOAD 6
-CONST Integer:1
-PUTFIELD local/lito381/server/NativeLightAction$Batch.captureSelf:Z
-ALOAD 6
-ALOAD 3
-PUTFIELD local/lito381/server/NativeLightAction$Batch.target:Llocal/lito381/server/ClientSession;
-ALOAD 6
-ALOAD 2
-PUTFIELD local/lito381/server/NativeLightAction$Batch.targetBinding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 6
-ALOAD 4
-PUTFIELD local/lito381/server/NativeLightAction$Batch.targetReceipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
-CHECKCAST local/lito381/server/NativeLightAction$Batch
-ASTORE 7
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 6
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 5
-INVOKEINTERFACE local/lito381/server/NativeSelfCastAction$Task.run()V itf
-ALOAD 7
-IFNONNULL L83
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-GOTO L86
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 7
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFEQ L94
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.completions:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFNE L147
-ALOAD 1
-ALOAD 3
-ALOAD 4
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.transfer(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-ALOAD 6
-INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.enqueueLocked(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Ljava/lang/Runnable;)V
-GOTO L147
-ASTORE 8
-ALOAD 4
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.abandon(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 8
-ATHROW
-ASTORE 9
-NEW java/io/UncheckedIOException
-DUP
-ALOAD 9
-INVOKESPECIAL java/io/UncheckedIOException.<init>(Ljava/io/IOException;)V
-ATHROW
-ASTORE 10
-ALOAD 7
-IFNONNULL L120
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-INVOKEVIRTUAL java/lang/ThreadLocal.remove()V
-GOTO L123
-GETSTATIC local/lito381/server/NativeLightAction.current:Ljava/lang/ThreadLocal;
-ALOAD 7
-INVOKEVIRTUAL java/lang/ThreadLocal.set(Ljava/lang/Object;)V
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.outputs:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFEQ L131
-ALOAD 6
-GETFIELD local/lito381/server/NativeLightAction$Batch.completions:Ljava/util/List;
-INVOKEINTERFACE java/util/List.isEmpty()Z itf
-IFNE L145
-ALOAD 1
-ALOAD 3
-ALOAD 4
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.transfer(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Ingress.receipt:Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;
-ALOAD 6
-INVOKESTATIC local/lito381/server/NativePlayerVitalCompletions.enqueueLocked(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;Ljava/lang/Runnable;)V
-GOTO L145
-ASTORE 11
-ALOAD 4
-INVOKESTATIC local/lito381/server/NativePairedCastSafety.abandon(Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;)V
-ALOAD 11
-ATHROW
-ALOAD 10
-ATHROW
-RETURN
-```
+| entry | 狀態 |
+|---|---|
+| `ClassicWorldMonsterPopulation` | SAME_CFG |
+| `ClassicWorldMonsterPopulation$1` | SAME |
+| `ClassicWorldMonsterPopulation$1Candidate` | SAME |
+| `ClassicWorldMonsterPopulation$1Triggered` | SAME |
+| `ClassicWorldMonsterPopulation$1TriggeredMagic` | SAME |
+| `ClassicWorldMonsterPopulation$Actor` | SAME |
+| `ClassicWorldMonsterPopulation$AirItemLanding` | SAME |
+| `ClassicWorldMonsterPopulation$Attack` | SAME |
+| `ClassicWorldMonsterPopulation$Capture` | SAME |
+| `ClassicWorldMonsterPopulation$Cell` | SAME |
+| `ClassicWorldMonsterPopulation$CkewSkillAttack` | SAME |
+| `ClassicWorldMonsterPopulation$Contribution` | SAME |
+| `ClassicWorldMonsterPopulation$ContributorKey` | SAME |
+| `ClassicWorldMonsterPopulation$ContributorKind` | SAME |
+| `ClassicWorldMonsterPopulation$DigestRemoval` | SAME |
+| `ClassicWorldMonsterPopulation$DoppelTransformation` | SAME |
+| `ClassicWorldMonsterPopulation$GiveAdmission` | SAME |
+| `ClassicWorldMonsterPopulation$GridPoint` | SAME |
+| `ClassicWorldMonsterPopulation$GuardHomecoming` | SAME |
+| `ClassicWorldMonsterPopulation$Healing` | SAME |
+| `ClassicWorldMonsterPopulation$Hit` | SAME |
+| `ClassicWorldMonsterPopulation$HomeReset` | SAME |
+| `ClassicWorldMonsterPopulation$IdleMovement` | SAME |
+| `ClassicWorldMonsterPopulation$ItemAction` | SAME |
+| `ClassicWorldMonsterPopulation$ItemActionKind` | SAME |
+| `ClassicWorldMonsterPopulation$ItemPickup` | SAME |
+| `ClassicWorldMonsterPopulation$ItemUse` | SAME |
+| `ClassicWorldMonsterPopulation$ItemUseKind` | SAME |
+| `ClassicWorldMonsterPopulation$MagicAttack` | SAME |
+| `ClassicWorldMonsterPopulation$MagicCancellation` | SAME |
+| `ClassicWorldMonsterPopulation$ManaDrain` | SAME |
+| `ClassicWorldMonsterPopulation$MonsterItemReceipt` | SAME |
+| `ClassicWorldMonsterPopulation$MonsterTameCommit` | SAME |
+| `ClassicWorldMonsterPopulation$Movement` | SAME |
+| `ClassicWorldMonsterPopulation$NearTeleport` | SAME |
+| `ClassicWorldMonsterPopulation$NearTeleportKind` | SAME |
+| `ClassicWorldMonsterPopulation$NpcPoison` | SAME |
+| `ClassicWorldMonsterPopulation$ParalysisUpdate` | SAME |
+| `ClassicWorldMonsterPopulation$PhysicalSkillAttack` | SAME |
+| `ClassicWorldMonsterPopulation$PoisonUpdate` | SAME |
+| `ClassicWorldMonsterPopulation$Refinement` | SAME |
+| `ClassicWorldMonsterPopulation$Respawn` | SAME |
+| `ClassicWorldMonsterPopulation$Resurrection` | SAME |
+| `ClassicWorldMonsterPopulation$Reveal` | SAME |
+| `ClassicWorldMonsterPopulation$Snapshot` | SAME_PATHS |
+| `ClassicWorldMonsterPopulation$StatusSkillAttack` | SAME |
+| `ClassicWorldMonsterPopulation$TamedItemReceipt` | SAME |
+| `ClassicWorldMonsterPopulation$TamedRelease` | SAME |
+| `LegacyInventoryWeightLoader` | SAME |
+| `LegacyMySqlRepository` | SAME_PATHS |
+| `LegacyMySqlRepository$1` | SAME |
+| `LegacyMySqlRepository$CastleWarRewardTarget` | SAME |
+| `LegacyMySqlRepository$CharacterClanRow` | SAME |
+| `LegacyMySqlRepository$HotelSqlLease` | SAME |
+| `LegacyMySqlRepository$HouseSettlementClan` | SAME |
+| `LegacyMySqlRepository$HouseSettlementRecord` | SAME |
+| `LegacyMySqlRepository$HouseTaxOwner` | SAME |
+| `LegacyMySqlRepository$MarriageCharacterRow` | SAME |
+| `LegacyMySqlRepository$PositionedWarehouseItem` | SAME |
+| `LegacyMySqlRepository$SqlBookmark` | SAME |
+| `LegacyMySqlRepository$SqlBuddyMetadata` | SAME |
+| `LegacyMySqlRepository$SqlCastleSecuritySettlement` | SAME |
+| `LegacyMySqlRepository$SqlStoredItem` | SAME |
+| `LegacyMySqlRepository$StoredBoardTopic` | SAME |
+| `NativeAcceptedHpCompletion` | SAME |
+| `NativeArmorProc` | SAME |
+| `NativeArmorProc$Catalog` | SAME |
+| `NativeArmorProc$Rule` | SAME |
+| `NativeArmorState` | SAME_PATHS |
+| `NativeBattleVisibility` | SAME |
+| `NativeCancellationBattleRuntime` | SAME |
+| `NativeCancellationBattleRuntime$Lease` | SAME |
+| `NativeCancellationBattleRuntime$Notice` | SAME |
+| `NativeCancellationBattleRuntime$State` | SAME |
+| `NativeCancellationBattleRuntime$Viewer` | SAME |
+| `NativeCancellationNpcStatic` | SAME_CFG |
+| `NativeCancellationNpcStatic$Appearance` | SAME |
+| `NativeCancellationNpcStatic$State` | SAME |
+| `NativeCancellationNpcStatic$Target` | SAME |
+| `NativeCastMaterial` | SAME |
+| `NativeCastMaterial$Cast` | SAME |
+| `NativeCastMaterial$Effect` | SAME |
+| `NativeCastMaterial$ItemView` | SAME |
+| `NativeCombatAttacker` | SAME_PATHS |
+| `NativeCombatAttacker$Feedback` | SAME |
+| `NativeCombatAttacker$Ingress` | SAME |
+| `NativeCombatAttacker$Live` | SAME |
+| `NativeCombatAttacker$Ref` | SAME |
+| `NativeCombatAttacker$Reflection` | SAME |
+| `NativeCombatOrigin` | SAME_PATHS |
+| `NativeCombatOrigin$Clock` | SAME |
+| `NativeCombatOrigin$Install` | SAME |
+| `NativeCombatOrigin$Life` | SAME |
+| `NativeCombatOrigin$Poison` | SAME |
+| `NativeCombatOrigin$Tick` | SAME |
+| `NativeDeItemDefinitionsSql` | SAME |
+| `NativeDeItemDefinitionsSql$Counts` | SAME |
+| `NativeDeItemDefinitionsSql$Lease` | SAME |
+| `NativeDeItemDefinitionsSql$ResultLease` | SAME |
+| `NativeDeItemDefinitionsSql$StatementLease` | SAME |
+| `NativeEquipmentDefense` | SAME_CFG |
+| `NativeEquipmentDefense$Effect` | SAME |
+| `NativeEquipmentDefense$Resolved` | SAME |
+| `NativeLightAction` | LAMBDA_PAIRED_BY_CALLSITE |
+| `NativeLightAction$Batch` | DIFF |
+| `NativeLightAction$Completion` | SAME |
+| `NativeLightAction$Ingress` | SAME |
+| `NativeLightAction$Output` | SAME |
+| `NativeMassTeleportAnswerLife` | SAME_PATHS |
+| `NativeMassTeleportAnswerLife$Lease` | SAME |
+| `NativeNpcLifetime` | SAME |
+| `NativeNpcLifetime$Dispatch` | SAME |
+| `NativeNpcLifetime$Lane` | SAME |
+| `NativeNpcLifetime$Retry` | SAME |
+| `NativePlayerActionScope` | SAME_PATHS |
+| `NativePlayerActionScope$Gated` | SAME |
+| `NativePlayerActionScope$Root` | SAME |
+| `NativePlayerActionScope$Ticket` | SAME |
+| `NativePlayerCommit` | SAME_CFG |
+| `NativePlayerCommit$Binding` | SAME_PATHS |
+| `NativePlayerCommit$CalcTicket` | SAME |
+| `NativePlayerCommit$DefenseVisual` | SAME |
+| `NativePlayerCommit$Event` | SAME |
+| `NativePlayerCommit$Frame` | SAME |
+| `NativePlayerCommit$Queue` | SAME_PATHS |
+| `NativePlayerCommit$WorldPlan` | SAME |
+| `NativePlayerLifetime` | SAME_CFG |
+| `NativePlayerLifetime$Dispatch` | SAME |
+| `NativePlayerLifetime$Mode` | SAME |
+| `NativePlayerLifetime$Registration` | SAME |
+| `NativePlayerLifetime$Shutdown` | SAME |
+| `NativePlayerLifetime$Snapshot` | SAME |
+| `NativePlayerVitalCompletions` | SAME_CFG |
+| `NativePlayerVitalCompletions$Receipt` | SAME_PATHS |
+| `NativePlayerVitalCompletions$State` | SAME |
+| `NativeProcHealingCompanion` | SAME |
+| `NativeProcHealingCompanion$Dispatch` | SAME |
+| `NativeProcHealingCompanion$Live` | SAME |
+| `NativeProcHealingCompanion$Meter` | SAME |
+| `NativeProcHealingCompanion$Plan` | SAME |
+| `NativeProcHealingCompanion$Receipt` | SAME |
+| `NativeProcHealingCompanion$Target` | SAME |
+| `NativeProcHealingEncounter` | SAME |
+| `NativeProcHealingEncounter$Dispatch` | SAME_CFG |
+| `NativeProcHealingEncounter$Live` | SAME |
+| `NativeProcHealingEncounter$Plan` | SAME |
+| `NativeProcHealingEncounter$Target` | SAME |
+| `NativeProcHealingPlayer` | SAME |
+| `NativeProcHealingPlayer$Target` | SAME |
+| `NativeProcSkillCatalog` | SAME |
+| `NativeProcSkillCatalog$Catalog` | SAME |
+| `NativeProcSkillCatalog$Skill` | SAME |
+| `NativeReturnNatureTransfer` | SAME |
+| `NativeReturnNatureTransfer$Overflow` | SAME |
+| `NativeReturnNatureTransfer$Scope` | SAME |
+| `NativeReuseActor` | SAME |
+| `NativeReuseShutdown` | SAME |
+| `NativeRolePublication` | SAME |
+| `NativeRolePublication$Lease` | SAME |
+| `NativeSourcePlayerActionLock` | SAME |
 
 </details>
-
-<details>
-<summary>right／NativeLightAction／lambda$content$feb21681a7a728f6083a06149f5c2fd605497b164c3f5581edc8c1a2fe120f3c</summary>
-
-```text
-lambda$content$feb21681a7a728f6083a06149f5c2fd605497b164c3f5581edc8c1a2fe120f3c(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-(Llocal/lito381/server/NativeLightAction$Batch;Llocal/lito381/server/NativeSelfCastAction$Task;)V
-0xa
-
-java/io/IOException
-||||pvis=|pinv=|lvtvis=|lvtinv=
-
-TRY
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Batch.accepted:Llocal/lito381/server/NativeLightAction$Ingress;
-GETFIELD local/lito381/server/NativeLightAction$Ingress.binding:Llocal/lito381/server/NativePlayerCommit$Binding;
-ALOAD 0
-GETFIELD local/lito381/server/NativeLightAction$Batch.pc:Llocal/lito381/server/ClientSession;
-INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matches(Llocal/lito381/server/ClientSession;)Z
-IFEQ L10
-GOTO L8
-ALOAD 1
-INVOKEINTERFACE local/lito381/server/NativeSelfCastAction$Task.run()V itf
-RETURN
-```
-
-</details>
-
-## 保留的治療鎖結構證據
-
-下列 javap 證據來自前次已提交的修補報告；本輪沒有重新將這項歷史檢查計為新測試。對應 Java 未變，本輪重新編譯後整個 NativeProcHealingPlayer 仍為 SAME。
-
-### 治療方法 javap 鎖定結構對照
-
-執行 `javap -p -c -s -classpath <staged 或 candidate JAR> local.lito381.server.NativeProcHealingPlayer`，擷取 `nativeSourceEquipmentProcOriginalApply`。
-
-| 操作 | staged offset | candidate offset |
-|---|---|---|
-| vitalLock.lock | 212 | 212 |
-| status monitorenter | 220 | 220 |
-| waterLife monitorenter | 269 | 269 |
-| 建立 Target／呼叫建構子 | 333／344 | 333／344 |
-| 核心 apply | 372 | 372 |
-| 登記 healing completion | 391 | 391 |
-| 正常釋放 waterLife／status | 396／410 | 396／410 |
-| 正常 vitalLock.unlock | 427 | 427 |
-| finally vitalLock.unlock | 440 | 440 |
-| receipt close／drain（正常） | 451／455 | 451／455 |
-| receipt close／drain（例外） | 465／469 | 465／469 |
-
-兩側均 2 個 monitorenter、7 個 monitorexit。以下 exception table **兩側逐字相同**；400 為 waterLife handler、414 為 status handler、433 為 vitalLock finally、461 為 receipt finally。第一個 monitor 前的 `215..244` 等區段亦受 vitalLock finally 保護。正常及提早返回均先釋放內層 monitor、外層 monitor，再 unlock，最後 close／drain。
-
-```text
-       from    to  target type
-         270   310   400   any
-         333   397   400   any
-         400   405   400   any
-         221   244   414   any
-         264   313   414   any
-         333   411   414   any
-         414   419   414   any
-         215   244   433   any
-         264   313   433   any
-         333   422   433   any
-         433   435   433   any
-         207   252   461   any
-         264   321   461   any
-         333   449   461   any
-         461   463   461   any
-```
-
-已以程式核對兩側所有 monitor、鎖／檢查／Target／apply／completion／close／drain 指令 offset 及 exception table，在移除常數池編號與空白差異後完全一致。整段 javap 仍有局部槽位與常數池編號差異，因此沒有宣稱 byte-identical；正式 semantic-diff 將該整類列為 SAME。
