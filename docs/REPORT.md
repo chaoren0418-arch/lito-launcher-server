@@ -37,3 +37,4 @@
 - 2026-11-06 — #75 T020-A04: T020-A04: src/main 對齊正式 0.6.71 暫存（battle-combat，25 類）（code，codex-local，PR #106 已合併）→ [報告](reports/issue-75.md)
 - 2026-11-06 — #74 T020-A03: T020-A03: src/main 對齊正式 0.6.71 暫存（nativede，47 類）（code，codex-local，PR #100 已合併）→ [報告](reports/issue-74.md)
 - 2026-11-06 — #66 T020-B05: 戰鬥併入暫存（new-java，48 類）（code，codex-local，PR #88 已合併）→ [報告](reports/issue-66.md)
+- 2026-11-06 — #77 T020-A06: T020-A06: src/main 對齊正式 0.6.71 暫存（other，27 類）（code，codex-local，PR #109 已合併）→ [報告](reports/issue-77.md)
