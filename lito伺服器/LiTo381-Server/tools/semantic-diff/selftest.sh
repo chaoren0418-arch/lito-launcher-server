@@ -602,6 +602,9 @@ java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semantic
 java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.NinthSelfTest \
   "$BUILD/ninth" "$BIN/ninth"
 
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.TenthSelfTest \
+  "$BUILD/tenth" "$BIN/tenth"
+
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"
 echo "SELFTEST_1b $SUMMARY1B"

@@ -38,6 +38,8 @@ final class JarIndex {
     Map<String, Set<String>> exceptionsExempt = Map.of();
     Map<String, Set<String>> extraMethods = Map.of();
     Map<String, Set<String>> methodDiffs = Map.of();
+    final Map<String, Map<String, String>> privateRenames = new TreeMap<>();
+    final Map<String, Set<String>> privateRenameTargets = new TreeMap<>();
     Set<String> innerAccessWiden = Set.of();
     Set<String> enclosingMethodExempt = Set.of();
     record MethodResult(String status, String detail) {}
@@ -218,6 +220,7 @@ final class JarIndex {
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         Normalizations.prepare(node);
+        PrivateRenames.calls(node, this);
         for (MethodNode m : node.methods) PureRethrowHandlers.normalize(m);
         for (MethodNode m : node.methods) NonNullChecks.normalize(node.name, m);
         FourthNormalizations.prepare(node, this);
