@@ -6,7 +6,7 @@
 
 分支取值互換反例已從錯誤 SAME 恢復 DIFF；662 項 Java 自測通過。代價是四個 entry 恢復 DIFF：#62 ControlledNegativeMaterial／HealingCast、#66 ProcScalarSkills、#76 Main。**原驗收的 expiry 消除與 #76 零 DIFF 尚未達成**；WindTargets.run、`_isBackgroundMode`、forMap、Main.accept 的改善保留。這是審查允許的保守拒絕方案，不宣稱已證明這四個 entry 不等價。
 
-未修改 src/main、staged Java、核准清單、docs/REPORT.md、機密設定、封存、正式產物或原始專案目錄；沒有啟動伺服器／登入器／遊戲，也沒有連 DB。
+未修改 src/main、staged Java、核准清單、docs/REPORT.md、機密設定、封存、正式產物或原始專案工作檔；git commit／push 僅依指示更新共用 Git 中繼資料。沒有啟動伺服器／登入器／遊戲，也沒有連 DB。
 
 交付分支 `task/166`，[PR #170](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170)。本次 CI 證據見下方「CI」，前次綠燈不當作本次驗證。
 
@@ -26,7 +26,7 @@
 
 基準比較器是 `10b6b2065fde545e9bbe36b6c9aa101ac2b2c4c4`（含 #153）；退回版為 `3c16f096378a7ea3f8de8ee8e25df9c7e0caf201`。本次從兩個固定提交重新讀取全部比較器 Java 來源，編譯到本 worktree `target/retry-baseline`／`target/retry-prior`，再與修正版 `target/classes` 三方重跑；前後使用相同 staged JAR、entry 清單及核准清單交集。未沿用舊 JSON 冒充重跑結果。
 
-#72 使用遠端 `task/72` 最新 `c460ce97a50b9a2cddeed5e727b37f14f53eb92c`，不是 #153 報告的舊 `6f8a87b`。本輪以 `gh api .../branches/task/72` 確認。其餘來源與題目指定提交一致。原專案 worktree 的留存 JAR 只讀；雜湊先與指定提交報告收據核對，複製到本 worktree target。
+#72 使用遠端 `task/72` 最新 `c460ce97a50b9a2cddeed5e727b37f14f53eb92c`，不是 #153 報告的舊 `6f8a87b`。本輪以 `gh api .../branches/task/72` 確認。其餘來源與題目指定提交一致。沿用前次從原專案 worktree 唯讀取得、已與指定提交報告收據核對的本 worktree target JAR；本次再次核對四份 staged 與兩份 reference 的 SHA-256。
 
 | 來源 | entries | staged SHA-256 |
 |---|---:|---|
@@ -97,12 +97,11 @@ Microsoft JDK 17.0.17、ASM 9.7。本機直接 javac 編譯全部工具／測試
 
 ### CI
 
-- 本次：待推送後記錄實際 CI 結果；不以先前 CI 綠燈代替本次修正的驗證。
-- 前次程式提交 `7bb08e9f7d036579e979c252f3c404bd524f9f35`：[build run 41981029012](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012)、[package run 41981028847](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981028847) 均 SUCCESS；Server、Server tests、Launcher、Semantic gap、Build-Package.ps1 zip 五個 job 全部通過。以下三項亦為前次紀錄。
-- [Semantic gap job 127090907938](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012/job/127090907938) 的實際日誌確認 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=73`、`FOURTH SELFTEST ALL PASS checks=56`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`。這是 646 項 Java fixture 檢查加完整 Bash／冷啟動 fallback，不是只看 non-blocking 外層工作流結果。
-- CI 全新 Maven JAR 的預設比較完成：2156 SAME、393 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT、1008 BYTE_SAME。這是完整伺服器的既有來源缺口盤點，不是本任務四個 staged 批次的驗收計數；未把 CI 產生的 docs/server-semantic-gap.md 寫入本分支。
-- [Server tests job 127090908037](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012/job/127090908037) SUCCESS；執行的是既有 CI `mvn -B test`，依工作流略過 MySQL／本機檔案依賴測試。本輪不以舊任務的測試總數冒稱本次總數。
-- 完整原始日誌保存於 `scratch/issue-166/ci-semantic.log`、`ci-server-tests.log`。後續僅更新本報告的提交，其最新檢查可由 [PR checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170/checks) 核對。
+- 本次程式提交 `3f7c409744410ffd43f90b4e291520609ab09381`：[build run 41988923959](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41988923959)、[package run 41988924043](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41988924043) 均 SUCCESS；Server、Server tests、Launcher、Semantic gap、Build-Package.ps1 zip 五個 job 全部通過。
+- [Semantic gap job 127116227327](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41988923959/job/127116227327) 的實際日誌確認 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=73`、`FOURTH SELFTEST ALL PASS checks=72`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`，以及分支互換兩種 fixture 的 JVM 相反結果與六種 CLI DIFF。這是 662 項 Java 檢查加完整 Bash／冷啟動 fallback，不是只看 non-blocking 外層工作流結果。
+- CI 全新 Maven JAR 的預設比較完成：2151 SAME、398 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT、1008 BYTE_SAME。這是完整伺服器的來源缺口盤點，不是本任務四個固定 staged 批次的驗收計數；未把 CI 產生的 docs/server-semantic-gap.md 寫入本分支。
+- [Server tests job 127116227059](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41988923959/job/127116227059) SUCCESS；執行既有 CI `mvn -B test`，依工作流略過 MySQL／本機檔案依賴測試。不以舊任務的測試總數冒稱本次總數。
+- 本次 semantic job 原始日誌保存於 `scratch/issue-166/retry/ci-semantic.log`。逐方法確認 Main.accept、forMap、WindTargets.run 仍為 SAME 的日誌亦在 `retry/`；`retry_audit.py` 已核對全部 entry 的狀態變化、六份輸入雜湊、修改範圍與檔案連結。後續只補本報告的提交，最新檢查見 [PR checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170/checks)。
 
 ## 推測
 
