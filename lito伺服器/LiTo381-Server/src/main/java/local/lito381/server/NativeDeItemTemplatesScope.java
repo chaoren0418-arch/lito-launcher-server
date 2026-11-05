@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -37,8 +34,7 @@ final class NativeDeItemTemplatesScope {
         Context context2 = current.get();
         current.set(context);
         try {
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
         finally {
             if (context2 == null) {
@@ -110,27 +106,17 @@ final class NativeDeItemTemplatesScope {
             return new Classes();
         }
 
-        void addList(int n, String string, int n2) {
-            String[] stringArray;
-            if (string.equals("0")) {
-                return;
-            }
+        void addList(int id, String executor, int mode) {
+            if (executor.equals("0")) return;
             Data data = NativeDeItemTemplatesScope.loadingData();
-            if (string.indexOf(32) >= 0) {
-                stringArray = string.split(" ");
-            } else {
-                String[] stringArray2 = new String[1];
-                stringArray = stringArray2;
-                stringArray2[0] = string;
-            }
-            String[] stringArray3 = stringArray;
-            String string2 = switch (n2) {
+            String[] words = executor.indexOf(32) >= 0 ? executor.split(" ") : new String[] {executor};
+            String prefix = switch (mode) {
                 case 0 -> "com.lineage.data.item_etcitem.";
                 case 1 -> "com.lineage.data.item_weapon.";
                 case 2 -> "com.lineage.data.item_armor.";
                 default -> throw new IllegalArgumentException("source item executor mode");
             };
-            data.bindings.put(n, new Binding(n, string, n2, string2 + stringArray3[0], List.copyOf(Arrays.asList(stringArray3))));
+            data.bindings.put(id, new Binding(id, executor, mode, prefix + words[0], List.copyOf(Arrays.asList(words))));
         }
     }
 

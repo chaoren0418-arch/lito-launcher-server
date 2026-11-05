@@ -30,8 +30,7 @@ final class NativeCompanionMutation {
         if (!NativeCompanionCallbacks.readySlave(clientSession, object, battleCompanion)) {
             return false;
         }
-        BattleCompanion battleCompanion2 = battleCompanion;
-        synchronized (battleCompanion2) {
+        synchronized (battleCompanion) {
             return NativeCompanionMutation.life(clientSession, object, battleCompanion, "pendingSlaveTarget") && battleCompanion.selectTarget(l);
         }
     }
@@ -43,8 +42,7 @@ final class NativeCompanionMutation {
         if (!NativeCompanionCallbacks.readyRename(clientSession, object, battleCompanion)) {
             return false;
         }
-        BattleCompanion battleCompanion2 = battleCompanion;
-        synchronized (battleCompanion2) {
+        synchronized (battleCompanion) {
             return NativeCompanionMutation.life(clientSession, object, battleCompanion, "pendingPetRename") && battleCompanion.renameOnce(string);
         }
     }
@@ -56,8 +54,7 @@ final class NativeCompanionMutation {
         if (!NativeCompanionCallbacks.readyRename(clientSession, object, battleCompanion)) {
             return false;
         }
-        BattleCompanion battleCompanion2 = battleCompanion;
-        synchronized (battleCompanion2) {
+        synchronized (battleCompanion) {
             return NativeCompanionMutation.life(clientSession, object, battleCompanion, "pendingPetRename");
         }
     }

@@ -19,6 +19,10 @@ final class CombatPoisonLifecycle {
  private record Death(Actor target,Actor caster,long room,long generation){}
  private static final class Damage {final Death identity;final long thread=Thread.currentThread().getId();Damage next;Damage(Death identity,Damage next){this.identity=identity;this.next=next;}}
  static final class State {
+  // 正式 0.6.71 的 owner 契約；A-land 的 NativeCombatOrigin 經 NativePlayerCommit 存取。
+  private volatile Object sourcePlayerQueue;
+  private volatile Object sourcePlayerOwner;
+  private volatile Object sourceNpcOwner;
   private volatile Lease current;
   private State curse;
   private BattleTimedStatus monsterCurse;

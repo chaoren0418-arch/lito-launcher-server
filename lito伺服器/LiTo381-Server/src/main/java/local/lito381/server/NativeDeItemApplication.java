@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -51,8 +51,7 @@ final class NativeDeItemApplication {
         NativeDeItemApplication nativeDeItemApplication;
         Objects.requireNonNull(snapshot);
         Objects.requireNonNull(snapshot2);
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
+        synchronized (gameHub) {
             if (!NativePlayerLifetime.of(gameHub).admits()) {
                 throw new IllegalStateException("item application is closed");
             }
@@ -69,13 +68,13 @@ final class NativeDeItemApplication {
         try {
             for (ClientSession clientSession : gameHub.connectedSessionsSnapshot()) {
                 Owner owner = nativeDeItemApplication.owner(clientSession);
-                if (owner == null) continue;
-                Owner owner2 = owner;
-                synchronized (owner2) {
-                    for (int i = 0; i < 4; ++i) {
-                        owner.adopt(clientSession.nativeDeInventory(i));
+                if (owner != null) {
+                    synchronized (owner) {
+                        for (int i = 0; i < 4; ++i) {
+                            owner.adopt(clientSession.nativeDeInventory(i));
+                        }
+                        owner.refreshFields();
                     }
-                    owner.refreshFields();
                 }
             }
             return nativeDeItemApplication;
@@ -99,8 +98,7 @@ final class NativeDeItemApplication {
         if (this.closed || !NativeCastMaterial.ownerLifetime(this.life, this, clientSession) || ((Boolean)CombatAccess.field(clientSession, DISCONNECTED)).booleanValue()) {
             return null;
         }
-        Object object = CombatAccess.field(clientSession, GATE);
-        synchronized (object) {
+        synchronized (CombatAccess.field(clientSession, GATE)) {
             if (((Boolean)CombatAccess.field(clientSession, DISCONNECTED)).booleanValue()) {
                 return null;
             }
@@ -124,16 +122,14 @@ final class NativeDeItemApplication {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void replace(ClientSession clientSession, RuntimeInventory runtimeInventory, int n) {
-        Owner owner;
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         NativeDeItemApplication nativeDeItemApplication = gameHub == null ? null : (NativeDeItemApplication)CombatAccess.field(gameHub, FIELD);
-        Owner owner2 = owner = nativeDeItemApplication == null ? null : nativeDeItemApplication.owner(clientSession);
+        Owner owner = nativeDeItemApplication == null ? null : nativeDeItemApplication.owner(clientSession);
         if (owner == null) {
             clientSession.nativeDeSetInventory(n, runtimeInventory);
             return;
         }
-        Owner owner3 = owner;
-        synchronized (owner3) {
+        synchronized (owner) {
             if (!owner.active || !owner.matches(clientSession)) {
                 throw new IllegalStateException("stale item inventory assignment");
             }
@@ -144,15 +140,10 @@ final class NativeDeItemApplication {
                 owner.refreshFields();
                 return;
             }
-            RuntimeInventory runtimeInventory3 = runtimeInventory2;
-            synchronized (runtimeInventory3) {
+            synchronized (runtimeInventory2) {
                 if (runtimeInventory != null) {
-                    RuntimeInventory runtimeInventory4 = runtimeInventory;
-                    synchronized (runtimeInventory4) {
-                        Object nativeItems = runtimeInventory.nativeDeItems();
-                        if (nativeItems instanceof NativeDeItemInventory inventory) {
-                            inventory.validateReplacement(runtimeInventory2);
-                        }
+                    synchronized (runtimeInventory) {
+                        ((NativeDeItemInventory)runtimeInventory.nativeDeItems()).validateReplacement(runtimeInventory2);
                         clientSession.nativeDeSetInventory(n, runtimeInventory);
                     }
                 } else {
@@ -170,8 +161,7 @@ final class NativeDeItemApplication {
         if (clientSession == null) {
             return;
         }
-        Object object = CombatAccess.field(clientSession, GATE);
-        synchronized (object) {
+        synchronized (CombatAccess.field(clientSession, GATE)) {
             Owner owner = (Owner)CombatAccess.field(clientSession, OWNER);
             if (owner != null) {
                 owner.retire();
@@ -211,9 +201,7 @@ final class NativeDeItemApplication {
     static Owner publicationOwner(ClientSession clientSession) {
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         NativeDeItemApplication nativeDeItemApplication = (NativeDeItemApplication)CombatAccess.field(gameHub, FIELD);
-        Object object = CombatAccess.field(clientSession, GATE);
-        synchronized (object) {
-            long l;
+        synchronized (CombatAccess.field(clientSession, GATE)) {
             if (((Boolean)CombatAccess.field(clientSession, DISCONNECTED)).booleanValue() || clientSession.selectedCharacterName().isBlank()) {
                 return null;
             }
@@ -233,7 +221,8 @@ final class NativeDeItemApplication {
                     return null;
                 }
             }
-            if ((l = clientSession.playerObjectId()) <= 0L || l > 0xFFFFFFFFL) {
+            long l = clientSession.playerObjectId();
+            if (l <= 0L || l > 0xFFFFFFFFL) {
                 return null;
             }
             if (owner != null) {
@@ -281,8 +270,7 @@ final class NativeDeItemApplication {
             if (!this.active || nativeDeItemApplication.closed || !NativeCastMaterial.adoptLifetime(nativeDeItemApplication.life, this, runtimeInventory)) {
                 throw new IllegalStateException("item owner retired");
             }
-            RuntimeInventory runtimeInventory2 = runtimeInventory;
-            synchronized (runtimeInventory2) {
+            synchronized (runtimeInventory) {
                 NativeDeItemInventory nativeDeItemInventory = NativeDeItemInventory.bind(runtimeInventory, nativeDeItemApplication.templates, nativeDeItemApplication.definitions);
                 if (nativeDeItemInventory.rentalCharacter != null) {
                     if (!nativeDeItemInventory.rentalCharacter.equals(this.source.toLowerCase(Locale.ROOT)) || nativeDeItemInventory.rentalAccount != null && !nativeDeItemInventory.rentalAccount.equals(this.account.toLowerCase(Locale.ROOT))) {
@@ -299,14 +287,13 @@ final class NativeDeItemApplication {
         }
 
         void requireActive(RuntimeInventory runtimeInventory) {
-            int n;
             NativeDeItemApplication nativeDeItemApplication = (NativeDeItemApplication)this.application.get();
             ClientSession clientSession = (ClientSession)this.session.get();
             if (!this.active || nativeDeItemApplication == null || nativeDeItemApplication.closed || !nativeDeItemApplication.life.admits() || clientSession == null || !this.matches(clientSession) || CombatAccess.field(clientSession, NativeDeItemApplication.OWNER) != this) {
                 throw new IllegalStateException("source item owner is stale");
             }
             boolean bl = (Boolean)CombatAccess.field(clientSession, "rentalTownRoomState") != false && String.valueOf(CombatAccess.field(clientSession, "phase")).equals("BATTLE");
-            int n2 = n = bl ? 1 : 0;
+            int n = bl ? 1 : 0;
             if (clientSession.nativeDeInventory(n) != runtimeInventory) {
                 throw new IllegalStateException("source item inventory is staged or inactive");
             }
@@ -324,17 +311,16 @@ final class NativeDeItemApplication {
             RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(bl ? 1 : 0);
             for (int i = 0; i < 4; ++i) {
                 RuntimeInventory runtimeInventory2 = clientSession.nativeDeInventory(i);
-                if (runtimeInventory2 == null) continue;
-                RuntimeInventory runtimeInventory3 = runtimeInventory2;
-                synchronized (runtimeInventory3) {
-                    Map map = runtimeInventory2.nativeDeItems();
-                    if (map instanceof NativeDeItemInventory) {
-                        NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
-                        if (nativeDeItemInventory.owner == this) {
-                            nativeDeItemInventory.ownerFields(runtimeInventory2 == runtimeInventory ? (int)this.objectId : 0);
+                if (runtimeInventory2 != null) {
+                    synchronized (runtimeInventory2) {
+                        Map map = runtimeInventory2.nativeDeItems();
+                        if (map instanceof NativeDeItemInventory) {
+                            NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
+                            if (nativeDeItemInventory.owner == this) {
+                                nativeDeItemInventory.ownerFields(runtimeInventory2 == runtimeInventory ? (int)this.objectId : 0);
+                            }
                         }
                     }
-                    continue;
                 }
             }
         }
@@ -348,10 +334,9 @@ final class NativeDeItemApplication {
             if (clientSession != null) {
                 for (int i = 0; i < 4; ++i) {
                     RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(i);
-                    if (runtimeInventory == null) continue;
-                    RuntimeInventory runtimeInventory2 = runtimeInventory;
-                    synchronized (runtimeInventory2) {
-                        continue;
+                    if (runtimeInventory != null) {
+                        synchronized (runtimeInventory) {
+                        }
                     }
                 }
             }

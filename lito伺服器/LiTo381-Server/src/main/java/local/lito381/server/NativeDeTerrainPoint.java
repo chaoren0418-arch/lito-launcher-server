@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 public class NativeDeTerrainPoint {
@@ -88,7 +85,10 @@ public class NativeDeTerrainPoint {
             return true;
         }
         int n2 = Math.abs(nativeDeTerrainPoint.getX() - (this.getX() - 18)) + Math.abs(nativeDeTerrainPoint.getY() - (this.getY() - 18));
-        return 19 <= n2 && n2 <= 52;
+        if (19 <= n2 && n2 <= 52) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isSamePoint(NativeDeTerrainPoint nativeDeTerrainPoint) {

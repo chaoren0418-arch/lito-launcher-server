@@ -1,8 +1,8 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import local.lito381.server.ArenaMapCatalog.Arena;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,8 +23,7 @@ final class NativeDeTerrainWorld {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Owner owner(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
+        synchronized (nativeDeWorldContext) {
             Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
             if (owner == null) {
                 nativeDeWorldContext.admit();
@@ -43,8 +42,7 @@ final class NativeDeTerrainWorld {
         readLock.lock();
         try {
             nativeDeWorldContext.admit();
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
         finally {
             readLock.unlock();
@@ -107,16 +105,16 @@ final class NativeDeTerrainWorld {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static void close(NativeDeWorldContext nativeDeWorldContext) {
-        NativeDeWorldContext nativeDeWorldContext2 = nativeDeWorldContext;
-        synchronized (nativeDeWorldContext2) {
-            Owner owner = (Owner)CombatAccess.field(nativeDeWorldContext, FIELD);
-            if (owner != null) {
-                owner.classic.clear();
-            }
-            CombatAccess.set(nativeDeWorldContext, FIELD, null);
-        }
-    }
+    static void close(NativeDeWorldContext var0) {
+      synchronized (var0) {
+         NativeDeTerrainWorld.Owner var2 = (NativeDeTerrainWorld.Owner)CombatAccess.field(var0, "sourceDeTerrain");
+         if (var2 != null) {
+            var2.classic.clear();
+         }
+
+         CombatAccess.set(var0, "sourceDeTerrain", null);
+      }
+   }
 
     private NativeDeTerrainWorld() {
     }

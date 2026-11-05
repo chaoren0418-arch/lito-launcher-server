@@ -66,6 +66,7 @@ final class BattleArmorBreak {
     }
 
     static boolean supportsWeaponType(int weaponType) {
+        weaponType = CombatRules.weaponActionType(weaponType);
         return weaponType != EXCLUDED_WEAPON_TYPE_BOW
                 && weaponType != EXCLUDED_WEAPON_TYPE_GAUNTLET;
     }

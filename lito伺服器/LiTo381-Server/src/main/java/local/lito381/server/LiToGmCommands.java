@@ -29,7 +29,7 @@ final class LiToGmCommands {
                 reply(s,"資料庫未啟用 "+command+"，或執行器設定不符。");return true;
             }
             String account=(String)call(s,"accountName",new Class[]{});
-            int access=repo.accessLevel(account);
+            int access=SourceAdministration.accessLevel(repo,account,s);
             // A configuration administrator is not a replacement for source GM authority.
             if(access<=0||access<policy.requiredAccessLevel()){
                 reply(s,"GM 權限不足：需要 access_level "+Math.max(1,policy.requiredAccessLevel())+"。");return true;

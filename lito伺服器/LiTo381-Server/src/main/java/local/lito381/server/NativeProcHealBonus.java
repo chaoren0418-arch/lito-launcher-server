@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -29,14 +29,12 @@ final class NativeProcHealBonus {
         boolean bl = false;
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM `\u89d2\u8272_\u667a\u529b\u6210\u9577`");){
-            int n;
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-            for (n = 1; n <= resultSetMetaData.getColumnCount(); ++n) {
-                if (!resultSetMetaData.getColumnLabel(n).equals("\u6cbb\u7652\u9ab0\u52a0\u6210")) continue;
-                bl = true;
+            for (int n = 1; n <= resultSetMetaData.getColumnCount(); ++n) {
+                if (resultSetMetaData.getColumnLabel(n).equals("\u6cbb\u7652\u9ab0\u52a0\u6210")) { bl = true; }
             }
             while (resultSet.next()) {
-                n = resultSet.getInt("id");
+                int n = resultSet.getInt("id");
                 int n2 = resultSet.getInt("\u9b54\u6cd5\u52a0\u6210");
                 linkedHashMap.put(n, n2);
                 linkedHashMap2.put(n, bl ? resultSet.getInt("\u6cbb\u7652\u9ab0\u52a0\u6210") : Math.min(n2, 10));
@@ -49,12 +47,12 @@ final class NativeProcHealBonus {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Catalog catalog;
         if (current != null) {
             return;
         }
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string = SharedDatabase.identifier(properties.getProperty("database.static.database"));
+        Catalog catalog;
         try (Connection connection = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
             connection.setReadOnly(true);
             connection.setAutoCommit(false);
@@ -77,7 +75,8 @@ final class NativeProcHealBonus {
         return catalog;
     }
 
-    record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {Catalog {
+    record Catalog(Map<Integer, Integer> magic, Map<Integer, Integer> healing, boolean explicitColumn) {
+        Catalog {
             magic = Map.copyOf(magic);
             healing = Map.copyOf(healing);
         }

@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -32,49 +32,30 @@ final class NativeSourceSkillConsumptionMath {
             n5 -= n3 - 12;
         }
         switch (n) {
-            case 26: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 26:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 43: {
-                if (bl) {
-                    n5 >>= 1;
-                    break;
-                }
-                if (!bl) break;
-                n5 >>= 1;
+            case 43:
+                if (bl) { n5 >>= 1; break; }
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 1: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 1:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 19: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 19:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 12: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 12:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 13: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 13:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 42: {
-                if (!bl) break;
-                n5 >>= 1;
+            case 42:
+                if (bl) n5 >>= 1;
                 break;
-            }
-            case 54: {
-                if (!bl) break;
-                n5 >>= 1;
-            }
+            case 54:
+                if (bl) n5 >>= 1;
         }
         if (0 < n2) {
             n5 = Math.max(n5, 1);
@@ -89,19 +70,19 @@ final class NativeSourceSkillConsumptionMath {
         int n3 = n2;
         int n4 = 0;
         if (n == 0) {
-            n4 = n3 == 11 || n3 == 12 ? 1 : (n3 >= 13 ? 2 : 0);
+            if (n3 == 11 || n3 == 12) n4 = 1; else if (n3 >= 13) n4 = 2; else n4 = 0;
         } else if (n == 1) {
-            n4 = n3 == 9 || n3 == 10 ? 1 : (n3 >= 11 ? 2 : 0);
+            if (n3 == 9 || n3 == 10) n4 = 1; else if (n3 >= 11) n4 = 2; else n4 = 0;
         } else if (n == 2) {
             n4 = 0;
         } else if (n == 4) {
-            n4 = n3 == 13 || n3 == 14 ? 1 : (n3 >= 15 ? 2 : 0);
+            if (n3 == 13 || n3 == 14) n4 = 1; else if (n3 >= 15) n4 = 2; else n4 = 0;
         } else if (n == 3) {
             n4 = 0;
         } else if (n == 5) {
             n4 = 0;
         } else if (n == 6) {
-            n4 = n3 == 14 ? 1 : (n3 >= 15 ? 2 : 0);
+            if (n3 == 14) n4 = 1; else if (n3 >= 15) n4 = 2; else n4 = 0;
         }
         return n4;
     }

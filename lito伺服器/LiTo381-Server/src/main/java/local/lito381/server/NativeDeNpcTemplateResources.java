@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,12 +38,12 @@ final class NativeDeNpcTemplateResources {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(4);
         }
-        catch (Error | RuntimeException | SQLException throwable) {
+        catch (SQLException | RuntimeException | Error throwable) {
             counts.lifecycleFailures.incrementAndGet();
             try {
                 connection.close();
             }
-            catch (Error | RuntimeException | SQLException throwable2) {
+            catch (SQLException | RuntimeException | Error throwable2) {
                 throwable.addSuppressed(throwable2);
             }
             throw throwable;
@@ -54,9 +51,7 @@ final class NativeDeNpcTemplateResources {
         counts.opened.incrementAndGet();
         AtomicBoolean atomicBoolean = new AtomicBoolean();
         return (Connection)Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[]{Connection.class}, (object, method, objectArray) -> {
-            String string;
-            Object object2;
-            if (method.getName().equals("close") && method.getParameterCount() == 0) {
+                        if (method.getName().equals("close") && method.getParameterCount() == 0) {
                 if (atomicBoolean.compareAndSet(false, true)) {
                     Throwable throwable = null;
                     try {
@@ -75,8 +70,9 @@ final class NativeDeNpcTemplateResources {
                         counts.lifecycleFailures.incrementAndGet();
                         if (throwable == null) {
                             throwable = throwable3;
+                        } else {
+                            throwable.addSuppressed(throwable3);
                         }
-                        throwable.addSuppressed(throwable3);
                     }
                     if (throwable != null) {
                         throw throwable;
@@ -87,7 +83,7 @@ final class NativeDeNpcTemplateResources {
             if (Set.of("commit", "setAutoCommit", "setReadOnly", "setTransactionIsolation").contains(method.getName())) {
                 throw new SQLException("source template load owns the read-only transaction");
             }
-            if ((method.getName().equals("prepareStatement") || method.getName().equals("prepareCall")) && objectArray != null && objectArray.length > 0 && (object2 = objectArray[0]) instanceof String && !(string = (String)object2).stripLeading().toLowerCase(Locale.ROOT).startsWith("select")) {
+            if ((method.getName().equals("prepareStatement") || method.getName().equals("prepareCall")) && objectArray != null && objectArray.length > 0 && objectArray[0] instanceof String string && !string.stripLeading().toLowerCase(Locale.ROOT).startsWith("select")) {
                 throw new SQLException("source template SQL must be SELECT");
             }
             try {
@@ -114,8 +110,8 @@ final class NativeDeNpcTemplateResources {
                 hashMap.put(resultSet.getInt("skill_id"), resultSet.getString("name"));
             }
         }
-        Object object = new NativeDeNpcTemplateLoadScope.Context(sql, resolver, nativeDeWorldLog2, hashMap);
-        NativeDeNpcTemplateLoadScope.call((NativeDeNpcTemplateLoadScope.Context)object, () -> {
+        NativeDeNpcTemplateLoadScope.Context object = new NativeDeNpcTemplateLoadScope.Context(sql, resolver, nativeDeWorldLog2, hashMap);
+        NativeDeNpcTemplateLoadScope.call(object, () -> {
             NativeDeNpcTemplateNpcLoader.load();
             NativeDeNpcTemplateMobLoader.load();
             return null;
@@ -123,7 +119,7 @@ final class NativeDeNpcTemplateResources {
         if (counts.lifecycleFailures.get() != 0L || counts.opened.get() != counts.rolledBack.get() || counts.opened.get() != counts.closed.get()) {
             throw new SQLException("source template transaction setup/rollback/close failed; publication refused");
         }
-        return new Snapshot(string3, ((NativeDeNpcTemplateLoadScope.Context)object).npcs, ((NativeDeNpcTemplateLoadScope.Context)object).mobSkills, ((NativeDeNpcTemplateLoadScope.Context)object).families, ((NativeDeNpcTemplateLoadScope.Context)object).orc, ((NativeDeNpcTemplateLoadScope.Context)object).requiredImplementations, ((NativeDeNpcTemplateLoadScope.Context)object).unresolvedExecutors, ((NativeDeNpcTemplateLoadScope.Context)object).suppressedBlankNameWrites, counts.opened.get(), counts.rolledBack.get(), counts.closed.get(), counts.errors.get(), false);
+        return new Snapshot(string3, object.npcs, object.mobSkills, object.families, object.orc, object.requiredImplementations, object.unresolvedExecutors, object.suppressedBlankNameWrites, counts.opened.get(), counts.rolledBack.get(), counts.closed.get(), counts.errors.get(), false);
     }
 
     static synchronized void load(ServerConfig serverConfig) throws Exception {

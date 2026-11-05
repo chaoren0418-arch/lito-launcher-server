@@ -20,7 +20,7 @@ final class BattleArmBreakerStatus {
 
     synchronized Activation activateIfAbsent(long nowNanos,
                                              int durationSeconds) {
-        if (nowNanos < 0 || durationSeconds != DURATION_SECONDS) {
+        if (nowNanos < 0 || !CombatBuffLeases.validArmDuration(durationSeconds)) {
             return Activation.rejected();
         }
         if (nowNanos < expiresAtNanos) {
@@ -40,7 +40,9 @@ final class BattleArmBreakerStatus {
     }
 
     synchronized int meleeDamageModifier(long nowNanos) {
-        return active(nowNanos) ? MELEE_DAMAGE_MODIFIER : 0;
+        return active(nowNanos)
+                ? CombatBuffLeases.value(MELEE_DAMAGE_MODIFIER, SKILL_ID, "DMG")
+                : 0;
     }
 
     synchronized boolean cancel() {

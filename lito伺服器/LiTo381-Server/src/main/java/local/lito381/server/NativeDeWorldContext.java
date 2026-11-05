@@ -1,8 +1,19 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
+
+import java.lang.System.Logger.Level;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+import local.lito381.server.BattleRules.MatchState;
+import local.lito381.server.NativeDeDeletionPorts.Boss;
+import local.lito381.server.NativeDeDeletionPorts.DeWorld;
+import local.lito381.server.NativeDeDeletionPorts.Log;
+import local.lito381.server.NativeDeDeletionPorts.ObjectRef;
+import local.lito381.server.NativeDeDeletionPorts.Quest;
+import local.lito381.server.NativeDeDeletionPorts.Services;
+import local.lito381.server.NativeDeDeletionPorts.Viewer;
+import local.lito381.server.NativeDeDeletionPorts.World;
+import local.lito381.server.NativeDeInitializerKernel.Name;
 
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Constructor;
@@ -125,34 +136,45 @@ implements NativeDeDeletionPorts.Services {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    static NativeDeWorldContext of(GameHub gameHub, NativeDeDeletionPorts.Services services) {
-        GameHub gameHub2 = gameHub;
-        synchronized (gameHub2) {
-            NativePlayerLifetime nativePlayerLifetime = NativePlayerLifetime.of(gameHub);
-            if (!nativePlayerLifetime.admits()) {
-                throw new RejectedExecutionException("World application closed");
+    static NativeDeWorldContext of(GameHub var0, Services var1) {
+      synchronized (var0) {
+         NativePlayerLifetime var3 = NativePlayerLifetime.of(var0);
+         if (!var3.admits()) {
+            throw new RejectedExecutionException("World application closed");
+         } else {
+            NativeDeWorldContext var4 = (NativeDeWorldContext)CombatAccess.field(var0, "sourceDeWorldContext");
+            if (var4 != null) {
+               if (var4.closed) {
+                  throw new RejectedExecutionException("World application closed");
+               } else if (var4.remaining != var1) {
+                  throw new IllegalArgumentException("World service binding is immutable");
+               } else {
+                  return var4;
+               }
+            } else {
+               HashSet var5 = new HashSet<>(ClassicWorldMapCatalog.supportedMapIds());
+               NativeDeTerrainResources.addMaps(var5);
+               var5.addAll(ArenaMapCatalog.mapIds());
+
+               for (NativeLitoMapTableCatalog.Entry var7 : ResourceDatabase.maps(List.of())) {
+                  var5.add(var7.mapId());
+               }
+
+               NativeDeWorldContext var10 = new NativeDeWorldContext(
+                  var3,
+                  var1,
+                  var5,
+                  (var0x, var1x, var2) -> System.getLogger(NativeDeWorldContext.class.getName())
+                     .log(var0x.equals("warn") ? Level.WARNING : (var0x.equals("error") ? Level.ERROR : Level.INFO), var1x + " " + Arrays.toString(var2)),
+                  NativeDeWorldControls.load(),
+                  System::nanoTime
+               );
+               CombatAccess.set(var0, "sourceDeWorldContext", var10);
+               return var10;
             }
-            NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)CombatAccess.field(gameHub, FIELD);
-            if (nativeDeWorldContext != null) {
-                if (nativeDeWorldContext.closed) {
-                    throw new RejectedExecutionException("World application closed");
-                }
-                if (nativeDeWorldContext.remaining != services) {
-                    throw new IllegalArgumentException("World service binding is immutable");
-                }
-                return nativeDeWorldContext;
-            }
-            HashSet<Integer> hashSet = new HashSet<Integer>(ClassicWorldMapCatalog.supportedMapIds());
-            NativeDeTerrainResources.addMaps(hashSet);
-            hashSet.addAll(ArenaMapCatalog.mapIds());
-            for (NativeLitoMapTableCatalog.Entry entry : ResourceDatabase.maps(List.of())) {
-                hashSet.add(entry.mapId());
-            }
-            NativeDeWorldContext nativeDeWorldContext2 = new NativeDeWorldContext(nativePlayerLifetime, services, hashSet, (string, string2, objectArray) -> System.getLogger(NativeDeWorldContext.class.getName()).log(string.equals("warn") ? System.Logger.Level.WARNING : (string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO), string2 + " " + Arrays.toString(objectArray)), NativeDeWorldControls.load(), System::nanoTime);
-            CombatAccess.set(gameHub, FIELD, nativeDeWorldContext2);
-            return nativeDeWorldContext2;
-        }
-    }
+         }
+      }
+   }
 
     static void closeHub(GameHub gameHub) {
         NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)CombatAccess.field(gameHub, FIELD);
@@ -295,59 +317,39 @@ implements NativeDeDeletionPorts.Services {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    Entry attach(NativeDeDeletionPorts.ObjectRef objectRef, int n, int n2, int n3, int n4, String string, int n5, int n6, boolean bl) {
-        Object object;
-        Entry entry;
+    Entry attach(NativeDeDeletionPorts.ObjectRef objectRef, int x, int y, int mapId, int showId, String name, int classType, int onlineStatus, boolean player) {
         ReentrantReadWriteLock.ReadLock readLock = this.admission.readLock();
         readLock.lock();
         try {
-            NativeDeDeletionPorts.ObjectRef objectRef2;
             this.admit();
             NativeDeInventoryIdentity.requireWorldIdentity(objectRef);
             if (!(objectRef instanceof NativeDeObjectFields)) {
                 throw new IllegalArgumentException("World actor requires native object identity");
             }
-            if (objectRef instanceof NativeDeDeletionState) {
-                NativeDeDeletionState deletionState = (NativeDeDeletionState)objectRef;
-                if (deletionState.deletionOwner != this.deletion) {
-                    throw new IllegalArgumentException("foreign NPC World owner");
-                }
+            if (objectRef instanceof NativeDeDeletionState npc && npc.deletionOwner != this.deletion) {
+                throw new IllegalArgumentException("foreign NPC World owner");
             }
-            if (objectRef instanceof NativeDeClientViewer) {
-                objectRef2 = (NativeDeClientViewer)objectRef;
-                if (((NativeDeClientViewer)objectRef2).life != this.life || ((NativeDeClientViewer)objectRef2).retired) {
-                    throw new IllegalArgumentException("foreign or retired PC World owner");
-                }
+            if (objectRef instanceof NativeDeClientViewer viewer && (viewer.life != this.life || viewer.retired)) {
+                throw new IllegalArgumentException("foreign or retired PC World owner");
             }
-            objectRef2 = objectRef;
-            synchronized (objectRef2) {
-                Entry entry2 = (Entry)CombatAccess.field(objectRef, ENTRY);
-                if (entry2 != null) {
-                    if (entry2.context != this) {
+            synchronized (objectRef) {
+                Entry existing = (Entry)CombatAccess.field(objectRef, "sourceDeWorldEntry");
+                if (existing != null) {
+                    if (existing.context != this) {
                         throw new IllegalArgumentException("World binding is application immutable");
                     }
-                    Entry entry3 = entry2;
-                    // MONITOREXIT @DISABLED, blocks:[0, 4, 8] lbl23 : MonitorExitStatement: MONITOREXIT : var11_11 /* !! */ 
-                    readLock.unlock();
-                    return entry3;
+                    return existing;
                 }
-                entry = new Entry(this, n, n2, n3, n4, string, n5, n6, bl, objectRef);
+                Entry entry = new Entry(this, x, y, mapId, showId, name, classType, onlineStatus, player, objectRef);
+                CombatAccess.set(objectRef, "sourceDeWorldEntry", entry);
+                if (objectRef instanceof NativeDeDeletionState npc) {
+                    npc.showId = showId;
+                }
+                return entry;
             }
-        }
-        catch (Throwable throwable) {
+        } finally {
             readLock.unlock();
-            throw throwable;
         }
-        {
-            CombatAccess.set(objectRef, ENTRY, entry);
-            if (objectRef instanceof NativeDeDeletionState) {
-                object = (NativeDeDeletionState)objectRef;
-                ((NativeDeDeletionState)object).showId = n4;
-            }
-            object = entry;
-        }
-        readLock.unlock();
-        return (Entry)object;
     }
 
     /*
@@ -419,26 +421,23 @@ implements NativeDeDeletionPorts.Services {
         }
     }
 
-    private static void clearMaps(Object object) {
-        try {
-            for (Field field : object.getClass().getDeclaredFields()) {
-                if (Modifier.isStatic(field.getModifiers())) continue;
-                field.setAccessible(true);
-                Object object2 = field.get(object);
-                if (object2 instanceof Map) {
-                    Map map = (Map)object2;
-                    map.clear();
-                    continue;
-                }
-                if (!(object2 instanceof CopyOnWriteArrayList)) continue;
-                CopyOnWriteArrayList copyOnWriteArrayList = (CopyOnWriteArrayList)object2;
-                copyOnWriteArrayList.clear();
+    private static void clearMaps(Object var0) {
+      try {
+         for (Field var4 : var0.getClass().getDeclaredFields()) {
+            if (!Modifier.isStatic(var4.getModifiers())) {
+               var4.setAccessible(true);
+               Object var5 = var4.get(var0);
+               if (var5 instanceof Map var6) {
+                  var6.clear();
+               } else if (var5 instanceof CopyOnWriteArrayList var7) {
+                  var7.clear();
+               }
             }
-        }
-        catch (ReflectiveOperationException reflectiveOperationException) {
-            throw new IllegalStateException(reflectiveOperationException);
-        }
-    }
+         }
+      } catch (ReflectiveOperationException var8) {
+         throw new IllegalStateException(var8);
+      }
+   }
 
     @Override
     public NativeDeDeletionPorts.World world() {

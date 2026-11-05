@@ -11,6 +11,11 @@ final class ResourceDatabase {
  private static volatile Snapshot current;
  static boolean shared(){return "tw13081901-v1".equals(System.getProperty("lito.resourceProfile"));}
  static synchronized void load(ServerConfig config)throws Exception {
+  NativeProcNpcCatalog.load(config);
+  NativeProcEncounterCatalog.load(config);
+  NativeProcSkillCatalog.load(config);
+  NativeProcHealBonus.load(config);
+  NativeArmorProc.load(config);
   if(current!=null)return;
   var p=UnifiedConfiguration.read(config.source());
   String db=SharedDatabase.identifier(p.getProperty("database.lito.database"));
@@ -67,6 +72,12 @@ final class ResourceDatabase {
   }
   GmTravel.load(config);
   CombatDatabase.load(config);
+  NativeDeSprites.load(config);
+  NativeDeFactoryControls.load(config);
+  NativeDeNpcTemplateResources.load(config);
+  NativeDeTerrainResources.load(config);
+  NativeDeShopResources.load(config);
+  NativeDeChatResources.load(config);
   current=new Snapshot(Map.copyOf(values),Map.copyOf(selectors),Collections.unmodifiableMap(maps),List.copyOf(zones),List.copyOf(colors),Map.copyOf(names),Set.copyOf(pages),Map.copyOf(portals),arrow,type);
   System.out.println("[LiTo] SQL resources loaded: skill-fields="+values.size()+" buffs="+selectors.size()+" maps="+maps.size()+" town-portals="+portals.size()+" npc-identities="+names.size()+"; unresolved fields remain disabled");
  }

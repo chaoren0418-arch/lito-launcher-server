@@ -39,8 +39,23 @@ final class LiToItemDetails {
   if(bytes.length>8192)throw new IllegalArgumentException("LiTo item detail exceeds 8192 bytes");
   return new Protocol.Writer().c(Protocol.S_MESSAGE).c(254).s(PREFIX+Long.toUnsignedString(id,16)+":"+HexFormat.of().formatHex(bytes)).bytes();
  }
- static Field INVENTORY,SHOP;static Method SEND,OFFERS;
- static {try{INVENTORY=ClientSession.class.getDeclaredField("inventory");INVENTORY.setAccessible(true);SEND=ClientSession.class.getDeclaredMethod("sendEncryptedFrame",byte[].class,String.class);SEND.setAccessible(true);SHOP=ClientSession.class.getDeclaredField("pendingTournamentShop");SHOP.setAccessible(true);OFFERS=Class.forName("local.lito381.server.ClientSession$PendingTournamentShop").getDeclaredMethod("offers");OFFERS.setAccessible(true);}catch(Exception e){throw new ExceptionInInitializerError(e);}}
+ static Field INVENTORY,SHOP;static Method SEND,OFFERS,SOURCE;
+ static {try{INVENTORY=ClientSession.class.getDeclaredField("inventory");INVENTORY.setAccessible(true);SEND=ClientSession.class.getDeclaredMethod("sendEncryptedFrame",byte[].class,String.class);SEND.setAccessible(true);SHOP=ClientSession.class.getDeclaredField("pendingTournamentShop");SHOP.setAccessible(true);OFFERS=Class.forName("local.lito381.server.ClientSession$PendingTournamentShop").getDeclaredMethod("offers");OFFERS.setAccessible(true);SOURCE=ClientSession.class.getDeclaredMethod("selectedSourceAccounts");SOURCE.setAccessible(true);}catch(Exception e){throw new ExceptionInInitializerError(e);}}
+
+ static String describe(ClientSession session,RuntimeInventory.Item item)throws ReflectiveOperationException {
+  if(!item.identified())return "";
+  AccountRepository repo=(AccountRepository)SOURCE.invoke(session);
+  var map=LiToItemTemplates.get(repo,item.definition().catalogId());
+  String custom=LiToItemTemplates.custom(repo,item.definition().catalogId());
+  if(map!=null && Set.of("armor","weapon").contains(map.get("kind"))){
+   return LiToItemTemplates.needsExtension(map)||!custom.isEmpty()?LiToItemTemplates.describe(item,map)+custom:"";
+  }
+  if(!custom.isEmpty())return describe(item)+custom;
+  var a=item.definition().sourceArmorStatus();
+  if(a==null)return "";
+  String text=describe(item);
+  return text.lines().count()>19L || Math.abs((long)a.hitPoints())>32767L || Math.abs((long)a.manaPoints())>32767L || Math.abs((long)a.magicResistance())>127L || Math.abs((long)a.spellPower())>127L ? text : "";
+ }
  static void publish(ClientSession session,byte[] original)throws IOException {
   if(!Boolean.getBoolean("lito.extendedItemDetails") || original.length==0)return;
   int op=original[0]&255;
@@ -50,15 +65,15 @@ final class LiToItemDetails {
     Object shop=SHOP.get(session);if(shop==null)return;
     for(Object raw:(List<?>)OFFERS.invoke(shop)) {
      var offer=(TournamentShopCatalog.Offer)raw;var d=offer.definition();
-     SEND.invoke(session,packet(d.catalogId(),describe(new RuntimeInventory.Item(d.catalogId(),d,1,false))),"S_LITO_ITEM_DETAIL shop="+d.catalogId());
+     SEND.invoke(session,packet(d.catalogId(),describe(session,new RuntimeInventory.Item(d.catalogId(),d,1,false))),"S_LITO_ITEM_DETAIL shop="+d.catalogId());
     }
     return;
    }
-   RuntimeInventory inventory=(RuntimeInventory)INVENTORY.get(session);if(inventory==null)return;
+   RuntimeInventory inventory=NativeDeItemPublication.inventory(session);if(inventory==null)return;
    long id=original.length>=5?((original[1]&255L)|((original[2]&255L)<<8)|((original[3]&255L)<<16)|((original[4]&255L)<<24)):0;
    if(op==Protocol.S_REMOVE_INVENTORY){SEND.invoke(session,packet(id,""),"S_LITO_ITEM_DETAIL remove="+id);return;}
    for(var item:inventory.items())if(op==Protocol.S_ADD_INVENTORY_BATCH || item.objectId()==id)
-    SEND.invoke(session,packet(item.objectId(),describe(item)),"S_LITO_ITEM_DETAIL v1 object="+item.objectId());
+    SEND.invoke(session,packet(item.objectId(),describe(session,item)),"S_LITO_ITEM_DETAIL v1 object="+item.objectId());
   }catch(InvocationTargetException e){if(e.getCause() instanceof IOException io)throw io;throw new IOException("LiTo item detail publication",e.getCause());}catch(ReflectiveOperationException e){throw new IOException(e);}
  }
 }

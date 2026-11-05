@@ -37,13 +37,16 @@ final class BattleFreezeEffects {
 
     synchronized Placement place(long targetObjectId, int x, int y,
                                  long nowNanos, int durationSeconds) {
+        durationSeconds = CombatWorldFreeze.visualDuration(durationSeconds);
         if (targetObjectId == 0 || x < 0 || x > 0xFFFF || y < 0 || y > 0xFFFF
                 || nowNanos < 0 || durationSeconds <= 0 || durationSeconds > 32) {
             throw new IllegalArgumentException("invalid freeze effect placement");
         }
         Effect previous = byTarget.remove(targetObjectId);
         Effect placed = new Effect(nextObjectId(), targetObjectId, x, y,
-                Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)));
+                CombatWorldFreeze.visualExpiry(
+                        Math.addExact(nowNanos, TimeUnit.SECONDS.toNanos(durationSeconds)),
+                        nowNanos));
         byTarget.put(targetObjectId, placed);
         return new Placement(previous, placed);
     }

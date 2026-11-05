@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -14,8 +14,7 @@ final class NativeDeAiWorkerProtocol {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void dispatch(NativeDeAiTimeline.State state, Port port, long l, boolean bl) {
-        Object object = state.lock;
-        synchronized (object) {
+        synchronized (state.lock) {
             if (!NativeDeAiTimeline.owns(state, l) || state.chain != l || state.stop || !state.pending || state.pendingBackground != bl || state.executing || state.activeTimer != 0L) {
                 return;
             }

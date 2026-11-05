@@ -1,10 +1,7 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
-import java.util.Random;
+import com.lineage.server.model.proc.ProcRandomHelper;
 import java.util.concurrent.ThreadLocalRandom;
 
 public record NativeDeItemWeaponProc(int id, int weaponId, int minEnchant, int enchantStep, int probBase, int probEnchant, int dmgType, int dmgFix, int dmgRnd, double dmgScaling, int dmgAttr, int gfxId, int gfxTarget, int areaSize, int hpDrainFix, int hpDrainRnd, int mpDrainFix, int mpDrainRnd, int skillId, int skillTimeSec, int skillTarget, String description) {
@@ -29,21 +26,14 @@ public record NativeDeItemWeaponProc(int id, int weaponId, int minEnchant, int e
     }
 
     public int calculateHpDrain() {
-        return NativeDeItemWeaponProc.addOneToInclusive(this.hpDrainFix, this.hpDrainRnd, ThreadLocalRandom.current());
+        return ProcRandomHelper.addOneToInclusive(this.hpDrainFix, this.hpDrainRnd, ThreadLocalRandom.current());
     }
 
     public int calculateMpDrain() {
-        return NativeDeItemWeaponProc.addOneToInclusive(this.mpDrainFix, this.mpDrainRnd, ThreadLocalRandom.current());
+        return ProcRandomHelper.addOneToInclusive(this.mpDrainFix, this.mpDrainRnd, ThreadLocalRandom.current());
     }
 
     public int getSkillDurationMillis() {
         return this.skillTimeSec > 0 ? (int)Math.min(Integer.MAX_VALUE, (long)this.skillTimeSec * 1000L) : 0;
-    }
-
-    private static int addOneToInclusive(int fix, int rnd, Random random) {
-        if (rnd <= 0) {
-            return Math.max(0, fix);
-        }
-        return fix + 1 + random.nextInt(rnd);
     }
 }

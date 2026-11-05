@@ -21,8 +21,7 @@ final class NativeCompanionCommands {
         int n = NativePlayerCommit.integer(clientSession, "classicWorldMapId");
         int n2 = NativePlayerCommit.integer(clientSession, "classicWorldInstanceId");
         for (ClientSession clientSession2 : gameHub.classicWorldMembers(n, n2)) {
-            if (clientSession2 != clientSession) continue;
-            return true;
+            if (clientSession2 == clientSession) return true;
         }
         return false;
     }

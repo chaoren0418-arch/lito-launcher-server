@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -19,7 +16,6 @@ import local.lito381.server.NativeDeWorldLog;
 
 public class NativeDeItemWeaponProcTable {
     private static final NativeDeWorldLog _log = NativeDeItemDefinitionsScope.Logs.getLogger(NativeDeItemWeaponProcTable.class);
-    private static NativeDeItemWeaponProcTable _instance;
     private Map<Integer, List<NativeDeItemWeaponProc>> _weaponProcs;
     final NativeDeItemDefinitionsScope.Data nativeDefinitions = NativeDeItemDefinitionsScope.loadingData();
 
@@ -30,7 +26,7 @@ public class NativeDeItemWeaponProcTable {
     public void load() {
         NativeDeItemDefinitionsScope.requireLoading(this.nativeDefinitions);
         NativeDeTerrainTimer nativeDeTerrainTimer = new NativeDeTerrainTimer();
-        HashMap<Integer, List<NativeDeItemWeaponProc>> hashMap = new HashMap<Integer, List<NativeDeItemWeaponProc>>();
+        Map<Integer, List<NativeDeItemWeaponProc>> hashMap = new HashMap<Integer, List<NativeDeItemWeaponProc>>();
         try (Connection connection = NativeDeItemDefinitionsScope.Database.get().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `\u88dd\u5099_weapon_\u9b54\u6cd5` ORDER BY `weapon_id`, `id`");
              ResultSet resultSet = preparedStatement.executeQuery();){
@@ -65,8 +61,9 @@ public class NativeDeItemWeaponProcTable {
 
     public void reload() {
         NativeDeItemDefinitionsScope.requireLoading(this.nativeDefinitions);
-        _instance = new NativeDeItemWeaponProcTable();
-        _instance.load();
+        new NativeDeItemWeaponProcTable();
+        // 正式版於 PUTSTATIC 解析不存在的 _instance 時失敗；依 #73 保留此行為。
+        throw new NoSuchFieldError("_instance");
     }
 
     public static NativeDeItemWeaponProcTable getInstance() {

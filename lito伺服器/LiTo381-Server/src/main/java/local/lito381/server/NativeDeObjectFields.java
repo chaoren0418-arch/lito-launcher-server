@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.Serializable;
@@ -19,6 +16,9 @@ Serializable {
     private final NativeDeWorldLocation _loc = new NativeDeWorldLocation();
     int showId = -1;
     protected volatile Object sourceDeWorldEntry;
+
+    public NativeDeObjectFields() {
+    }
 
     protected abstract int getId();
 

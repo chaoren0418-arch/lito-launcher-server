@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -38,12 +38,12 @@ final class NativeDeActorState {
             throw new IllegalStateException("De actor state requires status monitor");
         }
         Object object = NativeCombatAttacker.token(battleTimedStatus, true);
-        NativeDeActorState nativeDeActorState = (NativeDeActorState)CombatAccess.field(battleTimedStatus, FIELD);
-        if (nativeDeActorState == null || nativeDeActorState.life != object) {
-            nativeDeActorState = new NativeDeActorState(object);
-            CombatAccess.set(battleTimedStatus, FIELD, nativeDeActorState);
+        NativeDeActorState s = (NativeDeActorState)CombatAccess.field(battleTimedStatus, FIELD);
+        if (s == null || s.life != object) {
+            s = new NativeDeActorState(object);
+            CombatAccess.set(battleTimedStatus, FIELD, s);
         }
-        return nativeDeActorState;
+        return s;
     }
 
     private Lease lease() {
@@ -62,8 +62,7 @@ final class NativeDeActorState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Lease acquire(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             return NativeDeActorState.owned(battleTimedStatus).lease();
         }
     }
@@ -72,10 +71,9 @@ final class NativeDeActorState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Snapshot snapshot(BattleTimedStatus battleTimedStatus) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeDeActorState nativeDeActorState = NativeDeActorState.owned(battleTimedStatus);
-            return new Snapshot(nativeDeActorState.lease(), nativeDeActorState.profile(), nativeDeActorState.hate);
+        synchronized (battleTimedStatus) {
+            NativeDeActorState s = NativeDeActorState.owned(battleTimedStatus);
+            return new Snapshot(s.lease(), s.profile(), s.hate);
         }
     }
 
@@ -83,15 +81,14 @@ final class NativeDeActorState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Lease type(BattleTimedStatus battleTimedStatus, Lease lease, int n) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeDeActorState nativeDeActorState = NativeDeActorState.owned(battleTimedStatus);
-            if (!nativeDeActorState.matches(lease)) {
+        synchronized (battleTimedStatus) {
+            NativeDeActorState s = NativeDeActorState.owned(battleTimedStatus);
+            if (!s.matches(lease)) {
                 return null;
             }
-            nativeDeActorState.aiType = n;
-            nativeDeActorState.revision = new Object();
-            return nativeDeActorState.lease();
+            s.aiType = n;
+            s.revision = new Object();
+            return s.lease();
         }
     }
 
@@ -100,15 +97,14 @@ final class NativeDeActorState {
      */
     static Lease behavior(BattleTimedStatus battleTimedStatus, Lease lease, NativeDeProfileKernel.Combat combat) {
         Objects.requireNonNull(combat);
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeDeActorState nativeDeActorState = NativeDeActorState.owned(battleTimedStatus);
-            if (!nativeDeActorState.matches(lease)) {
+        synchronized (battleTimedStatus) {
+            NativeDeActorState s = NativeDeActorState.owned(battleTimedStatus);
+            if (!s.matches(lease)) {
                 return null;
             }
-            nativeDeActorState.combat = combat;
-            nativeDeActorState.revision = new Object();
-            return nativeDeActorState.lease();
+            s.combat = combat;
+            s.revision = new Object();
+            return s.lease();
         }
     }
 
@@ -116,67 +112,66 @@ final class NativeDeActorState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static Transition initialize(BattleTimedStatus battleTimedStatus, Lease lease) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            final NativeDeActorState nativeDeActorState = NativeDeActorState.owned(battleTimedStatus);
-            if (!nativeDeActorState.matches(lease)) {
+        synchronized (battleTimedStatus) {
+            final NativeDeActorState s = NativeDeActorState.owned(battleTimedStatus);
+            if (!s.matches(lease)) {
                 return null;
             }
-            nativeDeActorState.revision = new Object();
-            final ArrayList<Effect> arrayList = new ArrayList<Effect>();
+            s.revision = new Object();
+            final ArrayList<Effect> effects = new ArrayList<Effect>();
             NativeDeProfileKernel.initialize(new NativeDeProfileKernel.Target(){
 
                 @Override
                 public int aiType() {
-                    return nativeDeActorState.aiType;
+                    return s.aiType;
                 }
 
                 @Override
                 public boolean shop() {
-                    return nativeDeActorState.shop;
+                    return s.shop;
                 }
 
                 @Override
                 public void createShop() {
-                    nativeDeActorState.shop = true;
+                    s.shop = true;
                 }
 
                 @Override
                 public void startShop() {
-                    arrayList.add(Effect.START_SHOP);
+                    effects.add(Effect.START_SHOP);
                 }
 
                 @Override
                 public boolean fishing() {
-                    return nativeDeActorState.fishing;
+                    return s.fishing;
                 }
 
                 @Override
                 public void createFishing() {
-                    nativeDeActorState.fishing = true;
+                    s.fishing = true;
                 }
 
                 @Override
                 public boolean combat() {
-                    return nativeDeActorState.combat != NativeDeProfileKernel.Combat.NONE;
+                    return s.combat != NativeDeProfileKernel.Combat.NONE;
                 }
 
                 @Override
                 public void createCombat(NativeDeProfileKernel.Combat combat) {
-                    nativeDeActorState.combat = combat;
+                    s.combat = combat;
                 }
 
                 @Override
                 public void startAi() {
-                    arrayList.add(Effect.START_AI);
+                    effects.add(Effect.START_AI);
                 }
 
                 @Override
                 public void error(Exception exception) {
-                    arrayList.add(Effect.PROFILE_ERROR);
+                    effects.add(Effect.PROFILE_ERROR);
                 }
             });
-            return new Transition(nativeDeActorState.lease(), nativeDeActorState.profile(), arrayList);
+            return new Transition(s.lease(), s.profile(), effects);
         }
     }
 
@@ -187,13 +182,12 @@ final class NativeDeActorState {
         if (binding == null) {
             return false;
         }
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
-            NativeDeActorState nativeDeActorState = NativeDeActorState.owned(battleTimedStatus);
-            if (!nativeDeActorState.matches(lease) || nativeDeActorState.hate.containsKey(binding)) {
+        synchronized (battleTimedStatus) {
+            NativeDeActorState s = NativeDeActorState.owned(battleTimedStatus);
+            if (!s.matches(lease) || s.hate.containsKey(binding)) {
                 return false;
             }
-            nativeDeActorState.hate.put(binding, n);
+            s.hate.put(binding, n);
             return true;
         }
     }
@@ -202,8 +196,7 @@ final class NativeDeActorState {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static boolean current(BattleTimedStatus battleTimedStatus, Lease lease) {
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             return NativeDeActorState.owned(battleTimedStatus).matches(lease);
         }
     }
@@ -213,8 +206,7 @@ final class NativeDeActorState {
      */
     static void clear(BattleTimedStatus battleTimedStatus) {
         NativeDeAiTimers.retireStatus(battleTimedStatus);
-        BattleTimedStatus battleTimedStatus2 = battleTimedStatus;
-        synchronized (battleTimedStatus2) {
+        synchronized (battleTimedStatus) {
             CombatAccess.set(battleTimedStatus, FIELD, null);
         }
     }

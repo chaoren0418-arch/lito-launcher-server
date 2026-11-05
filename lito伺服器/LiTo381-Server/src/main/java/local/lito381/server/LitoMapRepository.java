@@ -72,11 +72,11 @@ final class LitoMapRepository implements AutoCloseable {
                 config.legacySqlProperties(), StandardCharsets.UTF_8)) {
             properties.load(reader);
         }
-        String prefix = requiredWithFallback(properties, "URL1_LOGIN", "URL1");
+        String prefix = required(properties, "URL1_LOGIN", required(properties, "URL1", null));
         String suffix = properties.getProperty("URL3_LOGIN",
                 properties.getProperty("URL3", "")).trim();
         url = prefix + staticDatabase + suffix;
-        login = requiredWithFallback(properties, "Login_LOGIN", "Login");
+        login = required(properties, "Login_LOGIN", required(properties, "Login", null));
         password = properties.getProperty("Password_LOGIN",
                 properties.getProperty("Password", ""));
         Class.forName(properties.getProperty(
@@ -193,17 +193,10 @@ final class LitoMapRepository implements AutoCloseable {
 
     static ClassicWorldMapCatalog.ClassicMap loadTextMap(Definition definition)
             throws IOException {
-        MessageDigest sourceDigest;
-        try {
-            sourceDigest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException impossible) {
-            throw new AssertionError(impossible);
-        }
         int width = -1;
         List<byte[]> rows = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new DigestInputStream(Files.newInputStream(definition.file()), sourceDigest),
-                StandardCharsets.UTF_8.newDecoder()))) {
+        try (BufferedReader reader = Files.newBufferedReader(
+                definition.file(), StandardCharsets.UTF_8)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",", -1);
@@ -244,7 +237,13 @@ final class LitoMapRepository implements AutoCloseable {
                 definition.startY(), Math.addExact(definition.startY(), height - 1),
                 definition.markable(), definition.teleportable(), definition.escapable(),
                 definition.deathPenalty(), definition.recallPets(), definition.file());
-        String sha256 = HexFormat.of().withUpperCase().formatHex(sourceDigest.digest());
+        String sha256;
+        try {
+            sha256 = HexFormat.of().withUpperCase().formatHex(
+                    MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(definition.file())));
+        } catch (NoSuchAlgorithmException impossible) {
+            throw new AssertionError(impossible);
+        }
         return ClassicWorldMapCatalog.externalMap(effective, sha256, cells);
     }
 
@@ -265,14 +264,6 @@ final class LitoMapRepository implements AutoCloseable {
 
     private static final class MapLoadException extends RuntimeException {
         private MapLoadException(IOException cause) { super(cause); }
-    }
-
-    // Resolve the generic property only when the preferred value is absent or blank.
-    private static String requiredWithFallback(Properties properties, String key,
-            String fallbackKey) {
-        String value = properties.getProperty(key);
-        return value == null || value.isBlank()
-                ? required(properties, fallbackKey, null) : value.trim();
     }
 
     private static String required(Properties properties, String key, String fallback) {

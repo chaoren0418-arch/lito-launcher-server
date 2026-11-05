@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.sql.DriverManager;
@@ -36,20 +33,20 @@ final class NativeDeShopResources {
         if (atomicLong.get() != 0L || counts.lifecycleFailures.get() != 0L || counts.opened.get() != 1L || counts.rolledBack.get() != 1L || counts.closed.get() != 1L) {
             throw new SQLException("source shop SQL failed; publication refused");
         }
-        Map map = (Map)CombatAccess.field(nativeDeShopTable, "_shopData");
-        int n = map.values().stream().mapToInt(value -> ((List<?>) value).size()).sum();
+        Map<?, List<?>> map = (Map<?, List<?>>)CombatAccess.field(nativeDeShopTable, "_shopData");
+        int n = map.values().stream().mapToInt(List::size).sum();
         return new Snapshot(string3, nativeDeShopTable, map.size(), n, counts.opened.get(), counts.rolledBack.get(), counts.closed.get(), atomicLong.get());
     }
 
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Snapshot snapshot;
         if (current != null) {
             return;
         }
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string3 = SharedDatabase.identifier(properties.getProperty("database.static.database"));
         NativeDeNpcTemplateResources.Counts counts = new NativeDeNpcTemplateResources.Counts();
-        current = snapshot = NativeDeShopResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeShopResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        Snapshot snapshot = NativeDeShopResources.read(string3, () -> NativeDeNpcTemplateResources.owned(DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), counts), counts, (string, string2, objectArray) -> System.getLogger(NativeDeShopResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : System.Logger.Level.INFO, string2 + " " + Arrays.toString(objectArray)));
+        current = snapshot;
     }
 
     static Snapshot snapshot() {

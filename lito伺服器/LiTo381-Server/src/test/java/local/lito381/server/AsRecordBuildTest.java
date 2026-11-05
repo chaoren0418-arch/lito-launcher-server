@@ -5,6 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AsRecordBuildTest {
     @Test
+    void aLandProductionAnnotationsAreAppliedBeforeTests() throws Exception {
+        Class<?> target=Class.forName("local.lito381.server.CombatCurseLifecycle$Target");
+        assertTrue(target.isRecord());
+        assertEquals(8,target.getRecordComponents().length);
+        assertFalse(java.lang.reflect.Modifier.isFinal(target.getDeclaredField("nativeRoleOwner").getModifiers()));
+        for(String name:java.util.List.of("_armorTypes","_weaponTypes","_weaponId","_materialTypes","_etcItemTypes","_useTypes")) {
+            assertTrue(java.lang.reflect.Modifier.isFinal(NativeDeItemTable.class.getDeclaredField(name).getModifiers()),name);
+        }
+    }
+    @Test
     void mavenTransformsTestClassesBeforeSurefire() {
         assertTrue(AsRecordBuildFixture.class.isRecord());
         var components = AsRecordBuildFixture.class.getRecordComponents();

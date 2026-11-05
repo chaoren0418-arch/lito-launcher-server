@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.IOException;
@@ -69,8 +66,7 @@ final class NativeDeItemPublication {
         if (nativeServerLifetime == null) {
             return false;
         }
-        Object object = nativeServerLifetime.fence;
-        synchronized (object) {
+        synchronized (nativeServerLifetime.fence) {
             ArrayDeque<Object> arrayDeque = NativeServerLifetime.packets.get();
             if (nativeServerLifetime.closing && !arrayDeque.contains(nativeServerLifetime)) {
                 if (arrayDeque.isEmpty()) {
@@ -97,8 +93,7 @@ final class NativeDeItemPublication {
         try {
             Ticket ticket;
             Object object;
-            Object object2 = object = CombatAccess.field(clientSession, "sourceItemAdmissionGate");
-            synchronized (object2) {
+            synchronized (object = CombatAccess.field(clientSession, "sourceItemAdmissionGate")) {
                 ticket = new Ticket(clientSession);
                 ticket.require(clientSession);
             }

@@ -30,11 +30,8 @@ final class ClientSessionGmDeIntegrationTest {
              Socket server = listener.accept()) {
             client.setSoTimeout(1_000);
             ClientSession session = new ClientSession(server, ClientSession.Endpoint.GAME,
-                    config, accounts, state,
+                    config, AccountAccessFixture.grant(accounts, "test", 200), state,
                     new CaptureLog(temporary.resolve("capture")), hub);
-            AccountRepository selected = accounts.repositoryForClassicSource(
-                    config.classicServerNames().get(0));
-            ((MemoryAccountRepository) selected).grantAccessLevel("test", 200);
             prepareRoomOwner(session, config.classicServerNames().get(0));
             hub.connect(session);
             hub.enterChannel(0, session);

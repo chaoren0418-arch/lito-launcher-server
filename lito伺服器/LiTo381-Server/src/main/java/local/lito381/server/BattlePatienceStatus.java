@@ -52,7 +52,9 @@ final class BattlePatienceStatus {
     }
 
     synchronized int physicalReduction(long playerObjectId, long nowNanos) {
-        return active(playerObjectId, nowNanos) ? PHYSICAL_REDUCTION : 0;
+        return active(playerObjectId, nowNanos)
+                ? CombatSourceReductions.patience(PHYSICAL_REDUCTION)
+                : 0;
     }
 
     synchronized boolean cancel(long objectId) {

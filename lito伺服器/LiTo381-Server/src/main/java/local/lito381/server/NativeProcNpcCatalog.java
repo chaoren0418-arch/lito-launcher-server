@@ -1,4 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
+// DECOMPILED from base-0.6.71.jar, TODO review
 /*
  * Decompiled with CFR 0.152.
  */
@@ -44,19 +44,20 @@ final class NativeProcNpcCatalog {
                 throw new IOException("invalid Proc NPC ancestry version");
             }
             while ((string = bufferedReader.readLine()) != null) {
-                NativeProcHealingKernel.Kind kind;
-                String[] stringArray = string.split("\t", -1);
+                    String[] stringArray = string.split("\t", -1);
                 if (stringArray.length != 2 || stringArray[0].isEmpty()) {
                     throw new IOException("invalid Proc NPC ancestry row");
                 }
+                NativeProcHealingKernel.Kind kind;
                 try {
                     kind = NativeProcHealingKernel.Kind.valueOf(stringArray[1]);
                 }
                 catch (IllegalArgumentException illegalArgumentException) {
                     throw new IOException("invalid Proc NPC ancestry kind", illegalArgumentException);
                 }
-                if (kind != NativeProcHealingKernel.Kind.PLAYER && linkedHashMap.putIfAbsent(stringArray[0], kind) == null) continue;
+                if (kind == NativeProcHealingKernel.Kind.PLAYER || linkedHashMap.putIfAbsent(stringArray[0], kind) != null) {
                 throw new IOException("invalid or duplicate Proc NPC ancestry=" + stringArray[0]);
+                }
             }
         }
         if (linkedHashMap.isEmpty()) {
@@ -71,8 +72,9 @@ final class NativeProcNpcCatalog {
              ResultSet resultSet = statement.executeQuery(QUERY);){
             while (resultSet.next()) {
                 Npc npc = new Npc(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3));
-                if (linkedHashMap.putIfAbsent(npc.id(), npc) == null) continue;
+                if (linkedHashMap.putIfAbsent(npc.id(), npc) != null) {
                 throw new SQLException("duplicate Proc npcid=" + npc.id());
+                }
             }
         }
         if (linkedHashMap.isEmpty()) {
@@ -85,13 +87,13 @@ final class NativeProcNpcCatalog {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static synchronized void load(ServerConfig serverConfig) throws Exception {
-        Catalog catalog;
         if (current != null) {
             return;
         }
         Map<String, NativeProcHealingKernel.Kind> map = NativeProcNpcCatalog.readKinds(NativeProcNpcCatalog.class.getResourceAsStream(RESOURCE));
         Properties properties = UnifiedConfiguration.read(serverConfig.source());
         String string = SharedDatabase.identifier(properties.getProperty("database.static.database"));
+        Catalog catalog;
         try (Connection connection = DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password"));){
             connection.setReadOnly(true);
             connection.setAutoCommit(false);
@@ -137,12 +139,11 @@ final class NativeProcNpcCatalog {
         }
 
         NativeProcHealingKernel.Kind kind(int n) {
-            NativeProcHealingKernel.Kind kind;
             Npc npc = this.find(n);
             if (npc == null) {
                 throw new IllegalArgumentException("missing Proc NPC template=" + n);
             }
-            NativeProcHealingKernel.Kind kind2 = kind = npc.implementation() == null ? null : this.implementations.get(npc.implementation());
+            NativeProcHealingKernel.Kind kind = npc.implementation() == null ? null : this.implementations.get(npc.implementation());
             if (kind == null) {
                 throw new IllegalArgumentException("unqualified Proc NPC implementation id=" + n + " impl=" + npc.implementation());
             }

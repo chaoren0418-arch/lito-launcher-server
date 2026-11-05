@@ -1156,6 +1156,10 @@ final class ClassicWorldMapCatalog {
     private ClassicWorldMapCatalog() {}
 
     static ClassicMap forMap(int mapId) {
+        {
+            ClassicMap sourced = CombatSpecialBuffs.sourceMap(mapId);
+            if (sourced != null) return sourced;
+        }
         ClassicMap result = MAPS.get(mapId);
         if (result != null) return result;
         LitoMapRepository external = externalMaps;
@@ -1164,12 +1168,14 @@ final class ClassicWorldMapCatalog {
     }
 
     static List<Integer> supportedMapIds() {
-        return SUPPORTED_MAP_IDS;
+        return CombatSpecialBuffs.mapIds(SUPPORTED_MAP_IDS);
     }
 
     static boolean supports(int mapId) {
         LitoMapRepository external = externalMaps;
-        return MAPS.containsKey(mapId) || (external != null && external.supports(mapId));
+        return CombatSpecialBuffs.mapSupported(
+                MAPS.containsKey(mapId) || (external != null && external.supports(mapId)),
+                mapId);
     }
 
     static boolean embeddedSupports(int mapId) {

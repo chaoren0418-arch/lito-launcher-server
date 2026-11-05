@@ -1,9 +1,7 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
+import java.lang.System.Logger.Level;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.sql.DriverManager;
@@ -16,35 +14,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
-import local.lito381.server.NativeDeArmorTemplate;
-import local.lito381.server.NativeDeEtcItemTemplate;
-import local.lito381.server.NativeDeFrozenArmorTemplate;
-import local.lito381.server.NativeDeFrozenEtcTemplate;
-import local.lito381.server.NativeDeFrozenWeaponTemplate;
-import local.lito381.server.NativeDeItemDefinitionsSql;
-import local.lito381.server.NativeDeItemTable;
-import local.lito381.server.NativeDeItemTemplate;
-import local.lito381.server.NativeDeItemTemplatesScope;
-import local.lito381.server.NativeDeTerrainScope;
-import local.lito381.server.NativeDeWeaponTemplate;
-import local.lito381.server.NativeDeWorldLog;
-import local.lito381.server.ServerConfig;
-import local.lito381.server.SharedDatabase;
-import local.lito381.server.UnifiedConfiguration;
+import local.lito381.server.NativeDeItemDefinitionsSql.Counts;
+import local.lito381.server.NativeDeTerrainScope.Sql;
 
 final class NativeDeItemTemplatesResources {
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    static Snapshot read(String string, NativeDeTerrainScope.Sql sql, NativeDeWorldLog nativeDeWorldLog) throws SQLException {
-        Object object;
-        NativeDeItemTemplatesScope.Data data = new NativeDeItemTemplatesScope.Data(nativeDeWorldLog);
-        NativeDeItemDefinitionsSql nativeDeItemDefinitionsSql = new NativeDeItemDefinitionsSql(sql.open(), NativeDeItemDefinitionsSql.TEMPLATE_QUERIES);
-        Throwable throwable = null;
+   static Snapshot read(String database, Sql sql, NativeDeWorldLog log) throws SQLException {
+        NativeDeItemTemplatesScope.Data data = new NativeDeItemTemplatesScope.Data(log);
+        NativeDeItemDefinitionsSql definitions = new NativeDeItemDefinitionsSql(sql.open(), NativeDeItemDefinitionsSql.TEMPLATE_QUERIES);
+        Throwable failure = null;
         try {
-            nativeDeItemDefinitionsSql.configure();
-            NativeDeItemTemplatesScope.loading(data, nativeDeItemDefinitionsSql, () -> {
+            definitions.configure();
+            NativeDeItemTemplatesScope.loading(data, definitions, () -> {
                 data.table = new NativeDeItemTable();
                 data.table.load();
                 return null;
@@ -52,134 +34,161 @@ final class NativeDeItemTemplatesResources {
             if (data.sourceErrors != 0L) {
                 throw new SQLException("source item template errors; publication refused: " + data.sourceErrors);
             }
-            nativeDeItemDefinitionsSql.validate();
-        }
-        catch (Throwable throwable2) {
-            throwable = throwable2;
-        }
-        finally {
+            definitions.validate();
+        } catch (Throwable caught) {
+            failure = caught;
+        } finally {
             try {
-                nativeDeItemDefinitionsSql.finish();
-            }
-            catch (Throwable throwable3) {
-                if (throwable == null) {
-                    throwable = throwable3;
+                definitions.finish();
+            } catch (Throwable finishFailure) {
+                if (failure == null) {
+                    failure = finishFailure;
+                } else {
+                    failure.addSuppressed(finishFailure);
                 }
-                throwable.addSuppressed(throwable3);
             }
             data.loading = false;
         }
-        if (throwable != null) {
-            if (throwable instanceof Error) {
-                throw (Error)throwable;
+        if (failure != null) {
+            if (failure instanceof Error error) {
+                throw error;
             }
-            if (throwable instanceof SQLException) {
-                throw (SQLException)throwable;
+            if (failure instanceof SQLException sqlFailure) {
+                throw sqlFailure;
             }
-            throw new SQLException("source item template publication refused", throwable);
+            throw new SQLException("source item template publication refused", failure);
         }
-        object = nativeDeItemDefinitionsSql.counts();
-        if (((NativeDeItemDefinitionsSql.Counts)object).rolledBack() != 1 || ((NativeDeItemDefinitionsSql.Counts)object).physicalClosed() != 1 || ((NativeDeItemDefinitionsSql.Counts)object).lifecycleFailures() != 0) {
+        Counts counts = definitions.counts();
+        if (counts.rolledBack() != 1 || counts.physicalClosed() != 1 || counts.lifecycleFailures() != 0) {
             throw new SQLException("item template SQL did not finish before publication");
         }
-        int n = NativeDeItemTemplatesResources.freeze(data.table);
-        return new Snapshot(string, data.table, data, Collections.unmodifiableMap(new LinkedHashMap<Integer, NativeDeItemTemplatesScope.Binding>(data.bindings)), (NativeDeItemDefinitionsSql.Counts)object, n);
+        int templates = freeze(data.table);
+        return new Snapshot(database, data.table, data, Collections.unmodifiableMap(new LinkedHashMap<Integer, NativeDeItemTemplatesScope.Binding>(data.bindings)), counts, templates);
     }
 
-    static int[] copyArray(int[] nArray) {
-        return nArray == null ? null : (int[])nArray.clone();
-    }
+   static int[] copyArray(int[] var0) {
+      return var0 == null ? null : (int[])var0.clone();
+   }
 
-    private static NativeDeItemTemplate frozen(NativeDeItemTemplate nativeDeItemTemplate, IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate> identityHashMap) throws ReflectiveOperationException {
-        NativeDeFrozenWeaponTemplate nativeDeFrozenWeaponTemplate;
-        if (nativeDeItemTemplate == null) {
-            return null;
-        }
-        NativeDeItemTemplate nativeDeItemTemplate2 = identityHashMap.get(nativeDeItemTemplate);
-        if (nativeDeItemTemplate2 != null) {
-            return nativeDeItemTemplate2;
-        }
-        NativeDeItemTemplate nativeDeItemTemplate3 = nativeDeItemTemplate instanceof NativeDeWeaponTemplate ? new NativeDeFrozenWeaponTemplate() : (nativeDeItemTemplate instanceof NativeDeArmorTemplate ? new NativeDeFrozenArmorTemplate() : (nativeDeItemTemplate instanceof NativeDeEtcItemTemplate ? new NativeDeFrozenEtcTemplate() : null));
-        nativeDeFrozenWeaponTemplate = nativeDeItemTemplate3 instanceof NativeDeFrozenWeaponTemplate ? (NativeDeFrozenWeaponTemplate)nativeDeItemTemplate3 : null;
-        if (nativeDeItemTemplate3 == null) {
-            throw new IllegalArgumentException("unknown source item template role");
-        }
-        for (Class<?> clazz = nativeDeItemTemplate.getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-            for (Field field : clazz.getDeclaredFields()) {
-                if (Modifier.isStatic(field.getModifiers())) continue;
-                field.setAccessible(true);
-                Object object = field.get(nativeDeItemTemplate);
-                if (object instanceof int[]) {
-                    int[] nArray = (int[])object;
-                    object = nArray.clone();
-                } else if (object != null && !field.getType().isPrimitive() && !(object instanceof String)) {
-                    throw new IllegalArgumentException("unexpected mutable template field " + field.getName());
-                }
-                field.set(nativeDeItemTemplate3, object);
+   private static NativeDeItemTemplate frozen(NativeDeItemTemplate var0, IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate> var1) throws ReflectiveOperationException {
+      if (var0 == null) {
+         return null;
+      } else {
+         NativeDeItemTemplate var2 = (NativeDeItemTemplate)var1.get(var0);
+         if (var2 != null) {
+            return var2;
+         } else {
+            NativeDeItemTemplate var3 = var0 instanceof NativeDeWeaponTemplate
+               ? new NativeDeFrozenWeaponTemplate()
+               : (
+                  var0 instanceof NativeDeArmorTemplate
+                     ? new NativeDeFrozenArmorTemplate()
+                     : (var0 instanceof NativeDeEtcItemTemplate ? new NativeDeFrozenEtcTemplate() : null)
+               );
+            if (var3 == null) {
+               throw new IllegalArgumentException("unknown source item template role");
+            } else {
+               for (Class var4 = var0.getClass(); var4 != Object.class; var4 = var4.getSuperclass()) {
+                  for (Field var8 : var4.getDeclaredFields()) {
+                     if (!Modifier.isStatic(var8.getModifiers())) {
+                        var8.setAccessible(true);
+                        Object var9 = var8.get(var0);
+                        if (var9 instanceof int[] var10) {
+                           var9 = var10.clone();
+                        } else if (var9 != null && !var8.getType().isPrimitive() && !(var9 instanceof String)) {
+                           throw new IllegalArgumentException("unexpected mutable template field " + var8.getName());
+                        }
+
+                        var8.set(var3, var9);
+                     }
+                  }
+               }
+
+               var1.put(var0, var3);
+               return (NativeDeItemTemplate)var3;
             }
-        }
-        identityHashMap.put(nativeDeItemTemplate, nativeDeItemTemplate3);
-        return nativeDeItemTemplate3;
-    }
+         }
+      }
+   }
 
-    private static int freeze(NativeDeItemTable nativeDeItemTable) throws SQLException {
-        try {
-            NativeDeItemTemplate[] nativeDeItemTemplateArray;
-            IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate> identityHashMap = new IdentityHashMap<NativeDeItemTemplate, NativeDeItemTemplate>();
-            for (String nativeDeItemTemplateArray22 : List.of("_etcitems", "_weapons", "_armors")) {
-                Field templateMapField = nativeDeItemTable.getClass().getDeclaredField(nativeDeItemTemplateArray22);
-                templateMapField.setAccessible(true);
-                Map<?, ?> i = (Map<?, ?>)templateMapField.get(nativeDeItemTable);
-                LinkedHashMap<Object, NativeDeItemTemplate> linkedHashMap = new LinkedHashMap<Object, NativeDeItemTemplate>();
-                for (Map.Entry<?, ?> entry : i.entrySet()) {
-                    linkedHashMap.put(entry.getKey(), NativeDeItemTemplatesResources.frozen((NativeDeItemTemplate)entry.getValue(), identityHashMap));
-                }
-                templateMapField.set(nativeDeItemTable, Collections.unmodifiableMap(linkedHashMap));
+   private static int freeze(NativeDeItemTable var0) throws SQLException {
+      try {
+         IdentityHashMap var1 = new IdentityHashMap();
+
+         for (String var3 : List.of("_etcitems", "_weapons", "_armors")) {
+            Field var4 = var0.getClass().getDeclaredField(var3);
+            var4.setAccessible(true);
+            Map<?, ?> var5 = (Map<?, ?>)var4.get(var0);
+            LinkedHashMap var6 = new LinkedHashMap();
+
+            for (Entry var8 : var5.entrySet()) {
+               var6.put(var8.getKey(), frozen((NativeDeItemTemplate)var8.getValue(), var1));
             }
-            Field field = nativeDeItemTable.getClass().getDeclaredField("_allTemplates");
-            field.setAccessible(true);
-            NativeDeItemTemplate[] nativeDeItemTemplateArray2 = (NativeDeItemTemplate[])field.get(nativeDeItemTable);
-            nativeDeItemTemplateArray = new NativeDeItemTemplate[nativeDeItemTemplateArray2.length];
-            for (int i = 0; i < nativeDeItemTemplateArray2.length; ++i) {
-                nativeDeItemTemplateArray[i] = NativeDeItemTemplatesResources.frozen(nativeDeItemTemplateArray2[i], identityHashMap);
-            }
-            field.set(nativeDeItemTable, nativeDeItemTemplateArray);
-            return identityHashMap.size();
-        }
-        catch (ReflectiveOperationException | RuntimeException exception) {
-            throw new SQLException("source item template freeze failed; publication refused", exception);
-        }
-    }
 
-    private NativeDeItemTemplatesResources() {
-    }
+            var4.set(var0, Collections.unmodifiableMap(var6));
+         }
 
-    record Snapshot(String database, NativeDeItemTable table, NativeDeItemTemplatesScope.Data data, Map<Integer, NativeDeItemTemplatesScope.Binding> executorBindings, NativeDeItemDefinitionsSql.Counts counts, int templates) {
-        <T> T call(Supplier<T> supplier) {
-            return NativeDeItemTemplatesScope.call(this.data, supplier);
-        }
-    }
+         Field var10 = var0.getClass().getDeclaredField("_allTemplates");
+         var10.setAccessible(true);
+         NativeDeItemTemplate[] var11 = (NativeDeItemTemplate[])var10.get(var0);
+         NativeDeItemTemplate[] var12 = new NativeDeItemTemplate[var11.length];
 
-    static final class Owner {
-        private volatile Snapshot current;
+         for (int var13 = 0; var13 < var11.length; var13++) {
+            var12[var13] = frozen(var11[var13], var1);
+         }
 
-        Owner() {
-        }
+         var10.set(var0, var12);
+         return var1.size();
+      } catch (ReflectiveOperationException | RuntimeException var9) {
+         throw new SQLException("source item template freeze failed; publication refused", var9);
+      }
+   }
 
-        Snapshot snapshot() {
-            return Objects.requireNonNull(this.current, "source item templates not loaded");
-        }
+   private NativeDeItemTemplatesResources() {
+   }
 
-        synchronized Snapshot reload(String string, NativeDeTerrainScope.Sql sql, NativeDeWorldLog nativeDeWorldLog) throws SQLException {
-            Snapshot snapshot;
-            this.current = snapshot = NativeDeItemTemplatesResources.read(string, sql, nativeDeWorldLog);
-            return snapshot;
-        }
+   static final class Owner {
+      private volatile NativeDeItemTemplatesResources.Snapshot current;
 
-        synchronized Snapshot reload(ServerConfig serverConfig) throws Exception {
-            Properties properties = UnifiedConfiguration.read(serverConfig.source());
-            String string3 = SharedDatabase.identifier(properties.getProperty("database.static.database"));
-            return this.reload(string3, () -> DriverManager.getConnection(properties.getProperty("database.jdbc.base.url") + string3 + properties.getProperty("database.jdbc.options"), properties.getProperty("database.user"), properties.getProperty("database.password")), (string, string2, objectArray) -> System.getLogger(NativeDeItemTemplatesResources.class.getName()).log(string.equals("error") ? System.Logger.Level.ERROR : (string.equals("warn") ? System.Logger.Level.WARNING : (string.equals("debug") ? System.Logger.Level.DEBUG : System.Logger.Level.INFO)), string2 + " " + Arrays.toString(objectArray)));
-        }
-    }
+      NativeDeItemTemplatesResources.Snapshot snapshot() {
+         return Objects.requireNonNull(this.current, "source item templates not loaded");
+      }
+
+      synchronized NativeDeItemTemplatesResources.Snapshot reload(String var1, Sql var2, NativeDeWorldLog var3) throws SQLException {
+         NativeDeItemTemplatesResources.Snapshot var4 = NativeDeItemTemplatesResources.read(var1, var2, var3);
+         this.current = var4;
+         return var4;
+      }
+
+      synchronized NativeDeItemTemplatesResources.Snapshot reload(ServerConfig var1) throws Exception {
+         Properties var2 = UnifiedConfiguration.read(var1.source());
+         String var3 = SharedDatabase.identifier(var2.getProperty("database.static.database"));
+         return this.reload(
+            var3,
+            () -> DriverManager.getConnection(
+               var2.getProperty("database.jdbc.base.url") + var3 + var2.getProperty("database.jdbc.options"),
+               var2.getProperty("database.user"),
+               var2.getProperty("database.password")
+            ),
+            (var0, var1x, var2x) -> System.getLogger(NativeDeItemTemplatesResources.class.getName())
+               .log(
+                  var0.equals("error") ? Level.ERROR : (var0.equals("warn") ? Level.WARNING : (var0.equals("debug") ? Level.DEBUG : Level.INFO)),
+                  var1x + " " + Arrays.toString(var2x)
+               )
+         );
+      }
+   }
+
+   record Snapshot(
+      String database,
+      NativeDeItemTable table,
+      NativeDeItemTemplatesScope.Data data,
+      Map<Integer, NativeDeItemTemplatesScope.Binding> executorBindings,
+      Counts counts,
+      int templates
+   ) {
+      <T> T call(Supplier<T> var1) {
+         return NativeDeItemTemplatesScope.call(this.data, var1);
+      }
+   }
 }

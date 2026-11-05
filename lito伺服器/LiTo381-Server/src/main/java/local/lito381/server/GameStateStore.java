@@ -5893,6 +5893,7 @@ final class GameStateStore {
 
     /** Materializes the latest official daily 05:00 ranking boundary. */
     private void ensureRankingSnapshot() throws IOException {
+        LiveBattleStats.beforeSnapshot(this);
         ZonedDateTime boundary = currentRankingBoundary();
         long boundaryEpochSeconds = boundary.toEpochSecond();
         boolean refreshLifetime = rankingSnapshotBoundaryEpochSeconds

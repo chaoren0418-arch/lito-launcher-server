@@ -119,7 +119,7 @@ final class BattlePetRaceCourseCatalog {
             finishedCount = 0;
             baseForm = BattlePetRaceFormCatalog.baseForm(mapId, raceGeneration);
             runners.clear();
-            for (long participant : participants) runners.put(participant, new Runner(nowNanos));
+            for (long participant : participants) runners.put(participant, new Runner());
         }
 
         void reset() {
@@ -275,11 +275,6 @@ final class BattlePetRaceCourseCatalog {
         long transformPanelReadyNanos;
         long speedPanelReadyNanos;
         long transformActivations;
-
-        Runner(long nowNanos) {
-            transformPanelReadyNanos = nowNanos;
-            speedPanelReadyNanos = nowNanos;
-        }
     }
 
     private static final Map<Integer, Course> COURSES = Map.of(

@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import local.lito381.server.NativeDeCharacterFields;
@@ -51,8 +48,7 @@ public class NativeDeNpcMobSkillUse {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     public boolean isSkillDelay(int n) {
-        Object object = this._skillDelayLock;
-        synchronized (object) {
+        synchronized (this._skillDelayLock) {
             if (this._skillDelay == null || n < 0 || n >= this._skillDelay.length) {
                 return false;
             }
@@ -64,8 +60,7 @@ public class NativeDeNpcMobSkillUse {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     public boolean trySetSkillDelay(int n) {
-        Object object = this._skillDelayLock;
-        synchronized (object) {
+        synchronized (this._skillDelayLock) {
             if (this._skillDelay == null || n < 0 || n >= this._skillDelay.length) {
                 return false;
             }
@@ -81,8 +76,7 @@ public class NativeDeNpcMobSkillUse {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     public void clearSkillDelay(int n) {
-        Object object = this._skillDelayLock;
-        synchronized (object) {
+        synchronized (this._skillDelayLock) {
             if (this._skillDelay == null || n < 0 || n >= this._skillDelay.length) {
                 return;
             }

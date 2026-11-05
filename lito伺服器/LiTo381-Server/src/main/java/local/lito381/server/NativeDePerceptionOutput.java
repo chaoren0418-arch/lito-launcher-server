@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.IOException;
@@ -49,8 +46,7 @@ final class NativeDePerceptionOutput {
         if (nativeDePerceptionPacket instanceof NativeDePerceptionEmblem && byArray.length < 389) {
             throw new IllegalArgumentException("native emblem requires 384 pixel bytes");
         }
-        ClientSession clientSession2 = clientSession;
-        synchronized (clientSession2) {
+        synchronized (clientSession) {
             if (!NativeDePerceptionOutput.current(nativeDeClientViewer, clientSession, nativeDePerceptionState) || !nativeDePerceptionPacket.isValidForWrite()) {
                 nativeDePerceptionPacket.onInvalidForWrite();
                 throw new IllegalStateException("stale perception publication");

@@ -125,13 +125,59 @@ final class BattleDragonEyeCatalog {
             }
         }
 
-        int meleeDamage() { return ability.meleeDamage(); }
-        int magicHit() { return ability.magicHit(); }
-        int damageReduction() { return ability.damageReduction(); }
-        int evasionRate() { return ability.evasionRate(); }
-        int stoneResistance() { return ability.stoneResistance(); }
-        int sleepResistance() { return ability.sleepResistance(); }
-        int freezeResistance() { return ability.freezeResistance(); }
-        int poisonResistance() { return ability.poisonResistance(); }
+        int meleeDamage() {
+            return CombatSpecialBuffs.eyeField(ability.meleeDamage(), this, "meleeDamage");
+        }
+        int magicHit() {
+            return CombatSpecialBuffs.eyeField(ability.magicHit(), this, "magicHit");
+        }
+        int damageReduction() {
+            return CombatSpecialBuffs.eyeField(ability.damageReduction(), this, "damageReduction");
+        }
+        int evasionRate() {
+            return CombatSpecialBuffs.eyeField(ability.evasionRate(), this, "evasionRate");
+        }
+        int stoneResistance() {
+            return CombatSpecialBuffs.eyeField(ability.stoneResistance(), this, "stoneResistance");
+        }
+        int sleepResistance() {
+            return CombatSpecialBuffs.eyeField(ability.sleepResistance(), this, "sleepResistance");
+        }
+        int freezeResistance() {
+            return CombatSpecialBuffs.eyeField(ability.freezeResistance(), this, "freezeResistance");
+        }
+        int poisonResistance() {
+            return CombatSpecialBuffs.eyeField(ability.poisonResistance(), this, "poisonResistance");
+        }
+        public int buffId() {
+            return CombatSpecialBuffs.eyeField(buffId, this, "buffId");
+        }
+        public int durationSeconds() {
+            return CombatSpecialBuffs.eyeField(durationSeconds, this, "durationSeconds");
+        }
+        public int castGfx() {
+            return CombatSpecialBuffs.eyeField(castGfx, this, "castGfx");
+        }
+        public int statusIcon() {
+            return CombatSpecialBuffs.eyeField(statusIcon, this, "statusIcon");
+        }
+        public int sharedDelayId() {
+            return CombatSpecialBuffs.eyeField(sharedDelayId, this, "sharedDelayId");
+        }
+        public int sharedDelayMillis() {
+            return CombatSpecialBuffs.eyeField(sharedDelayMillis, this, "sharedDelayMillis");
+        }
+        public int itemDelayMillis() {
+            return CombatSpecialBuffs.eyeField(itemDelayMillis, this, "itemDelayMillis");
+        }
+        public String group() {
+            return CombatSpecialBuffs.eyeText(group, this, "group");
+        }
+        public boolean canOverwrite() {
+            return CombatSpecialBuffs.eyeField(canOverwrite ? 1 : 0, this, "canOverwrite") != 0;
+        }
+        public String endMessage() {
+            return CombatSpecialBuffs.eyeText(endMessage, this, "endMessage");
+        }
     }
 }

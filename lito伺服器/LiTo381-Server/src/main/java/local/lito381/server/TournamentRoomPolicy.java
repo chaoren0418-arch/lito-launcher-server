@@ -31,7 +31,8 @@ final class TournamentRoomPolicy {
     static BattleRules.RuleSet rules(int mode, int mapId) {
         BattleRules.Mode selected = BattleRules.Mode.fromWire(mode);
         if (!selected.isBattleScene()) throw new IllegalArgumentException("non-battle room mode");
-        return BattleRules.decode(selected, mapId, BattleControlCatalog.defaults());
+        return BattleRules.decode(new GameHub.RoomSettings("", "", 2,
+                selected.wireId(), 0, 0, 0, 0), mapId, BattleControlCatalog.defaults());
     }
 
     /** Readiness is only a waiting-room fact, never permission to start a world. */

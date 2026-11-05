@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.IOException;
@@ -38,28 +35,26 @@ final class NativeDeTerrainScope {
         current.set(Objects.requireNonNull(context));
         Throwable throwable = null;
         try {
-            T t = supplier.get();
-            return t;
+            return supplier.get();
         }
-        catch (Error | RuntimeException throwable2) {
+        catch (RuntimeException | Error throwable2) {
             throwable = throwable2;
             throw throwable2;
         }
         finally {
-            IllegalStateException illegalStateException = null;
+            Throwable illegalStateException = null;
             for (NativeDeTerrainFileReader nativeDeTerrainFileReader : (NativeDeTerrainFileReader[])context.readers.toArray(NativeDeTerrainFileReader[]::new)) {
                 try {
-                    if (set.contains(nativeDeTerrainFileReader)) continue;
-                    nativeDeTerrainFileReader.close();
+                    if (!set.contains(nativeDeTerrainFileReader)) {
+                        nativeDeTerrainFileReader.close();
+                    }
                 }
                 catch (Throwable illegalStateException2) {
                     if (illegalStateException == null) {
-                        illegalStateException = illegalStateException2 instanceof IllegalStateException
-                                ? (IllegalStateException)illegalStateException2
-                                : new IllegalStateException(illegalStateException2);
-                        continue;
+                        illegalStateException = illegalStateException2;
+                    } else {
+                        illegalStateException.addSuppressed(illegalStateException2);
                     }
-                    illegalStateException.addSuppressed(illegalStateException2);
                 }
             }
             if (context.attempted - l != context.opened - l2 || context.opened - l2 != context.closed - l3) {

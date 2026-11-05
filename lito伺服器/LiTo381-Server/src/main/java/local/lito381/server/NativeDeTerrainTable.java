@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.sql.Connection;
@@ -68,6 +65,7 @@ public final class NativeDeTerrainTable {
                 }
                 catch (Exception exception) {
                     _log.error("\u8f09\u5165\u8cc7\u6599\u5931\u6557\uff0c\u5df2\u7565\u904e\u8a72\u7b46 (mapid: " + n + ")", exception);
+                    continue;
                 }
             }
         }

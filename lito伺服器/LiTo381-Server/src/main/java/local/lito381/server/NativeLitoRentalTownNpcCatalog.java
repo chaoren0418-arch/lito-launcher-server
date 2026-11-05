@@ -151,6 +151,9 @@ final class NativeLitoRentalTownNpcCatalog {
             }
         }
 
+        public String name() {
+            return ResourceDatabase.npcName(name, resourceIndex);
+        }
     }
 
     private static final List<Npc> NPCS = List.of(

@@ -18,13 +18,14 @@ final class CombatNpcDamageQueue {
  }
  static final class Queue {
   private final ArrayDeque<Event> events=new ArrayDeque<>();private Event active;private boolean dispatching,closed;private int count;
-  synchronized boolean offer(Event event){if(event==null||closed||count>=TARGET_LIMIT)return false;while(true){long old=pending.get();if(old>=GLOBAL_LIMIT)return false;if(pending.compareAndSet(old,old+1))break;}events.add(Objects.requireNonNull(event));count++;return true;}
+  private volatile Object sourceDamageLifetime;
+  synchronized boolean offer(Event event){if(event==null||closed||count>=NativeNpcLifetime.targetLimit(TARGET_LIMIT,this))return false;while(true){long old=pending.get();if(old>=NativeNpcLifetime.globalLimit(GLOBAL_LIMIT,this))return false;if(pending.compareAndSet(old,old+1))break;}events.add(Objects.requireNonNull(event));count++;return true;}
   synchronized boolean start(){if(closed||dispatching||events.isEmpty())return false;dispatching=true;return true;}
   synchronized void idle(){dispatching=false;notifyAll();}
   synchronized boolean needsDispatch(){return !closed&&!dispatching&&!events.isEmpty();}
-  synchronized Event claim(){if(active!=null)throw new IllegalStateException("overlapping NPC HP commit");active=closed?null:events.poll();if(active==null){dispatching=false;notifyAll();}return active;}
-  synchronized void complete(Event event){if(active!=event||event==null)throw new IllegalStateException("NPC commit receipt ownership");active=null;count--;pending.decrementAndGet();notifyAll();}
-  synchronized void clear(boolean terminal){if(terminal){closed=true;if(active==null)dispatching=false;}int dropped=events.size();events.clear();count-=dropped;pending.addAndGet(-dropped);notifyAll();}
+  synchronized Event claim(){if(NativeNpcLifetime.future(this))return null;if(active!=null)throw new IllegalStateException("overlapping NPC HP commit");active=closed?null:events.poll();if(active==null){dispatching=false;notifyAll();}return NativeNpcLifetime.claimed(active,this);}
+  synchronized void complete(Event event){if(active!=event||event==null)throw new IllegalStateException("NPC commit receipt ownership");active=null;count--;pending.decrementAndGet();notifyAll();NativeNpcLifetime.completed(this);}
+  synchronized void clear(boolean terminal){NativeNpcLifetime.clearing(this,terminal);if(terminal){closed=true;if(active==null)dispatching=false;}int dropped=events.size();events.clear();count-=dropped;pending.addAndGet(-dropped);notifyAll();}
   synchronized int pending(){return count;}
   synchronized boolean closed(){return closed;}
   synchronized boolean awaitIdle(long millis)throws InterruptedException{long until=System.nanoTime()+TimeUnit.MILLISECONDS.toNanos(millis);while(dispatching||active!=null){long remaining=until-System.nanoTime();if(remaining<=0)return false;TimeUnit.NANOSECONDS.timedWait(this,remaining);}return true;}

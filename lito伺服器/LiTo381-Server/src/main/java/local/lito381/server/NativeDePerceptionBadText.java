@@ -1,7 +1,4 @@
-// DECOMPILED (CFR 0.152) from reference/base-0.6.71.jar — TODO: replace with original source (T002)
-/*
- * Decompiled with CFR 0.152.
- */
+// DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
 
 import java.io.BufferedReader;
@@ -29,13 +26,16 @@ public class NativeDePerceptionBadText {
                     isFirstLine = false;
                     continue;
                 }
-                if ((line = line.trim()).isEmpty() || line.startsWith("#")) continue;
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#")) continue;
                 String word = line;
-                if (useTokenizer && (st = new StringTokenizer(line, ";")).hasMoreTokens()) {
-                    word = st.nextToken().trim();
+                if (useTokenizer) {
+                    st = new StringTokenizer(line, ";");
+                    if (st.hasMoreTokens()) word = st.nextToken().trim();
                 }
-                if (targetList.contains(word)) continue;
-                targetList.add(word);
+                if (!targetList.contains(word)) {
+                    targetList.add(word);
+                }
             }
             NativeDePerceptionControls.log().info("\u5df2\u8f09\u5165: " + file.getName());
         }
