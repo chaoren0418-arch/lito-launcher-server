@@ -569,7 +569,7 @@ public final class ModernBattleWirePeer {
                 ModernBattleLifecycleServiceTest.ModernWorldServiceItemTestAwait.until(()->f.lifecycle().settlement()==ModernWorldProtocol.SettlementState.SAVED);
                 operation("mixed-saved",f,ModernBattleOperationProtocolTest.move(f,++f.moves));
                 assertEquals(1,f.persisted.get());assertEquals(f.event.get(),f.lifecycle().result());
-                f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());
+                f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
             }
         } finally {
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()) {
@@ -605,7 +605,7 @@ public final class ModernBattleWirePeer {
                 assertEquals(saved.view().world().result(),retained.view().world().result());
                 world("detached-a",f,0,ModernBattleWorldProtocol.Action.READ,true);
                 world("leave-b",f,1,ModernBattleWorldProtocol.Action.LEAVE,false);
-                assertEquals(1,f.persisted.get());assertEquals(0,f.service.matchCount());
+                assertEquals(1,f.persisted.get());ModernWorldServiceTest.awaitNoMatches(f.service);
             }
         } finally {
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()) {
@@ -844,7 +844,7 @@ public final class ModernBattleWirePeer {
                     send("service-gear-"+stage+"-b",f.read(1).view());
                 }
                 assertEquals(1,f.persisted.get());assertEquals(f.event.get(),f.lifecycle().result());
-                f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());
+                f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
             }
         } finally {
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()) {

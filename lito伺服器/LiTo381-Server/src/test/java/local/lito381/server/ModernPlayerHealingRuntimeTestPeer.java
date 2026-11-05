@@ -28,7 +28,7 @@ public final class ModernPlayerHealingRuntimeTestPeer {
             // One login checks each of the two independently bound sources.
             assertEquals(args[2].equals("two")?4:2,f.backend.authenticationCalls.get());assertEquals(0,f.server.snapshot().sessions());
             assertEquals(0,f.server.snapshot().failed());
-            assertEquals(0,f.worlds.registrationCount());assertEquals(0,f.worlds.matchCount());
+            assertEquals(0,f.worlds.registrationCount());ModernWorldServiceTest.awaitNoMatches(f.worlds);
         } finally {
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()){
                 if(!path.toAbsolutePath().normalize().startsWith(root))throw new IllegalStateException("fixture cleanup scope");

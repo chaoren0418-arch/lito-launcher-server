@@ -49,7 +49,7 @@ class ModernGreaterHasteServiceTest {
             assertThrows(IllegalArgumentException.class,()->ModernBattleWorldProtocol.encodeResult(new ModernApplicationProtocol.BattleWorldResult(5,f.worldRequest(0,ModernBattleWorldProtocol.Action.READ),read),41));
             f.leave(0);assertEquals(ModernWorldProtocol.Phase.ABORTED,f.read(1).lifecycle().phase());
             assertEquals(ModernGreaterHasteCast.Reason.NOT_ACTIVE,f.service.greaterHaste(f.player(1).owner(),f.intent(1,2)).reason());
-            f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void ownerEntityRoomFutureRevisionAndStaleGearAreNotBorrowed()throws Exception {
