@@ -256,5 +256,8 @@ public final class TwelfthSelfTest implements Opcodes {
         ok("extra initializer call refuses content mapping",SwitchMaps.inspect(invalid)==null);
         invalid=switches(false,0);invalid.methods.get(0).tryCatchBlocks.get(0).type="java/lang/Throwable";
         ok("different handler refuses content mapping",SwitchMaps.inspect(invalid)==null);
+        SwitchMaps.Segment ordinary=new SwitchMaps.Segment("map","Enum",Map.of("A",1,"B",2),0,0);
+        SwitchMaps.Segment unusual=new SwitchMaps.Segment("map","Enum",Map.of("A=1, B",2),0,0);
+        ok("content identity uses unambiguous field boundaries",!ordinary.identity().equals(unusual.identity()));
     }
 }

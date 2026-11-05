@@ -13,7 +13,7 @@
 
 ## 已驗證／怎麼驗證
 
-Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。本機 11 套 Java 自測均以 `-Xverify:all` 執行，共 **2106 checks**，包含本輪 **261 checks**。
+Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。本機 11 套 Java 自測均以 `-Xverify:all` 執行，共 **2107 checks**，包含本輪 **262 checks**。
 
 同份 framed JAR 供雙向 CLI、直接 paths／CFG 及 platform-parent 隔離 ClassLoader 使用。反例須實際產生不同結果，VerifyError 不計入行為差異。
 

@@ -15,9 +15,12 @@ final class SwitchMaps implements Opcodes {
     record Segment(String field, String enumName, Map<String,Integer> cases, int start, int end) {
         String identity() {
             try {
-                String content = enumName + "\n" + cases;
+                StringBuilder content = new StringBuilder().append(enumName.length()).append(':').append(enumName);
+                for (var entry : new TreeMap<>(cases).entrySet())
+                    content.append('|').append(entry.getKey().length()).append(':').append(entry.getKey())
+                            .append('=').append(entry.getValue());
                 return "$SwitchMap$content$" + HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
-                        .digest(content.getBytes(StandardCharsets.UTF_8)));
+                        .digest(content.toString().getBytes(StandardCharsets.UTF_8)));
             } catch (NoSuchAlgorithmException ex) { throw new IllegalStateException(ex); }
         }
     }
