@@ -26,3 +26,4 @@
 - 2026-11-05 — #135 T020i-2: semantic-diff 正規化第二批（InnerClasses、ACC_SUPER、隱式建構子、區域變數重編號、核准額外方法）（code，codex-local，PR #152 已合併）→ [報告](reports/issue-135.md)
 - 2026-11-05 — #134 T020g-2: @AsRecord 轉換器接進 Maven 建置＋record-asm-fields.json 掃描（code，codex-local，PR #157 已合併）→ [報告](reports/issue-134.md)
 - 2026-11-05 — #159 T041: 伺服器測試離房後計數偶發失敗（ModernWorldService 清理時序競態）（code，codex-local，PR 已合併）→ [報告](reports/issue-159.md)
+- 2026-11-05 — #153 T020i-3: lambda 依內容比對、私有 lambda handle H5≡H7、@AsmFinal（一般類別 final 欄位）（code，codex-local，PR #164 已合併）→ [報告](reports/issue-153.md)
