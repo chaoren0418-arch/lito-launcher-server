@@ -1,0 +1,16 @@
+package local.lito381.server;
+import java.util.*;import java.io.IOException;
+/** Exact NPC class failure runs in original post-cost phases, without random draws or target mutation. */
+final class NativeSourceNpcTargetFailure {
+ static boolean failed(NativeSourceNpcFactoryType.Stamp stamp,int skill){if(stamp.kind()==3||stamp.kind()==4)return true;boolean monster=stamp.kind()==1;boolean tu=monster&&stamp.nativeSourceNpcIsTU,erase=monster&&stamp.nativeSourceNpcIsErase;int undead=monster?stamp.undead():0;return skill==18&&(undead==0||undead==2||!tu)||(skill==153||skill==29||skill==39||skill==76||skill==152||skill==167)&&!erase||skill==39&&!monster;}
+ static boolean probability(int skill){if(NativeSkillTargetMetadata.size()==0)return false;var row=NativeSkillTargetMetadata.row(skill);return row.type()==1||row.type()==4;}
+ static NativeSourceNpcFactoryType.Stamp known(Object selected){var c=NativeAreaMaterialAction.current.get();if(!NativeSourcePlayerFactories.scoped(c))return null;long id;int npc,kind;if(selected instanceof BattleQuestEncounter.Snapshot s){id=s.objectId();npc=s.npcId();kind=1;}else if(selected instanceof BattleTimeAttackEncounter.Snapshot s){id=s.objectId();npc=s.npcId();kind=2;}else return null;var n=c.npcs.get(id);var stamp=n==null||n.kind()!=kind?null:NativeSourceNpcFactoryType.stamp(n.actor());return stamp!=null&&stamp.npc()==npc?stamp:null;}
+ static boolean selectionErase(SourceNpcPhysicalStats stats,Object selected){var stamp=known(selected);return stamp!=null&&probability(76)||stats.eraseEligible();}
+ static boolean windErase(SourceNpcPhysicalStats stats,Object selected){var stamp=known(selected);return stamp!=null&&probability(167)?!failed(stamp,167):stats.eraseEligible();}
+ static boolean skip(Object selected,int skill){var stamp=known(selected);return stamp!=null&&failed(stamp,skill);}
+ static Iterator<?> iterator(Iterator<?> original,int skill){var c=NativeAreaMaterialAction.current.get();return NativeSourcePlayerFactories.scoped(c)&&probability(skill)?new Cursor(original,skill):original;}
+ static final class Cursor implements Iterator<Object>{final Iterator<?> original;final int skill;Object next;boolean ready,ended;Cursor(Iterator<?> original,int skill){this.original=original;this.skill=skill;}public boolean hasNext(){while(!ready&&!ended){if(!original.hasNext()){ended=true;next=null;break;}var value=original.next();if(!skip(value,skill)){next=value;ready=true;}}return ready;}public Object next(){if(!hasNext())throw new NoSuchElementException();var value=next;next=null;ready=false;return value;}}
+ static boolean naturalFailure(NativeSourceRemainingMaterials.Aim a){if(a==null||!NativeSourcePlayerFactories.scoped(a.c)||a.npc==null||a.npc.kind()!=1&&a.npc.kind()!=2||a.skill!=18&&a.skill!=39||!probability(a.skill))return false;var stamp=NativeSourceNpcFactoryType.stamp(a.npc.actor());return stamp!=null&&failed(stamp,a.skill);}
+ static boolean handled(ClientSession pc,byte[] packet,Object spell)throws IOException{var a=NativeSourceRemainingMaterials.aim();if(a==null||a.c.pc!=pc||!naturalFailure(a))return false;NativeSourceRemainingMaterials.controlledFailure(a,packet,spell);return true;}
+ private NativeSourceNpcTargetFailure(){}
+}
