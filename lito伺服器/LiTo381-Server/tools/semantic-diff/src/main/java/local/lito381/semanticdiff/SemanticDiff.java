@@ -73,6 +73,8 @@ public final class SemanticDiff {
         Args parsed = Args.parse(args);
         JarIndex left = JarIndex.load(parsed.left);
         JarIndex right = JarIndex.load(parsed.right);
+        for (Path p : parsed.leftClasspath) left.addClasspath(p);
+        for (Path p : parsed.rightClasspath) right.addClasspath(p);
         JarIndex allow = parsed.allowRight == null ? null : JarIndex.load(parsed.allowRight);
         // Pin approved original identities before constructing any canonical allow keys.
         // This also keeps calls and method handles consistent across all three JARs.
@@ -339,7 +341,7 @@ public final class SemanticDiff {
         return extra;
     }
 
-    private static String jsonNames(Set<String> names) {
+    private static String jsonNames(java.util.Collection<String> names) {
         return "[" + String.join(", ", names.stream().map(SemanticDiff::json).toList()) + "]";
     }
 
@@ -361,6 +363,8 @@ public final class SemanticDiff {
             w.println("  \"generatedAt\": " + json(Instant.now().truncatedTo(ChronoUnit.SECONDS).toString()) + ",");
             w.println("  \"left\": " + json(parsed.left.toString()) + ",");
             w.println("  \"right\": " + json(parsed.right.toString()) + ",");
+            w.println("  \"leftClasspath\": " + jsonNames(parsed.leftClasspath.stream().map(Path::toString).toList()) + ",");
+            w.println("  \"rightClasspath\": " + jsonNames(parsed.rightClasspath.stream().map(Path::toString).toList()) + ",");
             w.println("  \"allowRight\": "
                     + (parsed.allowRight == null ? "null" : json(parsed.allowRight.toString())) + ",");
             w.println("  \"effectsMethodsFile\": "
@@ -469,6 +473,8 @@ public final class SemanticDiff {
         lines.add("|---|---|");
         lines.add("| left | `" + mdEscape(parsed.left.toString()) + "`（" + left.classes.size() + " 類） |");
         lines.add("| right | `" + mdEscape(parsed.right.toString()) + "`（" + right.classes.size() + " 類） |");
+        lines.add("| left classpath | `" + mdEscape(parsed.leftClasspath.toString()) + "` |");
+        lines.add("| right classpath | `" + mdEscape(parsed.rightClasspath.toString()) + "` |");
         if (parsed.allowRight != null) {
             lines.add("| allow-right | `" + mdEscape(parsed.allowRight.toString()) + "` |");
         }
@@ -686,6 +692,7 @@ public final class SemanticDiff {
     }
 
     static final class Args {
+        List<Path> leftClasspath = new ArrayList<>(), rightClasspath = new ArrayList<>();
         Path left;
         Path right;
         Path json;
@@ -711,6 +718,8 @@ public final class SemanticDiff {
                     case "--layout-methods" -> out.layouts = parseMethods(Path.of(need(args, ++i, a)), a);
                     case "--deviations" -> out.parseDeviations(Path.of(need(args, ++i, a)));
                     case "--left" -> out.left = Path.of(need(args, ++i, a));
+                    case "--classpath", "--left-classpath" -> out.leftClasspath.add(Path.of(need(args, ++i, a)));
+                    case "--right-classpath" -> out.rightClasspath.add(Path.of(need(args, ++i, a)));
                     case "--right" -> out.right = Path.of(need(args, ++i, a));
                     case "--json" -> out.json = Path.of(need(args, ++i, a));
                     case "--md" -> out.md = Path.of(need(args, ++i, a));
@@ -864,6 +873,7 @@ public final class SemanticDiff {
                             + " [--allow-methods file --allow-right C.jar]"
                             + " [--effects-methods file] [--extra-methods file] [--metadata-exempt file]"
                             + " [--access-widen file] [--layout-methods file] [--deviations file]"
+                            + " [--left-classpath jar-or-dir] [--right-classpath jar-or-dir]"
                             + " [--json out.json] [--md out.md]");
         }
     }

@@ -70,7 +70,9 @@ public final class AdvancedSelfTest implements Opcodes {
         ClassNode legacy=plain(ACC_PUBLIC); legacy.methods.get(0).instructions.insert(new VarInsnNode(RET,1));
         rejected("layout-legacy-ret",legacy,legacy,"--layout-methods","Fixture#m()V");
         check("dup-temp",temp(true,1),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
-        check("dup-temp-twice",temp(true,2),temp(false,1),"DIFF","--effects-methods","Fixture#m()V");
+        // #166 generalizes transport: two reads correspond to DUP's two copies.
+        check("dup-temp-twice",temp(true,2),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
+        check("dup-temp-twice-default",temp(true,2),temp(false,1),"SAME");
         check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
         check("ctor-order",ctor("Parent",false,false),ctor("Parent",true,false),"DEVIATION","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ctorLocalWrites();

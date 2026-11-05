@@ -27,6 +27,10 @@ final class JarIndex {
     private final java.util.Set<String> resolving = new java.util.HashSet<>();
     private final Map<String, Map<String, String>> switchFields = new TreeMap<>();
     final Map<MethodNode, String> methodOwners = new java.util.IdentityHashMap<>();
+    final Map<MethodNode, MethodNode> beforeWebs = new java.util.IdentityHashMap<>();
+    private final Map<String, byte[]> dependencies = new TreeMap<>();
+    private final Map<String, ClassNode> headers = new TreeMap<>();
+    private Set<String> otherReferences;
     Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
 
     boolean approved(Map<String, Set<String>> list, MethodNode method) {
@@ -120,9 +124,100 @@ final class JarIndex {
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         Normalizations.prepare(node);
+        FourthNormalizations.prepare(node, this);
         for (MethodNode m : node.methods) methodOwners.put(m, node.name);
         trees.put(internalName, node);
         return node;
+    }
+
+    void addClasspath(Path path) throws IOException {
+        if (java.nio.file.Files.isDirectory(path)) {
+            try (var files = java.nio.file.Files.walk(path)) {
+                for (Path p : files.filter(p -> p.toString().endsWith(".class")).toList()) {
+                    byte[] bytes = java.nio.file.Files.readAllBytes(p);
+                    dependencies.putIfAbsent(new ClassReader(bytes).getClassName(), bytes);
+                }
+            }
+        } else JarIndex.load(path).classes.forEach(dependencies::putIfAbsent);
+    }
+
+    boolean physicalConstructor(String owner, MethodNode m) {
+        return m.name.equals("<init>") && exactMethods.getOrDefault(owner,Set.of()).contains(m.name+m.desc);
+    }
+
+    private ClassNode header(String name) {
+        if (headers.containsKey(name)) return headers.get(name);
+        byte[] bytes = classes.getOrDefault(name, dependencies.get(name));
+        if (bytes == null && name.startsWith("java/")) {
+            // Read platform class metadata without loading/initializing application classes.
+            try (InputStream in = ClassLoader.getPlatformClassLoader().getResourceAsStream(name + ".class")) {
+                if (in != null) bytes = readAll(in);
+            } catch (IOException ex) { return null; }
+        }
+        if (bytes == null) return null;
+        ClassNode c = new ClassNode();
+        new ClassReader(bytes).accept(c, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        headers.put(name,c); return c;
+    }
+
+    String fieldOwner(String owner, String name, String desc, int opcode) {
+        if (!FourthNormalizations.enabled("fields")) return owner;
+        String result = resolveField(owner,name,desc,opcode,new java.util.HashSet<>());
+        // Unresolved symbolic owners must not accidentally equal the declaration
+        // obtained by a successful lookup on the other side.
+        return result == null || result.isEmpty() ? "unresolved(" + owner + ")" : result;
+    }
+
+    // JVMS field lookup: declaration, direct superinterfaces, then superclass.
+    // null means unresolved; empty means the complete hierarchy has no such field.
+    private String resolveField(String owner, String name, String desc, int opcode, Set<String> seen) {
+        if (owner == null || owner.equals("java/lang/Object")) return "";
+        if (!seen.add(owner)) return null;
+        ClassNode c = header(owner);
+        if (c == null) return null;
+        for (var f : c.fields) if (f.name.equals(name) && f.desc.equals(desc)) {
+            boolean stat = (f.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0;
+            return stat == (opcode == org.objectweb.asm.Opcodes.GETSTATIC || opcode == org.objectweb.asm.Opcodes.PUTSTATIC) ? c.name : null;
+        }
+        for (String itf : c.interfaces) {
+            String r = resolveField(itf,name,desc,opcode,new java.util.HashSet<>(seen));
+            if (r == null || !r.isEmpty()) return r;
+        }
+        return resolveField(c.superName,name,desc,opcode,seen);
+    }
+
+    boolean otherReference(String owner, MethodNode m) {
+        if (exactMethods.getOrDefault(owner, Set.of()).contains(m.name + m.desc)) return true;
+        if (otherReferences == null) {
+            otherReferences = new java.util.HashSet<>();
+            Map<String,byte[]> all = new TreeMap<>(dependencies); all.putAll(classes);
+            for (byte[] bytes : all.values()) {
+                ClassNode c = new ClassNode();
+                new ClassReader(bytes).accept(c,ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                for (MethodNode method : c.methods) for (var n : method.instructions) {
+                    if (n instanceof org.objectweb.asm.tree.MethodInsnNode call)
+                        otherReferences.add(call.owner + "#" + call.name + call.desc);
+                    if (n instanceof org.objectweb.asm.tree.LdcInsnNode ldc) reference(ldc.cst);
+                    if (n instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode indy) {
+                        reference(indy.bsm);
+                        for (int i=0; i<indy.bsmArgs.length; i++) {
+                            Object arg = indy.bsmArgs[i];
+                            if (i == 1 && FourthNormalizations.lambda(indy) && arg instanceof org.objectweb.asm.Handle h
+                                    && h.getTag() == org.objectweb.asm.Opcodes.H_INVOKESTATIC && h.getOwner().equals(c.name)) continue;
+                            reference(arg);
+                        }
+                    }
+                }
+            }
+        }
+        return otherReferences.contains(owner + "#" + m.name + m.desc);
+    }
+    private void reference(Object value) {
+        if (value instanceof org.objectweb.asm.Handle h) otherReferences.add(h.getOwner()+"#"+h.getName()+h.getDesc());
+        if (value instanceof org.objectweb.asm.ConstantDynamic c) {
+            reference(c.getBootstrapMethod());
+            for (int i=0;i<c.getBootstrapMethodArgumentCount();i++) reference(c.getBootstrapMethodArgument(i));
+        }
     }
 
     private static Map<String, String> syntheticMap(byte[] bytes, Set<String> exactMethods) {

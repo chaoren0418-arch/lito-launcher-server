@@ -309,7 +309,14 @@ final class ClassComparer {
         if (d != null) {
             return d.withMember("method", key);
         }
+        if (!leftJar.approved(leftJar.layouts,lm) && instructions(lm,leftJar).equals(instructions(rm,rJar))
+                && tryCatch(lm,leftJar).equals(tryCatch(rm,rJar))) return null;
+        if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
         if (effects) {
+            // Keep the existing explicitly approved effects heuristic on physical slots.
+            // The default data-flow proof above already used the normalized webs.
+            lm = leftJar.beforeWebs.getOrDefault(lm,lm);
+            rm = rJar.beforeWebs.getOrDefault(rm,rm);
             d = cmpList("effects sequence", effectsSequence(lm, leftJar, tempStores(lm, rm)), effectsSequence(rm, rJar, tempStores(rm, lm)));
             if (d == null) d = cmp("effects constants", constants(lm, leftJar).toString(), constants(rm, rJar).toString());
             if (d == null) d = cmpList("effects tryCatch", catchTypes(lm, leftJar), catchTypes(rm, rJar));
@@ -479,7 +486,7 @@ final class ClassComparer {
         return out;
     }
 
-    private static List<String> tryCatch(MethodNode method, JarIndex jar) {
+    static List<String> tryCatch(MethodNode method, JarIndex jar) {
         Map<LabelNode, Integer> labels = labelIds(method);
         List<String> out = new ArrayList<>();
         if (method.tryCatchBlocks == null) {
@@ -546,7 +553,7 @@ final class ClassComparer {
             return op + " " + n.desc;
         }
         if (insn instanceof FieldInsnNode n) {
-            return op + " " + n.owner + "." + jar.remapField(n.owner, n.name) + ":" + n.desc;
+            return op + " " + jar.fieldOwner(n.owner, n.name, n.desc, n.getOpcode()) + "." + jar.remapField(n.owner, n.name) + ":" + n.desc;
         }
         if (insn instanceof MethodInsnNode n) {
             return op + " " + n.owner + "." + jar.remapMethod(n.owner, n.name, n.desc) + n.desc
