@@ -40,3 +40,4 @@
 - 2026-11-06 — #77 T020-A06: T020-A06: src/main 對齊正式 0.6.71 暫存（other，27 類）（code，codex-local，PR #109 已合併）→ [報告](reports/issue-77.md)
 - 2026-11-06 — #203 T020i-8: semantic-diff 依呼叫點配對 lambda＋不看分支方向的 CFG 比對＋可見性 bridge（code，codex-local，PR #215 已合併）→ [報告](reports/issue-203.md)
 - 2026-11-06 — #72 T020-A01: T020-A01: src/main 對齊正式 0.6.71 暫存（nativede，49 類）（code，codex-local，PR #99 已合併）→ [報告](reports/issue-72.md)
+- 2026-11-06 — #67 T020-B06: 戰鬥併入暫存（existing-battle，29 類）（code，codex-local，PR #89 已合併）→ [報告](reports/issue-67.md)
