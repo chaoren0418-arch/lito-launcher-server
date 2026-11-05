@@ -461,9 +461,7 @@ extends NativeDeNpcTemplateState {
         return null;
     }
 
-    @Override
-    // 正式為 private，但父類同名 package 方法使 Java 無法編譯；此差異待 #73 裁定。
-    void cancelNpcChatTimer() {
+    private void cancelNpcChatTimer() {
         NativeDeChatRuntime.cancel(this);
     }
 

@@ -16,8 +16,6 @@ import local.lito381.server.NativeDeWorldLog;
 
 public class NativeDeItemWeaponProcTable {
     private static final NativeDeWorldLog _log = NativeDeItemDefinitionsScope.Logs.getLogger(NativeDeItemWeaponProcTable.class);
-    // 正式 reload 仍引用此欄位，但正式 class 沒有宣告；保留可編譯版本，待 #73 主控裁定。
-    private static NativeDeItemWeaponProcTable _instance;
     private Map<Integer, List<NativeDeItemWeaponProc>> _weaponProcs;
     final NativeDeItemDefinitionsScope.Data nativeDefinitions = NativeDeItemDefinitionsScope.loadingData();
 
@@ -63,8 +61,9 @@ public class NativeDeItemWeaponProcTable {
 
     public void reload() {
         NativeDeItemDefinitionsScope.requireLoading(this.nativeDefinitions);
-        _instance = new NativeDeItemWeaponProcTable();
-        _instance.load();
+        new NativeDeItemWeaponProcTable();
+        // 正式版於 PUTSTATIC 解析不存在的 _instance 時失敗；依 #73 保留此行為。
+        throw new NoSuchFieldError("_instance");
     }
 
     public static NativeDeItemWeaponProcTable getInstance() {
