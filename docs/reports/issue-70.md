@@ -1,64 +1,58 @@
-# Issue #70 / T020-B09 — 重驗未通過，等待 #203／#216 合併
+# Issue #70 / T020-B09 — #203 合併後重驗，仍待 #216
 
 ## 結論
 
-**未通過驗收、不可 B-land。** 2026-11-06 在指定 worktree／`task/70`，從前輪 `9fdd2bf` 合併最新 `origin/main@295c19c14b06c73fdb4dc1d8e151dbd84e217bce`，合併提交為 `3c253f82b38a91b4b0925ad1a99e2596a855a628`。本輪從來源重新編譯工具、註解及三份 staged Java，在全新 `target/retry-main` 輸出驗證；未沿用前輪 class。工具包含 #174、#176、#186，但尚未包含新裁定要求的 #203、#216。
+**未通過驗收、不可 B-land；不符合再次送審條件。** 本輪沿用指定 worktree `D:/lineage開發/3-lito開發/scratch/wt/task-70` 與分支 `task/70`，從前輪 `b63c655` 合併最新 `origin/main@567b0cb7762864b10ef876f90749e74a66e9bb01`，合併提交為 `0c41ecbd30e3f5e72e8166f02fb309d53c1229d4`。工具已含 #174、#176、#186、#203；**#216／PR #238 尚未合併**。
 
-全部 **362 entries：353 SAME、2 SAME_PATHS、7 DIFF**；類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 皆 0。方法層級仍有 **398 DIFF、63 ONLY_RIGHT、9 ONLY_LEFT**；缺漏與額外方法全含 `lambda$`，普通方法缺漏為 0。**類別齊全不代表方法全部通過。** T029 為 **5 SAME、1 SAME_EFFECTS、1 SAME_PATHS、1 DIFF**。
+完整 **362 entries：353 SAME、2 SAME_PATHS、7 DIFF**。類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 皆 0。方法層級為 **356 DIFF、63 ONLY_RIGHT、9 ONLY_LEFT**，後兩者全含 `lambda$`；普通方法缺漏為 0。T029 八方法仍為 **5 SAME、1 SAME_EFFECTS、1 SAME_PATHS、1 DIFF**。不可把類別齊全或 CLI exit 0 當作完成。
 
-依[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007)，剩餘差異分型、完整代表差異附於本報告，交 `needs:claude`。未把 CLI exit 0、CI 綠燈或局部診斷當作驗收通過。
+#203 新證明 **42 個方法為 SAME_CFG**，均由前輪 DIFF 轉為通過，其餘方法狀態未變。例如 GameHub 建構子與 `endBattle(J)V` 已通過；GameHub 整類仍有其他差異。72 個 lambda 配對缺口尚未消除。這是含 #203 的新結果，不沿用前輪 398 DIFF。
 
-## 派工依賴與最新裁定（已核對 GitHub）
+## 做了什麼／派工依賴
 
-[主控新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6665159356) 已確認前輪的登入守門、light try/catch、差異分型及 pending metadata 處理正確，並指示先等 #203／#216 合併再續修。這兩項目前尚未進入 main：
+- 合併已發布於 main 的工具，使用全新 `target/merged203`、`target/merged203-tool`、`target/merged203-annotations`，從來源編譯三份 staged Java、semantic-diff、AsRecord 與註解，再完整重驗。
+- 本輪自行修改只有本報告；staged Java 與核准清單維持前輪內容。main 合併帶入的上游變更另計，沒有手動編輯 `docs/REPORT.md`、`src/main` 或 `pom.xml`。
+- 保留 `SourceLogin.allowed` 的窄 try／原樣轉拋 helper、`nativeLightCommit` 的 try/catch、三方移植、5 個 `@AsRecord`、`@AsmFinal` 與 T029 正式方法。沒有複製候選 class bytes、改名／替換驗收產物或自行修補 class；只執行官方 AsRecord 轉換器。
+- `metadata-exempt.txt` 的四筆 EnclosingMethod-only 仍為 pending。#216 尚未進 main，現有 CLI 只接受整組 metadata 豁免，不能取消註解或擴大豁免。
 
-| 項目 | 本輪讀取到的狀態 | 對 B09 的影響 |
-|---|---|---|
-| [#203／PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) | Issue `task:review`；PR `open`、`merged=false`；head `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe` | 呼叫點 lambda 配對、含迴圈 CFG 尚未可用 |
-| [#216](https://github.com/chaoren0418-arch/lito-launcher-server/issues/216) | Issue `task:queued`、依賴 #203 | 尚無 `enclosing-method` 單屬性語法及純轉拋 handler 正規化 |
-| [#70](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70) 派工 YAML | `attempts: 2`，`depends_on: [102, 132, 135, 153, 166, 174, 176, 186]` | 未補入主控要求的 203、216，因而再次派到同一組未解工具差異 |
+2026-11-06 讀取 GitHub 確認：[#203／PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 已合併；[#216／PR #238](https://github.com/chaoren0418-arch/lito-launcher-server/pull/238) 仍 OPEN、`mergedAt=null`，head `6e6752e635d3f35272da44290053a9f10b645b01`。#70 派工 YAML 仍為 `attempts: 3`、`depends_on: [102, 132, 135, 153, 166, 174, 176, 186]`，未包含主控要求的 203、216。
 
-本輪只新增合併提交與更新本報告；保留前輪 staged Java 及核准清單，不導入未合併的工具，不越界實作 #203／#216。四個 EnclosingMethod 條目維持 pending；只寫類名會一併豁免 Nest 等屬性，不能拿來替代精確豁免。
+依[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6665159356)及[前次審查](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6668172167)，工具到齊後才續修重驗。本輪提供 #203 的進展與完整差異交接，沒有導入未合併的 #216，也不代為合併其他 PR。仍須 `needs:claude` 同步派工依賴；不是要求重判已核准的 metadata 或 ORPHAN 規則。
 
-新裁定允許 #176 的 `ORPHAN_IGNORED` 計入通過，並預告 #203 的三種新證明狀態；即使納入此口徑，本輪 7 個類別 DIFF、398 個方法 DIFF 及 72 個方法配對缺口仍未解決。未以新口徑將現有 DIFF 改標通過。
+## 已驗證／怎麼驗證
 
-## 既有修正（本輪確認保留）
-
-- `sourceApplicationRun` 開頭補回 `SourceLogin.allowed(socket, config)`；try 只包含呼叫與條件，catch `Exception` 後呼叫 private static `rethrowUnchecked(Throwable)`。泛型 helper 本體只有 `throw (E) t;`，沒有包裝、記錄或吞例外；完整描述子及核准連結已加入 `extra-methods-approved.txt`。
-- `nativeLightCommit` 從讀取 cooldown 開始補上 `catch (Throwable failure) { throw failure; }`，覆蓋拒絕條件、admit、狀態與 MP 更新；成功路徑的 Integer boxing 保持在 try 之外。保留既有 `throws IOException`，沒有加入 Exceptions 豁免。目前工具仍未證明 handler／資料流等價，詳見下節。
-- 四個治療用 local record 的 EnclosingMethod-only 核准以 **pending 註解**記錄在 `metadata-exempt.txt`；目前工具只能整組豁免，沒有啟用超出授權的條目。
-- 保留三方移植、5 個 `@AsRecord`、`@AsmFinal`、T029 正式方法；本輪未改 Protocol、GameHub，也未以 Java 調整 poison record 的 SWAP、private 呼叫 opcode 或既有 stack 暫存。
-- 前輪修正限 ClientSession staged Java、上述兩份核准清單與本報告；本輪僅自行更新本報告。main 合併帶入的上游檔案不算本輪自行修改；未編輯 `docs/REPORT.md`、`src/main`、`pom.xml`、設定、封存、releases 或硬連結。
-
-## 已驗證
-
-本輪全新編譯 JAR 的 SHA-256 與前輪一致；完整官方 `classes` JSON（含逐方法結果）及唯讀診斷全文亦逐項／逐字相同。因此下列 T029 表、差異分型與完整代表附錄均經本輪重驗確認，不是只複製舊摘要。`report-retry.py` 以斷言核對上述一致性及 missing／extra 為空。
-
-Microsoft OpenJDK 17.0.17；ASM 9.7。直接從合併後來源編譯 semantic-diff、AsRecord 與兩個註解類；再用候選、正式、註解與 lib classpath 編譯本批三個 staged 檔，僅執行官方 AsRecord 轉換器，原位打包後直接比較。沒有複製候選 class bytes、另寫產物修補器、換名或替換待驗 JAR。
+Microsoft OpenJDK 17.0.17、ASM 9.7。依 §6-4／§6-5，候選 JAR 在 classpath 前、正式 JAR 在後，再加註解與 lib。三份 staged 檔使用 `javac --release 17 -encoding UTF-8`；編譯、AsRecord、完整 CLI 均 exit 0。
 
 ```text
-javac --release 17 -encoding UTF-8: exit 0（既有 unchecked 提示）
-as-record: scanned=362 converted=6; exit 0
+as-record: scanned=362 converted=6
 entries=362 missing=0 extra=0
-SUMMARY SAME=353 SAME_EFFECTS=0 SAME_PATHS=2 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=7 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=3 ALLOW_METHODS=2
-semantic-diff: exit 0（報告已產生，不表示驗收成功）
+SUMMARY SAME=353 SAME_EFFECTS=0 SAME_PATHS=2 ORPHAN_IGNORED=0 SAME_CFG=0 LAMBDA_PAIRED_BY_CALLSITE=0 VISIBILITY_BRIDGE=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=7 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=3 ALLOW_METHODS=2
 ```
 
-converted=6 為 5 個 record 加 ClientSession 的 AsmFinal，不是 6 個 record。四個 local record 由 javac 直接產生；Protocol 的 162 個 entries 仍全部 SAME。兩個 poison record 均 **SAME_PATHS**，Java 未改。
+`converted=6` 是五個 record 加 ClientSession 的 AsmFinal。四個 healing record 由 javac 產生，兩個 poison record 為 SAME_PATHS，Protocol 的 162 個 entries 全部 SAME。類別摘要的 SAME_CFG=0 不表示沒有方法通過：42 個 SAME_CFG 方法位於仍為 DIFF 的類別。
 
-正式驗收使用完整 362 entries、完整 T029 清單與正式 allow-right、裁切到 B09 的兩個 effects 條目及一個 extra helper。沒有傳入 metadata-exempt、exceptions-exempt、layout 或 deviations；前兩者在本批沒有可依法啟用的條目。
+官方 CLI 傳入完整 362 entries、完整 T029 清單、正式 allow-right，以及裁切到 B09 的兩筆 effects 與一筆 extra helper。沒有啟用 metadata-exempt、exceptions-exempt、layout 或 deviations。產物 JAR SHA-256 與前輪相同，確認本輪差異來自新工具；完整方法狀態與前輪逐筆核對，只有上述 42 個改善。方法診斷只列後備／失敗結果，不是全部方法總數：
 
-### 固定輸入／產物
+| 方法診斷狀態 | 數量 |
+|---|---:|
+| ONLY_LEFT | 9 |
+| ONLY_RIGHT | 63 |
+| ORPHAN_IGNORED | 8 |
+| SAME_PATHS | 71 |
+| DIFF | 356 |
+| SAME_CFG | 42 |
+
+### 固定輸入與產物
 
 | 檔案 | SHA-256 |
 |---|---|
 | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
 | `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `scratch/issue-70/target/retry-main.jar` | `2111ea1efeb4996b3293cc9d720398dd4ed0861c2353f55f637de0cbe4f1e302` |
+| `scratch/issue-70/target/merged203.jar` | `2111ea1efeb4996b3293cc9d720398dd4ed0861c2353f55f637de0cbe4f1e302` |
 
-### T029（完整原名與描述子）
+### T029 八方法（正式版為比較目標）
 
-| 方法 | 正式版比較結果 |
+| 方法 | 結果 |
 |---|---|
 | `local/lito381/server/ClientSession#exitRoom(Z)V` | SAME |
 | `local/lito381/server/ClientSession#exitRoomBeforePolyMe(Z)V` | SAME_EFFECTS |
@@ -69,88 +63,71 @@ converted=6 為 5 個 record 加 ClientSession 的 AsmFinal，不是 6 個 recor
 | `local/lito381/server/Protocol#magicDollCustomIcon(IIZ)[B` | SAME |
 | `local/lito381/server/Protocol#magicDollIcon(I)[B` | SAME |
 
-`run()V` 的工具結果為 SAME_PATHS，沒有冒稱嚴格 SAME；`sourcePoisonBody$useInventoryItemBeforeTravel` 仍在核准 effects 下失敗，因此 T029 整體未通過。
+inventory 的核准 effects 仍失敗：`effects sequence[43]: left=ASTORE right=INVOKEVIRTUAL local/lito381/server/ClientSession.accountName()Ljava/lang/String;`；paths 拒絕原因為 `normal control-flow cycle`，#203 CFG 後備拒絕原因為 `unsupported shuffle/subroutine`。沒有把「已核准 effects」當成這個差異已通過。
 
-### EnclosingMethod-only 的工具界線
+### 七個未通過 entry
 
-`SemanticDiff.parseMetadataExempt` 只接受類名，不支援屬性選擇；`ClassComparer.compare(..., boolean metadataExempt)` 會同時忽略 ACC_SYNTHETIC、outerClass／outerMethod、NestHost／NestMembers、InnerClasses 指向自身的條目。這超出本次只忽略 outerMethod／outerMethodDesc 的授權。四筆 pending 註解不會成為生效豁免，正式結果仍為 DIFF。
+| entry（前綴 local/lito381/server/） | 首個診斷 |
+|---|---|
+| ClientSession | acceptsLitoRosterBroadcast 的 switch-map #19／#20；labelled CFGs differ |
+| ClientSession$1 | <clinit> 的 NoSuchFieldError handler 覆蓋；labelled CFGs differ |
+| ClientSession$1CompanionHealing、$1PlayerHealing | outerMethod：nativeSourceHealingOriginalNature／useNaturesBlessingSpell |
+| ClientSession$2CompanionHealing、$2PlayerHealing | outerMethod：nativeSourceHealingOriginalGroup／useGroupHealingSpell |
+| GameHub | battleDisconnectWork 的 ASTORE／DUP；labelled CFGs differ |
 
-| entry（前綴 `local/lito381/server/ClientSession$`） | staged 的 outerMethod | 候選的 outerMethod |
-|---|---|---|
-| `1CompanionHealing`、`1PlayerHealing` | `nativeSourceHealingOriginalNature([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V` | `useNaturesBlessingSpell([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V` |
-| `2CompanionHealing`、`2PlayerHealing` | `nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V` | `useGroupHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V` |
+四個 healing record 的唯讀診斷只在記憶體對齊 `outerMethod`／`outerMethodDesc`，其餘完整 ClassComparer 結果都是 SAME；隨即還原，未序列化 class。這不是正式 CLI 通過結果。`outerClass`、其他 metadata、欄位、方法均未豁免，精確清單待 #216 合併。
 
-補充診斷只在記憶體暫時對齊這兩個屬性，再呼叫未修改的完整 ClassComparer；四個結果皆 `REST_EXCEPT_TWO_PROPERTIES SAME`，涵蓋其他 metadata、欄位、InnerClasses 與方法。診斷隨即還原屬性，沒有序列化／寫回 class，也沒有取代正式 CLI 結果。主控已開 #216 實作精確屬性豁免；待該任務合併後才能啟用，不可直接取消 pending 註解。
+### light 與登入流程
 
-### nativeLightCommit 仍非「只差 throws」
-
-補回 try/catch 後，正式結果先指出 Exceptions：left=`java/io/IOException`、right=空。**唯讀診斷**暫時忽略此方法的 Exceptions，仍然 DIFF：
-
-```text
-left=10:[121:java/lang/Throwable  ] right=12:[120:java/lang/Throwable  ]; path event multisets differ (left=110, right=90)
-```
-
-候選原始 javap 的例外表為：
+`nativeLightCommit` 首先因 Exceptions 左 `java/io/IOException`、右空而 DIFF。唯讀診斷暫時忽略 Exceptions 後仍為：
 
 ```text
-from  to   target type
-16    149  245    any
-151   239  245    any
-245   250  245    any
+left=10:[121:java/lang/Throwable  ] right=12:[120:java/lang/Throwable  ]; path event multisets differ (left=110, right=90); CFG rejected: unsupported shuffle/subroutine
 ```
 
-第三列保護 handler 開頭；依主控新裁定，其中 ASTORE／ALOAD 不會丟例外，應由 #174 涵蓋規則忽略，舊 ALOAD／POP 暫存也沒有作用，因此不再將自我涵蓋本身列為待裁定問題。仍須處理的是 CHECKCAST 與路徑事件數 110／90；主控要求等 #203 合併後重驗，再逐路徑定位多出的 20 個事件。#216 另處理純轉拋 handler。
+110／90 是工具輸出的 path event multiset 計數，尚未逐路徑證明相差內容。完整指令差異仍包含 CHECKCAST 與 handler／資料流。候選原始例外表為 `16–149 → 245 any`、`151–239 → 245 any`、`245–250 → 245 any`；主控已裁定 handler 開頭的 ASTORE／ALOAD 與舊 ALOAD／POP 本身不構成待裁定問題。本輪不將剩餘 DIFF 宣稱為無害。因仍非「只剩 throws」，沒有新增 Exceptions 豁免，亦沒有虛構 javac 失敗證據。
 
-因此主控「只剩 throws 才試原樣轉拋、再考慮 Exceptions 豁免」的前提不成立，本輪沒有新增 exceptions-exempt，也沒有拿不存在的 javac 失敗證據申請豁免。#186 的 helper 消除規則要求右側對應位置無 handler，本方法右側有 handler，不能直接借登入守門的核准擴大放行。完整正規化差異見附錄。
+`sourceApplicationRun` 的 SourceLogin.allowed 守門、條件與窄 try 仍在；helper 仍為 private static 泛型 `throw (E) t;`。整個方法仍有 handler／控制流程差異：`left=1:[8:java/lang/Exception] right=24:[740:java/lang/Exception, 1062:java/lang/Throwable]`，paths 因迴圈拒絕，CFG 回報 `labelled CFGs differ`。helper 核准不能代替完整方法等價。
 
-### sourceApplicationRun 的守門已恢復，但方法仍 DIFF
+### 剩餘方法差異分型
 
-新增守門位於連線日誌／hub.connect／後續處理 try 之前，拒絕即 return，checked Exception 保持原例外物件轉拋。編譯成功，未新增 throws。正式比較仍看到守門 handler，且其餘 try／控制流程仍不同；#186 的成對正規化未在此整個方法消去它。不能把「helper 已核准」理解成整個方法自動通過。完整差異見附錄，交主控判定工具邊界與既有 Java 缺口。
-
-### 尚餘差異分型
-
-下表按官方 `methodResults` 的**第一個診斷特徵**互斥歸類，不代表已證明根因，也不表示每個方法只有該一種差異。398 個 DIFF 加 72 個方法配對缺口全部納入；四個 metadata DIFF 另列上表。
+依官方 methodResults 的第一個診斷特徵互斥歸類，**不是根因裁定**。356 DIFF 加 72 個方法配對缺口全部納入；四個 metadata DIFF 另外列於上節。每類完整代表差異見附錄；本輪已通過的 GameHub.endBattle 不再充當未通過代表，改為仍 DIFF 的 ClientSession.setReady。
 
 | 類型 | 數量 |
 |---|---:|
 | lambda內容配對缺口 | 72 |
 | switch-map欄位對應 | 4 |
-| 指令資料流與控制流程 | 170 |
-| 例外涵蓋區間與handler | 211 |
+| 指令資料流與控制流程 | 131 |
+| 例外涵蓋區間與handler | 208 |
 | lambda或invokedynamic內容 | 8 |
 | 其他Exceptions宣告 | 2 |
 | nativeLightCommit的Exceptions與handler | 1 |
 | 登入守門轉拋與整體handler | 1 |
 | T029副作用摘要 | 1 |
 
-其他後備方法結果為 {'ONLY_LEFT': 9, 'ONLY_RIGHT': 63, 'ORPHAN_IGNORED': 8, 'SAME_PATHS': 71, 'DIFF': 398}。其中 ORPHAN_IGNORED 8 是工具依全 JAR 引用掃描的輸出，主控新裁定已明確認可，不再列作待裁定問題；其他 DIFF 與 ONLY_* 仍不通過。
-
 ## 推測
 
-- 同一來源 enum 的 switch-map 排序與 lambda 的內容識別可能造成連帶 DIFF，但不能只因方法名包含 lambda 就宣稱等價。現有工具仍保留 63 ONLY_RIGHT／9 ONLY_LEFT，未用額外方法清單掩蓋。
-- 迴圈、路徑上限或暫存不同可能包含工具尚不能證明的等價情況；也可能是真實重建錯誤。此輪沒有足夠證據把 398 DIFF 一概歸因於工具。
+- lambda 配對為整類交易，並須證明本體；#203 已合併卻仍留下 72 個缺口，不足以斷言工具失效，也不能斷言原始碼已等價。需要工具到齊後逐項定位。
+- 356 個 DIFF 可能包含工具未能證明的等價形狀與真實 Java 移植缺口；本輪沒有將全部差異歸因於工具。
 
 ## 待驗證／給下一棒的提示
 
-1. **Claude 主控／調度器**：請將 #70 的 `depends_on` 補入 **203、216**，依新裁定等待兩項合併後再派工。此輪依任務要求加回 `needs:claude`，原因是依賴未齊及派工資料尚未同步；不是要求重新裁定已裁定的 metadata／ORPHAN 問題。
-2. **工具任務執行器**：#203 完成審查、#216 完成單屬性豁免及純轉拋處理後，由使用者依專案流程合併；本任務沒有合併其他 PR 的授權。
-3. **B09 本機執行器**：合併含兩項工具的新 main，重編三份 staged Java，對完整 362 entries 重驗。若 light 仍 DIFF，逐路徑定位 110／90 事件的差距及 CHECKCAST；僅剩 throws 時才嘗試原樣轉拋 helper，再視 javac 失敗證據考慮 Exceptions 豁免。登入流程仍差異則附完整差異；T029 inventory 先查 effects 的第 43 個事件，再調整 Java。不得把全部差異一概歸因於工具。
-4. **switch-map**：四筆差異的完整代表仍在附錄；#186 已在本輪工具中，等待主控依新裁定處理形狀差異。
-5. **B-land**：尚不可落地。未執行單元測試、回歸或實機；依 §6-5 暫存區不執行，統一在 B-land 處理。未啟動伺服器／登入器／遊戲，未連正式 DB。
+1. **Claude 主控／調度器**：將 #70 的 depends_on 同步為包含 203、216，等待 #216／PR #238 合併後再派工。#203 已完成，不應再列為未合併阻塞。本輪不符合再次送審條件，請勿當成 B09 完成。
+2. **B09 本機執行器**：合併包含 #216 的最新 main，啟用四筆精確 `enclosing-method` 條目，確認只忽略 outerMethod／outerMethodDesc，其他內容皆通過；從三份 staged Java 全新編譯，重驗完整 362 entries。
+3. **Java 續修**：T029 inventory 對照正式 effects 第 43 項及後續完整摘要；light 對照 CHECKCAST 與每條路徑，僅剩 throws 時才試原樣轉拋，失敗須附 javac 證據才考慮核准 Exceptions 豁免。登入流程、switch-map、其他方法仍差異時，依分型附完整代表差異交主控。不可覆寫 class bytes、擴大豁免或把 72 個配對缺口忽略。
+4. **B-land**：僅在全部 362 entries、T029 八方法依核准模式通過，missing／extra／ONLY_LEFT／ONLY_RIGHT 全 0 後再送審。單元／回歸與實機依 §6-5 留待 B-land；本輪未啟動伺服器、登入器、遊戲，未連正式 DB，未讀機密設定或動封存、releases、硬連結。
 
 ## 產出路徑與重現
 
-- 本輪新增的版本控制變更只有本報告；PR 累積的版本控制產出：伺服器 `merge-inputs/50635f7e/staged/local/lito381/server/` 下的 `ClientSession.java`、`Protocol.java`、`GameHub.java`，以及 `docs/combat-merge/extra-methods-approved.txt`、`docs/combat-merge/metadata-exempt.txt`、本報告。
-- 本機可重建證據：`scratch/issue-70/verify-latest.py`、`run-audit.py`、`LatestAudit.java`、`latest-command.json`、`retry-main-{diff.json,diff.md,audit.txt,javac.log,record.log,semantic.log}`、`target/retry-main.jar`。scratch／target 不進 git；本報告附錄保留各類完整代表差異，不依賴本機檔案才能審查。
-- 最新 main 來源的工具未修改；官方 CLI 的 JSON 已列完整 `leftClasspath`、驗收清單及核准旗標。重新跑 `verify-latest.py` 須使用尚不存在的輸出名稱，避免舊 class 汙染。
-
-以下 PowerShell 從 repo 根目錄可重建正式驗收，不依賴前輪 scratch 腳本（JDK 路徑依本機安裝）：
+- 本輪版本控制變更：`docs/reports/issue-70.md`。PR 累積範圍另含本批 ClientSession／GameHub／Protocol staged Java，以及 extra-methods-approved、metadata-exempt 的核准條目。
+- 本機證據：`scratch/issue-70/verify-merged203.py`、`audit-merged203.py`、`LatestAudit.java`、`merged203-representatives.txt`、`classify-merged203.py`、`report-merged203.py`、`latest-command.json`、`merged203-{diff.json,diff.md,audit.txt,groups.json,tool.log,annotations.log,javac.log,record.log,semantic.log}`、`target/merged203.jar`。scratch／target 不進 git。
+- 完整代表差異直接保存在本報告，審查不依賴本機 scratch。工具來源未修改。以下從 repo 根目錄重建驗收，使用全新輸出目錄；需檢查 JSON，不能只看 exit 0。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
 $root = (Get-Location).Path
 $s = Join-Path $root 'lito伺服器/LiTo381-Server'
-$w = Join-Path $root 'scratch/issue-70/reproduce-latest'
+$w = Join-Path $root 'scratch/issue-70/reproduce-merged203'
 if (Test-Path $w) { throw '必須使用全新輸出目錄' }
 New-Item -ItemType Directory -Path "$w/target/dependency" -Force | Out-Null
 $jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
@@ -191,18 +168,16 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 (Get-Content -Raw -Encoding UTF8 "$w/result.json" | ConvertFrom-Json).counts
 ```
 
-上述 jar 工具時間戳可不同，語意結果應相同；本輪固定日期 Python 打包的 SHA 另列上表。**必須檢查 JSON 的狀態與缺漏，exit 0 不足以放行。**
+## 附錄：每類完整代表差異
 
-## 附錄：每類一個完整代表差異
-
-以下由官方 JarIndex／ClassComparer 正規化內容產生 unified diff；`staged` 為左、`candidate` 為右，T029 inventory 的右側為 `formal`。列出每個代表方法的全部差異 hunks，未裁切 bootstrap 內容、handler coverage 或 instructions。印出的指令流水序號移除以免平移產生假差異；L 標籤、槽位與 operands 保留。只做診斷文字比對，不改寫 bytes，也不取代官方結果。`TRY COVERAGE` 逐列列出工具的可拋出指令與有序 handler；`META` 含 access、signature、Exceptions。
+由本輪官方 JarIndex／ClassComparer 產生正規化內容；staged 在左、candidate 在右，T029 inventory 對 formal。移除印出的流水序號，保留全部差異 hunks、標籤、槽位、operands、bootstrap、META 與 TRY COVERAGE；未裁切。此文字診斷不寫入 class、不取代正式 CLI。
 
 ### nativeLightCommit的Exceptions與handler
 
 `local/lito381/server/ClientSession#nativeLightCommit(Llocal/lito381/server/BattleSpellCatalog$LightSpell;Ljava/lang/Object;J)Ljava/lang/Integer;`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#nativeLightCommit(Llocal/lito381/server/BattleSpellCatalog$LightSpell;Ljava/lang/Object;J)Ljava/lang/Integer;
@@ -380,7 +355,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#acceptsLitoRosterBroadcast()Z`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#acceptsLitoRosterBroadcast()Z
@@ -394,17 +369,101 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 
 ### 指令資料流與控制流程
 
-`local/lito381/server/GameHub#endBattle(J)V`
+`local/lito381/server/ClientSession#setReady([B)V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
---- staged/local/lito381/server/GameHub#endBattle(J)V
-+++ candidate/local/lito381/server/GameHub#endBattle(J)V
-@@ -80 +80 @@
--ALOAD 3
-+DUP
+--- staged/local/lito381/server/ClientSession#setReady([B)V
++++ candidate/local/lito381/server/ClientSession#setReady([B)V
+@@ -7 +7,3 @@
+-IF_ACMPEQ L5
++IF_ACMPEQ L7
++ALOAD 0
++INVOKESTATIC local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V
+@@ -14 +16 @@
+-IFEQ L13
++IFEQ L15
+@@ -16 +18 @@
+-GOTO L15
++GOTO L17
+@@ -22 +24 @@
+-IFEQ L43
++IFEQ L47
+@@ -28,3 +30,3 @@
+-IF_ACMPNE L27
+-GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
+-GOTO L28
++IF_ACMPNE L29
++GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
++GOTO L30
+@@ -45,0 +48,2 @@
++ALOAD 0
++INVOKESTATIC local/lito381/server/NativeRoomRules.feedback(Llocal/lito381/server/ClientSession;)V
+@@ -49 +53 @@
+-IFEQ L53
++IFEQ L57
+@@ -56 +60 @@
+-GOTO L61
++GOTO L65
+@@ -68 +72 @@
+-IFEQ L79
++IFEQ L83
+@@ -75 +79 @@
+-IFNE L79
++IFNE L83
+@@ -89,3 +93,3 @@
+-IF_ACMPNE L88
+-GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
+-GOTO L94
++IF_ACMPNE L92
++GETSTATIC local/lito381/server/Protocol$LitoParticipantState.SHOP_LIST:Llocal/lito381/server/Protocol$LitoParticipantState;
++GOTO L98
+@@ -94 +98 @@
+-IFEQ L93
++IFEQ L97
+@@ -96 +100 @@
+-GOTO L94
++GOTO L98
+@@ -115 +119 @@
+-IFEQ L128
++IFEQ L132
+@@ -131 +135 @@
+-GOTO L109
++GOTO L113
+@@ -134 +138 @@
+-IFLE L139
++IFLE L143
+@@ -145 +149 @@
+-IFEQ L164
++IFEQ L168
+@@ -154 +158 @@
+-IFEQ L164
++IFEQ L168
+@@ -161 +165 @@
+-IF_ICMPGE L164
++IF_ICMPGE L168
+@@ -173 +177 @@
+-IF_ACMPNE L185
++IF_ACMPNE L189
+@@ -179 +183 @@
+-IFEQ L184
++IFEQ L188
+@@ -187,2 +191,2 @@
+-GOTO L173
+-GOTO L202
++GOTO L177
++GOTO L206
+@@ -191 +195 @@
+-IF_ACMPNE L202
++IF_ACMPNE L206
+@@ -197 +201 @@
+-IFEQ L202
++IFEQ L206
+@@ -205 +209 @@
+-GOTO L191
++GOTO L195
 ```
 
 </details>
@@ -414,7 +473,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#login([B)V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#login([B)V
@@ -643,7 +702,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#useClassicWorldLineAttackSpell([BLlocal/lito381/server/BattleSpellCatalog$LineAttackSpell;)V
@@ -660,7 +719,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#movementUnlock([B)V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#movementUnlock([B)V
@@ -683,7 +742,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#repair021$lambda$attack$414()I`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#repair021$lambda$attack$414()I
@@ -706,7 +765,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#sourcePoisonBody$useInventoryItemBeforeTravel([BLlocal/lito381/server/CombatPoisonLifecycle$Scope;)V
@@ -1436,7 +1495,7 @@ if ($LASTEXITCODE) { throw 'semantic CLI failed' }
 `local/lito381/server/ClientSession#sourceApplicationRun()V`
 
 <details>
-<summary>完整差異（零行未變更上下文，保留所有 hunks）</summary>
+<summary>完整差異（保留所有 hunks）</summary>
 
 ```diff
 --- staged/local/lito381/server/ClientSession#sourceApplicationRun()V
