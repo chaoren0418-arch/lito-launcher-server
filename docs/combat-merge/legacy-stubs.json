@@ -1,0 +1,1835 @@
+{
+  "schema_version": 1,
+  "inputs": [
+    {
+      "name": "base-0.6.71.jar",
+      "sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498"
+    },
+    {
+      "name": "candidate-50635f7e.jar",
+      "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+    }
+  ],
+  "classes": [
+    {
+      "name": "com/lineage/server/datatables/QuestInstanceTable",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeWorldRegistryQuest.class",
+          "reason": "constant-pool",
+          "constant_pool": 9
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeWorldRegistryQuest.class",
+          "reason": "constant-pool",
+          "constant_pool": 9
+        },
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/datatables/QuestInstanceTable$Definition"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/datatables/QuestInstanceTable$Definition",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeWorldRegistryQuest.class",
+          "reason": "constant-pool",
+          "constant_pool": 7
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeWorldRegistryQuest.class",
+          "reason": "constant-pool",
+          "constant_pool": 7
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/Instance/DeathLifecycleGate",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "reason": "constant-pool",
+          "constant_pool": 10
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "reason": "constant-pool",
+          "constant_pool": 10
+        },
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/model/Instance/DeathLifecycleGate$Phase"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/Instance/DeathLifecycleGate$Phase",
+      "kind": "enum",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase",
+          "runtime_enum": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase",
+          "runtime_enum": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+        }
+      ],
+      "fields": [
+        {
+          "name": "ACTIVE",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "DEAD_PENDING",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "DEAD_SETTLED",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "DEATH_DROPPED",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 72,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 72,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "FINALIZING",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 87,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 87,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "RESURRECTING",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "TERMINATED",
+          "descriptor": "Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 103,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 103,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "methods": [
+        {
+          "name": "ordinal",
+          "descriptor": "()I",
+          "opcodes": [
+            "invokevirtual"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 75,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 90,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 106,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 75,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 90,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 106,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": false
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/lineage/server/model/Instance/DeathLifecycleGate$Phase;",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeathLifecycleGate$Phase"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": [
+        "ACTIVE",
+        "DEAD_PENDING",
+        "DEAD_SETTLED",
+        "DEATH_DROPPED",
+        "FINALIZING",
+        "RESURRECTING",
+        "TERMINATED"
+      ]
+    },
+    {
+      "name": "com/lineage/server/model/Instance/NpcDeletionVisibilityState",
+      "kind": "class",
+      "evidence": [
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase"
+        },
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase",
+      "kind": "enum",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase",
+          "runtime_enum": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase",
+          "runtime_enum": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+        }
+      ],
+      "fields": [
+        {
+          "name": "ACTIVE",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 87,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 87,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "DELETE_CLAIMED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "DESTROYED_MARKED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "FAILED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 119,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 119,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "REGISTRATION_ABORTED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 135,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 135,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "REMOVE_PUBLISHED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 72,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 72,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "TERMINAL",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 103,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 103,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "VIEWERS_CAPTURED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "WORLD_REMOVED",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "methods": [
+        {
+          "name": "ordinal",
+          "descriptor": "()I",
+          "opcodes": [
+            "invokevirtual"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 75,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 90,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 106,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 122,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 138,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 75,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 90,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 106,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 122,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 138,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": false
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$Phase;",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeDeletionVisibility$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$Phase"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": [
+        "ACTIVE",
+        "DELETE_CLAIMED",
+        "DESTROYED_MARKED",
+        "FAILED",
+        "REGISTRATION_ABORTED",
+        "REMOVE_PUBLISHED",
+        "TERMINAL",
+        "VIEWERS_CAPTURED",
+        "WORLD_REMOVED"
+      ]
+    },
+    {
+      "name": "com/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind",
+      "kind": "enum",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "method": "<clinit>()V",
+          "offset": 122,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind",
+          "runtime_enum": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+          "method": "<clinit>()V",
+          "offset": 122,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind",
+          "runtime_enum": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+        }
+      ],
+      "fields": [
+        {
+          "name": "LEAK",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 158,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 158,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "NORMAL_RACE",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 128,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 128,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "STALL",
+          "descriptor": "Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 143,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 143,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "methods": [
+        {
+          "name": "ordinal",
+          "descriptor": "()I",
+          "opcodes": [
+            "invokevirtual"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 131,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 146,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 161,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 131,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 146,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 161,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            }
+          ],
+          "static": false
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/lineage/server/model/Instance/NpcDeletionVisibilityState$RepairKind;",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 116,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeVisibilitySwitch.class",
+              "method": "<clinit>()V",
+              "offset": 116,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeDeletionVisibility$RepairKind"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": [
+        "LEAK",
+        "NORMAL_RACE",
+        "STALL"
+      ]
+    },
+    {
+      "name": "com/lineage/server/model/item/ItemGenerationContext",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeItemTable.class",
+          "reason": "constant-pool",
+          "constant_pool": 8
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeItemTable.class",
+          "reason": "constant-pool",
+          "constant_pool": 8
+        },
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/model/item/ItemGenerationContext$Source"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/item/ItemGenerationContext$Source",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeItemTable.class",
+          "reason": "constant-pool",
+          "constant_pool": 6
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeItemTable.class",
+          "reason": "constant-pool",
+          "constant_pool": 6
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/proc/ProcRandomHelper",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+          "reason": "constant-pool",
+          "constant_pool": 109
+        },
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+          "reason": "constant-pool",
+          "constant_pool": 113
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+          "reason": "constant-pool",
+          "constant_pool": 109
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+          "reason": "constant-pool",
+          "constant_pool": 113
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": "addOneToInclusive",
+          "descriptor": "(IILjava/util/Random;)I",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "constant_pool": 117
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "method": "calculateHpDrain()I",
+              "offset": 11
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "method": "calculateMpDrain()I",
+              "offset": 11
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "constant_pool": 117
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "method": "calculateHpDrain()I",
+              "offset": 11
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemWeaponProc.class",
+              "method": "calculateMpDrain()I",
+              "offset": 11
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "addZeroToInclusive",
+          "descriptor": "(IILjava/util/Random;)I",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "constant_pool": 113
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateDamage()I",
+              "offset": 18
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateHpRecover()I",
+              "offset": 27
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateMpRecover()I",
+              "offset": 27
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "constant_pool": 113
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateDamage()I",
+              "offset": 18
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateHpRecover()I",
+              "offset": 27
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeItemEquipProc.class",
+              "method": "calculateMpRecover()I",
+              "offset": 27
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/model/skill/L1SkillId",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeSourceSkillConsumptionMath.class",
+          "reason": "constant-pool",
+          "constant_pool": 1
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeSourceSkillConsumptionMath.class",
+          "reason": "constant-pool",
+          "constant_pool": 1
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/utils/TeleportTrace",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDePerceptionPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 9
+        },
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeVisibilityPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 8
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDePerceptionPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 9
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeVisibilityPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 8
+        },
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/utils/TeleportTrace$PacketTrace"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/utils/TeleportTrace$PacketTrace",
+      "kind": "class",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDePerceptionPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 7
+        },
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeVisibilityPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 6
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDePerceptionPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 7
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeVisibilityPacket.class",
+          "reason": "constant-pool",
+          "constant_pool": 6
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/world/PlayerFilter",
+      "kind": "enum",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$world$PlayerFilter",
+          "runtime_enum": "local/lito381/server/NativeDeWorldPlayerFilter"
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$world$PlayerFilter",
+          "runtime_enum": "local/lito381/server/NativeDeWorldPlayerFilter"
+        }
+      ],
+      "fields": [
+        {
+          "name": "ACTIVE_ONLY",
+          "descriptor": "Lcom/lineage/server/world/PlayerFilter;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "BROADCAST",
+          "descriptor": "Lcom/lineage/server/world/PlayerFilter;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "NONE",
+          "descriptor": "Lcom/lineage/server/world/PlayerFilter;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "methods": [
+        {
+          "name": "ordinal",
+          "descriptor": "()I",
+          "opcodes": [
+            "invokevirtual"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            }
+          ],
+          "static": false
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/lineage/server/world/PlayerFilter;",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldPlayerFilter$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldPlayerFilter"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": [
+        "ACTIVE_ONLY",
+        "BROADCAST",
+        "NONE"
+      ]
+    },
+    {
+      "name": "com/lineage/server/world/World",
+      "kind": "class",
+      "evidence": [
+        {
+          "reason": "enclosing-type",
+          "nested": "com/lineage/server/world/World$SpatialReconcileResult"
+        }
+      ],
+      "fields": [],
+      "methods": [],
+      "enum_constants": []
+    },
+    {
+      "name": "com/lineage/server/world/World$SpatialReconcileResult",
+      "kind": "enum",
+      "evidence": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$world$World$SpatialReconcileResult",
+          "runtime_enum": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+        },
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+          "method": "<clinit>()V",
+          "offset": 6,
+          "reason": "switch-map",
+          "field": "$SwitchMap$com$lineage$server$world$World$SpatialReconcileResult",
+          "runtime_enum": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+        }
+      ],
+      "fields": [
+        {
+          "name": "ALREADY_CONSISTENT",
+          "descriptor": "Lcom/lineage/server/world/World$SpatialReconcileResult;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 27,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "FAILED",
+          "descriptor": "Lcom/lineage/server/world/World$SpatialReconcileResult;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 57,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "NOT_REGISTERED",
+          "descriptor": "Lcom/lineage/server/world/World$SpatialReconcileResult;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 42,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": true
+        },
+        {
+          "name": "REPAIRED",
+          "descriptor": "Lcom/lineage/server/world/World$SpatialReconcileResult;",
+          "opcodes": [
+            "getstatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 12,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "methods": [
+        {
+          "name": "ordinal",
+          "descriptor": "()I",
+          "opcodes": [
+            "invokevirtual"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 15,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 30,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 45,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 60,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": false
+        },
+        {
+          "name": "values",
+          "descriptor": "()[Lcom/lineage/server/world/World$SpatialReconcileResult;",
+          "opcodes": [
+            "invokestatic"
+          ],
+          "evidence": [
+            {
+              "jar": "base-0.6.71.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            },
+            {
+              "jar": "candidate-50635f7e.jar",
+              "entry": "local/lito381/server/NativeDeWorldCore$1.class",
+              "method": "<clinit>()V",
+              "offset": 0,
+              "reason": "switch-map-alias",
+              "runtime_owner": "local/lito381/server/NativeDeWorldCore$SpatialReconcileResult"
+            }
+          ],
+          "static": true
+        }
+      ],
+      "enum_constants": [
+        "ALREADY_CONSISTENT",
+        "FAILED",
+        "NOT_REGISTERED",
+        "REPAIRED"
+      ]
+    }
+  ]
+}

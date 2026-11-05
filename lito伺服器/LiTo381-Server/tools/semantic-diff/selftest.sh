@@ -347,8 +347,8 @@ row = json.load(open(sys.argv[1], encoding="utf-8"))["classes"][0]
 assert row["status"] == "DIFF", row
 assert row["firstDiff"]["member"] == "unlisted()I", row
 assert row["firstDiff"]["insnIndex"] == 0, row
-assert "BIPUSH 10" in row["firstDiff"]["detail"], row
-assert "BIPUSH 20" in row["firstDiff"]["detail"], row
+assert "CONST Integer:10" in row["firstDiff"]["detail"], row
+assert "CONST Integer:20" in row["firstDiff"]["detail"], row
 PY
 echo "PASS SELFTEST 5d same-class unlisted()I DIFF=1 insn=0 uses right, not allow-right"
 
@@ -455,7 +455,7 @@ if [[ -d "$ROOT/target/dependency" ]]; then
   ASM_CP="$(printf '%s:' "$ROOT/target/dependency"/*.jar)"
 fi
 if [[ -z "$ASM_CP" || "$ASM_CP" == "$ROOT/target/dependency/*.jar:" ]]; then
-  ASM_CP="$ROOT/target/dependency/asm-9.7.jar:$ROOT/target/dependency/asm-tree-9.7.jar"
+  ASM_CP="$ROOT/target/dependency/asm-9.7.jar:$ROOT/target/dependency/asm-tree-9.7.jar:$ROOT/target/dependency/asm-analysis-9.7.jar"
 fi
 cat > "$BUILD/AnnPatch.java" <<'JAVA'
 import java.io.InputStream;
@@ -577,6 +577,16 @@ run_logged "$BUILD/ann-record.log" \
 echo "PASS SELFTEST 8c record type-ann DIFF=1"
 
 echo
+echo "=== SELFTEST 9: T020i/T020i-2 normalization and approved exceptions ==="
+javac --release 17 -encoding UTF-8 -cp "$ROOT/target/classes:$ASM_CP" -d "$BIN" \
+  "$ROOT/src/test/java/local/lito381/semanticdiff/"*.java
+java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.NormalizationSelfTest \
+  "$BUILD/normalization" "$BIN/normalization"
+java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.AdvancedSelfTest \
+  "$BUILD/advanced" "$BIN/advanced"
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.FourthSelfTest \
+  "$BUILD/fourth" "$BIN/fourth"
+
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"
 echo "SELFTEST_1b $SUMMARY1B"

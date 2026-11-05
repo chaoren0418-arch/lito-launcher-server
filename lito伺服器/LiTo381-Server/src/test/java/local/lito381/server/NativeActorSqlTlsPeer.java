@@ -168,7 +168,7 @@ public final class NativeActorSqlTlsPeer {
                 result.put("SQL_flow_reprepare_old_LOADED_and_operation_refused",true);
                 result.put("Native_scene_MOVE_service_verified",true);result.put("Native_scene_incarnation","geometry-only participant incarnation is 1 by domain rule; source7 owner/entity/world/revision derive from PERSONAL/WORLD in its READ61, never source42 active89");
             }
-            NativeCanonicalServiceProbeMain.await(()->server.snapshot().sessions()==0);negativeCatalogTls(server,clientContext,worlds,source,result);require(worlds.matchCount()==0&&worlds.registrationCount()==0,"all TLS attachments retired");
+            NativeCanonicalServiceProbeMain.await(()->server.snapshot().sessions()==0);negativeCatalogTls(server,clientContext,worlds,source,result);NativeCanonicalServiceProbeMain.await(()->worlds.matchCount()==0);require(worlds.matchCount()==0&&worlds.registrationCount()==0,"all TLS attachments retired");
         }finally{server.close();retired=server.awaitTermination(5000);worlds.close();require(worlds.awaitTermination(5000),"world workers retired");require(retired&&presence.ownerCount()==0&&rooms.ownerCount()==0&&rooms.roomCount()==0,"owned TLS/backend resources retired");try(var released=new java.net.ServerSocket(server.address().getPort(),1,java.net.InetAddress.getByName("127.0.0.1"))){result.put("owned_TLS_listener_released",true);}}
         var reloadExecutor=new ModernBackendExecutor(1,1);
         try(var reopened=new ModernEquipmentOverrideStore(config.equipmentStoreDirectory());var session=reloadExecutor.openSession()) {
