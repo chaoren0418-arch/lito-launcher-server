@@ -101,3 +101,26 @@ bash tools/semantic-diff/semantic-diff --left staged.jar --right reference.jar \
 ```
 
 `selftest.sh` 的 NormalizationSelfTest 同時涵蓋 T020i 與 T020i-2。新增正反例含直接內部類、Nest metadata、非 SUPER 旗標、建構子方向／overload／註解、參數與 wide 槽位別名、IINC／RET／型別註解、清單 typo／排除／非 private static，以及 metadata 豁免後 `<clinit>`、欄位與子類描述仍不同的情況。
+
+## T020i-4 預設正規化（Issue #166）
+
+以下六項預設開啟，不需要新增核准條目；修改只發生在比較器記憶體，不輸出或改寫應用程式 class。
+
+1. **轉呼叫 lambda**：標準 `LambdaMetafactory.metafactory` 的 implementation handle 若指向本類 `private static synthetic` 方法，其有效指令必須恰為依參數描述子載入所有參數、一次 static／virtual／interface 呼叫、對應回傳。接收者型別、引數及回傳型別精確一致；同步／其他旗標、註解、try、額外指令、重排引數均拒絕。整個輸入 JAR 與明確 classpath 中若還有直接呼叫、LDC／condy handle、其他 bootstrap 或外類參照，整個轉換拒絕。只有全部參照均被替換才移除方法；核准清單指定的精確方法保留。
+2. **相鄰 try 合併**：先執行 #153 邊界收斂，合併相同例外型別與 handler、有效指令邊界相接的區間；不得跨過有效指令，也不得越過會改變例外表優先序的重疊 handler。有型別註解時保持原狀。
+3. **stack／local 暫存**：ASM 資料流確認 local web 恰有一次寫入且每次 LOAD 均來自該寫入，才將 STORE／LOAD、DUP／DUP2 與純 stack 丟棄轉為內部運送關係。逐一比較每個運算、呼叫、欄位、monitor、分支及回傳所使用的有序值來源，並核對每個來源的複本數。其餘指令順序及正常／例外控制邊必須相同。只有原本列入 `--layout-methods` 的方法可重排 CFG。混合來源、覆寫、錯誤取值位置、呼叫順序改變、複本數不符均無法通過此證明。JSR／RET、DUP_X*／DUP2_X*／SWAP、不可達運送指令、未解析的值與 local 型別註解保守保留差異。
+4. **捕獲參數排列**：僅處理本類 private static lambda；所有使用點必須是標準 metafactory，捕獲值之前必須是連續純 xLOAD，不能跨標籤或含方法／欄位求值。按本體首次使用捕獲參數的順序，同步置換本體參數槽、implementation 描述子、呼叫點描述子及 LOAD。沒有使用的捕獲參數、額外參照、metadata 或描述子碰撞時不改。
+5. **local webs**：以 ASM reaching definitions 合併同一讀取可達的定義，包含分支、迴圈與例外邊；各 web 按首次出現順序獨立編號，保留參數入口與 wide 寬度。重用槽與另開槽只有在值依賴一致時相同。無法證明、舊式 subroutine 與 local 型別註解保守維持原規則。精確核准建構子仍使用實體槽，避免干擾 #153 跨 super 的寫入守門；原有核准 effects 摘要也使用 web 切分前的指令。
+6. **field owner**：按本側 classpath 的宣告、介面、父類次序解析；只有解析成功才使用宣告 owner，保留名稱、描述子與 static／instance 類別。子類遮蔽會解析到不同宣告，缺少祖先則維持原 owner。JDK `java/*` 只讀取平台 class metadata，不載入或初始化應用類別。
+
+左側 staged JAR 不包含父類時，必須提供它的實際編譯／執行依賴。左右側不會自動借用對側 JAR；依賴不增加比較 entry，也不能覆蓋本側主 JAR 的類別。旗標可重複，先出現的依賴優先；接受 JAR 或 class 目錄。`--classpath` 是 `--left-classpath` 的別名。JSON／Markdown 記錄使用的 classpath。
+
+```bash
+bash tools/semantic-diff/semantic-diff --left staged.jar --right reference.jar \
+  --left-classpath reference.jar --classes entries.txt \
+  --json scratch/result.json --md scratch/result.md
+```
+
+ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線及 SHA-256 校驗。`selftest.sh` 會執行 `FourthSelfTest`，包含六項正反例、跨類參照、例外表優先序、per-value 複本數、wide、diamond／loop／handler webs，以及隔離 ClassLoader 下實際執行的 JVM fixtures。
+
+診斷歸因可直接用 Java 的 `-Dsemanticdiff.disable=forward,try,transport,captures,webs,fields` 關閉指定規則；預設沒有關閉任何規則。此屬性僅供重跑前後對照，不是核准清單或忽略差異的入口。未知名稱不影響任何規則。

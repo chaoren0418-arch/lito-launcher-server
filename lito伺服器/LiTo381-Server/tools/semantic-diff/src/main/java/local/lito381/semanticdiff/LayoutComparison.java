@@ -11,11 +11,58 @@ import org.objectweb.asm.tree.*;
 final class LayoutComparison implements Opcodes {
     record Edge(String kind, int target) {}
     record Vertex(AbstractInsnNode insn, String text, List<Edge> edges) {}
-    record Graph(List<Vertex> nodes, int entry) {}
+    record Graph(List<Vertex> nodes, int entry, Map<Integer,List<Set<Integer>>> inputs,
+            Map<Set<Integer>,Integer> copies) {}
     private LayoutComparison() {}
 
     static boolean same(MethodNode left, MethodNode right, JarIndex lj, JarIndex rj) {
         return difference(left, right, lj, rj) == null;
+    }
+
+    static boolean transportSame(TransportComparison.View left, TransportComparison.View right,
+            JarIndex lj, JarIndex rj, boolean layout) {
+        Graph a = graph(left.method(),lj,left,layout), b = graph(right.method(),rj,right,layout);
+        if (a.nodes.size() != b.nodes.size()) return false;
+        State s = new State();
+        for (int i=0; i<LocalWebs.parameters(left.method()); i++) { s.slots.put(i,i); s.reverseSlots.put(i,i); }
+        if (!layout) {
+            for (int i=0; i<a.nodes.size(); i++) {
+                if (!match(a,b,i,i,s)) return false;
+                for (var e : s.nodes.entrySet()) if (!e.getKey().equals(e.getValue())) return false;
+            }
+            return dependencies(a,b,s);
+        }
+        if (a.nodes.isEmpty()) return true;
+        return match(a,b,a.entry,b.entry,s) && complete(a,b,s,new int[]{100000});
+    }
+
+    private static boolean dependencies(Graph a, Graph b, State s) {
+        Map<Set<Integer>,Integer> copies=new HashMap<>();
+        for (var entry:a.copies.entrySet()) {
+            Set<Integer> mapped=mapSources(entry.getKey(),s);
+            if(mapped==null)return false;
+            copies.merge(mapped,entry.getValue(),Integer::sum);
+        }
+        if(!copies.equals(b.copies))return false;
+        for (int i=0;i<a.nodes.size();i++) {
+            List<Set<Integer>> left=a.inputs.getOrDefault(i,List.of());
+            List<Set<Integer>> right=b.inputs.getOrDefault(s.nodes.get(i),List.of());
+            if (left.size()!=right.size()) return false;
+            for(int k=0;k<left.size();k++) {
+                Set<Integer> mapped=mapSources(left.get(k),s);
+                if(mapped==null || !mapped.equals(right.get(k)))return false;
+            }
+        }
+        return true;
+    }
+    private static Set<Integer> mapSources(Set<Integer> source,State s) {
+        Set<Integer> mapped=new HashSet<>();
+        for(int value:source) {
+            Integer target=s.nodes.get(value>=0?value:-value-2);
+            if(target==null)return null;
+            mapped.add(value>=0?target:-target-2);
+        }
+        return mapped;
     }
 
     static String difference(MethodNode left, MethodNode right, JarIndex lj, JarIndex rj) {
@@ -69,7 +116,7 @@ final class LayoutComparison implements Opcodes {
         return true;
     }
     private static boolean complete(Graph a, Graph b, State s, int[] budget) {
-        if (s.nodes.size()==a.nodes.size()) return true;
+        if (s.nodes.size()==a.nodes.size()) return dependencies(a,b,s);
         int x=0; while(s.nodes.containsKey(x)) x++;
         for(int y=0;y<b.nodes.size();y++) if(!s.reverse.containsKey(y)) {
             if (--budget[0]<0) throw new IllegalArgumentException("layout graph search budget exceeded");
@@ -90,35 +137,69 @@ final class LayoutComparison implements Opcodes {
         return n;
     }
     private static Graph graph(MethodNode m, JarIndex jar) {
+        return graph(m,jar,null,true);
+    }
+    private static Graph graph(MethodNode m, JarIndex jar, TransportComparison.View transport, boolean collapseGoto) {
         for (AbstractInsnNode n : m.instructions) if (n.getOpcode() == JSR || n.getOpcode() == RET)
             throw new IllegalArgumentException("layout does not support legacy JSR/RET subroutines");
         Map<AbstractInsnNode,Integer> ids=new IdentityHashMap<>(), positions=new IdentityHashMap<>();
         List<AbstractInsnNode> code=new ArrayList<>(); int pos=0;
-        for(AbstractInsnNode n:m.instructions) { positions.put(n,pos++); AbstractInsnNode r=resolve(n);
+        for(AbstractInsnNode n:m.instructions) { positions.put(n,pos++); AbstractInsnNode r=collapseGoto?resolve(n):FourthNormalizations.next(n);
             if(r!=null && !ids.containsKey(r)) { ids.put(r,code.size()); code.add(r); } }
         boolean monitor=code.stream().anyMatch(n->n.getOpcode()==MONITORENTER);
         List<Vertex> vertices=new ArrayList<>();
         for(AbstractInsnNode n:code) {
             List<Edge> edges=new ArrayList<>(); int op=n.getOpcode();
             if(n instanceof JumpInsnNode j) {
-                edges.add(edge("jump",j.label,ids));
-                if(op!=GOTO) edges.add(edge("fall",n.getNext(),ids));
+                edges.add(edge("jump",j.label,ids,collapseGoto));
+                if(op!=GOTO) edges.add(edge("fall",n.getNext(),ids,collapseGoto));
             } else if(n instanceof TableSwitchInsnNode t) {
-                edges.add(edge("default",t.dflt,ids));
-                for(int i=0;i<t.labels.size();i++) edges.add(edge("case:"+(t.min+i),t.labels.get(i),ids));
+                edges.add(edge("default",t.dflt,ids,collapseGoto));
+                for(int i=0;i<t.labels.size();i++) edges.add(edge("case:"+(t.min+i),t.labels.get(i),ids,collapseGoto));
             } else if(n instanceof LookupSwitchInsnNode t) {
-                edges.add(edge("default",t.dflt,ids));
-                for(int i=0;i<t.labels.size();i++) edges.add(edge("case:"+t.keys.get(i),t.labels.get(i),ids));
-            } else if(op!=ATHROW && !(op>=IRETURN && op<=RETURN)) edges.add(edge("fall",n.getNext(),ids));
+                edges.add(edge("default",t.dflt,ids,collapseGoto));
+                for(int i=0;i<t.labels.size();i++) edges.add(edge("case:"+t.keys.get(i),t.labels.get(i),ids,collapseGoto));
+            } else if(op!=ATHROW && !(op>=IRETURN && op<=RETURN)) edges.add(edge("fall",n.getNext(),ids,collapseGoto));
             if(!Normalizations.harmless(n,monitor)) {
                 for(TryCatchBlockNode t:m.tryCatchBlocks) if(positions.get(n)>=positions.get(t.start) && positions.get(n)<positions.get(t.end))
-                    edges.add(edge("catch:"+ClassComparer.graphCatch(t,jar),t.handler,ids));
+                    edges.add(edge("catch:"+ClassComparer.graphCatch(t,jar),t.handler,ids,collapseGoto));
             }
             vertices.add(new Vertex(n,ClassComparer.graphInsn(n,jar),edges));
         }
-        return new Graph(vertices,code.isEmpty() ? -1 : ids.get(resolve(m.instructions.getFirst())));
+        Map<Integer,List<Set<Integer>>> inputs = new HashMap<>();
+        if (transport != null) for (AbstractInsnNode n : code) {
+            List<Set<Integer>> operands=new ArrayList<>();
+            for (var value : transport.inputs().getOrDefault(n,List.of())) {
+                if(value.insns.isEmpty()) throw new IllegalArgumentException("unresolved transport operand");
+                Set<Integer> producers=new HashSet<>();
+                for(AbstractInsnNode producer:value.insns) {
+                    AbstractInsnNode resolved=producer instanceof LabelNode ? (collapseGoto?resolve(producer):FourthNormalizations.next(producer)) : producer;
+                    Integer id=ids.get(resolved);
+                    if(id==null) throw new IllegalArgumentException("removed transport producer");
+                    producers.add(producer instanceof LabelNode ? -id-2 : id);
+                }
+                operands.add(producers);
+            }
+            inputs.put(ids.get(n),operands);
+        }
+        Map<Set<Integer>,Integer> copies=new HashMap<>();
+        if(transport!=null)for(var entry:transport.copyCounts().entrySet()) {
+            Set<Integer> producers=new HashSet<>();
+            for(AbstractInsnNode producer:entry.getKey()) {
+                AbstractInsnNode resolved=producer instanceof LabelNode ? (collapseGoto?resolve(producer):FourthNormalizations.next(producer)) : producer;
+                Integer id=ids.get(resolved);
+                if(id==null)throw new IllegalArgumentException("unresolved copy producer");
+                producers.add(producer instanceof LabelNode ? -id-2 : id);
+            }
+            if(producers.isEmpty())throw new IllegalArgumentException("unknown copy producer");
+            copies.merge(producers,entry.getValue(),Integer::sum);
+        }
+        return new Graph(vertices,code.isEmpty() ? -1 : ids.get(collapseGoto?resolve(m.instructions.getFirst()):FourthNormalizations.next(m.instructions.getFirst())),inputs,copies);
     }
     private static Edge edge(String kind, AbstractInsnNode n, Map<AbstractInsnNode,Integer> ids) {
-        AbstractInsnNode r=resolve(n); return new Edge(kind,r==null ? -1 : ids.get(r));
+        return edge(kind,n,ids,true);
+    }
+    private static Edge edge(String kind, AbstractInsnNode n, Map<AbstractInsnNode,Integer> ids, boolean collapseGoto) {
+        AbstractInsnNode r=collapseGoto?resolve(n):FourthNormalizations.next(n); return new Edge(kind,r==null ? -1 : ids.get(r));
     }
 }
