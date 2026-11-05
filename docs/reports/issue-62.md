@@ -1,144 +1,69 @@
-# Issue #62／T020-B01：已整合 #186，等待 #203 合併後正式重驗
+# Issue #62／T020-B01：#203 合併後全批驗證通過
 
 ## 結論
 
-**B01 正式驗收尚未通過；本輪已整合最新 main，但 #203 的 PR #215 仍未合併，不能完成審查要求的正式重驗。** 依[最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664714583)，Java 不改。前輪正式 CLI 結果仍為 **20 SAME、1 SAME_EFFECTS、0 SAME_PATHS、1 DIFF**；這是保留的舊證據，本輪未重新編譯或執行語意比對。
+**B01 的 17 份 staged Java 重新編譯、轉換後，全部 22 個 entry 通過本批核准語意驗收：20 SAME、1 SAME_EFFECTS、1 LAMBDA_PAIRED_BY_CALLSITE；DIFF、ONLY_LEFT、ONLY_RIGHT、missing、extra 全為 0。** 比對時間 `2026-11-05T21:00:36Z`（臺北 2026-11-06）。本輪 Java 不改；前輪的 1 DIFF 已由 #203 正式 CLI 的呼叫點配對解決。
 
-## 本輪做了什麼／怎麼驗證（已驗證）
+## 做了什麼（已驗證）
 
-- 在既有 `task/62`，由 `574c188d882968e1f4cb9cd0e249a75cd001e0b8` 合併 `origin/main` 的 `295c19c14b06c73fdb4dc1d8e151dbd84e217bce`；合併提交為 `0b39c6c215e28660cadb0255988db1e3fa97a45e`。未 checkout 或建立分支。
-- 合併唯一衝突在 `docs/combat-merge/effects-approved.txt`：保留 main 原有 A04 條目及本分支原有 B01 Forest 條目；相對 main 僅多出既有 B01 核准行，未擴大豁免。
-- 查核時間 **2026-11-05T19:12:17.4534620Z（臺北 2026-11-06 03:12）**：#186 的 [PR #202](https://github.com/chaoren0418-arch/lito-launcher-server/pull/202) 已於 `2026-11-05T17:21:31Z` 合併，merge commit 為 `bccc2cb746e408bc8a496cf46c224d61616b9076`，已包含在本次 main。
-- #203 的 [PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 為 `OPEN`，`mergedAt=null`、`mergeCommit=null`，head 為 `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe`；#203 為 `OPEN / task:review / gate:pass`。`git merge-base --is-ancestor origin/task/203 origin/main` 退出碼 1。沒有把未合併工具帶入本分支。
-- #62 本文仍為 `depends_on: [102, 132, 135, 153, 166, 174, 176]`，未補上主控指定的 186、203；這是尚待主控／調度器處理的派工依賴缺口。本輪不更改工作流佇列或主控裁定。
-- `git diff --name-only 574c188 HEAD -- lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged` 無輸出；17 個 B01 Java 均維持原 bytes。批次表為 17 個外層類／22 entries，17 個指定標頭齊全。
-- `git diff --name-only origin/main...HEAD` 恰為本批 19 檔：17 個 staged Java、此報告及 effects 核准清單。`docs/REPORT.md` 與 main 相同，沒有本任務編輯。工具變更全部來自已合併 main。
-- 本輪 `git diff --check` 通過。全 PR 預設 whitespace 檢查會把既有 Forest／Summon Java 的 CRLF 視為 trailing whitespace；設定 `core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol` 後全 PR 檢查退出碼 0。依「Java 不改」保留既有行尾，未把全 PR 預設檢查宣稱為通過。
+- 工作目錄 `D:/lineage開發/3-lito開發/scratch/wt/task-62`，沿用 `task/62`，未 checkout／建立分支。
+- 開始 HEAD 為 `e01c6b9`；fetch 後將 main `567b0cb7762864b10ef876f90749e74a66e9bb01` 合入，合併提交 `68504262d2ec921285ab329df7ac28a55539f34b`，沒有衝突。
+- [#203 的 PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 已於 `2026-11-05T20:19:36Z` 合併，merge commit `5ae1eac20d75b75b2bf9fbf302e8d878a32c62bd`；`git merge-base --is-ancestor` 確認已在本次 HEAD。
+- 依[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6662268131)，逐一以 bytes 核對 17 份 B01 Java 與 `e01c6b9`、`574c188` 完全相同，全部保留指定 DECOMPILED 標頭。
+- 保留 DollAccepted 讀取方式、TargetLifecycle null 檢查與 throws、Wind varargs、Forest 既有 effects 核准，以及 Draft 的 `@AsRecord`。本輪沒有擴大核准清單。
+- 本輪自行修改的受追蹤檔案只有本報告；其他合併內容均來自 main。`docs/REPORT.md` 與 main 相同，未由本任務編輯。整個 PR 相對 main 仍為原有 17 份 B01 Java、Forest 核准行與本報告。
 
-### 本輪依賴查核原始收據
+## 怎麼驗證（已驗證）
 
-原始 argv、退出碼及完整 GitHub 回應保存在 `scratch/issue-62/dependency-check-current.json`，SHA-256：`71891c38e5e93f2af4d14bd9c8af7b7c3a5a923c15c2c7a6f2ce0c790c146f37`。四筆 `gh` 查詢退出碼均為 0。
+使用 Microsoft OpenJDK 17.0.17、ASM／asm-tree／asm-analysis 9.7。註解獨立編譯，僅將 B01 的 17 份 staged Java 傳給 javac，classpath 順序為候選、正式、AsRecord 註解、lib。轉換器輸出 `scanned=22 converted=1`，Draft 驗證為 SAME。語意工具由合併後原始碼重新編譯到全新的 `target/issue-62/current-203/tool-classes`，不使用先前編譯的工具 class。
+
+對 class 目錄與打包 JAR 各自核對完整 entry 集合，均精確等於 B01.verify_entries 的 22 筆；JAR 非目錄 entry 沒有額外資源。另檢查 JSON 的 22 個類別狀態全部屬允許集合、methodDiffs 為空、missingLeft／extraLeft 均為空；不以 CLI 退出碼 0 單獨判定通過。
+
+### 編譯與語意比對命令
+
+下列是本輪命令的 PowerShell 等價表示。實際執行器為 `scratch/issue-62/verify-current.py`，以 Python subprocess 傳入 argv；每步 cwd、完整 argv、退出碼記在 `scratch/issue-62/current/commands.jsonl`。臨時腳本與產物不進 git。
 
 ```powershell
-gh pr view 215 --repo chaoren0418-arch/lito-launcher-server --json state,mergedAt,mergeCommit,headRefOid,url
-gh pr view 202 --repo chaoren0418-arch/lito-launcher-server --json state,mergedAt,mergeCommit,url
-gh issue view 203 --repo chaoren0418-arch/lito-launcher-server --json state,labels
-gh issue view 62 --repo chaoren0418-arch/lito-launcher-server --json body,labels
+$ROOT = (Get-Location).Path # task-62 worktree 根目錄
+$SERVER = Join-Path $ROOT 'lito伺服器/LiTo381-Server'
+$JDK = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot'
+$PYTHON = 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe'
+$OUT = Join-Path $SERVER 'target/issue-62/current-203'
+$WORK = Join-Path $ROOT 'scratch/issue-62/current'
+$batch = (Get-Content -Raw -Encoding UTF8 docs/combat-merge/batches.json | ConvertFrom-Json).batches | Where-Object id -eq B01
+$sources = @($batch.classes | ForEach-Object { Join-Path $SERVER "merge-inputs/50635f7e/staged/local/lito381/server/$_.java" })
+$annotation = Join-Path $SERVER 'target/issue-62/annotation'
+$cp = "$SERVER/reference/candidate-50635f7e.jar;$SERVER/reference/base-0.6.71.jar;$annotation;$SERVER/lib/*"
+# 輸出目錄先建立；重跑請選新的 OUT，避免沿用舊 class。
+& "$JDK/bin/javac.exe" --release 17 -encoding UTF-8 -d $annotation "$SERVER/src/main/java/local/lito381/server/AsRecord.java"
+& "$JDK/bin/javac.exe" --release 17 -encoding UTF-8 -cp $cp -d "$OUT/classes" @sources
+$env:JAVA_HOME = $JDK
+$env:AS_RECORD_MAVEN_REPO = 'D:/dev-cache/maven/repository'
+& $PYTHON -B "$SERVER/tools/as-record/as_record.py" "$OUT/classes"
+& "$JDK/bin/jar.exe" --create --file "$OUT/staged.jar" --no-manifest -C "$OUT/classes" .
+$asm = 'D:/dev-cache/maven/repository/org/ow2/asm/asm/9.7/asm-9.7.jar;D:/dev-cache/maven/repository/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar;' + "$SERVER/target/issue-62/dependency/asm-analysis-9.7.jar"
+$toolSources = @(Get-ChildItem "$SERVER/tools/semantic-diff/src/main/java" -Recurse -Filter '*.java' | ForEach-Object FullName)
+& "$JDK/bin/javac.exe" --release 17 -encoding UTF-8 -cp $asm -d "$OUT/tool-classes" @toolSources
+# entries.txt 精確取 batch.verify_entries；兩份核准清單內容見下節。
+& "$JDK/bin/java.exe" -Dfile.encoding=UTF-8 -cp "$OUT/tool-classes;$asm" local.lito381.semanticdiff.SemanticDiff `
+  --left "$OUT/staged.jar" --right "$SERVER/reference/candidate-50635f7e.jar" `
+  --left-classpath "$SERVER/reference/candidate-50635f7e.jar" --classes "$WORK/entries.txt" `
+  --effects-methods "$WORK/effects-approved.txt" --exceptions-exempt "$WORK/exceptions-exempt.txt" `
+  --json "$WORK/current-203.json" --md "$WORK/current-203.md"
 ```
 
-PR 原始輸出：
+### 核准清單
 
-```json
-{"headRefOid":"1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe","mergeCommit":null,"mergedAt":null,"state":"OPEN","url":"https://github.com/chaoren0418-arch/lito-launcher-server/pull/215"}
-{"mergeCommit":{"oid":"bccc2cb746e408bc8a496cf46c224d61616b9076"},"mergedAt":"2026-11-05T17:21:31Z","state":"MERGED","url":"https://github.com/chaoren0418-arch/lito-launcher-server/pull/202"}
-```
-
-以下編譯命令、日誌、診斷、雜湊及附錄 A–E 均是 **`e275340` 前輪原始證據**，本輪繼續保留。附錄 E 為前輪審查補齊的 Forest 完整差異，不能替代 #203 合併後的正式全批重驗。直接診斷的 87 條路徑相同，也不能替代正式 CLI 通過。
-
-## 前輪做了什麼（已驗證）
-
-工作目錄為 `D:\lineage開發\3-lito開發\scratch\wt\task-62`，使用既有 `task/62`。開始時 HEAD 為 `63da8a2`，fetch 後合併 `origin/main` 的 `c72453957ebe47e00ad024e874bbe31859457799`，合併提交為 `151c5e959232e73df2f00ce4f61ab5f798666e48`。工具包含 #174 與 #176 第二次修正。fetch／merge 經提權更新共用 Git 中繼資料。
-
-| 檔案 | 本輪修改 |
-|---|---|
-| `NativeSourceDollAccepted.java` | `binding()` 使用獨立的 `plan.caster` 讀取，actor 引數內再賦值給 `casterActor`，供 `life()` 共用。target 同樣處理。 |
-| `NativeWeaponBreakTargetLifecycle.java` | 兩個 monitor 分支均先通過 current 與 player 短路條件，再取得 targets stream、呼叫 `Objects.requireNonNull(context)`、建立 proof lambda 與執行 allMatch，最後檢查 npc。保留 `throws IOException` 並更新核准註解。 |
-| `NativeCompanionWindAction.java` | `publish` 恢復一般 varargs，完整 stream/filter 運算放在第一個實參，讓 javac 的陣列配置維持候選順序。 |
-| `docs/reports/issue-62.md` | 更新為本輪驗證、完整剩餘差異及下一棒提示。 |
-
-本輪自行選定的 Java 表達方式包括 WeaponBreak 的條件區塊與 stream 區域變數，以及 Wind 將 stream 內嵌並移除已被 `c.players` 取用證明多餘的 null 檢查。Wind 正式驗證為 SAME。WeaponBreak 的順序、短路與 monitor 範圍以候選 javap 核對，直接逐方法診斷詳見下節。
-
-17 個外層類均重新用 CFR 0.152 反編譯候選作為核對，17 次退出碼皆為 0。全部 staged 檔均保有指定 DECOMPILED 標頭。`NativeSourceCubePlacement$Draft` 維持 `@AsRecord`，轉換後為 SAME。
-
-## 前輪怎麼驗證（已驗證）
-
-使用 Microsoft JDK 17.0.17，重新編譯 main 中 semantic-diff 原始碼。註解獨立編譯，staged 只編譯 B01 的 17 個 Java，接著執行 `tools/as-record/as_record.py` CLI，最後打包 22 個 entry 進驗收 JAR。逐一核對 class 目錄與 JAR entry 都精確等於 `B01.verify_entries`。
-
-所有正規化與逐路徑比較均使用預設啟用狀態。左側 classpath 指向候選。逐檔裁切 effects、extra-methods、metadata-exempt、exceptions-exempt、access-widen、layout、deviations 核准清單至 B01，只命中以下兩筆。
-
-- `effects-approved.txt` 既有的 `NativeCompanionForestArea#apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V`。
-- `exceptions-exempt.txt` 既有的 `NativeWeaponBreakTargetLifecycle#captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z`。
-
-本輪核准清單採既有條目。`SAME_LAYOUT`、`DEVIATION`、`ORPHAN_IGNORED` 均為 0。CLI 退出碼為 0，同時明確回報 DIFF=1。
-
-### 固定輸入及產物 SHA-256
-
-| 路徑 | SHA-256 |
-|---|---|
-| `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| `lito伺服器/LiTo381-Server/target/issue-62/final-174-176/staged.jar` | `e05d3f432413ecc65aa3f4f5a1d68b196de634f954935230763b443bfa92501f` |
-| `lito伺服器/LiTo381-Server/target/issue-62/dependency/cfr-0.152.jar` | `f686e8f3ded377d7bc87d216a90e9e9512df4156e75b06c655a16648ae8765b2` |
-
-### 編譯、轉換與語意工具原始輸出
-
-#### `jdk.log`
+以 B01.verify_entries 裁切所有適用核准清單，只有以下兩筆命中。extra-methods、metadata-exempt、access-widen、layout、deviations 均未啟用；預設正規化與 #203 呼叫點配對保持啟用。Forest 條目沿用本分支既有核准，exceptions-exempt 只豁免指定方法的 Exceptions 屬性。
 
 ```text
-openjdk version "17.0.17" 2025-10-21 LTS
-
-OpenJDK Runtime Environment Microsoft-12574423 (build 17.0.17+10-LTS)
-
-OpenJDK 64-Bit Server VM Microsoft-12574423 (build 17.0.17+10-LTS, mixed mode, sharing)
-
-
-exit=0
-```
-
-#### `final-174-176-annotation.log`
-
-```text
-exit=0
-```
-
-#### `final-174-176-javac.log`
-
-```text
-Note: Some input files use unchecked or unsafe operations.
-
-Note: Recompile with -Xlint:unchecked for details.
-
-
-exit=0
-```
-
-#### `final-174-176-as-record.log`
-
-```text
-as-record: scanned=22 converted=1
-
-
-exit=0
-```
-
-#### `final-174-176-jar.log`
-
-```text
-exit=0
-```
-
-#### `final-174-176-tool.log`
-
-```text
-exit=0
-```
-
-#### `final-174-176-semantic.log`
-
-```text
-SUMMARY SAME=20 SAME_EFFECTS=1 SAME_PATHS=0 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=1 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
-
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-62\scratch\issue-62\final-174-176.json
-
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-62\scratch\issue-62\final-174-176.md
-
-
-exit=0
+local/lito381/server/NativeCompanionForestArea#apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V # batch: B01, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/79
+local/lito381/server/NativeWeaponBreakTargetLifecycle#captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6654588607
 ```
 
 ### 全部 22 個 entry
 
-共同前綴為 `local/lito381/server/`。
+共同前綴 `local/lito381/server/`。
 
 | Entry | 狀態 |
 |---|---|
@@ -163,1293 +88,112 @@ exit=0
 | `NativeSourcePendingAdmission.class` | SAME |
 | `NativeSummonTerminalLifecycle.class` | SAME |
 | `NativeWeaponBreakBattleCompanion.class` | SAME |
-| `NativeWeaponBreakTargetLifecycle.class` | DIFF |
+| `NativeWeaponBreakTargetLifecycle.class` | LAMBDA_PAIRED_BY_CALLSITE |
 
-### 剩餘 DIFF 的診斷
+SAME_PATHS、SAME_CFG、SAME_LAYOUT、DEVIATION、ORPHAN_IGNORED、VISIBILITY_BRIDGE 的類別計數均為 0。呼叫點配對的方法數為 1；其本體走 SAME_PATHS，不應把此方法證明誤記為另一個類別。
 
-正式 CLI 的輸出 Runnable 左側為 `lambda$captureOutput$8`，右側為 `lambda$captureOutput$6`，兩者完整描述子相同。`JarIndex.remapMethod` 使用 `ClassComparer.methodIdentity` 的內容雜湊作為 lambda 名稱，identity 包含線性指令及例外涵蓋形狀。補上指定 null 檢查所需的條件區塊與暫存，造成 identity 不同，三層 lambda 及其上層 captureOutput handle 因而連帶不相同。
+### TargetLifecycle 正式配對證據
 
-另外在 scratch 建立 package-local 診斷程式，從同一對 JAR 以完整描述子取出輸出 Runnable，直接呼叫現有 `PathComparison.compare`，回傳 same=true、87 條路徑相同。此診斷只讀 class metadata 與 ASM 指令。正式驗收仍保留 DIFF=1。
+左側方法：`lambda$captureOutput$8(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V`。
 
 ```text
-LEFT lambda$captureOutput$8(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V
+lambda$captureOutput$6(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V; MethodResult[status=SAME_PATHS, detail=path multisets equal (87)]
+```
 
-RIGHT lambda$captureOutput$6(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V
+正式 CLI 現在完成 `$8` 與 `$6` 的呼叫點配對，完整方法比較確認 87 條路徑多重集合相同，整類其餘比較亦通過。沒有未解 DIFF 可附；舊差異診斷保留在 Git 歷史，不再混入本輪結果。
 
-IDENTITY_EQUAL false
+## 原始輸出
 
-DIRECT_PATHS Result[same=true, reason=path multisets equal (87)]
+### `jdk.log`
+
+```text
+openjdk version "17.0.17" 2025-10-21 LTS
+
+OpenJDK Runtime Environment Microsoft-12574423 (build 17.0.17+10-LTS)
+
+OpenJDK 64-Bit Server VM Microsoft-12574423 (build 17.0.17+10-LTS, mixed mode, sharing)
 
 
 exit=0
 ```
 
-#### 正式 CLI 的逐方法診斷
-
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$6(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_RIGHT
+### `current-203-annotation.log`
 
 ```text
-only right
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$7(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_RIGHT
+### `current-203-javac.log`
 
 ```text
-only right
+Note: Some input files use unchecked or unsafe operations.
+
+Note: Recompile with -Xlint:unchecked for details.
+
+
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$8(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_RIGHT
+### `current-203-as-record.log`
 
 ```text
-only right
+as-record: scanned=22 converted=1
+
+
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z` — DIFF
+### `current-203-jar.log`
 
 ```text
-method captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z insn[133]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$…; path event multisets differ (left=156, right=156)
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$10(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_LEFT
+### `current-203-tool.log`
 
 ```text
-only left
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$8(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_LEFT
+### `current-203-semantic.log`
 
 ```text
-only left
+SUMMARY SAME=20 SAME_EFFECTS=1 SAME_PATHS=0 ORPHAN_IGNORED=0 SAME_CFG=0 LAMBDA_PAIRED_BY_CALLSITE=1 VISIBILITY_BRIDGE=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=0 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
+
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-62\scratch\issue-62\current\current-203.json
+
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-62\scratch\issue-62\current\current-203.md
+
+
+exit=0
 ```
 
-### `local/lito381/server/NativeWeaponBreakTargetLifecycle#lambda$captureOutput$9(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V` — ONLY_LEFT
+## 產出路徑與雜湊
 
-```text
-only left
-```
+- 交付報告：`docs/reports/issue-62.md`。
+- 17 份 staged Java：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，本輪未改。
+- 原始證據：`scratch/issue-62/current/` 的 JSON、Markdown、log、argv 收據及 `validation.json`（含 17 份來源 SHA-256、entry 完整性與依賴查核）。
+- 隔離建置產物：`lito伺服器/LiTo381-Server/target/issue-62/current-203/`；沒有部署或打包遊戲客戶端。
 
+| 路徑 | SHA-256 |
+|---|---|
+| `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
+| `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| `lito伺服器/LiTo381-Server/target/issue-62/current-203/staged.jar` | `23e2811aa37aefd09ff9047b56c55569777c789730f10be6e4d9065e4401bfa4` |
+| `scratch/issue-62/current/current-203.json` | `89945161e15e936b6dcdecc2c8de6ca6c41e641930cbf8ec1be352819ef17cb7` |
+| `scratch/issue-62/current/validation.json` | `1c08edd7af71a2fde9fec778a5fbede6181d88c613de76c8b859b54d525dc2b4` |
+| `scratch/issue-62/current/commands.jsonl` | `4ef777c6939ebfb4fe8bb258512b4be27a590f6420ff341c5b76c872705516e3` |
 
 ## 推測
 
-主控預期 #203 的 lambda 呼叫點配對修正可讓最後的 WeaponBreak DIFF 歸零；尚未在已合併 main 上正式重驗，不能視為已證實。
+無需以推測補足本批驗收。SAME_EFFECTS 仍是既有核准的副作用摘要比對，不單獨證明參數資料流或分支目的地等價；本報告僅宣告通過主控指定的核准模式。
 
-## 待驗證／未完成事項
+## 未驗證什麼／待驗證
 
-- 審查 P1 尚未解除：等待 #203／PR #215 合併後，再整合 main、重新編譯 B01 全部 17 檔、僅做核准 AsRecord 轉換、帶入核准 effects／exceptions 與其他適用清單，正式驗證全部 22 entries。
-- 通過條件仍為 22 entries 全部 SAME／SAME_EFFECTS／SAME_PATHS；DIFF／ONLY_LEFT／ONLY_RIGHT=0，`missingLeft`／`extraLeft` 為空。須將新命令、原始輸出、雜湊與依賴狀態同步至本報告及 PR #79。
-- 本輪未重跑 javac／AsRecord／semantic-diff，沒有新的編譯或全批語意通過證據。單元測試與行為回歸依任務留待 B-land；未啟動伺服器、登入器、遊戲或連 DB。
-
-## 產出路徑
-
-- 正式報告：`docs/reports/issue-62.md`。
-- 本輪依賴查詢：`scratch/issue-62/dependency-check-current.json`；Issue 最新裁定快照：`scratch/issue-62/current-issue.json`。
-- 17 個 B01 來源：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，本輪保持不變。
-- 前輪建置證據：`lito伺服器/LiTo381-Server/target/issue-62/final-174-176/`。
-- 前輪正式工具輸出：`scratch/issue-62/final-174-176.{json,md}`；完整正規化輸出在 `scratch/issue-62/final-174-176/{left,right}/`。
-- 前輪重跑與診斷腳本：`scratch/issue-62/verify.py`、`decompile.py`、`dump.py`、`probe-weapon-paths.py`、`ProbeWeaponPaths.java`。命令與完整證據保留於下列附錄。
+- 依設計 §6-5，本批單元測試與行為回歸不適用，留待 B-land 統一處理。
+- 未執行整個伺服器 Maven 建置、正式程序、登入器、遊戲或真機驗收；未讀機密設定、封存、releases，未連 DB。
+- #203 工具自測已有該任務的合併證據，本輪僅重新編譯工具並驗證 B01，不把上游自測列作本輪執行。
 
 ## 給下一棒的提示
 
-主控／調度器先依[既有裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664714583)補上 `depends_on` 的 186、203，處理 attempts，並等 #203 合併後再派本機重驗。#186 已合併，不再列為未完成依賴。裁定仍是 **Java 不改、工具修正交 #203**，沒有新的 Java 問題需要再次裁定。
-
-#203 合併後，本機執行器使用既有 `task/62` 整合 main，從乾淨 target 子目錄重編 17 檔、轉換 Draft、重驗 22 entries。`captureOutput` 保留 `--exceptions-exempt`，Forest 保留既有 `--effects-methods` 與附錄 E；勿用未合併分支或局部 87 路徑診斷取代正式驗收。全批通過後交 Claude 審查，使用者合併；其後才接 B-land。
-
-## 附錄 A　實際命令收據
-
-每筆 argv 使用陣列保留完整路徑與參數。工作目錄為本 worktree 的 `lito伺服器/LiTo381-Server`，`JAVA_HOME` 為 `C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot`，`AS_RECORD_MAVEN_REPO` 為 `D:/dev-cache/maven/repository`。
-
-```json
-[
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\javac.exe",
-      "-J-Dfile.encoding=UTF-8",
-      "--release",
-      "17",
-      "-encoding",
-      "UTF-8",
-      "-d",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\annotation",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\src\\main\\java\\local\\lito381\\server\\AsRecord.java"
-    ],
-    "log": "final-174-176-annotation.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\javac.exe",
-      "-J-Dfile.encoding=UTF-8",
-      "--release",
-      "17",
-      "-encoding",
-      "UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\base-0.6.71.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\annotation;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\lib\\*",
-      "-d",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\classes",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeBlindSceneAction.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeCompanionForestArea.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeCompanionRefScene.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeCompanionWindAction.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeControlledNegativeMaterial.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativePairedCastSafety.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceBatchTerminal.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceCubePlacement.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceDollAccepted.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceDollNpc.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceDollSkills.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceDollSlow.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourceHealingCast.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSourcePendingAdmission.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeSummonTerminalLifecycle.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeWeaponBreakBattleCompanion.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\merge-inputs\\50635f7e\\staged\\local\\lito381\\server\\NativeWeaponBreakTargetLifecycle.java"
-    ],
-    "log": "final-174-176-javac.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Users\\CHAOREN\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
-      "-B",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\as-record\\as_record.py",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\classes"
-    ],
-    "log": "final-174-176-as-record.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\jar.exe",
-      "--create",
-      "--file",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\staged.jar",
-      "--no-manifest",
-      "-C",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\classes",
-      "."
-    ],
-    "log": "final-174-176-jar.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\javac.exe",
-      "-J-Dfile.encoding=UTF-8",
-      "--release",
-      "17",
-      "-encoding",
-      "UTF-8",
-      "-cp",
-      "D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "-d",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\BlockExpressions.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\ClassComparer.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\FourthNormalizations.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\JarIndex.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\LayoutComparison.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\LocalTransport.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\LocalWebs.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\NonNullChecks.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\Normalizations.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\PathComparison.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\SemanticDiff.java",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\src\\main\\java\\local\\lito381\\semanticdiff\\TransportComparison.java"
-    ],
-    "log": "final-174-176-tool.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
-      "-Dfile.encoding=UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "local.lito381.semanticdiff.SemanticDiff",
-      "--left",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\staged.jar",
-      "--right",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar",
-      "--left-classpath",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar",
-      "--classes",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\entries.txt",
-      "--json",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\final-174-176.json",
-      "--md",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\final-174-176.md",
-      "--effects-methods",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\effects-approved.txt",
-      "--exceptions-exempt",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\exceptions-exempt.txt"
-    ],
-    "log": "final-174-176-semantic.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\javac.exe",
-      "-J-Dfile.encoding=UTF-8",
-      "--release",
-      "17",
-      "-encoding",
-      "UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "-d",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dump-tool",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\DumpNormalized.java"
-    ],
-    "log": "final-174-176-dump-build.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
-      "-Dfile.encoding=UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dump-tool;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "local.lito381.semanticdiff.DumpNormalized",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\staged.jar",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\entries.txt",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\final-174-176\\left",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar"
-    ],
-    "log": "final-174-176-dump-left.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
-      "-Dfile.encoding=UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dump-tool;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "local.lito381.semanticdiff.DumpNormalized",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\entries.txt",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\final-174-176\\right",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar"
-    ],
-    "log": "final-174-176-dump-right.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\javac.exe",
-      "-J-Dfile.encoding=UTF-8",
-      "--release",
-      "17",
-      "-encoding",
-      "UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "-d",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\probe-weapon-paths",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\ProbeWeaponPaths.java"
-    ],
-    "log": "probe-weapon-paths-build.log",
-    "exit": 0
-  },
-  {
-    "cwd": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server",
-    "argv": [
-      "C:\\Program Files\\Microsoft\\jdk-17.0.17.10-hotspot\\bin\\java.exe",
-      "-Dfile.encoding=UTF-8",
-      "-cp",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\probe-weapon-paths;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\tools\\semantic-diff\\target\\classes;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm\\9.7\\asm-9.7.jar;D:\\dev-cache\\maven\\repository\\org\\ow2\\asm\\asm-tree\\9.7\\asm-tree-9.7.jar;D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\dependency\\asm-analysis-9.7.jar",
-      "local.lito381.semanticdiff.ProbeWeaponPaths",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\staged.jar",
-      "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar"
-    ],
-    "log": "probe-weapon-paths.log",
-    "exit": 0
-  }
-]
-```
-
-## 附錄 B　直接逐方法診斷程式
-
-```java
-package local.lito381.semanticdiff;
-
-import java.nio.file.Path;
-import org.objectweb.asm.tree.MethodNode;
-
-public final class ProbeWeaponPaths {
-    public static void main(String[] args) throws Exception {
-        JarIndex left = JarIndex.load(Path.of(args[0]));
-        JarIndex right = JarIndex.load(Path.of(args[1]));
-        left.addClasspath(Path.of(args[1]));
-        String owner = "local/lito381/server/NativeWeaponBreakTargetLifecycle";
-        String descriptor = "(Llocal/lito381/server/NativeAreaMaterialAction$Context;"
-                + "Llocal/lito381/server/NativePlayerCommit$Binding;"
-                + "Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V";
-        MethodNode leftMethod = left.readTree(owner).methods.stream()
-                .filter(m -> m.name.startsWith("lambda$captureOutput$") && m.desc.equals(descriptor))
-                .findFirst().orElseThrow();
-        MethodNode rightMethod = right.readTree(owner).methods.stream()
-                .filter(m -> m.name.startsWith("lambda$captureOutput$") && m.desc.equals(descriptor))
-                .findFirst().orElseThrow();
-        System.out.println("LEFT " + leftMethod.name + leftMethod.desc);
-        System.out.println("RIGHT " + rightMethod.name + rightMethod.desc);
-        System.out.println("IDENTITY_EQUAL " + ClassComparer.methodIdentity(leftMethod, left)
-                .equals(ClassComparer.methodIdentity(rightMethod, right)));
-        System.out.println("DIRECT_PATHS " + PathComparison.compare(leftMethod, rightMethod, left, right));
-    }
-}
-```
-
-## 附錄 C　剩餘類別的完整正規化差異
-
-方向為 staged → candidate。使用本輪工具的 `readTree`、`remapMethod`、`instructions` 與 `tryCatch` 產生，所有差異 hunk 均列出。此 raw dump 同時列出已獲豁免的 Exceptions 屬性，正式 CLI 的核准套用情形見上文及 JSON。方法依內容 hash 排序，因此 hash 改變會使方法區塊移位。
-
-```diff
---- staged/NativeWeaponBreakTargetLifecycle.txt
-+++ candidate/NativeWeaponBreakTargetLifecycle.txt
-@@ -84,7 +84,7 @@
- INVOKESTATIC local/lito381/server/NativeWeaponBreakMaterialAction.nativeTargetOriginalAdmit(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;III)Z
- IRETURN
-
--METHOD captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z access=8 signature=null exceptions=[java/io/IOException]
-+METHOD captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z access=8 signature=null exceptions=[]
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
- ALOAD 0
- ALOAD 1
-@@ -219,7 +219,7 @@
- LLOAD 10/11
- ALOAD 6
- ALOAD 2
--INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$b1b16ba1c81851b850e136c02340d6e6b57fc34a94441c794c0135a976983127(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
-+INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$56c27fca56ba29c7648e26e00cf9e56129d5daa7ffec4f35913eb3564ef061b8(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
- INVOKESTATIC local/lito381/server/NativeLightAction.deferWeaponTargetOutput(Llocal/lito381/server/NativeSelfCastAction$Task;)V
- CONST Integer:1
- IRETURN
-@@ -335,7 +335,53 @@
- CONST Integer:0
- IRETURN
-
--METHOD lambda$content$44f8379cfcb681fd08e9d82c1a2c11b532abcb7b20c3448ddfc861e902d0c53a(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[]
-+METHOD lambda$content$56c27fca56ba29c7648e26e00cf9e56129d5daa7ffec4f35913eb3564ef061b8(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[java/io/IOException]
-+annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
-+CONST Integer:1
-+ANEWARRAY java/lang/Runnable
-+ASTORE 9
-+ALOAD 0
-+ALOAD 1
-+ALOAD 0
-+ALOAD 9
-+ALOAD 2
-+ALOAD 3
-+ILOAD 4
-+LLOAD 5/6
-+ALOAD 7
-+ALOAD 8
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$d702c09cb808c472cec809e6ccae1d494c2f182dfdf1a62aef8c0710d0f4d085(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
-+INVOKESTATIC local/lito381/server/NativeSourcePlayerActionLock.run(Llocal/lito381/server/ClientSession;Ljava/lang/Runnable;)V
-+ALOAD 9
-+CONST Integer:0
-+AALOAD
-+IFNULL L23
-+ALOAD 9
-+CONST Integer:0
-+AALOAD
-+INVOKEINTERFACE java/lang/Runnable.run()V itf
-+RETURN
-+
-+METHOD lambda$content$acb8e80cffc637cf79b912c6a823ecec3d65b6daacf3ad383004c8d8b8832ad6(Llocal/lito381/server/ClientSession;ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)V access=10 signature=null exceptions=[java/io/IOException]
-+annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
-+ALOAD 0
-+CONST Integer:1
-+CONST Integer:27
-+ILOAD 1
-+ALOAD 2
-+ALOAD 0
-+ALOAD 3
-+ALOAD 4
-+LLOAD 5/6
-+ALOAD 7
-+ALOAD 8
-+ALOAD 9
-+ALOAD 10
-+INVOKEDYNAMIC run(ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$0700fe5f7bb2f9f8ee3e69ac6faf4e3e5d37d298551ee2b9b246ac8ad86490c9(ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)V, type:()V]
-+INVOKESTATIC local/lito381/server/NativeWorldMaterialPolicy.run(Llocal/lito381/server/ClientSession;ZILlocal/lito381/server/NativeSelfCastAction$Task;)V
-+RETURN
-+
-+METHOD lambda$content$d702c09cb808c472cec809e6ccae1d494c2f182dfdf1a62aef8c0710d0f4d085(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[]
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
- ALOAD 0
- ALOAD 1
-@@ -352,181 +398,9 @@
- LLOAD 6/7
- ALOAD 8
- ALOAD 9
--INVOKEDYNAMIC run(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$9275bbd215f844f866ce0d356d1b561d12a7fe5b1130367613e83a0440f0974e(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$f4ce92e0a78322eee880a1ba03c8fafb257aed9d759407f5cb5885bd716e22db(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
- INVOKESTATIC local/lito381/server/NativeRolePublication.completion(Llocal/lito381/server/ClientSession;Ljava/lang/Runnable;)Ljava/lang/Runnable;
- AASTORE
--RETURN
--
--METHOD lambda$content$9275bbd215f844f866ce0d356d1b561d12a7fe5b1130367613e83a0440f0974e(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[]
--annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
--6:[83:java/lang/Throwable  ]
--9:[83:java/lang/Throwable  ]
--12:[83:java/lang/Throwable  ]
--15:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--19:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--22:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--26:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--27:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--33:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--43:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--47:[45:java/lang/Throwable  , 83:java/lang/Throwable  ]
--49:[83:java/lang/Throwable  ]
--53:[83:java/lang/Throwable  ]
--57:[83:java/lang/Throwable  ]
--60:[83:java/lang/Throwable  ]
--64:[83:java/lang/Throwable  ]
--65:[83:java/lang/Throwable  ]
--71:[83:java/lang/Throwable  ]
--81:[83:java/lang/Throwable  ]
--85:[83:java/lang/Throwable  ]
--93:[95:java/io/IOException  ]
--ALOAD 0
--GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.hub:Llocal/lito381/server/GameHub;
--DUP
--ASTORE 9
--MONITORENTER
--ALOAD 0
--GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.population:Llocal/lito381/server/ClassicWorldMonsterPopulation;
--IFNULL L51
--ALOAD 0
--GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.population:Llocal/lito381/server/ClassicWorldMonsterPopulation;
--DUP
--ASTORE 10
--MONITORENTER
--ALOAD 1
--ALOAD 2
--INVOKESTATIC local/lito381/server/NativeSourceControlledRoleFrame.current(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;)Z
--IFEQ L40
--ALOAD 0
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.player(Llocal/lito381/server/ClientSession;)Z
--IFEQ L40
--ALOAD 3
--INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ASTORE 11
--ALOAD 11
--ALOAD 0
--INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
--INVOKEINTERFACE java/util/stream/Stream.allMatch(Ljava/util/function/Predicate;)Z itf
--IFEQ L37
--ILOAD 4
--IFEQ L35
--ALOAD 0
--LLOAD 5/6
--INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.npc(J)Z
--IFEQ L37
--CONST Integer:1
--GOTO L38
--CONST Integer:0
--ISTORE 12
--GOTO L42
--CONST Integer:0
--ISTORE 12
--ALOAD 10
--MONITOREXIT
--GOTO L50
--ASTORE 13
--ALOAD 10
--MONITOREXIT
--ALOAD 13
--ATHROW
--GOTO L80
--ALOAD 1
--ALOAD 2
--INVOKESTATIC local/lito381/server/NativeSourceControlledRoleFrame.current(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;)Z
--IFEQ L78
--ALOAD 0
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.player(Llocal/lito381/server/ClientSession;)Z
--IFEQ L78
--ALOAD 3
--INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ASTORE 14
--ALOAD 14
--ALOAD 0
--INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
--INVOKEINTERFACE java/util/stream/Stream.allMatch(Ljava/util/function/Predicate;)Z itf
--IFEQ L75
--ILOAD 4
--IFEQ L73
--ALOAD 0
--LLOAD 5/6
--INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.npc(J)Z
--IFEQ L75
--CONST Integer:1
--GOTO L76
--CONST Integer:0
--ISTORE 12
--GOTO L80
--CONST Integer:0
--ISTORE 12
--ALOAD 9
--MONITOREXIT
--GOTO L88
--ASTORE 15
--ALOAD 9
--MONITOREXIT
--ALOAD 15
--ATHROW
--ILOAD 12
--IFEQ L101
--ALOAD 2
--ALOAD 7
--ALOAD 8
--INVOKEVIRTUAL local/lito381/server/ClientSession.nativeSelfOriginalSend([BLjava/lang/String;)V
--GOTO L101
--ASTORE 16
--NEW java/io/UncheckedIOException
--DUP
--ALOAD 16
--INVOKESPECIAL java/io/UncheckedIOException.<init>(Ljava/io/IOException;)V
--ATHROW
--RETURN
--
--METHOD lambda$content$acb8e80cffc637cf79b912c6a823ecec3d65b6daacf3ad383004c8d8b8832ad6(Llocal/lito381/server/ClientSession;ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)V access=10 signature=null exceptions=[java/io/IOException]
--annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
--ALOAD 0
--CONST Integer:1
--CONST Integer:27
--ILOAD 1
--ALOAD 2
--ALOAD 0
--ALOAD 3
--ALOAD 4
--LLOAD 5/6
--ALOAD 7
--ALOAD 8
--ALOAD 9
--ALOAD 10
--INVOKEDYNAMIC run(ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeSelfCastAction$Task; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$0700fe5f7bb2f9f8ee3e69ac6faf4e3e5d37d298551ee2b9b246ac8ad86490c9(ZLlocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/GameHub;JLjava/lang/Object;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/ClientSession;)V, type:()V]
--INVOKESTATIC local/lito381/server/NativeWorldMaterialPolicy.run(Llocal/lito381/server/ClientSession;ZILlocal/lito381/server/NativeSelfCastAction$Task;)V
--RETURN
--
--METHOD lambda$content$b1b16ba1c81851b850e136c02340d6e6b57fc34a94441c794c0135a976983127(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[java/io/IOException]
--annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
--CONST Integer:1
--ANEWARRAY java/lang/Runnable
--ASTORE 9
--ALOAD 0
--ALOAD 1
--ALOAD 0
--ALOAD 9
--ALOAD 2
--ALOAD 3
--ILOAD 4
--LLOAD 5/6
--ALOAD 7
--ALOAD 8
--INVOKEDYNAMIC run(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H6 local/lito381/server/NativeWeaponBreakTargetLifecycle.lambda$content$44f8379cfcb681fd08e9d82c1a2c11b532abcb7b20c3448ddfc861e902d0c53a(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V, type:()V]
--INVOKESTATIC local/lito381/server/NativeSourcePlayerActionLock.run(Llocal/lito381/server/ClientSession;Ljava/lang/Runnable;)V
--ALOAD 9
--CONST Integer:0
--AALOAD
--IFNULL L23
--ALOAD 9
--CONST Integer:0
--AALOAD
--INVOKEINTERFACE java/lang/Runnable.run()V itf
- RETURN
-
- METHOD lambda$content$df4a7f0c1090897fcdff50781c314dadb3052d6407d81bb25cda81b2f17b3871(Llocal/lito381/server/NativeAreaMaterialAction$Context;ZLlocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$WeaponBreakSpell;Llocal/lito381/server/NativeAreaMaterialAction$Npc;Llocal/lito381/server/ClientSession;Llocal/lito381/server/SourceNpcPhysicalStats;)V access=10 signature=null exceptions=[java/io/IOException]
-@@ -579,6 +453,122 @@
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- INVOKESTATIC local/lito381/server/CombatAccess.set(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V
- ALOAD 8
-+ATHROW
-+RETURN
-+
-+METHOD lambda$content$f4ce92e0a78322eee880a1ba03c8fafb257aed9d759407f5cb5885bd716e22db(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V access=10 signature=null exceptions=[]
-+annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
-+6:[73:java/lang/Throwable  ]
-+9:[73:java/lang/Throwable  ]
-+12:[73:java/lang/Throwable  ]
-+15:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+19:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+22:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+24:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+25:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+31:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+38:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+42:[40:java/lang/Throwable  , 73:java/lang/Throwable  ]
-+44:[73:java/lang/Throwable  ]
-+48:[73:java/lang/Throwable  ]
-+52:[73:java/lang/Throwable  ]
-+55:[73:java/lang/Throwable  ]
-+57:[73:java/lang/Throwable  ]
-+58:[73:java/lang/Throwable  ]
-+64:[73:java/lang/Throwable  ]
-+71:[73:java/lang/Throwable  ]
-+75:[73:java/lang/Throwable  ]
-+83:[85:java/io/IOException  ]
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.hub:Llocal/lito381/server/GameHub;
-+DUP
-+ASTORE 9
-+MONITORENTER
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.population:Llocal/lito381/server/ClassicWorldMonsterPopulation;
-+IFNULL L46
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.population:Llocal/lito381/server/ClassicWorldMonsterPopulation;
-+DUP
-+ASTORE 10
-+MONITORENTER
-+ALOAD 1
-+ALOAD 2
-+INVOKESTATIC local/lito381/server/NativeSourceControlledRoleFrame.current(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;)Z
-+IFEQ L35
-+ALOAD 0
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.player(Llocal/lito381/server/ClientSession;)Z
-+IFEQ L35
-+ALOAD 3
-+INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
-+ALOAD 0
-+INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
-+INVOKEINTERFACE java/util/stream/Stream.allMatch(Ljava/util/function/Predicate;)Z itf
-+IFEQ L35
-+ILOAD 4
-+IFEQ L33
-+ALOAD 0
-+LLOAD 5/6
-+INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.npc(J)Z
-+IFEQ L35
-+CONST Integer:1
-+GOTO L36
-+CONST Integer:0
-+ISTORE 11
-+ALOAD 10
-+MONITOREXIT
-+GOTO L45
-+ASTORE 12
-+ALOAD 10
-+MONITOREXIT
-+ALOAD 12
-+ATHROW
-+GOTO L70
-+ALOAD 1
-+ALOAD 2
-+INVOKESTATIC local/lito381/server/NativeSourceControlledRoleFrame.current(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;)Z
-+IFEQ L68
-+ALOAD 0
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.player(Llocal/lito381/server/ClientSession;)Z
-+IFEQ L68
-+ALOAD 3
-+INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
-+ALOAD 0
-+INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
-+INVOKEINTERFACE java/util/stream/Stream.allMatch(Ljava/util/function/Predicate;)Z itf
-+IFEQ L68
-+ILOAD 4
-+IFEQ L66
-+ALOAD 0
-+LLOAD 5/6
-+INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Context.npc(J)Z
-+IFEQ L68
-+CONST Integer:1
-+GOTO L69
-+CONST Integer:0
-+ISTORE 11
-+ALOAD 9
-+MONITOREXIT
-+GOTO L78
-+ASTORE 13
-+ALOAD 9
-+MONITOREXIT
-+ALOAD 13
-+ATHROW
-+ILOAD 11
-+IFEQ L91
-+ALOAD 2
-+ALOAD 7
-+ALOAD 8
-+INVOKEVIRTUAL local/lito381/server/ClientSession.nativeSelfOriginalSend([BLjava/lang/String;)V
-+GOTO L91
-+ASTORE 14
-+NEW java/io/UncheckedIOException
-+DUP
-+ALOAD 14
-+INVOKESPECIAL java/io/UncheckedIOException.<init>(Ljava/io/IOException;)V
- ATHROW
- RETURN
-```
-
-## 附錄 D　正式工具完整 JSON
-
-```json
-{
-  "tool": "semantic-diff",
-  "generatedAt": "2026-11-05T15:26:59Z",
-  "left": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\target\\issue-62\\final-174-176\\staged.jar",
-  "right": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar",
-  "leftClasspath": [
-    "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\lito伺服器\\LiTo381-Server\\reference\\candidate-50635f7e.jar"
-  ],
-  "rightClasspath": [],
-  "allowRight": null,
-  "effectsMethodsFile": "D:\\lineage開發\\3-lito開發\\scratch\\wt\\task-62\\scratch\\issue-62\\effects-approved.txt",
-  "extraMethodsFile": null,
-  "metadataExemptFile": null,
-  "innerAccessWiden": [],
-  "accessWiden": [],
-  "layoutMethods": [],
-  "methodDiffs": [],
-  "ctorPrologueOrder": [],
-  "exceptionsExempt": [
-    "local/lito381/server/NativeWeaponBreakTargetLifecycle#captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z"
-  ],
-  "deviations": [],
-  "extraMethods": [],
-  "metadataExempt": [],
-  "leftClassCount": 22,
-  "rightClassCount": 3033,
-  "comparedClassCount": 22,
-  "classSelection": {
-    "missingLeft": [],
-    "extraLeft": []
-  },
-  "byteSameCount": 0,
-  "counts": {
-    "SAME": 20,
-    "SAME_EFFECTS": 1,
-    "SAME_LAYOUT": 0,
-    "SAME_PATHS": 0,
-    "ORPHAN_IGNORED": 0,
-    "DEVIATION": 0,
-    "DIFF": 1,
-    "ONLY_LEFT": 0,
-    "ONLY_RIGHT": 0,
-    "BYTE_SAME": 0
-  },
-  "classes": [
-    {
-      "name": "local/lito381/server/NativeBlindSceneAction",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeCompanionForestArea",
-      "status": "SAME_EFFECTS",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [
-        {
-          "method": "apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V",
-          "status": "SAME_EFFECTS",
-          "detail": null
-        }
-      ],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeCompanionRefScene",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeCompanionWindAction",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeControlledNegativeMaterial",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativePairedCastSafety",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceBatchTerminal",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceCubePlacement",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceCubePlacement$Draft",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollAccepted",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollAccepted$Pending",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollNpc",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollNpc$Scope",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollSkills",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollSkills$View",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceDollSlow",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceHealingCast",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourceHealingCast$Cast",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSourcePendingAdmission",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeSummonTerminalLifecycle",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeWeaponBreakBattleCompanion",
-      "status": "SAME",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [],
-      "effectsMethods": [],
-      "approvedMethods": []
-    },
-    {
-      "name": "local/lito381/server/NativeWeaponBreakTargetLifecycle",
-      "status": "DIFF",
-      "byteSame": false,
-      "allowMethodsApplied": false,
-      "methodResults": [
-        {
-          "method": "lambda$captureOutput$6(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_RIGHT",
-          "detail": "only right"
-        },
-        {
-          "method": "lambda$captureOutput$7(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_RIGHT",
-          "detail": "only right"
-        },
-        {
-          "method": "lambda$captureOutput$8(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_RIGHT",
-          "detail": "only right"
-        },
-        {
-          "method": "captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z",
-          "status": "DIFF",
-          "detail": "method captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z insn[133]: left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$…; path event multisets differ (left=156, right=156)"
-        },
-        {
-          "method": "lambda$captureOutput$10(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_LEFT",
-          "detail": "only left"
-        },
-        {
-          "method": "lambda$captureOutput$8(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_LEFT",
-          "detail": "only left"
-        },
-        {
-          "method": "lambda$captureOutput$9(Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/ClientSession;[Ljava/lang/Runnable;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)V",
-          "status": "ONLY_LEFT",
-          "detail": "only left"
-        }
-      ],
-      "effectsMethods": [],
-      "approvedMethods": [],
-      "firstDiff": {
-        "where": "method",
-        "member": "captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z",
-        "insnIndex": 133,
-        "detail": "left=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$… right=INVOKEDYNAMIC run(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;Ljava/util/List;ZJ[BLjava/lang/String;)Llocal/lito381/server/NativeSelfCastAction$…; path event multisets differ (left=156, right=156)"
-      }
-    }
-  ]
-}
-```
-
-## 附錄 E　Forest B 類核准的完整證據（本輪補回）
-
-方法：`NativeCompanionForestArea#apply(ClientSession, AreaSilenceSpell, int, int, int, int, long)`，完整描述子如下核准行。依[主控對 Forest 的裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6647804482)及[本次審查回饋](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664074935)，沿用 B 類 `dup-pop-local` 核准；本輪沒有新增或擴大豁免。
-
-完整正規化差異顯示 staged 在 `List.stream()` 後多出 `ASTORE 21`／`ALOAD 21`；候選把相同 stream 留在 stack。這使 `toList()` 結果槽位由候選的 21 成為 staged 的 22，後續例外暫存槽位由 22–24 成為 23–25；指令索引及 handler／跳躍目標相應位移兩條。`NativeSourceIndirectPlayerProof.player`、filter、toList、publish 呼叫及 monitor 退出結構仍保留。這是區域暫存與 stack 形狀差，屬既有 B 類分類；正式工具以精確方法核准得到 SAME_EFFECTS，並非把整個類別忽略。下方保留全部 hunks，含例外涵蓋與 monitor 區塊差異。
-
-核准行（`docs/combat-merge/effects-approved.txt`）：
-
-```text
-local/lito381/server/NativeCompanionForestArea#apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V # batch: B01, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/79
-```
-
-前輪原始 JSON 中的逐方法證據（附錄 D 保留完整 JSON）：
-
-```json
-{
-  "name": "local/lito381/server/NativeCompanionForestArea",
-  "status": "SAME_EFFECTS",
-  "byteSame": false,
-  "allowMethodsApplied": false,
-  "methodResults": [],
-  "effectsMethods": [
-    {
-      "method": "apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V",
-      "status": "SAME_EFFECTS",
-      "detail": null
-    }
-  ],
-  "approvedMethods": []
-}
-```
-
-原始命令收據已附於附錄 A，其中 `final-174-176-semantic.log` 對應的 argv 含 `--effects-methods scratch/issue-62/effects-approved.txt` 及 `--exceptions-exempt scratch/issue-62/exceptions-exempt.txt`（實際使用絕對路徑）。本輪以 `difflib.unified_diff(..., n=3)` 從原始 left／right dump 重新計算，確認與原始 `.diff` 逐字相同，並核對 JAR／classes 22 個 entry 的 bytes；核對腳本為 `scratch/issue-62/update-followup.py`，核對結果為 `scratch/issue-62/followup-validation.json`。下方文件只將 diff 的空白上下文行呈現為空行，全部指令與 hunks 均保留；原始 diff 未改動。
-
-| 原始證據路徑 | SHA-256 |
-|---|---|
-| `scratch/issue-62/final-174-176.json` | `8446c4e3fc11ab8713fc4f089e7096aad9252157343122a507755f2f4e775487` |
-| `scratch/issue-62/final-174-176/left/NativeCompanionForestArea.txt` | `06d5ed6ee3438d36a979bb898b3f1f6d9510520ce939851f35c67486db80e6fa` |
-| `scratch/issue-62/final-174-176/right/NativeCompanionForestArea.txt` | `9d569caf7c34036e0bef6de839c20e05390961a28f4075b767a970c3a2731b4b` |
-| `scratch/issue-62/final-174-176/NativeCompanionForestArea.txt.diff` | `ba297cbf782c826f6c3fa380d6b4f1f9053fb4d89f3ee1b0e096f9731bc5449c` |
-| `lito伺服器/LiTo381-Server/target/issue-62/final-174-176/staged.jar` | `e05d3f432413ecc65aa3f4f5a1d68b196de634f954935230763b443bfa92501f` |
-| `scratch/issue-62/dependency-check.json` | `0f466f5d77183b0c7251d5a3f1f918d45003f65b049f0d581693b67667c0130f` |
-
-### 完整正規化差異
-
-```diff
---- staged/NativeCompanionForestArea.txt
-+++ candidate/NativeCompanionForestArea.txt
-@@ -12,65 +12,65 @@
-
- METHOD apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V access=8 signature=null exceptions=[]
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
--54:[213:java/lang/Throwable  ]
--55:[213:java/lang/Throwable  ]
--60:[213:java/lang/Throwable  ]
--62:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--63:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--66:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--69:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--71:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--76:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--79:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--81:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--83:[213:java/lang/Throwable  ]
--86:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--90:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--92:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--97:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--102:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--104:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--107:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--111:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--112:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--118:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--121:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--125:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--131:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--133:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--135:[213:java/lang/Throwable  ]
--140:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--141:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--144:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--145:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--149:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--150:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--151:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--157:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--161:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--165:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--166:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--167:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--171:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--172:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--173:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--178:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--179:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--183:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--184:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--185:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--189:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--190:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--191:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--192:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--195:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--199:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--201:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--203:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--207:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
--209:[213:java/lang/Throwable  ]
--211:[213:java/lang/Throwable  ]
--215:[213:java/lang/Throwable  ]
-+54:[211:java/lang/Throwable  ]
-+55:[211:java/lang/Throwable  ]
-+60:[211:java/lang/Throwable  ]
-+62:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+63:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+66:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+69:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+71:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+76:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+79:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+81:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+83:[211:java/lang/Throwable  ]
-+86:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+90:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+92:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+97:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+102:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+104:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+107:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+111:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+112:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+118:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+121:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+125:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+131:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+133:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+135:[211:java/lang/Throwable  ]
-+140:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+141:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+144:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+145:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+147:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+148:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+149:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+155:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+159:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+163:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+164:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+165:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+169:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+170:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+171:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+176:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+177:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+181:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+182:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+183:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+187:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+188:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+189:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+190:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+193:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+197:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+199:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+201:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+205:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
-+207:[211:java/lang/Throwable  ]
-+209:[211:java/lang/Throwable  ]
-+213:[211:java/lang/Throwable  ]
- GETSTATIC local/lito381/server/NativeAreaMaterialAction.current:Ljava/lang/ThreadLocal;
- INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeAreaMaterialAction$Context
-@@ -106,7 +106,7 @@
- ASTORE 9
- ALOAD 9
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L219
-+IFEQ L217
- ALOAD 9
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/NativeAreaMaterialAction$Npc
-@@ -114,7 +114,7 @@
- ALOAD 10
- INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Npc.kind()I
- CONST Integer:3
--IF_ICMPNE L218
-+IF_ICMPNE L216
- ALOAD 10
- INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Npc.actor()Ljava/lang/Object;
- CHECKCAST local/lito381/server/BattleCompanion
-@@ -217,13 +217,11 @@
- ALOAD 8
- GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.players:Ljava/util/List;
- INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ASTORE 21
--ALOAD 21
- ALOAD 8
- INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
- INVOKEINTERFACE java/util/stream/Stream.filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream; itf
- INVOKEINTERFACE java/util/stream/Stream.toList()Ljava/util/List; itf
--ASTORE 22
-+ASTORE 21
- ALOAD 0
- CONST str:"publishAreaSilenceEffect"
- CONST str:"(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V"
-@@ -231,7 +229,7 @@
- ANEWARRAY java/lang/Object
- DUP
- CONST Integer:0
--ALOAD 22
-+ALOAD 21
- AASTORE
- DUP
- CONST Integer:1
-@@ -267,27 +265,27 @@
- POP
- ALOAD 16
- MONITOREXIT
--GOTO L202
-+GOTO L200
-+ASTORE 22
-+ALOAD 16
-+MONITOREXIT
-+ALOAD 22
-+ATHROW
-+ALOAD 14
-+MONITOREXIT
-+GOTO L208
- ASTORE 23
--ALOAD 16
-+ALOAD 14
- MONITOREXIT
- ALOAD 23
- ATHROW
--ALOAD 14
--MONITOREXIT
--GOTO L210
-+ALOAD 12
-+MONITOREXIT
-+GOTO L216
- ASTORE 24
--ALOAD 14
-+ALOAD 12
- MONITOREXIT
- ALOAD 24
--ATHROW
--ALOAD 12
--MONITOREXIT
--GOTO L218
--ASTORE 25
--ALOAD 12
--MONITOREXIT
--ALOAD 25
- ATHROW
- GOTO L33
- RETURN
-```
+請 Claude 審查既有 [PR #79](https://github.com/chaoren0418-arch/lito-launcher-server/pull/79) 與本輪 22-entry 證據；本批已無差異阻塞，無需新增 needs:claude 差異裁定。由使用者依流程合併後，B-land 執行器在其餘批次齊備時統一搬入 src/main、執行單元測試與回歸。請保留既有兩筆核准及 Draft 轉換，不再為 lambda 命名調整 Java。
