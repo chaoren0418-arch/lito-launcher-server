@@ -59,3 +59,25 @@
 **比較界線**：傳入 `--deviations` 才啟用 `method-diff`；精確匹配兩側原名與描述子，方法缺少、清單拼錯、未附核准 URL 均拒絕。整類其他方法與 metadata 照比；JSON `methodResults` 與 Markdown 另列 DEVIATION 和左右完整正規化方法內容，不混進 SAME。更換候選後應重做上述 producer 證明，不能沿用值域結論。
 
 **推測／待驗證**：指定值域下兩種 boolean 表達相同；B-land 仍須依主控要求補 `sourceState`／`targetState` 回傳 0／1 時兩個 consumer 與候選一致的單元測試。未載入應用類別、啟動伺服器或連接資料庫。命令、稽核腳本與批次結果見 [issue-176 報告](../reports/issue-176.md)。
+
+## #75：Eye.canOverwrite 的 int／boolean 方法偏離
+
+識別：`local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z`，類型 `method-diff`。依 [#75 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411) 保留 staged Java，僅核准此精確方法的表示差異。
+
+**已驗證（2026-11-06）**：Microsoft JDK 17.0.17 的 `javap -c -p -s`，正式 JAR SHA-256 為 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`。正式 consumer 的 offset 1 為 `GETFIELD canOverwrite:Z`，5 為字串常數 `"canOverwrite"`，7 呼叫 `CombatSpecialBuffs.eyeField(ILlocal/lito381/server/BattleDragonEyeCatalog$Eye;Ljava/lang/String;)I`，10 直接 IRETURN。staged 將第一個參數寫為 `this.canOverwrite ? 1 : 0`，回傳寫為 `eyeField(...) != 0`。
+
+`eyeField` 有且只有三個 IRETURN。它是多用途 int 方法，以下明確區分一般輸入與本次 consumer 的可達值域：
+
+| IRETURN offset | 一般輸入的所有來源（保守值域） | `field="canOverwrite"` 的可達值域與理由 |
+|---:|---|---|
+| 10 | offset 9 的 ILOAD 0，任意 int | `{0,1}`；來自 `canOverwrite:Z` 欄位，staged 的條件轉換亦為 `{0,1}` |
+| 42 | offset 39 的 `SourceSkillControls.ability(...)I`，不主張受限於 boolean | 不可達；`EYE_ABILITIES.get("canOverwrite") == null`，offset 27 必到 43 |
+| 390 | case 0–6 在 313／320／327／334／341／348／355 呼叫的七個 int accessor（保守為任意 int），或 368 的 ICONST_1／372 的 ICONST_0 | `{0,1}`；字串 hash 分派到 248，253 的 equals 成功，259–261 設 case 7；265 的 switch 到 361，362 呼叫 `Config.overwrite()Z`，365 的 IFEQ 選擇 368 的 1 或 372 的 0，兩者都到 390 |
+
+default 376–389 丟 `IllegalArgumentException`，沒有第四個回傳出口；本字串不會走 default。`config` 或其他呼叫丟例外時也沒有新增正常回傳值。
+
+不可達證據：`EYE_ABILITIES` 為 private static final；javap 中只有 `eyeField` 的一次 GETSTATIC 與 `<clinit>` 的一次 PUTSTATIC。`<clinit>` offset 24–69 的八組 key/value 是 `meleeDamage/DMG`、`magicHit/MAGIC_HIT`、`damageReduction/DMG_REDUX`、`evasionRate/ER`、`stoneResistance/REGIST_STONE`、`sleepResistance/REGIST_SLEEP`、`freezeResistance/REGIST_FREEZE`、`poisonResistance/POISON_RESIST`，72 呼叫不可修改的 `Map.of`，75 寫入欄位；沒有 `canOverwrite` key，也沒有將此 map 暴露給其他方法。這項證明不把其餘 int accessor 或 ability 的結果誤判為 `{0,1}`。
+
+依 [JVMS 17 §6.5 ireturn](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-6.html#jvms-6.5.ireturn)，boolean 回傳採 `value & 1`；[putfield](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-6.html#jvms-6.5.putfield) 寫入 Z 欄位也會收斂為最低位元。因此本 consumer 的可達集合 `{0,1}` 中，0 的兩種表達都為 false，1 都為 true；輸入端 `? 1 : 0` 亦保持欄位值。**證明成立，僅限這份正式 JAR 與這個呼叫的固定字串；不宣稱一般 int 的 `!= 0` 等同最低位元。**
+
+**比較界線與待驗證**：只有上述方法列 DEVIATION，其餘 Eye 方法、欄位與 metadata 照比；沒有為 PoisonAtomic 增加豁免。更換 producer 或 map 後須重做值域證明。未執行遊戲或 DB；A-land 仍需補 PoisonAtomic 的 `leaveInstall` 拋例外時 monitor 釋放測試。可重現命令、原始輸出與全批結果見 [issue-75 報告](../reports/issue-75.md)。

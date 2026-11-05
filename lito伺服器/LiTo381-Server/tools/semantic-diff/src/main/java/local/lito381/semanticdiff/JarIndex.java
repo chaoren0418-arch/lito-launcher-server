@@ -33,6 +33,7 @@ final class JarIndex {
     private Set<String> otherReferences;
     Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
     Map<String, Set<String>> exceptionsExempt = Map.of();
+    Map<String, Set<String>> extraMethods = Map.of();
     Map<String, Set<String>> methodDiffs = Map.of();
     Set<String> innerAccessWiden = Set.of();
     record MethodResult(String status, String detail) {}
@@ -150,7 +151,7 @@ final class JarIndex {
             new ClassReader(e.getValue()).accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
             Map<String, String> fields = new LinkedHashMap<>();
             for (var f : node.fields) if (f.name.startsWith("$SwitchMap$")
-                    && (f.access & org.objectweb.asm.Opcodes.ACC_SYNTHETIC) != 0)
+                    && f.desc.equals("[I"))
                 fields.put(f.name, "$SwitchMap$#" + fields.size());
             index.switchFields.put(node.name, fields);
         }
@@ -196,7 +197,9 @@ final class JarIndex {
         return name.startsWith("lambda$") ? name : map.getOrDefault(name, name);
     }
 
-    String remapField(String owner, String name) { return switchFields.getOrDefault(owner, Map.of()).getOrDefault(name, name); }
+    String remapField(String owner, String name, String desc) {
+        return desc.equals("[I") ? switchFields.getOrDefault(owner, Map.of()).getOrDefault(name, name) : name;
+    }
 
     ClassNode readTree(String internalName) {
         if (trees.containsKey(internalName)) return trees.get(internalName);
@@ -231,7 +234,7 @@ final class JarIndex {
         return m.name.equals("<init>") && exactMethods.getOrDefault(owner,Set.of()).contains(m.name+m.desc);
     }
 
-    private ClassNode header(String name) {
+    ClassNode header(String name) {
         if (headers.containsKey(name)) return headers.get(name);
         byte[] bytes = classes.getOrDefault(name, dependencies.get(name));
         if (bytes == null && name.startsWith("java/")) {
