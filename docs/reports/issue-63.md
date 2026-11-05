@@ -2,48 +2,48 @@
 
 ## 結論
 
-**未通過驗收；等待 #174 合併，不能標 done 或交 B-land。** 本次從 `task/63` @ `8313f571f1ebe669d2fae150257cb28c13b9f613` 的既有 51 份 staged Java 乾淨重建，結果仍為 **106 SAME／2 DIFF**；108 個 entry 無缺漏、多出。本次只更新本報告，沒有修改 Java 或比較器，也沒有覆蓋、改名驗收產物。
+本輪 51 份 staged Java 乾淨編譯後，完整 108 個 entry 為 **107 SAME、1 SAME_PATHS、0 DIFF**，missing／extra 皆空，符合本輪指定的語意門檻。`NativeBattleControlledCancellation` 為 SAME；`NativeAcceptedAreaFreezeMutation#players` 為 SAME_PATHS。
 
-### 本次重派發現的依賴缺口（2026-11-05）
+**待主控審查一項實作形式差異**：本輪用 null 分支提前回傳取代跨分支 `result` 暫存，沒有使用[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/63#issuecomment-6654689575)示意的單一條件運算式。直接把右運算元改成 `values.stream().filter(...)` 無法容納現有 `c` 區域變數宣告及 Predicate 建立前的獨立 null 檢查；把檢查塞進 lambda 會延後到串流求值，改用 `c::player` 也會失去 proof。故提交可審查且已通過逐路徑證明的最小替代寫法，不宣稱已逐字完成指定語法。請 Claude 裁定是否接受，再標 done／交 B-land。
 
-- [主控最新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/63#issuecomment-6654689575) 已將兩個方法的區塊內暫存／DUP 差異交給 **#174 第 3(b) 項**；要求 #174 合併後再派工，並處理 `players` 的條件運算式。
-- 本次讀取 [#174](https://github.com/chaoren0418-arch/lito-launcher-server/issues/174) 時，它仍為 `open`、`task:running`，只有派工留言；尚未合併。遠端 `main` 仍為 `450178d59b0157fddf2b9456b7c03d20207993fc`，與本地工具基準相同。
-- #63 本文的 `depends_on` 仍是 `[102, 135, 153, 166]`，沒有 174；這次派工發生在新增前置完成之前。主控裁定已拿掉 `needs:claude`，本次沒有出現新的語意差異，故不重複要求同一項裁定。
-- 本次先完成可獨立進行的乾淨重建、逐方法診斷及證據更新；`players` 的 Java 改寫與新版工具驗收依主控指定，留待 #174 合併後一起完成。未使用其他 worktree 的未合併工具或自行豁免。
+## 做了什麼
 
-## 本次做了什麼
+- 沿用 `task/63`，未 checkout 或另建分支。先合併最新 `origin/main` `c72453957ebe47e00ad024e874bbe31859457799`，合併提交 `c57d301ca43bc0756eb40867c695b800c85b388a`，無衝突；含 #174（PR #178）與 #176（PR #193）。
+- 本輪只改 `NativeAcceptedAreaFreezeMutation.java` 的 `players` 與本報告。`docs/REPORT.md`、工具及其他批次的變動僅來自 main 合併，本輪未編輯它們。
+- 保留既有 51 檔的候選移植、`@AsRecord`／`@AsmFinal`；`members` 的 Java 完全未改。proof 仍為 `NativeSourceIndirectPlayerProof.player(c,p)`。
+- 從全新 `target/issue-63/final-174-176/classes` 編譯，唯一 class 後處理是既有 `tools/as-record` 轉換器。未以 candidate class bytes 覆蓋輸出、未替換或改名驗收產物。
+- 未修改 `src/main`、`pom.xml`、設定、封存、正式程式、遊戲資源或玩家資料；未啟動任何伺服器／登入器／遊戲或連 DB。
 
-1. 讀取根目錄與伺服器規則、`docs/REPORT.md`、設計 §6-4／§6-5、B02 清單、前次報告及 GitHub 最新裁定。
-2. 在全新 `target/issue-63/retry-2/classes/` 一次編譯 B02 的 51 檔；執行既有 #102 轉換器，再打包全部 108 個 class。
-3. 從本分支來源重新編譯 semantic-diff，使用完整 `verify_entries` 比較；未啟用 effects／layout／deviation／allow-methods 豁免。
-4. 遍歷全部 entry 的全部方法，重新輸出完整正規化差異；與前次差異逐字相同，沒有新增差異。
+實際修改：
 
-未修改 `src/main`、`pom.xml`、`docs/REPORT.md`、正式程式或設定；未啟動伺服器／登入器／遊戲、連 DB、讀寫機密設定或封存。本次沿用 `task/63`，沒有 checkout、另建分支、合併其他分支或強制推送。
+```java
+static List<ClientSession> players(List<ClientSession> values) {
+ var g=group();
+ if(g==null)return values;
+ // 保留候選方法參照在 stream() 之後、建立 Predicate 之前的 null 檢查。
+ var stream=values.stream();var c=g.c;Objects.requireNonNull(c);
+ return stream.filter(p->NativeSourceIndirectPlayerProof.player(c,p)).toList();
+}
+```
 
-## 已有 Java 移植內容（前次提交保留）
+## 已驗證／怎麼驗證
 
-- 51 份 Java 均由 `merge-inputs/50635f7e/sources/local/lito381/server/` 起步；用 CFR 0.152 反編譯候選中題述 22 個 entry 所屬的 11 個外層類，逐項移植。另比對後補齊 `NativeSourceAcceptedPlayers`、`NativeSourceAreaClassSelection`（含 Cursor）、`NativeSourceControlledHealing` 的後加 ASM 語意；這三檔也在 B02。
-- 補回 freeze／shock／角色識別／controlled display 的原方法及轉呼叫、`playerLife`／`petLife`／NPC first-life、Placement 的 volatile 欄位、受眾快照、技能 metadata 載入與 Cube NPC 佇列／傳輸入口。
-- `NativeSourceArenaPoison$Viewer`、`NativeSourceControlledDisplay$Output` 改用 `@AsRecord`，保留元件順序、accessors、額外 transient 欄位與兩組建構子；`finalFields` 由既有轉換器還原，沒有手寫 Object 方法。
-- `NativeSourceAreaClassSelection$Cursor` 的舊建構子原本不賦值新 final 欄位，因此採 #153 已合併的 `@AsmFinal({"nativeSourceTargetMask"})`，仍由同一 #102 CLI 處理。沒有改轉換器。該 entry 實測 SAME。
-- 候選保留的未引用 `lambda$deliver$0` 以實際 Java 方法保留；它呼叫 `complete`，並非 stub。其餘 lambda 交新版比較器正規化。
-- 提交範圍只有 B02 的 51 份 staged `.java` 與本報告。`src/main`、`pom.xml`、`docs/REPORT.md` 的上游更新僅來自快轉，前次相對 `450178d` 無修改。
+環境：Windows、Microsoft OpenJDK 17.0.17、ASM 9.7。semantic-diff 從上述已合併來源重新編譯；輸入固定為 `batches.json` B02 的 51 個 `classes` 與完整 108 個 `verify_entries`。
 
-## 已驗證
-
-環境：Windows、Microsoft OpenJDK 17.0.17、ASM 9.7。工具來源基準已包含 #102、#153、#166，尚不含 #174。前次 CFR 0.152 的移植及原始碼保留；本次沒有重新以反編譯產物覆蓋原始碼。
-
-| 項目 | 本次結果 |
+| 項目 | 結果 |
 |---|---|
-| 一次 javac 編譯 51 份 Java | exit 0；僅 unchecked 提示 |
-| 既有 as-record CLI | exit 0；scanned=108 converted=3（2 AsRecord＋1 AsmFinal） |
-| class 集合對 B02.verify_entries | 108／108；缺少 0、多出 0 |
-| semantic-diff | SAME=106、DIFF=2；其餘結果種類皆 0 |
-| 全部方法診斷 | 只有下列兩方法不同 |
-| 完整正規化 diff 對前次 | 逐字相同 |
-| staged 集合 SHA-256 對前次 | 相同，51 份 Java 均未改動 |
+| javac --release 17 -encoding UTF-8 | exit 0；僅 unchecked 提示 |
+| as-record CLI | exit 0；scanned=108 converted=3（2 AsRecord＋1 AsmFinal） |
+| 實際 class entry 對 verify_entries | 108／108；missing=[]、extra=[] |
+| semantic-diff | SAME=107、SAME_PATHS=1；其餘種類皆 0 |
+| players 逐路徑證明 | path multisets equal (9) |
+| members | SAME；原始碼未改 |
+| 核准清單裁切 | 8 份清單對 B02 均 0 條；未傳入空清單、未新增任何豁免 |
+| 產物來源 | 全由 javac 與既有 as-record 產生 |
 
-實際輸出（`semantic.json.generatedAt=2026-11-05T09:54:55Z`）：
+核准清單：effects-approved、extra-methods-approved、metadata-exempt、layout-approved、access-widen-approved、deviations、exceptions-exempt、t029-methods。均依精確類別裁切，沒有適用 B02 的條目；access-widen 的巢狀 Output 屬其他批次。
+
+實際輸出：
 
 ```text
 javac.log exit=0
@@ -52,103 +52,56 @@ Note: Recompile with -Xlint:unchecked for details.
 as-record.log exit=0
 as-record: scanned=108 converted=3
 entries=108 missing=[] extra=[]
-semantic.log exit=0
-SUMMARY SAME=106 SAME_EFFECTS=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=2 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
-normalized_diff_identical=True
+SUMMARY SAME=107 SAME_EFFECTS=0 SAME_PATHS=1 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=0 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
+ACCEPTED 108 entries
 ```
 
-semantic-diff 的 exit 0 只代表報告成功產生；驗證腳本最後另外檢查結果，這次因 DIFF 非零結束。不能據 CLI exit 0 或一般 CI 綠燈宣告 staged 通過。
+驗證腳本另行斷言 comparedClassCount 與 classes 長度皆為 108、class 集合精確一致、每個 status 只可為 SAME／SAME_EFFECTS／SAME_PATHS；沒有只看 semantic-diff exit 0。
+
+javap 的 players：offset 11 為 `List.stream`、18 為 `GETFIELD Group.c`、23 為 `Objects.requireNonNull`、29 為 Predicate invokedynamic、34 為 filter、39 為 toList；null 分支 offset 9 直接 ARETURN，非 null 分支 offset 44 ARETURN。沒有跨分支 result STORE／LOAD。這是 #176 的逐路徑證明，不將 SAME_PATHS 冒稱 SAME。
 
 固定輸入／輸出 SHA-256：
 
 - candidate：`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729`
 - base：`e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`
-- 本次重建 JAR：`5c945982ef9f9bb9e778aea16e87ffebfed70c9ca691f55edec88936bb580e38`（ZIP 時間戳可能使另次打包雜湊不同）
-- 51 份 staged 集合：`c3820786459d0d92039d300201d7caf3e40ea8d2568fddcafa6ea32f128a92d4`（依檔名排序，串接 UTF-8 檔名＋換行＋檔案 SHA-256 原始 32 bytes，再 SHA-256）。
+- 重建 JAR：`9cc4d4cbac153d7f13ffea5864fb7ac34994618bd7717c4a2900bd36080f38ef`（ZIP 時間戳可能使另次雜湊不同）
+- staged 集合：`45eb934fa8b24913f0f419682ff7081a13c766d1aa64c9741083f3203cff82dc`（檔名排序後串接 UTF-8 檔名＋換行＋各檔 SHA-256 原始 32 bytes，再雜湊）
 
-## 未完成差異與理由
+## 推測
 
-剩餘兩個 entry 均位於 `local/lito381/server/`：
+不以人工推測補足語意差異。提前回傳符合移除跨分支 result 暫存的目的，但是否接受它取代指定條件運算式，仍由 Claude 主控審查。
 
-1. `NativeAcceptedAreaFreezeMutation.class`：`players(Ljava/util/List;)Ljava/util/List;`。
-2. `NativeBattleControlledCancellation.class`：`members(Llocal/lito381/server/ClientSession;I)Ljava/util/List;`。
+## 待驗證／未驗證什麼
 
-候選將 `c::player` 的 invokedynamic handle 改為 static `NativeSourceIndirectPlayerProof.player(Context, ClientSession)`，卻保留 bound method reference 的 `DUP; Objects.requireNonNull; POP`。Java 使用 lambda，先執行 `stream()`、再檢查 Context、最後建立 Predicate，以保留呼叫及例外時機。不能刪掉 players 的 null 檢查或改回 `Context.player`。
+- 主控對上述實作形式差異的裁定；目前未自行標 done。
+- 單元測試、整合與回歸依設計 §6-5 不適用本批暫存區，交 B-land 統一執行。
+- 未做真機戰鬥／登入驗收，未部署；SAME_PATHS 是有界語意模型證明。
 
-#166 已把轉呼叫 lambda 收斂到同一 static handle，但尚無法證明這裡的 local／DUP 搬運等價。`players` 另有跨分支 result 暫存，主控要求改為條件運算式；兩方法其餘區塊內暫存由 #174 處理。現在尚未取得 #174 合併後的工具，因此本次不是「新版工具仍失敗」，也不是已證明所有等價 Java 都不可能。
+## 產出路徑／給下一棒的提示
 
-診斷結果：players `localEqual=false singletonLeft=true singletonRight=false`；members `localEqual=false singletonLeft=false singletonRight=false`。沒有恢復多來源 union 放行。
+- 交付：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 的既有 B02 51 檔；本輪只改 `NativeAcceptedAreaFreezeMutation.java`。
+- 報告：`docs/reports/issue-63.md`（本檔）。
+- 本機證據（不入 git）：`scratch/issue-63/final-174-176/` 的 javac.args、javac.log、as-record.log、entries.txt、semantic.log、semantic.json／semantic.md。
+- 重現腳本（不入 git）：`scratch/issue-63/verify-final.py`；建置產物：`lito伺服器/LiTo381-Server/target/issue-63/final-174-176/`。
+- Claude：請審核提前回傳替代寫法及 107 SAME＋1 SAME_PATHS 收據。若接受，B02 已無語意差異，可由調度器接續合併及 B-land；無需擴大核准清單。
 
-以下為全部剩餘正規化指令差異，由本次重新編譯的 JarIndex／ClassComparer 診斷取得。`-` 是 staged，`+` 是 candidate，未顯示上下文一致；兩方法 access/signature/exceptions 與 try 表一致。其他 106 entry 及其方法均 SAME。
+## 重現指令
 
-```diff
---- NativeAcceptedAreaFreezeMutation-0-left.txt
-+++ NativeAcceptedAreaFreezeMutation-0-right.txt
-@@ -4,25 +4,18 @@
- ASTORE 1
- ALOAD 1
- IFNONNULL L0
- ALOAD 0
--ASTORE 2
- GOTO L1
- LABEL L0
- ALOAD 0
- INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ASTORE 3
- ALOAD 1
- GETFIELD local/lito381/server/NativeAcceptedAreaFreezeMutation$Group.c:Llocal/lito381/server/NativeAreaMaterialAction$Context;
--ASTORE 4
--ALOAD 4
-+DUP
- INVOKESTATIC java/util/Objects.requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
- POP
--ALOAD 3
--ALOAD 4
- INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
- INVOKEINTERFACE java/util/stream/Stream.filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream; itf
- INVOKEINTERFACE java/util/stream/Stream.toList()Ljava/util/List; itf
--ASTORE 2
- LABEL L1
--ALOAD 2
- ARETURN
---- NativeBattleControlledCancellation-0-left.txt
-+++ NativeBattleControlledCancellation-0-right.txt
-@@ -38,14 +38,12 @@
- LABEL L2
- ASTORE 3
- ALOAD 3
- INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
--ASTORE 4
- ALOAD 2
-+DUP
- INVOKESTATIC java/util/Objects.requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
- POP
--ALOAD 4
--ALOAD 2
- INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
- INVOKEINTERFACE java/util/stream/Stream.filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream; itf
- INVOKEINTERFACE java/util/stream/Stream.toList()Ljava/util/List; itf
- ARETURN
-
-```
-
-## 怎麼重現
-
-從 worktree 根目錄執行；把以下 Python 存成 `scratch/issue-63/verify-retry.py`：
+在 worktree 根目錄執行下列腳本。classes 目錄必須全新；再次執行請把腳本中的 `final-174-176` 改為另一個全新名稱，避免混用既有輸出。annotations 僅供 classpath；兩個 reference 也只供編譯及比對解析，不打進本批 JAR。
 
 ```powershell
-& D:/dev-orchestrator/tools/python/python.exe -B -X utf8 scratch/issue-63/verify-retry.py
+& D:/dev-orchestrator/tools/python/python.exe -B -X utf8 scratch/issue-63/verify-final.py
 ```
 
-腳本拒絕覆用已存在的 classes 目錄；本機本次目錄已存在，再跑時請把兩個 `retry-2` 路徑改成同一個全新名稱。annotations 只加入 classpath，未混入本批輸出；只有既有 #102 CLI 進行後處理。`--left-classpath` 只供欄位 owner 解析，沒有把依賴混入比對 JAR。
+下列為本次實際驗證腳本（可存回上述 scratch 路徑）：
 
 ```python
 import hashlib, json, os, subprocess, sys, urllib.request, zipfile
 from pathlib import Path
 root = Path.cwd()
 server = root / 'lito伺服器/LiTo381-Server'
-scratch = root / 'scratch/issue-63/retry-2'
-target = server / 'target/issue-63/retry-2'
+scratch = root / 'scratch/issue-63/final-174-176'
+target = server / 'target/issue-63/final-174-176'
 scratch.mkdir(parents=True, exist_ok=True)
 target.mkdir(parents=True, exist_ok=True)
 (target / 'tmp').mkdir(exist_ok=True)
@@ -194,36 +147,37 @@ toolclasses = target / 'semantic-tool'
 tool.compile_java(sorted((server / 'tools/semantic-diff/src/main/java').rglob('*.java')), toolclasses, dependencies)
 entries = scratch / 'entries.txt'
 entries.write_text('\n'.join(batch['verify_entries']) + '\n', 'utf-8')
+approved = []
+for flag, filename in [
+    ('--effects-methods', 'effects-approved.txt'), ('--extra-methods', 'extra-methods-approved.txt'),
+    ('--metadata-exempt', 'metadata-exempt.txt'), ('--layout-methods', 'layout-approved.txt'),
+    ('--access-widen', 'access-widen-approved.txt'), ('--deviations', 'deviations.txt'),
+    ('--exceptions-exempt', 'exceptions-exempt.txt'), ('--allow-methods', 't029-methods.txt')]:
+    src = root / 'docs/combat-merge' / filename
+    selected = []
+    for line in src.read_text('utf-8-sig').splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith('#'): continue
+        key = stripped.split()[0]
+        if key == 'ctor-prologue-order': key = stripped.split()[1]
+        owner = key.split('#')[0].removesuffix('.class')
+        if owner + '.class' in expected: selected.append(line)
+    print(filename, 'B02 entries=', len(selected))
+    if selected:
+        out = scratch / filename
+        out.write_text('\n'.join(selected) + '\n', 'utf-8')
+        approved.extend([flag, out])
+        if flag == '--allow-methods': approved.extend(['--allow-right', server / 'reference/base-0.6.71.jar'])
 run([*java, '-cp', str(toolclasses) + os.pathsep + dependencies, 'local.lito381.semanticdiff.SemanticDiff',
      '--left', jar, '--right', server / 'reference/candidate-50635f7e.jar',
      '--left-classpath', server / 'reference/candidate-50635f7e.jar', '--left-classpath', server / 'reference/base-0.6.71.jar',
-     '--classes', entries, '--json', scratch / 'semantic.json', '--md', scratch / 'semantic.md'], 'semantic.log')
+     '--classes', entries, *approved, '--json', scratch / 'semantic.json', '--md', scratch / 'semantic.md'], 'semantic.log')
 data = json.loads((scratch / 'semantic.json').read_text('utf-8'))
 assert not data['classSelection']['missingLeft'] and not data['classSelection']['extraLeft']
 print(data['counts'])
 # A successful comparator process does not mean the batch meets acceptance.
-assert data['comparedClassCount'] == len(expected)
+assert data['comparedClassCount'] == len(expected) == 108
 assert len(data['classes']) == len(expected)
-sys.exit(0 if all(c['status'] == 'SAME' for c in data['classes']) else 2)
-
+assert all(c['status'] in {'SAME', 'SAME_EFFECTS', 'SAME_PATHS'} for c in data['classes']), data['counts']
+print('ACCEPTED 108 entries')
 ```
-
-## 推測
-
-兩個方法目前的明確呼叫順序與資料傳遞應與候選一致，但現行工具沒有完成等價證明。#174 預期可處理區塊內暫存，並不代表本批已通過；players 改寫後仍須完整重驗。
-
-## 待驗證／未驗證什麼
-
-- #174 合併後，依主控裁定調整 `players`，保留 `stream()` → Context 讀取／null 檢查 → Predicate 建立的順序，重驗完整 108 entries。
-- 單元測試、整合與回歸依 §6-5 不適用本批暫存；由 B-land 統一處理。
-- 未進行遊戲／登入真機測試，未部署；本次報告提交不以一般 CI 代替 staged 驗收。
-
-## 產出路徑與給下一棒的提示
-
-- 既有交付：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 中 B02 的 51 份 Java。
-- 本次變更：`docs/reports/issue-63.md`。
-- 本機證據（不入 git）：`scratch/issue-63/retry-2/` 的 javac.args、javac.log、as-record.log、semantic.log、entries.txt、semantic.json／semantic.md、all-methods.log、normalized/、full.diff；腳本 `scratch/issue-63/verify-retry.py`、`audit-retry.py`。
-- 本次建置產物（不入 git）：`lito伺服器/LiTo381-Server/target/issue-63/retry-2/`。
-- **調度器／Claude 主控**：請依既有裁定補上 `depends_on: 174`，在 #174 合併前停止重派本批；這是前置尚未完成，不是本機環境偶發或新增 Java 編譯錯誤。
-- **#174 合併後的本機執行器**：取得已合併工具版本，完成 players 條件運算式改寫，再從全新目錄一次編譯 51 檔、轉換、核對集合並比較。若仍有差異，附新的完整正規化差異並標 `needs:claude`。不得使用候選 bytes 覆蓋輸出，不得放寬驗收。
-- PR #81 保持草稿；達到 108 SAME 前不要標 done、合併或交 B-land。使用者無須手動排查本機環境。

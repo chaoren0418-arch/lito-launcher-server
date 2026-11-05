@@ -32,14 +32,11 @@ final class NativeAcceptedAreaFreezeMutation {
  static boolean capture(BattleTimedStatus status,long now,int seconds,List<ClientSession> audience){var g=group();var b=g==null?null:g.active;if(b!=null&&b.cancelled)return false;if(b==null||!b.eligible||CombatAccess.field(b.target,"timedStatus")!=status)return NativeAcceptedFreezeMutation.capture(status,now,seconds,audience);b.freeze=true;b.seconds=seconds;b.audience=audience==null?null:List.copyOf(audience);return false;}
  static void publish(Player p){var b=p.batch;NativeSourcePlayerActionLock.runPairOrdered(b.c.pc,b.target,()->{if(!b.valid(false)||b.lifetime.mode==NativePlayerLifetime.Mode.STOPPED){b.cancelled=true;return;}try{NativeAreaMaterialAction.owned(b.c,()->{if(b.world)CombatPlayerDamage.world(b.target,p.amount,p.caster,p.flag);else CombatPlayerDamage.battle(b.target,p.amount,p.caster);});}catch(IOException e){throw new UncheckedIOException(e);}});}
  static List<ClientSession> players(List<ClientSession> values){
-  var g=group();List<ClientSession> result;
-  if(g==null)result=values;
-  else{
-   // 保留候選方法參照在 stream() 之後、建立 Predicate 之前的 null 檢查。
-   var stream=values.stream();var c=g.c;Objects.requireNonNull(c);
-   result=stream.filter(p->NativeSourceIndirectPlayerProof.player(c,p)).toList();
-  }
-  return result;
+  var g=group();
+  if(g==null)return values;
+  // 保留候選方法參照在 stream() 之後、建立 Predicate 之前的 null 檢查。
+  var stream=values.stream();var c=g.c;Objects.requireNonNull(c);
+  return stream.filter(p->NativeSourceIndirectPlayerProof.player(c,p)).toList();
  }
  static void replayBattle(ClientSession pc,BattleSpellCatalog.FreezeAttackSpell spell,ClientSession target,List<ClientSession> audience)throws IOException{if(spell.skillId()==80)pc.nativeAreaFreezeAcceptedBattle(spell,target,audience);else pc.nativeFreezeAcceptedBattle(spell,target,audience);}
  static void replayWorld(ClientSession pc,BattleSpellCatalog.FreezeAttackSpell spell,ClientSession target,List<ClientSession> audience)throws IOException{if(spell.skillId()==80)pc.nativeAreaFreezeAcceptedWorld(spell,target,audience);else pc.nativeFreezeAcceptedWorld(spell,target,audience);}
