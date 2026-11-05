@@ -35,3 +35,4 @@
 - 2026-11-06 — #63 T020-B02: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #81 已合併）→ [報告](reports/issue-63.md)
 - 2026-11-06 — #186 T020i-7: semantic-diff 的 $SwitchMap$ 兩側對稱改名、原樣轉拋 handler、private 呼叫指令（code，codex-local，PR 已合併）→ [報告](reports/issue-186.md)
 - 2026-11-06 — #75 T020-A04: T020-A04: src/main 對齊正式 0.6.71 暫存（battle-combat，25 類）（code，codex-local，PR #106 已合併）→ [報告](reports/issue-75.md)
+- 2026-11-06 — #74 T020-A03: T020-A03: src/main 對齊正式 0.6.71 暫存（nativede，47 類）（code，codex-local，PR #100 已合併）→ [報告](reports/issue-74.md)
