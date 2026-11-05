@@ -5,8 +5,11 @@ import java.io.IOException;import java.util.*;import java.util.concurrent.Thread
 final class NativeWeaponBreakBattleCompanion {
  static final String P="local/lito381/server/";
  static SourceNpcPhysicalStats nativeSourceWeaponFirstPrepare(ClientSession caster,BattleCompanion companion,NativeAreaMaterialAction.Context context){
-  var snap=NativeSourceWeaponTargetLife.snapshot(companion,context);if(snap==null)return null;
-  try{return ((AccountRepository)CombatAccess.call(caster,"selectedSourceAccounts","()L"+P+"AccountRepository;")).npcPhysicalStats(snap.npcId());}
+  try{
+   var accounts=(AccountRepository)CombatAccess.call(caster,"selectedSourceAccounts","()L"+P+"AccountRepository;");
+   var snap=NativeSourceWeaponTargetLife.snapshot(companion,context);if(snap==null)return null;
+   return accounts.npcPhysicalStats(snap.npcId());
+  }
   catch(Exception error){NativeReuseLog.getLogger(NativeWeaponBreakBattleCompanion.class).error("Weapon Break companion Source lookup failed",error);return null;}
  }
  static SourceNpcPhysicalStats prepare(ClientSession caster,BattleCompanion companion){
@@ -33,7 +36,7 @@ final class NativeWeaponBreakBattleCompanion {
   CombatAccess.call(caster,"sendInventoryDelta","(L"+P+"RuntimeInventory;L"+P+"RuntimeInventory;)V",NativeCastMaterial.previous(caster),NativeCastMaterial.next(caster));
   boolean earth=NativeSourceWeaponPlayerCounter.earth(companion,now),success=!earth&&probability>=roll;companion.consumeEraseMagic(now);companion.cancelSleep();var recipients=hub.roomMembers(room);
   for(var member:recipients)if(!(boolean)CombatAccess.field(caster,"invisible")||member==caster)send(member,Protocol.objectAction(caster.playerObjectId(),spell.actionId()),"S_ACTION Weapon Break companion caster="+caster.playerObjectId());
-  int stacks=success?companion.addWeaponBreakStack():-1;boolean applied=stacks>=0;
+  int stacks=success?NativeSourceWeaponCounterMagic.stack(companion,caster,recipients,actor.objectId()):-1;boolean applied=stacks>=0;
   if(applied)for(var member:recipients)send(member,Protocol.effectObject(actor.objectId(),spell.effectGfx()),"S_EFFECT Weapon Break target="+actor.objectId());
   send(caster,Protocol.manaPoint(mp,integer(caster,"playerMaxMp")),"S_MANA_POINT Weapon Break="+mp);if(!applied)send(caster,Protocol.messageCode(spell.failureMessage()),"S_MESSAGE_CODE Weapon-Break-failure="+spell.failureMessage());
   System.out.println("[LiTo] BATTLE companion Weapon Break target="+actor.objectId()+" probability="+probability+" roll="+roll+" stacks="+stacks+" earth="+earth+" mp="+mp);
