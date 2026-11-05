@@ -172,7 +172,7 @@ class ModernWorldServicePetRaceTest {
                     assertEquals(Status.BUSY, f.leave(f.sun, terminal).status()); assertEquals(terminal, f.read(f.sun));
                 } else {
                     for (var player : List.of(f.sun, f.moon)) { assertEquals(Status.OK, f.leave(player, terminal).status()); assertNull(f.read(player)); }
-                    assertTrue(slot.closed); assertEquals(0, f.service.matchCount());
+                    assertTrue(slot.closed); ModernWorldServiceTest.awaitNoMatches(f.service);
                     f.ready(); var next = f.loading();
                     assertNotEquals(terminal.matchId(), next.matchId()); assertNotEquals(terminal.generation(), next.generation());
                     assertEquals(2, f.journal.count()); assertTrue(next.race().runners().stream().allMatch(r -> r.completedLaps() == 0));
@@ -236,7 +236,7 @@ class ModernWorldServicePetRaceTest {
             for (var player : List.of(f.sun, f.moon)) {
                 assertEquals(Status.OK, f.leave(player, saved).status()); assertNull(f.read(player));
             }
-            assertEquals(1, slot.calls.get()); assertEquals(0, f.service.matchCount()); assertTrue(slot.closed);
+            assertEquals(1, slot.calls.get()); ModernWorldServiceTest.awaitNoMatches(f.service); assertTrue(slot.closed);
         }
     }
 
