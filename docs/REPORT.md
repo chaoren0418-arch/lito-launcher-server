@@ -41,3 +41,5 @@
 - 2026-11-06 — #203 T020i-8: semantic-diff 依呼叫點配對 lambda＋不看分支方向的 CFG 比對＋可見性 bridge（code，codex-local，PR #215 已合併）→ [報告](reports/issue-203.md)
 - 2026-11-06 — #72 T020-A01: T020-A01: src/main 對齊正式 0.6.71 暫存（nativede，49 類）（code，codex-local，PR #99 已合併）→ [報告](reports/issue-72.md)
 - 2026-11-06 — #67 T020-B06: 戰鬥併入暫存（existing-battle，29 類）（code，codex-local，PR #89 已合併）→ [報告](reports/issue-67.md)
+- 2026-11-06 — #65 T020-B04: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #87 已合併）→ [報告](reports/issue-65.md)
+- 2026-11-06 — #216 T020i-9: semantic-diff 單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner 解析（code，codex-local，PR 已合併）→ [報告](reports/issue-216.md)
