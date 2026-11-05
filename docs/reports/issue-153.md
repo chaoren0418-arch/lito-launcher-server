@@ -11,7 +11,7 @@
 - 先加反例並以舊實作執行，確認錯誤結果 `DEVIATION=1 DIFF=0`，證據為 `scratch/issue-153/field-order-red.log`。修正後 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=72`。
 - 只讀取原專案 `scratch/review-153/FieldOrderProbe.java`，複製到本 worktree 編譯執行。`java -Xverify:all` 實際呼叫 `(7,9)`，得到 `VERIFIED JVM: left.value=7 right.value=9`；新工具回報 `SAME=1 DEVIATION=0 DIFF=1`（共同 Parent 為 SAME）。證據為 `scratch/issue-153/field-order.log` 與 `field-order/result.json`。上一輪槽位覆寫 JVM 反例也重跑通過。
 - 所有固定輸入 SHA-256 與既有收據一致，重跑三批的修改前／預設／核准清單比較：核准後 #66 為 4 DIFF、#72 為 26 DIFF、#76 為 2 DIFF；相對 #135 基準分別減少 5／0／1，本次依賴修正沒有新增殘差。完整固定 JAR 仍為 2125 SAME／424 DIFF，已重新產出 `docs/server-semantic-gap.md`。
-- 本輪沒有重建伺服器 JAR，使用雜湊相符的固定產物；沒有改動原專案資源。CI 證據將於推送後核對，下方第 2 次與首輪結果均為歷史紀錄。
+- 本輪本機沒有重建伺服器 JAR，使用雜湊相符的固定產物；沒有改動原專案資源。`as-record/selftest.py` 本輪重跑 `SELFTEST PASS`。Linux CI 已重新建置並完成完整自測，證據見下方；第 2 次與首輪結果均為歷史紀錄。
 
 ## 第 2 次修正與驗證
 
@@ -106,6 +106,8 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 
 ### CI 實際證據
 
+- 第 3 次程式提交 `7df9624767d28f955a8fda6adad4a5dfb6d01383` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41974210462/job/127069200125) 實際 SUCCESS。日誌確認 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=72`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`；CI 全新 JAR 仍為 2125 SAME／424 DIFF。完整日誌保存於 `scratch/issue-153/ci-third-semantic.log`。
+- 第 3 次的 Server 建置、Launcher 建置與 [package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41974210413) 均 SUCCESS。Server tests 與最後文件補充提交的完成狀態可由 [PR #164 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164/checks) 查核；文件補充提交沒有修改程式。
 - 第 2 次修正的整合提交 `ff50cca6df1eb87c931b3d155ea0bfd72a65897b` 已通過全部 5 項 job。Server tests 為 **6,036 tests／0 failures／0 errors／117 skipped**。[build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851917)、[package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851940)。
 - 本次 Semantic gap job 實際 SUCCESS，日誌含 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=67`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`，合併 #134 Maven 接線後的全新 CI JAR 比較仍為 2125 SAME／424 DIFF。原始日誌保存於 `scratch/issue-153/ci-retry-semantic.log`、`ci-retry-server-tests.log`。[Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851917/job/127055288795)
 - 以下為首輪歷史證據，程式修正以本次 `ff50cca` 驗證為準。最後報告補充提交僅更新本文件，可由 PR checks 查閱其執行結果。
