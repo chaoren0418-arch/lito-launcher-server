@@ -13,10 +13,10 @@ final class NativeSourceDollAccepted {
   if(!NativeSourceDollCommit.enabled(caster)){NativeSourceDamageDisplay.physical(target,damage,caster,aim,weapon,maximum,multiplier);return;}
   var plan=NativeSourceDamageDisplay.capture(caster,target,damage,true,NativeSourceDamageDisplay.critical(weapon.weaponType(),maximum.effectEnabled(),multiplier.effectEnabled()),false);
   if(plan==null)plan=new NativeSourceDamageDisplay.Plan(NativeSourceDamageDisplay.Actor.capture(caster),NativeSourceDamageDisplay.Actor.capture(target),List.of());
-  var casterActor = plan.caster;
-  var source=NativeSourceAcceptedPlayers.fromActor(caster,casterActor.binding(),casterActor,casterActor.life());
-  var targetActor = plan.target;
-  var victim=NativeSourceAcceptedPlayers.fromActor(target,targetActor.binding(),targetActor,targetActor.life());
+  NativeSourceDamageDisplay.Actor casterActor;
+  var source=NativeSourceAcceptedPlayers.fromActor(caster,plan.caster.binding(),(casterActor = plan.caster),casterActor.life());
+  NativeSourceDamageDisplay.Actor targetActor;
+  var victim=NativeSourceAcceptedPlayers.fromActor(target,plan.target.binding(),(targetActor = plan.target),targetActor.life());
   var guard=new NativeSourceRawDamage.Guard(victim,source,true,plan.owner);plan.nativeRawGuard=guard;plan.nativeSourceDollPending=new Pending(caster,target,proc,guard);final var hp=plan;
   try{NativeSourcePlayerActionLock.runPairOrdered(caster,target,()->{synchronized(hp.owner.admission){if(hp.owner.mode!=NativePlayerLifetime.Mode.OPEN||!guard.before()||NativeSourceDamageDisplay.n(target,"playerHp")<=0||(boolean)CombatAccess.field(caster,"observer")||(boolean)CombatAccess.field(target,"observer")||(boolean)CombatAccess.field(hp.hub,"nativeStaticMotionClosed")||aim!=null&&!NativeSourceKiringkuAdmission.valid(aim,caster,target))return;try{NativeLightAction.commitPair(caster,target,()->{if(guard.before())NativeSourceDamageDisplay.damage(target,damage,caster,true,false,0,hp);});}catch(IOException error){throw new UncheckedIOException(error);}}});}catch(UncheckedIOException error){throw error.getCause();}
  }

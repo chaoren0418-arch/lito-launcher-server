@@ -38,7 +38,7 @@ final class NativeWeaponBreakTargetLifecycle {
   }}));
  }
  static boolean captureOutput(ClientSession receiver,byte[] packet,String note)throws IOException{
-  // TODO #62: javac requires this throws clause for capture; candidate metadata omits it.
+  // #174 exceptions-exempt.txt covers the candidate's omitted Exceptions attribute.
   if(NativeSourceWeaponFinalFrame.capture(receiver,packet,note))return true;
   var context=NativeAreaMaterialAction.current.get();if(context==null)return NativeAreaMaterialAction.nativeTargetOriginalCaptureOutput(receiver,packet,note);
   int stage=(int)CombatAccess.field(context,"nativeWeaponBreakTarget");if(stage==0)return NativeAreaMaterialAction.nativeTargetOriginalCaptureOutput(receiver,packet,note);if(stage!=2)return false;
@@ -50,8 +50,24 @@ final class NativeWeaponBreakTargetLifecycle {
   // only after that pair and the hub/population have been released.
   NativeLightAction.deferWeaponTargetOutput(()->{var completion=new Runnable[1];NativeSourcePlayerActionLock.run(receiver,()->{
    if(NativeSourceControlledRoleFrame.current(binding,receiver))completion[0]=NativeRolePublication.completion(receiver,()->{
-    boolean valid;synchronized(context.hub){if(context.population!=null)synchronized(context.population){valid=NativeSourceControlledRoleFrame.current(binding,receiver)&&context.player(receiver)&&targets.stream().allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));}
-     else valid=NativeSourceControlledRoleFrame.current(binding,receiver)&&context.player(receiver)&&targets.stream().allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));}
+    boolean valid;
+    synchronized(context.hub){
+     if(context.population!=null){
+      synchronized(context.population){
+       if(NativeSourceControlledRoleFrame.current(binding,receiver)&&context.player(receiver)){
+        var players=targets.stream();
+        Objects.requireNonNull(context);
+        valid=players.allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));
+       }else valid=false;
+      }
+     }else{
+      if(NativeSourceControlledRoleFrame.current(binding,receiver)&&context.player(receiver)){
+       var players=targets.stream();
+       Objects.requireNonNull(context);
+       valid=players.allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||context.npc(id));
+      }else valid=false;
+     }
+    }
     if(valid)try{receiver.nativeSelfOriginalSend(frozen,note);}catch(IOException e){throw new java.io.UncheckedIOException(e);}
    });
   });if(completion[0]!=null)completion[0].run();});return true;
