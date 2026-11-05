@@ -19,4 +19,3 @@ local/lito381/server/ClassicWorldMapCatalog#forMap(I)Llocal/lito381/server/Class
 # batch: A05, category: dup-pop-local
 # #75／#62：無效身分直接跳過該 Release；完整差異與副作用驗證見 docs/reports/issue-75.md。
 local/lito381/server/CombatCurseLifecycle$Removal#drain(Z)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6644525369 # batch: A04, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/106
-local/lito381/server/NativeCompanionForestArea#apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V # batch: B01, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/79
