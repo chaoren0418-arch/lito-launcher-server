@@ -1,0 +1,1 @@
+local/lito381/server/Main#main([Ljava/lang/String;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153

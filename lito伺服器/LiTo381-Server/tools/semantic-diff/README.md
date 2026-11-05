@@ -1,5 +1,33 @@
 # ASM 語意比對
 
+## T020i-3（Issue #153）
+
+預設新增以下正規化，所有轉換只在讀取的 ASM tree 進行，不改寫輸入 JAR：
+
+- `lambda$…$N` 用描述子與正規化內容的 SHA-256 識別，包含方法 metadata 與 try 表；相同內容的重複方法合併，呼叫及 bootstrap handle 同步引用內容識別。名稱前綴、數字與已遮罩的 SYNTHETIC 不影響識別。不同本體或不同呼叫目標仍 DIFF；循環 lambda 參照會報錯，避免遞迴失控。精確核准的原名仍固定，不會藉內容配對擴大授權。
+- invokedynamic 的 bootstrap 參數只對「同一類別、private、非 static、非建構子」的實例 method handle 統一 H5/H7；外部 owner、public、一般呼叫指令與 LDC handle 保持原狀。
+- Object 子類建構子的 `ALOAD 0; Object.<init>()V` 前移至開頭。直線前綴以堆疊追蹤確認 this 只作自身已宣告欄位的 PUTFIELD receiver，其餘計算不得使用 this；無法安全解析、分支或非法 this 用法報錯。非 Object 父類不套用。
+- 每類 `$SwitchMap$` 合成欄位依 class 欄位表首次出現的順序重命名，宣告及跨類別欄位引用／handle 共用映射。不是各方法各自重編，因此交換兩個 switch map 的使用仍 DIFF。
+- try 區間向內裁掉 LABEL／LINE／FRAME、NOP、GOTO、區域 xLOAD／xSTORE、數字／字串常數，以及方法內沒有 MONITORENTER 時的 return 系列。Class／MethodType／MethodHandle／condy 常數保留可能拋例外的邊界。空區間刪除，handler 不移動；未使用的標籤移除，同位置標籤共用識別。
+
+新增三個必須明確傳入的精確清單：
+
+```text
+--access-widen docs/combat-merge/access-widen-approved.txt
+--layout-methods docs/combat-merge/layout-approved.txt
+--deviations docs/combat-merge/deviations.txt
+```
+
+一般格式為 `類別#方法描述子 # approved: <url>`；deviations 的建構子條目加前綴 `ctor-prologue-order `。接受 BOM、空白與註解，拒絕空清單、範圍外類別、拼錯或缺少的必要方法。先裁切到本批；不自動擴大到內部類。allow-right 仍優先決定有效比較目標。
+
+`access-widen` 只允許左側較寬的可見性，其他 flags、內容與 metadata 照比。一般 deviation 只允許方法在左側多出；兩側皆有時照比，整類缺漏不豁免。`ctor-prologue-order` 只允許右側 super 前的自身欄位簡單賦值在左側改到 super 後，其他呼叫／計算仍保留；不包含 `NativeDeInstanceNames.name`。
+
+layout 比較使用細分至指令的 CFG，收縮無註解的 GOTO 接邊，匹配指令、具分支角色的正常後繼、依表順序的例外後繼及 handler 型別／註解。保留不可達區塊並驗證全圖同構，區域槽位採全圖一對一映射、參數與 wide 別名固定；不忽略新增 ASTORE／ALOAD。搜尋超過上限時明確報錯。effects 與 layout／建構子例外重疊會拒絕。
+
+`effects` 額外允許對側存在 DUP 時，省去單次寫入、單次讀取、同一直線片段且中間無其他寫入的 ASTORE 暫存。讀取兩次、沒有對應 DUP、標註的 store 均不放寬。這仍是明確核准方法的摘要比較，不是任意堆疊等價證明。
+
+JSON／Markdown 分列 `SAME_LAYOUT`、`DEVIATION` 與逐方法 `approvedMethods`，即使整類 DIFF 也列出。類別狀態優先序為 DIFF、DEVIATION、SAME_LAYOUT、SAME_EFFECTS、SAME；各方法結果完整保留。交集須加總這五項，不可只算舊三項。`AdvancedSelfTest` 已接入 `selftest.sh`；無法達成 #76 預期 0 DIFF 的固定輸入差異與規格衝突見 `docs/reports/issue-153.md`。
+
 使用 Java 17。Bash 入口優先使用 Maven，無 Maven 時以 javac＋通過 SHA-256 校驗的 ASM 9.7 建置；不影響伺服器 runtime 依賴。
 
 ```bash

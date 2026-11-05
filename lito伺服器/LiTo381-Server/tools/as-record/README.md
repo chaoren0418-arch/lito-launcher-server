@@ -1,5 +1,26 @@
 # @AsRecord 暫存批次轉換器
 
+## @AsmFinal（Issue #153）
+
+同一個 CLI 與 `AsRecord.transform` 也處理 `local.lito381.server.AsmFinal`：CLASS retention、TYPE target、`String[] value()`。適用一般、繼承、抽象類別與 static 欄位，不要求 record 或 Object 父類。列出的欄位補 `ACC_FINAL` 後移除註解，其他類別結構保持不變。缺少／重複／歧義欄位及 volatile 欄位會報錯；整批驗證完才寫回。可與 `@AsRecord` 同用。
+
+```java
+@AsmFinal({"nativeSourceNpcHpObserver"})
+class Member {
+    private transient Object nativeSourceNpcHpObserver;
+}
+```
+
+這只還原欄位旗標，不新增賦值、建構子或記憶體可見性保證。標註來源須自行保證 final 欄位寫入符合 JVM 限制。
+
+#134 的 Maven `process-classes`／`process-test-classes` 接線呼叫同一個 `AsRecord.main`，無須另外的 final 轉換步驟。本分支的伺服器 POM 尚未包含 #134；本任務沒有修改該範圍外檔案。可用相同 Maven 執行方式的隔離 fixture 驗證：
+
+```text
+python tools/as-record/asm-final-maven-selftest.py --maven <mvn路徑> --maven-repo <隔離快取> --offline
+```
+
+fixture 在 repo scratch 產生來源、在工具 target 產生成品，實際執行 `package`，檢查 JAR 不含 ASM／converter／舊伺服器 stub，再以 `-Xverify:all` 核對一般及抽象類別的 final、父類、預設值、註解移除與冪等性。`selftest.py` 另驗證欄位拼錯、重複與 volatile 時整批不寫回。
+
 Issue #102／T020g：將 Java 可編譯的 `final class` 原地轉成保留額外實例欄位的 JVM record。伺服器 `pom.xml` 未接線；Maven 生命週期與 JSON 掃描交給 #134。
 
 ## 使用

@@ -22,6 +22,16 @@ final class JarIndex {
     /** owner internal name → original synthetic method name → canonical name */
     final Map<String, Map<String, String>> syntheticMethods = new TreeMap<>();
     private Map<String, Set<String>> exactMethods = Map.of();
+    private final Map<String, ClassNode> trees = new TreeMap<>();
+    private final Map<String, String> lambdaIds = new TreeMap<>();
+    private final java.util.Set<String> resolving = new java.util.HashSet<>();
+    private final Map<String, Map<String, String>> switchFields = new TreeMap<>();
+    final Map<MethodNode, String> methodOwners = new java.util.IdentityHashMap<>();
+    Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
+
+    boolean approved(Map<String, Set<String>> list, MethodNode method) {
+        return list.getOrDefault(methodOwners.get(method), Set.of()).contains(method.name + method.desc);
+    }
 
     private JarIndex(Path path) {
         this.path = path;
@@ -47,6 +57,13 @@ final class JarIndex {
         }
         for (Map.Entry<String, byte[]> e : index.classes.entrySet()) {
             index.syntheticMethods.put(e.getKey(), syntheticMap(e.getValue(), Set.of()));
+            ClassNode node = new ClassNode();
+            new ClassReader(e.getValue()).accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+            Map<String, String> fields = new LinkedHashMap<>();
+            for (var f : node.fields) if (f.name.startsWith("$SwitchMap$")
+                    && (f.access & org.objectweb.asm.Opcodes.ACC_SYNTHETIC) != 0)
+                fields.put(f.name, "$SwitchMap$#" + fields.size());
+            index.switchFields.put(node.name, fields);
         }
         return index;
     }
@@ -54,6 +71,7 @@ final class JarIndex {
     /** Approval identities must not consume or match a synthetic ordinal on any side. */
     void preserveExactMethods(Map<String, Set<String>> methods) {
         exactMethods = methods;
+        lambdaIds.clear();
         for (var entry : methods.entrySet()) {
             byte[] bytes = classes.get(entry.getKey());
             if (bytes != null) syntheticMethods.put(entry.getKey(), syntheticMap(bytes, entry.getValue()));
@@ -62,14 +80,37 @@ final class JarIndex {
 
     String remapMethod(String owner, String name, String desc) {
         if (exactMethods.getOrDefault(owner, Set.of()).contains(name + desc)) return name;
+        if (name.startsWith("lambda$") && syntheticPrefix(name) != null && classes.containsKey(owner)) {
+            String key = owner + "#" + name + desc;
+            if (lambdaIds.containsKey(key)) return lambdaIds.get(key);
+            ClassNode node = readTree(owner);
+            // ASM and decompiled Java may omit ACC_SYNTHETIC; that flag is already ignored for methods.
+            MethodNode method = node.methods.stream().filter(m -> m.name.equals(name) && m.desc.equals(desc))
+                    .findFirst().orElse(null);
+            if (method != null) {
+                // Recursive synthetic graphs are not emitted by javac. Fail closed for such input.
+                if (!resolving.add(key)) throw new IllegalArgumentException("recursive lambda body: " + key);
+                try {
+                    String body = ClassComparer.methodIdentity(method, this);
+                    String id = "lambda$content$" + java.util.HexFormat.of().formatHex(
+                            java.security.MessageDigest.getInstance("SHA-256").digest(body.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+                    lambdaIds.put(key, id);
+                    return id;
+                } catch (java.security.NoSuchAlgorithmException ex) { throw new IllegalStateException(ex); }
+                finally { resolving.remove(key); }
+            }
+        }
         Map<String, String> map = syntheticMethods.get(owner);
         if (map == null) {
             return name;
         }
-        return map.getOrDefault(name, name);
+        return name.startsWith("lambda$") ? name : map.getOrDefault(name, name);
     }
 
+    String remapField(String owner, String name) { return switchFields.getOrDefault(owner, Map.of()).getOrDefault(name, name); }
+
     ClassNode readTree(String internalName) {
+        if (trees.containsKey(internalName)) return trees.get(internalName);
         byte[] bytes = classes.get(internalName);
         if (bytes == null) {
             return null;
@@ -78,6 +119,9 @@ final class JarIndex {
         // SKIP_DEBUG drops LineNumberTable / LocalVariable(Type)Table / SourceFile /
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        Normalizations.prepare(node);
+        for (MethodNode m : node.methods) methodOwners.put(m, node.name);
+        trees.put(internalName, node);
         return node;
     }
 
