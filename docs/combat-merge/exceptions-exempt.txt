@@ -1,0 +1,4 @@
+﻿# 僅忽略精確方法的 Exceptions 屬性；不豁免指令、handler 或其他 metadata。
+# #174 承接 #62 主控裁定；ASM 候選省略 checked throws，Java 來源仍需宣告。
+local/lito381/server/NativeWeaponBreakTargetLifecycle#captureOutput(Llocal/lito381/server/ClientSession;[BLjava/lang/String;)Z  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6654588607
+

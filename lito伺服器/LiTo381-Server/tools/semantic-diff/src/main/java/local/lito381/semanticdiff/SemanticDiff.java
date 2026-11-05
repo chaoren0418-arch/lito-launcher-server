@@ -80,7 +80,7 @@ public final class SemanticDiff {
         // This also keeps calls and method handles consistent across all three JARs.
         Map<String, Set<String>> exact = new LinkedHashMap<>();
         for (Map<String, Set<String>> policy : Arrays.asList(parsed.extraMethods, parsed.effectsMethods, parsed.accessWiden,
-                parsed.layouts, parsed.deviations, parsed.ctorOrders, parsed.allowMethods)) {
+                parsed.layouts, parsed.deviations, parsed.ctorOrders, parsed.allowMethods, parsed.exceptionsExempt)) {
             if (policy != null) policy.forEach((c, ms) -> exact.computeIfAbsent(c,k -> new LinkedHashSet<>()).addAll(ms));
         }
         left.preserveExactMethods(exact);
@@ -90,6 +90,7 @@ public final class SemanticDiff {
         left.layouts = parsed.layouts;
         left.deviations = parsed.deviations;
         left.ctorOrders = parsed.ctorOrders;
+        left.exceptionsExempt = parsed.exceptionsExempt;
 
         Set<String> universe = new TreeSet<>();
         universe.addAll(left.classes.keySet());
@@ -223,7 +224,8 @@ public final class SemanticDiff {
 
     private static void validatePolicies(Args p, Set<String> names, JarIndex left, JarIndex right, JarIndex allow) {
         for (var policy : Map.of("--access-widen", p.accessWiden, "--layout-methods", p.layouts,
-                "--deviations", p.deviations, "ctor-prologue-order", p.ctorOrders).entrySet()) {
+                "--deviations", p.deviations, "ctor-prologue-order", p.ctorOrders,
+                "--exceptions-exempt", p.exceptionsExempt).entrySet()) {
             for (var e : policy.getValue().entrySet()) {
                 if (!names.contains(e.getKey())) throw new IllegalArgumentException(policy.getKey() + " class outside comparison scope: " + e.getKey());
                 for (String key : e.getValue()) {
@@ -371,7 +373,7 @@ public final class SemanticDiff {
                     + (parsed.effectsFile == null ? "null" : json(parsed.effectsFile.toString())) + ",");
             w.println("  \"extraMethodsFile\": " + json(parsed.extraFile == null ? null : parsed.extraFile.toString()) + ",");
             w.println("  \"metadataExemptFile\": " + json(parsed.metadataFile == null ? null : parsed.metadataFile.toString()) + ",");
-            for (var p : Map.of("accessWiden",parsed.accessWiden,"layoutMethods",parsed.layouts,"deviations",parsed.deviations,"ctorPrologueOrder",parsed.ctorOrders).entrySet()) {
+            for (var p : Map.of("accessWiden",parsed.accessWiden,"layoutMethods",parsed.layouts,"deviations",parsed.deviations,"ctorPrologueOrder",parsed.ctorOrders,"exceptionsExempt",parsed.exceptionsExempt).entrySet()) {
                 Set<String> entries = new TreeSet<>(); p.getValue().forEach((c, ms) -> ms.forEach(m -> entries.add(c + "#" + m)));
                 w.println("  " + json(p.getKey()) + ": " + jsonNames(entries) + ",");
             }
@@ -482,6 +484,7 @@ public final class SemanticDiff {
         lines.add("| 正規化 | 移除 debug 與 frames；不比較 max_stack／max_locals／常數池順序；lambda 依描述子與正規化內容識別、相同內容去重；access$ 依出現順序正規化 |");
         lines.add("| T020i-3 正規化 | 同類 private 實例 bootstrap handle H5/H7 統一；Object super 前移並驗證 this 用法；合成 SwitchMap 欄位依宣告首次出現順序重命名；try 邊界裁掉不會拋例外的指令，刪除空區間 |");
         lines.add("| T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |");
+        lines.add("| T020i-5 正規化 | 逐條可能拋例外指令的有序 handler 涵蓋；所有路徑已成功取用的多餘 null 檢查；基本區塊內 local／stack 值、複本數與副作用順序證明 |");
         lines.add("| T020i-2 正規化 | InnerClasses 只比本類別及直接內部類；忽略類別 ACC_SUPER；右側無建構子時允許左側唯一的空 Object 建構子；非參數槽位依首次出現一對一重編號（含 wide 第二格） |");
         lines.add("| extra-methods | " + (parsed.extraFile == null ? "未啟用" : mdEscape(parsed.extraFile.toString())) + " |");
         lines.add("| metadata-exempt | " + (parsed.metadataFile == null ? "未啟用" : mdEscape(parsed.metadataFile.toString())) + " |");
@@ -521,7 +524,7 @@ public final class SemanticDiff {
             for (String method : entry.getValue()) lines.add("- extra-methods：`" + entry.getKey() + "#" + method + "`");
         }
         for (String owner : parsed.metadataExempt) lines.add("- metadata-exempt：`" + owner + "`");
-        for (var p : Map.of("access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders).entrySet())
+        for (var p : Map.of("access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders,"exceptions-exempt",parsed.exceptionsExempt).entrySet())
             p.getValue().forEach((c, ms) -> ms.forEach(m -> lines.add("- " + p.getKey() + "：`" + c + "#" + m + "`")));
         lines.add("");
         lines.add("## 核准排列與刻意偏離結果");
@@ -708,12 +711,23 @@ public final class SemanticDiff {
         Path effectsFile;
         Map<String, Set<String>> effectsMethods = Map.of();
         Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
+        Map<String, Set<String>> exceptionsExempt = Map.of();
 
         static Args parse(String[] args) throws IOException {
             Args out = new Args();
             for (int i = 0; i < args.length; i++) {
                 String a = args[i];
                 switch (a) {
+                    case "--exceptions-exempt" -> {
+                        Path file = Path.of(need(args, ++i, a));
+                        for (String line : Files.readAllLines(file, StandardCharsets.UTF_8)) {
+                            String entry = line.replace("\uFEFF", "").trim();
+                            if (!entry.isEmpty() && !entry.startsWith("#")
+                                    && !entry.matches(".*\\s+#\\s*approved:\\s+https?://\\S+\\s*"))
+                                throw new IllegalArgumentException("--exceptions-exempt requires approved URL: " + line);
+                        }
+                        out.exceptionsExempt = parseMethods(file, a);
+                    }
                     case "--access-widen" -> out.accessWiden = parseMethods(Path.of(need(args, ++i, a)), a);
                     case "--layout-methods" -> out.layouts = parseMethods(Path.of(need(args, ++i, a)), a);
                     case "--deviations" -> out.parseDeviations(Path.of(need(args, ++i, a)));
@@ -873,6 +887,7 @@ public final class SemanticDiff {
                             + " [--allow-methods file --allow-right C.jar]"
                             + " [--effects-methods file] [--extra-methods file] [--metadata-exempt file]"
                             + " [--access-widen file] [--layout-methods file] [--deviations file]"
+                            + " [--exceptions-exempt file]"
                             + " [--left-classpath jar-or-dir] [--right-classpath jar-or-dir]"
                             + " [--json out.json] [--md out.md]");
         }

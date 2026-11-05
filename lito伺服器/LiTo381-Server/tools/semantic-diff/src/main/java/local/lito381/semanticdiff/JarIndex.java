@@ -32,6 +32,7 @@ final class JarIndex {
     private final Map<String, ClassNode> headers = new TreeMap<>();
     private Set<String> otherReferences;
     Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
+    Map<String, Set<String>> exceptionsExempt = Map.of();
 
     boolean approved(Map<String, Set<String>> list, MethodNode method) {
         return list.getOrDefault(methodOwners.get(method), Set.of()).contains(method.name + method.desc);
@@ -124,6 +125,7 @@ final class JarIndex {
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         Normalizations.prepare(node);
+        for (MethodNode m : node.methods) NonNullChecks.normalize(node.name, m);
         FourthNormalizations.prepare(node, this);
         for (MethodNode m : node.methods) methodOwners.put(m, node.name);
         trees.put(internalName, node);
