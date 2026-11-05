@@ -90,6 +90,8 @@ final class LayoutComparison implements Opcodes {
         return n;
     }
     private static Graph graph(MethodNode m, JarIndex jar) {
+        for (AbstractInsnNode n : m.instructions) if (n.getOpcode() == JSR || n.getOpcode() == RET)
+            throw new IllegalArgumentException("layout does not support legacy JSR/RET subroutines");
         Map<AbstractInsnNode,Integer> ids=new IdentityHashMap<>(), positions=new IdentityHashMap<>();
         List<AbstractInsnNode> code=new ArrayList<>(); int pos=0;
         for(AbstractInsnNode n:m.instructions) { positions.put(n,pos++); AbstractInsnNode r=resolve(n);

@@ -25,7 +25,7 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 | 驗證 | 實測 |
 |---|---|
 | 原有 NormalizationSelfTest | `ALL PASS checks=517` |
-| 新增 AdvancedSelfTest | `ALL PASS checks=47`，已接進 selftest.sh |
+| 新增 AdvancedSelfTest | `ALL PASS checks=49`，已接進 selftest.sh；涵蓋跨 super 保留非 this 堆疊值，另拒絕未支援的舊式 JSR／RET CFG |
 | as-record/selftest.py | `SELFTEST PASS`；含新增 AsmFinal JVM／正反例及原有 record 回歸 |
 | asm-final-maven-selftest.py | `BUILD SUCCESS`、`ASM FINAL MAVEN SELFTEST PASS` |
 | 伺服器 `mvn -o -B -DskipTests package` | `BUILD SUCCESS`，含 testCompile，未執行伺服器測試 |

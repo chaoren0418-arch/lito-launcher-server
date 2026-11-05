@@ -190,7 +190,8 @@ final class Normalizations implements Opcodes {
             // Refuse unknown stack/control effects rather than accidentally exposing uninitialized this.
             fail(owner, m);
         }
-        if (!stack.isEmpty()) fail(owner, m);
+        // Other values may legitimately remain on the operand stack across the void Object call.
+        if (stack.contains(true)) fail(owner, m);
     }
 
     private static void push(List<Boolean> stack, int count, boolean self) { for (int i=0;i<count;i++) stack.add(self); }

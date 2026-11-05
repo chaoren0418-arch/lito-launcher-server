@@ -22,7 +22,7 @@
 
 `access-widen` 只允許左側較寬的可見性，其他 flags、內容與 metadata 照比。一般 deviation 只允許方法在左側多出；兩側皆有時照比，整類缺漏不豁免。`ctor-prologue-order` 只允許右側 super 前的自身欄位簡單賦值在左側改到 super 後，其他呼叫／計算仍保留；不包含 `NativeDeInstanceNames.name`。
 
-layout 比較使用細分至指令的 CFG，收縮無註解的 GOTO 接邊，匹配指令、具分支角色的正常後繼、依表順序的例外後繼及 handler 型別／註解。保留不可達區塊並驗證全圖同構，區域槽位採全圖一對一映射、參數與 wide 別名固定；不忽略新增 ASTORE／ALOAD。搜尋超過上限時明確報錯。effects 與 layout／建構子例外重疊會拒絕。
+layout 比較使用細分至指令的 CFG，收縮無註解的 GOTO 接邊，匹配指令、具分支角色的正常後繼、依表順序的例外後繼及 handler 型別／註解。保留不可達區塊並驗證全圖同構，區域槽位採全圖一對一映射、參數與 wide 別名固定；不忽略新增 ASTORE／ALOAD。搜尋超過上限或遇到舊式 JSR／RET 子程序時明確報錯。effects 與 layout／建構子例外重疊會拒絕。
 
 `effects` 額外允許對側存在 DUP 時，省去單次寫入、單次讀取、同一直線片段且中間無其他寫入的 ASTORE 暫存。讀取兩次、沒有對應 DUP、標註的 store 均不放寬。這仍是明確核准方法的摘要比較，不是任意堆疊等價證明。
 
@@ -89,7 +89,7 @@ bash tools/semantic-diff/selftest-fallback.sh
 
 兩份清單接受空白行、整行／行尾註解與 UTF-8 BOM；空清單、不存在的檔案、萬用字元及範圍外類別均拒絕。JSON 與 Markdown 列出使用的例外清單，結果仍需檢查所有 DIFF／ONLY_*，不是看 CLI exit 0。
 
-extra 清單中的精確原名＋描述子在 A／B／C 三側固定原名，不參與合成名稱編號；其他合成方法依剩餘出現順序比較。呼叫與 method handle 使用同一對應。因此兩側同原名的核准方法仍比較內容，左側未核准方法不能借用核准方法的編號被消去；同名但不同描述子的 overload 不受該條目豁免。
+核准清單中的精確原名＋描述子在 A／B／C 三側固定原名，不參與內容去重或合成名稱編號；其餘 lambda 依內容比較，access$ 依剩餘出現順序比較。呼叫與 method handle 使用同一對應。因此兩側同原名的核准方法仍比較內容，左側未核准方法不能借用核准方法的編號被消去；同名但不同描述子的 overload 不受該條目豁免。
 
 主控核准檔為 `docs/combat-merge/{extra-methods-approved,metadata-exempt,effects-approved}.txt`。批次重跑前先裁切到本批實際具備的類別／方法，不能把缺少 helper 的 Maven 原始產物套用完整 extra 清單後當作成功。#77 的 RuntimeInventory 為 3 個方法、4 處 return；ServerConfig 為 2 個 effects 方法及 1 個 extra helper。這些清單只記錄核准範圍，不保證 staged 已達 SAME_EFFECTS；若 catch、呼叫序列或其他摘要不同仍會 DIFF。
 

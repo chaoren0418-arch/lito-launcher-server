@@ -30,6 +30,11 @@ public final class AdvancedSelfTest implements Opcodes {
             c.methods.get(0).instructions.insertBefore(n,new InsnNode(ICONST_1)); c.methods.get(0).instructions.insertBefore(n,new InsnNode(IADD));
         }
         check("object-super-computation",calculation,calculation2,"SAME");
+        ClassNode live=ctor("java/lang/Object",true,false),live2=ctor("java/lang/Object",false,false);
+        live.methods.get(0).instructions.insert(new InsnNode(ICONST_2));
+        for(AbstractInsnNode n:live2.methods.get(0).instructions.toArray()) if(n instanceof MethodInsnNode) live2.methods.get(0).instructions.insert(n,new InsnNode(ICONST_2));
+        for(ClassNode c:List.of(live,live2)) c.methods.get(0).instructions.insertBefore(c.methods.get(0).instructions.getLast(),new InsnNode(POP));
+        check("object-super-live-stack",live,live2,"SAME");
         check("other-super",ctor("Parent",true,false),ctor("Parent",false,false),"DIFF");
         ClassNode unsafe=ctor("java/lang/Object",true,false);
         unsafe.methods.get(0).instructions.insert(new MethodInsnNode(INVOKEVIRTUAL,"Fixture","bad","()V",false));
@@ -62,6 +67,8 @@ public final class AdvancedSelfTest implements Opcodes {
         check("layout-unreachable",unreach,unreach2,"SAME_LAYOUT","--layout-methods","Fixture#m()V");
         unreach2.methods.get(0).instructions.insertBefore(unreach2.methods.get(0).instructions.getLast(),new InsnNode(NOP));
         check("layout-unreachable-different",unreach,unreach2,"DIFF","--layout-methods","Fixture#m()V");
+        ClassNode legacy=plain(ACC_PUBLIC); legacy.methods.get(0).instructions.insert(new VarInsnNode(RET,1));
+        rejected("layout-legacy-ret",legacy,legacy,"--layout-methods","Fixture#m()V");
         check("dup-temp",temp(true,1),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
         check("dup-temp-twice",temp(true,2),temp(false,1),"DIFF","--effects-methods","Fixture#m()V");
         check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
