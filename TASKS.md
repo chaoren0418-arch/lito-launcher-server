@@ -18,7 +18,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 2. `src/main` 用 `mvn package` 建出 `LiTo381-Server.jar`，與正式 `reference/base-0.6.71.jar` 做語意比對，摘要分成：
    - **A 範圍** 692 個 entry：**DIFF=0**（核准的偏離另行列出）；
    - **整顆 JAR**：差異只能落在下面兩類，**其他差異必須為 0**：
-     - (i) **B 範圍**：約 205 個 entry，即 DIFF 203＋ONLY_RIGHT 2（設計 §7-1）。這些類別在 M2 會改成候選 `50635f7e…` 的內容，**不會**變回正式版；
+     - (i) **B 範圍中與正式版不同的 entry**：約 205 個，即 DIFF 203＋ONLY_RIGHT 2（設計 §7-1；不同於 M2 第 1 點所說候選的全部 B entry 1,384 個）。這些類別在 M2 會改成候選 `50635f7e…` 的內容，**不會**變回正式版；
      - (ii) **`src/main` 專有的 ONLY_LEFT**：約 1,380 個（`Modern*` 等，T007 刻意排除）。
    - 因此 M0 的 JAR **不是**整顆等價於正式版。
 3. 三張截圖，都是用上述 JAR 在**實驗環境**中拍的：伺服器主控台啟動完成、登入器連線、遊戲**大廳**。實驗環境指 P24Lab，或由 `environments/` 快照建立的隔離 DB，不碰正式 MySQL 3306 與正式設定。
@@ -36,7 +36,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 | 8 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | **done**（closed） |
 | 9 | T020i-10 | #235 | 比較器：private 方法改名配對（不確定項 U0-1 兌現第 1 張） | doing |
 | 10 | T020-A-land | #78 | A 暫存併入 src/main，補 7 項單元測試，`mvn test` 綠燈，A 範圍語意 DIFF=0 | todo（等 2、9） |
-| 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | blocked（needs:user：處理誤匯出的正式副本，預設 C 凍結並改走 P24；needs:orchestrator：稽核事故） |
+| 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | blocked（needs:user：處理誤匯出的正式副本，預設 C 凍結並改走 P24；事故稽核另由 #247 執行） |
 | 12 | T050 | #225 | 用實驗環境啟動到大廳並截圖（dot） | todo（等 10、11） |
 
 <details><summary>M0 之前已完成的早期項目（計入歷史，不計入上表）</summary>
@@ -67,7 +67,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 ## M2 戰鬥技能同源化（M1 完成後封頂）
 
 **完成定義（凍結）**：使用者會看到：
-1. B-land 之後，`mvn package` 產物對候選 `50635f7e…` 的語意比對摘要：B 範圍 1,384 個 entry、**DIFF=0**（核准的偏離另列）。
+1. B-land 之後，`mvn package` 產物對候選 `50635f7e…` 的語意比對摘要：B 範圍（候選的**全部** B entry）1,384 個、**DIFF=0**（核准的偏離另列）。
 2. `tools/combat-continuation` 既有的 2,400 案、5,164 組合、curse-clock 24 案，在 Maven 產物上重跑的對照表，全部一致。
 3. 在實驗環境用新建置打一場戰鬥，技能 29、152、153 各施放一次並截圖。這三個技能有 `50635f7e…` 同 SHA 的專項收據（`docs/maintenance/source-negative-final-frame.zh-TW.md`）。
 
