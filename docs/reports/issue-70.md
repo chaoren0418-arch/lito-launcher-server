@@ -2,7 +2,7 @@
 
 ## 結論
 
-**尚未通過 B09 驗收、不可 B-land；剩餘差異交 `needs:claude` 裁定。** 已在指定 worktree／`task/70`，由 `31ddb09` 合併 `origin/main@43a4f7a`（含 #203／#216；合併提交 `d8c4d97`），沒有切換或建立分支。#216 已到齊，不再列為等待合併的阻塞。
+**尚未通過 B09 驗收、不可 B-land；剩餘差異交 `needs:claude` 裁定。** 已在指定 worktree／`task/70`，由 `31ddb09` 合併 `origin/main@43a4f7a`（含 #203／#216；合併提交 `d8c4d97`），沒有切換或建立分支。#216 已到齊，不再列為等待合併的阻塞。 交付前再同步工作期間新增的 `origin/main@b70c573`（B01／B07；合併提交 `c56de76`）；核對此次合併未變動三份 B09 Java、工具、註解、reference、lib、batches 或核准清單，因此完整 362-entry 結果仍適用。
 
 最終完整 **362 entries：357 SAME、2 SAME_PATHS、3 DIFF**；類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 全 0。方法診斷仍有 **346 DIFF、9 ONLY_LEFT、63 ONLY_RIGHT**，72 個配對缺口全含 `lambda$`，不可視為通過。T029 八方法為 **5 SAME、1 SAME_EFFECTS、1 SAME_PATHS、1 DIFF**。CLI exit 0 只表示報告成功產生。
 
@@ -141,7 +141,7 @@ Microsoft OpenJDK 17.0.17、ASM 9.7。每次使用全新輸出目錄，由來源
 
 ### 完整 PR 格式檢查
 
-修掉 Protocol 檔尾後，對 **完整 PR 累積差異**執行 `git diff --check origin/main`（包含工作樹修改），提交後再執行 `git diff --check origin/main...HEAD`；兩者皆須 exit 0。範圍包含前輪累積的三份 staged Java、extra-methods-approved 與本報告，並非只檢查本輪未提交差異。metadata-exempt 最終與 main 相同，不產生 PR 差異。實際收據為 `scratch/issue-70/full-pr-diff-check.txt`。
+修掉 Protocol 檔尾後，對 **完整 PR 累積差異**執行 `git diff --check origin/main`（包含工作樹修改），提交後再執行 `git diff --check origin/main...HEAD`；兩者皆 exit 0。範圍包含前輪累積的三份 staged Java、extra-methods-approved 與本報告，並非只檢查本輪未提交差異。metadata-exempt 最終與 main 相同，不產生 PR 差異。實際收據為 `scratch/issue-70/full-pr-diff-check.txt`。
 
 ## 推測
 
