@@ -33,3 +33,4 @@
 - 2026-11-05 — #184 T042: 調查 CombatSkillDerived 技能表欄位（SKU1/SKU2/SKD1-3）遺失的潛伏 bug（本機）（resource，codex-local，PR #198 已合併）→ [報告](reports/issue-184.md)
 - 2026-11-05 — #176 T020i-6: semantic-diff 第六批（巢狀類別存取放寬、無迴圈方法逐路徑比對、核准方法偏離）（code，codex-local，PR 已合併）→ [報告](reports/issue-176.md)
 - 2026-11-06 — #63 T020-B02: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #81 已合併）→ [報告](reports/issue-63.md)
+- 2026-11-06 — #186 T020i-7: semantic-diff 的 $SwitchMap$ 兩側對稱改名、原樣轉拋 handler、private 呼叫指令（code，codex-local，PR 已合併）→ [報告](reports/issue-186.md)
