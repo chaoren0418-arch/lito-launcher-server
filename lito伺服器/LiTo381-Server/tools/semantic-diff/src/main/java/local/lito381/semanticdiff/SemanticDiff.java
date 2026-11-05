@@ -100,6 +100,7 @@ public final class SemanticDiff {
         left.ctorOrders = parsed.ctorOrders;
         left.exceptionsExempt = parsed.exceptionsExempt;
         left.extraMethods = parsed.extraMethods;
+        left.enclosingMethodExempt = parsed.enclosingMethodExempt;
 
         Set<String> universe = new TreeSet<>();
         universe.addAll(left.classes.keySet());
@@ -278,8 +279,12 @@ public final class SemanticDiff {
                 ? allow : right;
     }
 
+    private static Set<String> union(Set<String> a, Set<String> b) {
+        Set<String> result = new TreeSet<>(a); result.addAll(b); return result;
+    }
+
     private static void validateExemptions(Args parsed, Set<String> names, JarIndex left) {
-        for (String owner : parsed.metadataExempt) {
+        for (String owner : union(parsed.metadataExempt, parsed.enclosingMethodExempt)) {
             if (!names.contains(owner)) throw new IllegalArgumentException(
                     "--metadata-exempt class outside comparison scope: " + owner);
         }
@@ -414,6 +419,7 @@ public final class SemanticDiff {
             parsed.extraMethods.forEach((owner, methods) -> methods.forEach(m -> extraEntries.add(owner + "#" + m)));
             w.println("  \"extraMethods\": " + jsonNames(extraEntries) + ",");
             w.println("  \"metadataExempt\": " + jsonNames(parsed.metadataExempt) + ",");
+            w.println("  \"enclosingMethodExempt\": " + jsonNames(parsed.enclosingMethodExempt) + ",");
             w.println("  \"leftClassCount\": " + left.classes.size() + ",");
             w.println("  \"rightClassCount\": " + right.classes.size() + ",");
             w.println("  \"comparedClassCount\": " + rows.size() + ",");
@@ -589,6 +595,7 @@ public final class SemanticDiff {
             for (String method : entry.getValue()) lines.add("- extra-methods：`" + entry.getKey() + "#" + method + "`");
         }
         for (String owner : parsed.metadataExempt) lines.add("- metadata-exempt：`" + owner + "`");
+        for (String owner : parsed.enclosingMethodExempt) lines.add("- metadata-exempt：`" + owner + " enclosing-method`");
         for(String inner:parsed.innerAccessWiden)lines.add("- inner-access-widen：`"+inner+"`");
         for (var p : Map.of("method-diff",parsed.methodDiffs,"access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders,"exceptions-exempt",parsed.exceptionsExempt).entrySet())
             p.getValue().forEach((c, ms) -> ms.forEach(m -> lines.add("- " + p.getKey() + "：`" + c + "#" + m + "`")));
@@ -780,6 +787,7 @@ public final class SemanticDiff {
         Path metadataFile;
         Map<String, Set<String>> extraMethods = Map.of();
         Set<String> metadataExempt = Set.of();
+        Set<String> enclosingMethodExempt = new LinkedHashSet<>();
         Path effectsFile;
         Map<String, Set<String>> effectsMethods = Map.of();
         Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
@@ -821,7 +829,7 @@ public final class SemanticDiff {
                     }
                     case "--metadata-exempt" -> {
                         out.metadataFile = Path.of(need(args, ++i, a));
-                        out.metadataExempt = parseMetadataExempt(out.metadataFile);
+                        out.metadataExempt = parseMetadataExempt(out.metadataFile, out.enclosingMethodExempt);
                     }
                     case "--effects-methods" -> {
                         out.effectsFile = Path.of(need(args, ++i, a));
@@ -959,18 +967,21 @@ public final class SemanticDiff {
             return map;
         }
 
-        private static Set<String> parseMetadataExempt(Path file) throws IOException {
+        private static Set<String> parseMetadataExempt(Path file, Set<String> enclosing) throws IOException {
             if (!Files.isRegularFile(file)) throw new IllegalArgumentException("--metadata-exempt file not found: " + file);
             Set<String> names = new LinkedHashSet<>();
             for (String line : Files.readString(file, StandardCharsets.UTF_8).replace("\uFEFF", "").split("\n")) {
                 String entry = line.split("#", 2)[0].trim();
                 if (entry.isEmpty()) continue;
-                String name = normalizeClassName(entry);
+                String[] parts = entry.split("\\s+");
+                if (parts.length > 2 || parts.length == 2 && !parts[1].equals("enclosing-method"))
+                    throw new IllegalArgumentException("--metadata-exempt invalid attribute: " + entry);
+                String name = normalizeClassName(parts[0]);
                 if (!name.matches("[\\p{L}\\p{N}_$/]+") || name.contains("//") || name.endsWith("/"))
                     throw new IllegalArgumentException("--metadata-exempt invalid class: " + entry);
-                names.add(name);
+                (parts.length == 2 ? enclosing : names).add(name);
             }
-            if (names.isEmpty()) throw new IllegalArgumentException("--metadata-exempt produced an empty set");
+            if (names.isEmpty() && enclosing.isEmpty()) throw new IllegalArgumentException("--metadata-exempt produced an empty set");
             return names;
         }
 

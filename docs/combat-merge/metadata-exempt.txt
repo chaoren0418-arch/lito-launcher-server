@@ -1,8 +1,6 @@
 # 僅主控可新增；只豁免列出的類別，不自動展開內部類。
 local/lito381/server/NativeDeVisibilitySwitch # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/108#issuecomment-6643057522
-# #70 僅核准 EnclosingMethod（outerMethod／outerMethodDesc）；目前 CLI 只能整組豁免，故以下維持註解、不得啟用。
-# approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007
-# pending EnclosingMethod-only: local/lito381/server/ClientSession$1CompanionHealing
-# pending EnclosingMethod-only: local/lito381/server/ClientSession$1PlayerHealing
-# pending EnclosingMethod-only: local/lito381/server/ClientSession$2CompanionHealing
-# pending EnclosingMethod-only: local/lito381/server/ClientSession$2PlayerHealing
+local/lito381/server/ClientSession$1CompanionHealing  enclosing-method  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007
+local/lito381/server/ClientSession$1PlayerHealing  enclosing-method  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007
+local/lito381/server/ClientSession$2CompanionHealing  enclosing-method  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007
+local/lito381/server/ClientSession$2PlayerHealing  enclosing-method  # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007
