@@ -16,7 +16,8 @@ final class BlockExpressions implements Opcodes {
         @Override public int getSize() { return type.getSize(); }
     }
     record Event(String text, List<Expr> args, List<String> catches) {}
-    record Block(List<Event> events, List<Expr> exit, Map<Expr,Integer> copies, List<Integer> edges) {}
+    record Block(List<Event> events, List<Expr> entry, List<Expr> exit,
+            Map<Expr,Integer> copies, List<Integer> edges) {}
 
     static boolean same(MethodNode a, MethodNode b, JarIndex aj, JarIndex bj) {
         if (!FourthNormalizations.enabled("blocks") || !FourthNormalizations.enabled("transport")) return false;
@@ -34,7 +35,7 @@ final class BlockExpressions implements Opcodes {
             for (int i=0;i<LocalWebs.parameters(a);i++) { slots.put(i,i); reverse.put(i,i); }
             for (int i=0;i<left.size();i++) {
                 Block l=left.get(i), r=right.get(i);
-                if (!l.edges.equals(r.edges) || l.events.size()!=r.events.size()) return false;
+                if (!l.edges.equals(r.edges) || !l.entry.equals(r.entry) || l.events.size()!=r.events.size()) return false;
                 for (int k=0;k<l.events.size();k++) {
                     Event x=l.events.get(k), y=r.events.get(k);
                     if (!x.text.equals(y.text) || !x.catches.equals(y.catches)
@@ -55,7 +56,7 @@ final class BlockExpressions implements Opcodes {
             return true;
         } catch (AnalyzerException | RuntimeException unsupported) { return false; }
     }
-    private static boolean match(List<Expr> a,List<Expr> b,Map<Integer,Integer> slots,Map<Integer,Integer> reverse) {
+    static boolean match(List<Expr> a,List<Expr> b,Map<Integer,Integer> slots,Map<Integer,Integer> reverse) {
         if(a.size()!=b.size())return false;
         for(int i=0;i<a.size();i++) {
             Expr x=a.get(i),y=b.get(i);
@@ -128,7 +129,11 @@ final class BlockExpressions implements Opcodes {
             Frame<Val> f=new Frame<>(m.maxLocals,m.maxStack);
             f.setReturn(eval.newValue(Type.getReturnType(m.desc)));
             for(int i=0;i<m.maxLocals;i++) { BasicValue v=entry.getLocal(i);f.setLocal(i,new Val(v,new Expr("local",i,v.getSize()))); }
-            for(int i=0;i<entry.getStackSize();i++){BasicValue v=entry.getStack(i);f.push(new Val(v,new Expr("stack",i,v.getSize())));}
+            List<Expr> incoming=new ArrayList<>();
+            for(int i=0;i<entry.getStackSize();i++) {
+                BasicValue v=entry.getStack(i);Expr value=new Expr("stack",i,v.getSize());
+                incoming.add(value);f.push(new Val(v,value));
+            }
             for(int i=start;i<end;i++) {
                 AbstractInsnNode n=code.get(i);int op=n.getOpcode();
                 if(op==DUP||op==DUP2) {
@@ -148,7 +153,7 @@ final class BlockExpressions implements Opcodes {
             else if(last instanceof TableSwitchInsnNode s){edges.add(block[pos.get(s.dflt)]);for(LabelNode l:s.labels)edges.add(block[pos.get(l)]);}
             else if(last instanceof LookupSwitchInsnNode s){edges.add(block[pos.get(s.dflt)]);for(LabelNode l:s.labels)edges.add(block[pos.get(l)]);}
             else if(op!=ATHROW&&!(op>=IRETURN&&op<=RETURN))edges.add(k+1);
-            result.add(new Block(eval.events,exit,eval.copies,edges));
+            result.add(new Block(eval.events,incoming,exit,eval.copies,edges));
         }
         return result;
     }
