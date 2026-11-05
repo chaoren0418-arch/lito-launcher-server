@@ -4,6 +4,8 @@
 
 完成四項比較器擴充與自測接線。新版另列 SAME_PATHS、DEVIATION、ORPHAN_IGNORED；不將後備成功混入 SAME。#65 仍有一般控制流程迴圈、#67 仍有迴圈及超過 4096 路徑的阻塞，依嚴格前提保留 DIFF。未修改 staged Java、src/main 或 docs/REPORT.md。
 
+第二次嘗試修正 PR #193（`aae760a`）審查指出的孤立方法誤放行：參照 owner 為子類別時，現在涵蓋其所有父類別與介面；階層資料不完整時，同名同描述子方法保守保留差異。新增實際執行反例後，審查案例改判 DIFF，方法為 ONLY_RIGHT。
+
 1. 類別層級 access-widen 只放寬指定 InnerClasses 可見性，所有引用該巢狀類別的選取 class 都適用，其他 flags 不變。
 2. 預設以逐路徑 ASM Frame 與表示式驗證有序可觀察事件；含例外邊、標準成對 monitor handler、記憶體讀值版本及分支方向。
 3. method-diff 僅作用於精確兩側方法，另附完整左右差異。已以 javap 核對兩個 producer 後追加兩條核准。
@@ -11,9 +13,31 @@
 
 ## 已驗證
 
+### 第二次嘗試：參照 owner 解析邊界
+
+- `JarIndex.orphanMethodReference` 使用原始 class header，將直接呼叫及 method handle 的參照保守展開至 owner、所有 superclass 與 superinterface；indy／condy 的 bootstrap 和巢狀參數共用此入口。不把 private 當成停止搜尋的依據。
+- 此處採參照候選集合，不宣稱完整實作 JVM 唯一方法選擇：即使宣告被遮蔽，也保留祖先候選；任何節點 metadata 缺失，就不忽略具有該名稱與描述子的右側方法。這可能多保留 DIFF，但不能用未知階層證明孤立。
+- `SixthSelfTest` 的隔離 ClassLoader 改為從同一份比較 JAR 按需載入 Fixture／Child／Middle，parent 仍為 platform loader。所有測試以 `-Xverify:all` 執行。
+- 先在未修正的程式執行新測試，確實得到左側 `NoSuchMethodError`、右側 5，工具卻為 DIFF=0／ORPHAN_IGNORED=1，並在 DIFF 斷言失敗；證據為 `review-before-selftest.log` 與 `review-before-inherited-call.json`。
+
+| 新增反例（各含單層、兩層繼承） | JVM 左／右 | 修正後預設 CLI |
+|---|---|---|
+| `orphan-inherited-call` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+| `orphan-inherited-handle` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+| `orphan-inherited-indy-argument` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+| `orphan-inherited-condy-argument` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+| `orphan-inherited-indy-bootstrap` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+| `orphan-inherited-condy-bootstrap` | NoSuchMethodError／5 | DIFF=1；hidden 為 ONLY_RIGHT |
+
+共 12 組同 bytes 的 CLI＋JVM 反例，逐案斷言 ORPHAN_IGNORED=0；另有缺少 Child metadata 的保守拒絕測試（僅檢查 CLI，不宣稱缺依賴的 JAR 可執行）。既有真正孤立 private synthetic 正例、左側獨有、非合成、LDC 同名字串及原 owner 直接呼叫／handle 反例全部保留且通過。
+
+另外直接讀取審查者 `scratch/review-176/Review176Probe.java`，複製到本 worktree 編譯執行，得到 `RUNTIME left=java.lang.NoSuchMethodError right=5` 與 DIFF=1／ORPHAN_IGNORED=0。沒有在原始工作區寫入。
+
+七批 1016 entries、#64 的 131-entry diagnostic、以及 #62／#63／#72／#76 無核准旗標的預設模式均已重跑。逐一核對 SHA 與指定提交報告，並以完整 JSON `classes`（含逐方法 detail）及 `counts` 對照前次輸出，全部完全相同；因此以下前後表及逐方法表仍適用，沒有新增 DIFF → SAME 的轉換，#66 真正孤立方法仍為 ORPHAN_IGNORED。#76 原 worktree 的 reference 已不存在，改讀 #72 路徑中的相同正式 JAR，重新核對 SHA `e1498871…` 後才執行。
+
 ### 自我測試
 
-Windows Microsoft JDK 17.0.17、ASM 9.7；五套 Java 自測以 `-Xverify:all` 執行，共 **974 checks（517＋73＋119＋169＋96）全過**。SixthSelfTest 已接進正式 selftest.sh。舊測試中只差 NOP／丟棄常數／丟棄參數／純 stack 搬移者，依新規格改期待 SAME_PATHS；豁免邊界反例改用實際呼叫差異。原 #153／#166 的真正副作用及資料來源反例保持預設 DIFF。舊規則 ablation 同時關閉 paths，避免另一項獨立證明遮住停用結果。
+Windows Microsoft JDK 17.0.17、ASM 9.7；五套 Java 自測以 `-Xverify:all` 執行，共 **1037 checks（517＋73＋119＋169＋159）全過**，比前次 974 checks 新增 63 項斷言。SixthSelfTest 已接進正式 selftest.sh。舊測試中只差 NOP／丟棄常數／丟棄參數／純 stack 搬移者，依新規格改期待 SAME_PATHS；豁免邊界反例改用實際呼叫差異。原 #153／#166 的真正副作用及資料來源反例保持預設 DIFF。舊規則 ablation 同時關閉 paths，避免另一項獨立證明遮住停用結果。
 
 同一份 framed class bytes 交 CLI 與隔離 ClassLoader；不載入遊戲應用類別。以下為實際執行的反例：
 
@@ -217,6 +241,10 @@ RIGHT
 
 ## CI
 
+本次修正不沿用舊提交的 CI 結論；本次 HEAD 的五項 job 收據見 [PR #193 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/193/checks)，另在本機保存 `scratch/issue-176/review-ci-status.json` 與 `review-ci-semantic-proof.txt`。Semantic gap 為 non-blocking，須檢查實際 step／日誌中的 1037 checks、SELFTEST ALL PASS 與 FALLBACK ALL PASS，不只看 workflow 總狀態。
+
+以下為前次提交的歷史收據：
+
 - 程式提交 `04f1dccdeb940262492a2cdc8f368e4823d78415` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42034482198/job/127268940066) **SUCCESS**。已讀取實際日誌，五套自測分別為 517／73／119／169／96 ALL PASS，另有 `SELFTEST ALL PASS` 與 `FALLBACK ALL PASS`；不是只看 non-blocking workflow 的總狀態。
 - 同提交的 Server 建置、Launcher 建置與 [打包 job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42034482218/job/127268940023) 均 **SUCCESS**。
 - CI 整包 Maven 產物對正式 reference 的額外結果為 2160 SAME／28 SAME_PATHS／361 DIFF；這是另一組輸入，不能混入七批固定 staged 的改善數。
@@ -239,6 +267,12 @@ SAME_PATHS 是本工具的有界事件模型證明，不是實機戰鬥驗收。
 
 本機證據（不入 git）：`scratch/issue-176/{verify.py,batches.py,inputs.json,producer-audit.py,producer-audit.json,*-javap.txt,*-before.json,*-after.json,*.log}`；工具與 fixture class/JAR 位於工具 `target/issue-176/`。inputs.json 包含每個原始 staged 路徑、固定複本 SHA、reference、entries 與實際裁切核准旗標。
 
+本次退回修正的重跑入口：`scratch/issue-176/recheck-review.py`；收據：`review-recheck.json`、`*-review-after*.json`、`review-probe.log`、`review-probe/inherited-reference.json`。審查者原始碼複本及 probe class/JAR 均留在本 worktree 的 scratch／target 內。
+
+```powershell
+& D:/dev-orchestrator/tools/python/python.exe -B -X utf8 -c "import sys,runpy; sys.path.insert(0,'scratch/issue-176'); runpy.run_path('scratch/issue-176/recheck-review.py')"
+```
+
 ```powershell
 & D:/dev-orchestrator/tools/python/python.exe -B -X utf8 scratch/issue-176/verify.py
 & D:/dev-orchestrator/tools/python/python.exe -B -X utf8 -c "import sys; sys.path.insert(0,'scratch/issue-176'); import batches"
@@ -256,5 +290,7 @@ semantic-diff --left <staged.jar> --right <reference.jar> --left-classpath <refe
 ```
 
 ## 給下一棒的提示
+
+本次先由 Claude 重審 PR #193 的孤立方法參照修正：核對原始 header 階層候選、未知 metadata 的保守拒絕，以及 12 組 owner 為子類別的有效 bytes 回歸。無需新增逐方法核准；既有批次結果全部維持。
 
 由 Claude 審查逐路徑模型的分支方向、例外優先序、讀值版本、monitor 配對與核准範圍。#66 可使用新版重驗並更新交付；#65／#67 剩餘方法交主控，不能在未滿足前提時逐一補豁免。#62／#63 重跑須分列 SAME_PATHS，不要求它們混成 SAME。#64 與 #69 接續跨批 Java 編譯，B-land 補 consumer 0／1 的實際回歸；使用者只負責後續真機驗收。

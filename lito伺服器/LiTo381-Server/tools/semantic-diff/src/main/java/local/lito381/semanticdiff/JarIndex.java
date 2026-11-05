@@ -42,6 +42,9 @@ final class JarIndex {
                 .put(m.name + m.desc, new MethodResult(status, detail));
     }
     private Set<String> allMethodReferences, ldcStrings;
+    private final Set<String> unresolvedMethodReferences = new java.util.HashSet<>();
+    private final Map<String, Set<String>> orphanReferenceOwners = new TreeMap<>();
+    private final Set<String> incompleteReferenceOwners = new java.util.HashSet<>();
 
     boolean orphan(MethodNode m) {
         int required = org.objectweb.asm.Opcodes.ACC_PRIVATE | org.objectweb.asm.Opcodes.ACC_SYNTHETIC;
@@ -53,7 +56,7 @@ final class JarIndex {
                 new ClassReader(bytes).accept(c, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
                 for (MethodNode method : c.methods) for (var n : method.instructions) {
                     if (n instanceof org.objectweb.asm.tree.MethodInsnNode call)
-                        allMethodReferences.add(call.owner + "#" + call.name + call.desc);
+                        orphanMethodReference(call.owner, call.name, call.desc);
                     if (n instanceof org.objectweb.asm.tree.LdcInsnNode ldc) orphanReference(ldc.cst);
                     if (n instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode indy) {
                         orphanReference(indy.bsm);
@@ -63,11 +66,45 @@ final class JarIndex {
             }
         }
         return !allMethodReferences.contains(methodOwners.get(m) + "#" + m.name + m.desc)
+                && !unresolvedMethodReferences.contains(m.name + m.desc)
                 && !ldcStrings.contains(m.name);
     }
+
+    /**
+     * Over-approximate method resolution, using original class headers rather than
+     * normalized methods. A symbolic owner can name a subclass of the declaration,
+     * even for a private static method called from its declaring class.
+     * Retain every ancestor/interface candidate (including shadowed declarations):
+     * false negatives for orphan removal are safer than a missed JVM reference.
+     * If any hierarchy metadata is missing, no matching signature is proven orphan.
+     */
+    private void orphanMethodReference(String owner, String name, String desc) {
+        Set<String> owners = orphanReferenceOwners.get(owner);
+        if (owners == null) {
+            owners = new java.util.HashSet<>();
+            var pending = new java.util.ArrayDeque<String>();
+            pending.add(owner);
+            while (!pending.isEmpty()) {
+                String current = pending.removeFirst();
+                if (!owners.add(current)) continue;
+                ClassNode c = header(current);
+                if (c == null) {
+                    incompleteReferenceOwners.add(owner);
+                    continue;
+                }
+                if (c.superName != null) pending.add(c.superName);
+                pending.addAll(c.interfaces);
+            }
+            orphanReferenceOwners.put(owner, owners);
+        }
+        for (String candidate : owners) allMethodReferences.add(candidate + "#" + name + desc);
+        if (incompleteReferenceOwners.contains(owner)) unresolvedMethodReferences.add(name + desc);
+    }
+
     private void orphanReference(Object v) {
         if (v instanceof String s) ldcStrings.add(s);
-        if (v instanceof org.objectweb.asm.Handle h) allMethodReferences.add(h.getOwner()+"#"+h.getName()+h.getDesc());
+        if (v instanceof org.objectweb.asm.Handle h && h.getTag() >= org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL)
+            orphanMethodReference(h.getOwner(), h.getName(), h.getDesc());
         if (v instanceof org.objectweb.asm.ConstantDynamic c) {
             orphanReference(c.getBootstrapMethod());
             for(int i=0;i<c.getBootstrapMethodArgumentCount();i++)orphanReference(c.getBootstrapMethodArgument(i));

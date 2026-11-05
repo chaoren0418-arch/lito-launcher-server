@@ -4,6 +4,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.lang.reflect.*;
 import org.objectweb.asm.*;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 import static local.lito381.semanticdiff.FourthSelfTest.*;
 
@@ -48,11 +49,16 @@ public final class SixthSelfTest implements Opcodes {
         ok("JVM "+name+" left="+x+" right="+y,Objects.equals(x,y)==same);
     }
     static Class<?> load(Path path)throws Exception {
+        Map<String,byte[]> classes=JarIndex.load(path).classes;
         class Loader extends ClassLoader {
             Loader(){super(ClassLoader.getPlatformClassLoader());}
-            Class<?> define(byte[] b){return defineClass(null,b,0,b.length);}
+            @Override protected Class<?> findClass(String name)throws ClassNotFoundException {
+                byte[] bytes=classes.get(name.replace('.','/'));
+                if(bytes==null)throw new ClassNotFoundException(name);
+                return defineClass(name,bytes,0,bytes.length);
+            }
         }
-        return new Loader().define(JarIndex.load(path).classes.get("Fixture"));
+        return new Loader().loadClass("Fixture");
     }
     static Object execute(Path path,Class<?>[] types,Object[] args)throws Exception {
         Object[] copy=args.clone();for(int i=0;i<copy.length;i++)if(copy[i] instanceof int[] a)copy[i]=a.clone();
@@ -182,5 +188,70 @@ public final class SixthSelfTest implements Opcodes {
                 ok("JVM orphan reflection "+mode,missing&&load(r).getDeclaredMethod("hidden")!=null);
             } else ok("JVM orphan linkage "+mode,!Objects.equals(execute(l,new Class<?>[]{},new Object[]{}),execute(r,new Class<?>[]{},new Object[]{})));
         }
+        inheritedOrphans();
+    }
+
+    static List<ClassNode> inheritedOrphan(boolean extra,int mode,boolean indirect) {
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","()I");
+        String hiddenDesc=inheritedDescriptor(mode);
+        Handle hidden=new Handle(H_INVOKESTATIC,"Child","hidden",hiddenDesc,false);
+        if(mode==0)invoke(m,INVOKESTATIC,"Child","hidden","()I");
+        else if(mode==1) {
+            m.instructions.add(new LdcInsnNode(hidden));
+            invoke(m,INVOKEVIRTUAL,"java/lang/invoke/MethodHandle","invokeExact","()I");
+        } else if(mode==2) {
+            m.instructions.add(new InvokeDynamicInsnNode("getAsInt","()Ljava/util/function/IntSupplier;",
+                    bsm(),Type.getMethodType("()I"),hidden,Type.getMethodType("()I")));
+            m.instructions.add(new MethodInsnNode(INVOKEINTERFACE,"java/util/function/IntSupplier","getAsInt","()I",true));
+        } else if(mode==3) {
+            Handle bootstrap=new Handle(H_INVOKESTATIC,"java/lang/invoke/ConstantBootstraps","invoke",
+                    "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/invoke/MethodHandle;[Ljava/lang/Object;)Ljava/lang/Object;",false);
+            m.instructions.add(new LdcInsnNode(new ConstantDynamic("value","I",bootstrap,hidden)));
+        } else if(mode==4)m.instructions.add(new InvokeDynamicInsnNode("value","()I",hidden));
+        else m.instructions.add(new LdcInsnNode(new ConstantDynamic("value","I",hidden)));
+        ins(m,IRETURN);
+        if(extra) {
+            m=method(c,ACC_PRIVATE|ACC_STATIC|ACC_SYNTHETIC,"hidden",hiddenDesc);
+            if(mode<4)ins(m,ICONST_5,IRETURN);
+            else if(mode==4) {
+                m.instructions.add(new TypeInsnNode(NEW,"java/lang/invoke/ConstantCallSite"));ins(m,DUP);
+                m.instructions.add(new FieldInsnNode(GETSTATIC,"java/lang/Integer","TYPE","Ljava/lang/Class;"));
+                ins(m,ICONST_5);invoke(m,INVOKESTATIC,"java/lang/Integer","valueOf","(I)Ljava/lang/Integer;");
+                invoke(m,INVOKESTATIC,"java/lang/invoke/MethodHandles","constant","(Ljava/lang/Class;Ljava/lang/Object;)Ljava/lang/invoke/MethodHandle;");
+                invoke(m,INVOKESPECIAL,"java/lang/invoke/ConstantCallSite","<init>","(Ljava/lang/invoke/MethodHandle;)V");ins(m,ARETURN);
+            } else {
+                ins(m,ICONST_5);invoke(m,INVOKESTATIC,"java/lang/Integer","valueOf","(I)Ljava/lang/Integer;");ins(m,ARETURN);
+            }
+        }
+        ClassNode child=clazz();child.name="Child";child.superName=indirect?"Middle":"Fixture";
+        ClassNode middle=clazz();middle.name="Middle";middle.superName="Fixture";
+        return indirect?List.of(framed(c),framed(child),framed(middle)):List.of(framed(c),framed(child));
+    }
+
+    static String inheritedDescriptor(int mode) {
+        if(mode<4)return "()I";
+        return "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;"+(mode==4
+                ?"Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;":"Ljava/lang/Class;)Ljava/lang/Object;");
+    }
+
+    static void inheritedOrphans()throws Exception {
+        String[] modes={"call","handle","indy-argument","condy-argument","indy-bootstrap","condy-bootstrap"};
+        for(int mode=0;mode<modes.length;mode++)for(boolean indirect:new boolean[]{false,true}) {
+            String name="orphan-inherited-"+modes[mode]+(indirect?"-indirect":"");
+            Path l=jar(name+"-l",inheritedOrphan(false,mode,indirect));
+            Path r=jar(name+"-r",inheritedOrphan(true,mode,indirect));
+            // Execute exactly the JAR bytes compared below, with a fresh platform-parent loader per side.
+            Object left=execute(l,new Class<?>[]{},new Object[]{}),right=execute(r,new Class<?>[]{},new Object[]{});
+            ok("JVM "+name+" left="+left+" right="+right,
+                    Objects.equals(left,"throws:java.lang.NoSuchMethodError")&&Objects.equals(right,5));
+            String json=cli(name,l,r,"DIFF");
+            ok(name+" method ONLY_RIGHT",json.contains("\"method\": \"hidden"+inheritedDescriptor(mode)+"\", \"status\": \"ONLY_RIGHT\""));
+            ok(name+" no orphan ignored",json.contains("\"ORPHAN_IGNORED\": 0"));
+        }
+        // Child may be supplied only at runtime. Missing hierarchy metadata is not evidence of no reference.
+        Path l=jar("orphan-unknown-owner-l",List.of(inheritedOrphan(false,0,false).get(0)));
+        Path r=jar("orphan-unknown-owner-r",List.of(inheritedOrphan(true,0,false).get(0)));
+        String json=cli("orphan-unknown-owner",l,r,"DIFF");
+        ok("unknown owner method ONLY_RIGHT",json.contains("\"method\": \"hidden()I\", \"status\": \"ONLY_RIGHT\""));
     }
 }
