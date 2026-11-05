@@ -17,3 +17,5 @@ local/lito381/server/NativeStaticNpcScene#restore(Llocal/lito381/server/GameHub;
 local/lito381/server/NativeStaticNpcScene#turn(Llocal/lito381/server/GameHub;Llocal/lito381/server/ClassicWorldNpcCatalog$StaticNpc;ILlocal/lito381/server/ClientSession;)Z # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
 local/lito381/server/ClassicWorldMapCatalog#forMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap; # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/76#issuecomment-6645328994
 # batch: A05, category: dup-pop-local
+# #75／#62：無效身分直接跳過該 Release；完整差異與副作用驗證見 docs/reports/issue-75.md。
+local/lito381/server/CombatCurseLifecycle$Removal#drain(Z)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6644525369 # batch: A04, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/106
