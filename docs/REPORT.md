@@ -29,3 +29,4 @@
 - 2026-11-05 — #153 T020i-3: lambda 依內容比對、私有 lambda handle H5≡H7、@AsmFinal（一般類別 final 欄位）（code，codex-local，PR #164 已合併）→ [報告](reports/issue-153.md)
 - 2026-11-05 — #166 T020i-4: semantic-diff 正規化第四批（轉呼叫 lambda≡直接 handle、相鄰保護範圍合併、單次使用暫存、捕獲參數排列）（code，codex-local，PR 已合併）→ [報告](reports/issue-166.md)
 - 2026-11-05 — #174 T020i-5: semantic-diff 正規化第五批（例外涵蓋正規形、多餘 null 檢查、區塊內 local 讀取位置、Exceptions 屬性豁免）（code，codex-local，PR #178 已合併）→ [報告](reports/issue-174.md)
+- 2026-11-05 — #76 T020-A05: T020-A05: src/main 對齊正式 0.6.71 暫存（other，27 類）（code，codex-local，PR 已合併）→ [報告](reports/issue-76.md)
