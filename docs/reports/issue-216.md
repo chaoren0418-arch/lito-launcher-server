@@ -4,7 +4,7 @@
 
 完成三項規則與測試。#70 四個 EnclosingMethod entry 均 SAME；#68 全部 56 entries 為 **54 SAME、2 SAME_CFG、0 DIFF**；#69 的 `NativeCombatAttacker.calculated(Llocal/lito381/server/NativePlayerCommit$Binding;)V` 經 public 虛擬呼叫 owner 證明通過。#62、#65、#67、#72 完整 classes JSON（包含逐方法結果）、counts 與 classSelection 均與修改前相同，維持 0 DIFF。
 
-沿用既有 worktree `D:/lineage開發/3-lito開發/scratch/wt/task-216` 與 `task/216`；比較器修改前基線為 `567b0cb7762864b10ef876f90749e74a66e9bb01`。只修改 `tools/semantic-diff/**`、追加指定的四條 metadata 核准及本報告。未修改 src/main、staged Java、docs/REPORT.md，未讀取機密設定、封存、releases 或硬連結，未啟停正式程序、遊戲或 DB。
+沿用既有 worktree `D:/lineage開發/3-lito開發/scratch/wt/task-216` 與 `task/216`；比較器修改前基線為 `567b0cb7762864b10ef876f90749e74a66e9bb01`。只修改 `tools/semantic-diff/**`、追加指定的四條 metadata 核准及本報告。未修改 src/main、staged Java、docs/REPORT.md，未讀取機密設定、封存或 releases，未建立或修改硬連結，未啟停正式程序、遊戲或 DB。
 
 ## 實作與邊界
 
@@ -74,11 +74,27 @@ B 批 reference 為 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f51
 
 - #70 的 `ClientSession$1CompanionHealing`、`$1PlayerHealing`、`$2CompanionHealing`、`$2PlayerHealing`：修改前皆只因 outerMethod DIFF；精確核准後四者皆 SAME。整批仍有其他未證明差異，沒有因這四條核准忽略外層類別。
 - #68：`CombatCompanionSpells#nativeShockCompanionBody` 與 `CombatNpcDebuffs#nativeMaterialControlledNegativeBody` 均 **SAME_CFG**。停用 pure-rethrow 即恢復兩個 DIFF，證明結果不是由核准清單消掉。
-- #69：第 3 項實際消除 **一個方法**：`NativeCombatAttacker#calculated(Llocal/lito381/server/NativePlayerCommit$Binding;)V`，完整比較通過；該類其他方法沿用 SAME_PATHS，因此類別 DIFF → SAME_PATHS。停用 virtual-owner 恢復該方法 DIFF，其他規則仍開啟。
+- #69：第 3 項實際消除 **一個方法**：`NativeCombatAttacker#calculated(Llocal/lito381/server/NativePlayerCommit$Binding;)V`，完整比較通過；該類其他方法沿用 SAME_PATHS，因此類別 DIFF → SAME_PATHS。停用 virtual-owner 恢復該方法 DIFF，其他規則仍開啟。javap 確認該呼叫 staged owner 是 `java/lang/Object`，candidate owner 是 `NativeCombatAttacker$Ref`，名稱／描述子均為 `equals(Ljava/lang/Object;)Z`。
+
+核准模式下 #69 剩餘四個 DIFF 類別是 `NativeLightAction`、`NativeLightAction$Batch`、`NativePlayerCommit`、`NativeProcHealingEncounter$Dispatch`；#70 剩餘三個為 `ClientSession`、`ClientSession$1`、`GameHub`。保留其逐方法診斷，不推定為等價。執行期間 #67／#72 分支完成新一輪 #203 重驗，本輪已改用其最新報告所列 `cfg-final/staged.jar`／`verify-203/target/staged.jar` 再跑；兩個 JAR 的 SHA-256 與原固定輸入相同。
 
 ## CI
 
-程式提交與最終 HEAD 的 CI 收據於推送後補入；一般工作流綠燈以外，另核對 Semantic gap 自測步驟及日誌，避免 non-blocking job 掩蓋自測失敗。
+程式提交 `743c55ee924dd4942bfc0bd717e53081fd319fdd` 的 CI 收據如下：
+
+| Job | 收據 |
+|---|---|
+| Semantic gap (non-blocking) | [127524490448](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42107044943/job/127524490448) |
+| Server tests | [127524490838](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42107044943/job/127524490838) |
+| Launcher (.NET 10 / WinForms) | [127524490890](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42107044943/job/127524490890) |
+| Server (Java 17 / Maven) | [127524491022](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42107044943/job/127524491022) |
+| Build-Package.ps1 zip | [127524490556](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42107044939/job/127524490556) |
+
+已讀取 Semantic gap 完整日誌，八套自測為 517／73／119／169／159／96／265／193，共 **1591 checks 全過**，並確認 `SELFTEST ALL PASS`、`FALLBACK ALL PASS`；未以 non-blocking job 總狀態代替自測證據。本機摘錄為 `scratch/issue-216/ci-semantic-proof.txt`。
+
+CI 整包 Maven 產物對正式 reference 為 2160 SAME、28 SAME_PATHS、19 SAME_CFG、3 LAMBDA_PAIRED_BY_CALLSITE、339 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT；這與本任務固定 staged 的輸入不同，不能混入批次驗收。
+
+最後僅補報告的提交不改工具或測試。最終 HEAD 的五項檢查以 [PR #238 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/238/checks) 為準，交付前另外核對。
 
 ## 推測
 
@@ -88,7 +104,7 @@ B 批 reference 為 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f51
 
 - 未部署、未執行遊戲／伺服器／登入器或連 DB。
 - #69、#70 尚有既有 DIFF；本任務只交付工具修正與指定消除項，不能當作這兩批 B-land 全量驗收完成。
-- 推送後補 CI 最終收據。
+- 最後的報告提交之 CI 於交付前核對；上列固定輸入與自測已完成。
 
 ## 產出路徑／重跑
 
