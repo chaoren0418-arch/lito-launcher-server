@@ -432,7 +432,7 @@ extends NativeDeNpcTemplateState {
         if (nativeDeChatData == null) {
             return;
         }
-        this.cancelNpcChatTimer();
+        this.cancelNpcChatTimer$own();
         NativeDeChatTimer nativeDeChatTimer = new NativeDeChatTimer(this, nativeDeChatData);
         this._monitorFuture = !nativeDeChatData.isRepeat() ? this.scheduleNpcChatTimer(nativeDeChatTimer, nativeDeChatData.getStartDelayTime(), 0L) : this.scheduleNpcChatTimer(nativeDeChatTimer, nativeDeChatData.getStartDelayTime(), nativeDeChatData.getRepeatInterval());
     }
@@ -461,7 +461,7 @@ extends NativeDeNpcTemplateState {
         return null;
     }
 
-    private void cancelNpcChatTimer() {
+    private void cancelNpcChatTimer$own() {
         NativeDeChatRuntime.cancel(this);
     }
 
