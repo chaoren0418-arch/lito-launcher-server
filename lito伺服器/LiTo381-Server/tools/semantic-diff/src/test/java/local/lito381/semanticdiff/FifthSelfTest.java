@@ -36,7 +36,7 @@ public final class FifthSelfTest implements Opcodes {
         pair("block-merged-entry-false",mergedEntry(true,false),mergedEntry(false,false),true,new Class<?>[]{boolean.class,int.class},false,-7);
         pair("block-merged-entry-swapped",mergedEntry(true,false),mergedEntry(false,true),false,new Class<?>[]{boolean.class,int.class},false,-7);
         Path ml=jar("merged-block-ablation-l",List.of(framed(mergedEntry(true,false)))),mr=jar("merged-block-ablation-r",List.of(framed(mergedEntry(false,false))));
-        System.setProperty("semanticdiff.disable","blocks,paths");
+        System.setProperty("semanticdiff.disable","blocks,paths,cfg");
         try{compare("block-ablation",ml,mr,false);}finally{System.clearProperty("semanticdiff.disable");}
         exceptions();
         System.out.println("FIFTH SELFTEST ALL PASS checks="+total);

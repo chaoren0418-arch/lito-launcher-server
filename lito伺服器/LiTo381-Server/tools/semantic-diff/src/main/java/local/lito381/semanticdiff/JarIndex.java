@@ -24,6 +24,9 @@ final class JarIndex {
     private Map<String, Set<String>> exactMethods = Map.of();
     private final Map<String, ClassNode> trees = new TreeMap<>();
     private final Map<String, String> lambdaIds = new TreeMap<>();
+    final Map<String,String> callsiteIds = new TreeMap<>();
+    void clearLambdaIds() { lambdaIds.clear(); }
+    boolean exact(String owner,MethodNode m) { return exactMethods.getOrDefault(owner,Set.of()).contains(m.name+m.desc); }
     private final java.util.Set<String> resolving = new java.util.HashSet<>();
     private final Map<String, Map<String, String>> switchFields = new TreeMap<>();
     final Map<MethodNode, String> methodOwners = new java.util.IdentityHashMap<>();
@@ -170,6 +173,8 @@ final class JarIndex {
 
     String remapMethod(String owner, String name, String desc) {
         if (exactMethods.getOrDefault(owner, Set.of()).contains(name + desc)) return name;
+        String paired=callsiteIds.get(owner+"#"+name+desc);
+        if(paired!=null)return paired;
         if (name.startsWith("lambda$") && syntheticPrefix(name) != null && classes.containsKey(owner)) {
             String key = owner + "#" + name + desc;
             if (lambdaIds.containsKey(key)) return lambdaIds.get(key);
