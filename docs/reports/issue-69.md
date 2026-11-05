@@ -8,6 +8,8 @@
 
 分支 `task/69`；本輪起點 `e274b35`，沿用原 worktree，未 checkout／另建分支。合併 `origin/main` 的提交為 `e389785`（主線 `295c19c`），取得已合併的 #186 工具。PR 為 [#94](https://github.com/chaoren0418-arch/lito-launcher-server/pull/94)。
 
+Java 修正提交 `2fe58f6` 已用 `git push -u origin task/69` 成功推送。PR 標題與描述已透過 GitHub 連接器更新為本輪結果。依規則先寫 UTF-8 `scratch/issue-69/comment.md`，再執行 `gh issue comment 69 --body-file ...`，但 gh 回覆 HTTP 401，因此沒有新增 Issue 留言；`needs:claude` 標籤已由連接器成功加入。`gh pr edit --body-file ...` 亦為 401，PR 描述改由連接器以同一份預備文字更新成功。
+
 依 [主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666508373) 接受 SAME_PATHS；依 [最後更正](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6666511561)，不等 #203／#216 才改 Java，現有工具未證明的方法列為待重驗。Issue 已成功加上 `needs:claude`。不是因迴圈／路徑上限而推定等價。
 
 ## 已驗證：做了什麼
