@@ -61,7 +61,7 @@ class ModernBattleCanonicalActionServiceTest {
             var stopped=f.service.canonicalAction(f.player(0).owner(),request(f,move(f,f.moves+1,4),NO_TARGET));
             assertEquals(ModernBattleCommandLife.Rejection.NOT_ACTIVE,stopped.rejection());assertNull(stopped.outcome());
             assertEquals(ModernWorldProtocol.SettlementState.SAVED,stopped.lifecycle().settlement());
-            f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());assertEquals(1,f.persisted.get());
+            f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);assertEquals(1,f.persisted.get());
         }
     }
     @Test void canonicalOwnerAndLifeAdmissionCannotConsumeSequenceAndLegacyAdapterStillEncodes()throws Exception {

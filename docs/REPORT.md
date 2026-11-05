@@ -23,3 +23,8 @@
 - 2026-11-05 — #102 T020g: @AsRecord 轉換器（record 加 ASM 實例欄位的 Java 表達）＋Maven 建置接線（code，codex-local，PR 已合併）→ [報告](reports/issue-102.md)
 - 2026-11-05 — #132 T020i: semantic-diff 正規化擴充（整數常數、ACC_SYNTHETIC、catch-any）＋核准方法的副作用序列比對（code，codex-local，PR 已合併）→ [報告](reports/issue-132.md)
 - 2026-11-05 — #108 T020h: 舊伺服器 com.lineage.* 編譯期 stub（只供編譯、不打包）（code，codex-local，PR #147 已合併）→ [報告](reports/issue-108.md)
+- 2026-11-05 — #135 T020i-2: semantic-diff 正規化第二批（InnerClasses、ACC_SUPER、隱式建構子、區域變數重編號、核准額外方法）（code，codex-local，PR #152 已合併）→ [報告](reports/issue-135.md)
+- 2026-11-05 — #134 T020g-2: @AsRecord 轉換器接進 Maven 建置＋record-asm-fields.json 掃描（code，codex-local，PR #157 已合併）→ [報告](reports/issue-134.md)
+- 2026-11-05 — #159 T041: 伺服器測試離房後計數偶發失敗（ModernWorldService 清理時序競態）（code，codex-local，PR 已合併）→ [報告](reports/issue-159.md)
+- 2026-11-05 — #153 T020i-3: lambda 依內容比對、私有 lambda handle H5≡H7、@AsmFinal（一般類別 final 欄位）（code，codex-local，PR #164 已合併）→ [報告](reports/issue-153.md)
+- 2026-11-05 — #166 T020i-4: semantic-diff 正規化第四批（轉呼叫 lambda≡直接 handle、相鄰保護範圍合併、單次使用暫存、捕獲參數排列）（code，codex-local，PR 已合併）→ [報告](reports/issue-166.md)
