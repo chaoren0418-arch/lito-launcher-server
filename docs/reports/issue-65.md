@@ -2,11 +2,24 @@
 
 ## 結論
 
-**#176 合併後已完成重驗，B04 仍未通過最終語意驗收，交 `needs:claude`。** 2026-11-05 將最新 `origin/main`（`c72453957ebe47e00ad024e874bbe31859457799`）合入既有 `task/65`，merge commit 為 `b2292eda2326854ecf0b44df9f28e7adb9d683fb`。#174／#176 都已在主線，#176 的 PR #193 包含最後修正 `48b5843`。
+**等待 #203 合併；B04 尚未通過最終語意驗收，本次不送通過審查。** 2026-11-06 成功 `git fetch origin main`，工作期間 #186 經 PR #202 合併，已再次 fetch 並同步最新主線 `bccc2cb746e408bc8a496cf46c224d61616b9076`。在既有 `task/65` 無衝突合併，最終 merge commit 為 `bcb248a7512a85550540b60339defaa8d39267b2`，未 checkout 或建立分支。#174／#176／#186 已在主線，不再列為待辦依賴。
 
-重新整批編譯 51 份 staged Java，執行已合併 as-record 轉換器，以新版 semantic-diff 加本批精確核准清單驗證全部 98 個 entry：**95 SAME、1 SAME_PATHS、1 DEVIATION、1 DIFF；ONLY_LEFT／ONLY_RIGHT 均為 0，missingLeft／extraLeft 均為空。** 剩下的是 `NativeSourceNpcEscape` 的兩個方法，工具明確拒絕一般控制流程迴圈。此結果與 [#176 報告](issue-176.md) 一致；不能再以等待 #176 合併解釋，也不能宣告全部通過。
+最近一次實際整批編譯及比對仍為 2026-11-05 的 #176 重驗：**95 SAME、1 SAME_PATHS、1 DEVIATION、1 DIFF；ONLY_LEFT／ONLY_RIGHT 均為 0，missingLeft／extraLeft 均為空。** 剩下的是 `NativeSourceNpcEscape` 的兩個方法，工具拒絕一般控制流程迴圈。以下保留前次完整證據；這不是本次新的重驗結果，也不能宣告全部通過。
 
-## 做了什麼
+依[最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6662562240)及 PR #87 退回意見，Java 維持原樣、不新增豁免，必須等 #203 第 2 項 CFG 比較工具合併後才重編譯、轉換及驗收。此次主線雖新增 #186 的 switch／rethrow／private-call 比較修正，仍沒有 #203 所需的迴圈 CFG 比較，因此尚未啟動最終重驗。
+
+## 本次做了什麼／已驗證（2026-11-06）
+
+- 合併最新 `origin/main`；上游帶入 B02、報告索引與 #186 工具，任務自身僅修改 `docs/reports/issue-65.md`。`docs/REPORT.md` 與上游內容一致，沒有手動編輯。
+- 最終合併的 `tools/semantic-diff` Git tree 為 `52f6bc4a43c810eea321661d9774052a9830dfaa`，已含 #186；`tools/as-record` 仍為 `025d66c3be040820866e9e9ac9876600168c6f5e`。已閱讀 #186 報告及工具 README，確認新增功能不含 #203 的迴圈 CFG 比較。
+- `git grep -n SAME_CFG bccc2cb -- lito伺服器/LiTo381-Server/tools/semantic-diff` 無匹配；該主線沒有 #203 報告。#186 提交 `3b3709d1` 已是主線祖先（`git merge-base --is-ancestor` exit=0）。不能使用未合併分支代替 #203 前置。
+- 逐一核對 B04 的 51 個 staged Java，與 `e5fa958` 相同，保留 12 個 asm-only entry、三個 `@AsRecord` 與 Commit 的 `@AsmFinal`。六個指定方法及核准清單不變。
+- 重讀既存 `scratch/issue-65/recheck-176-semantic.json`，結果與上述前次摘要一致；本次未產生新 class、未替換或改名驗收產物。
+- GitHub 連接工具缺少 `link_id`，沙箱內 `gh` 也曾回應 HTTP 401；經受核准的沙箱外存取後，已成功讀取 #203 規格及 #65 最新留言，確認 #203 仍 OPEN、PR #87 仍 OPEN。第 2 項明確涵蓋本批 NpcEscape 兩方法，沒有新增修改 Java 或新增豁免的授權。
+
+本次核對紀錄：`scratch/issue-65/dependency-check.log`；本次不適用單元測試／回歸，且尚未具備重新執行最終語意驗收的工具前置。
+
+## 前次做了什麼（2026-11-05，#176 重驗）
 
 1. 在原 `task/65` 合併最新 main，沒有切換或建立分支。合併沒有衝突；main 帶入的其他檔案屬上游變更，本輪任務修改只有本報告。
 2. 保留 `e5fa958` 的全部 51 份 Java 移植，包含指定 12 個 asm-only entry 的 Java 表達。`git diff e5fa958 -- lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server` 為空。六個指定方法一律未修改。
@@ -15,7 +28,7 @@
 5. 掃描全部八份核准 txt，B04 只有 `deviations.txt` 的兩條 PhysicalNpc `method-diff` 適用，其餘匹配數皆 0。這兩條與 javap 證明已由 #176 加入 `deviations.txt`／`deviations.md`，本輪不重複新增或擴大核准。
 6. 重新 javap 查核兩個 producer 與 consumer，並附上兩個剩餘方法的完整新版正規形差異。依[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888)保留 callback／monitor 時序及 Java 原樣。
 
-## 已驗證
+## 前次已驗證（2026-11-05）
 
 ### 編譯與完整性
 
@@ -82,7 +95,7 @@ NpcEscape 的一般回邊已重新以兩側 javap 查核：
 
 ## 待驗證／未驗證什麼
 
-- B04 尚缺 `NativeSourceNpcEscape` 兩個方法的可接受驗收，未達全部 98 entry 通過。
+- 等 #203 合併後，由本機執行器以新輸出目錄重編 51 份 staged Java、執行核准轉換器、重驗全部 98 entry；取得 `DIFF=0`、`ONLY_LEFT=0`、`ONLY_RIGHT=0`、missing／extra 皆空，並附 NpcEscape 兩個方法的實測 `SAME_CFG` 或其他主控核准結果。現階段未完成此項。
 - 本批未執行應用程式、伺服器、登入器、遊戲或 DB；單元測試與回歸依設計交 B-land。
 - 推送後 CI 另由調度器檢查。CI 通過亦不能代替本批仍為 DIFF=1 的 staged 語意驗收。
 
@@ -95,11 +108,13 @@ NpcEscape 的一般回邊已重新以兩側 javap 查核：
 
 ## 給下一棒的提示
 
-請雲端 Claude 接手 `needs:claude`：#176 已合併且本批已重驗，但其「無一般控制流程迴圈」前提不涵蓋 NpcEscape 的兩個方法。請裁定後續比較器工作或其他精確驗收方式；目前不自行修改這兩個 Java 方法、不新增 effects／layout／method-diff 豁免。完整新版差異、回邊與描述子均已附在本報告。調度器應保留未通過狀態，不要再以等待已完成的 #176 合併反覆派同一重驗。
+主控已裁定由 **#203 第 2 項**處理 NpcEscape CFG 比較，不再請 Claude 重做相同裁定。#186 已合併，請調度器落實 **#203 合併前不得重派最終驗收**的依賴閘門；待 #203 進 main 後，再交本機執行器合併最新 main、重編、轉換並重驗全部 98 entry。維持 Java 原樣，不新增 effects／layout／method-diff 豁免，不以舊 CI 綠燈視為語意驗收通過。
+
+PR #87 的「未驗證什麼／阻塞」同步為上述依賴，Issue #65 保留 `needs:claude` 交接。不要將本次報告修正或分支推送當作重新送審完成。
 
 B-land（#138）須保留三個 AsRecord 與 Commit 的 AsmFinal，整批編譯後執行已合併轉換器，並補 `sourceState`／`targetState` 各回傳 0、1 時，`sourceCurrent`／`targetCurrent` 與候選一致的測試。B04 最終驗收前不宣告 B-land 前置完成。
 
-## 可重現指令
+## 前次可重現指令（#176 工具；不代表 #203 驗收）
 
 以下在此 worktree 根目錄執行，工具來源為合入的 `c724539`；先確保 B04 Java 仍為 `e5fa958` 的內容。輸出目錄必須全新，重跑請換另一個 `target/issue-65/` 子目錄。ASM 依賴以既有 SHA 校驗。兩條核准從已合併清單精確裁切；其他核准 txt 對 B04 匹配數為 0。
 
