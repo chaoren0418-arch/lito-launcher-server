@@ -9,7 +9,7 @@
 |---|---|
 | left | `D:\lineage開發\3-lito開發\scratch\wt\task-153\lito伺服器\LiTo381-Server\target\LiTo381-Server.jar`（3931 類） |
 | right | `D:\lineage開發\3-lito開發\scratch\wt\task-153\lito伺服器\LiTo381-Server\reference\base-0.6.71.jar`（2554 類） |
-| 產生時間 | 2026-11-05T01:47:10Z |
+| 產生時間 | 2026-11-05T04:40:20Z |
 | 正規化 | 移除 debug 與 frames；不比較 max_stack／max_locals／常數池順序；lambda 依描述子與正規化內容識別、相同內容去重；access$ 依出現順序正規化 |
 | T020i-3 正規化 | 同類 private 實例 bootstrap handle H5/H7 統一；Object super 前移並驗證 this 用法；合成 SwitchMap 欄位依宣告首次出現順序重命名；try 邊界裁掉不會拋例外的指令，刪除空區間 |
 | T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |

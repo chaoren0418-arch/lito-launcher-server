@@ -100,11 +100,41 @@ final class Normalizations implements Opcodes {
                     || value != null && value.getOpcode() >= ACONST_NULL && value.getOpcode() <= SIPUSH;
             if (!simple || !(receiver instanceof VarInsnNode r) || r.getOpcode() != ALOAD || r.var != 0) continue;
             if (receiver.getNext() != value || value.getNext() != n) continue;
+            if (!stableAssignmentInputs(value, n, superCall)) continue;
             for (AbstractInsnNode part : List.of(receiver, value, n)) { m.instructions.remove(part); moved.add(part); }
         }
         AbstractInsnNode cursor = superCall;
         for (AbstractInsnNode n : moved) { m.instructions.insert(cursor, n); cursor = n; }
         return m;
+    }
+
+    /** Moving a load must preserve its value, including both slots of long/double locals. */
+    private static boolean stableAssignmentInputs(AbstractInsnNode value, AbstractInsnNode assignment,
+            MethodInsnNode superCall) {
+        int readSlot = value instanceof VarInsnNode local ? local.var : -1;
+        int readWidth = value.getOpcode() == LLOAD || value.getOpcode() == DLOAD ? 2 : 1;
+        for (AbstractInsnNode n = assignment.getNext(); n != superCall; n = n.getNext()) {
+            // Only prove straight-line movement. Labels can be branch or handler boundaries.
+            if (n == null || n instanceof LabelNode || n instanceof JumpInsnNode
+                    || n instanceof TableSwitchInsnNode || n instanceof LookupSwitchInsnNode) return false;
+            int op = n.getOpcode();
+            if (op == RET || op == ATHROW || op >= IRETURN && op <= RETURN) return false;
+            int writeSlot;
+            int writeWidth;
+            if (n instanceof VarInsnNode local && op >= ISTORE && op <= ASTORE) {
+                writeSlot = local.var;
+                writeWidth = op == LSTORE || op == DSTORE ? 2 : 1;
+            } else if (n instanceof IincInsnNode increment) {
+                writeSlot = increment.var;
+                writeWidth = 1;
+            } else {
+                continue;
+            }
+            // ALOAD 0 is also moved, even when the assigned value is a constant.
+            if (writeSlot == 0 || readSlot >= 0 && writeSlot < readSlot + readWidth
+                    && readSlot < writeSlot + writeWidth) return false;
+        }
+        return true;
     }
 
     private static void objectSuper(ClassNode owner, MethodNode m) {

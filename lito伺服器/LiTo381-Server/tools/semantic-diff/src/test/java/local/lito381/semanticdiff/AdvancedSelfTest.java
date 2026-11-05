@@ -73,6 +73,7 @@ public final class AdvancedSelfTest implements Opcodes {
         check("dup-temp-twice",temp(true,2),temp(false,1),"DIFF","--effects-methods","Fixture#m()V");
         check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
         check("ctor-order",ctor("Parent",false,false),ctor("Parent",true,false),"DEVIATION","--deviations","ctor-prologue-order Fixture#<init>(I)V");
+        ctorLocalWrites();
         check("ctor-order-reverse",ctor("Parent",true,false),ctor("Parent",false,false),"DIFF","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ClassNode nameBefore=ctor("Parent",true,true), nameAfter=ctor("Parent",false,false);
         MethodNode nameMethod=nameAfter.methods.get(0); nameMethod.instructions.insertBefore(nameMethod.instructions.getLast(),new MethodInsnNode(INVOKESTATIC,"Names","name","()V",false));
@@ -85,6 +86,76 @@ public final class AdvancedSelfTest implements Opcodes {
         }
         System.out.println("ADVANCED SELFTEST ALL PASS checks="+checks);
     }
+
+    private static void ctorLocalWrites() throws Exception {
+        checkCtorWrite("ctor-overwrite-int", "I", ILOAD, 1, ISTORE, 1, "DIFF");
+        checkCtorWrite("ctor-overwrite-float", "F", FLOAD, 1, FSTORE, 1, "DIFF");
+        checkCtorWrite("ctor-overwrite-reference", "Ljava/lang/Object;", ALOAD, 1, ASTORE, 1, "DIFF");
+        checkCtorWrite("ctor-overwrite-long", "J", LLOAD, 1, LSTORE, 1, "DIFF");
+        checkCtorWrite("ctor-overwrite-double", "D", DLOAD, 1, DSTORE, 1, "DIFF");
+        checkCtorWrite("ctor-overwrite-iinc", "I", ILOAD, 1, IINC, 1, "DIFF");
+        // Both halves of a category-2 load and store participate in the dependency.
+        checkCtorWrite("ctor-wide-read-high", "J", LLOAD, 1, ISTORE, 2, "DIFF");
+        checkCtorWrite("ctor-wide-read-low", "D", DLOAD, 1, ISTORE, 1, "DIFF");
+        checkCtorWrite("ctor-wide-read-iinc", "J", LLOAD, 1, IINC, 2, "DIFF");
+        checkCtorWrite("ctor-wide-store-low", "II", ILOAD, 1, LSTORE, 1, "DIFF");
+        checkCtorWrite("ctor-wide-store-high", "II", ILOAD, 2, DSTORE, 1, "DIFF");
+        checkCtorWrite("ctor-disjoint-store", "I", ILOAD, 1, ISTORE, 2, "DEVIATION");
+        checkCtorWrite("ctor-disjoint-iinc", "II", ILOAD, 1, IINC, 2, "DEVIATION");
+        checkCtorWrite("ctor-disjoint-wide-store", "I", ILOAD, 1, LSTORE, 2, "DEVIATION");
+        checkCtorWrite("ctor-disjoint-wide-read", "J", LLOAD, 1, ISTORE, 3, "DEVIATION");
+        checkCtorWrite("ctor-disjoint-wide-store-before", "III", ILOAD, 3, DSTORE, 1, "DEVIATION");
+        // ASM represents WIDE operands through VarInsnNode/IincInsnNode as well.
+        checkCtorWrite("ctor-high-slot-store", "I", ILOAD, 256, ISTORE, 256, "DIFF");
+        checkCtorWrite("ctor-high-slot-iinc", "I", ILOAD, 256, IINC, 256, "DIFF");
+    }
+
+    private static void checkCtorWrite(String name, String parameters, int loadOpcode, int readSlot,
+            int writeOpcode, int writeSlot, String status) throws Exception {
+        ClassNode left = ctorWithWrite(false, parameters, loadOpcode, readSlot, writeOpcode, writeSlot);
+        ClassNode right = ctorWithWrite(true, parameters, loadOpcode, readSlot, writeOpcode, writeSlot);
+        check(name, left, right, status, "--deviations", "ctor-prologue-order Fixture#<init>(" + parameters + ")V");
+    }
+
+    private static ClassNode ctorWithWrite(boolean before, String parameters, int loadOpcode, int readSlot,
+            int writeOpcode, int writeSlot) {
+        ClassNode c = ctor("Parent", before, false);
+        String fieldDescriptor = switch (loadOpcode) {
+            case LLOAD -> "J";
+            case FLOAD -> "F";
+            case DLOAD -> "D";
+            case ALOAD -> "Ljava/lang/Object;";
+            default -> "I";
+        };
+        c.fields.get(0).desc = fieldDescriptor;
+        MethodNode m = c.methods.get(0);
+        m.desc = "(" + parameters + ")V";
+        for (AbstractInsnNode n : m.instructions.toArray()) {
+            if (n instanceof VarInsnNode v && v.getOpcode() == ILOAD) {
+                m.instructions.set(n, new VarInsnNode(loadOpcode, readSlot));
+            }
+            if (n instanceof FieldInsnNode f) f.desc = fieldDescriptor;
+            if (n instanceof MethodInsnNode) {
+                InsnList write = new InsnList();
+                if (writeOpcode == IINC) {
+                    write.add(new IincInsnNode(writeSlot, 1));
+                } else {
+                    int constant = switch (writeOpcode) {
+                        case LSTORE -> LCONST_1;
+                        case FSTORE -> FCONST_2;
+                        case DSTORE -> DCONST_1;
+                        case ASTORE -> ACONST_NULL;
+                        default -> ICONST_2;
+                    };
+                    write.add(new InsnNode(constant));
+                    write.add(new VarInsnNode(writeOpcode, writeSlot));
+                }
+                m.instructions.insertBefore(n.getPrevious(), write);
+            }
+        }
+        return c;
+    }
+
     static ClassNode clazz(){ ClassNode c=new ClassNode(); c.version=V17; c.access=ACC_PUBLIC; c.name="Fixture"; c.superName="java/lang/Object"; return c; }
     static MethodNode add(ClassNode c,int access,String name,String desc){ MethodNode m=new MethodNode(access,name,desc,null,null); c.methods.add(m); return m; }
     static ClassNode plain(int access){ ClassNode c=clazz(); add(c,access|ACC_STATIC,"m","()V").instructions.add(new InsnNode(RETURN)); return c; }

@@ -2,7 +2,17 @@
 
 ## 結論
 
-工具實作、自測、固定輸入重跑及快照已完成，首輪完整 CI 全綠，但**整項驗收尚未完成**：指定 #76 產物仍為 2 DIFF，與題目預期 0 不符。沒有把新增核准條目當作直接通過，也沒有改 staged 或擴大來源修補範圍。交付分支 `task/153`，草稿 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。
+第 2 次嘗試已修正審查退回的 P1，`ctor-prologue-order` 移動前會驗證取值依賴。有效 JVM 重現案例現在正確回報 DIFF，自測與三批固定輸入已重跑。#76 仍為 2 DIFF，依本次主控裁定，零 DIFF、槽位重用與一般 stack 暫存移交 #166。交付分支 `task/153`，沿用 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。本次提交的 CI 待推送後確認。
+
+## 第 2 次修正與驗證
+
+- `Normalizations.ctorOrder` 只在跨越區間內沒有覆寫賦值輸入時移動。檢查五種 xSTORE 與 IINC，讀寫範圍均計入 long／double 的第二槽，也檢查接收者 ALOAD 0。重疊時保留原指令，後續照常比較。
+- 無法用直線掃描證明安全的跳躍、switch、標籤邊界與提前退出，採保守拒絕移動。這是本次實作選擇。
+- AdvancedSelfTest 新增 18 個案例，涵蓋審查提供的 `(I)V` 槽位覆寫、五種 xSTORE、IINC、雙槽讀寫的兩端重疊、WIDE 索引，以及互不重疊的正例。原有合法前後移動正例繼續通過。
+- 先加負例並以舊實作執行，實際重現錯誤的 `DEVIATION=1 DIFF=0`，證據在 `scratch/issue-153/advanced-red.log`。修正後為 `ADVANCED SELFTEST ALL PASS checks=67`，原有自測為 `NORMALIZATION SELFTEST ALL PASS checks=517`。
+- 只讀取主控留存的 `scratch/review-153/ReviewProbe.java`，複製到本 worktree 執行。`java -Xverify:all` 實際載入並呼叫兩側，印出 `left.value=2 right.value=7`。比較器輸出 `DIFF=1 DEVIATION=0`，共同 Parent 為 SAME。證據在 `scratch/issue-153/review-probe.log` 與 `review-probe/ctor-overwrite.json`。
+- 三批 staged、正式／候選參考 JAR 及完整 Maven JAR 的 SHA-256 全部與下表原收據相符。重跑修改前、預設、核准清單三組比較，結果仍為下表數字。重新產出 `docs/server-semantic-gap.md`，完整 JAR 結果為 2125 SAME／424 DIFF。
+- `as-record/selftest.py` 本次重跑為 `SELFTEST PASS`。本次未重建伺服器 JAR，使用雜湊相符的既有固定產物重跑比較。下方 Maven 接線及 package 建置紀錄屬首輪證據。
 
 ## 做了什麼
 
@@ -25,7 +35,7 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 | 驗證 | 實測 |
 |---|---|
 | 原有 NormalizationSelfTest | `ALL PASS checks=517` |
-| 新增 AdvancedSelfTest | `ALL PASS checks=49`，已接進 selftest.sh；涵蓋跨 super 保留非 this 堆疊值，另拒絕未支援的舊式 JSR／RET CFG |
+| 新增 AdvancedSelfTest | 第 2 次修正後 `ALL PASS checks=67`，已接進 selftest.sh；涵蓋跨 super 取值依賴、保留非 this 堆疊值，另拒絕未支援的舊式 JSR／RET CFG |
 | as-record/selftest.py | `SELFTEST PASS`；含新增 AsmFinal JVM／正反例及原有 record 回歸 |
 | asm-final-maven-selftest.py | `BUILD SUCCESS`、`ASM FINAL MAVEN SELFTEST PASS` |
 | 伺服器 `mvn -o -B -DskipTests package` | `BUILD SUCCESS`，含 testCompile，未執行伺服器測試 |
@@ -61,7 +71,7 @@ Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsR
 
 ### #76 的三個具體殘差
 
-1. **forMap**：staged 的 ASTORE 1 後有兩次 ALOAD 1，分別供 IFNULL 與 ARETURN。題目第 11 項明定只讀一次，反例也要求讀兩次必須 DIFF，因此保留 `effects sequence[1]: left=ASTORE right=ARETURN`。已在對話送出規格澄清，尚無另行核准。
+1. **forMap**：staged 的 ASTORE 1 後有兩次 ALOAD 1，分別供 IFNULL 與 ARETURN。題目第 11 項明定只讀一次，反例也要求讀兩次必須 DIFF，因此保留 `effects sequence[1]: left=ASTORE right=ARETURN`。後續依主控裁定移交 #166。
 2. **Main.accept**：try 範圍已相同，但最後 handler 左側重用槽 9，右側用槽 10。前面的 socket 與 Exception handler 兩側都用槽 9。#135 的一對一槽位規則保留重用關係，因此這不是單純重編號；第 9 項未授權消除此差異。
 3. **Main.main**：CFG 有 475／473 個有效節點。實際 staged 在 `System.out` 與 `SourceLogin.start` 之間有 ASTORE 17，呼叫後有 ALOAD 17；正式版保留在 operand stack，沒有這兩條。第 10 項只允許區塊排列不同，不能忽略不同指令。僅在診斷記憶體中移除這一對後，CFG 同構通過；未輸出修改 class／JAR，也未將該診斷列入驗收 SAME_LAYOUT。這確認 cleanup 排列本身已可比較。
 
@@ -92,11 +102,11 @@ Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsR
 
 ## 推測
 
-固定 #76 產物的剩餘差異可能有行為等價的來源表達或可另行核准的狹窄正規化，但本輪沒有得到兩次讀取、活性區間槽位或 Main 的堆疊暫存豁免。不能以 CFG 通過局部診斷取代全類驗收。SAME_EFFECTS 仍只是主控核准摘要相符，不證明完整資料流等價。
+固定 #76 產物的剩餘差異可能有行為等價的來源表達或可另行核准的狹窄正規化，後續範圍由 #166 處理。SAME_EFFECTS 的核准摘要相符仍需搭配執行期驗證。雙槽部分覆寫與 WIDE 索引的新增 fixture 用於結構邊界測試，JVM 執行證據限於上述審查者的有效 int 案例。
 
 ## 待驗證／未完成
 
-- #76 要求的 0 DIFF 未達成，待主控處理上述明文條件與固定產物的衝突，或來源任務修正 staged。
+- #76 的 0 DIFF 由 #166 接續，本次維持核准邊界並保留三個具體殘差。
 - 本機沒有 Bash；完整 shell 與冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 本機伺服器 package 跳過測試執行；A-land 的 default debug 與建構子執行期測試尚未做。未啟動服務／遊戲、未連正式 DB。
 - #134 正式 Maven 接線仍由該任務合併；本次沒有修改伺服器 POM。
@@ -116,7 +126,8 @@ Windows 可用 javac 對 `semantic-diff/src/main/java`、`src/test/java` 全部 
 - 交付清單與規格：`docs/combat-merge/{effects-approved,access-widen-approved,layout-approved,deviations}.txt`、`deviations.md`。
 - 報告：本文件、`docs/server-semantic-gap.md`。
 - 本機可重跑腳本與完整證據（不入 git）：`scratch/issue-153/verify.py`；`{66,72,76}-{before,after,approved}.{json,md,log}`；`inputs.json`、`full-inputs.json`；`selftest.log`、`advanced.log`、`as-record-selftest.log`、`asm-final-maven.log`、`server-package.log`。建置產物在各工具 target 與伺服器 target。
+- 第 2 次修正重跑入口為 `scratch/issue-153/retry.py`，執行前先用 `verify.py test` 編譯工具與測試，再執行 AdvancedSelfTest。`retry.log` 保留輸入雜湊核對、有效 JVM probe 與三批／完整 JAR 比較結果。
 
 ## 給下一棒的提示
 
-Claude 主控先審比較邊界與 #76 三項殘差；不要將「主控核准使用 effects」視為忽略所有 ASTORE／呼叫順序。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告只驗證題目固定提交。#134 合併時確認共用 AsRecord 入口沿用本次 AsmFinal 處理，A-land 再補 deviations.md 列出的執行期單元測試。使用者只需後續真機驗收，無須處理編譯或工具前置。
+Claude 主控複審本次 P1 的槽位依賴保護與有效 JVM 負例，#166 執行器接續 #76 三項殘差。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告驗證題目固定提交。#134 合併時確認共用 AsRecord 入口沿用本次 AsmFinal 處理，A-land 再補 deviations.md 列出的執行期單元測試。使用者負責後續真機驗收。
