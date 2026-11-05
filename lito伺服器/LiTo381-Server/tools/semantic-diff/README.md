@@ -1,5 +1,23 @@
 # ASM 語意比對
 
+## T020i-10（Issue #235）
+
+`--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。
+
+配對後仍比較完整本體及 metadata，只有通過的方法列 DEVIATION。僅比較樹中本類 owner 的 INVOKEVIRTUAL／INVOKESPECIAL 呼叫（包含遞迴）依配對統一；祖先／其他 owner、static／interface 呼叫、method handle、字串不改名。JSON `privateRenames` 與 Markdown 列出核准對應，`methodResults` 記錄實際配對結果及失敗原因。未配對的 synthetic 目標不能由 orphan 規則忽略。範圍外類別、重複配對端點、缺核准 URL 或與其他方法豁免重疊會拒絕，避免跳過完整本體比較。
+
+`TenthSelfTest` 接入 `selftest.sh`；同份 framed JAR 供比較及 platform-parent 隔離 ClassLoader 執行，確認 private 改名仍派送祖先版本，而非 private 覆寫及保留原名的反例確實改變派送結果。
+
+## T020i-9（Issue #216）
+
+`--metadata-exempt` 新增 `類別 enclosing-method # approved: <url>`。僅略過該類別的 `outerMethod`／`outerMethodDesc`；`outerClass`、Nest、InnerClasses、旗標、註解、欄位及方法仍比較。不展開內部類。舊的純類名條目維持原行為；JSON 分開列出 `metadataExempt` 與 `enclosingMethodExempt`，未知屬性與範圍外類別拒絕。
+
+兩側在 local webs／CFG 比較前都分析純轉拋 handler。只接受從入口 ASTORE 保存同一例外、經安全 local／常數搬移及 POP 後 ATHROW 的直線本體；呼叫、欄位、monitor、配置、cast 等均拒絕。共用 handler 的 try 條目一起處理，禁止正常路徑進入；每個受保護拋出點刪除 handler 後的有序處理鏈，必須等於 ATHROW 處的處理鏈。另以正常／例外 CFG liveness 檢查 catch 寫入不能被外層讀取。只有移除成功的方法才清理殘留 LOAD／POP、DUP／POP 及已證明不再讀取的鎖暫存；有副作用的值產生者保留。原 #186 核准 helper 的單向規則不變。診斷停用：`-Dsemanticdiff.disable=pure-rethrow`。
+
+public `INVOKEVIRTUAL`／`INVOKEINTERFACE` 的 owner 不同時，按方法內呼叫次序提出候選；名稱／描述子相同，兩側 classpath 都成功解析到 public 非 static 方法，owner 有父子關係，且各側呼叫前 stack receiver 型別同為兩個 owner 的子型別，才在比較用副本統一指令拼法。讀取 class header，不初始化應用程式；不明確的介面解析、未知 receiver 匯合、private／package-private、SPECIAL／STATIC 均不套用。完整方法、操作順序及 CFG 仍須比較。診斷停用：`-Dsemanticdiff.disable=virtual-owner`。
+
+CFG 保留 STORE 事件、槽位與順序，但後續 LOAD 的值來源沿用該 STORE 保存的原值，因而可以證明 `DUP; STORE` 與 `STORE; LOAD` 等價；跨區塊 stack 邊界及覆寫檢查不變。`NinthSelfTest` 接入 `selftest.sh`，以同份 framed JAR 雙向比較並用隔離 ClassLoader 實際執行反例。
+
 ## T020i-6（Issue #176）
 
 預設在既有完整比較仍 DIFF、方法 metadata 相同時，嘗試有界逐路徑證明。成功另列 `SAME_PATHS`，不計入 `SAME`。方法級 `methodResults` 保留每個後備結果，即使類別仍 DIFF；Markdown 同樣逐方法列出原因。類別優先序為 DIFF → DEVIATION → SAME_PATHS → ORPHAN_IGNORED → SAME_LAYOUT → SAME_EFFECTS → SAME。

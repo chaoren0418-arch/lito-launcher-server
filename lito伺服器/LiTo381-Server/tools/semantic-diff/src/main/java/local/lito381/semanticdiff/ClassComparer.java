@@ -123,7 +123,8 @@ final class ClassComparer {
             if (d != null) {
                 return d;
             }
-            d = cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
+            d = leftJar.enclosingMethodExempt.contains(left.name) ? null
+                    : cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
                     str(right.outerMethod) + str(right.outerMethodDesc));
             if (d != null) {
                 return d;
@@ -205,6 +206,11 @@ final class ClassComparer {
         LambdaCallsites.pair(left,right,leftJar,rightJar);
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
+        Map<String, String> renames = rightJar.privateRenames.getOrDefault(right.name, Map.of());
+        for (var rename : renames.entrySet()) {
+            MethodNode method = rmap.remove(rename.getKey());
+            if (method != null) rmap.put(rename.getValue(), method);
+        }
         Map<String, MethodNode> amap =
                 allowRight == null || allowJar == null ? Map.of() : methodMap(allowRight, allowJar);
         Set<String> keys = new TreeSet<>(unionKeys(lmap, rmap));
@@ -232,7 +238,8 @@ final class ClassComparer {
                 rightLabel = "right";
             }
             if (lm == null) {
-                if (!allow && rJar.orphan(rm)) {
+                if (!allow && !rJar.privateRenameTargets.getOrDefault(right.name, Set.of()).contains(rm.name + rm.desc)
+                        && rJar.orphan(rm)) {
                     rJar.result(rm,"ORPHAN_IGNORED","private synthetic; no JAR references or matching LDC string");
                     continue;
                 }
@@ -260,6 +267,11 @@ final class ClassComparer {
             JarIndex.MethodResult pairing=leftJar.methodResults.getOrDefault(left.name,Map.of()).get(lm.name+lm.desc);
             FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
                     effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
+            if (!allow && key.equals(renames.get(rm.name + rm.desc))) {
+                leftJar.result(lm, d == null ? "DEVIATION" : "DIFF",
+                        "private-rename " + lm.name + lm.desc + " -> " + rm.name + rm.desc
+                        + (d == null ? "; private shadow guards and full body comparison passed" : "; " + d.oneLine()));
+            }
             if(d==null && leftJar.callsiteIds.containsKey(left.name+"#"+lm.name+lm.desc))
                 leftJar.result(lm,"LAMBDA_PAIRED_BY_CALLSITE",pairing!=null&&pairing.status().equals("LAMBDA_PAIRED_BY_CALLSITE")
                         ?pairing.detail():rm.name+rm.desc+"; full body comparison passed");
@@ -333,6 +345,8 @@ final class ClassComparer {
     static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
             JarIndex leftJar, JarIndex rJar, boolean effects) {
         lm = RethrowHandlers.normalize(lm, rm, leftJar, rJar);
+        MethodNode[] virtual = VirtualCalls.normalize(lm, rm, leftJar, rJar);
+        lm = virtual[0]; rm = virtual[1];
         FirstDiff d = compareLinear(key,lm,rm,leftJar,rJar,effects);
         if (d == null) return null;
         if (leftJar.approved(leftJar.methodDiffs,lm) && lm.name.equals(rm.name) && lm.desc.equals(rm.desc)) {
