@@ -2,7 +2,16 @@
 
 ## 結論
 
-第 2 次嘗試已修正審查退回的 P1，`ctor-prologue-order` 移動前會驗證取值依賴。有效 JVM 重現案例現在正確回報 DIFF，自測與三批固定輸入已重跑，整合提交 `ff50cca` 的 5 項 CI 全綠。#76 仍為 2 DIFF，依本次主控裁定，零 DIFF、槽位重用與一般 stack 暫存移交 #166。交付分支 `task/153`，沿用 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。
+第 3 次嘗試修正同欄位部分移動會反轉寫入順序的 P1。`ctor-prologue-order` 先建立完整計畫，再檢查欄位寫入依賴；審查提供的有效 JVM 反例現在正確回報 DIFF。自測與三批固定輸入已重跑。#76 仍為 2 DIFF，依主控裁定，零 DIFF、槽位重用與一般 stack 暫存移交 #166。交付分支 `task/153`，沿用 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。
+
+## 第 3 次修正與驗證
+
+- `Normalizations.ctorOrder` 先對未修改的指令序列建立候選移動計畫，保留原有 xSTORE／IINC／wide 取值依賴與控制流程守門。再由 super 往前掃描所有 PUTFIELD，以 owner／name／descriptor 識別欄位；若後方同欄位寫入未移動，撤回前方候選，並把阻擋傳遞到更早的寫入。全部可移動者依原順序插到 super 後。
+- AdvancedSelfTest 新增 5 案：審查的兩筆同欄位部分移動、三筆依賴傳遞、兩筆／三筆同欄位整批合法移動、不同欄位的安全部分移動。原有單筆合法移動、來源槽覆寫與 wide 邊界案例均保留。
+- 先加反例並以舊實作執行，確認錯誤結果 `DEVIATION=1 DIFF=0`，證據為 `scratch/issue-153/field-order-red.log`。修正後 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=72`。
+- 只讀取原專案 `scratch/review-153/FieldOrderProbe.java`，複製到本 worktree 編譯執行。`java -Xverify:all` 實際呼叫 `(7,9)`，得到 `VERIFIED JVM: left.value=7 right.value=9`；新工具回報 `SAME=1 DEVIATION=0 DIFF=1`（共同 Parent 為 SAME）。證據為 `scratch/issue-153/field-order.log` 與 `field-order/result.json`。上一輪槽位覆寫 JVM 反例也重跑通過。
+- 所有固定輸入 SHA-256 與既有收據一致，重跑三批的修改前／預設／核准清單比較：核准後 #66 為 4 DIFF、#72 為 26 DIFF、#76 為 2 DIFF；相對 #135 基準分別減少 5／0／1，本次依賴修正沒有新增殘差。完整固定 JAR 仍為 2125 SAME／424 DIFF，已重新產出 `docs/server-semantic-gap.md`。
+- 本輪沒有重建伺服器 JAR，使用雜湊相符的固定產物；沒有改動原專案資源。CI 證據將於推送後核對，下方第 2 次與首輪結果均為歷史紀錄。
 
 ## 第 2 次修正與驗證
 
@@ -36,7 +45,7 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 | 驗證 | 實測 |
 |---|---|
 | 原有 NormalizationSelfTest | `ALL PASS checks=517` |
-| 新增 AdvancedSelfTest | 第 2 次修正後 `ALL PASS checks=67`，已接進 selftest.sh；涵蓋跨 super 取值依賴、保留非 this 堆疊值，另拒絕未支援的舊式 JSR／RET CFG |
+| 新增 AdvancedSelfTest | 第 3 次修正後 `ALL PASS checks=72`，已接進 selftest.sh；涵蓋跨 super 欄位寫入與取值依賴、保留非 this 堆疊值，另拒絕未支援的舊式 JSR／RET CFG |
 | as-record/selftest.py | `SELFTEST PASS`；含新增 AsmFinal JVM／正反例及原有 record 回歸 |
 | asm-final-maven-selftest.py | `BUILD SUCCESS`、`ASM FINAL MAVEN SELFTEST PASS` |
 | 伺服器 `mvn -o -B -DskipTests package` | `BUILD SUCCESS`，含 testCompile，未執行伺服器測試 |
@@ -50,7 +59,7 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 
 ### 固定 staged 三批對照
 
-「修改前」為本分支起點的 #135 比較器；兩輪使用完全相同的輸入 JAR。最後一欄是新版加本批精確核准清單；所有輪次 ONLY_LEFT／ONLY_RIGHT = 0，missingLeft／extraLeft 皆空。
+「修改前」為本分支起點的 #135 比較器；三輪使用完全相同的輸入 JAR。最後一欄是新版加本批精確核准清單；所有輪次 ONLY_LEFT／ONLY_RIGHT = 0，missingLeft／extraLeft 皆空。
 
 | 固定來源 | entries | 修改前 SAME／DIFF | 新版預設 SAME／DIFF | 新版核准 SAME／SAME_EFFECTS／DIFF | 本任務減少 DIFF |
 |---|---:|---:|---:|---:|---:|
@@ -131,7 +140,8 @@ Windows 可用 javac 對 `semantic-diff/src/main/java`、`src/test/java` 全部 
 - 報告：本文件、`docs/server-semantic-gap.md`。
 - 本機可重跑腳本與完整證據（不入 git）：`scratch/issue-153/verify.py`；`{66,72,76}-{before,after,approved}.{json,md,log}`；`inputs.json`、`full-inputs.json`；`selftest.log`、`advanced.log`、`as-record-selftest.log`、`asm-final-maven.log`、`server-package.log`。建置產物在各工具 target 與伺服器 target。
 - 第 2 次修正重跑入口為 `scratch/issue-153/retry.py`，執行前先用 `verify.py test` 編譯工具與測試，再執行 AdvancedSelfTest。`retry.log` 保留輸入雜湊核對、有效 JVM probe 與三批／完整 JAR 比較結果。
+- 第 3 次修正重跑入口為 `scratch/issue-153/retry3.py`，先執行 `verify.py test`；入口包含上一輪雜湊核對與比較、FieldOrderProbe JVM 驗證、AdvancedSelfTest。另保留 `field-order-red.log`、`field-order.log`、`field-order/result.json`。
 
 ## 給下一棒的提示
 
-Claude 主控複審本次 P1 的槽位依賴保護與有效 JVM 負例，#166 執行器接續 #76 三項殘差。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告驗證題目固定提交。A-land 再補 deviations.md 列出的執行期單元測試。使用者負責後續真機驗收。
+Claude 主控複審本次 P1 的完整移動計畫、同欄位寫入依賴傳遞與有效 JVM 負例，#166 執行器接續 #76 三項殘差。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告驗證題目固定提交。A-land 再補 deviations.md 列出的執行期單元測試。使用者負責後續真機驗收。

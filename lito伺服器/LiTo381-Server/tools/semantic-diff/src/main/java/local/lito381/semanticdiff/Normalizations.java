@@ -87,7 +87,8 @@ final class Normalizations implements Opcodes {
         for (AbstractInsnNode n : m.instructions) if (n instanceof MethodInsnNode c && c.getOpcode() == INVOKESPECIAL
                 && c.owner.equals(owner.superName) && c.name.equals("<init>")) { superCall = c; break; }
         if (superCall == null) return m;
-        List<AbstractInsnNode> moved = new ArrayList<>();
+        // Plan against the original instruction stream before removing any assignment.
+        Map<FieldInsnNode, List<AbstractInsnNode>> plan = new LinkedHashMap<>();
         for (AbstractInsnNode n : m.instructions.toArray()) {
             if (n == superCall) break;
             if (!(n instanceof FieldInsnNode f) || f.getOpcode() != PUTFIELD || !f.owner.equals(owner.name)
@@ -101,10 +102,26 @@ final class Normalizations implements Opcodes {
             if (!simple || !(receiver instanceof VarInsnNode r) || r.getOpcode() != ALOAD || r.var != 0) continue;
             if (receiver.getNext() != value || value.getNext() != n) continue;
             if (!stableAssignmentInputs(value, n, superCall)) continue;
-            for (AbstractInsnNode part : List.of(receiver, value, n)) { m.instructions.remove(part); moved.add(part); }
+            plan.put(f, List.of(receiver, value, n));
+        }
+        // Moving an earlier write past a retained write of the same field reverses
+        // the final value. Walk backwards so rejecting one move also blocks every
+        // earlier dependent move; writes moved together retain their original order.
+        Set<String> retainedWrites = new HashSet<>();
+        for (AbstractInsnNode n = superCall.getPrevious(); n != null; n = n.getPrevious()) {
+            if (!(n instanceof FieldInsnNode f) || f.getOpcode() != PUTFIELD) continue;
+            String field = f.owner + "#" + f.name + ":" + f.desc;
+            if (retainedWrites.contains(field)) plan.remove(f);
+            if (!plan.containsKey(f)) retainedWrites.add(field);
         }
         AbstractInsnNode cursor = superCall;
-        for (AbstractInsnNode n : moved) { m.instructions.insert(cursor, n); cursor = n; }
+        for (List<AbstractInsnNode> assignment : plan.values()) {
+            for (AbstractInsnNode n : assignment) {
+                m.instructions.remove(n);
+                m.instructions.insert(cursor, n);
+                cursor = n;
+            }
+        }
         return m;
     }
 

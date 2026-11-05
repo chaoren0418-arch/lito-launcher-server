@@ -74,6 +74,7 @@ public final class AdvancedSelfTest implements Opcodes {
         check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
         check("ctor-order",ctor("Parent",false,false),ctor("Parent",true,false),"DEVIATION","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ctorLocalWrites();
+        ctorFieldOrder();
         check("ctor-order-reverse",ctor("Parent",true,false),ctor("Parent",false,false),"DIFF","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ClassNode nameBefore=ctor("Parent",true,true), nameAfter=ctor("Parent",false,false);
         MethodNode nameMethod=nameAfter.methods.get(0); nameMethod.instructions.insertBefore(nameMethod.instructions.getLast(),new MethodInsnNode(INVOKESTATIC,"Names","name","()V",false));
@@ -85,6 +86,49 @@ public final class AdvancedSelfTest implements Opcodes {
             rejected("wildcard"+flag,plain(ACC_PUBLIC),plain(ACC_PUBLIC),flag,"Fixture#*()V");
         }
         System.out.println("ADVANCED SELFTEST ALL PASS checks="+checks);
+    }
+
+    private static void ctorFieldOrder() throws Exception {
+        checkCtorFields("ctor-field-partial-order", 2, true, false, "DIFF");
+        checkCtorFields("ctor-field-transitive-order", 3, true, false, "DIFF");
+        checkCtorFields("ctor-field-all-moved", 2, false, false, "DEVIATION");
+        checkCtorFields("ctor-field-all-moved-chain", 3, false, false, "DEVIATION");
+        checkCtorFields("ctor-field-disjoint-partial", 2, true, true, "DEVIATION");
+    }
+
+    private static void checkCtorFields(String name, int assignments, boolean overwrite,
+            boolean disjoint, String status) throws Exception {
+        check(name, ctorFields(false, assignments, overwrite, disjoint),
+                ctorFields(true, assignments, overwrite, disjoint), status,
+                "--deviations", "ctor-prologue-order Fixture#<init>(II)V");
+    }
+
+    private static ClassNode ctorFields(boolean before, int assignments, boolean overwrite, boolean disjoint) {
+        ClassNode c = clazz(); c.superName = "Parent";
+        c.fields.add(new FieldNode(ACC_PUBLIC, "value", "I", null, null));
+        if (disjoint) c.fields.add(new FieldNode(ACC_PUBLIC, "other", "I", null, null));
+        MethodNode m = add(c, ACC_PUBLIC, "<init>", "(II)V");
+        // A retained final write must also retain all earlier writes of the same field.
+        if (before) for (int i = 1; i < assignments; i++) assignment(m);
+        if (before || overwrite) fieldAssignment(m, disjoint ? "other" : "value", 2);
+        if (overwrite) {
+            m.instructions.add(new InsnNode(ICONST_3));
+            m.instructions.add(new VarInsnNode(ISTORE, 2));
+        }
+        m.instructions.add(new VarInsnNode(ALOAD, 0));
+        m.instructions.add(new MethodInsnNode(INVOKESPECIAL, "Parent", "<init>", "()V", false));
+        if (!before) {
+            for (int i = 1; i < assignments; i++) assignment(m);
+            if (!overwrite) fieldAssignment(m, disjoint ? "other" : "value", 2);
+        }
+        m.instructions.add(new InsnNode(RETURN));
+        return c;
+    }
+
+    private static void fieldAssignment(MethodNode m, String field, int slot) {
+        m.instructions.add(new VarInsnNode(ALOAD, 0));
+        m.instructions.add(new VarInsnNode(ILOAD, slot));
+        m.instructions.add(new FieldInsnNode(PUTFIELD, "Fixture", field, "I"));
     }
 
     private static void ctorLocalWrites() throws Exception {
