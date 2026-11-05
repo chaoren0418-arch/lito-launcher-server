@@ -9707,6 +9707,8 @@ final class Protocol {
 
             int attackerX, int attackerY, int targetX, int targetY) {
 
+        projectileGfx = ResourceDatabase.arrow(projectileGfx);
+
         requireByte(actionId, "ranged-physical action");
 
         requireDwordId(attackerObjectId, "ranged-physical attacker");
@@ -9741,7 +9743,7 @@ final class Protocol {
 
                 .c(damageMarker).c(heading).d(sequence)
 
-                .h(projectileGfx).c(0x7f)
+                .h(projectileGfx).c(ResourceDatabase.flightType(0x7f))
 
                 .h(attackerX).h(attackerY).h(targetX).h(targetY)
 
@@ -12443,7 +12445,8 @@ final class Protocol {
 
         }
 
-        return new Writer().c(S_SHOW_MAP).d(inventoryObjectId).c(page).bytes();
+        return ResourceDatabase.mapPage(
+                new Writer().c(S_SHOW_MAP).d(inventoryObjectId).c(page).bytes(), page);
 
     }
 
@@ -14519,7 +14522,7 @@ final class Protocol {
 
     /** S_BLINK locks native action bit 8; mode 17 releases it without curing status effects. */
     static byte[] movementLockRelease() {
-        return new Writer().c(S_PARALYSE).c(17).bytes();
+        return new byte[]{S_PARALYSE, 17};
     }
 
 
@@ -15718,76 +15721,44 @@ final class Protocol {
 
     /** Native common S_PUT_OBJECT body for one authoritative Quest monster. */
 
-    static byte[] questMonster(BattleQuestEncounter.Snapshot monster) {
-
-        if (monster == null || monster.objectId() == 0
-
-                || monster.force() < 0 || monster.force() > 1
-
-                || monster.roomNumber() < 1 || monster.roomNumber() > 4
-
-                || !monster.alive() || monster.hp() <= 0
-
-                || monster.hp() > monster.maxHp()) {
-
+    static byte[] questMonster(BattleQuestEncounter.Snapshot snapshot) {
+        if (snapshot != null && snapshot.objectId() != 0L
+                && snapshot.force() >= 0 && snapshot.force() <= 1
+                && snapshot.roomNumber() >= 1 && snapshot.roomNumber() <= 4
+                && snapshot.alive() && snapshot.hp() > 0) {
+            snapshot.hp();
+            snapshot.maxHp();
+        } else {
             throw new IllegalArgumentException("invalid native Quest monster");
-
         }
-
-        BattleAnimationCatalog.get().requireBattleCapableSprite(
-
-                monster.gfx(), BattleActionCodes.WALK);
-
-        return battleActor(monster.objectId(), monster.x(), monster.y(),
-
-                monster.gfx(), BattleActionCodes.WALK, 0,
-
-                BattleTimedStatus.NORMAL, monster.name(), "", 0,
-
-                healthRatio(monster.hp(), monster.maxHp()), monster.level());
-
+        BattleAnimationCatalog.get().requireBattleCapableSprite(snapshot.gfx(), 0);
+        return battleActor(snapshot.objectId(), snapshot.x(), snapshot.y(), snapshot.gfx(),
+                0, 0, 0, snapshot.name(), "", 0,
+                NativeBattleTamedLifecycle.visualHealthRatio(snapshot.hp(), snapshot.maxHp()),
+                snapshot.level());
     }
 
 
 
     /** Native common S_PUT_OBJECT body for one cooperative Time Attack actor. */
 
-    static byte[] timeAttackActor(BattleTimeAttackEncounter.Snapshot actor) {
-
-        if (actor == null || actor.objectId() == 0 || !actor.alive()
-
-                || actor.hp() <= 0 || actor.hp() > actor.maxHp()) {
-
-            throw new IllegalArgumentException("invalid native Time Attack actor");
-
-        }
-
-        if (actor.finalBoss()) {
-
-            BattleAnimationCatalog.get().requireBattleCapableSprite(
-
-                    actor.gfx(), BattleActionCodes.WALK);
-
+    static byte[] timeAttackActor(BattleTimeAttackEncounter.Snapshot snapshot) {
+        if (snapshot != null && snapshot.objectId() != 0L
+                && snapshot.alive() && snapshot.hp() > 0) {
+            snapshot.hp();
+            snapshot.maxHp();
         } else {
-
-            // The documented Sea Dancer supports walk plus actions 18/19,
-
-            // but not ordinary melee action 1. It remains a passive fragment.
-
-            BattleAnimationCatalog.get().requireWalkAction(
-
-                    actor.gfx(), BattleActionCodes.WALK);
-
+            throw new IllegalArgumentException("invalid native Time Attack actor");
         }
-
-        return battleActor(actor.objectId(), actor.x(), actor.y(),
-
-                actor.gfx(), BattleActionCodes.WALK, 0,
-
-                BattleTimedStatus.NORMAL, actor.name(), "", 0,
-
-                healthRatio(actor.hp(), actor.maxHp()), actor.level());
-
+        if (snapshot.finalBoss()) {
+            BattleAnimationCatalog.get().requireBattleCapableSprite(snapshot.gfx(), 0);
+        } else {
+            BattleAnimationCatalog.get().requireWalkAction(snapshot.gfx(), 0);
+        }
+        return battleActor(snapshot.objectId(), snapshot.x(), snapshot.y(), snapshot.gfx(),
+                0, 0, 0, snapshot.name(), "", 0,
+                NativeBattleTamedLifecycle.visualHealthRatio(snapshot.hp(), snapshot.maxHp()),
+                snapshot.level());
     }
 
 
@@ -16128,7 +16099,7 @@ final class Protocol {
 
         };
 
-        return new Writer().c(S_EFFECT).d(objectId).h(nativeGfx).bytes();
+        return new Writer().c(S_EFFECT).d(objectId).h(SharedClientResources.effect(nativeGfx, gfx)).bytes();
 
     }
 

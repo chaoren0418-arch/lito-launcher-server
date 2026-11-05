@@ -212,12 +212,6 @@ final class ClientSession implements Runnable {
             this.expiresAtNanos = expiresAtNanos;
         }
 
-
-
-
-
-
-
         public long controllerObjectId() {
             return this.controllerObjectId;
         }
@@ -247,12 +241,6 @@ final class ClientSession implements Runnable {
             this.roomId = roomId;
             this.expiresAtNanos = expiresAtNanos;
         }
-
-
-
-
-
-
 
         public long companionObjectId() {
             return this.companionObjectId;
@@ -13914,7 +13902,7 @@ final class ClientSession implements Runnable {
 
     private void exitRoomBeforePolyMe(boolean bl) throws IOException {
         boolean bl2;
-        Object object;
+        GameHub.ReadyTransition readyTransition;
         if (this.phase == Phase.BATTLE) {
             this.settleRequestedBattleExit();
             return;
@@ -13923,8 +13911,9 @@ final class ClientSession implements Runnable {
         this.pendingShapeChange = null;
         this.pendingSlaveTarget = null;
         this.pendingPetRename = null;
-        NativeResurrectionAnswerLife.capture(this, null);
-        this.pendingResurrection = null;
+        PendingResurrection clearedResurrection;
+        NativeResurrectionAnswerLife.capture(this, clearedResurrection = null);
+        this.pendingResurrection = clearedResurrection;
         this.pendingHouseAuctionBid = null;
         this.clearControlledCompanionTargets();
         if (this.pendingTransition == PendingTransition.RESTART_AWAIT_RETURN) {
@@ -13953,19 +13942,19 @@ final class ClientSession implements Runnable {
             System.out.println("[LiTo] exited rental-town room=" + l + " player=" + this.playerName() + " return=group-1-directory");
             return;
         }
-        if (this.phase == Phase.ROOM && (object = this.hub.setReady(this.currentRoomId, this, false).transition()) == GameHub.ReadyTransition.COUNTDOWN_CANCELLED) {
+        if (this.phase == Phase.ROOM && (readyTransition = this.hub.setReady(this.currentRoomId, this, false).transition()) == GameHub.ReadyTransition.COUNTDOWN_CANCELLED) {
             for (ClientSession clientSession : this.hub.roomMembers(this.currentRoomId)) {
                 clientSession.serverCountdown(0);
             }
         }
-        object = new Protocol.Writer().c(208).d(this.currentRoomId).s(this.litoDisplayName()).bytes();
+        byte[] exitPacket = new Protocol.Writer().c(208).d(this.currentRoomId).s(this.litoDisplayName()).bytes();
         if (bl) {
-            this.sendEncrypted((byte[])object, "S_LITO_EXIT_ROOM player=" + this.playerName());
+            this.sendEncrypted(exitPacket, "S_LITO_EXIT_ROOM player=" + this.playerName());
         }
         for (ClientSession clientSession : this.hub.roomMembers(this.currentRoomId)) {
             if (clientSession == this) continue;
             try {
-                clientSession.sendEncrypted((byte[])object, "S_LITO_EXIT_ROOM peer=" + this.playerName());
+                clientSession.sendEncrypted(exitPacket, "S_LITO_EXIT_ROOM peer=" + this.playerName());
             }
             catch (IOException iOException) {
                 System.out.println("[LiTo] room-exit peer notification failed recipient=" + clientSession.playerName() + ": " + iOException.getMessage());
@@ -22225,8 +22214,12 @@ final class ClientSession implements Runnable {
                         + " result=exactly-one-configured-battle-endpoint-required");
                 return;
             }
-            boolean staged = hub.stageRentalBattleHandoff(
-                    SourceLogin.account(this, accountName()), stateCharacter(), rentalTownInventory);
+            GameHub handoffHub = hub;
+            String handoffAccount = accountName();
+            String handoffCharacter = stateCharacter();
+            RuntimeInventory handoffInventory = rentalTownInventory;
+            boolean staged = handoffHub.stageRentalBattleHandoff(
+                    SourceLogin.account(this, handoffAccount), handoffCharacter, handoffInventory);
             if (!staged) {
                 System.out.println("[LiTo] C_USE_ITEM rental-town transfer-stone rejected"
                         + " object=" + objectId
@@ -65815,9 +65808,33 @@ final class ClientSession implements Runnable {
         DragonSkillRequests.dispatch(this, byArray);
     }
 
-    Object nativeLightCommit(BattleSpellCatalog.LightSpell spell, Object phase, long now) {
-        this.timedStatus.activateLight(now, spell.durationSeconds());
-        return spell;
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    Integer nativeLightCommit(BattleSpellCatalog.LightSpell lightSpell, Object object, long l) throws IOException {
+        int n;
+        int n2;
+        long l2;
+        block4: {
+            l2 = l;
+            Phase phase = (Phase)((Object)object);
+            object = lightSpell;
+            ClientSession clientSession = this;
+            long l3 = this.spellReadyNanos.getOrDefault(((BattleSpellCatalog.LightSpell)object).skillId(), 0L);
+            if (l2 >= l3 && this.playerMp >= NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2 = this.nativeSkillConsumptionIntelligence(), n = this.nativeSkillConsumptionOriginalReduction()) && this.phase == phase && (phase == Phase.BATTLE || phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block4;
+            System.out.println("[LiTo] C_USE_SPELL light rejected state skill=" + ((BattleSpellCatalog.LightSpell)object).skillId() + " mp=" + this.playerMp + " cooldownNanos=" + Math.max(0L, l3 - l2));
+            return null;
+        }
+        if (!NativeLightAction.admit(this, lightSpell)) {
+            return null;
+        }
+        this.cancelMeditation("spell-" + ((BattleSpellCatalog.LightSpell)object).skillId());
+        this.timedStatus.activateLight(l2, ((BattleSpellCatalog.LightSpell)object).durationSeconds());
+        ClientSession clientSession = this;
+        clientSession.playerMp = NativeSkillConsumption.boundMp(clientSession, clientSession.playerMp - NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2, n));
+        int n3 = this.playerMp;
+        this.commitSpellReady(((BattleSpellCatalog.LightSpell)object).skillId(), l2 + (long)((BattleSpellCatalog.LightSpell)object).reuseDelayMillis() * 1000000L);
+        return n3;
     }
 
     void nativeLightActivate(int n, long l, int n2) {
@@ -65872,7 +65889,24 @@ final class ClientSession implements Runnable {
         }
     }
 
-    void nativeLightTail(BattleSpellCatalog.LightSpell spell, boolean world, Object after) {
+    void nativeLightTail(BattleSpellCatalog.LightSpell lightSpell, boolean bl, int n) throws IOException {
+        int n2 = n;
+        boolean bl2 = bl;
+        BattleSpellCatalog.LightSpell lightSpell2 = lightSpell;
+        byte[] byArray = new Protocol.Writer().c(32).d(this.playerObjectId()).c(lightSpell2.actionId()).bytes();
+        byte[] byArray2 = Protocol.effectObject(this.playerObjectId(), lightSpell2.effectGfx());
+        List<ClientSession> list = bl2 ? this.classicWorldMembers(this.classicWorldMapId) : this.hub.roomMembers(this.currentRoomId);
+        for (ClientSession clientSession : list) {
+            if (bl2 && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, this.positionX, this.positionY)) continue;
+            if (!this.invisible || clientSession == this) {
+                clientSession.sendEncrypted(byArray, "S_ACTION light-cast object=" + this.playerObjectId() + " action=" + lightSpell2.actionId());
+            }
+            clientSession.sendEncrypted(byArray2, "S_EFFECT light target=" + this.playerObjectId() + " gfx=" + lightSpell2.effectGfx());
+        }
+        this.sendEncrypted(Protocol.soundEffect(0, lightSpell2.soundId()), "S_SOUND_EFFECT light sound=" + lightSpell2.soundId());
+        this.broadcastLightState("light-spell");
+        this.sendEncrypted(Protocol.manaPoint(n2, this.playerMaxMp), "S_MANA_POINT light=" + n2 + "/" + this.playerMaxMp);
+        System.out.println("[LiTo] C_USE_SPELL light caster=" + this.playerName() + " phase=" + String.valueOf((Object)this.phase) + " duration=" + lightSpell2.durationSeconds() + " range=" + lightSpell2.lightRange() + " mp=" + n2 + "/" + this.playerMaxMp);
     }
 
     private volatile long nativeArmorStateExpiresAt;
@@ -69702,5 +69736,2470 @@ final class ClientSession implements Runnable {
             }
         }
         System.out.println("[LiTo] classic-world monster status npc=" + snapshot.npcId() + " object=" + snapshot.objectId() + " skill=" + definition.skillId() + " target=" + classicWorldMonsterPhysicalTarget.objectId() + " companion=" + classicWorldMonsterPhysicalTarget.isCompanion() + " probability=" + n6 + " roll=" + n8 + " success=" + bl3 + " countered=" + bl + " applied=" + bl6 + " target-level=" + n3 + " target-mr=" + n2 + " stone-resistance=" + n5 + " earth-bound=" + bl2 + " erase-magic-consumed=" + bl4 + " native-monster-target=" + bl7 + " trigger-roll=" + String.valueOf(statusSkillAttack.triggerChanceApplied() ? Integer.valueOf(statusSkillAttack.triggerRoll()) : "ignored") + " warning-ms=" + (classicWorldMonsterPhysicalTarget.isCompanion() ? 0 : definition.warningDelayMillis()) + " active-ms=" + definition.paralysisDurationMillis());
+    }
+
+    // ported from candidate-50635f7e.jar: previously missing ASM-spliced methods.
+    long nativeAcceptedShockBattle(BattleSpellCatalog.ShockStunSpell shockStunSpell, Protocol.AttackSpellRequest attackSpellRequest, ClientSession clientSession, int n2, int n3, List list) throws IOException {
+        long l = System.nanoTime();
+        int n4 = shockStunSpell.rollStunSeconds(n -> ThreadLocalRandom.current().nextInt(1, n + 1));
+        BattleTimedStatus.ShockStunActivation shockStunActivation = clientSession.timedStatus.activateShockStun(l, n4, shockStunSpell.maximumStunSeconds());
+        n4 = shockStunActivation.durationSeconds();
+        boolean bl = shockStunActivation.refreshed();
+        boolean bl2 = true;
+        long l2 = 0L;
+        if (bl2) {
+            BattleShockStunEffects.Placement placement = this.hub.placeShockStunEffect(this.currentRoomId, attackSpellRequest.targetObjectId(), n2, n3, l, n4);
+            if (placement != null) {
+                byte[] byArray;
+                if (placement.previous() != null) {
+                    byArray = Protocol.removeObject(placement.previous().objectId());
+                    for (ClientSession clientSession2 : (List<ClientSession>)list) {
+                        clientSession2.sendEncrypted(byArray, "S_REMOVE_OBJECT refreshed Shock Stun effect=" + placement.previous().objectId());
+                    }
+                }
+                l2 = placement.placed().objectId();
+                byArray = Protocol.shockStunEffect(placement.placed());
+                for (ClientSession clientSession2 : (List<ClientSession>)list) {
+                    clientSession2.sendEncrypted(byArray, "S_PUT_OBJECT Shock Stun effect=" + l2 + " target=" + attackSpellRequest.targetObjectId() + " npc=" + shockStunSpell.effectNpcId() + " gfx=" + shockStunSpell.effectNpcGfx() + " duration=" + n4);
+                }
+            }
+            if (clientSession != null) {
+                clientSession.sendEncrypted(Protocol.paralysis(Protocol.ParalysisMode.STUN_APPLY), "S_PARALYSE mode=22 Shock Stun duration=" + n4);
+            }
+        }
+        return l2;
+    }
+
+    long nativeAcceptedShockWorld(BattleSpellCatalog.ShockStunSpell shockStunSpell, Protocol.AttackSpellRequest attackSpellRequest, ClientSession clientSession, int n2, int n3, int n4, int n5) throws IOException {
+        long l = System.nanoTime();
+        boolean bl = false;
+        int n6 = shockStunSpell.rollStunSeconds(n -> ThreadLocalRandom.current().nextInt(1, n + 1));
+        BattleTimedStatus.ShockStunActivation shockStunActivation = clientSession.timedStatus.activateShockStun(l, n6, shockStunSpell.maximumStunSeconds());
+        if (shockStunActivation != null) {
+            n6 = shockStunActivation.durationSeconds();
+            boolean bl2 = shockStunActivation.refreshed();
+            bl = true;
+        }
+        long l2 = 0L;
+        if (bl) {
+            BattleShockStunEffects.Placement placement = this.hub.placeClassicWorldShockStunEffect(n2, n3, attackSpellRequest.targetObjectId(), n4, n5, l, n6);
+            if (placement != null) {
+                if (placement.previous() != null) {
+                    this.publishClassicWorldShockStunPacket(Protocol.removeObject(placement.previous().objectId()), n2, n3, n4, n5, "remove refreshed effect=" + placement.previous().objectId());
+                }
+                l2 = placement.placed().objectId();
+                this.publishClassicWorldShockStunPacket(Protocol.shockStunEffect(placement.placed()), n2, n3, n4, n5, "put effect=" + l2 + " target=" + attackSpellRequest.targetObjectId() + " npc=" + shockStunSpell.effectNpcId() + " gfx=" + shockStunSpell.effectNpcGfx() + " duration=" + n6);
+            }
+            if (clientSession != null) {
+                clientSession.sendEncrypted(Protocol.paralysis(Protocol.ParalysisMode.STUN_APPLY), "S_PARALYSE mode=22 classic-world Shock Stun duration=" + n6);
+            }
+        }
+        return l2;
+    }
+
+    void nativeNpcWeaponCompanionBody(ClassicWorldMonsterPopulation.Attack attack, long l) throws IOException {
+        boolean bl;
+        if (attack == null || attack.targetObjectId() != l || this.phase != Phase.WORLD || !ClassicWorldMapCatalog.supports(this.classicWorldMapId)) {
+            return;
+        }
+        BattleCompanion battleCompanion = this.ownedCompanion(l);
+        BattleCompanion.Snapshot snapshot = battleCompanion == null ? null : battleCompanion.snapshot();
+        ClassicWorldMonsterPopulation.Snapshot snapshot2 = attack.attacker();
+        if (!(snapshot != null && snapshot.active() && snapshot.kind().classicWorldEligible() && snapshot2.mapId() == this.classicWorldMapId && attack.targetX() == snapshot.x() && attack.targetY() == snapshot.y() && ClassicWorldMapCatalog.forMap(snapshot2.mapId()).attackPosition(snapshot2.x(), snapshot2.y(), snapshot.x(), snapshot.y(), snapshot2.template().attackRange()))) {
+            return;
+        }
+        int n = Math.max(Math.abs(snapshot2.x() - snapshot.x()), Math.abs(snapshot2.y() - snapshot.y()));
+        int n2 = this.config.uncannyDodgeHitFixtureD20() > 0 ? this.config.uncannyDodgeHitFixtureD20() : ThreadLocalRandom.current().nextInt(1, 21);
+        int n3 = snapshot.armorClass() < 0 ? ThreadLocalRandom.current().nextInt(1, BattleNpcPhysicalAttack.negativeAcRollMaximum(snapshot.armorClass()) + 1) : 0;
+        int n4 = BattleNpcPhysicalAttack.hitChance(snapshot2.template().level(), 0, snapshot.armorClass(), 0, n2, n3);
+        int n5 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
+        boolean bl2 = !this.config.battlePhysicalHitEnabled() || BattleNpcPhysicalAttack.hits(n4, n5);
+        long l2 = System.nanoTime();
+        bl = bl2 && !battleCompanion.freezeActive(l2) && !battleCompanion.earthBindActive(l2);
+        if (!bl) {
+            bl2 = false;
+        }
+        int n6 = 0;
+        int n7 = 0;
+        int n8 = this.hub.classicWorldMonsterWeaponBreakStacks(snapshot2.mapId(), this.classicWorldInstanceId, snapshot2.objectId());
+        if (bl) {
+            SourceNpcPhysicalStats sourceNpcPhysicalStats;
+            boolean bl4;
+            int n9 = this.classicWorldMonsterPanicAdjustedAbility(snapshot2, snapshot2.template().strength(), l2);
+            int n10 = snapshot2.template().level();
+            int n11 = this.requiredPhysicalGrowthStats().damage(false, n9);
+            int n12 = ThreadLocalRandom.current().nextInt(snapshot2.template().level());
+            int n13 = ThreadLocalRandom.current().nextInt(100);
+            double d = NativeNpcWeaponBreakDamage.sourceExact(n10, n9, n11, n12, n13, switch (snapshot2.template().undead()) {
+                case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(System.currentTimeMillis());
+                default -> false;
+            }, snapshot2.template().boss());
+            n7 = Math.max((int)d, 0);
+            int n14 = NativeNpcWeaponBreakDamage.afterStacks(d, n8);
+            bl4 = n <= 1 || snapshot2.template().bowActionId() <= 0;
+            if (bl4) {
+                n14 = Math.max(0, Math.addExact(n14, this.hub.classicWorldMonsterArmBreakerMeleeDamageModifier(snapshot2.mapId(), this.classicWorldInstanceId, snapshot2.objectId(), System.nanoTime())));
+            }
+            try {
+                sourceNpcPhysicalStats = this.selectedSourceAccounts().npcPhysicalStats(snapshot.npcId());
+            }
+            catch (Exception exception) {
+                System.out.println("[LiTo] classic-world companion defense source lookup failed owner=" + this.playerName() + " npc=" + snapshot.npcId() + " reason=" + exception.getMessage());
+                return;
+            }
+            int n15 = BattlePhysicalDefense.npcAcMaximum(sourceNpcPhysicalStats);
+            int n16 = n15 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n15);
+            n6 = BattlePhysicalDefense.againstNpc(n14, sourceNpcPhysicalStats, n16, false, false).damage();
+            bl2 = n6 > 0;
+        }
+        if (bl) {
+            this.applyClassicWorldMonsterPoisonToCompanion(snapshot2, battleCompanion, snapshot, l2);
+        }
+        long l3 = attack.projectile() ? ATTACK_SPELL_SEQUENCE.getAndIncrement() : 0L;
+        byte[] byArray = attack.projectile() ? Protocol.rangedPhysicalAttack(snapshot2.template().projectileAttackAction(), snapshot2.objectId(), snapshot.objectId(), Math.min(255, n6), snapshot2.heading(), l3, snapshot2.template().bowActionId(), snapshot2.x(), snapshot2.y(), snapshot.x(), snapshot.y()) : new Protocol.Writer().c(35).c(1).d(snapshot2.objectId()).d(snapshot.objectId()).c(Math.min(255, n6)).c(snapshot2.heading()).d(0L).bytes();
+        for (ClientSession clientSession : this.classicWorldMembers(this.classicWorldMapId)) {
+            if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot2.x(), snapshot2.y()) && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y())) continue;
+            clientSession.sendEncrypted(byArray, "S_ATTACK classic-world-monster=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " target-companion=" + snapshot.objectId() + " owner=" + this.playerName() + " damage=" + n6 + " hit=" + bl2 + " physical-hit=" + bl + " source-before-weapon-break=" + n7 + " weapon-break-stacks=" + n8 + " hit-chance=" + n4 + " d20=" + n2 + " d100=" + n5 + " distance=" + n + " projectile=" + attack.projectile());
+        }
+        if (!bl2) {
+            return;
+        }
+        this.applyClassicWorldMonsterCompanionDamage(battleCompanion, snapshot, n6, attack.attacker().objectId(), "monster-death");
+    }
+
+    void nativeNpcWeaponDspyBody(ClassicWorldMonsterPopulation.Attack attack, long l) throws IOException {
+        if (attack == null || attack.targetObjectId() != l || this.phase != Phase.WORLD || this.classicWorldMapId != 400) {
+            return;
+        }
+        ClassicWorldDspyEscorts.Snapshot snapshot = this.hub.classicWorldDspyEscorts().find(l);
+        ClassicWorldMonsterPopulation.Snapshot snapshot2 = attack.attacker();
+        if (!(snapshot != null && snapshot.alive() && snapshot.owned() && snapshot.ownerIdentity().equals(ClassicWorldDspyEscorts.normalizeIdentityForWire(this.sourceCharacterIdentity())) && snapshot2.mapId() == snapshot.mapId() && attack.targetX() == snapshot.x() && attack.targetY() == snapshot.y() && ClassicWorldMapCatalog.forMap(snapshot2.mapId()).attackPosition(snapshot2.x(), snapshot2.y(), snapshot.x(), snapshot.y(), snapshot2.template().attackRange()))) {
+            return;
+        }
+        int n = Math.max(Math.abs(snapshot2.x() - snapshot.x()), Math.abs(snapshot2.y() - snapshot.y()));
+        int n2 = this.config.uncannyDodgeHitFixtureD20() > 0 ? this.config.uncannyDodgeHitFixtureD20() : ThreadLocalRandom.current().nextInt(1, 21);
+        int n3 = ThreadLocalRandom.current().nextInt(1, BattleNpcPhysicalAttack.negativeAcRollMaximum(-15) + 1);
+        int n4 = BattleNpcPhysicalAttack.hitChance(snapshot2.template().level(), 0, -15, 0, n2, n3);
+        int n5 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
+        boolean bl = !this.config.battlePhysicalHitEnabled() || BattleNpcPhysicalAttack.hits(n4, n5);
+        int n6 = 0;
+        int n7 = 0;
+        int n8 = this.hub.classicWorldMonsterWeaponBreakStacks(snapshot2.mapId(), this.classicWorldInstanceId, snapshot2.objectId());
+        if (bl) {
+            long l2 = System.nanoTime();
+            int n9 = this.classicWorldMonsterPanicAdjustedAbility(snapshot2, snapshot2.template().strength(), l2);
+            int n10 = snapshot2.template().level();
+            int n11 = this.requiredPhysicalGrowthStats().damage(false, n9);
+            int n12 = ThreadLocalRandom.current().nextInt(snapshot2.template().level());
+            int n13 = ThreadLocalRandom.current().nextInt(100);
+            double d = NativeNpcWeaponBreakDamage.sourceExact(n10, n9, n11, n12, n13, switch (snapshot2.template().undead()) {
+                case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(System.currentTimeMillis());
+                default -> false;
+            }, snapshot2.template().boss());
+            n7 = Math.max((int)d, 0);
+            int n14 = NativeNpcWeaponBreakDamage.afterStacks(d, n8);
+            SourceNpcPhysicalStats object = ClassicWorldDspyCatalog.DSPY_PHYSICAL;
+            int n15 = BattlePhysicalDefense.npcAcMaximum(object);
+            int n16 = n15 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n15);
+            n6 = BattlePhysicalDefense.againstNpc(n14, object, n16, false, false).damage();
+            bl = n6 > 0;
+        }
+        byte[] byArray = new Protocol.Writer().c(35).c(1).d(snapshot2.objectId()).d(snapshot.objectId()).c(Math.min(255, n6)).c(snapshot2.heading()).d(0L).bytes();
+        for (ClientSession clientSession : this.classicWorldMembers(this.classicWorldMapId)) {
+            if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot2.x(), snapshot2.y()) && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y())) continue;
+            clientSession.sendEncrypted(byArray, "S_ATTACK Dspy-assassin=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " target-Dspy=" + snapshot.objectId() + " owner=" + this.playerName() + " damage=" + n6 + " hit=" + bl + " source-before-weapon-break=" + n7 + " weapon-break-stacks=" + n8 + " hit-chance=" + n4 + " d20=" + n2 + " d100=" + n5 + " distance=" + n);
+        }
+        if (!bl) {
+            return;
+        }
+        ClassicWorldDspyEscorts.Damage damage = this.hub.classicWorldDspyEscorts().damage(snapshot.objectId(), n6, System.nanoTime());
+        if (damage == null || damage.appliedDamage() <= 0) {
+            return;
+        }
+        this.sendEncrypted(Protocol.hitRatio(snapshot.objectId(), damage.after().currentHp(), damage.after().maximumHp()), "S_HIT_RATIO Dspy-follower=" + snapshot.objectId() + " hp=" + damage.after().currentHp() + "/" + damage.after().maximumHp() + " owner-only=true");
+        if (!damage.diedNow()) {
+            return;
+        }
+        byte[] byArray2 = Protocol.objectAction(snapshot.objectId(), 8);
+        for (ClientSession clientSession : this.classicWorldMembers(this.classicWorldMapId)) {
+            if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y())) continue;
+            clientSession.sendEncrypted(byArray2, "S_ACTION Dspy-follower-death=" + snapshot.objectId() + " owner=" + this.playerName() + " delete-delay-ms=10000");
+        }
+        this.hub.clearClassicWorldMonsterTargets(snapshot.objectId());
+        System.out.println("[LiTo] Dspy follower died owner=" + this.playerName() + " follower=" + snapshot.objectId() + " attacker=" + snapshot2.objectId() + " corpse-delay-ms=10000");
+    }
+
+    void nativeNpcWeaponMonsterBody(ClassicWorldMonsterPopulation.Attack attack) throws IOException {
+        if (!NativeCombatOrigin.validWorldAction(this, attack)) {
+            return;
+        }
+        NativeCombatAttacker.Ingress ingress = NativeCombatOrigin.enterWorldAction(this, attack);
+        try {
+            int n;
+            boolean bl;
+            boolean bl2;
+            if (attack == null || attack.targetObjectId() != this.playerObjectId()) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            ClassicWorldMonsterPopulation.Snapshot snapshot = attack.attacker();
+            boolean bl3 = snapshot.npcId() == 60520 && ClassicWorldMonsterGuardCatalog.target(snapshot.mapId(), snapshot.objectId()) != null;
+            boolean bl4 = bl3 ? this.classicWorldMonsterGuardAiEligible(snapshot.mapId()) : this.classicWorldMonsterRetainedTargetEligible(snapshot.mapId());
+            ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(snapshot.mapId());
+            bl2 = bl3 ? ClassicWorldMonsterGuardCatalog.attackPosition(classicMap, snapshot.x(), snapshot.y(), this.positionX, this.positionY, snapshot.template().attackRange()) : classicMap.attackPosition(snapshot.x(), snapshot.y(), this.positionX, this.positionY, snapshot.template().attackRange());
+            if (!bl4 || attack.targetX() != this.positionX || attack.targetY() != this.positionY || !bl2) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            long l = System.nanoTime();
+            int n2 = this.classicWorldMonsterPanicAdjustedAbility(snapshot, snapshot.template().strength(), l);
+            int n3 = Math.max(Math.abs(snapshot.x() - this.positionX), Math.abs(snapshot.y() - this.positionY));
+            int n4 = this.config.uncannyDodgeHitFixtureD20() > 0 ? this.config.uncannyDodgeHitFixtureD20() : ThreadLocalRandom.current().nextInt(1, 21);
+            int n5 = this.battleArmorClass();
+            int n6 = n5 < 0 ? ThreadLocalRandom.current().nextInt(1, BattleNpcPhysicalAttack.negativeAcRollMaximum(n5) + 1) : 0;
+            int n7 = this.effectivePhysicalDodge(l);
+            int n8 = this.effectivePhysicalDodgeDown(l);
+            int n9 = BattleNpcPhysicalAttack.hitChance(snapshot.template().level(), 0, n5, n7, n8, n4, n6);
+            int n10 = this.config.uncannyDodgeHitFixtureD100() > 0 ? this.config.uncannyDodgeHitFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
+            boolean bl6 = !this.config.battlePhysicalHitEnabled() || BattleNpcPhysicalAttack.hits(n9, n10);
+            boolean bl7 = false;
+            int n11 = 0;
+            int n12 = 0;
+            if (bl6 && this.config.battlePhysicalHitEnabled() && snapshot.template().ranged() >= 10 && n3 >= 2 && n9 > n10) {
+                bl7 = true;
+                n11 = this.effectiveRangedEvasionRate(l);
+                n12 = this.config.rangedEvasionFixtureD100() > 0 ? this.config.rangedEvasionFixtureD100() : ThreadLocalRandom.current().nextInt(1, 101);
+                bl6 = BattleRangedEvasion.hitsAfterEvasion(n11, n12);
+            }
+            bl = bl6 && !this.timedStatus.freezeActive(l) && !this.timedStatus.absoluteBarrierActive(l) && !this.timedStatus.earthBindActive(l);
+            if (!bl) {
+                bl6 = false;
+            }
+            boolean bl9 = n3 <= 1 || snapshot.template().bowActionId() <= 0;
+            BattleCounterBarrier.Decision decision = BattleCounterBarrier.Decision.inactive();
+            if (bl6 && bl9 && (decision = CombatProbability.counterDecision(this, snapshot.template().level(), snapshot.template().magicResistance(), snapshot.template().boss(), this.counterBarrierRoll(), l, this, new Object[]{snapshot})).triggered()) {
+                this.commitClassicWorldMonsterCounterBarrier(snapshot, decision);
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            int n13 = 0;
+            int n14 = 0;
+            int n15 = this.hub.classicWorldMonsterWeaponBreakStacks(snapshot.mapId(), this.classicWorldInstanceId, snapshot.objectId());
+            int n16 = 0;
+            int n17 = 0;
+            if (bl6) {
+                int n18 = ThreadLocalRandom.current().nextInt(snapshot.template().level());
+                int n19 = ThreadLocalRandom.current().nextInt(100);
+                int n20 = this.requiredPhysicalGrowthStats().damage(false, n2);
+                boolean bl10 = switch (snapshot.template().undead()) {
+                    case 1, 3, 4 -> ClassicWorldNpcDamage.retainedNight(System.currentTimeMillis());
+                    default -> false;
+                };
+                double d = NativeNpcWeaponBreakDamage.sourceExact(snapshot.template().level(), n2, n20, n18, n19, bl10, snapshot.template().boss());
+                n14 = Math.max((int)d, 0);
+                n13 = NativeNpcWeaponBreakDamage.afterStacks(d, n15);
+                n = bl9 ? this.hub.classicWorldMonsterArmBreakerMeleeDamageModifier(snapshot.mapId(), this.classicWorldInstanceId, snapshot.objectId(), l) : 0;
+                n13 = Math.max(0, Math.addExact(n13, n));
+                CharacterSummary characterSummary = this.selectedCharacterSummary();
+                int n21 = characterSummary == null ? 0 : characterSummary.type();
+                int n22 = BattlePhysicalDefense.playerAcMaximum(n21, n5);
+                int n23 = n22 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n22);
+                n16 = n22 == 0 ? 0 : n23 + Math.max(1, n22 >> 3);
+                n17 = this.combatPhysicalDamageAfterArmorAndCooking(Math.max(0, n13 - n16), "classic-world-monster-" + snapshot.npcId());
+                n17 = BattleStrikerGale.damageAfterStatus(n17, this.timedStatus.strikerGaleActive(l), BattleStrikerGale.npcAttackEligible(n3, snapshot.template().bowActionId()));
+                n17 = this.earthBindProtectedCombatDamage(n17, "classic-world-monster-" + snapshot.npcId());
+            }
+            if (bl) {
+                this.applyClassicWorldMonsterPoison(snapshot, l);
+            }
+            long l2 = attack.projectile() ? ATTACK_SPELL_SEQUENCE.getAndIncrement() : 0L;
+            byte[] byArray = attack.projectile() ? Protocol.rangedPhysicalAttack(snapshot.template().projectileAttackAction(), snapshot.objectId(), this.playerObjectId(), Math.min(255, n17), snapshot.heading(), l2, snapshot.template().bowActionId(), snapshot.x(), snapshot.y(), this.positionX, this.positionY) : new Protocol.Writer().c(35).c(1).d(snapshot.objectId()).d(this.playerObjectId()).c(Math.min(255, n17)).c(snapshot.heading()).d(0L).bytes();
+            for (ClientSession clientSession : this.classicWorldMembers(this.classicWorldMapId)) {
+                if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y()) && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, this.positionX, this.positionY)) continue;
+                clientSession.sendEncrypted(byArray, "S_ATTACK classic-world-monster=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " target=" + this.playerObjectId() + " damage=" + n17 + " raw=" + n13 + " source-before-weapon-break=" + n14 + " weapon-break-stacks=" + n15 + " ac-reduction=" + n16 + " hit=" + bl6 + " physical-hit=" + bl + " hit-chance=" + n9 + " d20=" + n4 + " d100=" + n10 + " dodge=" + n7 + " projectile=" + attack.projectile() + " projectile-gfx=" + snapshot.template().bowActionId() + " projectile-sequence=" + l2 + " ranged-er-checked=" + bl7 + " ranged-er=" + n11 + " ranged-er-roll=" + n12);
+            }
+            if (n17 > 0) {
+                BattleJoyOfPainStatus.Lease lease = this.hub.captureClassicWorldMonsterJoyOfPain(this.classicWorldMapId, this.classicWorldInstanceId, snapshot.objectId(), System.nanoTime());
+                n = lease == null ? 0 : this.currentJoyOfPainFeedbackDamage();
+                this.takeClassicWorldMonsterDamage(n17, snapshot.objectId());
+                this.tryMortalBodyClassicWorldMonsterReflection(snapshot, "classic-world-monster-physical");
+                this.applyJoyOfPainClassicWorldMonsterFeedback(snapshot, lease, n, "classic-world-monster-physical");
+            }
+            NativeCombatOrigin.leaveWorldAction(ingress);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatOrigin.leaveWorldAction(ingress);
+            throw throwable;
+        }
+    }
+
+    void nativeNpcWeaponPhysicalBody(ClassicWorldMonsterPopulation.PhysicalSkillAttack physicalSkillAttack) throws IOException {
+        if (!NativeCombatOrigin.validWorldAction(this, physicalSkillAttack)) {
+            return;
+        }
+        NativeCombatAttacker.Ingress ingress = NativeCombatOrigin.enterWorldAction(this, physicalSkillAttack);
+        try {
+            if (physicalSkillAttack == null || this.phase != Phase.WORLD || !ClassicWorldMapCatalog.supports(this.classicWorldMapId)) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            ClassicWorldMonsterPopulation.Snapshot snapshot = physicalSkillAttack.attacker();
+            if (snapshot.mapId() != this.classicWorldMapId) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            if (physicalSkillAttack.targetObjectId() == this.playerObjectId() && !this.classicWorldMonsterRetainedTargetEligible(snapshot.mapId())) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            ClassicWorldMonsterPhysicalTarget classicWorldMonsterPhysicalTarget = this.classicWorldMonsterPhysicalTarget(physicalSkillAttack.targetObjectId());
+            if (classicWorldMonsterPhysicalTarget == null || classicWorldMonsterPhysicalTarget.x() != physicalSkillAttack.targetX() || classicWorldMonsterPhysicalTarget.y() != physicalSkillAttack.targetY()) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            ClassicWorldMonsterPhysicalSkillCatalog.Definition definition = physicalSkillAttack.skill();
+            ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(snapshot.mapId());
+            if (!classicMap.attackPosition(snapshot.x(), snapshot.y(), classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y(), definition.range())) {
+                NativeCombatOrigin.leaveWorldAction(ingress);
+                return;
+            }
+            List<ClassicWorldMonsterPhysicalTarget> list2 = definition.hasArea() ? this.classicWorldMonsterPhysicalAreaTargets(snapshot, definition) : List.of(classicWorldMonsterPhysicalTarget);
+            ArrayList<ClassicWorldMonsterPhysicalHit> arrayList = new ArrayList<ClassicWorldMonsterPhysicalHit>();
+            long l = System.nanoTime();
+            for (ClassicWorldMonsterPhysicalTarget list3 : list2) {
+                arrayList.add(this.classicWorldMonsterPhysicalSkillHit(snapshot, definition, list3, l));
+            }
+            ClassicWorldMonsterPhysicalHit classicWorldMonsterPhysicalHit2 = arrayList.stream().filter(classicWorldMonsterPhysicalHit -> classicWorldMonsterPhysicalHit.target().objectId() == classicWorldMonsterPhysicalTarget.objectId()).findFirst().orElse(new ClassicWorldMonsterPhysicalHit(classicWorldMonsterPhysicalTarget, 0, 0, 0, 0, 0, false, false, 0));
+            for (ClassicWorldMonsterPhysicalHit classicWorldMonsterPhysicalHit3 : arrayList) {
+                if (!classicWorldMonsterPhysicalHit3.physicalHit()) continue;
+                if (classicWorldMonsterPhysicalHit3.target().isCompanion()) {
+                    classicWorldMonsterPhysicalHit3.target().owner().applyClassicWorldMonsterPoisonToCompanion(snapshot, classicWorldMonsterPhysicalHit3.target().controlled(), classicWorldMonsterPhysicalHit3.target().companion(), l);
+                    continue;
+                }
+                classicWorldMonsterPhysicalHit3.target().owner().applyClassicWorldMonsterPoison(snapshot, l);
+            }
+            List<ClientSession> list = NativeNpcWeaponBreakAreaActions.members(this, this.classicWorldMapId);
+            if (definition.gfxId() > 0) {
+                byte[] byArray = Protocol.effectObject(snapshot.objectId(), definition.gfxId());
+                for (ClientSession clientSession : list) {
+                    if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y())) continue;
+                    clientSession.sendEncrypted(byArray, "S_EFFECT classic-world-monster-physical=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " gfx=" + definition.gfxId());
+                }
+            }
+            byte[] byArray = Protocol.physicalDamageAttack(definition.actionId(), snapshot.objectId(), classicWorldMonsterPhysicalTarget.objectId(), classicWorldMonsterPhysicalHit2.damage(), snapshot.heading());
+            for (ClientSession clientSession : list) {
+                if (!BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, snapshot.x(), snapshot.y()) && !BattleSpellCatalog.isInNativeScreen(clientSession.positionX, clientSession.positionY, classicWorldMonsterPhysicalTarget.x(), classicWorldMonsterPhysicalTarget.y())) continue;
+                clientSession.sendEncrypted(byArray, "S_ATTACK classic-world-monster-physical=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " act-no=" + definition.actNo() + " target=" + classicWorldMonsterPhysicalTarget.objectId() + " targets=" + arrayList.size() + " action=" + definition.actionId() + " gfx=" + definition.gfxId() + " damage=" + classicWorldMonsterPhysicalHit2.damage() + " trigger-roll=" + String.valueOf(physicalSkillAttack.triggerChanceApplied() ? Integer.valueOf(physicalSkillAttack.triggerRoll()) : "ignored") + " leverage=" + definition.effectiveLeverage() + " secondary-actions=0 attack-all=0");
+            }
+            for (ClassicWorldMonsterPhysicalHit classicWorldMonsterPhysicalHit4 : arrayList) {
+                System.out.println("[LiTo] classic-world monster physical skill npc=" + snapshot.npcId() + " object=" + snapshot.objectId() + " act-no=" + definition.actNo() + " target=" + classicWorldMonsterPhysicalHit4.target().objectId() + " companion=" + classicWorldMonsterPhysicalHit4.target().isCompanion() + " source-damage=" + classicWorldMonsterPhysicalHit4.sourceDamage() + " leverage=" + definition.effectiveLeverage() + " weapon-break-stacks=" + this.hub.classicWorldMonsterWeaponBreakStacks(snapshot.mapId(), this.classicWorldInstanceId, snapshot.objectId()) + " armor-reduction=" + classicWorldMonsterPhysicalHit4.armorReduction() + " physical-hit=" + classicWorldMonsterPhysicalHit4.physicalHit() + " hit=" + classicWorldMonsterPhysicalHit4.hit() + " hit-chance=" + classicWorldMonsterPhysicalHit4.hitChance() + " d20=" + classicWorldMonsterPhysicalHit4.d20() + " d100=" + classicWorldMonsterPhysicalHit4.d100() + " damage=" + classicWorldMonsterPhysicalHit4.damage());
+                if (classicWorldMonsterPhysicalHit4.damage() <= 0) continue;
+                if (classicWorldMonsterPhysicalHit4.target().isCompanion()) {
+                    classicWorldMonsterPhysicalHit4.target().owner().applyClassicWorldMonsterCompanionDamage(classicWorldMonsterPhysicalHit4.target().controlled(), classicWorldMonsterPhysicalHit4.target().companion(), classicWorldMonsterPhysicalHit4.damage(), snapshot.objectId(), "monster-physical-skill-death");
+                    continue;
+                }
+                BattleJoyOfPainStatus.Lease lease = this.hub.captureClassicWorldMonsterJoyOfPain(classicWorldMonsterPhysicalHit4.target().owner().classicWorldMapId, classicWorldMonsterPhysicalHit4.target().owner().classicWorldInstanceId, snapshot.objectId(), System.nanoTime());
+                int n = lease == null ? 0 : classicWorldMonsterPhysicalHit4.target().owner().currentJoyOfPainFeedbackDamage();
+                classicWorldMonsterPhysicalHit4.target().owner().takeClassicWorldMonsterDamage(classicWorldMonsterPhysicalHit4.damage(), snapshot.objectId());
+                classicWorldMonsterPhysicalHit4.target().owner().tryMortalBodyClassicWorldMonsterReflection(snapshot, "classic-world-monster-physical-skill-" + definition.actNo());
+                classicWorldMonsterPhysicalHit4.target().owner().applyJoyOfPainClassicWorldMonsterFeedback(snapshot, lease, n, "classic-world-monster-physical-skill-" + definition.actNo());
+            }
+            NativeCombatOrigin.leaveWorldAction(ingress);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatOrigin.leaveWorldAction(ingress);
+            throw throwable;
+        }
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    void nativeSourceCompanionClockTick(long l, long l2, Object object) throws IOException {
+        if (!NativeSourceCompanionClock.valid(this, l, object)) {
+            return;
+        }
+        NativeSummonTerminalLifecycle.retry(this, l2);
+        for (BattleCompanion.Snapshot snapshot : this.controlledCompanionSnapshots()) {
+            BattleCompanion battleCompanion2 = NativeSourceCompanionFirstActor.lookup(this.ownedCompanion(snapshot.objectId()), snapshot, object);
+            if (battleCompanion2 == null || NativeSummonOwnerLifecycle.expiry(battleCompanion2, l2, this)) continue;
+            if (battleCompanion2.expired(l2)) {
+                battleCompanion2.deactivate();
+                Object object2 = this.tamedCompanions;
+                synchronized (object2) {
+                    this.tamedCompanions.removeIf(battleCompanion -> battleCompanion.snapshot().objectId() == snapshot.objectId());
+                }
+                object2 = Protocol.removeObject(snapshot.objectId());
+                for (ClientSession clientSession : this.hub.roomMembers(l)) {
+                    clientSession.sendEncrypted((byte[])object2, "S_REMOVE_OBJECT summoned-companion-expired=" + snapshot.objectId());
+                }
+                System.out.println("[LiTo] summoned companion expired owner=" + this.playerName() + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId());
+                continue;
+            }
+            this.nativeSourceCompanionFirstAction(battleCompanion2, l, l2, object, snapshot);
+        }
+    }
+
+    static int nativeSourceCubeTimeCommitted(ClientSession clientSession, GameHub.TimeAttackActorHit timeAttackActorHit, int n, String string, int n2, NativeSourceCubeNpc.Commit commit) throws IOException {
+        BattleTimeAttackEncounter.Hit hit = timeAttackActorHit.hit();
+        BattleTimeAttackEncounter.Damage damage = hit.damage();
+        BattleTimeAttackEncounter.Snapshot snapshot = damage.after();
+        byte[] byArray = NativeBattleTamedLifecycle.visualHitRatio(snapshot.objectId(), snapshot.hp(), snapshot.maxHp());
+        List<ClientSession> list = NativeSourceCubeNpc.members(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), commit);
+        for (ClientSession object : list) {
+            NativeSourceCubeNpc.send(object, byArray, "S_HIT_RATIO timeattack-actor=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " remaining=" + hit.actorsRemaining() + " source=" + string, commit);
+            if (damage.diedNow()) {
+                if (n > 0) {
+                    NativeSourceCubeNpc.send(object, Protocol.poison(snapshot.objectId(), 0), "S_POISON timeattack-actor=" + snapshot.objectId() + " type=0 reason=death", commit);
+                }
+                NativeSourceCubeNpc.send(object, Protocol.objectAction(snapshot.objectId(), 8), "S_ACTION timeattack-actor=" + snapshot.objectId() + " action=8 source=" + string, commit);
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot2 : hit.spawned()) {
+                NativeSourceCubeNpc.send(object, Protocol.timeAttackActor(snapshot2), "S_PUT_OBJECT timeattack-actor=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " gfx=" + snapshot2.gfx() + " final-boss=" + snapshot2.finalBoss() + " active-ai=" + snapshot2.activeAi() + " hp=" + snapshot2.hp() + "/" + snapshot2.maxHp() + " after-ordinary-fragment=" + snapshot.objectId(), commit);
+            }
+        }
+        if (damage.diedNow()) {
+            NativeSourceCubeNpc.cancel(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), snapshot.objectId(), commit);
+            NativeSourceCubeNpc.lawful(clientSession, snapshot.npcId(), "timeattack-" + string, commit);
+        }
+        if (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter.Snapshot::activeAi)) {
+            NativeSourceCubeNpc.arm(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), commit);
+        }
+        System.out.println("[LiTo] Time Attack actor damaged room=" + NativeSourceCubeNpc.room(clientSession, commit) + " attacker=" + NativeSourceCubeNpc.name(clientSession, commit) + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " damage=" + n2 + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " died=" + damage.diedNow() + " remaining=" + hit.actorsRemaining() + " completed=" + hit.finalBossesCleared() + " source=" + string + (n2 == n2 ? "" : ";acceptance-fixture"));
+        int n3 = Math.max(0, damage.before().hp() - damage.after().hp());
+        if (!timeAttackActorHit.resolution().ended()) {
+            return n3;
+        }
+        for (ClientSession clientSession2 : list) {
+            NativeSourceCubeNpc.end(clientSession2, timeAttackActorHit.resolution(), commit);
+        }
+        NativeSourceCubeNpc.finish(NativeSourceCubeNpc.hub(clientSession, commit), NativeSourceCubeNpc.room(clientSession, commit), commit);
+        return n3;
+    }
+
+    synchronized void nativeSourceDollDetachedFinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceEquipmentOutput.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDetachedOutput.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    /*
+     * WARNING - Removed try catching itself - possible behaviour change.
+     */
+    void nativeSourceDollOriginalOrderedAttackProcs(NativeMagicDollEffects.AttackProc attackProc, long l, ClientSession clientSession, BattleQuestEncounter.Snapshot snapshot, BattleTimeAttackEncounter.Snapshot snapshot2, SourceNpcPhysicalStats sourceNpcPhysicalStats) throws IOException {
+        if (attackProc == null || !attackProc.triggered()) {
+            return;
+        }
+        for (SourceMagicDollPower sourceMagicDollPower : attackProc.damageTriggers()) {
+            this.publishNativeMagicDollProcVisual(sourceMagicDollPower, l, false, "attack-damage");
+        }
+        for (SourceMagicDollPower sourceMagicDollPower : attackProc.skillTriggers()) {
+            NativeMagicDoll nativeMagicDoll;
+            int n = NativeSourceDollNpc.skillDamage(this, sourceMagicDollPower, clientSession, sourceNpcPhysicalStats);
+            if (CombatPlayerDamage.dollGate(n, clientSession, this) > 0) {
+                NativeSourceDollNpc.commit(this, n, l, clientSession, snapshot, snapshot2, "active-skill-" + sourceMagicDollPower.triggerSkillId());
+            }
+            this.publishNativeMagicDollProcVisual(sourceMagicDollPower, l, false, "attack-skill");
+            BattleSpellCatalog.AreaAttackSpell areaAttackSpell = BattleSpellCatalog.areaAttackSpell(sourceMagicDollPower.triggerSkillId());
+            if (areaAttackSpell == null) continue;
+            byte[] byArray = Protocol.effectObject(l, areaAttackSpell.effectGfx());
+            Set<Long> set = this.activeMagicDollObjectIds;
+            synchronized (set) {
+                nativeMagicDoll = this.activeMagicDoll;
+            }
+            if (nativeMagicDoll == null) continue;
+            for (ClientSession clientSession2 : this.nativeMagicDollRecipients(nativeMagicDoll)) {
+                clientSession2.sendEncrypted(byArray, "S_EFFECT magic-doll-skill=" + sourceMagicDollPower.id() + " skill=" + sourceMagicDollPower.triggerSkillId() + " target=" + l + " gfx=" + areaAttackSpell.effectGfx());
+            }
+        }
+        if (attackProc.additionalDamage() > 0) {
+            NativeSourceDollNpc.commit(this, attackProc.additionalDamage(), l, clientSession, snapshot, snapshot2, "active-damage");
+        }
+        System.out.println("[LiTo] magic-doll attack proc player=" + this.playerName() + " target=" + l + " direct=" + attackProc.additionalDamage() + " damage-powers=" + String.valueOf(attackProc.damageTriggers().stream().map(SourceMagicDollPower::id).toList()) + " skill-powers=" + String.valueOf(attackProc.skillTriggers().stream().map(SourceMagicDollPower::id).toList()));
+    }
+
+    synchronized void nativeSourceEquipmentFinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceEquipmentFinalOutput.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    void nativeSourceFatalityOriginalArea(BattleDeathmatchFatalityCatalog.Effect effect, int n2) throws IOException {
+        List<ClientSession> list = NativeSourceFatalityDamage.members(this.hub, this.currentRoomId).stream().filter(clientSession -> clientSession.phase == Phase.BATTLE && !clientSession.observer && clientSession.playerHp > 0 && Math.max(Math.abs(clientSession.positionX - this.positionX), Math.abs(clientSession.positionY - this.positionY)) <= n2).toList();
+        this.broadcastFatalityEffect(effect, list);
+        for (ClientSession clientSession2 : list) {
+            int n3 = NativeSourceFatalityDamage.roll(effect, n -> ThreadLocalRandom.current().nextInt(1, n + 1), this, clientSession2);
+            NativeSourceFatalityDamage.completed(clientSession2, n3, null, this);
+        }
+    }
+
+    void nativeSourceFatalityOriginalSingle(BattleDeathmatchFatalityCatalog.Effect effect) throws IOException {
+        this.broadcastFatalityEffect(effect, List.of(this));
+        NativeSourceFatalityDamage.completed(this, NativeSourceFatalityDamage.roll(effect, n -> ThreadLocalRandom.current().nextInt(1, n + 1), this, this), null, this);
+    }
+
+    int nativeSourceHpOriginalTimeDamage(long l, int n, String string, NativeSourceNpcDamageDisplay.Receipt receipt) throws IOException {
+        this.markBattleCombat();
+        int n2 = this.config.timeAttackPlayerPhysicalDamageFixture() > 0 && "physical".equals(string) ? this.config.timeAttackPlayerPhysicalDamageFixture() : n;
+        int n3 = this.hub.timeAttackActorPoisonPalette(this.currentRoomId, l, System.nanoTime());
+        GameHub.TimeAttackActorHit timeAttackActorHit = NativeSourceNpcDamageDisplay.timeDamage(this.hub, this.currentRoomId, this, l, n2, receipt);
+        if (timeAttackActorHit == null) {
+            System.out.println("[LiTo] Time Attack actor damage rejected room=" + this.currentRoomId + " attacker=" + this.playerName() + " object=" + l + " damage=" + n2 + " source=" + string);
+            return 0;
+        }
+        BattleTimeAttackEncounter.Hit hit = timeAttackActorHit.hit();
+        BattleTimeAttackEncounter.Damage damage = hit.damage();
+        BattleTimeAttackEncounter.Snapshot snapshot = damage.after();
+        byte[] byArray = NativeBattleTamedLifecycle.visualHitRatio(snapshot.objectId(), snapshot.hp(), snapshot.maxHp());
+        List<ClientSession> list = this.hub.roomMembers(this.currentRoomId);
+        for (ClientSession object : list) {
+            NativeSourceMonsterHp.oldRatio(object, byArray, "S_HIT_RATIO timeattack-actor=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " remaining=" + hit.actorsRemaining() + " source=" + string);
+            if (damage.diedNow()) {
+                if (n3 > 0) {
+                    object.sendEncrypted(Protocol.poison(snapshot.objectId(), 0), "S_POISON timeattack-actor=" + snapshot.objectId() + " type=0 reason=death");
+                }
+                object.sendEncrypted(Protocol.objectAction(snapshot.objectId(), 8), "S_ACTION timeattack-actor=" + snapshot.objectId() + " action=8 source=" + string);
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot2 : hit.spawned()) {
+                object.sendEncrypted(Protocol.timeAttackActor(snapshot2), "S_PUT_OBJECT timeattack-actor=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " gfx=" + snapshot2.gfx() + " final-boss=" + snapshot2.finalBoss() + " active-ai=" + snapshot2.activeAi() + " hp=" + snapshot2.hp() + "/" + snapshot2.maxHp() + " after-ordinary-fragment=" + snapshot.objectId());
+            }
+        }
+        if (damage.diedNow()) {
+            this.hub.cancelArmorBreak(this.currentRoomId, snapshot.objectId());
+            this.applyNpcLawfulReward(snapshot.npcId(), "timeattack-" + string);
+        }
+        if (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter.Snapshot::activeAi)) {
+            this.hub.armPveAi(this.currentRoomId);
+        }
+        System.out.println("[LiTo] Time Attack actor damaged room=" + this.currentRoomId + " attacker=" + this.playerName() + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " damage=" + n2 + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " died=" + damage.diedNow() + " remaining=" + hit.actorsRemaining() + " completed=" + hit.finalBossesCleared() + " source=" + string + (n2 == n ? "" : ";acceptance-fixture"));
+        int n4 = Math.max(0, damage.before().hp() - damage.after().hp());
+        if (!timeAttackActorHit.resolution().ended()) {
+            return n4;
+        }
+        for (ClientSession clientSession : list) {
+            clientSession.serverEndBattle(timeAttackActorHit.resolution());
+        }
+        this.hub.endBattle(this.currentRoomId);
+        return n4;
+    }
+
+    synchronized void nativeSourceIcons1FinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceProcScalarOutput.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    synchronized void nativeSourceNpcHpFinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceNpcHpOutput.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceEquipmentOutput.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    static int nativeSourcePhysicalTimeCommitted(ClientSession clientSession, GameHub.TimeAttackActorHit timeAttackActorHit, int n, String string, int n2, NativeSourcePhysicalNpc.Commit commit) throws IOException {
+        BattleTimeAttackEncounter.Hit hit = timeAttackActorHit.hit();
+        BattleTimeAttackEncounter.Damage damage = hit.damage();
+        BattleTimeAttackEncounter.Snapshot snapshot = damage.after();
+        byte[] byArray = NativeBattleTamedLifecycle.visualHitRatio(snapshot.objectId(), snapshot.hp(), snapshot.maxHp());
+        List<ClientSession> list = NativeSourcePhysicalNpc.members(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), commit);
+        for (ClientSession object : list) {
+            NativeSourcePhysicalNpc.send(object, byArray, "S_HIT_RATIO timeattack-actor=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " remaining=" + hit.actorsRemaining() + " source=" + string, commit);
+            if (damage.diedNow()) {
+                if (n > 0) {
+                    NativeSourcePhysicalNpc.send(object, Protocol.poison(snapshot.objectId(), 0), "S_POISON timeattack-actor=" + snapshot.objectId() + " type=0 reason=death", commit);
+                }
+                NativeSourcePhysicalNpc.send(object, Protocol.objectAction(snapshot.objectId(), 8), "S_ACTION timeattack-actor=" + snapshot.objectId() + " action=8 source=" + string, commit);
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot2 : hit.spawned()) {
+                NativeSourcePhysicalNpc.send(object, Protocol.timeAttackActor(snapshot2), "S_PUT_OBJECT timeattack-actor=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " gfx=" + snapshot2.gfx() + " final-boss=" + snapshot2.finalBoss() + " active-ai=" + snapshot2.activeAi() + " hp=" + snapshot2.hp() + "/" + snapshot2.maxHp() + " after-ordinary-fragment=" + snapshot.objectId(), commit);
+            }
+        }
+        if (damage.diedNow()) {
+            NativeSourcePhysicalNpc.cancel(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), snapshot.objectId(), commit);
+            NativeSourcePhysicalNpc.lawful(clientSession, snapshot.npcId(), "timeattack-" + string, commit);
+        }
+        if (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter.Snapshot::activeAi)) {
+            NativeSourcePhysicalNpc.arm(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), commit);
+        }
+        System.out.println("[LiTo] Time Attack actor damaged room=" + NativeSourcePhysicalNpc.room(clientSession, commit) + " attacker=" + NativeSourcePhysicalNpc.name(clientSession, commit) + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " damage=" + n2 + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " died=" + damage.diedNow() + " remaining=" + hit.actorsRemaining() + " completed=" + hit.finalBossesCleared() + " source=" + string + (n2 == n2 ? "" : ";acceptance-fixture"));
+        int n3 = Math.max(0, damage.before().hp() - damage.after().hp());
+        if (!timeAttackActorHit.resolution().ended()) {
+            return n3;
+        }
+        for (ClientSession clientSession2 : list) {
+            NativeSourcePhysicalNpc.end(clientSession2, timeAttackActorHit.resolution(), commit);
+        }
+        NativeSourcePhysicalNpc.finish(NativeSourcePhysicalNpc.hub(clientSession, commit), NativeSourcePhysicalNpc.room(clientSession, commit), commit);
+        return n3;
+    }
+
+    static int nativeSourcePoisonTimeCommitted(ClientSession clientSession, GameHub.TimeAttackActorHit timeAttackActorHit, int n, String string, int n2, NativeSourcePoisonNpc.Commit commit) throws IOException {
+        BattleTimeAttackEncounter.Hit hit = timeAttackActorHit.hit();
+        BattleTimeAttackEncounter.Damage damage = hit.damage();
+        BattleTimeAttackEncounter.Snapshot snapshot = damage.after();
+        byte[] byArray = NativeBattleTamedLifecycle.visualHitRatio(snapshot.objectId(), snapshot.hp(), snapshot.maxHp());
+        List<ClientSession> list = NativeSourcePoisonNpc.members(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), commit);
+        for (ClientSession object : list) {
+            NativeSourcePoisonNpc.send(object, byArray, "S_HIT_RATIO timeattack-actor=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " remaining=" + hit.actorsRemaining() + " source=" + string, commit);
+            if (damage.diedNow()) {
+                if (n > 0) {
+                    NativeSourcePoisonNpc.send(object, Protocol.poison(snapshot.objectId(), 0), "S_POISON timeattack-actor=" + snapshot.objectId() + " type=0 reason=death", commit);
+                }
+                NativeSourcePoisonNpc.send(object, Protocol.objectAction(snapshot.objectId(), 8), "S_ACTION timeattack-actor=" + snapshot.objectId() + " action=8 source=" + string, commit);
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot2 : hit.spawned()) {
+                NativeSourcePoisonNpc.send(object, Protocol.timeAttackActor(snapshot2), "S_PUT_OBJECT timeattack-actor=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " gfx=" + snapshot2.gfx() + " final-boss=" + snapshot2.finalBoss() + " active-ai=" + snapshot2.activeAi() + " hp=" + snapshot2.hp() + "/" + snapshot2.maxHp() + " after-ordinary-fragment=" + snapshot.objectId(), commit);
+            }
+        }
+        if (damage.diedNow()) {
+            NativeSourcePoisonNpc.cancel(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), snapshot.objectId(), commit);
+            NativeSourcePoisonNpc.lawful(clientSession, snapshot.npcId(), "timeattack-" + string, commit);
+        }
+        if (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter.Snapshot::activeAi)) {
+            NativeSourcePoisonNpc.arm(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), commit);
+        }
+        System.out.println("[LiTo] Time Attack actor damaged room=" + NativeSourcePoisonNpc.room(clientSession, commit) + " attacker=" + NativeSourcePoisonNpc.name(clientSession, commit) + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " damage=" + n2 + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " died=" + damage.diedNow() + " remaining=" + hit.actorsRemaining() + " completed=" + hit.finalBossesCleared() + " source=" + string + (n2 == n2 ? "" : ";acceptance-fixture"));
+        int n3 = Math.max(0, damage.before().hp() - damage.after().hp());
+        if (!timeAttackActorHit.resolution().ended()) {
+            return n3;
+        }
+        for (ClientSession clientSession2 : list) {
+            NativeSourcePoisonNpc.end(clientSession2, timeAttackActorHit.resolution(), commit);
+        }
+        NativeSourcePoisonNpc.finish(NativeSourcePoisonNpc.hub(clientSession, commit), NativeSourcePoisonNpc.room(clientSession, commit), commit);
+        return n3;
+    }
+
+    synchronized void nativeSourceProc68FinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceProc68Graphics.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    synchronized void nativeSourceProc68IconFinalFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceProc68Icon.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    synchronized void nativeSourceWeaponStaticFrame(byte[] byArray, String string, Object object) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceWeaponFinalFrame.allow(this, byArray, object)) {
+            return;
+        }
+        if (!NativeSourceEquipmentOutput.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    synchronized void nativeStaticOriginalFrame(byte[] byArray, String string) throws IOException {
+        Protocol.Reader reader;
+        int n;
+        if (!NativeSourceEquipmentOutput.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledHealing.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNpcMagicEffects.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceFatalityDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeVisibility.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeRemainder.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeStatus.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceSingleNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePhysicalNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourcePoisonNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubeNpc.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceCubePlayer.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollDefense.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceDollSlow.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceArenaPoison.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRawDamage.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceControlledDisplay.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceRemainingMaterials.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWeaponBuffTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningHp.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceLightningLifetime.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceNegativeTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceWindTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeSourceMassSlowTargets.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeBattleControlledCancellation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeAcceptedFreezeMutation.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeStaticNpcRespawn.allowFrame(this, byArray)) {
+            return;
+        }
+        if (!NativeDeItemPublication.allowPublication(this)) {
+            return;
+        }
+        byte[] byArray2 = this.outgoing.encrypt(byArray);
+        Protocol.writeFrame(this.socket.getOutputStream(), byArray2);
+        NativeSourceNpcMagicEffects.sent(this, byArray);
+        NativeSourceCubeVisibility.sent(this, byArray);
+        this.capture.frame("server_to_client", byArray, byArray2.length + 2, string);
+        n = byArray.length == 0 ? -1 : byArray[0] & 0xFF;
+        if (n == 22 || n == 124 || n == 23) {
+            if (this.clientInventoryObjectIds == null) {
+                this.clientInventoryObjectIds = new LinkedHashSet<Long>();
+            }
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            if (n == 22) {
+                this.clientInventoryObjectIds.add(reader.d());
+            } else if (n == 23) {
+                this.clientInventoryObjectIds.remove(reader.d());
+            } else {
+                int n3 = reader.c();
+                for (int i = 0; i < n3; ++i) {
+                    this.clientInventoryObjectIds.add(reader.d());
+                    reader.c();
+                    reader.c();
+                    reader.h();
+                    reader.c();
+                    reader.d();
+                    reader.c();
+                    reader.s();
+                    int n4 = reader.c();
+                    for (int j = 0; j < n4; ++j) {
+                        reader.c();
+                    }
+                }
+            }
+        }
+        if (n == 26) {
+            reader = new Protocol.Reader(byArray);
+            reader.c();
+            long l = reader.d();
+            long l2 = reader.d();
+            RuntimeInventory.Item item = NativeDeItemPublication.inventory(this).item(l);
+            if (item != null && (long)item.quantity() == l2) {
+                this.sendEncrypted(Protocol.changeInventoryDescription(l, item.nativeViewName()), "S_CHANGE_ITEM_DESC stack-count=" + l2 + " object=" + l);
+            }
+        }
+        LiToItemDetails.publish(this, byArray);
+    }
+
+    void nativeStaticOriginalMove(int n, int n2, int n3, int n4, int n5) throws IOException {
+        boolean bl;
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(this.classicWorldMapId);
+        GameHub.ClassicWorldLocation classicWorldLocation = this.hub.classicWorldLocation(this);
+        boolean bl2 = this.classicWorldMembers(this.classicWorldMapId).stream().anyMatch(clientSession -> clientSession != this && clientSession.positionX == n3 && clientSession.positionY == n4);
+        boolean bl3 = this.classicWorldMembers(this.classicWorldMapId).stream().flatMap(clientSession -> clientSession.classicWorldCompanionSnapshots().stream()).anyMatch(snapshot -> snapshot.active() && snapshot.x() == n3 && snapshot.y() == n4);
+        boolean bl4 = NativeStaticNpcMotion.occupies(this.classicWorldMapId, n3, n4, this) || this.hub.classicWorldMonsterOccupies(this.classicWorldMapId, this.classicWorldInstanceId, n3, n4);
+        boolean bl5 = this.hub.dwarfCastleDoorBlocks(this.classicWorldMapId, n3, n4) || this.hub.adenCastleDoorBlocks(this.classicWorldMapId, n3, n4) || this.hub.heineCastleDoorBlocks(this.classicWorldMapId, n3, n4) || this.hub.mainlandCastleDoorBlocks(this.classicWorldMapId, n3, n4) || this.hub.classicWorldWaterDragonDoorBlocks(this.classicWorldMapId, this.classicWorldInstanceId, n3, n4);
+        bl = bl2 || bl3 || bl4;
+        if (n != this.positionX || n2 != this.positionY || classicWorldLocation == null || classicWorldLocation.mapId() != this.classicWorldMapId || !classicMap.canStep(this.positionX, this.positionY, n3, n4) || bl || bl5) {
+            this.sendEncrypted(NativeMovement.legacyDestinationPacket(new Protocol.Writer().c(18).d(this.playerObjectId()).h(this.positionX).h(this.positionY).c(n5).bytes()), "S_MOVE_OBJECT rejected-classic-world requested=" + n3 + "," + n4 + " packet-source=" + n + "," + n2 + " authoritative-source=" + this.positionX + "," + this.positionY + " map=" + this.classicWorldMapId + " occupied=" + bl + " door-blocked=" + bl5);
+            this.issueMovementLock("rejected-classic-world-edge");
+            return;
+        }
+        int n6 = this.positionX;
+        int n7 = this.positionY;
+        this.positionX = n3;
+        this.positionY = n4;
+        this.playerHeading = n5;
+        if (!this.hub.updateClassicWorld(this, this.classicWorldMapId, n3, n4, n5)) {
+            this.positionX = n6;
+            this.positionY = n7;
+            throw new IOException("classic-world membership vanished during movement");
+        }
+        this.cancelMeditation("move");
+        this.naturalHpRegen.noteMove();
+        this.naturalMpRegen.noteMove();
+        byte[] byArray = NativeMovement.legacyDestinationPacket(new Protocol.Writer().c(18).d(this.playerObjectId()).h(n3).h(n4).c(n5).bytes());
+        for (ClientSession clientSession2 : this.classicWorldMembers(this.classicWorldMapId)) {
+            if (clientSession2 == this || !this.sameClassicWorldMap(clientSession2)) continue;
+            boolean bl7 = BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, n6, n7);
+            boolean bl8 = BattleSpellCatalog.isInNativeScreen(clientSession2.positionX, clientSession2.positionY, n3, n4);
+            if (!this.invisible && !bl7 && bl8) {
+                clientSession2.sendBattleObject(this.playerObjectId(), this.litoDisplayName(), this.sourceCharacterIdentity(), n3, n4, this.battleGfx(), this.battleWalkAction(), this.battleLightRange(), this.battleMoveSpeed(), 4, this.battleLevel(), ClientSession.nativeLawful(this.characterLawful()), this.classicTitle, this.battleHpRatio());
+                BattleTimedStatus.Brave brave = this.timedStatus.brave(System.nanoTime());
+                if (brave.mode() != 0) {
+                    clientSession2.sendEncrypted(Protocol.braveSpeed(this.playerObjectId(), Protocol.BraveMode.fromWire(brave.mode()), 0), "S_EMOTION(brave) object=" + this.playerObjectId() + " mode=" + brave.mode() + " duration=0 reason=classic-world-screen-enter");
+                }
+            } else if (!this.invisible && bl7 && !bl8) {
+                clientSession2.sendEncrypted(Protocol.removeObject(this.playerObjectId()), "S_REMOVE_OBJECT classic-world screen-exit=" + this.playerName());
+            } else if (!this.invisible && bl8) {
+                clientSession2.sendEncrypted(byArray, "S_MOVE_OBJECT classic-world object=" + this.playerObjectId() + " x=" + n3 + " y=" + n4 + " heading=" + n5);
+            }
+            boolean bl9 = BattleSpellCatalog.isInNativeScreen(n6, n7, clientSession2.positionX, clientSession2.positionY);
+            boolean bl10 = BattleSpellCatalog.isInNativeScreen(n3, n4, clientSession2.positionX, clientSession2.positionY);
+            if (!clientSession2.invisible && !bl9 && bl10) {
+                this.sendBattleObject(clientSession2.playerObjectId(), clientSession2.litoDisplayName(), clientSession2.sourceCharacterIdentity(), clientSession2.positionX, clientSession2.positionY, clientSession2.battleGfx(), clientSession2.battleWalkAction(), clientSession2.battleLightRange(), clientSession2.battleMoveSpeed(), 4, clientSession2.battleLevel(), ClientSession.nativeLawful(clientSession2.characterLawful()), clientSession2.classicTitle, clientSession2.battleHpRatio());
+                BattleTimedStatus.Brave brave = clientSession2.timedStatus.brave(System.nanoTime());
+                if (brave.mode() == 0) continue;
+                this.sendEncrypted(Protocol.braveSpeed(clientSession2.playerObjectId(), Protocol.BraveMode.fromWire(brave.mode()), 0), "S_EMOTION(brave) object=" + clientSession2.playerObjectId() + " mode=" + brave.mode() + " duration=0 reason=classic-world-screen-enter");
+                continue;
+            }
+            if (clientSession2.invisible || !bl9 || bl10) continue;
+            this.sendEncrypted(Protocol.removeObject(clientSession2.playerObjectId()), "S_REMOVE_OBJECT classic-world screen-exit=" + clientSession2.playerName());
+        }
+        this.updateClassicWorldStaticNpcVisibility(n6, n7, n3, n4);
+        this.updateClassicCastleWarObjectVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldRescueFollowerVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldDspyFollowerVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldRoiFollowerVisibility(n6, n7, n3, n4);
+        this.updateMainlandCastleDoorVisibility(n6, n7, n3, n4);
+        this.updateDwarfCastleDoorVisibility(n6, n7, n3, n4);
+        this.updateAdenCastleDoorVisibility(n6, n7, n3, n4);
+        this.updateHeineCastleDoorVisibility(n6, n7, n3, n4);
+        this.updateWaterDragonDoorVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldMonsterVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldGroundItemVisibility(n6, n7, n3, n4);
+        this.updateClassicWorldCompanionVisibility(n6, n7, n3, n4);
+    }
+
+    private void sourcePlayerBattleCommit(int n, ClientSession clientSession, boolean bl, boolean bl2, long l, BattleJoyOfPainStatus.Lease lease, int n2) throws IOException {
+        if (NativeSourceHealingHp.recovery(this)) {
+            return;
+        }
+        NativeAcceptedState.requireCurrent();
+        NativePlayerCommit.markCombat(this, clientSession);
+        NativeAcceptedState.requireCurrent();
+        CombatPoisonLifecycle.lastDamage(this, clientSession);
+        NativeAcceptedState.requireCurrent();
+        if (NativePlayerCommit.deathHp(this) == 0 && l > 0L) {
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            long l2 = System.nanoTime() + l * 1000000L;
+            NativeAcceptedState.requireCurrent();
+            long l3 = Math.max(this.terminalEffectResultNotBeforeNanos, l2);
+            NativeAcceptedState.requireCurrent();
+            this.terminalEffectResultNotBeforeNanos = l3;
+        }
+        NativeAcceptedState.requireCurrent();
+        String string = NativePlayerCommit.deathHp(this) == 0 ? "accepted-fatal-damage" : "accepted-damage";
+        NativeAcceptedState.requireCurrent();
+        NativeAcceptedState.sleep(this, string);
+        Protocol.Writer writer = new Protocol.Writer();
+        NativeAcceptedState.requireCurrent();
+        Protocol.Writer writer2 = writer.c(13);
+        NativeAcceptedState.requireCurrent();
+        int n3 = NativePlayerCommit.hp(this);
+        NativeAcceptedState.requireCurrent();
+        Protocol.Writer writer3 = writer2.h(n3);
+        NativeAcceptedState.requireCurrent();
+        int n4 = NativePlayerCommit.max(this);
+        NativeAcceptedState.requireCurrent();
+        Protocol.Writer writer4 = writer3.h(n4);
+        NativeAcceptedState.requireCurrent();
+        byte[] byArray = writer4.bytes();
+        NativeAcceptedState.requireCurrent();
+        int n5 = NativePlayerCommit.hp(this);
+        NativeAcceptedState.requireCurrent();
+        String string2 = "S_HIT_POINT player=" + n5 + "/" + NativePlayerCommit.max(this);
+        NativeAcceptedState.requireCurrent();
+        NativePlayerCommit.safeSend(this, byArray, string2);
+        NativeAcceptedState.requireCurrent();
+        String string3 = NativePlayerCommit.deathHp(this) == 0 ? "player-death" : "player-damage";
+        NativeAcceptedState.requireCurrent();
+        NativePlayerCommit.safeRatio(this, string3);
+        NativeAcceptedState.requireCurrent();
+        NativePlayerCommit.publishDefense(this);
+        NativeAcceptedState.requireCurrent();
+        if (NativePlayerCommit.deathHp(this) == 0) {
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            long l4 = this.playerObjectId();
+            NativeAcceptedState.requireCurrent();
+            this.hub.cancelArmorBreak(this.currentRoomId, l4);
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            long l5 = this.playerObjectId();
+            NativeAcceptedState.requireCurrent();
+            this.hub.cancelPatience(this.currentRoomId, l5);
+            NativeAcceptedState.requireCurrent();
+            CombatDeathCancellation.death(this);
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.timedStatus.clearWaterDragonAffliction();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.dragonSkinStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            BattleAwakenStatus.Snapshot snapshot = this.awakenStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            BattleAwakenStatus.Snapshot snapshot2 = CombatBuffLeases.onDeath(snapshot, this);
+            NativeAcceptedState.requireCurrent();
+            if (snapshot2.active()) {
+                NativeAcceptedState.requireCurrent();
+                NativeAcceptedState.requireCurrent();
+                this.polymorphStatus.clear();
+                NativeAcceptedState.requireCurrent();
+                long l6 = System.nanoTime();
+                NativeAcceptedState.requireCurrent();
+                this.rebuildMaximumVitals(l6);
+            }
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.burningSlashStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.guardBrakeStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.armBreakerStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.joyOfPainStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            this.resistFearStatus.clear();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            String string4 = this.stateCharacter();
+            NativeAcceptedState.requireCurrent();
+            GameStateStore.TimedResistFearBuff timedResistFearBuff = GameStateStore.TimedResistFearBuff.none();
+            NativeAcceptedState.requireCurrent();
+            this.state.saveTimedResistFearBuff(string4, timedResistFearBuff);
+            NativeAcceptedState.requireCurrent();
+            this.cancelParalysis("player-death");
+            NativeAcceptedState.requireCurrent();
+            this.cancelFreeze("player-death");
+            NativeAcceptedState.requireCurrent();
+            this.cancelEarthBind("player-death");
+            NativeAcceptedState.requireCurrent();
+            this.cancelShockStun("player-death");
+            NativeAcceptedState.requireCurrent();
+            this.cancelThunderGrab("player-death");
+        }
+        NativeAcceptedState.requireCurrent();
+        String string5 = NativePlayerCommit.deathHp(this) == 0 ? "accepted-fatal-damage" : "accepted-damage";
+        NativeAcceptedState.requireCurrent();
+        NativeAcceptedState.reveal(this, string5);
+        NativeAcceptedState.requireCurrent();
+        if (NativePlayerCommit.deathHp(this) == 0) {
+            NativeAcceptedState.requireCurrent();
+            this.deathConfirmationPending = true;
+            Protocol.Writer writer5 = new Protocol.Writer();
+            NativeAcceptedState.requireCurrent();
+            Protocol.Writer writer6 = writer5.c(32);
+            NativeAcceptedState.requireCurrent();
+            long l7 = this.playerObjectId();
+            NativeAcceptedState.requireCurrent();
+            Protocol.Writer writer7 = writer6.d(l7);
+            NativeAcceptedState.requireCurrent();
+            Protocol.Writer writer8 = writer7.c(8);
+            NativeAcceptedState.requireCurrent();
+            byte[] byArray2 = writer8.bytes();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            NativeAcceptedState.requireCurrent();
+            List<ClientSession> list = this.hub.roomMembers(this.currentRoomId);
+            NativeAcceptedState.requireCurrent();
+            Iterator<ClientSession> iterator = list.iterator();
+            while (true) {
+                NativeAcceptedState.requireCurrent();
+                if (!iterator.hasNext()) break;
+                NativeAcceptedState.requireCurrent();
+                ClientSession clientSession2 = iterator.next();
+                NativeAcceptedState.requireCurrent();
+                String string6 = "S_ACTION player death object=" + this.playerObjectId();
+                NativeAcceptedState.requireCurrent();
+                NativePlayerCommit.safeSend(clientSession2, byArray2, string6);
+            }
+            Protocol.Writer writer9 = new Protocol.Writer();
+            NativeAcceptedState.requireCurrent();
+            Protocol.Writer writer10 = writer9.c(227);
+            NativeAcceptedState.requireCurrent();
+            byte[] byArray3 = writer10.bytes();
+            NativeAcceptedState.requireCurrent();
+            NativePlayerCommit.safeSend(this, byArray3, "S_LITO_CONFIRM_DEATH required");
+        }
+        if (!bl2 && clientSession != null && clientSession != this) {
+            NativeAcceptedState.requireCurrent();
+            if (clientSession.playerHp > 0) {
+                NativeAcceptedState.requireCurrent();
+                NativePlayerCommit.safeMortal(this, clientSession, "battle-accepted-player-damage");
+            }
+        }
+        NativeAcceptedState.requireCurrent();
+        NativePlayerCommit.safeJoy(this, clientSession, lease, n2, "battle-accepted-player-damage");
+    }
+
+    private int sourceProcTimeCommitted(GameHub.TimeAttackActorHit timeAttackActorHit, int n, String string, int n2, NativeProcEncounterPublication.Context context) throws IOException {
+        BattleTimeAttackEncounter.Hit hit = timeAttackActorHit.hit();
+        BattleTimeAttackEncounter.Damage damage = hit.damage();
+        BattleTimeAttackEncounter.Snapshot snapshot = damage.after();
+        byte[] byArray = NativeBattleTamedLifecycle.visualHitRatio(snapshot.objectId(), snapshot.hp(), snapshot.maxHp());
+        List<ClientSession> list = NativeProcEncounterPublication.members(this.hub, NativeProcEncounterPublication.room(this, context), context);
+        for (ClientSession object : list) {
+            NativeProcEncounterPublication.send(object, byArray, "S_HIT_RATIO timeattack-actor=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " remaining=" + hit.actorsRemaining() + " source=" + string, context);
+            if (damage.diedNow()) {
+                if (n > 0) {
+                    NativeProcEncounterPublication.send(object, Protocol.poison(snapshot.objectId(), 0), "S_POISON timeattack-actor=" + snapshot.objectId() + " type=0 reason=death", context);
+                }
+                NativeProcEncounterPublication.send(object, Protocol.objectAction(snapshot.objectId(), 8), "S_ACTION timeattack-actor=" + snapshot.objectId() + " action=8 source=" + string, context);
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot2 : hit.spawned()) {
+                NativeProcEncounterPublication.send(object, Protocol.timeAttackActor(snapshot2), "S_PUT_OBJECT timeattack-actor=" + snapshot2.objectId() + " npc=" + snapshot2.npcId() + " gfx=" + snapshot2.gfx() + " final-boss=" + snapshot2.finalBoss() + " active-ai=" + snapshot2.activeAi() + " hp=" + snapshot2.hp() + "/" + snapshot2.maxHp() + " after-ordinary-fragment=" + snapshot.objectId(), context);
+            }
+        }
+        if (damage.diedNow()) {
+            NativeProcEncounterPublication.cancel(this.hub, NativeProcEncounterPublication.room(this, context), snapshot.objectId(), context);
+            NativeProcEncounterPublication.lawful(this, snapshot.npcId(), "timeattack-" + string, context);
+        }
+        if (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter.Snapshot::activeAi)) {
+            NativeProcEncounterPublication.arm(this.hub, NativeProcEncounterPublication.room(this, context), context);
+        }
+        System.out.println("[LiTo] Time Attack actor damaged room=" + NativeProcEncounterPublication.room(this, context) + " attacker=" + NativeProcEncounterPublication.name(this, context) + " object=" + snapshot.objectId() + " npc=" + snapshot.npcId() + " damage=" + n2 + " hp=" + snapshot.hp() + "/" + snapshot.maxHp() + " died=" + damage.diedNow() + " remaining=" + hit.actorsRemaining() + " completed=" + hit.finalBossesCleared() + " source=" + string + (n2 == n2 ? "" : ";acceptance-fixture"));
+        int n3 = Math.max(0, damage.before().hp() - damage.after().hp());
+        if (!timeAttackActorHit.resolution().ended()) {
+            return n3;
+        }
+        for (ClientSession clientSession : list) {
+            NativeProcEncounterPublication.end(clientSession, timeAttackActorHit.resolution(), context);
+        }
+        NativeProcEncounterPublication.finish(this.hub, NativeProcEncounterPublication.room(this, context), context);
+        return n3;
+    }
+
+    // ported from candidate-50635f7e.jar; structured from CFR and checked against ASM instructions.
+    private void nativeSourceCompanionClockAction(BattleCompanion battleCompanion, long l, long l2, Object object) throws IOException {
+        int var29_39;
+        int var31_45;
+        if (!NativeSourceCompanionClock.ready(this, battleCompanion, l, object)) {
+            return;
+        }
+        NativeCombatAttacker.Ingress ingress = NativeCombatAttacker.nativeSourceCompanionClockEnter(this, battleCompanion, object);
+        try {
+            int n;
+            int n2;
+            int n3;
+            int n4;
+            ArenaMapCatalog.Point point;
+            boolean bl;
+            boolean bl2;
+            CombatNpcPlayerDamage.Attempt attempt = null;
+            BattleCompanion.Snapshot snapshot = battleCompanion.snapshot();
+            if (!NativeSourceCompanionClock.ready(this, battleCompanion, l, object)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (this.phase != Phase.BATTLE || this.observer || this.currentRoomId != l || this.playerHp <= 0 || !this.hub.battleStarted(l)) {
+                if (snapshot.targetObjectId() != 0L) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (!snapshot.active() || snapshot.targetObjectId() == 0L || !battleCompanion.ready(l2)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            List<ClientSession> list = this.hub.roomCombatants(l);
+            boolean bl3 = snapshot.targetObjectId() == 2L && this.hub.roomCombatantCount(l) < 2 && this.hub.botHp(l) > 0;
+            ClientSession clientSession2 = list.stream().filter(clientSession -> clientSession.playerObjectId() == snapshot.targetObjectId()).findFirst().orElse(null);
+            bl2 = clientSession2 != null && clientSession2 != this && clientSession2.phase == Phase.BATTLE && clientSession2.playerHp > 0 && !clientSession2.invisible && this.hub.canAttack(l, this, clientSession2);
+            if (!NativeSourceCompanionClock.selected(bl2, clientSession2, object)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            BattleQuestEncounter.Snapshot snapshot2 = this.hub.questMonster(l, snapshot.targetObjectId());
+            BattleTimeAttackEncounter.Snapshot snapshot3 = this.hub.timeAttackActor(l, snapshot.targetObjectId());
+            boolean bl5 = snapshot2 != null && this.hub.canAttackQuestMonster(l, this, snapshot2.objectId());
+            bl = snapshot3 != null && this.hub.canAttackTimeAttackActor(l, this, snapshot3.objectId());
+            if (!(bl3 || bl2 || bl5 || bl)) {
+                battleCompanion.clearTarget();
+                System.out.println("[LiTo] companion target cleared owner=" + this.playerName() + " target=" + snapshot.targetObjectId() + " reason=not-attackable");
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            ArenaMapCatalog.Point point2 = point = bl3 ? this.hub.botPosition(l) : null;
+            if (bl3 && point == null) {
+                battleCompanion.clearTarget();
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            n4 = bl3 ? point.x() : (bl2 ? clientSession2.positionX : (bl5 ? snapshot2.x() : snapshot3.x()));
+            int n6 = bl3 ? point.y() : (bl2 ? clientSession2.positionY : (bl5 ? snapshot2.y() : snapshot3.y()));
+            int n7 = Math.max(Math.abs(snapshot.x() - n4), Math.abs(snapshot.y() - n6));
+            if (n7 > 1) {
+                ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(this.hub.battleMapId(l, this));
+                int[] nArray = this.chooseCompanionStep(l, arena, snapshot, n4, n6, snapshot.targetObjectId());
+                if (nArray == null) {
+                    battleCompanion.defer(l2, 100);
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+                BattleCompanion.Movement movement = NativeStaticNpcMotion.companionMove(battleCompanion, nArray[0], nArray[1], nArray[2], l2, this);
+                if (movement == null) {
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+                byte[] byArray = new Protocol.Writer().c(18).d(snapshot.objectId()).h(movement.sourceX()).h(movement.sourceY()).c(movement.heading()).bytes();
+                List<ClientSession> list2 = bl5 ? this.hub.battleRecipients(l, snapshot2.force()) : this.hub.roomMembers(l);
+                for (ClientSession clientSession3 : list2) {
+                    clientSession3.sendEncrypted(byArray, "S_MOVE_OBJECT companion=" + snapshot.objectId() + " source=" + movement.sourceX() + "," + movement.sourceY() + " destination=" + movement.destinationX() + "," + movement.destinationY() + " heading=" + movement.heading());
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (n7 != 1) {
+                battleCompanion.defer(l2, 100);
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            BattleCompanion.Strike strike = battleCompanion.beginStrike(n4, n6, l2);
+            if (strike == null) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            SourceNpcPhysicalStats sourceNpcPhysicalStats = null;
+            if (bl5 || bl) {
+                n3 = bl5 ? snapshot2.npcId() : snapshot3.npcId();
+                try {
+                    sourceNpcPhysicalStats = this.selectedSourceAccounts().npcPhysicalStats(n3);
+                }
+                catch (Exception exception) {
+                    battleCompanion.clearTarget();
+                    System.out.println("[LiTo] companion target source lookup failed owner=" + this.playerName() + " npc=" + n3 + " reason=" + exception.getClass().getSimpleName() + ": " + exception.getMessage());
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+            }
+            n3 = bl3 ? 10 : (bl2 ? clientSession2.battleArmorClass() : sourceNpcPhysicalStats.armorClass());
+            int n8 = n3 < 0 ? ThreadLocalRandom.current().nextInt(1, -n3 + 1) : 0;
+            int n9 = ClientSession.companionHitChance(snapshot.level(), n3, ThreadLocalRandom.current().nextInt(1, 21), n8);
+            boolean bl7 = ThreadLocalRandom.current().nextInt(1, 101) <= n9;
+            int n10 = 0;
+            if (bl7) {
+                int n11 = ThreadLocalRandom.current().nextInt(snapshot.level());
+                int n12 = ThreadLocalRandom.current().nextInt(100);
+                if (sourceNpcPhysicalStats != null) {
+                    var29_39 = ClientSession.companionNpcPhysicalDamage(snapshot.level(), snapshot.strength(), n11, n12, this.requiredPhysicalGrowthStats().damage(false, snapshot.strength()));
+                    var29_39 = Math.max(0, Math.addExact(var29_39, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
+                    n2 = BattlePhysicalDefense.npcAcMaximum(sourceNpcPhysicalStats);
+                    var31_45 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
+                    n10 = BattlePhysicalDefense.againstNpc(var29_39, sourceNpcPhysicalStats, var31_45, false, false).damage();
+                } else {
+                    var29_39 = bl3 ? 0 : clientSession2.battleCharacterType();
+                    n2 = ClientSession.companionDefenseMaximum(var29_39, n3);
+                    var31_45 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
+                    attempt = CombatNpcPlayerDamage.prepare(snapshot.level(), snapshot.strength(), var29_39, n3, n11, n12, var31_45, this, battleCompanion, clientSession2, l2, bl2, false);
+                    n10 = attempt.value();
+                    n10 = Math.max(0, Math.addExact(n10, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
+                }
+                if (bl2) {
+                    n10 = CombatNpcPlayerDamage.finish(clientSession2, n10, "companion-physical", attempt, l2, this);
+                    n10 = clientSession2.earthBindProtectedCombatDamage(n10, "companion-physical");
+                }
+                bl7 = n10 > 0;
+            }
+            byte[] byArray = Protocol.physicalAttack(1, snapshot.objectId(), snapshot.targetObjectId(), bl7, strike.heading());
+            List<ClientSession> list3 = bl5 ? this.hub.battleRecipients(l, snapshot2.force()) : this.hub.roomMembers(l);
+            for (ClientSession clientSession4 : list3) {
+                clientSession4.sendEncrypted(byArray, "S_ATTACK companion=" + snapshot.objectId() + " owner=" + this.playerName() + " target=" + snapshot.targetObjectId() + " hit=" + bl7 + " damage=" + n10 + " heading=" + strike.heading());
+            }
+            CombatNpcPlayerDamage.Commit commit = CombatNpcPlayerDamage.commit(n10, bl7, attempt, clientSession2, this);
+            n10 = commit.value();
+            bl7 = commit.hit();
+            if (!bl7) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl2) {
+                BattleJoyOfPainStatus.Lease lease = battleCompanion.captureJoyOfPain(System.nanoTime());
+                n2 = lease == null ? 0 : clientSession2.currentJoyOfPainFeedbackDamage();
+                NativeSourceNpcPlayer.damage(clientSession2, n10, null, false);
+                clientSession2.tryMortalBodyCompanionReflection(this, battleCompanion, list3, "companion-physical");
+                clientSession2.applyJoyOfPainCompanionFeedback(this, battleCompanion, lease, n2, list3, "companion-physical");
+                if (clientSession2.playerHp <= 0) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl5) {
+                this.applyQuestMonsterDamage(snapshot2.objectId(), n10, "companion-" + snapshot.objectId());
+                if (!this.hub.canAttackQuestMonster(l, this, snapshot2.objectId())) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl) {
+                this.applyTimeAttackActorDamage(snapshot3.objectId(), n10, "companion-" + snapshot.objectId());
+                if (!this.hub.canAttackTimeAttackActor(l, this, snapshot3.objectId())) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            n = this.hub.damageBot(l, n10);
+            this.broadcastHitRatio(2L, n, 100, n == 0 ? "companion-bot-death" : "companion-bot-damage");
+            if (n > 0) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            battleCompanion.clearTarget();
+            byte[] byArray2 = new Protocol.Writer().c(32).d(2L).c(8).bytes();
+            for (ClientSession object2 : this.hub.roomMembers(l)) {
+                object2.sendEncrypted(byArray2, "S_ACTION companion bot death");
+            }
+            BattleRules.Resolution resolution = new BattleRules.Resolution(true, false, Set.of(Long.valueOf(this.playerObjectId())), Set.of(), "arena-bot-defeated-by-companion");
+            for (ClientSession clientSession3 : this.hub.roomMembers(l)) {
+                clientSession3.serverEndBattle(resolution);
+            }
+            this.hub.endBattle(l);
+            NativeCombatAttacker.leave(ingress);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatAttacker.leave(ingress);
+            throw throwable;
+        }
+    }
+
+    private void nativeSourceCompanionFirstAction(BattleCompanion battleCompanion, long l, long l2, Object object, Object object2) throws IOException {
+        int var30_40;
+        int var32_46;
+        if (!NativeSourceCompanionFirstActor.ready(this, battleCompanion, l, object, object2)) {
+            return;
+        }
+        NativeCombatAttacker.Ingress ingress = NativeCombatAttacker.nativeSourceCompanionFirstEnter(this, battleCompanion, object, object2);
+        try {
+            int n;
+            int n2;
+            int n3;
+            int n4;
+            ArenaMapCatalog.Point point;
+            boolean bl;
+            boolean bl2;
+            CombatNpcPlayerDamage.Attempt attempt = null;
+            BattleCompanion.Snapshot snapshot = battleCompanion.snapshot();
+            if (!NativeSourceCompanionFirstActor.ready(this, battleCompanion, l, object, object2)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (this.phase != Phase.BATTLE || this.observer || this.currentRoomId != l || this.playerHp <= 0 || !this.hub.battleStarted(l)) {
+                if (snapshot.targetObjectId() != 0L) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (!snapshot.active() || snapshot.targetObjectId() == 0L || !battleCompanion.ready(l2)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            List<ClientSession> list = this.hub.roomCombatants(l);
+            boolean bl3 = snapshot.targetObjectId() == 2L && this.hub.roomCombatantCount(l) < 2 && this.hub.botHp(l) > 0;
+            ClientSession clientSession2 = list.stream().filter(clientSession -> clientSession.playerObjectId() == snapshot.targetObjectId()).findFirst().orElse(null);
+            bl2 = clientSession2 != null && clientSession2 != this && clientSession2.phase == Phase.BATTLE && clientSession2.playerHp > 0 && !clientSession2.invisible && this.hub.canAttack(l, this, clientSession2);
+            if (!NativeSourceCompanionClock.selected(bl2, clientSession2, object)) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            BattleQuestEncounter.Snapshot snapshot2 = this.hub.questMonster(l, snapshot.targetObjectId());
+            BattleTimeAttackEncounter.Snapshot snapshot3 = this.hub.timeAttackActor(l, snapshot.targetObjectId());
+            boolean bl5 = snapshot2 != null && this.hub.canAttackQuestMonster(l, this, snapshot2.objectId());
+            bl = snapshot3 != null && this.hub.canAttackTimeAttackActor(l, this, snapshot3.objectId());
+            if (!(bl3 || bl2 || bl5 || bl)) {
+                battleCompanion.clearTarget();
+                System.out.println("[LiTo] companion target cleared owner=" + this.playerName() + " target=" + snapshot.targetObjectId() + " reason=not-attackable");
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            ArenaMapCatalog.Point point2 = point = bl3 ? this.hub.botPosition(l) : null;
+            if (bl3 && point == null) {
+                battleCompanion.clearTarget();
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            n4 = bl3 ? point.x() : (bl2 ? clientSession2.positionX : (bl5 ? snapshot2.x() : snapshot3.x()));
+            int n6 = bl3 ? point.y() : (bl2 ? clientSession2.positionY : (bl5 ? snapshot2.y() : snapshot3.y()));
+            int n7 = Math.max(Math.abs(snapshot.x() - n4), Math.abs(snapshot.y() - n6));
+            if (n7 > 1) {
+                ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(this.hub.battleMapId(l, this));
+                int[] nArray = this.chooseCompanionStep(l, arena, snapshot, n4, n6, snapshot.targetObjectId());
+                if (nArray == null) {
+                    battleCompanion.defer(l2, 100);
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+                BattleCompanion.Movement movement = NativeStaticNpcMotion.companionMove(battleCompanion, nArray[0], nArray[1], nArray[2], l2, this);
+                if (movement == null) {
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+                byte[] byArray = new Protocol.Writer().c(18).d(snapshot.objectId()).h(movement.sourceX()).h(movement.sourceY()).c(movement.heading()).bytes();
+                List<ClientSession> list2 = bl5 ? this.hub.battleRecipients(l, snapshot2.force()) : this.hub.roomMembers(l);
+                for (ClientSession clientSession3 : list2) {
+                    clientSession3.sendEncrypted(byArray, "S_MOVE_OBJECT companion=" + snapshot.objectId() + " source=" + movement.sourceX() + "," + movement.sourceY() + " destination=" + movement.destinationX() + "," + movement.destinationY() + " heading=" + movement.heading());
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (n7 != 1) {
+                battleCompanion.defer(l2, 100);
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            BattleCompanion.Strike strike = battleCompanion.beginStrike(n4, n6, l2);
+            if (strike == null) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            SourceNpcPhysicalStats sourceNpcPhysicalStats = null;
+            if (bl5 || bl) {
+                n3 = bl5 ? snapshot2.npcId() : snapshot3.npcId();
+                try {
+                    sourceNpcPhysicalStats = this.selectedSourceAccounts().npcPhysicalStats(n3);
+                }
+                catch (Exception exception) {
+                    battleCompanion.clearTarget();
+                    System.out.println("[LiTo] companion target source lookup failed owner=" + this.playerName() + " npc=" + n3 + " reason=" + exception.getClass().getSimpleName() + ": " + exception.getMessage());
+                    NativeCombatAttacker.leave(ingress);
+                    return;
+                }
+            }
+            n3 = bl3 ? 10 : (bl2 ? clientSession2.battleArmorClass() : sourceNpcPhysicalStats.armorClass());
+            int n8 = n3 < 0 ? ThreadLocalRandom.current().nextInt(1, -n3 + 1) : 0;
+            int n9 = ClientSession.companionHitChance(snapshot.level(), n3, ThreadLocalRandom.current().nextInt(1, 21), n8);
+            boolean bl7 = ThreadLocalRandom.current().nextInt(1, 101) <= n9;
+            int n10 = 0;
+            if (bl7) {
+                int n11 = ThreadLocalRandom.current().nextInt(snapshot.level());
+                int n12 = ThreadLocalRandom.current().nextInt(100);
+                if (sourceNpcPhysicalStats != null) {
+                    var30_40 = ClientSession.companionNpcPhysicalDamage(snapshot.level(), snapshot.strength(), n11, n12, this.requiredPhysicalGrowthStats().damage(false, snapshot.strength()));
+                    var30_40 = Math.max(0, Math.addExact(var30_40, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
+                    n2 = BattlePhysicalDefense.npcAcMaximum(sourceNpcPhysicalStats);
+                    var32_46 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
+                    n10 = BattlePhysicalDefense.againstNpc(var30_40, sourceNpcPhysicalStats, var32_46, false, false).damage();
+                } else {
+                    var30_40 = bl3 ? 0 : clientSession2.battleCharacterType();
+                    n2 = ClientSession.companionDefenseMaximum(var30_40, n3);
+                    var32_46 = n2 == 0 ? 0 : ThreadLocalRandom.current().nextInt(n2);
+                    attempt = CombatNpcPlayerDamage.prepare(snapshot.level(), snapshot.strength(), var30_40, n3, n11, n12, var32_46, this, battleCompanion, clientSession2, l2, bl2, false);
+                    n10 = attempt.value();
+                    n10 = Math.max(0, Math.addExact(n10, battleCompanion.armBreakerMeleeDamageModifier(System.nanoTime())));
+                }
+                if (bl2) {
+                    n10 = CombatNpcPlayerDamage.finish(clientSession2, n10, "companion-physical", attempt, l2, this);
+                    n10 = clientSession2.earthBindProtectedCombatDamage(n10, "companion-physical");
+                }
+                bl7 = n10 > 0;
+            }
+            byte[] byArray = Protocol.physicalAttack(1, snapshot.objectId(), snapshot.targetObjectId(), bl7, strike.heading());
+            List<ClientSession> list3 = bl5 ? this.hub.battleRecipients(l, snapshot2.force()) : this.hub.roomMembers(l);
+            for (ClientSession clientSession4 : list3) {
+                clientSession4.sendEncrypted(byArray, "S_ATTACK companion=" + snapshot.objectId() + " owner=" + this.playerName() + " target=" + snapshot.targetObjectId() + " hit=" + bl7 + " damage=" + n10 + " heading=" + strike.heading());
+            }
+            CombatNpcPlayerDamage.Commit commit = CombatNpcPlayerDamage.commit(n10, bl7, attempt, clientSession2, this);
+            n10 = commit.value();
+            bl7 = commit.hit();
+            if (!bl7) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl2) {
+                BattleJoyOfPainStatus.Lease lease = battleCompanion.captureJoyOfPain(System.nanoTime());
+                n2 = lease == null ? 0 : clientSession2.currentJoyOfPainFeedbackDamage();
+                NativeSourceNpcPlayer.damage(clientSession2, n10, null, false);
+                clientSession2.tryMortalBodyCompanionReflection(this, battleCompanion, list3, "companion-physical");
+                clientSession2.applyJoyOfPainCompanionFeedback(this, battleCompanion, lease, n2, list3, "companion-physical");
+                if (clientSession2.playerHp <= 0) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl5) {
+                this.applyQuestMonsterDamage(snapshot2.objectId(), n10, "companion-" + snapshot.objectId());
+                if (!this.hub.canAttackQuestMonster(l, this, snapshot2.objectId())) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            if (bl) {
+                this.applyTimeAttackActorDamage(snapshot3.objectId(), n10, "companion-" + snapshot.objectId());
+                if (!this.hub.canAttackTimeAttackActor(l, this, snapshot3.objectId())) {
+                    battleCompanion.clearTarget();
+                }
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            n = this.hub.damageBot(l, n10);
+            this.broadcastHitRatio(2L, n, 100, n == 0 ? "companion-bot-death" : "companion-bot-damage");
+            if (n > 0) {
+                NativeCombatAttacker.leave(ingress);
+                return;
+            }
+            battleCompanion.clearTarget();
+            byte[] byArray2 = new Protocol.Writer().c(32).d(2L).c(8).bytes();
+            for (ClientSession object3 : this.hub.roomMembers(l)) {
+                object3.sendEncrypted(byArray2, "S_ACTION companion bot death");
+            }
+            BattleRules.Resolution resolution = new BattleRules.Resolution(true, false, Set.of(Long.valueOf(this.playerObjectId())), Set.of(), "arena-bot-defeated-by-companion");
+            for (ClientSession clientSession3 : this.hub.roomMembers(l)) {
+                clientSession3.serverEndBattle(resolution);
+            }
+            this.hub.endBattle(l);
+            NativeCombatAttacker.leave(ingress);
+            return;
+        }
+        catch (Throwable throwable) {
+            NativeCombatAttacker.leave(ingress);
+            throw throwable;
+        }
+    }
+
+    private void sourceDamagePoisonClock(long nowNanos, boolean battle, boolean world,
+            BattleSpellCatalog.PoisonSpell spell, CombatPoisonLifecycle.Scope scope) throws IOException {
+        boolean worldNpc = CombatPoisonLifecycle.world(world, this, scope)
+                && CombatPoisonLifecycle.kind(this, scope) == ClassicWorldMonsterPoisonAttack.Kind.DAMAGE;
+        boolean worldPlayer = world && CombatPoisonLifecycle.attacker(this, scope) != null && !worldNpc;
+        int interval = worldNpc ? 3000 : spell.tickIntervalMillis();
+        BattleTimedStatus.PoisonPoll poll = CombatPoisonLifecycle.poll(timedStatus, nowNanos, interval, this, scope);
+        if (battle) {
+            for (int tick = 0; tick < poll.damageTicks() && playerHp > 0; tick++) {
+                CombatPoisonLifecycle.battle(this, spell.tickDamage(), CombatPoisonLifecycle.attacker(this, scope), scope);
+            }
+        } else if (worldNpc) {
+            for (int tick = 0; tick < poll.damageTicks() && playerHp > 0; tick++) {
+                CombatPoisonLifecycle.worldNpc(this, 5, CombatPoisonLifecycle.object(this, scope), scope);
+            }
+        } else if (worldPlayer) {
+            for (int tick = 0; tick < poll.damageTicks() && playerHp > 0; tick++) {
+                CombatPoisonLifecycle.worldPlayer(this, spell.tickDamage(), CombatPoisonLifecycle.attacker(this, scope), scope);
+            }
+        }
+        boolean curedOnDeath = playerHp <= 0 && CombatPoisonLifecycle.cure(timedStatus, this, scope);
+        if (poll.expired() || curedOnDeath) {
+            CombatPoisonAtomic.attacker(this, null);
+            if (worldNpc) {
+                CombatPoisonAtomic.object(this, 0L);
+                CombatPoisonAtomic.kind(this, ClassicWorldMonsterPoisonAttack.Kind.NONE);
+            }
+            if (battle || world) {
+                CombatPoisonLifecycle.palette(this, currentPoisonPalette(nowNanos),
+                        poll.expired() ? "damage-poison-expired" : "damage-poison-death", scope);
+            }
+        }
+    }
+
+    private CombatPoisonAtomic.NpcState sourceNpcPoisonState(long attackerObjectId, int npcId,
+            int poisonAttack, int damage, long nowNanos, String reason) {
+        int fixtureRoll = config.classicWorldMonsterPoisonFixtureRoll();
+        int roll = fixtureRoll == 0 ? ThreadLocalRandom.current().nextInt(1, 101) : fixtureRoll;
+        ClassicWorldMonsterPoisonAttack.Kind kind = ClassicWorldMonsterPoisonAttack.resolve(poisonAttack, roll);
+        boolean resisted = dragonEyeStatus.snapshot(nowNanos).poisonResistance() > 0
+                || !timedStatus.acceptsPoison(nowNanos, switch (kind) {
+                    case DAMAGE -> BattleTimedStatus.PoisonKind.DAMAGE;
+                    case SILENCE -> BattleTimedStatus.PoisonKind.SILENCE;
+                    case PARALYSIS -> BattleTimedStatus.PoisonKind.PARALYSIS;
+                    case NONE -> BattleTimedStatus.PoisonKind.DAMAGE;
+                });
+        boolean existing = CombatPoisonLifecycle.existing(timedStatus.poisonActive(nowNanos)
+                || timedStatus.poisonSilenceActive()
+                || classicWorldPoisonKind == ClassicWorldMonsterPoisonAttack.Kind.PARALYSIS
+                && CombatPoisonParalysis.poisonVisual(timedStatus, nowNanos), this);
+        boolean applied = false;
+        if (kind != ClassicWorldMonsterPoisonAttack.Kind.NONE && !resisted && !existing) {
+            applied = switch (kind) {
+                case DAMAGE -> timedStatus.activatePoison(nowNanos, 30, 3000);
+                case SILENCE -> timedStatus.activatePoisonSilence(nowNanos);
+                case PARALYSIS -> CombatPoisonParalysis.activate(timedStatus, nowNanos, 20000, 45000);
+                case NONE -> false;
+            };
+        }
+        if (applied) {
+            classicWorldPoisonAttackerObjectId = attackerObjectId;
+            classicWorldPoisonKind = kind;
+        }
+        return new CombatPoisonAtomic.NpcState(kind, roll, resisted, existing, applied);
+    }
+
+    private static boolean nativeSourceGroupLos$397(Phase phase,
+            ClassicWorldMapCatalog.ClassicMap map, int sourceX, int sourceY,
+            ArenaMapCatalog.Arena arena, ClientSession caster,
+            BattleSpellCatalog.GroupHealingSpell spell, ClientSession target) {
+        return phase == Phase.WORLD
+                ? map.hasLineOfSight(sourceX, sourceY, target.positionX, target.positionY)
+                : NativeSourceTargetLos.line(arena, sourceX, sourceY, target.positionX, target.positionY, caster, spell.skillId());
+    }
+
+    private static boolean nativeSourceGroupLos$401(Phase phase,
+            ClassicWorldMapCatalog.ClassicMap map, int sourceX, int sourceY,
+            ArenaMapCatalog.Arena arena, ClientSession caster,
+            BattleSpellCatalog.GroupHealingSpell spell, BattleCompanion.Snapshot target) {
+        return phase == Phase.WORLD
+                ? map.hasLineOfSight(sourceX, sourceY, target.x(), target.y())
+                : NativeSourceTargetLos.line(arena, sourceX, sourceY, target.x(), target.y(), caster, spell.skillId());
+    }
+
+    // ported from candidate-50635f7e.jar: synthetic ground-spell commit callbacks.
+    private void nativeMaterialGroundBodyCommit(RuntimeInventory inventorySnapshot, int mpCost,
+            BattleSpellCatalog.GroundSpell spell, long castNanos, int heading) {
+        NativeGroundMaterialAction.admit(this, spell);
+        long nowNanos = System.nanoTime();
+        playerMp = NativeSkillConsumption.boundMp(this, playerMp - mpCost);
+        spellReadyNanos.put(spell.skillId(), nowNanos + (long)spell.reuseDelayMillis() * 1000000L);
+        if (spell.skillId() == 58) {
+            playerHeading = heading;
+        }
+    }
+
+    private void nativeMaterialWorldGroundBodyCommit(RuntimeInventory inventorySnapshot, int mpCost,
+            BattleSpellCatalog.GroundSpell spell, long castNanos, int heading) {
+        NativeGroundMaterialAction.admit(this, spell);
+        long nowNanos = System.nanoTime();
+        playerMp = NativeSkillConsumption.boundMp(this, playerMp - mpCost);
+        spellReadyNanos.put(spell.skillId(), nowNanos + (long)spell.reuseDelayMillis() * 1000000L);
+        if (spell.skillId() == 58) {
+            playerHeading = heading;
+        }
     }
 }

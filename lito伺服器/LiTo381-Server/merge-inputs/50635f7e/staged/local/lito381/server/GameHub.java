@@ -282,8 +282,8 @@ final class GameHub implements AutoCloseable {
         }
     }
     private record BotTick(long roomId, ClientSession target, int x, int y, int damage) {}
-    // ported from candidate-50635f7e.jar; record shape supplied only by T020g (#102).
-    @AsRecord(components = {"roomId", "mode", "objectId", "force", "sourceX", "sourceY", "destinationX", "destinationY", "heading", "target", "damage", "attack", "magicSkill", "visualSkill", "physicalSkill", "summonSkill", "groundSkill", "spawned", "questSpawned", "magicTriggerRoll", "source"})
+    // ported from candidate-50635f7e.jar; T020g restores the ASM-added final field.
+    @AsRecord(components = {"roomId", "mode", "objectId", "force", "sourceX", "sourceY", "destinationX", "destinationY", "heading", "target", "damage", "attack", "magicSkill", "visualSkill", "physicalSkill", "summonSkill", "groundSkill", "spawned", "questSpawned", "magicTriggerRoll", "source"}, finalFields = {"nativeSourceNpcTickView"})
     static final class MonsterAiTick {
         private final long roomId;
         private final BattleRules.Mode mode;
@@ -308,7 +308,7 @@ final class GameHub implements AutoCloseable {
         private final String source;
         private volatile Object sourceCombatOrigin;
         final Object nativeSourceNpcPlayerOrigin;
-        final transient Object nativeSourceNpcTickView;
+        transient Object nativeSourceNpcTickView;
 
         MonsterAiTick(long l, BattleRules.Mode mode, long l2, int n, int n2, int n3, int n4, int n5, int n6, ClientSession clientSession, int n7, boolean bl, BattleTimeAttackMagicSkillCatalog.Definition definition, BattleTimeAttackMagicSkillCatalog.PhysicalDefinition physicalDefinition, BattleTimeAttackMagicSkillCatalog.SummonDefinition summonDefinition, List<BattleTimeAttackEncounter.Snapshot> list, int n8, String string) {
             this(l, mode, l2, n, n2, n3, n4, n5, n6, clientSession, n7, bl, definition, null, physicalDefinition, summonDefinition, null, list, List.of(), n8, string);
@@ -336,16 +336,9 @@ final class GameHub implements AutoCloseable {
             this.questSpawned = list2;
             this.magicTriggerRoll = n8;
             this.source = string;
-            this.nativeSourceNpcTickView = null; // Candidate leaves this final field at JVM default; needs:claude.
             this.nativeSourceNpcPlayerOrigin = NativeSourceNpcPlayer.capture(this);
             NativeCombatOrigin.tickCreated(this);
         }
-
-
-
-
-
-
 
         public long roomId() {
             return this.roomId;
@@ -493,24 +486,17 @@ final class GameHub implements AutoCloseable {
             NativeCombatOrigin.tickCreated(this);
         }
     }
-    // ported from candidate-50635f7e.jar; record shape supplied only by T020g (#102).
-    @AsRecord(components = {"roomId", "owner"})
+    // ported from candidate-50635f7e.jar; T020g restores the ASM-added final field.
+    @AsRecord(components = {"roomId", "owner"}, finalFields = {"nativeSourceCompanionClockView"})
     private static final class CompanionTick {
         private final long roomId;
         private final ClientSession owner;
-        final transient Object nativeSourceCompanionClockView;
+        transient Object nativeSourceCompanionClockView;
 
         private CompanionTick(long l, ClientSession clientSession) {
             this.roomId = l;
             this.owner = clientSession;
-            this.nativeSourceCompanionClockView = null; // Explicit JVM default for javac definite assignment.
         }
-
-
-
-
-
-
 
         public long roomId() {
             return this.roomId;
@@ -521,8 +507,7 @@ final class GameHub implements AutoCloseable {
         }
 
         private CompanionTick(long l, ClientSession clientSession, Object object) {
-            this.roomId = l;
-            this.owner = clientSession;
+            this(l, clientSession);
             this.nativeSourceCompanionClockView = object;
         }
     }
@@ -625,8 +610,8 @@ final class GameHub implements AutoCloseable {
         }
     }
     private record ClassicWorldEffectKey(int mapId, int instanceId) {}
-    // ported from candidate-50635f7e.jar; record shape supplied only by T020g (#102).
-    @AsRecord(components = {"roomId", "caster", "target", "bot", "skillId", "npcCasterObjectId"})
+    // ported from candidate-50635f7e.jar; T020g restores the ASM-added final field.
+    @AsRecord(components = {"roomId", "caster", "target", "bot", "skillId", "npcCasterObjectId"}, finalFields = {"nativeSourceGroundProof"})
     private static final class GroundTick {
         private final long roomId;
         private final ClientSession caster;
@@ -634,7 +619,7 @@ final class GameHub implements AutoCloseable {
         private final boolean bot;
         private final int skillId;
         private final long npcCasterObjectId;
-        final Object nativeSourceGroundProof;
+        Object nativeSourceGroundProof;
 
         GroundTick(long l, ClientSession clientSession, ClientSession clientSession2, boolean bl, int n) {
             this(l, clientSession, clientSession2, bl, n, 0L);
@@ -647,14 +632,7 @@ final class GameHub implements AutoCloseable {
             this.bot = bl;
             this.skillId = n;
             this.npcCasterObjectId = l2;
-            this.nativeSourceGroundProof = null; // Explicit JVM default for javac definite assignment.
         }
-
-
-
-
-
-
 
         public long roomId() {
             return this.roomId;
@@ -681,12 +659,7 @@ final class GameHub implements AutoCloseable {
         }
 
         GroundTick(long l, ClientSession clientSession, ClientSession clientSession2, boolean bl, int n, BattleGroundEffects.Pulse pulse) {
-            this.roomId = l;
-            this.caster = clientSession;
-            this.target = clientSession2;
-            this.bot = bl;
-            this.skillId = n;
-            this.npcCasterObjectId = 0L;
+            this(l, clientSession, clientSession2, bl, n);
             this.nativeSourceGroundProof = NativeSourceGroundOrigin.tick(pulse);
         }
     }
@@ -1151,36 +1124,25 @@ final class GameHub implements AutoCloseable {
         return new ArrayList<>(connectedSessions);
     }
 
-    /**
-     * Serializes native account ownership at the gameplay endpoint.
-     *
-     * <p>A LOGIN session is only a directory/handoff connection and therefore
-     * does not claim the account.  Both endpoints must still reject while an
-     * authenticated GAME session owns it; this produces native
-     * S_LOGIN_CHECK result 0x16 without breaking the normal LOGIN -> GAME
-     * handoff overlap.</p>
-     */
-    synchronized boolean acceptAuthenticatedAccount(ClientSession session,
-                                                    ClientSession.Endpoint endpoint,
-                                                    String account) {
-        String accountKey = key(account);
-        if (session == null || !connectedSessions.contains(session) || accountKey.isEmpty()) {
+    synchronized boolean acceptAuthenticatedAccount(ClientSession clientSession, ClientSession.Endpoint endpoint, String string) {
+        String string2 = GameHub.key(SourceLogin.account(clientSession, string));
+        if (clientSession == null || !this.connectedSessions.contains(clientSession) || string2.isEmpty()) {
             return false;
         }
-        ClientSession active = authenticatedGameAccounts.get(accountKey);
-        if (active != null && active != session && connectedSessions.contains(active)) {
-            if (!active.authorizesAuthenticatedEndpointTransfer(account)) {
+        ClientSession clientSession2 = this.authenticatedGameAccounts.get(string2);
+        if (clientSession2 != null && clientSession2 != clientSession && this.connectedSessions.contains(clientSession2)) {
+            if (!clientSession2.authorizesAuthenticatedEndpointTransfer(string)) {
                 return false;
             }
-            authenticatedGameAccounts.remove(accountKey);
-            clearNativeSelection(active);
-            active.completeAuthenticatedEndpointTransfer();
+            this.authenticatedGameAccounts.remove(string2);
+            this.selectedCharacters.remove(clientSession2);
+            clientSession2.completeAuthenticatedEndpointTransfer();
         }
-        if (active != null && !connectedSessions.contains(active)) {
-            authenticatedGameAccounts.remove(accountKey);
+        if (clientSession2 != null && !this.connectedSessions.contains(clientSession2)) {
+            this.authenticatedGameAccounts.remove(string2);
         }
         if (endpoint == ClientSession.Endpoint.GAME) {
-            authenticatedGameAccounts.put(accountKey, session);
+            this.authenticatedGameAccounts.put(string2, clientSession);
         }
         return true;
     }
@@ -4972,27 +4934,34 @@ final class GameHub implements AutoCloseable {
         return channelMembership.size();
     }
 
-    synchronized ClientSession channelMemberByName(int channelId, String name) {
-        Channel channel = channels.get(channelId);
-        if (channel == null || name == null) return null;
-        return uniqueNamedMember(channelMembers(channelId), null, name);
+    synchronized ClientSession channelMemberByName(int n, String string) {
+        Channel channel = this.channels.get(n);
+        if (channel == null || string == null) {
+            return null;
+        }
+        return GameHub.uniqueNamedMember(channel.members, null, string);
     }
 
-    synchronized ClientSession channelMemberByName(
-            int channelId, ClientSession requester, String name) {
-        Channel channel = channels.get(channelId);
-        if (channel == null || requester == null || name == null) return null;
-        return uniqueNamedMember(channelMembers(channelId), requester, name);
+    synchronized ClientSession channelMemberByName(int n, ClientSession clientSession, String string) {
+        Channel channel = this.channels.get(n);
+        if (channel == null || clientSession == null || string == null) {
+            return null;
+        }
+        return GameHub.uniqueNamedMember(channel.members, clientSession, string);
     }
 
-    synchronized ClientSession activeMemberByName(String name) {
-        if (name == null) return null;
-        return uniqueNamedMember(nativeChannelMembers(), null, name);
+    synchronized ClientSession activeMemberByName(String string) {
+        if (string == null) {
+            return null;
+        }
+        return GameHub.uniqueNamedMember(this.channelMembership.keySet(), null, string);
     }
 
-    synchronized ClientSession activeMemberByName(ClientSession requester, String name) {
-        if (requester == null || name == null) return null;
-        return uniqueNamedMember(nativeChannelMembers(), requester, name);
+    synchronized ClientSession activeMemberByName(ClientSession clientSession, String string) {
+        if (clientSession == null || string == null) {
+            return null;
+        }
+        return GameHub.uniqueNamedMember(this.channelMembership.keySet(), clientSession, string);
     }
 
     synchronized ClientSession onlineMemberByName(
@@ -5001,13 +4970,12 @@ final class GameHub implements AutoCloseable {
         return uniqueNamedMember(selectedCharacters.keySet(), requester, name);
     }
 
-    synchronized ClientSession activeMemberByIdentity(String sourceCharacterIdentity) {
-        if (sourceCharacterIdentity == null || sourceCharacterIdentity.isBlank()) return null;
-        List<ClientSession> matches = nativeChannelMembers().stream()
-                .filter(member -> member.sourceCharacterIdentity()
-                        .equalsIgnoreCase(sourceCharacterIdentity))
-                .toList();
-        return matches.size() == 1 ? matches.get(0) : null;
+    synchronized ClientSession activeMemberByIdentity(String string) {
+        if (string == null || string.isBlank()) {
+            return null;
+        }
+        List<ClientSession> list = this.channelMembership.keySet().stream().filter(clientSession -> clientSession.sourceCharacterIdentity().equalsIgnoreCase(string)).toList();
+        return list.size() == 1 ? list.get(0) : null;
     }
 
     /**
@@ -5599,7 +5567,7 @@ final class GameHub implements AutoCloseable {
     synchronized List<ClientSession> clanSessions(String characterName) {
         String clanKey = clanMembership.get(key(characterName));
         if (clanKey == null) return List.of();
-        return nativeChannelMembers().stream()
+        return channelMembership.keySet().stream()
                 .filter(session -> clanKey.equals(
                         clanMembership.get(key(session.sourceCharacterIdentity()))))
                 .toList();
@@ -5666,7 +5634,7 @@ final class GameHub implements AutoCloseable {
         ClanMember targetLeader = targetClan.members.values().stream()
                 .filter(member -> member.role == CLAN_ROLE_OWNER).findFirst().orElse(null);
         ClientSession targetOwner = targetLeader == null ? null
-                : nativeChannelMembers().stream()
+                : channelMembership.keySet().stream()
                         .filter(session -> key(session.sourceCharacterIdentity())
                                 .equals(key(targetLeader.identity)))
                         .findFirst().orElse(null);
@@ -6327,7 +6295,7 @@ final class GameHub implements AutoCloseable {
                 .map(requester::sourceCharacterIdentity)
                 .map(GameHub::key)
                 .collect(java.util.stream.Collectors.toSet());
-        return nativeChannelMembers().stream()
+        return channelMembership.keySet().stream()
                 .filter(session -> identities.contains(key(session.sourceCharacterIdentity())))
                 .toList();
     }
@@ -6338,7 +6306,7 @@ final class GameHub implements AutoCloseable {
         Set<String> identities = characterIdentities.stream().map(GameHub::key)
                 .filter(value -> !value.isEmpty())
                 .collect(java.util.stream.Collectors.toSet());
-        return nativeChannelMembers().stream()
+        return channelMembership.keySet().stream()
                 .filter(session -> identities.contains(key(session.sourceCharacterIdentity())))
                 .toList();
     }
@@ -7474,13 +7442,21 @@ final class GameHub implements AutoCloseable {
         return castResult;
     }
 
-    ClassicWorldGroundEffects.CastResult nativeMaterialPlaceWorldGroundSpell(
-            int mapId, int instanceId, ClientSession caster,
-            BattleSpellCatalog.GroundSpell spell,
-            int sourceX, int sourceY, int targetX, int targetY,
-            long nowNanos, Runnable resourceCommit) {
-        return this.placeClassicWorldGroundSpell(mapId, instanceId, caster, spell,
-                sourceX, sourceY, targetX, targetY, nowNanos, resourceCommit);
+    synchronized ClassicWorldGroundEffects.CastResult nativeMaterialPlaceWorldGroundSpell(int n, int n2, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n3, int n4, int n5, int n6, long l, Runnable runnable) {
+        ClassicWorldLocation classicWorldLocation = this.classicWorldMembership.get(clientSession);
+        if (classicWorldLocation == null || classicWorldLocation.mapId() != n || classicWorldLocation.instanceId() != n2 || classicWorldLocation.x() != n3 || classicWorldLocation.y() != n4 || groundSpell == null || runnable == null || l < 0L) {
+            return ClassicWorldGroundEffects.CastResult.rejected();
+        }
+        ClassicWorldMapCatalog.ClassicMap classicMap = ClassicWorldMapCatalog.forMap(n);
+        if (!classicMap.standingPassable(n3, n4) || !classicMap.contains(n5, n6) || groundSpell.skillId() != 58 && !classicMap.standingPassable(n5, n6)) {
+            return ClassicWorldGroundEffects.CastResult.rejected();
+        }
+        ClassicWorldEffectKey classicWorldEffectKey2 = new ClassicWorldEffectKey(n, n2);
+        ClassicWorldGroundEffects.CastResult castResult = NativeGroundMaterialAction.castWorld(this.classicWorldGroundEffects.computeIfAbsent(classicWorldEffectKey2, classicWorldEffectKey -> new ClassicWorldGroundEffects()), groundSpell, clientSession.playerObjectId(), n3, n4, n5, n6, classicMap, l, this, classicWorldEffectKey2, runnable);
+        if (castResult.accepted()) {
+            // empty if block
+        }
+        return castResult;
     }
 
     synchronized BattleGroundEffects.CastResult placeGroundSpell(
@@ -7581,9 +7557,14 @@ final class GameHub implements AutoCloseable {
         return NativeSourceCubePlacement.place(room.cubeIgnitionEffects, clientSession.playerObjectId(), n, n2, l2, clientSession, this, l);
     }
 
-    BattleCubeIgnitionEffects.Placement nativeMaterialPlaceClassicWorldCubeIgnition(
-            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
-        return this.placeClassicWorldCubeIgnition(caster, mapId, instanceId, x, y, nowNanos);
+    synchronized BattleCubeIgnitionEffects.Placement nativeMaterialPlaceClassicWorldCubeIgnition(ClientSession clientSession, int n, int n2, int n3, int n4, long l) {
+        ClassicWorldLocation classicWorldLocation = this.classicWorldMembership.get(clientSession);
+        if (clientSession == null || classicWorldLocation == null || classicWorldLocation.mapId() != n || classicWorldLocation.instanceId() != n2 || classicWorldLocation.x() != n3 || classicWorldLocation.y() != n4 || !ClassicWorldMapCatalog.forMap(n).standingPassable(n3, n4)) {
+            return BattleCubeIgnitionEffects.Placement.rejected();
+        }
+        ClassicWorldEffectKey classicWorldEffectKey2 = new ClassicWorldEffectKey(n, n2);
+        BattleCubeIgnitionEffects battleCubeIgnitionEffects = this.classicWorldCubeIgnitionEffects.computeIfAbsent(classicWorldEffectKey2, classicWorldEffectKey -> new BattleCubeIgnitionEffects());
+        return battleCubeIgnitionEffects.nativeMaterialPlace(clientSession.playerObjectId(), n3, n4, l, clientSession);
     }
 
     synchronized BattleCubeQuakeEffects.Placement nativeMaterialPlaceCubeQuake(long l, ClientSession clientSession, int n, int n2, long l2) {
@@ -7598,9 +7579,14 @@ final class GameHub implements AutoCloseable {
         return NativeSourceCubeStatus.place(room.cubeQuakeEffects, clientSession.playerObjectId(), n, n2, l2, clientSession, this, l);
     }
 
-    BattleCubeQuakeEffects.Placement nativeMaterialPlaceClassicWorldCubeQuake(
-            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
-        return this.placeClassicWorldCubeQuake(caster, mapId, instanceId, x, y, nowNanos);
+    synchronized BattleCubeQuakeEffects.Placement nativeMaterialPlaceClassicWorldCubeQuake(ClientSession clientSession, int n, int n2, int n3, int n4, long l) {
+        ClassicWorldLocation classicWorldLocation = this.classicWorldMembership.get(clientSession);
+        if (clientSession == null || classicWorldLocation == null || classicWorldLocation.mapId() != n || classicWorldLocation.instanceId() != n2 || classicWorldLocation.x() != n3 || classicWorldLocation.y() != n4 || !ClassicWorldMapCatalog.forMap(n).standingPassable(n3, n4)) {
+            return BattleCubeQuakeEffects.Placement.rejected();
+        }
+        ClassicWorldEffectKey classicWorldEffectKey2 = new ClassicWorldEffectKey(n, n2);
+        BattleCubeQuakeEffects battleCubeQuakeEffects = this.classicWorldCubeQuakeEffects.computeIfAbsent(classicWorldEffectKey2, classicWorldEffectKey -> new BattleCubeQuakeEffects());
+        return battleCubeQuakeEffects.nativeMaterialPlace(clientSession.playerObjectId(), n3, n4, l, clientSession);
     }
 
     synchronized BattleCubeShockEffects.Placement nativeMaterialPlaceCubeShock(long l, ClientSession clientSession, int n, int n2, long l2) {
@@ -7615,9 +7601,14 @@ final class GameHub implements AutoCloseable {
         return NativeSourceCubeStatus.place(room.cubeShockEffects, clientSession.playerObjectId(), n, n2, l2, clientSession, this, l);
     }
 
-    BattleCubeShockEffects.Placement nativeMaterialPlaceClassicWorldCubeShock(
-            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
-        return this.placeClassicWorldCubeShock(caster, mapId, instanceId, x, y, nowNanos);
+    synchronized BattleCubeShockEffects.Placement nativeMaterialPlaceClassicWorldCubeShock(ClientSession clientSession, int n, int n2, int n3, int n4, long l) {
+        ClassicWorldLocation classicWorldLocation = this.classicWorldMembership.get(clientSession);
+        if (clientSession == null || classicWorldLocation == null || classicWorldLocation.mapId() != n || classicWorldLocation.instanceId() != n2 || classicWorldLocation.x() != n3 || classicWorldLocation.y() != n4 || !ClassicWorldMapCatalog.forMap(n).standingPassable(n3, n4)) {
+            return BattleCubeShockEffects.Placement.rejected();
+        }
+        ClassicWorldEffectKey classicWorldEffectKey2 = new ClassicWorldEffectKey(n, n2);
+        BattleCubeShockEffects battleCubeShockEffects = this.classicWorldCubeShockEffects.computeIfAbsent(classicWorldEffectKey2, classicWorldEffectKey -> new BattleCubeShockEffects());
+        return battleCubeShockEffects.nativeMaterialPlace(clientSession.playerObjectId(), n3, n4, l, clientSession);
     }
 
     synchronized BattleCubeHarmonyEffects.Placement nativeMaterialPlaceCubeHarmony(long l, ClientSession clientSession, int n, int n2, long l2) {
@@ -7632,9 +7623,14 @@ final class GameHub implements AutoCloseable {
         return NativeSourceCubePlacement.place(room.cubeHarmonyEffects, clientSession.playerObjectId(), n, n2, l2, clientSession, this, l);
     }
 
-    BattleCubeHarmonyEffects.Placement nativeMaterialPlaceClassicWorldCubeHarmony(
-            ClientSession caster, int mapId, int instanceId, int x, int y, long nowNanos) {
-        return this.placeClassicWorldCubeHarmony(caster, mapId, instanceId, x, y, nowNanos);
+    synchronized BattleCubeHarmonyEffects.Placement nativeMaterialPlaceClassicWorldCubeHarmony(ClientSession clientSession, int n, int n2, int n3, int n4, long l) {
+        ClassicWorldLocation classicWorldLocation = this.classicWorldMembership.get(clientSession);
+        if (clientSession == null || classicWorldLocation == null || classicWorldLocation.mapId() != n || classicWorldLocation.instanceId() != n2 || classicWorldLocation.x() != n3 || classicWorldLocation.y() != n4 || !ClassicWorldMapCatalog.forMap(n).standingPassable(n3, n4)) {
+            return BattleCubeHarmonyEffects.Placement.rejected();
+        }
+        ClassicWorldEffectKey classicWorldEffectKey2 = new ClassicWorldEffectKey(n, n2);
+        BattleCubeHarmonyEffects battleCubeHarmonyEffects = this.classicWorldCubeHarmonyEffects.computeIfAbsent(classicWorldEffectKey2, classicWorldEffectKey -> new BattleCubeHarmonyEffects());
+        return battleCubeHarmonyEffects.nativeMaterialPlace(clientSession.playerObjectId(), n3, n4, l, clientSession);
     }
 
     synchronized BattleCubeIgnitionEffects.Placement placeCubeIgnition(long l, ClientSession clientSession, int n, int n2, long l2) {
@@ -12387,29 +12383,30 @@ final class GameHub implements AutoCloseable {
     }
 
     private void companionTickSafely() {
+        NativeSummonRetirement.tick(this);
+        NativeSummonOwnerLifecycle.clock(this);
+        NativeStaticNpcMotion.tickSafely(this);
         try {
-            long nowNanos = System.nanoTime();
-            for (CompanionTick tick : companionTicks()) {
+            long l = System.nanoTime();
+            for (CompanionTick record : this.companionTicks()) {
                 try {
-                    tick.owner.serverCompanionTick(tick.roomId, nowNanos);
-                } catch (IOException error) {
-                    System.out.println("[LiTo] companion send failed room=" + tick.roomId
-                            + " owner=" + tick.owner.playerName() + ": " + error.getMessage());
+                    record.owner.nativeSourceCompanionClockTick(record.roomId, l, record.nativeSourceCompanionClockView);
+                }
+                catch (IOException iOException) {
+                    System.out.println("[LiTo] companion send failed room=" + record.roomId + " owner=" + record.owner.playerName() + ": " + iOException.getMessage());
                 }
             }
-            for (WorldCompanionTick tick : worldCompanionTicks()) {
+            for (WorldCompanionTick worldCompanionTick : this.worldCompanionTicks()) {
                 try {
-                    tick.owner.serverClassicWorldCompanionTick(
-                            tick.mapId, nowNanos);
-                } catch (IOException error) {
-                    System.out.println("[LiTo] classic-world companion send failed map="
-                            + tick.mapId + " owner=" + tick.owner.playerName()
-                            + ": " + error.getMessage());
+                    worldCompanionTick.owner.serverClassicWorldCompanionTick(worldCompanionTick.mapId, l);
+                }
+                catch (IOException iOException) {
+                    System.out.println("[LiTo] classic-world companion send failed map=" + worldCompanionTick.mapId + " owner=" + worldCompanionTick.owner.playerName() + ": " + iOException.getMessage());
                 }
             }
-        } catch (Throwable error) {
-            System.out.println("[LiTo] companion clock recovered: "
-                    + error.getClass().getSimpleName() + ": " + error.getMessage());
+        }
+        catch (Throwable throwable) {
+            System.out.println("[LiTo] companion clock recovered: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
         }
     }
 
@@ -13849,4 +13846,7 @@ final class GameHub implements AutoCloseable {
             list.add(new MonsterAiTick(room.id, mode, l, n, n2, n3, nArray[0], nArray[1], nArray[2], clientSession, n7, false, null, null, null, List.of(), 0, string, object, object2));
         }
     }
+
+    // ported from candidate-50635f7e.jar: previously missing ASM-spliced methods.
+
 }
