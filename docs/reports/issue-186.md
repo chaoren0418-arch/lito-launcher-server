@@ -4,7 +4,7 @@
 
 三項修正已完成，六套 Java 自測 **1,133 項全過**。#74 全部 88 entries 為 **87 SAME＋1 DEVIATION、DIFF 0**；#77 全部 69 entries 為 **67 SAME＋2 SAME_EFFECTS、DIFF 0**。#70 消除 10 個方法的 DIFF；#72、#76 完整 class rows（含逐方法結果及差異細節）與修改前完全相同。
 
-分支為 `task/186`，起點 `a32d30d`，沿用指定 worktree，未 checkout／另建分支。修改限 `tools/semantic-diff/**` 與本報告；未改伺服器 src/main、staged Java、核准清單或 docs/REPORT.md，未操作正式程序、遊戲、DB、機密設定、封存、releases 或硬連結。
+交付 [PR #202](https://github.com/chaoren0418-arch/lito-launcher-server/pull/202)。分支為 `task/186`，起點 `a32d30d`，沿用指定 worktree，未 checkout／另建分支。修改限 `tools/semantic-diff/**` 與本報告；未改伺服器 src/main、staged Java、核准清單或 docs/REPORT.md，未操作正式程序、遊戲、DB、機密設定、封存、releases 或硬連結。
 
 - `$SwitchMap$` 改名以名稱前綴與 `[I` 描述子為準，兩側依宣告類別的欄位順序編號，所有欄位指令及 handle 共用映射。欄位 flags 沿用 #132 忽略 SYNTHETIC；類別 metadata 沿用既有豁免。額外以 descriptor 限制參照映射，避免誤改同名不同型別欄位。
 - 新增 `RethrowHandlers`：只對左側建立成對比較副本。驗證 handler 的 ASTORE／ALOAD／核准 INVOKESTATIC，以及 helper 的 ALOAD 0／安全 CHECKCAST／ATHROW。逐指令檢查右側對應操作沒有 handler，才刪除例外表項與 handler，保留原 try 中的業務指令；處理不可達尾端與 javac 跳過 catch 的 goto-next。候選仍交既有完整比較或原先核准的 effects 比較。
@@ -88,7 +88,13 @@
 
 ### CI
 
-本機六套自測及 git diff --check 已通過。PR 建立後核對 GitHub Actions 的 Server、Server tests、Launcher，以及 Semantic gap 中 Self-test／cold fallback 的實際 step 結果；後者是 non-blocking job，不以外層綠燈代替測試通過。CI 收據於交付前補入。
+程式碼提交 `7554762bd0267d937d798ab7aff39b9d3b623384` 的五項 CI 全部成功：
+
+- [Build run 42057672245](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42057672245)：Server、Server tests、Launcher、Semantic gap 全部 success，完成於 2026-11-05 15:51 UTC。
+- [Package run 42057672261](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42057672261)：Build-Package.ps1 zip success。
+- Semantic gap 雖為 non-blocking，另逐 step 確認 Self-test、Self-test without Maven (cold javac fallback)、Package server、Semantic compare 全部 success，沒有用外層綠燈掩蓋失敗。
+
+本機六套自測及最終 `git diff a32d30d --check` 已通過。完整 job／step 收據保存在 `scratch/issue-186/ci-status.json`；本次收據更新只修改報告與其 LF 換行，未再變更已驗證程式碼。最後文件提交的 CI 由 [PR checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/202/checks) 提供對應 SHA 的結果。
 
 ## 推測
 
@@ -96,7 +102,7 @@
 
 ## 待驗證與保守限制
 
-- 尚待 PR CI 完成；真機行為與部署驗收由後續 A-land／B-land 流程處理。本任務不啟動遊戲或伺服器。
+- 真機行為與部署驗收由後續 A-land／B-land 流程處理。本任務不啟動遊戲或伺服器。
 - 原樣轉拋只接受本類 private static helper；跨類 helper 可能引發 class initialization／解析副作用，因此保守不移除。CHECKCAST 需有已知 superclass 證據；未知型別、額外副作用、入口、註解、其他 handler 涵蓋及無法對齊的可能拋例外指令均保持原比較。
 - #70 仍有 7 個類別 DIFF、#72 仍有 3 個類別 DIFF；這不是本工具任務未完成的三項規則，不能據此授權它們進 land。
 
