@@ -212,7 +212,7 @@ public final class FourthSelfTest implements Opcodes {
             cliCheck(name,left,right,layout,signature,layout?"SAME_LAYOUT":"SAME");
             cliCheck(name+"-reverse",right,left,layout,signature,layout?"SAME_LAYOUT":"SAME");
             if(layout)cliCheck(name+"-unapproved",left,right,false,signature,"SAME_PATHS");
-            System.setProperty("semanticdiff.disable","transport,paths");
+            System.setProperty("semanticdiff.disable","transport,paths,cfg");
             try{cliCheck(name+"-disabled",left,right,layout,signature,"DIFF");}
             finally{System.clearProperty("semanticdiff.disable");}
             class Loader extends ClassLoader{Class<?> load(ClassNode c){ClassWriter w=new ClassWriter(0);c.accept(w);byte[] bytes=w.toByteArray();return defineClass("Fixture",bytes,0,bytes.length);}}

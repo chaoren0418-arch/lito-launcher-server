@@ -55,7 +55,7 @@ final class BlockExpressions implements Opcodes {
             return true;
         } catch (AnalyzerException | RuntimeException unsupported) { return false; }
     }
-    private static boolean match(List<Expr> a,List<Expr> b,Map<Integer,Integer> slots,Map<Integer,Integer> reverse) {
+    static boolean match(List<Expr> a,List<Expr> b,Map<Integer,Integer> slots,Map<Integer,Integer> reverse) {
         if(a.size()!=b.size())return false;
         for(int i=0;i<a.size();i++) {
             Expr x=a.get(i),y=b.get(i);

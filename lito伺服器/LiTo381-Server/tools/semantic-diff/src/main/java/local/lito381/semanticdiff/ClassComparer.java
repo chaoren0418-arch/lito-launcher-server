@@ -202,6 +202,7 @@ final class ClassComparer {
             JarIndex rightJar,
             JarIndex allowJar,
             Set<String> effectsMethods, Set<String> extraMethods) {
+        LambdaCallsites.pair(left,right,leftJar,rightJar);
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
         Map<String, MethodNode> amap =
@@ -240,6 +241,10 @@ final class ClassComparer {
                 continue;
             }
             if (rm == null) {
+                if (!allow && VisibilityBridge.matches(left,right,lm,leftJar,rightJar)) {
+                    leftJar.result(lm,"VISIBILITY_BRIDGE","javac bridge to inherited public method declared by non-public ancestor");
+                    continue;
+                }
                 if (!allow && leftJar.approved(leftJar.deviations, lm)
                         && right.methods.stream().noneMatch(m -> m.name.equals(lm.name) && m.desc.equals(lm.desc))) continue;
                 if (!allow && ((extraMethods.contains(lm.name + lm.desc)
@@ -252,8 +257,12 @@ final class ClassComparer {
             if (effectsMethods.contains(rm.name + rm.desc) && !lm.name.equals(rm.name)) {
                 return FirstDiff.of("method", key, null, "effects approval requires exact original method name on both sides");
             }
+            JarIndex.MethodResult pairing=leftJar.methodResults.getOrDefault(left.name,Map.of()).get(lm.name+lm.desc);
             FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
                     effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
+            if(d==null && leftJar.callsiteIds.containsKey(left.name+"#"+lm.name+lm.desc))
+                leftJar.result(lm,"LAMBDA_PAIRED_BY_CALLSITE",pairing!=null&&pairing.status().equals("LAMBDA_PAIRED_BY_CALLSITE")
+                        ?pairing.detail():rm.name+rm.desc+"; full body comparison passed");
             if (d != null && first == null) first = d;
         }
         return first;
@@ -333,7 +342,9 @@ final class ClassComparer {
         if (methodMetadata(key,lm,rm,leftJar,rJar,effects)==null) {
             PathComparison.Result paths=PathComparison.compare(lm,rm,leftJar,rJar);
             if(paths.same()) { leftJar.result(lm,"SAME_PATHS",paths.reason()); return null; }
-            d=FirstDiff.of("method",key,d.insnIndex,d.detail+"; "+paths.reason());
+            CfgComparison.Result cfg=CfgComparison.compare(lm,rm,leftJar,rJar);
+            if(cfg.same()) { leftJar.result(lm,"SAME_CFG",cfg.reason()); return null; }
+            d=FirstDiff.of("method",key,d.insnIndex,d.detail+"; "+paths.reason()+"; "+cfg.reason());
         }
         leftJar.result(lm,"DIFF",d.oneLine());
         return d;
