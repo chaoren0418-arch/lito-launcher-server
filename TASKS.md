@@ -15,14 +15,16 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 **完成定義（凍結）**：使用者打開 Issue #225，會看到：
 1. 一行指令 `mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 的輸出，結果為 `Failures: 0, Errors: 0`。
-2. `src/main` 以 `mvn package` 建出的 `LiTo381-Server.jar`，對正式 `reference/base-0.6.71.jar` 的語意比對摘要：A 範圍 692 個 entry、**DIFF=0**（核准的偏離另列）。
+2. `src/main` 以 `mvn package` 建出的 `LiTo381-Server.jar`，對正式 `reference/base-0.6.71.jar` 的語意比對摘要有兩行：
+   - A 範圍 692 個 entry、**DIFF=0**（核准的偏離另列）；
+   - **整顆 JAR** 對正式版的剩餘差異數，以及類別清單。這些差異只能來自 B 範圍（`a-batches.json` 的 `diff_owned_by_B` 為 203 個 entry），要到 M2 的 B-land 才會處理，所以 M0 的 JAR **並非**整顆等價於正式版。
 3. 三張截圖，都是用上述 JAR 在**實驗環境**中拍的：伺服器主控台啟動完成、登入器連線、遊戲**大廳**。實驗環境指 P24Lab，或由 `environments/` 快照建立的隔離 DB，不碰正式 MySQL 3306 與正式設定。
 4. 一份使用者可以自己重跑的指令清單。
 
 | # | ID | Issue | 內容 | 狀態（2026-11-05 20:46 UTC 查詢） |
 |---|---|---|---|---|
-| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | review；剩 bridge 與 lambda，交 #203 處理 |
-| 2 | T020-A02 | #73 | 同上（nativede，49 類） | review；`cancelNpcChatTimer` 改名待 #235 |
+| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | queued；#203 已合併，待重驗 |
+| 2 | T020-A02 | #73 | 同上（nativede，49 類） | queued；`cancelNpcChatTimer` 改名，等 #235 |
 | 3 | T020-A03 | #74 | 同上（nativede，47 類） | **done**（closed） |
 | 4 | T020-A04 | #75 | 同上（battle-combat，25 類） | **done**（closed） |
 | 5 | T020-A05 | #76 | 同上（other，27 類） | **done**（closed） |
@@ -31,13 +33,13 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 | 8 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | doing |
 | 9 | T020i-10 | #235 | 比較器：private 方法改名配對（不確定項 U0-1 兌現第 1 張） | todo（等 #216） |
 | 10 | T020-A-land | #78 | A 暫存併入 src/main，補 7 項單元測試，`mvn test` 綠燈，A 範圍語意 DIFF=0 | todo（等 1、2、8、9） |
-| 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | doing |
+| 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | blocked（needs:user：處理誤匯出的正式副本，預設 C 凍結並改走 P24；needs:orchestrator：稽核事故） |
 | 12 | T050 | #225 | 用實驗環境啟動到大廳並截圖（dot） | todo（等 10、11） |
 
 <details><summary>M0 之前已完成的早期項目（計入歷史，不計入上表）</summary>
 
 - T001 done：CI（Maven compile＋登入器 dotnet build）。
-- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 改 0.6.71、Main-Class；**等價 JAR** 由上表 #10 完成。
+- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 改 0.6.71、Main-Class。A 範圍對齊正式版由上表 #10 完成；整顆 JAR 等價還要等 M2 的 B-land（203 個 B 範圍 entry）。
 - T003 done（Issue #4，PR #8）：`Build.ps1` 去掉硬編路徑。
 - T004 done（Issue #5）：版本號與文件統一為 0.6.71。
 - T005 done（Issue #3；經 #12/#15、#20/#22 達成）：DB 依賴測試加守門，Server tests 改為阻斷式。
@@ -64,7 +66,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 **完成定義（凍結）**：使用者會看到：
 1. B-land 之後，`mvn package` 產物對候選 `50635f7e…` 的語意比對摘要：B 範圍 1,384 個 entry、**DIFF=0**（核准的偏離另列）。
 2. `tools/combat-continuation` 既有的 2,400 案、5,164 組合、curse-clock 24 案，在 Maven 產物上重跑的對照表，全部一致。
-3. 在實驗環境用新建置打一場戰鬥，下列技能各施放一次並截圖：29（負向）、76（範圍）、87（衝擊）、161、167（受控 NPC 相關）。這些技能都已有 50635f7e 同 SHA 的專項收據。
+3. 在實驗環境用新建置打一場戰鬥，技能 29、152、153 各施放一次並截圖。這三個技能有 `50635f7e…` 同 SHA 的專項收據（`docs/maintenance/source-negative-final-frame.zh-TW.md`）。
 
 已知主線（M2 封頂時從 Backlog 升格）：B01–B09（#62–#70）、B-land（#138）、T020-close（#139）、T020c-3（#84）、#31 收尾。
 
@@ -89,7 +91,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 ### M2 已知項目（M1 完成後升格）
 | ID | Issue | 內容 | 狀態 |
 |---|---|---|---|
-| T020-B01 | #62 | new-asm 17 類 | 等 #203 合併後重驗（20 SAME＋1 DIFF） |
+| T020-B01 | #62 | new-asm 17 類 | queued；#203 已合併，待重驗（20 SAME＋1 DIFF） |
 | T020-B02 | #63 | new-java 51 類 | **done** |
 | T020-B03 | #64 | new-java 51 類 | 等 #69 |
 | T020-B04 | #65 | new-java 51 類 | 等重驗（NpcEscape 交 #203） |
@@ -97,7 +99,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 | T020-B06 | #67 | existing-battle 29 類 | doing |
 | T020-B07 | #68 | existing-combat-material 23 類 | 等 #216 |
 | T020-B08 | #69 | existing-native 30 類 | 等 #216 |
-| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | review；等 #203、#216 |
+| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | review；等 #216 |
 | T020-B-land | #138 | B 暫存併入 src/main | 等 B01–B09 |
 | T020-close | #139 | 總語意比對＋Maven 產物全套戰鬥回歸 | 等 #78、#138、#84 |
 | T020c-3 | #84 | 8d26c9d7 基準完整回歸 | 等 #83 |
@@ -119,7 +121,7 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 - T030 同 SHA 後端全回歸
 - T031 實機：游標／前景／多視窗／大廳集中驗收（使用者）
 - T032 中文 MySQL 真裝備角色唯讀重載（使用者延後）
-- 候選 `046c58c5…`（2026-10-29 收尾開發，「已實作、待測」）相對 `50635f7e…` 的差異
+- 候選 `3ccbb…`（76／167 主目標修補）與 `046c58c5…`（2026-10-29 收尾開發，「已實作、待測」）相對 `50635f7e…` 的差異
 
 ### 其他
-- 登入器已知未驗：結算畫面職業圖示、Ctrl 強制攻擊雙視窗、斷線結算壓力／災難復原。前兩項已列入 M1 CHECKLIST 步驟 10、14、12；GM 魔杖與 ddraw 名稱由 T013 補進。
+- 登入器已知未驗中，CHECKLIST 尚未涵蓋的只剩：斷線結算的長時間壓力與災難復原。結算職業圖示、Ctrl 強制攻擊雙視窗、斷線結算已在 CHECKLIST 步驟 10、14、12；GM 魔杖與 ddraw 名稱由 T013 補進。
