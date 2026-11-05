@@ -150,9 +150,12 @@ final class NativeDeClientViewer extends NativeDeKnownState {
                   throw new IllegalStateException("stale native viewer publication");
                }
                {
+                  Object publicationTarget = var9;
+                  String publicationMethod = "sendEncryptedFrame";
+                  String publicationDescriptor = "([BLjava/lang/String;)V";
                   Object[] var10003 = new Object[]{var5, "S_REMOVE_OBJECT source-De deletion id=" + Integer.toUnsignedLong(var3.getId())};
                   NativeDeVisibilityRuntime.requirePublication(this);
-                  CombatAccess.call(var9, "sendEncryptedFrame", "([BLjava/lang/String;)V", var10003);
+                  CombatAccess.call(publicationTarget, publicationMethod, publicationDescriptor, var10003);
                }
             }
          }

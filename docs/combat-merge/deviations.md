@@ -35,3 +35,15 @@
 - **已驗證**：比較器 fixture 涵蓋左側額外方法／清單外方法／兩側同名內容不同、核准建構子賦值前後移動／反向／額外呼叫／Name 呼叫位置改變。
 - **推測**：以上來源端修補可滿足交付需求；比較器結果不證明執行期父鏈回呼不會觀察到差異。
 - **待驗證**：本文件列出的 A-land 執行期單元測試，以及介面 default 實作與五個建構子的最終來源。
+
+## #72：Name 建構子的 Java 17 委派表達
+
+依[同一核准留言第 2 項](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935)，追加一個 private 建構子：
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeInitializerKernel$Name;Llocal/lito381/server/NativeDeNpcTemplate;)V
+```
+
+四個公開 Name overload 先執行 `this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate)`。private 建構子執行 super、寫入 construction 與共用初始化，公開 overload 再寫入各自旗標並呼叫 startNpc。Name 失敗時不會進入 private／父建構子。
+
+新增建構子以一般 left-only deviation 列管；原五個 `ctor-prologue-order` 不擴大。新版比較器尚不展開建構子委派，因此四個公開 overload 仍為 DIFF，不代表已通過驗收。完整建構子鏈、正式 JAR 的子類清單（0 個）、虛擬方法解析與剩餘差異見 `docs/reports/issue-72.md`。A-land #78 仍須執行核准留言第 4 項兩個測試。

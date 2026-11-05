@@ -265,7 +265,8 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
                   var61
                );
          }
-      } else {
+         return;
+      }
          this.sourceBeginDeletionObservation();
 
          try {
@@ -296,10 +297,14 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
 
          try {
             if (var1 != 0) {
-               for (NativeDeDeletionPorts.ObjectRef var5 : NativeDeDeletionPorts.World.get().getVisibleObjects(this)) {
-                  if (var5 instanceof NativeDeDeletionState var6 && var6.getNpcId() == var1) {
+               ArrayList<NativeDeDeletionPorts.ObjectRef> visible = NativeDeDeletionPorts.World.get().getVisibleObjects(this);
+               for (NativeDeDeletionPorts.ObjectRef var5 : visible) {
+                  if (var5 instanceof NativeDeDeletionState var6) {
+                     if (var6.getNpcId() != var1) {
+                        continue;
+                     }
                      if (!var6.isDead()) {
-                        this.releasePairedCorpseClaim();
+                        ((NativeDeNpcVitalState)this).releasePairedCorpseClaim();
                         this.resurrect(this.getMaxHp());
                         if (!this.isDead()) {
                            this.sourceResetDeletionObservation();
@@ -561,7 +566,8 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
                   this._spawnNumber,
                   var79
                );
-         } else {
+            return;
+         }
             if (this._spawn != null) {
                this._spawn.releaseActiveNpc(this);
             }
@@ -583,8 +589,6 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
             }
 
             this.sourceFinishDeletionObservation(NativeDeDeletionVisibility.Phase.TERMINAL);
-         }
-      }
    }
 
    private static String sourceAuditText(String var0) {
