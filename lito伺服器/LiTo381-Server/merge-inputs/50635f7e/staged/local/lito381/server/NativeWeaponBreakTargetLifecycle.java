@@ -38,7 +38,7 @@ final class NativeWeaponBreakTargetLifecycle {
   }}));
  }
  static boolean captureOutput(ClientSession receiver,byte[] packet,String note)throws IOException{
-  // Preserve the original IOException; the candidate has no Exceptions attribute here.
+  // TODO #62: javac requires this throws clause for capture; candidate metadata omits it.
   if(NativeSourceWeaponFinalFrame.capture(receiver,packet,note))return true;
   var context=NativeAreaMaterialAction.current.get();if(context==null)return NativeAreaMaterialAction.nativeTargetOriginalCaptureOutput(receiver,packet,note);
   int stage=(int)CombatAccess.field(context,"nativeWeaponBreakTarget");if(stage==0)return NativeAreaMaterialAction.nativeTargetOriginalCaptureOutput(receiver,packet,note);if(stage!=2)return false;
