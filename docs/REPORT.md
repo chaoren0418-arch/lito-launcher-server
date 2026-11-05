@@ -48,3 +48,4 @@
 - 2026-11-06 — #247 #83 稽核：前一輪對正式 3306 實際執行了什麼（唯讀，不連 DB、不刪檔）（resource，codex-local，PR #255 已合併）→ [報告](reports/issue-247.md)
 - 2026-11-06 — #235 T020i-10: semantic-diff deviations 支援「private 方法改名」配對（code，codex-local，PR 已合併）→ [報告](reports/issue-235.md)
 - 2026-11-06 — #231 範圍凍結：完成定義、主線封頂、backlog 分流（plan，claude-chat，PR #232 已合併）→ [報告](reports/issue-231.md)
+- 2026-11-06 — #73 T020-A02: T020-A02: src/main 對齊正式 0.6.71 暫存（nativede，49 類）（code，codex-local，PR #101 已合併）→ [報告](reports/issue-73.md)
