@@ -35,6 +35,7 @@ public final class EighthSelfTest implements Opcodes {
         fixture("cfg-alias-branch-write",alias(true,2),alias(false,0),"DIFF",false);
         fixture("cfg-copy-transport",copies(true,false),copies(false,false),"SAME_CFG",true);
         fixture("cfg-copy-source",copies(true,false),copies(false,true),"DIFF",false);
+        stackBoundaries();
         for(int mode=0;mode<=6;mode++)bridges(mode);
         bounds();
         System.out.println("EIGHTH SELFTEST ALL PASS checks="+checks);
@@ -128,6 +129,74 @@ public final class EighthSelfTest implements Opcodes {
         var(m,ILOAD,0);if(dup)ins(m,DUP);else if(different)ins(m,ICONST_1);else var(m,ILOAD,0);
         ins(m,IADD);call(m,INVOKESTATIC,"Fixture","mark","(I)I");ins(m,POP);m.instructions.add(new IincInsnNode(0,-1));jump(m,GOTO,head);
         m.instructions.add(done);m.instructions.add(new FieldInsnNode(GETSTATIC,"Fixture","trace","I"));ins(m,IRETURN);return c;
+    }
+    static void stackBoundaries()throws Exception {
+        stackFixture("cfg-stack-constants",stackDiamond(false,0,false),stackDiamond(false,1,false),false);
+        stackFixture("cfg-stack-local-goto",stackDiamond(true,0,false),stackDiamond(true,1,false),false);
+        stackFixture("cfg-stack-swapped",stackDiamond(true,0,false),stackDiamond(true,2,false),false);
+        // Each class has a valid join: depth one on the left, depth two on the
+        // right. Unequal depths within a single join would be invalid bytecode,
+        // so cannot serve as a JVM behavioural counterexample.
+        stackFixture("cfg-stack-depth",stackDiamond(true,0,false),stackDiamond(true,3,false),false);
+        stackFixture("cfg-stack-diamond-inverted",stackDiamond(true,0,false),stackDiamond(true,0,true),true);
+        stackFixture("cfg-stack-loop",stackLoop(false,false),stackLoop(true,false),true);
+        stackFixture("cfg-stack-loop-value",stackLoop(false,false),stackLoop(true,true),false);
+        stackFixture("cfg-stack-wide",stackWide(false,false),stackWide(true,false),true);
+        stackFixture("cfg-stack-wide-value",stackWide(false,false),stackWide(true,true),false);
+    }
+    static ClassNode stackDiamond(boolean local,int mode,boolean inverted) {
+        ClassNode c=base();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(I)I");
+        ins(m,ICONST_1);var(m,ISTORE,1);ins(m,ICONST_2);var(m,ISTORE,2);
+        LabelNode yes=new LabelNode(),no=new LabelNode(),join=new LabelNode();
+        var(m,ILOAD,0);
+        if(inverted){jump(m,IFNE,yes);jump(m,GOTO,no);}else jump(m,IFEQ,no);
+        m.instructions.add(yes);
+        stackArm(m,local,mode==1||mode==2?2:1,mode==3);jump(m,GOTO,join);
+        m.instructions.add(no);stackArm(m,local,mode==2?1:2,mode==3);jump(m,GOTO,join);
+        m.instructions.add(join);if(mode==3)ins(m,IADD);ins(m,IRETURN);return c;
+    }
+    static void stackArm(MethodNode m,boolean local,int value,boolean extra) {
+        if(local)var(m,ILOAD,value);else ins(m,value==1?ICONST_1:ICONST_2);
+        if(extra)var(m,ILOAD,2);
+    }
+    static ClassNode stackLoop(boolean inverted,boolean changed) {
+        ClassNode c=base();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(I)I");
+        LabelNode head=new LabelNode(),body=new LabelNode(),done=new LabelNode(),via=new LabelNode();
+        ins(m,ICONST_1);jump(m,GOTO,head);m.instructions.add(head);var(m,ILOAD,0);
+        if(inverted){jump(m,IFGT,body);jump(m,GOTO,done);}else jump(m,IFLE,done);
+        m.instructions.add(body);ins(m,changed?ICONST_2:ICONST_1,IADD);
+        m.instructions.add(new IincInsnNode(0,-1));jump(m,GOTO,inverted?via:head);
+        if(inverted){m.instructions.add(via);jump(m,GOTO,head);}
+        m.instructions.add(done);ins(m,IRETURN);return c;
+    }
+    static ClassNode stackWide(boolean inverted,boolean changed) {
+        ClassNode c=base();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(I)I");
+        ins(m,LCONST_1);var(m,LSTORE,1);ins(m,LCONST_0);var(m,LSTORE,3);
+        LabelNode yes=new LabelNode(),no=new LabelNode(),join=new LabelNode();var(m,ILOAD,0);
+        if(inverted){jump(m,IFNE,yes);jump(m,GOTO,no);}else jump(m,IFEQ,no);
+        m.instructions.add(yes);var(m,LLOAD,changed?3:1);jump(m,GOTO,join);
+        m.instructions.add(no);var(m,LLOAD,3);jump(m,GOTO,join);
+        m.instructions.add(join);ins(m,L2I,IRETURN);return c;
+    }
+    static void stackFixture(String name,ClassNode a,ClassNode b,boolean same)throws Exception {
+        Path l=save(name+"-l",List.of(a)),r=save(name+"-r",List.of(b));
+        JarIndex lj=JarIndex.load(l),rj=JarIndex.load(r);
+        MethodNode lm=lj.readTree("Fixture").methods.stream().filter(m->m.name.equals("m")).findFirst().orElseThrow();
+        MethodNode rm=rj.readTree("Fixture").methods.stream().filter(m->m.name.equals("m")).findFirst().orElseThrow();
+        ok(name+" direct CFG",CfgComparison.compare(lm,rm,lj,rj).same()==same);
+        ok(name+" direct reverse CFG",CfgComparison.compare(rm,lm,rj,lj).same()==same);
+        // Force the CLI to reach this fallback even for acyclic positive cases.
+        System.setProperty("semanticdiff.disable","paths,blocks,transport");
+        try {cli(name,l,r,same?"SAME_CFG":"DIFF");cli(name+"-reverse",r,l,same?"SAME_CFG":"DIFF");}
+        finally {System.clearProperty("semanticdiff.disable");}
+        if(!same){cli(name+"-default",l,r,"DIFF");cli(name+"-default-reverse",r,l,"DIFF");}
+        boolean different=false;
+        for(int input:new int[]{0,2}) {
+            Object x=execute(l,input),y=execute(r,input);
+            ok("JVM "+name+" input="+input+" left="+x+" right="+y,x instanceof Integer&&y instanceof Integer);
+            if(!Objects.equals(x,y))different=true;
+        }
+        ok(name+" JVM behaviour",different!=same);
     }
     static Path save(String name,List<ClassNode> cs)throws Exception{return jar(name,cs.stream().map(EighthSelfTest::frame).toList());}
     static String cli(String name,Path l,Path r,String expected)throws Exception {

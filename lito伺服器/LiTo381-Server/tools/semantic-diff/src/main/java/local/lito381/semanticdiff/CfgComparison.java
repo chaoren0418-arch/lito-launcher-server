@@ -35,6 +35,7 @@ final class CfgComparison implements Opcodes {
             if(back.containsKey(ri))return false;
             blocks.put(li,ri);back.put(ri,li);
             Block l=canonical(left.get(li)),r=canonical(right.get(ri));
+            if(!l.entry().equals(r.entry()))return mismatch(li,ri,l.entry(),r.entry());
             if(l.events().size()!=r.events().size()||l.edges().size()!=r.edges().size())return mismatch(li,ri,l,r);
             for(int i=0;i<l.events().size();i++) {
                 Event x=l.events().get(i),y=r.events().get(i);
@@ -57,6 +58,61 @@ final class CfgComparison implements Opcodes {
         // Refuse disconnected components; do not invent an arbitrary correspondence.
         for(int i=0;i<left.size();i++)if(!blocks.containsKey(target(left,i)))return false;
         for(int i=0;i<right.size();i++)if(!back.containsKey(target(right,i)))return false;
+        return boundaries(left,right,blocks,slots,reverse);
+    }
+
+    // A stack input is NOT an unqualified union of producer values. It is a phi
+    // with one ordered vector per labelled predecessor. Each vector position is
+    // (predecessor block, edge label, stack position) -> block-local expression.
+    // "event" expressions reference the ordered expression DAG compared above;
+    // "stack" expressions reference that predecessor's own input position.
+    // Comparing every equation under the entry-rooted bijection preserves these
+    // correlations even on backedges, without recursively expanding a loop.
+    private record Predecessor(int block,int event,int arm) {}
+    private static Map<Integer,Map<Predecessor,List<Expr>>> incoming(List<Block> graph) {
+        Map<Integer,Map<Predecessor,List<Expr>>> inputs=new HashMap<>();
+        for(int id=0;id<graph.size();id++)if(target(graph,id)==id)inputs.put(id,new HashMap<>());
+        if(!graph.get(target(graph,0)).entry().isEmpty())
+            throw new IllegalArgumentException("nonempty method entry stack");
+        for(int id:inputs.keySet()) {
+            Block b=canonical(graph.get(id));
+            for(int arm=0;arm<b.edges().size();arm++)
+                addInput(graph,inputs,b.edges().get(arm),new Predecessor(id,-1,arm),b.exit());
+            for(int event=0;event<b.events().size();event++) {
+                List<String> catches=b.events().get(event).catches();
+                for(int arm=0;arm<catches.size();arm++) {
+                    String edge=catches.get(arm);int end=edge.indexOf(':');
+                    // JVM exceptional transfer discards the normal stack and
+                    // supplies exactly this instruction's thrown object.
+                    addInput(graph,inputs,Integer.parseInt(edge.substring(0,end)),
+                            new Predecessor(id,event,arm),List.of(new Expr("exception",event,1)));
+                }
+            }
+        }
+        return inputs;
+    }
+    private static void addInput(List<Block> graph,Map<Integer,Map<Predecessor,List<Expr>>> inputs,
+            int destination,Predecessor source,List<Expr> values) {
+        int id=target(graph,destination);List<Expr> entry=graph.get(id).entry();
+        if(values.size()!=entry.size())throw new IllegalArgumentException("edge stack depth mismatch");
+        for(int i=0;i<entry.size();i++)if(values.get(i).size()!=entry.get(i).size())
+            throw new IllegalArgumentException("edge stack category mismatch");
+        if(inputs.get(id).put(source,values)!=null)throw new IllegalArgumentException("duplicate edge");
+    }
+    private static boolean boundaries(List<Block> left,List<Block> right,Map<Integer,Integer> blocks,
+            Map<Integer,Integer> slots,Map<Integer,Integer> reverse) {
+        var a=incoming(left);var b=incoming(right);
+        for(var pair:blocks.entrySet()) {
+            var l=a.get(pair.getKey());var r=b.get(pair.getValue());
+            if(l.size()!=r.size())return false;
+            for(var edge:l.entrySet()) {
+                Predecessor p=edge.getKey();Integer source=blocks.get(p.block());
+                if(source==null)return false;
+                List<Expr> values=r.get(new Predecessor(source,p.event(),p.arm()));
+                if(values==null||!match(edge.getValue(),values,slots,reverse))
+                    return mismatch(pair.getKey(),pair.getValue(),edge,values);
+            }
+        }
         return true;
     }
 
@@ -71,7 +127,8 @@ final class CfgComparison implements Opcodes {
             if(!seen.add(id))throw new IllegalArgumentException("GOTO-only cycle");
             Block b=graph.get(id);
             if(b.events().size()!=1||!b.events().get(0).text().equals("GOTO L0")
-                    ||!b.events().get(0).catches().isEmpty()||!b.copies().isEmpty()||b.edges().size()!=1)return id;
+                    ||!b.events().get(0).catches().isEmpty()||!b.copies().isEmpty()||b.edges().size()!=1
+                    ||!b.entry().equals(b.exit()))return id;
             id=b.edges().get(0);
         }
     }
@@ -92,6 +149,6 @@ final class CfgComparison implements Opcodes {
                 }
             }
         }
-        return new Block(events,b.exit(),b.copies(),edges);
+        return new Block(events,b.entry(),b.exit(),b.copies(),edges);
     }
 }

@@ -185,6 +185,12 @@ ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線�
 
 CFG 的純運送處理不再要求 DUP 次數相同：每個實際使用點的運算元來源、寫入事件與出口 stack 已逐一相同時，DUP 與重新載入未覆寫 local 可相等。跨區塊只新增一種精確別名消去：連續 `DUP[2]; STORE a; STORE b`，兩槽皆非參數、全方法唯一寫入、所有讀取由該 STORE 唯一定義、無 IINC／註解／wide 重疊，才能把 b 的讀取改成 a 並刪除冗餘保存。沒有跨分支來源 union 或任意 local 合併；欄位讀取、呼叫、monitor、POP 及會丟例外的操作仍是有序事件。
 
+第 2 次修正明確記錄每個區塊的入口 stack（位置與 JVM category 寬度）。只有入口與出口表示式逐項完全相同的 GOTO 區塊才可收縮；`ILOAD n; GOTO` 會把 local 推到 stack，不能當作空區塊。即使出口深度相同，值來源不同也不能收縮。非空 stack 上的純 GOTO 則可安全保留原值傳遞。
+
+完成入口確定的區塊雙射後，再核對每個入口的全部 predecessor：正常邊以「前驅區塊＋正規化後的分支位置」為鍵，每個 stack 位置指向前驅區塊內的表示式 DAG；event 節點包含已比較的 opcode、有序 operands 與值來源，繼承值指向前驅入口的位置。例外邊另含「事件位置＋handler 優先序」，清空正常 stack，只傳入該事件拋出的單一例外物件。兩邊的前驅鍵、每條邊的 stack 深度、category 寬度與表示式都必須一致；不能以無序來源集合合併不同分支。迴圈以相同的邊界方程核對回邊，無須展開無限表示式。入口／邊不相容或無法建立證明，一律拒絕 SAME_CFG。
+
+新增 stack 回歸用同一份有效 class 在隔離 ClassLoader 執行與 CLI 比較，包含常數三元式、local＋GOTO、分支值互換、兩側有效匯合點的深度不同、迴圈累積值、long 寬值，並雙向直接測試 CFG。單一方法的同一匯合點若收到不同 stack 深度，JVM 會拒絕，因此深度反例使用兩個各自有效、回傳行為不同的方法。
+
 報表新增 `SAME_CFG`、`LAMBDA_PAIRED_BY_CALLSITE`、`VISIBILITY_BRIDGE`，逐方法列於 `methodResults`，JSON 的 `proofMethodCounts` 及 Markdown 方法表另列總數。類別狀態仍先顯示 DIFF／DEVIATION 等優先結果；例如含已核准方法差異的類別可為 DEVIATION，同時列出 169 個 VISIBILITY_BRIDGE，不能把類別數當方法數。
 
 消融開關為 `-Dsemanticdiff.disable=callsites,cfg,visibility`；`-Dsemanticdiff.traceCfg=true` 可輸出第一個不一致區塊。舊規則消融測試會同時關閉可獨立證明的 CFG 後備。`EighthSelfTest` 已接入 `selftest.sh`，用同一份 framed JAR 交 CLI 與 platform-parent 隔離 ClassLoader，包含呼叫點交換／共用不一致／巢狀不同、迴圈分支／呼叫／回邊不同、例外差異、別名覆寫，以及 bridge 的目標、cast、public 祖先反射與子類派送差異。
