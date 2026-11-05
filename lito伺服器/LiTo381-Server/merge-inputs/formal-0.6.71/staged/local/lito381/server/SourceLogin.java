@@ -51,6 +51,11 @@ final class SourceLogin {
                     tasks.add(()->{
                         try {
                         try { while(!server.isClosed()) {
+                            // javac scans this compile-time-only branch for captures but emits no code.
+                            // Preserve the formal capture descriptor before acceptSocket first uses hub.
+                            if (false) {
+                                Object[] captureOrder={clients,endpoint,config,accounts,state,capture};
+                            }
                             Socket socket=NativeServerLifetime.acceptSocket(server,hub);
                             try {NativeServerLifetime.submitAccepted(clients,new ClientSession(socket,endpoint,config,accounts,state,capture,hub));}
                             catch(Exception e){socket.close();throw e;}
