@@ -11,35 +11,38 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 
 ---
 
-## M0 從原始碼建出正式版，並啟動到大廳（主線 12 項，封頂；已完成 5、剩餘 7）
+## M0 從原始碼建出正式版，並啟動到大廳（主線 12 項，封頂；已完成 7、剩餘 5）
 
 **完成定義（凍結）**：使用者打開 Issue #225，會看到：
 1. 一行指令 `mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 的輸出，結果為 `Failures: 0, Errors: 0`。
-2. `src/main` 以 `mvn package` 建出的 `LiTo381-Server.jar`，對正式 `reference/base-0.6.71.jar` 的語意比對摘要有兩行：
-   - A 範圍 692 個 entry、**DIFF=0**（核准的偏離另列）；
-   - **整顆 JAR** 對正式版的剩餘差異數，以及類別清單。這些差異只能來自 B 範圍（`a-batches.json` 的 `diff_owned_by_B` 為 203 個 entry），要到 M2 的 B-land 才會處理，所以 M0 的 JAR **並非**整顆等價於正式版。
+2. `src/main` 用 `mvn package` 建出 `LiTo381-Server.jar`，與正式 `reference/base-0.6.71.jar` 做語意比對，摘要分成：
+   - **A 範圍** 692 個 entry：**DIFF=0**（核准的偏離另行列出）；
+   - **整顆 JAR**：差異只能落在下面兩類，**其他差異必須為 0**：
+     - (i) **B 範圍**：約 205 個 entry，即 DIFF 203＋ONLY_RIGHT 2（設計 §7-1）。這些類別在 M2 會改成候選 `50635f7e…` 的內容，**不會**變回正式版；
+     - (ii) **`src/main` 專有的 ONLY_LEFT**：約 1,380 個（`Modern*` 等，T007 刻意排除）。
+   - 因此 M0 的 JAR **不是**整顆等價於正式版。
 3. 三張截圖，都是用上述 JAR 在**實驗環境**中拍的：伺服器主控台啟動完成、登入器連線、遊戲**大廳**。實驗環境指 P24Lab，或由 `environments/` 快照建立的隔離 DB，不碰正式 MySQL 3306 與正式設定。
 4. 一份使用者可以自己重跑的指令清單。
 
-| # | ID | Issue | 內容 | 狀態（2026-11-05 20:46 UTC 查詢） |
+| # | ID | Issue | 內容 | 狀態（2026-11-05 21:35 UTC 查詢） |
 |---|---|---|---|---|
-| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | queued；#203 已合併，待重驗 |
+| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | **done**（closed） |
 | 2 | T020-A02 | #73 | 同上（nativede，49 類） | queued；`cancelNpcChatTimer` 改名，等 #235 |
 | 3 | T020-A03 | #74 | 同上（nativede，47 類） | **done**（closed） |
 | 4 | T020-A04 | #75 | 同上（battle-combat，25 類） | **done**（closed） |
 | 5 | T020-A05 | #76 | 同上（other，27 類） | **done**（closed） |
 | 6 | T020-A06 | #77 | 同上（other，27 類） | **done**（closed） |
 | 7 | T020i-8 | #203 | 比較器：依呼叫點配對 lambda、CFG 比對、可見性 bridge | **done**（closed） |
-| 8 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | doing |
-| 9 | T020i-10 | #235 | 比較器：private 方法改名配對（不確定項 U0-1 兌現第 1 張） | todo（等 #216） |
-| 10 | T020-A-land | #78 | A 暫存併入 src/main，補 7 項單元測試，`mvn test` 綠燈，A 範圍語意 DIFF=0 | todo（等 1、2、8、9） |
+| 8 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | **done**（closed） |
+| 9 | T020i-10 | #235 | 比較器：private 方法改名配對（不確定項 U0-1 兌現第 1 張） | doing |
+| 10 | T020-A-land | #78 | A 暫存併入 src/main，補 7 項單元測試，`mvn test` 綠燈，A 範圍語意 DIFF=0 | todo（等 2、9） |
 | 11 | T020c-2 | #83 | 實驗 DB：從 P24Lab 或 `environments/` 快照建立隔離的實驗 schema／實例與實驗設定（dot） | blocked（needs:user：處理誤匯出的正式副本，預設 C 凍結並改走 P24；needs:orchestrator：稽核事故） |
 | 12 | T050 | #225 | 用實驗環境啟動到大廳並截圖（dot） | todo（等 10、11） |
 
 <details><summary>M0 之前已完成的早期項目（計入歷史，不計入上表）</summary>
 
 - T001 done：CI（Maven compile＋登入器 dotnet build）。
-- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 改 0.6.71、Main-Class。A 範圍對齊正式版由上表 #10 完成；整顆 JAR 等價還要等 M2 的 B-land（203 個 B 範圍 entry）。
+- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 改 0.6.71、加上 Main-Class。A 範圍對齊正式版由上表第 10 項完成。B 範圍的類別在 M2 改成候選內容，`src/main` 專有類別（T007）照舊保留；最終 JAR 依設計 §6-2，是「B 類別＝候選，其他＝正式」，並非整顆等於正式版。
 - T003 done（Issue #4，PR #8）：`Build.ps1` 去掉硬編路徑。
 - T004 done（Issue #5）：版本號與文件統一為 0.6.71。
 - T005 done（Issue #3；經 #12/#15、#20/#22 達成）：DB 依賴測試加守門，Server tests 改為阻斷式。
@@ -91,15 +94,15 @@ PR 標題用 `ID: 摘要`。已知範圍與不確定項的估計見 `PLAN.md`「
 ### M2 已知項目（M1 完成後升格）
 | ID | Issue | 內容 | 狀態 |
 |---|---|---|---|
-| T020-B01 | #62 | new-asm 17 類 | queued；#203 已合併，待重驗（20 SAME＋1 DIFF） |
+| T020-B01 | #62 | new-asm 17 類 | review |
 | T020-B02 | #63 | new-java 51 類 | **done** |
-| T020-B03 | #64 | new-java 51 類 | 等 #69 |
-| T020-B04 | #65 | new-java 51 類 | 等重驗（NpcEscape 交 #203） |
+| T020-B03 | #64 | new-java 51 類 | queued（等 #69） |
+| T020-B04 | #65 | new-java 51 類 | **done** |
 | T020-B05 | #66 | new-java 48 類 | **done** |
-| T020-B06 | #67 | existing-battle 29 類 | doing |
-| T020-B07 | #68 | existing-combat-material 23 類 | 等 #216 |
-| T020-B08 | #69 | existing-native 30 類 | 等 #216 |
-| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | review；等 #216 |
+| T020-B06 | #67 | existing-battle 29 類 | **done** |
+| T020-B07 | #68 | existing-combat-material 23 類 | review |
+| T020-B08 | #69 | existing-native 30 類 | running |
+| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | queued |
 | T020-B-land | #138 | B 暫存併入 src/main | 等 B01–B09 |
 | T020-close | #139 | 總語意比對＋Maven 產物全套戰鬥回歸 | 等 #78、#138、#84 |
 | T020c-3 | #84 | 8d26c9d7 基準完整回歸 | 等 #83 |
