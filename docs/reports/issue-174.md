@@ -4,7 +4,7 @@
 
 四項功能已實作，878 項本機自測通過。固定 #62 核准模式由 **6 DIFF → 2 DIFF**，#63 由 **2 DIFF → 1 DIFF**；#66、#72、#76 的所有 entry 狀態均維持原結果，沒有把原 DIFF 判成 SAME。沒有以跨區塊來源 union 放行 #63 的回傳暫存。
 
-交付分支 `task/174`。只修改 semantic-diff 工具、指定 Exceptions 清單與本報告；不改 src/main、staged Java、docs/REPORT.md 或原專案工作檔，未啟動服務／遊戲、未連 DB、未讀寫機密設定、封存或正式產物。
+交付分支 `task/174`，[PR #178](https://github.com/chaoren0418-arch/lito-launcher-server/pull/178)。只修改 semantic-diff 工具、指定 Exceptions 清單與本報告；不改 src/main、staged Java、docs/REPORT.md 或原專案工作檔，未啟動服務／遊戲、未連 DB、未讀寫機密設定、封存或正式產物。
 
 ## 做了什麼
 
@@ -245,7 +245,9 @@ Microsoft JDK 17.0.17、ASM 9.7，全部 Java 從來源重新編譯，以 `-Xver
 
 ### CI
 
-本機自測已全過；PR CI 狀態於推送後補錄。沒有把歷史 CI 綠燈當作本次證據。
+- 程式提交 `65be0a1d5dc12b63b6c7cc51d171eff3332cb858` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42007901903/job/127179206980) 實際 SUCCESS。原始 log 確認四套自測分別 `517／73／119／169 ALL PASS`，並有 `SELFTEST ALL PASS`、`FALLBACK ALL PASS`；不是只看 non-blocking 工作流總狀態。
+- 同提交的 Server 建置、Launcher 建置與 [打包 job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42007901918/job/127179206800) 均 SUCCESS。完整 CI 新建 JAR 的預設結果為 2160 SAME／389 DIFF；這是額外整包比較，不能混入五批固定 staged 的改善數。
+- [Server tests](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42007901903/job/127179207067) 與後續報告提交的最終狀態由 [PR #178 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/178/checks) 查核。報告補充提交沒有改程式；交付前仍核對最後 HEAD 的全部五項 job，並保存 `scratch/issue-174/ci-status.json`、`ci-semantic.log`、`ci-server-tests.log`。
 
 ## 推測
 
@@ -256,7 +258,7 @@ Microsoft JDK 17.0.17、ASM 9.7，全部 Java 從來源重新編譯，以 `-Xver
 - 固定 #62 仍有 Wind／DollAccepted 兩類 DIFF，按 #62 最新裁定由該批修改 staged Java；本任務沒有寫入其 worktree。
 - 固定 #63 仍有 players 跨區塊暫存 DIFF；不宣稱 B02 已全部 SAME。
 - 不做正式服務、DB、遊戲或真機驗收。SAME 是比較器證明結果，不替代 B-land 執行期回歸。
-- 本機無 Bash，完整 shell／冷啟動 fallback 由 PR 的 Linux CI 驗證。
+- 本機無 Bash；完整 shell／冷啟動 fallback 已由上述 Linux CI 實跑通過。
 
 ## 產出路徑與重跑
 
