@@ -71,7 +71,11 @@ final class CombatCurseLifecycle {
    try{synchronized(context.timed){if(!applied){if(context.state.current()!=transition)throw new IllegalStateException("curse cleanup lost exact lease");after.apply(context.timed);applied=true;}}
     while(true){Palette p;synchronized(this){p=palettes.poll();}if(p==null)break;if(context.valid()&&lease.target.valid(context.pc)){int color=(int)CombatAccess.call(context.pc,"currentPoisonPalette","(J)I",p.now!=0?p.now:System.nanoTime());if(p.recipient==null)CombatPoisonLifecycle.rawPalette(context.pc,color,p.reason);else sendPacket(p.recipient,Protocol.poison(context.pc.playerObjectId(),color),p.reason.replace(" type="+p.intended+" reason="," type="+color+" reason="));colorPublished=true;}}
     if(terminal&&lease.managed&&context.valid()&&lease.target.valid(context.pc)){if(!colorPublished){CombatPoisonLifecycle.rawPalette(context.pc,(int)CombatAccess.call(context.pc,"currentPoisonPalette","(J)I",context.now!=0?context.now:System.nanoTime()),"source-curse-cleanup");colorPublished=true;}synchronized(this){if(!releaseRegistered&&number(context.pc,"playerHp")>0){var release=new Release(context.pc,Protocol.paralysis(Protocol.ParalysisMode.PARALYSIS_RELEASE),"S_PARALYSE mode=3 reason=source-curse-cleanup",context.now!=0?context.now:System.nanoTime());releaseRegistered=true;release.colorRequired.set(true);release.colorReady.set(true);releases.add(release);}}}
-    List<Release> ready;synchronized(this){if(!(terminal||colorPublished))return;ready=List.copyOf(releases);for(var r:ready)r.colorReady.set(true);releases.clear();if(terminal)sealed=true;}for(var r:ready)if(context.valid()&&lease.target.valid(context.pc))r.send();
+    List<Release> ready;synchronized(this){if(!(terminal||colorPublished))return;ready=List.copyOf(releases);for(var r:ready)r.colorReady.set(true);releases.clear();if(terminal)sealed=true;}
+    for(var r:ready){
+     if(!context.valid()||!lease.target.valid(context.pc))continue;
+     r.send();
+    }
    }finally{synchronized(this){draining=false;}}
   }
  }
