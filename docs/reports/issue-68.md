@@ -2,21 +2,25 @@
 
 ## 結論
 
-2026-11-06 重驗結果為 **54 SAME、0 SAME_EFFECTS、0 SAME_PATHS、2 DIFF、0 ONLY_LEFT、0 ONLY_RIGHT**。23 份 staged Java 編譯成功，產生的 56 個 entry 與 B07 `verify_entries` 完全一致。**驗收尚未完成，交雲端主控／Claude 裁定剩餘兩個方法。**
+2026-11-06 本次退回後重驗結果為 **54 SAME、0 SAME_EFFECTS、0 SAME_PATHS、2 DIFF、0 ONLY_LEFT、0 ONLY_RIGHT**。23 份 staged Java 編譯成功，產生的 56 個 entry 與 B07 `verify_entries` 完全一致。**驗收尚未完成，交雲端主控／Claude 裁定剩餘兩個方法。**
 
-本輪從 `task/68` 的 `a9f1f6f` 繼續，合併 `origin/main` 的 `c724539`，merge commit 為 `7c7bdd5`，包含 #174、#176。既有三方移植保留，本輪修改 `CombatRules.java`、`NativeAreaMaterialAction.java` 及本報告。
+本輪從 `task/68` 的 `6f4046e` 繼續，合併 `origin/main` 的 `9678e97f`，merge commit 為 `c709819`，工具包含已合併的 #174、#176、#186。23 份 Java 的來源雜湊與前輪逐檔相符，本輪交付修改為本報告。
+
+GitHub 重查 #203 與 PR #215 仍為 OPEN，PR head 為 `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe`、`mergedAt=null`、`mergeCommit=null`。本次依已合併 main 的工具驗收。**剩餘兩個方法待 #203 合併後重驗，或由雲端主控進一步裁定。** [#203](https://github.com/chaoren0418-arch/lito-launcher-server/issues/203) [PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215)
 
 ## 做了什麼
 
+本輪完成 main 合併、工具與 23 份 Java 重新編譯、AsRecord 轉換、56-entry 重驗及兩個方法的完整診斷。以下來源調整由前輪交付，本次沿用並重新核對。
+
 - `CombatRules.load` 保留 receiver、`DragonKnightAwakeClassicMode` key、`read(character)`、`NativePetControls.loadFromProperties`、`awakeClassicMode`、`put` 的求值順序。把 destination 的靜態型別由 `Map` 改為 `var` 推導的 `HashMap`，讓呼叫與候選一致地使用 `INVOKEVIRTUAL HashMap.put`，並合併重複的 Properties 暫存。該類現為 SAME。
 - `NativeAreaMaterialAction.nativeTargetOriginalCaptureOutput` 的發布 lambda 採用連續 `&&` 短路運算式，保留 `NativeSourceIndirectPlayerProof.player`。兩條路徑在進入 allMatch 前均已成功讀取 `context.hub`、`context.population`，因此省去冗餘 `Objects.requireNonNull(context)`，讓 stream 直接作為 allMatch receiver。#174 對候選中的同一多餘檢查進行既有正規化後，整類為 SAME。
-- 區域發布仍先鎖 hub，再視 population 決定內層鎖，send 在鎖區塊外。這是本輪採用的 Java 表達方式，已透過完整類別比較驗證。
+- 區域發布仍先鎖 hub，再視 population 決定內層鎖，send 在鎖區塊外。這是前輪採用的 Java 表達方式，已透過完整類別比較驗證。
 - `NativeReturnNatureMaterialAction.Target` 的 `@AsRecord` 及 `NativeAreaMaterialAction.Context` 的 `@AsmFinal` 持續使用既有轉換器，兩個 entry 均 SAME。
 - 依主控裁定保留 `CombatCompanionSpells`、`CombatNpcDebuffs`、`CombatPoisonLifecycle` 的 Java。Poison 已由新版工具驗成 SAME，另兩類各有一個 DIFF。
 
 ## 已驗證
 
-環境為 Windows、Microsoft OpenJDK 17.0.17、Python 3.12、ASM 9.7。比較器與 AsRecord 均由本分支工具來源重新 javac。最終產物獨立建立於全新的 `target/issue-68/recheck/`，轉換前後均核對 56 個 class entry，轉換器只改動 Context 與 Target 的 bytes，打包內容逐 entry 與轉換後 classes 雜湊一致。
+環境為 Windows、Microsoft OpenJDK 17.0.17、Python 3.12、ASM 9.7。比較器與 AsRecord 均由本分支工具來源重新 javac。semantic-diff 最新來源提交為 `7554762bd0267d937d798ab7aff39b9d3b623384`（#186），AsRecord 最新來源提交為 `ff50cca6df1eb87c931b3d155ea0bfd72a65897b`。最終產物獨立建立於全新的 `target/issue-68/retry/`，轉換前後均核對 56 個 class entry，轉換器只改動 Context 與 Target 的 bytes，打包內容逐 entry 與轉換後 classes 雜湊一致。
 
 | 輪次 | SAME | DIFF | 說明 |
 | --- | ---: | ---: | --- |
@@ -24,24 +28,27 @@
 | 合併 main 後首輪 | 52 | 4 | Poison 通過 |
 | 修正 CombatRules | 53 | 3 | HashMap 呼叫型別及 Properties 暫存對齊 |
 | 修正區域發布並獨立重建 | 54 | 2 | 區域發布整類通過 |
+| 本輪合併 #186 後獨立重建 | 54 | 2 | 兩個方法仍因正常迴圈被逐路徑工具拒絕 |
 
 ### 最終命令與輸出
 
-最終建置／比較入口為 `scratch/issue-68/recheck.py`，逐方法診斷入口為 `scratch/issue-68/remaining.py`。完整 argv、退出碼與日誌路徑保留在 `recheck-commands.json`、`remaining-commands.json`。以下指令從 worktree 根目錄執行。
+最終建置／比較入口為 `scratch/issue-68/retry.py`，逐方法診斷入口為 `scratch/issue-68/retry_remaining.py`。完整 argv、退出碼與日誌路徑保留在 `recheck-commands.json`、`remaining-commands.json`。以下指令從 worktree 根目錄執行。
 
 ```powershell
-& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-68/recheck.py
-& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-68/remaining.py
+& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-68/retry.py
+& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-68/retry_remaining.py
 ```
 
-`recheck.py` 刻意要求新的輸出目錄。後續重跑可傳入未使用的目錄名稱，例如 `recheck-repeat`，產物將位於 `target/issue-68/recheck-repeat/`。本報告的驗證證據固定對應 `recheck/`，診斷腳本預設也讀取該目錄。
+`retry.py` 要求新的輸出目錄，預設為 `target/issue-68/retry/`。本輪命令收據與原始輸出集中於 `scratch/issue-68/retry/`，前輪證據另存原路徑。`retry_remaining.py` 對本輪產物做線性及逐路徑診斷，完整 argv 保留於兩份 commands JSON，兩個 Python 入口退出碼均為 0。
+
+七個重建／全批比較子命令，以及兩個逐方法診斷子命令，退出碼全為 0。semantic-diff CLI 在有 DIFF 時仍可退出 0，驗收依 JSON 的結果計數與 entry 集合判定，本批通過數為 54/56。
 
 本輪 staged 編譯及轉換等同下列指令，`$sources` 精確由 23 個 B07 外層名稱產生。annotation classes 另行編譯供 classpath 使用。
 
 ```powershell
 $server = Join-Path (Get-Location) 'lito伺服器/LiTo381-Server'
 $jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
-$out = Join-Path $server 'target/issue-68/recheck'
+$out = Join-Path $server 'target/issue-68/retry'
 $batch = (Get-Content -Raw -Encoding UTF8 docs/combat-merge/batches.json | ConvertFrom-Json).batches |
   Where-Object id -eq 'B07'
 $sources = @($batch.classes | ForEach-Object {
@@ -57,8 +64,8 @@ $deps = 'D:/dev-cache/maven/repository/org/ow2/asm/asm/9.7/asm-9.7.jar;' +
 & "$jdk/java.exe" -Dfile.encoding=UTF-8 -cp "$out/semantic-tool;$deps" local.lito381.semanticdiff.SemanticDiff `
   --left "$out/staged.jar" --right "$server/reference/candidate-50635f7e.jar" `
   --left-classpath "$server/reference/candidate-50635f7e.jar" `
-  --classes scratch/issue-68/entries.txt `
-  --json scratch/issue-68/recheck-default.json --md scratch/issue-68/recheck-default.md
+  --classes scratch/issue-68/retry/entries.txt `
+  --json scratch/issue-68/retry/recheck-default.json --md scratch/issue-68/retry/recheck-default.md
 # 線性診斷使用相同命令，額外傳 -Dsemanticdiff.disable=paths，輸出 recheck-linear.*。
 ```
 
@@ -89,9 +96,9 @@ exit=0
 ```text
 SUMMARY SAME=54 SAME_EFFECTS=0 SAME_PATHS=0 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=2 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
 
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\recheck-default.json
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\retry\recheck-default.json
 
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\recheck-default.md
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\retry\recheck-default.md
 
 
 exit=0
@@ -102,9 +109,9 @@ exit=0
 ```text
 SUMMARY SAME=54 SAME_EFFECTS=0 SAME_PATHS=0 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=2 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=0 ALLOW_METHODS=0
 
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\recheck-linear.json
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\retry\recheck-linear.json
 
-wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\recheck-linear.md
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-68\scratch\issue-68\retry\recheck-linear.md
 
 
 exit=0
@@ -181,15 +188,21 @@ classSelection 的 `missingLeft`、`extraLeft` 都為空。類別計數總和為
 | --- | --- |
 | `reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
 | `reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `target/issue-68/recheck/staged.jar` | `eb531bfca6a5e45223e31dec5e8e35f804ca7c5cb092faf1a833faee7555d884` |
-| `scratch/issue-68/recheck-default.json` | `1cbed17ca3c73c2a8f52f80bb36b3ffa6e4a53077eb8a7e9c41f608a1f8759f4` |
-| `scratch/issue-68/recheck-linear.json` | `f16f9ead0dc02014f49350cc5510d28ff939102300a7c3e1cc9ad015876af66c` |
-| `scratch/issue-68/remaining.log` | `5297c700f3ab58e20e8fb16f1576044a03701c6bd3d74ffb7e721a5bdffda2ee` |
-| `scratch/issue-68/recheck-commands.json` | `1759eb618c6dd36ca284c6dab67634d7e27b5d60f2ccd02bfa4fc3edef54e083` |
-| `scratch/issue-68/remaining/CombatCompanionSpells.diff` | `957387aae1e741386ba1928d8314d9bdabdc5488ee09a3006a3d352fa787224e` |
-| `scratch/issue-68/remaining/CombatNpcDebuffs.diff` | `cf8a5ec07c783e980ae8cdaa462a3445497c4c63dd15d3ac3bfbd5cdb1aebd2e` |
-| `scratch/issue-68/Remaining.java` | `49f51a768553c0b9b62bb102612f5b894980edf945018706d1249873921b31a3` |
-| `scratch/issue-68/recheck.py` | `bac3fc60a5d4a488bd2d52a2eb37477cd66a84aeb8b1bf82ba7c693ff1887ae9` |
+| `target/issue-68/retry/staged.jar` | `ef49e8d94855fac2d6503c18f18b285f40bc63a9cb3e0471d7c9ed1dc77d3727` |
+| `scratch/issue-68/retry/recheck-default.json` | `cbd0859b0a6113eaa4f3938832bd2dd1874c68bd591c65d627caf3011dbe88d5` |
+| `scratch/issue-68/retry/recheck-linear.json` | `d910d96a30e59d5f09f91c30e418efc25966ae70c5fc10a172cccdb472772bde` |
+| `scratch/issue-68/retry/remaining.log` | `5297c700f3ab58e20e8fb16f1576044a03701c6bd3d74ffb7e721a5bdffda2ee` |
+| `scratch/issue-68/retry/recheck-commands.json` | `6385267d73cfa40f74cd393e8574850458e6a327b5e35d80bb71f111f933fa24` |
+| `scratch/issue-68/retry/remaining-commands.json` | `1ed259d59a0f14a7f89202096664db171321a43a9a3c04a386f28da272adda86` |
+| `scratch/issue-68/retry/audit.json` | `f92955b092bf5330599b75659ffcb71844eed099867582b7bf9eb6a86c54d3aa` |
+| `scratch/issue-68/retry/approved-selection.json` | `073215104e2d4280d0aa65f6cbb84012f6e2898d61a7eea942100eaaf92ea490` |
+| `scratch/issue-68/retry/pr-215.json` | `4d436bc5d6664e3e2d61817c516cdba0ada0e4f45014c6c86213d393c7f27d39` |
+| `scratch/issue-68/retry/remaining/CombatCompanionSpells.diff` | `957387aae1e741386ba1928d8314d9bdabdc5488ee09a3006a3d352fa787224e` |
+| `scratch/issue-68/retry/remaining/CombatNpcDebuffs.diff` | `cf8a5ec07c783e980ae8cdaa462a3445497c4c63dd15d3ac3bfbd5cdb1aebd2e` |
+| `scratch/issue-68/retry/Remaining.java` | `ca3495992bb6c079a16e42d1ee3549c492efeb28f48a70f8c70dfacae6749280` |
+| `scratch/issue-68/retry.py` | `eb803be3db6898157bf5114779d21fa71d5240960163ae1389c1816c3aa60f35` |
+| `scratch/issue-68/retry_remaining.py` | `b0e1d1e81b9c83846049b330d77ece414f9daa6ebfa1f5bdff0af1bc670d8118` |
+| `scratch/issue-68/prepare.py` | `99e35145c7cc560d572d5185fcd68a83b6e1b5266c7a2960b98f5a11ebc9b0d6` |
 
 23 份 staged 來源的驗證雜湊如下。
 
@@ -225,7 +238,7 @@ classSelection 的 `missingLeft`、`extraLeft` 都為空。類別計數總和為
 - `CombatNpcDebuffs.nativeMaterialControlledNegativeBody` 的第一差異為左側 `552:[592:java/lang/Throwable]`，右側 `293:[484:java/lang/Throwable]`。同樣涉及早期保護區段、handler 及堆疊運送。
 - 兩個方法的逐路徑結果均為 `paths rejected: normal control-flow cycle`。直接呼叫目前工具的 `PathComparison.compare`，連左／左、右／右自比也都因相同理由被拒絕。原始方法包含傷害擲骰或收件者遍歷等正常迴圈，超出 #176 的無迴圈證明範圍。
 
-附錄 A、B 由完整正規化 exception coverage 與 instructions 輸出建立 unified diff，保留全部差異 hunk，只有相同區段使用三行 context。完整兩側方法文字留在 `scratch/issue-68/remaining/`。以下是逐方法線性診斷與直接逐路徑比對的完整 stdout。
+附錄 A、B 由完整正規化 exception coverage 與 instructions 輸出建立 unified diff，保留全部差異 hunk，只有相同區段使用三行 context。完整兩側方法文字留在 `scratch/issue-68/retry/remaining/`。以下是逐方法線性診斷與直接逐路徑比對的完整 stdout。
 
 ```text
 local/lito381/server/CombatCompanionSpells#nativeShockCompanionBody(Llocal/lito381/server/ClientSession;[BLlocal/lito381/server/BattleSpellCatalog$ShockStunSpell;Ljava/util/function/IntUnaryOperator;Ljava/lang/Object;)Z
@@ -252,6 +265,10 @@ paths right/right=Result[same=false, reason=paths rejected: normal control-flow 
 exit=0
 ```
 
+### CFG 診斷狀態
+
+本輪 main 的比較器只有既有精確核准的 layout 模式，#203 的預設 CFG 後備與 SAME_CFG 尚待 PR #215 合併，因此本輪 CFG 結果記為「待工具合併，未執行」。八份核准清單對 B07 的交集皆空。GitHub 狀態原始 JSON 保存於 `scratch/issue-68/retry/pr-215.json`。
+
 ## 推測
 
 剩餘兩個方法可能需要比較器進一步處理移除 monitor 後留下的 catch-rethrow 與正常迴圈。現有線性與逐路徑結果仍為 DIFF，因此等價性尚待主控裁定與後續工具證明。
@@ -266,15 +283,17 @@ exit=0
 ## 產出路徑
 
 - 交付來源位於 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 的 B07 23 份 Java。
-- 本輪更新兩份來源與 `docs/reports/issue-68.md`。
-- 暫存命令、日誌、完整 JSON、差異與診斷程式位於 `scratch/issue-68/`。
-- 最終編譯產物位於 `lito伺服器/LiTo381-Server/target/issue-68/recheck/`。
+- 本輪更新 `docs/reports/issue-68.md`。相對 main 的整批交付仍為 23 份 staged Java 加本報告，共 24 檔。
+- 本輪日誌、完整 JSON、差異、診斷程式與命令收據位於 `scratch/issue-68/retry/`，入口腳本位於 `scratch/issue-68/retry.py` 與 `scratch/issue-68/retry_remaining.py`。
+- 最終編譯產物位於 `lito伺服器/LiTo381-Server/target/issue-68/retry/`。
 
 ## 給下一棒的提示
 
-請雲端主控／Claude 依附錄審查兩個保留方法的完整差異，裁定比較器後續工作。#176 明確拒絕正常控制流程中的迴圈，本批兩個方法實際含迴圈。請接手時維持 callback／monitor／leave 與清理的原有語意，依裁定保留這兩份 Java。
+請雲端主控／Claude 處理 #203／PR #215 的依賴與審查，完成合併或另行裁定後，再派本機執行器重驗 #68。兩個待證明的方法為 `CombatCompanionSpells#nativeShockCompanionBody` 與 `CombatNpcDebuffs#nativeMaterialControlledNegativeBody`。附錄 A、B 為本輪完整線性差異，逐路徑輸出見前節。
 
-工具更新後，從 23 份 staged Java 重編譯，僅執行既有 AsRecord 轉換器，再驗證全部 56 entries。完成條件為 SAME／SAME_EFFECTS／SAME_PATHS 合計 56，DIFF／ONLY_LEFT／ONLY_RIGHT 及 missingLeft／extraLeft 均為零。PR #92 同步本輪 54 SAME／2 DIFF，Issue #68 以 `needs:claude` 交接。
+接手時依既有裁定保留這兩份 Java，維持 callback／monitor／leave 與清理的原有語意。工具更新後從 23 份 staged Java 重編譯，執行 AsRecord 轉換器，再比較全部 56 entries。現行完成條件為 SAME／SAME_EFFECTS／SAME_PATHS 合計 56，DIFF／ONLY_LEFT／ONLY_RIGHT 及 missingLeft／extraLeft 均為零。若 #203 產生 SAME_CFG，請主控先確認更新後的驗收口徑。
+
+PR #92 描述同步為本輪 54 SAME／2 DIFF。Issue #68 補回 `needs:claude` 並留言交接待 #203 的依賴，交接後需以 GitHub 查詢確認標籤存在。
 
 ## 附錄 A — CombatCompanionSpells 完整正規化差異
 
