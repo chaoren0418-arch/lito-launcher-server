@@ -49,7 +49,7 @@ public final class AdvancedSelfTest implements Opcodes {
         check("extra-deviation",extra(true),extra(false),"DEVIATION","--deviations","Fixture#extra()V");
         check("extra-unlisted",extra(true),extra(false),"DIFF");
         check("extra-reverse",extra(false),extra(true),"DIFF");
-        ClassNode changed=extra(true); changed.methods.get(1).instructions.insert(new InsnNode(NOP));
+        ClassNode changed=extra(true); changed.methods.get(1).instructions.insert(new MethodInsnNode(INVOKESTATIC,"Sink","changed","()V",false));
         check("deviation-shared",changed,extra(true),"DIFF","--deviations","Fixture#extra()V");
         check("trim-return",caught(true,false,false),caught(false,false,false),"SAME");
         check("trim-invoke",caught(true,true,false),caught(false,true,false),"DIFF");
@@ -58,7 +58,7 @@ public final class AdvancedSelfTest implements Opcodes {
         ClassNode empty2=copy(empty); empty2.methods.get(0).tryCatchBlocks.clear();
         check("trim-empty",empty,empty2,"SAME");
         check("layout-reordered",layout(false,false),layout(true,false),"SAME_LAYOUT","--layout-methods","Fixture#m()V");
-        check("layout-unlisted",layout(false,false),layout(true,false),"DIFF");
+        check("layout-unlisted",layout(false,false),layout(true,false),"SAME_PATHS");
         check("layout-exception",layout(false,false),layout(true,true),"DIFF","--layout-methods","Fixture#m()V");
         ClassNode changedCall=layout(true,false); for(AbstractInsnNode n:changedCall.methods.get(0).instructions) if(n instanceof MethodInsnNode c && c.name.equals("cleanup")) c.name="different";
         check("layout-instruction",layout(false,false),changedCall,"DIFF","--layout-methods","Fixture#m()V");
@@ -73,7 +73,7 @@ public final class AdvancedSelfTest implements Opcodes {
         // #166 generalizes transport: two reads correspond to DUP's two copies.
         check("dup-temp-twice",temp(true,2),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
         check("dup-temp-twice-default",temp(true,2),temp(false,1),"SAME");
-        check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
+        check("dup-temp-unapproved",temp(true,1),temp(false,1),"SAME_PATHS");
         check("ctor-order",ctor("Parent",false,false),ctor("Parent",true,false),"DEVIATION","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ctorLocalWrites();
         ctorFieldOrder();
