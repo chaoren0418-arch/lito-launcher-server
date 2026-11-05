@@ -1,0 +1,4341 @@
+{
+  "schema_version": 1,
+  "selection": "superName == java/lang/Record && instance fields > record components",
+  "access_scope": "同一 JAR 中實際 GETFIELD/PUTFIELD 指令；包含宣告類別本身，排除反射與 method handle",
+  "batch_rule": "以外層類別對照 classes；B 選候選，A 選正式；另一 JAR 的完整證據保留在 other_jar_variants",
+  "inputs": [
+    {
+      "path": "lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar",
+      "sha256": "50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729"
+    },
+    {
+      "path": "lito伺服器/LiTo381-Server/reference/base-0.6.71.jar",
+      "sha256": "e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498"
+    }
+  ],
+  "batch_inputs": [
+    {
+      "path": "docs/combat-merge/batches.json",
+      "sha256": "985ce87719338034c9b9d42834de2ecdb41fc2e7a9ab3894fc5a23622d03802e"
+    },
+    {
+      "path": "docs/combat-merge/a-batches.json",
+      "sha256": "ac1c17ec1a446564c6fb912235ecd9222d06bef1a3a91cdcb3836fda158ad65d"
+    }
+  ],
+  "raw_counts": {
+    "base-0.6.71.jar": 5,
+    "candidate-50635f7e.jar": 39
+  },
+  "raw_total": 44,
+  "counts": {
+    "base-0.6.71.jar": 1,
+    "candidate-50635f7e.jar": 38
+  },
+  "total": 39,
+  "records": [
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCompanion$Snapshot.class",
+      "class": "local/lito381/server/BattleCompanion$Snapshot",
+      "instance_field_count": 30,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "npcId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "gfx",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "name",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "kind",
+          "descriptor": "Llocal/lito381/server/BattleCompanion$Kind;",
+          "signature": null
+        },
+        {
+          "name": "active",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "posture",
+          "descriptor": "Llocal/lito381/server/BattleCompanion$Posture;",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "heading",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "nextActionNanos",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "hp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maxHp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "mp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maxMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "level",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "armorClass",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "strength",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "dexterity",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "moveSpeed",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "petCost",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "collarObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "collarCatalogId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "experience",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "experiencePercentage",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "lawful",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceNpcFactoryMemory",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCompanion$Snapshot",
+              "entry": "local/lito381/server/BattleCompanion$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIILjava/lang/String;Llocal/lito381/server/BattleCompanion$Kind;ZLlocal/lito381/server/BattleCompanion$Posture;JIIIJIIIIIIIIIIJJIJIILjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryMemory",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryMemory.class",
+              "method": "proof",
+              "descriptor": "(Ljava/lang/Object;)Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCompanionFirstActor",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCompanion$Snapshot",
+              "entry": "local/lito381/server/BattleCompanion$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIILjava/lang/String;Llocal/lito381/server/BattleCompanion$Kind;ZLlocal/lito381/server/BattleCompanion$Posture;JIIIJIIIIIIIIIIJJIJIILjava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCompanionFirstActor",
+              "entry": "local/lito381/server/NativeSourceCompanionFirstActor.class",
+              "method": "raw",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCompanion$Snapshot",
+        "local/lito381/server/NativeSourceCompanionFirstActor",
+        "local/lito381/server/NativeSourceNpcFactoryMemory"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+      "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "casterObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeEntity",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeFaction",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeVisibility",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubePresentation",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeHarmonyEffects$Cube"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeHarmonyEffects$Event.class",
+      "class": "local/lito381/server/BattleCubeHarmonyEffects$Event",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "kind",
+          "descriptor": "Llocal/lito381/server/BattleCubeHarmonyEffects$EventKind;",
+          "signature": null
+        },
+        {
+          "name": "cube",
+          "descriptor": "Llocal/lito381/server/BattleCubeHarmonyEffects$Cube;",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "targetKind",
+          "descriptor": "Llocal/lito381/server/BattleCubeHarmonyEffects$ActorKind;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Event",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeHarmonyEffects$EventKind;Llocal/lito381/server/BattleCubeHarmonyEffects$Cube;JLlocal/lito381/server/BattleCubeHarmonyEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeNpc",
+              "entry": "local/lito381/server/NativeSourceCubeNpc.class",
+              "method": "matches",
+              "descriptor": "(Ljava/lang/Object;Llocal/lito381/server/NativeSourceCubeOrigin$Lease;JZ)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeNpc",
+              "entry": "local/lito381/server/NativeSourceCubeNpc.class",
+              "method": "deliver",
+              "descriptor": "(Llocal/lito381/server/GameHub;JIILjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubePlayer",
+              "entry": "local/lito381/server/NativeSourceCubePlayer.class",
+              "method": "damage",
+              "descriptor": "(Llocal/lito381/server/ClientSession;JIILlocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCubeHarmonyEffects$Event;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeRemainder",
+              "entry": "local/lito381/server/NativeSourceCubeRemainder.class",
+              "method": "capture",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeRemainderProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Event",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeHarmonyEffects$EventKind;Llocal/lito381/server/BattleCubeHarmonyEffects$Cube;JLlocal/lito381/server/BattleCubeHarmonyEffects$ActorKind;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeHarmonyEffects$Event",
+              "entry": "local/lito381/server/BattleCubeHarmonyEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeHarmonyEffects$EventKind;Llocal/lito381/server/BattleCubeHarmonyEffects$Cube;JLlocal/lito381/server/BattleCubeHarmonyEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeRemainder",
+              "entry": "local/lito381/server/NativeSourceCubeRemainder.class",
+              "method": "dispatch",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeHarmonyEffects$Event",
+        "local/lito381/server/NativeSourceCubeNpc",
+        "local/lito381/server/NativeSourceCubePlayer",
+        "local/lito381/server/NativeSourceCubeRemainder"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+      "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "casterObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeEntity",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeFaction",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeVisibility",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubePresentation",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeIgnitionEffects$Cube"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeIgnitionEffects$Event.class",
+      "class": "local/lito381/server/BattleCubeIgnitionEffects$Event",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "kind",
+          "descriptor": "Llocal/lito381/server/BattleCubeIgnitionEffects$EventKind;",
+          "signature": null
+        },
+        {
+          "name": "cube",
+          "descriptor": "Llocal/lito381/server/BattleCubeIgnitionEffects$Cube;",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "targetKind",
+          "descriptor": "Llocal/lito381/server/BattleCubeIgnitionEffects$ActorKind;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Event",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeIgnitionEffects$EventKind;Llocal/lito381/server/BattleCubeIgnitionEffects$Cube;JLlocal/lito381/server/BattleCubeIgnitionEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeNpc",
+              "entry": "local/lito381/server/NativeSourceCubeNpc.class",
+              "method": "matches",
+              "descriptor": "(Ljava/lang/Object;Llocal/lito381/server/NativeSourceCubeOrigin$Lease;JZ)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeNpc",
+              "entry": "local/lito381/server/NativeSourceCubeNpc.class",
+              "method": "deliver",
+              "descriptor": "(Llocal/lito381/server/GameHub;JIILjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubePlayer",
+              "entry": "local/lito381/server/NativeSourceCubePlayer.class",
+              "method": "damage",
+              "descriptor": "(Llocal/lito381/server/ClientSession;JIILlocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCubeIgnitionEffects$Event;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeRemainder",
+              "entry": "local/lito381/server/NativeSourceCubeRemainder.class",
+              "method": "capture",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeRemainderProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Event",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeIgnitionEffects$EventKind;Llocal/lito381/server/BattleCubeIgnitionEffects$Cube;JLlocal/lito381/server/BattleCubeIgnitionEffects$ActorKind;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeIgnitionEffects$Event",
+              "entry": "local/lito381/server/BattleCubeIgnitionEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeIgnitionEffects$EventKind;Llocal/lito381/server/BattleCubeIgnitionEffects$Cube;JLlocal/lito381/server/BattleCubeIgnitionEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeRemainder",
+              "entry": "local/lito381/server/NativeSourceCubeRemainder.class",
+              "method": "dispatch",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeIgnitionEffects$Event",
+        "local/lito381/server/NativeSourceCubeNpc",
+        "local/lito381/server/NativeSourceCubePlayer",
+        "local/lito381/server/NativeSourceCubeRemainder"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+      "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "casterObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeEntity",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeFaction",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeVisibility",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubePresentation",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeQuakeEffects$Cube"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeQuakeEffects$Event.class",
+      "class": "local/lito381/server/BattleCubeQuakeEffects$Event",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "kind",
+          "descriptor": "Llocal/lito381/server/BattleCubeQuakeEffects$EventKind;",
+          "signature": null
+        },
+        {
+          "name": "cube",
+          "descriptor": "Llocal/lito381/server/BattleCubeQuakeEffects$Cube;",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "targetKind",
+          "descriptor": "Llocal/lito381/server/BattleCubeQuakeEffects$ActorKind;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Event",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeQuakeEffects$EventKind;Llocal/lito381/server/BattleCubeQuakeEffects$Cube;JLlocal/lito381/server/BattleCubeQuakeEffects$ActorKind;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeQuakeEffects$Event",
+              "entry": "local/lito381/server/BattleCubeQuakeEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeQuakeEffects$EventKind;Llocal/lito381/server/BattleCubeQuakeEffects$Cube;JLlocal/lito381/server/BattleCubeQuakeEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeStatus",
+              "entry": "local/lito381/server/NativeSourceCubeStatus.class",
+              "method": "freeze",
+              "descriptor": "(Ljava/util/List;J)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeStatus",
+              "entry": "local/lito381/server/NativeSourceCubeStatus.class",
+              "method": "proof",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeQuakeEffects$Event",
+        "local/lito381/server/NativeSourceCubeStatus"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+      "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "casterObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeEntity",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeFaction",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubeVisibility",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceCubePresentation",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Cube",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Cube.class",
+              "method": "<init>",
+              "descriptor": "(JJIIJLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeShockEffects$Cube"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleCubeShockEffects$Event.class",
+      "class": "local/lito381/server/BattleCubeShockEffects$Event",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "kind",
+          "descriptor": "Llocal/lito381/server/BattleCubeShockEffects$EventKind;",
+          "signature": null
+        },
+        {
+          "name": "cube",
+          "descriptor": "Llocal/lito381/server/BattleCubeShockEffects$Cube;",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "targetKind",
+          "descriptor": "Llocal/lito381/server/BattleCubeShockEffects$ActorKind;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Event",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeShockEffects$EventKind;Llocal/lito381/server/BattleCubeShockEffects$Cube;JLlocal/lito381/server/BattleCubeShockEffects$ActorKind;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/BattleCubeShockEffects$Event",
+              "entry": "local/lito381/server/BattleCubeShockEffects$Event.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/BattleCubeShockEffects$EventKind;Llocal/lito381/server/BattleCubeShockEffects$Cube;JLlocal/lito381/server/BattleCubeShockEffects$ActorKind;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCubeStatus",
+              "entry": "local/lito381/server/NativeSourceCubeStatus.class",
+              "method": "proof",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleCubeShockEffects$Event",
+        "local/lito381/server/NativeSourceCubeStatus"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleGroundEffects$Pulse.class",
+      "class": "local/lito381/server/BattleGroundEffects$Pulse",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "skillId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "casterObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "targetObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "bot",
+          "descriptor": "Z",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceGroundProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleGroundEffects$Pulse",
+              "entry": "local/lito381/server/BattleGroundEffects$Pulse.class",
+              "method": "<init>",
+              "descriptor": "(IJJZLlocal/lito381/server/BattleGroundEffects;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "schedule",
+              "descriptor": "(Ljava/lang/Object;Llocal/lito381/server/BattleGroundEffects$Pulse;Ljava/util/List;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundOrigin",
+              "entry": "local/lito381/server/NativeSourceGroundOrigin.class",
+              "method": "caster",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleGroundEffects$Pulse;)Llocal/lito381/server/ClientSession;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundOrigin",
+              "entry": "local/lito381/server/NativeSourceGroundOrigin.class",
+              "method": "tick",
+              "descriptor": "(Llocal/lito381/server/BattleGroundEffects$Pulse;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleGroundEffects$Pulse",
+        "local/lito381/server/NativeSourceGroundNpc",
+        "local/lito381/server/NativeSourceGroundOrigin"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleQuestEncounter$PoisonUpdate.class",
+      "class": "local/lito381/server/BattleQuestEncounter$PoisonUpdate",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "attackerObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/BattleQuestEncounter$Snapshot;",
+          "signature": null
+        },
+        {
+          "name": "hits",
+          "descriptor": "Ljava/util/List;",
+          "signature": "Ljava/util/List<Llocal/lito381/server/BattleQuestEncounter$Hit;>;"
+        },
+        {
+          "name": "expired",
+          "descriptor": "Z",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceArenaPoisonProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 64,
+          "flags": [
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleQuestEncounter$Snapshot.class",
+      "class": "local/lito381/server/BattleQuestEncounter$Snapshot",
+      "instance_field_count": 23,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "force",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "roomNumber",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "npcId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "gfx",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "name",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "level",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "hp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maxHp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "alive",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "currentMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maximumMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "intelligence",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "speciesSource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "countSource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "placementSource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeBattleTamedCompanion",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeZombieCorpseActor",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeZombieCorpseBag",
+          "descriptor": "Llocal/lito381/server/RuntimeInventory;",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeSourceNpcFactoryMemory",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleQuestEncounter$Snapshot",
+              "entry": "local/lito381/server/BattleQuestEncounter$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIIIIIILjava/lang/String;IIIZIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryMemory",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryMemory.class",
+              "method": "proof",
+              "descriptor": "(Ljava/lang/Object;)Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFirstView",
+              "entry": "local/lito381/server/NativeSourceNpcFirstView.class",
+              "method": "copy",
+              "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "raw",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcFirstView",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleQuestEncounter$Snapshot",
+              "entry": "local/lito381/server/BattleQuestEncounter$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIIIIIILjava/lang/String;IIIZIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFirstView",
+              "entry": "local/lito381/server/NativeSourceNpcFirstView.class",
+              "method": "raw",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleQuestEncounter$Snapshot",
+        "local/lito381/server/NativeSourceNpcFactoryMemory",
+        "local/lito381/server/NativeSourceNpcFirstView",
+        "local/lito381/server/NativeSourceNpcMotion"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleTimeAttackEncounter$PoisonUpdate.class",
+      "class": "local/lito381/server/BattleTimeAttackEncounter$PoisonUpdate",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "attackerObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;",
+          "signature": null
+        },
+        {
+          "name": "hits",
+          "descriptor": "Ljava/util/List;",
+          "signature": "Ljava/util/List<Llocal/lito381/server/BattleTimeAttackEncounter$Hit;>;"
+        },
+        {
+          "name": "expired",
+          "descriptor": "Z",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceArenaPoisonProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 64,
+          "flags": [
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/BattleTimeAttackEncounter$Snapshot.class",
+      "class": "local/lito381/server/BattleTimeAttackEncounter$Snapshot",
+      "instance_field_count": 23,
+      "components": [
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "npcId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "gfx",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "name",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "level",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "hp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maxHp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "alive",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "finalBoss",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "activeAi",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "currentMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maximumMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "intelligence",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "identitySource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "ordinaryWaveSource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "placementSource",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeBattleTamedCompanion",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeZombieCorpseActor",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeZombieCorpseBag",
+          "descriptor": "Llocal/lito381/server/RuntimeInventory;",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeSourceNpcFactoryMemory",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleTimeAttackEncounter$Snapshot",
+              "entry": "local/lito381/server/BattleTimeAttackEncounter$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIIIILjava/lang/String;IIIZZZIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeCancellationBattleRuntime",
+              "entry": "local/lito381/server/NativeCancellationBattleRuntime.class",
+              "method": "replace",
+              "descriptor": "(Llocal/lito381/server/GameHub;JLlocal/lito381/server/ClientSession;JI)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryMemory",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryMemory.class",
+              "method": "proof",
+              "descriptor": "(Ljava/lang/Object;)Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFirstView",
+              "entry": "local/lito381/server/NativeSourceNpcFirstView.class",
+              "method": "copy",
+              "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "raw",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcFirstView",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/BattleTimeAttackEncounter$Snapshot",
+              "entry": "local/lito381/server/BattleTimeAttackEncounter$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(JIIIILjava/lang/String;IIIZZZIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFirstView",
+              "entry": "local/lito381/server/NativeSourceNpcFirstView.class",
+              "method": "raw",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/BattleTimeAttackEncounter$Snapshot",
+        "local/lito381/server/NativeCancellationBattleRuntime",
+        "local/lito381/server/NativeSourceNpcFactoryMemory",
+        "local/lito381/server/NativeSourceNpcFirstView",
+        "local/lito381/server/NativeSourceNpcMotion"
+      ],
+      "batches": [
+        {
+          "id": "B06",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/ClassicWorldMonsterPopulation$Snapshot.class",
+      "class": "local/lito381/server/ClassicWorldMonsterPopulation$Snapshot",
+      "instance_field_count": 25,
+      "components": [
+        {
+          "name": "mapId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "spawnId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "spawnNumber",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "npcId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "heading",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "currentHp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maximumHp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "currentMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "maximumMp",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "alive",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "present",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "hiddenStatus",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "actorStatus",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "definition",
+          "descriptor": "Llocal/lito381/server/ClassicWorldMonsterCatalog$SpawnDefinition;",
+          "signature": null
+        },
+        {
+          "name": "gfxId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "nameId",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "title",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "lawful",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "passispeed",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "atkspeed",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "sourceCombatOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeTamedCapturePreparation",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B08",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/ClassicWorldMonsterPopulation$Snapshot.class",
+          "class": "local/lito381/server/ClassicWorldMonsterPopulation$Snapshot",
+          "instance_field_count": 24,
+          "components": [
+            {
+              "name": "mapId",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "spawnId",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "spawnNumber",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "objectId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "npcId",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "x",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "y",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "heading",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "currentHp",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "maximumHp",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "currentMp",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "maximumMp",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "alive",
+              "descriptor": "Z",
+              "signature": null
+            },
+            {
+              "name": "present",
+              "descriptor": "Z",
+              "signature": null
+            },
+            {
+              "name": "hiddenStatus",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "actorStatus",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "definition",
+              "descriptor": "Llocal/lito381/server/ClassicWorldMonsterCatalog$SpawnDefinition;",
+              "signature": null
+            },
+            {
+              "name": "gfxId",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "nameId",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            },
+            {
+              "name": "title",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            },
+            {
+              "name": "lawful",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "passispeed",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "atkspeed",
+              "descriptor": "I",
+              "signature": null
+            }
+          ],
+          "extra_fields": [
+            {
+              "name": "sourceCombatOrigin",
+              "descriptor": "Ljava/lang/Object;",
+              "access": 66,
+              "flags": [
+                "ACC_PRIVATE",
+                "ACC_VOLATILE"
+              ],
+              "direct_accesses": []
+            }
+          ],
+          "direct_access_classes": [],
+          "batches": [
+            {
+              "id": "B08",
+              "source": "batches.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/ClientSession$PendingPetRename.class",
+      "class": "local/lito381/server/ClientSession$PendingPetRename",
+      "instance_field_count": 4,
+      "components": [
+        {
+          "name": "companionObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "roomId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "sourceCompanionCallback",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B09",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/ClientSession$PendingPetRename.class",
+          "class": "local/lito381/server/ClientSession$PendingPetRename",
+          "instance_field_count": 4,
+          "components": [
+            {
+              "name": "companionObjectId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "roomId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "expiresAtNanos",
+              "descriptor": "J",
+              "signature": null
+            }
+          ],
+          "extra_fields": [
+            {
+              "name": "sourceCompanionCallback",
+              "descriptor": "Ljava/lang/Object;",
+              "access": 66,
+              "flags": [
+                "ACC_PRIVATE",
+                "ACC_VOLATILE"
+              ],
+              "direct_accesses": []
+            }
+          ],
+          "direct_access_classes": [],
+          "batches": [
+            {
+              "id": "B09",
+              "source": "batches.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/ClientSession$PendingSlaveTarget.class",
+      "class": "local/lito381/server/ClientSession$PendingSlaveTarget",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "controllerObjectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "mode",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "roomId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "expiresAtNanos",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "sourceCompanionCallback",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B09",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/ClientSession$PendingSlaveTarget.class",
+          "class": "local/lito381/server/ClientSession$PendingSlaveTarget",
+          "instance_field_count": 5,
+          "components": [
+            {
+              "name": "controllerObjectId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "mode",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "roomId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "expiresAtNanos",
+              "descriptor": "J",
+              "signature": null
+            }
+          ],
+          "extra_fields": [
+            {
+              "name": "sourceCompanionCallback",
+              "descriptor": "Ljava/lang/Object;",
+              "access": 66,
+              "flags": [
+                "ACC_PRIVATE",
+                "ACC_VOLATILE"
+              ],
+              "direct_accesses": []
+            }
+          ],
+          "direct_access_classes": [],
+          "batches": [
+            {
+              "id": "B09",
+              "source": "batches.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jar": "base-0.6.71.jar",
+      "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+      "class": "local/lito381/server/CombatCurseLifecycle$Target",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "id",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "source",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "account",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "name",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "phase",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "room",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "map",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "instance",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeRoleOwner",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/CombatCurseLifecycle$Target",
+              "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+              "method": "take",
+              "descriptor": "(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/CombatCurseLifecycle$Target;",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/CombatCurseLifecycle$Target",
+              "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+              "method": "valid",
+              "descriptor": "(Llocal/lito381/server/ClientSession;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/CombatCurseLifecycle$Target"
+      ],
+      "batches": [
+        {
+          "id": "A04",
+          "source": "a-batches.json"
+        }
+      ],
+      "other_jar_variants": [
+        {
+          "jar": "candidate-50635f7e.jar",
+          "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+          "class": "local/lito381/server/CombatCurseLifecycle$Target",
+          "instance_field_count": 9,
+          "components": [
+            {
+              "name": "id",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "source",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            },
+            {
+              "name": "account",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            },
+            {
+              "name": "name",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            },
+            {
+              "name": "phase",
+              "descriptor": "Ljava/lang/Object;",
+              "signature": null
+            },
+            {
+              "name": "room",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "map",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "instance",
+              "descriptor": "J",
+              "signature": null
+            }
+          ],
+          "extra_fields": [
+            {
+              "name": "nativeRoleOwner",
+              "descriptor": "Ljava/lang/Object;",
+              "access": 66,
+              "flags": [
+                "ACC_PRIVATE",
+                "ACC_VOLATILE"
+              ],
+              "direct_accesses": [
+                {
+                  "class": "local/lito381/server/CombatCurseLifecycle$Target",
+                  "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+                  "method": "take",
+                  "descriptor": "(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/CombatCurseLifecycle$Target;",
+                  "opcode": "PUTFIELD"
+                },
+                {
+                  "class": "local/lito381/server/CombatCurseLifecycle$Target",
+                  "entry": "local/lito381/server/CombatCurseLifecycle$Target.class",
+                  "method": "valid",
+                  "descriptor": "(Llocal/lito381/server/ClientSession;)Z",
+                  "opcode": "GETFIELD"
+                }
+              ]
+            }
+          ],
+          "direct_access_classes": [
+            "local/lito381/server/CombatCurseLifecycle$Target"
+          ],
+          "batches": [
+            {
+              "id": "A04",
+              "source": "a-batches.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/GameHub$CompanionTick.class",
+      "class": "local/lito381/server/GameHub$CompanionTick",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "roomId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "owner",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCompanionClockView",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/GameHub$CompanionTick",
+              "entry": "local/lito381/server/GameHub$CompanionTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/ClientSession;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/GameHub",
+              "entry": "local/lito381/server/GameHub.class",
+              "method": "companionTickSafely",
+              "descriptor": "()V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/GameHub",
+        "local/lito381/server/GameHub$CompanionTick"
+      ],
+      "batches": [
+        {
+          "id": "B09",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/GameHub$GroundTick.class",
+      "class": "local/lito381/server/GameHub$GroundTick",
+      "instance_field_count": 7,
+      "components": [
+        {
+          "name": "roomId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "caster",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "bot",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "skillId",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "npcCasterObjectId",
+          "descriptor": "J",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceGroundProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/GameHub$GroundTick",
+              "entry": "local/lito381/server/GameHub$GroundTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;ZILlocal/lito381/server/BattleGroundEffects$Pulse;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/GameHub$GroundTick"
+      ],
+      "batches": [
+        {
+          "id": "B09",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+      "class": "local/lito381/server/GameHub$MonsterAiTick",
+      "instance_field_count": 24,
+      "components": [
+        {
+          "name": "roomId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "mode",
+          "descriptor": "Llocal/lito381/server/BattleRules$Mode;",
+          "signature": null
+        },
+        {
+          "name": "objectId",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "force",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "sourceX",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "sourceY",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "destinationX",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "destinationY",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "heading",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "damage",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "attack",
+          "descriptor": "Z",
+          "signature": null
+        },
+        {
+          "name": "magicSkill",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;",
+          "signature": null
+        },
+        {
+          "name": "visualSkill",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;",
+          "signature": null
+        },
+        {
+          "name": "physicalSkill",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;",
+          "signature": null
+        },
+        {
+          "name": "summonSkill",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;",
+          "signature": null
+        },
+        {
+          "name": "groundSkill",
+          "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;",
+          "signature": null
+        },
+        {
+          "name": "spawned",
+          "descriptor": "Ljava/util/List;",
+          "signature": "Ljava/util/List<Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;>;"
+        },
+        {
+          "name": "questSpawned",
+          "descriptor": "Ljava/util/List;",
+          "signature": "Ljava/util/List<Llocal/lito381/server/BattleQuestEncounter$Snapshot;>;"
+        },
+        {
+          "name": "magicTriggerRoll",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "source",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "sourceCombatOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 66,
+          "flags": [
+            "ACC_PRIVATE",
+            "ACC_VOLATILE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeSourceNpcPlayerOrigin",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/GameHub$MonsterAiTick",
+              "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;JIIIIIILlocal/lito381/server/ClientSession;IZLlocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;Ljava/util/List;Ljava/util/List;ILjava/lang/String;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/GameHub$MonsterAiTick",
+              "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;JIIIIIILlocal/lito381/server/ClientSession;IZLlocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;Ljava/util/List;Ljava/util/List;ILjava/lang/String;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/GameHub$MonsterAiTick",
+              "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;JIIIIIILlocal/lito381/server/ClientSession;IZLlocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;Ljava/util/List;Ljava/util/List;ILjava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcTickView",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/GameHub$MonsterAiTick",
+              "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;JIIIIIILlocal/lito381/server/ClientSession;IZLlocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;Ljava/util/List;Ljava/util/List;ILjava/lang/String;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/GameHub$MonsterAiTick",
+              "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+              "method": "<init>",
+              "descriptor": "(JLlocal/lito381/server/BattleRules$Mode;JIIIIIILlocal/lito381/server/ClientSession;IZLlocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;Ljava/util/List;Ljava/util/List;ILjava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeCombatAttacker",
+              "entry": "local/lito381/server/NativeCombatAttacker.class",
+              "method": "encounter",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/GameHub$MonsterAiTick;)Llocal/lito381/server/NativeCombatAttacker$Ref;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcTickView",
+              "entry": "local/lito381/server/NativeSourceNpcTickView.class",
+              "method": "encounter",
+              "descriptor": "(Ljava/lang/Object;Llocal/lito381/server/GameHub$MonsterAiTick;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/GameHub$MonsterAiTick",
+        "local/lito381/server/NativeCombatAttacker",
+        "local/lito381/server/NativeSourceNpcTickView"
+      ],
+      "batches": [
+        {
+          "id": "B09",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": [
+        {
+          "jar": "base-0.6.71.jar",
+          "entry": "local/lito381/server/GameHub$MonsterAiTick.class",
+          "class": "local/lito381/server/GameHub$MonsterAiTick",
+          "instance_field_count": 22,
+          "components": [
+            {
+              "name": "roomId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "mode",
+              "descriptor": "Llocal/lito381/server/BattleRules$Mode;",
+              "signature": null
+            },
+            {
+              "name": "objectId",
+              "descriptor": "J",
+              "signature": null
+            },
+            {
+              "name": "force",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "sourceX",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "sourceY",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "destinationX",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "destinationY",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "heading",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "target",
+              "descriptor": "Llocal/lito381/server/ClientSession;",
+              "signature": null
+            },
+            {
+              "name": "damage",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "attack",
+              "descriptor": "Z",
+              "signature": null
+            },
+            {
+              "name": "magicSkill",
+              "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$Definition;",
+              "signature": null
+            },
+            {
+              "name": "visualSkill",
+              "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$VisualDefinition;",
+              "signature": null
+            },
+            {
+              "name": "physicalSkill",
+              "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$PhysicalDefinition;",
+              "signature": null
+            },
+            {
+              "name": "summonSkill",
+              "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$SummonDefinition;",
+              "signature": null
+            },
+            {
+              "name": "groundSkill",
+              "descriptor": "Llocal/lito381/server/BattleTimeAttackMagicSkillCatalog$GroundDefinition;",
+              "signature": null
+            },
+            {
+              "name": "spawned",
+              "descriptor": "Ljava/util/List;",
+              "signature": "Ljava/util/List<Llocal/lito381/server/BattleTimeAttackEncounter$Snapshot;>;"
+            },
+            {
+              "name": "questSpawned",
+              "descriptor": "Ljava/util/List;",
+              "signature": "Ljava/util/List<Llocal/lito381/server/BattleQuestEncounter$Snapshot;>;"
+            },
+            {
+              "name": "magicTriggerRoll",
+              "descriptor": "I",
+              "signature": null
+            },
+            {
+              "name": "source",
+              "descriptor": "Ljava/lang/String;",
+              "signature": null
+            }
+          ],
+          "extra_fields": [
+            {
+              "name": "sourceCombatOrigin",
+              "descriptor": "Ljava/lang/Object;",
+              "access": 66,
+              "flags": [
+                "ACC_PRIVATE",
+                "ACC_VOLATILE"
+              ],
+              "direct_accesses": []
+            }
+          ],
+          "direct_access_classes": [],
+          "batches": [
+            {
+              "id": "B09",
+              "source": "batches.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeCombatAttacker$Ref.class",
+      "class": "local/lito381/server/NativeCombatAttacker$Ref",
+      "instance_field_count": 10,
+      "components": [
+        {
+          "name": "kind",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "id",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "owner",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "epoch",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "master",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        },
+        {
+          "name": "room",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "map",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "instance",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceNpcMasterProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeCombatAttacker$Ref",
+              "entry": "local/lito381/server/NativeCombatAttacker$Ref.class",
+              "method": "<init>",
+              "descriptor": "(IJLjava/lang/Object;JLlocal/lito381/server/NativePlayerCommit$Binding;JIILjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCompanionFirstActor",
+              "entry": "local/lito381/server/NativeSourceCompanionFirstActor.class",
+              "method": "ref",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Ljava/lang/Object;Ljava/lang/Object;)Llocal/lito381/server/NativeCombatAttacker$Ref;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcOrigins",
+              "entry": "local/lito381/server/NativeSourceNpcOrigins.class",
+              "method": "master",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeCombatAttacker$Ref;)Llocal/lito381/server/NativeSourceRawDamage$Member;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcTickView",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeCombatAttacker$Ref",
+              "entry": "local/lito381/server/NativeCombatAttacker$Ref.class",
+              "method": "<init>",
+              "descriptor": "(IJLjava/lang/Object;JLlocal/lito381/server/NativePlayerCommit$Binding;JIILjava/lang/Object;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceCompanionFirstActor",
+              "entry": "local/lito381/server/NativeSourceCompanionFirstActor.class",
+              "method": "live",
+              "descriptor": "(ZLlocal/lito381/server/NativeCombatAttacker$Ref;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcTickView",
+              "entry": "local/lito381/server/NativeSourceNpcTickView.class",
+              "method": "live",
+              "descriptor": "(ZLlocal/lito381/server/NativeCombatAttacker$Ref;Ljava/lang/Object;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeCombatAttacker$Ref",
+        "local/lito381/server/NativeSourceCompanionFirstActor",
+        "local/lito381/server/NativeSourceNpcOrigins",
+        "local/lito381/server/NativeSourceNpcTickView"
+      ],
+      "batches": [
+        {
+          "id": "B08",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeLightAction$Ingress.class",
+      "class": "local/lito381/server/NativeLightAction$Ingress",
+      "instance_field_count": 7,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        },
+        {
+          "name": "hub",
+          "descriptor": "Llocal/lito381/server/GameHub;",
+          "signature": null
+        },
+        {
+          "name": "application",
+          "descriptor": "Llocal/lito381/server/NativeDeItemApplication;",
+          "signature": null
+        },
+        {
+          "name": "receipt",
+          "descriptor": "Llocal/lito381/server/NativePlayerVitalCompletions$Receipt;",
+          "signature": null
+        },
+        {
+          "name": "arrival",
+          "descriptor": "Llocal/lito381/server/NativeCastTimeline$Arrival;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceSelfIngressFirst",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 128,
+          "flags": [
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B08",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativePlayerCommit$DefenseVisual.class",
+      "class": "local/lito381/server/NativePlayerCommit$DefenseVisual",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "doll",
+          "descriptor": "Llocal/lito381/server/NativeMagicDoll;",
+          "signature": null
+        },
+        {
+          "name": "power",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "gfx",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "reason",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceDollDefenseProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativePlayerCommit$DefenseVisual",
+              "entry": "local/lito381/server/NativePlayerCommit$DefenseVisual.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/NativeMagicDoll;IIJLjava/lang/String;Llocal/lito381/server/ClientSession;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefense",
+              "entry": "local/lito381/server/NativeSourceDollDefense.class",
+              "method": "recipients",
+              "descriptor": "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Llocal/lito381/server/NativePlayerCommit$DefenseVisual;)Ljava/lang/Object;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefense",
+              "entry": "local/lito381/server/NativeSourceDollDefense.class",
+              "method": "accepted",
+              "descriptor": "(Llocal/lito381/server/NativePlayerCommit$Frame;)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefense",
+              "entry": "local/lito381/server/NativeSourceDollDefense.class",
+              "method": "send",
+              "descriptor": "(Llocal/lito381/server/ClientSession;[BLjava/lang/String;Llocal/lito381/server/NativePlayerCommit$DefenseVisual;Llocal/lito381/server/ClientSession;)V",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativePlayerCommit$DefenseVisual",
+        "local/lito381/server/NativeSourceDollDefense"
+      ],
+      "batches": [
+        {
+          "id": "B08",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeProcSkillCatalog$Catalog.class",
+      "class": "local/lito381/server/NativeProcSkillCatalog$Catalog",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "database",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "skills",
+          "descriptor": "Ljava/util/Map;",
+          "signature": "Ljava/util/Map<Ljava/lang/Integer;Llocal/lito381/server/NativeProcSkillCatalog$Skill;>;"
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceIcons1Policy",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeProcSkillCatalog$Catalog",
+              "entry": "local/lito381/server/NativeProcSkillCatalog$Catalog.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;Ljava/util/Map;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceIcons1Policy",
+              "entry": "local/lito381/server/NativeSourceIcons1Policy.class",
+              "method": "of",
+              "descriptor": "(Llocal/lito381/server/NativeProcSkillCatalog$Catalog;)Llocal/lito381/server/NativeSourceIcons1Policy$Policy;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeProcSkillCatalog$Catalog",
+        "local/lito381/server/NativeSourceIcons1Policy"
+      ],
+      "batches": [
+        {
+          "id": "B08",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeReturnNatureMaterialAction$Target.class",
+      "class": "local/lito381/server/NativeReturnNatureMaterialAction$Target",
+      "instance_field_count": 7,
+      "components": [
+        {
+          "name": "caster",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "owner",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "pet",
+          "descriptor": "Llocal/lito381/server/BattleCompanion;",
+          "signature": null
+        },
+        {
+          "name": "stamp",
+          "descriptor": "Llocal/lito381/server/NativeCompanionCallbacks$Stamp;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSummonOwnerContext",
+          "descriptor": "Z",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeReturnNatureMaterialAction",
+              "entry": "local/lito381/server/NativeReturnNatureMaterialAction.class",
+              "method": "ownerContext",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativeCompanionCallbacks$Stamp;)Ljava/lang/Object;",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeReturnNatureMaterialAction",
+              "entry": "local/lito381/server/NativeReturnNatureMaterialAction.class",
+              "method": "ownerContext",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativeCompanionCallbacks$Stamp;)Ljava/lang/Object;",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSummonPublication",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": []
+        },
+        {
+          "name": "nativeSummonDeletionContext",
+          "descriptor": "Z",
+          "access": 2,
+          "flags": [
+            "ACC_PRIVATE"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeReturnNatureMaterialAction",
+              "entry": "local/lito381/server/NativeReturnNatureMaterialAction.class",
+              "method": "ownerDeletionContext",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleCompanion;Llocal/lito381/server/NativeCompanionCallbacks$Stamp;)Ljava/lang/Object;",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeReturnNatureMaterialAction"
+      ],
+      "batches": [
+        {
+          "id": "B07",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceArenaPoison$Viewer.class",
+      "class": "local/lito381/server/NativeSourceArenaPoison$Viewer",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Ljava/lang/ref/WeakReference;",
+          "signature": "Ljava/lang/ref/WeakReference<Llocal/lito381/server/ClientSession;>;"
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourcePoisonAudience",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceArenaPoison$Viewer",
+              "entry": "local/lito381/server/NativeSourceArenaPoison$Viewer.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/ref/WeakReference;Llocal/lito381/server/NativePlayerCommit$Binding;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourcePoisonAudience",
+              "entry": "local/lito381/server/NativeSourcePoisonAudience.class",
+              "method": "current",
+              "descriptor": "(Llocal/lito381/server/NativeSourceArenaPoison$Proof;Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceArenaPoison$Viewer",
+        "local/lito381/server/NativeSourcePoisonAudience"
+      ],
+      "batches": [
+        {
+          "id": "B02",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceControlledDisplay$Output.class",
+      "class": "local/lito381/server/NativeSourceControlledDisplay$Output",
+      "instance_field_count": 7,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        },
+        {
+          "name": "packet",
+          "descriptor": "[B",
+          "signature": null
+        },
+        {
+          "name": "note",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/NativeSourceControlledDisplay$Target;",
+          "signature": null
+        },
+        {
+          "name": "screen",
+          "descriptor": "Z",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceControlledAudience",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceControlledAudience",
+              "entry": "local/lito381/server/NativeSourceControlledAudience.class",
+              "method": "allow",
+              "descriptor": "(Llocal/lito381/server/ClientSession;[B)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceControlledDisplay$Output",
+              "entry": "local/lito381/server/NativeSourceControlledDisplay$Output.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;[BLjava/lang/String;Llocal/lito381/server/NativeSourceControlledDisplay$Target;ZLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceControlledAudience",
+        "local/lito381/server/NativeSourceControlledDisplay$Output"
+      ],
+      "batches": [
+        {
+          "id": "B02",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceCubePlacement$Draft.class",
+      "class": "local/lito381/server/NativeSourceCubePlacement$Draft",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "engine",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "epoch",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "previousScene",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "scene",
+          "descriptor": "Llocal/lito381/server/NativeSourceCubeOrigin$Scene;",
+          "signature": null
+        },
+        {
+          "name": "creator",
+          "descriptor": "Llocal/lito381/server/NativeSourceCubeOrigin$Creator;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceCubeTemplate",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceCubePlacement$Draft",
+              "entry": "local/lito381/server/NativeSourceCubePlacement$Draft.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Llocal/lito381/server/NativeSourceCubeOrigin$Scene;Llocal/lito381/server/NativeSourceCubeOrigin$Creator;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceCubePlacement$Draft"
+      ],
+      "batches": [
+        {
+          "id": "B01",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceDollDefense$Receiver.class",
+      "class": "local/lito381/server/NativeSourceDollDefense$Receiver",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceDollDefenseAudienceProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceDollDefense$Receiver",
+              "entry": "local/lito381/server/NativeSourceDollDefense$Receiver.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefenseAudience",
+              "entry": "local/lito381/server/NativeSourceDollDefenseAudience.class",
+              "method": "current",
+              "descriptor": "(Llocal/lito381/server/NativeSourceDollDefense$Output;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefenseAudience",
+              "entry": "local/lito381/server/NativeSourceDollDefenseAudience.class",
+              "method": "allowFrame",
+              "descriptor": "(Llocal/lito381/server/ClientSession;[B)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceDollDefense$Receiver",
+        "local/lito381/server/NativeSourceDollDefenseAudience"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceDollDefense$Snapshot.class",
+      "class": "local/lito381/server/NativeSourceDollDefense$Snapshot",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "dolls",
+          "descriptor": "Ljava/util/Map;",
+          "signature": "Ljava/util/Map<Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativeSourceDollAction$Stamp;>;"
+        },
+        {
+          "name": "receivers",
+          "descriptor": "Ljava/util/List;",
+          "signature": "Ljava/util/List<Llocal/lito381/server/NativeSourceDollDefense$Receiver;>;"
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceDollPassivePowers",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceDollDefense$Snapshot",
+              "entry": "local/lito381/server/NativeSourceDollDefense$Snapshot.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/util/Map;Ljava/util/List;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollPassive",
+              "entry": "local/lito381/server/NativeSourceDollPassive.class",
+              "method": "powers",
+              "descriptor": "(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeMagicDollPowers;",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceDollDefense$Snapshot",
+        "local/lito381/server/NativeSourceDollPassive"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceDollOutput$Receiver.class",
+      "class": "local/lito381/server/NativeSourceDollOutput$Receiver",
+      "instance_field_count": 3,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceDollAudienceProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceDollAudience",
+              "entry": "local/lito381/server/NativeSourceDollAudience.class",
+              "method": "current",
+              "descriptor": "(Llocal/lito381/server/NativeSourceDollOutput$Output;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollDefenseAudience",
+              "entry": "local/lito381/server/NativeSourceDollDefenseAudience.class",
+              "method": "receiver",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Llocal/lito381/server/NativeAreaMaterialAction$Context;)Llocal/lito381/server/NativeSourceDollDefense$Receiver;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollOutput$Receiver",
+              "entry": "local/lito381/server/NativeSourceDollOutput$Receiver.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceDollAudience",
+        "local/lito381/server/NativeSourceDollDefenseAudience",
+        "local/lito381/server/NativeSourceDollOutput$Receiver"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceDollOutput$Speed.class",
+      "class": "local/lito381/server/NativeSourceDollOutput$Speed",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "actor",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "state",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "haste",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "slow",
+          "descriptor": "J",
+          "signature": null
+        },
+        {
+          "name": "mode",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceDollSlowEpoch",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceDollOutput$Speed",
+              "entry": "local/lito381/server/NativeSourceDollOutput$Speed.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;JJI)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceDollSlow",
+              "entry": "local/lito381/server/NativeSourceDollSlow.class",
+              "method": "sameEpoch",
+              "descriptor": "(Llocal/lito381/server/NativeSourceDollOutput$Speed;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceDollOutput$Speed",
+        "local/lito381/server/NativeSourceDollSlow"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceEquipmentOutput$Viewer.class",
+      "class": "local/lito381/server/NativeSourceEquipmentOutput$Viewer",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        },
+        {
+          "name": "life",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "observer",
+          "descriptor": "Z",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceEquipmentViewerState",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceEquipmentFinalOutput",
+              "entry": "local/lito381/server/NativeSourceEquipmentFinalOutput.class",
+              "method": "viewerCurrent",
+              "descriptor": "(Llocal/lito381/server/NativeSourceEquipmentOutput$Viewer;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceEquipmentOutput$Viewer",
+              "entry": "local/lito381/server/NativeSourceEquipmentOutput$Viewer.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;Ljava/lang/Object;ZLjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceEquipmentFinalOutput",
+        "local/lito381/server/NativeSourceEquipmentOutput$Viewer"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceGroundOrigin$Entity.class",
+      "class": "local/lito381/server/NativeSourceGroundOrigin$Entity",
+      "instance_field_count": 6,
+      "components": [
+        {
+          "name": "actual",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "engine",
+          "descriptor": "Llocal/lito381/server/BattleGroundEffects;",
+          "signature": null
+        },
+        {
+          "name": "epoch",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "scene",
+          "descriptor": "Llocal/lito381/server/NativeSourceGroundOrigin$Scene;",
+          "signature": null
+        },
+        {
+          "name": "creator",
+          "descriptor": "Llocal/lito381/server/NativeSourceGroundOrigin$Creator;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceGroundFaction",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "allowed",
+              "descriptor": "(Llocal/lito381/server/NativeSourceGroundNpc$Proof;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundOrigin$Entity",
+              "entry": "local/lito381/server/NativeSourceGroundOrigin$Entity.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/Object;Llocal/lito381/server/BattleGroundEffects;Ljava/lang/Object;Llocal/lito381/server/NativeSourceGroundOrigin$Scene;Llocal/lito381/server/NativeSourceGroundOrigin$Creator;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceGroundNpc",
+        "local/lito381/server/NativeSourceGroundOrigin$Entity"
+      ],
+      "batches": [
+        {
+          "id": "B03",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+      "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+      "instance_field_count": 11,
+      "components": [
+        {
+          "name": "database",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "npc",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "impl",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        },
+        {
+          "name": "kind",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "undead",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceNpcIsTU",
+          "descriptor": "Z",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZ)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcTargetFailure",
+              "entry": "local/lito381/server/NativeSourceNpcTargetFailure.class",
+              "method": "failed",
+              "descriptor": "(Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;I)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcIsErase",
+          "descriptor": "Z",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZ)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcTargetFailure",
+              "entry": "local/lito381/server/NativeSourceNpcTargetFailure.class",
+              "method": "failed",
+              "descriptor": "(Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;I)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcBraveSpeed",
+          "descriptor": "Ljava/lang/Boolean;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcActionIntervals",
+              "entry": "local/lito381/server/NativeSourceNpcActionIntervals.class",
+              "method": "brave",
+              "descriptor": "(Ljava/lang/Object;)Ljava/lang/Boolean;",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcBaseSpeeds",
+              "entry": "local/lito381/server/NativeSourceNpcBaseSpeeds.class",
+              "method": "npcMillis",
+              "descriptor": "(IIZZZLjava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZZ)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcMoveInterval",
+          "descriptor": "Ljava/lang/Integer;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcBaseSpeeds",
+              "entry": "local/lito381/server/NativeSourceNpcBaseSpeeds.class",
+              "method": "npcMillis",
+              "descriptor": "(IIZZZLjava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "handled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "nativeSourceFirstViewHandled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "nativeSourceNpcPlayerFirstHandled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZZII)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "known",
+              "descriptor": "(Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "onTarget",
+              "descriptor": "(ILjava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMovement",
+              "entry": "local/lito381/server/NativeSourceNpcMovement.class",
+              "method": "allowed",
+              "descriptor": "(ZLjava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcAttackInterval",
+          "descriptor": "Ljava/lang/Integer;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcBaseSpeeds",
+              "entry": "local/lito381/server/NativeSourceNpcBaseSpeeds.class",
+              "method": "npcMillis",
+              "descriptor": "(IIZZZLjava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "handled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "nativeSourceFirstViewHandled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcEscape",
+              "entry": "local/lito381/server/NativeSourceNpcEscape.class",
+              "method": "nativeSourceNpcPlayerFirstHandled",
+              "descriptor": "(Llocal/lito381/server/GameHub;Ljava/util/List;Ljava/lang/Object;Llocal/lito381/server/BattleRules$Mode;JIIILlocal/lito381/server/ClientSession;JIILjava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZZII)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "known",
+              "descriptor": "(Llocal/lito381/server/NativeSourceNpcFactoryType$Stamp;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcMotion",
+              "entry": "local/lito381/server/NativeSourceNpcMotion.class",
+              "method": "onTarget",
+              "descriptor": "(ILjava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceNpcSpellTiming",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+              "entry": "local/lito381/server/NativeSourceNpcFactoryType$Stamp.class",
+              "method": "<init>",
+              "descriptor": "(Ljava/lang/String;ILjava/lang/String;IIZZZIILjava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceNpcSpellTiming",
+              "entry": "local/lito381/server/NativeSourceNpcSpellTiming.class",
+              "method": "base",
+              "descriptor": "(ILjava/lang/Object;Ljava/lang/Object;)I",
+              "opcode": "GETFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceNpcActionIntervals",
+        "local/lito381/server/NativeSourceNpcBaseSpeeds",
+        "local/lito381/server/NativeSourceNpcEscape",
+        "local/lito381/server/NativeSourceNpcFactoryType$Stamp",
+        "local/lito381/server/NativeSourceNpcMotion",
+        "local/lito381/server/NativeSourceNpcMovement",
+        "local/lito381/server/NativeSourceNpcSpellTiming",
+        "local/lito381/server/NativeSourceNpcTargetFailure"
+      ],
+      "batches": [
+        {
+          "id": "B04",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceNpcPlayer$Scope.class",
+      "class": "local/lito381/server/NativeSourceNpcPlayer$Scope",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "origin",
+          "descriptor": "Llocal/lito381/server/NativeSourceNpcPlayer$Origin;",
+          "signature": null
+        },
+        {
+          "name": "attacker",
+          "descriptor": "Llocal/lito381/server/NativeCombatAttacker$Ref;",
+          "signature": null
+        },
+        {
+          "name": "defense",
+          "descriptor": "Ljava/lang/Object;",
+          "signature": null
+        },
+        {
+          "name": "lifetime",
+          "descriptor": "Llocal/lito381/server/NativePlayerLifetime;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceNpcMagicDefinition",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 0,
+          "flags": [],
+          "direct_accesses": []
+        }
+      ],
+      "direct_access_classes": [],
+      "batches": [
+        {
+          "id": "B04",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourcePhysicalNpc$Origin.class",
+      "class": "local/lito381/server/NativeSourcePhysicalNpc$Origin",
+      "instance_field_count": 9,
+      "components": [
+        {
+          "name": "scene",
+          "descriptor": "Llocal/lito381/server/NativeSourceCubeOrigin$Scene;",
+          "signature": null
+        },
+        {
+          "name": "target",
+          "descriptor": "Llocal/lito381/server/NativeSourceCubeOrigin$Target;",
+          "signature": null
+        },
+        {
+          "name": "source",
+          "descriptor": "Llocal/lito381/server/NativeSourceDamageDisplay$Actor;",
+          "signature": null
+        },
+        {
+          "name": "summon",
+          "descriptor": "Llocal/lito381/server/NativeSourceDollAction$Stamp;",
+          "signature": null
+        },
+        {
+          "name": "force",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "x",
+          "descriptor": "I",
+          "signature": null
+        },
+        {
+          "name": "y",
+          "descriptor": "I",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceRawNpcSource",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "lambda$deliver$0",
+              "descriptor": "(Llocal/lito381/server/NativeSourceGroundOrigin$Scene;Llocal/lito381/server/NativeSourceCubeOrigin$Target;Llocal/lito381/server/NativeSourceDamageDisplay$Actor;Llocal/lito381/server/NativeSourceGroundNpc$Proof;Llocal/lito381/server/NativePlayerLifetime;[Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;ILlocal/lito381/server/SourceNpcPhysicalStats;)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourcePhysicalNpc$Origin",
+              "entry": "local/lito381/server/NativeSourcePhysicalNpc$Origin.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/NativeSourceCubeOrigin$Scene;Llocal/lito381/server/NativeSourceCubeOrigin$Target;Llocal/lito381/server/NativeSourceDamageDisplay$Actor;Llocal/lito381/server/NativeSourceDollAction$Stamp;III)V",
+              "opcode": "PUTFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceRawNpc",
+              "entry": "local/lito381/server/NativeSourceRawNpc.class",
+              "method": "allowHpbar",
+              "descriptor": "(Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceRawNpc",
+              "entry": "local/lito381/server/NativeSourceRawNpc.class",
+              "method": "sourceState",
+              "descriptor": "(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)I",
+              "opcode": "GETFIELD"
+            }
+          ]
+        },
+        {
+          "name": "nativeSourceGroundNpcProof",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 16,
+          "flags": [
+            "ACC_FINAL"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "scene",
+              "descriptor": "(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;Llocal/lito381/server/NativePlayerLifetime;)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "targetState",
+              "descriptor": "(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)I",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceGroundNpc",
+              "entry": "local/lito381/server/NativeSourceGroundNpc.class",
+              "method": "lambda$deliver$0",
+              "descriptor": "(Llocal/lito381/server/NativeSourceGroundOrigin$Scene;Llocal/lito381/server/NativeSourceCubeOrigin$Target;Llocal/lito381/server/NativeSourceDamageDisplay$Actor;Llocal/lito381/server/NativeSourceGroundNpc$Proof;Llocal/lito381/server/NativePlayerLifetime;[Llocal/lito381/server/NativeSourcePhysicalNpc$Commit;ILlocal/lito381/server/SourceNpcPhysicalStats;)V",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourcePhysicalNpc$Origin",
+              "entry": "local/lito381/server/NativeSourcePhysicalNpc$Origin.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/NativeSourceCubeOrigin$Scene;Llocal/lito381/server/NativeSourceCubeOrigin$Target;Llocal/lito381/server/NativeSourceDamageDisplay$Actor;Llocal/lito381/server/NativeSourceDollAction$Stamp;III)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceGroundNpc",
+        "local/lito381/server/NativeSourcePhysicalNpc$Origin",
+        "local/lito381/server/NativeSourceRawNpc"
+      ],
+      "batches": [
+        {
+          "id": "B04",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    },
+    {
+      "jar": "candidate-50635f7e.jar",
+      "entry": "local/lito381/server/NativeSourceRawDamage$Output.class",
+      "class": "local/lito381/server/NativeSourceRawDamage$Output",
+      "instance_field_count": 5,
+      "components": [
+        {
+          "name": "pc",
+          "descriptor": "Llocal/lito381/server/ClientSession;",
+          "signature": null
+        },
+        {
+          "name": "binding",
+          "descriptor": "Llocal/lito381/server/NativePlayerCommit$Binding;",
+          "signature": null
+        },
+        {
+          "name": "packet",
+          "descriptor": "[B",
+          "signature": null
+        },
+        {
+          "name": "note",
+          "descriptor": "Ljava/lang/String;",
+          "signature": null
+        }
+      ],
+      "extra_fields": [
+        {
+          "name": "nativeSourceRawAudience",
+          "descriptor": "Ljava/lang/Object;",
+          "access": 144,
+          "flags": [
+            "ACC_FINAL",
+            "ACC_TRANSIENT"
+          ],
+          "direct_accesses": [
+            {
+              "class": "local/lito381/server/NativeSourceRawAudience",
+              "entry": "local/lito381/server/NativeSourceRawAudience.class",
+              "method": "allow",
+              "descriptor": "(Llocal/lito381/server/ClientSession;[B)Z",
+              "opcode": "GETFIELD"
+            },
+            {
+              "class": "local/lito381/server/NativeSourceRawDamage$Output",
+              "entry": "local/lito381/server/NativeSourceRawDamage$Output.class",
+              "method": "<init>",
+              "descriptor": "(Llocal/lito381/server/ClientSession;Llocal/lito381/server/NativePlayerCommit$Binding;[BLjava/lang/String;Ljava/lang/Object;)V",
+              "opcode": "PUTFIELD"
+            }
+          ]
+        }
+      ],
+      "direct_access_classes": [
+        "local/lito381/server/NativeSourceRawAudience",
+        "local/lito381/server/NativeSourceRawDamage$Output"
+      ],
+      "batches": [
+        {
+          "id": "B05",
+          "source": "batches.json"
+        }
+      ],
+      "other_jar_variants": []
+    }
+  ]
+}

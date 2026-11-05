@@ -1,6 +1,22 @@
 # @AsRecord 暫存批次轉換器
 
-Issue #102／T020g：將 Java 可編譯的 `final class` 原地轉成保留額外實例欄位的 JVM record。伺服器 `pom.xml` 未接線；Maven 生命週期與 JSON 掃描交給 #134。
+Issue #102／T020g：將 Java 可編譯的 `final class` 原地轉成保留額外實例欄位的 JVM record。#134 已接上伺服器 Maven 的 `process-classes` 與 `process-test-classes`，一般 `mvn -B package` 不需要 Python。ASM 僅屬於建置外掛依賴，工具 classes 放在 `target/as-record-tool`。
+
+`compile-stubs` 是額外編譯來源，因此 `target/classes` 與單元測試 classpath 會含 stub；所有 Maven 成品 JAR 排除 `com/lineage/**`，`target/lib` 也不含 stub 或 ASM。只以成品 JAR 作為部署輸入，不能把 `target/classes` 當成執行期部署目錄。
+
+## Maven 與掃描驗證
+
+```bash
+mvn -B package
+mvn -B test
+python -B tools/as-record/scan-record-fields.py
+python -B tools/as-record/scan-record-fields.py --check
+python -B tools/as-record/maven-selftest.py --maven mvn --maven-repo <隔離快取路徑>
+```
+
+`maven-selftest.py` 檢查伺服器主 JAR、modern JAR、測試 fixture JAR 與 runtime lib，再在 repo `scratch/issue-134/maven-selftest` 複製同一份 POM、工具及 stub，用極小來源集合實跑主類別轉換、測試轉換、測試略過模式與掃描器。fixture 僅出現在測試 JAR／隔離模組，不加入伺服器 `src/main`。`--module-only` 可在伺服器尚未 package 時獨立執行小型模組。
+
+掃描器以 ASM 讀取兩個 `reference` JAR，輸出 repo `docs/combat-merge/record-asm-fields.json`。原始符合條件者共 44 個 JAR entry（候選 39、正式 5），去重為 39 個類別。按 `batches.json`／`a-batches.json` 外層類別歸屬，B 選候選、A 選正式，主清單為候選 38＋正式 1；另外 5 個版本保留於各筆 `other_jar_variants`，沒有省略來源證據。每個額外欄位列出名稱、描述子、numeric access、旗標及同 JAR 內實際 GETFIELD／PUTFIELD 的類別／方法；反射與 method handle 不當成直接指令存取。`--check` 比較完整 UTF-8 bytes 與 38＋1 筆數，無時間戳，輸入 JAR 與批次表均記 SHA-256。
 
 ## 使用
 
