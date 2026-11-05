@@ -16,6 +16,16 @@ final class TransportComparison implements Opcodes {
     static boolean same(MethodNode a, MethodNode b, JarIndex aj, JarIndex bj, boolean layout) {
         if (!FourthNormalizations.enabled("transport")) return false;
         try {
+            // First prove local rewrites without interpreting merged origins as equal unions.
+            // The complete rewritten instruction stream (or approved CFG) must still match.
+            MethodNode al = LocalTransport.normalize(a), bl = LocalTransport.normalize(b);
+            if (layout ? LayoutComparison.same(al,bl,aj,bj)
+                    : ClassComparer.instructions(al,aj).equals(ClassComparer.instructions(bl,bj))
+                        && ClassComparer.tryCatch(al,aj).equals(ClassComparer.tryCatch(bl,bj))) return true;
+        } catch (AnalyzerException | RuntimeException unsupported) {
+            // A failed local proof must not disable the independent singleton-provenance proof.
+        }
+        try {
             View av = view(a), bv = view(b);
             return av != null && bv != null && av.copies == bv.copies
                     && LayoutComparison.transportSame(av,bv,aj,bj,layout);

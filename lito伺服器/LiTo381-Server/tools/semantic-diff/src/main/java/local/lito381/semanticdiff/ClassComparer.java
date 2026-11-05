@@ -486,7 +486,7 @@ final class ClassComparer {
         return out;
     }
 
-    private static List<String> tryCatch(MethodNode method, JarIndex jar) {
+    static List<String> tryCatch(MethodNode method, JarIndex jar) {
         Map<LabelNode, Integer> labels = labelIds(method);
         List<String> out = new ArrayList<>();
         if (method.tryCatchBlocks == null) {

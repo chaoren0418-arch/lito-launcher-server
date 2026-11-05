@@ -108,10 +108,17 @@ bash tools/semantic-diff/semantic-diff --left staged.jar --right reference.jar \
 
 1. **轉呼叫 lambda**：標準 `LambdaMetafactory.metafactory` 的 implementation handle 若指向本類 `private static synthetic` 方法，其有效指令必須恰為依參數描述子載入所有參數、一次 static／virtual／interface 呼叫、對應回傳。接收者型別、引數及回傳型別精確一致；同步／其他旗標、註解、try、額外指令、重排引數均拒絕。整個輸入 JAR 與明確 classpath 中若還有直接呼叫、LDC／condy handle、其他 bootstrap 或外類參照，整個轉換拒絕。只有全部參照均被替換才移除方法；核准清單指定的精確方法保留。
 2. **相鄰 try 合併**：先執行 #153 邊界收斂，合併相同例外型別與 handler、有效指令邊界相接的區間；不得跨過有效指令，也不得越過會改變例外表優先序的重疊 handler。有型別註解時保持原狀。
-3. **stack／local 暫存**：ASM 資料流確認 local web 恰有一次寫入且每次 LOAD 均來自該寫入，才將 STORE／LOAD、DUP／DUP2 與純 stack 丟棄轉為內部運送關係。逐一比較每個運算、呼叫、欄位、monitor、分支及回傳所使用的有序值來源，並核對每個來源的複本數。其餘指令順序及正常／例外控制邊必須相同。只有原本列入 `--layout-methods` 的方法可重排 CFG。每個保留指令的 operand 與每個被複製值都必須恰有一個已知 producer；`SourceInterpreter` 的多來源 union 沒有保留前驅邊與取值的對應，即使來源集合、複本數與 CFG 相同也不能證明等價，因此一律拒絕該方法的 transport 證明（含 layout 核准模式），回到既有比較。此保守限制也可能保留實際等價的多來源 DIFF；同一來源經分支使用的合法暫存仍可通過。覆寫、錯誤取值位置、呼叫順序改變、複本數不符均無法通過此證明。JSR／RET、DUP_X*／DUP2_X*／SWAP、不可達運送指令、未解析的值與 local 型別註解保守保留差異。
+3. **stack／local 暫存**：先嘗試下述局部改寫，改寫後仍比較完整指令／try 表或既有精確核准的 CFG。未通過時再用原有 singleton 資料流證明：ASM 確認 local web 恰有一次寫入且每次 LOAD 均來自該寫入，才將 STORE／LOAD、DUP／DUP2 與純 stack 丟棄轉為內部運送關係；逐一核對運算、呼叫、欄位、monitor、分支、回傳的有序來源、每個來源的複本數、其餘指令順序及正常／例外控制邊。此第二條證明仍要求每個保留 operand 與被複製值恰有一個已知 producer；多來源 union 一律拒絕，包含 layout 核准模式。沒有恢復 union 集合放行。覆寫、錯誤取值位置、呼叫順序改變與複本數不符仍 DIFF；JSR／RET、未解析值與 local 型別註解保守拒絕。一般多來源跨分支暫存尚不支援，不能推論所有實際等價方法都會通過。
 4. **捕獲參數排列**：僅處理本類 private static lambda；所有使用點必須是標準 metafactory，捕獲值之前必須是連續純 xLOAD，不能跨標籤或含方法／欄位求值。按本體首次使用捕獲參數的順序，同步置換本體參數槽、implementation 描述子、呼叫點描述子及 LOAD。沒有使用的捕獲參數、額外參照、metadata 或描述子碰撞時不改。
 5. **local webs**：以 ASM reaching definitions 合併同一讀取可達的定義，包含分支、迴圈與例外邊；各 web 按首次出現順序獨立編號，保留參數入口與 wide 寬度。重用槽與另開槽只有在值依賴一致時相同。無法證明、舊式 subroutine 與 local 型別註解保守維持原規則。精確核准建構子仍使用實體槽，避免干擾 #153 跨 super 的寫入守門；原有核准 effects 摘要也使用 web 切分前的指令。
 6. **field owner**：按本側 classpath 的宣告、介面、父類次序解析；只有解析成功才使用宣告 owner，保留名稱、描述子與 static／instance 類別。子類遮蔽會解析到不同宣告，缺少祖先則以 `unresolved(原 owner)` 表示，避免未解析符號偶然等於對側已解析宣告而誤判。JDK `java/*` 只讀取平台 class metadata，不載入或初始化應用類別。
+
+`LocalTransport` 的兩個局部證明均要求非參數 web、唯一寫入、所有讀取的 reaching definition 恰為該 STORE、型別匹配，且沒有重疊 wide 存取、IINC 或被移除指令的註解：
+
+- **單次讀取的直線區段**：`xSTORE n; ...; xLOAD n` 之間不可有正常分支或額外的分支／handler 入口（LOAD 位置也不可是入口）。將區段入口 stack 清空後，以 ASM Frame 逐指令執行；不得 underflow，抵達 LOAD 時必須再次為空。這證明中間每個 operand 都由區段內產生，完全不碰 STORE 下方的 stack 前綴；移除 STORE／LOAD 後，保存值只會留在前綴上方，恰在原 LOAD 處供後續使用。呼叫、欄位與 monitor 保持原順序。例外會在兩種形狀都清空 stack，唯一讀取限制保證 handler 無法觀察被移除的 local。STORE 的值可以來自多個前驅：不合併或重排那些前驅，而是保留完整原 CFG。此規則涵蓋 `Main#main` 跨 `SourceLogin.start` 的 `System.out`。
+- **null 檢查後立即回傳**：只將連續 `ASTORE n; ALOAD n; IFNULL target; ALOAD n; ARETURN; target: ...` 換為 `DUP; IFNULL target; ARETURN; target: POP; ...`。n 恰有上述兩次讀取，中間不可有其他入口，target 必須緊接 ARETURN，且其唯一正常前驅就是該 IFNULL，亦不可是 handler（包含同位置的別名標籤）。非 null 路徑回傳同一值；null 路徑丟棄複本後恢復原 stack。後面的 switch／分支匯合完整保留，因此 `expiry` 可通過，而互換 switch arm 或取值的反例仍 DIFF。
+
+每次改寫後重新分析 frames；分析失敗不構成成功證明。兩側完成局部改寫後，預設須逐指令與 try 表完全相同；只有原本列入 `--layout-methods` 的方法才使用保留分支角色、例外順序及槽位雙射的全圖比對。局部改寫不使用多來源 union 判定兩值相等，也不把一般方法自動升格為 layout 核准。`-Dsemanticdiff.disable=transport` 同時停用這兩條證明。
 
 左側 staged JAR 不包含父類時，必須提供它的實際編譯／執行依賴。左右側不會自動借用對側 JAR；依賴不增加比較 entry，也不能覆蓋本側主 JAR 的類別。旗標可重複，先出現的依賴優先；接受 JAR 或 class 目錄。`--classpath` 是 `--left-classpath` 的別名。JSON／Markdown 記錄使用的 classpath。
 
@@ -122,5 +129,7 @@ bash tools/semantic-diff/semantic-diff --left staged.jar --right reference.jar \
 ```
 
 ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線及 SHA-256 校驗。`selftest.sh` 會執行 `FourthSelfTest`，包含六項正反例、跨類參照、例外表優先序、per-value 複本數、wide、diamond／loop／handler webs，以及隔離 ClassLoader 下實際執行的 JVM fixtures。
+
+第三次修正新增 CLI 回歸：expiry 四路匯合、STORE 收到合併值、Main 暫存＋layout 皆含左右交換與停用 transport 的 DIFF 對照；Main 未核准仍 DIFF。switch arm 互換、呼叫／欄位順序變更、額外前驅、消耗 stack 前綴、帶註解的 STORE 均有反例，並執行局部改寫後的正常／例外路徑。三套 Java 自測共 709 項（517＋73＋119）；固定四批重跑證據見 `docs/reports/issue-166.md`。
 
 診斷歸因可直接用 Java 的 `-Dsemanticdiff.disable=forward,try,transport,captures,webs,fields` 關閉指定規則；預設沒有關閉任何規則。此屬性僅供重跑前後對照，不是核准清單或忽略差異的入口。未知名稱不影響任何規則。

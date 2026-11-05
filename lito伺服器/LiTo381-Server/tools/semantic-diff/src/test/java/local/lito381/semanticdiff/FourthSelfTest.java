@@ -52,6 +52,7 @@ public final class FourthSelfTest implements Opcodes {
         execute(branchTemp(true),branchTemp(false),"branch-temp");
         execute(wideTemp(true),wideTemp(false),"wide-temp");
         branchMergeChecks();
+        localTransportChecks();
         System.out.println("FOURTH SELFTEST ALL PASS checks="+checks);
     }
     static ClassNode clazz(){ClassNode c=new ClassNode();c.version=V17;c.access=ACC_PUBLIC;c.name="Fixture";c.superName="java/lang/Object";return c;}
@@ -133,13 +134,129 @@ public final class FourthSelfTest implements Opcodes {
         }
     }
     static void cliCheck(String name,Path left,Path right,boolean layout)throws Exception{
+        cliCheck(name,left,right,layout,"m(Z)I","DIFF");
+    }
+    static void cliCheck(String name,Path left,Path right,boolean layout,String method,String status)throws Exception{
         Path json=work.resolve(name+".json");
         List<String> args=new ArrayList<>(List.of("--left",left.toString(),"--right",right.toString(),
                 "--json",json.toString(),"--md",work.resolve(name+".md").toString()));
-        if(layout){Path policy=work.resolve(name+"-approved.txt");Files.writeString(policy,"Fixture#m(Z)I # approved: https://example.test/issues/166\n");
+        if(layout){Path policy=work.resolve(name+"-approved.txt");Files.writeString(policy,"Fixture#"+method+" # approved: https://example.test/issues/166\n");
             args.addAll(List.of("--layout-methods",policy.toString()));}
         assertion("CLI "+name+" exit",SemanticDiff.run(args.toArray(String[]::new))==0);
-        assertion("CLI "+name+" DIFF",Files.readString(json).contains("\"DIFF\": 1"));
+        assertion("CLI "+name+" "+status,Files.readString(json).contains("\""+status+"\": 1"));
+    }
+    static ClassNode framed(ClassNode c){
+        ClassWriter w=new ClassWriter(ClassWriter.COMPUTE_FRAMES|ClassWriter.COMPUTE_MAXS);c.accept(w);
+        ClassNode result=new ClassNode();new ClassReader(w.toByteArray()).accept(result,0);return result;
+    }
+    // Same null-return prefix and later, unrelated four-way stack merge as the fixed expiry input.
+    static ClassNode expiry(boolean local,boolean swapped){
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(Ljava/lang/String;I)Ljava/lang/String;");
+        LabelNode no=new LabelNode(),join=new LabelNode();LabelNode[] arms={new LabelNode(),new LabelNode(),new LabelNode(),new LabelNode()};
+        var(m,ALOAD,0);if(local){var(m,ASTORE,2);var(m,ALOAD,2);}else ins(m,DUP);
+        m.instructions.add(new JumpInsnNode(IFNULL,no));if(local)var(m,ALOAD,2);ins(m,ARETURN);
+        m.instructions.add(no);if(!local)ins(m,POP);var(m,ILOAD,1);
+        m.instructions.add(new TableSwitchInsnNode(0,2,arms[3],arms[0],arms[1],arms[2]));
+        for(int i=0;i<4;i++){
+            m.instructions.add(arms[i]);m.instructions.add(new LdcInsnNode("value"+(swapped&&i<2?1-i:i)));
+            m.instructions.add(new JumpInsnNode(GOTO,join));
+        }
+        m.instructions.add(join);ins(m,ARETURN);return framed(c);
+    }
+    // Here the removed STORE itself receives a genuinely merged value (not just elsewhere).
+    static ClassNode mergedTemp(boolean local,boolean swapped){
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(Z)I");
+        LabelNode alternate=new LabelNode(),join=new LabelNode();var(m,ILOAD,0);
+        m.instructions.add(new JumpInsnNode(IFEQ,alternate));ins(m,swapped?ICONST_2:ICONST_1);
+        m.instructions.add(new JumpInsnNode(GOTO,join));m.instructions.add(alternate);ins(m,swapped?ICONST_1:ICONST_2);
+        m.instructions.add(join);if(local){var(m,ISTORE,1);var(m,ILOAD,1);}ins(m,IRETURN);return framed(c);
+    }
+    // System.out is saved across start(); another merged operand and reordered blocks require
+    // the local proof AND the existing explicit layout policy. start has a visible side effect.
+    static ClassNode mainLayout(boolean local,boolean reorder,boolean callFirst){
+        ClassNode c=clazz();c.fields.add(new FieldNode(ACC_PUBLIC|ACC_STATIC,"ticks","I",null,null));
+        MethodNode start=method(c,ACC_PRIVATE|ACC_STATIC,"start","()V");
+        start.instructions.add(new FieldInsnNode(GETSTATIC,"Fixture","ticks","I"));ins(start,ICONST_1,IADD);
+        start.instructions.add(new FieldInsnNode(PUTSTATIC,"Fixture","ticks","I"));ins(start,RETURN);
+        MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(Z)I");LabelNode alternate=new LabelNode(),join=new LabelNode();
+        var(m,ILOAD,0);m.instructions.add(new JumpInsnNode(IFEQ,alternate));ins(m,ICONST_1);
+        m.instructions.add(new JumpInsnNode(GOTO,join));
+        if(!reorder){m.instructions.add(alternate);ins(m,ICONST_2);}
+        m.instructions.add(join);var(m,ISTORE,1);
+        if(callFirst)m.instructions.add(new MethodInsnNode(INVOKESTATIC,"Fixture","start","()V",false));
+        m.instructions.add(new FieldInsnNode(GETSTATIC,"java/lang/System","out","Ljava/io/PrintStream;"));
+        if(local)var(m,ASTORE,2);
+        if(!callFirst)m.instructions.add(new MethodInsnNode(INVOKESTATIC,"Fixture","start","()V",false));
+        if(local)var(m,ALOAD,2);
+        m.instructions.add(new MethodInsnNode(INVOKEVIRTUAL,"java/lang/Object","hashCode","()I",false));ins(m,POP);
+        var(m,ILOAD,1);var(m,ILOAD,1);ins(m,IADD,IRETURN);
+        if(reorder){m.instructions.add(alternate);ins(m,ICONST_2);m.instructions.add(new JumpInsnNode(GOTO,join));}
+        return framed(c);
+    }
+    static ClassNode exceptionTemp(boolean local){
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(I)I");
+        LabelNode start=new LabelNode(),end=new LabelNode(),handler=new LabelNode();
+        m.instructions.add(new IntInsnNode(BIPUSH,42));if(local)var(m,ISTORE,1);
+        m.instructions.add(start);ins(m,ICONST_1);var(m,ILOAD,0);ins(m,IDIV,POP);
+        m.instructions.add(end);if(local)var(m,ILOAD,1);ins(m,IRETURN);
+        m.instructions.add(handler);ins(m,POP,ICONST_M1,IRETURN);
+        m.tryCatchBlocks.add(new TryCatchBlockNode(start,end,handler,"java/lang/ArithmeticException"));return framed(c);
+    }
+    static void localTransportChecks()throws Exception{
+        for(String name:List.of("expiry-merge","merged-temp","main-layout-temp")){
+            ClassNode a=name.equals("expiry-merge")?expiry(true,false):name.equals("merged-temp")?mergedTemp(true,false):mainLayout(true,false,false);
+            ClassNode b=name.equals("expiry-merge")?expiry(false,false):name.equals("merged-temp")?mergedTemp(false,false):mainLayout(false,true,false);
+            String signature=name.equals("expiry-merge")?"m(Ljava/lang/String;I)Ljava/lang/String;":"m(Z)I";
+            Path left=jar(name+"-l",List.of(a)),right=jar(name+"-r",List.of(b));boolean layout=name.equals("main-layout-temp");
+            cliCheck(name,left,right,layout,signature,layout?"SAME_LAYOUT":"SAME");
+            cliCheck(name+"-reverse",right,left,layout,signature,layout?"SAME_LAYOUT":"SAME");
+            if(layout)cliCheck(name+"-unapproved",left,right,false,signature,"DIFF");
+            System.setProperty("semanticdiff.disable","transport");
+            try{cliCheck(name+"-disabled",left,right,layout,signature,"DIFF");}
+            finally{System.clearProperty("semanticdiff.disable");}
+            class Loader extends ClassLoader{Class<?> load(ClassNode c){ClassWriter w=new ClassWriter(0);c.accept(w);byte[] bytes=w.toByteArray();return defineClass("Fixture",bytes,0,bytes.length);}}
+            Class<?> l=new Loader().load(a),r=new Loader().load(b);
+            if(name.equals("expiry-merge"))for(String value:new String[]{null,"present"})for(int key:new int[]{-1,0,1,2,3}){
+                Object expected=value!=null?value:"value"+(key>=0&&key<3?key:3);
+                assertion("JVM "+name+" "+value+" "+key,expected.equals(l.getMethod("m",String.class,int.class).invoke(null,value,key))
+                        && expected.equals(r.getMethod("m",String.class,int.class).invoke(null,value,key)));
+            }else for(boolean value:new boolean[]{false,true}){
+                Object expected=(value?1:2)*(layout?2:1);
+                assertion("JVM "+name+" "+value,expected.equals(l.getMethod("m",boolean.class).invoke(null,value))
+                        && expected.equals(r.getMethod("m",boolean.class).invoke(null,value)));
+            }
+            if(layout)assertion("JVM main start side effects",l.getField("ticks").getInt(null)==2&&r.getField("ticks").getInt(null)==2);
+        }
+        check("expiry-merge-swapped",expiry(true,false),expiry(false,true),false);
+        check("merged-temp-swapped",mergedTemp(true,false),mergedTemp(false,true),false);
+        Path left=jar("main-order-l",List.of(mainLayout(true,false,false))),right=jar("main-order-r",List.of(mainLayout(false,true,true)));
+        cliCheck("main-layout-call-order",left,right,true);
+        cliCheck("main-layout-call-order-reverse",right,left,true);
+        // A sibling entry cannot acquire the extra POP introduced by null-return rewriting.
+        ClassNode alias=branchTemp(true);MethodNode m=alias.methods.get(0);
+        LabelNode target=((JumpInsnNode)m.instructions.get(3)).label;
+        m.instructions.insertBefore(m.instructions.getFirst(),new InsnNode(ICONST_0));
+        m.instructions.insertBefore(m.instructions.get(1),new JumpInsnNode(IFNE,target));
+        assertion("null-return additional predecessor rejected",LocalTransport.normalize(m).instructions.size()==m.instructions.size());
+        // A corridor may not consume the stack prefix underneath the stored value.
+        ClassNode prefix=clazz();m=method(prefix,ACC_STATIC,"m","()I");
+        ins(m,ICONST_2,ICONST_1);var(m,ISTORE,1);ins(m,POP);var(m,ILOAD,1);ins(m,IRETURN);
+        assertion("corridor prefix consumption rejected",LocalTransport.normalize(m).instructions.size()==m.instructions.size());
+        ClassNode annotated=mergedTemp(true,false);m=annotated.methods.get(0);
+        for(AbstractInsnNode n:m.instructions)if(n.getOpcode()==ISTORE)n.visibleTypeAnnotations=new ArrayList<>(List.of(new TypeAnnotationNode(0,null,"LMarker;")));
+        assertion("corridor annotated store rejected",LocalTransport.normalize(m).instructions.size()==m.instructions.size());
+        check("corridor-exception",exceptionTemp(true),exceptionTemp(false),true);
+        ClassNode original=exceptionTemp(true),normalized=clazz();
+        normalized.methods.add(LocalTransport.normalize(original.methods.get(0)));
+        // Rebuild frames from the transformed code, then actually execute both exit paths.
+        for(AbstractInsnNode n:normalized.methods.get(0).instructions.toArray())
+            if(n instanceof FrameNode)normalized.methods.get(0).instructions.remove(n);
+        normalized=framed(normalized);
+        class Loader extends ClassLoader{Class<?> load(ClassNode c){ClassWriter w=new ClassWriter(0);c.accept(w);byte[] bytes=w.toByteArray();return defineClass("Fixture",bytes,0,bytes.length);}}
+        Class<?> l=new Loader().load(original),r=new Loader().load(normalized);
+        for(int input:new int[]{0,1})assertion("JVM rewritten exception corridor "+input,
+                Objects.equals(l.getMethod("m",int.class).invoke(null,input),input==0?-1:42)
+                && Objects.equals(r.getMethod("m",int.class).invoke(null,input),input==0?-1:42));
     }
     static ClassNode wrongPosition(boolean local){ClassNode c=clazz();MethodNode m=method(c,ACC_STATIC,"m","()I");ins(m,ICONST_1);if(local)var(m,ISTORE,1);ins(m,ICONST_2);if(local)var(m,ILOAD,1);ins(m,ISUB,IRETURN);return c;}
     static ClassNode monitor(boolean local){ClassNode c=temp(local,1,false,false);MethodNode m=c.methods.get(0);AbstractInsnNode before=m.instructions.getFirst();m.instructions.insertBefore(before,new FieldInsnNode(GETSTATIC,"Sink","lock","Ljava/lang/Object;"));m.instructions.insertBefore(before,new InsnNode(local?MONITORENTER:MONITOREXIT));return c;}
