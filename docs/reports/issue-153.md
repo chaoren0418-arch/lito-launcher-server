@@ -2,7 +2,7 @@
 
 ## 結論
 
-工具實作、自測、固定輸入重跑及快照已完成，但**整項驗收尚未完成**：指定 #76 產物仍為 2 DIFF，與題目預期 0 不符；另有 CI 待確認。沒有把新增核准條目當作直接通過，也沒有改 staged 或擴大來源修補範圍。
+工具實作、自測、固定輸入重跑及快照已完成，首輪完整 CI 全綠，但**整項驗收尚未完成**：指定 #76 產物仍為 2 DIFF，與題目預期 0 不符。沒有把新增核准條目當作直接通過，也沒有改 staged 或擴大來源修補範圍。交付分支 `task/153`，草稿 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。
 
 ## 做了什麼
 
@@ -84,6 +84,12 @@ Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsR
 
 三類由 DIFF 變 SAME：NativeDeWorldCore$1、NativeDeWorldPlayerFilter、NativeDeWorldPlayerFilter$1；沒有反向退化。ONLY_LEFT 比 #135 報告多 1 是新增 AsmFinal 註解類別，並非漏比較。快照使用新版預設，不套用批次清單。
 
+### CI 實際證據
+
+- 初始程式提交 `e73fc58f6c631e4588be8815975544be7c4c24dc` 的 [build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951354158) 與 [package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951354253) 全部 5 項 job SUCCESS。Server tests 為 **6,033 tests／0 failures／0 errors／117 skipped**，已保存完整 log，沒有重跑失敗 job 來換取綠燈。
+- 最後程式提交 `f8fe1210645b03268a3e2cb77d995eae1a9f1473` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951737626/job/126997021398) 實際 SUCCESS，完整日誌含 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=49`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`、2125 SAME／424 DIFF。不是只看 non-blocking 工作流總狀態。Server／Launcher 建置與 package 亦已 SUCCESS。
+- 最後提交的整體狀態見 [PR #164 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164/checks)；報告補充提交不再修改程式。日誌在 `scratch/issue-153/ci-semantic-gap-final.log`、`ci-server-tests.log`。
+
 ## 推測
 
 固定 #76 產物的剩餘差異可能有行為等價的來源表達或可另行核准的狹窄正規化，但本輪沒有得到兩次讀取、活性區間槽位或 Main 的堆疊暫存豁免。不能以 CFG 通過局部診斷取代全類驗收。SAME_EFFECTS 仍只是主控核准摘要相符，不證明完整資料流等價。
@@ -91,7 +97,7 @@ Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsR
 ## 待驗證／未完成
 
 - #76 要求的 0 DIFF 未達成，待主控處理上述明文條件與固定產物的衝突，或來源任務修正 staged。
-- CI 全綠待推送後查核；本機沒有 Bash，完整 shell 冷啟動 fallback 尚未在此機執行。Java 自測及 Maven fixture 已實跑。
+- 本機沒有 Bash；完整 shell 與冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 本機伺服器 package 跳過測試執行；A-land 的 default debug 與建構子執行期測試尚未做。未啟動服務／遊戲、未連正式 DB。
 - #134 正式 Maven 接線仍由該任務合併；本次沒有修改伺服器 POM。
 
