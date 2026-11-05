@@ -1,77 +1,70 @@
-# Issue #76 — T020-A05 正式 0.6.71 暫存與差異裁定交接
+# Issue #76 — A05 審查退回修正與依賴阻塞交接
 
 ## 結論
 
-**尚未通過 A05 驗收：156 SAME／4 DIFF，160 個 entry 無缺漏、無多出。**
-已修正上一輪 `Main` 四層清理覆蓋原始例外的缺陷，並修正完整比較揭露的取消免疫與材料政策缺口。
-依[主控指示](https://github.com/chaoren0418-arch/lito-launcher-server/issues/76#issuecomment-6640676228)，已將 Issue #76 加上 `needs:claude`，請主控裁定下列四筆；沒有核准例外前不得標 done 或移入 A-land。
+**未完成、不可合併或移入 A-land。** 本輪直接編譯 27 個 staged Java 成功，160 個 entry 無缺漏、無多出；以目前已合併的 #132 比較器重跑，嚴格模式與加入核准 forMap 的模式均為 **SAME=156／SAME_EFFECTS=0／DIFF=4**。這是本輪新產物結果，不沿用先前 verified／recheck 或 CI 綠作為驗收證據。
 
-本輪以 `task/76` 的 main 基底 `33f3f5c` 接續上一輪 `521456f5430035379eb737f56770334a1d54fd57`，保留雙方歷史，不切換分支、不強制推送。#132 已由 `e76e1fe` 合併，使用目前工作樹的原版比較器，未修改正規化規則。
+本輪承接 `task/76` @ `05d926f50f25ebd5e1c5eab400483fff8e63fe96`，未切換／新建分支。主控已明定等待 #135、#153 合併後重驗：2026-11-05 本輪查得 [PR #152](https://github.com/chaoren0418-arch/lito-launcher-server/pull/152) 仍 `open, merged=false`（HEAD `9c9eb599b15bed4c78c961e3b8b3ba378dd5cedc`）；[#153](https://github.com/chaoren0418-arch/lito-launcher-server/issues/153) 仍 `open, task:queued`，依賴 #135。沒有借用未合併的比較器宣告通過。
 
 ## 做了什麼
 
-- 範圍為 A05 的 27 個 staged Java 與本報告；保留原始碼類別的既有註解／結構，沒有修改 `src/main`、`pom.xml`、`docs/REPORT.md`。
-- 重新以 CFR 0.152 與 Vineflower 1.11.2 反編譯本 worktree 的正式 JAR，核對上一輪 staged；8 個 DECOMPILED 類別均保留標頭。`NativeAcceptedHpContext`、`NativeCastMaterialPolicy` 採新 Vineflower 輸出並修正控制流程，其餘保留已修整的 CFR 版本並核對新輸出。
-- `Main`：hub／capture／maps／accounts 四層捕捉清理失敗，呼叫原始 `thrown.addSuppressed(cleanupFailure)` 後重拋；maps／accounts 保留 null 判斷。正常清理在自己的 catch 之外，不因清理失敗重複 close。同時對齊登入 socket 註冊在內層 try 之前，以及在 `SourceLogin.start` 前擷取 `System.out` 的順序；登入 socket 也保留 suppressed 例外。
-- `NativeCancellationSpeedImmunity`：補上 weakness（47）、disease（56）、decayPotion（71）、polluteWater（173）、strikerGale（174）的到期值保存、finally 復原及結果遮罩。上一輪只保留 haste／slow，這是實際行為缺漏，不能稱為純 try 標籤差異。**此類現為 SAME。**
-- `NativeCastMaterialPolicy`：使用正式版 `LegacyMySqlRepository.nativeMaterialCharacterConnection()` 直接呼叫，修正來源分支、角色一致性判斷、變數範圍及 JDBC try-with-resources；保留 rollback 與 suppressed 清理。**此類現為 SAME。**
-- `NativeAcceptedHpContext.resolve()`：修正字串／索引的求值及變數順序、null 分支、try 外 return。**此類現為 SAME。**
-- `NativeAcceptedState`：修正 monitor 暫存重複、`isStale` 分支、布林重複賦值；保留正式 JAR 中未再被引用的兩個 lambda 方法。全方法內容已一致，只剩 InnerClasses 多一列。
-- `ClassicWorldMapCatalog.forMap`：縮小來源地圖暫存變數範圍，使後續區域變數槽與正式版一致；剩餘差異只有入口 stack／local 的寫法。
-- `AccountRepository`、`MemoryAccountRepository`：重新用既存 Maven class 的 `javap -v` 確認兩者 `SourceFile: "Accounts.java"`，維持從該原始檔拆出的獨立 staged Java，避免帶入清單外類別。唯讀證據來源為 `D:/lineage開發/3-lito開發/scratch/wt/task-30/lito伺服器/LiTo381-Server/target/classes/local/lito381/server/`；沒有修改該 worktree。
+- `Main.java`：addListener 第二個參數改為 `(ServerSocket) (Object) gameServer`。經直接 javac 與 javap 確認，正式與 staged 均在 offset 482 產生 `CHECKCAST java/net/ServerSocket`，485 呼叫 addListener。先轉為 Object 使 javac 保留 CHECKCAST；單純轉回已知 ServerSocket 型別不足以重現該指令。
+- `docs/combat-merge/effects-approved.txt`：依[主控逐項裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/76#issuecomment-6645328994)與使用者提供的審查回饋，加入 `ClassicWorldMapCatalog#forMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;`，附核准連結及 `# batch: A05, category: dup-pop-local`。這是原 Java／報告範圍之外，審查明確要求的單一核准清單增補。
+- 保留既有四層 `thrown.addSuppressed(cleanupFailure)` 與 login socket 清理；兩邊仍各 5 次呼叫。沒有把失敗候選的 try 改寫搬入 staged。
+- `Main.main` 的 readyOutput 暫存仍保留在 SourceLogin.start 前，以維持 System.out 讀取順序。主控只核准這一處 B 類差異；main 尚有 C 類 cleanup 差異，**未將整個 main 加入 effects 清單**，避免把局部核准擴張成整方法例外。
+- `NativeAcceptedState`、`NativeCastTimeline` 未為 metadata／lambda 差異改寫 Java。重新 javap 確認 `lambda$admitSelf$4` flags 為 `0x100a ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC`，是來源 lambda，不是手寫具名 helper。
+- 更新本報告，列出新產物、實際指令、四種隔離試編、每個 Main 方法的完整正規化差異，以及另外三個類別的完整差異。
 
 ## 已驗證
 
-Microsoft OpenJDK `javac 17.0.17`、`--release 17 -encoding UTF-8`；工具使用本機唯讀 ASM 9.7。`lib/` 不存在，編譯 classpath 仍按任務包含 `reference/base-0.6.71.jar;lib/*`。
+Microsoft OpenJDK `javac 17.0.17`，`--release 17 -encoding UTF-8`；classpath 為本 worktree 的 `reference/base-0.6.71.jar;lib/*`（lib 不存在），工具只讀 `D:/dev-cache/maven/repository/org/ow2/asm/` 的 ASM 9.7。比較器從本 worktree `tools/semantic-diff/src/main/java` 重新編譯，未改工具來源。
 
 ```text
 javac exit 0
 Note: Some input files use unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
 expected=160 actual=160 missing=[] extra=[]
-SUMMARY SAME=156 SAME_EFFECTS=0 DIFF=4 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=4 ALLOW_METHODS=0
+strict:   SAME=156 SAME_EFFECTS=0 DIFF=4 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=4
+approved: SAME=156 SAME_EFFECTS=0 DIFF=4 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=4
 leftClassCount=160 comparedClassCount=160
 classSelection.missingLeft=[] classSelection.extraLeft=[]
 ```
 
-23 個外層及全部 133 個內部 entry 為 SAME。沒有使用 `--allow-methods`、`--effects-methods`、ASM 後處理、正式 `.class` 覆蓋或替換驗收 JAR。比較器 exit 0 只代表報告產生成功，四筆 DIFF 仍是驗收失敗。
+23 個外層及 133 個內部 entry 為 SAME。8 個 DECOMPILED 標頭仍保留。既有 `NativeCancellationSpeedImmunity`、`NativeCastMaterialPolicy`、`NativeAcceptedHpContext` 本輪均 SAME。沒有改 class bytes、套用 ASM 後處理、從正式 JAR 覆蓋 class、增加清單外產物或使用 `--allow-methods`。
 
-已實際執行下方 PowerShell 重跑區塊：再現同一 156／4 結果，最後依驗收閘門以 exit 1 回報未通過；不是編譯失敗。`git diff --check` 通過，28 個變更路徑符合 A05 白名單，8 個 DECOMPILED 標頭完整。
+核准 forMap 仍未通過的具體原因：目前 `ClassComparer.effectsSequence` 保留 `ASTORE`（只忽略槽位數字），因此實際回報 `effects sequence[1]: left=ASTORE right=ARETURN`。這不是未載入核准清單；`approved.json` 的 `effectsMethods` 已列出精確描述子。需要比較器負責者確認核准的 dup-pop-local 類型如何處理，不能只新增清單就宣稱 SAME_EFFECTS。
 
-對全部 160 entry 另以同一 `ClassComparer` 的正規化函式輸出所有方法、例外表與類別／欄位屬性，沒有在 firstDiff 停止；全部差異均在下方附錄。這修正上一輪只列首差異、過度宣稱「javac 無法 SAME」的問題。
+`Main` 的完整正規化檢查：類別屬性、`<init>`、`serverVersion`、`lambda$main$0` 全部相同；僅 `accept` 與 `main` 不同。對全部 160 entry 輸出完整正規化內容後，只有附錄四類有差異；不是只取 firstDiff。
 
-`javap -c -p Main` 確認 staged 與 formal 各有 **5 次** `Throwable.addSuppressed`。正式版其中四次位於 offset 1000／1030／1070／1110；staged 的偏移不同，但原始 Throwable 與 cleanup Throwable 分別作為 receiver／argument，並重拋原始 Throwable。這是靜態結構核對，沒有啟動 Main 或注入執行時故障。
+## Main 巢狀結構試編與尚未解決事項
 
-最終編譯來源經 LF／尾端空白整理後，從全新 `target/issue-76/verified/classes` 編譯。產物雜湊如下（ZIP 包裝時間可能使重跑 JAR 雜湊不同，語意與 entry 驗收才是門檻）：
+所有試編只在 `scratch/issue-76/review-final/<variant>/Main.java`，產物在 `target/issue-76/review-final/<variant>/`；沒有執行 Main。下表是實際 javap 結果，失敗候選未取代 staged。
 
-| 輸入／產物 | SHA-256 |
-|---|---|
-| `正式 base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| `直接 javac 產物 target/issue-76/verified/a05.jar` | `6f53f0f9f522e1a2a5b6aab0b04357602b6d4fa8a90a6959435a13b232f20884` |
-| `驗收清單 scratch/issue-76/entries.txt` | `3916f41ecd5fb67979ac5522d564fcf193e7b0689c7320f77dfabe3e4756a462` |
-
-## 剩餘四筆與待裁定事項
-
-| Entry（皆為 `local/lito381/server/`） | 已確認的完整差異 | 狀態 |
+| 寫法 | 實際結果 | 判斷 |
 |---|---|---|
-| `ClassicWorldMapCatalog.class` | 只有 `forMap(I)` 的 `ASTORE/ALOAD` 與正式 `DUP/POP` 差異；後續查表／fallback 指令一致 | Java 需要暫存單次呼叫的結果；未找到零 local 的同形寫法，待裁定 |
-| `Main.class` | `accept` 的 catch 範圍、handler local；`main` 正常 cleanup 與 handler 的排列／標籤、正式多出的 ServerSocket CHECKCAST、readyOutput 暫存的 ASTORE/ALOAD | 四層 suppressed 缺陷已修；仍不能宣告整類等價或 SAME，請逐方法審查附錄 |
-| `NativeAcceptedState.class` | 唯一差異是 javac 增加 `NativePlayerVitalCompletions$Receipt` 的 InnerClasses 列；所有方法／欄位／其餘屬性一致 | 未找到標準 Java 省略該列的方法，待裁定 |
-| `NativeCastTimeline.class` | `lambda$admitSelf$#0` bootstrap 指向自己的布林 lambda，正式共用 `lambda$admit$#3`；左側另多一個相同邏輯的布林 helper | 未找到在指定標準 javac 命令下共用 captured lambda 實作的方法，待裁定 |
+| staged 現行顯式 return | accept 的 Throwable `[0,79)`、handler 80；正式 `[0,80)`、handler 80 | 多出的保護範圍恰為 offset 79 的 RETURN，差異仍保留；不自行核准 |
+| `accept-implicit-return`，移除顯式 return | Throwable `[0,79)`、handler 82，正常路徑增加 GOTO | 未重現正式版 |
+| `accept-finally`，外層改 finally | catch-any `[0,76)`、handler 82，另有 `[82,84)` 的自保護 | 正常 abortAccept 位於保護範圍外；與正式版不同，不採用 |
+| `login-existing-resource`，既有變數 `try (loginServer)` | 正常 close 移到 handler 前，但 javac 新增資源別名／null 檢查，主區間起點變成 283（正式 279） | 不能只用槽位重編號消除新增指令；其餘四層 custom close 亦未解，不採用 |
+| `login-close-inside-try`，直接把 normal close 移入 try | close 的指令變成 `[950,955)`，同層 Throwable 保護區間延伸到 955 | normal close 自己失敗會再進 handler 執行 close，改變行為，不採用 |
 
-以上「可能是編譯器／ASM 形狀差異」屬**推測**，不是主控已核准的等價例外，更不是所有 Java 寫法都不可能的證明。尤其 Main 仍須人工審查其完整控制流程；不可單看 firstDiff 或五次 addSuppressed 就宣稱整類通過。
+正式版 login／hub／capture／maps／accounts 的 normal cleanup 在各自 handler 之前，且各自排除於自己的 Throwable 保護區間外；目前 staged 的 normal cleanup 在 handler 之後、同樣排除於自己的保護區間外。對應所有正規化標籤與指令的差異見附錄，不以「行為看起來相同」消除此項 C 類要求。
 
-## 可重跑的編譯與語意驗收
+**推測**：上述排列與保護 RETURN 的差異可能來自正式 ASM 對 javac try-with-resources 的改寫。但本輪試編沒有證明所有 Java 寫法都不可能重現，也沒有獲准擴大例外。尚需主控指定可接受的 Java 表達或裁定／安排比較器的受控處理；`Main` 仍是 C 類。
 
-以下在 repo 根目錄 PowerShell 執行，只讀外部 ASM 快取，所有新輸出都留在 worktree。`recheck` 目錄必須不存在；重跑請改一個新的目錄名稱，避免混入舊 class。命令刻意在最後對四筆 DIFF 回報失敗，不把 exit 0 當驗收通過。
+## 可重跑的編譯與比較
+
+本輪實際腳本為 `scratch/issue-76/review-followup.py`（27 檔直接編譯、封裝、重建比較器、strict 與 approved 比較、完整 dump），`variants.py` 與 `check-review.py` 產生試編及方法級證據。皆只在本 worktree 輸出。以下 PowerShell 可從 repo 根目錄重跑；必須使用全新輸出目錄。核准清單需先依 A05 範圍篩選，直接傳含 ClientSession 的整份清單會被比較器的 scope 驗證拒絕。
+
+本輪亦實際執行下方 PowerShell 區塊，重新編譯並再現 156／0／4，最後因驗收閘門以 exit 1 結束。工具 exit 0 只表示產生報表；最後驗收條件必須失敗，不能把目前 156／0／4 當完成。#135、#153 合併後仍須重新編譯本批，而非沿用此 JAR。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
 $server = Join-Path (Get-Location) 'lito伺服器/LiTo381-Server'
 $batch = (Get-Content -Raw -Encoding UTF8 docs/combat-merge/a-batches.json |
     ConvertFrom-Json).batches | Where-Object id -eq 'A05'
-$out = Join-Path $server 'target/issue-76/recheck'
-$evidence = Join-Path (Get-Location) 'scratch/issue-76/recheck'
+$out = Join-Path $server 'target/issue-76/review-recheck'
+$evidence = Join-Path (Get-Location) 'scratch/issue-76/review-recheck'
 if ((Test-Path $out) -or (Test-Path $evidence)) { throw '請使用全新輸出目錄' }
 New-Item -ItemType Directory "$out/classes", "$out/tool", $evidence | Out-Null
 $jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
@@ -97,9 +90,13 @@ $toolSources = @(Get-ChildItem "$server/tools/semantic-diff/src/main/java" -Recu
     -Filter '*.java' | Select-Object -ExpandProperty FullName)
 & "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp $asm -d "$out/tool" $toolSources
 if ($LASTEXITCODE -ne 0) { throw '比較器編譯失敗' }
+$effects = @(Get-Content -Encoding UTF8 docs/combat-merge/effects-approved.txt |
+    Where-Object { $_.StartsWith('local/lito381/server/ClassicWorldMapCatalog#') })
+[IO.File]::WriteAllLines("$evidence/effects-a05.txt", [string[]]$effects, $utf8)
 & "$jdk/java.exe" '-Dfile.encoding=UTF-8' -cp "$out/tool;$asm" `
     local.lito381.semanticdiff.SemanticDiff --left "$out/a05.jar" `
     --right "$server/reference/base-0.6.71.jar" --classes "$evidence/entries.txt" `
+    --effects-methods "$evidence/effects-a05.txt" `
     --json "$evidence/result.json" --md "$evidence/result.md"
 if ($LASTEXITCODE -ne 0) { throw '比較器執行失敗' }
 $r = Get-Content -Raw -Encoding UTF8 "$evidence/result.json" | ConvertFrom-Json
@@ -108,57 +105,53 @@ if ($r.classSelection.missingLeft.Count -or $r.classSelection.extraLeft.Count) {
     throw '比較器 entry 集合驗證失敗'
 }
 if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
-    $r.counts.SAME -ne 160) { throw 'A05 尚未通過：請查看完整差異並交主控裁定' }
+    ($r.counts.SAME + $r.counts.SAME_EFFECTS) -ne 160) { throw 'A05 尚未通過：請查看完整差異並交主控裁定' }
 ```
+
+## 本輪輸入與產物 SHA-256
+
+| 路徑 | SHA-256 |
+|---|---|
+| `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| `lito伺服器/LiTo381-Server/target/issue-76/review-final/a05.jar` | `3af155bc5c65e2413862fc1ceb1db598f9aa704fe91297c788288e6e0570e091` |
+| `scratch/issue-76/review-final/entries.txt` | `3916f41ecd5fb67979ac5522d564fcf193e7b0689c7320f77dfabe3e4756a462` |
 
 ## 未驗證什麼
 
-- 尚未達到 160 SAME，沒有變更工具或套用未核准的 effects 白名單。
-- 單元測試／執行時回歸依任務不適用，待 A-land 統一執行；未啟動伺服器、登入器、遊戲，未連 DB。
-- 未修改原始專案、機密設定、封存、硬連結或正式部署檔。
-- 本報告的本機結果不是 PR CI 結果。既有 Semantic gap CI 以 Maven `src/main` 為輸入，不能代替本批 staged 的驗收。
+- #135、#153 尚未合併，未完成更新比較器下的最終 A05 驗收；當前結果是診斷，不是 done。
+- Main catch／cleanup 的 C 類差異未消除，readyOutput 不代表整個 main 已獲例外。
+- 未啟動伺服器、登入器或遊戲，未連 DB；未做執行時故障注入。單元／回歸測試依任務在 A-land 統一執行。
+- 未修改 src/main、pom.xml、docs/REPORT.md、機密設定、原始專案、封存、硬連結或正式部署檔。未合併 PR 或關閉 Issue。
+- 本輪未把既有 PR CI 綠當作 staged 驗收，也未重跑與暫存區無關的 Maven 測試。
 
 ## 產出路徑與給下一棒的提示
 
-- 提交：`lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/` 下清單限定的 27 個 `.java`，以及 `docs/reports/issue-76.md`。
-- 本機證據（不入 git）：`scratch/issue-76/verified.{json,md}`、`verified-entries.json`、`verified-javac.log`、`verified-semantic.log`、`{staged,formal}-Main.javap.txt`、兩份 `*-sourcefile.txt`、`normalized-{left,right}/` 及四份 `.diff`。
-- 直接 javac 產物：`lito伺服器/LiTo381-Server/target/issue-76/verified/{classes,a05.jar}`。
-- Claude 主控下一步：審查四筆完整差異，決定可接受的工具正規化規則或繼續 Java 修正；若另行批准，先修改對應工具任務再重派本批。不得默默將 DIFF 當 SAME，也不得用正式 class／ASM 覆蓋。
-- A-land 前保留 `AccountRepository`／`MemoryAccountRepository` 的拆檔處理需求，避免與 `Accounts.java` 重複定義。
-- 下方完整差異已隨報告入 git；審查者即使沒有本機 scratch 仍可閱讀。完整正規化輸出產生器也附在文末，可自行重現，無需強加忽略檔案。
+- 本輪提交：A05 staged `Main.java`、核准清單 `docs/combat-merge/effects-approved.txt`、本報告 `docs/reports/issue-76.md`。其餘 26 個 A05 Java 沿用前輪修正，已一起重新編譯。
+- 本機新證據（不進 git）：`scratch/issue-76/review-final/` 下 `strict.{json,md,log}`、`approved.{json,md,log}`、`entries.json`、`effects-a05.txt`、`javac.log`、`tool-javac.log`、`normalized-{left,right}/`、四份 `.diff`、`main-methods.json`、`{left,right}-Main.javap.log`、`NativeCastTimeline.javap.txt`、`variants.json` 及四個試編子目錄。
+- 本機編譯產物：`lito伺服器/LiTo381-Server/target/issue-76/review-final/{classes,a05.jar,tool}`。沒有修改先前 verified/recheck 產物。
+- Issue #76 已加上 `needs:claude` 與 `needs:orchestrator`，保留既有標籤。
+- **調度器**：依主控要求把 #76 的依賴更新為 #135、#153，兩者合併前不要反覆派送最終驗收；本輪仍屬 blocked／未完成。
+- **Claude 主控**：依附錄逐方法裁定 Main 殘留問題，不把 readyOutput 的局部 B 類核准擴大。並請比較器負責者處理已核准 forMap 在現有 effects 模式仍因 ASTORE 失敗的情況；本任務不能自行修改工具。
+- **本機執行器**：依賴合併與主控裁定到位後，接續 `task/76` 重新編譯 27 檔、核對 160 entry，套用有效核准清單，分列 SAME／SAME_EFFECTS／DIFF。未清除 C 類差異前不宣告完成。
 
-## 附錄：全部正規化差異（未截斷）
+## 附錄：Main 每個方法的完整正規化差異
 
-左側是直接 javac 的 staged，右側是正式版。依 class／field／method 鍵排序，使用既有比較器的 label、常數、合成方法名及 catch-any 正規化；此處只略去相同的行，保留全部不同片段。程式碼區塊行尾的展示空白已去除，不改變 opcode、常數、旗標、例外表或 method descriptor。
+以下取自本輪 #132 比較器的正規化函式（報告僅去除行尾空白），包含所有例外表與方法指令，不在第一處差異停止。`-` 為本輪 staged，`+` 為正式版。區域槽位與引用 InnerClasses 尚未套用未合併的 #135。
 
-### ClassicWorldMapCatalog
+### `<init>()V`
 
-```diff
---- staged/ClassicWorldMapCatalog.txt
-+++ formal/ClassicWorldMapCatalog.txt
-@@ -2992,12 +2992,11 @@
- DEFAULT
- ILOAD 0
- INVOKESTATIC local/lito381/server/CombatSpecialBuffs.sourceMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;
--ASTORE 1
--ALOAD 1
-+DUP
- IFNULL L0
--ALOAD 1
- ARETURN
- LABEL L0
-+POP
- GETSTATIC local/lito381/server/ClassicWorldMapCatalog.MAPS:Ljava/util/Map;
- ILOAD 0
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-```
+SAME，無差異。
 
-### Main
+### `CLASS METADATA`
+
+SAME，無差異。
+
+### `accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V`
 
 ```diff
---- staged/Main.txt
-+++ formal/Main.txt
-@@ -22,7 +22,7 @@
+--- staged/accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V
++++ formal/accept(Ljava/net/ServerSocket;Llocal/lito381/server/ClientSession$Endpoint;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V
+@@ -3,7 +3,7 @@
  ANNOTATIONS ||||pvis=|pinv=|lvtvis=|lvtinv=
  DEFAULT
  TRY L0 L1 L2 java/lang/Exception
@@ -167,7 +160,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  LABEL L0
  ALOAD 0
  INVOKEVIRTUAL java/net/ServerSocket.isClosed()Z
-@@ -62,12 +62,11 @@
+@@ -43,11 +43,10 @@
  INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
  LABEL L3
  INVOKESTATIC local/lito381/server/NativeServerLifetime.abortAccept()V
@@ -182,8 +175,18 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
 +ALOAD 10
  ATHROW
  END METHOD
- METHOD lambda$main$#0(Ljava/net/ServerSocket;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V
-@@ -92,18 +91,18 @@
+```
+
+### `lambda$main$#0(Ljava/net/ServerSocket;ILlocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V`
+
+SAME，無差異。
+
+### `main([Ljava/lang/String;)V`
+
+```diff
+--- staged/main([Ljava/lang/String;)V
++++ formal/main([Ljava/lang/String;)V
+@@ -4,18 +4,18 @@
  DEFAULT
  TRY L11 L28 L29 java/lang/Throwable
  TRY L30 L31 L32 java/lang/Throwable
@@ -214,15 +217,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  ALOAD 0
  ARRAYLENGTH
  IFLE L0
-@@ -337,6 +336,7 @@
- INVOKESTATIC local/lito381/server/NativeServerLifetime.bindMain(Ljava/net/ServerSocket;Ljava/net/SocketAddress;I)V
- ALOAD 6
- ALOAD 18
-+CHECKCAST java/net/ServerSocket
- INVOKESTATIC local/lito381/server/NativeServerLifetime.addListener(Ljava/util/List;Ljava/net/ServerSocket;)Z
- POP
- IINC var=17 incr=1
-@@ -450,7 +450,6 @@
+@@ -363,7 +363,6 @@
  INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
  LABEL L23
  GETSTATIC java/lang/System.out:Ljava/io/PrintStream;
@@ -230,7 +225,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  ALOAD 3
  ALOAD 8
  ALOAD 7
-@@ -458,7 +457,6 @@
+@@ -371,7 +370,6 @@
  ALOAD 11
  ALOAD 5
  INVOKESTATIC local/lito381/server/SourceLogin.start(Llocal/lito381/server/ServerConfig;Llocal/lito381/server/AccountRepository;Llocal/lito381/server/GameStateStore;Llocal/lito381/server/CaptureLog;Llocal/lito381/server/GameHub;Ljava/util/concurrent/ExecutorService;)V
@@ -238,7 +233,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  CONST str:"[LiTo] ready"
  INVOKEVIRTUAL java/io/PrintStream.println(Ljava/lang/String;)V
  CONST Integer:0
-@@ -519,6 +517,8 @@
+@@ -432,6 +430,8 @@
  POP
  GOTO L27
  LABEL L28
@@ -247,7 +242,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  GOTO L34
  LABEL L29
  ASTORE 13
-@@ -536,152 +536,145 @@
+@@ -449,151 +449,144 @@
  ALOAD 13
  ATHROW
  LABEL L34
@@ -279,33 +274,30 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
 +ATHROW
  LABEL L40
 -ALOAD 12
+-ATHROW
 +ALOAD 10
 +INVOKESTATIC local/lito381/server/NativeServerLifetime.closeResource(Ljava/lang/AutoCloseable;)V
 +GOTO L46
-+LABEL L41
+ LABEL L41
+-ALOAD 11
+-INVOKESTATIC local/lito381/server/NativeServerLifetime.closeHub(Llocal/lito381/server/GameHub;)V
 +ASTORE 11
-+LABEL L42
+ LABEL L42
+-GOTO L48
 +ALOAD 10
 +INVOKESTATIC local/lito381/server/NativeServerLifetime.closeResource(Ljava/lang/AutoCloseable;)V
-+LABEL L43
+ LABEL L43
+-ASTORE 11
 +GOTO L45
-+LABEL L44
+ LABEL L44
+-ALOAD 10
 +ASTORE 12
 +ALOAD 11
 +ALOAD 12
 +INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
 +LABEL L45
 +ALOAD 11
- ATHROW
--LABEL L41
--ALOAD 11
--INVOKESTATIC local/lito381/server/NativeServerLifetime.closeHub(Llocal/lito381/server/GameHub;)V
--LABEL L42
--GOTO L48
--LABEL L43
--ASTORE 11
--LABEL L44
--ALOAD 10
++ATHROW
 +LABEL L46
 +ALOAD 9
 +IFNULL L52
@@ -372,9 +364,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
 -LABEL L54
 -ALOAD 10
-+LABEL L57
-+ALOAD 9
- ATHROW
+-ATHROW
 -LABEL L55
 -ALOAD 9
 -IFNULL L56
@@ -382,10 +372,12 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
 -INVOKESTATIC local/lito381/server/NativeServerLifetime.closeResource(Ljava/lang/AutoCloseable;)V
 -LABEL L56
 -GOTO L62
--LABEL L57
+ LABEL L57
 -ASTORE 9
 -ALOAD 8
 -IFNULL L61
++ALOAD 9
++ATHROW
  LABEL L58
 -ALOAD 8
 -INVOKESTATIC local/lito381/server/NativeServerLifetime.closeResource(Ljava/lang/AutoCloseable;)V
@@ -489,10 +481,37 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
 +LABEL L73
  RETURN
  END METHOD
- METHOD serverVersion()Ljava/lang/String;
 ```
 
-### NativeAcceptedState
+### `serverVersion()Ljava/lang/String;`
+
+SAME，無差異。
+
+## 附錄：其他三個類別的完整正規化差異
+
+### `ClassicWorldMapCatalog`
+
+```diff
+--- staged/ClassicWorldMapCatalog.txt
++++ formal/ClassicWorldMapCatalog.txt
+@@ -2992,12 +2992,11 @@
+ DEFAULT
+ ILOAD 0
+ INVOKESTATIC local/lito381/server/CombatSpecialBuffs.sourceMap(I)Llocal/lito381/server/ClassicWorldMapCatalog$ClassicMap;
+-ASTORE 1
+-ALOAD 1
++DUP
+ IFNULL L0
+-ALOAD 1
+ ARETURN
+ LABEL L0
++POP
+ GETSTATIC local/lito381/server/ClassicWorldMapCatalog.MAPS:Ljava/util/Map;
+ ILOAD 0
+ INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
+```
+
+### `NativeAcceptedState`
 
 ```diff
 --- staged/NativeAcceptedState.txt
@@ -507,7 +526,7 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  FIELD SLEEP:Ljava/lang/String; ACCESS 26 SIGNATURE null VALUE str:"sourceSleepLease" ANNOTATIONS |||
 ```
 
-### NativeCastTimeline
+### `NativeCastTimeline`
 
 ```diff
 --- staged/NativeCastTimeline.txt
@@ -574,25 +593,9 @@ if ($r.counts.DIFF -or $r.counts.ONLY_LEFT -or $r.counts.ONLY_RIGHT -or
  ANNOTATIONS ||||pvis=|pinv=|lvtvis=|lvtinv=
 ```
 
-## 附錄：完整正規化輸出產生器
+## 附錄：完整正規化輸出器
 
-將以下 Java 存為本 worktree 的 `scratch/issue-76/DumpNormalized.java`。此輔助程式只讀取 JAR、呼叫現有比較器的函式並輸出文字，不修改類別。沿用上述 `$out`、`$evidence`、`$jdk`、`$asm`：
-
-```powershell
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp "$out/tool;$asm" `
-    -d "$out/tool" scratch/issue-76/DumpNormalized.java
-if ($LASTEXITCODE -ne 0) { throw '輸出輔助程式編譯失敗' }
-& "$jdk/java.exe" '-Dfile.encoding=UTF-8' -cp "$out/tool;$asm" `
-    local.lito381.semanticdiff.DumpNormalized "$out/a05.jar" `
-    "$evidence/entries.txt" "$evidence/left"
-if ($LASTEXITCODE -ne 0) { throw '左側正規化輸出失敗' }
-& "$jdk/java.exe" '-Dfile.encoding=UTF-8' -cp "$out/tool;$asm" `
-    local.lito381.semanticdiff.DumpNormalized "$server/reference/base-0.6.71.jar" `
-    "$evidence/entries.txt" "$evidence/right"
-if ($LASTEXITCODE -ne 0) { throw '右側正規化輸出失敗' }
-git diff --no-index -- "$evidence/left" "$evidence/right"
-# git diff exit 1 在此表示確有上列差異。
-```
+儲存於 `scratch/issue-76/DumpNormalized.java`；只讀 class tree、呼叫現有 ClassComparer 正規化函式並輸出文字，沒有產生或改寫 class。#135／#153 合併後若私有介面改動，須依當時比較器更新診斷輸出器，不可改比較器以配合本報告。
 
 ```java
 package local.lito381.semanticdiff;

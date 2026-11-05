@@ -78,7 +78,8 @@ public final class Main {
                                                     InetAddress.getByName(config.gameBind()),
                                                     config.channelPorts().get(channelId)),
                                             16);
-                                    NativeServerLifetime.addListener(gameServers, gameServer);
+                                    // Keep the formal bytecode CHECKCAST after loading the listener.
+                                    NativeServerLifetime.addListener(gameServers, (ServerSocket) (Object) gameServer);
                                 }
                                 System.out.println("LiTo381 Server " + serverVersion());
                                 System.out.println("[LiTo] login-listen=" + config.bind() + ":" + config.port());
