@@ -219,6 +219,10 @@ final class JarIndex {
         // SKIP_DEBUG drops LineNumberTable / LocalVariable(Type)Table / SourceFile /
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        // Preserve the existing handler proof's discovery of discarded lock locals.
+        for (MethodNode m : node.methods) PureRethrowHandlers.normalize(m);
+        // Run before trimming try ranges or deleting labels: adjacency is a proof guard.
+        for (MethodNode m : node.methods) DiscardedLoads.normalize(m);
         Normalizations.prepare(node);
         PrivateRenames.calls(node, this);
         for (MethodNode m : node.methods) PureRethrowHandlers.normalize(m);

@@ -74,11 +74,22 @@ final class BlockExpressions implements Opcodes {
         return view(m,jar,false);
     }
     static List<Block> view(MethodNode m,JarIndex jar,boolean storedValues) throws AnalyzerException {
+        return view(m,jar,storedValues,false);
+    }
+    static List<Block> view(MethodNode m,JarIndex jar,boolean storedValues,boolean tryBoundaries) throws AnalyzerException {
+        return view(m,jar,storedValues,tryBoundaries,false);
+    }
+    static List<Block> view(MethodNode m,JarIndex jar,boolean storedValues,boolean tryBoundaries,boolean emptyBoundaries) throws AnalyzerException {
         if(m.instructions.size()==0 || m.visibleLocalVariableAnnotations!=null || m.invisibleLocalVariableAnnotations!=null)
             throw new IllegalArgumentException("unsupported block metadata");
         List<AbstractInsnNode> code=new ArrayList<>(); Map<AbstractInsnNode,Integer> pos=new IdentityHashMap<>();
         for(AbstractInsnNode n:m.instructions) { pos.put(n,code.size());if(n.getOpcode()>=0)code.add(n); }
+        Frame<BasicValue>[] frames=new Analyzer<>(new BasicInterpreter()).analyze("Blocks",m);
         TreeSet<Integer> leaders=new TreeSet<>();leaders.add(0);
+        if(emptyBoundaries)for(int i=0;i<code.size();i++) {
+            Frame<BasicValue> frame=frames[m.instructions.indexOf(code.get(i))];
+            if(frame!=null&&frame.getStackSize()==0)leaders.add(i);
+        }
         for(int i=0;i<code.size();i++) {
             AbstractInsnNode n=code.get(i);int op=n.getOpcode();
             if(op==JSR||op==RET||op==DUP_X1||op==DUP_X2||op==DUP2_X1||op==DUP2_X2||op==SWAP)
@@ -89,7 +100,15 @@ final class BlockExpressions implements Opcodes {
             if(n instanceof JumpInsnNode||n instanceof TableSwitchInsnNode||n instanceof LookupSwitchInsnNode
                     ||op==ATHROW||op>=IRETURN&&op<=RETURN)leaders.add(i+1);
         }
-        for(TryCatchBlockNode t:m.tryCatchBlocks)leaders.add(pos.get(t.handler));
+        for(TryCatchBlockNode t:m.tryCatchBlocks) {
+            leaders.add(pos.get(t.handler));
+            // Split a cleanup suffix only at an empty-stack boundary. Keeping
+            // expression evaluation intact avoids artificial stack transport blocks.
+            if(tryBoundaries)for(LabelNode boundary:List.of(t.start,t.end)) {
+                Frame<BasicValue> frame=frames[m.instructions.indexOf(boundary)];
+                if(frame!=null&&frame.getStackSize()==0)leaders.add(pos.get(boundary));
+            }
+        }
         leaders.remove(code.size());
         List<Integer> starts=new ArrayList<>(leaders);int[] block=new int[code.size()];
         for(int i=0;i<starts.size();i++)Arrays.fill(block,starts.get(i),i+1<starts.size()?starts.get(i+1):code.size(),i);
@@ -121,7 +140,6 @@ final class BlockExpressions implements Opcodes {
             // No reads in any other block (including handlers), hence not live at the exit.
             if(ok&&count>0){temps.add(e.getKey());reads.put(e.getKey(),count);}
         }
-        Frame<BasicValue>[] frames=new Analyzer<>(new BasicInterpreter()).analyze("Blocks",m);
         List<Block> result=new ArrayList<>();
         boolean monitor=code.stream().anyMatch(n->n.getOpcode()==MONITORENTER);
         for(int k=0;k<starts.size();k++) {

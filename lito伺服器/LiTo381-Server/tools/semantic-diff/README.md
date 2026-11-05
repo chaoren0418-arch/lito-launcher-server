@@ -212,3 +212,15 @@ CFG 的純運送處理不再要求 DUP 次數相同：每個實際使用點的�
 報表新增 `SAME_CFG`、`LAMBDA_PAIRED_BY_CALLSITE`、`VISIBILITY_BRIDGE`，逐方法列於 `methodResults`，JSON 的 `proofMethodCounts` 及 Markdown 方法表另列總數。類別狀態仍先顯示 DIFF／DEVIATION 等優先結果；例如含已核准方法差異的類別可為 DEVIATION，同時列出 169 個 VISIBILITY_BRIDGE，不能把類別數當方法數。
 
 消融開關為 `-Dsemanticdiff.disable=callsites,cfg,visibility`；`-Dsemanticdiff.traceCfg=true` 可輸出第一個不一致區塊。舊規則消融測試會同時關閉可獨立證明的 CFG 後備。`EighthSelfTest` 已接入 `selftest.sh`，用同一份 framed JAR 交 CLI 與 platform-parent 隔離 ClassLoader，包含呼叫點交換／共用不一致／巢狀不同、迴圈分支／呼叫／回邊不同、例外差異、別名覆寫，以及 bridge 的目標、cast、public 祖先反射與子類派送差異。
+
+## T020i-11 無作用載入與相同區塊（Issue #254）
+
+兩側預設套用，不需核准清單，僅處理記憶體中的比較副本。
+
+- `DiscardedLoads` 移除真正相鄰、沒有指令註解的 `xLOAD; POP[2]`、純常數載入後 `POP[2]`、`DUP; POP`。category 寬度必須完全相符，不能讓 `POP2` 多丟掉原 stack 的值；任何 label 都阻止配對，因此不跨跳轉入口或 try 邊界。只接受數值、字串與 null 常數；class／MethodType／MethodHandle／ConstantDynamic 的解析或 bootstrap 可能有副作用，均保留。呼叫、欄位讀取、配置、cast 的結果即使被 POP 也不刪除。
+- 既有純轉拋 handler 先辨識鎖暫存，再做通用載入清理，避免清理掉 #216 所需的證據。其他 try 正規化、local webs 及比較流程維持原有檢查。
+- `CfgComparison` 保留原有 CFG 證明；失敗時先收縮合法 GOTO，再反覆合併完全相同的正規化區塊。鍵包含有序事件、operands、正常後繼、每個事件的有序例外後繼、入口／出口 stack 與複本資訊。#174 區塊內暫存已在建立 view 時消除，活躍 local 不任意改名。
+- 非空入口 stack 逐前驅追蹤；所有進入邊必須證明同一來源或相同純常數，才可合併。來源以生產區塊限定，不能只比 `event[0]`／`stack[0]` 或無序來源集合。無法解析的 phi、循環與超過 256 層的 transport 鏈保守拒絕合併。重新導向所有正常／例外前驅，直到固定點；完成後仍執行原有同構與跨邊 stack 關聯檢查。
+- javac 可能把 finally 內嵌在直線區塊末端。必要時先在空 stack 的 try 邊界、再在其他空 stack 指令邊界切成較小區塊，重新做相同證明；不移動操作，不刪例外邊。原有 view 優先，保留 #174 的區塊暫存證明。
+
+消融開關：`-Dsemanticdiff.disable=discarded-loads`、`-Dsemanticdiff.disable=cfg-merge`。不提高 paths 的 4096 上限。`EleventhSelfTest` 已接入 `selftest.sh`；同一份 framed JAR 供 CLI、直接 CFG 與 platform-parent 隔離 ClassLoader 使用，包含副作用呼叫後 POP、後繼不同、try 覆蓋不同、入口 stack 值不同的實際行為反例，及固定點、內嵌 finally、區塊暫存與相同非空 stack 的正例。
