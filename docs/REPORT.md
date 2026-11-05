@@ -43,3 +43,4 @@
 - 2026-11-06 — #67 T020-B06: 戰鬥併入暫存（existing-battle，29 類）（code，codex-local，PR #89 已合併）→ [報告](reports/issue-67.md)
 - 2026-11-06 — #65 T020-B04: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #87 已合併）→ [報告](reports/issue-65.md)
 - 2026-11-06 — #216 T020i-9: semantic-diff 單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner 解析（code，codex-local，PR 已合併）→ [報告](reports/issue-216.md)
+- 2026-11-06 — #62 T020-B01: 戰鬥併入暫存（new-asm，17 類）（code，codex-local，PR #79 已合併）→ [報告](reports/issue-62.md)
