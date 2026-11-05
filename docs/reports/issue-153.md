@@ -13,6 +13,7 @@
 - 只讀取主控留存的 `scratch/review-153/ReviewProbe.java`，複製到本 worktree 執行。`java -Xverify:all` 實際載入並呼叫兩側，印出 `left.value=2 right.value=7`。比較器輸出 `DIFF=1 DEVIATION=0`，共同 Parent 為 SAME。證據在 `scratch/issue-153/review-probe.log` 與 `review-probe/ctor-overwrite.json`。
 - 三批 staged、正式／候選參考 JAR 及完整 Maven JAR 的 SHA-256 全部與下表原收據相符。重跑修改前、預設、核准清單三組比較，結果仍為下表數字。重新產出 `docs/server-semantic-gap.md`，完整 JAR 結果為 2125 SAME／424 DIFF。
 - `as-record/selftest.py` 本次重跑為 `SELFTEST PASS`。本次未重建伺服器 JAR，使用雜湊相符的既有固定產物重跑比較。下方 Maven 接線及 package 建置紀錄屬首輪證據。
+- 推送 `a1d08e1` 後，GitHub 顯示 PR 與 main 衝突，CI 沒有啟動。本次在原分支合併 `origin/main`（`c3d5f6e`），手動整合唯一衝突 `tools/as-record/README.md`，保留 #134 Maven 說明與 #153 AsmFinal 用法。POM、其他測試與 `docs/REPORT.md` 直接沿用上游內容，本任務相對 main 的變更仍限核准範圍。
 
 ## 做了什麼
 
@@ -45,7 +46,7 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 
 原 catch fixture 只保護 NOP，依新規則應刪除，所以改為保護一條可能拋例外的呼叫，繼續驗證原本 catch 型別／數量規則；另加空 try 刪除案例。ASM fixture 是比較器結構測試，不宣稱所有負向 bytecode 都可由 JVM 執行。
 
-Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsRecord.main`；核對 JAR 沒有 ASM／converter／com.lineage entry，再執行 `-Xverify:all` 檢查 final、父類、預設值與冪等性。#134 尚未合併到此 worktree 的 POM，因此這是隔離接線驗證，不冒稱伺服器 POM 已接線。
+首輪 Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsRecord.main`，核對 JAR 沒有 ASM／converter／com.lineage entry，再執行 `-Xverify:all` 檢查 final、父類、預設值與冪等性。首輪使用隔離接線，第 2 次修正整合 main 後已帶入 #134 正式 POM 接線。
 
 ### 固定 staged 三批對照
 
@@ -109,7 +110,7 @@ Maven fixture 實際跑 process-classes → package，使用 #134 相同的 `AsR
 - #76 的 0 DIFF 由 #166 接續，本次維持核准邊界並保留三個具體殘差。
 - 本機沒有 Bash；完整 shell 與冷啟動 fallback 已由上述 Linux CI 實跑通過。
 - 本機伺服器 package 跳過測試執行；A-land 的 default debug 與建構子執行期測試尚未做。未啟動服務／遊戲、未連正式 DB。
-- #134 正式 Maven 接線仍由該任務合併；本次沒有修改伺服器 POM。
+- #134 正式 Maven 接線已隨 main 帶入，本次沒有額外編輯伺服器 POM。
 
 ## 重跑與產出路徑
 
@@ -130,4 +131,4 @@ Windows 可用 javac 對 `semantic-diff/src/main/java`、`src/test/java` 全部 
 
 ## 給下一棒的提示
 
-Claude 主控複審本次 P1 的槽位依賴保護與有效 JVM 負例，#166 執行器接續 #76 三項殘差。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告驗證題目固定提交。#134 合併時確認共用 AsRecord 入口沿用本次 AsmFinal 處理，A-land 再補 deviations.md 列出的執行期單元測試。使用者負責後續真機驗收。
+Claude 主控複審本次 P1 的槽位依賴保護與有效 JVM 負例，#166 執行器接續 #76 三項殘差。#66、#72、#76 執行器取得本工具後仍要對各自最終 staged 重跑，本報告驗證題目固定提交。A-land 再補 deviations.md 列出的執行期單元測試。使用者負責後續真機驗收。

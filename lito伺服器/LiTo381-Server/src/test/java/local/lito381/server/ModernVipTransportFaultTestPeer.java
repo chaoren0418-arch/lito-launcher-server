@@ -41,7 +41,7 @@ public final class ModernVipTransportFaultTestPeer {
                 if(saved.isPresent())assertEquals(1,saved.orElseThrow().revision(),"uncertain SET is committed once, never retried");
                 assertTrue(f.store.read(new TournamentPresence.CharacterKey(42,3333),scope).isEmpty());
             } finally {scope.finish();}
-            assertEquals(0,f.worlds.registrationCount());assertEquals(0,f.worlds.matchCount());
+            assertEquals(0,f.worlds.registrationCount());ModernWorldServiceTest.awaitNoMatches(f.worlds);
         } finally {
             workers.shutdownNow();assertTrue(workers.awaitTermination(3000,TimeUnit.MILLISECONDS));timeout.cancel(false);timer.shutdownNow();
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()){
