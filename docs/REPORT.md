@@ -24,3 +24,4 @@
 - 2026-11-05 — #132 T020i: semantic-diff 正規化擴充（整數常數、ACC_SYNTHETIC、catch-any）＋核准方法的副作用序列比對（code，codex-local，PR 已合併）→ [報告](reports/issue-132.md)
 - 2026-11-05 — #108 T020h: 舊伺服器 com.lineage.* 編譯期 stub（只供編譯、不打包）（code，codex-local，PR #147 已合併）→ [報告](reports/issue-108.md)
 - 2026-11-05 — #135 T020i-2: semantic-diff 正規化第二批（InnerClasses、ACC_SUPER、隱式建構子、區域變數重編號、核准額外方法）（code，codex-local，PR #152 已合併）→ [報告](reports/issue-135.md)
+- 2026-11-05 — #134 T020g-2: @AsRecord 轉換器接進 Maven 建置＋record-asm-fields.json 掃描（code，codex-local，PR #157 已合併）→ [報告](reports/issue-134.md)
