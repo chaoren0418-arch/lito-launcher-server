@@ -61,9 +61,21 @@ fixture 的公開 `run()` 結果為 `祖先 dispatch() * 10 + 本類 private 結
 
 同份 #73 JAR 對舊工具為 86 SAME、16 SAME_PATHS、1 DEVIATION、1 DIFF；新版加核准後，`NativeDeNpcConstructionState` 為 DEVIATION，`cancelNpcChatTimer$own()V → cancelNpcChatTimer()V` 完整本體通過，`sourceChat$startChat(I)V` 為 SAME_PATHS（1310 個路徑多重集合相等）。該類 176 個 VISIBILITY_BRIDGE 保留。另一個 DEVIATION 是既有的 `NativeDeItemWeaponProcTable.reload()V`。
 
+新版工具移除 private-rename 核准再跑同份 JAR，恢復 1 DIFF：原名為 ONLY_RIGHT、新名為 ONLY_LEFT、`sourceChat$startChat(I)V` 為 DIFF。javap 同時確認兩側 offset 139 均為 invokevirtual，左側目標為 `cancelNpcChatTimer$own:()V`，右側為 `cancelNpcChatTimer:()V`，宣告均 private；`sourceChat$cancelNpcChatTimer()` 保留原名。
+
 ### CI
 
-提交與 PR 建立後核對最終 HEAD 的 CI；收據於交付前補入本節。Semantic gap 為 non-blocking，因此還須讀取日誌確認 `SELFTEST ALL PASS` 與 `FALLBACK ALL PASS`，不能僅看 job 結果。
+程式提交 `2ea0999be1b1a570b315b77ec40dc7d5300019a4` 的 CI 收據：
+
+| Job | 收據 |
+|---|---|
+| Semantic gap (non-blocking) | [127553943494](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42115505840/job/127553943494) |
+| Server tests | [127553943430](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42115505840/job/127553943430) |
+| Server (Java 17 / Maven) | [127553943273](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42115505840/job/127553943273) |
+| Launcher (.NET 10 / WinForms) | [127553942918](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42115505840/job/127553942918) |
+| Build-Package.ps1 zip | [127553943272](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42115505846/job/127553943272) |
+
+已讀取完成的 Semantic gap 日誌：九套自測同為 517／73／119／169／159／96／265／193／106，共 **1697 checks 全過**；明確包含 `SELFTEST ALL PASS` 與 `FALLBACK ALL PASS`。沒有以 non-blocking job 總狀態代替自測證據。最後僅補本報告，不改程式／測試；最終 HEAD 的五項檢查以 [PR #252 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/252/checks) 為準，交付前另行核對。
 
 ## 推測
 
