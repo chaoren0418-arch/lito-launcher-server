@@ -1,6 +1,5 @@
 // ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
 // ORIGINAL SOURCE moved from lito伺服器/LiTo381-Server/tools/combat-continuation/area-sleep-slow/NativeAreaMaterialAction.java (T002); replaces CFR decompile of reference/base-0.6.71.jar
-// 待驗證：nativeTargetOriginalCaptureOutput 的 lambda 版面／暫存仍 DIFF；不得視為已驗收，見 issue-68 報告。
 package local.lito381.server;
 import java.io.*;import java.util.*;import java.util.concurrent.locks.*;
 
@@ -331,8 +330,20 @@ final class NativeAreaMaterialAction {
   var targets=context.players.stream().filter(pc->pc.playerObjectId()==id).toList();boolean npc=context.npcs.containsKey(id);
   Runnable output=NativeRolePublication.completion(receiver,()->{
    boolean valid;
-   synchronized(context.hub){if(context.population!=null)synchronized(context.population){if(binding.matches(receiver)&&context.player(receiver)){var targetStream=targets.stream();java.util.Objects.requireNonNull(context);valid=targetStream.allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||NativeCompanionTargets.publication(context,id));}else valid=false;}
-    else if(binding.matches(receiver)&&context.player(receiver)){var targetStream=targets.stream();java.util.Objects.requireNonNull(context);valid=targetStream.allMatch(p->NativeSourceIndirectPlayerProof.player(context,p))&&(!npc||NativeCompanionTargets.publication(context,id));}else valid=false;}
+   synchronized (context.hub) {
+    // context 已成功取用 hub、population，這兩條路徑皆已確認非 null。
+    if (context.population != null) {
+     synchronized (context.population) {
+      valid = binding.matches(receiver) && context.player(receiver)
+        && targets.stream().allMatch(p -> NativeSourceIndirectPlayerProof.player(context, p))
+        && (!npc || NativeCompanionTargets.publication(context, id));
+     }
+    } else {
+     valid = binding.matches(receiver) && context.player(receiver)
+       && targets.stream().allMatch(p -> NativeSourceIndirectPlayerProof.player(context, p))
+       && (!npc || NativeCompanionTargets.publication(context, id));
+    }
+   }
    if(valid)try{receiver.nativeSelfOriginalSend(frozen,note);}catch(IOException e){throw new UncheckedIOException(e);}
   });
   NativeLightAction.finishScoped((published,failure)->output.run());return true;

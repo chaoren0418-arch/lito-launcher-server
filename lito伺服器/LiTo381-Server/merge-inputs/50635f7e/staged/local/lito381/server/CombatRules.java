@@ -1,5 +1,4 @@
 // ported from candidate 50635f7e; B07 三方移植（base-0.6.71 / candidate / src/main）。
-// 待驗證：load 的 ASM 堆疊複本與 Java 暫存尚未獲比較器證明等價，見 issue-68 報告。
 package local.lito381.server;
 
 import java.io.IOException;
@@ -41,9 +40,11 @@ final class CombatRules {
         var source=snapshot(read(skill), read(damage), skill, damage);
         var combined=new HashMap<>(source.values());
         var defaults=new java.util.HashSet<>(source.defaultedKeys());
-        Map<String,Double> destination=combined;String awakeKey=AWAKE_CLASSIC_MODE;Properties characterProperties=read(character);Properties retained=characterProperties;
-        NativePetControls.loadFromProperties(characterProperties,combined,defaults,character);
-        destination.put(awakeKey,awakeClassicMode(retained,character,defaults)?1.0:0.0);
+        var destination = combined;
+        String awakeKey = AWAKE_CLASSIC_MODE;
+        Properties characterProperties = read(character);
+        NativePetControls.loadFromProperties(characterProperties, combined, defaults, character);
+        destination.put(awakeKey, awakeClassicMode(characterProperties, character, defaults) ? 1.0 : 0.0);
         parse(combined,paths,"arena.bot.con",entry);parse(combined,paths,"arena.bot.wis",entry);
         current = NativeSourceOtherControls.prepare(new Snapshot(combined,skill,damage,character,defaults,maps));
         System.out.println("[LiTo] source combat controls loaded: " + current.values().size()
