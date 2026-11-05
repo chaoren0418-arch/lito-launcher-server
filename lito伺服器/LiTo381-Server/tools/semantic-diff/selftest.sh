@@ -587,6 +587,15 @@ java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.Advanced
 java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.FourthSelfTest \
   "$BUILD/fourth" "$BIN/fourth"
 
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.FifthSelfTest \
+  "$BUILD/fifth" "$BIN/fifth"
+
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.SixthSelfTest \
+  "$BUILD/sixth" "$BIN/sixth"
+
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.SeventhSelfTest \
+  "$BUILD/seventh" "$BIN/seventh"
+
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"
 echo "SELFTEST_1b $SUMMARY1B"
