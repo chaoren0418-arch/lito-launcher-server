@@ -71,6 +71,9 @@ final class BlockExpressions implements Opcodes {
         return true;
     }
     static List<Block> view(MethodNode m,JarIndex jar) throws AnalyzerException {
+        return view(m,jar,false);
+    }
+    static List<Block> view(MethodNode m,JarIndex jar,boolean storedValues) throws AnalyzerException {
         if(m.instructions.size()==0 || m.visibleLocalVariableAnnotations!=null || m.invisibleLocalVariableAnnotations!=null)
             throw new IllegalArgumentException("unsupported block metadata");
         List<AbstractInsnNode> code=new ArrayList<>(); Map<AbstractInsnNode,Integer> pos=new IdentityHashMap<>();
@@ -126,6 +129,7 @@ final class BlockExpressions implements Opcodes {
             Frame<BasicValue> entry=frames[m.instructions.indexOf(code.get(start))];
             if(entry==null)throw new IllegalArgumentException("unreachable block");
             Evaluator eval=new Evaluator(m,jar,temps,reads,pos,block,monitor);
+            eval.storedValues=storedValues;
             Frame<Val> f=new Frame<>(m.maxLocals,m.maxStack);
             f.setReturn(eval.newValue(Type.getReturnType(m.desc)));
             for(int i=0;i<m.maxLocals;i++) { BasicValue v=entry.getLocal(i);f.setLocal(i,new Val(v,new Expr("local",i,v.getSize()))); }
@@ -161,6 +165,7 @@ final class BlockExpressions implements Opcodes {
         final BasicInterpreter types=new BasicInterpreter();final List<Event> events=new ArrayList<>();
         final Map<Expr,Integer> copies=new HashMap<>();final MethodNode m;final JarIndex jar;
         final Set<Integer> temps;final Map<Integer,Integer> reads;final Map<AbstractInsnNode,Integer> pos;final int[] blocks;final boolean monitor;
+        boolean storedValues;
         Evaluator(MethodNode m,JarIndex jar,Set<Integer> temps,Map<Integer,Integer> reads,Map<AbstractInsnNode,Integer> pos,int[] blocks,boolean monitor){
             super(ASM9);this.m=m;this.jar=jar;this.temps=temps;this.reads=reads;this.pos=pos;this.blocks=blocks;this.monitor=monitor;
         }
@@ -182,7 +187,10 @@ final class BlockExpressions implements Opcodes {
             if(n instanceof VarInsnNode x) {
                 if(LocalWebs.store(n.getOpcode())) {
                     if(temps.contains(x.var)){copy(v.expr,reads.get(x.var)-1);return v;}
-                    return event(n,List.of(v),v.type);
+                    Val stored=event(n,List.of(v),v.type);
+                    // STORE is still an ordered, slot-labelled event. Its local now
+                    // holds exactly the input value: DUP;STORE and STORE;LOAD agree.
+                    return storedValues ? v : stored;
                 }
                 if(FourthNormalizations.annotated(n))return event(n,List.of(v),v.type);
             }
