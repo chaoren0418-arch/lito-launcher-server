@@ -104,3 +104,7 @@ $env:AS_RECORD_MAVEN_REPO = 'D:/dev-cache/maven/repository'
 ## 給下一棒的提示
 
 請雲端主控／Claude 先審查六個未通過方法，決定是否另派 semantic-diff 或建置轉換器工作；不要直接放寬本批驗收或將 51 SAME 計為 56 SAME。原始 JAR、全部 staged 及前置工具已在 repo，可在有 JDK 17 的環境重建，無需正式 DB／遊戲或封存資源。若更新工具，接手執行器須重跑完整 56 entries，確認 SAME=56 且無缺漏／多出後，再交 B-land。
+
+## 交付與歷史整合
+
+推送時發現遠端 `task/68` 已有前次提交 `739bfa8`（當時為 36 SAME／20 DIFF）。本輪以一般 merge 保留該提交歷史，24 個 add/add 衝突採用本輪 `a7ab245` 的檔案內容，再補上本段說明；沒有強制推送，也沒有混入前次尚未通過的來源。合併後另核對 23 份 Java 的 SHA-256 與本輪驗證紀錄一致。
