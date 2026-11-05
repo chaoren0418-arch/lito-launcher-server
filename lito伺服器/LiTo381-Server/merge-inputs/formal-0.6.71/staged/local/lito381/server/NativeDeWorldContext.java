@@ -317,59 +317,39 @@ implements NativeDeDeletionPorts.Services {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    Entry attach(NativeDeDeletionPorts.ObjectRef objectRef, int n, int n2, int n3, int n4, String string, int n5, int n6, boolean bl) {
-        Object object;
-        Entry entry;
+    Entry attach(NativeDeDeletionPorts.ObjectRef objectRef, int x, int y, int mapId, int showId, String name, int classType, int onlineStatus, boolean player) {
         ReentrantReadWriteLock.ReadLock readLock = this.admission.readLock();
         readLock.lock();
         try {
-            NativeDeDeletionPorts.ObjectRef objectRef2;
             this.admit();
             NativeDeInventoryIdentity.requireWorldIdentity(objectRef);
             if (!(objectRef instanceof NativeDeObjectFields)) {
                 throw new IllegalArgumentException("World actor requires native object identity");
             }
-            if (objectRef instanceof NativeDeDeletionState) {
-                NativeDeDeletionState deletionState = (NativeDeDeletionState)objectRef;
-                if (deletionState.deletionOwner != this.deletion) {
-                    throw new IllegalArgumentException("foreign NPC World owner");
-                }
+            if (objectRef instanceof NativeDeDeletionState npc && npc.deletionOwner != this.deletion) {
+                throw new IllegalArgumentException("foreign NPC World owner");
             }
-            if (objectRef instanceof NativeDeClientViewer) {
-                objectRef2 = (NativeDeClientViewer)objectRef;
-                if (((NativeDeClientViewer)objectRef2).life != this.life || ((NativeDeClientViewer)objectRef2).retired) {
-                    throw new IllegalArgumentException("foreign or retired PC World owner");
-                }
+            if (objectRef instanceof NativeDeClientViewer viewer && (viewer.life != this.life || viewer.retired)) {
+                throw new IllegalArgumentException("foreign or retired PC World owner");
             }
-            objectRef2 = objectRef;
-            synchronized (objectRef2) {
-                Entry entry2 = (Entry)CombatAccess.field(objectRef, ENTRY);
-                if (entry2 != null) {
-                    if (entry2.context != this) {
+            synchronized (objectRef) {
+                Entry existing = (Entry)CombatAccess.field(objectRef, "sourceDeWorldEntry");
+                if (existing != null) {
+                    if (existing.context != this) {
                         throw new IllegalArgumentException("World binding is application immutable");
                     }
-                    Entry entry3 = entry2;
-                    // MONITOREXIT @DISABLED, blocks:[0, 4, 8] lbl23 : MonitorExitStatement: MONITOREXIT : var11_11 /* !! */
-                    readLock.unlock();
-                    return entry3;
+                    return existing;
                 }
-                entry = new Entry(this, n, n2, n3, n4, string, n5, n6, bl, objectRef);
+                Entry entry = new Entry(this, x, y, mapId, showId, name, classType, onlineStatus, player, objectRef);
+                CombatAccess.set(objectRef, "sourceDeWorldEntry", entry);
+                if (objectRef instanceof NativeDeDeletionState npc) {
+                    npc.showId = showId;
+                }
+                return entry;
             }
-        }
-        catch (Throwable throwable) {
+        } finally {
             readLock.unlock();
-            throw throwable;
         }
-        {
-            CombatAccess.set(objectRef, ENTRY, entry);
-            if (objectRef instanceof NativeDeDeletionState) {
-                object = (NativeDeDeletionState)objectRef;
-                ((NativeDeDeletionState)object).showId = n4;
-            }
-            object = entry;
-        }
-        readLock.unlock();
-        return (Entry)object;
     }
 
     /*

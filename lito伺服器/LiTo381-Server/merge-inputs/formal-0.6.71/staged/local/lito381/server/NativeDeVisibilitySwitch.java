@@ -2,8 +2,8 @@
 package local.lito381.server;
 
 class NativeDeVisibilitySwitch {
-    static final int[] $SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase;
     static final int[] $SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind;
+    static final int[] $SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase;
 
     static {
         $SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase = new int[NativeDeathLifecycleGate.Phase.values().length];

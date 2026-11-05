@@ -11,6 +11,7 @@ import local.lito381.server.NativeDeDeletionVisibility.Snapshot;
 import local.lito381.server.NativeDeVisibilityPorts.Follower;
 
 import java.util.ArrayList;
+import java.util.List;
 import local.lito381.server.NativeDeDeletionDeState;
 import local.lito381.server.NativeDeDeletionPorts;
 import local.lito381.server.NativeDeDeletionState;
@@ -25,7 +26,7 @@ import local.lito381.server.NativeDeWorldKinds;
 public class NativeDeVisibilityPc {
     public static void removeOutOfRangeKnownObjects(NativeDeDeletionPorts.Viewer viewer) {
         try {
-            ArrayList<NativeDeDeletionPorts.ObjectRef> arrayList = new ArrayList<NativeDeDeletionPorts.ObjectRef>(NativeDeVisibilityAccess.L1PcInstance$getKnownObjects(viewer));
+            List<NativeDeDeletionPorts.ObjectRef> arrayList = new ArrayList<NativeDeDeletionPorts.ObjectRef>(NativeDeVisibilityAccess.L1PcInstance$getKnownObjects(viewer));
             short s = NativeDeVisibilityAccess.L1PcInstance$getMapId(viewer);
             int n = NativeDeVisibilityAccess.L1PcInstance$get_showId(viewer);
             for (NativeDeDeletionPorts.ObjectRef objectRef : arrayList) {
@@ -64,14 +65,14 @@ public class NativeDeVisibilityPc {
                     continue;
                 }
                 if (NativeDeVisibilityScope.range() == -1) {
-                    if (NativeDeVisibilityAccess.L1PcInstance$getLocation(viewer).isInScreen(NativeDeVisibilityAccess.L1Object$getLocation(objectRef))) continue;
+                    if (!NativeDeVisibilityAccess.L1PcInstance$getLocation(viewer).isInScreen(NativeDeVisibilityAccess.L1Object$getLocation(objectRef))) {
+                        NativeDeVisibilityAccess.L1PcInstance$removeKnownObject(viewer, objectRef);
+                        NativeDeVisibilityAccess.L1PcInstance$sendPackets(viewer, new NativeDeDeletionPorts.RemoveObject(objectRef));
+                    }
+                } else if (NativeDeVisibilityAccess.L1PcInstance$getLocation(viewer).getTileLineDistance(NativeDeVisibilityAccess.L1Object$getLocation(objectRef)) > NativeDeVisibilityScope.range()) {
                     NativeDeVisibilityAccess.L1PcInstance$removeKnownObject(viewer, objectRef);
                     NativeDeVisibilityAccess.L1PcInstance$sendPackets(viewer, new NativeDeDeletionPorts.RemoveObject(objectRef));
-                    continue;
                 }
-                if (NativeDeVisibilityAccess.L1PcInstance$getLocation(viewer).getTileLineDistance(NativeDeVisibilityAccess.L1Object$getLocation(objectRef)) <= NativeDeVisibilityScope.range()) continue;
-                NativeDeVisibilityAccess.L1PcInstance$removeKnownObject(viewer, objectRef);
-                NativeDeVisibilityAccess.L1PcInstance$sendPackets(viewer, new NativeDeDeletionPorts.RemoveObject(objectRef));
             }
         }
         catch (Exception exception) {
@@ -110,6 +111,9 @@ public class NativeDeVisibilityPc {
         if (objectRef instanceof NativeDeDeletionDeState) {
             return true;
         }
-        return objectRef instanceof NativeDeVisibilityPorts.Follower;
+        if (objectRef instanceof NativeDeVisibilityPorts.Follower) {
+            return true;
+        }
+        return false;
     }
 }
