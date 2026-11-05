@@ -2,13 +2,15 @@
 
 ## 結論
 
-2026-11-06 使用已合併 #174／#176 的工具，從 29 個 staged Java 重新編譯並完成核准轉換，重驗全部 323 個 entry：**311 SAME、10 SAME_PATHS、2 DIFF**，missing／extra／ONLY_LEFT／ONLY_RIGHT 均為零。**本批驗收未完成，需主控裁定剩餘兩個方法；不得送入 B-land 或以一般 CI 綠燈宣告完成。**
+2026-11-06 合併最新 main（`9678e97`，包含 #186）後，從 29 個 staged Java 重新編譯並完成核准轉換，重驗全部 323 個 entry：**311 SAME、0 SAME_EFFECTS、10 SAME_PATHS、2 DIFF**，missing／extra／ONLY_LEFT／ONLY_RIGHT 均為零。現行工具尚不支援 SAME_CFG，不能填成 CFG 驗收通過。**本批受 #203 尚未合併阻擋，驗收未完成；不得送入 B-land 或以一般 CI 綠燈宣告完成。**
+
+本輪以 GitHub API（`gh pr view 215 --json state,mergedAt,mergeCommit,headRefOid`）確認 [PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 仍為 `OPEN`、`mergedAt=null`、`mergeCommit=null`，head 為 `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe`。已合併的 main 沒有 SAME_CFG 實作，`PathComparison.java` 仍維持 4096 上限。依 [最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/67#issuecomment-6663017511)，兩個方法均保持 Java 不變，等待 #203 的 CFG 比較；本輪結果僅為依賴合併前的重建證據，不是審查要求的最終驗收。
 
 主控特別指定的 `BattleQuestEncounter#pollPoisons`、`BattleTimeAttackEncounter#pollPoisons` 與 `BattleCubeHarmonyEffects#advance` 均已是 **SAME**，無須改寫。其餘兩項是 `BattleGroundEffects#cast` 的迴圈拒絕與 `BattleTimedStatus#cancelMagicEffects` 超過逐路徑比較 4096 上限。
 
 ## 做了什麼
 
-- 在既有 `task/67` 工作，未 checkout 或建立分支。起點 `cd84b99`；先 fetch 並以一般 merge 合併最新 `origin/main`（`c724539`），合併提交 `47fffbb`。其中 #174／#176 已合併，主控裁定依 [Issue #67 留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/67#issuecomment-6656318371)。
+- 在既有 `task/67` 工作，未 checkout 或建立分支。本輪起點 `b900eae`；先 fetch 並以一般 merge 合併最新 `origin/main`（`9678e97`），合併提交 `4c9d9ab`。#174／#176／#186 已合併，#203 尚未合併。前輪合併 `c724539` 的紀錄保留於 git。
 - 保留前輪三方移植的全部 29 個 Java、14 個 `@AsRecord` 與 7 個 `@AsmFinal`，本輪沒有修改 Java。新的兩項仍屬 DUP／暫存位置差異，依本輪第 1 項「Java 不改」不自行改寫，也不提高工具限制或新增豁免。第 2 項列出的三個迴圈方法已通過，不觸發其改寫條件。
 - 從 staged 原始碼重新 javac 編譯，唯一後處理是 repo 的 AsRecord CLI（包含 AsmFinal 支援）。未複製候選 class bytes、未在驗收前替換或改名產物。
 - 核對全部現行核准清單的精確 owner；B06 命中 **0 條**。因此 CLI 不傳空清單，也未新增授權。核對包含 access-widen、deviations、effects、exceptions-exempt、extra-methods、layout、metadata-exempt、T029；完整裁切收據為 `scratch/issue-67/replay/approved-scope.json`。
@@ -95,11 +97,11 @@ BattleTimeAttackEncounter#pollPoisons(JII)Ljava/util/List; SAME
 BattleCubeHarmonyEffects#advance(JLjava/util/List;Llocal/lito381/server/BattleCubeHarmonyEffects$Alliance;)Ljava/util/List; SAME
 ```
 
-### 仍待裁定的完整差異
+### 等待 #203 處理的完整差異
 
 下列為兩個 DIFF 方法的**全部正規化指令差異區塊**，不是只取第一處差異。使用同版 JarIndex／ClassComparer.instructions 與 tryCatch，左右附相同 metadata，unified diff 的未列部分相同；沒有以此診斷取代正式 CLI。完整左右方法保留於 `scratch/issue-67/replay/methods/`，診斷程式附在後方可重建。
 
-`BattleGroundEffects#cast` 第一處為 insn[39]，left=DUP、right=ASTORE 11。CLI 理由為 `paths rejected: normal control-flow cycle`。來源的兩個 List 別名與候選暫存位置不同，方法包含建立 Lease 的 for 迴圈。它不是本輪第 2 項特准改寫的三個方法，故依第 1 項保留 Java。
+`BattleGroundEffects#cast` 第一處為 insn[39]，left=DUP、right=ASTORE 11。CLI 理由為 `paths rejected: normal control-flow cycle`。來源的兩個 List 別名與候選暫存位置不同，方法包含建立 Lease 的 for 迴圈。主控已指定交由 #203 CFG 比較，保持 Java 不變。
 
 `BattleTimedStatus#cancelMagicEffects` 第一處為 insn[289]，left=DUP、right=CONST Long:0。CLI 理由為 `paths rejected: path limit 4096 exceeded`。這是未完成證明的工具界限，不能據此宣稱等價，也沒有調高上限重跑充當驗收。
 
@@ -497,7 +499,7 @@ BattleCubeHarmonyEffects#advance(JLjava/util/List;Llocal/lito381/server/BattleCu
 ```powershell
 Set-Location 'D:\lineage開發\3-lito開發\scratch\wt\task-67'
 & 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-67/reproduce.py
-# 本版預期 exit 2：2 個 DIFF 尚待裁定，不能當成通過。
+# 目前預期 exit 2：#203 尚未合併，2 個 DIFF 尚未清零，不能當成通過。
 ```
 
 ```python
@@ -608,7 +610,7 @@ assert data['classSelection']['missingLeft'] == [] and data['classSelection']['e
 receipt = {'counts': data['counts'], 'recordSame': 14, 'entries': len(entries), 'jarSha256': hashlib.sha256(jar.read_bytes()).hexdigest(), 'sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}}
 (scratch / 'receipt.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8')
 print(json.dumps(receipt, ensure_ascii=False))
-if len(data['classes']) != 323 or any(c['status'] not in {'SAME', 'SAME_EFFECTS', 'SAME_PATHS'} for c in data['classes']):
+if len(data['classes']) != 323 or any(c['status'] not in {'SAME', 'SAME_EFFECTS', 'SAME_PATHS', 'SAME_CFG'} for c in data['classes']):
     raise SystemExit(2)
 ```
 
@@ -677,14 +679,16 @@ run([java, '-Dfile.encoding=UTF-8', '-Xmx2g', '-cp', str(diagnostic) + os.pathse
 
 ## 推測
 
-兩項可能仍是暫存運送差異；現有工具沒有完成等價證明。不能把「cycle／path limit」解讀為行為相同，也不宣稱 javac 不可表達。
+主控預期 #203 的 CFG 比較可消除剩餘兩項 DIFF；此預期尚未以合併後工具驗證。不能把「cycle／path limit」解讀為行為相同，也不宣稱 javac 不可表達。
 
 ## 待驗證
 
-- 2 個 DIFF 尚未清零，B06 尚未完成；需主控就 Ground cast 是否允許調整暫存，以及 TimedStatus 的證明方式作裁定。
+- 2 個 DIFF 尚未清零，B06 尚未完成；主控已裁定等待 #203，不再請求是否改 Java 的裁定。須待 PR #215 合併後，用合併後工具重驗全部 323 entries，分列 SAME／SAME_EFFECTS／SAME_PATHS／SAME_CFG，且 DIFF／ONLY_LEFT／ONLY_RIGHT／missing／extra 均為零。
 - 單元測試與回歸依 §6-5 不適用於本次 staged 任務，留待 B-land 統一執行。未執行伺服器、登入器、遊戲、正式 DB 或部署。
 - javac 的 unchecked 警告仍存在，編譯成功不代表完成行為回歸。一般 Maven CI 也不能替代本批驗收。
 
 ## 給下一棒的提示
 
-請 Claude 主控裁定本報告兩個完整差異，Issue 加 `needs:claude`。本輪具體第 1 項要求 Java 不改；舊 #62 的一般 effects 自列規則不作為本輪擴大修改核准清單的理由。請明確給出可修改方法或工具／核准方式，取得裁定後仍須用同一組 323 entries 驗收到全數 SAME／SAME_EFFECTS／SAME_PATHS，missing／extra 為空。三個原指定迴圈方法已通過，不需再反覆改寫。不得直接送 B-land、合併 PR 或關閉 Issue。
+請調度器／Claude 主控先確認 #203（PR #215）已合併，再派本機執行器重驗；目前是依賴阻塞，不能將本輪提交判為 done 或重新送審驗收完成。#186 已在本輪 main，#203 仍未合併。Java、14 個 `@AsRecord`、7 個 `@AsmFinal` 與 4096 上限維持不變；不新增豁免、不覆蓋 class bytes、不使用未合併工具代替驗收。
+
+依賴合併後先 merge 最新 main，以本報告重現程式重建全部 323 entries，更新逐 entry／逐方法結果及末段交接。只有新 CFG 工具仍判 DIFF 時，才依最新裁定附完整方法差異並加 `needs:claude`；目前不把已裁定的兩個方法重新交付相同問題。三個原指定迴圈方法已通過，無須改寫。單元測試與回歸由 B-land 統一處理；本輪不合併 PR、不關閉 Issue。
