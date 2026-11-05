@@ -140,6 +140,29 @@ Windows Microsoft JDK 17.0.17、ASM 9.7；五套 Java 自測以 `-Xverify:all` �
 
 #62 的 Wind 方法保留相同配置／呼叫／陣列寫入順序後，只消除 stack/local 的運送差異；DollAccepted 在呼叫邊界前後重新 GETFIELD，記憶體版本不同，維持 DIFF。#63 players 是原先已確認的跨分支回傳暫存，逐路徑不合併值來源後得到 SAME_PATHS。#76 核准模式原本就 0 DIFF，沒有新增放寬。
 
+### 不傳核准清單的防誤判對照
+
+另以同一固定輸入完全不傳核准旗標，重跑以下四批；仍沒有原 DIFF 變成 SAME。#76 Main 保留 DIFF（含一般控制流程迴圈），沒有因新版預設自動略過差異。
+
+| 批次 | 修改前 SAME／DIFF | 修改後 SAME／SAME_PATHS／DIFF |
+|---|---:|---:|
+| #62 | 19／3 | 19／1／2 |
+| #63 | 107／1 | 107／1／0 |
+| #72 | 181／4 | 181／0／4 |
+| #76 | 159／1 | 159／0／1 |
+
+### 剩餘一般迴圈的 javap 證據
+
+原始指令 offset，並非正規化標籤；兩側皆有正常回邊，不屬 monitor handler 自我涵蓋。
+
+| 方法 | staged 回邊 | candidate 回邊 |
+|---|---|---|
+| `NativeSourceNpcEscape#nativeSourceFirstViewHandled` | 895 → 720 | 898 → 722 |
+| `NativeSourceNpcEscape#nativeSourceNpcPlayerFirstHandled` | 900 → 725 | 903 → 727 |
+| `BattleGroundEffects#cast` | 224 → 157 | 221 → 154 |
+
+這些方法即使目前差異看起來只在局部排列，也不符合本 Issue 的「兩側一般控制流程均無迴圈」前提，故仍 DIFF。javap 完整輸出與回邊 JSON 保存在 scratch/issue-176。
+
 ### 兩條 DEVIATION 的證明與完整差異
 
 producer javap 的所有 IRETURN 運算元：sourceState offset 25 → {-1}、224 → {0,1}；targetState offset 21 → {-1}、85 → {0,1}。兩個 consumer 都是 DUP、IFLT 9、offset 8 IRETURN，負值進 fallback。完整理由、核准 URL 與前驅 offset 見 [deviations.md](../combat-merge/deviations.md)。
@@ -194,7 +217,10 @@ RIGHT
 
 ## CI
 
-已接上既有 Linux selftest 與 fallback 工作流。推送後核對 PR 的 Semantic gap 實際 job（含五套自測與冷啟動 fallback），以及 Server、Server tests、Launcher、打包；最終 CI 收據會在此節更新。
+- 程式提交 `04f1dccdeb940262492a2cdc8f368e4823d78415` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42034482198/job/127268940066) **SUCCESS**。已讀取實際日誌，五套自測分別為 517／73／119／169／96 ALL PASS，另有 `SELFTEST ALL PASS` 與 `FALLBACK ALL PASS`；不是只看 non-blocking workflow 的總狀態。
+- 同提交的 Server 建置、Launcher 建置與 [打包 job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42034482218/job/127268940023) 均 **SUCCESS**。
+- CI 整包 Maven 產物對正式 reference 的額外結果為 2160 SAME／28 SAME_PATHS／361 DIFF；這是另一組輸入，不能混入七批固定 staged 的改善數。
+- Server tests 與後續僅補報告提交的最後 HEAD，以 [PR #193 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/193/checks) 為最終收據；交付時仍核對五項 job。已保存本機 `scratch/issue-176/ci-semantic-proof.txt`，最終 CI 狀態另存 `ci-status.json`。
 
 ## 推測
 
