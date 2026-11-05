@@ -112,6 +112,16 @@ default 376–389 丟 `IllegalArgumentException`，沒有第四個回傳出口�
 
 **比較界線與待驗證**：只有上述方法列 DEVIATION，其餘 Eye 方法、欄位與 metadata 照比；沒有為 PoisonAtomic 增加豁免。更換 producer 或 map 後須重做值域證明。未執行遊戲或 DB；A-land 仍需補 PoisonAtomic 的 `leaveInstall` 拋例外時 monitor 釋放測試。可重現命令、原始輸出與全批結果見 [issue-75 報告](../reports/issue-75.md)。
 
+## #73：NativeDeItemWeaponProcTable.reload 保留缺欄位失敗
+
+識別：`local/lito381/server/NativeDeItemWeaponProcTable#reload()V`，類型 `method-diff`。依 [#73 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/73#issuecomment-6668320896)，移除 staged 額外的 `_instance` 欄位，不修復正式版的潛伏 bug；根本原因歸入 #184，不另開任務。
+
+**已驗證（靜態）**：正式 JAR SHA-256 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` 的欄位表沒有 `_instance`，父類為 Object，但 `reload()` 在 offset 14 PUTSTATIC、17 GETSTATIC 仍引用它。staged 保留前面的 `requireLoading(this.nativeDefinitions)` 與 `new NativeDeItemWeaponProcTable()`，再明確 `throw new NoSuchFieldError("_instance")`。javap 確認 offset 0–11 的操作與順序相同；之後 POP 丟棄新物件並配置／拋出錯誤，與正式缺欄位解析的 bytecode 不同，因此只將精確 `reload()V` 列為 DEVIATION，其他欄位、方法、metadata 仍比較。
+
+**呼叫調查**：掃描正式 JAR 全部 2,554 個 class 的直接呼叫、LDC method handle、invokedynamic bootstrap／參數及遞迴 ConstantDynamic，目標 `reload()V` 的呼叫／handle 均為 0。`NativeDeItemDefinitionsResources.lambda$read$0` 建立此表後經 `invokeLoad` 反射呼叫固定字串 `load`，沒有呼叫 `reload`。依這份 JAR 的靜態證據，正常啟動／遊玩不會走到本方法；外部呼叫或動態組合反射名稱不在此結論內。完整調查見 [issue-73 報告](../reports/issue-73.md)。
+
+**待驗證（#78 A-land）**：在有效 loading context 下呼叫 `reload()`，斷言拋出 `NoSuchFieldError` 且訊息為 `_instance`；前置檢查及建構須按正式順序執行。若沒有相符 context、data 已發布或 SQL context 缺少，正式 `requireLoading` 會先丟 `IllegalStateException`，不可略過前置守門或把所有呼叫都斷言為 `NoSuchFieldError`。本輪未執行應用類別、DB 或此執行期測試。
+
 ## #235／#73：private 遮蔽祖先方法的改名配對
 
 依 [#73 主控修正裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/73#issuecomment-6668602650)，新增唯一條目：
