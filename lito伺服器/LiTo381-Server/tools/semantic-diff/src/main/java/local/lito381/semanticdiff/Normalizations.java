@@ -36,6 +36,12 @@ final class Normalizations implements Opcodes {
         if (op < 0 || op == NOP || op == GOTO) return true;
         if (op >= ILOAD && op <= ALOAD || op >= ISTORE && op <= ASTORE) return true;
         if (op >= ACONST_NULL && op <= SIPUSH) return true;
+        if (FourthNormalizations.enabled("coverage")) {
+            if (op >= POP && op <= SWAP || op == IINC) return true;
+            if (op >= IADD && op <= DCMPG && op != IDIV && op != LDIV && op != IREM && op != LREM) return true;
+            if (op >= IFEQ && op <= GOTO || op == IFNULL || op == IFNONNULL
+                    || op == TABLESWITCH || op == LOOKUPSWITCH) return true;
+        }
         if (op >= IRETURN && op <= RETURN) return !monitor;
         // Class/MethodHandle/MethodType/condy resolution can throw; do not trim these.
         return n instanceof LdcInsnNode ldc && (ldc.cst instanceof Number || ldc.cst instanceof String);

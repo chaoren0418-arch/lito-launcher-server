@@ -291,7 +291,8 @@ final class ClassComparer {
         if (d != null) {
             return d.withMember("method", key);
         }
-        d = cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
+        d = leftJar.approved(leftJar.exceptionsExempt, lm) && lm.name.equals(rm.name) ? null
+                : cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
         if (d != null) {
             return d.withMember("method", key);
         }
@@ -312,6 +313,7 @@ final class ClassComparer {
         if (!leftJar.approved(leftJar.layouts,lm) && instructions(lm,leftJar).equals(instructions(rm,rJar))
                 && tryCatch(lm,leftJar).equals(tryCatch(rm,rJar))) return null;
         if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
+        if (BlockExpressions.same(lm, rm, leftJar, rJar)) return null;
         if (effects) {
             // Keep the existing explicitly approved effects heuristic on physical slots.
             // The default data-flow proof above already used the normalized webs.
@@ -475,6 +477,7 @@ final class ClassComparer {
         Set<Integer> emitted = new java.util.HashSet<>();
         for (AbstractInsnNode insn : method.instructions.toArray()) {
             if (insn instanceof LabelNode label) {
+                if (FourthNormalizations.enabled("coverage")) continue;
                 if (emitted.add(labels.get(label))) out.add("LABEL " + labelId(labels, label));
                 continue;
             }
@@ -487,6 +490,23 @@ final class ClassComparer {
     }
 
     static List<String> tryCatch(MethodNode method, JarIndex jar) {
+        if (FourthNormalizations.enabled("coverage")) {
+            List<String> out = new ArrayList<>();
+            Map<LabelNode,Integer> ids = labelIds(method);
+            boolean monitor = java.util.Arrays.stream(method.instructions.toArray()).anyMatch(n -> n.getOpcode() == Opcodes.MONITORENTER);
+            int position = 0;
+            for (AbstractInsnNode n : method.instructions) if (n.getOpcode() >= 0) {
+                if (!Normalizations.harmless(n, monitor)) {
+                    List<String> handlers = new ArrayList<>();
+                    for (TryCatchBlockNode t : method.tryCatchBlocks)
+                        if (position >= ids.get(t.start) && position < ids.get(t.end))
+                            handlers.add(ids.get(t.handler) + ":" + graphCatch(t, jar));
+                    if (!handlers.isEmpty()) out.add(position + ":" + handlers);
+                }
+                position++;
+            }
+            return out;
+        }
         Map<LabelNode, Integer> labels = labelIds(method);
         List<String> out = new ArrayList<>();
         if (method.tryCatchBlocks == null) {
@@ -511,6 +531,14 @@ final class ClassComparer {
 
     private static Map<LabelNode, Integer> labelIds(MethodNode method) {
         Map<LabelNode, Integer> ids = new IdentityHashMap<>();
+        if (FourthNormalizations.enabled("coverage")) {
+            int position = 0;
+            for (AbstractInsnNode n : method.instructions) {
+                if (n instanceof LabelNode l) ids.put(l, position);
+                if (n.getOpcode() >= 0) position++;
+            }
+            return ids;
+        }
         int next = 0;
         if (method.instructions != null) {
             boolean newPosition = true;

@@ -133,3 +133,15 @@ ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線�
 第三次修正新增 CLI 回歸：expiry 四路匯合、STORE 收到合併值、Main 暫存＋layout 皆含左右交換與停用 transport 的 DIFF 對照；Main 未核准仍 DIFF。switch arm 互換、呼叫／欄位順序變更、額外前驅、消耗 stack 前綴、帶註解的 STORE 均有反例，並執行局部改寫後的正常／例外路徑。三套 Java 自測共 709 項（517＋73＋119）；固定四批重跑證據見 `docs/reports/issue-166.md`。
 
 診斷歸因可直接用 Java 的 `-Dsemanticdiff.disable=forward,try,transport,captures,webs,fields` 關閉指定規則；預設沒有關閉任何規則。此屬性僅供重跑前後對照，不是核准清單或忽略差異的入口。未知名稱不影響任何規則。
+
+## T020i-5 預設正規化（Issue #174）
+
+1. **例外涵蓋正規形**取代逐段 try 表比較（涵蓋 #153 邊界裁切與 #166 相鄰合併）。以有效指令位置識別 branch／handler 進入點，對每條可能拋例外指令列出依表順序涵蓋的 handler、例外型別及註解。未被涵蓋以空清單表示。區域變數讀寫、一般常數、stack shuffle、IINC、NOP、GOTO、條件跳轉、switch、非整數除法／餘數的算術與數值轉換不產生例外邊；無 MONITORENTER 的方法忽略 RETURN 系列覆蓋。IDIV／LDIV／IREM／LREM、欄位、呼叫、陣列、monitor、CHECKCAST 等仍保留。LDC 的 class／method handle／method type／condy 可能解析失敗，保守視為會拋例外。只用於 debug 的標籤不再改變指令身份。既有裁切／相鄰合併仍是前處理，但不再決定預設 try 相等性。
+2. **多餘 null 檢查**僅移除 `DUP` 或 `ALOAD n`＋精確 `Objects.requireNonNull(Object)`＋`POP`。來源分析保留參數、local、stack 複製的值身份；控制流程固定點以交集計算「所有路徑都已成功取用」的證據。GETFIELD／PUTFIELD、實例呼叫、陣列操作、monitor 的成功正常邊可建立證據，例外邊只傳入原證據，不能把失敗的 receiver 取用當成成功。重新執行 producer（迴圈）會清掉舊值證據；覆寫 local 後使用新的來源。多來源 union 不作相同值證明；建構子、JSR／RET、local 型別註解、檢查三條指令間的額外入口及指令註解均保守拒絕。帶訊息／Supplier overload 不移除。
+3. **區塊內表示式比較**：以分支目的地、分支後續及 handler 入口切基本區塊，按原順序比較每個區塊，沒有 CFG 重排或跨區塊值合併。入口 stack 依位置表示，入口 local 使用全方法一致的槽位雙射；每個非純運送操作成為依序編號的節點，包含有序 operands、正常分支、例外 handler。LOAD 使用當下 local 值，STORE／IINC 產生新的值版本，故跨覆寫取值仍不同。只有非參數 web 恰有一次 STORE、全部匹配 LOAD 位於同區塊且在 STORE 之後、沒有 IINC／註解／wide 重疊，才展開為被存入的表示式並移除運送。全方法掃描確保不存在區塊外或 handler 讀取；沒有讀取的 STORE 不刪。DUP／DUP2 展開同一節點並逐值核對複本數，出口 stack 保留順序，防止 predecessor／value 互換。其他運算、POP、呼叫、欄位讀寫、monitor 與會拋例外指令都保持順序；不合併兩次 GETFIELD。JSR／RET、未支援的 shuffle、不可達區塊與分析失敗回退既有比較。先嘗試原方法，再嘗試既有 #166 局部改寫的結果；不放寬原 singleton 多來源守門。
+
+新診斷開關為 `-Dsemanticdiff.disable=coverage,nonnull,blocks`。`transport` 也會停用新區塊證明；各條證明可能重疊，單項停用後仍成功不能據此認定該規則沒有作用。
+
+`--exceptions-exempt <file>` 預設不啟用。每行必須是 `類別#原名及完整描述子  # approved: https://核准連結`，可有空白行、整行註解及 UTF-8 BOM。僅忽略精確方法的 Exceptions（throws）屬性；指令、handler、方法存取、signature、註解及其他方法均照常比較。類別不在比較集合、方法任一側不存在、拼錯或缺少核准 URL 都報錯；不把 overload／其他合成方法視為核准對象。JSON 的 `exceptionsExempt` 與 Markdown 受控例外清單會列出實際使用條目。初始清單在 `docs/combat-merge/exceptions-exempt.txt`，只含 #62 核准的 `captureOutput`。
+
+`selftest.sh` 新增 `FifthSelfTest`。正反例的 framed class bytes 同時用於實際 CLI 比對與隔離 ClassLoader 執行；含 try gap／呼叫覆蓋／handler 與優先序、null 全路徑／缺路徑／覆寫／例外回復／迴圈新值、LOAD 跨 IINC／STORE、暫存複本數／副作用順序／live-out，以及多來源區塊入口但不合併來源的案例。既有 #153／#166 審查反例繼續執行。
