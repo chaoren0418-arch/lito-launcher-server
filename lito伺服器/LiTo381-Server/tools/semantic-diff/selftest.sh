@@ -579,9 +579,11 @@ echo "PASS SELFTEST 8c record type-ann DIFF=1"
 echo
 echo "=== SELFTEST 9: T020i/T020i-2 normalization and approved exceptions ==="
 javac --release 17 -encoding UTF-8 -cp "$ROOT/target/classes:$ASM_CP" -d "$BIN" \
-  "$ROOT/src/test/java/local/lito381/semanticdiff/NormalizationSelfTest.java"
+  "$ROOT/src/test/java/local/lito381/semanticdiff/"*.java
 java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.NormalizationSelfTest \
   "$BUILD/normalization" "$BIN/normalization"
+java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.AdvancedSelfTest \
+  "$BUILD/advanced" "$BIN/advanced"
 
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"
