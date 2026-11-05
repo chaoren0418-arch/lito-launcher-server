@@ -123,3 +123,38 @@ Pop-Location
 ## 給下一棒的提示
 
 由 Claude／主控審查 `task/134`，合併交使用者。A／B 批次執行器以 `records` 的批次目標版本移植，`other_jar_variants` 只作另一版本的來源證據；不要混用正式與候選欄位旗標。A-land／B-land 仍須逐批 semantic-diff 與完整回歸。Linux 執行器可依上述 CLI 重跑 Maven 自測；#108 的 Bash `build.sh` 驗證仍需 Linux CI 承接。
+
+## 第 2 次嘗試：合併前閘門複核（2026-11-05）
+
+### 已驗證
+
+- 本輪開始時 worktree 乾淨，分支為 `task/134`；本機 HEAD 與 PR #157 head 都是 `0a119412cb906b7cf950d5aa58b797321fdbcb67`。前次 10 個檔案的成果已推送，不需重做實作。
+- GitHub API 回傳 PR #157 仍開啟、未合併。該 commit 最新兩個 workflow 仍為 failure：[build 41939084363](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41939084363)、[package 41939084386](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41939084386)。全部 5 個 job 的 `steps` 與 `logs_url` 都是 null；本輪沒有可判讀的編譯或測試失敗 log。
+- [Issue #158](https://github.com/chaoren0418-arch/lito-launcher-server/issues/158) 仍開啟，記錄 Actions 帳務／支出上限阻擋；本輪未直接查詢帳務設定，未宣稱額度已恢復。
+- 使用前述 JAVA_HOME、worktree 暫存與 Maven 快取設定，重跑下列檢查，均退出 0：
+
+```powershell
+py -3 -B -X utf8 lito伺服器/LiTo381-Server/tools/as-record/scan-record-fields.py --check
+py -3 -B -X utf8 -c "import runpy,sys; from pathlib import Path; sys.path.insert(0,'lito伺服器/LiTo381-Server/tools/as-record'); m=runpy.run_path('lito伺服器/LiTo381-Server/tools/as-record/maven-selftest.py'); m['verify_jars'](Path('lito伺服器/LiTo381-Server/target'))"
+```
+
+```text
+CHECK: total=39 counts={'base-0.6.71.jar': 1, 'candidate-50635f7e.jar': 38}
+RAW: total=44 counts={'base-0.6.71.jar': 5, 'candidate-50635f7e.jar': 39}
+JAR RECORD PASS: local.lito381.server.AsRecordBuildFixture
+PACKAGE PASS: main/modern/test JAR and runtime lib contain no ASM/stubs/converter
+```
+
+第一次以 `runpy` 呼叫 JAR 驗證函式時未加入工具目錄，得到 `ModuleNotFoundError: as_record`；補上上列 `sys.path.insert` 後通過，未修改工具程式。
+
+另重新讀取前次 Surefire XML，共 1,267 份、6,035 tests、0 failures、0 errors、110 skipped；既存 `maven-test-exit.txt` 為 `Maven JVM exit code: 0`，`maven-package-final.log` 為 `BUILD SUCCESS`。這些是前次執行證據，本輪未重新執行全套 Maven test／package 或隔離模組自測。
+
+### 推測
+
+最新 CI 狀態與主控在 #158 記錄的帳務阻擋一致；目前沒有新的程式碼失敗證據，因此本輪只更新此報告，不改動已通過本機驗證的實作。
+
+### 待驗證與給下一棒的提示
+
+- CI 尚未通過，不能把本輪本機複核當成合併閘門已解除。
+- 由調度器／主控追蹤 #158；額度恢復後，針對 PR #157 的最新 commit 重跑 build 與 package，再由 Claude 審查、使用者合併。本輪未另行手動重跑舊 workflow。
+- 本輪唯一提交變更為 `docs/reports/issue-134.md`；未修改 `docs/REPORT.md`、程式碼、工作流或正式資源。
