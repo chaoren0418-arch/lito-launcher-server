@@ -28,6 +28,8 @@ public final class SemanticDiff {
         SAME,
         SAME_EFFECTS,
         SAME_LAYOUT,
+        SAME_PATHS,
+        ORPHAN_IGNORED,
         DEVIATION,
         DIFF,
         ONLY_LEFT,
@@ -41,6 +43,7 @@ public final class SemanticDiff {
         final boolean byteSame;
         final boolean allowMethodsApplied;
         final Map<String, ClassComparer.FirstDiff> effectsMethods = new LinkedHashMap<>();
+        final Map<String, JarIndex.MethodResult> methodResults = new LinkedHashMap<>();
         final Map<String, String> approvedMethods = new LinkedHashMap<>();
         final Map<String, ClassComparer.FirstDiff> approvedDetails = new LinkedHashMap<>();
 
@@ -80,13 +83,15 @@ public final class SemanticDiff {
         // This also keeps calls and method handles consistent across all three JARs.
         Map<String, Set<String>> exact = new LinkedHashMap<>();
         for (Map<String, Set<String>> policy : Arrays.asList(parsed.extraMethods, parsed.effectsMethods, parsed.accessWiden,
-                parsed.layouts, parsed.deviations, parsed.ctorOrders, parsed.allowMethods, parsed.exceptionsExempt)) {
+                parsed.layouts, parsed.deviations, parsed.methodDiffs, parsed.ctorOrders, parsed.allowMethods, parsed.exceptionsExempt)) {
             if (policy != null) policy.forEach((c, ms) -> exact.computeIfAbsent(c,k -> new LinkedHashSet<>()).addAll(ms));
         }
         left.preserveExactMethods(exact);
         right.preserveExactMethods(exact);
         if (allow != null) allow.preserveExactMethods(exact);
         left.accessWiden = parsed.accessWiden;
+        left.innerAccessWiden = parsed.innerAccessWiden;
+        left.methodDiffs = parsed.methodDiffs;
         left.layouts = parsed.layouts;
         left.deviations = parsed.deviations;
         left.ctorOrders = parsed.ctorOrders;
@@ -157,11 +162,19 @@ public final class SemanticDiff {
                 boolean deviated = ln.methods.stream().anyMatch(m -> parsed.ctorOrders.getOrDefault(name, Set.of()).contains(m.name + m.desc)
                         || parsed.deviations.getOrDefault(name, Set.of()).contains(m.name + m.desc)
                         && exactMethod(effectsTarget(parsed,name,m.name+m.desc,right,allow), name, m.name + m.desc) == null);
-                Status success = deviated ? Status.DEVIATION : parsed.layouts.containsKey(name) ? Status.SAME_LAYOUT
+                var methodResults = new LinkedHashMap<String, JarIndex.MethodResult>();
+                methodResults.putAll(right.methodResults.getOrDefault(name, Map.of()));
+                methodResults.putAll(left.methodResults.getOrDefault(name, Map.of()));
+                if(allow != null)methodResults.putAll(allow.methodResults.getOrDefault(name, Map.of()));
+                deviated |= methodResults.values().stream().anyMatch(r -> r.status().equals("DEVIATION"));
+                boolean paths = methodResults.values().stream().anyMatch(r -> r.status().equals("SAME_PATHS"));
+                boolean orphans = methodResults.values().stream().anyMatch(r -> r.status().equals("ORPHAN_IGNORED"));
+                Status success = deviated ? Status.DEVIATION : paths ? Status.SAME_PATHS : orphans ? Status.ORPHAN_IGNORED : parsed.layouts.containsKey(name) ? Status.SAME_LAYOUT
                         : effects.isEmpty() ? Status.SAME : Status.SAME_EFFECTS;
                 row = diff == null
                         ? new ClassRow(name, success, null, bytesEqual, allowThis)
                         : new ClassRow(name, Status.DIFF, diff, bytesEqual, allowThis);
+                row.methodResults.putAll(methodResults);
             }
             for (String method : parsed.layouts.getOrDefault(name, Set.of())) {
                 var lm = exactMethod(left, name, method);
@@ -197,6 +210,7 @@ public final class SemanticDiff {
         }
         String summary = "SUMMARY SAME=" + counts.get(Status.SAME)
                 + " SAME_EFFECTS=" + counts.get(Status.SAME_EFFECTS)
+                + " SAME_PATHS=" + counts.get(Status.SAME_PATHS) + " ORPHAN_IGNORED=" + counts.get(Status.ORPHAN_IGNORED)
                 + " SAME_LAYOUT=" + counts.get(Status.SAME_LAYOUT) + " DEVIATION=" + counts.get(Status.DEVIATION)
                 + " DIFF=" + counts.get(Status.DIFF)
                 + " ONLY_LEFT=" + counts.get(Status.ONLY_LEFT)
@@ -223,7 +237,12 @@ public final class SemanticDiff {
     }
 
     private static void validatePolicies(Args p, Set<String> names, JarIndex left, JarIndex right, JarIndex allow) {
-        for (var policy : Map.of("--access-widen", p.accessWiden, "--layout-methods", p.layouts,
+        for (String name : p.innerAccessWiden) {
+            for (JarIndex jar : List.of(left,right)) if(names.stream().map(jar::readTree).filter(java.util.Objects::nonNull)
+                    .noneMatch(c -> c.innerClasses.stream().anyMatch(i -> i.name.equals(name))))
+                throw new IllegalArgumentException("--access-widen inner class missing/outside comparison: " + name);
+        }
+        for (var policy : Map.of("method-diff", p.methodDiffs, "--access-widen", p.accessWiden, "--layout-methods", p.layouts,
                 "--deviations", p.deviations, "ctor-prologue-order", p.ctorOrders,
                 "--exceptions-exempt", p.exceptionsExempt).entrySet()) {
             for (var e : policy.getValue().entrySet()) {
@@ -373,7 +392,8 @@ public final class SemanticDiff {
                     + (parsed.effectsFile == null ? "null" : json(parsed.effectsFile.toString())) + ",");
             w.println("  \"extraMethodsFile\": " + json(parsed.extraFile == null ? null : parsed.extraFile.toString()) + ",");
             w.println("  \"metadataExemptFile\": " + json(parsed.metadataFile == null ? null : parsed.metadataFile.toString()) + ",");
-            for (var p : Map.of("accessWiden",parsed.accessWiden,"layoutMethods",parsed.layouts,"deviations",parsed.deviations,"ctorPrologueOrder",parsed.ctorOrders,"exceptionsExempt",parsed.exceptionsExempt).entrySet()) {
+            w.println("  \"innerAccessWiden\": " + jsonNames(parsed.innerAccessWiden) + ",");
+            for (var p : Map.of("methodDiffs",parsed.methodDiffs,"accessWiden",parsed.accessWiden,"layoutMethods",parsed.layouts,"deviations",parsed.deviations,"ctorPrologueOrder",parsed.ctorOrders,"exceptionsExempt",parsed.exceptionsExempt).entrySet()) {
                 Set<String> entries = new TreeSet<>(); p.getValue().forEach((c, ms) -> ms.forEach(m -> entries.add(c + "#" + m)));
                 w.println("  " + json(p.getKey()) + ": " + jsonNames(entries) + ",");
             }
@@ -395,6 +415,8 @@ public final class SemanticDiff {
             w.println("    \"SAME\": " + counts.get(Status.SAME) + ",");
             w.println("    \"SAME_EFFECTS\": " + counts.get(Status.SAME_EFFECTS) + ",");
             w.println("    \"SAME_LAYOUT\": " + counts.get(Status.SAME_LAYOUT) + ",");
+            w.println("    \"SAME_PATHS\": " + counts.get(Status.SAME_PATHS) + ",");
+            w.println("    \"ORPHAN_IGNORED\": " + counts.get(Status.ORPHAN_IGNORED) + ",");
             w.println("    \"DEVIATION\": " + counts.get(Status.DEVIATION) + ",");
             w.println("    \"DIFF\": " + counts.get(Status.DIFF) + ",");
             w.println("    \"ONLY_LEFT\": " + counts.get(Status.ONLY_LEFT) + ",");
@@ -408,6 +430,14 @@ public final class SemanticDiff {
                         + ", \"status\": " + json(row.status.name())
                         + ", \"byteSame\": " + row.byteSame
                         + ", \"allowMethodsApplied\": " + row.allowMethodsApplied);
+                w.print(", \"methodResults\": [");
+                int resultIndex=0;
+                for(var e:row.methodResults.entrySet()) {
+                    if(resultIndex++>0)w.print(", ");
+                    w.print("{\"method\": "+json(e.getKey())+", \"status\": "+json(e.getValue().status())
+                            +", \"detail\": "+json(e.getValue().detail())+"}");
+                }
+                w.print("]");
                 w.print(", \"effectsMethods\": [");
                 int methodIndex = 0;
                 for (var entry : row.effectsMethods.entrySet()) {
@@ -461,7 +491,7 @@ public final class SemanticDiff {
         int same = counts.get(Status.SAME);
         int sameEffects = counts.get(Status.SAME_EFFECTS);
         int diff = counts.get(Status.DIFF);
-        int intersection = same + sameEffects + diff + counts.get(Status.SAME_LAYOUT) + counts.get(Status.DEVIATION);
+        int intersection = counts.get(Status.SAME_PATHS) + counts.get(Status.ORPHAN_IGNORED) + same + sameEffects + diff + counts.get(Status.SAME_LAYOUT) + counts.get(Status.DEVIATION);
         long bytesDiffSemanticSame = rows.stream().filter(r -> r.status == Status.SAME && !r.byteSame).count();
         List<String> lines = new ArrayList<>();
         lines.add("# 伺服器語意缺口（T020d／T020i）");
@@ -498,11 +528,13 @@ public final class SemanticDiff {
         lines.add("| SAME | " + same + " | 兩邊都有，正規化後語意相同 |");
         lines.add("| SAME_EFFECTS | " + sameEffects + " | 類別其餘比較通過，含明確核准的副作用序列比較 |");
         lines.add("| SAME_LAYOUT | " + counts.get(Status.SAME_LAYOUT) + " | 核准方法的控制流程圖同構，其餘比較通過 |");
+        lines.add("| SAME_PATHS | " + counts.get(Status.SAME_PATHS) + " | 無迴圈方法的逐路徑事件多重集合相同，其餘比較通過 |");
+        lines.add("| ORPHAN_IGNORED | " + counts.get(Status.ORPHAN_IGNORED) + " | 右側孤立 private synthetic 方法，其餘比較通過 |");
         lines.add("| DEVIATION | " + counts.get(Status.DEVIATION) + " | 含核准刻意偏離，其餘比較通過 |");
         lines.add("| DIFF | " + diff + " | 兩邊都有，正規化後仍不同 |");
         lines.add("| ONLY_LEFT | " + counts.get(Status.ONLY_LEFT) + " | 只在 left |");
         lines.add("| ONLY_RIGHT | " + counts.get(Status.ONLY_RIGHT) + " | 只在 right |");
-        lines.add("| 交集 SAME+SAME_EFFECTS+SAME_LAYOUT+DEVIATION+DIFF | " + intersection + " | 兩邊都有的類別 |");
+        lines.add("| 交集 SAME+SAME_EFFECTS+SAME_LAYOUT+SAME_PATHS+ORPHAN_IGNORED+DEVIATION+DIFF | " + intersection + " | 兩邊都有的類別 |");
         lines.add("| BYTE_SAME | " + byteSameCount + " | **同一交集**裡 class bytes 完全相同（本輪實測） |");
         lines.add("| SAME 且 bytes 不同 | " + bytesDiffSemanticSame + " | 逐列計算，不含 SAME_EFFECTS |");
         lines.add("| 比較類別 | " + rows.size() + " | left∪right"
@@ -524,7 +556,8 @@ public final class SemanticDiff {
             for (String method : entry.getValue()) lines.add("- extra-methods：`" + entry.getKey() + "#" + method + "`");
         }
         for (String owner : parsed.metadataExempt) lines.add("- metadata-exempt：`" + owner + "`");
-        for (var p : Map.of("access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders,"exceptions-exempt",parsed.exceptionsExempt).entrySet())
+        for(String inner:parsed.innerAccessWiden)lines.add("- inner-access-widen：`"+inner+"`");
+        for (var p : Map.of("method-diff",parsed.methodDiffs,"access-widen",parsed.accessWiden,"layout-methods",parsed.layouts,"deviations",parsed.deviations,"ctor-prologue-order",parsed.ctorOrders,"exceptions-exempt",parsed.exceptionsExempt).entrySet())
             p.getValue().forEach((c, ms) -> ms.forEach(m -> lines.add("- " + p.getKey() + "：`" + c + "#" + m + "`")));
         lines.add("");
         lines.add("## 核准排列與刻意偏離結果");
@@ -533,6 +566,12 @@ public final class SemanticDiff {
         for (ClassRow row : rows) row.approvedMethods.forEach((m,s) -> lines.add("| `" + row.name + "#" + m + "` | " + s
                 + " | " + (row.approvedDetails.get(m) == null ? "—" : mdCell(row.approvedDetails.get(m).oneLine())) + " |"));
         lines.add("");
+        lines.add("## 逐方法後備比較與偏離（含完整偏離差異）");
+        lines.add("");
+        for(ClassRow row:rows)for(var e:row.methodResults.entrySet()) {
+            lines.add("### `"+row.name+"#"+e.getKey()+"` — "+e.getValue().status());
+            lines.add(""); lines.add("```text"); lines.add(e.getValue().detail()); lines.add("```"); lines.add("");
+        }
         lines.add("## 核准方法副作用結果");
         lines.add("");
         lines.add("此表逐方法獨立比較；即使類別整體 DIFF 也列出，不能用單一方法通過代替整類驗收。");
@@ -583,7 +622,7 @@ public final class SemanticDiff {
         lines.add("");
         lines.add("本表只報告**這一對 JAR、這一輪交集**的實測：");
         lines.add("");
-        lines.add("- 交集 SAME+SAME_EFFECTS+SAME_LAYOUT+DEVIATION+DIFF = **" + intersection + "**。");
+        lines.add("- 交集 SAME+SAME_EFFECTS+SAME_LAYOUT+SAME_PATHS+ORPHAN_IGNORED+DEVIATION+DIFF = **" + intersection + "**。");
         lines.add("- 其中 BYTE_SAME = **" + byteSameCount + "**（本輪 bytes 全同）。");
         lines.add("- SAME = **" + same + "**，故 bytes 不同但語意相同 = **" + bytesDiffSemanticSame + "**（本輪實測，含 debug／合成名／常數池編號等）。");
         lines.add("- DIFF = **" + diff + "**（第一處差異：method " + methodDiff + "、field " + fieldDiff
@@ -712,6 +751,8 @@ public final class SemanticDiff {
         Map<String, Set<String>> effectsMethods = Map.of();
         Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
         Map<String, Set<String>> exceptionsExempt = Map.of();
+        Map<String, Set<String>> methodDiffs = new LinkedHashMap<>();
+        Set<String> innerAccessWiden = new LinkedHashSet<>();
 
         static Args parse(String[] args) throws IOException {
             Args out = new Args();
@@ -728,7 +769,7 @@ public final class SemanticDiff {
                         }
                         out.exceptionsExempt = parseMethods(file, a);
                     }
-                    case "--access-widen" -> out.accessWiden = parseMethods(Path.of(need(args, ++i, a)), a);
+                    case "--access-widen" -> out.parseAccess(Path.of(need(args, ++i, a)));
                     case "--layout-methods" -> out.layouts = parseMethods(Path.of(need(args, ++i, a)), a);
                     case "--deviations" -> out.parseDeviations(Path.of(need(args, ++i, a)));
                     case "--left" -> out.left = Path.of(need(args, ++i, a));
@@ -789,6 +830,29 @@ public final class SemanticDiff {
             return args[i];
         }
 
+        private static void requireApproval(String line) {
+            if(!line.matches(".*\\s+#\\s*approved:\\s+https?://\\S+\\s*"))
+                throw new IllegalArgumentException("requires approved URL: "+line);
+        }
+        private void parseAccess(Path file) throws IOException {
+            accessWiden=new LinkedHashMap<>();
+            for(String line:Files.readString(file,StandardCharsets.UTF_8).replace("\uFEFF", "").split("\n")) {
+                String text=line.trim();if(text.isEmpty()||text.startsWith("#"))continue;
+                text=text.replaceFirst("\\s+#.*$", "").trim();
+                if(!text.contains("#")) {
+                    requireApproval(line);
+                    String name=normalizeClassName(text);
+                    if(!name.matches("[\\p{L}\\p{N}_$/]+")||name.contains("//"))throw new IllegalArgumentException("invalid inner class: "+text);
+                    innerAccessWiden.add(name);
+                } else {
+                    int hash=text.indexOf('#');String method=text.substring(hash+1);
+                    if(hash<=0||!method.matches("[^\\s#(]+\\([^\\s]*\\)[^\\s]+"))throw new IllegalArgumentException("invalid access method: "+text);
+                    accessWiden.computeIfAbsent(normalizeClassName(text.substring(0,hash)),k->new LinkedHashSet<>()).add(method);
+                }
+            }
+            if(accessWiden.isEmpty()&&innerAccessWiden.isEmpty())throw new IllegalArgumentException("empty --access-widen");
+        }
+
         private void parseDeviations(Path file) throws IOException {
             deviations = new LinkedHashMap<>(); ctorOrders = new LinkedHashMap<>();
             for (String line : Files.readString(file, StandardCharsets.UTF_8).replace("\uFEFF", "").split("\n")) {
@@ -796,14 +860,19 @@ public final class SemanticDiff {
                 if (text.isEmpty() || text.startsWith("#")) continue;
                 int comment = text.indexOf('#', text.indexOf('#')+1);
                 if (comment >= 0) text = text.substring(0,comment).trim();
+                boolean methodDiff = text.endsWith(" method-diff");
+                if(methodDiff) {
+                    requireApproval(line);
+                    text=text.substring(0,text.length()-" method-diff".length()).trim();
+                }
                 boolean ctor = text.startsWith("ctor-prologue-order ");
                 if (ctor) text = text.substring("ctor-prologue-order ".length()).trim();
                 int hash = text.indexOf('#');
                 if (hash <= 0 || !text.substring(hash+1).matches("[^\\s#(]+\\([^\\s]*\\)[^\\s]+"))
                     throw new IllegalArgumentException("invalid --deviations entry: " + line);
-                (ctor ? ctorOrders : deviations).computeIfAbsent(normalizeClassName(text.substring(0,hash)), k -> new LinkedHashSet<>()).add(text.substring(hash+1));
+                (methodDiff ? methodDiffs : ctor ? ctorOrders : deviations).computeIfAbsent(normalizeClassName(text.substring(0,hash)), k -> new LinkedHashSet<>()).add(text.substring(hash+1));
             }
-            if (deviations.isEmpty() && ctorOrders.isEmpty()) throw new IllegalArgumentException("--deviations produced an empty set");
+            if (deviations.isEmpty() && ctorOrders.isEmpty() && methodDiffs.isEmpty()) throw new IllegalArgumentException("--deviations produced an empty set");
         }
 
         private static Set<String> parseNameList(String spec, String flag) throws IOException {
