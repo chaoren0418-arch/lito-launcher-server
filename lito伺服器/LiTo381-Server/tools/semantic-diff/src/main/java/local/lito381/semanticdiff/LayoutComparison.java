@@ -170,7 +170,8 @@ final class LayoutComparison implements Opcodes {
         if (transport != null) for (AbstractInsnNode n : code) {
             List<Set<Integer>> operands=new ArrayList<>();
             for (var value : transport.inputs().getOrDefault(n,List.of())) {
-                if(value.insns.isEmpty()) throw new IllegalArgumentException("unresolved transport operand");
+                // Check before resolving labels: mapping must never collapse ambiguous origins.
+                if(value.insns.size()!=1) throw new IllegalArgumentException("ambiguous or unresolved transport operand");
                 Set<Integer> producers=new HashSet<>();
                 for(AbstractInsnNode producer:value.insns) {
                     AbstractInsnNode resolved=producer instanceof LabelNode ? (collapseGoto?resolve(producer):FourthNormalizations.next(producer)) : producer;
@@ -184,6 +185,7 @@ final class LayoutComparison implements Opcodes {
         }
         Map<Set<Integer>,Integer> copies=new HashMap<>();
         if(transport!=null)for(var entry:transport.copyCounts().entrySet()) {
+            if(entry.getKey().size()!=1)throw new IllegalArgumentException("ambiguous or unresolved copy producer");
             Set<Integer> producers=new HashSet<>();
             for(AbstractInsnNode producer:entry.getKey()) {
                 AbstractInsnNode resolved=producer instanceof LabelNode ? (collapseGoto?resolve(producer):FourthNormalizations.next(producer)) : producer;

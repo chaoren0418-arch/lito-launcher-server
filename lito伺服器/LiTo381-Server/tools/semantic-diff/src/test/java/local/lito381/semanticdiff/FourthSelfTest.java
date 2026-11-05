@@ -51,6 +51,7 @@ public final class FourthSelfTest implements Opcodes {
         // Execute valid fixtures in isolated loaders. No server or application classes are loaded.
         execute(branchTemp(true),branchTemp(false),"branch-temp");
         execute(wideTemp(true),wideTemp(false),"wide-temp");
+        branchMergeChecks();
         System.out.println("FOURTH SELFTEST ALL PASS checks="+checks);
     }
     static ClassNode clazz(){ClassNode c=new ClassNode();c.version=V17;c.access=ACC_PUBLIC;c.name="Fixture";c.superName="java/lang/Object";return c;}
@@ -93,6 +94,53 @@ public final class FourthSelfTest implements Opcodes {
         m.instructions.add(new JumpInsnNode(IFNULL,no));if(local)var(m,ALOAD,1);ins(m,ARETURN);m.instructions.add(no);if(!local)ins(m,POP);ins(m,ACONST_NULL,ARETURN);return c;
     }
     static ClassNode wideTemp(boolean local){ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(J)J");var(m,LLOAD,0);if(local){var(m,LSTORE,3);var(m,LLOAD,3);var(m,LLOAD,3);}else ins(m,DUP2);ins(m,LADD,LRETURN);return c;}
+    // Both operands at join have union {ICONST_1, ICONST_2}, but opposite edge/value pairings.
+    static ClassNode branchSwap(boolean swapped, boolean duplicate){
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(Z)I");
+        LabelNode alternate=new LabelNode(),join=new LabelNode();
+        ins(m,ICONST_1);var(m,ISTORE,1);ins(m,ICONST_2);var(m,ISTORE,2);
+        var(m,ILOAD,0);m.instructions.add(new JumpInsnNode(IFEQ,alternate));
+        var(m,ILOAD,swapped?2:1);var(m,ILOAD,swapped?1:2);
+        m.instructions.add(new JumpInsnNode(GOTO,join));m.instructions.add(alternate);
+        var(m,ILOAD,swapped?1:2);var(m,ILOAD,swapped?2:1);m.instructions.add(join);
+        if(duplicate)ins(m,DUP,POP);
+        ins(m,ISUB,IRETURN);
+        // Persist valid Java 17 stack-map frames in the very same JARs used by the CLI and JVM.
+        ClassWriter writer=new ClassWriter(ClassWriter.COMPUTE_FRAMES|ClassWriter.COMPUTE_MAXS);c.accept(writer);
+        ClassNode framed=new ClassNode();new ClassReader(writer.toByteArray()).accept(framed,0);return framed;
+    }
+    static void branchMergeChecks()throws Exception{
+        for(boolean duplicate:new boolean[]{false,true}){
+            String name="branch-merge-swap"+(duplicate?"-dup":"");
+            Path left=jar(name+"-l",List.of(branchSwap(false,duplicate)));
+            Path right=jar(name+"-r",List.of(branchSwap(true,duplicate)));
+            class Loader extends ClassLoader{
+                Class<?> load(Path path)throws Exception{
+                    byte[] bytes=JarIndex.load(path).classes.get("Fixture");
+                    return defineClass("Fixture",bytes,0,bytes.length);
+                }
+            }
+            Class<?> l=new Loader().load(left),r=new Loader().load(right);
+            for(boolean value:new boolean[]{true,false}){
+                Object lv=l.getMethod("m",boolean.class).invoke(null,value);
+                Object rv=r.getMethod("m",boolean.class).invoke(null,value);
+                assertion("JVM "+name+" "+value+" left="+lv+" right="+rv,
+                        lv.equals(value?-1:1)&&rv.equals(value?1:-1));
+            }
+            cliCheck(name,left,right,false);
+            cliCheck(name+"-reverse",right,left,false);
+            cliCheck(name+"-layout",left,right,true);
+        }
+    }
+    static void cliCheck(String name,Path left,Path right,boolean layout)throws Exception{
+        Path json=work.resolve(name+".json");
+        List<String> args=new ArrayList<>(List.of("--left",left.toString(),"--right",right.toString(),
+                "--json",json.toString(),"--md",work.resolve(name+".md").toString()));
+        if(layout){Path policy=work.resolve(name+"-approved.txt");Files.writeString(policy,"Fixture#m(Z)I # approved: https://example.test/issues/166\n");
+            args.addAll(List.of("--layout-methods",policy.toString()));}
+        assertion("CLI "+name+" exit",SemanticDiff.run(args.toArray(String[]::new))==0);
+        assertion("CLI "+name+" DIFF",Files.readString(json).contains("\"DIFF\": 1"));
+    }
     static ClassNode wrongPosition(boolean local){ClassNode c=clazz();MethodNode m=method(c,ACC_STATIC,"m","()I");ins(m,ICONST_1);if(local)var(m,ISTORE,1);ins(m,ICONST_2);if(local)var(m,ILOAD,1);ins(m,ISUB,IRETURN);return c;}
     static ClassNode monitor(boolean local){ClassNode c=temp(local,1,false,false);MethodNode m=c.methods.get(0);AbstractInsnNode before=m.instructions.getFirst();m.instructions.insertBefore(before,new FieldInsnNode(GETSTATIC,"Sink","lock","Ljava/lang/Object;"));m.instructions.insertBefore(before,new InsnNode(local?MONITORENTER:MONITOREXIT));return c;}
     static ClassNode captures(boolean swapped,int bad){

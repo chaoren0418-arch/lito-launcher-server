@@ -89,6 +89,14 @@ final class TransportComparison implements Opcodes {
             f.execute(n,interpreter);
         }
         for (AbstractInsnNode n : remove) { m.instructions.remove(n); interpreter.inputs.remove(n); }
+        // SourceInterpreter merges alternatives into an unordered union, losing the predecessor
+        // edge that selected each operand. Equal unions (and copy counts) do NOT prove equality:
+        // branches loading (a,b)/(b,a) versus (b,a)/(a,b) differ at a joined ISUB.
+        // Until we track edge/value correlations, transport requires one known producer per use
+        // and per duplicated value. This gate applies to both ordered and layout-approved CFGs.
+        for (List<SourceValue> operands : interpreter.inputs.values())
+            for (SourceValue value : operands) if (value.insns.size() != 1) return null;
+        for (Set<AbstractInsnNode> origins : copyCounts.keySet()) if (origins.size() != 1) return null;
         Normalizations.trimTry(m);
         if (FourthNormalizations.enabled("try")) FourthNormalizations.mergeTry(m);
         Normalizations.cleanLabels(m);
