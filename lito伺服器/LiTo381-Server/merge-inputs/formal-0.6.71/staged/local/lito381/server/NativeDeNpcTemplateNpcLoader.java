@@ -115,6 +115,7 @@ final class NativeDeNpcTemplateNpcLoader {
                NativeDeNpcTemplateLoadScope.npcs().put(var4, var5);
             } catch (Exception var12) {
                NativeDeNpcTemplateLoadScope.log().error("載入資料失敗，已略過該筆 (npcid: " + var4 + ")", (Throwable)var12);
+               continue;
             }
          }
       } catch (SQLException var16) {
@@ -158,7 +159,7 @@ final class NativeDeNpcTemplateNpcLoader {
    }
 
    private static Map<String, Integer> sourceBuildFamily() {
-      HashMap var0 = new HashMap();
+      Map<String, Integer> var0 = new HashMap<>();
 
       try (
          Connection var1 = NativeDeNpcTemplateLoadScope.Database.get().getConnection();
@@ -180,6 +181,7 @@ final class NativeDeNpcTemplateNpcLoader {
                var0.put(var5, var6);
             } catch (Exception var10) {
                NativeDeNpcTemplateLoadScope.log().error("載入資料失敗，已略過該筆 (family: " + var5 + ", id: " + var4 + ")", (Throwable)var10);
+               continue;
             }
          }
       } catch (SQLException var14) {

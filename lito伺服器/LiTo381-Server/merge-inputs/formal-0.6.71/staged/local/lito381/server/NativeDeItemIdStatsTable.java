@@ -63,6 +63,7 @@ public class NativeDeItemIdStatsTable {
                var2++;
             } catch (Exception var12) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (item_id: " + var6 + ")", (Throwable)var12);
+               continue;
             }
          }
       } catch (SQLException var16) {
@@ -110,6 +111,7 @@ public class NativeDeItemIdStatsTable {
                var2++;
             } catch (Exception var13) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (item_id: " + var6 + ")", (Throwable)var13);
+               continue;
             }
          }
       } catch (SQLException var17) {

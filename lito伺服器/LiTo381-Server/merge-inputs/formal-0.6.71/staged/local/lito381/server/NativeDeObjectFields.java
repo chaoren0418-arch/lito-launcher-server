@@ -17,6 +17,9 @@ Serializable {
     int showId = -1;
     protected volatile Object sourceDeWorldEntry;
 
+    public NativeDeObjectFields() {
+    }
+
     protected abstract int getId();
 
     public void setId(int n) {

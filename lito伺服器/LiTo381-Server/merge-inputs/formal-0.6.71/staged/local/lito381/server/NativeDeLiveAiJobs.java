@@ -175,52 +175,54 @@ final class NativeDeLiveAiJobs {
 
    static void background(NativeDeInstanceState var0, boolean var1) {
       NativeDeLiveAiJobs.Binding var2 = find(var0);
-      if (var2 != null) {
-         NativeDeLiveAiJobs.Owner var3 = var2.owner;
-         ScheduledFuture var4 = null;
-         NativeDeLiveAiJobs.Credit var5 = null;
-         synchronized (var3.life.admission) {
-            if (var1) {
-               if (var2.closed || var3.closed || !var3.life.admits()) {
-                  return;
+      if (var2 == null) {
+         return;
+      }
+      NativeDeLiveAiJobs.Owner var3 = var2.owner;
+      ScheduledFuture var4 = null;
+      NativeDeLiveAiJobs.Credit var5 = null;
+      synchronized (var3.life.admission) {
+         if (var1) {
+            if (var2.closed || var3.closed || !var3.life.admits()) {
+               return;
+            }
+
+            var3.background.add(var2);
+            if (var3.heartbeat == null) {
+               NativeDeLiveAiJobs.Credit var7 = credit(var2);
+               if (var7 == null) {
+                  var3.background.remove(var2);
+                  throw new RejectedExecutionException("De AI heartbeat budget exhausted");
                }
 
-               var3.background.add(var2);
-               if (var3.heartbeat == null) {
-                  NativeDeLiveAiJobs.Credit var7 = credit(var2);
-                  if (var7 == null) {
-                     var3.background.remove(var2);
-                     throw new RejectedExecutionException("De AI heartbeat budget exhausted");
-                  }
-
-                  try {
-                     var3.heartbeat = var3.life.retry.scheduleAtFixedRate(() -> pulse(var3), 10L, 10L, TimeUnit.SECONDS);
-                     var3.heartbeatCredit = var7;
-                  } catch (RuntimeException | Error var10) {
-                     var3.background.remove(var2);
-                     var7.release();
-                     throw var10;
-                  }
-               }
-            } else {
-               var3.background.remove(var2);
-               if (var3.background.isEmpty()) {
-                  var4 = var3.heartbeat;
-                  var5 = var3.heartbeatCredit;
-                  var3.heartbeat = null;
-                  var3.heartbeatCredit = null;
+               try {
+                  var3.heartbeat = var3.life.retry.scheduleAtFixedRate(() -> pulse(var3), 10L, 10L, TimeUnit.SECONDS);
+                  var3.heartbeatCredit = var7;
+               } catch (RuntimeException | Error var10) {
+                  var3.background.remove(var2);
+                  var7.release();
+                  throw var10;
                }
             }
-         }
-
-         if (var4 != null) {
-            var4.cancel(false);
-         }
-
-         if (var5 != null) {
-            var5.release();
+         } else {
+            var3.background.remove(var2);
+            if (var3.background.isEmpty()) {
+               var4 = var3.heartbeat;
+               var5 = var3.heartbeatCredit;
+               var3.heartbeat = null;
+               var3.heartbeatCredit = null;
+            }
          }
       }
+
+      if (var4 != null) {
+         var4.cancel(false);
+      }
+
+      if (var5 != null) {
+         var5.release();
+      }
+
    }
 
    static void pulse(NativeDeLiveAiJobs.Owner var0) {
@@ -242,7 +244,7 @@ final class NativeDeLiveAiJobs {
 
       try {
          for (NativeDeLiveAiJobs.Binding var6 : var1) {
-            if (!var6.actor.isDead() && var6.actor.getMap() != null && admits(var6.actor)) {
+            if (var6.actor.isDead() || var6.actor.getMap() == null || !admits(var6.actor)) { background(var6.actor, false); continue; }
                NativeDeLiveAiJobs.Credit var7;
                synchronized (var0.life.admission) {
                   if (var0.closed || var6.closed || !var0.life.admits()) {
@@ -252,7 +254,7 @@ final class NativeDeLiveAiJobs {
                   var7 = credit(var6);
                }
 
-               if (var7 != null) {
+               if (var7 == null) { continue; }
                   NativeDeLiveAiJobs.PulseCredit var28 = pulseCredit.get();
                   pulseCredit.set(new NativeDeLiveAiJobs.PulseCredit(var6, var7));
 
@@ -269,10 +271,8 @@ final class NativeDeLiveAiJobs {
 
                      var7.release();
                   }
-               }
-            } else {
-               background(var6.actor, false);
-            }
+
+
          }
       } finally {
          var2.release();
@@ -294,80 +294,84 @@ final class NativeDeLiveAiJobs {
    static void retire(NativeDeInstanceState var0) {
       var0.stopAI();
       NativeDeLiveAiJobs.Binding var1 = find(var0);
-      if (var1 != null) {
-         background(var0, false);
-         NativeDeLiveAiJobs.Ticket[] var2;
-         synchronized (var1.owner.life.admission) {
-            var1.closed = true;
-            var1.owner.bindings.remove(var1);
-            var2 = var1.owner.tickets.stream().filter(var1x -> var1x.binding == var1).toArray(NativeDeLiveAiJobs.Ticket[]::new);
-         }
+      if (var1 == null) {
+         return;
+      }
+      background(var0, false);
+      NativeDeLiveAiJobs.Ticket[] var2;
+      synchronized (var1.owner.life.admission) {
+         var1.closed = true;
+         var1.owner.bindings.remove(var1);
+         var2 = var1.owner.tickets.stream().filter(var1x -> var1x.binding == var1).toArray(NativeDeLiveAiJobs.Ticket[]::new);
+      }
 
-         for (NativeDeLiveAiJobs.Ticket var6 : var2) {
-            var6.cancel(false);
-         }
+      for (NativeDeLiveAiJobs.Ticket var6 : var2) {
+         var6.cancel(false);
+      }
 
-         synchronized (var1.owner.life.admission) {
-            if (var1.tasks == 0) {
-               CombatAccess.set(var0, "sourceDeLiveAiBinding", null);
-            }
+      synchronized (var1.owner.life.admission) {
+         if (var1.tasks == 0) {
+            CombatAccess.set(var0, "sourceDeLiveAiBinding", null);
          }
       }
+
    }
 
    static void close(NativeDeWorldContext var0) {
       NativeDeLiveAiJobs.Owner var1 = (NativeDeLiveAiJobs.Owner)CombatAccess.field(var0, "sourceDeLiveAiJobs");
-      if (var1 != null) {
-         NativeDeLiveAiJobs.Binding[] var2;
-         NativeDeLiveAiJobs.Ticket[] var3;
-         ScheduledFuture var4;
-         NativeDeLiveAiJobs.Credit var5;
-         synchronized (var1.life.admission) {
-            var1.closed = true;
-            var2 = var1.bindings.toArray(NativeDeLiveAiJobs.Binding[]::new);
-
-            for (NativeDeLiveAiJobs.Binding var10 : var2) {
-               var10.closed = true;
-            }
-
-            var3 = var1.tickets.toArray(NativeDeLiveAiJobs.Ticket[]::new);
-            var1.bindings.clear();
-            var1.background.clear();
-            var4 = var1.heartbeat;
-            var5 = var1.heartbeatCredit;
-            var1.heartbeat = null;
-            var1.heartbeatCredit = null;
-         }
-
-         if (var4 != null) {
-            var4.cancel(false);
-         }
-
-         if (var5 != null) {
-            var5.release();
-         }
-
-         for (NativeDeLiveAiJobs.Binding var24 : var2) {
-            NativeDeLiveAiScope.call(var24.actor, () -> {
-               var24.actor.stopAI();
-               return null;
-            });
-         }
-
-         for (NativeDeLiveAiJobs.Ticket var25 : var3) {
-            var25.cancel(false);
-         }
-
-         synchronized (var1.life.admission) {
-            for (NativeDeLiveAiJobs.Binding var27 : var2) {
-               if (var27.tasks == 0) {
-                  CombatAccess.set(var27.actor, "sourceDeLiveAiBinding", null);
-               }
-            }
-         }
-
-         CombatAccess.set(var0, "sourceDeLiveAiJobs", null);
+      if (var1 == null) {
+         return;
       }
+      NativeDeLiveAiJobs.Binding[] var2;
+      NativeDeLiveAiJobs.Ticket[] var3;
+      ScheduledFuture var4;
+      NativeDeLiveAiJobs.Credit var5;
+      synchronized (var1.life.admission) {
+         var1.closed = true;
+         var2 = var1.bindings.toArray(NativeDeLiveAiJobs.Binding[]::new);
+
+         for (NativeDeLiveAiJobs.Binding var10 : var2) {
+            var10.closed = true;
+         }
+
+         var3 = var1.tickets.toArray(NativeDeLiveAiJobs.Ticket[]::new);
+         var1.bindings.clear();
+         var1.background.clear();
+         var4 = var1.heartbeat;
+         var5 = var1.heartbeatCredit;
+         var1.heartbeat = null;
+         var1.heartbeatCredit = null;
+      }
+
+      if (var4 != null) {
+         var4.cancel(false);
+      }
+
+      if (var5 != null) {
+         var5.release();
+      }
+
+      for (NativeDeLiveAiJobs.Binding var24 : var2) {
+         NativeDeLiveAiScope.call(var24.actor, () -> {
+            var24.actor.stopAI();
+            return null;
+         });
+      }
+
+      for (NativeDeLiveAiJobs.Ticket var25 : var3) {
+         var25.cancel(false);
+      }
+
+      synchronized (var1.life.admission) {
+         for (NativeDeLiveAiJobs.Binding var27 : var2) {
+            if (var27.tasks == 0) {
+               CombatAccess.set(var27.actor, "sourceDeLiveAiBinding", null);
+            }
+         }
+      }
+
+      CombatAccess.set(var0, "sourceDeLiveAiJobs", null);
+
    }
 
    static NativeDeLiveAiJobs.Snapshot snapshot(NativeDeWorldContext var0) {

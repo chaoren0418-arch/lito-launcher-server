@@ -1,11 +1,5 @@
 // DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
-import local.lito381.server.NativeDeCharacterFields;
-import local.lito381.server.NativeDeDeletionPorts;
-import local.lito381.server.NativeDeDeletionState;
-import local.lito381.server.NativeDeNpcConstructionGeometry;
-import local.lito381.server.NativeDeNpcConstructionPorts;
-import local.lito381.server.NativeDeWorldKinds;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,12 +24,11 @@ public class NativeDeNpcHateList implements Hate {
       this._hateMap = new ConcurrentHashMap<>();
    }
 
-   public void add(NativeDeCharacterFields nativeDeCharacterFields, int n) {
-        if (nativeDeCharacterFields == null) {
-            return;
-        }
-        this._hateMap.merge(nativeDeCharacterFields, n, Integer::sum);
-    }
+   public void add(NativeDeCharacterFields var1, int var2) {
+      if (var1 != null) {
+         this._hateMap.merge(var1, var2, Integer::sum);
+      }
+   }
 
    public boolean isHate(NativeDeCharacterFields var1) {
       return this._hateMap.containsKey(var1);
@@ -50,12 +43,11 @@ public class NativeDeNpcHateList implements Hate {
       return this._hateMap.containsKey(var1);
    }
 
-   public void remove(NativeDeCharacterFields nativeDeCharacterFields) {
-        if (nativeDeCharacterFields == null) {
-            return;
-        }
-        this._hateMap.remove(nativeDeCharacterFields);
-    }
+   public void remove(NativeDeCharacterFields var1) {
+      if (var1 != null) {
+         this._hateMap.remove(var1);
+      }
+   }
 
    @Override
    public void clear() {
@@ -84,7 +76,7 @@ public class NativeDeNpcHateList implements Hate {
 
    public void removeInvalidCharacter(NativeDeDeletionState var1) {
       for (NativeDeCharacterFields var3 : this._hateMap.keySet()) {
-         if (var3 != null && !var3.isDead()) {
+         if (var3 == null || var3.isDead()) { this._hateMap.remove(var3); continue; }
             if ((var1 instanceof Pet || var1 instanceof Summon) && var3 instanceof Monster var7) {
                if (var7.destroyed()
                   || NativeDeNpcConstructionGeometry.mapId(var7) != NativeDeNpcConstructionGeometry.mapId(var1)
@@ -92,27 +84,29 @@ public class NativeDeNpcHateList implements Hate {
                   || NativeDeNpcConstructionGeometry.location(var1).getTileDistance(NativeDeNpcConstructionGeometry.location(var7)) > 30) {
                   this._hateMap.remove(var3);
                }
+               continue;
             } else if (var3 instanceof Viewer var6) {
                if (NativeDeNpcConstructionGeometry.mapId(var6) != NativeDeNpcConstructionGeometry.mapId(var1)
                   || NativeDeNpcConstructionGeometry.showId(var6) != NativeDeNpcConstructionGeometry.showId(var1)) {
                   this._hateMap.remove(var3);
                }
+               continue;
             } else if (var3 instanceof Pet var5) {
                if (NativeDeNpcConstructionGeometry.mapId(var5) != NativeDeNpcConstructionGeometry.mapId(var1)
                   || NativeDeNpcConstructionGeometry.showId(var5) != NativeDeNpcConstructionGeometry.showId(var1)) {
                   this._hateMap.remove(var3);
                }
+               continue;
             } else if (var3 instanceof Summon var4) {
                if (NativeDeNpcConstructionGeometry.mapId(var4) != NativeDeNpcConstructionGeometry.mapId(var1)
                   || NativeDeNpcConstructionGeometry.showId(var4) != NativeDeNpcConstructionGeometry.showId(var1)) {
                   this._hateMap.remove(var3);
                }
+               continue;
             } else if (!var1.knownsObject(var3)) {
                this._hateMap.remove(var3);
             }
-         } else {
-            this._hateMap.remove(var3);
-         }
+
       }
    }
 

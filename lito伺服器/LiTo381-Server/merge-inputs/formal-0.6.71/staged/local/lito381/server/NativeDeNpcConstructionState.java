@@ -360,11 +360,14 @@ extends NativeDeNpcTemplateState {
         if (n <= 0) {
             n = 960;
         }
-        return NativeDePerceptionSpeed.calculate(this, n, switch (n2) {
-            case 0 -> NativeDePerceptionSpeed.ActionType.MOVE;
-            case 1 -> NativeDePerceptionSpeed.ActionType.ATTACK;
-            default -> NativeDePerceptionSpeed.ActionType.SPELL;
-        });
+        NativeDePerceptionSpeed.ActionType action;
+        switch (n2) {
+            case 0: action = NativeDePerceptionSpeed.ActionType.MOVE; break;
+            case 1: action = NativeDePerceptionSpeed.ActionType.ATTACK; break;
+            case 2:
+            default: action = NativeDePerceptionSpeed.ActionType.SPELL;
+        }
+        return NativeDePerceptionSpeed.calculate(this, n, action);
     }
 
     protected final long tryAcquireAiOwner() {
@@ -459,6 +462,7 @@ extends NativeDeNpcTemplateState {
     }
 
     @Override
+    // 正式為 private，但父類同名 package 方法使 Java 無法編譯；此差異待 #73 裁定。
     void cancelNpcChatTimer() {
         NativeDeChatRuntime.cancel(this);
     }

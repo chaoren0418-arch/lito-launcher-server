@@ -1,18 +1,5 @@
 // DECOMPILED from base-0.6.71.jar, TODO review
 package local.lito381.server;
-import java.util.Iterator;
-import local.lito381.server.InventoryCatalog;
-import local.lito381.server.NativeDeArmorTemplate;
-import local.lito381.server.NativeDeItemApplication;
-import local.lito381.server.NativeDeItemDefinitionsResources;
-import local.lito381.server.NativeDeItemStateCopy;
-import local.lito381.server.NativeDeItemTemplate;
-import local.lito381.server.NativeDeItemTemplatesResources;
-import local.lito381.server.NativeDeWeaponTemplate;
-import local.lito381.server.NativeDeWorldKinds;
-import local.lito381.server.RuntimeInventory;
-import local.lito381.server.SourceWeaponCombatTraits;
-import local.lito381.server.SourceWeaponPhysicalStats;
 
 import java.lang.ref.WeakReference;
 import java.util.AbstractMap;
@@ -49,11 +36,10 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       Objects.requireNonNull(var2);
       synchronized (var0) {
          if (var0.nativeDeItems() instanceof NativeDeItemInventory var9) {
-            if (var9.templates == var1 && var9.definitions == var2) {
-               return var9;
-            } else {
+            if (var9.templates != var1 || var9.definitions != var2) {
                throw new IllegalStateException("inventory already captures another source generation");
             }
+            return var9;
          } else {
             NativeDeItemInventory var4 = new NativeDeItemInventory(var0, var1, var2);
 
@@ -77,13 +63,10 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       return var1 > 0L && var1 <= 2147483647L ? this.templates.table().getTemplate((int)var1) : null;
    }
 
-   private NativeDeItemTemplate template(InventoryCatalog.Definition definition) {
-        NativeDeItemTemplate nativeDeItemTemplate = this.template(definition.catalogId());
-        if (nativeDeItemTemplate == null || nativeDeItemTemplate instanceof NativeDeWeaponTemplate != definition.weapon() || nativeDeItemTemplate instanceof NativeDeArmorTemplate != definition.armor()) {
-            return null;
-        }
-        return nativeDeItemTemplate;
-    }
+   private NativeDeItemTemplate template(Definition var1) {
+      NativeDeItemTemplate var2 = this.template(var1.catalogId());
+      return var2 != null && var2 instanceof NativeDeWeaponTemplate == var1.weapon() && var2 instanceof NativeDeArmorTemplate == var1.armor() ? var2 : null;
+   }
 
    static boolean shuffle(RuntimeInventory var0, Random var1) {
       if (!(var0.nativeDeItems() instanceof NativeDeItemInventory var2)) {
@@ -125,7 +108,7 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
 
    static RuntimeInventory preserveCopy(RuntimeInventory var0, RuntimeInventory var1) {
       synchronized (var0) {
-         if (var0.nativeDeItems() instanceof NativeDeItemInventory var3) {
+         if (!(var0.nativeDeItems() instanceof NativeDeItemInventory var3)) { return var1; }
             NativeDeItemInventory var11 = new NativeDeItemInventory(var1, var3.templates, var3.definitions);
             var11.owner = var3.owner;
             var11.rentalCharacter = var3.rentalCharacter;
@@ -150,9 +133,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
 
             var1.nativeDeBind(var11);
             return var1;
-         } else {
-            return var1;
-         }
       }
    }
 
@@ -244,23 +224,37 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       }
    }
 
-   private void updatePhysical(long l, RuntimeInventory.Item item, RuntimeInventory.Item item2) {
-        Map map = this.inventory.nativeDePhysical();
-        SourceWeaponPhysicalStats sourceWeaponPhysicalStats = (SourceWeaponPhysicalStats)map.get(l);
-        if (sourceWeaponPhysicalStats == null) {
-            return;
-        }
-        if (item != null && item.definition().catalogId() != item2.definition().catalogId()) {
-            map.remove(l);
-        } else {
-            sourceWeaponPhysicalStats = sourceWeaponPhysicalStats.withEnchantLevel(item2.enchantLevel()).withDurability(item2.durability());
-            if (item2.blessing() <= 2) {
-                SourceWeaponCombatTraits sourceWeaponCombatTraits = sourceWeaponPhysicalStats.combatTraits();
-                sourceWeaponPhysicalStats = sourceWeaponPhysicalStats.withCombatTraits(new SourceWeaponCombatTraits(sourceWeaponCombatTraits.material(), item2.blessing(), sourceWeaponCombatTraits.attributeKind(), sourceWeaponCombatTraits.attributeLevel(), sourceWeaponCombatTraits.attributeDamage(), sourceWeaponCombatTraits.doubleDamageChance(), sourceWeaponCombatTraits.doubleDamageMultiplier(), sourceWeaponCombatTraits.maximumDamageChance(), sourceWeaponCombatTraits.doubleDamageEffect(), sourceWeaponCombatTraits.maximumDamageEffect(), sourceWeaponCombatTraits.inventoryGfx()));
+   private void updatePhysical(long var1, Item var3, Item var4) {
+      Map var5 = this.inventory.nativeDePhysical();
+      SourceWeaponPhysicalStats var6 = (SourceWeaponPhysicalStats)var5.get(var1);
+      if (var6 != null) {
+         if (var3 != null && var3.definition().catalogId() != var4.definition().catalogId()) {
+            var5.remove(var1);
+         } else {
+            var6 = var6.withEnchantLevel(var4.enchantLevel()).withDurability(var4.durability());
+            if (var4.blessing() <= 2) {
+               SourceWeaponCombatTraits var7 = var6.combatTraits();
+               var6 = var6.withCombatTraits(
+                  new SourceWeaponCombatTraits(
+                     var7.material(),
+                     var4.blessing(),
+                     var7.attributeKind(),
+                     var7.attributeLevel(),
+                     var7.attributeDamage(),
+                     var7.doubleDamageChance(),
+                     var7.doubleDamageMultiplier(),
+                     var7.maximumDamageChance(),
+                     var7.doubleDamageEffect(),
+                     var7.maximumDamageEffect(),
+                     var7.inventoryGfx()
+                  )
+               );
             }
-            map.put(l, sourceWeaponPhysicalStats);
-        }
-    }
+
+            var5.put(var1, var6);
+         }
+      }
+   }
 
    public Item remove(Object var1) {
       synchronized (this.inventory) {
@@ -295,16 +289,17 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       }
    }
 
-   private void changed(BoundItem boundItem) {
-        EntryState entryState = this.entries.get(Integer.toUnsignedLong(boundItem.getId()));
-        if (entryState == null || entryState.actor != boundItem) {
-            throw new IllegalStateException("source item is detached from its inventory");
-        }
-        RuntimeInventory.Item item = entryState.view;
-        RuntimeInventory.Item item2 = this.snapshot(entryState);
-        this.updatePhysical(item2.objectId(), item, item2);
-        ++this.mutationRevision;
-    }
+   private void changed(NativeDeItemInventory.BoundItem var1) {
+      NativeDeItemInventory.EntryState var2 = this.entries.get(Integer.toUnsignedLong(var1.getId()));
+      if (var2 != null && var2.actor == var1) {
+         Item var3 = var2.view;
+         Item var4 = this.snapshot(var2);
+         this.updatePhysical(var4.objectId(), var3, var4);
+         this.mutationRevision++;
+      } else {
+         throw new IllegalStateException("source item is detached from its inventory");
+      }
+   }
 
    void validateReplacement(RuntimeInventory var1) {
       NativeDeItemInventory var2 = this.copySource == null ? null : this.copySource.get();
@@ -435,7 +430,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setCount(long var1) {
          if (this.store == null) {
             super.setCount(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -444,7 +438,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
                } else if (var1 == 0L) {
                   this.store.remove(Integer.toUnsignedLong(this.getId()));
                   super.setCount(0L);
-                  return;
                } else {
                   super.setCount(var1);
                   this.store.changed(this);
@@ -457,7 +450,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setEquipped(boolean var1) {
          if (this.store == null) {
             super.setEquipped(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -471,7 +463,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setIdentified(boolean var1) {
          if (this.store == null) {
             super.setIdentified(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -485,7 +476,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setSealed(boolean var1) {
          if (this.store == null) {
             super.setSealed(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -499,7 +489,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setEnchantLevel(int var1) {
          if (this.store == null) {
             super.setEnchantLevel(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -523,7 +512,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void set_durability(int var1) {
          if (this.store == null) {
             super.set_durability(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -547,7 +535,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setBless(int var1) {
          if (this.store == null) {
             super.setBless(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -571,7 +558,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setChargeCount(int var1) {
          if (this.store == null) {
             super.setChargeCount(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -595,7 +581,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setItem(NativeDeItemTemplate var1) {
          if (this.store == null) {
             super.setItem(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
@@ -613,7 +598,6 @@ final class NativeDeItemInventory extends AbstractMap<Long, Item> {
       public void setItemId(int var1) {
          if (this.store == null) {
             super.setItemId(var1);
-            return;
          } else {
             synchronized (this.store.inventory) {
                this.check();
