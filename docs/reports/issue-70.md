@@ -1,22 +1,38 @@
-# Issue #70 / T020-B09 — 最新工具重驗，仍待主控裁定
+# Issue #70 / T020-B09 — 重驗未通過，等待 #203／#216 合併
 
 ## 結論
 
-**未通過驗收、不可 B-land。** 2026-11-06 在指定 worktree／`task/70`，先將最新 `origin/main@9678e97f4bff1dfab7cc820297e3ea6ff533375c` 合併為 `b3236ab808bb631ce154ed2f1575f9b0f3869124`，再修改與重編。本次工具已包含 #174（`6b769a4d`）、#176（`a32d30db`）、#186（`bccc2cb7`），並非沿用前輪舊工具。
+**未通過驗收、不可 B-land。** 2026-11-06 在指定 worktree／`task/70`，從前輪 `9fdd2bf` 合併最新 `origin/main@295c19c14b06c73fdb4dc1d8e151dbd84e217bce`，合併提交為 `3c253f82b38a91b4b0925ad1a99e2596a855a628`。本輪從來源重新編譯工具、註解及三份 staged Java，在全新 `target/retry-main` 輸出驗證；未沿用前輪 class。工具包含 #174、#176、#186，但尚未包含新裁定要求的 #203、#216。
 
 全部 **362 entries：353 SAME、2 SAME_PATHS、7 DIFF**；類別 missing／extra／ONLY_LEFT／ONLY_RIGHT 皆 0。方法層級仍有 **398 DIFF、63 ONLY_RIGHT、9 ONLY_LEFT**；缺漏與額外方法全含 `lambda$`，普通方法缺漏為 0。**類別齊全不代表方法全部通過。** T029 為 **5 SAME、1 SAME_EFFECTS、1 SAME_PATHS、1 DIFF**。
 
 依[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6660410007)，剩餘差異分型、完整代表差異附於本報告，交 `needs:claude`。未把 CLI exit 0、CI 綠燈或局部診斷當作驗收通過。
 
-## 做了什麼
+## 派工依賴與最新裁定（已核對 GitHub）
+
+[主控新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70#issuecomment-6665159356) 已確認前輪的登入守門、light try/catch、差異分型及 pending metadata 處理正確，並指示先等 #203／#216 合併再續修。這兩項目前尚未進入 main：
+
+| 項目 | 本輪讀取到的狀態 | 對 B09 的影響 |
+|---|---|---|
+| [#203／PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) | Issue `task:review`；PR `open`、`merged=false`；head `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe` | 呼叫點 lambda 配對、含迴圈 CFG 尚未可用 |
+| [#216](https://github.com/chaoren0418-arch/lito-launcher-server/issues/216) | Issue `task:queued`、依賴 #203 | 尚無 `enclosing-method` 單屬性語法及純轉拋 handler 正規化 |
+| [#70](https://github.com/chaoren0418-arch/lito-launcher-server/issues/70) 派工 YAML | `attempts: 2`，`depends_on: [102, 132, 135, 153, 166, 174, 176, 186]` | 未補入主控要求的 203、216，因而再次派到同一組未解工具差異 |
+
+本輪只新增合併提交與更新本報告；保留前輪 staged Java 及核准清單，不導入未合併的工具，不越界實作 #203／#216。四個 EnclosingMethod 條目維持 pending；只寫類名會一併豁免 Nest 等屬性，不能拿來替代精確豁免。
+
+新裁定允許 #176 的 `ORPHAN_IGNORED` 計入通過，並預告 #203 的三種新證明狀態；即使納入此口徑，本輪 7 個類別 DIFF、398 個方法 DIFF 及 72 個方法配對缺口仍未解決。未以新口徑將現有 DIFF 改標通過。
+
+## 既有修正（本輪確認保留）
 
 - `sourceApplicationRun` 開頭補回 `SourceLogin.allowed(socket, config)`；try 只包含呼叫與條件，catch `Exception` 後呼叫 private static `rethrowUnchecked(Throwable)`。泛型 helper 本體只有 `throw (E) t;`，沒有包裝、記錄或吞例外；完整描述子及核准連結已加入 `extra-methods-approved.txt`。
-- `nativeLightCommit` 從讀取 cooldown 開始補上 `catch (Throwable failure) { throw failure; }`，覆蓋拒絕條件、admit、狀態與 MP 更新；成功路徑的 Integer boxing 保持在 try 之外。保留既有 `throws IOException`，沒有加入 Exceptions 豁免。候選的自我涵蓋 handler 尚未被 Java／比較器重現，詳見下節。
+- `nativeLightCommit` 從讀取 cooldown 開始補上 `catch (Throwable failure) { throw failure; }`，覆蓋拒絕條件、admit、狀態與 MP 更新；成功路徑的 Integer boxing 保持在 try 之外。保留既有 `throws IOException`，沒有加入 Exceptions 豁免。目前工具仍未證明 handler／資料流等價，詳見下節。
 - 四個治療用 local record 的 EnclosingMethod-only 核准以 **pending 註解**記錄在 `metadata-exempt.txt`；目前工具只能整組豁免，沒有啟用超出授權的條目。
 - 保留三方移植、5 個 `@AsRecord`、`@AsmFinal`、T029 正式方法；本輪未改 Protocol、GameHub，也未以 Java 調整 poison record 的 SWAP、private 呼叫 opcode 或既有 stack 暫存。
-- 自行修改限 ClientSession staged Java、上述兩份核准清單與本報告。main 合併帶入的上游檔案不算本輪自行修改；未編輯 `docs/REPORT.md`、`src/main`、`pom.xml`、設定、封存、releases 或硬連結。
+- 前輪修正限 ClientSession staged Java、上述兩份核准清單與本報告；本輪僅自行更新本報告。main 合併帶入的上游檔案不算本輪自行修改；未編輯 `docs/REPORT.md`、`src/main`、`pom.xml`、設定、封存、releases 或硬連結。
 
 ## 已驗證
+
+本輪全新編譯 JAR 的 SHA-256 與前輪一致；完整官方 `classes` JSON（含逐方法結果）及唯讀診斷全文亦逐項／逐字相同。因此下列 T029 表、差異分型與完整代表附錄均經本輪重驗確認，不是只複製舊摘要。`report-retry.py` 以斷言核對上述一致性及 missing／extra 為空。
 
 Microsoft OpenJDK 17.0.17；ASM 9.7。直接從合併後來源編譯 semantic-diff、AsRecord 與兩個註解類；再用候選、正式、註解與 lib classpath 編譯本批三個 staged 檔，僅執行官方 AsRecord 轉換器，原位打包後直接比較。沒有複製候選 class bytes、另寫產物修補器、換名或替換待驗 JAR。
 
@@ -38,7 +54,7 @@ converted=6 為 5 個 record 加 ClientSession 的 AsmFinal，不是 6 個 recor
 |---|---|
 | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
 | `lito伺服器/LiTo381-Server/reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| `scratch/issue-70/target/latest-final.jar` | `2111ea1efeb4996b3293cc9d720398dd4ed0861c2353f55f637de0cbe4f1e302` |
+| `scratch/issue-70/target/retry-main.jar` | `2111ea1efeb4996b3293cc9d720398dd4ed0861c2353f55f637de0cbe4f1e302` |
 
 ### T029（完整原名與描述子）
 
@@ -64,7 +80,7 @@ converted=6 為 5 個 record 加 ClientSession 的 AsmFinal，不是 6 個 recor
 | `1CompanionHealing`、`1PlayerHealing` | `nativeSourceHealingOriginalNature([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V` | `useNaturesBlessingSpell([BLlocal/lito381/server/BattleSpellCatalog$NaturesBlessingSpell;I)V` |
 | `2CompanionHealing`、`2PlayerHealing` | `nativeSourceHealingOriginalGroup([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V` | `useGroupHealingSpell([BLlocal/lito381/server/BattleSpellCatalog$GroupHealingSpell;)V` |
 
-補充診斷只在記憶體暫時對齊這兩個屬性，再呼叫未修改的完整 ClassComparer；四個結果皆 `REST_EXCEPT_TWO_PROPERTIES SAME`，涵蓋其他 metadata、欄位、InnerClasses 與方法。診斷隨即還原屬性，沒有序列化／寫回 class，也沒有取代正式 CLI 結果。請主控新增精確屬性工具任務；不可直接取消 pending 註解。
+補充診斷只在記憶體暫時對齊這兩個屬性，再呼叫未修改的完整 ClassComparer；四個結果皆 `REST_EXCEPT_TWO_PROPERTIES SAME`，涵蓋其他 metadata、欄位、InnerClasses 與方法。診斷隨即還原屬性，沒有序列化／寫回 class，也沒有取代正式 CLI 結果。主控已開 #216 實作精確屬性豁免；待該任務合併後才能啟用，不可直接取消 pending 註解。
 
 ### nativeLightCommit 仍非「只差 throws」
 
@@ -83,7 +99,7 @@ from  to   target type
 245   250  245    any
 ```
 
-第三列保護 handler 自身；候選有 ALOAD／POP 的舊 monitor 暫存，javac 的 catch 原樣轉拋沒有這個自我涵蓋區間。此外完整差異仍見 CHECKCAST、stack 運送與 handler 涵蓋的指令差異。未宣稱全是 harmless。
+第三列保護 handler 開頭；依主控新裁定，其中 ASTORE／ALOAD 不會丟例外，應由 #174 涵蓋規則忽略，舊 ALOAD／POP 暫存也沒有作用，因此不再將自我涵蓋本身列為待裁定問題。仍須處理的是 CHECKCAST 與路徑事件數 110／90；主控要求等 #203 合併後重驗，再逐路徑定位多出的 20 個事件。#216 另處理純轉拋 handler。
 
 因此主控「只剩 throws 才試原樣轉拋、再考慮 Exceptions 豁免」的前提不成立，本輪沒有新增 exceptions-exempt，也沒有拿不存在的 javac 失敗證據申請豁免。#186 的 helper 消除規則要求右側對應位置無 handler，本方法右側有 handler，不能直接借登入守門的核准擴大放行。完整正規化差異見附錄。
 
@@ -107,7 +123,7 @@ from  to   target type
 | 登入守門轉拋與整體handler | 1 |
 | T029副作用摘要 | 1 |
 
-其他後備方法結果為 {'ONLY_LEFT': 9, 'ONLY_RIGHT': 63, 'ORPHAN_IGNORED': 8, 'SAME_PATHS': 71, 'DIFF': 398}。其中 ORPHAN_IGNORED 8 是工具依全 JAR 引用掃描的輸出，不當作使用者要求的 SAME／SAME_EFFECTS／SAME_PATHS；仍需主控處理最終驗收口徑。
+其他後備方法結果為 {'ONLY_LEFT': 9, 'ONLY_RIGHT': 63, 'ORPHAN_IGNORED': 8, 'SAME_PATHS': 71, 'DIFF': 398}。其中 ORPHAN_IGNORED 8 是工具依全 JAR 引用掃描的輸出，主控新裁定已明確認可，不再列作待裁定問題；其他 DIFF 與 ONLY_* 仍不通過。
 
 ## 推測
 
@@ -116,15 +132,16 @@ from  to   target type
 
 ## 待驗證／給下一棒的提示
 
-1. **Claude 主控**：先裁定 metadata 精確豁免的工具任務、nativeLightCommit 的自我涵蓋 handler、登入守門的成對正規化邊界，以及其餘分型；Issue #70 應保留 `needs:claude`。
-2. **本機執行器**：依主控裁定續修本批／更新工具後，從 staged 重新編譯並重驗完整 362 entries。不能拿本輪 353 SAME 加上手工推測湊成通過。
-3. **T029**：保留正式來源，優先消除 inventory 方法的 effects ASTORE 差異；`run()` 的 SAME_PATHS 如需更嚴格模式，交主控明確裁定，沒有自行擴大 effects。
-4. **B-land**：本批尚不可落地。未執行單元測試、回歸或實機；依 §6-5 暫存區不執行，統一在 B-land 處理。未啟動伺服器／登入器／遊戲，未連正式 DB。
+1. **Claude 主控／調度器**：請將 #70 的 `depends_on` 補入 **203、216**，依新裁定等待兩項合併後再派工。此輪依任務要求加回 `needs:claude`，原因是依賴未齊及派工資料尚未同步；不是要求重新裁定已裁定的 metadata／ORPHAN 問題。
+2. **工具任務執行器**：#203 完成審查、#216 完成單屬性豁免及純轉拋處理後，由使用者依專案流程合併；本任務沒有合併其他 PR 的授權。
+3. **B09 本機執行器**：合併含兩項工具的新 main，重編三份 staged Java，對完整 362 entries 重驗。若 light 仍 DIFF，逐路徑定位 110／90 事件的差距及 CHECKCAST；僅剩 throws 時才嘗試原樣轉拋 helper，再視 javac 失敗證據考慮 Exceptions 豁免。登入流程仍差異則附完整差異；T029 inventory 先查 effects 的第 43 個事件，再調整 Java。不得把全部差異一概歸因於工具。
+4. **switch-map**：四筆差異的完整代表仍在附錄；#186 已在本輪工具中，等待主控依新裁定處理形狀差異。
+5. **B-land**：尚不可落地。未執行單元測試、回歸或實機；依 §6-5 暫存區不執行，統一在 B-land 處理。未啟動伺服器／登入器／遊戲，未連正式 DB。
 
 ## 產出路徑與重現
 
-- 版本控制產出：`merge-inputs/50635f7e/staged/local/lito381/server/ClientSession.java`（位於伺服器目錄）、`docs/combat-merge/extra-methods-approved.txt`、`docs/combat-merge/metadata-exempt.txt`、本報告。
-- 本機可重建證據：`scratch/issue-70/verify-latest.py`、`run-audit.py`、`LatestAudit.java`、`latest-command.json`、`latest-final-{diff.json,diff.md,audit.txt,javac.log,record.log,semantic.log}`、`target/latest-final.jar`。scratch／target 不進 git；本報告附錄保留各類完整代表差異，不依賴本機檔案才能審查。
+- 本輪新增的版本控制變更只有本報告；PR 累積的版本控制產出：伺服器 `merge-inputs/50635f7e/staged/local/lito381/server/` 下的 `ClientSession.java`、`Protocol.java`、`GameHub.java`，以及 `docs/combat-merge/extra-methods-approved.txt`、`docs/combat-merge/metadata-exempt.txt`、本報告。
+- 本機可重建證據：`scratch/issue-70/verify-latest.py`、`run-audit.py`、`LatestAudit.java`、`latest-command.json`、`retry-main-{diff.json,diff.md,audit.txt,javac.log,record.log,semantic.log}`、`target/retry-main.jar`。scratch／target 不進 git；本報告附錄保留各類完整代表差異，不依賴本機檔案才能審查。
 - 最新 main 來源的工具未修改；官方 CLI 的 JSON 已列完整 `leftClasspath`、驗收清單及核准旗標。重新跑 `verify-latest.py` 須使用尚不存在的輸出名稱，避免舊 class 汙染。
 
 以下 PowerShell 從 repo 根目錄可重建正式驗收，不依賴前輪 scratch 腳本（JDK 路徑依本機安裝）：
