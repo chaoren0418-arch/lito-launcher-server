@@ -1,14 +1,24 @@
-# Issue #62／T020-B01 指定修正與 #174、#176 重驗
+# Issue #62／T020-B01 審查回覆與 #203 依賴阻塞
 
 ## 結論
 
-**本輪指定三處 Java 已修正，B01 驗收仍有 1 個 DIFF，交主控 Claude 裁定。** 最終為 **20 SAME、1 SAME_EFFECTS、0 SAME_PATHS、1 DIFF**。Java 17 編譯成功，AsRecord 轉換 1 類，22 個 entry 完整且無額外 entry。
+**B01 正式驗收尚未通過；依最新主控裁定，Java 不改，等待 #186、#203 合併後重驗。** 本輪（2026-11-06）已補回 Forest 的 B 類完整正規化差異與核准證據，更新下一棒提示。前輪正式 CLI 結果維持 **20 SAME、1 SAME_EFFECTS、0 SAME_PATHS、1 DIFF**，不是本輪重新執行所得。
 
-剩餘 `NativeWeaponBreakTargetLifecycle` 的輸出 Runnable 在直接逐方法診斷得到 `path multisets equal (87)`，但正式 CLI 仍因 lambda 內容識別與上層 handle 配對得到 DIFF。以正式 CLI 結果作為驗收結論。
+剩餘 `NativeWeaponBreakTargetLifecycle` 的 lambda 呼叫點配對已由[最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6662268131)交給 #203，無須再次要求相同裁定。直接診斷的 87 條路徑相同不能取代正式 CLI 全批通過。
 
-本報告取代前輪 15 SAME／1 SAME_EFFECTS／6 DIFF 的狀態。本輪依主控最新裁定執行。[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6654588607)
+## 本輪審查回覆（已驗證）
 
-## 做了什麼（已驗證）
+- 在既有 `task/62` 從 `e2753408400367b14306a79f2e0403304537952b` 合併最新 `origin/main`：`422f92e563c8de2201f7caaf5fcc228bd5623438`，合併提交 `f94c24d7729837d7b54bcfb7257ea6d450980552`；未 checkout 或建立分支。
+- `2026-11-05T17:12:06.772929+00:00` 查核 GitHub：#203 為 OPEN／task:queued，`task/203` 的全狀態 PR 查詢為 `[]`；#186 為 OPEN／task:review。最新 main 尚不含 #203。原始查詢命令、退出碼與回應保存在 `scratch/issue-62/dependency-check.json`。
+- #62 本文仍列 `depends_on: [102, 132, 135, 153, 166, 174, 176]`，尚未加入最新裁定所列 186、203。這是派工依賴缺口，交主控／調度器修正。
+- 本輪只修改本報告；17 個 B01 Java、核准清單與 semantic-diff／AsRecord 工具相對 `e275340` 均無差異，因此未用舊工具重跑未滿足依賴的正式驗收。
+- 已核對前輪 JAR 與 classes：精確 22 個 entries，逐檔 bytes 相同，無缺漏或多出；17 個來源標頭齊全。前輪原始 JSON 的 `missingLeft`／`extraLeft` 均為空，Forest `apply` 逐方法狀態為 SAME_EFFECTS，原始命令包含 `--effects-methods` 與 `--exceptions-exempt`。
+- 補回附錄 E：完整 Forest diff、B 類分類、核准行、逐方法 JSON 與原始證據 SHA-256。Forest Java 與核准範圍均未擴大。
+- 本 PR 對最新 main 的完整範圍仍為 19 檔：B01 的 17 個 staged Java、`docs/reports/issue-62.md`、`docs/combat-merge/effects-approved.txt`。PR #79 描述應與本次推送 head 一併更新，明確保留驗收未通過及 #203 依賴。
+
+以下編譯命令、日誌、診斷、雜湊及附錄 A–D 均是 **`e275340` 前輪原始證據**；本輪保留並核對，未宣稱是含 #203 的重驗結果。
+
+## 前輪做了什麼（已驗證）
 
 工作目錄為 `D:\lineage開發\3-lito開發\scratch\wt\task-62`，使用既有 `task/62`。開始時 HEAD 為 `63da8a2`，fetch 後合併 `origin/main` 的 `c72453957ebe47e00ad024e874bbe31859457799`，合併提交為 `151c5e959232e73df2f00ce4f61ab5f798666e48`。工具包含 #174 與 #176 第二次修正。fetch／merge 經提權更新共用 Git 中繼資料。
 
@@ -23,7 +33,7 @@
 
 17 個外層類均重新用 CFR 0.152 反編譯候選作為核對，17 次退出碼皆為 0。全部 staged 檔均保有指定 DECOMPILED 標頭。`NativeSourceCubePlacement$Draft` 維持 `@AsRecord`，轉換後為 SAME。
 
-## 怎麼驗證（已驗證）
+## 前輪怎麼驗證（已驗證）
 
 使用 Microsoft JDK 17.0.17，重新編譯 main 中 semantic-diff 原始碼。註解獨立編譯，staged 只編譯 B01 的 17 個 Java，接著執行 `tools/as-record/as_record.py` CLI，最後打包 22 個 entry 進驗收 JAR。逐一核對 class 目錄與 JAR entry 都精確等於 `B01.verify_entries`。
 
@@ -204,17 +214,17 @@ only left
 
 ## 推測
 
-上述直接診斷支持剩餘問題位於 lambda 配對階段。主控可評估讓不同內容 identity、但同描述子的 lambda 先經嚴格逐路徑證明，再處理上層 handle 身份。該工具變更需要獨立審查其反例與歧義處理。
+主控預期 #203 的 lambda 呼叫點配對修正可讓剩餘 DIFF 歸零；因尚未合併，這仍是待正式 CLI 重驗確認的預期。
 
 ## 待驗證／未完成事項
 
-- B01 的 22 個 entry 全部達 SAME／SAME_EFFECTS／SAME_PATHS 尚未完成，剩 `NativeWeaponBreakTargetLifecycle` 一個 DIFF。
-- 本輪只處理 staged，單元測試與行為回歸依任務規定留待 B-land。實機啟動與遊戲驗收留待使用者。
-- 下一棒須由主控 Claude 審查本報告的直接逐方法證據與完整差異，裁定工具配對修正或 Java 表達方式後重新派工。
+- P1 尚未解除：等 #186、#203 合併後重編 B01 17 檔，執行核准 AsRecord 轉換與全部核准清單，再驗收 22 entries 全為 SAME／SAME_EFFECTS／SAME_PATHS，DIFF／ONLY_LEFT／ONLY_RIGHT=0，missingLeft／extraLeft 為空。
+- 單元測試與行為回歸依任務規定留待 B-land；本輪未啟動伺服器、登入器、遊戲或連 DB。
+- 報告證據與 PR 描述修復不等同 B01 驗收完成，不能因此合併落地。
 
 ## 產出路徑
 
-- 本輪來源為 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下上述三個 Java。
+- 前輪修正來源為 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下上述三個 Java；本輪保持不變。
 - 正式報告為 `docs/reports/issue-62.md`。
 - 本機建置證據為 `lito伺服器/LiTo381-Server/target/issue-62/final-174-176/`。
 - 本機工具輸出為 `scratch/issue-62/final-174-176.{json,md}`，完整正規化輸出在 `scratch/issue-62/final-174-176/{left,right}/`。
@@ -222,7 +232,7 @@ only left
 
 ## 給下一棒的提示
 
-將 Issue #62 標記 `needs:claude`，接續既有 PR #79。請先確認輸出 Runnable 的直接 path 證明，再處理 `JarIndex.remapMethod` 對三層 lambda 的內容雜湊依賴。`captureOutput` 的 Exceptions 已有核准條目，重跑時必須傳 `--exceptions-exempt`。全部 22 個 entry 達標後才交 B-land。
+主控／調度器先將派工依賴補上 #186、#203，避免在依賴未合併時重派。最新裁定已確定 **Java 不改、工具修正交 #203**，不必重做相同裁定。#203 合併後交本機執行器在 `task/62` 合併 main，重新編譯全部 17 檔、轉換 Draft、重驗全部 22 entries，更新本報告與 PR #79 的結果、原始輸出及雜湊。`captureOutput` 必須保留 `--exceptions-exempt`，Forest 必須保留既有 `--effects-methods` 與附錄 E 證據。全批正式通過後才交審查及 B-land。
 
 ## 附錄 A　實際命令收據
 
@@ -1163,4 +1173,263 @@ public final class ProbeWeaponPaths {
     }
   ]
 }
+```
+
+## 附錄 E　Forest B 類核准的完整證據（本輪補回）
+
+方法：`NativeCompanionForestArea#apply(ClientSession, AreaSilenceSpell, int, int, int, int, long)`，完整描述子如下核准行。依[主控對 Forest 的裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6647804482)及[本次審查回饋](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664074935)，沿用 B 類 `dup-pop-local` 核准；本輪沒有新增或擴大豁免。
+
+完整正規化差異顯示 staged 在 `List.stream()` 後多出 `ASTORE 21`／`ALOAD 21`；候選把相同 stream 留在 stack。這使 `toList()` 結果槽位由候選的 21 成為 staged 的 22，後續例外暫存槽位由 22–24 成為 23–25；指令索引及 handler／跳躍目標相應位移兩條。`NativeSourceIndirectPlayerProof.player`、filter、toList、publish 呼叫及 monitor 退出結構仍保留。這是區域暫存與 stack 形狀差，屬既有 B 類分類；正式工具以精確方法核准得到 SAME_EFFECTS，並非把整個類別忽略。下方保留全部 hunks，含例外涵蓋與 monitor 區塊差異。
+
+核准行（`docs/combat-merge/effects-approved.txt`）：
+
+```text
+local/lito381/server/NativeCompanionForestArea#apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V # batch: B01, category: dup-pop-local, pr: https://github.com/chaoren0418-arch/lito-launcher-server/pull/79
+```
+
+前輪原始 JSON 中的逐方法證據（附錄 D 保留完整 JSON）：
+
+```json
+{
+  "name": "local/lito381/server/NativeCompanionForestArea",
+  "status": "SAME_EFFECTS",
+  "byteSame": false,
+  "allowMethodsApplied": false,
+  "methodResults": [],
+  "effectsMethods": [
+    {
+      "method": "apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V",
+      "status": "SAME_EFFECTS",
+      "detail": null
+    }
+  ],
+  "approvedMethods": []
+}
+```
+
+原始命令收據已附於附錄 A，其中 `final-174-176-semantic.log` 對應的 argv 含 `--effects-methods scratch/issue-62/effects-approved.txt` 及 `--exceptions-exempt scratch/issue-62/exceptions-exempt.txt`（實際使用絕對路徑）。本輪以 `difflib.unified_diff(..., n=3)` 從原始 left／right dump 重新計算，確認與原始 `.diff` 逐字相同，並核對 JAR／classes 22 個 entry 的 bytes；核對腳本為 `scratch/issue-62/update-followup.py`，核對結果為 `scratch/issue-62/followup-validation.json`。下方文件只將 diff 的空白上下文行呈現為空行，全部指令與 hunks 均保留；原始 diff 未改動。
+
+| 原始證據路徑 | SHA-256 |
+|---|---|
+| `scratch/issue-62/final-174-176.json` | `8446c4e3fc11ab8713fc4f089e7096aad9252157343122a507755f2f4e775487` |
+| `scratch/issue-62/final-174-176/left/NativeCompanionForestArea.txt` | `06d5ed6ee3438d36a979bb898b3f1f6d9510520ce939851f35c67486db80e6fa` |
+| `scratch/issue-62/final-174-176/right/NativeCompanionForestArea.txt` | `9d569caf7c34036e0bef6de839c20e05390961a28f4075b767a970c3a2731b4b` |
+| `scratch/issue-62/final-174-176/NativeCompanionForestArea.txt.diff` | `ba297cbf782c826f6c3fa380d6b4f1f9053fb4d89f3ee1b0e096f9731bc5449c` |
+| `lito伺服器/LiTo381-Server/target/issue-62/final-174-176/staged.jar` | `e05d3f432413ecc65aa3f4f5a1d68b196de634f954935230763b443bfa92501f` |
+| `scratch/issue-62/dependency-check.json` | `0f466f5d77183b0c7251d5a3f1f918d45003f65b049f0d581693b67667c0130f` |
+
+### 完整正規化差異
+
+```diff
+--- staged/NativeCompanionForestArea.txt
++++ candidate/NativeCompanionForestArea.txt
+@@ -12,65 +12,65 @@
+
+ METHOD apply(Llocal/lito381/server/ClientSession;Llocal/lito381/server/BattleSpellCatalog$AreaSilenceSpell;IIIIJ)V access=8 signature=null exceptions=[]
+ annotations=||||pvis=|pinv=|lvtvis=|lvtinv= default=
+-54:[213:java/lang/Throwable  ]
+-55:[213:java/lang/Throwable  ]
+-60:[213:java/lang/Throwable  ]
+-62:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-63:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-66:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-69:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-71:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-76:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-79:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-81:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-83:[213:java/lang/Throwable  ]
+-86:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-90:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-92:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-97:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-102:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-104:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-107:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-111:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-112:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-118:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-121:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-125:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-131:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-133:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-135:[213:java/lang/Throwable  ]
+-140:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-141:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-144:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-145:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-149:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-150:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-151:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-157:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-161:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-165:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-166:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-167:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-171:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-172:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-173:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-178:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-179:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-183:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-184:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-185:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-189:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-190:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-191:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-192:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-195:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-199:[197:java/lang/Throwable  , 205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-201:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-203:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-207:[205:java/lang/Throwable  , 213:java/lang/Throwable  ]
+-209:[213:java/lang/Throwable  ]
+-211:[213:java/lang/Throwable  ]
+-215:[213:java/lang/Throwable  ]
++54:[211:java/lang/Throwable  ]
++55:[211:java/lang/Throwable  ]
++60:[211:java/lang/Throwable  ]
++62:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++63:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++66:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++69:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++71:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++76:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++79:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++81:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++83:[211:java/lang/Throwable  ]
++86:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++90:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++92:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++97:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++102:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++104:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++107:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++111:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++112:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++118:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++121:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++125:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++131:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++133:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++135:[211:java/lang/Throwable  ]
++140:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++141:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++144:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++145:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++147:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++148:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++149:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++155:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++159:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++163:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++164:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++165:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++169:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++170:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++171:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++176:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++177:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++181:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++182:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++183:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++187:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++188:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++189:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++190:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++193:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++197:[195:java/lang/Throwable  , 203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++199:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++201:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++205:[203:java/lang/Throwable  , 211:java/lang/Throwable  ]
++207:[211:java/lang/Throwable  ]
++209:[211:java/lang/Throwable  ]
++213:[211:java/lang/Throwable  ]
+ GETSTATIC local/lito381/server/NativeAreaMaterialAction.current:Ljava/lang/ThreadLocal;
+ INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
+ CHECKCAST local/lito381/server/NativeAreaMaterialAction$Context
+@@ -106,7 +106,7 @@
+ ASTORE 9
+ ALOAD 9
+ INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
+-IFEQ L219
++IFEQ L217
+ ALOAD 9
+ INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
+ CHECKCAST local/lito381/server/NativeAreaMaterialAction$Npc
+@@ -114,7 +114,7 @@
+ ALOAD 10
+ INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Npc.kind()I
+ CONST Integer:3
+-IF_ICMPNE L218
++IF_ICMPNE L216
+ ALOAD 10
+ INVOKEVIRTUAL local/lito381/server/NativeAreaMaterialAction$Npc.actor()Ljava/lang/Object;
+ CHECKCAST local/lito381/server/BattleCompanion
+@@ -217,13 +217,11 @@
+ ALOAD 8
+ GETFIELD local/lito381/server/NativeAreaMaterialAction$Context.players:Ljava/util/List;
+ INVOKEINTERFACE java/util/List.stream()Ljava/util/stream/Stream; itf
+-ASTORE 21
+-ALOAD 21
+ ALOAD 8
+ INVOKEDYNAMIC test(Llocal/lito381/server/NativeAreaMaterialAction$Context;)Ljava/util/function/Predicate; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:(Ljava/lang/Object;)Z, handle:H6 local/lito381/server/NativeSourceIndirectPlayerProof.player(Llocal/lito381/server/NativeAreaMaterialAction$Context;Llocal/lito381/server/ClientSession;)Z, type:(Llocal/lito381/server/ClientSession;)Z]
+ INVOKEINTERFACE java/util/stream/Stream.filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream; itf
+ INVOKEINTERFACE java/util/stream/Stream.toList()Ljava/util/List; itf
+-ASTORE 22
++ASTORE 21
+ ALOAD 0
+ CONST str:"publishAreaSilenceEffect"
+ CONST str:"(Ljava/util/List;JILlocal/lito381/server/ClientSession$Phase;II)V"
+@@ -231,7 +229,7 @@
+ ANEWARRAY java/lang/Object
+ DUP
+ CONST Integer:0
+-ALOAD 22
++ALOAD 21
+ AASTORE
+ DUP
+ CONST Integer:1
+@@ -267,27 +265,27 @@
+ POP
+ ALOAD 16
+ MONITOREXIT
+-GOTO L202
++GOTO L200
++ASTORE 22
++ALOAD 16
++MONITOREXIT
++ALOAD 22
++ATHROW
++ALOAD 14
++MONITOREXIT
++GOTO L208
+ ASTORE 23
+-ALOAD 16
++ALOAD 14
+ MONITOREXIT
+ ALOAD 23
+ ATHROW
+-ALOAD 14
+-MONITOREXIT
+-GOTO L210
++ALOAD 12
++MONITOREXIT
++GOTO L216
+ ASTORE 24
+-ALOAD 14
++ALOAD 12
+ MONITOREXIT
+ ALOAD 24
+-ATHROW
+-ALOAD 12
+-MONITOREXIT
+-GOTO L218
+-ASTORE 25
+-ALOAD 12
+-MONITOREXIT
+-ALOAD 25
+ ATHROW
+ GOTO L33
+ RETURN
 ```
