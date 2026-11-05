@@ -74,6 +74,7 @@ ACCEPTANCE False
 - 交付來源：`lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/NativeDeCharacterFields.java`、`NativeDeInstanceState.java`。
 - 核准紀錄：`docs/combat-merge/deviations.txt`、`deviations.md`；主報告：`docs/reports/issue-72.md`。
 - 本機原始證據：`scratch/issue-72/final-reproduce.{json,md}`、`target/final-reproduce.jar`、`audit/{summary.txt,bridges.tsv,calls.tsv}`、`*-instance.javap.txt`、`formal-callers.javap.txt`、`lambda-audit.txt`、`remaining-full.diff`。不加入 git；重要結果及再現程式已嵌入本報告。
+- **PR 描述同步受阻**：已將修訂描述以 UTF-8 寫入 `scratch/issue-72/pr-body.md`，執行 `gh pr edit 99 --repo chaoren0418-arch/lito-launcher-server --body-file scratch/issue-72/pr-body.md` 回傳 HTTP 401；REST PATCH 同樣 401，既有 Git credential helper 亦未提供可用認證。分支推送成功，但 PR #99 描述尚未更新；請具備 GitHub 寫入認證的調度器／本機執行器依本報告同步，移除過時的「待主控裁定」要求。
 - **調度器／#203 審查與合併流程**：本輪受依賴阻擋，先等待 #203／PR #215 合併；不要重新派回 bridge／lambda 裁定。合併後再派本機執行器更新 main，以含 #186、#203 的工具及核准清單直接編譯 49 份 staged Java、重驗 185 entries，更新同一份報告的工具版本、命令、雜湊及逐項結果。每項須為 SAME／SAME_EFFECTS／SAME_PATHS／DEVIATION，DIFF=0、missingLeft/extraLeft=[]，才可送 A01 完成審查。
 - **#78 A-land**：在 A01 全部驗收通過後，測試 construction 父鏈觀測、四個 Name overload 的求值／例外／旗標順序，以及 compute 空集合／全 null／非 null 元素錯誤行為。技能根因追蹤 #184，本批不修正式 bug。
 
