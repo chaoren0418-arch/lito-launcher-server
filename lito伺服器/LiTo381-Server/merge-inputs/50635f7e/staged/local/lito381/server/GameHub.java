@@ -12945,7 +12945,7 @@ final class GameHub implements AutoCloseable {
         Channel channel = requiredChannel(room.channelId);
         boolean deleted = room.members.isEmpty() && room.id != channel.defaultRoomId;
         List<ClientSession> deleteRecipients = deleted
-                ? channelMembers(room.channelId) : List.of();
+                ? new ArrayList<>(channel.members) : List.of();
         if (deleted) {
             rooms.remove(room.id);
             channel.roomIds.remove(room.id);

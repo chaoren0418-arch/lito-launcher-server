@@ -21622,7 +21622,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.MAP) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM map rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -21658,7 +21658,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.light()) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM light rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -21888,7 +21888,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.BRAVE) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM brave rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -21916,7 +21916,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.WISDOM) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM wisdom-potion rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -21951,7 +21951,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.ELVEN_BRAVE) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM elven-wafer rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -21988,7 +21988,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.BLUE_MPR) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM blue-potion rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -22117,7 +22117,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.BLIND) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM blindness rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -22137,7 +22137,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.BREATH) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM underwater-breath rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -22173,7 +22173,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.WHISTLE) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM whistle rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -22189,7 +22189,7 @@ final class ClientSession implements Runnable {
         }
 
         if (definition.effect() == InventoryCatalog.Effect.LIQUOR) {
-            if (!NativeWorldPotionPhase.allowed(this) || observer || playerHp <= 0) {
+            if (phase != Phase.BATTLE || observer || playerHp <= 0) {
                 System.out.println("[LiTo] C_USE_ITEM liquor rejected phase=" + phase
                         + " observer=" + observer + " hp=" + playerHp);
                 return;
@@ -56951,33 +56951,35 @@ final class ClientSession implements Runnable {
     /*
      * WARNING - Removed try catching itself - possible behaviour change.
      */
-    Integer nativeLightCommit(BattleSpellCatalog.LightSpell lightSpell, Object object, long l) throws IOException {
+    Integer nativeLightCommit(BattleSpellCatalog.LightSpell lightSpell, Object object, long l) {
         int n;
         int n2;
         long l2;
         l2 = l;
         Phase phase = (Phase)((Object)object);
-        object = lightSpell;
+        BattleSpellCatalog.LightSpell spell = lightSpell;
         ClientSession lock = this;
         int n3;
-        try {
+        {
             block4: {
-                long l3 = this.spellReadyNanos.getOrDefault(((BattleSpellCatalog.LightSpell)object).skillId(), 0L);
-                if (l2 >= l3 && this.playerMp >= NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2 = this.nativeSkillConsumptionIntelligence(), n = this.nativeSkillConsumptionOriginalReduction()) && this.phase == phase && (phase == Phase.BATTLE || phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block4;
-                System.out.println("[LiTo] C_USE_SPELL light rejected state skill=" + ((BattleSpellCatalog.LightSpell)object).skillId() + " mp=" + this.playerMp + " cooldownNanos=" + Math.max(0L, l3 - l2));
+                long l3 = this.spellReadyNanos.getOrDefault(spell.skillId(), 0L);
+                if (l2 >= l3 && this.playerMp >= NativeSkillConsumptionBridges.LightSpell_mpCost_I(spell, n2 = this.nativeSkillConsumptionIntelligence(), n = this.nativeSkillConsumptionOriginalReduction()) && this.phase == phase && (phase == Phase.BATTLE || phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block4;
+                System.out.println("[LiTo] C_USE_SPELL light rejected state skill=" + spell.skillId() + " mp=" + this.playerMp + " cooldownNanos=" + Math.max(0L, l3 - l2));
                 return null;
             }
             if (!NativeLightAction.admit(this, lightSpell)) {
                 return null;
             }
-            this.cancelMeditation("spell-" + ((BattleSpellCatalog.LightSpell)object).skillId());
-            this.timedStatus.activateLight(l2, ((BattleSpellCatalog.LightSpell)object).durationSeconds());
+            this.cancelMeditation("spell-" + spell.skillId());
+            this.timedStatus.activateLight(l2, spell.durationSeconds());
             ClientSession clientSession = this;
-            clientSession.playerMp = NativeSkillConsumption.boundMp(clientSession, clientSession.playerMp - NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2, n));
+            clientSession.playerMp = NativeSkillConsumption.boundMp(clientSession, clientSession.playerMp - NativeSkillConsumptionBridges.LightSpell_mpCost_I(spell, n2, n));
             n3 = this.playerMp;
-            this.commitSpellReady(((BattleSpellCatalog.LightSpell)object).skillId(), l2 + (long)((BattleSpellCatalog.LightSpell)object).reuseDelayMillis() * 1000000L);
-        } catch (Throwable failure) {
-            throw failure;
+            try {
+                this.commitSpellReady(spell.skillId(), l2 + (long)spell.reuseDelayMillis() * 1000000L);
+            } catch (IOException failure) {
+                ClientSession.<RuntimeException>rethrowUnchecked(failure);
+            }
         }
         return n3;
     }
