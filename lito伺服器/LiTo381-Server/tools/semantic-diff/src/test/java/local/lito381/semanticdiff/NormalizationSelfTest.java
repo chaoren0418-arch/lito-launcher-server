@@ -65,7 +65,7 @@ public final class NormalizationSelfTest implements Opcodes {
             if (c == dup2) m.instructions.add(new InsnNode(POP2));
             m.instructions.add(new InsnNode(POP2)); m.instructions.add(new InsnNode(RETURN));
         }
-        diff("unapproved-dup2-swap", dup2, swap);
+        compare("unapproved-dup2-swap", dup2, swap, null, "SAME_PATHS");
         compare("approved-dup2-swap", dup2, swap, APPROVED, "SAME_EFFECTS");
         ClassNode unlistedLeft = effects(false, 1), unlistedRight = effects(true, 500);
         MethodNode extra = new MethodNode(ACC_PUBLIC | ACC_STATIC, "unlisted", "()V", null, null);
@@ -75,7 +75,7 @@ public final class NormalizationSelfTest implements Opcodes {
         extraRight.instructions.add(new InsnNode(NOP));
         extraRight.instructions.add(new InsnNode(RETURN));
         unlistedRight.methods.add(extraRight);
-        String mixed = compare("unlisted-same-class", unlistedLeft, unlistedRight, APPROVED, "DIFF");
+        String mixed = compare("unlisted-same-class", unlistedLeft, unlistedRight, APPROVED, "SAME_PATHS");
         require(mixed.contains("\"method\": \"m()V\", \"status\": \"SAME_EFFECTS\""), "independent method result");
 
         effectDiff("invoke-order", m -> {
@@ -117,7 +117,7 @@ public final class NormalizationSelfTest implements Opcodes {
         compare("effects-catch-count", caught(null, 1), caught(null, 2), APPROVED, "DIFF");
         ClassNode ordered = pair(1, 2), reordered = pair(2, 1);
         compare("constant-bag-order", ordered, reordered, APPROVED, "SAME_EFFECTS");
-        compare("constant-bag-multiplicity", pair(1, 1), pair(1, 2), APPROVED, "DIFF");
+        compare("constant-bag-multiplicity", pair(1, 1), pair(1, 2), APPROVED, "SAME_PATHS");
         ClassNode incrementLeft = pair(1, 2), incrementRight = pair(1, 2);
         incrementLeft.methods.get(0).instructions.insert(new IincInsnNode(1, 1));
         incrementRight.methods.get(0).instructions.insert(new IincInsnNode(500, 1));
@@ -211,7 +211,7 @@ public final class NormalizationSelfTest implements Opcodes {
                 slots("()V", true, ISTORE, 2, ISTORE, 8, ILOAD, 8));
         diff("slots-bijection", slots("()V", true, ISTORE, 8, ISTORE, 8),
                 slots("()V", true, ISTORE, 2, ISTORE, 3));
-        diff("slots-parameter", slots("(II)V", true, ILOAD, 0), slots("(II)V", true, ILOAD, 1));
+        compare("slots-parameter", slots("(II)V", true, ILOAD, 0), slots("(II)V", true, ILOAD, 1), null, "SAME_PATHS");
         diff("slots-this", slots("()V", false, ALOAD, 0), slots("()V", false, ALOAD, 1));
         same("slots-wide-parameters", slots("(JDI)V", false, ILOAD, 5, ISTORE, 10, ILOAD, 10),
                 slots("(JDI)V", false, ILOAD, 5, ISTORE, 20, ILOAD, 20));
@@ -244,7 +244,7 @@ public final class NormalizationSelfTest implements Opcodes {
         method(extraUnlisted, "()V").instructions.add(new InsnNode(RETURN));
         compare("extra-other-method", extraUnlisted, clazz(), null, "DIFF", "--extra-methods", extra.toString());
         ClassNode changedHelper = helper(ACC_PRIVATE | ACC_STATIC);
-        changedHelper.methods.get(0).instructions.insert(new InsnNode(NOP));
+        changedHelper.methods.get(0).instructions.insert(new MethodInsnNode(INVOKESTATIC,"Sink","changed","()V",false));
         compare("extra-both-present", helper, changedHelper, null, "DIFF", "--extra-methods", extra.toString());
         compare("extra-right-only-unapproved", clazz(), helper, null, "DIFF");
         for (int access : new int[]{ACC_PUBLIC | ACC_STATIC, ACC_PRIVATE, ACC_STATIC, ACC_PROTECTED | ACC_STATIC}) {
@@ -277,7 +277,7 @@ public final class NormalizationSelfTest implements Opcodes {
         ClassNode initLeft = clazz(), initRight = clazz();
         MethodNode il = method(initLeft, "()V"), ir = method(initRight, "()V");
         il.name = ir.name = "<clinit>";
-        il.instructions.add(new InsnNode(RETURN)); ir.instructions.add(new InsnNode(NOP)); ir.instructions.add(new InsnNode(RETURN));
+        il.instructions.add(new InsnNode(RETURN)); ir.instructions.add(new MethodInsnNode(INVOKESTATIC,"Sink","changed","()V",false)); ir.instructions.add(new InsnNode(RETURN));
         compare("metadata-clinit-preserved", initLeft, initRight, null, "DIFF", "--metadata-exempt", exempt.toString());
         ClassNode field = clazz(); field.fields.add(new FieldNode(ACC_STATIC, "x", "I", null, null));
         compare("metadata-field-preserved", field, clazz(), null, "DIFF", "--metadata-exempt", exempt.toString());

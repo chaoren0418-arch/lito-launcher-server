@@ -2,3 +2,5 @@
 local/lito381/server/NativeDeDeletionState#get_showId()I # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
 local/lito381/server/NativeDeNpcVitalState#getX()I # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
 local/lito381/server/NativeDeNpcVitalState#getY()I # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
+
+local/lito381/server/NativeLightAction$Output # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/64#issuecomment-6654963452

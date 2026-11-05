@@ -35,3 +35,27 @@
 - **已驗證**：比較器 fixture 涵蓋左側額外方法／清單外方法／兩側同名內容不同、核准建構子賦值前後移動／反向／額外呼叫／Name 呼叫位置改變。
 - **推測**：以上來源端修補可滿足交付需求；比較器結果不證明執行期父鏈回呼不會觀察到差異。
 - **待驗證**：本文件列出的 A-land 執行期單元測試，以及介面 default 實作與五個建構子的最終來源。
+
+## #176：PhysicalNpc 的 int／boolean 方法偏離
+
+兩條均由 [#65 主控留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888) 核准，僅作用於下列完整方法識別：
+
+- `local/lito381/server/NativeSourcePhysicalNpc#sourceCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z`
+- `local/lito381/server/NativeSourcePhysicalNpc#targetCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z`
+
+**理由**：候選呼叫 int producer 後，以 `DUP; IFLT; IRETURN` 直接回傳非負 int；Java boolean 方法必須表達成 `state != 0`。負值兩側均先走既有 fallback。這是指定候選的方法級核准，並非一般 int／boolean 正規化。
+
+**已驗證**：以 JDK 17 `javap -c -p -s` 檢查 SHA-256 `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` 的候選，並逐一反向追蹤每個 `IRETURN` 的所有一般前驅，結果如下。沒有從方法名稱或返回型別推測值域。
+
+| 對應核准方法 | producer | IRETURN offset | 所有可能運算元 |
+|---|---|---:|---|
+| sourceCurrent | `NativeSourceRawNpc.sourceState(Origin)I` | 25 | -1（offset 24 ICONST_M1） |
+| sourceCurrent | 同上 | 224 | 0（223）、1（219 → GOTO 224） |
+| targetCurrent | `NativeSourceGroundNpc.targetState(Origin)I` | 21 | -1（20 ICONST_M1） |
+| targetCurrent | 同上 | 85 | 0（84）、1（80 → GOTO 85） |
+
+兩個 producer 都只有上述兩個 IRETURN。其他路徑可能丟例外，沒有其他正常回傳值。兩個 consumer 的 offset 5 均為 `IFLT 9`，非負路徑 offset 8 IRETURN，offset 9 POP 後進 fallback，因此直接回傳的值域恰為 0／1。
+
+**比較界線**：傳入 `--deviations` 才啟用 `method-diff`；精確匹配兩側原名與描述子，方法缺少、清單拼錯、未附核准 URL 均拒絕。整類其他方法與 metadata 照比；JSON `methodResults` 與 Markdown 另列 DEVIATION 和左右完整正規化方法內容，不混進 SAME。更換候選後應重做上述 producer 證明，不能沿用值域結論。
+
+**推測／待驗證**：指定值域下兩種 boolean 表達相同；B-land 仍須依主控要求補 `sourceState`／`targetState` 回傳 0／1 時兩個 consumer 與候選一致的單元測試。未載入應用類別、啟動伺服器或連接資料庫。命令、稽核腳本與批次結果見 [issue-176 報告](../reports/issue-176.md)。
