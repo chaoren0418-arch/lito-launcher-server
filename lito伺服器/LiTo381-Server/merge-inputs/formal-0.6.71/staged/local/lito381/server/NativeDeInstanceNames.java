@@ -27,11 +27,10 @@ final class NativeDeInstanceNames {
         if (name == null || name instanceof NativeDeInstanceName) {
             return name;
         }
-        NativeDeDeletionPorts.Services services = construction.owner().services;
-        if (!(services instanceof NativeDeWorldContext)) {
+        if (construction.owner().services instanceof NativeDeWorldContext nativeDeWorldContext) {
+        } else {
             throw new IllegalArgumentException("source mutable names require a concrete World");
         }
-        NativeDeWorldContext nativeDeWorldContext = (NativeDeWorldContext)services;
         return NativeDeInstanceNames.name(nativeDeWorldContext, name);
     }
 
@@ -54,8 +53,7 @@ final class NativeDeInstanceNames {
                     nativeDeInstanceNames = new NativeDeInstanceNames();
                     CombatAccess.set(nativeDeWorldContext, FIELD, nativeDeInstanceNames);
                 }
-                NativeDeInitializerKernel.Name name3 = nativeDeInstanceNames.values.computeIfAbsent(name2, name -> new NativeDeInstanceName(name.get_deobjid(), name.get_name(), name.get_classId(), name.get_sex(), name.get_clanid(), name.get_weaponType(), name.getTitle(), name.getDeShop()));
-                return name3;
+                return nativeDeInstanceNames.values.computeIfAbsent(name2, name -> new NativeDeInstanceName(name.get_deobjid(), name.get_name(), name.get_classId(), name.get_sex(), name.get_clanid(), name.get_weaponType(), name.getTitle(), name.getDeShop()));
             }
         }
         finally {

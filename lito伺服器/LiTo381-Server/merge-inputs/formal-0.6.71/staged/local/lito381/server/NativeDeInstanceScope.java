@@ -53,17 +53,17 @@ final class NativeDeInstanceScope {
       void forEachNearbyPlayer(NativeDeObjectFields var1, int var2, NativeDeWorldPlayerFilter var3, Consumer<NativeDeDeletionPorts.Viewer> var4) {
          NativeDeInstanceState var5 = NativeDeInstanceScope.actor();
          if (var1 == var5 && var5.deletionOwner.services instanceof NativeDeWorldContext var6) {
-            var6.call(
-               "forEachNearbyPlayer",
-               "(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V",
-               var1,
-               var2,
-               var3,
-               var4
-            );
          } else {
             throw new IllegalArgumentException("De broadcast requires the owning concrete World");
          }
+         var6.call(
+            "forEachNearbyPlayer",
+            "(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V",
+            var1,
+            var2,
+            var3,
+            var4
+         );
       }
    }
 }

@@ -151,137 +151,140 @@ final class NativeDeInitializerKernel {
             return;
          }
 
-         if (var2.get_name() != null && !var2.get_name().trim().isEmpty()) {
-            var1.set_deName(var2);
-            ArrayList var40 = var0.liveNames();
-            ReentrantLock var43 = var0.namesLock();
-            var43.lock();
+         if (var2.get_name() == null || var2.get_name().trim().isEmpty()) {
 
-            try {
-               if (!var40.contains(var2)) {
-                  var40.add(var2);
-               }
-            } finally {
-               var43.unlock();
+            var0.log()
+               .warn(
+               "[假人名稱驗證][DB名稱無效] deobjid={}, denamebig5={}, npcObjectId={}",
+               var2.get_deobjid(),
+               var2.get_name() == null ? "<NULL>" : "[" + var2.get_name() + "]",
+               var1.getId()
+               );
+            var1.setInitFailed(true);
+            return;
+         }
+
+         var1.set_deName(var2);
+         ArrayList var40 = var0.liveNames();
+         ReentrantLock var43 = var0.namesLock();
+         var43.lock();
+
+         try {
+            if (!var40.contains(var2)) {
+               var40.add(var2);
             }
+         } finally {
+            var43.unlock();
+         }
 
-            var1.setNameId(var2.get_name());
-            if (var1.getNameId() != null && !var1.getNameId().trim().isEmpty() && var2.get_name().equals(var1.getNameId())) {
-               int var49;
-               if (var5 != null) {
-                  var49 = var5.classId;
-               } else {
-                  var49 = var2.get_classId();
-               }
-
-               int var55 = var2.get_sex();
-               if (var55 > 1) {
-                  var55 = 1;
-               }
-
-               if (var49 > 6) {
-                  var49 = 0;
-               }
-
-               int var61 = _class_list[var55][var49];
-               NativeDeInitializerKernel.Ability var69 = var0.getAbility(var49);
-               if (var69 != null) {
-                  int var71 = var0.nextInt(Math.max(1, var69.lvlMax - var69.lvlMin + 1)) + var69.lvlMin;
-                  var1.setLevel(var71);
-                  int var73 = var0.nextInt(Math.max(1, var69.hpMax - var69.hpMin + 1)) + var69.hpMin;
-                  int var15 = var0.nextInt(Math.max(1, var69.mpMax - var69.mpMin + 1)) + var69.mpMin;
-                  var1.setMaxHp(var73);
-                  var1.setCurrentHp(var73);
-                  var1.setMaxMp(var15);
-                  var1.setCurrentMp(var15);
-                  int var16 = Math.abs(var69.acMax - var69.acMin);
-                  int var17 = var69.acMin - var0.nextInt(var16 + 1);
-                  int var18 = var0.nextInt(Math.max(1, var69.lawfulMax - var69.lawfulMin + 1)) + var69.lawfulMin;
-                  var1.setAc(var17);
-                  var1.setLawful(var18);
-                  var1.setStr(var69.strAdd + 10);
-                  var1.setDex(var69.dexAdd + 10);
-                  var1.setCon(var69.conAdd + 10);
-                  var1.setInt(var69.intAdd + 10);
-                  var1.setWis(var69.wisAdd + 10);
-                  var1.setCha(var69.chaAdd + 10);
-                  var1.addSp(var69.spAdd);
-                  var1.addDmgup(var69.dmgAdd);
-                  var1.addHitup(var71 / 3);
-               }
-
-               int var72;
-               if (var5 != null) {
-                  var72 = var5.weaponType;
-                  var0.log().debug("DeInitializer: 強制鎖定武器類型=" + var72 + " (來自 Setting ID=" + var5.id + ")");
-               } else {
-                  var72 = var2.get_weaponType();
-                  if (var72 == 0) {
-                     var72 = NativeDeWeaponKernel.random(var49, var0::nextBoolean);
-                  }
-               }
-
-               int var74 = var61;
-               if (var3) {
-                  int var75 = var0.getRandomPoly(var49, var72);
-                  if (var75 > 0) {
-                     var74 = var75;
-                  }
-               }
-
-               var1.setClassId(var49);
-               var1.setTempCharGfx(var74);
-               var1.setGfxId(var74);
-               NativeDeWeaponKernel.apply(var1, var72);
-               var1.setMoveSpeed(1);
-               var1.setBraveSpeed(1);
-               int var76 = var0.getAttackSpeed(var1.getTempCharGfx(), var1.getCurrentWeapon() + 1);
-               int var77 = var0.getMoveSpeed(var1.getTempCharGfx(), var1.getCurrentWeapon());
-               var1.setPassispeed(var77);
-               var1.setAtkspeed(var76);
-               if (var2.get_clanid() != 0) {
-                  var1.set_clanid(var2.get_clanid());
-                  NativeDeInitializerKernel.Clan var78 = var0.clan(var2.get_clanid());
-                  if (var78 != null) {
-                     var1.set_clanname(var78.getClanName());
-                     NativeDeInitializerKernel.Emblem var80 = var0.emblem(var78.getClanId());
-                     var1.set_emblem(var80);
-                  }
-               }
-
-               String var79 = var2.getTitle();
-               if (var79 != null && !var79.trim().isEmpty()) {
-                  var1.setTitle(var79);
-               } else {
-                  var1.setTitle("");
-               }
-
-               var1.broadcastPacketAll(var0.visual(var1.getId(), var1.getCurrentWeapon()));
-               return;
-            }
+         var1.setNameId(var2.get_name());
+         if (var1.getNameId() == null || var1.getNameId().trim().isEmpty() || !var2.get_name().equals(var1.getNameId())) {
 
             var0.log()
                .error(
-                  "[假人名稱驗證][套用流程錯誤] deobjid={}, sourceName={}, npcNameId={}, npcObjectId={}",
-                  var2.get_deobjid(),
-                  "[" + var2.get_name() + "]",
-                  var1.getNameId() == null ? "<NULL>" : "[" + var1.getNameId() + "]",
-                  var1.getId()
+               "[假人名稱驗證][套用流程錯誤] deobjid={}, sourceName={}, npcNameId={}, npcObjectId={}",
+               var2.get_deobjid(),
+               "[" + var2.get_name() + "]",
+               var1.getNameId() == null ? "<NULL>" : "[" + var1.getNameId() + "]",
+               var1.getId()
                );
             var1.setInitFailed(true);
             var1.removeFromDeNameList();
             return;
          }
 
-         var0.log()
-            .warn(
-               "[假人名稱驗證][DB名稱無效] deobjid={}, denamebig5={}, npcObjectId={}",
-               var2.get_deobjid(),
-               var2.get_name() == null ? "<NULL>" : "[" + var2.get_name() + "]",
-               var1.getId()
-            );
-         var1.setInitFailed(true);
-         return;
+         int var49;
+         if (var5 != null) {
+            var49 = var5.classId;
+         } else {
+            var49 = var2.get_classId();
+         }
+
+         int var55 = var2.get_sex();
+         if (var55 > 1) {
+            var55 = 1;
+         }
+
+         if (var49 > 6) {
+            var49 = 0;
+         }
+
+         int var61 = _class_list[var55][var49];
+         NativeDeInitializerKernel.Ability var69 = var0.getAbility(var49);
+         if (var69 != null) {
+            int var71 = var0.nextInt(Math.max(1, var69.lvlMax - var69.lvlMin + 1)) + var69.lvlMin;
+            var1.setLevel(var71);
+            int var73 = var0.nextInt(Math.max(1, var69.hpMax - var69.hpMin + 1)) + var69.hpMin;
+            int var15 = var0.nextInt(Math.max(1, var69.mpMax - var69.mpMin + 1)) + var69.mpMin;
+            var1.setMaxHp(var73);
+            var1.setCurrentHp(var73);
+            var1.setMaxMp(var15);
+            var1.setCurrentMp(var15);
+            int var16 = Math.abs(var69.acMax - var69.acMin);
+            int var17 = var69.acMin - var0.nextInt(var16 + 1);
+            int var18 = var0.nextInt(Math.max(1, var69.lawfulMax - var69.lawfulMin + 1)) + var69.lawfulMin;
+            var1.setAc(var17);
+            var1.setLawful(var18);
+            var1.setStr(var69.strAdd + 10);
+            var1.setDex(var69.dexAdd + 10);
+            var1.setCon(var69.conAdd + 10);
+            var1.setInt(var69.intAdd + 10);
+            var1.setWis(var69.wisAdd + 10);
+            var1.setCha(var69.chaAdd + 10);
+            var1.addSp(var69.spAdd);
+            var1.addDmgup(var69.dmgAdd);
+            var1.addHitup(var71 / 3);
+         }
+
+         int var72;
+         if (var5 != null) {
+            var72 = var5.weaponType;
+            var0.log().debug("DeInitializer: 強制鎖定武器類型=" + var72 + " (來自 Setting ID=" + var5.id + ")");
+         } else {
+            var72 = var2.get_weaponType();
+            if (var72 == 0) {
+               var72 = NativeDeWeaponKernel.random(var49, var0::nextBoolean);
+            }
+         }
+
+         int var74 = var61;
+         if (var3) {
+            int var75 = var0.getRandomPoly(var49, var72);
+            if (var75 > 0) {
+               var74 = var75;
+            }
+         }
+
+         var1.setClassId(var49);
+         var1.setTempCharGfx(var74);
+         var1.setGfxId(var74);
+         NativeDeWeaponKernel.apply(var1, var72);
+         var1.setMoveSpeed(1);
+         var1.setBraveSpeed(1);
+         int var76 = var0.getAttackSpeed(var1.getTempCharGfx(), var1.getCurrentWeapon() + 1);
+         int var77 = var0.getMoveSpeed(var1.getTempCharGfx(), var1.getCurrentWeapon());
+         var1.setPassispeed(var77);
+         var1.setAtkspeed(var76);
+         if (var2.get_clanid() != 0) {
+            var1.set_clanid(var2.get_clanid());
+            NativeDeInitializerKernel.Clan var78 = var0.clan(var2.get_clanid());
+            if (var78 != null) {
+               var1.set_clanname(var78.getClanName());
+               NativeDeInitializerKernel.Emblem var80 = var0.emblem(var78.getClanId());
+               var1.set_emblem(var80);
+            }
+         }
+
+         String var79 = var2.getTitle();
+         if (var79 == null || var79.trim().isEmpty()) {
+            var1.setTitle("");
+         } else {
+            var1.setTitle(var79);
+         }
+
+         var1.broadcastPacketAll(var0.visual(var1.getId(), var1.getCurrentWeapon()));
+
+
       } catch (Exception var36) {
          int var6 = var2 != null ? var2.get_deobjid() : 0;
          String var7 = var2 != null ? var2.get_name() : null;
@@ -333,7 +336,8 @@ final class NativeDeInitializerKernel {
 
    static void initDoll(NativeDeInitializerKernel.Services var0, NativeDeInitializerKernel.Actor var1, int var2, int var3) {
       int var4 = var0.getRandomDoll(var2, var3);
-      if (var4 > 0) {
+      if (var4 <= 0) { return; }
+      {
          try {
             NativeDeInitializerKernel.Template var5 = var0.template(71082);
             if (var5 == null) {
@@ -358,7 +362,8 @@ final class NativeDeInitializerKernel {
 
          for (int var5 = 0; var5 < var4.count; var5++) {
             NativeDeInitializerKernel.Template var6 = var0.template(var4.npcId);
-            if (var6 != null) {
+            if (var6 == null) { continue; }
+            {
                NativeDeInitializerKernel.Pet var7 = var0.summon(var6, var1);
                var7.setDePetType(var4.type);
                var7.setHomeX(var7.getX());

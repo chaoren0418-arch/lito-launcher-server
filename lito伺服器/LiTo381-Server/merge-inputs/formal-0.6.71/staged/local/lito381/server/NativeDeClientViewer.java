@@ -21,11 +21,10 @@ final class NativeDeClientViewer extends NativeDeKnownState {
    }
 
    private static int objectId(long var0) {
-      if (var0 > 0L && var0 <= 4294967295L) {
-         return (int)var0;
-      } else {
+      if (var0 <= 0L || var0 > 4294967295L) {
          throw new IllegalArgumentException("source viewer object ID outside unsigned32");
       }
+      return (int)var0;
    }
 
    static NativeDeClientViewer of(ClientSession var0) {
@@ -72,7 +71,8 @@ final class NativeDeClientViewer extends NativeDeKnownState {
    }
 
    static void retireClient(ClientSession var0) {
-      if (var0 != null) {
+      if (var0 == null) { return; }
+      {
          BattleTimedStatus var1 = CombatPoisonAtomic.status(var0);
          if (var1 != null) {
             retire(var1);
@@ -101,17 +101,11 @@ final class NativeDeClientViewer extends NativeDeKnownState {
    }
 
    private ClientSession current() {
-      if (!this.retired && this.life.mode != Mode.STOPPED) {
-         for (ClientSession var2 : this.hub.connectedSessionsSnapshot()) {
-            if (this.binding.matches(var2)) {
-               return var2;
-            }
-         }
-
-         return null;
-      } else {
-         return null;
+      if (this.retired || this.life.mode == Mode.STOPPED) { return null; }
+      for (ClientSession var2 : this.hub.connectedSessionsSnapshot()) {
+         if (this.binding.matches(var2)) { return var2; }
       }
+      return null;
    }
 
    @Override
@@ -120,9 +114,8 @@ final class NativeDeClientViewer extends NativeDeKnownState {
       if (var2 == null) {
          return false;
       } else {
-         return var1 instanceof NativeDeDeletionState var3 && var3.deletionOwner.timer.life != this.life
-            ? false
-            : this.withKnownLock(() -> !this.retired && this.life.admits() && this.binding.matchesFast(var2) && super.tryAddKnownObject(var1));
+         if (var1 instanceof NativeDeDeletionState var3 && var3.deletionOwner.timer.life != this.life) { return false; }
+         return this.withKnownLock(() -> !this.retired && this.life.admits() && this.binding.matchesFast(var2) && super.tryAddKnownObject(var1));
       }
    }
 
@@ -135,8 +128,10 @@ final class NativeDeClientViewer extends NativeDeKnownState {
    void sendPackets(NativeDeDeletionPorts.Packet var1) {
       if (NativeDeVisibilityOutput.accepts(var1)) {
          NativeDeVisibilityOutput.send(this, var1);
+         return;
       } else if (var1 instanceof NativeDePerceptionPacket) {
          NativeDePerceptionOutput.send(this, (NativeDePerceptionPacket)var1);
+         return;
       } else if (!(var1 instanceof NativeDeDeletionPorts.RemoveObject var2 && var2.actor instanceof NativeDeDeletionState var3)) {
          throw new IllegalArgumentException("viewer accepts source NPC remove packets only");
       } else if (var3.deletionOwner.timer.life != this.life) {
@@ -148,15 +143,16 @@ final class NativeDeClientViewer extends NativeDeKnownState {
          } else {
             byte[] var5 = Protocol.removeObject(Integer.toUnsignedLong(var3.getId()));
             synchronized (var9) {
-               if (!this.retired
-                  && this.life.mode != Mode.STOPPED
-                  && this.binding.matchesFast(var9)
-                  && CombatAccess.field(CombatPoisonAtomic.status(var9), "sourceDeKnownViewer") == this) {
+               if (this.retired
+                  || this.life.mode == Mode.STOPPED
+                  || !this.binding.matchesFast(var9)
+                  || CombatAccess.field(CombatPoisonAtomic.status(var9), "sourceDeKnownViewer") != this) {
+                  throw new IllegalStateException("stale native viewer publication");
+               }
+               {
                   Object[] var10003 = new Object[]{var5, "S_REMOVE_OBJECT source-De deletion id=" + Integer.toUnsignedLong(var3.getId())};
                   NativeDeVisibilityRuntime.requirePublication(this);
                   CombatAccess.call(var9, "sendEncryptedFrame", "([BLjava/lang/String;)V", var10003);
-               } else {
-                  throw new IllegalStateException("stale native viewer publication");
                }
             }
          }

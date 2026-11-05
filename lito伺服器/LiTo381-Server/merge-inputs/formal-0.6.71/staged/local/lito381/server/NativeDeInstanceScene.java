@@ -31,14 +31,13 @@ final class NativeDeInstanceScene implements Scene {
 
    @Override
    public void publish(NativeDeInstanceState var1, NativeDeInitializerKernel.Packet var2) {
-      if (var1.deletionOwner.services == this.context
-         && NativeDeInstanceScope.actor() == var1
-         && var2 instanceof NativeDeInstanceScene.Visual var3
-         && var3.packet().subject == var1) {
-         NativeDeInstanceBroadcast.toVisiblePlayers(var1, -1, var3.packet());
-      } else {
+      if (var1.deletionOwner.services != this.context
+         || NativeDeInstanceScope.actor() != var1
+         || !(var2 instanceof NativeDeInstanceScene.Visual var3)
+         || var3.packet().subject != var1) {
          throw new IllegalArgumentException("foreign initializer visual binding");
       }
+      NativeDeInstanceBroadcast.toVisiblePlayers(var1, -1, var3.packet());
    }
 
    record Visual(NativeDePerceptionCharVisualUpdate packet) implements NativeDeInitializerKernel.Packet {

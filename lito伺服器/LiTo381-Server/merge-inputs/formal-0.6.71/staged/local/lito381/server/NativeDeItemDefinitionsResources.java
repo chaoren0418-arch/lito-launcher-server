@@ -64,8 +64,9 @@ final class NativeDeItemDefinitionsResources {
                 for (Class<?> clazz : TABLES) {
                     Object object = NativeDeItemDefinitionsResources.create(clazz);
                     data.tables.put(clazz, object);
-                    if (!Set.of(NativeDeItemWeaponAttrTable.class, NativeDeItemMagicStoneTable.class, NativeDeItemWeaponProcTable.class).contains(clazz)) continue;
-                    NativeDeItemDefinitionsResources.invokeLoad(object);
+                    if (Set.of(NativeDeItemWeaponAttrTable.class, NativeDeItemMagicStoneTable.class, NativeDeItemWeaponProcTable.class).contains(clazz)) {
+                        NativeDeItemDefinitionsResources.invokeLoad(object);
+                    }
                 }
                 return null;
             });
@@ -84,8 +85,9 @@ final class NativeDeItemDefinitionsResources {
             catch (Throwable throwable3) {
                 if (throwable == null) {
                     throwable = throwable3;
+                } else {
+                    throwable.addSuppressed(throwable3);
                 }
-                throwable.addSuppressed(throwable3);
             }
             data.loading = false;
         }
@@ -139,9 +141,10 @@ final class NativeDeItemDefinitionsResources {
             IdentityHashMap<Object, Object> identityHashMap = new IdentityHashMap<Object, Object>();
             for (Object object : data.tables.values()) {
                 for (Field field : object.getClass().getDeclaredFields()) {
-                    if (Modifier.isStatic(field.getModifiers()) || !Map.class.isAssignableFrom(field.getType())) continue;
-                    field.setAccessible(true);
-                    field.set(object, NativeDeItemDefinitionsResources.freezeValue(field.get(object), identityHashMap));
+                    if (!Modifier.isStatic(field.getModifiers()) && Map.class.isAssignableFrom(field.getType())) {
+                        field.setAccessible(true);
+                        field.set(object, NativeDeItemDefinitionsResources.freezeValue(field.get(object), identityHashMap));
+                    }
                 }
             }
             data.tables = Collections.unmodifiableMap(new LinkedHashMap(data.tables));

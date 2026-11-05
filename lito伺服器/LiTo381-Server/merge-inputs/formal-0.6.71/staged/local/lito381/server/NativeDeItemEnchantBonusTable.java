@@ -59,6 +59,7 @@ public class NativeDeItemEnchantBonusTable {
                var1++;
             } catch (Exception var11) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (item_id: " + var5 + ")", (Throwable)var11);
+               continue;
             }
          }
       } catch (SQLException var15) {
@@ -103,6 +104,7 @@ public class NativeDeItemEnchantBonusTable {
                var1++;
             } catch (Exception var12) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (item_id: " + var5 + ")", (Throwable)var12);
+               continue;
             }
          }
       } catch (SQLException var16) {

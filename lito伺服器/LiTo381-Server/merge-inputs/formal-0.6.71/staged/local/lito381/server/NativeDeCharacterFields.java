@@ -250,9 +250,8 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
          ReentrantLock var2 = this.vitalMutationLock();
          var2.lock();
 
-         Object var3;
          try {
-            var3 = var1.get();
+            return var1.get();
          } finally {
             var2.unlock();
             if (!var2.isHeldByCurrentThread()) {
@@ -260,7 +259,6 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
             }
          }
 
-         return (T)var3;
       }
    }
 
@@ -303,29 +301,25 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    private void recordDamageHpMutation(int var1, int var2) {
-      if (var1 != var2) {
-         ArrayDeque<NativeDeCharacterFields.DamageMutationReceipt> var3 = DAMAGE_MUTATION_RECEIPTS.get();
-         if (var3 != null) {
-            for (NativeDeCharacterFields.DamageMutationReceipt var5 : var3) {
-               if (var5._target == this) {
-                  var5.recordHp(var1, var2);
-                  return;
-               }
-            }
+      if (var1 == var2) { return; }
+      ArrayDeque<NativeDeCharacterFields.DamageMutationReceipt> var3 = DAMAGE_MUTATION_RECEIPTS.get();
+      if (var3 == null) { return; }
+      for (NativeDeCharacterFields.DamageMutationReceipt var5 : var3) {
+         if (var5._target == this) {
+            var5.recordHp(var1, var2);
+            return;
          }
       }
    }
 
    private void recordDamageDeathMutation(boolean var1, boolean var2) {
-      if (var1 != var2) {
-         ArrayDeque<NativeDeCharacterFields.DamageMutationReceipt> var3 = DAMAGE_MUTATION_RECEIPTS.get();
-         if (var3 != null) {
-            for (NativeDeCharacterFields.DamageMutationReceipt var5 : var3) {
-               if (var5._target == this) {
-                  var5.recordDead(var1, var2, this._currentHp);
-                  return;
-               }
-            }
+      if (var1 == var2) { return; }
+      ArrayDeque<NativeDeCharacterFields.DamageMutationReceipt> var3 = DAMAGE_MUTATION_RECEIPTS.get();
+      if (var3 == null) { return; }
+      for (NativeDeCharacterFields.DamageMutationReceipt var5 : var3) {
+         if (var5._target == this) {
+            var5.recordDead(var1, var2, this._currentHp);
+            return;
          }
       }
    }
@@ -403,14 +397,14 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
 
    final void drainVitalCompletionsAfterActionUnlock() {
       ReentrantLock var1 = this.vitalMutationLock();
-
-      while (!var1.isHeldByCurrentThread() && this._vitalCompletionDraining.compareAndSet(false, true)) {
-         label118:
-         while (true) {
-            try {
-               ArrayDeque var2 = new ArrayDeque();
+      do {
+         if (var1.isHeldByCurrentThread() || !this._vitalCompletionDraining.compareAndSet(false, true)) {
+            return;
+         }
+         try {
+            while (true) {
+               ArrayDeque<Runnable> var2 = new ArrayDeque<>();
                var1.lock();
-
                Runnable var3;
                try {
                   while ((var3 = this._vitalCompletions.poll()) != null) {
@@ -419,30 +413,19 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
                } finally {
                   var1.unlock();
                }
-
-               if (!var2.isEmpty()) {
-                  while (true) {
-                     if ((var3 = (Runnable)var2.pollFirst()) == null) {
-                        continue label118;
-                     }
-
-                     try {
-                        var3.run();
-                     } catch (Throwable var12) {
-                        this.reportCompletionFailure(var12);
-                     }
+               if (var2.isEmpty()) { break; }
+               while ((var3 = var2.pollFirst()) != null) {
+                  try {
+                     var3.run();
+                  } catch (Throwable var12) {
+                     this.reportCompletionFailure(var12);
                   }
                }
-            } finally {
-               this._vitalCompletionDraining.set(false);
             }
-
-            if (this._vitalCompletions.isEmpty()) {
-               return;
-            }
-            break;
+         } finally {
+            this._vitalCompletionDraining.set(false);
          }
-      }
+      } while (!this._vitalCompletions.isEmpty());
    }
 
    public final int adjustCurrentHp(long var1) {
@@ -459,12 +442,11 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
 
    public final int adjustCurrentHpIfAlive(long var1, int var3) {
       NativeDeCharacterFields.CurrentHpMutation var4 = this.withVitalMutation(() -> {
-         if (this._currentHp > 0 && !this.isDead()) {
-            int var4x = boundedVitalValue(this._currentHp, var1, Math.min(this._currentHp, var3), this.getMaxHp());
-            return this.enqueueCurrentHpCompletionLocked(this.commitCurrentHpLocked(var4x));
-         } else {
+         if (this._currentHp <= 0 || this.isDead()) {
             return this.enqueueCurrentHpCompletionLocked(new NativeDeCharacterFields.CurrentHpMutation(this._currentHp, this._currentHp));
          }
+         int var4x = boundedVitalValue(this._currentHp, var1, Math.min(this._currentHp, var3), this.getMaxHp());
+         return this.enqueueCurrentHpCompletionLocked(this.commitCurrentHpLocked(var4x));
       });
       return var4.currentHp();
    }
@@ -740,7 +722,7 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    public void setStatus(int var1) {
-      this.withVitalMutation(() -> this._status = var1);
+      this.withVitalMutation(() -> { this._status = var1; });
    }
 
    public int getLawful() {
@@ -870,7 +852,6 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
       TreeMap var1 = new TreeMap();
       this._npcVitalMutationLock.lock();
 
-      NativeDeCharacterFields.Snapshot var2;
       try {
          var1.put("_level", this.getLevel());
          var1.put("_currentHp", this._currentHp);
@@ -902,12 +883,11 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
          var1.put("_trueInt", this._trueInt);
          var1.put("_wis", this._wis);
          var1.put("_trueWis", this._trueWis);
-         var2 = new NativeDeCharacterFields.Snapshot(this.clientType, var1, this._isDead);
+         return new NativeDeCharacterFields.Snapshot(this.clientType, var1, this._isDead);
       } finally {
          this._npcVitalMutationLock.unlock();
       }
 
-      return var2;
    }
 
    NativeDeCharacterFields(int var1, NativeDeCharacterFields.Snapshot var2) throws IOException {
@@ -986,14 +966,12 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    protected final <T> T withKnownLock(Supplier<T> var1) {
       this._knownObjectLock.lock();
 
-      Object var2;
       try {
-         var2 = var1.get();
+         return var1.get();
       } finally {
          this._knownObjectLock.unlock();
       }
 
-      return (T)var2;
    }
 
    public boolean hasSkillEffect(int var1) {
@@ -1038,27 +1016,18 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    public boolean tryAddKnownObject(NativeDeDeletionPorts.ObjectRef var1) {
-      if (var1 == null) {
-         return false;
-      } else {
-         this._knownObjectLock.lock();
-
-         boolean var4;
-         try {
-            if (!(this instanceof NativeDeDeletionPorts.Viewer var2 && var1 instanceof NativeDeDeletionState var3 && !var3.registerViewer(var2))) {
-               if (this._knownObjects.addIfAbsent(var1) && var1 instanceof NativeDeDeletionPorts.Viewer) {
-                  this._knownPlayer.addIfAbsent((NativeDeDeletionPorts.Viewer)var1);
-               }
-
-               return true;
-            }
-
-            var4 = false;
-         } finally {
-            this._knownObjectLock.unlock();
+      if (var1 == null) { return false; }
+      this._knownObjectLock.lock();
+      try {
+         if (this instanceof NativeDeDeletionPorts.Viewer var2 && var1 instanceof NativeDeDeletionState var3 && !var3.registerViewer(var2)) {
+            return false;
          }
-
-         return var4;
+         if (this._knownObjects.addIfAbsent(var1) && var1 instanceof NativeDeDeletionPorts.Viewer) {
+            this._knownPlayer.addIfAbsent((NativeDeDeletionPorts.Viewer)var1);
+         }
+         return true;
+      } finally {
+         this._knownObjectLock.unlock();
       }
    }
 
@@ -1072,7 +1041,6 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
       } else {
          this._knownObjectLock.lock();
 
-         boolean var9;
          try {
             boolean var2 = this._knownObjects.remove(var1);
             if (var1 instanceof NativeDeDeletionPorts.Viewer) {
@@ -1083,29 +1051,21 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
                var4.unregisterViewer(var3);
             }
 
-            var9 = var2;
+            return var2;
          } finally {
             this._knownObjectLock.unlock();
          }
 
-         return var9;
       }
    }
 
    public boolean isKnownNpcViewerConsistent(NativeDeDeletionState var1) {
-      if (this instanceof NativeDeDeletionPorts.Viewer var2 && var1 != null) {
-         this._knownObjectLock.lock();
-
-         boolean var3;
-         try {
-            var3 = this._knownObjects.contains(var1) == var1.isViewerRegistered(var2);
-         } finally {
-            this._knownObjectLock.unlock();
-         }
-
-         return var3;
-      } else {
-         return true;
+      if (!(this instanceof NativeDeDeletionPorts.Viewer var2) || var1 == null) { return true; }
+      this._knownObjectLock.lock();
+      try {
+         return this._knownObjects.contains(var1) == var1.isViewerRegistered(var2);
+      } finally {
+         this._knownObjectLock.unlock();
       }
    }
 
@@ -1333,7 +1293,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    public int getMr() {
-      return this.hasSkillEffect(153) ? this._mr >> 2 : this._mr;
+      if (this.hasSkillEffect(153) == true) {
+         return this._mr >> 2;
+      }
+      return this._mr;
    }
 
    public int getTrueMr() {
@@ -1403,7 +1366,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    public int getChaLightSize() {
-      return this.isInvisble() ? 0 : this._chaLightSize;
+      if (this.isInvisble()) {
+         return 0;
+      }
+      return this._chaLightSize;
    }
 
    public void setChaLightSize(int var1) {
@@ -1411,7 +1377,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
    }
 
    public int getOwnLightSize() {
-      return this.isInvisble() ? 0 : this._ownLightSize;
+      if (this.isInvisble()) {
+         return 0;
+      }
+      return this._ownLightSize;
    }
 
    public void setOwnLightSize(int var1) {
@@ -1428,7 +1397,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
 
    private int hpMeterRatio() {
       int var1 = NativeDeVisibilityAccess.L1Character$getMaxHp(this);
-      return var1 <= 0 ? 100 : 100 * NativeDeVisibilityAccess.L1Character$getCurrentHp(this) / var1;
+      if (var1 <= 0) {
+         return 100;
+      }
+      return 100 * NativeDeVisibilityAccess.L1Character$getCurrentHp(this) / var1;
    }
 
    private final void visibilitySource$broadcastPacketHP(NativeDeDeletionPorts.Viewer var1) {
@@ -1498,7 +1470,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
          boolean var6 = false;
 
          for (Integer var8 : var0) {
-            if (var8 != null) {
+            if (var8 == null) {
+               continue;
+            }
+            {
                Integer var9 = (Integer)NativeDeCharacterFields.SKU1.get(var8);
                if (var9 != null) {
                   var1 += var9;
@@ -1605,7 +1580,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
       }
 
       private void recordHp(int var1, int var2) {
-         if (var1 != var2) {
+         if (var1 == var2) {
+            return;
+         }
+         {
             if (!this._hpSeen) {
                this._hpBefore = var1;
                this._hpSeen = true;
@@ -1617,7 +1595,10 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
       }
 
       private void recordDead(boolean var1, boolean var2, int var3) {
-         if (var1 != var2) {
+         if (var1 == var2) {
+            return;
+         }
+         {
             this._deathSeen = true;
             this._deadAfter = var2;
             if (!this._hpSeen) {

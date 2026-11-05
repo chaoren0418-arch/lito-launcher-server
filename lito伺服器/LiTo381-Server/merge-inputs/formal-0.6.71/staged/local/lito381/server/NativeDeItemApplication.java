@@ -68,12 +68,13 @@ final class NativeDeItemApplication {
         try {
             for (ClientSession clientSession : gameHub.connectedSessionsSnapshot()) {
                 Owner owner = nativeDeItemApplication.owner(clientSession);
-                if (owner == null) continue;
-                synchronized (owner) {
-                    for (int i = 0; i < 4; ++i) {
-                        owner.adopt(clientSession.nativeDeInventory(i));
+                if (owner != null) {
+                    synchronized (owner) {
+                        for (int i = 0; i < 4; ++i) {
+                            owner.adopt(clientSession.nativeDeInventory(i));
+                        }
+                        owner.refreshFields();
                     }
-                    owner.refreshFields();
                 }
             }
             return nativeDeItemApplication;
@@ -121,15 +122,13 @@ final class NativeDeItemApplication {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     static void replace(ClientSession clientSession, RuntimeInventory runtimeInventory, int n) {
-        Owner owner;
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         NativeDeItemApplication nativeDeItemApplication = gameHub == null ? null : (NativeDeItemApplication)CombatAccess.field(gameHub, FIELD);
-        Owner owner2 = owner = nativeDeItemApplication == null ? null : nativeDeItemApplication.owner(clientSession);
+        Owner owner = nativeDeItemApplication == null ? null : nativeDeItemApplication.owner(clientSession);
         if (owner == null) {
             clientSession.nativeDeSetInventory(n, runtimeInventory);
             return;
         }
-        Owner owner3;
         synchronized (owner) {
             if (!owner.active || !owner.matches(clientSession)) {
                 throw new IllegalStateException("stale item inventory assignment");
@@ -141,14 +140,10 @@ final class NativeDeItemApplication {
                 owner.refreshFields();
                 return;
             }
-            RuntimeInventory runtimeInventory3;
             synchronized (runtimeInventory2) {
                 if (runtimeInventory != null) {
                     synchronized (runtimeInventory) {
-                        Object nativeItems = runtimeInventory.nativeDeItems();
-                        if (nativeItems instanceof NativeDeItemInventory inventory) {
-                            inventory.validateReplacement(runtimeInventory2);
-                        }
+                        ((NativeDeItemInventory)runtimeInventory.nativeDeItems()).validateReplacement(runtimeInventory2);
                         clientSession.nativeDeSetInventory(n, runtimeInventory);
                     }
                 } else {
@@ -207,7 +202,6 @@ final class NativeDeItemApplication {
         GameHub gameHub = (GameHub)CombatAccess.field(clientSession, "hub");
         NativeDeItemApplication nativeDeItemApplication = (NativeDeItemApplication)CombatAccess.field(gameHub, FIELD);
         synchronized (CombatAccess.field(clientSession, GATE)) {
-            long l;
             if (((Boolean)CombatAccess.field(clientSession, DISCONNECTED)).booleanValue() || clientSession.selectedCharacterName().isBlank()) {
                 return null;
             }
@@ -227,7 +221,8 @@ final class NativeDeItemApplication {
                     return null;
                 }
             }
-            if ((l = clientSession.playerObjectId()) <= 0L || l > 0xFFFFFFFFL) {
+            long l = clientSession.playerObjectId();
+            if (l <= 0L || l > 0xFFFFFFFFL) {
                 return null;
             }
             if (owner != null) {
@@ -292,14 +287,13 @@ final class NativeDeItemApplication {
         }
 
         void requireActive(RuntimeInventory runtimeInventory) {
-            int n;
             NativeDeItemApplication nativeDeItemApplication = (NativeDeItemApplication)this.application.get();
             ClientSession clientSession = (ClientSession)this.session.get();
             if (!this.active || nativeDeItemApplication == null || nativeDeItemApplication.closed || !nativeDeItemApplication.life.admits() || clientSession == null || !this.matches(clientSession) || CombatAccess.field(clientSession, NativeDeItemApplication.OWNER) != this) {
                 throw new IllegalStateException("source item owner is stale");
             }
             boolean bl = (Boolean)CombatAccess.field(clientSession, "rentalTownRoomState") != false && String.valueOf(CombatAccess.field(clientSession, "phase")).equals("BATTLE");
-            int n2 = n = bl ? 1 : 0;
+            int n = bl ? 1 : 0;
             if (clientSession.nativeDeInventory(n) != runtimeInventory) {
                 throw new IllegalStateException("source item inventory is staged or inactive");
             }
@@ -317,16 +311,16 @@ final class NativeDeItemApplication {
             RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(bl ? 1 : 0);
             for (int i = 0; i < 4; ++i) {
                 RuntimeInventory runtimeInventory2 = clientSession.nativeDeInventory(i);
-                if (runtimeInventory2 == null) continue;
-                synchronized (runtimeInventory2) {
-                    Map map = runtimeInventory2.nativeDeItems();
-                    if (map instanceof NativeDeItemInventory) {
-                        NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
-                        if (nativeDeItemInventory.owner == this) {
-                            nativeDeItemInventory.ownerFields(runtimeInventory2 == runtimeInventory ? (int)this.objectId : 0);
+                if (runtimeInventory2 != null) {
+                    synchronized (runtimeInventory2) {
+                        Map map = runtimeInventory2.nativeDeItems();
+                        if (map instanceof NativeDeItemInventory) {
+                            NativeDeItemInventory nativeDeItemInventory = (NativeDeItemInventory)map;
+                            if (nativeDeItemInventory.owner == this) {
+                                nativeDeItemInventory.ownerFields(runtimeInventory2 == runtimeInventory ? (int)this.objectId : 0);
+                            }
                         }
                     }
-                    continue;
                 }
             }
         }
@@ -340,9 +334,9 @@ final class NativeDeItemApplication {
             if (clientSession != null) {
                 for (int i = 0; i < 4; ++i) {
                     RuntimeInventory runtimeInventory = clientSession.nativeDeInventory(i);
-                    if (runtimeInventory == null) continue;
-                    synchronized (runtimeInventory) {
-                        continue;
+                    if (runtimeInventory != null) {
+                        synchronized (runtimeInventory) {
+                        }
                     }
                 }
             }

@@ -58,6 +58,7 @@ public class NativeDeItemBlessStatsTable {
                this._weaponBlessStats.computeIfAbsent(var4, var0 -> new HashMap<>()).put(var5, var6);
             } catch (Exception var10) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (bless_id: " + var4 + ")", (Throwable)var10);
+               continue;
             }
          }
       } catch (SQLException var14) {
@@ -98,6 +99,7 @@ public class NativeDeItemBlessStatsTable {
                this._armorBlessStats.computeIfAbsent(var4, var0 -> new HashMap<>()).put(var5, var6);
             } catch (Exception var11) {
                this.nativeDefinitions.log.error("載入資料失敗，已略過該筆 (bless_id: " + var4 + ")", (Throwable)var11);
+               continue;
             }
          }
       } catch (SQLException var15) {

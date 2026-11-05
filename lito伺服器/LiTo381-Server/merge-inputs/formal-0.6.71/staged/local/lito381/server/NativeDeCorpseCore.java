@@ -87,8 +87,9 @@ implements Runnable {
             if (object == null) continue;
             try {
                 if (!this.port.claim(npc, l, object)) {
-                    if (!npc.destroyed()) continue;
-                    this.tracked.remove(npc);
+                    if (npc.destroyed()) {
+                        this.tracked.remove(npc);
+                    }
                     continue;
                 }
                 this.tracked.remove(npc);
@@ -100,8 +101,9 @@ implements Runnable {
                 this.port.log("error", "[NpcLifecycle] corpse delete failed: objectId={} npcId={} map={} x={} y={} count={}", npc.getId(), npc.getNpcId(), (int) npc.getMapId(), npc.getX(), npc.getY(), l2, runtimeException);
             }
             finally {
-                if (this.port.retained(object)) continue;
-                this.port.release(object);
+                if (!this.port.retained(object)) {
+                    this.port.release(object);
+                }
             }
         }
     }

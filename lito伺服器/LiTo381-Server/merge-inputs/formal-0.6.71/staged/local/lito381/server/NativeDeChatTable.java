@@ -60,6 +60,7 @@ public class NativeDeChatTable {
                }
             } catch (Exception var10) {
                NativeDeChatScope.log().error("載入資料失敗，已略過該筆 (npcid: " + var5 + ")", (Throwable)var10);
+               continue;
             }
          }
       } catch (SQLException var14) {

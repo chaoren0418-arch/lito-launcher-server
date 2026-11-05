@@ -1,49 +1,117 @@
-# Issue #72 — T020-A01 正式 0.6.71 暫存
+# Issue #72 — T020-A01 正式 0.6.71 暫存（審查退回修正）
 
 ## 結論
 
-2026-11-05 本機重新驗證：49 份 staged Java 可編譯，產出恰好 185 個 A01 entry，**137 SAME／48 DIFF／0 ONLY_LEFT／0 ONLY_RIGHT**，SAME_EFFECTS=0、BYTE_SAME=18。**未達 185 SAME，不可進 A-land，不可部署。** 已依任務要求在 Issue #72 加上 `needs:claude`；本報告提供每個待裁定 entry 的完整正規化差異，不以 CI 綠或編譯成功冒充完成。
+2026-11-05，本輪以 `6f8a87b73f810f65c36f89839c1c8ec76ef4aa28` 為起點，在既有 `task/72` 工作樹修正 19 份 A01 staged Java。49 份來源可直接編譯，產物恰好包含 A01 的 185 個 entry：**152 SAME／33 DIFF／0 ONLY_LEFT／0 ONLY_RIGHT**，SAME_EFFECTS=0、BYTE_SAME=18，missingLeft／extraLeft 皆空。相較前輪 137／48，新增 15 個 SAME，沒有原本 SAME 的 entry 退回 DIFF。
 
-分支沿用 `task/72`，起點 `33f3f5c`。為保存已有遠端工作，將 `origin/task/72` 的 `94d28539c3c7b4b339d8ffd2367283a690b30095` 以 `git merge --no-commit --no-ff` 合入，沒有 checkout／重建分支，也不需要 force push。本報告取代前次報告；123 SAME／62 DIFF 是本機重現的修正前基準。
+**本任務仍未完成，不可合併進 A-land、不可部署。** 這次是修正過程的診斷重跑，並非依賴合併後的最終驗收。查詢 GitHub 時 #135 與 #153 仍 OPEN，尚未取得合併後工具；依主控留言，必須待兩案合併後再做 185 SAME 驗收。本輪已重新加上 `needs:claude`，原因是非 Object 建構子及下述未涵蓋的結構問題；不是要求把所有分支／try 差異當成例外。
+
+依據：[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6644325505)、[本輪退回](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6645753281)、設計 `docs/design/T020-combat-merge.md` §7。
 
 ## 做了什麼
 
-- 讀取根目錄與伺服器 AGENTS、docs/REPORT.md、設計 §7、A01 清單、#108 報告及 #72 主控／退回留言。49 類全為 DECOMPILED，均保留指定標頭。
-- 唯讀重新反編譯固定正式 JAR：CFR 0.152 及 Vineflower 1.11.2。保留已通過部分，修復泛型、捕捉名稱、冗餘區域槽、同步鎖、finally 返回與分支方向；以完整差異選擇較接近正式版的來源。
-- **修正真正行為錯誤**：舊 staged 的 `NativeDeAiTimeline.nextTimer` 每次執行兩次遞增；正式版先 `++timerSequence`，只有結果為 0 時再遞增。修正後整個 entry SAME。
-- AI timer／worker、chat scope／jobs、deletion scope／owner、definitions scope 等完整 entry 已對齊。`NativeDeItemEquipProc` 使用 #108 可重現的編譯期依賴，重驗 SAME。
-- `NativeDeInstanceState` 改用正式版新 CFR 來源，移除前次沿用的 src/main wrapper 寫法；但正式建構子的 pre-super 賦值無法在 Java 17 直接表達，已在來源與下文標明仍有行為風險。`NativeDeDeletionState` 的縮小存取權限也仍需裁定。
-- 只提交 A01 49 份 `.java` 與本報告。`src/main`、`pom.xml`、`docs/REPORT.md`、固定 JAR 未修改。沒有 javac 後 ASM、沒有覆蓋正式 class，也沒有 effects／allow／exclude 豁免。
+- 修正審查點名的 `NativeDeInstanceScene.publish`、`CombatSkillDerived.compute`、`NativeDeItemApplication.install`／`Owner.refreshFields`、`NativeDeItemDefinitionsResources.freeze`；也修正聊天／物品資料表 catch 的 continue、控制資料載入、corpse timer、名字綁定、初始化失敗分支與角色同步／return 結構。
+- 修正已從正式指令確認的行為差異：`NativeDeItemDefinitionsResources.read` 在沒有前一個例外時不再對自己呼叫 `addSuppressed`；`NativeDeItemApplication.replace` 恢復正式版的直接轉型與驗證；`NativeDeCorpseCore.run` 的 finally 不再以 continue 吞掉原有例外；`NativeDeInstanceState.sourceAi$nextAiTimerTokenLocked` 恢復先遞增一次、僅結果為 0 才再遞增。
+- `NativeDeCharacterFields.setStatus` 恢復 Runnable overload；`drainVitalCompletionsAfterActionUnlock` 恢復正式版的 try／finally 迴圈範圍。這些方法的完整正規化差異已消除。其他仍不同的方法照實列在附錄。
+- 調整 `NativeDeDeletionVisibility.Snapshot` 在來源中的位置，使 javac switch map 序號與正式相同；仍保留合成欄位名稱 DIFF，等待 #153，未改名或後處理 class。
+- 使用前輪從 SHA 固定正式 JAR 產生的 CFR 0.152／Vineflower 1.11.2 來源作逐方法對照；本輪沒有重新下載或重新執行反編譯器。49 份 staged 都保留 DECOMPILED 標頭。
+- `src/main`、`pom.xml`、`docs/REPORT.md`、正規化工具與核准清單均未修改。沒有套用 allow／effects／exclude，沒有 javac 後 ASM，也沒有用正式 class 覆蓋輸出。
 
-## 已驗證
+新增整個 entry SAME 的 15 項：
 
-環境：Windows、Microsoft JDK `17.0.17`、Python 3.12。一般 exec 沙箱初始化失敗，改用已核准的提升執行；寫入仍限本 worktree，原專案只讀。未啟動伺服器／登入器／遊戲，未連 DB，未讀機密設定、封存或客戶端。
+`NativeDeCharacterFields$CombatSkillDerived`, `NativeDeCharacterFields$DamageMutationReceipt`, `NativeDeChatWire`, `NativeDeCorpseCore`, `NativeDeCorpseTimers$Job`, `NativeDeCorpseTimers$Owner`, `NativeDeCorpseTimers$Owner$1`, `NativeDeCorpseTimers$Ticket`, `NativeDeInitializerKernel`, `NativeDeInstanceNames`, `NativeDeInstanceScene`, `NativeDeInstanceScope$World`, `NativeDeItemApplication`, `NativeDeItemApplication$Owner`, `NativeDeItemDefinitionsResources`。
 
-| 檔案／內容 | SHA-256 |
+## 已驗證：非 Object 父類與建構子時序
+
+正式 JAR SHA-256 已重新核對。對正式版執行 `javap -p -c -v`，並比對兩側正規化全文：
+
+```text
+NativeDeInstanceState:
+  super_class: #4 // local/lito381/server/NativeDeNpcConstructionState
+left/right class superName=local/lito381/server/NativeDeNpcConstructionState
+NativeDeNpcConstructionState:
+  super_class: #4 // local/lito381/server/NativeDeNpcTemplateState
+```
+
+正式版最基本建構子完整描述子：
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;)V
+```
+
+其起始指令是 `ALOAD 0; ALOAD 1; PUTFIELD NativeDeInstanceState.construction`，隨後取 construction 的 id／effects／owner／perception／template／npc，再 `INVOKESPECIAL NativeDeNpcConstructionState.<init>`。staged 則先 super、後寫 construction。另四個含 Name 的建構子，正式版在父建構子前呼叫 `NativeDeInstanceNames.name`，staged 移到 super 後。五個建構子的完整正規化差異均收錄於附錄，沒有只列 firstDiff。
+
+父建構子不是無作用的 Object 建構子。正式 `NativeDeNpcConstructionState` 建構子中可見以下 bytecode offset：
+
+```text
+  9: invokespecial NativeDeNpcTemplateState.<init>(...)
+ 15: invokestatic java/util/Objects.requireNonNull(Object)
+ 21: putfield nativeServices
+ 26: invokevirtual setNameId(String)
+ 30: new NativeDeNpcInventory
+ 38: invokespecial NativeDeNpcInventory.<init>(Services)
+ 41: putfield NativeDeDeletionState.inventory
+ 45: iconst_1
+ 46: putfield firstFound
+ 90: new java/util/concurrent/atomic/AtomicLong
+ 98: putfield _aiGeneration
+```
+
+**已驗證**：實際父類、欄位初始化與方法呼叫、super 前後的時序差異。**推測／風險**：父鏈或虛擬呼叫可能在 construction 尚未賦值時觀察到不同狀態，Name 的錯誤也可能改變父類是否執行；沒有執行建構子，沒有宣稱已重現特定執行期錯誤。**待裁定**：#153 的 Object-only 規則不適用此類；請主控另外裁定可接受的 Java 表達／交付策略，不得直接放寬比較。
+
+正式 `NativeDeCharacterFields$CombatSkillDerived.compute` 的相關欄位引用（指令內容來自正式正規化全文）：
+
+```text
+GETSTATIC local/lito381/server/NativeDeCharacterFields.SKU1:Ljava/util/HashMap;
+GETSTATIC local/lito381/server/NativeDeCharacterFields.SKU2:Ljava/util/HashMap;
+GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD1:Ljava/util/HashMap;
+GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD2:Ljava/util/HashMap;
+GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD3:Ljava/util/HashMap;
+```
+
+## 已裁定事項與新增未決事項
+
+| 項目 | 本輪結論與下一步 |
 |---|---|
-| 正式 `reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| 驗收 `scratch/issue-72/target/a01.jar` | `7a6d259928fb53e00a8c826d3d65ef9bdba11753008a242892cb291668556b86` |
-| A01 verify_entries（UTF-8、LF） | `8c883895819b752ae9c9b70b2cef771ce7f44bc23cacfc25c19c197109c79499` |
-| 49 份來源 SHA 清單（下方重現程式可產生） | `0d34a6343d76562bb9fcdc20901e94380c48e91141b97c26925d7ef67e971aae` |
-| CFR 0.152 | `f686e8f3ded377d7bc87d216a90e9e9512df4156e75b06c655a16648ae8765b2` |
-| Vineflower 1.11.2 | `e1e2415e7f78b34960402c4beddfc88e033d7842a23ecd132a8ec2eadd54f6bf` |
+| #108 編譯依賴 | 已完成；使用 repo 的 compile-stubs，不再要求裁定私人 stub。 |
+| InnerClasses、ACC_SUPER、預設建構子、槽位 | 等 #135 合併後套用正式工具重跑。 |
+| lambda 內容與 handle、switch-map 名稱 | 等 #153 合併後重跑；名稱之外的方法內容仍須相同。 |
+| `local/lito381/server/NativeDeDeletionState#get_showId()I` | 已核准放寬為 public，完整識別提供給 #153 的 access-widen-approved.txt；本批不越界修改清單。 |
+| 非 Object 的 Instance 建構子 | 重新標 needs:claude；不在既有 Object-only 裁定內。 |
+| `NativeDeCharacterFields` 的 SKU1／SKU2／SKD1／SKD2／SKD3 | 前輪 staged 新增五個空 HashMap 欄位，正式版及其父類 NativeDeObjectFields 均未宣告這五個欄位，而正式 CombatSkillDerived.compute 仍以 GETSTATIC 引用它們。正式父鏈止於 Object；本輪靜態查核確認矛盾，未執行該方法。附錄列出五個多出欄位、clinit 及正式引用。空 map 不可當成功移植，尚需主控指定正式欄位來源／處理方式；本輪未擴大此補法。 |
+| `NativeDeInstanceState` 額外橋接方法 | 直接 javac 產物有 **169 個** access=0x41（public／bridge）方法在正式版缺少；例如 `getAc()I`。本輪未在來源新增這些 wrapper。#135 的 private-static 額外方法清單不涵蓋這些 public bridge，不能直接豁免，附錄保留所有方法全文差異。 |
+| `NativeDeClientViewer.sendPackets` | 正式 bytecode 將 receiver／字串／陣列先留在 operand stack，再呼叫 void requirePublication，之後才呼叫 CombatAccess.call；目前 Java 以區域陣列保存參數，仍 DIFF。未自行新增 helper 或 effects 核准，請主控決定此特定表達障礙。 |
 
-來源不依賴原專案私有 stub；使用已合併 #108 的 `compile-stubs` 9 份 Java，編成 `target/legacy-stubs`，classpath 為正式 JAR、stub classes、`lib/*`。stub 的 16 個 class 只作編譯依賴，**驗收 JAR 內沒有 com/lineage 或任何 A01 清單外 class**。
+上述未決問題不免除仍可修改的來源差異。`NativeDeDeletionState.sourceDeleteNpc`、`NativeDeInstanceState` 的其餘同步／欄位 owner／分支差異仍待本機續修；沒有宣稱全部都是 javac 無法表達。完整剩餘集合為 25 個只有類別／欄位差異、8 個包含方法差異。
 
-實際命令結果：stub build、semantic 工具 javac、A01 javac、打包及 semantic-diff 均 exit 0；semantic-diff exit 0 只表示成功產生報告，不表示無 DIFF。
+## 編譯與中間診斷結果
+
+環境：Microsoft JDK 17.0.17、Python 3.12、Windows。一般沙箱無法初始化，已經核准的提升執行僅在工作樹寫檔。未啟動遊戲、登入器、伺服器，未連正式 DB；未讀機密設定、封存或客戶端。stub 僅供編譯，不代表執行期實作。
+
+stub build、semantic-diff javac、49 份 staged javac、打包、semantic-diff、Dump.java 及第二次獨立 reproduce 執行皆 exit 0。語意工具 exit 0 只表示報告產生成功，不是驗收成功。
 
 ```text
 Compiled 9 compile-only sources -> target/legacy-stubs (never packaged)
-javac: Note: Some input files use unchecked or unsafe operations.
 entries 185 missing [] extra []
-SUMMARY SAME=137 SAME_EFFECTS=0 DIFF=48 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=18 ALLOW_METHODS=0
+SUMMARY SAME=152 SAME_EFFECTS=0 DIFF=33 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=18 ALLOW_METHODS=0
 classSelection.missingLeft=[]
 classSelection.extraLeft=[]
+a01.jar SHA == reproduce.jar SHA
 ```
 
-## 可直接重現的編譯／打包／比對
+| 輸入／產出 | SHA-256 |
+|---|---|
+| `reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| `scratch/issue-72/target/a01.jar` 與 `target/reproduce.jar` | `ba50147a61ce3f50a08aae1ea0f35aba09fd19efdb1a44b3db37d4c4d7fcea49` |
+| A01 verify_entries（UTF-8 LF） | `8c883895819b752ae9c9b70b2cef771ce7f44bc23cacfc25c19c197109c79499` |
+| 49 份來源 SHA 清單 | `c0d078324b75560ff104b78aceb9696cb425c8ac9953531ea575b4c7431c0c7f` |
+| semantic-diff ClassComparer.java | `40d6e0bb103120e454e3de2edaf312625001b361dc331673ff2c35c3610253b6` |
+| 正式 Instance javap 全文 | `503b25e739005da07126e8a648b2c9c752324a9ab954794c0e358a6f0c5f303c` |
+| 正式父類 javap 全文 | `f857674af532206b12db372cb7e4c0252fe62a43858d9e95df9907960794b284` |
 
-在 repo 根目錄先執行：
+## 可直接重現的步驟
+
+在 repo 根目錄執行（所有生成內容位於目前工作樹；不需要原專案私有資源）：
 
 ```powershell
 $env:JAVA_HOME = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot'
@@ -52,7 +120,7 @@ New-Item -ItemType Directory -Force scratch/issue-72 | Out-Null
 if ($LASTEXITCODE -ne 0) { throw 'stub build failed' }
 ```
 
-將下段存為 `scratch/issue-72/reproduce.py`，執行 `py -3 -B -X utf8 scratch/issue-72/reproduce.py`。此段直接由 JSON 取得 A01，不用佔位清單；ASM 9.7 使用本機 Maven cache，可由工具既有 build 入口取得相同版本。固定 JAR 與來源均從目前提交讀取，不需重新下載反編譯器才能驗收。
+將以下程式存為 `scratch/issue-72/reproduce.py`，執行 `py -3 -B -X utf8 scratch/issue-72/reproduce.py`。ASM 9.7 來自既有本機 Maven cache；正常工具建置入口亦使用相同版本。最後斷言僅檢查本輪現況，正式閘門仍須 SAME=185、DIFF=0。
 
 ```python
 from pathlib import Path
@@ -90,85 +158,61 @@ print(r['counts'])
 print('JAR SHA256',hashlib.sha256(jar.read_bytes()).hexdigest())
 print('SOURCE MANIFEST SHA256',hashlib.sha256(manifest.encode()).hexdigest())
 # 這是現況再現斷言，並非 A01 完成驗收；正式閘門仍要求 DIFF=0、SAME=185。
-assert r['counts']['SAME']==137 and r['counts']['DIFF']==48
+assert r['counts']['SAME']==152 and r['counts']['DIFF']==33
 ```
 
-## 待裁定範圍／未驗證
+## 產出路徑與給下一棒的提示
 
-以下 48 個 entry，其中 **20 個僅 metadata／欄位結構差異、28 個仍含方法差異**。所有 DIFF 都維持原工具結果；沒有自行放寬驗收，也不把未解差異稱為語意等價。
+- Git 產出：本報告 `docs/reports/issue-72.md` 及指定 staged 目錄內 19 份修改；整批共有 49 份來源。未修改 `docs/REPORT.md`。
+- 本機證據：`scratch/issue-72/` 下的 `semantic.json`、`reproduce.json`、`left/`、`right/`、`full.diff`、`javac.log`、`verify_entries.txt`、`source-sha256.txt`、五份 `*.javap.txt`；classes／JAR 在 `target/`。這些 ignored 證據沒有強加進 git；必要全文在本報告附錄。
+- 主控 Claude：先裁定非 Object 建構子，並處理上表三項新揭露的結構／表達問題。已核准的 get_showId、switch-map 與 metadata 不必重新裁定。
+- 調度器：本批依賴應包含 #135、#153；尚未合併前不得因 CI success 或編譯成功標示完成，也不應立即重複派驗收。
+- 本機執行器：依賴合併後沿用 task/72，取得正式工具與核准清單，再處理附錄中剩餘分支／try／欄位 owner 差異。用 staged Java 直接編出的產物重驗全部 185 SAME，更新本報告與 PR #99 描述；不得以覆蓋 class 或後處理達標。
+- 未驗證：依賴合併後的最終語意閘門、單元測試／回歸及實機；本批未改 src/main，單元／回歸依規定在 A-land 統一執行。未合併 PR、未關閉 Issue。
 
-| Entry（共同前綴 local/lito381/server/，副檔名 .class） | 有差異的方法數 | 分類 |
+## 剩餘 33 個 entry
+
+| Entry（省略 local/lito381/server/ 與 .class） | 不同方法數 | 分類 |
 |---|---:|---|
-| `NativeDeCachedFactoryServices` | 0 | 僅 metadata／欄位 |
-| `NativeDeCharacterActor` | 0 | 僅 metadata／欄位 |
-| `NativeDeCharacterFields$CombatSkillDerived` | 1 | 含方法差異 |
-| `NativeDeCharacterFields$DamageMutationReceipt` | 2 | 含方法差異 |
-| `NativeDeCharacterFields$ViewerHpState` | 0 | 僅 metadata／欄位 |
-| `NativeDeCharacterFields` | 21 | 含方法差異 |
+| `NativeDeCachedFactoryServices` | 0 | 僅類別／欄位屬性 |
+| `NativeDeCharacterActor` | 0 | 僅類別／欄位屬性 |
+| `NativeDeCharacterFields$ViewerHpState` | 0 | 僅類別／欄位屬性 |
+| `NativeDeCharacterFields` | 4 | 含方法差異 |
 | `NativeDeChatBroadcast` | 1 | 含方法差異 |
-| `NativeDeChatChat` | 0 | 僅 metadata／欄位 |
-| `NativeDeChatChatGlobal` | 0 | 僅 metadata／欄位 |
-| `NativeDeChatChatShouting` | 0 | 僅 metadata／欄位 |
-| `NativeDeChatTable` | 1 | 含方法差異 |
-| `NativeDeChatTimer$RunSequenceTask` | 0 | 僅 metadata／欄位 |
-| `NativeDeChatTimer` | 0 | 僅 metadata／欄位 |
-| `NativeDeChatWire` | 3 | 含方法差異 |
-| `NativeDeClientViewer` | 5 | 含方法差異 |
-| `NativeDeControlCatalog$Names` | 0 | 僅 metadata／欄位 |
-| `NativeDeControlCatalog$Reporter` | 0 | 僅 metadata／欄位 |
-| `NativeDeControlCatalog` | 2 | 含方法差異 |
-| `NativeDeCorpseCore` | 1 | 含方法差異 |
-| `NativeDeCorpseTimers$Job` | 1 | 含方法差異 |
-| `NativeDeCorpseTimers$Owner$1` | 3 | 含方法差異 |
-| `NativeDeCorpseTimers$Owner` | 2 | 含方法差異 |
-| `NativeDeCorpseTimers$Ticket` | 1 | 含方法差異 |
-| `NativeDeDeletionDeState` | 0 | 僅 metadata／欄位 |
-| `NativeDeDeletionPorts$Services` | 0 | 僅 metadata／欄位 |
-| `NativeDeDeletionState` | 5 | 含方法差異 |
+| `NativeDeChatChat` | 0 | 僅類別／欄位屬性 |
+| `NativeDeChatChatGlobal` | 0 | 僅類別／欄位屬性 |
+| `NativeDeChatChatShouting` | 0 | 僅類別／欄位屬性 |
+| `NativeDeChatTable` | 0 | 僅類別／欄位屬性 |
+| `NativeDeChatTimer$RunSequenceTask` | 0 | 僅類別／欄位屬性 |
+| `NativeDeChatTimer` | 0 | 僅類別／欄位屬性 |
+| `NativeDeClientViewer` | 1 | 含方法差異 |
+| `NativeDeControlCatalog$Names` | 0 | 僅類別／欄位屬性 |
+| `NativeDeControlCatalog$Reporter` | 0 | 僅類別／欄位屬性 |
+| `NativeDeControlCatalog` | 0 | 僅類別／欄位屬性 |
+| `NativeDeDeletionDeState` | 0 | 僅類別／欄位屬性 |
+| `NativeDeDeletionPorts$Services` | 0 | 僅類別／欄位屬性 |
+| `NativeDeDeletionState` | 2 | 含方法差異 |
 | `NativeDeDeletionVisibility$1` | 1 | 含方法差異 |
 | `NativeDeDeletionVisibility$Snapshot` | 1 | 含方法差異 |
 | `NativeDeDeletionVisibility` | 1 | 含方法差異 |
-| `NativeDeFactoryControls` | 0 | 僅 metadata／欄位 |
-| `NativeDeInitializerKernel$Actor` | 0 | 僅 metadata／欄位 |
-| `NativeDeInitializerKernel$Services` | 0 | 僅 metadata／欄位 |
-| `NativeDeInitializerKernel` | 3 | 含方法差異 |
-| `NativeDeInstanceBroadcast` | 0 | 僅 metadata／欄位 |
-| `NativeDeInstanceName` | 0 | 僅 metadata／欄位 |
-| `NativeDeInstanceNames` | 2 | 含方法差異 |
-| `NativeDeInstanceScene` | 1 | 含方法差異 |
-| `NativeDeInstanceScope$World` | 1 | 含方法差異 |
-| `NativeDeInstanceState$DeAiWorkerTask` | 0 | 僅 metadata／欄位 |
-| `NativeDeInstanceState` | 320 | 含方法差異 |
-| `NativeDeItemAbility` | 0 | 僅 metadata／欄位 |
-| `NativeDeItemApplication$Owner` | 3 | 含方法差異 |
-| `NativeDeItemApplication` | 3 | 含方法差異 |
-| `NativeDeItemBlessStatsTable` | 2 | 含方法差異 |
-| `NativeDeItemCommonEnchantTable` | 2 | 含方法差異 |
-| `NativeDeItemDefinitionsResources` | 3 | 含方法差異 |
-| `NativeDeItemEnchantBonusTable` | 2 | 含方法差異 |
-| `NativeDeItemEquipProcTable` | 0 | 僅 metadata／欄位 |
+| `NativeDeFactoryControls` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInitializerKernel$Actor` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInitializerKernel$Services` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInstanceBroadcast` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInstanceName` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInstanceState$DeAiWorkerTask` | 0 | 僅類別／欄位屬性 |
+| `NativeDeInstanceState` | 319 | 含方法差異 |
+| `NativeDeItemAbility` | 0 | 僅類別／欄位屬性 |
+| `NativeDeItemBlessStatsTable` | 0 | 僅類別／欄位屬性 |
+| `NativeDeItemCommonEnchantTable` | 0 | 僅類別／欄位屬性 |
+| `NativeDeItemEnchantBonusTable` | 0 | 僅類別／欄位屬性 |
+| `NativeDeItemEquipProcTable` | 0 | 僅類別／欄位屬性 |
 
-- **已驗證的表達障礙**：NativeDeInstanceState 的 pre-super 實例欄位寫入／前置 name 呼叫、NativeDeDeletionState 的縮小存取、DeletionVisibility switch map 的舊名稱。兩種反編譯器也都不能原樣編成 Java 17。相關原始 javac 訊息為 `call to super must be first statement in constructor`、`attempting to assign weaker access privileges; was public`。這些障礙不授權略過同類其他方法差異。
-- **推測**：InnerClasses 缺列／旗標與 switch 欄位舊名來自歷史 ASM 搬遷；本輪沒有重播歷史鏈，不宣稱已證明歷史來源。其他槽位、正反分支、try 邊界、lambda 重建有些可能只屬編譯形狀，但尚未逐一證明行為等價。
-- **待驗證**：剩餘 48 entry 的最終可接受表達與驗收；Java 17 建構子順序調整的實際影響；所有 staged 類的整合行為。單元測試／完整回歸依任務不適用，A-land 才執行。沒有將本輪產物移入 src/main 或正式部署。
+## 完整正規化差異
 
-## 產出路徑／給下一棒的提示
-
-- 交付來源：`lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/`，精確為 A01 49 檔；報告：`docs/reports/issue-72.md`。
-- 本機重建證據（不入 git）：`scratch/issue-72/` 的 cfr、vf、vfclean、semantic.json、semantic.md、verify_entries.txt、javac.log、left/right 正規化全文及 full.diff；class/JAR 均在 target 子目錄。原始碼與完整必要差異已在此提交，不依賴審查者取得 ignored scratch。
-- **Claude 主控接手**：Issue 已有 `needs:claude`。請先裁定三類 Java 表達障礙，再按下方完整 diff 指定續修或批准明確例外；不要把整個類別豁免，也不要因 firstDiff 只顯示 metadata 而漏掉後續方法差異。本批應保持未完成，不能直接放行 A-land。
-- **後續本機執行器**：使用 #108 的 compile-stubs；保留已對齊的 137 entries。原工具預設比較必須保留，若主控授權工具擴充則另案處理；禁止私自做 javac 後 ASM 或搬正式 bytes。本機 JDK 17.0.17 的初始數量與前次報告所載 JDK 17.0.21 相同；本輪未另行執行 JDK 17.0.21，不將版本差異視為已證明的原因。
-- 不修改 docs/REPORT.md；不用使用者啟動遊戲驗證這些尚未等價的暫存來源。
-
-## 完整正規化差異（48 entries）
-
-以下由**未修改的 ClassComparer** 與 JarIndex 讀取兩個驗收 JAR，在 scratch 診斷類中呼叫同一組正規化函式匯出全部比較欄位。沒有寫回 class、沒有把診斷結果當驗收豁免。逐類差異集合與 semantic.json 的 48 DIFF 完全一致；其餘 137 類完整 dump 一致。包含所有 class／field 屬性與所有方法 metadata、try-catch、指令；不是只列 firstDiff。
-
-每段 `--- staged`／`+++ formal`，hunk 行號是該比較項正規化序列中的 1-based 行號，`method` 標題保留完整描述子；共同的 method 前綴移到標題以便閱讀，**沒有刪掉任何差異 hunk**。完全相同的方法不重複列出。內嵌長字串未截斷。
+以下使用目前 repo 的 ClassComparer 原有正規化，按方法列出全部 unified diff（含方法屬性與 try 表，三行共同上下文）；未將本輪自行推測的等價規則加入工具。`-` 是 staged，`+` 是正式版。附錄僅去除展示行尾空白，原始文字證據仍保留；只有名稱不同的 lambda 仍照實顯示 ONLY_LEFT／ONLY_RIGHT 方法內容，但類別狀態維持 DIFF。全 33 個 DIFF 的集合已與 semantic.json 精確核對。
 
 ### `NativeDeCachedFactoryServices`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -188,8 +232,6 @@ assert r['counts']['SAME']==137 and r['counts']['DIFF']==48
 
 ### `NativeDeCharacterActor`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -206,212 +248,7 @@ assert r['counts']['SAME']==137 and r['counts']['DIFF']==48
  field fields:Llocal/lito381/server/NativeDeCharacterFields; signature=null
 ```
 
-### `NativeDeCharacterFields$CombatSkillDerived`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived;`
-
-```diff
---- staged
-+++ formal
-@@ -21,88 +21,90 @@
- LABEL L0
- ALOAD 7
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L7
-+IFEQ L8
- ALOAD 7
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST java/lang/Integer
- ASTORE 8
- ALOAD 8
--IFNULL L6
-+IFNONNULL L1
-+GOTO L0
-+LABEL L1
- GETSTATIC local/lito381/server/NativeDeCharacterFields.SKU1:Ljava/util/HashMap;
- ALOAD 8
- INVOKEVIRTUAL java/util/HashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- CHECKCAST java/lang/Integer
- ASTORE 9
- ALOAD 9
--IFNULL L1
-+IFNULL L2
- ILOAD 1
- ALOAD 9
- INVOKEVIRTUAL java/lang/Integer.intValue()I
- IADD
- ISTORE 1
--LABEL L1
-+LABEL L2
- GETSTATIC local/lito381/server/NativeDeCharacterFields.SKU2:Ljava/util/HashMap;
- ALOAD 8
- INVOKEVIRTUAL java/util/HashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- CHECKCAST java/lang/Integer
- ASTORE 10
- ALOAD 10
--IFNULL L2
-+IFNULL L3
- ILOAD 2
- ALOAD 10
- INVOKEVIRTUAL java/lang/Integer.intValue()I
- IADD
- ISTORE 2
--LABEL L2
-+LABEL L3
- GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD1:Ljava/util/HashMap;
- ALOAD 8
- INVOKEVIRTUAL java/util/HashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- CHECKCAST java/lang/Integer
- ASTORE 11
- ALOAD 11
--IFNULL L3
-+IFNULL L4
- ILOAD 3
- ALOAD 11
- INVOKEVIRTUAL java/lang/Integer.intValue()I
- IADD
- ISTORE 3
--LABEL L3
-+LABEL L4
- GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD2:Ljava/util/HashMap;
- ALOAD 8
- INVOKEVIRTUAL java/util/HashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- CHECKCAST java/lang/Integer
- ASTORE 12
- ALOAD 12
--IFNULL L4
-+IFNULL L5
- ILOAD 4
- ALOAD 12
- INVOKEVIRTUAL java/lang/Integer.intValue()I
- IADD
- ISTORE 4
--LABEL L4
-+LABEL L5
- GETSTATIC local/lito381/server/NativeDeCharacterFields.SKD3:Ljava/util/HashMap;
- ALOAD 8
- INVOKEVIRTUAL java/util/HashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- CHECKCAST java/lang/Integer
- ASTORE 13
- ALOAD 13
--IFNULL L6
-+IFNULL L7
- ALOAD 13
- ALOAD 8
- INVOKEVIRTUAL java/lang/Integer.equals(Ljava/lang/Object;)Z
--IFEQ L5
-+IFEQ L6
- CONST Integer:1
- ISTORE 6
--GOTO L6
--LABEL L5
-+GOTO L7
-+LABEL L6
- ILOAD 5
- ALOAD 13
- INVOKEVIRTUAL java/lang/Integer.intValue()I
- IADD
- ISTORE 5
--LABEL L6
-+LABEL L7
- GOTO L0
--LABEL L7
-+LABEL L8
- NEW local/lito381/server/NativeDeCharacterFields$CombatSkillDerived
- DUP
- ILOAD 1
-```
-
-### `NativeDeCharacterFields$DamageMutationReceipt`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method recordDead(ZZI)V`
-
-```diff
---- staged
-+++ formal
-@@ -5,7 +5,9 @@
- default=
- ILOAD 1
- ILOAD 2
--IF_ICMPEQ L0
-+IF_ICMPNE L0
-+RETURN
-+LABEL L0
- ALOAD 0
- CONST Integer:1
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._deathSeen:Z
-@@ -14,12 +16,12 @@
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._deadAfter:Z
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpSeen:Z
--IFNE L0
-+IFNE L1
- ALOAD 0
- ILOAD 3
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpBefore:I
- ALOAD 0
- ILOAD 3
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpAfter:I
--LABEL L0
-+LABEL L1
- RETURN
-```
-
-#### `method recordHp(II)V`
-
-```diff
---- staged
-+++ formal
-@@ -5,17 +5,19 @@
- default=
- ILOAD 1
- ILOAD 2
--IF_ICMPEQ L3
-+IF_ICMPNE L0
-+RETURN
-+LABEL L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpSeen:Z
--IFNE L0
-+IFNE L1
- ALOAD 0
- ILOAD 1
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpBefore:I
- ALOAD 0
- CONST Integer:1
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpSeen:Z
--LABEL L0
-+LABEL L1
- ALOAD 0
- ILOAD 2
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpAfter:I
-@@ -24,13 +26,12 @@
- GETFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpReduced:Z
- ILOAD 2
- ILOAD 1
--IF_ICMPGE L1
-+IF_ICMPGE L2
- CONST Integer:1
--GOTO L2
--LABEL L1
-+GOTO L3
-+LABEL L2
- CONST Integer:0
--LABEL L2
-+LABEL L3
- IOR
- PUTFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._hpReduced:Z
--LABEL L3
- RETURN
-```
-
 ### `NativeDeCharacterFields$ViewerHpState`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -430,8 +267,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 ```
 
 ### `NativeDeCharacterFields`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -510,349 +345,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  INVOKESPECIAL java/lang/ThreadLocal.<init>()V
 ```
 
-#### `method drainVitalCompletionsAfterActionUnlock()V`
-
-```diff
---- staged
-+++ formal
-@@ -3,103 +3,99 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L2 L3 L4 java/lang/Throwable
--TRY L4 L5 L4 java/lang/Throwable
-+TRY L3 L4 L5 java/lang/Throwable
-+TRY L5 L6 L5 java/lang/Throwable
- TRY L9 L10 L11 java/lang/Throwable
--TRY L1 L8 L13 java/lang/Throwable
--TRY L9 L12 L13 java/lang/Throwable
--TRY L13 L14 L13 java/lang/Throwable
-+TRY L2 L13 L14 java/lang/Throwable
-+TRY L14 L15 L14 java/lang/Throwable
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.vitalMutationLock()Ljava/util/concurrent/locks/ReentrantLock;
- ASTORE 1
- LABEL L0
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.isHeldByCurrentThread()Z
--IFNE L16
-+IFNE L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletionDraining:Ljava/util/concurrent/atomic/AtomicBoolean;
- CONST Integer:0
- CONST Integer:1
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.compareAndSet(ZZ)Z
--IFEQ L16
-+IFNE L2
- LABEL L1
-+RETURN
-+LABEL L2
- NEW java/util/ArrayDeque
- DUP
- INVOKESPECIAL java/util/ArrayDeque.<init>()V
- ASTORE 2
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.lock()V
--LABEL L2
-+LABEL L3
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletions:Ljava/util/concurrent/ConcurrentLinkedQueue;
- INVOKEVIRTUAL java/util/concurrent/ConcurrentLinkedQueue.poll()Ljava/lang/Object;
- CHECKCAST java/lang/Runnable
- DUP
- ASTORE 3
--IFNULL L3
-+IFNULL L4
- ALOAD 2
- ALOAD 3
- INVOKEVIRTUAL java/util/ArrayDeque.addLast(Ljava/lang/Object;)V
--GOTO L2
--LABEL L3
-+GOTO L3
-+LABEL L4
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L6
--LABEL L4
-+GOTO L7
-+LABEL L5
- ASTORE 4
--LABEL L5
-+LABEL L6
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 4
- ATHROW
--LABEL L6
-+LABEL L7
- ALOAD 2
- INVOKEVIRTUAL java/util/ArrayDeque.isEmpty()Z
--IFNE L12
--LABEL L7
-+IFEQ L8
-+GOTO L13
-+LABEL L8
- ALOAD 2
- INVOKEVIRTUAL java/util/ArrayDeque.pollFirst()Ljava/lang/Object;
- CHECKCAST java/lang/Runnable
- DUP
- ASTORE 3
--IFNONNULL L9
--LABEL L8
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletionDraining:Ljava/util/concurrent/atomic/AtomicBoolean;
--CONST Integer:0
--INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.set(Z)V
--GOTO L1
-+IFNULL L12
- LABEL L9
- ALOAD 3
- INVOKEINTERFACE java/lang/Runnable.run()V itf
- LABEL L10
--GOTO L7
-+GOTO L8
- LABEL L11
- ASTORE 4
- ALOAD 0
- ALOAD 4
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.reportCompletionFailure(Ljava/lang/Throwable;)V
--GOTO L7
-+GOTO L8
- LABEL L12
-+GOTO L2
-+LABEL L13
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletionDraining:Ljava/util/concurrent/atomic/AtomicBoolean;
- CONST Integer:0
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.set(Z)V
--GOTO L15
--LABEL L13
-+GOTO L16
-+LABEL L14
- ASTORE 5
--LABEL L14
-+LABEL L15
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletionDraining:Ljava/util/concurrent/atomic/AtomicBoolean;
- CONST Integer:0
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.set(Z)V
- ALOAD 5
- ATHROW
--LABEL L15
-+LABEL L16
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._vitalCompletions:Ljava/util/concurrent/ConcurrentLinkedQueue;
- INVOKEVIRTUAL java/util/concurrent/ConcurrentLinkedQueue.isEmpty()Z
- IFEQ L0
- RETURN
--LABEL L16
--RETURN
-```
-
-#### `method getChaLightSize()I`
-
-```diff
---- staged
-+++ formal
-@@ -7,9 +7,8 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.isInvisble()Z
- IFEQ L0
- CONST Integer:0
--GOTO L1
-+IRETURN
- LABEL L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._chaLightSize:I
--LABEL L1
- IRETURN
-```
-
-#### `method getMr()I`
-
-```diff
---- staged
-+++ formal
-@@ -6,14 +6,14 @@
- ALOAD 0
- CONST Integer:153
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.hasSkillEffect(I)Z
--IFEQ L0
-+CONST Integer:1
-+IF_ICMPNE L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._mr:I
- CONST Integer:2
- ISHR
--GOTO L1
-+IRETURN
- LABEL L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._mr:I
--LABEL L1
- IRETURN
-```
-
-#### `method getOwnLightSize()I`
-
-```diff
---- staged
-+++ formal
-@@ -7,9 +7,8 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.isInvisble()Z
- IFEQ L0
- CONST Integer:0
--GOTO L1
-+IRETURN
- LABEL L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._ownLightSize:I
--LABEL L1
- IRETURN
-```
-
-#### `method hpMeterRatio()I`
-
-```diff
---- staged
-+++ formal
-@@ -9,7 +9,7 @@
- ILOAD 1
- IFGT L0
- CONST Integer:100
--GOTO L1
-+IRETURN
- LABEL L0
- CONST Integer:100
- ALOAD 0
-@@ -17,5 +17,4 @@
- IMUL
- ILOAD 1
- IDIV
--LABEL L1
- IRETURN
-```
-
-#### `method isKnownNpcViewerConsistent(Llocal/lito381/server/NativeDeDeletionState;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -3,22 +3,26 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L0 L3 L4 java/lang/Throwable
--TRY L4 L5 L4 java/lang/Throwable
-+TRY L2 L5 L6 java/lang/Throwable
-+TRY L6 L7 L6 java/lang/Throwable
- ALOAD 0
- ASTORE 3
- ALOAD 3
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$Viewer
--IFEQ L7
-+IFEQ L0
- ALOAD 3
- CHECKCAST local/lito381/server/NativeDeDeletionPorts$Viewer
- ASTORE 2
- ALOAD 1
--IFNULL L7
-+IFNONNULL L1
-+LABEL L0
-+CONST Integer:1
-+IRETURN
-+LABEL L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.lock()V
--LABEL L0
-+LABEL L2
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjects:Ljava/util/concurrent/CopyOnWriteArrayList;
- ALOAD 1
-@@ -26,29 +30,24 @@
- ALOAD 1
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.isViewerRegistered(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)Z
--IF_ICMPNE L1
-+IF_ICMPNE L3
- CONST Integer:1
--GOTO L2
--LABEL L1
-+GOTO L4
-+LABEL L3
- CONST Integer:0
--LABEL L2
-+LABEL L4
- ISTORE 3
--LABEL L3
-+LABEL L5
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L6
--LABEL L4
-+ILOAD 3
-+IRETURN
-+LABEL L6
- ASTORE 4
--LABEL L5
-+LABEL L7
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 4
- ATHROW
--LABEL L6
--ILOAD 3
--IRETURN
--LABEL L7
--CONST Integer:1
--IRETURN
-```
-
-#### `method lambda$adjustCurrentHpIfAlive$#0(JI)Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;`
-
-```diff
---- staged
-+++ formal
-@@ -8,7 +8,19 @@
- IFLE L0
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.isDead()Z
--IFNE L0
-+IFEQ L1
-+LABEL L0
-+ALOAD 0
-+NEW local/lito381/server/NativeDeCharacterFields$CurrentHpMutation
-+DUP
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
-+INVOKESPECIAL local/lito381/server/NativeDeCharacterFields$CurrentHpMutation.<init>(II)V
-+INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.enqueueCurrentHpCompletionLocked(Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;)Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;
-+ARETURN
-+LABEL L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
- LLOAD 1
-@@ -26,14 +38,3 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.commitCurrentHpLocked(I)Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.enqueueCurrentHpCompletionLocked(Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;)Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;
- ARETURN
--LABEL L0
--ALOAD 0
--NEW local/lito381/server/NativeDeCharacterFields$CurrentHpMutation
--DUP
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
--INVOKESPECIAL local/lito381/server/NativeDeCharacterFields$CurrentHpMutation.<init>(II)V
--INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.enqueueCurrentHpCompletionLocked(Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;)Llocal/lito381/server/NativeDeCharacterFields$CurrentHpMutation;
--ARETURN
-```
-
 #### `method lambda$broadcastPacketHP$#0(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;Ljava/lang/Integer;Llocal/lito381/server/NativeDeCharacterFields$ViewerHpState;)Llocal/lito381/server/NativeDeCharacterFields$ViewerHpState;`
 
 ```diff
@@ -879,42 +371,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 +INVOKESPECIAL local/lito381/server/NativeDeCharacterFields$ViewerHpState.<init>(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)V
 +LABEL L1
 +ARETURN
-```
-
-#### `method lambda$setStatus$#0(I)Ljava/lang/Integer;`
-
-```diff
---- staged
-+++ formal
-@@ -1,11 +0,0 @@
--access=0x2
--signature=null
--exceptions=
--annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
--default=
--ALOAD 0
--ILOAD 1
--DUP_X1
--PUTFIELD local/lito381/server/NativeDeCharacterFields._status:I
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--ARETURN
-```
-
-#### `method lambda$setStatus$#0(I)V`
-
-```diff
---- staged
-+++ formal
-@@ -0,0 +1,9 @@
-+access=0x2
-+signature=null
-+exceptions=
-+annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
-+default=
-+ALOAD 0
-+ILOAD 1
-+PUTFIELD local/lito381/server/NativeDeCharacterFields._status:I
-+RETURN
 ```
 
 #### `method lambda$visibilitySource$broadcastPacketHP$#0(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;Ljava/lang/Integer;Llocal/lito381/server/NativeDeCharacterFields$ViewerHpState;)Llocal/lito381/server/NativeDeCharacterFields$ViewerHpState;`
@@ -945,334 +401,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 -ARETURN
 ```
 
-#### `method recordDamageDeathMutation(ZZ)V`
-
-```diff
---- staged
-+++ formal
-@@ -5,20 +5,24 @@
- default=
- ILOAD 1
- ILOAD 2
--IF_ICMPEQ L2
-+IF_ICMPNE L0
-+RETURN
-+LABEL L0
- GETSTATIC local/lito381/server/NativeDeCharacterFields.DAMAGE_MUTATION_RECEIPTS:Ljava/lang/ThreadLocal;
- INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
- CHECKCAST java/util/ArrayDeque
- ASTORE 3
- ALOAD 3
--IFNULL L2
-+IFNONNULL L1
-+RETURN
-+LABEL L1
- ALOAD 3
- INVOKEVIRTUAL java/util/ArrayDeque.iterator()Ljava/util/Iterator;
- ASTORE 4
--LABEL L0
-+LABEL L2
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2
-+IFEQ L4
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt
-@@ -26,7 +30,7 @@
- ALOAD 5
- GETFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._target:Llocal/lito381/server/NativeDeCharacterFields;
- ALOAD 0
--IF_ACMPNE L1
-+IF_ACMPNE L3
- ALOAD 5
- ILOAD 1
- ILOAD 2
-@@ -34,7 +38,7 @@
- GETFIELD local/lito381/server/NativeDeCharacterFields._currentHp:I
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt.recordDead(ZZI)V
- RETURN
--LABEL L1
--GOTO L0
--LABEL L2
-+LABEL L3
-+GOTO L2
-+LABEL L4
- RETURN
-```
-
-#### `method recordDamageHpMutation(II)V`
-
-```diff
---- staged
-+++ formal
-@@ -5,20 +5,24 @@
- default=
- ILOAD 1
- ILOAD 2
--IF_ICMPEQ L2
-+IF_ICMPNE L0
-+RETURN
-+LABEL L0
- GETSTATIC local/lito381/server/NativeDeCharacterFields.DAMAGE_MUTATION_RECEIPTS:Ljava/lang/ThreadLocal;
- INVOKEVIRTUAL java/lang/ThreadLocal.get()Ljava/lang/Object;
- CHECKCAST java/util/ArrayDeque
- ASTORE 3
- ALOAD 3
--IFNULL L2
-+IFNONNULL L1
-+RETURN
-+LABEL L1
- ALOAD 3
- INVOKEVIRTUAL java/util/ArrayDeque.iterator()Ljava/util/Iterator;
- ASTORE 4
--LABEL L0
-+LABEL L2
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2
-+IFEQ L4
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt
-@@ -26,13 +30,13 @@
- ALOAD 5
- GETFIELD local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt._target:Llocal/lito381/server/NativeDeCharacterFields;
- ALOAD 0
--IF_ACMPNE L1
-+IF_ACMPNE L3
- ALOAD 5
- ILOAD 1
- ILOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields$DamageMutationReceipt.recordHp(II)V
- RETURN
--LABEL L1
--GOTO L0
--LABEL L2
-+LABEL L3
-+GOTO L2
-+LABEL L4
- RETURN
-```
-
-#### `method removeKnownObjectIfPresent(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -18,7 +18,7 @@
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjects:Ljava/util/concurrent/CopyOnWriteArrayList;
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/CopyOnWriteArrayList.remove(Ljava/lang/Object;)Z
--ISTORE 3
-+ISTORE 2
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$Viewer
- IFEQ L2
-@@ -29,38 +29,36 @@
- POP
- LABEL L2
- ALOAD 0
--ASTORE 6
--ALOAD 6
-+ASTORE 5
-+ALOAD 5
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$Viewer
- IFEQ L3
--ALOAD 6
-+ALOAD 5
- CHECKCAST local/lito381/server/NativeDeDeletionPorts$Viewer
--ASTORE 4
-+ASTORE 3
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeDeletionState
- IFEQ L3
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDeDeletionState
--ASTORE 5
--ALOAD 5
-+ASTORE 4
- ALOAD 4
-+ALOAD 3
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.unregisterViewer(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)V
- LABEL L3
--ILOAD 3
--ISTORE 2
-+ILOAD 2
-+ISTORE 3
- LABEL L4
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L7
-+ILOAD 3
-+IRETURN
- LABEL L5
--ASTORE 7
-+ASTORE 6
- LABEL L6
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--ALOAD 7
-+ALOAD 6
- ATHROW
--LABEL L7
--ILOAD 2
--IRETURN
-```
-
-#### `method setStatus(I)V`
-
-```diff
---- staged
-+++ formal
-@@ -6,7 +6,6 @@
- ALOAD 0
- ALOAD 0
- ILOAD 1
--INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeCharacterFields;I)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H5 local/lito381/server/NativeDeCharacterFields.lambda$setStatus$#0(I)Ljava/lang/Integer;, type:()Ljava/lang/Integer;]
--INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.withVitalMutation(Ljava/util/function/Supplier;)Ljava/lang/Object;
--POP
-+INVOKEDYNAMIC run(Llocal/lito381/server/NativeDeCharacterFields;I)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H5 local/lito381/server/NativeDeCharacterFields.lambda$setStatus$#0(I)V, type:()V]
-+INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.withVitalMutation(Ljava/lang/Runnable;)V
- RETURN
-```
-
-#### `method snapshot()Llocal/lito381/server/NativeDeCharacterFields$Snapshot;`
-
-```diff
---- staged
-+++ formal
-@@ -235,7 +235,8 @@
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._npcVitalMutationLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L3
-+ALOAD 2
-+ARETURN
- LABEL L2
- ASTORE 3
- ALOAD 0
-@@ -243,6 +244,3 @@
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 3
- ATHROW
--LABEL L3
--ALOAD 2
--ARETURN
-```
-
-#### `method tryAddKnownObject(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -3,9 +3,9 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L1 L4 L7 java/lang/Throwable
--TRY L5 L6 L7 java/lang/Throwable
--TRY L7 L8 L7 java/lang/Throwable
-+TRY L1 L2 L6 java/lang/Throwable
-+TRY L3 L5 L6 java/lang/Throwable
-+TRY L6 L7 L6 java/lang/Throwable
- ALOAD 1
- IFNONNULL L0
- CONST Integer:0
-@@ -16,63 +16,60 @@
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.lock()V
- LABEL L1
- ALOAD 0
--ASTORE 5
--ALOAD 5
-+ASTORE 4
-+ALOAD 4
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$Viewer
--IFEQ L2
--ALOAD 5
-+IFEQ L3
-+ALOAD 4
- CHECKCAST local/lito381/server/NativeDeDeletionPorts$Viewer
--ASTORE 3
-+ASTORE 2
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeDeletionState
--IFEQ L2
-+IFEQ L3
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDeDeletionState
--ASTORE 4
--ALOAD 4
-+ASTORE 3
- ALOAD 3
-+ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.registerViewer(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)Z
--IFEQ L5
-+IFNE L3
-+CONST Integer:0
-+ISTORE 4
- LABEL L2
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
-+INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
-+ILOAD 4
-+IRETURN
-+LABEL L3
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjects:Ljava/util/concurrent/CopyOnWriteArrayList;
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/CopyOnWriteArrayList.addIfAbsent(Ljava/lang/Object;)Z
--IFEQ L3
-+IFEQ L4
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$Viewer
--IFEQ L3
-+IFEQ L4
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownPlayer:Ljava/util/concurrent/CopyOnWriteArrayList;
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDeDeletionPorts$Viewer
- INVOKEVIRTUAL java/util/concurrent/CopyOnWriteArrayList.addIfAbsent(Ljava/lang/Object;)Z
- POP
--LABEL L3
-+LABEL L4
- CONST Integer:1
--ISTORE 5
--LABEL L4
-+ISTORE 2
-+LABEL L5
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--ILOAD 5
-+ILOAD 2
- IRETURN
--LABEL L5
--CONST Integer:0
--ISTORE 2
- LABEL L6
-+ASTORE 5
-+LABEL L7
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L9
--LABEL L7
--ASTORE 6
--LABEL L8
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
--INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--ALOAD 6
-+ALOAD 5
- ATHROW
--LABEL L9
--ILOAD 2
--IRETURN
-```
-
 #### `method visibilitySource$broadcastPacketHP(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)V`
 
 ```diff
@@ -1289,82 +417,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  ASTORE 4
 ```
 
-#### `method withKnownLock(Ljava/util/function/Supplier;)Ljava/lang/Object;`
-
-```diff
---- staged
-+++ formal
-@@ -15,7 +15,8 @@
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCharacterFields._knownObjectLock:Ljava/util/concurrent/locks/ReentrantLock;
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L3
-+ALOAD 2
-+ARETURN
- LABEL L2
- ASTORE 3
- ALOAD 0
-@@ -23,6 +24,3 @@
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 3
- ATHROW
--LABEL L3
--ALOAD 2
--ARETURN
-```
-
-#### `method withVitalMutation(Ljava/util/function/Supplier;)Ljava/lang/Object;`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L1 L2 L3 java/lang/Throwable
--TRY L3 L4 L3 java/lang/Throwable
-+TRY L1 L2 L4 java/lang/Throwable
-+TRY L4 L5 L4 java/lang/Throwable
- ALOAD 1
- IFNONNULL L0
- NEW java/lang/NullPointerException
-@@ -27,23 +27,22 @@
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 2
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.isHeldByCurrentThread()Z
--IFNE L6
-+IFNE L3
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.drainVitalCompletionsAfterActionUnlock()V
--GOTO L6
- LABEL L3
-+ALOAD 3
-+ARETURN
-+LABEL L4
- ASTORE 4
--LABEL L4
-+LABEL L5
- ALOAD 2
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 2
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.isHeldByCurrentThread()Z
--IFNE L5
-+IFNE L6
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeCharacterFields.drainVitalCompletionsAfterActionUnlock()V
--LABEL L5
-+LABEL L6
- ALOAD 4
- ATHROW
--LABEL L6
--ALOAD 3
--ARETURN
-```
-
 ### `NativeDeChatBroadcast`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -1398,8 +451,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeChatChat`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -1417,8 +468,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 ```
 
 ### `NativeDeChatChatGlobal`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -1438,8 +487,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeChatChatShouting`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -1458,8 +505,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeChatTable`
 
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
 #### `class / fields`
 
 ```diff
@@ -1476,24 +521,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _allTimeValues:Ljava/util/Collection; signature=Ljava/util/Collection<Llocal/lito381/server/NativeDeChatData;>;
 ```
 
-#### `method load()V`
-
-```diff
---- staged
-+++ formal
-@@ -173,6 +173,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (npcid: \u0001)"]
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L10
- GOTO L3
- LABEL L11
-```
-
 ### `NativeDeChatTimer$RunSequenceTask`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -1513,8 +541,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeChatTimer`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -1531,191 +557,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field ACTIVE_COUNT:Ljava/util/concurrent/atomic/AtomicLong; signature=null
 ```
 
-### `NativeDeChatWire`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method content(Llocal/lito381/server/NativeDeVisibilityPacket;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)[B`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L0 L6 L7 java/lang/Throwable
--TRY L7 L8 L7 java/lang/Throwable
-+TRY L0 L5 L6 java/lang/Throwable
-+TRY L6 L7 L6 java/lang/Throwable
- ALOAD 0
- DUP
- ASTORE 2
-@@ -68,18 +68,16 @@
- LABEL L3
- ALOAD 4
- INVOKEVIRTUAL local/lito381/server/Protocol$Reader.remaining()I
--IFLE L5
-+IFLE L4
- ALOAD 4
- INVOKEVIRTUAL local/lito381/server/Protocol$Reader.c()I
--IFNE L4
--GOTO L3
--LABEL L4
-+IFEQ L3
- NEW java/lang/IllegalArgumentException
- DUP
- CONST str:"source NPC chat trailing bytes"
- INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
- ATHROW
--LABEL L5
-+LABEL L4
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDeCharacterFields
- ASTORE 9
-@@ -99,12 +97,12 @@
- ALOAD 10
- ALOAD 2
- MONITOREXIT
-+LABEL L5
-+ARETURN
- LABEL L6
--ARETURN
--LABEL L7
- ASTORE 11
- ALOAD 2
- MONITOREXIT
--LABEL L8
-+LABEL L7
- ALOAD 11
- ATHROW
-```
-
-#### `method requirePublication(Llocal/lito381/server/NativeDeClientViewer;Llocal/lito381/server/NativeDeDeletionPorts$Packet;)V`
-
-```diff
---- staged
-+++ formal
-@@ -5,37 +5,35 @@
- default=
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativeDeChatWire.subject(Llocal/lito381/server/NativeDeDeletionPorts$Packet;)Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;
--ASTORE 3
--ALOAD 3
-+ASTORE 2
-+ALOAD 2
- IFNONNULL L0
- RETURN
- LABEL L0
-+ALOAD 2
-+INVOKESTATIC local/lito381/server/NativeDeWorldContext.entry(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Llocal/lito381/server/NativeDeWorldContext$Entry;
-+ASTORE 3
- ALOAD 3
--INVOKESTATIC local/lito381/server/NativeDeWorldContext.entry(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Llocal/lito381/server/NativeDeWorldContext$Entry;
--ASTORE 4
--ALOAD 4
- GETFIELD local/lito381/server/NativeDeWorldContext$Entry.context:Llocal/lito381/server/NativeDeWorldContext;
- GETFIELD local/lito381/server/NativeDeWorldContext.closed:Z
- IFNE L1
- ALOAD 0
- INVOKESTATIC local/lito381/server/NativeDeWorldContext.entry(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Llocal/lito381/server/NativeDeWorldContext$Entry;
- GETFIELD local/lito381/server/NativeDeWorldContext$Entry.context:Llocal/lito381/server/NativeDeWorldContext;
--ALOAD 4
-+ALOAD 3
- GETFIELD local/lito381/server/NativeDeWorldContext$Entry.context:Llocal/lito381/server/NativeDeWorldContext;
- IF_ACMPNE L1
--ALOAD 3
-+ALOAD 2
- INSTANCEOF local/lito381/server/NativeDeDeletionState
- IFEQ L2
--ALOAD 3
-+ALOAD 2
- CHECKCAST local/lito381/server/NativeDeDeletionState
--DUP
--ASTORE 2
--CHECKCAST local/lito381/server/NativeDeNpcVitalState
--INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.destroyed()Z
-+ASTORE 4
-+ALOAD 4
-+INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.destroyed()Z
- IFNE L1
--ALOAD 2
--CHECKCAST local/lito381/server/NativeDeNpcVitalState
--INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionStarted()Z
-+ALOAD 4
-+INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionStarted()Z
- IFEQ L2
- LABEL L1
- NEW java/util/concurrent/RejectedExecutionException
-@@ -44,14 +42,13 @@
- INVOKESPECIAL java/util/concurrent/RejectedExecutionException.<init>(Ljava/lang/String;)V
- ATHROW
- LABEL L2
--ALOAD 4
-+ALOAD 3
- GETFIELD local/lito381/server/NativeDeWorldContext$Entry.context:Llocal/lito381/server/NativeDeWorldContext;
- INVOKESTATIC local/lito381/server/NativeDeChatJobs.find(Llocal/lito381/server/NativeDeWorldContext;)Llocal/lito381/server/NativeDeChatJobs$Owner;
--ASTORE 2
--ALOAD 2
-+ASTORE 4
-+ALOAD 4
- IFNULL L3
--ALOAD 2
--CHECKCAST local/lito381/server/NativeDeChatJobs$Owner
-+ALOAD 4
- GETFIELD local/lito381/server/NativeDeChatJobs$Owner.closed:Z
- IFEQ L4
- LABEL L3
-```
-
-#### `method subject(Llocal/lito381/server/NativeDeDeletionPorts$Packet;)Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;`
-
-```diff
---- staged
-+++ formal
-@@ -8,10 +8,9 @@
- IFEQ L0
- ALOAD 0
- CHECKCAST local/lito381/server/NativeDeChatChat
--ASTORE 2
--ALOAD 2
-+ASTORE 3
-+ALOAD 3
- GETFIELD local/lito381/server/NativeDeChatChat.nativeSubject:Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;
--ASTORE 1
- GOTO L3
- LABEL L0
- ALOAD 0
-@@ -22,7 +21,6 @@
- ASTORE 2
- ALOAD 2
- GETFIELD local/lito381/server/NativeDeChatChatGlobal.nativeSubject:Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;
--ASTORE 1
- GOTO L3
- LABEL L1
- ALOAD 0
-@@ -30,14 +28,11 @@
- IFEQ L2
- ALOAD 0
- CHECKCAST local/lito381/server/NativeDeChatChatShouting
--ASTORE 2
--ALOAD 2
-+ASTORE 1
-+ALOAD 1
- GETFIELD local/lito381/server/NativeDeChatChatShouting.nativeSubject:Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;
--ASTORE 1
- GOTO L3
- LABEL L2
- CONST null
--ASTORE 1
- LABEL L3
--ALOAD 1
- ARETURN
-```
-
 ### `NativeDeClientViewer`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -1733,157 +575,22 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field FIELD:Ljava/lang/String; signature=null
 ```
 
-#### `method current()Llocal/lito381/server/ClientSession;`
-
-```diff
---- staged
-+++ formal
-@@ -5,21 +5,25 @@
- default=
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeClientViewer.retired:Z
--IFNE L3
-+IFNE L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeClientViewer.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.mode:Llocal/lito381/server/NativePlayerLifetime$Mode;
- GETSTATIC local/lito381/server/NativePlayerLifetime$Mode.STOPPED:Llocal/lito381/server/NativePlayerLifetime$Mode;
--IF_ACMPEQ L3
-+IF_ACMPNE L1
-+LABEL L0
-+CONST null
-+ARETURN
-+LABEL L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeClientViewer.hub:Llocal/lito381/server/GameHub;
- INVOKEVIRTUAL local/lito381/server/GameHub.connectedSessionsSnapshot()Ljava/util/List;
- INVOKEINTERFACE java/util/List.iterator()Ljava/util/Iterator; itf
- ASTORE 1
--LABEL L0
-+LABEL L2
- ALOAD 1
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L2
-+IFEQ L4
- ALOAD 1
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -28,14 +32,11 @@
- GETFIELD local/lito381/server/NativeDeClientViewer.binding:Llocal/lito381/server/NativePlayerCommit$Binding;
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativePlayerCommit$Binding.matches(Llocal/lito381/server/ClientSession;)Z
--IFEQ L1
-+IFEQ L3
- ALOAD 2
- ARETURN
--LABEL L1
--GOTO L0
--LABEL L2
-+LABEL L3
-+GOTO L2
-+LABEL L4
- CONST null
- ARETURN
--LABEL L3
--CONST null
--ARETURN
-```
-
-#### `method objectId(J)I`
-
-```diff
---- staged
-+++ formal
-@@ -10,13 +10,14 @@
- LLOAD 0
- CONST Long:4294967295
- LCMP
--IFGT L0
--LLOAD 0
--L2I
--IRETURN
-+IFLE L1
- LABEL L0
- NEW java/lang/IllegalArgumentException
- DUP
- CONST str:"source viewer object ID outside unsigned32"
- INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
- ATHROW
-+LABEL L1
-+LLOAD 0
-+L2I
-+IRETURN
-```
-
-#### `method retireClient(Llocal/lito381/server/ClientSession;)V`
-
-```diff
---- staged
-+++ formal
-@@ -4,13 +4,15 @@
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
- ALOAD 0
--IFNULL L0
-+IFNONNULL L0
-+RETURN
-+LABEL L0
- ALOAD 0
- INVOKESTATIC local/lito381/server/CombatPoisonAtomic.status(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/BattleTimedStatus;
- ASTORE 1
- ALOAD 1
--IFNULL L0
-+IFNULL L1
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativeDeClientViewer.retire(Llocal/lito381/server/BattleTimedStatus;)V
--LABEL L0
-+LABEL L1
- RETURN
-```
-
 #### `method sendPackets(Llocal/lito381/server/NativeDeDeletionPorts$Packet;)V`
 
 ```diff
 --- staged
 +++ formal
-@@ -11,7 +11,7 @@
- ALOAD 0
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativeDeVisibilityOutput.send(Llocal/lito381/server/NativeDeClientViewer;Llocal/lito381/server/NativeDeDeletionPorts$Packet;)V
--GOTO L12
-+RETURN
- LABEL L0
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDePerceptionPacket
-@@ -20,7 +20,7 @@
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDePerceptionPacket
- INVOKESTATIC local/lito381/server/NativeDePerceptionOutput.send(Llocal/lito381/server/NativeDeClientViewer;Llocal/lito381/server/NativeDePerceptionPacket;)V
--GOTO L12
-+RETURN
- LABEL L1
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeDeletionPorts$RemoveObject
-@@ -97,7 +97,17 @@
- CONST str:"sourceDeKnownViewer"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- ALOAD 0
--IF_ACMPNE L7
-+IF_ACMPEQ L8
-+LABEL L7
-+NEW java/lang/IllegalStateException
-+DUP
-+CONST str:"stale native viewer publication"
-+INVOKESPECIAL java/lang/IllegalStateException.<init>(Ljava/lang/String;)V
-+ATHROW
-+LABEL L8
+@@ -105,6 +105,9 @@
+ INVOKESPECIAL java/lang/IllegalStateException.<init>(Ljava/lang/String;)V
+ ATHROW
+ LABEL L8
 +ALOAD 4
 +CONST str:"sendEncryptedFrame"
 +CONST str:"([BLjava/lang/String;)V"
  CONST Integer:2
  ANEWARRAY java/lang/Object
  DUP
-@@ -111,33 +121,20 @@
+@@ -118,13 +121,8 @@
  INVOKESTATIC java/lang/Integer.toUnsignedLong(I)J
  INVOKEDYNAMIC makeConcatWithConstants(J)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"S_REMOVE_OBJECT source-De deletion id=\u0001"]
  AASTORE
@@ -1896,16 +603,8 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 -ALOAD 7
  INVOKESTATIC local/lito381/server/CombatAccess.call(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
  POP
--GOTO L8
--LABEL L7
--NEW java/lang/IllegalStateException
--DUP
--CONST str:"stale native viewer publication"
--INVOKESPECIAL java/lang/IllegalStateException.<init>(Ljava/lang/String;)V
--ATHROW
--LABEL L8
  ALOAD 6
- MONITOREXIT
+@@ -132,11 +130,11 @@
  LABEL L9
  GOTO L12
  LABEL L10
@@ -1921,31 +620,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  RETURN
 ```
 
-#### `method tryAddKnownObject(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -25,7 +25,7 @@
- GETFIELD local/lito381/server/NativeDeClientViewer.life:Llocal/lito381/server/NativePlayerLifetime;
- IF_ACMPEQ L1
- CONST Integer:0
--GOTO L2
-+IRETURN
- LABEL L1
- ALOAD 0
- ALOAD 0
-@@ -35,5 +35,4 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeClientViewer.withKnownLock(Ljava/util/function/Supplier;)Ljava/lang/Object;
- CHECKCAST java/lang/Boolean
- INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
--LABEL L2
- IRETURN
-```
-
 ### `NativeDeControlCatalog$Names`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -1965,8 +640,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeControlCatalog$Reporter`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -1982,8 +655,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 ```
 
 ### `NativeDeControlCatalog`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -2001,1531 +672,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field ABILITIES:Ljava/lang/String; signature=null
 ```
 
-#### `method names(Ljava/sql/Connection;Llocal/lito381/server/NativeDeControlCatalog$Names;Llocal/lito381/server/NativeDeControlCatalog$Reporter;)Llocal/lito381/server/NativeDeControlCatalog$Names;`
-
-```diff
---- staged
-+++ formal
-@@ -4,11 +4,11 @@
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
- TRY L9 L10 L11 java/sql/SQLException
--TRY L4 L14 L15 java/lang/Throwable
--TRY L16 L17 L18 java/lang/Throwable
--TRY L3 L20 L21 java/lang/Throwable
--TRY L22 L23 L24 java/lang/Throwable
--TRY L2 L26 L27 java/sql/SQLException
-+TRY L4 L15 L16 java/lang/Throwable
-+TRY L17 L18 L19 java/lang/Throwable
-+TRY L3 L21 L22 java/lang/Throwable
-+TRY L23 L24 L25 java/lang/Throwable
-+TRY L2 L27 L28 java/sql/SQLException
- NEW java/util/concurrent/ConcurrentHashMap
- DUP
- INVOKESPECIAL java/util/concurrent/ConcurrentHashMap.<init>()V
-@@ -71,37 +71,37 @@
- LABEL L4
- ALOAD 11
- INVOKEINTERFACE java/sql/ResultSet.next()Z itf
--IFEQ L14
-+IFEQ L15
- IINC var=6 incr=1
- ALOAD 11
- CONST str:"deobjid"
- INVOKEINTERFACE java/sql/ResultSet.getInt(Ljava/lang/String;)I itf
--ISTORE 13
-+ISTORE 12
- ALOAD 11
- CONST str:"denamebig5"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
-+ASTORE 13
-+ALOAD 11
-+CONST str:"detitlebig5"
-+INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
- ASTORE 14
--ALOAD 11
--CONST str:"detitlebig5"
-+ALOAD 14
-+IFNONNULL L5
-+CONST str:""
-+ASTORE 14
-+LABEL L5
-+ALOAD 11
-+CONST str:"deshopbig5"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
- ASTORE 15
- ALOAD 15
--IFNONNULL L5
-+IFNONNULL L6
- CONST str:""
- ASTORE 15
--LABEL L5
--ALOAD 11
--CONST str:"deshopbig5"
--INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
--DUP
--ASTORE 12
--IFNONNULL L6
--CONST str:""
--ASTORE 12
- LABEL L6
--ALOAD 14
-+ALOAD 13
- IFNULL L7
--ALOAD 14
-+ALOAD 13
- INVOKEVIRTUAL java/lang/String.trim()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
- IFEQ L8
-@@ -109,7 +109,7 @@
- IINC var=7 incr=1
- ALOAD 2
- CONST str:"invalid-name"
--ILOAD 13
-+ILOAD 12
- CONST null
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
- GOTO L4
-@@ -142,27 +142,27 @@
- LABEL L12
- NEW local/lito381/server/NativeDeInitializerKernel$Name
- DUP
--ILOAD 13
--ALOAD 14
-+ILOAD 12
-+ALOAD 13
- ILOAD 16
- ILOAD 17
- ILOAD 18
- ILOAD 19
-+ALOAD 14
- ALOAD 15
--ALOAD 12
- INVOKESPECIAL local/lito381/server/NativeDeInitializerKernel$Name.<init>(ILjava/lang/String;IIIILjava/lang/String;Ljava/lang/String;)V
- ASTORE 20
- ALOAD 3
--ALOAD 14
-+ALOAD 13
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.get(Ljava/lang/Object;)Ljava/lang/Object;
- IFNONNULL L13
- ALOAD 3
--ALOAD 14
-+ALOAD 13
- ALOAD 20
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
- POP
- ALOAD 4
--ILOAD 13
-+ILOAD 12
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- ALOAD 20
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-@@ -174,68 +174,69 @@
- ALOAD 2
- ALOAD 20
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.registered(Llocal/lito381/server/NativeDeInitializerKernel$Name;)V itf
--GOTO L4
-+GOTO L14
- LABEL L13
- ALOAD 8
--ILOAD 13
-+ILOAD 12
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- INVOKEVIRTUAL java/util/ArrayList.add(Ljava/lang/Object;)Z
- POP
- ALOAD 2
- CONST str:"duplicate-name-write-suppressed"
--ILOAD 13
-+ILOAD 12
- CONST null
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
-+LABEL L14
- GOTO L4
--LABEL L14
-+LABEL L15
-+ALOAD 11
-+IFNULL L21
-+ALOAD 11
-+INVOKEINTERFACE java/sql/ResultSet.close()V itf
-+GOTO L21
-+LABEL L16
-+ASTORE 12
- ALOAD 11
- IFNULL L20
-+LABEL L17
- ALOAD 11
- INVOKEINTERFACE java/sql/ResultSet.close()V itf
-+LABEL L18
- GOTO L20
--LABEL L15
--ASTORE 12
--ALOAD 11
--IFNULL L19
--LABEL L16
--ALOAD 11
--INVOKEINTERFACE java/sql/ResultSet.close()V itf
--LABEL L17
--GOTO L19
--LABEL L18
-+LABEL L19
- ASTORE 13
- ALOAD 12
- ALOAD 13
- INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
--LABEL L19
-+LABEL L20
- ALOAD 12
- ATHROW
--LABEL L20
-+LABEL L21
-+ALOAD 10
-+IFNULL L27
-+ALOAD 10
-+INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
-+GOTO L27
-+LABEL L22
-+ASTORE 11
- ALOAD 10
- IFNULL L26
-+LABEL L23
- ALOAD 10
- INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
-+LABEL L24
- GOTO L26
--LABEL L21
--ASTORE 11
--ALOAD 10
--IFNULL L25
--LABEL L22
--ALOAD 10
--INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
--LABEL L23
--GOTO L25
--LABEL L24
-+LABEL L25
- ASTORE 12
- ALOAD 11
- ALOAD 12
- INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
--LABEL L25
-+LABEL L26
- ALOAD 11
- ATHROW
--LABEL L26
--GOTO L28
- LABEL L27
-+GOTO L29
-+LABEL L28
- ASTORE 10
- CONST Integer:1
- ISTORE 9
-@@ -244,7 +245,7 @@
- CONST Integer:0
- ALOAD 10
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
--LABEL L28
-+LABEL L29
- NEW local/lito381/server/NativeDeControlCatalog$Names
- DUP
- ALOAD 3
-```
-
-#### `method settings(Ljava/sql/Connection;Llocal/lito381/server/NativeDeControlCatalog$Reporter;)Llocal/lito381/server/NativeDeControlCatalog$Settings;`
-
-```diff
---- staged
-+++ formal
-@@ -3,15 +3,14 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L6 L7 L10 java/lang/NumberFormatException
--TRY L8 L9 L10 java/lang/NumberFormatException
--TRY L3 L13 L14 java/lang/Exception
--TRY L17 L18 L19 java/lang/NumberFormatException
--TRY L2 L25 L26 java/lang/Throwable
--TRY L27 L28 L29 java/lang/Throwable
--TRY L1 L31 L32 java/lang/Throwable
--TRY L33 L34 L35 java/lang/Throwable
--TRY L0 L37 L38 java/lang/Exception
-+TRY L6 L7 L8 java/lang/NumberFormatException
-+TRY L3 L12 L13 java/lang/Exception
-+TRY L16 L17 L18 java/lang/NumberFormatException
-+TRY L2 L24 L25 java/lang/Throwable
-+TRY L26 L27 L28 java/lang/Throwable
-+TRY L1 L30 L31 java/lang/Throwable
-+TRY L32 L33 L34 java/lang/Throwable
-+TRY L0 L36 L37 java/lang/Exception
- NEW java/util/HashMap
- DUP
- INVOKESPECIAL java/util/HashMap.<init>()V
-@@ -36,91 +35,89 @@
- LABEL L2
- ALOAD 7
- INVOKEINTERFACE java/sql/ResultSet.next()Z itf
--IFEQ L24
-+IFEQ L23
- IINC var=4 incr=1
- ALOAD 7
- CONST str:"id"
- INVOKEINTERFACE java/sql/ResultSet.getInt(Ljava/lang/String;)I itf
--ISTORE 10
-+ISTORE 8
- ALOAD 7
- CONST str:"class_id"
- INVOKEINTERFACE java/sql/ResultSet.getInt(Ljava/lang/String;)I itf
--ISTORE 11
-+ISTORE 9
- ALOAD 7
- CONST str:"weapon_type"
- INVOKEINTERFACE java/sql/ResultSet.getInt(Ljava/lang/String;)I itf
--ISTORE 12
-+ISTORE 10
- ALOAD 7
- CONST str:"poly_list"
-+INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
-+ASTORE 11
-+ALOAD 11
-+CONST Integer:0
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+INVOKESTATIC java/util/List.of(Ljava/lang/Object;)Ljava/util/List; itf
-+INVOKESTATIC local/lito381/server/NativeDeControlCatalog.tolerant(Ljava/lang/String;Ljava/util/List;)Ljava/util/List;
-+ASTORE 12
-+ALOAD 7
-+CONST str:"doll_list"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
- ASTORE 13
- ALOAD 13
--CONST Integer:0
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--INVOKESTATIC java/util/List.of(Ljava/lang/Object;)Ljava/util/List; itf
-+INVOKESTATIC java/util/List.of()Ljava/util/List; itf
- INVOKESTATIC local/lito381/server/NativeDeControlCatalog.tolerant(Ljava/lang/String;Ljava/util/List;)Ljava/util/List;
- ASTORE 14
- ALOAD 7
--CONST str:"doll_list"
--INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
--ASTORE 15
--ALOAD 15
--INVOKESTATIC java/util/List.of()Ljava/util/List; itf
--INVOKESTATIC local/lito381/server/NativeDeControlCatalog.tolerant(Ljava/lang/String;Ljava/util/List;)Ljava/util/List;
--ASTORE 16
--ALOAD 7
- CONST str:"use_skill"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
- CONST null
- INVOKESTATIC local/lito381/server/NativeDeControlCatalog.strictTokens(Ljava/lang/String;Ljava/util/List;)Ljava/util/List;
--ASTORE 17
-+ASTORE 15
- ALOAD 7
- CONST str:"use_item_Gfx"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
- INVOKESTATIC java/util/List.of()Ljava/util/List; itf
- INVOKESTATIC local/lito381/server/NativeDeControlCatalog.strictTokens(Ljava/lang/String;Ljava/util/List;)Ljava/util/List;
-+ASTORE 16
-+ALOAD 7
-+CONST str:"De_pet"
-+INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
-+ASTORE 17
-+NEW java/util/ArrayList
-+DUP
-+INVOKESPECIAL java/util/ArrayList.<init>()V
- ASTORE 18
--ALOAD 7
--CONST str:"De_pet"
--INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
--ASTORE 19
--NEW java/util/ArrayList
--DUP
--INVOKESPECIAL java/util/ArrayList.<init>()V
--ASTORE 20
--ALOAD 19
--IFNULL L15
--ALOAD 19
-+ALOAD 17
-+IFNULL L14
-+ALOAD 17
- CONST str:"0"
- INVOKEVIRTUAL java/lang/String.equals(Ljava/lang/Object;)Z
--IFNE L15
--ALOAD 19
-+IFNE L14
-+ALOAD 17
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L15
-+IFNE L14
- LABEL L3
--ALOAD 19
-+ALOAD 17
- CONST str:"\\s+"
- CONST str:""
- INVOKEVIRTUAL java/lang/String.replaceAll(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
--ASTORE 9
--ALOAD 9
-+ASTORE 19
-+ALOAD 19
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L13
-+IFNE L12
- NEW java/util/StringTokenizer
- DUP
--ALOAD 9
-+ALOAD 19
- CONST str:","
- INVOKESPECIAL java/util/StringTokenizer.<init>(Ljava/lang/String;Ljava/lang/String;)V
--ASTORE 8
-+ASTORE 20
- CONST Integer:0
- ISTORE 21
- LABEL L4
--ALOAD 8
--CHECKCAST java/util/StringTokenizer
-+ALOAD 20
- INVOKEVIRTUAL java/util/StringTokenizer.hasMoreTokens()Z
--IFEQ L12
--ALOAD 8
--CHECKCAST java/util/StringTokenizer
-+IFEQ L11
-+ALOAD 20
- INVOKEVIRTUAL java/util/StringTokenizer.nextToken()Ljava/lang/String;
- ASTORE 22
- ALOAD 22
-@@ -139,7 +136,7 @@
- ALOAD 23
- INVOKEVIRTUAL java/util/StringTokenizer.countTokens()I
- CONST Integer:3
--IF_ICMPLT L11
-+IF_ICMPLT L9
- LABEL L6
- ALOAD 23
- INVOKEVIRTUAL java/util/StringTokenizer.nextToken()Ljava/lang/String;
-@@ -161,11 +158,8 @@
- ILOAD 25
- IFLE L7
- ILOAD 26
--IFGT L8
--LABEL L7
--GOTO L4
--LABEL L8
--ALOAD 20
-+IFLE L7
-+ALOAD 18
- NEW local/lito381/server/NativeDeInitializerKernel$PetInfo
- DUP
- ILOAD 24
-@@ -175,67 +169,67 @@
- INVOKEVIRTUAL java/util/ArrayList.add(Ljava/lang/Object;)Z
- POP
- IINC var=21 incr=1
-+LABEL L7
-+GOTO L10
-+LABEL L8
-+ASTORE 24
-+ALOAD 1
-+CONST str:"pet-number"
-+CONST Integer:0
-+ALOAD 24
-+INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
-+GOTO L10
- LABEL L9
--GOTO L4
-+ALOAD 1
-+CONST str:"pet-short"
-+CONST Integer:0
-+CONST null
-+INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
- LABEL L10
--ASTORE 24
--ALOAD 1
--CONST str:"pet-number"
--CONST Integer:0
--ALOAD 24
--INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
- GOTO L4
- LABEL L11
--ALOAD 1
--CONST str:"pet-short"
--CONST Integer:0
--CONST null
--INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
--GOTO L4
--LABEL L12
- ILOAD 21
--IFLE L13
-+IFLE L12
- ALOAD 1
- CONST str:"pet-info"
- ILOAD 21
- CONST null
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
-+LABEL L12
-+GOTO L14
- LABEL L13
--GOTO L15
-+ASTORE 19
-+ALOAD 1
-+CONST str:"pet-error"
-+CONST Integer:0
-+ALOAD 19
-+INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
- LABEL L14
--ASTORE 21
--ALOAD 1
--CONST str:"pet-error"
--CONST Integer:0
--ALOAD 21
--INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
--LABEL L15
- ALOAD 7
- CONST str:"akk_skill"
- INVOKEINTERFACE java/sql/ResultSet.getString(Ljava/lang/String;)Ljava/lang/String; itf
--DUP
--ASTORE 9
--IFNULL L21
--ALOAD 9
-+ASTORE 19
-+ALOAD 19
-+IFNULL L20
-+ALOAD 19
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L21
-+IFNE L20
- NEW java/util/StringTokenizer
- DUP
--ALOAD 9
-+ALOAD 19
- CONST str:","
- INVOKESPECIAL java/util/StringTokenizer.<init>(Ljava/lang/String;Ljava/lang/String;)V
- ASTORE 21
- NEW java/util/ArrayList
- DUP
- INVOKESPECIAL java/util/ArrayList.<init>()V
--ASTORE 8
--LABEL L16
-+ASTORE 20
-+LABEL L15
- ALOAD 21
- INVOKEVIRTUAL java/util/StringTokenizer.hasMoreTokens()Z
--IFEQ L20
--LABEL L17
--ALOAD 8
--CHECKCAST java/util/List
-+IFEQ L19
-+LABEL L16
-+ALOAD 20
- ALOAD 21
- INVOKEVIRTUAL java/util/StringTokenizer.nextToken()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.trim()Ljava/lang/String;
-@@ -243,118 +237,115 @@
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
- POP
-+LABEL L17
-+GOTO L15
- LABEL L18
--GOTO L16
-+ASTORE 22
-+ALOAD 20
-+CONST Integer:0
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
-+POP
-+GOTO L15
- LABEL L19
--ASTORE 22
--ALOAD 8
--CHECKCAST java/util/List
--CONST Integer:0
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
--POP
--GOTO L16
-+GOTO L21
- LABEL L20
--GOTO L22
-+CONST Integer:0
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+INVOKESTATIC java/util/List.of(Ljava/lang/Object;)Ljava/util/List; itf
-+ASTORE 20
- LABEL L21
--CONST Integer:0
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--INVOKESTATIC java/util/List.of(Ljava/lang/Object;)Ljava/util/List; itf
--ASTORE 8
--LABEL L22
- NEW local/lito381/server/NativeDeControlCatalog$Definition
- DUP
- NEW local/lito381/server/NativeDeInitializerKernel$Setting
- DUP
-+ILOAD 8
-+ILOAD 9
- ILOAD 10
--ILOAD 11
--ILOAD 12
- INVOKESPECIAL local/lito381/server/NativeDeInitializerKernel$Setting.<init>(III)V
-+ALOAD 11
-+ALOAD 12
- ALOAD 13
- ALOAD 14
- ALOAD 15
- ALOAD 16
--ALOAD 17
- ALOAD 18
- ALOAD 20
--ALOAD 8
--CHECKCAST java/util/List
- INVOKESPECIAL local/lito381/server/NativeDeControlCatalog$Definition.<init>(Llocal/lito381/server/NativeDeInitializerKernel$Setting;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
- ASTORE 21
- ALOAD 2
--ILOAD 11
--ILOAD 12
-+ILOAD 9
-+ILOAD 10
- INVOKEDYNAMIC makeConcatWithConstants(II)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"\u0001_\u0001"]
- ALOAD 21
- INVOKEVIRTUAL java/util/HashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
- POP
--ILOAD 10
--IFGT L23
-+ILOAD 8
-+IFLE L22
-+ALOAD 3
-+ILOAD 8
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+ALOAD 21
-+INVOKEVIRTUAL java/util/HashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-+POP
-+LABEL L22
- GOTO L2
- LABEL L23
--ALOAD 3
--ILOAD 10
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--ALOAD 21
--INVOKEVIRTUAL java/util/HashMap.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
--POP
--GOTO L2
--LABEL L24
- ALOAD 1
- CONST str:"settings-info"
- ALOAD 2
- INVOKEVIRTUAL java/util/HashMap.size()I
- CONST null
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
-+LABEL L24
-+ALOAD 7
-+IFNULL L30
-+ALOAD 7
-+INVOKEINTERFACE java/sql/ResultSet.close()V itf
-+GOTO L30
- LABEL L25
--ALOAD 7
--IFNULL L31
-+ASTORE 8
-+ALOAD 7
-+IFNULL L29
-+LABEL L26
- ALOAD 7
- INVOKEINTERFACE java/sql/ResultSet.close()V itf
--GOTO L31
--LABEL L26
--ASTORE 8
--ALOAD 7
--IFNULL L30
- LABEL L27
--ALOAD 7
--INVOKEINTERFACE java/sql/ResultSet.close()V itf
-+GOTO L29
- LABEL L28
--GOTO L30
--LABEL L29
- ASTORE 9
- ALOAD 8
- ALOAD 9
- INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
--LABEL L30
-+LABEL L29
- ALOAD 8
- ATHROW
-+LABEL L30
-+ALOAD 6
-+IFNULL L36
-+ALOAD 6
-+INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
-+GOTO L36
- LABEL L31
--ALOAD 6
--IFNULL L37
-+ASTORE 7
-+ALOAD 6
-+IFNULL L35
-+LABEL L32
- ALOAD 6
- INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
--GOTO L37
--LABEL L32
--ASTORE 7
--ALOAD 6
--IFNULL L36
- LABEL L33
--ALOAD 6
--INVOKEINTERFACE java/sql/PreparedStatement.close()V itf
-+GOTO L35
- LABEL L34
--GOTO L36
--LABEL L35
- ASTORE 8
- ALOAD 7
- ALOAD 8
- INVOKEVIRTUAL java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V
-+LABEL L35
-+ALOAD 7
-+ATHROW
- LABEL L36
--ALOAD 7
--ATHROW
-+GOTO L38
- LABEL L37
--GOTO L39
--LABEL L38
- ASTORE 6
- CONST Integer:1
- ISTORE 5
-@@ -363,7 +354,7 @@
- CONST Integer:0
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeControlCatalog$Reporter.event(Ljava/lang/String;ILjava/lang/Exception;)V itf
--LABEL L39
-+LABEL L38
- NEW local/lito381/server/NativeDeControlCatalog$Settings
- DUP
- ALOAD 2
-```
-
-### `NativeDeCorpseCore`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method run()V`
-
-```diff
---- staged
-+++ formal
-@@ -3,14 +3,12 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L3 L4 L12 java/lang/RuntimeException
--TRY L6 L7 L12 java/lang/RuntimeException
--TRY L9 L10 L12 java/lang/RuntimeException
--TRY L3 L4 L15 java/lang/Throwable
--TRY L6 L7 L15 java/lang/Throwable
--TRY L9 L10 L15 java/lang/Throwable
--TRY L12 L13 L15 java/lang/Throwable
--TRY L15 L16 L15 java/lang/Throwable
-+TRY L3 L4 L7 java/lang/RuntimeException
-+TRY L5 L6 L7 java/lang/RuntimeException
-+TRY L3 L4 L9 java/lang/Throwable
-+TRY L5 L6 L9 java/lang/Throwable
-+TRY L7 L8 L9 java/lang/Throwable
-+TRY L9 L10 L9 java/lang/Throwable
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.auditDeletionStalls()V itf
-@@ -31,7 +29,7 @@
- LABEL L1
- ALOAD 3
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L19
-+IFEQ L13
- ALOAD 3
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/NativeDeCorpseCore$Npc
-@@ -61,43 +59,27 @@
- LLOAD 1
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.claim(Llocal/lito381/server/NativeDeCorpseCore$Npc;JLjava/lang/Object;)Z itf
--IFNE L9
-+IFNE L5
- ALOAD 4
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Npc.destroyed()Z itf
--IFNE L6
-+IFEQ L4
-+ALOAD 0
-+GETFIELD local/lito381/server/NativeDeCorpseCore.tracked:Ljava/util/Set;
-+ALOAD 4
-+INVOKEINTERFACE java/util/Set.remove(Ljava/lang/Object;)Z itf
-+POP
- LABEL L4
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.retained(Ljava/lang/Object;)Z itf
--IFEQ L5
--GOTO L1
--LABEL L5
-+IFNE L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.release(Ljava/lang/Object;)V itf
- GOTO L1
--LABEL L6
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCorpseCore.tracked:Ljava/util/Set;
--ALOAD 4
--INVOKEINTERFACE java/util/Set.remove(Ljava/lang/Object;)Z itf
--POP
--LABEL L7
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
--ALOAD 5
--INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.retained(Ljava/lang/Object;)Z itf
--IFEQ L8
--GOTO L1
--LABEL L8
--ALOAD 0
--GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
--ALOAD 5
--INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.release(Ljava/lang/Object;)V itf
--GOTO L1
--LABEL L9
-+LABEL L5
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.tracked:Ljava/util/Set;
- ALOAD 4
-@@ -116,20 +98,18 @@
- INVOKESPECIAL local/lito381/server/NativeDeCorpseCore$Task.<init>(Llocal/lito381/server/NativeDeCorpseCore;Llocal/lito381/server/NativeDeCorpseCore$Npc;Ljava/lang/Object;)V
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseCore.dispatch(Llocal/lito381/server/NativeDeCorpseCore$Task;I)V
--LABEL L10
-+LABEL L6
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.retained(Ljava/lang/Object;)Z itf
--IFEQ L11
--GOTO L1
--LABEL L11
-+IFNE L12
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.release(Ljava/lang/Object;)V itf
--GOTO L18
--LABEL L12
-+GOTO L12
-+LABEL L7
- ASTORE 6
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.deleteFailures:Ljava/util/concurrent/atomic/AtomicLong;
-@@ -181,36 +161,33 @@
- ALOAD 6
- AASTORE
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.log(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V itf
--LABEL L13
-+LABEL L8
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.retained(Ljava/lang/Object;)Z itf
--IFEQ L14
--GOTO L1
--LABEL L14
-+IFNE L12
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.release(Ljava/lang/Object;)V itf
--GOTO L18
--LABEL L15
-+GOTO L12
-+LABEL L9
- ASTORE 9
--LABEL L16
-+LABEL L10
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.retained(Ljava/lang/Object;)Z itf
--IFEQ L17
--GOTO L1
--LABEL L17
-+IFNE L11
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseCore.port:Llocal/lito381/server/NativeDeCorpseCore$Port;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeCorpseCore$Port.release(Ljava/lang/Object;)V itf
-+LABEL L11
- ALOAD 9
- ATHROW
--LABEL L18
-+LABEL L12
- GOTO L1
--LABEL L19
-+LABEL L13
- RETURN
-```
-
-### `NativeDeCorpseTimers$Job`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method run()V`
-
-```diff
---- staged
-+++ formal
-@@ -17,20 +17,20 @@
- TRY L22 L23 L22 java/lang/Throwable
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Job.ticket:Llocal/lito381/server/NativeDeCorpseTimers$Ticket;
--ASTORE 2
--ALOAD 2
-+ASTORE 1
-+ALOAD 1
- DUP
- ASTORE 3
- MONITORENTER
- LABEL L0
--ALOAD 2
-+ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.closed:Z
- IFNE L1
--ALOAD 2
-+ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.job:Llocal/lito381/server/NativeDeCorpseTimers$Job;
- ALOAD 0
- IF_ACMPNE L1
--ALOAD 2
-+ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.owner:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.mode:Llocal/lito381/server/NativePlayerLifetime$Mode;
-@@ -41,18 +41,16 @@
- LABEL L1
- CONST Integer:0
- LABEL L2
--DUP
--ISTORE 1
--ISTORE 4
--ILOAD 1
-+ISTORE 2
-+ILOAD 2
- IFEQ L3
--ALOAD 2
-+ALOAD 1
- CONST Integer:1
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.running:Z
--ALOAD 2
-+ALOAD 1
- CONST Integer:3
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
--ALOAD 2
-+ALOAD 1
- CONST null
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.job:Llocal/lito381/server/NativeDeCorpseTimers$Job;
- LABEL L3
-@@ -61,36 +59,36 @@
- LABEL L4
- GOTO L7
- LABEL L5
--ASTORE 5
-+ASTORE 4
- ALOAD 3
- MONITOREXIT
- LABEL L6
--ALOAD 5
-+ALOAD 4
- ATHROW
- LABEL L7
--ILOAD 1
-+ILOAD 2
- IFNE L8
--ALOAD 2
-+ALOAD 1
- CONST Integer:1
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- RETURN
- LABEL L8
--ALOAD 2
-+ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.owner:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Job.task:Llocal/lito381/server/NativeDeCorpseCore$Task;
- INVOKEVIRTUAL local/lito381/server/NativePlayerLifetime.executeCommitted(Ljava/lang/Runnable;)V
- LABEL L9
--ALOAD 2
-+ALOAD 1
- DUP
- ASTORE 3
- MONITORENTER
- LABEL L10
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.running:Z
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
- ALOAD 3
-@@ -98,14 +96,14 @@
- LABEL L11
- GOTO L14
- LABEL L12
--ASTORE 6
-+ASTORE 5
- ALOAD 3
- MONITOREXIT
- LABEL L13
--ALOAD 6
-+ALOAD 5
- ATHROW
- LABEL L14
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- GOTO L29
-@@ -114,15 +112,15 @@
- ALOAD 3
- INVOKESTATIC local/lito381/server/CombatNpcDamageQueue.failed(Ljava/lang/Throwable;)V
- LABEL L16
--ALOAD 2
-+ALOAD 1
- DUP
- ASTORE 3
- MONITORENTER
- LABEL L17
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.running:Z
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
- ALOAD 3
-@@ -130,47 +128,47 @@
- LABEL L18
- GOTO L21
- LABEL L19
--ASTORE 7
-+ASTORE 6
- ALOAD 3
- MONITOREXIT
- LABEL L20
--ALOAD 7
-+ALOAD 6
- ATHROW
- LABEL L21
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- GOTO L29
- LABEL L22
-+ASTORE 7
-+LABEL L23
-+ALOAD 1
-+DUP
- ASTORE 8
--LABEL L23
--ALOAD 2
--DUP
--ASTORE 9
- MONITORENTER
- LABEL L24
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.running:Z
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
--ALOAD 9
-+ALOAD 8
- MONITOREXIT
- LABEL L25
- GOTO L28
- LABEL L26
--ASTORE 10
--ALOAD 9
-+ASTORE 9
-+ALOAD 8
- MONITOREXIT
- LABEL L27
--ALOAD 10
-+ALOAD 9
- ATHROW
- LABEL L28
--ALOAD 2
-+ALOAD 1
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
--ALOAD 8
-+ALOAD 7
- ATHROW
- LABEL L29
- RETURN
-```
-
-### `NativeDeCorpseTimers$Owner$1`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method lambda$retry$#0(Llocal/lito381/server/NativeDeCorpseTimers$Ticket;JLlocal/lito381/server/NativePlayerLifetime;Ljava/lang/Runnable;)V`
-
-```diff
---- staged
-+++ formal
-@@ -35,9 +35,7 @@
- LABEL L1
- CONST Integer:0
- LABEL L2
--DUP
- ISTORE 6
--ISTORE 8
- ILOAD 6
- IFEQ L3
- ALOAD 1
-@@ -52,11 +50,11 @@
- LABEL L4
- GOTO L7
- LABEL L5
--ASTORE 9
-+ASTORE 8
- ALOAD 7
- MONITOREXIT
- LABEL L6
--ALOAD 9
-+ALOAD 8
- ATHROW
- LABEL L7
- ILOAD 6
-```
-
-#### `method retry(Llocal/lito381/server/NativeDeCorpseCore$Task;Ljava/lang/Runnable;J)Ljava/util/concurrent/ScheduledFuture;`
-
-```diff
---- staged
-+++ formal
-@@ -7,20 +7,20 @@
- TRY L4 L5 L4 java/lang/Throwable
- TRY L9 L13 L14 java/lang/Throwable
- TRY L14 L15 L14 java/lang/Throwable
-+TRY L6 L7 L19 java/lang/RuntimeException
- TRY L6 L7 L19 java/lang/Error
--TRY L6 L7 L19 java/lang/RuntimeException
-+TRY L8 L18 L19 java/lang/RuntimeException
- TRY L8 L18 L19 java/lang/Error
--TRY L8 L18 L19 java/lang/RuntimeException
- ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseCore$Task.credit:Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeCorpseTimers$Ticket
--ASTORE 7
--ALOAD 7
-+ASTORE 5
-+ALOAD 5
- DUP
- ASTORE 8
- MONITORENTER
- LABEL L0
--ALOAD 7
-+ALOAD 5
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.closed:Z
- IFNE L1
- ALOAD 0
-@@ -33,7 +33,7 @@
- GETSTATIC local/lito381/server/NativePlayerLifetime$Mode.OPEN:Llocal/lito381/server/NativePlayerLifetime$Mode;
- IF_ACMPEQ L2
- LABEL L1
--ALOAD 7
-+ALOAD 5
- CONST Integer:1
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- NEW java/util/concurrent/RejectedExecutionException
-@@ -42,20 +42,20 @@
- INVOKESPECIAL java/util/concurrent/RejectedExecutionException.<init>(Ljava/lang/String;)V
- ATHROW
- LABEL L2
--ALOAD 7
-+ALOAD 5
- ALOAD 1
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.task:Llocal/lito381/server/NativeDeCorpseCore$Task;
--ALOAD 7
-+ALOAD 5
- CONST Integer:1
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
--ALOAD 7
-+ALOAD 5
- DUP
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.epoch:J
- CONST Long:1
- LADD
- DUP2_X1
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.epoch:J
--LSTORE 5
-+LSTORE 6
- ALOAD 8
- MONITOREXIT
- LABEL L3
-@@ -72,8 +72,8 @@
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner$1.val$life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.retry:Ljava/util/concurrent/ScheduledThreadPoolExecutor;
- ALOAD 0
--ALOAD 7
--LLOAD 5
-+ALOAD 5
-+LLOAD 6
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner$1.val$life:Llocal/lito381/server/NativePlayerLifetime;
- ALOAD 2
-@@ -81,31 +81,31 @@
- LLOAD 3
- GETSTATIC java/util/concurrent/TimeUnit.MILLISECONDS:Ljava/util/concurrent/TimeUnit;
- INVOKEVIRTUAL java/util/concurrent/ScheduledThreadPoolExecutor.schedule(Ljava/lang/Runnable;JLjava/util/concurrent/TimeUnit;)Ljava/util/concurrent/ScheduledFuture;
--ASTORE 9
--ALOAD 9
-+ASTORE 8
-+ALOAD 8
- IFNONNULL L8
--ALOAD 7
-+ALOAD 5
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- CONST null
- LABEL L7
- ARETURN
- LABEL L8
--ALOAD 7
-+ALOAD 5
- DUP
- ASTORE 10
- MONITORENTER
- LABEL L9
--ALOAD 7
-+ALOAD 5
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.closed:Z
- IFNE L10
--ALOAD 7
-+ALOAD 5
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.phase:I
- CONST Integer:1
- IF_ICMPNE L10
--ALOAD 7
-+ALOAD 5
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.epoch:J
--LLOAD 5
-+LLOAD 6
- LCMP
- IFNE L10
- CONST Integer:1
-@@ -113,13 +113,11 @@
- LABEL L10
- CONST Integer:0
- LABEL L11
--DUP
--ISTORE 8
--ISTORE 11
--ILOAD 8
-+ISTORE 9
-+ILOAD 9
- IFEQ L12
--ALOAD 7
--ALOAD 9
-+ALOAD 5
-+ALOAD 8
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.future:Ljava/util/concurrent/ScheduledFuture;
- LABEL L12
- ALOAD 10
-@@ -127,26 +125,26 @@
- LABEL L13
- GOTO L16
- LABEL L14
--ASTORE 12
-+ASTORE 11
- ALOAD 10
- MONITOREXIT
- LABEL L15
--ALOAD 12
-+ALOAD 11
- ATHROW
- LABEL L16
--ILOAD 8
-+ILOAD 9
- IFNE L17
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner$1.this$0:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
--ALOAD 9
-+ALOAD 8
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Owner.cancel(Ljava/util/concurrent/ScheduledFuture;)V
- LABEL L17
--ALOAD 9
-+ALOAD 8
- LABEL L18
- ARETURN
- LABEL L19
- ASTORE 8
--ALOAD 7
-+ALOAD 5
- CONST Integer:0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
- ALOAD 8
-```
-
-#### `method tryExecute(Llocal/lito381/server/NativeDeCorpseCore$Task;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -11,8 +11,8 @@
- TRY L12 L13 L17 java/lang/Throwable
- TRY L14 L16 L17 java/lang/Throwable
- TRY L17 L18 L17 java/lang/Throwable
-+TRY L9 L10 L20 java/lang/RuntimeException
- TRY L9 L10 L20 java/lang/Error
--TRY L9 L10 L20 java/lang/RuntimeException
- ALOAD 1
- GETFIELD local/lito381/server/NativeDeCorpseCore$Task.credit:Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeCorpseTimers$Ticket
-```
-
-### `NativeDeCorpseTimers$Owner`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method close(Z)V`
-
-```diff
---- staged
-+++ formal
-@@ -7,38 +7,37 @@
- TRY L2 L3 L2 java/lang/Throwable
- TRY L7 L11 L12 java/lang/Throwable
- TRY L12 L13 L12 java/lang/Throwable
--TRY L6 L15 L18 java/lang/Throwable
--TRY L16 L17 L18 java/lang/Throwable
-+TRY L6 L15 L16 java/lang/Throwable
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.admission:Ljava/lang/Object;
- DUP
--ASTORE 3
-+ASTORE 2
- MONITORENTER
- LABEL L0
- ALOAD 0
- CONST Integer:1
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Owner.closed:Z
--ALOAD 3
-+ALOAD 2
- MONITOREXIT
- LABEL L1
- GOTO L4
- LABEL L2
--ASTORE 4
--ALOAD 3
-+ASTORE 3
-+ALOAD 2
- MONITOREXIT
- LABEL L3
--ALOAD 4
-+ALOAD 3
- ATHROW
- LABEL L4
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.ticker:Ljava/util/concurrent/atomic/AtomicReference;
- CONST null
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicReference.getAndSet(Ljava/lang/Object;)Ljava/lang/Object;
-+CHECKCAST java/util/concurrent/ScheduledFuture
- ASTORE 2
- ALOAD 0
- ALOAD 2
--CHECKCAST java/util/concurrent/ScheduledFuture
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Owner.cancel(Ljava/util/concurrent/ScheduledFuture;)V
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.core:Llocal/lito381/server/NativeDeCorpseCore;
-@@ -58,7 +57,7 @@
- LABEL L5
- ILOAD 5
- ILOAD 4
--IF_ICMPGE L20
-+IF_ICMPGE L18
- ALOAD 3
- ILOAD 5
- AALOAD
-@@ -98,23 +97,20 @@
- ATHROW
- LABEL L14
- ILOAD 7
--IFEQ L16
--LABEL L15
--GOTO L19
--LABEL L16
-+IFNE L15
- ALOAD 6
- CONST Integer:1
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Ticket.close(Z)V
--LABEL L17
--GOTO L19
--LABEL L18
-+LABEL L15
-+GOTO L17
-+LABEL L16
- ASTORE 7
- ALOAD 7
- INVOKESTATIC local/lito381/server/CombatNpcDamageQueue.failed(Ljava/lang/Throwable;)V
--LABEL L19
-+LABEL L17
- IINC var=5 incr=1
- GOTO L5
--LABEL L20
-+LABEL L18
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Owner.removeIfIdle()V
- RETURN
-```
-
-#### `method track(Llocal/lito381/server/NativeDeNpcVitalState;)V`
-
-```diff
---- staged
-+++ formal
-@@ -3,64 +3,61 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L3 L6 L7 java/lang/Throwable
--TRY L7 L8 L7 java/lang/Throwable
-+TRY L2 L5 L6 java/lang/Throwable
-+TRY L6 L7 L6 java/lang/Throwable
- ALOAD 1
- INSTANCEOF local/lito381/server/NativeDeCorpseState
--IFNE L0
--GOTO L1
--LABEL L0
-+IFEQ L0
- ALOAD 1
- CHECKCAST local/lito381/server/NativeDeCorpseState
- ASTORE 2
- ALOAD 2
- GETFIELD local/lito381/server/NativeDeCorpseState.owner:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
- ALOAD 0
--IF_ACMPNE L1
--GOTO L2
--LABEL L1
-+IF_ACMPEQ L1
-+LABEL L0
- NEW java/lang/IllegalArgumentException
- DUP
- CONST str:"corpse state belongs to another application owner"
- INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
- ATHROW
--LABEL L2
-+LABEL L1
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.admission:Ljava/lang/Object;
- DUP
- ASTORE 3
- MONITORENTER
--LABEL L3
-+LABEL L2
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.closed:Z
--IFNE L4
-+IFNE L3
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.mode:Llocal/lito381/server/NativePlayerLifetime$Mode;
- GETSTATIC local/lito381/server/NativePlayerLifetime$Mode.OPEN:Llocal/lito381/server/NativePlayerLifetime$Mode;
--IF_ACMPEQ L5
--LABEL L4
-+IF_ACMPEQ L4
-+LABEL L3
- NEW java/util/concurrent/RejectedExecutionException
- DUP
- CONST str:"corpse application admission closed"
- INVOKESPECIAL java/util/concurrent/RejectedExecutionException.<init>(Ljava/lang/String;)V
- ATHROW
--LABEL L5
-+LABEL L4
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.core:Llocal/lito381/server/NativeDeCorpseCore;
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeCorpseCore.track(Llocal/lito381/server/NativeDeCorpseCore$Npc;)V
- ALOAD 3
- MONITOREXIT
-+LABEL L5
-+GOTO L8
- LABEL L6
--GOTO L9
--LABEL L7
- ASTORE 4
- ALOAD 3
- MONITOREXIT
--LABEL L8
-+LABEL L7
- ALOAD 4
- ATHROW
--LABEL L9
-+LABEL L8
- RETURN
-```
-
-### `NativeDeCorpseTimers$Ticket`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method close(Z)V`
-
-```diff
---- staged
-+++ formal
-@@ -37,13 +37,13 @@
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.closed:Z
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.future:Ljava/util/concurrent/ScheduledFuture;
--ASTORE 3
-+ASTORE 2
- ALOAD 0
- CONST null
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.future:Ljava/util/concurrent/ScheduledFuture;
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.job:Llocal/lito381/server/NativeDeCorpseTimers$Job;
--ASTORE 2
-+ASTORE 3
- ALOAD 0
- CONST null
- PUTFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.job:Llocal/lito381/server/NativeDeCorpseTimers$Job;
-@@ -76,15 +76,15 @@
- LABEL L9
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.owner:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Owner.cancel(Ljava/util/concurrent/ScheduledFuture;)V
- ALOAD 3
--INVOKEVIRTUAL local/lito381/server/NativeDeCorpseTimers$Owner.cancel(Ljava/util/concurrent/ScheduledFuture;)V
--ALOAD 2
- IFNULL L10
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Ticket.owner:Llocal/lito381/server/NativeDeCorpseTimers$Owner;
- GETFIELD local/lito381/server/NativeDeCorpseTimers$Owner.life:Llocal/lito381/server/NativePlayerLifetime;
- GETFIELD local/lito381/server/NativePlayerLifetime.workers:Ljava/util/concurrent/ThreadPoolExecutor;
--ALOAD 2
-+ALOAD 3
- INVOKEVIRTUAL java/util/concurrent/ThreadPoolExecutor.remove(Ljava/lang/Runnable;)Z
- POP
- LABEL L10
-```
-
 ### `NativeDeDeletionDeState`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -3543,8 +690,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeDeletionPorts$Services`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -3560,8 +705,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 ```
 
 ### `NativeDeDeletionState`
-
-正式 get_showId 是 package-private，但固定 classpath 的 NativeDeObjectFields 同簽名為 public；javac 明確拒絕縮小存取。暫存保留 public 以供編譯，非 SAME；其餘方法仍有分支、區域槽、例外表差異，尚未證明等價。
 
 #### `class / fields`
 
@@ -3592,174 +735,12 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
 ```
 
-#### `method sourceAbortFailedWorldRegistration()V`
-
-```diff
---- staged
-+++ formal
-@@ -6,7 +6,7 @@
- ALOAD 0
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.require(Llocal/lito381/server/NativeDeDeletionState;)V
- ALOAD 0
--INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
-+INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
- CONST Integer:1
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.set(Z)V
- ALOAD 0
-```
-
-#### `method sourceAuditDeletionStalls()V`
-
-```diff
---- staged
-+++ formal
-@@ -3,32 +3,40 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L3 L4 L5 java/lang/RuntimeException
--TRY L1 L7 L8 java/lang/RuntimeException
-+TRY L9 L10 L11 java/lang/RuntimeException
-+TRY L2 L3 L14 java/lang/RuntimeException
-+TRY L4 L5 L14 java/lang/RuntimeException
-+TRY L6 L7 L14 java/lang/RuntimeException
-+TRY L8 L13 L14 java/lang/RuntimeException
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETIONS_IN_FLIGHT()Ljava/util/concurrent/ConcurrentHashMap;
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.isEmpty()Z
--IFNE L12
-+IFEQ L0
-+RETURN
-+LABEL L0
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETIONS_IN_FLIGHT()Ljava/util/concurrent/ConcurrentHashMap;
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.values()Ljava/util/Collection;
- INVOKEINTERFACE java/util/Collection.iterator()Ljava/util/Iterator; itf
- ASTORE 0
--LABEL L0
-+LABEL L1
- ALOAD 0
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L12
-+IFEQ L18
- ALOAD 0
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/NativeDeDeletionState
- ASTORE 1
--LABEL L1
-+LABEL L2
- ALOAD 1
--IFNULL L7
-+IFNONNULL L4
-+LABEL L3
-+GOTO L1
-+LABEL L4
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.sourceDeletionVisibilitySnapshot()Llocal/lito381/server/NativeDeDeletionVisibility$Snapshot;
- ASTORE 2
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Snapshot.deletionInProgress()Z
--IFNE L2
-+IFNE L6
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETIONS_IN_FLIGHT()Ljava/util/concurrent/ConcurrentHashMap;
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.getId()I
-@@ -36,8 +44,9 @@
- ALOAD 1
- INVOKEVIRTUAL java/util/concurrent/ConcurrentHashMap.remove(Ljava/lang/Object;Ljava/lang/Object;)Z
- POP
--GOTO L7
--LABEL L2
-+LABEL L5
-+GOTO L1
-+LABEL L6
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Snapshot.deleteAgeMillis()J
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETION_STALL_MILLIS()J
-@@ -48,20 +57,23 @@
- CONST Integer:0
- CONST Integer:1
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.compareAndSet(ZZ)Z
--IFEQ L7
-+IFNE L8
-+LABEL L7
-+GOTO L1
-+LABEL L8
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETION_STALL_COUNT()Ljava/util/concurrent/atomic/AtomicLong;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
- LSTORE 3
- CONST Integer:0
- ISTORE 5
--LABEL L3
-+LABEL L9
- INVOKESTATIC local/lito381/server/NativeDeDeletionPorts$World.get()Llocal/lito381/server/NativeDeDeletionPorts$World;
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionPorts$World.isObjectRegistered(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z
- ISTORE 5
--LABEL L4
--GOTO L6
--LABEL L5
-+LABEL L10
-+GOTO L12
-+LABEL L11
- ASTORE 6
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope._log()Llocal/lito381/server/NativeDeDeletionPorts$Log;
- CONST str:"[NpcLifecycle] deletion stall world-state read failed: objectId={} npcId={} phase={}"
-@@ -75,7 +87,7 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Snapshot.phase()Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeDeletionPorts$Log.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
--LABEL L6
-+LABEL L12
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope._log()Llocal/lito381/server/NativeDeDeletionPorts$Log;
- CONST str:"[NpcLifecycle] deletion stalled: objectId={} npcId={} phase={} deleteAgeMs={} phaseAgeMs={} worldRegistered={} destroyed={} viewers={} map={} x={} y={} count={}"
- CONST Integer:12
-@@ -151,9 +163,9 @@
- INVOKESTATIC java/lang/Long.valueOf(J)Ljava/lang/Long;
- AASTORE
- INVOKEINTERFACE local/lito381/server/NativeDeDeletionPorts$Log.warn(Ljava/lang/String;[Ljava/lang/Object;)V itf
--LABEL L7
--GOTO L11
--LABEL L8
-+LABEL L13
-+GOTO L17
-+LABEL L14
- ASTORE 2
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope.DELETION_AUDIT_FAILURE_COUNT()Ljava/util/concurrent/atomic/AtomicLong;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
-@@ -161,19 +173,19 @@
- INVOKESTATIC local/lito381/server/NativeDeDeletionScope._log()Llocal/lito381/server/NativeDeDeletionPorts$Log;
- CONST str:"[NpcLifecycle] deletion stall audit failed: objectId={} count={}"
- ALOAD 1
--IFNULL L9
-+IFNULL L15
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.getId()I
--GOTO L10
--LABEL L9
-+GOTO L16
-+LABEL L15
- CONST Integer:-1
--LABEL L10
-+LABEL L16
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- LLOAD 3
- INVOKESTATIC java/lang/Long.valueOf(J)Ljava/lang/Long;
- ALOAD 2
- INVOKEINTERFACE local/lito381/server/NativeDeDeletionPorts$Log.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
--LABEL L11
--GOTO L0
--LABEL L12
-+LABEL L17
-+GOTO L1
-+LABEL L18
- RETURN
-```
-
 #### `method sourceDeleteNpc()V`
 
 ```diff
 --- staged
 +++ formal
-@@ -5,27 +5,27 @@
+@@ -5,23 +5,23 @@
  default=
  TRY L3 L4 L5 java/lang/RuntimeException
  TRY L9 L10 L11 java/lang/RuntimeException
@@ -3800,11 +781,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  ALOAD 0
  INVOKESTATIC local/lito381/server/NativeDeDeletionScope.require(Llocal/lito381/server/NativeDeDeletionState;)V
  ALOAD 0
--INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
-+INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
- CONST Integer:0
- CONST Integer:1
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.compareAndSet(ZZ)Z
 @@ -67,7 +67,7 @@
  INVOKESTATIC java/lang/Long.valueOf(J)Ljava/lang/Long;
  INVOKEINTERFACE local/lito381/server/NativeDeDeletionPorts$Log.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
@@ -3871,7 +847,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 +ALOAD 0
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.isDead()Z
  IFNE L17
- ALOAD 0
+-ALOAD 0
 -INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.releasePairedCorpseClaim()V
 -ALOAD 0
 -ALOAD 0
@@ -3880,11 +856,10 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 -ALOAD 0
 -INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.isDead()Z
 -IFNE L16
--ALOAD 0
+ ALOAD 0
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.sourceResetDeletionObservation()V
  ALOAD 0
--INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
-+INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
+ INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
  CONST Integer:0
  INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.set(Z)V
 -LABEL L15
@@ -4582,69 +1557,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  RETURN
 ```
 
-#### `method sourceRegisterViewer(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)Z`
-
-```diff
---- staged
-+++ formal
-@@ -12,11 +12,18 @@
- LABEL L0
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeDeletionState._destroyed:Z
--IFNE L2
-+IFNE L1
- ALOAD 0
--INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
-+INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.get()Z
--IFNE L2
-+IFEQ L2
-+LABEL L1
-+INVOKESTATIC local/lito381/server/NativeDeDeletionScope.LATE_VIEWER_REJECTED_COUNT()Ljava/util/concurrent/atomic/AtomicLong;
-+INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
-+POP2
-+CONST Integer:0
-+IRETURN
-+LABEL L2
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeDeletionState._registeredViewers:Ljava/util/concurrent/ConcurrentHashMap;
- ALOAD 1
-@@ -27,14 +34,12 @@
- POP
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeDeletionState._destroyed:Z
--IFNE L1
-+IFNE L3
- ALOAD 0
--INVOKEVIRTUAL local/lito381/server/NativeDeDeletionState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
-+INVOKEVIRTUAL local/lito381/server/NativeDeNpcVitalState.deletionClaimFlag()Ljava/util/concurrent/atomic/AtomicBoolean;
- INVOKEVIRTUAL java/util/concurrent/atomic/AtomicBoolean.get()Z
--IFNE L1
--CONST Integer:1
--IRETURN
--LABEL L1
-+IFEQ L4
-+LABEL L3
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeDeletionState._registeredViewers:Ljava/util/concurrent/ConcurrentHashMap;
- ALOAD 1
-@@ -48,9 +53,6 @@
- POP2
- CONST Integer:0
- IRETURN
--LABEL L2
--INVOKESTATIC local/lito381/server/NativeDeDeletionScope.LATE_VIEWER_REJECTED_COUNT()Ljava/util/concurrent/atomic/AtomicLong;
--INVOKEVIRTUAL java/util/concurrent/atomic/AtomicLong.incrementAndGet()J
--POP2
--CONST Integer:0
-+LABEL L4
-+CONST Integer:1
- IRETURN
-```
-
 ### `NativeDeDeletionVisibility$1`
-
-正式 switch-map 欄位保留 com.lineage 名稱，但實際 values/ordinal 使用 NativeDeDeletionVisibility.Phase；javac 依 enum 擁有者產生不同欄位名稱。需主控裁定如何表達／驗收，尚無本批例外；本 entry 其他差異也全部列出。
 
 #### `class / fields`
 
@@ -4709,28 +1622,24 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.WORLD_REMOVED:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Phase.ordinal()I
  CONST Integer:4
-@@ -57,8 +57,8 @@
+@@ -57,7 +57,7 @@
  LABEL L11
  ASTORE 0
  LABEL L12
 -GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I
--GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.ACTIVE:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
 +GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I
-+GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.REMOVE_PUBLISHED:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
+ GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.REMOVE_PUBLISHED:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Phase.ordinal()I
  CONST Integer:5
- IASTORE
-@@ -67,8 +67,8 @@
+@@ -67,7 +67,7 @@
  LABEL L14
  ASTORE 0
  LABEL L15
 -GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$local$lito381$server$NativeDeDeletionVisibility$Phase:[I
--GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.REMOVE_PUBLISHED:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
 +GETSTATIC local/lito381/server/NativeDeDeletionVisibility$1.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$Phase:[I
-+GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.ACTIVE:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
+ GETSTATIC local/lito381/server/NativeDeDeletionVisibility$Phase.ACTIVE:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Phase.ordinal()I
  CONST Integer:6
- IASTORE
 @@ -77,7 +77,7 @@
  LABEL L17
  ASTORE 0
@@ -4762,14 +1671,12 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeDeletionVisibility$Snapshot`
 
-正式 switch-map 欄位保留 com.lineage 名稱，但實際 values/ordinal 使用 NativeDeDeletionVisibility.Phase；javac 依 enum 擁有者產生不同欄位名稱。需主控裁定如何表達／驗收，尚無本批例外；本 entry 其他差異也全部列出。
-
 #### `method deletionInProgress()Z`
 
 ```diff
 --- staged
 +++ formal
-@@ -3,12 +3,12 @@
+@@ -3,7 +3,7 @@
  exceptions=
  annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  default=
@@ -4778,24 +1685,16 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  ALOAD 0
  GETFIELD local/lito381/server/NativeDeDeletionVisibility$Snapshot._phase:Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Phase.ordinal()I
- IALOAD
--TABLESWITCH min=1 max=6 default=L1 labels=L0,L0,L0,L0,L1,L0
-+TABLESWITCH min=1 max=5 default=L1 labels=L0,L0,L0,L0,L0
- LABEL L0
- CONST Integer:1
- GOTO L2
 ```
 
 ### `NativeDeDeletionVisibility`
-
-正式 switch-map 欄位保留 com.lineage 名稱，但實際 values/ordinal 使用 NativeDeDeletionVisibility.Phase；javac 依 enum 擁有者產生不同欄位名稱。需主控裁定如何表達／驗收，尚無本批例外；本 entry 其他差異也全部列出。
 
 #### `method classifyRepair(Llocal/lito381/server/NativeDeDeletionVisibility$Snapshot;ZJ)Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;`
 
 ```diff
 --- staged
 +++ formal
-@@ -8,12 +8,12 @@
+@@ -8,7 +8,7 @@
  GETSTATIC local/lito381/server/NativeDeDeletionVisibility$RepairKind.LEAK:Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;
  ARETURN
  LABEL L0
@@ -4804,17 +1703,9 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  ALOAD 0
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Snapshot.phase()Llocal/lito381/server/NativeDeDeletionVisibility$Phase;
  INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$Phase.ordinal()I
- IALOAD
--TABLESWITCH min=1 max=9 default=L1 labels=L2,L2,L2,L2,L5,L7,L7,L7,L7
-+TABLESWITCH min=1 max=9 default=L1 labels=L2,L2,L2,L2,L7,L5,L7,L7,L7
- LABEL L1
- NEW java/lang/IncompatibleClassChangeError
- DUP
 ```
 
 ### `NativeDeFactoryControls`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -4834,8 +1725,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeInitializerKernel$Actor`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -4852,8 +1741,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeInitializerKernel$Services`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -4868,571 +1755,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  class recordComponents=
 ```
 
-### `NativeDeInitializerKernel`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method init(Llocal/lito381/server/NativeDeInitializerKernel$Services;Llocal/lito381/server/NativeDeInitializerKernel$Actor;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V`
-
-```diff
---- staged
-+++ formal
-@@ -8,12 +8,12 @@
- TRY L1 L15 L16 java/lang/Exception
- TRY L28 L30 L31 java/lang/Throwable
- TRY L31 L32 L31 java/lang/Throwable
--TRY L37 L38 L39 java/lang/Throwable
--TRY L39 L40 L39 java/lang/Throwable
--TRY L0 L35 L62 java/lang/Exception
--TRY L36 L53 L62 java/lang/Exception
--TRY L54 L57 L62 java/lang/Exception
--TRY L58 L61 L62 java/lang/Exception
-+TRY L42 L43 L44 java/lang/Throwable
-+TRY L44 L45 L44 java/lang/Throwable
-+TRY L0 L35 L65 java/lang/Exception
-+TRY L36 L40 L65 java/lang/Exception
-+TRY L41 L50 L65 java/lang/Exception
-+TRY L51 L64 L65 java/lang/Exception
- LABEL L0
- CONST null
- ASTORE 5
-@@ -349,12 +349,39 @@
- LABEL L36
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
--IFNULL L58
-+IFNULL L37
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.trim()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L58
-+IFEQ L41
-+LABEL L37
-+ALOAD 0
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
-+CONST str:"[假人名稱驗證][DB名稱無效] deobjid={}, denamebig5={}, npcObjectId={}"
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_deobjid()I
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
-+IFNONNULL L38
-+CONST str:"<NULL>"
-+GOTO L39
-+LABEL L38
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
-+INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
-+LABEL L39
-+ALOAD 1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getId()I itf
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
-+ALOAD 1
-+CONST Integer:1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setInitFailed(Z)V itf
-+LABEL L40
-+RETURN
-+LABEL L41
- ALOAD 1
- ALOAD 2
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.set_deName(Llocal/lito381/server/NativeDeInitializerKernel$Name;)V itf
-@@ -366,71 +393,103 @@
- ASTORE 8
- ALOAD 8
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.lock()V
--LABEL L37
-+LABEL L42
- ALOAD 7
- ALOAD 2
- INVOKEVIRTUAL java/util/ArrayList.contains(Ljava/lang/Object;)Z
--IFNE L38
-+IFNE L43
- ALOAD 7
- ALOAD 2
- INVOKEVIRTUAL java/util/ArrayList.add(Ljava/lang/Object;)Z
- POP
--LABEL L38
-+LABEL L43
- ALOAD 8
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
--GOTO L41
--LABEL L39
-+GOTO L46
-+LABEL L44
- ASTORE 16
--LABEL L40
-+LABEL L45
- ALOAD 8
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantLock.unlock()V
- ALOAD 16
- ATHROW
--LABEL L41
-+LABEL L46
- ALOAD 1
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setNameId(Ljava/lang/String;)V itf
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
--IFNULL L54
-+IFNULL L47
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
- INVOKEVIRTUAL java/lang/String.trim()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L54
-+IFNE L47
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
- INVOKEVIRTUAL java/lang/String.equals(Ljava/lang/Object;)Z
--IFEQ L54
--ALOAD 5
--IFNULL L42
-+IFNE L51
-+LABEL L47
-+ALOAD 0
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
-+CONST str:"[假人名稱驗證][套用流程錯誤] deobjid={}, sourceName={}, npcNameId={}, npcObjectId={}"
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_deobjid()I
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+ALOAD 2
-+INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
-+INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
-+ALOAD 1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
-+IFNONNULL L48
-+CONST str:"<NULL>"
-+GOTO L49
-+LABEL L48
-+ALOAD 1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
-+INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
-+LABEL L49
-+ALOAD 1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getId()I itf
-+INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
-+ALOAD 1
-+CONST Integer:1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setInitFailed(Z)V itf
-+ALOAD 1
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.removeFromDeNameList()V itf
-+LABEL L50
-+RETURN
-+LABEL L51
-+ALOAD 5
-+IFNULL L52
- ALOAD 5
- GETFIELD local/lito381/server/NativeDeInitializerKernel$Setting.classId:I
- ISTORE 9
--GOTO L43
--LABEL L42
-+GOTO L53
-+LABEL L52
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_classId()I
- ISTORE 9
--LABEL L43
-+LABEL L53
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_sex()I
- ISTORE 10
- ILOAD 10
- CONST Integer:1
--IF_ICMPLE L44
-+IF_ICMPLE L54
- CONST Integer:1
- ISTORE 10
--LABEL L44
-+LABEL L54
- ILOAD 9
- CONST Integer:6
--IF_ICMPLE L45
-+IF_ICMPLE L55
- CONST Integer:0
- ISTORE 9
--LABEL L45
-+LABEL L55
- GETSTATIC local/lito381/server/NativeDeInitializerKernel._class_list:[[I
- ILOAD 10
- AALOAD
-@@ -442,7 +501,7 @@
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.getAbility(I)Llocal/lito381/server/NativeDeInitializerKernel$Ability; itf
- ASTORE 12
- ALOAD 12
--IFNULL L46
-+IFNULL L56
- ALOAD 0
- CONST Integer:1
- ALOAD 12
-@@ -589,9 +648,9 @@
- CONST Integer:3
- IDIV
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.addHitup(I)V itf
--LABEL L46
--ALOAD 5
--IFNULL L47
-+LABEL L56
-+ALOAD 5
-+IFNULL L57
- ALOAD 5
- GETFIELD local/lito381/server/NativeDeInitializerKernel$Setting.weaponType:I
- ISTORE 13
-@@ -602,13 +661,13 @@
- GETFIELD local/lito381/server/NativeDeInitializerKernel$Setting.id:I
- INVOKEDYNAMIC makeConcatWithConstants(II)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"DeInitializer: 強制鎖定武器類型=\u0001 (來自 Setting ID=\u0001)"]
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.debug(Ljava/lang/String;)V itf
--GOTO L48
--LABEL L47
-+GOTO L58
-+LABEL L57
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_weaponType()I
- ISTORE 13
- ILOAD 13
--IFNE L48
-+IFNE L58
- ILOAD 9
- ALOAD 0
- DUP
-@@ -617,21 +676,21 @@
- INVOKEDYNAMIC getAsBoolean(Llocal/lito381/server/NativeDeInitializerKernel$Services;)Ljava/util/function/BooleanSupplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Z, handle:H9 local/lito381/server/NativeDeInitializerKernel$Services.nextBoolean()Z itf, type:()Z]
- INVOKESTATIC local/lito381/server/NativeDeWeaponKernel.random(ILjava/util/function/BooleanSupplier;)I
- ISTORE 13
--LABEL L48
-+LABEL L58
- ILOAD 11
- ISTORE 14
- ILOAD 3
--IFEQ L49
-+IFEQ L59
- ALOAD 0
- ILOAD 9
- ILOAD 13
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.getRandomPoly(II)I itf
- ISTORE 15
- ILOAD 15
--IFLE L49
-+IFLE L59
- ILOAD 15
- ISTORE 14
--LABEL L49
-+LABEL L59
- ALOAD 1
- ILOAD 9
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setClassId(I)V itf
-@@ -674,7 +733,7 @@
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setAtkspeed(I)V itf
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_clanid()I
--IFEQ L50
-+IFEQ L60
- ALOAD 1
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_clanid()I
-@@ -685,7 +744,7 @@
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.clan(I)Llocal/lito381/server/NativeDeInitializerKernel$Clan; itf
- ASTORE 17
- ALOAD 17
--IFNULL L50
-+IFNULL L60
- ALOAD 1
- ALOAD 17
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Clan.getClanName()Ljava/lang/String; itf
-@@ -698,25 +757,26 @@
- ALOAD 1
- ALOAD 18
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.set_emblem(Llocal/lito381/server/NativeDeInitializerKernel$Emblem;)V itf
--LABEL L50
-+LABEL L60
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.getTitle()Ljava/lang/String;
- ASTORE 17
- ALOAD 17
--IFNULL L51
-+IFNULL L61
- ALOAD 17
- INVOKEVIRTUAL java/lang/String.trim()Ljava/lang/String;
- INVOKEVIRTUAL java/lang/String.isEmpty()Z
--IFNE L51
-+IFEQ L62
-+LABEL L61
-+ALOAD 1
-+CONST str:""
-+INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setTitle(Ljava/lang/String;)V itf
-+GOTO L63
-+LABEL L62
- ALOAD 1
- ALOAD 17
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setTitle(Ljava/lang/String;)V itf
--GOTO L52
--LABEL L51
--ALOAD 1
--CONST str:""
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setTitle(Ljava/lang/String;)V itf
--LABEL L52
-+LABEL L63
- ALOAD 1
- ALOAD 0
- ALOAD 1
-@@ -725,93 +785,36 @@
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getCurrentWeapon()I itf
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.visual(II)Llocal/lito381/server/NativeDeInitializerKernel$Packet; itf
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.broadcastPacketAll(Llocal/lito381/server/NativeDeInitializerKernel$Packet;)V itf
--LABEL L53
--RETURN
--LABEL L54
--ALOAD 0
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
--CONST str:"[假人名稱驗證][套用流程錯誤] deobjid={}, sourceName={}, npcNameId={}, npcObjectId={}"
-+LABEL L64
-+GOTO L78
-+LABEL L65
-+ASTORE 5
-+ALOAD 2
-+IFNULL L66
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_deobjid()I
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
-+GOTO L67
-+LABEL L66
-+CONST Integer:0
-+LABEL L67
-+ISTORE 6
-+ALOAD 2
-+IFNULL L68
- ALOAD 2
- INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
--INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
-+GOTO L69
-+LABEL L68
-+CONST null
-+LABEL L69
-+ASTORE 7
-+ALOAD 1
-+IFNULL L70
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
--IFNONNULL L55
--CONST str:"<NULL>"
--GOTO L56
--LABEL L55
--ALOAD 1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
--INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
--LABEL L56
--ALOAD 1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getId()I itf
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
--ALOAD 1
--CONST Integer:1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setInitFailed(Z)V itf
--ALOAD 1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.removeFromDeNameList()V itf
--LABEL L57
--RETURN
--LABEL L58
--ALOAD 0
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
--CONST str:"[假人名稱驗證][DB名稱無效] deobjid={}, denamebig5={}, npcObjectId={}"
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_deobjid()I
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
--IFNONNULL L59
--CONST str:"<NULL>"
--GOTO L60
--LABEL L59
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
--INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
--LABEL L60
--ALOAD 1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getId()I itf
--INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
--ALOAD 1
--CONST Integer:1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setInitFailed(Z)V itf
--LABEL L61
--RETURN
--LABEL L62
--ASTORE 5
--ALOAD 2
--IFNULL L63
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_deobjid()I
--GOTO L64
--LABEL L63
--CONST Integer:0
--LABEL L64
--ISTORE 6
--ALOAD 2
--IFNULL L65
--ALOAD 2
--INVOKEVIRTUAL local/lito381/server/NativeDeInitializerKernel$Name.get_name()Ljava/lang/String;
--GOTO L66
--LABEL L65
-+GOTO L71
-+LABEL L70
- CONST null
--LABEL L66
--ASTORE 7
--ALOAD 1
--IFNULL L67
--ALOAD 1
--INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getNameId()Ljava/lang/String; itf
--GOTO L68
--LABEL L67
--CONST null
--LABEL L68
-+LABEL L71
- ASTORE 8
- ALOAD 0
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
-@@ -819,38 +822,38 @@
- ILOAD 6
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- ALOAD 7
--IFNONNULL L69
-+IFNONNULL L72
- CONST str:"<NULL>"
--GOTO L70
--LABEL L69
-+GOTO L73
-+LABEL L72
- ALOAD 7
- INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
--LABEL L70
--ALOAD 8
--IFNONNULL L71
-+LABEL L73
-+ALOAD 8
-+IFNONNULL L74
- CONST str:"<NULL>"
--GOTO L72
--LABEL L71
-+GOTO L75
-+LABEL L74
- ALOAD 8
- INVOKEDYNAMIC makeConcatWithConstants(Ljava/lang/String;)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"[\u0001]"]
--LABEL L72
--ALOAD 1
--IFNULL L73
-+LABEL L75
-+ALOAD 1
-+IFNULL L76
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getId()I itf
--GOTO L74
--LABEL L73
-+GOTO L77
-+LABEL L76
- CONST Integer:0
--LABEL L74
-+LABEL L77
- INVOKESTATIC java/lang/Integer.valueOf(I)Ljava/lang/Integer;
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V itf
- ALOAD 1
--IFNULL L75
-+IFNULL L78
- ALOAD 1
- CONST Integer:1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.setInitFailed(Z)V itf
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.removeFromDeNameList()V itf
--LABEL L75
-+LABEL L78
- RETURN
-```
-
-#### `method initDoll(Llocal/lito381/server/NativeDeInitializerKernel$Services;Llocal/lito381/server/NativeDeInitializerKernel$Actor;II)V`
-
-```diff
---- staged
-+++ formal
-@@ -11,7 +11,8 @@
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.getRandomDoll(II)I itf
- ISTORE 4
- ILOAD 4
--IFLE L5
-+IFGT L0
-+RETURN
- LABEL L0
- ALOAD 0
- CONST Integer:71082
-```
-
-#### `method initPet(Llocal/lito381/server/NativeDeInitializerKernel$Services;Llocal/lito381/server/NativeDeInitializerKernel$Actor;)V`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L0 L1 L6 java/lang/Exception
--TRY L2 L5 L6 java/lang/Exception
-+TRY L0 L1 L7 java/lang/Exception
-+TRY L2 L6 L7 java/lang/Exception
- LABEL L0
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getClassId()I itf
-@@ -34,14 +34,16 @@
- ILOAD 5
- ALOAD 4
- GETFIELD local/lito381/server/NativeDeInitializerKernel$PetInfo.count:I
--IF_ICMPGE L5
-+IF_ICMPGE L6
- ALOAD 0
- ALOAD 4
- GETFIELD local/lito381/server/NativeDeInitializerKernel$PetInfo.npcId:I
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.template(I)Llocal/lito381/server/NativeDeInitializerKernel$Template; itf
- ASTORE 6
- ALOAD 6
--IFNULL L4
-+IFNONNULL L4
-+GOTO L5
-+LABEL L4
- ALOAD 0
- ALOAD 6
- ALOAD 1
-@@ -63,17 +65,17 @@
- ALOAD 1
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Actor.getHeading()I itf
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Pet.setHeading(I)V itf
--LABEL L4
-+LABEL L5
- IINC var=5 incr=1
- GOTO L3
--LABEL L5
--GOTO L7
- LABEL L6
-+GOTO L8
-+LABEL L7
- ASTORE 2
- ALOAD 0
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Services.log()Llocal/lito381/server/NativeDeInitializerKernel$Log; itf
- CONST str:"假人寵物 initPet 異常"
- ALOAD 2
- INVOKEINTERFACE local/lito381/server/NativeDeInitializerKernel$Log.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
--LABEL L7
-+LABEL L8
- RETURN
-```
-
 ### `NativeDeInstanceBroadcast`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -5450,8 +1773,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeInstanceName`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -5468,164 +1789,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _clanid:I signature=null
 ```
 
-### `NativeDeInstanceNames`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method name(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeInitializerKernel$Name;)Llocal/lito381/server/NativeDeInitializerKernel$Name;`
-
-```diff
---- staged
-+++ formal
-@@ -15,20 +15,22 @@
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeInstancePorts$Construction.owner()Llocal/lito381/server/NativeDeDeletionOwner;
- GETFIELD local/lito381/server/NativeDeDeletionOwner.services:Llocal/lito381/server/NativeDeDeletionPorts$Services;
-+ASTORE 3
-+ALOAD 3
-+INSTANCEOF local/lito381/server/NativeDeWorldContext
-+IFEQ L2
-+ALOAD 3
-+CHECKCAST local/lito381/server/NativeDeWorldContext
- ASTORE 2
--ALOAD 2
--INSTANCEOF local/lito381/server/NativeDeWorldContext
--IFNE L2
-+GOTO L3
-+LABEL L2
- NEW java/lang/IllegalArgumentException
- DUP
- CONST str:"source mutable names require a concrete World"
- INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
- ATHROW
--LABEL L2
-+LABEL L3
- ALOAD 2
--CHECKCAST local/lito381/server/NativeDeWorldContext
--ASTORE 3
--ALOAD 3
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativeDeInstanceNames.name(Llocal/lito381/server/NativeDeWorldContext;Llocal/lito381/server/NativeDeInitializerKernel$Name;)Llocal/lito381/server/NativeDeInitializerKernel$Name;
- ARETURN
-```
-
-#### `method name(Llocal/lito381/server/NativeDeWorldContext;Llocal/lito381/server/NativeDeInitializerKernel$Name;)Llocal/lito381/server/NativeDeInitializerKernel$Name;`
-
-```diff
---- staged
-+++ formal
-@@ -60,26 +60,24 @@
- INVOKEVIRTUAL java/util/IdentityHashMap.computeIfAbsent(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeInitializerKernel$Name
- ASTORE 5
--ALOAD 5
--ASTORE 6
- ALOAD 3
- MONITOREXIT
- LABEL L6
- ALOAD 2
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock.unlock()V
--ALOAD 6
-+ALOAD 5
- ARETURN
- LABEL L7
--ASTORE 7
-+ASTORE 6
- ALOAD 3
- MONITOREXIT
- LABEL L8
--ALOAD 7
-+ALOAD 6
- ATHROW
- LABEL L9
--ASTORE 8
-+ASTORE 7
- LABEL L10
- ALOAD 2
- INVOKEVIRTUAL java/util/concurrent/locks/ReentrantReadWriteLock$ReadLock.unlock()V
--ALOAD 8
-+ALOAD 7
- ATHROW
-```
-
-### `NativeDeInstanceScene`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method publish(Llocal/lito381/server/NativeDeInstanceState;Llocal/lito381/server/NativeDeInitializerKernel$Packet;)V`
-
-```diff
---- staged
-+++ formal
-@@ -22,13 +22,7 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeInstanceScene$Visual.packet()Llocal/lito381/server/NativeDePerceptionCharVisualUpdate;
- GETFIELD local/lito381/server/NativeDePerceptionCharVisualUpdate.subject:Llocal/lito381/server/NativeDePerceptionState;
- ALOAD 1
--IF_ACMPNE L0
--ALOAD 1
--CONST Integer:-1
--ALOAD 3
--INVOKEVIRTUAL local/lito381/server/NativeDeInstanceScene$Visual.packet()Llocal/lito381/server/NativeDePerceptionCharVisualUpdate;
--INVOKESTATIC local/lito381/server/NativeDeInstanceBroadcast.toVisiblePlayers(Llocal/lito381/server/NativeDeObjectFields;ILlocal/lito381/server/NativeDePerceptionPacket;)V
--GOTO L1
-+IF_ACMPEQ L1
- LABEL L0
- NEW java/lang/IllegalArgumentException
- DUP
-@@ -36,4 +30,9 @@
- INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
- ATHROW
- LABEL L1
-+ALOAD 1
-+CONST Integer:-1
-+ALOAD 3
-+INVOKEVIRTUAL local/lito381/server/NativeDeInstanceScene$Visual.packet()Llocal/lito381/server/NativeDePerceptionCharVisualUpdate;
-+INVOKESTATIC local/lito381/server/NativeDeInstanceBroadcast.toVisiblePlayers(Llocal/lito381/server/NativeDeObjectFields;ILlocal/lito381/server/NativeDePerceptionPacket;)V
- RETURN
-```
-
-### `NativeDeInstanceScope$World`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method forEachNearbyPlayer(Llocal/lito381/server/NativeDeObjectFields;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V`
-
-```diff
---- staged
-+++ formal
-@@ -18,6 +18,14 @@
- ALOAD 7
- CHECKCAST local/lito381/server/NativeDeWorldContext
- ASTORE 6
-+GOTO L1
-+LABEL L0
-+NEW java/lang/IllegalArgumentException
-+DUP
-+CONST str:"De broadcast requires the owning concrete World"
-+INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
-+ATHROW
-+LABEL L1
- ALOAD 6
- CONST str:"forEachNearbyPlayer"
- CONST str:"(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;ILlocal/lito381/server/NativeDeWorldPlayerFilter;Ljava/util/function/Consumer;)V"
-@@ -42,12 +50,4 @@
- AASTORE
- INVOKEVIRTUAL local/lito381/server/NativeDeWorldContext.call(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
- POP
--GOTO L1
--LABEL L0
--NEW java/lang/IllegalArgumentException
--DUP
--CONST str:"De broadcast requires the owning concrete World"
--INVOKESPECIAL java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V
--ATHROW
--LABEL L1
- RETURN
-```
-
 ### `NativeDeInstanceState$DeAiWorkerTask`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -5644,8 +1808,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 ```
 
 ### `NativeDeInstanceState`
-
-正式建構子在 super 前寫 construction，4 個多載還會先呼叫 name；Java 17 拒絕。暫存將這些敘述移到 super 後，這會改變初始化／例外時序，**不是等價修復，不得落地或部署**。完整差異還包含 lambda 名稱／wrapper、同步、指令與例外範圍，不能只豁免 constructor。
 
 #### `class / fields`
 
@@ -11450,42 +7612,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  ATHROW
 ```
 
-#### `method sourceAi$nextAiTimerTokenLocked()J`
-
-```diff
---- staged
-+++ formal
-@@ -8,21 +8,20 @@
- GETFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
- CONST Long:1
- LADD
-+DUP2_X1
- PUTFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
--ALOAD 0
--DUP
--GETFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
--DUP2_X1
--CONST Long:1
--LADD
--PUTFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
--DUP2
- LSTORE 1
-+LLOAD 1
- CONST Long:0
- LCMP
- IFNE L0
- ALOAD 0
-+DUP
- GETFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
-+CONST Long:1
-+LADD
-+DUP2_X1
-+PUTFIELD local/lito381/server/NativeDeInstanceState._deAiTimerSequence:J
- LSTORE 1
- LABEL L0
- LLOAD 1
-```
-
 #### `method sourceAi$onAiTimer(JJZ)V`
 
 ```diff
@@ -12219,8 +8345,6 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
 
 ### `NativeDeItemAbility`
 
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
-
 #### `class / fields`
 
 ```diff
@@ -12237,659 +8361,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _abilities:Ljava/util/Map; signature=Ljava/util/Map<Llocal/lito381/server/NativeDeItemAbility$AbilityType;Ljava/lang/Integer;>;
 ```
 
-### `NativeDeItemApplication$Owner`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method refreshFields()V`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L7 L11 L12 java/lang/Throwable
--TRY L12 L13 L12 java/lang/Throwable
-+TRY L6 L10 L11 java/lang/Throwable
-+TRY L11 L12 L11 java/lang/Throwable
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.session:Ljava/lang/ref/WeakReference;
- INVOKEVIRTUAL java/lang/ref/WeakReference.get()Ljava/lang/Object;
-@@ -48,59 +48,57 @@
- LABEL L5
- ILOAD 4
- CONST Integer:4
--IF_ICMPGE L15
-+IF_ICMPGE L14
- ALOAD 1
- ILOAD 4
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeInventory(I)Llocal/lito381/server/RuntimeInventory;
- ASTORE 5
- ALOAD 5
--IFNONNULL L6
--GOTO L14
--LABEL L6
-+IFNULL L13
- ALOAD 5
- DUP
- ASTORE 6
- MONITORENTER
--LABEL L7
-+LABEL L6
- ALOAD 5
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory.nativeDeItems()Ljava/util/Map;
- ASTORE 7
- ALOAD 7
- INSTANCEOF local/lito381/server/NativeDeItemInventory
--IFEQ L10
-+IFEQ L9
- ALOAD 7
- CHECKCAST local/lito381/server/NativeDeItemInventory
- ASTORE 8
- ALOAD 8
- GETFIELD local/lito381/server/NativeDeItemInventory.owner:Llocal/lito381/server/NativeDeItemApplication$Owner;
- ALOAD 0
--IF_ACMPNE L10
-+IF_ACMPNE L9
- ALOAD 8
- ALOAD 5
- ALOAD 3
--IF_ACMPNE L8
-+IF_ACMPNE L7
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.objectId:J
- L2I
--GOTO L9
-+GOTO L8
-+LABEL L7
-+CONST Integer:0
- LABEL L8
--CONST Integer:0
-+INVOKEVIRTUAL local/lito381/server/NativeDeItemInventory.ownerFields(I)V
- LABEL L9
--INVOKEVIRTUAL local/lito381/server/NativeDeItemInventory.ownerFields(I)V
--LABEL L10
- ALOAD 6
- MONITOREXIT
-+LABEL L10
-+GOTO L13
- LABEL L11
--GOTO L14
--LABEL L12
- ASTORE 9
- ALOAD 6
- MONITOREXIT
--LABEL L13
-+LABEL L12
- ALOAD 9
- ATHROW
--LABEL L14
-+LABEL L13
- IINC var=4 incr=1
- GOTO L5
--LABEL L15
-+LABEL L14
- RETURN
-```
-
-#### `method requireActive(Llocal/lito381/server/RuntimeInventory;)V`
-
-```diff
---- staged
-+++ formal
-@@ -7,31 +7,31 @@
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.application:Ljava/lang/ref/WeakReference;
- INVOKEVIRTUAL java/lang/ref/WeakReference.get()Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeItemApplication
--ASTORE 3
-+ASTORE 2
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.session:Ljava/lang/ref/WeakReference;
- INVOKEVIRTUAL java/lang/ref/WeakReference.get()Ljava/lang/Object;
- CHECKCAST local/lito381/server/ClientSession
--ASTORE 4
-+ASTORE 3
- ALOAD 0
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.active:Z
- IFEQ L0
--ALOAD 3
-+ALOAD 2
- IFNULL L0
--ALOAD 3
-+ALOAD 2
- GETFIELD local/lito381/server/NativeDeItemApplication.closed:Z
- IFNE L0
--ALOAD 3
-+ALOAD 2
- GETFIELD local/lito381/server/NativeDeItemApplication.life:Llocal/lito381/server/NativePlayerLifetime;
- INVOKEVIRTUAL local/lito381/server/NativePlayerLifetime.admits()Z
- IFEQ L0
--ALOAD 4
-+ALOAD 3
- IFNULL L0
- ALOAD 0
--ALOAD 4
-+ALOAD 3
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.matches(Llocal/lito381/server/ClientSession;)Z
- IFEQ L0
--ALOAD 4
-+ALOAD 3
- CONST str:"sourceItemOwner"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- ALOAD 0
-@@ -43,13 +43,13 @@
- INVOKESPECIAL java/lang/IllegalStateException.<init>(Ljava/lang/String;)V
- ATHROW
- LABEL L1
--ALOAD 4
-+ALOAD 3
- CONST str:"rentalTownRoomState"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- CHECKCAST java/lang/Boolean
- INVOKEVIRTUAL java/lang/Boolean.booleanValue()Z
- IFEQ L2
--ALOAD 4
-+ALOAD 3
- CONST str:"phase"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- INVOKESTATIC java/lang/String.valueOf(Ljava/lang/Object;)Ljava/lang/String;
-@@ -61,19 +61,17 @@
- LABEL L2
- CONST Integer:0
- LABEL L3
--ISTORE 5
--ILOAD 5
-+ISTORE 4
-+ILOAD 4
- IFEQ L4
- CONST Integer:1
- GOTO L5
- LABEL L4
- CONST Integer:0
- LABEL L5
--DUP
--ISTORE 2
--ISTORE 6
--ALOAD 4
--ILOAD 2
-+ISTORE 5
-+ALOAD 3
-+ILOAD 5
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeInventory(I)Llocal/lito381/server/RuntimeInventory;
- ALOAD 1
- IF_ACMPEQ L6
-```
-
-#### `method retire()V`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L2 L3 L4 java/lang/Throwable
--TRY L4 L5 L4 java/lang/Throwable
-+TRY L1 L2 L3 java/lang/Throwable
-+TRY L3 L4 L3 java/lang/Throwable
- ALOAD 0
- CONST Integer:0
- PUTFIELD local/lito381/server/NativeDeItemApplication$Owner.active:Z
-@@ -14,39 +14,37 @@
- CHECKCAST local/lito381/server/ClientSession
- ASTORE 1
- ALOAD 1
--IFNULL L7
-+IFNULL L6
- CONST Integer:0
- ISTORE 2
- LABEL L0
- ILOAD 2
- CONST Integer:4
--IF_ICMPGE L7
-+IF_ICMPGE L6
- ALOAD 1
- ILOAD 2
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeInventory(I)Llocal/lito381/server/RuntimeInventory;
- ASTORE 3
- ALOAD 3
--IFNONNULL L1
--GOTO L6
--LABEL L1
-+IFNULL L5
- ALOAD 3
- DUP
- ASTORE 4
- MONITORENTER
--LABEL L2
-+LABEL L1
- ALOAD 4
- MONITOREXIT
-+LABEL L2
-+GOTO L5
- LABEL L3
--GOTO L6
--LABEL L4
- ASTORE 5
- ALOAD 4
- MONITOREXIT
--LABEL L5
-+LABEL L4
- ALOAD 5
- ATHROW
--LABEL L6
-+LABEL L5
- IINC var=2 incr=1
- GOTO L0
--LABEL L7
-+LABEL L6
- RETURN
-```
-
-### `NativeDeItemApplication`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method install(Llocal/lito381/server/GameHub;Llocal/lito381/server/NativeDeItemTemplatesResources$Snapshot;Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot;)Llocal/lito381/server/NativeDeItemApplication;`
-
-```diff
---- staged
-+++ formal
-@@ -6,9 +6,9 @@
- TRY L0 L4 L7 java/lang/Throwable
- TRY L5 L6 L7 java/lang/Throwable
- TRY L7 L8 L7 java/lang/Throwable
--TRY L12 L15 L16 java/lang/Throwable
--TRY L16 L17 L16 java/lang/Throwable
--TRY L9 L20 L21 java/lang/Throwable
-+TRY L11 L14 L15 java/lang/Throwable
-+TRY L15 L16 L15 java/lang/Throwable
-+TRY L9 L19 L20 java/lang/Throwable
- ALOAD 1
- INVOKESTATIC java/util/Objects.requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
- POP
-@@ -91,7 +91,7 @@
- LABEL L10
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L19
-+IFEQ L18
- ALOAD 4
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- CHECKCAST local/lito381/server/ClientSession
-@@ -101,48 +101,46 @@
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication.owner(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeDeItemApplication$Owner;
- ASTORE 6
- ALOAD 6
--IFNONNULL L11
--GOTO L10
--LABEL L11
-+IFNULL L17
- ALOAD 6
- DUP
- ASTORE 7
- MONITORENTER
--LABEL L12
-+LABEL L11
- CONST Integer:0
- ISTORE 8
--LABEL L13
-+LABEL L12
- ILOAD 8
- CONST Integer:4
--IF_ICMPGE L14
-+IF_ICMPGE L13
- ALOAD 6
- ALOAD 5
- ILOAD 8
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeInventory(I)Llocal/lito381/server/RuntimeInventory;
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.adopt(Llocal/lito381/server/RuntimeInventory;)V
- IINC var=8 incr=1
--GOTO L13
--LABEL L14
-+GOTO L12
-+LABEL L13
- ALOAD 6
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.refreshFields()V
- ALOAD 7
- MONITOREXIT
-+LABEL L14
-+GOTO L17
- LABEL L15
--GOTO L18
--LABEL L16
- ASTORE 9
- ALOAD 7
- MONITOREXIT
--LABEL L17
-+LABEL L16
- ALOAD 9
- ATHROW
-+LABEL L17
-+GOTO L10
- LABEL L18
--GOTO L10
-+ALOAD 3
- LABEL L19
--ALOAD 3
-+ARETURN
- LABEL L20
--ARETURN
--LABEL L21
- ASTORE 4
- ALOAD 3
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication.close()V
-```
-
-#### `method publicationOwner(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeDeItemApplication$Owner;`
-
-```diff
---- staged
-+++ formal
-@@ -49,22 +49,22 @@
- CONST str:"sourceItemOwner"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeItemApplication$Owner
--ASTORE 6
--ALOAD 6
-+ASTORE 4
-+ALOAD 4
- IFNULL L5
--ALOAD 6
-+ALOAD 4
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.active:Z
- IFEQ L5
--ALOAD 6
-+ALOAD 4
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.application:Ljava/lang/ref/WeakReference;
- INVOKEVIRTUAL java/lang/ref/WeakReference.get()Ljava/lang/Object;
- ALOAD 2
- IF_ACMPNE L5
--ALOAD 6
-+ALOAD 4
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.matches(Llocal/lito381/server/ClientSession;)Z
- IFEQ L5
--ALOAD 6
-+ALOAD 4
- ALOAD 3
- MONITOREXIT
- LABEL L4
-@@ -84,10 +84,10 @@
- ALOAD 2
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication.owner(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeDeItemApplication$Owner;
--ASTORE 7
--ALOAD 7
-+ASTORE 5
-+ALOAD 5
- IFNULL L9
--ALOAD 7
-+ALOAD 5
- ALOAD 3
- MONITOREXIT
- LABEL L8
-@@ -115,12 +115,12 @@
- LABEL L12
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/ClientSession.playerObjectId()J
--DUP2
--LSTORE 4
-+LSTORE 5
-+LLOAD 5
- CONST Long:0
- LCMP
- IFLE L13
--LLOAD 4
-+LLOAD 5
- CONST Long:4294967295
- LCMP
- IFLE L15
-@@ -131,9 +131,9 @@
- LABEL L14
- ARETURN
- LABEL L15
--ALOAD 6
-+ALOAD 4
- IFNULL L16
--ALOAD 6
-+ALOAD 4
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.retire()V
- LABEL L16
- NEW local/lito381/server/NativeDeItemApplication$Owner
-```
-
-#### `method replace(Llocal/lito381/server/ClientSession;Llocal/lito381/server/RuntimeInventory;I)V`
-
-```diff
---- staged
-+++ formal
-@@ -3,42 +3,40 @@
- exceptions=
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L11 L13 L14 java/lang/Throwable
--TRY L14 L15 L14 java/lang/Throwable
--TRY L10 L19 L20 java/lang/Throwable
--TRY L20 L21 L20 java/lang/Throwable
--TRY L5 L8 L24 java/lang/Throwable
--TRY L9 L23 L24 java/lang/Throwable
--TRY L24 L25 L24 java/lang/Throwable
-+TRY L11 L12 L13 java/lang/Throwable
-+TRY L13 L14 L13 java/lang/Throwable
-+TRY L10 L18 L19 java/lang/Throwable
-+TRY L19 L20 L19 java/lang/Throwable
-+TRY L5 L8 L23 java/lang/Throwable
-+TRY L9 L22 L23 java/lang/Throwable
-+TRY L23 L24 L23 java/lang/Throwable
- ALOAD 0
- CONST str:"hub"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- CHECKCAST local/lito381/server/GameHub
--ASTORE 4
--ALOAD 4
-+ASTORE 3
-+ALOAD 3
- IFNONNULL L0
- CONST null
- GOTO L1
- LABEL L0
--ALOAD 4
-+ALOAD 3
- CONST str:"sourceItemApplication"
- INVOKESTATIC local/lito381/server/CombatAccess.field(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
- CHECKCAST local/lito381/server/NativeDeItemApplication
- LABEL L1
--ASTORE 5
--ALOAD 5
-+ASTORE 4
-+ALOAD 4
- IFNONNULL L2
- CONST null
- GOTO L3
- LABEL L2
--ALOAD 5
-+ALOAD 4
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication.owner(Llocal/lito381/server/ClientSession;)Llocal/lito381/server/NativeDeItemApplication$Owner;
- LABEL L3
--DUP
--ASTORE 3
--ASTORE 6
--ALOAD 3
-+ASTORE 5
-+ALOAD 5
- IFNONNULL L4
- ALOAD 0
- ILOAD 2
-@@ -46,15 +44,15 @@
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeSetInventory(ILlocal/lito381/server/RuntimeInventory;)V
- RETURN
- LABEL L4
--ALOAD 3
-+ALOAD 5
- DUP
--ASTORE 8
-+ASTORE 6
- MONITORENTER
- LABEL L5
--ALOAD 3
-+ALOAD 5
- GETFIELD local/lito381/server/NativeDeItemApplication$Owner.active:Z
- IFEQ L6
--ALOAD 3
-+ALOAD 5
- ALOAD 0
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.matches(Llocal/lito381/server/ClientSession;)Z
- IFNE L7
-@@ -65,98 +63,90 @@
- INVOKESPECIAL java/lang/IllegalStateException.<init>(Ljava/lang/String;)V
- ATHROW
- LABEL L7
--ALOAD 3
-+ALOAD 5
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.adopt(Llocal/lito381/server/RuntimeInventory;)V
- ALOAD 0
- ILOAD 2
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeInventory(I)Llocal/lito381/server/RuntimeInventory;
--ASTORE 9
--ALOAD 9
-+ASTORE 7
-+ALOAD 7
- IFNONNULL L9
- ALOAD 0
- ILOAD 2
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeSetInventory(ILlocal/lito381/server/RuntimeInventory;)V
--ALOAD 3
-+ALOAD 5
- INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.refreshFields()V
--ALOAD 8
-+ALOAD 6
- MONITOREXIT
- LABEL L8
- RETURN
- LABEL L9
--ALOAD 9
-+ALOAD 7
- DUP
--ASTORE 11
-+ASTORE 8
- MONITORENTER
- LABEL L10
- ALOAD 1
--IFNULL L17
-+IFNULL L16
- ALOAD 1
- DUP
--ASTORE 12
-+ASTORE 9
- MONITORENTER
- LABEL L11
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/RuntimeInventory.nativeDeItems()Ljava/util/Map;
--ASTORE 13
--ALOAD 13
--INSTANCEOF local/lito381/server/NativeDeItemInventory
--IFEQ L12
--ALOAD 13
- CHECKCAST local/lito381/server/NativeDeItemInventory
--ASTORE 14
--ALOAD 14
--ALOAD 9
-+ALOAD 7
- INVOKEVIRTUAL local/lito381/server/NativeDeItemInventory.validateReplacement(Llocal/lito381/server/RuntimeInventory;)V
--LABEL L12
- ALOAD 0
- ILOAD 2
- ALOAD 1
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeSetInventory(ILlocal/lito381/server/RuntimeInventory;)V
--ALOAD 12
-+ALOAD 9
- MONITOREXIT
-+LABEL L12
-+GOTO L15
- LABEL L13
--GOTO L16
-+ASTORE 10
-+ALOAD 9
-+MONITOREXIT
- LABEL L14
--ASTORE 15
--ALOAD 12
--MONITOREXIT
-+ALOAD 10
-+ATHROW
- LABEL L15
--ALOAD 15
--ATHROW
-+GOTO L17
- LABEL L16
--GOTO L18
--LABEL L17
- ALOAD 0
- ILOAD 2
- CONST null
- INVOKEVIRTUAL local/lito381/server/ClientSession.nativeDeSetInventory(ILlocal/lito381/server/RuntimeInventory;)V
--LABEL L18
--ALOAD 11
--MONITOREXIT
--LABEL L19
--GOTO L22
--LABEL L20
--ASTORE 16
--ALOAD 11
--MONITOREXIT
--LABEL L21
--ALOAD 16
--ATHROW
--LABEL L22
--ALOAD 3
--INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.refreshFields()V
-+LABEL L17
- ALOAD 8
- MONITOREXIT
--LABEL L23
--GOTO L26
--LABEL L24
--ASTORE 17
-+LABEL L18
-+GOTO L21
-+LABEL L19
-+ASTORE 11
- ALOAD 8
- MONITOREXIT
-+LABEL L20
-+ALOAD 11
-+ATHROW
-+LABEL L21
-+ALOAD 5
-+INVOKEVIRTUAL local/lito381/server/NativeDeItemApplication$Owner.refreshFields()V
-+ALOAD 6
-+MONITOREXIT
-+LABEL L22
-+GOTO L25
-+LABEL L23
-+ASTORE 12
-+ALOAD 6
-+MONITOREXIT
-+LABEL L24
-+ALOAD 12
-+ATHROW
- LABEL L25
--ALOAD 17
--ATHROW
--LABEL L26
- RETURN
-```
-
 ### `NativeDeItemBlessStatsTable`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -12907,39 +8379,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _armorBlessStats:Ljava/util/Map; signature=Ljava/util/Map<Ljava/lang/Integer;Ljava/util/Map<Ljava/lang/Integer;Llocal/lito381/server/NativeDeItemAbility;>;>;
 ```
 
-#### `method loadArmorBlessStats()V`
-
-```diff
---- staged
-+++ formal
-@@ -132,6 +132,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (bless_id: \u0001)"]
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L8
- GOTO L3
- LABEL L9
-```
-
-#### `method loadWeaponBlessStats()V`
-
-```diff
---- staged
-+++ formal
-@@ -85,6 +85,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (bless_id: \u0001)"]
- ALOAD 5
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L7
- GOTO L3
- LABEL L8
-```
-
 ### `NativeDeItemCommonEnchantTable`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -12957,183 +8397,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _armorCommonBonus:Ljava/util/Map; signature=Ljava/util/Map<Ljava/lang/Integer;Ljava/util/Map<Ljava/lang/Integer;Llocal/lito381/server/NativeDeItemAbility;>;>;
 ```
 
-#### `method loadArmorCommonBonus()I`
-
-```diff
---- staged
-+++ formal
-@@ -141,6 +141,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (over_enchant: \u0001)"]
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L8
- GOTO L3
- LABEL L9
-```
-
-#### `method loadWeaponCommonBonus()I`
-
-```diff
---- staged
-+++ formal
-@@ -100,6 +100,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (over_enchant: \u0001)"]
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L7
- GOTO L3
- LABEL L8
-```
-
-### `NativeDeItemDefinitionsResources`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
-
-#### `method freeze(Llocal/lito381/server/NativeDeItemDefinitionsScope$Data;)V`
-
-```diff
---- staged
-+++ formal
-@@ -3,8 +3,8 @@
- exceptions=java/sql/SQLException
- annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
- default=
--TRY L0 L7 L8 java/lang/ReflectiveOperationException
--TRY L0 L7 L8 java/lang/RuntimeException
-+TRY L0 L6 L7 java/lang/ReflectiveOperationException
-+TRY L0 L6 L7 java/lang/RuntimeException
- LABEL L0
- NEW java/util/IdentityHashMap
- DUP
-@@ -18,7 +18,7 @@
- LABEL L1
- ALOAD 2
- INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
--IFEQ L6
-+IFEQ L5
- ALOAD 2
- INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
- ASTORE 3
-@@ -34,7 +34,7 @@
- LABEL L2
- ILOAD 6
- ILOAD 5
--IF_ICMPGE L5
-+IF_ICMPGE L4
- ALOAD 4
- ILOAD 6
- AALOAD
-@@ -42,14 +42,12 @@
- ALOAD 7
- INVOKEVIRTUAL java/lang/reflect/Field.getModifiers()I
- INVOKESTATIC java/lang/reflect/Modifier.isStatic(I)Z
--IFNE L4
-+IFNE L3
- CONST type:Ljava/util/Map;
- ALOAD 7
- INVOKEVIRTUAL java/lang/reflect/Field.getType()Ljava/lang/Class;
- INVOKEVIRTUAL java/lang/Class.isAssignableFrom(Ljava/lang/Class;)Z
--IFNE L3
--GOTO L4
--LABEL L3
-+IFEQ L3
- ALOAD 7
- CONST Integer:1
- INVOKEVIRTUAL java/lang/reflect/Field.setAccessible(Z)V
-@@ -61,12 +59,12 @@
- ALOAD 1
- INVOKESTATIC local/lito381/server/NativeDeItemDefinitionsResources.freezeValue(Ljava/lang/Object;Ljava/util/IdentityHashMap;)Ljava/lang/Object;
- INVOKEVIRTUAL java/lang/reflect/Field.set(Ljava/lang/Object;Ljava/lang/Object;)V
--LABEL L4
-+LABEL L3
- IINC var=6 incr=1
- GOTO L2
-+LABEL L4
-+GOTO L1
- LABEL L5
--GOTO L1
--LABEL L6
- ALOAD 0
- NEW java/util/LinkedHashMap
- DUP
-@@ -75,9 +73,9 @@
- INVOKESPECIAL java/util/LinkedHashMap.<init>(Ljava/util/Map;)V
- INVOKESTATIC java/util/Collections.unmodifiableMap(Ljava/util/Map;)Ljava/util/Map;
- PUTFIELD local/lito381/server/NativeDeItemDefinitionsScope$Data.tables:Ljava/util/Map;
-+LABEL L6
-+GOTO L8
- LABEL L7
--GOTO L9
--LABEL L8
- ASTORE 1
- NEW java/sql/SQLException
- DUP
-@@ -85,5 +83,5 @@
- ALOAD 1
- INVOKESPECIAL java/sql/SQLException.<init>(Ljava/lang/String;Ljava/lang/Throwable;)V
- ATHROW
--LABEL L9
-+LABEL L8
- RETURN
-```
-
-#### `method lambda$read$#0(Llocal/lito381/server/NativeDeItemDefinitionsScope$Data;)Ljava/lang/Object;`
-
-```diff
---- staged
-+++ formal
-@@ -29,11 +29,10 @@
- INVOKESTATIC java/util/Set.of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Set; itf
- ALOAD 2
- INVOKEINTERFACE java/util/Set.contains(Ljava/lang/Object;)Z itf
--IFNE L1
--GOTO L0
--LABEL L1
-+IFEQ L1
- ALOAD 3
- INVOKESTATIC local/lito381/server/NativeDeItemDefinitionsResources.invokeLoad(Ljava/lang/Object;)V
-+LABEL L1
- GOTO L0
- LABEL L2
- CONST null
-```
-
-#### `method read(Ljava/lang/String;Llocal/lito381/server/NativeDeTerrainScope$Sql;Llocal/lito381/server/NativeDeWorldLog;)Llocal/lito381/server/NativeDeItemDefinitionsResources$Snapshot;`
-
-```diff
---- staged
-+++ formal
-@@ -58,6 +58,7 @@
- IFNONNULL L5
- ALOAD 6
- ASTORE 5
-+GOTO L6
- LABEL L5
- ALOAD 5
- ALOAD 6
-@@ -82,6 +83,7 @@
- IFNONNULL L11
- ALOAD 6
- ASTORE 5
-+GOTO L12
- LABEL L11
- ALOAD 5
- ALOAD 6
-@@ -104,6 +106,7 @@
- IFNONNULL L17
- ALOAD 8
- ASTORE 5
-+GOTO L18
- LABEL L17
- ALOAD 5
- ALOAD 8
-```
-
 ### `NativeDeItemEnchantBonusTable`
-
-CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未證明 Java 無法再改善，也未證明行為等價。請主控依完整 diff 決定續修範圍或明確例外，不可只忽略 firstDiff。
 
 #### `class / fields`
 
@@ -13151,39 +8415,7 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field _enchantBonuses:Ljava/util/Map; signature=Ljava/util/Map<Ljava/lang/Integer;Ljava/util/Map<Ljava/lang/Integer;Llocal/lito381/server/NativeDeItemAbility;>;>;
 ```
 
-#### `method loadArmorBonuses()I`
-
-```diff
---- staged
-+++ formal
-@@ -135,6 +135,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (item_id: \u0001)"]
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L8
- GOTO L3
- LABEL L9
-```
-
-#### `method loadWeaponBonuses()I`
-
-```diff
---- staged
-+++ formal
-@@ -100,6 +100,7 @@
- INVOKEDYNAMIC makeConcatWithConstants(I)Ljava/lang/String; bsm=H6 java/lang/invoke/StringConcatFactory.makeConcatWithConstants(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite; args=[str:"載入資料失敗，已略過該筆 (item_id: \u0001)"]
- ALOAD 6
- INVOKEINTERFACE local/lito381/server/NativeDeWorldLog.error(Ljava/lang/String;Ljava/lang/Throwable;)V itf
-+GOTO L3
- LABEL L7
- GOTO L3
- LABEL L8
-```
-
 ### `NativeDeItemEquipProcTable`
-
-本輪完整比較僅 metadata／欄位結構不同，方法指令、例外表與方法屬性均一致。多數為 InnerClasses 缺列或旗標不同；javac 依實際巢狀型別生成，尚未取得本批豁免。此觀察不代表 metadata 對所有反射／存取情境無影響。
 
 #### `class / fields`
 
@@ -13201,9 +8433,9 @@ CFR／Vineflower 及局部重寫後仍有下列完整方法／結構差異；未
  field ENCHANT_ANY_LEVEL:I signature=null
 ```
 
-## 差異匯出器的完整來源（可重建證據）
+## 正規化全文擷取方式
 
-以下存為 `scratch/issue-72/Dump.java`。這是診斷輸出器，透過 reflection 讀原工具私有正規化函式；不更動工具，也不載入／執行遊戲類別。
+將以下內容存為 `scratch/issue-72/Dump.java`；此工具只讀 JAR，呼叫現有 ClassComparer，再寫文字，沒有 class bytes 寫入功能。
 
 ```java
 package local.lito381.semanticdiff;
@@ -13249,17 +8481,17 @@ public class Dump {
 }
 ```
 
-先執行前述 reproduce.py，以下 PowerShell 會輸出完整左右正規化文字：
+執行下列 Python（根目錄執行；reproduce.py 建立的檔案必須已存在）：
 
-```powershell
-$jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
-$server = 'lito伺服器/LiTo381-Server'
-$asm = 'D:/dev-cache/maven/repository/org/ow2/asm/asm/9.7/asm-9.7.jar;D:/dev-cache/maven/repository/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar'
-$cp = "$server/tools/semantic-diff/target/classes;$asm"
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp $cp -d scratch/issue-72/target/diagnostics scratch/issue-72/Dump.java
-if ($LASTEXITCODE -ne 0) { throw 'diagnostic build failed' }
-& "$jdk/java.exe" -cp "scratch/issue-72/target/diagnostics;$cp" local.lito381.semanticdiff.Dump scratch/issue-72/target/reproduce.jar scratch/issue-72/verify_entries.txt scratch/issue-72/left
-& "$jdk/java.exe" -cp "scratch/issue-72/target/diagnostics;$cp" local.lito381.semanticdiff.Dump "$server/reference/base-0.6.71.jar" scratch/issue-72/verify_entries.txt scratch/issue-72/right
+```python
+from pathlib import Path
+import subprocess
+s = Path('lito伺服器/LiTo381-Server').resolve()
+w = Path('scratch/issue-72').resolve()
+j = Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin')
+asm = ';'.join(str(Path('D:/dev-cache/maven/repository/org/ow2/asm')/n/'9.7'/f'{n}-9.7.jar') for n in ['asm','asm-tree'])
+tc = s/'tools/semantic-diff/target/classes'
+subprocess.run([str(j/'javac.exe'),'--release','17','-encoding','UTF-8','-cp',f'{tc};{asm}','-d',str(w/'target/diagnostics'),str(w/'Dump.java')],check=True)
+for side, jar in [('left',w/'target/reproduce.jar'),('right',s/'reference/base-0.6.71.jar')]:
+    subprocess.run([str(j/'java.exe'),'-cp',f'{w}/target/diagnostics;{tc};{asm}','local.lito381.semanticdiff.Dump',str(jar),str(w/'verify_entries.txt'),str(w/side)],check=True)
 ```
-
-可用 Python `difflib.unified_diff` 對兩側同名文字檔逐行比較；報告分段時依每行 `method <名稱及描述子> ` 分組，其餘列為 class／fields；每組 n=3。原始正規化 TRY 列的尾端空白於 Markdown 排版移除，不影響左右比較值或任何 opcode／運算元。

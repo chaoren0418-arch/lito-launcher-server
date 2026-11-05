@@ -159,76 +159,53 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
       NativeDeDeletionScope.DELETIONS_IN_FLIGHT().remove(this.getId(), this);
    }
 
-   public static void sourceAuditDeletionStalls() {
-      if (!NativeDeDeletionScope.DELETIONS_IN_FLIGHT().isEmpty()) {
-         for (NativeDeDeletionState var1 : NativeDeDeletionScope.DELETIONS_IN_FLIGHT().values()) {
+    public static void sourceAuditDeletionStalls() {
+        if (NativeDeDeletionScope.DELETIONS_IN_FLIGHT().isEmpty()) {
+            return;
+        }
+        for (NativeDeDeletionState nativeDeDeletionState : NativeDeDeletionScope.DELETIONS_IN_FLIGHT().values()) {
             try {
-               if (var1 != null) {
-                  NativeDeDeletionVisibility.Snapshot var2 = var1.sourceDeletionVisibilitySnapshot();
-                  if (!var2.deletionInProgress()) {
-                     NativeDeDeletionScope.DELETIONS_IN_FLIGHT().remove(var1.getId(), var1);
-                  } else if (var2.deleteAgeMillis() >= NativeDeDeletionScope.DELETION_STALL_MILLIS() && var1._deletionStallReported.compareAndSet(false, true)) {
-                     long var9 = NativeDeDeletionScope.DELETION_STALL_COUNT().incrementAndGet();
-                     boolean var5 = false;
-
-                     try {
-                        var5 = NativeDeDeletionPorts.World.get().isObjectRegistered(var1);
-                     } catch (RuntimeException var7) {
-                        NativeDeDeletionScope._log()
-                           .warn(
-                              "[NpcLifecycle] deletion stall world-state read failed: objectId={} npcId={} phase={}",
-                              var1.getId(),
-                              var1.getNpcId(),
-                              var2.phase(),
-                              var7
-                           );
-                     }
-
-                     NativeDeDeletionScope._log()
-                        .warn(
-                           "[NpcLifecycle] deletion stalled: objectId={} npcId={} phase={} deleteAgeMs={} phaseAgeMs={} worldRegistered={} destroyed={} viewers={} map={} x={} y={} count={}",
-                           var1.getId(),
-                           var1.getNpcId(),
-                           var2.phase(),
-                           var2.deleteAgeMillis(),
-                           var2.phaseAgeMillis(),
-                           var5,
-                           var1.destroyed(),
-                           var1._registeredViewers.size(),
-                           Integer.valueOf(var1.getMapId()),
-                           var1.getX(),
-                           var1.getY(),
-                           var9
-                        );
-                  }
-               }
-            } catch (RuntimeException var8) {
-               long var3 = NativeDeDeletionScope.DELETION_AUDIT_FAILURE_COUNT().incrementAndGet();
-               NativeDeDeletionScope._log()
-                  .error("[NpcLifecycle] deletion stall audit failed: objectId={} count={}", var1 != null ? var1.getId() : -1, var3, var8);
+                if (nativeDeDeletionState == null) continue;
+                NativeDeDeletionVisibility.Snapshot snapshot = nativeDeDeletionState.sourceDeletionVisibilitySnapshot();
+                if (!snapshot.deletionInProgress()) {
+                    NativeDeDeletionScope.DELETIONS_IN_FLIGHT().remove(nativeDeDeletionState.getId(), nativeDeDeletionState);
+                    continue;
+                }
+                if (snapshot.deleteAgeMillis() < NativeDeDeletionScope.DELETION_STALL_MILLIS() || !nativeDeDeletionState._deletionStallReported.compareAndSet(false, true)) continue;
+                long l = NativeDeDeletionScope.DELETION_STALL_COUNT().incrementAndGet();
+                boolean bl = false;
+                try {
+                    bl = NativeDeDeletionPorts.World.get().isObjectRegistered(nativeDeDeletionState);
+                }
+                catch (RuntimeException runtimeException) {
+                    NativeDeDeletionScope._log().warn("[NpcLifecycle] deletion stall world-state read failed: objectId={} npcId={} phase={}", (Object)nativeDeDeletionState.getId(), (Object)nativeDeDeletionState.getNpcId(), (Object)snapshot.phase(), (Object)runtimeException);
+                }
+                NativeDeDeletionScope._log().warn("[NpcLifecycle] deletion stalled: objectId={} npcId={} phase={} deleteAgeMs={} phaseAgeMs={} worldRegistered={} destroyed={} viewers={} map={} x={} y={} count={}", new Object[]{nativeDeDeletionState.getId(), nativeDeDeletionState.getNpcId(), snapshot.phase(), snapshot.deleteAgeMillis(), snapshot.phaseAgeMillis(), bl, nativeDeDeletionState.destroyed(), nativeDeDeletionState._registeredViewers.size(), (int)nativeDeDeletionState.getMapId(), nativeDeDeletionState.getX(), nativeDeDeletionState.getY(), l});
             }
-         }
-      }
-   }
+            catch (RuntimeException runtimeException) {
+                long l = NativeDeDeletionScope.DELETION_AUDIT_FAILURE_COUNT().incrementAndGet();
+                NativeDeDeletionScope._log().error("[NpcLifecycle] deletion stall audit failed: objectId={} count={}", nativeDeDeletionState != null ? nativeDeDeletionState.getId() : -1, l, runtimeException);
+            }
+        }
+    }
 
-   public final boolean sourceRegisterViewer(NativeDeDeletionPorts.Viewer var1) {
-      NativeDeDeletionScope.require(this);
-      if (var1 == null) {
-         return false;
-      } else if (!this._destroyed && !this.deletionClaimFlag().get()) {
-         this._registeredViewers.put(var1.getId(), var1);
-         if (!this._destroyed && !this.deletionClaimFlag().get()) {
-            return true;
-         } else {
-            this._registeredViewers.remove(var1.getId(), var1);
+    public final boolean sourceRegisterViewer(NativeDeDeletionPorts.Viewer viewer) {
+        NativeDeDeletionScope.require(this);
+        if (viewer == null) {
+            return false;
+        }
+        if (this._destroyed || ((NativeDeNpcVitalState)this).deletionClaimFlag().get()) {
             NativeDeDeletionScope.LATE_VIEWER_REJECTED_COUNT().incrementAndGet();
             return false;
-         }
-      } else {
-         NativeDeDeletionScope.LATE_VIEWER_REJECTED_COUNT().incrementAndGet();
-         return false;
-      }
-   }
+        }
+        this._registeredViewers.put(viewer.getId(), viewer);
+        if (this._destroyed || ((NativeDeNpcVitalState)this).deletionClaimFlag().get()) {
+            this._registeredViewers.remove(viewer.getId(), viewer);
+            NativeDeDeletionScope.LATE_VIEWER_REJECTED_COUNT().incrementAndGet();
+            return false;
+        }
+        return true;
+    }
 
    public final void sourceUnregisterViewer(NativeDeDeletionPorts.Viewer var1) {
       NativeDeDeletionScope.require(this);
@@ -274,7 +251,7 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
 
    protected void sourceDeleteNpc() {
       NativeDeDeletionScope.require(this);
-      if (!this.deletionClaimFlag().compareAndSet(false, true)) {
+      if (!((NativeDeNpcVitalState)this).deletionClaimFlag().compareAndSet(false, true)) {
          long var61 = NativeDeDeletionScope.DELETE_DUPLICATE_SUPPRESSED_COUNT().incrementAndGet();
          if (var61 <= 8L || (var61 & var61 - 1L) == 0L) {
             NativeDeDeletionScope._log()
@@ -326,7 +303,7 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
                         this.resurrect(this.getMaxHp());
                         if (!this.isDead()) {
                            this.sourceResetDeletionObservation();
-                           this.deletionClaimFlag().set(false);
+                           ((NativeDeNpcVitalState)this).deletionClaimFlag().set(false);
                            return;
                         }
 
@@ -616,7 +593,7 @@ class NativeDeDeletionState extends NativeDeCorpseState implements NativeDeDelet
 
    private final void sourceAbortFailedWorldRegistration() {
       NativeDeDeletionScope.require(this);
-      this.deletionClaimFlag().set(true);
+      ((NativeDeNpcVitalState)this).deletionClaimFlag().set(true);
       this._destroyed = true;
       this._deletionVisibility.registrationAborted();
       NativeDeDeletionScope.DELETIONS_IN_FLIGHT().remove(this.getId(), this);

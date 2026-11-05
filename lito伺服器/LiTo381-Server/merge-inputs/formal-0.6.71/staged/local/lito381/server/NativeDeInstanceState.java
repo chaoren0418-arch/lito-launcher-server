@@ -1097,10 +1097,9 @@ Runnable {
     }
 
     private long sourceAi$nextAiTimerTokenLocked() {
-        long l;
-        ++this._deAiTimerSequence;
-        if ((l = this._deAiTimerSequence++) == 0L) {
-            l = this._deAiTimerSequence;
+        long l = ++this._deAiTimerSequence;
+        if (l == 0L) {
+            l = ++this._deAiTimerSequence;
         }
         return l;
     }
