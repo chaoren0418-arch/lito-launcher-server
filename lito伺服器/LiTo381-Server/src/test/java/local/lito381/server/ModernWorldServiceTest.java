@@ -86,6 +86,16 @@ class ModernWorldServiceTest {
         long end = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
         while (!condition.getAsBoolean()) { assertTrue(System.nanoTime() < end, "bounded condition did not complete"); Thread.sleep(5); }
     }
+    /** LEAVE retires followers synchronously, but the preparation worker can
+     * still own capacity until its real finally. Keep the exact zero assertion. */
+    static void awaitNoMatches(ModernWorldService service) throws Exception {
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(3);
+        while (service.matchCount() != 0 && System.nanoTime() < deadline) {
+            if (Thread.interrupted()) throw new InterruptedException("waiting for world retirement");
+            java.util.concurrent.locks.LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(1));
+        }
+        assertEquals(0, service.matchCount(), "preparation worker did not retire within 3 seconds");
+    }
     private static void blocking(CountDownLatch release) throws Exception {
         if (!release.await(3, TimeUnit.SECONDS)) throw new IllegalStateException("test reader barrier timed out");
     }

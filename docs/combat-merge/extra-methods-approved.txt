@@ -1,0 +1,2 @@
+# 僅主控可新增；精確原名與描述子，且必須為 private static。
+local/lito381/server/ServerConfig#rethrowSourceFailure(Ljava/lang/Throwable;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/77#issuecomment-6641248257

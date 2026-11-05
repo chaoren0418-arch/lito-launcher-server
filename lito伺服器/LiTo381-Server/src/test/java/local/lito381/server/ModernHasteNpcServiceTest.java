@@ -24,7 +24,7 @@ class ModernHasteNpcServiceTest {
             assertThrows(IllegalArgumentException.class,()->ModernApplicationProtocol.encode(new ModernApplicationProtocol.HasteResult(result),43));
             assertEquals(ModernHasteCast.Reason.STALE_TARGET,f.service.haste(f.a.owner(),f.intent(f.a,2,target)).reason());
             for(var p:List.of(f.a,f.b))assertEquals(ModernWorldProtocol.Status.OK,f.service.battleWorld(p.owner(),f.request(p,ModernBattleWorldProtocol.Action.LEAVE)).status());
-            assertEquals(0,f.service.matchCount());
+            ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     static final class Fixture implements AutoCloseable {
