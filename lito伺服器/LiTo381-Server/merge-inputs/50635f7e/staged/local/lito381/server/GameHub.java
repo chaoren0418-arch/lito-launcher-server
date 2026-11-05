@@ -966,8 +966,6 @@ final class GameHub implements AutoCloseable {
     }
 
     private final Map<Integer, Channel> channels = new LinkedHashMap<>();
-    private final Set<String> deletingCharacters = new LinkedHashSet<>();
-    private final Map<ClientSession, Integer> channelMembership = new LinkedHashMap<>();
     private final Set<ClientSession> connectedSessions = new LinkedHashSet<>();
     private final Map<String, ClientSession> authenticatedGameAccounts = new LinkedHashMap<>();
     /**
@@ -987,6 +985,8 @@ final class GameHub implements AutoCloseable {
             new LinkedHashMap<>();
     /** Native social-recipient projection only; all reservation decisions live in TournamentPresence. */
     private final Map<ClientSession, String> selectedCharacters = new LinkedHashMap<>();
+    private final Set<String> deletingCharacters = new LinkedHashSet<>();
+    private final Map<ClientSession, Integer> channelMembership = new LinkedHashMap<>();
     private final Map<ClientSession, ClassicWorldLocation> classicWorldMembership =
             new LinkedHashMap<>();
     private final Map<Long, Integer> classicWorldNpcHeadings = new LinkedHashMap<>();
@@ -1353,30 +1353,22 @@ final class GameHub implements AutoCloseable {
         return List.copyOf(wantedAccountWatches.values());
     }
 
-    synchronized boolean selectCharacter(ClientSession session, String characterName) {
-        String characterKey = key(characterName);
-        if (session == null || !connectedSessions.contains(session)
-                || characterKey.isEmpty()) {
+    synchronized boolean selectCharacter(ClientSession clientSession, String string) {
+        String string2 = GameHub.key(string);
+        if (clientSession == null || !this.connectedSessions.contains(clientSession) || string2.isEmpty() || this.deletingCharacters.contains(string2)) {
             return false;
         }
-        if (deletingCharacters.contains(characterKey)) return false;
-        boolean taken = selectedCharacters.entrySet().stream()
-                .anyMatch(entry -> entry.getKey() != session && characterKey.equals(entry.getValue()));
-        if (taken) return false;
-        selectedCharacters.put(session, characterKey);
+        boolean bl = this.selectedCharacters.entrySet().stream().anyMatch(entry -> entry.getKey() != clientSession && string2.equals(entry.getValue()));
+        if (bl) {
+            return false;
+        }
+        this.selectedCharacters.put(clientSession, string2);
         return true;
     }
 
-    /** Live native admission uses the matched owned DB row, never playerObjectId()/first-row fallbacks. */
-    synchronized boolean selectCharacter(ClientSession session, int sourceId, String sourceName,
-                                         CharacterSummary character) {
-        if (session == null || character == null || !connectedSessions.contains(session)) return false;
-        return selectCharacter(session, character.name());
-    }
 
-    private void clearNativeSelection(ClientSession session) {
-        selectedCharacters.remove(session);
-    }
+
+
 
     synchronized boolean beginCharacterDeletion(String characterName,
                                                 ClientSession requester) {
@@ -1430,122 +1422,78 @@ final class GameHub implements AutoCloseable {
     private long nextVirtualPlayerObjectId = 0x4000_0000L;
     private long nextPrivateShopGeneration = 1;
 
-    GameHub(ServerConfig config) {
-        this(config, null, null);
+    GameHub(ServerConfig serverConfig) {
+        this(serverConfig, null, null);
     }
 
-    GameHub(ServerConfig config, GameStateStore state) {
-        this(config, state, null);
+    GameHub(ServerConfig serverConfig, GameStateStore gameStateStore) {
+        this(serverConfig, gameStateStore, null);
     }
 
-    GameHub(ServerConfig config, GameStateStore state, AccountRepository accounts) {
-        this.state = state;
-        this.accounts = accounts;
-        battleControls = BattleControlCatalog.load(accounts);
-        NativeRoomRules.install(this, config, accounts);
-        this.ephemeralSourceProfiles = config.ephemeralSourceProfiles();
-        this.classicSourceNames = List.copyOf(config.classicServerNames());
-        rentalBattleHandoffStore =
-                new RentalBattleHandoffStore(config.rentalBattleHandoffFile());
-        aiEnabled = config.battleAiEnabled();
-        petRaceMinimumPlayersEnforced = config.nativePetRaceMinimumPlayersEnforced();
-        siegeRosterEnforced = config.nativeSiegeRosterEnforced();
-        classicWorldMonsterAiEnabled = config.classicWorldMonsterAiEnabled();
-        classicWorldMonsterAggressiveAiEnabled =
-                config.classicWorldMonsterAggressiveAiEnabled();
-        classicWorldMonsterPhysicalSkillFixtureBranch =
-                config.classicWorldMonsterPhysicalSkillFixtureBranch();
-        classicWorldMonsterPhysicalSkillFixtureTriggerRoll =
-                config.classicWorldMonsterPhysicalSkillFixtureTriggerRoll();
-        classicWorldMonsterMagicFixtureBranch =
-                config.classicWorldMonsterMagicFixtureBranch();
-        classicWorldMonsterMagicFixtureTriggerRoll =
-                config.classicWorldMonsterMagicFixtureTriggerRoll();
-        timeAttackDocumentedPatternFixtureIndex =
-                config.timeAttackDocumentedPatternFixtureIndex();
-        timeAttackDragonOutcomeFixtureIndex =
-                config.timeAttackDragonOutcomeFixtureIndex();
-        timeAttackDragonCombatFixtureOnly =
-                config.timeAttackDragonCombatFixtureOnly();
-        timeAttackDragonCombatFixtureMinimumTargets =
-                config.timeAttackDragonCombatFixtureMinimumTargets();
-        timeAttackMonsterActNoFixture =
-                config.timeAttackMonsterActNoFixture();
-        timeAttackMonsterMagicFixtureTriggerRoll =
-                config.timeAttackMonsterMagicFixtureTriggerRoll();
-        timeAttackMonsterPhysicalFixtureTriggerRoll =
-                config.timeAttackMonsterPhysicalFixtureTriggerRoll();
-        timeAttackMonsterCandidateFixtureSelector =
-                config.timeAttackMonsterCandidateFixtureSelector();
-        aiDamage = config.battleAiDamage();
-        classicWorldMonsters = new ClassicWorldMonsterPopulation();
-        classicWorldGroundItems = new ClassicWorldGroundItems();
-        for (ChannelTier tier : CHANNEL_TIERS) {
-            channels.put(tier.id(), new Channel(tier.id(), tier.name(), CHANNEL_CAPACITY));
+    GameHub(ServerConfig serverConfig, GameStateStore gameStateStore, AccountRepository accountRepository) {
+        this.state = gameStateStore;
+        this.accounts = accountRepository;
+        this.battleControls = BattleControlCatalog.load(accountRepository);
+        this.ephemeralSourceProfiles = serverConfig.ephemeralSourceProfiles();
+        this.classicSourceNames = List.copyOf(serverConfig.classicServerNames());
+        this.rentalBattleHandoffStore = new RentalBattleHandoffStore(serverConfig.rentalBattleHandoffFile());
+        this.aiEnabled = serverConfig.battleAiEnabled();
+        this.petRaceMinimumPlayersEnforced = serverConfig.nativePetRaceMinimumPlayersEnforced();
+        this.siegeRosterEnforced = serverConfig.nativeSiegeRosterEnforced();
+        this.classicWorldMonsterAiEnabled = serverConfig.classicWorldMonsterAiEnabled();
+        this.classicWorldMonsterAggressiveAiEnabled = serverConfig.classicWorldMonsterAggressiveAiEnabled();
+        this.classicWorldMonsterPhysicalSkillFixtureBranch = serverConfig.classicWorldMonsterPhysicalSkillFixtureBranch();
+        this.classicWorldMonsterPhysicalSkillFixtureTriggerRoll = serverConfig.classicWorldMonsterPhysicalSkillFixtureTriggerRoll();
+        this.classicWorldMonsterMagicFixtureBranch = serverConfig.classicWorldMonsterMagicFixtureBranch();
+        this.classicWorldMonsterMagicFixtureTriggerRoll = serverConfig.classicWorldMonsterMagicFixtureTriggerRoll();
+        this.timeAttackDocumentedPatternFixtureIndex = serverConfig.timeAttackDocumentedPatternFixtureIndex();
+        this.timeAttackDragonOutcomeFixtureIndex = serverConfig.timeAttackDragonOutcomeFixtureIndex();
+        this.timeAttackDragonCombatFixtureOnly = serverConfig.timeAttackDragonCombatFixtureOnly();
+        this.timeAttackDragonCombatFixtureMinimumTargets = serverConfig.timeAttackDragonCombatFixtureMinimumTargets();
+        this.timeAttackMonsterActNoFixture = serverConfig.timeAttackMonsterActNoFixture();
+        this.timeAttackMonsterMagicFixtureTriggerRoll = serverConfig.timeAttackMonsterMagicFixtureTriggerRoll();
+        this.timeAttackMonsterPhysicalFixtureTriggerRoll = serverConfig.timeAttackMonsterPhysicalFixtureTriggerRoll();
+        this.timeAttackMonsterCandidateFixtureSelector = serverConfig.timeAttackMonsterCandidateFixtureSelector();
+        this.aiDamage = serverConfig.battleAiDamage();
+        this.classicWorldMonsters = new ClassicWorldMonsterPopulation();
+        this.classicWorldGroundItems = new ClassicWorldGroundItems();
+        for (ChannelTier channelTier : CHANNEL_TIERS) {
+            this.channels.put(channelTier.id(), new Channel(channelTier.id(), channelTier.name(), 100));
         }
-        // Preserve the historical channel-0 default room id used by existing
-        // clients and packet fixtures. Other channels create their default
-        // room lazily when the first player enters them.
-        ensureDefaultRoom(requiredChannel(0));
-        battleClock = Executors.newSingleThreadScheduledExecutor(task -> {
-            Thread thread = new Thread(task, "lito381-battle-clock");
+        GameHub defaultRoomOwner = this;
+        Channel channel = this.requiredChannel(0);
+        NativeRoomRules.install(this, serverConfig, accountRepository);
+        defaultRoomOwner.ensureDefaultRoom(channel);
+        this.battleClock = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = new Thread(runnable, "lito381-battle-clock");
             thread.setDaemon(true);
             return thread;
         });
-        battleClock.scheduleWithFixedDelay(this::countdownTickSafely,
-                250, 250, TimeUnit.MILLISECONDS);
-        battleClock.scheduleWithFixedDelay(this::groundTickSafely,
-                100, 100, TimeUnit.MILLISECONDS);
-        battleClock.scheduleWithFixedDelay(this::statusTickSafely,
-                100, 100, TimeUnit.MILLISECONDS);
-        // Retained ServerItemUserTimer cadence: absolute inventory deadlines
-        // are scanned independently every minute.
-        battleClock.scheduleWithFixedDelay(this::itemUserTickSafely,
-                60, 60, TimeUnit.SECONDS);
-        // Retained ServerAuctionTimer semantics, applied independently to
-        // every selected 380_ac_N authority. Exact snapshots make retries
-        // idempotent when another process settles the same deadline first.
-        if (accounts != null && "lito_mysql".equals(config.databaseMode())) {
-            battleClock.scheduleWithFixedDelay(this::houseAuctionTickSafely,
-                    5, 5, TimeUnit.MINUTES);
-            // Retained ServerHouseTaxTimer cadence. Tax default is a separate
-            // exact-snapshot mutation so auction settlement and tax eviction
-            // cannot partially publish one another.
-            battleClock.scheduleWithFixedDelay(this::houseTaxTickSafely,
-                    10, 10, TimeUnit.MINUTES);
+        this.battleClock.scheduleWithFixedDelay(this::countdownTickSafely, 250L, 250L, TimeUnit.MILLISECONDS);
+        ScheduledExecutorService groundClock = this.battleClock;
+        NativeSourceCubeClock.init(this);
+        groundClock.scheduleWithFixedDelay(this::groundTickSafely, 100L, 100L, TimeUnit.MILLISECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::statusTickSafely, 100L, 100L, TimeUnit.MILLISECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::itemUserTickSafely, 60L, 60L, TimeUnit.SECONDS);
+        if (accountRepository != null && "lito_mysql".equals(serverConfig.databaseMode())) {
+            this.battleClock.scheduleWithFixedDelay(this::houseAuctionTickSafely, 5L, 5L, TimeUnit.MINUTES);
+            this.battleClock.scheduleWithFixedDelay(this::houseTaxTickSafely, 10L, 10L, TimeUnit.MINUTES);
         }
-        // Retained DollTimer decrements every second, independently of item expiry.
-        battleClock.scheduleWithFixedDelay(this::magicDollTickSafely,
-                1, 1, TimeUnit.SECONDS);
-        battleClock.scheduleWithFixedDelay(this::companionTickSafely,
-                50, 50, TimeUnit.MILLISECONDS);
-        battleClock.scheduleWithFixedDelay(this::classicWorldCkewTickSafely,
-                1, 1, TimeUnit.SECONDS);
-        battleClock.scheduleWithFixedDelay(this::classicWorldWaterDragonTickSafely,
-                100, 100, TimeUnit.MILLISECONDS);
-        battleClock.scheduleWithFixedDelay(this::classicWorldShipTickSafely,
-                5, 5, TimeUnit.SECONDS);
-        // Retained NpcDigestItemTimer is independent from ordinary monster AI.
-        battleClock.scheduleWithFixedDelay(this::classicWorldMonsterDigestTickSafely,
-                5, 5, TimeUnit.SECONDS);
-        battleClock.scheduleWithFixedDelay(this::classicCastleWarTickSafely,
-                1, 1, TimeUnit.SECONDS);
-        // Retained NpcBowTimer is independent of ordinary monster AI and
-        // continues to fire every 1500 ms whenever a player recognizes an
-        // aperture.  Do not gate it behind classic.world.monster.ai.enabled.
-        battleClock.scheduleWithFixedDelay(this::classicWorldBowTickSafely,
-                ClassicWorldBowCatalog.TICK_INTERVAL_MILLIS,
-                ClassicWorldBowCatalog.TICK_INTERVAL_MILLIS,
-                TimeUnit.MILLISECONDS);
-        if (aiEnabled) {
-            battleClock.scheduleWithFixedDelay(this::tickSafely,
-                    config.battleAiTickMs(), config.battleAiTickMs(), TimeUnit.MILLISECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::magicDollTickSafely, 1L, 1L, TimeUnit.SECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::companionTickSafely, 50L, 50L, TimeUnit.MILLISECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicWorldCkewTickSafely, 1L, 1L, TimeUnit.SECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicWorldWaterDragonTickSafely, 100L, 100L, TimeUnit.MILLISECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicWorldShipTickSafely, 5L, 5L, TimeUnit.SECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicWorldMonsterDigestTickSafely, 5L, 5L, TimeUnit.SECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicCastleWarTickSafely, 1L, 1L, TimeUnit.SECONDS);
+        this.battleClock.scheduleWithFixedDelay(this::classicWorldBowTickSafely, 1500L, 1500L, TimeUnit.MILLISECONDS);
+        if (this.aiEnabled) {
+            this.battleClock.scheduleWithFixedDelay(this::tickSafely, serverConfig.battleAiTickMs(), serverConfig.battleAiTickMs(), TimeUnit.MILLISECONDS);
         }
-        if (classicWorldMonsterAiEnabled) {
-            battleClock.scheduleWithFixedDelay(this::classicWorldMonsterTickSafely,
-                    config.classicWorldMonsterAiTickMs(),
-                    config.classicWorldMonsterAiTickMs(), TimeUnit.MILLISECONDS);
+        if (this.classicWorldMonsterAiEnabled) {
+            this.battleClock.scheduleWithFixedDelay(this::classicWorldMonsterTickSafely, serverConfig.classicWorldMonsterAiTickMs(), serverConfig.classicWorldMonsterAiTickMs(), TimeUnit.MILLISECONDS);
         }
+        NativePlayerLifetime.openHub(this);
     }
 
     synchronized ChannelSnapshot enterChannel(int channelId, ClientSession session) {
@@ -1662,39 +1610,14 @@ final class GameHub implements AutoCloseable {
         return room != null && room.channelId == channelId;
     }
 
-    /**
-     * Finds a room that the caller can actually enter before S_EB reports
-     * matchmaking success.  A zero result means that no public eligible room
-     * exists; room ids are allocated from one, so zero is an unambiguous
-     * sentinel and must never be serialized as a successful S_CE join.
-     */
-    synchronized long matchRoom(int channelId, int characterLevel, boolean observer) {
-        return matchRoom(channelId, characterLevel, observer, null);
+    synchronized long matchRoom(int n, int n2, boolean bl) {
+        return this.matchRoom(n, n2, bl, null);
     }
 
-    synchronized long matchRoom(int channelId, int characterLevel, boolean observer,
-                                BattleRules.Mode requestedMode) {
-        Channel channel = requiredChannel(channelId);
-        ensureDefaultRoom(channel);
-        return channel.roomIds.stream().map(rooms::get)
-                .filter(java.util.Objects::nonNull)
-                .filter(room -> !room.battleStarted)
-                // Local Lobby is the per-channel default test room. It stays
-                // on the room list for direct join / ArenaBot, but S_EB
-                // quick-match must never pick it over player-created rooms.
-                .filter(room -> !NativeRoomRules.testRoom(this, room.id))
-                // Native C_E3 exposes only the six ordinary battle modes
-                // (0..5).  Server-gated mode 6 is the rental town scene and
-                // must never be selected by battle matchmaking.
-                .filter(room -> room.match.rules().mode().isBattleScene())
-                .filter(room -> requestedMode == null
-                        || room.match.rules().mode() == requestedMode)
-                .filter(room -> room.settings.password().isEmpty())
-                .filter(room -> canJoinRoom(channelId, characterLevel, room.settings))
-                .filter(room -> !observer || room.settings.allowsObservers())
-                .filter(room -> observer || room.combatantCount()
-                        < nativeCombatantCapacity(room.settings))
-                .mapToLong(room -> room.id).findFirst().orElse(0);
+    synchronized long matchRoom(int n, int n2, boolean bl, BattleRules.Mode mode) {
+        Channel channel = this.requiredChannel(n);
+        this.ensureDefaultRoom(channel);
+        return channel.roomIds.stream().map(this.rooms::get).filter(Objects::nonNull).filter(room -> !room.battleStarted).filter(room -> room.match.rules().mode().isBattleScene()).filter(room -> mode == null || room.match.rules().mode() == mode).filter(room -> room.settings.password().isEmpty()).filter(room -> GameHub.canJoinRoom(n, n2, room.settings)).filter(room -> !bl || room.settings.allowsObservers()).filter(room -> bl || room.combatantCount() < GameHub.nativeCombatantCapacity(room.settings)).mapToLong(room -> room.id).findFirst().orElse(0L);
     }
 
     /**
@@ -1828,7 +1751,7 @@ final class GameHub implements AutoCloseable {
             long roomId, ClientSession session, int characterType, int sourceServerId,
             String tournamentTeamName) {
         Room room = required(roomId);
-        Integer channelId = nativeChannel(session);
+        Integer channelId = channelMembership.get(session);
         if (channelId == null || room.channelId != channelId) {
             throw new IllegalArgumentException("room does not belong to session channel");
         }
@@ -1932,7 +1855,7 @@ final class GameHub implements AutoCloseable {
         connectedSessions.remove(session);
         matchMakingQueue.remove(session);
         authenticatedGameAccounts.values().removeIf(owner -> owner == session);
-        clearNativeSelection(session);
+        selectedCharacters.remove(session);
         ClassicWorldLocation departingClassicWorldLocation =
                 classicWorldMembership.remove(session);
         if (!departingSourceIdentity.isBlank()
@@ -4922,13 +4845,9 @@ final class GameHub implements AutoCloseable {
         return channel == null ? List.of() : new ArrayList<>(channel.members);
     }
 
-    private Integer nativeChannel(ClientSession session) {
-        return channelMembership.get(session);
-    }
 
-    private List<ClientSession> nativeChannelMembers() {
-        return new ArrayList<>(channelMembership.keySet());
-    }
+
+
 
     synchronized int tournamentUserCount() {
         return channelMembership.size();
@@ -5009,33 +4928,23 @@ final class GameHub implements AutoCloseable {
         return true;
     }
 
-    synchronized BuddyData buddyData(String owner, int channelId) {
-        BuddyProfile profile = buddyProfile(owner);
-        // Keep the development guide from the earlier deterministic profile,
-        // then expose real online channel peers to the native buddy panel.
-        BuddyEntry guide = profile.entries.computeIfAbsent(key("ArenaGuide"),
-                ignored -> new BuddyEntry("ArenaGuide", 1, 1,
-                        Protocol.LitoBuddyActivity.WAITING, "Local", 1,
-                        0, "", false));
-        guide.activity = Protocol.LitoBuddyActivity.WAITING;
-        Channel channel = channels.get(channelId);
+    synchronized BuddyData buddyData(String string3, int n) {
+        BuddyProfile buddyProfile = this.buddyProfile(string3);
+        BuddyEntry buddyEntry = buddyProfile.entries.computeIfAbsent(GameHub.key("ArenaGuide"), string -> new BuddyEntry("ArenaGuide", 1, 1, Protocol.LitoBuddyActivity.WAITING, "Local", 1, 0L, "", false));
+        buddyEntry.activity = Protocol.LitoBuddyActivity.WAITING;
+        Channel channel = this.channels.get(n);
         if (channel != null) {
-            String ownerSource = identitySourceKey(owner);
-            for (ClientSession member : channelMembers(channelId)) {
-                String memberIdentity = member.sourceCharacterIdentity();
-                if (memberIdentity.equalsIgnoreCase(owner)) continue;
-                if (!ownerSource.isEmpty()
-                        && !ownerSource.equals(identitySourceKey(memberIdentity))) continue;
-                Protocol.LitoBuddyActivity activity = member.buddyActivityState();
-                BuddyEntry entry = profile.entries.computeIfAbsent(key(member.playerName()),
-                        ignored -> new BuddyEntry(member.playerName(), 1, 1,
-                                activity, member.originServerName(), 1,
-                                0, identitySourceKey(memberIdentity), false));
-                entry.activity = activity;
-                entry.origin = member.originServerName();
+            String string4 = GameHub.identitySourceKey(string3);
+            for (ClientSession clientSession : channel.members) {
+                String string5 = clientSession.sourceCharacterIdentity();
+                if (string5.equalsIgnoreCase(string3) || !string4.isEmpty() && !string4.equals(GameHub.identitySourceKey(string5))) continue;
+                Protocol.LitoBuddyActivity litoBuddyActivity = clientSession.buddyActivityState();
+                BuddyEntry buddyEntry2 = buddyProfile.entries.computeIfAbsent(GameHub.key(clientSession.playerName()), string2 -> new BuddyEntry(clientSession.playerName(), 1, 1, litoBuddyActivity, clientSession.originServerName(), 1, 0L, GameHub.identitySourceKey(string5), false));
+                buddyEntry2.activity = litoBuddyActivity;
+                buddyEntry2.origin = clientSession.originServerName();
             }
         }
-        return buddySnapshot(profile);
+        return GameHub.buddySnapshot(buddyProfile);
     }
 
     synchronized BuddyAddResult addBuddy(String owner, String requestedName,
@@ -7419,11 +7328,8 @@ final class GameHub implements AutoCloseable {
         return new ArenaMapCatalog.Point(spawn.x() + offset[room.botStep & 3], spawn.y());
     }
 
-    synchronized BattleGroundEffects.CastResult placeGroundSpell(
-            long roomId, ClientSession caster, BattleSpellCatalog.GroundSpell spell,
-            int sourceX, int sourceY, int targetX, int targetY, long nowNanos) {
-        return placeGroundSpell(roomId, caster, spell, sourceX, sourceY,
-                targetX, targetY, nowNanos, () -> {});
+    synchronized BattleGroundEffects.CastResult placeGroundSpell(long l, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n, int n2, int n3, int n4, long l2) {
+        return this.placeGroundSpell(l, clientSession, groundSpell, n, n2, n3, n4, l2, () -> {});
     }
 
     synchronized BattleGroundEffects.CastResult nativeMaterialPlaceGroundSpell(long l, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n, int n2, int n3, int n4, long l2, Runnable runnable) {
@@ -7459,33 +7365,20 @@ final class GameHub implements AutoCloseable {
         return castResult;
     }
 
-    synchronized BattleGroundEffects.CastResult placeGroundSpell(
-            long roomId, ClientSession caster, BattleSpellCatalog.GroundSpell spell,
-            int sourceX, int sourceY, int targetX, int targetY, long nowNanos,
-            Runnable resourceCommit) {
-        Room room = rooms.get(roomId);
-        if (room == null || !room.battleStarted || caster == null
-                || !room.battleRoster.contains(caster) || spell == null
-                || resourceCommit == null || nowNanos < 0) {
+    synchronized BattleGroundEffects.CastResult placeGroundSpell(long l, ClientSession clientSession, BattleSpellCatalog.GroundSpell groundSpell, int n, int n2, int n3, int n4, long l2, Runnable runnable) {
+        Room room = this.rooms.get(l);
+        if (room == null || !room.battleStarted || clientSession == null || !room.battleRoster.contains(clientSession) || groundSpell == null || runnable == null || l2 < 0L) {
             return BattleGroundEffects.CastResult.rejected();
         }
         ArenaMapCatalog.Arena arena = ArenaMapCatalog.forMap(room.match.rules().mapId());
-        if (!arena.nativeStandingFloor(sourceX, sourceY)
-                || spell.skillId() != BattleSpellCatalog.FIRE_WALL
-                    && !arena.nativeStandingFloor(targetX, targetY)
-                || room.door.blocks(targetX, targetY)
-                || room.siegeGate.blocks(targetX, targetY)
-                || room.guardianTowers.blocks(targetX, targetY)
-                || room.questEncounter.blocks(
-                        forceOf(room, caster), targetX, targetY)
-                || room.timeAttackEncounter.blocks(targetX, targetY)) {
+        if (!arena.nativeStandingFloor(n, n2) || groundSpell.skillId() != 58 && !arena.nativeStandingFloor(n3, n4) || room.door.blocks(n3, n4) || room.siegeGate.blocks(n3, n4) || room.guardianTowers.blocks(n3, n4) || room.questEncounter.blocks(GameHub.forceOf(room, clientSession), n3, n4) || room.timeAttackEncounter.blocks(n3, n4)) {
             return BattleGroundEffects.CastResult.rejected();
         }
-        BattleGroundEffects.CastResult placed = room.groundEffects.cast(
-                spell, caster.playerObjectId(),
-                sourceX, sourceY, targetX, targetY, arena, nowNanos);
-        if (placed.accepted()) resourceCommit.run();
-        return placed;
+        BattleGroundEffects.CastResult castResult = NativeSourceGroundOrigin.cast(room.groundEffects, groundSpell, clientSession.playerObjectId(), n, n2, n3, n4, arena, l2, this, l, clientSession);
+        if (castResult.accepted()) {
+            runnable.run();
+        }
+        return castResult;
     }
 
     synchronized ClassicWorldGroundEffects.CastResult placeClassicWorldGroundSpell(
@@ -8990,32 +8883,19 @@ final class GameHub implements AutoCloseable {
         return room != null && room.battleStarted && clientSession != null && room.battleRoster.contains(clientSession) && LiToGmNpcs.combatMode(room.match.rules()) == BattleRules.Mode.TIME_ATTACK && room.timeAttackEncounter.canAttack(l2);
     }
 
-    synchronized TimeAttackActorHit damageTimeAttackActor(
-            long roomId, ClientSession attacker, long objectId, int damage) {
-        Room room = rooms.get(roomId);
-        if (room == null || !room.battleStarted || attacker == null
-                || !room.battleRoster.contains(attacker) || damage <= 0
-                || room.match.rules().mode() != BattleRules.Mode.TIME_ATTACK) {
+    synchronized TimeAttackActorHit damageTimeAttackActor(long l, ClientSession clientSession, long l2, int n) {
+        Room room = this.rooms.get(l);
+        if (room == null || !room.battleStarted || clientSession == null || !room.battleRoster.contains(clientSession) || n <= 0 || LiToGmNpcs.combatMode(room.match.rules()) != BattleRules.Mode.TIME_ATTACK) {
             return null;
         }
-        BattleTimeAttackEncounter.Hit hit =
-                room.timeAttackEncounter.damage(objectId, damage);
-        if (hit == null) return null;
-        if (!hit.spawned().isEmpty()) room.pveAiPublishAfterNanos = Long.MAX_VALUE;
-        BattleRules.Resolution resolution = hit.finalBossesCleared()
-                ? room.match.timeAttackCompleted(
-                        BattleTimeAttackEncounter.isDragonStageActor(
-                                hit.damage().before()))
-                : BattleRules.Resolution.continuing(
-                        false, hit.spawned().isEmpty()
-                                ? "timeattack-actor-damaged"
-                                : hit.spawned().stream().anyMatch(
-                                        BattleTimeAttackEncounter::isDragonStageActor)
-                                        ? "timeattack-dragon-stage-spawned"
-                                : hit.spawned().stream().allMatch(
-                                        BattleTimeAttackEncounter.Snapshot::finalBoss)
-                                        ? "timeattack-ordinary-fragments-cleared"
-                                        : "timeattack-next-ordinary-fragment");
+        BattleTimeAttackEncounter.Hit hit = room.timeAttackEncounter.damage(l2, n);
+        if (hit == null) {
+            return null;
+        }
+        if (!hit.spawned().isEmpty()) {
+            room.pveAiPublishAfterNanos = Long.MAX_VALUE;
+        }
+        BattleRules.Resolution resolution = hit.finalBossesCleared() ? room.match.timeAttackCompleted(BattleTimeAttackEncounter.isDragonStageActor(hit.damage().before())) : BattleRules.Resolution.continuing(false, hit.spawned().isEmpty() ? "timeattack-actor-damaged" : (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter::isDragonStageActor) ? "timeattack-dragon-stage-spawned" : (hit.spawned().stream().allMatch(BattleTimeAttackEncounter.Snapshot::finalBoss) ? "timeattack-ordinary-fragments-cleared" : "timeattack-next-ordinary-fragment")));
         return new TimeAttackActorHit(hit, resolution);
     }
 
@@ -9042,46 +8922,24 @@ final class GameHub implements AutoCloseable {
         return timeAttackActorPoisonActive(roomId, objectId, nowNanos) ? 1 : 0;
     }
 
-    synchronized List<TimeAttackPoisonUpdate> pollTimeAttackActorPoisons(
-            long roomId, long nowNanos, int tickIntervalMillis, int tickDamage) {
-        Room room = rooms.get(roomId);
-        if (room == null || !room.battleStarted
-                || room.match.rules().mode() != BattleRules.Mode.TIME_ATTACK) {
+    synchronized List<TimeAttackPoisonUpdate> pollTimeAttackActorPoisons(long l, long l2, int n, int n2) {
+        Room room = this.rooms.get(l);
+        if (room == null || !room.battleStarted || LiToGmNpcs.combatMode(room.match.rules()) != BattleRules.Mode.TIME_ATTACK) {
             return List.of();
         }
-        List<TimeAttackPoisonUpdate> results = new ArrayList<>();
-        for (BattleTimeAttackEncounter.PoisonUpdate update
-                : room.timeAttackEncounter.pollPoisons(
-                        nowNanos, tickIntervalMillis, tickDamage)) {
-            BattleRules.Resolution resolution = BattleRules.Resolution.continuing(
-                    false, update.expired()
-                            ? "timeattack-poison-expired" : "timeattack-poison-tick");
-            for (BattleTimeAttackEncounter.Hit hit : update.hits()) {
+        List<TimeAttackPoisonUpdate> arrayList = new ArrayList<TimeAttackPoisonUpdate>();
+        for (BattleTimeAttackEncounter.PoisonUpdate poisonUpdate : room.timeAttackEncounter.pollPoisons(l2, n, n2)) {
+            BattleRules.Resolution resolution = BattleRules.Resolution.continuing(false, poisonUpdate.expired() ? "timeattack-poison-expired" : "timeattack-poison-tick");
+            for (BattleTimeAttackEncounter.Hit hit : poisonUpdate.hits()) {
                 if (!hit.spawned().isEmpty()) {
                     room.pveAiPublishAfterNanos = Long.MAX_VALUE;
                 }
-                resolution = hit.finalBossesCleared()
-                        ? room.match.timeAttackCompleted(
-                                BattleTimeAttackEncounter.isDragonStageActor(
-                                        hit.damage().before()))
-                        : BattleRules.Resolution.continuing(false,
-                                hit.spawned().isEmpty()
-                                        ? "timeattack-actor-poisoned"
-                                        : hit.spawned().stream().anyMatch(
-                                                BattleTimeAttackEncounter::isDragonStageActor)
-                                                ? "timeattack-dragon-stage-spawned-by-poison"
-                                        : hit.spawned().stream().allMatch(
-                                                BattleTimeAttackEncounter.Snapshot::finalBoss)
-                                                ? "timeattack-ordinary-fragments-cleared-by-poison"
-                                                : "timeattack-next-ordinary-fragment-by-poison");
+                resolution = hit.finalBossesCleared() ? room.match.timeAttackCompleted(BattleTimeAttackEncounter.isDragonStageActor(hit.damage().before())) : BattleRules.Resolution.continuing(false, hit.spawned().isEmpty() ? "timeattack-actor-poisoned" : (hit.spawned().stream().anyMatch(BattleTimeAttackEncounter::isDragonStageActor) ? "timeattack-dragon-stage-spawned-by-poison" : (hit.spawned().stream().allMatch(BattleTimeAttackEncounter.Snapshot::finalBoss) ? "timeattack-ordinary-fragments-cleared-by-poison" : "timeattack-next-ordinary-fragment-by-poison")));
             }
-            ClientSession attacker = room.battleRoster.stream()
-                    .filter(session -> session.playerObjectId()
-                            == update.attackerObjectId())
-                    .findFirst().orElse(null);
-            results.add(new TimeAttackPoisonUpdate(update, attacker, resolution));
+            ClientSession clientSession2 = room.battleRoster.stream().filter(clientSession -> clientSession.playerObjectId() == poisonUpdate.attackerObjectId()).findFirst().orElse(null);
+            arrayList.add(new TimeAttackPoisonUpdate(poisonUpdate, clientSession2, resolution));
         }
-        return List.copyOf(results);
+        return List.copyOf(arrayList);
     }
 
     synchronized BattleTimeAttackEncounter.Capture captureTimeAttackActor(long l, ClientSession clientSession, long l2) {
@@ -9304,12 +9162,9 @@ final class GameHub implements AutoCloseable {
         return Math.max(0, n2 + (room == null ? 0 : room.cubeShockEffects.magicResistanceModifier(l2, l3)));
     }
 
-    synchronized boolean consumeTimeAttackActorEraseMagic(
-            long roomId, long objectId, long nowNanos) {
-        Room room = rooms.get(roomId);
-        return room != null && room.battleStarted
-                && room.match.rules().mode() == BattleRules.Mode.TIME_ATTACK
-                && room.timeAttackEncounter.consumeEraseMagic(objectId, nowNanos);
+    synchronized boolean consumeTimeAttackActorEraseMagic(long l, long l2, long l3) {
+        Room room = this.rooms.get(l);
+        return room != null && room.battleStarted && LiToGmNpcs.combatMode(room.match.rules()) == BattleRules.Mode.TIME_ATTACK && room.timeAttackEncounter.consumeEraseMagic(l2, l3);
     }
 
     synchronized BattleEraseMagicStatus.Lease captureTimeAttackActorEraseMagic(long l, long l2, long l3) {
@@ -9317,12 +9172,9 @@ final class GameHub implements AutoCloseable {
         return room != null && room.battleStarted && LiToGmNpcs.combatMode(room.match.rules()) == BattleRules.Mode.TIME_ATTACK ? room.timeAttackEncounter.captureEraseMagic(l2, l3) : BattleEraseMagicStatus.Lease.none();
     }
 
-    synchronized boolean consumeTimeAttackActorEraseMagic(
-            long roomId, long objectId, BattleEraseMagicStatus.Lease lease) {
-        Room room = rooms.get(roomId);
-        return room != null && room.battleStarted
-                && room.match.rules().mode() == BattleRules.Mode.TIME_ATTACK
-                && room.timeAttackEncounter.consumeEraseMagic(objectId, lease);
+    synchronized boolean consumeTimeAttackActorEraseMagic(long l, long l2, BattleEraseMagicStatus.Lease lease) {
+        Room room = this.rooms.get(l);
+        return room != null && room.battleStarted && LiToGmNpcs.combatMode(room.match.rules()) == BattleRules.Mode.TIME_ATTACK && room.timeAttackEncounter.consumeEraseMagic(l2, lease);
     }
 
     synchronized boolean consumeTimeAttackActorSilenceForSpell(long l, long l2, long l3) {
@@ -9815,27 +9667,24 @@ final class GameHub implements AutoCloseable {
         return current != null ? current : room.battleForces.getOrDefault(session, 0);
     }
 
-    synchronized int winningForce(long roomId, BattleRules.Resolution resolution) {
-        Room room = rooms.get(roomId);
-        if (room == null || !resolution.ended()) return -1;
-        List<ClientSession> combatants = room.battleRoster.isEmpty()
-                ? room.combatants() : new ArrayList<>(room.battleRoster);
-        for (ClientSession member : combatants) {
-            if (resolution.winners().contains(member.playerObjectId())) {
-                return forceOf(room, member);
-            }
+    synchronized int winningForce(long l, BattleRules.Resolution resolution) {
+        Room room = this.rooms.get(l);
+        if (room == null || !resolution.ended()) {
+            return -1;
         }
-        List<RoomVirtualPlayer> virtuals = room.battleVirtualPlayers.isEmpty()
-                ? room.virtualPlayers : room.battleVirtualPlayers;
-        for (RoomVirtualPlayer member : virtuals) {
-            if (resolution.winners().contains(member.objectId())) return member.force();
+        List<ClientSession> arrayList = room.battleRoster.isEmpty() ? room.combatants() : new ArrayList<ClientSession>(room.battleRoster);
+        for (ClientSession object2 : arrayList) {
+            if (!resolution.winners().contains(object2.playerObjectId())) continue;
+            return GameHub.forceOf(room, object2);
         }
-        // The local one-player arena represents ArenaBot as object 2 / force
-        // 1 without creating a ClientSession for it.  A defeated sole player
-        // therefore means the bot's force won.
-        if (NativeRoomRules.bot(room.match.rules().mode(), this, room.id)
-                && combatants.size() == 1 && virtuals.isEmpty()
-                && resolution.losers().contains(combatants.get(0).playerObjectId())) {
+        List<RoomVirtualPlayer> list = room.battleVirtualPlayers.isEmpty() ? room.virtualPlayers : room.battleVirtualPlayers;
+        Iterator iterator = list.iterator();
+        while (iterator.hasNext()) {
+            RoomVirtualPlayer roomVirtualPlayer = (RoomVirtualPlayer)iterator.next();
+            if (!resolution.winners().contains(roomVirtualPlayer.objectId())) continue;
+            return roomVirtualPlayer.force();
+        }
+        if (arrayList.size() == NativeRoomRules.botSingle(this, l) && list.isEmpty() && resolution.losers().contains(((ClientSession)arrayList.get(0)).playerObjectId())) {
             return 1;
         }
         return resolution.winners().contains(2L) ? 1 : -1;
@@ -11686,6 +11535,7 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<CubeTick> cubeTicks(long nowNanos) {
+        NativeSourceCubeClock.begin(this, nowNanos, 0);
         List<CubeTick> result = new ArrayList<>();
         for (Room room : rooms.values()) {
             if (!room.battleStarted
@@ -11815,6 +11665,7 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<CubeQuakeTick> cubeQuakeTicks(long nowNanos) {
+        NativeSourceCubeClock.begin(this, nowNanos, 1);
         List<CubeQuakeTick> result = new ArrayList<>();
         for (Room room : rooms.values()) {
             if (!room.battleStarted
@@ -11974,6 +11825,7 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<CubeShockTick> cubeShockTicks(long nowNanos) {
+        NativeSourceCubeClock.begin(this, nowNanos, 2);
         List<CubeShockTick> result = new ArrayList<>();
         for (Room room : rooms.values()) {
             if (!room.battleStarted
@@ -12100,6 +11952,7 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<CubeHarmonyTick> cubeHarmonyTicks(long nowNanos) {
+        NativeSourceCubeClock.begin(this, nowNanos, 3);
         List<CubeHarmonyTick> result = new ArrayList<>();
         for (Room room : rooms.values()) {
             if (!room.battleStarted
@@ -12411,7 +12264,7 @@ final class GameHub implements AutoCloseable {
     }
 
     private synchronized List<CompanionTick> companionTicks() {
-        ArrayList<CompanionTick> arrayList = new ArrayList<CompanionTick>();
+        List<CompanionTick> arrayList = new ArrayList<CompanionTick>();
         for (Room room : this.rooms.values()) {
             if (!room.battleStarted || room.match.phase() != BattleRules.Phase.RUNNING) continue;
             for (ClientSession clientSession : room.combatants()) {
@@ -12596,49 +12449,28 @@ final class GameHub implements AutoCloseable {
         return arrayList;
     }
 
-    synchronized List<MonsterAiTick> monsterAiTicks(long nowNanos) {
-        List<MonsterAiTick> result = new ArrayList<>();
-        for (Room room : rooms.values()) {
-            BattleRules.Mode mode = room.match.rules().mode();
-            if (!room.battleStarted || room.disconnectResolutionPending
-                    || room.match.phase() != BattleRules.Phase.RUNNING
-                    || nowNanos < room.pveAiPublishAfterNanos
-                    || (mode != BattleRules.Mode.QUEST_BATTLE
-                        && mode != BattleRules.Mode.TIME_ATTACK)) continue;
-
+    synchronized List<MonsterAiTick> monsterAiTicks(long l) {
+        ArrayList<MonsterAiTick> arrayList = new ArrayList<MonsterAiTick>();
+        for (Room room : this.rooms.values()) {
+            ClientSession clientSession2;
+            Object object;
+            BattleRules.Mode mode = LiToGmNpcs.combatMode(room.match.rules());
+            if (!room.battleStarted || room.disconnectResolutionPending || room.match.phase() != BattleRules.Phase.RUNNING || l < room.pveAiPublishAfterNanos || mode != BattleRules.Mode.QUEST_BATTLE && mode != BattleRules.Mode.TIME_ATTACK) continue;
             if (mode == BattleRules.Mode.QUEST_BATTLE) {
-                for (BattleQuestEncounter.Snapshot actor
-                        : room.questEncounter.snapshots()) {
-                    ClientSession target = nearestMonsterTarget(
-                            room, actor.force(), actor.x(), actor.y(), true);
-                    if (target == null) continue;
-                    appendMonsterAiTick(result, room, mode, actor.objectId(),
-                            actor.force(), actor.x(), actor.y(), target, nowNanos);
+                for (BattleQuestEncounter.Snapshot snapshot : room.questEncounter.snapshots()) {
+                    object = GameHub.nativeSourceNpcPlayerFirstTarget(room, snapshot.force(), snapshot.x(), snapshot.y(), true, this);
+                    clientSession2 = NativeSourceNpcPlayerView.target(object);
+                    if (clientSession2 == null) continue;
+                    this.nativeSourceNpcPlayerFirstAppend(arrayList, room, mode, snapshot.objectId(), snapshot.force(), snapshot.x(), snapshot.y(), clientSession2, l, snapshot, object);
                 }
-            } else {
-                for (BattleTimeAttackEncounter.Snapshot actor
-                        : room.timeAttackEncounter.snapshots()) {
-                    if (timeAttackDragonCombatFixtureOnly
-                            && !BattleTimeAttackEncounter.isDragonNpc(
-                                    actor.npcId())) continue;
-                    if (timeAttackDragonCombatFixtureOnly
-                            && room.battleRoster.stream().filter(candidate ->
-                                    candidate.battleAiTargetEligible(room.id)
-                                    && chebyshev(actor.x(), actor.y(),
-                                            candidate.battleX(), candidate.battleY())
-                                            <= 3).count()
-                                    < timeAttackDragonCombatFixtureMinimumTargets) {
-                        continue;
-                    }
-                    ClientSession target = nearestMonsterTarget(
-                            room, 0, actor.x(), actor.y(), false);
-                    if (target == null) continue;
-                    appendMonsterAiTick(result, room, mode, actor.objectId(),
-                            0, actor.x(), actor.y(), target, nowNanos);
-                }
+                continue;
+            }
+            for (BattleTimeAttackEncounter.Snapshot snapshot : room.timeAttackEncounter.snapshots()) {
+                if (this.timeAttackDragonCombatFixtureOnly && !BattleTimeAttackEncounter.isDragonNpc(snapshot.npcId()) || this.timeAttackDragonCombatFixtureOnly && room.battleRoster.stream().filter(clientSession -> clientSession.battleAiTargetEligible(room.id) && GameHub.chebyshev(snapshot.x(), snapshot.y(), clientSession.battleX(), clientSession.battleY()) <= 3).count() < (long)this.timeAttackDragonCombatFixtureMinimumTargets || (clientSession2 = NativeSourceNpcPlayerView.target(object = GameHub.nativeSourceNpcPlayerFirstTarget(room, 0, snapshot.x(), snapshot.y(), false, this))) == null) continue;
+                this.nativeSourceNpcPlayerFirstAppend(arrayList, room, mode, snapshot.objectId(), 0, snapshot.x(), snapshot.y(), clientSession2, l, snapshot, object);
             }
         }
-        return result;
+        return arrayList;
     }
 
     synchronized void armPveAi(long roomId) {
@@ -13720,7 +13552,6 @@ final class GameHub implements AutoCloseable {
     }
 
 
-    // ported from candidate-50635f7e.jar: explicit ASM helper methods.
     private static Object nativeSourceNpcPlayerFirstTarget(Room room, int n, int n2, int n3, boolean bl, Object object) {
         NativeSourceNpcPlayerView.Builder builder = NativeSourceNpcPlayerView.start(object, room);
         ClientSession clientSession = null;
