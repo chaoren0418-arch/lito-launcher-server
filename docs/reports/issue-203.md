@@ -105,7 +105,19 @@ B 批 reference 為 candidate：`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f
 
 ## CI
 
-本機 Java 自測及七批重跑已完成；推送後另核對本分支 PR 的所有 checks，尤其 Semantic gap 為 non-blocking，必須讀取實際 selftest／fallback step 及日誌，不能僅憑 workflow 總狀態宣稱通過。CI 收據將在實際完成後補入本節。
+程式提交 `1a9fc8288a884b5b312512cc184e2350821d44e2` 的五項 job 全部 SUCCESS：
+
+| Job | 收據 |
+|---|---|
+| Server 建置 | [127424622946](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42078391640/job/127424622946) |
+| Server tests | [127424622914](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42078391640/job/127424622914) |
+| Launcher 建置 | [127424622724](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42078391640/job/127424622724) |
+| Semantic gap | [127424623267](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42078391640/job/127424623267) |
+| Build-Package.ps1 zip | [127424623332](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42078391753/job/127424623332) |
+
+已讀取 Semantic gap 的實際日誌：七套自測分別 517／73／119／169／159／96／160 checks，合計 1293，全有 ALL PASS，另有 `SELFTEST ALL PASS` 與 `FALLBACK ALL PASS`。不是僅憑 non-blocking workflow 總狀態；selftest、冷啟動 javac fallback、整包比較各 step 均 SUCCESS。
+
+CI 的整包 Maven 產物對 reference 為 2160 SAME、28 SAME_PATHS、15 SAME_CFG、3 LAMBDA_PAIRED_BY_CALLSITE、343 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT；這是不同輸入，不混入本任務七批 staged 的 0 DIFF 結論。本機收據：`scratch/issue-203/ci-status.json`、`ci-semantic-proof.txt`。後續僅補報告的最終 HEAD，以 [PR #215 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215/checks) 為準，交付前再核對。
 
 ## 推測
 
@@ -113,7 +125,7 @@ SAME_CFG 與 Lambda 配對是本工具保守事件模型下的證明；不能推
 
 ## 待驗證／未驗證什麼
 
-- CI 尚待推送後執行並記錄收據。
+- 程式提交 CI 已全綠；本次補報告後的最終 HEAD checks 另於交付前核對。
 - 本任務未執行 B-land 應用回歸或遊戲實機驗收，也未部署任何產物。
 
 ## 產出路徑與重跑
