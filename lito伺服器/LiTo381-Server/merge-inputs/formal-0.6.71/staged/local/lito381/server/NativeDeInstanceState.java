@@ -953,10 +953,13 @@ Runnable {
             this._deAiActiveTimerToken = l2;
         }
         try {
-            ScheduledFuture<?> scheduledFuture = NativeDeLiveAiScope.Clock.get().aiSchedule(() -> NativeDeLiveAiScope.call(this, () -> {
-                this.sourceAi$lambda$scheduleAiTick$0(l, l2, bl);
-                return null;
-            }), Math.max(0, n), l);
+            ScheduledFuture<?> scheduledFuture = NativeDeLiveAiScope.Clock.get().aiSchedule(() -> {
+                NativeDeInstanceState actor = this;
+                NativeDeLiveAiScope.call(this, () -> {
+                    actor.sourceAi$lambda$scheduleAiTick$0(l, l2, bl);
+                    return null;
+                });
+            }, Math.max(0, n), l);
             if (scheduledFuture != null) {
                 boolean bl2 = false;
                 synchronized (this._deAiScheduleLock) {

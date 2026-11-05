@@ -70,3 +70,21 @@ local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDe
 **比較界線**：傳入 `--deviations` 才啟用 `method-diff`；精確匹配兩側原名與描述子，方法缺少、清單拼錯、未附核准 URL 均拒絕。整類其他方法與 metadata 照比；JSON `methodResults` 與 Markdown 另列 DEVIATION 和左右完整正規化方法內容，不混進 SAME。更換候選後應重做上述 producer 證明，不能沿用值域結論。
 
 **推測／待驗證**：指定值域下兩種 boolean 表達相同；B-land 仍須依主控要求補 `sourceState`／`targetState` 回傳 0／1 時兩個 consumer 與候選一致的單元測試。未載入應用類別、啟動伺服器或連接資料庫。命令、稽核腳本與批次結果見 [issue-176 報告](../reports/issue-176.md)。
+
+## #72：四個公開 Name 建構子與 compute 的 method-diff（2026-11-06）
+
+依 [主控最新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173)，僅追加下列五個完整方法識別。前述舊紀錄中「四個公開 overload 仍為 DIFF」是舊工具的歷史狀態；本輪四個公開 overload 已依此裁定列為 `method-diff`。原有 `ctor-prologue-order` 與新增 private 建構子的 left-only 核准均保留。
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;Z)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZZLjava/lang/String;)V
+local/lito381/server/NativeDeCharacterFields$CombatSkillDerived#compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived;
+```
+
+- **四個 Name 建構子的理由**：依 #72 裁定，`NativeDeInstanceNames.name(construction, name)` 在 super 前求值；`this(...)` 委派給 private 建構子執行父建構、construction 賦值及共用初始化，公開建構子再執行各自的旗標設定與 startNpc。Java 的委派形狀不同，主控核准為方法級刻意偏離；construction 賦值由 super 前移後仍是原先有限核准，不宣稱字節碼或所有父鏈觀測無條件等價。
+- **compute 的理由**：正式版參照不存在的 SKU1／SKU2／SKD1／SKD2／SKD3 欄位，Java 無法直接表達未解析欄位引用。保留六個區域值初始化、Iterable 迭代及 null 元素略過，在首個非 null 元素原 GETSTATIC SKU1 處明確 `throw new NoSuchFieldError("SKU1")`。後四個 GETSTATIC 永遠不可達，Java 不保留不可達敘述，也不補空表或替代技能值。根本原因另由 #184 調查。
+- **比較界線**：`method-diff` 比較精確名稱及描述子，左右方法均須存在；其餘方法、欄位、metadata 與 entry 完整性照常驗證。169 個 public bridge 及 lambda 差異沒有加入任何豁免。
+- **已驗證**：49 份 staged Java 以 Java 17 編譯，185 個 entry 完整；NativeDeCharacterFields 為 SAME，CombatSkillDerived 為 DEVIATION，四個公開 Name 建構子逐方法 DEVIATION。整個 Instance 類別仍為 DIFF，詳見 issue-72 報告。
+- **待驗證（#78 A-land）**：construction 的父鏈可觀測性；四個 Name overload 的成功／失敗求值與初始化順序、各布林組合及字串邊界；compute 空集合及全 null 元素正常回傳，含非 null 元素拋 NoSuchFieldError。未執行 staged 應用類別、伺服器、遊戲或資料庫。

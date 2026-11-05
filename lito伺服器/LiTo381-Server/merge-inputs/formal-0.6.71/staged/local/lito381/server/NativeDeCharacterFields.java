@@ -34,11 +34,6 @@ import local.lito381.server.NativeDeResurrectionEffects.Viewer;
 class NativeDeCharacterFields extends NativeDeObjectFields {
    static final int MAX_HP_MP_RO = 999999;
    static final int MAX_HP_MP_STANDARD = 32767;
-   static final java.util.HashMap<Integer,Integer> SKU1 = new java.util.HashMap<>();
-   static final java.util.HashMap<Integer,Integer> SKU2 = new java.util.HashMap<>();
-   static final java.util.HashMap<Integer,Integer> SKD1 = new java.util.HashMap<>();
-   static final java.util.HashMap<Integer,Integer> SKD2 = new java.util.HashMap<>();
-   static final java.util.HashMap<Integer,Integer> SKD3 = new java.util.HashMap<>();
    private final int clientType;
    private final int objectId;
    private final ReentrantLock _npcVitalMutationLock;
@@ -1473,36 +1468,9 @@ class NativeDeCharacterFields extends NativeDeObjectFields {
             if (var8 == null) {
                continue;
             }
-            {
-               Integer var9 = (Integer)NativeDeCharacterFields.SKU1.get(var8);
-               if (var9 != null) {
-                  var1 += var9;
-               }
-
-               Integer var10 = (Integer)NativeDeCharacterFields.SKU2.get(var8);
-               if (var10 != null) {
-                  var2 += var10;
-               }
-
-               Integer var11 = (Integer)NativeDeCharacterFields.SKD1.get(var8);
-               if (var11 != null) {
-                  var3 += var11;
-               }
-
-               Integer var12 = (Integer)NativeDeCharacterFields.SKD2.get(var8);
-               if (var12 != null) {
-                  var4 += var12;
-               }
-
-               Integer var13 = (Integer)NativeDeCharacterFields.SKD3.get(var8);
-               if (var13 != null) {
-                  if (var13.equals(var8)) {
-                     var6 = true;
-                  } else {
-                     var5 += var13;
-                  }
-               }
-            }
+            // #72: the formal JAR fails at its first missing field access.
+            // SKU2 / SKD1 / SKD2 / SKD3 are unreachable after that failure.
+            throw new NoSuchFieldError("SKU1");
          }
 
          return new NativeDeCharacterFields.CombatSkillDerived(var1, var2, var3, var4, var5, var6);
