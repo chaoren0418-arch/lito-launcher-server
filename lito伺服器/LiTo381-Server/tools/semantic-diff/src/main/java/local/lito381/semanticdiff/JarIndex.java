@@ -163,7 +163,9 @@ final class JarIndex {
     String fieldOwner(String owner, String name, String desc, int opcode) {
         if (!FourthNormalizations.enabled("fields")) return owner;
         String result = resolveField(owner,name,desc,opcode,new java.util.HashSet<>());
-        return result == null || result.isEmpty() ? owner : result;
+        // Unresolved symbolic owners must not accidentally equal the declaration
+        // obtained by a successful lookup on the other side.
+        return result == null || result.isEmpty() ? "unresolved(" + owner + ")" : result;
     }
 
     // JVMS field lookup: declaration, direct superinterfaces, then superclass.

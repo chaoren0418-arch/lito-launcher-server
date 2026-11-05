@@ -133,6 +133,9 @@ public final class FourthSelfTest implements Opcodes {
             assertion("field-shadow-"+op,ClassComparer.compare(l.readTree("Fixture"),r.readTree("Fixture"),l,r)!=null);
             l=JarIndex.load(jar("field-missing-"+op,List.of(field("Child",op))));
             assertion("field-unresolved-"+op,ClassComparer.compare(l.readTree("Fixture"),r.readTree("Fixture"),l,r)!=null);
+            l=JarIndex.load(jar("field-unresolved-declaration-"+op,List.of(field("Parent",op))));
+            r=JarIndex.load(jar("field-resolved-child-"+op,List.of(field("Child",op),parent,child)));
+            assertion("field-unresolved-must-not-match-declaration-"+op,ClassComparer.compare(l.readTree("Fixture"),r.readTree("Fixture"),l,r)!=null);
         }
     }
     static void crossReference()throws Exception{

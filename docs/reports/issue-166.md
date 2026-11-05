@@ -2,7 +2,7 @@
 
 ## 結論
 
-六項規則預設啟用，程式及測試只修改 `tools/semantic-diff/`。固定 staged 重跑後，核准清單模式的 DIFF：#62 **8 → 5**、#66 **4 → 2**、#72 **4 → 4**、#76 **2 → 0**。#66 的 expiry／WindTargets.run、#72 的 `_isBackgroundMode`、#76 的三個指定方法殘差均已消除。#72 同類其他方法仍不同，因此類別計數不變。
+六項規則預設啟用，程式及測試只修改 `tools/semantic-diff/`。固定 staged 重跑後，核准清單模式的 DIFF：#62 **8 → 5**、#66 **4 → 2**、#72 **4 → 5**、#76 **2 → 0**。#66 的 expiry／WindTargets.run、#72 的 `_isBackgroundMode`、#76 的三個指定方法殘差均已消除。#72 同類其他方法仍不同，另因拒絕未解析欄位誤匹配而新揭露 1 個 DIFF，詳見下表。
 
 未修改 src/main、staged Java、核准清單、docs/REPORT.md、機密設定、封存、正式產物或原始專案目錄；沒有啟動伺服器／登入器／遊戲，也沒有連 DB。
 
@@ -11,7 +11,7 @@
 - `FourthNormalizations`：標準 metafactory 轉呼叫 handle 收斂、無其他參照時移除合成方法、保留 handler 優先序的相鄰 try 合併、捕獲參數與呼叫點一致置換。巢狀 lambda 依子方法先、呼叫者後的順序處理；直接呼叫、LDC、condy、非標準 bootstrap、外類參照均阻止方法移除／捕獲置換。
 - `LocalWebs`：ASM reaching definitions 分析正常與例外控制流程，合併同一讀取可達的定義；web 依首次出現順序編號。包含 wide、IINC、diamond、loop 與 handler。精確核准建構子保留實體槽，維持 #153 ctor-prologue-order 的覆寫與欄位寫入守門。
 - `TransportComparison`／`LayoutComparison`：對單寫入 web 的每個 LOAD 證明定義來源，消去運送指令後，核對每個運算的有序值來源、每個來源的複本數、其餘指令順序、正常與有序例外邊。stack 值在未使用路徑的 POP／POP2 可以對應 local 不再讀取，但其產生指令仍保留。只有原本核准 layout 的方法容許 CFG 排列不同。
-- `JarIndex`：分側解析 field owner，宣告／介面／父類查找保留同名遮蔽；主 JAR 優先於明確 classpath，缺少依賴時保留原 owner。只讀平台 `java/*` metadata，不初始化應用類別。新增可重複的 `--left-classpath`（別名 `--classpath`）與 `--right-classpath`，接受 JAR／class 目錄並記錄於報告。
+- `JarIndex`：分側解析 field owner，宣告／介面／父類查找保留同名遮蔽；主 JAR 優先於明確 classpath，解析失敗標為 `unresolved(原 owner)`，不讓未知符號偶然等於對側宣告。只讀平台 `java/*` metadata，不初始化應用類別。新增可重複的 `--left-classpath`（別名 `--classpath`）與 `--right-classpath`，接受 JAR／class 目錄並記錄於報告。
 - Maven、Bash fallback、selftest 接入 ASM 9.7 `asm-analysis`，與其他 ASM 依賴一起校驗 SHA-256。原有核准 effects 摘要沿用 web 切分前指令，避免改變既有核准結果。
 
 每項詳細前提與保守拒絕情況見 `tools/semantic-diff/README.md`。分析失敗、未解析值、local 型別註解、舊式 subroutine、未支援 stack shuffle 不會視為證明成功。
@@ -37,10 +37,10 @@
 |---|---:|---:|---:|---:|
 | #62 | 14／8 | 17／5 | 14／0／0／8 | 17／0／0／5 |
 | #66 | 115／5 | 117／3 | 115／1／0／4 | 115／3／0／2 |
-| #72 | 181／4 | 181／4 | 181／0／0／4 | 181／0／0／4 |
+| #72 | 181／4 | 180／5 | 181／0／0／4 | 180／0／0／5 |
 | #76 | 158／2 | 159／1 | 158／0／0／2 | 158／1／1／0 |
 
-四批每輪 ONLY_LEFT／ONLY_RIGHT 均為 0，missingLeft／extraLeft 皆空。核准模式原有 SAME／SAME_EFFECTS 沒有退回 DIFF。所有清單都是既有主控清單的精確交集，沒有新增核准或隱藏 entry。
+四批每輪 ONLY_LEFT／ONLY_RIGHT 均為 0，missingLeft／extraLeft 皆空。#62／#66／#76 的原有 SAME／SAME_EFFECTS 沒有退回 DIFF；#72 唯一新增 DIFF 是下表的 CombatSkillDerived 未解析欄位參照。所有清單都是既有主控清單的精確交集，沒有新增核准或隱藏 entry。
 
 ### 每個原 DIFF entry 的前後對照
 
@@ -57,10 +57,11 @@
 | #62 NativeWeaponBreakBattleCompanion | DIFF → SAME | 第 2 項處理相鄰保護範圍，第 3＋5 項證明 accounts／snapshot 暫存、null 分支 stack 丟棄及 handler 的值來源一致。 |
 | #62 NativeWeaponBreakTargetLifecycle | DIFF → DIFF | 第 1 項收斂 player handle；第 4 項連同巢狀 lambda 收斂 GameHub／Context，run 方法已 SAME。captureOutput 仍宣告左側獨有 IOException；其他 candidate requireNonNull 差異亦不豁免。 |
 | #66 NativeSourceProcScalarSkills | DIFF → SAME_EFFECTS | expiry 的重複讀取由第 3 項證明；預設也為 SAME。結果名稱仍遵從原 effects 核准清單。 |
-| #66 NativeSourceRawDamage$Member | DIFF → DIFF | 建構子仍有左側額外初始化／後續欄位 metadata 差異，未修改 staged 或自動套 AsmFinal。 |
+| #66 NativeSourceRawDamage$Member | DIFF → DIFF | 建構子仍有左側額外初始化，未修改 staged 或自動套 AsmFinal。 |
 | #66 NativeSourceWindTargets | DIFF → SAME_EFFECTS | run 的 ASTORE 與 web 差異由第 3＋5 項消除；預設也為 SAME。 |
 | #66 NativeStaticNpcScene | DIFF → DIFF | heading 仍有不同的呼叫、ASTORE 與 monitor 離開順序，沒有把核准摘要擴大成忽略順序。 |
 | #72 NativeDeCharacterFields | DIFF → DIFF | 左側獨有 SKD1 等宣告欄位，owner 解析不刪宣告。 |
+| #72 NativeDeCharacterFields$CombatSkillDerived | SAME → DIFF | 新揭露：compute 的 GETSTATIC SKU1／SKU2／SKD1／SKD2／SKD3 在左側可解析，正式 JAR 與父鏈沒有宣告。原始 symbolic owner 相同曾掩蓋此差異。#72 指定提交報告「已裁定事項與新增未決事項」已明列這五個空 HashMap／正式引用矛盾；新版保守拒絕把已解析與未解析欄位視為相同，未執行正式方法。 |
 | #72 NativeDeClientViewer | DIFF → DIFF | sendPackets 仍有 CONST／ALOAD 與分支指令差異。 |
 | #72 NativeDeDeletionState | DIFF → DIFF | sourceDeleteNpc 的 RuntimeException 保護範圍仍不同，未符合相鄰合併／資料流證明。 |
 | #72 NativeDeInstanceState | DIFF → DIFF | 第 6 項消除 `_isBackgroundMode` owner 差異，兩參數基本建構子由既有 ctor-prologue-order 核准通過，逐方法為 DEVIATION；其他四個 Name 建構子仍有呼叫時序差異。 |
@@ -75,7 +76,8 @@ Microsoft JDK 17.0.17、ASM 9.7。本機直接 javac 編譯全部工具／測試
 
 - NormalizationSelfTest：517 項通過，既有旗標、metadata、wide 別名、核准邊界測試保留。
 - AdvancedSelfTest：73 項通過。原「兩讀取對 DUP」由 #166 明確擴充為合法，更新為 SAME_EFFECTS，另加預設 SAME；原一讀取對兩複本未核准反例仍 DIFF。#153 的欄位覆寫、同欄位寫入順序及 wide 邊界反例均維持 DIFF。
-- FourthSelfTest：六項正反例、H6/H5/H9、額外指令／參數重排／直接與 LDC／外類參照、try 缺口與重疊 handler 優先序、讀次數與每來源複本數、呼叫順序、覆寫、錯誤消耗位置、monitor、純 LOAD／INVOKE／GETFIELD、巢狀捕獲、web 重用／重疊／diamond／loop／handler、四種欄位 opcode／遮蔽／缺少 classpath，以及 JVM 執行案例。
+- FourthSelfTest：56 項通過，涵蓋六項正反例、H6/H5/H9、額外指令／參數重排／直接與 LDC／外類參照、try 缺口與重疊 handler 優先序、讀次數與每來源複本數、呼叫順序、覆寫、錯誤消耗位置、monitor、純 LOAD／INVOKE／GETFIELD、巢狀捕獲、web 重用／重疊／diamond／loop／handler、四種欄位 opcode／遮蔽／缺少 classpath，以及 JVM 執行案例。
+- 四種 field opcode 的「左側未知 Parent，右側 Child 成功解析到 Parent」反例先在初版重現錯誤 SAME，保存 `scratch/issue-166/field-unresolved-red.log`；新增未解析標記後全部 DIFF。四批固定產物已重跑，新增保守差異完整列於上表，沒有為維持原計數取消此守門。
 - 診斷以 `-Dsemanticdiff.disable=<rule>` 逐項關閉六項規則。第 3／5 項關閉時，指定暫存差異重新出現；第 6 項關閉時基本建構子重新出現 field owner DIFF。第 1／4 項的改善在同類仍有其他差異時不改變類別計數。第 2 項的相鄰區間在第 3 項的有序例外邊證明中也可得到相同結果，因此不能把類別差額全歸給第 2 項。
 - `git diff --check` 通過；本機完整命令、輸入收據、前後 JSON／Markdown 及逐項關閉規則的結果保存在下列 scratch 路徑。
 
@@ -89,7 +91,7 @@ Microsoft JDK 17.0.17、ASM 9.7。本機直接 javac 編譯全部工具／測試
 
 ## 待驗證／未驗證什麼
 
-- #62 剩 5、#66 剩 2、#72 剩 4 個 DIFF 是來源或其他未核准形狀，應由各批次執行器及主控處理；本任務沒有擴大核准範圍。
+- #62 剩 5、#66 剩 2、#72 剩 5 個 DIFF 是來源、未解析欄位或其他未核准形狀，應由各批次執行器及主控處理；本任務沒有擴大核准範圍。
 - 保守拒絕的舊式 subroutine、複雜 stack shuffle、local 型別註解與未解析依賴，不承諾消除差異。
 - 尚未執行遊戲／登入／戰鬥真機驗收，未測正式 DB；比較器證據不等於部署驗收。
 

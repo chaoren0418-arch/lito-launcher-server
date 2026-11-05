@@ -111,7 +111,7 @@ bash tools/semantic-diff/semantic-diff --left staged.jar --right reference.jar \
 3. **stack／local 暫存**：ASM 資料流確認 local web 恰有一次寫入且每次 LOAD 均來自該寫入，才將 STORE／LOAD、DUP／DUP2 與純 stack 丟棄轉為內部運送關係。逐一比較每個運算、呼叫、欄位、monitor、分支及回傳所使用的有序值來源，並核對每個來源的複本數。其餘指令順序及正常／例外控制邊必須相同。只有原本列入 `--layout-methods` 的方法可重排 CFG。混合來源、覆寫、錯誤取值位置、呼叫順序改變、複本數不符均無法通過此證明。JSR／RET、DUP_X*／DUP2_X*／SWAP、不可達運送指令、未解析的值與 local 型別註解保守保留差異。
 4. **捕獲參數排列**：僅處理本類 private static lambda；所有使用點必須是標準 metafactory，捕獲值之前必須是連續純 xLOAD，不能跨標籤或含方法／欄位求值。按本體首次使用捕獲參數的順序，同步置換本體參數槽、implementation 描述子、呼叫點描述子及 LOAD。沒有使用的捕獲參數、額外參照、metadata 或描述子碰撞時不改。
 5. **local webs**：以 ASM reaching definitions 合併同一讀取可達的定義，包含分支、迴圈與例外邊；各 web 按首次出現順序獨立編號，保留參數入口與 wide 寬度。重用槽與另開槽只有在值依賴一致時相同。無法證明、舊式 subroutine 與 local 型別註解保守維持原規則。精確核准建構子仍使用實體槽，避免干擾 #153 跨 super 的寫入守門；原有核准 effects 摘要也使用 web 切分前的指令。
-6. **field owner**：按本側 classpath 的宣告、介面、父類次序解析；只有解析成功才使用宣告 owner，保留名稱、描述子與 static／instance 類別。子類遮蔽會解析到不同宣告，缺少祖先則維持原 owner。JDK `java/*` 只讀取平台 class metadata，不載入或初始化應用類別。
+6. **field owner**：按本側 classpath 的宣告、介面、父類次序解析；只有解析成功才使用宣告 owner，保留名稱、描述子與 static／instance 類別。子類遮蔽會解析到不同宣告，缺少祖先則以 `unresolved(原 owner)` 表示，避免未解析符號偶然等於對側已解析宣告而誤判。JDK `java/*` 只讀取平台 class metadata，不載入或初始化應用類別。
 
 左側 staged JAR 不包含父類時，必須提供它的實際編譯／執行依賴。左右側不會自動借用對側 JAR；依賴不增加比較 entry，也不能覆蓋本側主 JAR 的類別。旗標可重複，先出現的依賴優先；接受 JAR 或 class 目錄。`--classpath` 是 `--left-classpath` 的別名。JSON／Markdown 記錄使用的 classpath。
 
