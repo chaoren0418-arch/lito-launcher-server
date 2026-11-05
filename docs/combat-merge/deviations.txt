@@ -9,3 +9,4 @@ ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lit
 
 local/lito381/server/NativeSourcePhysicalNpc#sourceCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888
 local/lito381/server/NativeSourcePhysicalNpc#targetCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888
+local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411
