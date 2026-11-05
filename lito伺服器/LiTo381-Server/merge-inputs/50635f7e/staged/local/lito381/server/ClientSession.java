@@ -1256,7 +1256,17 @@ final class ClientSession implements Runnable {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> void rethrowUnchecked(Throwable t) throws E {
+        throw (E) t;
+    }
+
     private void sourceApplicationRun() {
+        try {
+            if (!SourceLogin.allowed(socket, config)) return;
+        } catch (Exception e) {
+            rethrowUnchecked(e);
+        }
         String peer = socket.getRemoteSocketAddress().toString();
         System.out.println("[LiTo] connected endpoint=" + endpoint + " peer=" + peer);
         hub.connect(this);
@@ -56945,25 +56955,30 @@ final class ClientSession implements Runnable {
         int n;
         int n2;
         long l2;
-        block4: {
-            l2 = l;
-            Phase phase = (Phase)((Object)object);
-            object = lightSpell;
+        l2 = l;
+        Phase phase = (Phase)((Object)object);
+        object = lightSpell;
+        ClientSession lock = this;
+        int n3;
+        try {
+            block4: {
+                long l3 = this.spellReadyNanos.getOrDefault(((BattleSpellCatalog.LightSpell)object).skillId(), 0L);
+                if (l2 >= l3 && this.playerMp >= NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2 = this.nativeSkillConsumptionIntelligence(), n = this.nativeSkillConsumptionOriginalReduction()) && this.phase == phase && (phase == Phase.BATTLE || phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block4;
+                System.out.println("[LiTo] C_USE_SPELL light rejected state skill=" + ((BattleSpellCatalog.LightSpell)object).skillId() + " mp=" + this.playerMp + " cooldownNanos=" + Math.max(0L, l3 - l2));
+                return null;
+            }
+            if (!NativeLightAction.admit(this, lightSpell)) {
+                return null;
+            }
+            this.cancelMeditation("spell-" + ((BattleSpellCatalog.LightSpell)object).skillId());
+            this.timedStatus.activateLight(l2, ((BattleSpellCatalog.LightSpell)object).durationSeconds());
             ClientSession clientSession = this;
-            long l3 = this.spellReadyNanos.getOrDefault(((BattleSpellCatalog.LightSpell)object).skillId(), 0L);
-            if (l2 >= l3 && this.playerMp >= NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2 = this.nativeSkillConsumptionIntelligence(), n = this.nativeSkillConsumptionOriginalReduction()) && this.phase == phase && (phase == Phase.BATTLE || phase == Phase.WORLD) && !this.observer && this.playerHp > 0) break block4;
-            System.out.println("[LiTo] C_USE_SPELL light rejected state skill=" + ((BattleSpellCatalog.LightSpell)object).skillId() + " mp=" + this.playerMp + " cooldownNanos=" + Math.max(0L, l3 - l2));
-            return null;
+            clientSession.playerMp = NativeSkillConsumption.boundMp(clientSession, clientSession.playerMp - NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2, n));
+            n3 = this.playerMp;
+            this.commitSpellReady(((BattleSpellCatalog.LightSpell)object).skillId(), l2 + (long)((BattleSpellCatalog.LightSpell)object).reuseDelayMillis() * 1000000L);
+        } catch (Throwable failure) {
+            throw failure;
         }
-        if (!NativeLightAction.admit(this, lightSpell)) {
-            return null;
-        }
-        this.cancelMeditation("spell-" + ((BattleSpellCatalog.LightSpell)object).skillId());
-        this.timedStatus.activateLight(l2, ((BattleSpellCatalog.LightSpell)object).durationSeconds());
-        ClientSession clientSession = this;
-        clientSession.playerMp = NativeSkillConsumption.boundMp(clientSession, clientSession.playerMp - NativeSkillConsumptionBridges.LightSpell_mpCost_I((BattleSpellCatalog.LightSpell)object, n2, n));
-        int n3 = this.playerMp;
-        this.commitSpellReady(((BattleSpellCatalog.LightSpell)object).skillId(), l2 + (long)((BattleSpellCatalog.LightSpell)object).reuseDelayMillis() * 1000000L);
         return n3;
     }
 
