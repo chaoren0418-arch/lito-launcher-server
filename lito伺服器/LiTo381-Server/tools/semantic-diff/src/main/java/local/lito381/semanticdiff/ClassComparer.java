@@ -123,7 +123,8 @@ final class ClassComparer {
             if (d != null) {
                 return d;
             }
-            d = cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
+            d = leftJar.enclosingMethodExempt.contains(left.name) ? null
+                    : cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
                     str(right.outerMethod) + str(right.outerMethodDesc));
             if (d != null) {
                 return d;
@@ -333,6 +334,8 @@ final class ClassComparer {
     static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
             JarIndex leftJar, JarIndex rJar, boolean effects) {
         lm = RethrowHandlers.normalize(lm, rm, leftJar, rJar);
+        MethodNode[] virtual = VirtualCalls.normalize(lm, rm, leftJar, rJar);
+        lm = virtual[0]; rm = virtual[1];
         FirstDiff d = compareLinear(key,lm,rm,leftJar,rJar,effects);
         if (d == null) return null;
         if (leftJar.approved(leftJar.methodDiffs,lm) && lm.name.equals(rm.name) && lm.desc.equals(rm.desc)) {

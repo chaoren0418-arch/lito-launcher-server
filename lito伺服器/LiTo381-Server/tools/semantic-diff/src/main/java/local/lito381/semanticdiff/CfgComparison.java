@@ -24,7 +24,7 @@ final class CfgComparison implements Opcodes {
 
     private static boolean direct(MethodNode a,MethodNode b,JarIndex aj,JarIndex bj)
             throws org.objectweb.asm.tree.analysis.AnalyzerException {
-        List<Block> left=view(a,aj),right=view(b,bj);
+        List<Block> left=view(a,aj,true),right=view(b,bj,true);
         Map<Integer,Integer> blocks=new HashMap<>(),back=new HashMap<>();
         Map<Integer,Integer> slots=new HashMap<>(),reverse=new HashMap<>();
         for(int i=0;i<LocalWebs.parameters(a);i++){slots.put(i,i);reverse.put(i,i);}
