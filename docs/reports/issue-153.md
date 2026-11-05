@@ -2,7 +2,7 @@
 
 ## 結論
 
-第 2 次嘗試已修正審查退回的 P1，`ctor-prologue-order` 移動前會驗證取值依賴。有效 JVM 重現案例現在正確回報 DIFF，自測與三批固定輸入已重跑。#76 仍為 2 DIFF，依本次主控裁定，零 DIFF、槽位重用與一般 stack 暫存移交 #166。交付分支 `task/153`，沿用 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。本次提交的 CI 待推送後確認。
+第 2 次嘗試已修正審查退回的 P1，`ctor-prologue-order` 移動前會驗證取值依賴。有效 JVM 重現案例現在正確回報 DIFF，自測與三批固定輸入已重跑，整合提交 `ff50cca` 的 5 項 CI 全綠。#76 仍為 2 DIFF，依本次主控裁定，零 DIFF、槽位重用與一般 stack 暫存移交 #166。交付分支 `task/153`，沿用 [PR #164](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164)。
 
 ## 第 2 次修正與驗證
 
@@ -97,6 +97,9 @@ Windows／Microsoft JDK 17.0.17／ASM 9.7／Python 3.12／Maven 3.9.16。一般�
 
 ### CI 實際證據
 
+- 第 2 次修正的整合提交 `ff50cca6df1eb87c931b3d155ea0bfd72a65897b` 已通過全部 5 項 job。Server tests 為 **6,036 tests／0 failures／0 errors／117 skipped**。[build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851917)、[package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851940)。
+- 本次 Semantic gap job 實際 SUCCESS，日誌含 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=67`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`，合併 #134 Maven 接線後的全新 CI JAR 比較仍為 2125 SAME／424 DIFF。原始日誌保存於 `scratch/issue-153/ci-retry-semantic.log`、`ci-retry-server-tests.log`。[Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41969851917/job/127055288795)
+- 以下為首輪歷史證據，程式修正以本次 `ff50cca` 驗證為準。最後報告補充提交僅更新本文件，可由 PR checks 查閱其執行結果。
 - 初始程式提交 `e73fc58f6c631e4588be8815975544be7c4c24dc` 的 [build](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951354158) 與 [package](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951354253) 全部 5 項 job SUCCESS。Server tests 為 **6,033 tests／0 failures／0 errors／117 skipped**，已保存完整 log，沒有重跑失敗 job 來換取綠燈。
 - 最後程式提交 `f8fe1210645b03268a3e2cb77d995eae1a9f1473` 的 [Semantic gap job](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41951737626/job/126997021398) 實際 SUCCESS，完整日誌含 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=49`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`、2125 SAME／424 DIFF。不是只看 non-blocking 工作流總狀態。Server／Launcher 建置與 package 亦已 SUCCESS。
 - 最後提交的整體狀態見 [PR #164 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/164/checks)；報告補充提交不再修改程式。日誌在 `scratch/issue-153/ci-semantic-gap-final.log`、`ci-server-tests.log`。
