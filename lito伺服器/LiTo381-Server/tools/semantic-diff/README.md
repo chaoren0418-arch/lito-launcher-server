@@ -1,5 +1,13 @@
 # ASM 語意比對
 
+## T020i-10（Issue #235）
+
+`--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。
+
+配對後仍比較完整本體及 metadata，只有通過的方法列 DEVIATION。僅比較樹中本類 owner 的 INVOKEVIRTUAL／INVOKESPECIAL 呼叫（包含遞迴）依配對統一；祖先／其他 owner、static／interface 呼叫、method handle、字串不改名。JSON `privateRenames` 與 Markdown 列出核准對應，`methodResults` 記錄實際配對結果及失敗原因。未配對的 synthetic 目標不能由 orphan 規則忽略。範圍外類別、重複配對端點、缺核准 URL 或與其他方法豁免重疊會拒絕，避免跳過完整本體比較。
+
+`TenthSelfTest` 接入 `selftest.sh`；同份 framed JAR 供比較及 platform-parent 隔離 ClassLoader 執行，確認 private 改名仍派送祖先版本，而非 private 覆寫及保留原名的反例確實改變派送結果。
+
 ## T020i-9（Issue #216）
 
 `--metadata-exempt` 新增 `類別 enclosing-method # approved: <url>`。僅略過該類別的 `outerMethod`／`outerMethodDesc`；`outerClass`、Nest、InnerClasses、旗標、註解、欄位及方法仍比較。不展開內部類。舊的純類名條目維持原行為；JSON 分開列出 `metadataExempt` 與 `enclosingMethodExempt`，未知屬性與範圍外類別拒絕。
@@ -204,3 +212,15 @@ CFG 的純運送處理不再要求 DUP 次數相同：每個實際使用點的�
 報表新增 `SAME_CFG`、`LAMBDA_PAIRED_BY_CALLSITE`、`VISIBILITY_BRIDGE`，逐方法列於 `methodResults`，JSON 的 `proofMethodCounts` 及 Markdown 方法表另列總數。類別狀態仍先顯示 DIFF／DEVIATION 等優先結果；例如含已核准方法差異的類別可為 DEVIATION，同時列出 169 個 VISIBILITY_BRIDGE，不能把類別數當方法數。
 
 消融開關為 `-Dsemanticdiff.disable=callsites,cfg,visibility`；`-Dsemanticdiff.traceCfg=true` 可輸出第一個不一致區塊。舊規則消融測試會同時關閉可獨立證明的 CFG 後備。`EighthSelfTest` 已接入 `selftest.sh`，用同一份 framed JAR 交 CLI 與 platform-parent 隔離 ClassLoader，包含呼叫點交換／共用不一致／巢狀不同、迴圈分支／呼叫／回邊不同、例外差異、別名覆寫，以及 bridge 的目標、cast、public 祖先反射與子類派送差異。
+
+## T020i-11 無作用載入與相同區塊（Issue #254）
+
+兩側預設套用，不需核准清單，僅處理記憶體中的比較副本。
+
+- `DiscardedLoads` 移除真正相鄰、沒有指令註解的 `xLOAD; POP[2]`、純常數載入後 `POP[2]`、`DUP; POP`。category 寬度必須完全相符，不能讓 `POP2` 多丟掉原 stack 的值；任何 label 都阻止配對，因此不跨跳轉入口或 try 邊界。只接受數值、字串與 null 常數；class／MethodType／MethodHandle／ConstantDynamic 的解析或 bootstrap 可能有副作用，均保留。呼叫、欄位讀取、配置、cast 的結果即使被 POP 也不刪除。
+- 既有純轉拋 handler 先辨識鎖暫存，再做通用載入清理，避免清理掉 #216 所需的證據。其他 try 正規化、local webs 及比較流程維持原有檢查。
+- `CfgComparison` 保留原有 CFG 證明；失敗時先收縮合法 GOTO，再反覆合併完全相同的正規化區塊。鍵包含有序事件、operands、正常後繼、每個事件的有序例外後繼、入口／出口 stack 與複本資訊。#174 區塊內暫存已在建立 view 時消除，活躍 local 不任意改名。
+- 非空入口 stack 逐前驅追蹤；所有進入邊必須證明同一來源或相同純常數，才可合併。來源以生產區塊限定，不能只比 `event[0]`／`stack[0]` 或無序來源集合。無法解析的 phi、循環與超過 256 層的 transport 鏈保守拒絕合併。重新導向所有正常／例外前驅，直到固定點；完成後仍執行原有同構與跨邊 stack 關聯檢查。
+- javac 可能把 finally 內嵌在直線區塊末端。必要時先在空 stack 的 try 邊界、再在其他空 stack 指令邊界切成較小區塊，重新做相同證明；不移動操作，不刪例外邊。原有 view 優先，保留 #174 的區塊暫存證明。
+
+消融開關：`-Dsemanticdiff.disable=discarded-loads`、`-Dsemanticdiff.disable=cfg-merge`。不提高 paths 的 4096 上限。`EleventhSelfTest` 已接入 `selftest.sh`；同一份 framed JAR 供 CLI、直接 CFG 與 platform-parent 隔離 ClassLoader 使用，包含副作用呼叫後 POP、後繼不同、try 覆蓋不同、入口 stack 值不同的實際行為反例，及固定點、內嵌 finally、區塊暫存與相同非空 stack 的正例。
