@@ -13,6 +13,13 @@ final class Normalizations implements Opcodes {
     static void prepare(ClassNode owner) {
         for (MethodNode m : owner.methods) {
             for (AbstractInsnNode n : m.instructions) {
+                if (FourthNormalizations.enabled("private-calls") && n instanceof MethodInsnNode call
+                        && (call.getOpcode() == INVOKESPECIAL || call.getOpcode() == INVOKEVIRTUAL)
+                        && call.owner.equals(owner.name) && !call.name.startsWith("<")
+                        && owner.methods.stream().anyMatch(t -> t.name.equals(call.name) && t.desc.equals(call.desc)
+                            && (t.access & (ACC_PRIVATE | ACC_STATIC)) == ACC_PRIVATE)) {
+                    call.setOpcode(INVOKESPECIAL);
+                }
                 if (n instanceof InvokeDynamicInsnNode indy) {
                     for (int i = 0; i < indy.bsmArgs.length; i++) {
                         if (indy.bsmArgs[i] instanceof Handle h && h.getOwner().equals(owner.name)
