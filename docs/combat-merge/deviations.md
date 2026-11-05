@@ -88,3 +88,5 @@ local/lito381/server/NativeDeCharacterFields$CombatSkillDerived#compute(Ljava/la
 - **比較界線**：`method-diff` 比較精確名稱及描述子，左右方法均須存在；其餘方法、欄位、metadata 與 entry 完整性照常驗證。169 個 public bridge 及 lambda 差異沒有加入任何豁免。
 - **已驗證**：49 份 staged Java 以 Java 17 編譯，185 個 entry 完整；NativeDeCharacterFields 為 SAME，CombatSkillDerived 為 DEVIATION，四個公開 Name 建構子逐方法 DEVIATION。整個 Instance 類別仍為 DIFF，詳見 issue-72 報告。
 - **待驗證（#78 A-land）**：construction 的父鏈可觀測性；四個 Name overload 的成功／失敗求值與初始化順序、各布林組合及字串邊界；compute 空集合及全 null 元素正常回傳，含非 null 元素拋 NoSuchFieldError。未執行 staged 應用類別、伺服器、遊戲或資料庫。
+
+**2026-11-06 重驗狀態更新**：依 [最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6663641218)，169 個 bridge 與巢狀 lambda 的裁定已完成，兩者 Java 不改，分別交 #203 第 3、1 項工具規則驗證；不增加任何精確核准識別或整類豁免。本輪合併 main `9678e97`（含 #186）後，直接編譯全部 49 份 staged Java，185 entries 為 183 SAME／1 DEVIATION／1 DIFF，missingLeft/extraLeft 皆空，Instance 仍 DIFF。PR #215 於 2026-11-06 02:32（UTC+08:00）仍 OPEN、merged_at=null，因此等待 #203 合併及全量重驗，尚未通過最終驗收。既有五項 method-diff、private 建構子及 ctor-prologue-order 的精確核准識別均保留；#78 測試要求不變，詳見 [issue-72 報告](../reports/issue-72.md)。

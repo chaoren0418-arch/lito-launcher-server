@@ -2,28 +2,30 @@
 
 ## 結論
 
-2026-11-06，延續 `task/72 @ f4b20cb`，先合併 `origin/main @ c724539`（含已合併 #174、#176，merge commit `5039c3d`）。依 [主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173) 完成技能欄位移除、五項方法偏離與巢狀 lambda 表達修正。
+2026-11-06，延續審查版本 `task/72 @ 2ac8ba5`，合併 `origin/main @ 9678e97f4bff1dfab7cc820297e3ea6ff533375c`（merge commit `2633b68061ab2bb55deefbeade074a56ee9a9156`）。目前 main 含 #174、#176、#186；#186 已由 PR #202 合併（`bccc2cb`）。保留前輪技能欄位移除、五項方法偏離與巢狀 lambda 表達修正。
 
-**183 SAME／1 DEVIATION／1 DIFF；185 個 entry，missingLeft=[]、extraLeft=[]。驗收未通過，不可 A-land 或部署。** NativeDeInstanceState 仍有 169 個 public bridge，以及一對 lambda 的配對差異。這些均未豁免；需 `needs:claude` 主控裁定。
+**183 SAME／1 DEVIATION／1 DIFF；185 個 entry，missingLeft=[]、extraLeft=[]。驗收未通過，不可 A-land 或部署。** 這是含 #186、尚未含 #203 的已合併工具全量重驗結果。剩餘 DIFF 為 NativeDeInstanceState 的 169 個可見性 bridge 及巢狀 lambda 配對。
+
+依 [最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6663641218)，**裁定已完成，等待 #203 合併及全量重驗**：bridge 由 #203 第 3 項驗證，lambda 由第 1 項配對，兩者 Java 均不改，不改父類可見性、不新增整類豁免，也不再要求 needs:claude 裁定。2026-11-06 02:32（UTC+08:00）以 GitHub REST API 查證：#203 OPEN、PR #215 OPEN、`merged_at=null`（head `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe`），審查 #219 OPEN。依賴尚未滿足，本輪不能宣稱完成包含 #203 的最終驗收。
 
 ## 做了什麼
 
 - `NativeDeCharacterFields.java`：移除 SKU1／SKU2／SKD1／SKD2／SKD3 五個空 HashMap 宣告（相應 clinit 初始化也消失）。`CombatSkillDerived.compute` 保留原六個區域值初始化、Iterable 迭代、null 元素 continue；原首個 GETSTATIC SKU1 改為 `throw new NoSuchFieldError("SKU1")`。其後四個欄位存取永遠不可達，沒有補表或引入假資料。外層類別已 SAME。
-- `deviations.txt`／`deviations.md`：僅追加本次已核准的 compute 與四個公開 Name 建構子 `method-diff`；保留既有 private 建構子及 ctor-prologue-order 清單。兩邊追加項在合併 main 的衝突中均保留，沒有移除其他批次核准。
-- `NativeDeInstanceState.java`：巢狀排程外層 Runnable 使用 `this` 呼叫 LiveAiScope，內層 Supplier 明確捕獲 actor，產生與正式一致的 static 描述子。原先 35 個 adapter 的 Java 未改；它們已無差異回報。本輪只修這一處巢狀 lambda。
+- `deviations.txt`／`deviations.md`：前輪僅追加已核准的 compute 與四個公開 Name 建構子 `method-diff`；保留既有 private 建構子及 ctor-prologue-order 清單。兩邊追加項在合併 main 的衝突中均保留，沒有移除其他批次核准。
+- `NativeDeInstanceState.java`：巢狀排程外層 Runnable 使用 `this` 呼叫 LiveAiScope，內層 Supplier 明確捕獲 actor，產生與正式一致的 static 描述子。原先 35 個 adapter 的 Java 未改；它們已無差異回報。前輪只修這一處巢狀 lambda，本輪保持來源不變。
 - 逐一核對 bridge 及一般方法描述子。**124 個非 synthetic、非建構子方法的描述子全與正式相同，沒有可修正的回傳／參數型別差異。169 個 bridge 的目標描述子也各與 bridge 完全相同，沒有 CHECKCAST／協變回傳適配。** 因此沒有為消掉 bridge 而擅改公開 API、父類可見性或 class bytes。
 
-本輪手動變更僅兩份 A01 staged Java、兩份 deviation 文件及本報告；暫存稽核程式／證據位於 worktree 的 scratch/issue-72，建置產物位於其中 target/ 或既有工具 target/。未手動修改 src/main、pom.xml、docs/REPORT.md、比較工具與其他批次 Java。沒有從正式 JAR 複製 class 覆蓋編譯產物，也沒有 ASM 後處理。
+以上來源與核准項是前輪已完成內容，本輪沒有修改任何 staged Java 或精確核准清單；只更新本報告及 deviations.md 的驗證狀態。暫存稽核程式／證據位於 worktree 的 scratch/issue-72，建置產物位於其中 target/ 或既有工具 target/。未手動修改 src/main、pom.xml、docs/REPORT.md、比較工具與其他批次 Java；合併帶入的 main 變更照原樣保留。沒有從正式 JAR 複製 class 覆蓋編譯產物，也沒有 ASM 後處理。
 
 ## 已驗證：169 個 bridge
 
 掃描 SHA-256 固定正式 JAR 的全部 **2,554 個 class**。Instance 是 public；169 個 bridge 均為 `0x1041 ACC_PUBLIC|ACC_BRIDGE|ACC_SYNTHETIC`，內容為依序 LOAD 參數、`INVOKESPECIAL NativeDeNpcConstructionState.<同名同描述子>`、對應 RETURN。正式 Instance 不宣告這 169 個方法；它們解析到非 public 祖先：CharacterFields 112、NpcTemplateState 20、ObjectFields 18、NpcVitalState 8、PerceptionState 8、CorpseState／DeletionState／DeletionDeState 各 1。NpcConstructionState 自身為 public，不能將問題簡化成直接父類非 public。
 
-這符合 javac 為非公開祖先的繼承公開方法產生存取 bridge 的形狀，**不是泛型或協變描述子差異**。本批無權放寬父鏈存取或刪除生成方法；不能僅因轉呼叫形狀看似直接就接受派送差異。
+這符合 javac 為非公開祖先的繼承公開方法產生存取 bridge 的形狀，**不是泛型或協變描述子差異**。最新主控已確認這些 bridge 轉向同一實作，派送行為相同，差別在反射宣告方法清單；核准由 #203 的嚴格形狀與祖先解析規則驗證。本批保留 Java，等待已合併工具的驗收結果。
 
 反向掃描的 receiver owner 包含 Instance、全部父類及遞迴實作介面。找到 **426 個參照**：352 invokevirtual、70 invokeinterface、3 invokespecial、1 method handle；91 個描述子有參照、78 個沒有。附錄逐項列出描述子、目標、正式宣告 owner、參照數，以及一個實際 javap 呼叫點；所有 426 筆另完整列出。
 
-**證明界線**：「有呼叫端」指正式 class 中符號 receiver owner 可接收 Instance 的呼叫／handle，保守包含祖先型別及介面；不是已證明每個呼叫在執行時都持有 Instance。特別是父型別也可能持有其他子類。invokespecial 另列，並非虛擬派送。零筆只表示此固定 JAR 沒有相符的靜態參照，不排除反射、外部模組或未來呼叫，因此 78 項仍不豁免。
+**證明界線**：「有呼叫端」指正式 class 中符號 receiver owner 可接收 Instance 的呼叫／handle，保守包含祖先型別及介面；不是已證明每個呼叫在執行時都持有 Instance。特別是父型別也可能持有其他子類。invokespecial 另列，並非虛擬派送。零筆只表示此固定 JAR 沒有相符的靜態參照，不排除反射、外部模組或未來呼叫；#203 的驗收條件依 bridge 形狀與解析結果，不依零參照數。
 
 ## 已驗證：巢狀 lambda
 
@@ -31,7 +33,7 @@
 
 本輪外層 `lambda$sourceAi$scheduleAiTick$22(JJZ)V` 為 instance，內層 `$21(Instance;JJZ)Object` 為 static，內層內容 hash 已與正式相同。外層只多出 actor 的 ASTORE／ALOAD，工具仍用線性內容 hash 配對 synthetic lambda，因此一左一右方法仍無法配對，連帶 sourceAi$scheduleAiTick 的 invokedynamic handle DIFF。
 
-直接對指定外層兩方法呼叫本版 PathComparison：**same=true，path multisets equal (3)**。這是診斷，不取代 CLI 驗收；正式結果仍 DIFF。完整 javap、正規化內容及差異見附錄。此缺口與 [#203 呼叫點配對 lambda](https://github.com/chaoren0418-arch/lito-launcher-server/issues/203) 相符，交主控決定納入該任務重驗，不在本批擴充工具。
+直接對指定外層兩方法呼叫本版 PathComparison：**same=true，path multisets equal (3)**。這是診斷，不取代 CLI 驗收；正式結果仍 DIFF。完整 javap、正規化內容及差異見附錄。最新主控已指派 [#203 呼叫點配對 lambda](https://github.com/chaoren0418-arch/lito-launcher-server/issues/203) 處理，Java 保持不變，待該工具合併後重驗。
 
 ## 怎麼驗證
 
@@ -63,8 +65,8 @@ ACCEPTANCE False
 ## 未驗證／推測
 
 - 未執行 staged 應用程式、單元測試、伺服器、登入器、遊戲或 DB；本批依規定在 #78 A-land 統一測試。compute 的錯誤行為與建構順序在此是來源及 class 靜態證據，不冒充執行測試。
-- bridge 的最終消除方法與派送影響須主控裁定；即使本輪找到 78 個零參照描述子，也不代表可忽略。
-- #203 應能處理外層 lambda 的配對問題是依診斷的推測，尚未用該工具版本驗證。
+- bridge 與 lambda 的處理方向已裁定；尚未以包含 #186、#203 的已合併工具完成 185 entries 全量驗收，不能把主控核准方向視為工具已通過。
+- #203 應能消除剩餘 DIFF 是預期；本輪未使用未合併的 task/203 工具，也未把 DIFF 手動改為通過。
 - 前輪已核准的 construction 證明（12 層、18 個建構子、正式 JAR 無子類、父鏈可達方法不讀 construction）本輪來源未改；完整證據保留在 [前輪報告 f4b20cb](https://github.com/chaoren0418-arch/lito-launcher-server/blob/f4b20cb/docs/reports/issue-72.md)。不將舊 182 SAME／3 DIFF 混為本輪結果。
 
 ## 產出路徑／給下一棒的提示
@@ -72,7 +74,7 @@ ACCEPTANCE False
 - 交付來源：`lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/NativeDeCharacterFields.java`、`NativeDeInstanceState.java`。
 - 核准紀錄：`docs/combat-merge/deviations.txt`、`deviations.md`；主報告：`docs/reports/issue-72.md`。
 - 本機原始證據：`scratch/issue-72/final-reproduce.{json,md}`、`target/final-reproduce.jar`、`audit/{summary.txt,bridges.tsv,calls.tsv}`、`*-instance.javap.txt`、`formal-callers.javap.txt`、`lambda-audit.txt`、`remaining-full.diff`。不加入 git；重要結果及再現程式已嵌入本報告。
-- **Claude 主控**：依附錄逐項裁定 169 bridge；確認巢狀 lambda 的 3 路徑診斷並將本輪產物交 #203 重驗。現況加 needs:claude，不視為 A01 完成。
+- **調度器／#203 審查與合併流程**：本輪受依賴阻擋，先等待 #203／PR #215 合併；不要重新派回 bridge／lambda 裁定。合併後再派本機執行器更新 main，以含 #186、#203 的工具及核准清單直接編譯 49 份 staged Java、重驗 185 entries，更新同一份報告的工具版本、命令、雜湊及逐項結果。每項須為 SAME／SAME_EFFECTS／SAME_PATHS／DEVIATION，DIFF=0、missingLeft/extraLeft=[]，才可送 A01 完成審查。
 - **#78 A-land**：在 A01 全部驗收通過後，測試 construction 父鏈觀測、四個 Name overload 的求值／例外／旗標順序，以及 compute 空集合／全 null／非 null 元素錯誤行為。技能根因追蹤 #184，本批不修正式 bug。
 
 ## 附錄 A：185 個 entry 完整結果
@@ -1860,7 +1862,7 @@ ALOAD 6
 LLOAD 1/2
 LLOAD 3/4
 ILOAD 5
-INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$55f34d9be55581ac35a1f796e5b24e62589e0beb5a01900e11f81d0e28322baf(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6e34c385d8f1d059b9d55cd4e13b09c43db4fe7ba283054930f7d1ae77e48eae(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 POP
 RETURN
@@ -1870,7 +1872,7 @@ ALOAD 0
 LLOAD 1/2
 LLOAD 3/4
 ILOAD 5
-INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$55f34d9be55581ac35a1f796e5b24e62589e0beb5a01900e11f81d0e28322baf(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6e34c385d8f1d059b9d55cd4e13b09c43db4fe7ba283054930f7d1ae77e48eae(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 POP
 RETURN
@@ -1893,7 +1895,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method beginAiTick(J)Z ALOAD 0
 -method beginAiTick(J)Z ALOAD 3
  method beginAiTick(J)Z LLOAD 1/2
- method beginAiTick(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$0aec4a63a23900f28867605d4437057a49ddbed73e6b0114d32a6492859e1f5f(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method beginAiTick(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$8d31e72a99e5d175e5aaeb1f2849132c352a173b36ad8621108bc19f77ea9e0d(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method beginAiTick(J)Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -184,9 +182,7 @@
  method beginBackgroundTick(J)Z annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -1903,7 +1905,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method beginBackgroundTick(J)Z ALOAD 0
 -method beginBackgroundTick(J)Z ALOAD 3
  method beginBackgroundTick(J)Z LLOAD 1/2
- method beginBackgroundTick(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$c67a63d5c7acd01eeb85e91928eb2fd866c5d319507bda775e0759f14074efd8(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method beginBackgroundTick(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f99408d8bac39023575cea63a7d03bdf8e5654d54d06704026e4d96f4e8dc741(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method beginBackgroundTick(J)Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -211,9 +207,7 @@
  method calcSleepTime(II)I annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -1914,7 +1916,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method calcSleepTime(II)I ALOAD 3
  method calcSleepTime(II)I ILOAD 1
  method calcSleepTime(II)I ILOAD 2
- method calcSleepTime(II)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;II)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6993f07ee0d075e4895a866fa85c1dca0147c455eec4b5e0079af0d24494419b(Llocal/lito381/server/NativeDeInstanceState;II)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method calcSleepTime(II)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;II)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$766818ef16eb340fda5d2ea0ea4b631ca4e69147414167f7ccca1c858564c7be(Llocal/lito381/server/NativeDeInstanceState;II)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 @@ -227,9 +221,7 @@
  method checkNeedActive()Z annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method checkNeedActive()Z default=
@@ -1922,7 +1924,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method checkNeedActive()Z ASTORE 1
  method checkNeedActive()Z ALOAD 0
 -method checkNeedActive()Z ALOAD 1
- method checkNeedActive()Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$3e50641aa1ab0102beb4864083197cc242cde7dc380ef4282de0db90b13ebcbb(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method checkNeedActive()Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$a0f5465ee770176efce7d178895c1447fa0149a5431f950503b9c702f72a07f0(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method checkNeedActive()Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method checkNeedActive()Z CHECKCAST java/lang/Boolean
 @@ -241,9 +233,7 @@
@@ -1932,7 +1934,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method checkSpawnLocation()V ASTORE 1
  method checkSpawnLocation()V ALOAD 0
 -method checkSpawnLocation()V ALOAD 1
- method checkSpawnLocation()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$d8070b41a40457ccc97186b92c04f1b11b0a0ae10beef000451c622a0d773ec6(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method checkSpawnLocation()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$e0fa1531638dcdc178cb183d27df504914f183c7e9e2899abf15edb8acf257c0(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method checkSpawnLocation()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method checkSpawnLocation()V POP
 @@ -285,9 +275,7 @@
@@ -1943,7 +1945,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method completeAiStopLocked(J)Z ALOAD 0
 -method completeAiStopLocked(J)Z ALOAD 3
  method completeAiStopLocked(J)Z LLOAD 1/2
- method completeAiStopLocked(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6d02416b33308c9d6589d9dc06a06174d8da49089ce2f137db9c8b07cb487537(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method completeAiStopLocked(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$04fe5ddf9af7afd1067fa248c317ce2d1338029eadee0c84bb7d2da50836d18a(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method completeAiStopLocked(J)Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -349,9 +337,7 @@
  method dispatchAiWork(JZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -1954,7 +1956,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method dispatchAiWork(JZ)V ALOAD 4
  method dispatchAiWork(JZ)V LLOAD 1/2
  method dispatchAiWork(JZ)V ILOAD 3
- method dispatchAiWork(JZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$4fc1f089622da1cda0d2f54fc9ba0eac5b0b61de6580474227f7c3b36965c09d(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method dispatchAiWork(JZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$31704940456f4ced120aa80e85dc692477dbdb516bc5a30b5fb8bbeda8a4d6eb(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 @@ -364,9 +350,7 @@
  method ensureAiScheduled()V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method ensureAiScheduled()V default=
@@ -1962,7 +1964,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method ensureAiScheduled()V ASTORE 1
  method ensureAiScheduled()V ALOAD 0
 -method ensureAiScheduled()V ALOAD 1
- method ensureAiScheduled()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6732b770fd6477193d9d92d5f6c09ca067e6200aef32d4933526361e2446e9b7(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method ensureAiScheduled()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$17595e90c9e7076d36fdcce3a8f82105a9fdaa7185058aba41249ea2925fdcb3(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method ensureAiScheduled()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method ensureAiScheduled()V POP
 @@ -377,9 +361,7 @@
@@ -1973,7 +1975,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method enterBackgroundMode(J)V ALOAD 0
 -method enterBackgroundMode(J)V ALOAD 3
  method enterBackgroundMode(J)V LLOAD 1/2
- method enterBackgroundMode(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$98684a9aa8bb5063731367e7c3750dc32668fa63ae02ea4e11fea0a608bf4c2a(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method enterBackgroundMode(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$052406114ab86bc5e468300ef193026d003db6475e0ec08ac5e0c266c0ce56e5(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method enterBackgroundMode(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -407,9 +389,7 @@
  method failAiTimer(JJ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -1984,7 +1986,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method failAiTimer(JJ)V ALOAD 5
  method failAiTimer(JJ)V LLOAD 1/2
  method failAiTimer(JJ)V LLOAD 3/4
- method failAiTimer(JJ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f540af9ec74be8352cd4afe16c745bd61d5636b7493da1944a986acf6c72a83b(Llocal/lito381/server/NativeDeInstanceState;JJ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method failAiTimer(JJ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6d225bfd869d02f7f03f08c23bc4470c45ffc6394c615c7a4e118f1ac25f282e(Llocal/lito381/server/NativeDeInstanceState;JJ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 @@ -422,9 +402,7 @@
  method finishAiTick(J)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method finishAiTick(J)V default=
@@ -1993,7 +1995,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method finishAiTick(J)V ALOAD 0
 -method finishAiTick(J)V ALOAD 3
  method finishAiTick(J)V LLOAD 1/2
- method finishAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$7564ba95bfa4f830ca5d54a5d82b624e8e155bbfecd75eb17ba8f12f34d5cf75(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method finishAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$0ea923374607d223a236b57f8aeca588e4c509ca30ceb1b881d7113792bad6a3(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method finishAiTick(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -540,9 +518,7 @@
  method getName()Ljava/lang/String; annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2002,7 +2004,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method getName()Ljava/lang/String; ASTORE 1
  method getName()Ljava/lang/String; ALOAD 0
 -method getName()Ljava/lang/String; ALOAD 1
- method getName()Ljava/lang/String; INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f1a04170b5bccd722b023c52222802103bae45b884dc2cf1ae2482be8b428d12(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method getName()Ljava/lang/String; INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$7f3a1d3a2bcdb1bfdc41b01d9b24d6ef1c2b7ccbfc759bc6e409c1afe1a6239c(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method getName()Ljava/lang/String; INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method getName()Ljava/lang/String; CHECKCAST java/lang/String
 @@ -553,9 +529,7 @@
@@ -2012,7 +2014,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method getSleepTime()I ASTORE 1
  method getSleepTime()I ALOAD 0
 -method getSleepTime()I ALOAD 1
- method getSleepTime()I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$0704c677d2b1e3069243221854187d85f85568638a16c4a31c687353c0811e83(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method getSleepTime()I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$b17d5aefdad5a574e8469cefacf8f9c22a7db13e26f5a407e27955e5d10d7437(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method getSleepTime()I INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method getSleepTime()I CHECKCAST java/lang/Integer
 @@ -583,9 +557,7 @@
@@ -2022,7 +2024,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method isBusy()Z ASTORE 1
  method isBusy()Z ALOAD 0
 -method isBusy()Z ALOAD 1
- method isBusy()Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$936e20649f8705e7cc7dbc41f9ddbd1399993ea8a1eac1d43577c1b42efb0e3b(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method isBusy()Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$d8ae5c61fbc3b0d6410c96d3a8258a88f5c06ff31ab2fb8850887ce2d07de464(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method isBusy()Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method isBusy()Z CHECKCAST java/lang/Boolean
 @@ -622,9 +594,7 @@
@@ -2033,52 +2035,52 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method isDeAiChain(J)Z ALOAD 0
 -method isDeAiChain(J)Z ALOAD 3
  method isDeAiChain(J)Z LLOAD 1/2
- method isDeAiChain(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$85ee9f204e29e44faa49d2aeca343b5935b37e313cf88755970f34d4f4a552ae(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method isDeAiChain(J)Z INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$0d9fbd9062a728230a2e173ea5fb543d98a8e17d9fc11683eccbb46748e27bb0(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method isDeAiChain(J)Z INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
-@@ -722,22 +692,6 @@
- method lambda$content$266210398aadeefd0252fcae301d0b18a0bfcdb60d62bdb62bb87ad247008ee4(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; INVOKEVIRTUAL local/lito381/server/NativeDeInstanceState.sourceAi$runBackgroundTick(J)V
- method lambda$content$266210398aadeefd0252fcae301d0b18a0bfcdb60d62bdb62bb87ad247008ee4(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; CONST null
- method lambda$content$266210398aadeefd0252fcae301d0b18a0bfcdb60d62bdb62bb87ad247008ee4(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; ARETURN
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V access=0x2
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V signature=null
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V exceptions=
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V default=
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V ALOAD 0
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V ASTORE 6
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V ALOAD 0
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V ALOAD 6
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V LLOAD 1/2
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V LLOAD 3/4
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V ILOAD 5
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$55f34d9be55581ac35a1f796e5b24e62589e0beb5a01900e11f81d0e28322baf(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V POP
--method lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V RETURN
- method lambda$content$29f3f3c7f5a8c2e93ee9f4d479292a805648f797e66af39b149f74a69e66301d(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; access=0xa
- method lambda$content$29f3f3c7f5a8c2e93ee9f4d479292a805648f797e66af39b149f74a69e66301d(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; signature=null
- method lambda$content$29f3f3c7f5a8c2e93ee9f4d479292a805648f797e66af39b149f74a69e66301d(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; exceptions=
-@@ -936,6 +890,20 @@
- method lambda$content$6d02416b33308c9d6589d9dc06a06174d8da49089ce2f137db9c8b07cb487537(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; INVOKEVIRTUAL local/lito381/server/NativeDeInstanceState.sourceAi$completeAiStopLocked(J)Z
- method lambda$content$6d02416b33308c9d6589d9dc06a06174d8da49089ce2f137db9c8b07cb487537(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; INVOKESTATIC java/lang/Boolean.valueOf(Z)Ljava/lang/Boolean;
- method lambda$content$6d02416b33308c9d6589d9dc06a06174d8da49089ce2f137db9c8b07cb487537(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; ARETURN
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V access=0x2
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V signature=null
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V exceptions=
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V default=
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V ALOAD 0
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V ALOAD 0
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V LLOAD 1/2
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V LLOAD 3/4
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V ILOAD 5
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$55f34d9be55581ac35a1f796e5b24e62589e0beb5a01900e11f81d0e28322baf(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V POP
-+method lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V RETURN
- method lambda$content$7564ba95bfa4f830ca5d54a5d82b624e8e155bbfecd75eb17ba8f12f34d5cf75(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; access=0xa
- method lambda$content$7564ba95bfa4f830ca5d54a5d82b624e8e155bbfecd75eb17ba8f12f34d5cf75(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; signature=null
- method lambda$content$7564ba95bfa4f830ca5d54a5d82b624e8e155bbfecd75eb17ba8f12f34d5cf75(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; exceptions=
+@@ -743,6 +713,20 @@
+ method lambda$content$31704940456f4ced120aa80e85dc692477dbdb516bc5a30b5fb8bbeda8a4d6eb(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object; INVOKESPECIAL local/lito381/server/NativeDeInstanceState.sourceAi$dispatchAiWork(JZ)V
+ method lambda$content$31704940456f4ced120aa80e85dc692477dbdb516bc5a30b5fb8bbeda8a4d6eb(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object; CONST null
+ method lambda$content$31704940456f4ced120aa80e85dc692477dbdb516bc5a30b5fb8bbeda8a4d6eb(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object; ARETURN
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V access=0x2
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V signature=null
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V exceptions=
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V default=
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V ALOAD 0
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V ALOAD 0
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V LLOAD 1/2
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V LLOAD 3/4
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V ILOAD 5
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6e34c385d8f1d059b9d55cd4e13b09c43db4fe7ba283054930f7d1ae77e48eae(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V POP
++method lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V RETURN
+ method lambda$content$374a7feeea95d07b6724df256e4d062097c4470c331b242e2911021affa29852(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; access=0xa
+ method lambda$content$374a7feeea95d07b6724df256e4d062097c4470c331b242e2911021affa29852(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; signature=null
+ method lambda$content$374a7feeea95d07b6724df256e4d062097c4470c331b242e2911021affa29852(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object; exceptions=
+@@ -1093,22 +1077,6 @@
+ method lambda$content$dcdc0eeca0b7c94436c21d81cf5758824531592f0d454098d8c9cb86f3e20a90(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/lang/Object; INVOKESPECIAL local/lito381/server/NativeDeInstanceState.sourceAi$setAiRunning(Z)V
+ method lambda$content$dcdc0eeca0b7c94436c21d81cf5758824531592f0d454098d8c9cb86f3e20a90(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/lang/Object; CONST null
+ method lambda$content$dcdc0eeca0b7c94436c21d81cf5758824531592f0d454098d8c9cb86f3e20a90(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/lang/Object; ARETURN
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V access=0x2
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V signature=null
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V exceptions=
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V default=
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V ALOAD 0
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V ASTORE 6
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V ALOAD 0
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V ALOAD 6
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V LLOAD 1/2
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V LLOAD 3/4
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V ILOAD 5
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6e34c385d8f1d059b9d55cd4e13b09c43db4fe7ba283054930f7d1ae77e48eae(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V POP
+-method lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V RETURN
+ method lambda$content$e0fa1531638dcdc178cb183d27df504914f183c7e9e2899abf15edb8acf257c0(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; access=0xa
+ method lambda$content$e0fa1531638dcdc178cb183d27df504914f183c7e9e2899abf15edb8acf257c0(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; signature=null
+ method lambda$content$e0fa1531638dcdc178cb183d27df504914f183c7e9e2899abf15edb8acf257c0(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object; exceptions=
 @@ -1162,9 +1130,7 @@
  method nextAiRetryDelay(JZ)I annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method nextAiRetryDelay(JZ)I default=
@@ -2088,7 +2090,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method nextAiRetryDelay(JZ)I ALOAD 4
  method nextAiRetryDelay(JZ)I LLOAD 1/2
  method nextAiRetryDelay(JZ)I ILOAD 3
- method nextAiRetryDelay(JZ)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$ef30b685cba853cc74694365f94e2637420e10296ab8b9b9b54f82b0de0da614(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method nextAiRetryDelay(JZ)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$a21cb609ea3950369f7481f10c054f8ac56e76b313f70769268262b3d505793e(Llocal/lito381/server/NativeDeInstanceState;JZ)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 @@ -1178,9 +1144,7 @@
  method nextAiTimerTokenLocked()J annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method nextAiTimerTokenLocked()J default=
@@ -2096,7 +2098,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method nextAiTimerTokenLocked()J ASTORE 1
  method nextAiTimerTokenLocked()J ALOAD 0
 -method nextAiTimerTokenLocked()J ALOAD 1
- method nextAiTimerTokenLocked()J INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6784d6560a00c78a3361cfc2b7d12d2cfbe9831a4dfab273dda2d6d218e874d6(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method nextAiTimerTokenLocked()J INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$6d56864644b6d5cc34c84feccb49eb9e323a8e2ba1af52632409a13d777916bb(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method nextAiTimerTokenLocked()J INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method nextAiTimerTokenLocked()J CHECKCAST java/lang/Long
 @@ -1192,9 +1156,7 @@
@@ -2107,7 +2109,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method normalizeDeSleepTime(J)I ALOAD 0
 -method normalizeDeSleepTime(J)I ALOAD 3
  method normalizeDeSleepTime(J)I LLOAD 1/2
- method normalizeDeSleepTime(J)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$11013fa846631f85a6067673b91405b29fb63055f117caeb01b8aa77652fafd0(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method normalizeDeSleepTime(J)I INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$0078114c2ede166c9951182c2da584c0e9748177f9cf39842c86dac921df5c4e(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method normalizeDeSleepTime(J)I INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -1207,9 +1169,7 @@
  method onAiTimer(JJZ)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2126,7 +2128,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method onBackgroundTick()V ASTORE 1
  method onBackgroundTick()V ALOAD 0
 -method onBackgroundTick()V ALOAD 1
- method onBackgroundTick()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$4f8beabd3ff88fcd1ccde59bbcbe16d00c7633360a9a4524c71f944761bc2437(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method onBackgroundTick()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$9be4c9ea054447f893fa047fde4d698e9270cf256f597168ce4ccce8344f411f(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method onBackgroundTick()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method onBackgroundTick()V POP
 @@ -1267,9 +1225,7 @@
@@ -2136,7 +2138,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method run()V ASTORE 1
  method run()V ALOAD 0
 -method run()V ALOAD 1
- method run()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$29f3f3c7f5a8c2e93ee9f4d479292a805648f797e66af39b149f74a69e66301d(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method run()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f352210bd9a19674b51b6d30f17c988ef8312d5816947e2bb4dc30b7cf0e3371(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method run()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method run()V POP
 @@ -1280,9 +1236,7 @@
@@ -2147,7 +2149,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method runAiTick(J)V ALOAD 0
 -method runAiTick(J)V ALOAD 3
  method runAiTick(J)V LLOAD 1/2
- method runAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$e82873d66d920423a3e23a0f790f2c26c537b159307e4aa3d5a64233fe446ba0(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method runAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$88bf759f1c82ee3d3ed850c68681aa12496a3e22df985b027e57a483fb6c09b4(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method runAiTick(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -1294,9 +1248,7 @@
  method runBackgroundTick(J)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2157,7 +2159,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method runBackgroundTick(J)V ALOAD 0
 -method runBackgroundTick(J)V ALOAD 3
  method runBackgroundTick(J)V LLOAD 1/2
- method runBackgroundTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$266210398aadeefd0252fcae301d0b18a0bfcdb60d62bdb62bb87ad247008ee4(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method runBackgroundTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$68068ba960deb8d30240f82f4244b44ab137274153e8c1e538613683482f4ece(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method runBackgroundTick(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -1308,9 +1260,7 @@
  method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2168,7 +2170,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; ALOAD 4
  method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; LLOAD 1/2
  method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; ILOAD 3
- method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JI)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$344ff366e4b00e0f19600b47d566ea38ad7d34ef53ac20fc63bf8e82d24bae6a(Llocal/lito381/server/NativeDeInstanceState;JI)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method scheduleAiTick(JI)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;JI)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$5b037b66674c43515d30e1dd0d9d8da867c4e5b3cf71612c28b539f3d9eb8288(Llocal/lito381/server/NativeDeInstanceState;JI)Ljava/lang/Object;, type:()Ljava/lang/Object;]
 @@ -1323,9 +1273,7 @@
  method scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
  method scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; default=
@@ -2187,7 +2189,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method scheduleNextAiTick(J)V ALOAD 0
 -method scheduleNextAiTick(J)V ALOAD 3
  method scheduleNextAiTick(J)V LLOAD 1/2
- method scheduleNextAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$8138e935c5a0eb8baca8c7df44b1df5d6696d55f21c0f24af39f8d3773d90b2e(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method scheduleNextAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$945e2896e0b6148f449dcdfedd66bff45c1998e8f530bfccfcd1b0734661d5f1(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method scheduleNextAiTick(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -1353,9 +1299,7 @@
  method setAiRunning(Z)V annotations=@Ljava/lang/Deprecated;||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2197,7 +2199,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method setAiRunning(Z)V ALOAD 0
 -method setAiRunning(Z)V ALOAD 2
  method setAiRunning(Z)V ILOAD 1
- method setAiRunning(Z)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$03ab986d274dab0b583dff5bea1373a2c1738c4fbb65343cf52f51908e018f02(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method setAiRunning(Z)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$dcdc0eeca0b7c94436c21d81cf5758824531592f0d454098d8c9cb86f3e20a90(Llocal/lito381/server/NativeDeInstanceState;Z)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method setAiRunning(Z)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -1495,9 +1439,7 @@
  method setNpcSpeed()V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2206,15 +2208,15 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method setNpcSpeed()V ASTORE 1
  method setNpcSpeed()V ALOAD 0
 -method setNpcSpeed()V ALOAD 1
- method setNpcSpeed()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$ef695f35fdb5da1ac6acdb7398855142a8ea8de87efbf3dfae1ef69668275116(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method setNpcSpeed()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$d82832a2183f640244a3f998eab3fa3efe3f5e16e2654e965fc7b8bf47481356(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method setNpcSpeed()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method setNpcSpeed()V POP
 @@ -3285,7 +3227,7 @@
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; LLOAD 1/2
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; LLOAD 6/7
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; ILOAD 4
--method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC run(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/NativeDeInstanceState.lambda$content$2959569b727ad218050ee179fe2880176d681e03a7e07c821500b45076d398dd(JJZ)V, type:()V]
-+method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC run(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/NativeDeInstanceState.lambda$content$6d279e5f5068f203c47c0d54162625e71322da60a5575507b438db26eb83f5e0(JJZ)V, type:()V]
+-method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC run(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/NativeDeInstanceState.lambda$content$ddf3fa5fa9cea94022d8bc9316f36679ae594967bc8cbdce754b697aeb990b7d(JJZ)V, type:()V]
++method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; INVOKEDYNAMIC run(Llocal/lito381/server/NativeDeInstanceState;JJZ)Ljava/lang/Runnable; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()V, handle:H7 local/lito381/server/NativeDeInstanceState.lambda$content$351481d0b3c78d336e51b1beac1da6879a4988c6e81a04d1533c212df2c5d781(JJZ)V, type:()V]
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; CONST Integer:0
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; ILOAD 3
  method sourceAi$scheduleAiTick(JIZ)Ljava/util/concurrent/ScheduledFuture; INVOKESTATIC java/lang/Math.max(II)I
@@ -2225,7 +2227,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method startAI()V ASTORE 1
  method startAI()V ALOAD 0
 -method startAI()V ALOAD 1
- method startAI()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$fd1ba82fa5bc2d3af41ae9b55c3c9cb9056616c975a4888758aeeed3363fe0c9(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method startAI()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$afd00721cf0943ac2ed68f035f4231ea8970fc1542fd7d31a86cee32c324db62(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method startAI()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method startAI()V POP
 @@ -4020,9 +3960,7 @@
@@ -2235,7 +2237,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method stopAI()V ASTORE 1
  method stopAI()V ALOAD 0
 -method stopAI()V ALOAD 1
- method stopAI()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$7d57c00e9c6f7cbe762d09ac22a110a83cfde57b1ae8f532d8e7537081e20621(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method stopAI()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$5afda35f2420fabd33fb5acc42db84107fe8853ce8eb11d130ea44ed35dc70d4(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method stopAI()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method stopAI()V POP
 @@ -4033,9 +3971,7 @@
@@ -2246,7 +2248,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method stopAiOwner(J)V ALOAD 0
 -method stopAiOwner(J)V ALOAD 3
  method stopAiOwner(J)V LLOAD 1/2
- method stopAiOwner(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f04c709ad951306a250d2bfbb46e2f198ca65818d23e88b3e7a5b669730bfec9(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method stopAiOwner(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$4bfea0865f313a078f4054e7d8259859d6bd0ec8891bda62fd729e29b968bd20(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method stopAiOwner(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -4047,9 +3983,7 @@
  method submitAiTick(J)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2256,7 +2258,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method submitAiTick(J)V ALOAD 0
 -method submitAiTick(J)V ALOAD 3
  method submitAiTick(J)V LLOAD 1/2
- method submitAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$e35014986baf8453b7ce6346aa779329f2e452f7dc6925e7d27a61bbdb49368f(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method submitAiTick(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$374a7feeea95d07b6724df256e4d062097c4470c331b242e2911021affa29852(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method submitAiTick(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -4061,9 +3995,7 @@
  method updateNextActionTime(I)V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2266,7 +2268,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method updateNextActionTime(I)V ALOAD 0
 -method updateNextActionTime(I)V ALOAD 2
  method updateNextActionTime(I)V ILOAD 1
- method updateNextActionTime(I)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;I)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$798fb3755f799fed2904209a1203df8a88d7779f257160cb1e6124192e4ab099(Llocal/lito381/server/NativeDeInstanceState;I)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method updateNextActionTime(I)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;I)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$99b1717b29e0f8c927fe237f95a0924b7ee57d051661db44be1f9cc6f40b2381(Llocal/lito381/server/NativeDeInstanceState;I)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method updateNextActionTime(I)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 @@ -4075,9 +4007,7 @@
  method wakeup()V annotations=||||pvis=|pinv=|lvtvis=|lvtinv=
@@ -2275,7 +2277,7 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
 -method wakeup()V ASTORE 1
  method wakeup()V ALOAD 0
 -method wakeup()V ALOAD 1
- method wakeup()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$b867129d95dec223ced7e0c959814ebf79437ebe7e890195ed46b5795a4487db(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method wakeup()V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$dacb1b16918bcb3894b7dcb010ed8f5153164ccb7bb9558fff23db42ea0369c5(Llocal/lito381/server/NativeDeInstanceState;)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method wakeup()V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
  method wakeup()V POP
 @@ -4088,9 +4018,7 @@
@@ -2286,37 +2288,49 @@ bridge 已逐項列於附錄 B，已核准建構子另列 deviations。以下是
  method wakeup(J)V ALOAD 0
 -method wakeup(J)V ALOAD 3
  method wakeup(J)V LLOAD 1/2
- method wakeup(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$c27f2dd7a058f134cd8e387e16d3326f5958f89ee9ab731a3da66cd159336584(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
+ method wakeup(J)V INVOKEDYNAMIC get(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/util/function/Supplier; bsm=H6 java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite; args=[type:()Ljava/lang/Object;, handle:H6 local/lito381/server/NativeDeInstanceState.lambda$content$f33796a7920f59e63d9e9558e6379e9bd319c64d3a7474e5e9bdee0102c7317d(Llocal/lito381/server/NativeDeInstanceState;J)Ljava/lang/Object;, type:()Ljava/lang/Object;]
  method wakeup(J)V INVOKESTATIC local/lito381/server/NativeDeLiveAiScope.call(Llocal/lito381/server/NativeDeInstanceState;Ljava/util/function/Supplier;)Ljava/lang/Object;
 ```
 
 ## 附錄 D：輸入與證據 SHA-256
 
+本輪工具來源與 main `9678e97` 相同，包含 #186、未包含 #203；JSON generatedAt 為 `2026-11-05T18:31:58Z`。
+
 | 路徑 | SHA-256 |
 |---|---|
 | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
 | `scratch/issue-72/target/final-reproduce.jar` | `63e970a0ed1bd26f94586b79df3de840e6231b46977ce63215d5427e55363808` |
-| `scratch/issue-72/final-reproduce.json` | `bd0077bd98aa497efe6e7c4ba91f3f4585bb78636b4628df1e57b9ce82636fed` |
-| `scratch/issue-72/final-reproduce.md` | `efd314368230d37daca6914207d49d5a18b9dc45ba88112227b8f5836ddb77ef` |
+| `scratch/issue-72/final-reproduce.json` | `de7c5b2a04094e8d259fa69c0d5c4387cc16a1ccc4bd6e515358a559fbd9d911` |
+| `scratch/issue-72/final-reproduce.md` | `80f6e8aa8e8eee41e98b01da30c5bfb6891f8804fb0a5ca7e21b620b3b6b2323` |
 | `scratch/issue-72/staged-instance.javap.txt` | `d25eceb12d285baed5880c49de8e05a347e40a341d36a1a9886db9c746277122` |
 | `scratch/issue-72/formal-instance.javap.txt` | `5aee326c850f7d71af3c39c77aab7373de3dbd3c649a01c4cea02221bce529ee` |
 | `scratch/issue-72/formal-callers.javap.txt` | `c45d54785e9bfc6f894f1abaa38d31fb06f126734ae0cc89b9521871862b21ab` |
 | `scratch/issue-72/audit/bridges.tsv` | `a769e24699c04cb4c7ea1ec405dd17b2923a58299bb9931b060448ded83c74a9` |
 | `scratch/issue-72/audit/calls.tsv` | `4acd5d7833426987ddfae9a6c6a98a0899335ecd9593d7cfd14cdba2a0acb1d0` |
-| `scratch/issue-72/lambda-audit.txt` | `a175279e3a483b2f2de2ddf1726f13fce8a3c5751b68bf467ca3bdbc41662ebf` |
+| `scratch/issue-72/lambda-audit.txt` | `1362078962842385e74b17e5c3b815558f7d8c935a1f762ddcdf18089dcaa59d` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/BlockExpressions.java` | `f5d93c6a34f3d3b9b1cb769749b7be6cc6df598d53e106ef34c04f3e3e13a5dc` |
-| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/ClassComparer.java` | `f3cb4b65b7a881b75486ccf712e8489883e7bdc2a8e1d2f55586b4a1b4c6f15c` |
+| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/ClassComparer.java` | `32fe3a8dce53cbcc2955dbcab27634f719736a71343641195bd2ddfb468ea6d1` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/FourthNormalizations.java` | `f2994f27816d427575b1d65d7e33502dd0006b49938a46d5e1633396e3e0a0ce` |
-| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/JarIndex.java` | `2a17eaa32ddd76aca18b83cae0e0a9e5aae3c99cea1f88fc22d9aefef667e24d` |
+| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/JarIndex.java` | `78219bb9c1aca74e275450046313b4dd3eacfaa26e6140aead2f9259911d73f5` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/LayoutComparison.java` | `c3c31be673b6088eacb2fcbb4da71d6523951be2bcc9d2e7c2325778178c6078` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/LocalTransport.java` | `bd98cfc3303dbb170595bc63143c5be95c3483b720a912861708c5448d4643d8` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/LocalWebs.java` | `564d8dbc0256890d64520c46815bfa00b5c93075b9e65052121488bdcf9fd608` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/NonNullChecks.java` | `2dbd1a43a1c2324dda5af4d3de510f8472daf880676892bf2788ff106578d923` |
-| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/Normalizations.java` | `d6151ce17917fb639fa0b0f5c13a41c66f8055cf975132416b5f075d6d259395` |
+| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/Normalizations.java` | `6094fa299e2b17538a6a7050464e624ffec75c7cecf8566d667fc11058e79dec` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/PathComparison.java` | `a36626687f3177ef1fe38ce5aa68d5ecf9f27927fc3fca0788add0098d1162ad` |
-| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/SemanticDiff.java` | `085ac7d21355db4dfc3c1bc634df8f02ce9bf411876cd8da4b22c8d5ec7891ff` |
+| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/SemanticDiff.java` | `29234a4a092712401e85245e73b95bd5c48d85fbe82c8810b52ceb90233c4bfd` |
 | `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/TransportComparison.java` | `fa05cf2ea262c8d6b23a2fcbdcf0fb1d76057519978e081e5433067679df4fa2` |
 | `scratch/issue-72/formal-handle.javap.txt` | `a3d0613df04d43d3ed24e17880ea1914215bcd3b837b1b7ccda663382d3d7d6f` |
+| `lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/local/lito381/semanticdiff/RethrowHandlers.java` | `29f7f291cd6bf5cecfe77653fc3267e80decea857d3ea782878802727a37215e` |
+| `docs/combat-merge/a-batches.json` | `ac1c17ec1a446564c6fb912235ecd9222d06bef1a3a91cdcb3836fda158ad65d` |
+| `docs/combat-merge/deviations.txt` | `15d68d4115fa4eeece0f206972a19049f6eeebf3f5055cc28f3c852c4d5475f9` |
+| `docs/combat-merge/access-widen-approved.txt` | `4bf5066b4ba996472337b173330e9fb5306b4378847512d15fe510d9b666ac74` |
+| `docs/combat-merge/effects-approved.txt` | `b8ecf18b0595beadd278534735b6df6279ae8aa9cc3d8a256d7cd72e7a29c11f` |
+| `scratch/issue-72/verify_entries.txt` | `8c883895819b752ae9c9b70b2cef771ce7f44bc23cacfc25c19c197109c79499` |
+| `scratch/issue-72/deviations.txt` | `a69185542cbe0af49e8bb2287f9745d6d0640322a533a47cd99ab7671ac10dbb` |
+| `scratch/issue-72/access-widen-approved.txt` | `c91befb77d5968cfe9a58779c819f410b8e817712e9c660b233805733c1faed3` |
+| `scratch/issue-72/final-reproduce.py` | `cc9ece2eaf36dd427b0d4900f9c5fbb433cd2aa3683ccae96a30990955bffbb1` |
+| `scratch/issue-72/final-semantic.log` | `38c1a4e26b00c587225ed60807b00d12a19ea69cc58a02c5f5381d050d30fbcd` |
 
 ## 附錄 E：完整重現與稽核程式
 
