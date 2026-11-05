@@ -24,6 +24,9 @@ final class JarIndex {
     private Map<String, Set<String>> exactMethods = Map.of();
     private final Map<String, ClassNode> trees = new TreeMap<>();
     private final Map<String, String> lambdaIds = new TreeMap<>();
+    final Map<String,String> callsiteIds = new TreeMap<>();
+    void clearLambdaIds() { lambdaIds.clear(); }
+    boolean exact(String owner,MethodNode m) { return exactMethods.getOrDefault(owner,Set.of()).contains(m.name+m.desc); }
     private final java.util.Set<String> resolving = new java.util.HashSet<>();
     private final Map<String, Map<String, String>> switchFields = new TreeMap<>();
     final Map<MethodNode, String> methodOwners = new java.util.IdentityHashMap<>();
@@ -36,6 +39,7 @@ final class JarIndex {
     Map<String, Set<String>> extraMethods = Map.of();
     Map<String, Set<String>> methodDiffs = Map.of();
     Set<String> innerAccessWiden = Set.of();
+    Set<String> enclosingMethodExempt = Set.of();
     record MethodResult(String status, String detail) {}
     final Map<String, Map<String, MethodResult>> methodResults = new TreeMap<>();
     void result(MethodNode m, String status, String detail) {
@@ -170,6 +174,8 @@ final class JarIndex {
 
     String remapMethod(String owner, String name, String desc) {
         if (exactMethods.getOrDefault(owner, Set.of()).contains(name + desc)) return name;
+        String paired=callsiteIds.get(owner+"#"+name+desc);
+        if(paired!=null)return paired;
         if (name.startsWith("lambda$") && syntheticPrefix(name) != null && classes.containsKey(owner)) {
             String key = owner + "#" + name + desc;
             if (lambdaIds.containsKey(key)) return lambdaIds.get(key);
@@ -212,6 +218,7 @@ final class JarIndex {
         // SourceDebugExtension / MethodParameters. SKIP_FRAMES drops StackMap (not compared).
         new ClassReader(bytes).accept(node, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
         Normalizations.prepare(node);
+        for (MethodNode m : node.methods) PureRethrowHandlers.normalize(m);
         for (MethodNode m : node.methods) NonNullChecks.normalize(node.name, m);
         FourthNormalizations.prepare(node, this);
         for (MethodNode m : node.methods) methodOwners.put(m, node.name);

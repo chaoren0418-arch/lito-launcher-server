@@ -36,6 +36,17 @@
 - **推測**：以上來源端修補可滿足交付需求；比較器結果不證明執行期父鏈回呼不會觀察到差異。
 - **待驗證**：本文件列出的 A-land 執行期單元測試，以及介面 default 實作與五個建構子的最終來源。
 
+## #72：Name 建構子的 Java 17 委派表達
+
+依[同一核准留言第 2 項](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935)，追加一個 private 建構子：
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeInitializerKernel$Name;Llocal/lito381/server/NativeDeNpcTemplate;)V
+```
+
+四個公開 Name overload 先執行 `this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate)`。private 建構子執行 super、寫入 construction 與共用初始化，公開 overload 再寫入各自旗標並呼叫 startNpc。Name 失敗時不會進入 private／父建構子。
+
+新增建構子以一般 left-only deviation 列管；原五個 `ctor-prologue-order` 不擴大。新版比較器尚不展開建構子委派，因此四個公開 overload 仍為 DIFF，不代表已通過驗收。完整建構子鏈、正式 JAR 的子類清單（0 個）、虛擬方法解析與剩餘差異見 `docs/reports/issue-72.md`。A-land #78 仍須執行核准留言第 4 項兩個測試。
 ## #176：PhysicalNpc 的 int／boolean 方法偏離
 
 兩條均由 [#65 主控留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888) 核准，僅作用於下列完整方法識別：
@@ -59,3 +70,44 @@
 **比較界線**：傳入 `--deviations` 才啟用 `method-diff`；精確匹配兩側原名與描述子，方法缺少、清單拼錯、未附核准 URL 均拒絕。整類其他方法與 metadata 照比；JSON `methodResults` 與 Markdown 另列 DEVIATION 和左右完整正規化方法內容，不混進 SAME。更換候選後應重做上述 producer 證明，不能沿用值域結論。
 
 **推測／待驗證**：指定值域下兩種 boolean 表達相同；B-land 仍須依主控要求補 `sourceState`／`targetState` 回傳 0／1 時兩個 consumer 與候選一致的單元測試。未載入應用類別、啟動伺服器或連接資料庫。命令、稽核腳本與批次結果見 [issue-176 報告](../reports/issue-176.md)。
+
+## #72：四個公開 Name 建構子與 compute 的 method-diff（2026-11-06）
+
+依 [主控最新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173)，僅追加下列五個完整方法識別。前述舊紀錄中「四個公開 overload 仍為 DIFF」是舊工具的歷史狀態；本輪四個公開 overload 已依此裁定列為 `method-diff`。原有 `ctor-prologue-order` 與新增 private 建構子的 left-only 核准均保留。
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;Z)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZZLjava/lang/String;)V
+local/lito381/server/NativeDeCharacterFields$CombatSkillDerived#compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived;
+```
+
+- **四個 Name 建構子的理由**：依 #72 裁定，`NativeDeInstanceNames.name(construction, name)` 在 super 前求值；`this(...)` 委派給 private 建構子執行父建構、construction 賦值及共用初始化，公開建構子再執行各自的旗標設定與 startNpc。Java 的委派形狀不同，主控核准為方法級刻意偏離；construction 賦值由 super 前移後仍是原先有限核准，不宣稱字節碼或所有父鏈觀測無條件等價。
+- **compute 的理由**：正式版參照不存在的 SKU1／SKU2／SKD1／SKD2／SKD3 欄位，Java 無法直接表達未解析欄位引用。保留六個區域值初始化、Iterable 迭代及 null 元素略過，在首個非 null 元素原 GETSTATIC SKU1 處明確 `throw new NoSuchFieldError("SKU1")`。後四個 GETSTATIC 永遠不可達，Java 不保留不可達敘述，也不補空表或替代技能值。根本原因另由 #184 調查。
+- **比較界線**：`method-diff` 比較精確名稱及描述子，左右方法均須存在；其餘方法、欄位、metadata 與 entry 完整性照常驗證。169 個 public bridge 及 lambda 差異沒有加入任何豁免。
+- **已驗證**：49 份 staged Java 以 Java 17 編譯，185 個 entry 完整；NativeDeCharacterFields 為 SAME，CombatSkillDerived 為 DEVIATION，四個公開 Name 建構子逐方法 DEVIATION。整個 Instance 類別仍為 DIFF，詳見 issue-72 報告。
+- **待驗證（#78 A-land）**：construction 的父鏈可觀測性；四個 Name overload 的成功／失敗求值與初始化順序、各布林組合及字串邊界；compute 空集合及全 null 元素正常回傳，含非 null 元素拋 NoSuchFieldError。未執行 staged 應用類別、伺服器、遊戲或資料庫。
+
+**2026-11-06 重驗狀態更新**：依 [最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6663641218)，169 個 bridge 與巢狀 lambda 的裁定已完成，兩者 Java 不改，分別交 #203 第 3、1 項工具規則驗證；不增加任何精確核准識別或整類豁免。本輪合併 main `9678e97`（含 #186）後，直接編譯全部 49 份 staged Java，185 entries 為 183 SAME／1 DEVIATION／1 DIFF，missingLeft/extraLeft 皆空，Instance 仍 DIFF。PR #215 於 2026-11-06 02:32（UTC+08:00）仍 OPEN、merged_at=null，因此等待 #203 合併及全量重驗，尚未通過最終驗收。既有五項 method-diff、private 建構子及 ctor-prologue-order 的精確核准識別均保留；#78 測試要求不變，詳見 [issue-72 報告](../reports/issue-72.md)。
+## #75：Eye.canOverwrite 的 int／boolean 方法偏離
+
+識別：`local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z`，類型 `method-diff`。依 [#75 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411) 保留 staged Java，僅核准此精確方法的表示差異。
+
+**已驗證（2026-11-06）**：Microsoft JDK 17.0.17 的 `javap -c -p -s`，正式 JAR SHA-256 為 `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498`。正式 consumer 的 offset 1 為 `GETFIELD canOverwrite:Z`，5 為字串常數 `"canOverwrite"`，7 呼叫 `CombatSpecialBuffs.eyeField(ILlocal/lito381/server/BattleDragonEyeCatalog$Eye;Ljava/lang/String;)I`，10 直接 IRETURN。staged 將第一個參數寫為 `this.canOverwrite ? 1 : 0`，回傳寫為 `eyeField(...) != 0`。
+
+`eyeField` 有且只有三個 IRETURN。它是多用途 int 方法，以下明確區分一般輸入與本次 consumer 的可達值域：
+
+| IRETURN offset | 一般輸入的所有來源（保守值域） | `field="canOverwrite"` 的可達值域與理由 |
+|---:|---|---|
+| 10 | offset 9 的 ILOAD 0，任意 int | `{0,1}`；來自 `canOverwrite:Z` 欄位，staged 的條件轉換亦為 `{0,1}` |
+| 42 | offset 39 的 `SourceSkillControls.ability(...)I`，不主張受限於 boolean | 不可達；`EYE_ABILITIES.get("canOverwrite") == null`，offset 27 必到 43 |
+| 390 | case 0–6 在 313／320／327／334／341／348／355 呼叫的七個 int accessor（保守為任意 int），或 368 的 ICONST_1／372 的 ICONST_0 | `{0,1}`；字串 hash 分派到 248，253 的 equals 成功，259–261 設 case 7；265 的 switch 到 361，362 呼叫 `Config.overwrite()Z`，365 的 IFEQ 選擇 368 的 1 或 372 的 0，兩者都到 390 |
+
+default 376–389 丟 `IllegalArgumentException`，沒有第四個回傳出口；本字串不會走 default。`config` 或其他呼叫丟例外時也沒有新增正常回傳值。
+
+不可達證據：`EYE_ABILITIES` 為 private static final；javap 中只有 `eyeField` 的一次 GETSTATIC 與 `<clinit>` 的一次 PUTSTATIC。`<clinit>` offset 24–69 的八組 key/value 是 `meleeDamage/DMG`、`magicHit/MAGIC_HIT`、`damageReduction/DMG_REDUX`、`evasionRate/ER`、`stoneResistance/REGIST_STONE`、`sleepResistance/REGIST_SLEEP`、`freezeResistance/REGIST_FREEZE`、`poisonResistance/POISON_RESIST`，72 呼叫不可修改的 `Map.of`，75 寫入欄位；沒有 `canOverwrite` key，也沒有將此 map 暴露給其他方法。這項證明不把其餘 int accessor 或 ability 的結果誤判為 `{0,1}`。
+
+依 [JVMS 17 §6.5 ireturn](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-6.html#jvms-6.5.ireturn)，boolean 回傳採 `value & 1`；[putfield](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-6.html#jvms-6.5.putfield) 寫入 Z 欄位也會收斂為最低位元。因此本 consumer 的可達集合 `{0,1}` 中，0 的兩種表達都為 false，1 都為 true；輸入端 `? 1 : 0` 亦保持欄位值。**證明成立，僅限這份正式 JAR 與這個呼叫的固定字串；不宣稱一般 int 的 `!= 0` 等同最低位元。**
+
+**比較界線與待驗證**：只有上述方法列 DEVIATION，其餘 Eye 方法、欄位與 metadata 照比；沒有為 PoisonAtomic 增加豁免。更換 producer 或 map 後須重做值域證明。未執行遊戲或 DB；A-land 仍需補 PoisonAtomic 的 `leaveInstall` 拋例外時 monitor 釋放測試。可重現命令、原始輸出與全批結果見 [issue-75 報告](../reports/issue-75.md)。
