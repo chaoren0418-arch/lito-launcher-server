@@ -2,18 +2,20 @@
 
 ## 結論
 
-**待主控裁定，B04 尚未通過全部語意驗收。** 51 個 staged Java 已完成本輪移植並整批編譯，直接 javac 產物經既有轉換器處理後有 98 個 class，清單完整。預設 semantic-diff 結果為 **SAME 95、DIFF 3、ONLY_LEFT 0、ONLY_RIGHT 0**。逐方法複核定位為 3 個 entry 的 6 個方法，下方附全部正規化差異，交 `needs:claude`。
+**等待 #176 合併後驗收，B04 尚未通過全部語意驗收。** 2026-11-05 本輪查核：#174 已透過 PR #178 合併，#176 仍為 OPEN／task:running。使用已合併主線 `2d8be85804c6e78cc4aff4ade7971415aae4b29b` 的工具重新整批編譯 51 個 staged Java，經既有轉換器後得到 98 個 class，無多缺。預設 semantic-diff 結果仍為 **SAME 95、DIFF 3、ONLY_LEFT 0、ONLY_RIGHT 0**，逐方法複核仍為相同六個方法。
 
-本報告取代前次 `c30740d` 的完成宣告與 ASM 疊回交接。本輪驗收使用本次 Java 編譯及已合併轉換器的產物。驗收方法保持完整預設比較。
+這六個方法已由[主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888)：Java 維持現狀，四個方法等待 #176 的逐路徑比對，兩個方法等待核准 `method-diff`；不再要求重新裁定。未把預期 SAME_PATHS／DEVIATION 當成已驗證結果。本輪只更新本報告及 PR #87 說明，51 個 staged Java 保持 `e5fa958` 原樣。
+
+本報告取代前次 `c30740d` 的完成宣告與 ASM 疊回交接。驗證使用直接 javac 產物及已合併的 as-record 轉換器，不覆蓋候選 class，也未自行新增豁免。PR #87 本文同步改為整批編譯、核准轉換器與實際 95／3 結果。
 
 ## 做了什麼
 
-1. 在既有 `task/65` worktree，將主線快轉至 `450178d59b0157fddf2b9456b7c03d20207993fc`，取得已合併 #102／#135／#153／#166。再合入遠端 `task/65` 的 `c30740debf2308a7ecb47e9bbb911b73e5f7d407` 歷史，保留前次提交以供正常推送。
+1. 前輪 `e5fa958` 在既有 `task/65` worktree，以 `450178d59b0157fddf2b9456b7c03d20207993fc` 的已合併 #102／#135／#153／#166 為工具基礎，保留前次 `c30740d` 歷史。本輪沿用同一分支，以 `git archive` 將已合併 #174 的工具取到 worktree 內 scratch，再編到 target；未切換分支或修改追蹤中的工具檔。
 2. 依 `batches.json` 與凍結 `manifest.json` 重新選取 51 個 Java 起點。外層標為 asm-only 者取同檔內部類別的凍結來源，`NativeSourceNpcDamageDisplay` 選 `$Proof` 變體。25 檔與選定凍結來源 bytes 相同，12 檔僅整理行尾空白與換行，14 檔移植後補上可讀排版。
 3. 以 CFR 0.152 反編譯指定 12 個 asm-only entry 所屬的 7 個外層類別，逐方法對照移植。另比對 FactoryType、FactoryMemory、NpcEscape、Pair trampoline 與 PlayerView 的候選改動，補齊整批來源依賴。
 4. 補入目標 first-life／negative-final-frame、NPC 工廠欄位與重載建構子、原始目標與 clock scope、NPC HP／magic 輸出、physical audience／raw／ground guard、成對呼叫轉接等候選邏輯。
 5. 三個 record 使用 `@AsRecord`，分別為 `NativeSourceNpcFactoryType$Stamp`、`NativeSourceNpcPlayer$Scope`、`NativeSourcePhysicalNpc$Origin`。Stamp 的六個額外 final 欄位交由 `finalFields` 還原，以保留部分建構子中的 JVM 預設值。
-6. `NativeSourcePhysicalNpc$Commit.nativeSourcePhysicalAudience` 的舊建構子同樣保留預設值，新增重載才賦值。本輪依已合併 #153 的一般類別欄位方案使用 `@AsmFinal`，由同一支 `tools/as-record` 轉換器恢復 final，並保留 transient。該 Commit 已比對 SAME。此處是依 #153 通用契約作出的實作選擇，請主控一併確認本批適用性。
+6. `NativeSourcePhysicalNpc$Commit.nativeSourcePhysicalAudience` 的舊建構子同樣保留預設值，新增重載才賦值。依已合併 #153 的一般類別欄位方案使用 `@AsmFinal`，由同一支 `tools/as-record` 轉換器恢復 final，並保留 transient。該 Commit 已比對 SAME。
 7. 保留候選轉接後仍存在的 private lambda producer 本體，實際 producer 呼叫轉向 `NativeSourceNegativeFinalFrame.produce`，全部候選方法納入逐項驗證。
 
 14 個實際移植檔案如下，其餘 37 檔沿用凍結 Java。
@@ -37,7 +39,7 @@
 
 ### 編譯、轉換與清單
 
-Windows／Microsoft OpenJDK 17.0.17，`--release 17 -encoding UTF-8`，ASM 9.7。使用全新的 `target/issue-65/final/classes` 整批編譯 51 檔。支援 annotation 獨立編到 `annotations/` 並加入 javac classpath，以取得候選 JAR 尚未包含的 `AsRecord`／`AsmFinal` 定義。驗收 JAR 包含整個批次 classes 目錄。
+Windows／Microsoft OpenJDK 17.0.17，`--release 17 -encoding UTF-8`，ASM 9.7。本輪使用全新的 `target/issue-65/recheck-174/classes` 整批編譯 51 檔。支援 annotation 獨立編到 `annotations/` 並加入 javac classpath，以取得候選 JAR 尚未包含的 `AsRecord`／`AsmFinal` 定義。驗證 JAR 包含整個批次 classes 目錄。
 
 ```text
 javac exit=0 sources=51
@@ -53,38 +55,50 @@ different methods=6
 
 轉換前後 SHA-256 清單確認僅四個標註 class 有改變。候選 JAR 僅供 javac 依賴、反編譯及右側比較。另提供 `--left-classpath` candidate/base 供 #166 解析外部 field owner，這些依賴各自獨立於左側驗收集合。
 
-已從下方報告區塊擷取 PowerShell 指令，使用另一個全新目錄 `target/issue-65/recheck-verified` 再編譯及比較，結果同為 95 SAME／3 DIFF，98 個 class bytes 逐一與 final 相同。複驗日誌為 `scratch/issue-65/recheck.log`。依賴首次在沙箱內下載遇 TLS 認證失敗，經核准重試下載後三個 SHA-256 全部通過。`git diff --check HEAD` 與變更範圍核對通過，檔案集合精確為 51 個 B04 Java 加本報告。
+本輪執行 `scratch/issue-65/recheck-174.ps1`，日誌為 `recheck-174.log`，結果為 95 SAME／3 DIFF；98 個 class bytes 逐一與前輪 final 相同，三個 ASM 依賴 SHA-256 均通過。另以同一份 #174 工具的 `ClassComparer.compareMethod(..., false)` 稽核全批方法，`recheck-174-method-audit.log` 確認仍只有下列六個方法不同，沒有缺少方法。PowerShell 5.1 將 javac 的 unchecked 提示包為 `NativeCommandError` 顯示；javac 實際 exit=0，後續轉換與比對均完成。
+
+`git diff --check` 與範圍核對通過：本輪只有本報告變動；整個分支相對主線共同祖先仍精確為 B04 的 51 個 Java 加本報告，共 52 檔。
 
 | 輸入或產物 | SHA-256 |
 |---|---|
 | candidate-50635f7e.jar | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
 | base-0.6.71.jar | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| 本次 final/b04.jar | `5ccec2e8573d427fd98a8de93776a6b4ef81966c45ae16b1d26d358f5d41b7e6` |
+| 本次 recheck-174/b04.jar | `c4964f81bcb31f29ede684eb6f306bc0d54b67e9fb15056a54490397423a2b41` |
 | CFR 0.152 | `f686e8f3ded377d7bc87d216a90e9e9512df4156e75b06c655a16648ae8765b2` |
 
 JAR 雜湊包含封裝時間，重新打包時以清單和語意結果核對。class 比對已忽略 debug 資訊。
 
-### 待裁定的三個 entry
+### 已裁定、等待 #176 驗收的三個 entry
 
 | Entry，皆位於 `local/lito381/server/` | 方法 | 已觀察差異與理由 |
 |---|---|---|
 | `NativeSourceNpcDamageDisplay.class` | `questDamage`、`timeDamage` | 候選在各個正常 return 的 MONITOREXIT 之後、ARETURN 之前插入 `acceptedNatural(receipt)`，異常出口跳過回呼。CFR 對早退輸出 `MONITOREXIT @DISABLED`，直接照抄會把早退回呼放進 monitor。本輪 Java 將結果保存後離開 synchronized，再呼叫回呼，保留正常／異常出口與鎖界線，但共用出口的 try 區段與控制流程未通過預設線性比較。 |
-| `NativeSourceNpcEscape.class` | `nativeSourceFirstViewHandled`、`nativeSourceNpcPlayerFirstHandled` | 保護區段及其餘正規化指令已一致。剩一組反向分支加 GOTO，相對候選的單一條件跳躍。以 frozen body、CFR body、巢狀標籤版移植後，最後仍保留此一排列差異。尚未證明 javac 完全無法產生目標排列，主控可裁定補正規化或指定另一個 Java 形狀。 |
+| `NativeSourceNpcEscape.class` | `nativeSourceFirstViewHandled`、`nativeSourceNpcPlayerFirstHandled` | 反向分支加 GOTO 相對候選的單一條件跳躍；#174 比較亦呈現由排列差異造成的 handler 指令位置差異。主控已裁定 Java 維持現狀，交 #176 逐路徑比對。 |
 | `NativeSourcePhysicalNpc.class` | `sourceCurrent`、`targetCurrent` | 候選呼叫回傳 int 的 `sourceState`／`targetState` 後，直接 `DUP; IFLT; IRETURN` 作 boolean 回傳，負值走原本 fallback。Java 的 boolean 方法必須以布林運算表達此值，因此使用 `state >= 0` 分支及 `state != 0`。已讀取候選兩個 producer，其返回常數集合為 -1／0／1。預設比較保留 int→boolean 指令形狀差異。 |
 
-逐方法稽核使用同一份已合併 `JarIndex`／`ClassComparer.compareMethod(..., false)`，遍歷全部 98 entries 的正規化方法鍵，得到上述六筆，缺少方法數為零。下方 diff 由 `ClassComparer.tryCatch` 與 `ClassComparer.instructions` 原始完整列表產生，列出六個方法所有差異 hunk，左側是 staged、右側是 candidate，無裁切指令或縮略欄位／方法描述子。
+逐方法結果與核准依據如下。核准依據均為上述主控留言及 [#176 規格](https://github.com/chaoren0418-arch/lito-launcher-server/issues/176)；預期狀態尚未驗證。
+
+| 類別／方法 | #174 實測 | #176 核准驗收方式 | 依據 |
+|---|---|---|---|
+| NativeSourceNpcDamageDisplay／questDamage | DIFF | 預期 SAME_PATHS | 主控表第一列；#176 第 2 項 |
+| NativeSourceNpcDamageDisplay／timeDamage | DIFF | 預期 SAME_PATHS | 主控表第一列；#176 第 2 項 |
+| NativeSourceNpcEscape／nativeSourceFirstViewHandled | DIFF | 預期 SAME_PATHS | 主控表第二列；#176 第 2 項 |
+| NativeSourceNpcEscape／nativeSourceNpcPlayerFirstHandled | DIFF | 預期 SAME_PATHS | 主控表第二列；#176 第 2 項 |
+| NativeSourcePhysicalNpc／sourceCurrent | DIFF | 預期 DEVIATION（method-diff） | 主控表第三列；#176 第 3 項 |
+| NativeSourcePhysicalNpc／targetCurrent | DIFF | 預期 DEVIATION（method-diff） | 主控表第三列；#176 第 3 項 |
+
+主控初始留言提到 `path-approved.txt`，#176 最新規格將無迴圈逐路徑比對改為預設後備。本批待 #176 合併後依實際工具契約與已合併核准清單執行，不自行建立清單或使用未合併工具。報告末尾保留 `e5fa958`／#166 時的六方法完整差異，作為已裁定問題的證據；它不是 #174 的新正規形輸出。
 
 ## 推測
 
-- Escape 的條件反向加 GOTO 可由保持分支目標的正規化或既有 CFG 比較處理，是否新增核准交主控。
-- DamageDisplay 的共用正常出口應保留候選鎖界線與回呼時序，目前缺少經核准的語意證明。
-- PhysicalNpc 的三態 producer 在本候選回傳集合下可由布林條件表達，但需主控裁定受限的 int／boolean 正規化。三項皆保留 DIFF。
+- 依已核准的 #176 規格，預期四個方法為 SAME_PATHS、兩個方法為 DEVIATION；仍須實際重跑，不能推論工具一定通過。
+- 本輪沒有新的未裁定 Java 語意問題；目前阻塞是已核准比較能力尚未合併。
 
 ## 待驗證／未驗證什麼
 
-- 98 個 entry 全部 SAME 的驗收仍有上述三類阻塞。
+- #176 尚未合併，尚未取得全批 DIFF=0、無多缺及逐方法 SAME_PATHS／DEVIATION 的最終證據。
 - 單元測試與行為回歸依本批設計交 B-land。暫存區未執行應用邏輯。
-- 尚待主控審查與本次推送後的 CI 狀態確認。
+- 尚待 #176 的 producer javap 證據、B-land 的 0／1 producer 回歸、主控審查及推送後 CI 狀態確認。
 
 ## 產出路徑
 
@@ -92,27 +106,38 @@ JAR 雜湊包含封裝時間，重新打包時以清單和語意結果核對。c
 - `docs/reports/issue-65.md`，本報告。
 - 本機可重建證據在 `scratch/issue-65/`，包含 `sources.json`、`entries.txt`、`final-verification.log`、`final-semantic.json`、`method-audit.log`、`remaining-differences.json`、`cfr/` 與 `final-left/`／`final-right/`。
 - 建置產物在伺服器 `target/issue-65/final/`。scratch 與 target 由忽略規則管理。
+- 本輪產物：`target/issue-65/recheck-174/`；證據：`scratch/issue-65/recheck-174.ps1`、`recheck-174.log`、`recheck-174-semantic.json`／`.md`、`recheck-174-method-audit.log`。已合併工具快照位於 `scratch/issue-65/merged-tools-174/`。
 
 ## 給下一棒的提示
 
-請 Claude 主控依本報告六個方法的完整差異處理 `needs:claude`，先裁定正規化、精確核准或 Java 寫法，再交本機重跑全批 98 個 entry。B-land 須等待全批驗收。請保留三個 AsRecord 宣告與 Commit 的 final 欄位契約，於整批 javac 後執行已合併轉換器。
+請調度器將本批等待依賴維持為 #174／#176，#174 已完成；待 #176 合併後再交本機執行器重驗全部 98 個 entry。六個方法 Java 維持現狀，不再要求主控重裁，也不自行加豁免。採用已合併工具及裁切至本批的核准清單，逐方法記錄實際 SAME_PATHS／DEVIATION 與核准連結，確認 DIFF=0、ONLY_LEFT=0、ONLY_RIGHT=0、missingLeft／extraLeft 皆空後，更新報告與 PR #87 再送審。若屆時仍有差異，才附完整新差異交 `needs:claude`。
+
+B-land（#138）仍須補單元測試：`sourceState`／`targetState` 各回傳 0 與 1 時，確認 `sourceCurrent`／`targetCurrent` 結果與候選一致。保留三個 AsRecord 宣告與 Commit 的 final 欄位契約，整批 javac 後執行已合併轉換器。B04 最終驗收前不得宣告 B-land 前置已完成。
 
 ## 可重現指令
 
-在本 worktree 根目錄使用 PowerShell 7 執行。以下使用全新的 `target/issue-65/recheck`，若重跑請替換為另一個全新目錄。ASM 依賴從 Maven Central 下載到任務 target 並核對既有工具宣告的 SHA-256。可將區塊保存到 `scratch/issue-65/recheck.ps1` 執行，全部檔案寫入 worktree。執行後須檢查 counts 與 classSelection，CLI 的 exit 0 只表示報告成功產生。
+在本 worktree 根目錄使用 PowerShell 執行（本輪為 Windows PowerShell 5.1）。以下固定使用已合併 #174 的 commit，重現本輪 95／3 結果，**不是 #176 最終驗收指令**。使用全新的工具快照及 `target/issue-65/recheck-174`，若重跑請替換為另一個全新目錄。ASM 依賴從 Maven Central 下載到任務 target 並核對既有工具宣告的 SHA-256。可將區塊保存到 `scratch/issue-65/recheck-174.ps1` 執行，全部檔案寫入 worktree。執行後須檢查 counts 與 classSelection，CLI 的 exit 0 只表示報告成功產生。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
 $root = (Get-Location).Path
 $server = Join-Path $root 'lito伺服器/LiTo381-Server'
 $evidence = Join-Path $root 'scratch/issue-65'
-$output = Join-Path $server 'target/issue-65/recheck'
+$output = Join-Path $server 'target/issue-65/recheck-174'
 if (Test-Path -LiteralPath $output) { throw '請使用全新的驗證輸出目錄' }
 $classes = Join-Path $output 'classes'
 $support = Join-Path $output 'annotations'
 $semantic = Join-Path $output 'semantic'
 $converter = Join-Path $output 'converter'
 New-Item -ItemType Directory -Force $evidence,$classes,$support,$semantic,$converter | Out-Null
+$toolCommit = '2d8be85804c6e78cc4aff4ade7971415aae4b29b'
+$snapshot = Join-Path $evidence 'merged-tools-174'
+$archive = Join-Path $evidence 'merged-tools-174.zip'
+if ((Test-Path -LiteralPath $snapshot) -or (Test-Path -LiteralPath $archive)) { throw '請使用全新的工具快照路徑' }
+git archive --format=zip "--output=$archive" $toolCommit -- lito伺服器/LiTo381-Server/tools/semantic-diff lito伺服器/LiTo381-Server/tools/as-record
+if ($LASTEXITCODE) { throw 'tool archive failed' }
+Expand-Archive -LiteralPath $archive -DestinationPath $snapshot
+$toolServer = Join-Path $snapshot 'lito伺服器/LiTo381-Server'
 $jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
 $candidate = Join-Path $server 'reference/candidate-50635f7e.jar'
 $base = Join-Path $server 'reference/base-0.6.71.jar'
@@ -140,10 +165,10 @@ $entries = Join-Path $evidence 'entries.txt'
 [IO.File]::WriteAllLines($entries, [string[]]$batch.verify_entries, [Text.UTF8Encoding]::new($false))
 & "$jdk/javac.exe" --release 17 -encoding UTF-8 -d $support "$server/src/main/java/local/lito381/server/AsRecord.java" "$server/src/main/java/local/lito381/server/AsmFinal.java"
 if ($LASTEXITCODE) { throw 'annotation javac failed' }
-$semanticSources = @(Get-ChildItem "$server/tools/semantic-diff/src/main/java" -Recurse -Filter '*.java' | ForEach-Object FullName)
+$semanticSources = @(Get-ChildItem "$toolServer/tools/semantic-diff/src/main/java" -Recurse -Filter '*.java' | ForEach-Object FullName)
 & "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp $deps -d $semantic $semanticSources
 if ($LASTEXITCODE) { throw 'semantic tool javac failed' }
-$converterSources = @(Get-ChildItem "$server/tools/as-record/src/main/java" -Recurse -Filter '*.java' | ForEach-Object FullName)
+$converterSources = @(Get-ChildItem "$toolServer/tools/as-record/src/main/java" -Recurse -Filter '*.java' | ForEach-Object FullName)
 & "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp $deps -d $converter $converterSources
 if ($LASTEXITCODE) { throw 'converter javac failed' }
 & "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp "$candidate;$base;$server/lib/*;$support" -d $classes $sources
@@ -163,15 +188,15 @@ if ($missing.Count -or $extra.Count) { throw 'entry inventory mismatch' }
 $jar = Join-Path $output 'b04.jar'
 & "$jdk/jar.exe" --create --file $jar -C $classes .
 if ($LASTEXITCODE) { throw 'jar failed' }
-& "$jdk/java.exe" '-Dfile.encoding=UTF-8' -cp "$semantic;$deps" local.lito381.semanticdiff.SemanticDiff --left $jar --right $candidate --left-classpath $candidate --left-classpath $base --classes $entries --json "$evidence/final-semantic.json" --md "$evidence/final-semantic.md"
+& "$jdk/java.exe" '-Dfile.encoding=UTF-8' -cp "$semantic;$deps" local.lito381.semanticdiff.SemanticDiff --left $jar --right $candidate --left-classpath $candidate --left-classpath $base --classes $entries --json "$evidence/recheck-174-semantic.json" --md "$evidence/recheck-174-semantic.md"
 if ($LASTEXITCODE) { throw 'semantic tool failed' }
 Get-FileHash $candidate,$base,$jar -Algorithm SHA256 | Format-Table -AutoSize
-$result = Get-Content -Raw -Encoding UTF8 "$evidence/final-semantic.json" | ConvertFrom-Json
+$result = Get-Content -Raw -Encoding UTF8 "$evidence/recheck-174-semantic.json" | ConvertFrom-Json
 $result.counts | ConvertTo-Json -Compress
 $result.classSelection | ConvertTo-Json -Compress
 ```
 
-## 六個方法的完整正規化差異
+## 六個方法的完整正規化差異（e5fa958／#166 裁定依據）
 
 ### `questDamage(Llocal/lito381/server/GameHub;JLlocal/lito381/server/ClientSession;JILlocal/lito381/server/NativeSourceNpcDamageDisplay$Receipt;)Llocal/lito381/server/BattleQuestEncounter$Hit;`
 
