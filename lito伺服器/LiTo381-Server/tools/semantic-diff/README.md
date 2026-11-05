@@ -1,5 +1,24 @@
 # ASM 語意比對
 
+## T020i-6（Issue #176）
+
+預設在既有完整比較仍 DIFF、方法 metadata 相同時，嘗試有界逐路徑證明。成功另列 `SAME_PATHS`，不計入 `SAME`。方法級 `methodResults` 保留每個後備結果，即使類別仍 DIFF；Markdown 同樣逐方法列出原因。類別優先序為 DIFF → DEVIATION → SAME_PATHS → ORPHAN_IGNORED → SAME_LAYOUT → SAME_EFFECTS → SAME。
+
+- 逐路徑複製 ASM Frame，stack／local 搬移共用表示式，不在匯合點合併來源。一般 CFG 任一分量有 cycle 即拒絕；JSR／RET、不可達指令、未解析欄位 volatile 屬性、指令／local／handler 型別註解或分析失敗均維持 DIFF。
+- 每條路徑保留有序呼叫及引數、欄位／陣列寫入、volatile 讀取、monitor、分支條件及實際走向、回傳／拋出。零比較、反向條件、交換比較運算元一併正規化；switch 保留每個 case／default 的條件。所有出口紀錄使用多重集合比較，不能只比路徑數或去重後集合。
+- 非 volatile 欄位讀值含記憶體狀態版本；呼叫、寫入、volatile、monitor、配置、可能執行 class initializer／condy bootstrap 的讀取會推進版本。因此寫入前後兩次讀值不可互換。已知非 null（this 或本路徑已成功取用）的 receiver 讀取若未被使用，可以消失；未知 receiver 的取用保留 CHECK 與例外邊。陣列讀取亦保留版本、順序與檢查。
+- NEW 和對應 `<init>` 結合成配置事件，保留 NEW 位置及 constructor 完成的事件邊界；中間的參數求值、呼叫、寫入與失敗路徑不消失。只搬移 DUP／SWAP／暫存不增加事件。
+- 可能丟例外的指令逐一列舉有序涵蓋 handler，保存 catch 型別／優先序及未捕捉出口。handler 進入時清空 operand stack，保留指令執行前 locals；例外可能帶來的記憶體變化使用新版本。只對精確 `ASTORE; ALOAD lock; MONITOREXIT; ALOAD exception; ATHROW` 且已證明同一物件成對取得的 self-covering monitor handler 省略自身例外邊。其他例外循環、無法配對的 monitor 均拒絕。
+- 每側超過 4096 出口路徑拒絕；另有 500000 指令步數、32768 表示式大小及遞迴保護，達上限只回報 DIFF。這是保守證明，不是通用迴圈等價檢查或完整 JVM／並行程式驗證。診斷可用 `-Dsemanticdiff.disable=paths` 停用；其他既有正規化不受影響。
+
+`--access-widen` 新增 `類別 # approved: https://...` 格式，限定 InnerClasses 中精確該巢狀類別：左側 private → package-private／protected／public，protected → public。所有選取類別中出現的該條目都套用，允許巢狀類本身不在本批 JAR；兩側選取範圍必須均有該條目。class 自身 access 及 InnerClasses 其餘旗標照比，不擴大至其他巢狀類。JSON `innerAccessWiden` 列出清單。
+
+`--deviations` 新增 `類別#方法描述子 method-diff # approved: https://...`。只豁免精確兩側均存在的方法，另列 DEVIATION 與左右完整正規化內容；其他方法、欄位、類別 metadata 仍驗收。清單外、typo、缺方法或核准 URL 均不豁免。JSON `methodDiffs` 記錄使用條目。初始兩條 producer 的 javap 值域證據見 `docs/combat-merge/deviations.md`。
+
+右側獨有的 private synthetic 方法，只有在原始完整右側 JAR 中無直接呼叫、method handle、bootstrap／遞迴 condy 參數參照，且無同名 LDC 字串時才列 `ORPHAN_IGNORED`。掃描不受 `--classes` 篩選影響；左側獨有、非合成、有參照或有同名字串仍保留差異。
+
+`SixthSelfTest` 接入 `selftest.sh`。有效 framed bytes 同時供 CLI 與隔離 ClassLoader 執行，涵蓋呼叫順序、分支反向、ISUB operands、callback 鎖界線、欄位／陣列讀值版本與 volatile 次數；另測標準／非標準 monitor handler、4096 上限、迴圈、方向性核准、未核准方法、LDC 字串及 method handle／直接參照。先前只差 NOP 或丟棄值的測試按新規格調整；需要測「未核准本體差異」的案例改為實際呼叫差異。既有 ablation 測試同時停用 paths，正式反例仍使用預設比較。
+
 ## T020i-3（Issue #153）
 
 預設新增以下正規化，所有轉換只在讀取的 ASM tree 進行，不改寫輸入 JAR：

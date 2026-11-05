@@ -33,6 +33,53 @@ final class JarIndex {
     private Set<String> otherReferences;
     Map<String, Set<String>> accessWiden = Map.of(), layouts = Map.of(), deviations = Map.of(), ctorOrders = Map.of();
     Map<String, Set<String>> exceptionsExempt = Map.of();
+    Map<String, Set<String>> methodDiffs = Map.of();
+    Set<String> innerAccessWiden = Set.of();
+    record MethodResult(String status, String detail) {}
+    final Map<String, Map<String, MethodResult>> methodResults = new TreeMap<>();
+    void result(MethodNode m, String status, String detail) {
+        methodResults.computeIfAbsent(methodOwners.get(m), k -> new TreeMap<>())
+                .put(m.name + m.desc, new MethodResult(status, detail));
+    }
+    private Set<String> allMethodReferences, ldcStrings;
+
+    boolean orphan(MethodNode m) {
+        int required = org.objectweb.asm.Opcodes.ACC_PRIVATE | org.objectweb.asm.Opcodes.ACC_SYNTHETIC;
+        if ((m.access & required) != required || m.name.startsWith("<")) return false;
+        if (allMethodReferences == null) {
+            allMethodReferences = new java.util.HashSet<>(); ldcStrings = new java.util.HashSet<>();
+            for (byte[] bytes : classes.values()) {
+                ClassNode c = new ClassNode();
+                new ClassReader(bytes).accept(c, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                for (MethodNode method : c.methods) for (var n : method.instructions) {
+                    if (n instanceof org.objectweb.asm.tree.MethodInsnNode call)
+                        allMethodReferences.add(call.owner + "#" + call.name + call.desc);
+                    if (n instanceof org.objectweb.asm.tree.LdcInsnNode ldc) orphanReference(ldc.cst);
+                    if (n instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode indy) {
+                        orphanReference(indy.bsm);
+                        for (Object arg : indy.bsmArgs) orphanReference(arg);
+                    }
+                }
+            }
+        }
+        return !allMethodReferences.contains(methodOwners.get(m) + "#" + m.name + m.desc)
+                && !ldcStrings.contains(m.name);
+    }
+    private void orphanReference(Object v) {
+        if (v instanceof String s) ldcStrings.add(s);
+        if (v instanceof org.objectweb.asm.Handle h) allMethodReferences.add(h.getOwner()+"#"+h.getName()+h.getDesc());
+        if (v instanceof org.objectweb.asm.ConstantDynamic c) {
+            orphanReference(c.getBootstrapMethod());
+            for(int i=0;i<c.getBootstrapMethodArgumentCount();i++)orphanReference(c.getBootstrapMethodArgument(i));
+        }
+    }
+
+    Integer fieldAccess(org.objectweb.asm.tree.FieldInsnNode f) {
+        String owner = resolveField(f.owner,f.name,f.desc,f.getOpcode(),new java.util.HashSet<>());
+        ClassNode c = owner == null ? null : header(owner);
+        if(c != null)for(var field:c.fields)if(field.name.equals(f.name)&&field.desc.equals(f.desc))return field.access;
+        return null;
+    }
 
     boolean approved(Map<String, Set<String>> list, MethodNode method) {
         return list.getOrDefault(methodOwners.get(method), Set.of()).contains(method.name + method.desc);

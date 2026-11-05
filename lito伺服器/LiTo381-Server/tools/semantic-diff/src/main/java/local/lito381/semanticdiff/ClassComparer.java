@@ -99,6 +99,7 @@ final class ClassComparer {
             ClassNode left, ClassNode right, ClassNode allowRight, Set<String> allowedMethodKeys,
             JarIndex leftJar, JarIndex rightJar, JarIndex allowJar, Set<String> effectsMethods,
             Set<String> extraMethods, boolean metadataExempt) {
+        FirstDiff methods = compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods, extraMethods);
         FirstDiff d;
         int ignoredAccess = Opcodes.ACC_SUPER | (metadataExempt ? Opcodes.ACC_SYNTHETIC : 0);
         d = cmp("access", hex(left.access & ~ignoredAccess), hex(right.access & ~ignoredAccess));
@@ -145,7 +146,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        d = cmp("innerClasses", innerClasses(left, metadataExempt), innerClasses(right, metadataExempt));
+        d = cmp("innerClasses", innerClasses(left, metadataExempt, leftJar.innerAccessWiden, right), innerClasses(right, metadataExempt, leftJar.innerAccessWiden, null));
         if (d != null) {
             return d;
         }
@@ -157,7 +158,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods, extraMethods);
+        return methods;
     }
 
     private static FirstDiff compareFields(ClassNode left, ClassNode right, JarIndex leftJar, JarIndex rightJar) {
@@ -209,6 +210,7 @@ final class ClassComparer {
         // CLI validates these canonical keys against allow-right before comparison.
         // Include methods absent from BOTH left and right: these are missing ports.
         keys.addAll(allowedMethodKeys);
+        FirstDiff first = null;
         for (String key : keys) {
             MethodNode lm = lmap.get(key);
             MethodNode fromRight = rmap.get(key);
@@ -229,7 +231,13 @@ final class ClassComparer {
                 rightLabel = "right";
             }
             if (lm == null) {
-                return FirstDiff.of("method", key, null, "only " + rightLabel);
+                if (!allow && rJar.orphan(rm)) {
+                    rJar.result(rm,"ORPHAN_IGNORED","private synthetic; no JAR references or matching LDC string");
+                    continue;
+                }
+                rJar.result(rm,"ONLY_RIGHT","only " + rightLabel);
+                if(first==null)first=FirstDiff.of("method",key,null,"only "+rightLabel);
+                continue;
             }
             if (rm == null) {
                 if (!allow && leftJar.approved(leftJar.deviations, lm)
@@ -237,18 +245,18 @@ final class ClassComparer {
                 if (!allow && ((extraMethods.contains(lm.name + lm.desc)
                         && right.methods.stream().noneMatch(m -> m.name.equals(lm.name) && m.desc.equals(lm.desc)))
                         || implicitConstructor(left, right, lm))) continue;
-                return FirstDiff.of("method", key, null, "only left");
+                leftJar.result(lm,"ONLY_LEFT","only left");
+                if(first==null)first=FirstDiff.of("method",key,null,"only left");
+                continue;
             }
             if (effectsMethods.contains(rm.name + rm.desc) && !lm.name.equals(rm.name)) {
                 return FirstDiff.of("method", key, null, "effects approval requires exact original method name on both sides");
             }
             FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
                     effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
-            if (d != null) {
-                return d;
-            }
+            if (d != null && first == null) first = d;
         }
-        return null;
+        return first;
     }
 
     private static boolean implicitConstructor(ClassNode left, ClassNode right, MethodNode method) {
@@ -278,7 +286,7 @@ final class ClassComparer {
                 && "()V".equals(call.desc) && !call.itf && code.get(2).getOpcode() == Opcodes.RETURN;
     }
 
-    static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
+    private static FirstDiff methodMetadata(String key, MethodNode lm, MethodNode rm,
             JarIndex leftJar, JarIndex rJar, boolean effects) {
         int leftAccess = lm.access;
         if (leftJar.approved(leftJar.accessWiden, lm) && lm.name.equals(rm.name)
@@ -310,6 +318,30 @@ final class ClassComparer {
         if (d != null) {
             return d.withMember("method", key);
         }
+        return null;
+    }
+
+    static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
+            JarIndex leftJar, JarIndex rJar, boolean effects) {
+        FirstDiff d = compareLinear(key,lm,rm,leftJar,rJar,effects);
+        if (d == null) return null;
+        if (leftJar.approved(leftJar.methodDiffs,lm) && lm.name.equals(rm.name) && lm.desc.equals(rm.desc)) {
+            leftJar.result(lm,"DEVIATION",d.oneLine()+"\nLEFT\n"+methodIdentity(lm,leftJar)+"\nRIGHT\n"+methodIdentity(rm,rJar));
+            return null;
+        }
+        if (methodMetadata(key,lm,rm,leftJar,rJar,effects)==null) {
+            PathComparison.Result paths=PathComparison.compare(lm,rm,leftJar,rJar);
+            if(paths.same()) { leftJar.result(lm,"SAME_PATHS",paths.reason()); return null; }
+            d=FirstDiff.of("method",key,d.insnIndex,d.detail+"; "+paths.reason());
+        }
+        leftJar.result(lm,"DIFF",d.oneLine());
+        return d;
+    }
+
+    private static FirstDiff compareLinear(String key, MethodNode lm, MethodNode rm,
+            JarIndex leftJar, JarIndex rJar, boolean effects) {
+        FirstDiff d = methodMetadata(key,lm,rm,leftJar,rJar,effects);
+        if(d != null) return d;
         if (!leftJar.approved(leftJar.layouts,lm) && instructions(lm,leftJar).equals(instructions(rm,rJar))
                 && tryCatch(lm,leftJar).equals(tryCatch(rm,rJar))) return null;
         if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
@@ -360,6 +392,12 @@ final class ClassComparer {
                     "insn length left=" + lins.size() + " right=" + rins.size());
         }
         return null;
+    }
+
+    private static boolean innerWider(int left, int right) {
+        int l=left&7, r=right&7;
+        return l==r || r==Opcodes.ACC_PRIVATE && Set.of(0,Opcodes.ACC_PROTECTED,Opcodes.ACC_PUBLIC).contains(l)
+                || r==Opcodes.ACC_PROTECTED && l==Opcodes.ACC_PUBLIC;
     }
 
     private static boolean wider(int left, int right) {
@@ -939,16 +977,22 @@ final class ClassComparer {
         return sb.toString();
     }
 
-    private static String innerClasses(ClassNode node, boolean metadataExempt) {
+    private static String innerClasses(ClassNode node, boolean metadataExempt, Set<String> approved, ClassNode target) {
         if (node.innerClasses == null || node.innerClasses.isEmpty()) {
             return "";
         }
         List<String> rows = new ArrayList<>();
         for (InnerClassNode inner : node.innerClasses) {
-            if (!node.name.equals(inner.name) && !node.name.equals(inner.outerName)) continue;
+            if (!node.name.equals(inner.name) && !node.name.equals(inner.outerName) && !approved.contains(inner.name)) continue;
             if (metadataExempt && node.name.equals(inner.name)) continue;
+            int access = inner.access;
+            if (target != null && approved.contains(inner.name)) {
+                for (InnerClassNode r : target.innerClasses) if (Objects.equals(inner.name,r.name)
+                        && Objects.equals(inner.outerName,r.outerName) && Objects.equals(inner.innerName,r.innerName)
+                        && innerWider(access,r.access)) { access = (access & ~7) | (r.access & 7); break; }
+            }
             rows.add(str(inner.name) + "|" + str(inner.outerName) + "|" + str(inner.innerName)
-                    + "|" + hex(inner.access));
+                    + "|" + hex(access));
         }
         Collections.sort(rows);
         return String.join("; ", rows);
