@@ -96,7 +96,11 @@ Microsoft JDK 17.0.17、ASM 9.7，javac 從來源編譯後以 `-Xverify:all` 執
 
 ### CI
 
-本次提交推送後核對新 HEAD 的 build／package，以及 Semantic gap 內 Self-test 與冷啟動 fallback 實際步驟。既有 CI 是 non-blocking，不能只看外層綠燈；實際驗證連結於推送後補入本節，不沿用前次 HEAD 的綠燈。
+- 本次程式提交 `c98b4e8e552742ffad3f624dfee646dcb1f4218d` 的 [Semantic gap job 127140985250](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41996537643/job/127140985250) SUCCESS；實際日誌確認 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=73`、`FOURTH SELFTEST ALL PASS checks=119`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`。包含新正例、原分支互換／DUP／layout 反例及改寫後 JVM 例外路徑；不是只看 non-blocking 外層綠燈。原始日誌存於 `scratch/issue-166/third/ci-semantic.log`。
+- 同提交的 Server 建置、Launcher 建置成功，[package run 41996537715](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41996537715) SUCCESS，包含 ZIP 掃描與無 DB／遊戲的 package-entry 預檢。
+- CI 全新 Maven JAR 預設比較完成：2158 SAME、391 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT、1008 BYTE_SAME。這是全伺服器來源缺口盤點，不是四批固定 staged 的驗收計數；沒有將 CI 生成的報告寫回本分支。
+- [build run 41996537643](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41996537643) 的四個 job 全部 SUCCESS，包括 [Server tests 127140985036](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41996537643/job/127140985036)。加上 package 共五項全綠；Server tests 依既有 CI 略過 MySQL／本機檔案依賴，未連正式 DB。
+- 後續提交只補本報告；最終 HEAD 的檢查見 [PR #170 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170/checks)。交付時另保存最終 HEAD／workflow／job 收據於 `scratch/issue-166/third/final-ci-status.json`，不以程式提交的綠燈代替最終 HEAD。
 
 ## 推測
 
