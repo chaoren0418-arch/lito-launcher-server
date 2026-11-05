@@ -6,6 +6,8 @@
 
 未修改 src/main、staged Java、核准清單、docs/REPORT.md、機密設定、封存、正式產物或原始專案目錄；沒有啟動伺服器／登入器／遊戲，也沒有連 DB。
 
+交付分支 `task/166`，[PR #170](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170)。程式提交 `7bb08e9f7d036579e979c252f3c404bd524f9f35` 已通過全部五項 CI 檢查；後續報告補充提交不改程式。
+
 ## 做了什麼
 
 - `FourthNormalizations`：標準 metafactory 轉呼叫 handle 收斂、無其他參照時移除合成方法、保留 handler 優先序的相鄰 try 合併、捕獲參數與呼叫點一致置換。巢狀 lambda 依子方法先、呼叫者後的順序處理；直接呼叫、LDC、condy、非標準 bootstrap、外類參照均阻止方法移除／捕獲置換。
@@ -83,7 +85,11 @@ Microsoft JDK 17.0.17、ASM 9.7。本機直接 javac 編譯全部工具／測試
 
 ### CI
 
-推送後執行 GitHub Actions；最終 run、job 與測試結果會在完成後補入本節。不能把 non-blocking Semantic gap 工作流外層綠燈當成其內部自測成功。
+- 程式提交 `7bb08e9f7d036579e979c252f3c404bd524f9f35`：[build run 41981029012](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012)、[package run 41981028847](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981028847) 均 SUCCESS；Server、Server tests、Launcher、Semantic gap、Build-Package.ps1 zip 五個 job 全部通過。
+- [Semantic gap job 127090907938](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012/job/127090907938) 的實際日誌確認 `NORMALIZATION SELFTEST ALL PASS checks=517`、`ADVANCED SELFTEST ALL PASS checks=73`、`FOURTH SELFTEST ALL PASS checks=56`、`SELFTEST ALL PASS`、`FALLBACK ALL PASS`。這是 646 項 Java fixture 檢查加完整 Bash／冷啟動 fallback，不是只看 non-blocking 外層工作流結果。
+- CI 全新 Maven JAR 的預設比較完成：2156 SAME、393 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT、1008 BYTE_SAME。這是完整伺服器的既有來源缺口盤點，不是本任務四個 staged 批次的驗收計數；未把 CI 產生的 docs/server-semantic-gap.md 寫入本分支。
+- [Server tests job 127090908037](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/41981029012/job/127090908037) SUCCESS；執行的是既有 CI `mvn -B test`，依工作流略過 MySQL／本機檔案依賴測試。本輪不以舊任務的測試總數冒稱本次總數。
+- 完整原始日誌保存於 `scratch/issue-166/ci-semantic.log`、`ci-server-tests.log`。後續僅更新本報告的提交，其最新檢查可由 [PR checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/170/checks) 核對。
 
 ## 推測
 
