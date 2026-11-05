@@ -1,115 +1,118 @@
 # TASKS — lito-launcher-server
 
 格式：`ID | 狀態 | 負責 | 範圍 | 驗收條件`。狀態：todo / doing / review / done / blocked。
-Cursor 接任務時只改「範圍」列出的路徑；PR 標題用 `ID: 摘要`。
+PR 標題用 `ID: 摘要`。
 
-## M0 可重現建置
+## 規則（2026-11-06 範圍凍結，Issue #231）
+- **進度只算 `## M*` 區段**；`## Backlog` 另計數量，不算進度。
+- 每個里程碑的「**完成定義**」寫好就凍結。要修改必須另開 Issue 說明理由，並標 `needs:user`。
+- **主線封頂**：最近一個未完成里程碑的剩餘任務一次列完，標題寫「主線 N 項，封頂」。之後新發現的工作一律放進 Backlog；要升格為主線，必須同時刪掉一項主線，或取得使用者同意。
+- 比較器（semantic-diff）的工具缺口，併進同一張進行中的工具任務，不另開主線項目。
 
-### T001 | done | Claude | `.github/workflows/build.yml`
-CI：Maven compile（先把 `tools/shared-database/SharedDatabase.java` 複製進 `src/main`）+ 登入器 `dotnet build`。
-驗收：main 分支兩個 job 綠燈。
+---
 
-### T002 | done | Claude+Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `src/main/java/**`, `tools/shared-database/*.java`, `lito登入器/LiTo381-Launcher/server-patches/**`（唯讀來源）
-**現況**：`src/main` 只有 610 個檔，不是完整伺服器來源。正式 JAR = 二進位 `base-0.6.35/0.6.70.jar` + `tools/*/build.py` 逐層以 ASM patch 疊上去；缺的類別來源散在：
-- `tools/shared-database/{SharedDatabase,UnifiedConfiguration,SourceLogin}.java`
-- `lito登入器/LiTo381-Launcher/server-patches/repair-034/{LiToGmCommands,LiToGmNpcs,EnableCommands}.java` 等
-- 各 `tools/<feature>/` 下的 `*.java`
-目標：讓 `mvn -DskipTests package` 直接產出等價 JAR。步驟：
-1. 用 `jar tf` 列出正式 JAR（`lito登入器/LiTo381-Launcher/app/server/LiTo381-SharedResources-candidate.jar`）全部 class；對照 `src/main` 找出缺的類別清單，寫進 PR。
-2. 每個缺的類別：在 repo 內找到 `.java` 來源就搬進 `src/main/java/local/lito381/server/`；找不到來源的，用 CFR／Fernflower 反編譯 base JAR 取得並標注 `// decompiled from base-0.6.70.jar, TODO review`。
-3. `tools/*/build.py` 改成只負責「驗證 mvn 產物 SHA 與正式 JAR 類別清單一致」，不再 patch。
-4. `pom.xml` 版本改 `0.6.71`，設 Main-Class；CI 移除 `continue-on-error`。
-驗收：CI Server job 綠；`jar tf` 類別清單與正式 JAR 一致（差異列在 PR）；`1.啟動伺服器.bat --check` 用 mvn 產物通過。
-每個步驟一個 commit；反編譯的檔案另開 commit 以便審查。
+## M0 從原始碼建出正式版，並啟動到大廳（主線 9 項，封頂）
 
-### T003 | done（Issue #4，PR #8）| Cursor | `lito登入器/LiTo381-Launcher/Build.ps1`, `tools/build_current.py`, `tools/verify_current.py`
-去硬編路徑：Python 改用 `py -3.12` 或 PATH 中的 `python`；dotnet 改用 PATH；伺服器 `deployment/release-inputs.json` 路徑改相對 repo 根。
-驗收：在 `D:\tmp\litotest` clone 後 `Build.ps1` 能跑到 publish 完成。
+**完成定義（凍結）**：使用者打開 Issue #225，會看到：
+1. 一行指令 `mvn -f lito伺服器/LiTo381-Server/pom.xml -B test` 的輸出，結果為 `Failures: 0, Errors: 0`。
+2. `src/main` 用 `mvn package` 建出的 `LiTo381-Server.jar` 對正式 `reference/base-0.6.71.jar` 的語意比對摘要：A 範圍 692 個 entry，**DIFF=0**（核准的偏離另行列出）。
+3. 三張截圖，都是用上述 JAR 在實驗環境（實驗 MySQL 127.0.0.1:3307，不碰正式服務）拍的：伺服器主控台啟動完成、登入器連線、遊戲**大廳**。
+4. 一份使用者可自己重跑的指令清單。
 
-### T004 | done（Issue #5）| Cursor | `lito登入器/README.md`, `LiTo381-Launcher/README.zh-TW.md`, `lito伺服器/README.md`, `LiTo381-Server/README.zh-TW.md`, `VALIDATION.md`, `docs/HISTORY.md`
-統一版本號為 0.6.71；刪除「正式 0.6.69」殘句；`VALIDATION.md` 只留最新一節，舊段落移到 `docs/HISTORY.md`。
-驗收：`grep -rn "0\.6\.69\|0\.6\.70" --include=*.md` 只剩歷史章節。
+| # | ID | Issue | 內容 | 狀態 |
+|---|---|---|---|---|
+| 1 | T020-A01 | #72 | src/main 對齊正式（nativede，49 類）暫存 | doing（等 #203） |
+| 2 | T020-A02 | #73 | 同上（nativede，49 類） | doing |
+| 3 | T020-A03 | #74 | 同上（nativede，47 類）：0 DIFF，review:pass | review（待合併） |
+| 4 | T020-A06 | #77 | 同上（other，27 類）：0 DIFF，review:pass | review（待合併） |
+| 5 | T020i-8 | #203 | 比較器：依呼叫點配對 lambda、不看分支方向的 CFG 比對、可見性 bridge | doing |
+| 6 | T020i-9 | #216 | 比較器：單一屬性 metadata 豁免、純轉拋 handler、public 虛擬呼叫 owner | todo（等 #203） |
+| 7 | T020-A-land | #78 | A 暫存併入 src/main、補單元測試、`mvn test` 綠、A 範圍語意 DIFF=0 | todo（等 1–6） |
+| 8 | T020c-2 | #83 | 實驗 MySQL（從正式庫唯讀匯出 → 獨立 3307 實例）與實驗設定 | doing（dot） |
+| 9 | T050 | #225 | 實驗環境啟動到大廳＋截圖（dot） | todo（等 7、8） |
 
-### T005 | done（Issue #3 關閉；由 #12/#15、#20/#22 達成）| Cursor | `lito伺服器/LiTo381-Server/src/test/java/local/**/Legacy*IntegrationTest.java`
-DB 依賴測試加 `Assumptions.assumeTrue(Boolean.getBoolean("lito.mysql.integration"))` 守門，與 `LitoMySql*IntegrationTest` 一致。
-驗收：無 DB 環境 `mvn test` 全綠（skipped 可）；CI 加 `mvn test` job。
-**結果**：main 上 36 個 Legacy 類以 `@EnabledIfSystemProperty(lito.legacy.integration)` 預設停用（等價 opt-in）；本機資源守門見 Issue #12（PR #15）、30 案真實失敗修復與阻斷式 `Server tests` job 見 Issue #20（PR #22）。PR #10 的 332 類排除清單會隱藏真失敗，未合入。
+已完成、計入 M0：A04（#75）、A05（#76）；工具 #102、#108、#132、#134、#135、#153、#166、#174、#176、#186；以及下列早期項目。
 
-> 編號註記：Issue #12 標題「T009」、#20 標題「T010」是調度器編號，與本檔 T010（實機核對表）不同；以 Issue 號為準。
+<details><summary>M0 早期已完成項目（T001–T012、T040）</summary>
 
-### T006 | done | Claude | `.gitignore`, `config/server.properties.example`
-真實 `server.properties` 不進 git。**使用者須更換 DB 密碼。**
+- T001 done：CI（Maven compile＋登入器 dotnet build）。
+- T002 done（第一階段）：`src/main` 補齊缺漏類別、pom 0.6.71、Main-Class。**等價 JAR** 由本里程碑的 A-land（#78）完成。
+- T003 done（Issue #4，PR #8）：`Build.ps1` 去除硬編路徑。
+- T004 done（Issue #5）：版本號與文件統一為 0.6.71。
+- T005 done（Issue #3；由 #12/#15、#20/#22 達成）：DB 依賴測試加守門，Server tests 改為阻斷式。
+- T006 done：真實 `server.properties` 不進 git。
+- T007 done（Issue #2，PR #7）：CI 比對類別清單，`docs/server-source-gap.md`。
+- T008 done（否定結果，Issue #6）：evidence.zip 中沒有 266 個 DECOMPILED 類別的原始碼。
+- T009 done（Issue #12，PR #15）：本機資源依賴測試加守門。
+- T012 done（Issue #37，PR #39）：修正不穩定測試。
+- T040 done（Issue #32，PR #33）：安裝手冊＋打包腳本（歸 M3 交付，先行完成）。
+</details>
 
-### T007 | done（Issue #2，PR #7）| Cursor | `lito伺服器/LiTo381-Server/pom.xml`, `reference/`
-T002 收尾：pom 版本改 0.6.71、`maven-jar-plugin` 設 Main-Class（`local.lito381.server.SharedResourceMain`，見 reference JAR 的 MANIFEST）；CI 加 `mvn -DskipTests package` 並用 `jar tf` 與 `reference/base-0.6.71.jar` 比對類別清單，差異寫進 `docs/server-source-gap.md`。
-驗收：CI 綠；差異清單存在且只含 Modern* 類別與刻意排除項。
+## M1 正式版實機回歸（M0 完成後封頂）
 
-### T009 | done（Issue #12，PR #15；調度器編號）| 本機代理 | `lito伺服器/LiTo381-Server/src/test/java/**`
-本機資源依賴測試加守門；真實失敗 30 案由 Issue #20（PR #22）修復，Server tests 改為阻斷式。
+**完成定義（凍結）**：使用者打開 `docs/acceptance/0.6.71.md`，會看到：用 M0 建出的伺服器，在實驗環境完成「登入 → 大廳 → 進房 → 一場戰鬥 → 結算 → 正常退出」，每一步都有截圖；結算後實驗庫 `character_lito` 的勝敗筆數有變化（附 `SELECT` 前後對照）。
 
-### T012 | done（Issue #37，PR #39）| Cursor | `ClientSessionClassicWorldMonsterAggressionIntegrationTest`
-修不穩定測試（隔離 battleClock），50 次連跑通過。
-
-### T008 | done（否定結果，Issue #6）| 本機代理 | `src/main/java/**`（266 個 DECOMPILED 檔）
-**結果**：evidence.zip 內沒有這 266 個類別的原始碼（本機 Codex 三次掃描；報告 PR #14）。保留反編譯版；找到其他備份再開新任務。
-用 `backups/history/server-development-evidence.zip`（本機，164 MB）搜尋這 266 個類別的原始 .java；找到的以原始碼取代反編譯版並去掉 DECOMPILED 標頭。每批 ≤ 50 檔一個 PR。
-驗收：每批 CI 綠；`grep -l "^// DECOMPILED"` 數量下降；PR 描述列出取代／未找到清單。
-
-## M1 正式版實機回歸
-
-### T010 | done | Claude | `docs/acceptance/CHECKLIST.md`（新建）
-實機核對表：伺服器 `--check` / `--smoke` 輸出預期、登入器登入→大廳→進房→戰鬥→結算→退出 每步截圖與 DB 核對 SQL（`SELECT ... FROM character_lito WHERE ...`）。
-
-### T011 | blocked(T020) | 使用者 | `docs/acceptance/0.6.71.md`
-照 T010 跑一次；失敗項各開 T1xx bug。
-
-## M2 戰鬥技能同源化（每項一個 PR；先做 T020）
-
-### T020 | doing | Claude+Cursor | `lito伺服器/LiTo381-Server/src/main/**`, `tools/combat-continuation/**`
-設計：`docs/design/T020-combat-merge.md`（§6 B 階段＝併入候選 50635f7e，§7 A 階段＝src/main 對齊正式 0.6.71）。子任務（2026-11-04）：
-
-| 子任務 | Issue | 狀態 |
+| ID | 內容 | 狀態 |
 |---|---|---|
-| 合併策略（設計） | #24 | done |
-| T020a 類別差異盤點 | #30 | done |
-| T020b B 批次設計 | #43 | done |
-| T020c 回歸工具參數化 | #31 | done（工具）；實跑拆為 #83（隔離設定，needs:local）、#84（8d26 基準） |
-| T020d 語意比對工具 | #44 | done |
-| T020e A 批次設計 | #59 | done |
-| T020f 候選 JAR 入庫 | #45 | done |
-| T020g `@AsRecord` 轉換器 | #102 | doing |
-| T020g-2 Maven 接線 | #134 | todo（等 #102、#108） |
-| T020h 舊伺服器 stub | #108 | doing |
-| T020i 比對正規化 | #132 | doing |
-| T020i-2 比對正規化第二批 | #135 | todo（等 #132） |
-| A01–A06 對齊正式（暫存） | #72–#77 | doing |
-| A-land | #78 | todo |
-| B01–B09 併入候選（暫存） | #62–#70 | doing |
-| B-land | #138 | todo |
-| T020-close 總比對＋全套回歸 | #139 | todo |
-決定並執行合併策略：把候選 `50635f7e…` 相對正式來源的 diff 併進 `src/main`，候選工具鏈停用。Claude 先產出 diff 摘要與風險清單，Cursor 執行。
-驗收：合併後 CI 綠；`tools/combat-continuation` 既有 2,400 案可在合併後來源上重跑並通過。
+| T010 | 實機核對表 `docs/acceptance/CHECKLIST.md` | done |
+| T011 | 依 T010 在實驗環境跑一次，寫 `docs/acceptance/0.6.71.md`；失敗項各開 bug（進 Backlog，影響驗收者升格為主線） | blocked（等 M0） |
 
-### T021 | todo | — | 技能目標／Ctrl 政策（807 列技能 × 正常／Ctrl，既有 3,814 案未驗此政策）
-### T022 | todo | — | 26／42 自施：Source26 不按 Ctrl 無法自施（需真實游標與送包證據）
-### T023 | todo | — | 受控 NPC（PET／SUMMON）Source 語意：1,472 組目標失敗 + 1,472 正常順序
-### T024 | todo | — | HP 生產端：魔杖／反射／毒傷／裝備／魔石／武器 proc、魔法娃娃 proc、fatality、cube、ground pulse、AI
-### T025 | todo | — | 58 列材料技能逐列（剩 27、36、41、44；靜態掃描剩 3 個舊呼叫）
-### T026 | todo | — | 外控完整鏈：讀取器→消費端、動態鍵／別名、SQL 控制
-### T027 | todo | — | 生命週期：receipt 保留／排空、成對鎖、退役／死復活／同 ID 替換、DRAINING／STOPPED／Main
-### T028 | todo | — | 顯示與 NPC 語意：HPBAR／傷害數字／奇古獸、NPC 工廠／AI／hate、免疫時序
-### T029 | todo | — | 正式功能隔離合成：0.6.71 資源／圖示／litoddraw.dll／GM7200 併入合併後來源
-### T030 | blocked(T021–T029) | — | 同 SHA 後端全回歸
-### T031 | blocked(T030) | 使用者 | 實機：游標／前景／多視窗／大廳集中驗收
-### T032 | todo | 使用者 | 中文 MySQL 真裝備角色唯讀重載（使用者延後）
+## M2 戰鬥技能同源化（M1 完成後封頂）
 
-## M3 交付
-### T040 | done（Issue #32，PR #33）| Cursor | `docs/INSTALL.md`, `packaging/`
-安裝手冊 + 打包腳本（JAR、`db/*.sql`、`server.properties.example`、登入器 release）。
+**完成定義（凍結）**：使用者會看到：
+1. B-land 之後，`mvn package` 產物對候選 `50635f7e…` 的語意比對摘要，B 範圍 1,384 個 entry **DIFF=0**（核准的偏離另行列出）。
+2. `tools/combat-continuation` 既有 2,400 案、5,164 組合、curse-clock 24 案，在 Maven 產物上重跑的對照表，結果全部一致。
+3. 在實驗環境用新建置打一場戰鬥，施放指定技能（清單在 M2 封頂時訂定），附截圖。
 
-## 登入器已知未驗（排進 M1 一起看）
-- 結算畫面職業圖示無人工回報
-- 0.6.67 Ctrl 強制攻擊雙視窗手動驗收未做
-- GM 魔杖滑鼠點選未人工驗
-- 斷線結算無長時間壓力／災難復原驗證
-- 舊正式入口仍用通用 `ddraw.dll` 名稱（候選用 `litoddraw.dll`）
+目前 B01–B09、B-land、T020-close 等工作列在 Backlog，待 M1 完成後封頂時再升格。
+
+## M3 交付（M2 完成後封頂）
+
+**完成定義（凍結）**：使用者會看到：
+1. `release/package-0.6.x.zip` 一個檔案。
+2. 依 `docs/INSTALL.md` 在乾淨的 Windows 機器（或乾淨目錄）安裝後，啟動到大廳的截圖。
+3. git tag `launcher-v0.6.x`／`server-v0.6.x`。
+
+| ID | 內容 | 狀態 |
+|---|---|---|
+| T040 | 安裝手冊＋打包腳本（Issue #32，PR #33） | done |
+
+---
+
+## Backlog（不算進度）
+
+### 戰鬥合併 B 階段（M2 封頂時升格）
+| ID | Issue | 內容 | 狀態 |
+|---|---|---|---|
+| T020-B01 | #62 | new-asm 17 類 | 等 #203（20 SAME＋1 DIFF） |
+| T020-B02 | #63 | new-java 51 類 | done（107 SAME＋1 SAME_PATHS） |
+| T020-B03 | #64 | new-java 51 類 | 等 #69 |
+| T020-B04 | #65 | new-java 51 類 | 等 #203 |
+| T020-B05 | #66 | new-java 48 類 | review:pass（0 DIFF） |
+| T020-B06 | #67 | existing-battle 29 類 | 等 #203 |
+| T020-B07 | #68 | existing-combat-material 23 類 | 等 #203、#216 |
+| T020-B08 | #69 | existing-native 30 類 | 等 #203、#216 |
+| T020-B09 | #70 | existing-core 3 類（含 T029 八方法） | 等 #203、#216 |
+| T020-B-land | #138 | B 暫存併入 src/main | 等 B01–B09 |
+| T020-close | #139 | 總語意比對＋Maven 產物全套戰鬥回歸 | 等 #78、#138、#84 |
+| T020c-3 | #84 | 8d26c9d7 基準完整回歸 | 等 #83 |
+
+設計：`docs/design/T020-combat-merge.md`（§6 B 階段、§7 A 階段）。
+
+### 戰鬥技能開放缺口（原 M2 清單）
+- T021 技能目標／Ctrl 政策（807 列技能 × 正常／Ctrl，既有 3,814 案未驗此政策）
+- T022 26／42 自施：Source26 不按 Ctrl 無法自施（需真實游標與送包證據）
+- T023 受控 NPC（PET／SUMMON）Source 語意：1,472 組目標失敗＋1,472 正常順序
+- T024 HP 生產端：魔杖／反射／毒傷／裝備／魔石／武器 proc、魔法娃娃 proc、fatality、cube、ground pulse、AI
+- T025 58 列材料技能逐列（剩 27、36、41、44；靜態掃描剩 3 個舊呼叫）
+- T026 外控完整鏈：讀取器→消費端、動態鍵／別名、SQL 控制
+- T027 生命週期：receipt 保留／排空、成對鎖、退役／死復活／同 ID 替換、DRAINING／STOPPED／Main
+- T028 顯示與 NPC 語意：HPBAR／傷害數字／奇古獸、NPC 工廠／AI／hate、免疫時序
+- T029 正式功能隔離合成：0.6.71 資源／圖示／litoddraw.dll／GM7200（已由 B09 的 T029 八方法部分涵蓋）
+- T030 同 SHA 後端全回歸（等 T021–T029）
+- T031 實機：游標／前景／多視窗／大廳集中驗收（使用者）
+- T032 中文 MySQL 真裝備角色唯讀重載（使用者延後）
+
+### 其他
+- T042（#184）：調查 CombatSkillDerived 技能表欄位遺失的潛伏 bug。
+- 登入器已知未驗：結算畫面職業圖示、0.6.67 Ctrl 強制攻擊雙視窗、GM 魔杖滑鼠點選、斷線結算壓力／災難復原、舊正式入口仍使用通用 `ddraw.dll` 名稱（候選為 `litoddraw.dll`）。

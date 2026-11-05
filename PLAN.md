@@ -1,6 +1,6 @@
 # PLAN — lito-launcher-server
 
-更新：2026-11-04。本檔由 Claude 維護；任務細目在 `TASKS.md`。
+更新：2026-11-06（範圍凍結，Issue #231）。本檔由 Claude 維護；任務細目、凍結的完成定義與主線清單在 `TASKS.md`。
 
 ## 一句話目標
 交付給廠商一套**可重現建置、可安裝、可驗收**的 LiTo 登入器 + 伺服器：玩家能登入、進大廳、進房、戰鬥、結算、正常退出；技能行為與原版一致；GM 功能可用。
@@ -13,7 +13,7 @@
 | 聯合基準 | `backups/baseline-0.6.66.zip`（僅本機） |
 | 協定覆蓋 | C→S 157/157 可達已處理；S→C 167 已發送；LiTo 擴充 49/49 — **靜態盤點，不等於實測** |
 | 戰鬥技能同源化 | 大量隔離候選（最新 `50635f7e…`，2,400 案／5,164 組合）**全部未部署**；開放缺口見 TASKS M2 |
-| 建置可重現性 | **差**：`Build.ps1` 硬編 `C:\Users\CHAOREN\...\python.exe`；`Build-Server.ps1` 只做檢查、不產 JAR；正式 JAR 由 `tools/*/build.py` 逐層 patch 疊出來，pom 版本 0.7.864 與 0.6.x 無對應 |
+| 建置可重現性 | 進行中：`Build.ps1` 已去除硬編路徑（T003），pom 已改為 0.6.71（T007）。`src/main` 對齊正式 0.6.71 分 A01–A06 暫存，A03–A06 已達 0 DIFF；A-land（#78）完成後，`mvn package` 即可直接產出等價 JAR |
 | CI | GitHub Actions：Maven compile（補 `SharedDatabase.java`）+ 登入器 dotnet build |
 | 安全 | `config/server.properties` 曾含明文 DB 密碼進 git（已移除，需換密碼） |
 
@@ -23,29 +23,25 @@
 3. 版本號三處不一致（0.6.69 / 0.6.70 / 0.6.71），文件與 csproj 互相矛盾。
 4. 測試有 1,331 個檔，但有 DB 依賴的 `Legacy*IntegrationTest` 沒有 assume 守門，`mvn test` 在無 DB 環境會紅。
 
-## 里程碑
-### M0 可重現建置（本週）
-- CI 綠燈（T001）。
-- 伺服器：讓 `mvn package` 直接產出等價於正式 0.6.71 的 JAR（把 patch 工具的改動併回 `src/main`，或把 patch 流程寫進 Maven 階段）；`pom.xml` 版本改 0.6.71（T002）。
-- 登入器：`Build.ps1` 去硬編路徑（T003）。
-- 統一版本號與文件（T004）。
-- 真實設定檔不進 git，`server.properties.example` 為範本（已做）。
+## 里程碑（完成定義凍結於 `TASKS.md`）
+進度只計 `## M*` 區段；新發現的工作一律進 Backlog（詳見 `TASKS.md` 開頭的規則）。
 
-### M1 正式版實機回歸（使用者操作）
-- 用 M0 的建置跑：啟動伺服器 `--check`／`--smoke` → 登入器登入 → 大廳 → 進房 → 一場戰鬥 → 結算寫入 `character_lito` → 退出。
-- 結果寫 `docs/acceptance/0.6.71.md`。這是把「published-and-verified」變成有紀錄的基線。
+### M0 從原始碼建出正式版，並啟動到大廳（主線 9 項，封頂）
+使用者打開 #225，會看到：`mvn test` 全綠、`src/main` 建出的 JAR 對正式版語意 DIFF=0，以及用這顆 JAR 在實驗環境（3307）啟動的伺服器、登入器、大廳三張截圖。
+依賴鏈：A01／A02／A03／A06 ＋ 比較器 #203 → #216 → A-land #78 ─┐
+　　　　實驗 MySQL #83 ────────────────────────────────┴→ T050 #225
 
-### M2 戰鬥技能同源化收斂
-- 先決定合併策略：把候選 `50635f7e…` 的來源差異併進 `src/main`（而非再疊一層 patch）。
-- 依 TASKS M2 逐項收斂 12 組缺口；每組一個 PR，CI + 既有案例通過才合。
-- 完成後做同 SHA 全回歸，再進 M1 流程實測一次。
+### M1 正式版實機回歸
+使用者打開 `docs/acceptance/0.6.71.md`，會看到：在實驗環境完成登入→大廳→進房→戰鬥→結算→退出，每一步都有截圖，並附 `character_lito` 結算前後的對照。
+
+### M2 戰鬥技能同源化
+B-land 後，Maven 產物對候選 `50635f7e…` 語意 DIFF=0；既有戰鬥回歸（2,400 案、5,164 組合、curse-clock 24 案）在 Maven 產物上全部一致；附實驗環境的指定技能戰鬥截圖。B01–B09 目前在 Backlog，M1 完成後封頂升格。
 
 ### M3 交付
-- 安裝包：伺服器 JAR + `db/*.sql` + `server.properties.example` + 登入器 release；一份安裝手冊。
-- tag `launcher-v0.6.x` / `server-v0.6.x`。
+一個 `release/package-0.6.x.zip`，依 `docs/INSTALL.md` 在乾淨環境安裝並啟動到大廳（截圖），並打 tag。
 
 ## 分工
-Claude：PLAN／TASKS、審 PR、CI、合併策略。Cursor：實作。ChatGPT：第二意見與測試案例。使用者：實機測試、DB、合併 PR、與廠商確認範圍。
+Claude（雲端主控）：PLAN／TASKS、裁定、審查。本機執行器（codex-local）：實作與驗證。dot：本機資源與實驗環境、截圖驗收。使用者：驗收與觀測，並對 DB 授權、範圍變更做決定。
 
 ## 停用的舊流程
 總控任務板、監製索引、對話 ID、`工作佇列.json`／`監製進度.json`、每輪時間戳 JSON。
