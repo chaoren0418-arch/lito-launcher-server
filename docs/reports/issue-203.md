@@ -137,7 +137,7 @@ B 批 reference 為 candidate：`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f
 
 `get_showId()I` 的特例有實際 metadata 證據：正式 `NativeDeDeletionState` 宣告旗標為 0，staged 為 public；兩側都解析到這個非 public 類別。此差異已在 #153 的精確 access-widen 核准中。未套核准時維持 ONLY_LEFT；套核准後才認為 bridge 是 javac 對該已核准 public 方法產生的可見性轉接。其餘 168 個 bridge 不依賴這個例外。
 
-### 不傳核准清單的對照
+### 相對首次實作前 bccc2cb 的無核准對照
 
 | 批次 | 修改前 DIFF | 修改後 DIFF | 說明 |
 |---|---:|---:|---|
@@ -151,7 +151,21 @@ B 批 reference 為 candidate：`50635f7edca8ec6ce77787cc32371c7590b497e48ea202f
 
 ## CI
 
-本輪程式尚待推送後的 CI；以前次綠燈作為歷史紀錄，不能當成本輪 stack 修正的驗收。交付前會檢查 [PR #215 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215/checks)，包含 Semantic gap 實際 selftest／fallback 日誌，並更新本節收據。
+本輪程式提交 `4f9b1afe506f8e04ee619b08de45f314d336d0ce` 五項 job 全部 SUCCESS：
+
+| Job | 收據 |
+|---|---|
+| Server 建置 | [127492368597](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42097814365/job/127492368597) |
+| Server tests | [127492368663](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42097814365/job/127492368663) |
+| Launcher 建置 | [127492368076](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42097814365/job/127492368076) |
+| Semantic gap | [127492369255](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42097814365/job/127492369255) |
+| Build-Package.ps1 zip | [127492362998](https://github.com/chaoren0418-arch/lito-launcher-server/actions/runs/42097813486/job/127492362998) |
+
+已讀取 Semantic gap 實際日誌：七套自測 517／73／119／169／159／96／265，合計 **1398 checks 全過**；另確認 `SELFTEST ALL PASS`、`FALLBACK ALL PASS` 與新增 stack fixtures 的 JVM 執行收據。沒有僅依 non-blocking 工作流總狀態判定。Server tests 日誌為 **6036 tests、0 failures、0 errors、117 skipped**。
+
+CI 的整包 Maven 產物對 reference 仍為 2160 SAME、28 SAME_PATHS、15 SAME_CFG、3 LAMBDA_PAIRED_BY_CALLSITE、343 DIFF、1382 ONLY_LEFT、5 ONLY_RIGHT，與前次整包摘要相同；這是不同輸入，不能混入本任務七批 staged 的 0 DIFF 結論。
+
+本機收據為 `scratch/issue-203/review-ci-status.json`、`review-ci-semantic-proof.txt`。後續補報告的提交不改程式；最終 HEAD 狀態以 [PR #215 checks](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215/checks) 為準，交付前另核對。
 
 ## 推測
 
@@ -159,7 +173,7 @@ SAME_CFG 與 Lambda 配對是本工具保守事件模型下的證明；不能推
 
 ## 待驗證／未驗證什麼
 
-- 本輪 CI 待推送後驗證；本機七套自測與七批固定輸入重跑已通過。
+- 本輪程式提交 CI、本機七套自測與七批固定輸入重跑已通過；最後補報告提交的 checks 於交付前另核對。
 - 本任務未執行 B-land 應用回歸或遊戲實機驗收，也未部署任何產物。
 
 ## 產出路徑與重跑
