@@ -23,7 +23,7 @@ public final class ModernVipWorldRuntimeTestPeer {
             // Two actors in each of two preparations, plus one fresh source
             // bundle for INSPECT and one for SET on the first match.
             assertEquals(0,f.server.snapshot().failed());assertEquals(6,f.vipReads.get());
-            assertEquals(0,f.worlds.registrationCount());assertEquals(0,f.worlds.matchCount());
+            assertEquals(0,f.worlds.registrationCount());ModernWorldServiceTest.awaitNoMatches(f.worlds);
         } finally {
             try(var paths=Files.walk(root)){for(var path:paths.sorted(Comparator.reverseOrder()).toList()){
                 if(!path.toAbsolutePath().normalize().startsWith(root))throw new IllegalStateException("fixture cleanup scope");
