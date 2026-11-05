@@ -49,7 +49,7 @@ class ModernHasteServiceTest {
             assertThrows(IllegalArgumentException.class,()->ModernBattleWorldProtocol.encodeResult(new ModernApplicationProtocol.BattleWorldResult(5,f.worldRequest(0,ModernBattleWorldProtocol.Action.READ),read),43));
             f.leave(0);assertEquals(ModernWorldProtocol.Phase.ABORTED,f.read(1).lifecycle().phase());
             assertEquals(ModernHasteCast.Reason.NOT_ACTIVE,f.service.haste(f.player(1).owner(),f.intent(1,2)).reason());
-            f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void ownerEntityRoomFutureRevisionAndStaleGearAreNotBorrowed()throws Exception {
@@ -96,7 +96,7 @@ class ModernHasteServiceTest {
             assertEquals(ModernWorldProtocol.Status.OK,f.prepare().status());
             ModernNpcServiceTest.await(()->f.read(1).lifecycle().phase()==ModernWorldProtocol.Phase.ABORTED);
             assertNull(f.read(1).view());assertEquals(0,f.reads.get());
-            f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void blockedCatalogDoesNotPublishAfterDepartureAndProviderFailureAborts()throws Exception {

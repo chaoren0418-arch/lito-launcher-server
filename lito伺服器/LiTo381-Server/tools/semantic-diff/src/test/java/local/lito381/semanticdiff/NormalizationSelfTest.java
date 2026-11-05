@@ -448,7 +448,7 @@ public final class NormalizationSelfTest implements Opcodes {
     private static ClassNode caught(String type, int count) {
         ClassNode c = clazz(); MethodNode m = method(c, "()V");
         LabelNode start = new LabelNode(), end = new LabelNode(), handler = new LabelNode(), done = new LabelNode();
-        m.instructions.add(start); m.instructions.add(new InsnNode(NOP)); m.instructions.add(end);
+        m.instructions.add(start); m.instructions.add(new MethodInsnNode(INVOKESTATIC, "Sink", "run", "()V", false)); m.instructions.add(end);
         m.instructions.add(new JumpInsnNode(GOTO, done)); m.instructions.add(handler);
         m.instructions.add(new VarInsnNode(ASTORE, 0)); m.instructions.add(done); m.instructions.add(new InsnNode(RETURN));
         for (int i = 0; i < count; i++) m.tryCatchBlocks.add(new TryCatchBlockNode(start, end, handler, type));
