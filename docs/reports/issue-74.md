@@ -2,13 +2,36 @@
 
 ## 結論
 
-2026-11-05 續跑已完成編譯與全部 88 entry 的語意檢查，結果為 **85 SAME、1 DEVIATION、2 DIFF**，missing／extra 均空，`acceptancePass=false`。本批最終語意驗收仍待主控裁定 switch 欄位正規化問題。交付分支 `task/74`，PR #100。
+2026-11-05 本輪核對遠端後，**最終驗收仍受 #186 尚未合併阻擋**：#186 為 OPEN／`task:queued`，`task/186` 尚無 PR，其依賴 #176 為 OPEN／`task:running`。遠端 main 為 `cc526bcd722736065b5ee2e24644ff4b4fcd0f0f`。本輪只修正交接說明並核對既有證據，沒有以舊工具重跑或宣稱通過。交付分支 `task/74`，PR #100；本輪不再次送交最終驗收。
 
-本次額外採用已合併的 #174 工具與核准清單，從固定主線提交 `18c80178f579b36aa227786e9b79638dc6af6db8` 讀取到 scratch 後編譯。工具 Java 最後變更提交為 `65be0a1d5dc12b63b6c7cc51d171eff3332cb858`。staged 來源提交為 `1b38344b678c889de2e89759139f37f6dc18fb1d`，本次唯一追蹤檔變更為本報告。此方式讓工具版本可重現，同時遵守本批檔案範圍。
+最近一次實測仍為 **85 SAME、1 DEVIATION、2 DIFF**，missing／extra 均空，`acceptancePass=false`。[主控既有裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/74#issuecomment-6657652171) 已確認兩筆 DIFF 為 **A 類比較器問題**，由 #186 第 1 項處理，Java 不必修改，也不需要新的裁定或重加 `needs:claude`。**87 SAME＋1 DEVIATION 僅是 #186 合併後的預期，尚非本批實測結果。**
+
+下列編譯、語意檢查、固定工具 commit、命令、原始結果及雜湊均保留自前輪 #174 驗證：工具快照 `18c80178f579b36aa227786e9b79638dc6af6db8`，工具 Java 最後變更提交 `65be0a1d5dc12b63b6c7cc51d171eff3332cb858`，staged 來源提交 `1b38344b678c889de2e89759139f37f6dc18fb1d`。此快照**不含 #186**。本輪唯一追蹤檔變更為本報告。
+
+## 本輪依賴查證
+
+透過 `gh api` 查詢下列 REST 端點；原始 JSON、查詢時間、命令及 SHA-256 保存於 `scratch/issue-74/dependency-check/`，不覆寫 `latest/` 的前輪驗收收據。
+
+```powershell
+gh api repos/chaoren0418-arch/lito-launcher-server/issues/186
+gh api 'repos/chaoren0418-arch/lito-launcher-server/pulls?head=chaoren0418-arch:task/186&state=all'
+gh api repos/chaoren0418-arch/lito-launcher-server/issues/176
+gh api repos/chaoren0418-arch/lito-launcher-server/commits/main
+gh api repos/chaoren0418-arch/lito-launcher-server/issues/comments/6657652171
+```
+
+已驗證 #186 尚無合併可供本批使用；本輪未新增工具修正、核准條目或 Java 改動。`NativeDeVisibilitySwitch.java` 欄位原名與 `NativeDeVisibilityPc.java` 使用點保持原樣，`NativeDeWorldLog` 指定的單一 debug 偏離也保持原樣。
+
+本輪既有證據核對通過：83 項輸入、345 項輸出逐檔雜湊相符；47 份 Java 的 DECOMPILED 標頭、指定單一 debug 偏離、88 entry 集合與 JAR/class bytes 均符合前輪收據。`git diff --check` 通過，本輪僅變更本報告。
+
+| 本輪收據 | SHA-256 |
+|---|---|
+| `scratch/issue-74/dependency-check/receipt.json` | `febf21fde3b4365c6c0c409fe18830c97804460f4feb46fb407f6ae143e19ba6` |
+| `scratch/issue-74/dependency-check/audit.log` | `8e55a6b3612e0cab890967978babbbf8d21d2992842dc7ea2d0167ab3a92afa4` |
 
 ## 做了什麼
 
-既有提交已完成下列來源修正，本次以重新建立的直接 javac 產物逐項核對。
+既有提交已完成下列來源修正，前輪以直接 javac 產物驗證，本輪只核對其既有收據。
 
 - `NativeDeVisibilityCoordinator.tick` 恢復正式版 check 成功後才更新玩家的條件區塊。
 - `NativeDeVisibilityPc` 的已知物件快照採用 `List` 呼叫型別，對齊 range 分支與 GM HP bar 的明確布林返回。
@@ -18,7 +41,7 @@
 - `NativeDeWorldLog` 僅有一個指定的 `default debug(String,Object,Object)`，內文為 `emit("debug", message, new Object[]{a, b})`，依既有清單列為 DEVIATION。
 - 47 份來源均保有正式版 DECOMPILED 標頭。前輪 CFR 0.152／Vineflower 1.11.2 還原紀錄可由既有提交追溯。
 
-## 已驗證
+## 前輪已驗證（本輪核對既有證據）
 
 本 worktree 已含 #108、#135、#153、#166 的合併提交。此次從主線讀取的 #174 快照也包含這些依賴。
 
@@ -88,7 +111,7 @@ acceptancePass false
 1. `NativeDeVisibilitySwitch` 兩欄位在兩側的原名、描述子、宣告順序及初始化內容一致，flags 分別為明寫 Java 的 `0x18`、正式合成欄位的 `0x1018`。#174 快照中的 `JarIndex.java` 第 68–70 行仍僅替帶有 ACC_SYNTHETIC 的 `$SwitchMap$` 欄位建立映射，造成右側名稱成為 `$SwitchMap$#0/#1`，左側保留原名。metadata 豁免目前僅涵蓋該類別的 metadata。
 2. `NativeDeVisibilityPc.removeOutOfRangeKnownObjects` 的一個 GETSTATIC 引用受到同一映射影響。其餘正規化指令與例外保護表已以唯讀診斷核對。
 
-通用 A 類的其餘差異已由正式 CLI 處理。以上差異超出 B 類四種堆疊／暫存類型，因此本批以 C 類送主控裁定，並依任務要求加 `needs:claude`。既有正式 caller 依賴這些欄位原名，Java 原始碼也無法直接指定 ACC_SYNTHETIC 或包含 `#` 的欄位識別字。
+依[主控既有裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/74#issuecomment-6657652171)，以上兩筆屬 A 類比較器問題，由 #186 第 1 項實作雙側對稱的 `$SwitchMap$` 改名；不再列為 C 類，不需新的裁定，也不重加 `needs:claude`。既有正式 caller 依賴這些欄位原名，保留 staged Java 原名及使用點即可。
 
 完整兩側 dump 的 unified diff 附於本報告後段，其中也保留工具已豁免的類別 metadata 與隱式建構子差異。正式 CLI 的兩筆 DIFF 與唯讀診斷分開保存。唯讀診斷只把右側顯示名稱還原，再比較完整指令及保護表，其結果如下。
 ```text
@@ -108,8 +131,8 @@ normalizedTryCatchEqual=true
 ```
 ## 推測／未驗證什麼／給下一棒的提示
 
-- **主控 Claude** 接手兩筆 C 類差異，裁定精確 switch 欄位正規化方案。可考慮對 metadata-exempt 的明寫 switch holder，以原名、描述子及欄位宣告順序建立雙側一致映射，並保留「交換兩個 map 的使用點」仍為 DIFF 的反例。這項方案目前屬待實作、待驗證。
-- **工具執行器** 依裁定修正工具並完成正反例。合併後由 **A03 本機執行器** 更新固定工具提交，重跑全部 88 entry，確認所有 entry 為 SAME／SAME_EFFECTS／DEVIATION，且 DIFF、ONLY_LEFT、ONLY_RIGHT、missing、extra 均為 0。
+- **調度器／主控** 先等待 #176、#186 完成並合併；本輪是依賴未滿足，請勿因報告或 PR 描述已更新就再次送審，也不需重做既有 A 類裁定。
+- **#186 工具執行器** 依該 Issue 第 1 項完成雙側對稱 switch 欄位改名與正反例。合併後再派 **A03 本機執行器**，從包含 #186 的固定主線 commit 讀取正式工具與全部核准清單，直接編譯 47 Java，重驗完整 88 entry。更新本報告、完整命令、輸入輸出 SHA-256、原始結果及 PR 描述；所有 entry 須為 SAME／SAME_EFFECTS／DEVIATION，且 DIFF、ONLY_LEFT、ONLY_RIGHT=0、missing／extra 皆空，才可再次送審。
 - **A-land 執行器** 統一執行單元測試與回歸，並依 `deviations.md` 模擬選用欄位讀取失敗，驗證 debug 的訊息、參數及 NoSuchMethodError 修正。此次驗證限於 staged 編譯與靜態語意比較，執行期及真機驗收仍待後續階段。
 - 分支相對固定主線的三點差異恰為 A03 47 份 staged Java 加本報告。編譯及診斷產物保存於 worktree 的 scratch／target。GitHub 操作使用既有認證，Git 共用 metadata 操作依本任務授權提升權限。
 
@@ -117,7 +140,8 @@ normalizedTryCatchEqual=true
 
 - `lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/` 的 A03 47 Java。
 - `docs/reports/issue-74.md` 為交付報告。
-- `scratch/issue-74/latest.py` 為本次完整重驗腳本。
+- `scratch/issue-74/dependency-check/` 為本輪依賴查證與既有證據核對收據。
+- `scratch/issue-74/latest.py` 為前輪完整重驗腳本，固定在不含 #186 的工具版本；後續必須更新工具 commit 後才可用於最終驗收。
 - `scratch/issue-74/latest/` 保存原始命令、log、核准清單快照與交集、semantic JSON／Markdown、176 份兩側 normalized 全文、完整差異、驗收結果及雜湊收據。
 - `scratch/issue-74/latest/target/` 保存工具、診斷及 A03 classes／JAR。
 - `scratch/issue-74/reverify/Dump.java` 與 `SwitchDiagnostic.java` 為唯讀診斷來源，原文附於後段。
@@ -192,7 +216,7 @@ normalizedTryCatchEqual=true
 | `NativeDeWorldRegistryWizard.java` | `0f0ef9bb06fed6369d6e09501a1112294349e41b41a437db636e2880e6b32e33` |
 | `NativeDeWorldScope.java` | `00f942ab8eceadafc5b4ae8510066b45630ffa8d4013eaa73aeaf1f814c0c0e0` |
 
-## 可重現指令
+## 前輪可重現指令（不含 #186，不是最終驗收）
 
 從本 worktree 根目錄執行。工具及清單由腳本的固定 `TOOL_REF` 讀取。ASM／asm-tree 使用既有 Maven cache，asm-analysis 使用前輪已校驗的本任務檔案。重跑時腳本先清除其自身 classes 輸出內的 class，再編譯並驗證集合與逐 entry bytes。
 
