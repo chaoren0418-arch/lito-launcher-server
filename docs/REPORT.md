@@ -31,3 +31,4 @@
 - 2026-11-05 — #174 T020i-5: semantic-diff 正規化第五批（例外涵蓋正規形、多餘 null 檢查、區塊內 local 讀取位置、Exceptions 屬性豁免）（code，codex-local，PR #178 已合併）→ [報告](reports/issue-174.md)
 - 2026-11-05 — #76 T020-A05: T020-A05: src/main 對齊正式 0.6.71 暫存（other，27 類）（code，codex-local，PR 已合併）→ [報告](reports/issue-76.md)
 - 2026-11-05 — #184 T042: 調查 CombatSkillDerived 技能表欄位（SKU1/SKU2/SKD1-3）遺失的潛伏 bug（本機）（resource，codex-local，PR #198 已合併）→ [報告](reports/issue-184.md)
+- 2026-11-05 — #176 T020i-6: semantic-diff 第六批（巢狀類別存取放寬、無迴圈方法逐路徑比對、核准方法偏離）（code，codex-local，PR 已合併）→ [報告](reports/issue-176.md)
