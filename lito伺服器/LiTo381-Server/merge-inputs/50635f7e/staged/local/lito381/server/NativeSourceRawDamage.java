@@ -3,14 +3,15 @@ import java.io.*;import java.util.*;
 /** Raw Source events have DamageCommitPlan.none(). Identity admission is independent of digit settings. */
 final class NativeSourceRawDamage {
  static final String P="local/lito381/server/",FIELD="nativeSourceRawAction";
+ @AsmFinal({"nativeSourceNpcHpObserver"})
  static final class Member {
   final ClientSession pc;final NativePlayerCommit.Binding binding;final Object life;final int x,y;volatile Object acceptedLife;volatile boolean dead;
-  // 保留候選 final 契約；Java 舊建構子須明確賦 null，委派建構子須展開。差異見 #66 報告。
-  final transient Boolean nativeSourceNpcHpObserver;
+  // 舊建構子保留 JVM 預設值；@AsmFinal 在編譯後還原候選的 final 旗標。
+  transient Boolean nativeSourceNpcHpObserver;
   Member(ClientSession pc,NativePlayerCommit.Binding binding){this(pc,binding,NativeSourceControlledDisplay.token(pc));}
-  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token){this.pc=pc;this.binding=binding;life=acceptedLife=token;x=number(pc,"positionX");y=number(pc,"positionY");nativeSourceNpcHpObserver=null;}
-  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token,int x,int y){this.pc=pc;this.binding=binding;life=acceptedLife=token;this.x=x;this.y=y;nativeSourceNpcHpObserver=null;}
-  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token,int x,int y,Boolean observer){this.pc=pc;this.binding=binding;life=acceptedLife=token;this.x=x;this.y=y;nativeSourceNpcHpObserver=observer;}
+  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token){this.pc=pc;this.binding=binding;life=acceptedLife=token;x=number(pc,"positionX");y=number(pc,"positionY");}
+  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token,int x,int y){this.pc=pc;this.binding=binding;life=acceptedLife=token;this.x=x;this.y=y;}
+  Member(ClientSession pc,NativePlayerCommit.Binding binding,Object token,int x,int y,Boolean observer){this(pc,binding,token,x,y);nativeSourceNpcHpObserver=observer;}
   boolean role(){return binding!=null&&NativeAcceptedFreezeMutation.roleFrame(binding,pc)&&!(boolean)CombatAccess.field(pc,"sourceItemDisconnected")&&!(boolean)CombatAccess.field(pc,"observer");}
   boolean current(boolean position){return role()&&NativeSourceControlledDisplay.rawLife(pc)==acceptedLife&&(!position||number(pc,"positionX")==x&&number(pc,"positionY")==y)&&(!dead||number(pc,"playerHp")==0);}
  }

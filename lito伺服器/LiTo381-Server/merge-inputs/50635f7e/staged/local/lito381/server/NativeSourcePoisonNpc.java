@@ -67,8 +67,6 @@ final class NativeSourcePoisonNpc {
   var origin=(Origin)proof.lease().nativeSourcePoisonOrigin;var out=new Status(proof,origin,NativePlayerLifetime.of(origin.scene().hub()),pc,binding);var frozen=packet.clone();
   // Current status cleanup is immediate outside the polling locks; it does not own queued HP authority.
   var c=NativeSourceElementTransport.context(pc,out);
-  // 保留 ASM 改接後留下的原始 synthetic task；javac 不產生此分支的呼叫。
-  if(false)NativeLightAction.deferScoped(()->{var prior=c.nativeSourcePoisonNpcOutput;try{c.nativeSourcePoisonNpcOutput=out;synchronized(pc){if(current(out))NativeAreaMaterialAction.owned(c,()->pc.nativeSelfOriginalSend(frozen,note));}}finally{c.nativeSourcePoisonNpcOutput=prior;}});
   NativeLightAction.deferScoped(NativeSourceElementTransport.task(c,out,pc,frozen,note));return true;
  }
  static boolean allowFrame(ClientSession pc,byte[] packet){var c=NativeAreaMaterialAction.current.get();var value=c==null?null:c.nativeSourcePoisonNpcOutput;return value instanceof Output out?out.receiver()==pc&&current(out):value instanceof Status out?out.receiver()==pc&&current(out):true;}
