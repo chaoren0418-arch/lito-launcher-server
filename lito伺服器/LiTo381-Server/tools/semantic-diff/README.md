@@ -1,5 +1,17 @@
 # ASM 語意比對
 
+## T020i-12（Issue #259）
+
+兩側預設以同一套值編號比較 stack／local 搬移。區塊內沿用原值表示式，純常數以型別及完整值表示；DUP／DUP2／DUP_X*／SWAP 由 ASM Frame 保留精確 operand 順序與寬度。呼叫、欄位與陣列操作、monitor、throw、return、分支及有序例外邊繼續比較完整引數。常數可預先壓入，呼叫與讀寫操作維持原順序。
+
+跨區塊暫存先經 LocalWebs 分開重用槽位，再要求唯一寫入、每個讀取的唯一 reaching definition 均為該寫入、型別／寬度一致、無重疊 wide 槽位或指令註解。handler 的正常後繼可到達的寫入／讀取一律排除。符合者的保存值綁定依生產者編號放在正常區塊出口，區塊內讀取直接沿用原值。所有跨邊 stack 關聯及 local 一對一映射仍須通過。`ASTORE; ALOAD; IFNULL; ALOAD; CHECKCAST; ARETURN` 另沿用唯一前驅證明轉為 DUP 形式，cast 與例外涵蓋保留。
+
+舊 `tempStores` 依對側 DUP 數量選擇性消除 ASTORE 的摘要規則已移除。effects 方法先嘗試完整區塊／路徑資料流證明，失敗後既有核准摘要保留全部 ASTORE。連續多個 store 由同一套值來源分析處理；paths 使用原有逐路徑 Frame，不作部分 store 刪除。
+
+switch-map 只接受完整可辨識的 enum `values → ARRAYLENGTH → NEWARRAY → PUTSTATIC` 與 `enum constant → ordinal → case value → IASTORE` 初始化，逐項驗證 NoSuchFieldError 的涵蓋範圍、跳轉及無後續讀取的 handler 暫存。名稱依 enum 類別與完整「常數→case 值」內容雜湊，宣告、跨類別欄位引用及 field handle 共用映射。`<clinit>` 的完整 enum 段依內容識別排序，段內指令及 catch 順序保留。未知形狀、額外呼叫、重複內容欄位或未涵蓋的 switch 欄位保留原名；case 值／常數集合不同持續 DIFF。
+
+診斷停用為 `-Dsemanticdiff.disable=value-flow` 與 `switch-content`。`TwelfthSelfTest` 接入 `selftest.sh`，同份 framed JAR 用於雙向 CLI、直接 paths／CFG 與 platform-parent 隔離 ClassLoader。包含四連 store、跨區塊讀取、型別重用、handler 可觀察 local、各種 stack shuffle、寬值、null/cast return、預壓 receiver／常數、switch 順序與內容反例。
+
 ## T020i-10（Issue #235）
 
 `--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。

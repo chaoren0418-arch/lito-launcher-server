@@ -118,13 +118,20 @@ final class LocalTransport implements Opcodes {
         AbstractInsnNode branch = first == null ? null : FourthNormalizations.next(first.getNext());
         AbstractInsnNode second = branch == null ? null : FourthNormalizations.next(branch.getNext());
         AbstractInsnNode ret = second == null ? null : FourthNormalizations.next(second.getNext());
+        AbstractInsnNode cast = null;
+        if (FourthNormalizations.enabled("value-flow") && ret != null && ret.getOpcode() == CHECKCAST
+                && !FourthNormalizations.annotated(ret)) {
+            cast = ret;
+            ret = FourthNormalizations.next(ret.getNext());
+        }
         if (first != loads.get(0) || second != loads.get(1) || !(branch instanceof JumpInsnNode jump)
                 || jump.getOpcode() != IFNULL || FourthNormalizations.annotated(jump)
                 || ret == null || ret.getOpcode() != ARETURN) return false;
         AbstractInsnNode target = FourthNormalizations.next(ret.getNext());
         if (target == null || FourthNormalizations.next(jump.label) != target) return false;
         Set<AbstractInsnNode> entries = entries(m);
-        if (entries.contains(first) || entries.contains(branch) || entries.contains(second) || entries.contains(ret)) return false;
+        if (entries.contains(first) || entries.contains(branch) || entries.contains(second) || entries.contains(ret)
+                || cast != null && entries.contains(cast)) return false;
         // Exclude aliases of the same target as well as explicit uses of jump.label.
         for (AbstractInsnNode n : m.instructions) {
             if (n instanceof JumpInsnNode j && n != jump && FourthNormalizations.next(j.label) == target) return false;
