@@ -1,0 +1,2 @@
+# 僅主控可新增；只豁免列出的類別，不自動展開內部類。
+local/lito381/server/NativeDeVisibilitySwitch # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/108#issuecomment-6643057522
