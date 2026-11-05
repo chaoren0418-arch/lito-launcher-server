@@ -2,24 +2,25 @@
 
 ## 結論
 
-本輪使用已合併的 #108、#135、#153、#166 重驗全部 88 entry，結果為 **85 SAME、1 DEVIATION、2 DIFF**，missing／extra 均為空。仍待主控裁定兩筆 switch 欄位正規化差異，最終語意驗收尚未通過。交付分支 `task/74`，PR #100。
+2026-11-05 續跑已完成編譯與全部 88 entry 的語意檢查，結果為 **85 SAME、1 DEVIATION、2 DIFF**，missing／extra 均空，`acceptancePass=false`。本批最終語意驗收仍待主控裁定 switch 欄位正規化問題。交付分支 `task/74`，PR #100。
 
-初次新版重驗為 82 SAME、1 DEVIATION、5 DIFF。本輪修正五份 staged Java，其中 `NativeDeVisibilityCoordinator`、`NativeDeWorldContext`、`NativeDeWorldCore` 已完整 SAME，`NativeDeVisibilityPc` 僅剩對 switch 欄位的引用差異。`NativeDeWorldKinds` 與其內部類、`NativeDeWorldPlayerFilter` 與 `$1` 均 SAME。
+本次額外採用已合併的 #174 工具與核准清單，從固定主線提交 `18c80178f579b36aa227786e9b79638dc6af6db8` 讀取到 scratch 後編譯。工具 Java 最後變更提交為 `65be0a1d5dc12b63b6c7cc51d171eff3332cb858`。staged 來源提交為 `1b38344b678c889de2e89759139f37f6dc18fb1d`，本次唯一追蹤檔變更為本報告。此方式讓工具版本可重現，同時遵守本批檔案範圍。
 
 ## 做了什麼
 
-- 沿用 `task/74`，合入已合併依賴的 `origin/main`。本輪工作前 head 為 `ee6ab35c5eb56334dd0e155ab24a8a3d89d3126f`，依賴基底為 `450178d59b0157fddf2b9456b7c03d20207993fc`。合併帶入主線既有變更，分支相對主線的任務範圍仍精確為 47 Java 與本報告。
-- `NativeDeVisibilityCoordinator.tick` 恢復正式版 check 成功後才更新玩家的條件區塊，消除 continue 造成的例外表分段差異。
-- `NativeDeVisibilityPc` 的已知物件快照採用 `List` 呼叫型別，恢復 range 條件分支及 GM HP bar 的明確布林返回。
-- `NativeDeWorldContext.attach` 將欄位發佈與 showId 寫入放回物件 monitor 內，返回時先離開 monitor，再由 finally 釋放 admission read lock。前輪反編譯內容曾把新 entry 的發佈放到 monitor 外，並在既有 entry 返回時提前 unlock。本輪已依正式版修正，完整 SAME。
-- `NativeDeWorldCore` 修正 Map 查詢的 key 裝箱型別，將 `short actualMapId` 改為 `int`，使 `_visibleObjects.get`／`_spatialIndex.get` 使用正式版的 `Integer.valueOf`。同時對齊 log 裝箱、`NativeDeWorldPoint` 呼叫型別、switch 出口、查詢 guard、pattern variable、lambda 提早返回、陣列自增與區域暫存，完整 SAME。
-- `NativeDeVisibilitySwitch` 的兩個欄位宣告順序對齊正式 class 欄位表，依序為 RepairKind、Phase。初始化仍先 Phase、後 RepairKind。這為後續依欄位順序比對提供一致輸入。
-- 保留唯一的 `NativeDeWorldLog.debug(String,Object,Object)`，其 `emit("debug", message, new Object[]{a,b})` 實作經來源檢查，CLI 以既有 `--deviations` 列為 DEVIATION。
-- 本輪沿用前輪 CFR 0.152／Vineflower 1.11.2 的正式版還原結果，結合新版完整正規化輸出修正來源。47 檔的 DECOMPILED 標頭均保留。
+既有提交已完成下列來源修正，本次以重新建立的直接 javac 產物逐項核對。
+
+- `NativeDeVisibilityCoordinator.tick` 恢復正式版 check 成功後才更新玩家的條件區塊。
+- `NativeDeVisibilityPc` 的已知物件快照採用 `List` 呼叫型別，對齊 range 分支與 GM HP bar 的明確布林返回。
+- `NativeDeWorldContext.attach` 將欄位發佈與 showId 寫入置於物件 monitor 內，返回時先離開 monitor，再由 finally 釋放 admission read lock。
+- `NativeDeWorldCore` 將 `actualMapId` 對齊為 int，讓 Map key 使用 `Integer.valueOf`，並對齊 log 裝箱、呼叫型別、switch 出口、guard、pattern variable、lambda、陣列自增與暫存。
+- `NativeDeVisibilitySwitch` 欄位宣告順序依正式 class 為 RepairKind、Phase，初始化順序為 Phase、RepairKind。
+- `NativeDeWorldLog` 僅有一個指定的 `default debug(String,Object,Object)`，內文為 `emit("debug", message, new Object[]{a, b})`，依既有清單列為 DEVIATION。
+- 47 份來源均保有正式版 DECOMPILED 標頭。前輪 CFR 0.152／Vineflower 1.11.2 還原紀錄可由既有提交追溯。
 
 ## 已驗證
 
-環境為 Windows、Microsoft OpenJDK 17.0.17+10-LTS、Python 3.12.10、ASM 9.7。新版工具從本 worktree 的 Java 來源重新編譯，工具最後變更 commit 為 `c98b4e8e552742ffad3f624dfee646dcb1f4218d`。四項依賴的主線合併提交如下。
+本 worktree 已含 #108、#135、#153、#166 的合併提交。此次從主線讀取的 #174 快照也包含這些依賴。
 
 | 依賴 | PR | 合併提交 |
 |---|---|---|
@@ -27,45 +28,69 @@
 | #135 | #152 | `4a8d7e5` |
 | #153 | #164 | `bf50dd7` |
 | #166 | #170 | `5089b6b` |
+| #174 | #178 | `6b769a4` |
 
-原始摘要如下。semantic-diff 產生報表時即回傳 0，驗收另以每個 entry 的狀態判定，`acceptance.json` 的 `acceptancePass` 為 false。
+使用 Microsoft OpenJDK 17.0.17+10-LTS、Python 3.12.10、ASM 9.7。重建 9 份 compile-only stub、11 份工具來源，再直接編譯 A03 的 47 Java。輸出 JAR 恰為 88 個指定 class，逐 entry bytes 與 javac 輸出一致。打包日期固定為 `2026-11-05T00:00:00Z`。JAR SHA-256 與前輪直接產物相同。
 
+`VisibilityCoordinator`、`WorldContext`、`WorldCore`、`WorldKinds`、`WorldPlayerFilter` 及本批相關內部類均為 SAME。DIFF 限於 `VisibilityPc`、`VisibilitySwitch`。以下保留原始命令結果，完整 argv 與輸出分別在 `*-command.json`、`*.log`。
 ```text
+openjdk version "17.0.17" 2025-10-21 LTS
+OpenJDK Runtime Environment Microsoft-12574423 (build 17.0.17+10-LTS)
+OpenJDK 64-Bit Server VM Microsoft-12574423 (build 17.0.17+10-LTS, mixed mode, sharing)
 Compiled 9 compile-only sources -> target/legacy-stubs (never packaged)
-tool-build exit 0
-javac exit 0
 Note: Some input files use unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
-jar exit 0
-{'entries': 88, 'missing': [], 'extra': []}
-semantic exit 0
 SUMMARY SAME=85 SAME_EFFECTS=0 SAME_LAYOUT=0 DEVIATION=1 DIFF=2 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=3 ALLOW_METHODS=0
-classSelection.missingLeft=[]
-classSelection.extraLeft=[]
-acceptancePass False
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-74\scratch\issue-74\latest\semantic.json
+wrote D:\lineage開發\3-lito開發\scratch\wt\task-74\scratch\issue-74\latest\semantic.md
+{
+  "entries": 88,
+  "missing": [],
+  "extra": []
+}
+acceptancePass false
 ```
+所有子程序退出碼如下。semantic-diff 以成功產生報表回傳 0，驗收由逐 entry 狀態及集合另行判定。
 
-只將本批 47 Java 直接 javac 編譯，產物恰為清單內 88 class。驗收 JAR 全部來自該輸出目錄，沒有 class bytes 覆蓋、編譯後處理或 com/lineage stub 打包。打包固定 `--date 2026-11-05T00:00:00Z` 供重現。
-
-裁切六份核准清單後，本批實際使用一條 metadata 豁免及一條 deviation。effects／extra-methods／access-widen／layout 與本批的交集為空，因此未傳空檔。左側以正式 reference JAR 作明確 classpath，供 #166 的父類欄位解析。核准內容如下。
-
-```text
-local/lito381/server/NativeDeVisibilitySwitch # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/108#issuecomment-6643057522
+```json
+{
+  "jdk-version": 0,
+  "stubs": 0,
+  "tool-build": 0,
+  "javac": 0,
+  "jar": 0,
+  "semantic": 0,
+  "diagnostic-build": 0,
+  "dump": 0,
+  "switch-diagnostic": 0
+}
 ```
+## 核准清單
 
-```text
-local/lito381/server/NativeDeWorldLog#debug(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
+七份清單從同一主線快照讀取，再依本批 verify_entries 裁切。實際交集只有一筆 metadata 豁免與一筆 deviation，其餘五份交集為空。完整裁切結果如下。
+```json
+{
+  "effects-approved.txt": [],
+  "extra-methods-approved.txt": [],
+  "metadata-exempt.txt": [
+    "local/lito381/server/NativeDeVisibilitySwitch # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/108#issuecomment-6643057522"
+  ],
+  "access-widen-approved.txt": [],
+  "layout-approved.txt": [],
+  "deviations.txt": [
+    "local/lito381/server/NativeDeWorldLog#debug(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153"
+  ],
+  "exceptions-exempt.txt": []
+}
 ```
-
 ## 剩餘差異與 A／B／C 分類
 
-1. `NativeDeVisibilitySwitch` 的兩個欄位在兩側具有相同原名、描述子、宣告順序與初始化內容。右側 flags 為 `0x1018`，Java 明寫欄位為 `0x18`。`JarIndex.load` 目前只對具有 ACC_SYNTHETIC 的 `$SwitchMap$` 建立改名表，右側因此改為 `$SwitchMap$#0/#1`，左側保留原名，導致欄位及 clinit DIFF。既有 metadata 豁免處理類別 metadata，未涵蓋此欄位名稱映射。
-2. `NativeDeVisibilityPc.removeOutOfRangeKnownObjects` 只剩一個 GETSTATIC 引用相同 switch 欄位時受到上述不對稱改名影響。其餘完整方法指令與 try-catch 表已核對一致。
+1. `NativeDeVisibilitySwitch` 兩欄位在兩側的原名、描述子、宣告順序及初始化內容一致，flags 分別為明寫 Java 的 `0x18`、正式合成欄位的 `0x1018`。#174 快照中的 `JarIndex.java` 第 68–70 行仍僅替帶有 ACC_SYNTHETIC 的 `$SwitchMap$` 欄位建立映射，造成右側名稱成為 `$SwitchMap$#0/#1`，左側保留原名。metadata 豁免目前僅涵蓋該類別的 metadata。
+2. `NativeDeVisibilityPc.removeOutOfRangeKnownObjects` 的一個 GETSTATIC 引用受到同一映射影響。其餘正規化指令與例外保護表已以唯讀診斷核對。
 
-A 類的其餘 metadata、lambda、local webs、stack/local 與 try 邊界差異已由新版工具驗收。B 類本輪沒有新增條目，剩餘欄位名稱映射不在可自行追加 effects 的四種範圍。以上兩筆按 C 類未涵蓋情形送主控，需加 `needs:claude`。程式碼欄位原名須保留供既有 reference caller 使用，Java 原始碼也無法直接指定 ACC_SYNTHETIC 或含 `#` 的欄位識別字。
+通用 A 類的其餘差異已由正式 CLI 處理。以上差異超出 B 類四種堆疊／暫存類型，因此本批以 C 類送主控裁定，並依任務要求加 `needs:claude`。既有正式 caller 依賴這些欄位原名，Java 原始碼也無法直接指定 ACC_SYNTHETIC 或包含 `#` 的欄位識別字。
 
-獨立唯讀診斷將右側正規化顯示名稱還原為正式原名後，對兩個完整方法逐指令與 try-catch 表比較。此診斷沒有寫入 class，也沒有改變正式 CLI 的 DIFF 結果。原始輸出如下。
-
+完整兩側 dump 的 unified diff 附於本報告後段，其中也保留工具已豁免的類別 metadata 與隱式建構子差異。正式 CLI 的兩筆 DIFF 與唯讀診斷分開保存。唯讀診斷只把右側顯示名稱還原，再比較完整指令及保護表，其結果如下。
 ```text
 DIAGNOSTIC ONLY - semantic.json remains authoritative
 LEFT fields in declaration order
@@ -81,49 +106,43 @@ local/lito381/server/NativeDeVisibilityPc#removeOutOfRangeKnownObjects
 instructionsEqualAfterRestoringRawFieldNames=true
 normalizedTryCatchEqual=true
 ```
+## 推測／未驗證什麼／給下一棒的提示
 
-## 推測／待驗證／給下一棒的提示
-
-- **主控 Claude** 接手兩筆 C 類結果，裁定精確 switch 欄位正規化方案。建議工具工作範圍檢查 metadata-exempt 的明寫 switch holder，以實際欄位原名與宣告順序建立雙側一致映射，同時保留交換兩個 map 使用點仍為 DIFF 的反例。這項建議尚未實作或驗證。
-- **工具修正合併後的 A03 執行器** 用本報告指令重跑全部 88 entry，確認 87 SAME 加 1 DEVIATION 或其餘核准通過狀態，並確認缺漏、多出及 DIFF 皆為 0。這次提交須保留待驗收狀態。
-- **A-land** 再統一跑單元測試及回歸，特別依 `deviations.md` 模擬選用欄位讀取失敗，確認 default debug 的訊息／參數與 NoSuchMethodError 修正。本批單元／回歸不適用，真機執行尚待 A-land 後安排。
-- 本輪程式碼及報告修改限 staged 與本報告。src/main、pom.xml、docs/REPORT.md 的主線差異由依賴合併帶入，本任務相對 origin/main 對這些路徑的差異為空。未啟動遊戲／伺服器／登入器，未連 DB，未存取機密設定、封存與客戶端，未改正式部署或硬連結。
-- Git 共用 metadata 的 fetch／merge／commit／push 依任務使用權限提升。GitHub CLI 在沙箱內回傳 401，提升後可使用既有認證。ASM analysis 下載在提升模式成功，SHA-256 已與 repo 的 `build-support.sh` 常數核對。未寫入原始專案工作檔。
+- **主控 Claude** 接手兩筆 C 類差異，裁定精確 switch 欄位正規化方案。可考慮對 metadata-exempt 的明寫 switch holder，以原名、描述子及欄位宣告順序建立雙側一致映射，並保留「交換兩個 map 的使用點」仍為 DIFF 的反例。這項方案目前屬待實作、待驗證。
+- **工具執行器** 依裁定修正工具並完成正反例。合併後由 **A03 本機執行器** 更新固定工具提交，重跑全部 88 entry，確認所有 entry 為 SAME／SAME_EFFECTS／DEVIATION，且 DIFF、ONLY_LEFT、ONLY_RIGHT、missing、extra 均為 0。
+- **A-land 執行器** 統一執行單元測試與回歸，並依 `deviations.md` 模擬選用欄位讀取失敗，驗證 debug 的訊息、參數及 NoSuchMethodError 修正。此次驗證限於 staged 編譯與靜態語意比較，執行期及真機驗收仍待後續階段。
+- 分支相對固定主線的三點差異恰為 A03 47 份 staged Java 加本報告。編譯及診斷產物保存於 worktree 的 scratch／target。GitHub 操作使用既有認證，Git 共用 metadata 操作依本任務授權提升權限。
 
 ## 產出路徑
 
-- `lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/` 的 A03 47 Java。本輪另修正其中五份。
-- `docs/reports/issue-74.md` 為本輪提交報告。
-- `scratch/issue-74/reverify.py` 為重驗腳本。
-- `scratch/issue-74/reverify/` 保存 `*-command.json`、原始 log、semantic JSON／Markdown、88 對 normalized 全文、差異、核准交集、雜湊 manifest 與唯讀診斷。
-- `scratch/issue-74/reverify/target/a03.jar`、`target/classes/`、`target/tool/`、`target/dependency/` 為本輪建置輸出，均不入 Git。
-- `scratch/issue-74/reverify/initial/` 保存本輪第一次新版重驗的 82／1／5 結果及完整差異。前輪紀錄仍可由 git 追溯。
+- `lito伺服器/LiTo381-Server/merge-inputs/formal-0.6.71/staged/local/lito381/server/` 的 A03 47 Java。
+- `docs/reports/issue-74.md` 為交付報告。
+- `scratch/issue-74/latest.py` 為本次完整重驗腳本。
+- `scratch/issue-74/latest/` 保存原始命令、log、核准清單快照與交集、semantic JSON／Markdown、176 份兩側 normalized 全文、完整差異、驗收結果及雜湊收據。
+- `scratch/issue-74/latest/target/` 保存工具、診斷及 A03 classes／JAR。
+- `scratch/issue-74/reverify/Dump.java` 與 `SwitchDiagnostic.java` 為唯讀診斷來源，原文附於後段。
 
 ## 輸入輸出 SHA-256
 
-`inputs-sha256.json` 列出 47 Java、工具 Java、核准清單、stub 來源、reference／lib 與 ASM 依賴的逐檔雜湊。以下是主要收據。
+`inputs-sha256.json` 含 47 Java、工具快照、七份核准清單、stub、reference、lib、ASM 與驗證腳本逐檔雜湊。`outputs-sha256.json` 含本次產物與原始證據的逐檔雜湊。主要收據如下。
 
 | 路徑 | SHA-256 |
 |---|---|
 | `lito伺服器/LiTo381-Server/reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| `scratch/issue-74/reverify/target/a03.jar` | `9f3555fed2db3e6d61db3213189f74f0b5d283e21997774982be2bd92ac3ea45` |
-| `scratch/issue-74/reverify/inputs-sha256.json` | `27861ce7c3dd7d34a176e0850d25e621e7fc69743561e5b967fb9ef388a443de` |
-| `scratch/issue-74/reverify/entries.txt` | `6e5f2f766d5158a5ebc2dc028c5c0e47d2e9cad2dcebe23bc8b9ca30a0f79831` |
-| `scratch/issue-74/reverify/metadata-exempt.txt` | `846f881adfea193300b358c53066738cef25e4f568adb7db392294a1cf6ff5b6` |
-| `scratch/issue-74/reverify/deviations.txt` | `58efe0b86b4e6fad0eb3e213411fd53b07e45236c15dbc32d830ee0a448d45f2` |
-| `scratch/issue-74/reverify/semantic.json` | `e2622219b2cea2fde5fb710470fb98a890c91972fab3de0f5499a5eb39cc1357` |
-| `scratch/issue-74/reverify/semantic.log` | `d19ba2d7e727f5a0ced4da2c08f53e09670e516d2214a562c6c716d340387847` |
-| `scratch/issue-74/reverify/javac.log` | `373c917b895fa8f625556c0b4b359c0d4fcb2a78b8bd66390f8a0a0f001bfe3a` |
-| `scratch/issue-74/reverify/remaining-diffs.md` | `d534179af7ac16ad1aa13bf459070e62a0847a2ddd17e9f7b97d1a01179ed4c7` |
-| `scratch/issue-74/reverify/switch-diagnostic.log` | `97235ebdb247c3baeb088542beee89fc3a454cfc1fb6dbd16c62755dd473af26` |
-| `scratch/issue-74/reverify/acceptance.json` | `f0cec68f4963aece923d9d181f7e825dd798de9f593c8f3636caafb73040e23f` |
-| `scratch/issue-74/reverify.py` | `fa0db0bd585515f2eacc1e14d527d2ef7e5c88f90973e912107a4b4bed3259e6` |
-| `scratch/issue-74/reverify/Dump.java` | `757ab5f33a54d9c702c6ce08189473d34b23b292d920a99b54e5d5654718dcb2` |
-| `scratch/issue-74/reverify/SwitchDiagnostic.java` | `461804acbd603aa11c0923b088269f02425df9d8cb44617ab08ece166940d4b2` |
+| `scratch/issue-74/latest/target/a03.jar` | `9f3555fed2db3e6d61db3213189f74f0b5d283e21997774982be2bd92ac3ea45` |
+| `scratch/issue-74/latest/provenance.json` | `7e2c6408728f74b35b8f89b6081890676b60e6d712ccc955ce2d8b3b3c7b1bbc` |
+| `scratch/issue-74/latest/inputs-sha256.json` | `614f2734fb2aba56e200cd32a5c24b0397f7369528071b355adf94076d01a0c1` |
+| `scratch/issue-74/latest/outputs-sha256.json` | `95e492e57b4c4bb26a9ca52899aaa478f5fbdb616b53bf1fa42a0db3fee841ba` |
+| `scratch/issue-74/latest/semantic.json` | `95fe26e6c158667c8ee0d00a309d73071b6106621a7312ec5f506d87760a7446` |
+| `scratch/issue-74/latest/semantic.log` | `cffa4cbe3c9d71bbd272b7c2d9a2760b1a4e31c7d24330e14defedc260be0db9` |
+| `scratch/issue-74/latest/acceptance.json` | `847d43079fc4c503c6865782f65afbeb6c30f0749611fdfd51632d7dfc1aabd3` |
+| `scratch/issue-74/latest/remaining-diffs.md` | `4476ddccf639e05e1e2512bb8ee1aa0ef116dbc5ae1275d73025cbe81614fc49` |
+| `scratch/issue-74/latest/switch-diagnostic.log` | `97235ebdb247c3baeb088542beee89fc3a454cfc1fb6dbd16c62755dd473af26` |
+| `scratch/issue-74/latest.py` | `2534fcab1eedbf8011b2933c121a596bc422a8536bf7b54cc4d356a1d2090463` |
 
-### 47 份 staged 輸入
+47 份 staged Java 的雜湊如下。
 
-| Java | SHA-256 |
+| 檔名 | SHA-256 |
 |---|---|
 | `NativeDeShopResources.java` | `ac972234c96157f29d7307c0766bc31482be88cb930b9cedcd1ce803940c7011` |
 | `NativeDeShopTable.java` | `173cb0b3f3201a5fbde342c715e2ad076f83d3e0acda2dafaaa687cc795298a0` |
@@ -175,89 +194,167 @@ normalizedTryCatchEqual=true
 
 ## 可重現指令
 
-從 worktree 根目錄執行。JDK 與 Python 路徑為本機實測位置。ASM／asm-tree 使用既有 Maven cache，asm-analysis 放此任務的 target/dependency。
+從本 worktree 根目錄執行。工具及清單由腳本的固定 `TOOL_REF` 讀取。ASM／asm-tree 使用既有 Maven cache，asm-analysis 使用前輪已校驗的本任務檔案。重跑時腳本先清除其自身 classes 輸出內的 class，再編譯並驗證集合與逐 entry bytes。
 
 ```powershell
-$env:JAVA_HOME = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot'
-powershell -NoProfile -ExecutionPolicy Bypass -File lito伺服器/LiTo381-Server/tools/legacy-stubs/build.ps1
-New-Item -ItemType Directory -Force scratch/issue-74/reverify/target/dependency | Out-Null
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -UseBasicParsing 'https://repo.maven.apache.org/maven2/org/ow2/asm/asm-analysis/9.7/asm-analysis-9.7.jar' -OutFile scratch/issue-74/reverify/target/dependency/asm-analysis-9.7.jar
-if ((Get-FileHash scratch/issue-74/reverify/target/dependency/asm-analysis-9.7.jar).Hash -ne '7bc6bcbc21379948a0c8c467fb0f864206e5b818f6bc0b546872f5c9f941556f') { throw 'ASM hash mismatch' }
-& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-74/reverify.py
+& 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-74/latest.py
 ```
 
-下列為實際重驗腳本全文。每個 subprocess 的完整 argv 與 stdout／stderr 分別保存為 `*-command.json` 及 `*.log`。
+以下為實際執行腳本全文。
 
 ```python
 from pathlib import Path
+import difflib
 import hashlib
 import json
+import os
 import subprocess
 import zipfile
 
 ROOT = Path.cwd()
 SERVER = ROOT / 'lito伺服器/LiTo381-Server'
-WORK = ROOT / 'scratch/issue-74/reverify'
+WORK = ROOT / 'scratch/issue-74/latest'
 JDK = Path('C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin')
-BATCH = next(b for b in json.loads((ROOT / 'docs/combat-merge/a-batches.json').read_text(encoding='utf-8'))['batches'] if b['id'] == 'A03')
+TOOL_REF = '18c80178f579b36aa227786e9b79638dc6af6db8'
+TOOL_PREFIX = 'lito伺服器/LiTo381-Server/tools/semantic-diff/src/main/java/'
+APPROVAL_FLAGS = {
+    'effects-approved.txt': '--effects-methods',
+    'extra-methods-approved.txt': '--extra-methods',
+    'metadata-exempt.txt': '--metadata-exempt',
+    'access-widen-approved.txt': '--access-widen',
+    'layout-approved.txt': '--layout-methods',
+    'deviations.txt': '--deviations',
+    'exceptions-exempt.txt': '--exceptions-exempt',
+}
 WORK.mkdir(parents=True, exist_ok=True)
-ASM = ';'.join(str(p) for p in [
-    Path('D:/dev-cache/maven/repository/org/ow2/asm') / name / '9.7' / f'{name}-9.7.jar'
-    for name in ['asm', 'asm-tree']
-] + [WORK / 'target/dependency/asm-analysis-9.7.jar'])
+COMMAND_RESULTS = {}
 
-def run(name, arguments):
-    command = [str(arg) for arg in arguments]
-    (WORK / f'{name}-command.json').write_text(json.dumps(command, ensure_ascii=False, indent=2), encoding='utf-8')
-    result = subprocess.run(command, capture_output=True)
-    (WORK / f'{name}.log').write_bytes(result.stdout + result.stderr)
+
+def git(*arguments):
+    return subprocess.check_output(['git', *arguments], cwd=ROOT)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def save_json(name, value):
+    (WORK / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+
+def run(name, arguments, env=None):
+    command = [str(argument) for argument in arguments]
+    save_json(name + '-command.json', command)
+    result = subprocess.run(command, cwd=ROOT, capture_output=True, env=env)
+    (WORK / (name + '.log')).write_bytes(result.stdout + result.stderr)
+    COMMAND_RESULTS[name] = result.returncode
+    save_json('exit-codes.json', COMMAND_RESULTS)
     print(name, 'exit', result.returncode)
     print((result.stdout + result.stderr).decode('utf-8', errors='replace'))
-    if result.returncode:
-        raise SystemExit(result.returncode)
+    result.check_returncode()
+
 
 def main():
-    run('tool-build', [JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', ASM, '-d', WORK / 'target/tool', *sorted((SERVER / 'tools/semantic-diff/src/main/java').rglob('*.java'))])
-    output = WORK / 'target/classes'
-    output.mkdir(parents=True, exist_ok=True)
-    assert output.resolve().is_relative_to(WORK.resolve())
-    for path in output.rglob('*.class'):
-        path.unlink()
+    tool_ref = git('rev-parse', TOOL_REF).decode().strip()
+    input_files = []
+    tool_sources = []
+    tracked = git('ls-tree', '-r', '--name-only', '-z', tool_ref, '--', TOOL_PREFIX).decode('utf-8').split('\0')
+    for name in filter(None, tracked):
+        destination = WORK / 'tool-source' / name.removeprefix(TOOL_PREFIX)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(git('show', tool_ref + ':' + name))
+        tool_sources.append(destination)
+        input_files.append(destination)
+    source_commit = git('log', '-1', '--format=%H', tool_ref, '--', TOOL_PREFIX).decode().strip()
+    save_json('provenance.json', {
+        'stagedCommit': git('rev-parse', 'HEAD').decode().strip(),
+        'toolSnapshotCommit': tool_ref,
+        'toolSourceCommit': source_commit,
+        'toolSourceCount': len(tool_sources),
+    })
+    asm_files = [Path('D:/dev-cache/maven/repository/org/ow2/asm') / name / '9.7' / (name + '-9.7.jar') for name in ['asm', 'asm-tree']]
+    asm_files.append(ROOT / 'scratch/issue-74/reverify/target/dependency/asm-analysis-9.7.jar')
+    assert sha(asm_files[-1]) == '7bc6bcbc21379948a0c8c467fb0f864206e5b818f6bc0b546872f5c9f941556f'
+    asm = ';'.join(map(str, asm_files))
+    input_files.extend(asm_files)
+    environment = dict(os.environ, JAVA_HOME=str(JDK.parent))
+    run('jdk-version', [JDK / 'java.exe', '-version'])
+    run('stubs', ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', SERVER / 'tools/legacy-stubs/build.ps1'], env=environment)
+    run('tool-build', [JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', asm, '-d', WORK / 'target/tool', *tool_sources])
+    batches_path = ROOT / 'docs/combat-merge/a-batches.json'
+    batch = next(batch for batch in json.loads(batches_path.read_text(encoding='utf-8'))['batches'] if batch['id'] == 'A03')
     staged = SERVER / 'merge-inputs/formal-0.6.71/staged/local/lito381/server'
+    sources = [staged / (name + '.java') for name in batch['classes']]
+    assert len(sources) == 47 and all('DECOMPILED from base-0.6.71.jar' in path.read_text(encoding='utf-8') for path in sources)
     reference = SERVER / 'reference/base-0.6.71.jar'
-    run('javac', [JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', f'{reference};{SERVER / "target/legacy-stubs"};{SERVER / "lib/*"}', '-d', output, *[staged / (name + '.java') for name in BATCH['classes']]])
+    output = WORK / 'target/classes'
+    assert output.resolve().is_relative_to(WORK.resolve())
+    existing_classes = list(output.rglob('*.class'))
+    assert all(path.resolve().is_relative_to(output.resolve()) for path in existing_classes)
+    for path in existing_classes:
+        path.unlink()
+    output.mkdir(parents=True, exist_ok=True)
+    run('javac', [JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', f'{reference};{SERVER / "target/legacy-stubs"};{SERVER / "lib/*"}', '-d', output, *sources])
     jar = WORK / 'target/a03.jar'
     run('jar', [JDK / 'jar.exe', '--create', '--file', jar, '--date', '2026-11-05T00:00:00Z', '-C', output, '.'])
     with zipfile.ZipFile(jar) as archive:
         actual = {name for name in archive.namelist() if name.endswith('.class')}
-    expected = set(BATCH['verify_entries'])
+        assert all(archive.read(name) == (output / name).read_bytes() for name in actual)
+    expected = set(batch['verify_entries'])
     selection = {'entries': len(actual), 'missing': sorted(expected - actual), 'extra': sorted(actual - expected)}
+    save_json('selection.json', selection)
     print(selection)
-    (WORK / 'selection.json').write_text(json.dumps(selection, indent=2), encoding='utf-8')
-    assert actual == expected
-    (WORK / 'entries.txt').write_text('\n'.join(BATCH['verify_entries']) + '\n', encoding='utf-8')
+    assert actual == expected and len(actual) == 88
+    (WORK / 'entries.txt').write_text('\n'.join(batch['verify_entries']) + '\n', encoding='utf-8')
     approvals = []
-    for filename, flag in [('effects-approved.txt', '--effects-methods'), ('extra-methods-approved.txt', '--extra-methods'), ('metadata-exempt.txt', '--metadata-exempt'), ('access-widen-approved.txt', '--access-widen'), ('layout-approved.txt', '--layout-methods'), ('deviations.txt', '--deviations')]:
-        lines = []
-        for line in (ROOT / 'docs/combat-merge' / filename).read_text(encoding='utf-8-sig').splitlines():
+    intersections = {}
+    for filename, flag in APPROVAL_FLAGS.items():
+        snapshot = WORK / 'approvals-source' / filename
+        snapshot.parent.mkdir(exist_ok=True)
+        snapshot.write_bytes(git('show', tool_ref + ':docs/combat-merge/' + filename))
+        input_files.append(snapshot)
+        selected = []
+        for line in snapshot.read_text(encoding='utf-8-sig').splitlines():
             entry = line.strip()
             if not entry or entry.startswith('#'):
                 continue
             owner = entry.removeprefix('ctor-prologue-order ').split('#')[0].strip()
             if owner + '.class' in expected:
-                lines.append(line)
-        if lines:
+                selected.append(line)
+        intersections[filename] = selected
+        if selected:
             path = WORK / filename
-            path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+            path.write_text('\n'.join(selected) + '\n', encoding='utf-8')
             approvals.extend([flag, path])
-    run('semantic', [JDK / 'java.exe', '-Dfile.encoding=UTF-8', '-cp', f'{WORK / "target/tool"};{ASM}', 'local.lito381.semanticdiff.SemanticDiff', '--left', jar, '--right', reference, '--left-classpath', reference, '--classes', WORK / 'entries.txt', *approvals, '--json', WORK / 'semantic.json', '--md', WORK / 'semantic.md'])
+    save_json('approval-intersections.json', intersections)
+    classpath = f'{WORK / "target/tool"};{asm}'
+    run('semantic', [JDK / 'java.exe', '-Dfile.encoding=UTF-8', '-cp', classpath, 'local.lito381.semanticdiff.SemanticDiff', '--left', jar, '--right', reference, '--left-classpath', reference, '--classes', WORK / 'entries.txt', *approvals, '--json', WORK / 'semantic.json', '--md', WORK / 'semantic.md'])
     result = json.loads((WORK / 'semantic.json').read_text(encoding='utf-8'))
-    print('counts', result['counts'])
+    accepted = all(entry['status'] in {'SAME', 'SAME_EFFECTS', 'DEVIATION'} for entry in result['classes'])
+    save_json('acceptance.json', {'acceptancePass': accepted and actual == expected, 'counts': result['counts'], 'classSelection': result['classSelection']})
+    print('acceptancePass', accepted)
+    helpers = [ROOT / 'scratch/issue-74/reverify' / name for name in ['Dump.java', 'SwitchDiagnostic.java']]
+    run('diagnostic-build', [JDK / 'javac.exe', '--release', '17', '-encoding', 'UTF-8', '-cp', classpath, '-d', WORK / 'target/diagnostics', *helpers])
+    diagnostic_classpath = f'{WORK / "target/diagnostics"};{classpath}'
+    run('dump', [JDK / 'java.exe', '-Dfile.encoding=UTF-8', '-cp', diagnostic_classpath, 'local.lito381.semanticdiff.Dump', jar, reference, WORK / 'normalized'])
+    run('switch-diagnostic', [JDK / 'java.exe', '-Dfile.encoding=UTF-8', '-cp', diagnostic_classpath, 'local.lito381.semanticdiff.SwitchDiagnostic', jar, reference])
+    diffs = []
     for entry in result['classes']:
-        if entry['status'] == 'DIFF':
-            print(json.dumps(entry, ensure_ascii=False))
-    print('jar SHA256', hashlib.sha256(jar.read_bytes()).hexdigest())
+        if entry['status'] != 'DIFF':
+            continue
+        name = entry['name'].split('/')[-1]
+        left = (WORK / 'normalized' / (name + '.left.txt')).read_text(encoding='utf-8').splitlines(True)
+        right = (WORK / 'normalized' / (name + '.right.txt')).read_text(encoding='utf-8').splitlines(True)
+        diff = ''.join(difflib.unified_diff(left, right, fromfile=name + '.left', tofile=name + '.right'))
+        diffs.append('### ' + name + '\n\n```diff\n' + diff + '```\n')
+    (WORK / 'remaining-diffs.md').write_text('\n'.join(diffs), encoding='utf-8')
+    input_files.extend([*sources, reference, batches_path, *helpers, Path(__file__).resolve(), SERVER / 'tools/legacy-stubs/build.ps1'])
+    input_files.extend(sorted((SERVER / 'compile-stubs').rglob('*.java')))
+    input_files.extend(sorted((SERVER / 'lib').glob('*.jar')))
+    save_json('inputs-sha256.json', [{'path': str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path), 'sha256': sha(path)} for path in input_files])
+    save_json('outputs-sha256.json', [{'path': path.relative_to(WORK).as_posix(), 'sha256': sha(path)} for path in sorted(WORK.rglob('*')) if path.is_file() and path.name != 'outputs-sha256.json'])
+    print('jar SHA256', sha(jar))
+
 
 if __name__ == '__main__':
     main()
@@ -356,50 +453,13 @@ if __name__ == '__main__':
 | `NativeDeWorldRegistryWizard` | SAME |
 | `NativeDeWorldScope` | SAME |
 
-### CLI 原始 DIFF 結果
-
-```json
-[
-  {
-    "name": "local/lito381/server/NativeDeVisibilityPc",
-    "status": "DIFF",
-    "byteSame": false,
-    "allowMethodsApplied": false,
-    "effectsMethods": [],
-    "approvedMethods": [],
-    "firstDiff": {
-      "where": "method",
-      "member": "removeOutOfRangeKnownObjects(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;)V",
-      "insnIndex": 69,
-      "detail": "left=GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind:[I right=GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I"
-    }
-  },
-  {
-    "name": "local/lito381/server/NativeDeVisibilitySwitch",
-    "status": "DIFF",
-    "byteSame": false,
-    "allowMethodsApplied": false,
-    "effectsMethods": [],
-    "approvedMethods": [],
-    "firstDiff": {
-      "where": "field",
-      "member": "$SwitchMap$#0:[I",
-      "insnIndex": null,
-      "detail": "only right"
-    }
-  }
-]
-```
-
 ## 兩筆剩餘 entry 的完整正規化差異
-
-以下 unified diff 以完整類別 dump 產生，未截斷指令。`-` 為 staged，`+` 為正式 reference。Dump 保留類別 metadata 與隱含建構子的可見證據，這些項目已由既有 metadata 豁免／預設建構子規則處理。欄位宣告與引用採用比較器的實際改名結果。正式驗收以 CLI JSON 為準。
 
 ### NativeDeVisibilityPc
 
 ```diff
---- NativeDeVisibilityPc.left.txt
-+++ NativeDeVisibilityPc.right.txt
+--- NativeDeVisibilityPc.left
++++ NativeDeVisibilityPc.right
 @@ -11,16 +11,6 @@
  annotations |||
  innerClasses
@@ -417,7 +477,7 @@ if __name__ == '__main__':
  METHOD isGmHpBarTarget(Llocal/lito381/server/NativeDeDeletionPorts$Viewer;Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)Z
  access 0x9
  signature
-@@ -168,7 +158,7 @@
+@@ -155,7 +145,7 @@
     ALOAD 5
     INVOKESPECIAL local/lito381/server/NativeDeDeletionPorts$RemoveObject.<init>(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;)V
     INVOKESTATIC local/lito381/server/NativeDeVisibilityAccess.L1PcInstance$sendPackets(Llocal/lito381/server/NativeDeDeletionPorts$ObjectRef;Llocal/lito381/server/NativeDeDeletionPorts$Packet;)V
@@ -431,8 +491,8 @@ if __name__ == '__main__':
 ### NativeDeVisibilitySwitch
 
 ```diff
---- NativeDeVisibilitySwitch.left.txt
-+++ NativeDeVisibilitySwitch.right.txt
+--- NativeDeVisibilitySwitch.left
++++ NativeDeVisibilitySwitch.right
 @@ -1,22 +1,22 @@
 -access 32
 +access 4128
@@ -462,106 +522,96 @@ if __name__ == '__main__':
  access 0x18
  signature
  value
-@@ -30,9 +30,9 @@
+@@ -30,50 +30,50 @@
     INVOKESTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.values()[Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     ARRAYLENGTH
     NEWARRAY 10
 -   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
-+   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
-    LABEL L0
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
++   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.ACTIVE:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:1
-@@ -42,7 +42,7 @@
-    LABEL L2
+    IASTORE
+    GOTO L11
     ASTORE 0
-    LABEL L3
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.RESURRECTING:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:2
-@@ -52,7 +52,7 @@
-    LABEL L5
+    IASTORE
+    GOTO L18
     ASTORE 1
-    LABEL L6
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.DEAD_PENDING:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:3
-@@ -62,7 +62,7 @@
-    LABEL L8
+    IASTORE
+    GOTO L25
     ASTORE 2
-    LABEL L9
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.DEAD_SETTLED:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:4
-@@ -72,7 +72,7 @@
-    LABEL L11
+    IASTORE
+    GOTO L32
     ASTORE 3
-    LABEL L12
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.DEATH_DROPPED:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:5
-@@ -82,7 +82,7 @@
-    LABEL L14
+    IASTORE
+    GOTO L39
     ASTORE 4
-    LABEL L15
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.FINALIZING:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:6
-@@ -92,7 +92,7 @@
-    LABEL L17
+    IASTORE
+    GOTO L46
     ASTORE 5
-    LABEL L18
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$DeathLifecycleGate$Phase:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#1:[I
     GETSTATIC local/lito381/server/NativeDeathLifecycleGate$Phase.TERMINATED:Llocal/lito381/server/NativeDeathLifecycleGate$Phase;
     INVOKEVIRTUAL local/lito381/server/NativeDeathLifecycleGate$Phase.ordinal()I
     CONST Integer:7
-@@ -105,9 +105,9 @@
+@@ -83,22 +83,22 @@
     INVOKESTATIC local/lito381/server/NativeDeDeletionVisibility$RepairKind.values()[Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;
     ARRAYLENGTH
     NEWARRAY 10
 -   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind:[I
-+   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I
-    LABEL L22
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind:[I
++   PUTSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I
     GETSTATIC local/lito381/server/NativeDeDeletionVisibility$RepairKind.NORMAL_RACE:Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;
     INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$RepairKind.ordinal()I
     CONST Integer:1
-@@ -117,7 +117,7 @@
-    LABEL L24
+    IASTORE
+    GOTO L64
     ASTORE 7
-    LABEL L25
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I
     GETSTATIC local/lito381/server/NativeDeDeletionVisibility$RepairKind.STALL:Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;
     INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$RepairKind.ordinal()I
     CONST Integer:2
-@@ -127,7 +127,7 @@
-    LABEL L27
+    IASTORE
+    GOTO L71
     ASTORE 8
-    LABEL L28
 -   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$com$lineage$server$model$Instance$NpcDeletionVisibilityState$RepairKind:[I
 +   GETSTATIC local/lito381/server/NativeDeVisibilitySwitch.$SwitchMap$#0:[I
     GETSTATIC local/lito381/server/NativeDeDeletionVisibility$RepairKind.LEAK:Llocal/lito381/server/NativeDeDeletionVisibility$RepairKind;
     INVOKEVIRTUAL local/lito381/server/NativeDeDeletionVisibility$RepairKind.ordinal()I
     CONST Integer:3
-@@ -139,13 +139,3 @@
-    LABEL L31
+@@ -107,13 +107,3 @@
+    ASTORE 9
     RETURN
- tryCatch [TRY L0 L1 L2 java/lang/NoSuchFieldError  , TRY L3 L4 L5 java/lang/NoSuchFieldError  , TRY L6 L7 L8 java/lang/NoSuchFieldError  , TRY L9 L10 L11 java/lang/NoSuchFieldError  , TRY L12 L13 L14 java/lang/NoSuchFieldError  , TRY L15 L16 L17 java/lang/NoSuchFieldError  , TRY L18 L19 L20 java/lang/NoSuchFieldError  , TRY L22 L23 L24 java/lang/NoSuchFieldError  , TRY L25 L26 L27 java/lang/NoSuchFieldError  , TRY L28 L29 L30 java/lang/NoSuchFieldError  ]
+ tryCatch [4:[10:java/lang/NoSuchFieldError  ], 5:[10:java/lang/NoSuchFieldError  ], 6:[10:java/lang/NoSuchFieldError  ], 8:[10:java/lang/NoSuchFieldError  ], 11:[17:java/lang/NoSuchFieldError  ], 12:[17:java/lang/NoSuchFieldError  ], 13:[17:java/lang/NoSuchFieldError  ], 15:[17:java/lang/NoSuchFieldError  ], 18:[24:java/lang/NoSuchFieldError  ], 19:[24:java/lang/NoSuchFieldError  ], 20:[24:java/lang/NoSuchFieldError  ], 22:[24:java/lang/NoSuchFieldError  ], 25:[31:java/lang/NoSuchFieldError  ], 26:[31:java/lang/NoSuchFieldError  ], 27:[31:java/lang/NoSuchFieldError  ], 29:[31:java/lang/NoSuchFieldError  ], 32:[38:java/lang/NoSuchFieldError  ], 33:[38:java/lang/NoSuchFieldError  ], 34:[38:java/lang/NoSuchFieldError  ], 36:[38:java/lang/NoSuchFieldError  ], 39:[45:java/lang/NoSuchFieldError  ], 40:[45:java/lang/NoSuchFieldError  ], 41:[45:java/lang/NoSuchFieldError  ], 43:[45:java/lang/NoSuchFieldError  ], 46:[52:java/lang/NoSuchFieldError  ], 47:[52:java/lang/NoSuchFieldError  ], 48:[52:java/lang/NoSuchFieldError  ], 50:[52:java/lang/NoSuchFieldError  ], 57:[63:java/lang/NoSuchFieldError  ], 58:[63:java/lang/NoSuchFieldError  ], 59:[63:java/lang/NoSuchFieldError  ], 61:[63:java/lang/NoSuchFieldError  ], 64:[70:java/lang/NoSuchFieldError  ], 65:[70:java/lang/NoSuchFieldError  ], 66:[70:java/lang/NoSuchFieldError  ], 68:[70:java/lang/NoSuchFieldError  ], 71:[77:java/lang/NoSuchFieldError  ], 72:[77:java/lang/NoSuchFieldError  ], 73:[77:java/lang/NoSuchFieldError  ], 75:[77:java/lang/NoSuchFieldError  ]]
 -METHOD <init>()V
 -access 0x0
 -signature
@@ -574,10 +624,9 @@ if __name__ == '__main__':
 -tryCatch []
 ```
 
+## 唯讀診斷來源
 
-## 差異與診斷重現
-
-將下列 Java 原文儲存為 `scratch/issue-74/reverify/Dump.java` 與 `SwitchDiagnostic.java`。它們只呼叫工具的讀取／比較 API，將輔助程式編譯到獨立 target/tool。
+依序存為 `scratch/issue-74/reverify/Dump.java`、`SwitchDiagnostic.java`。完整編譯及執行命令已包含於重驗腳本，診斷 class 使用獨立的 `target/diagnostics`。
 
 ```java
 package local.lito381.semanticdiff;
@@ -615,6 +664,7 @@ public class Dump {
   }
  }
 }
+
 ```
 
 ```java
@@ -667,16 +717,5 @@ public class SwitchDiagnostic {
         }
     }
 }
-```
 
-```powershell
-$jdk = 'C:/Program Files/Microsoft/jdk-17.0.17.10-hotspot/bin'
-$work = 'scratch/issue-74/reverify'
-$reference = 'lito伺服器/LiTo381-Server/reference/base-0.6.71.jar'
-$asm = 'D:/dev-cache/maven/repository/org/ow2/asm/asm/9.7/asm-9.7.jar;D:/dev-cache/maven/repository/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar;scratch/issue-74/reverify/target/dependency/asm-analysis-9.7.jar'
-& "$jdk/javac.exe" --release 17 -encoding UTF-8 -cp "$work/target/tool;$asm" -d "$work/target/tool" "$work/Dump.java" "$work/SwitchDiagnostic.java"
-& "$jdk/java.exe" -Dfile.encoding=UTF-8 -cp "$work/target/tool;$asm" local.lito381.semanticdiff.Dump "$work/target/a03.jar" $reference "$work/normalized"
-& "$jdk/java.exe" -Dfile.encoding=UTF-8 -cp "$work/target/tool;$asm" local.lito381.semanticdiff.SwitchDiagnostic "$work/target/a03.jar" $reference
 ```
-
-Python `difflib.unified_diff` 對各 entry 的 `.left.txt`／`.right.txt` 全文產生上述差異。`SwitchDiagnostic` 的 raw-name 還原只供定位工具缺口，最終重驗仍必須使用主線正式 CLI。
