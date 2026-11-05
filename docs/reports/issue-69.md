@@ -1,6 +1,34 @@
 # Issue #69 — T020-B08 戰鬥併入暫存
 
-## 結論
+## 本輪結論（2026-11-06 04:12，Asia/Taipei）
+
+**未完成／依賴阻塞：仍有 10 個 DIFF，不可交付 B-land。** 本輪確認 #203／#216 尚未合併；依[最新審查](https://github.com/chaoren0418-arch/lito-launcher-server/issues/69#issuecomment-6667999906)「無須在工具未變時反覆重跑」，保留前次 Java 與完整逐方法差異，只更新本報告與交接標記。沒有將前次計數冒充新工具的重驗結果。
+
+### 已驗證：依賴、工具與既有證據
+
+- 本輪起點 `4127026de97dc3208cf14df6e10744907a4d2fa5`，沿用 `task/69`，沒有 checkout／建分支。`git fetch origin main` 成功，主線為 `65448732d781aae64ac55aef50b49c3365616ea1`。
+- [#203](https://github.com/chaoren0418-arch/lito-launcher-server/issues/203) 為 OPEN、`task:review`；[PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 為 OPEN、`merged=false`、`merged_at=null`，head `5ba2413a399a25910ea39cba62a2b5ff8803fef6`。未拿未合併工具作正式驗收。
+- [#216](https://github.com/chaoren0418-arch/lito-launcher-server/issues/216) 為 OPEN、`task:queued`，依賴 #203；`NativeCombatAttacker.calculated` 的 public equals owner 解析仍由該任務處理。
+- `git diff --quiet HEAD origin/main -- lito伺服器/LiTo381-Server/tools/semantic-diff lito伺服器/LiTo381-Server/tools/as-record docs/combat-merge` 退出碼 **0**。工具與共用核准清單沒有新變更，因此本輪沒有合併主線、重建工具或重跑相同語意比較。
+- semantic-diff 最近程式提交為 `7554762bd0267d937d798ab7aff39b9d3b623384`（#186）；HEAD／origin/main 的工具 tree 均為 `52f6bc4a43c810eea321661d9774052a9830dfaa`。
+- 唯讀重新核對既有 `target/issue-69/b08.jar`：SHA-256 `88425cbf5dd6bd5e2881dbac1c838d2c56829e0ef80c2a3f9f26956aabc9d77b`。以 ZIP class 集合對 B08.verify_entries 比較，**30 個外層類別、160 entries、missing=0、extra=0**。
+- 既有 `scratch/issue-69/semantic.json` SHA-256 為 `172b87ce2bcf98c29206d0a14de4f8486bce93471b71f3f4fd66e7d075a5e449`；保存的計數為 **SAME=141、SAME_PATHS=9、DIFF=10、ONLY_LEFT=0、ONLY_RIGHT=0**，classSelection 兩個陣列均空。150 entries 已有可接受結果，10 entries 尚未證明等價。
+- 已重新加上 Issue #69 的 `needs:claude`，API 回傳確認標籤存在。本輪不改 staged Java、src/main、pom.xml、docs/REPORT.md、核准清單或工具；未啟動應用程式或連 DB。
+
+### 推測
+
+#203／#216 可能消除部分剩餘差異，但未完成合併後的實際編譯與比對，不能預先宣稱 DIFF 會歸零。
+
+### 待驗證／給下一棒的提示
+
+1. Claude 主控先完成 #203／PR #215 的審查與既定合併程序，再完成 #216；請調度器將 #203、#216 納入 #69 的再派工前置條件。Issue 本文目前的 depends_on 尚未包含這兩項，本輪沒有越權改工作流佇列。
+2. 工具合併後由本機執行器從本報告保存的 30 份 staged Java 全新編譯，僅執行核准的 AsRecord 轉換，再驗收全部 160 entries。只有新工具仍判不等價的方法才繼續修 Java；equals owner 不先行改寫。
+3. 更新同一份報告的工具版本、命令原始輸出、產物 SHA、完整計數與 entry 集合。必須 DIFF=0、無多無缺且各接受狀態符合主控裁定，才能宣告整批完成；本輪沒有最終重驗收據。
+4. 下方前次的編譯紀錄、核准條目、鎖證據與所有剩餘方法完整差異原樣保留。B03 仍可引用 package-private 的 `NativeLightAction.Output`；單元／實機回歸留待 B-land。
+
+本輪交付檔案只有 `docs/reports/issue-69.md`；暫存交接文字放 `scratch/issue-69/dependency-comment.md`（UTF-8）。已按規則執行 `gh issue comment 69 --repo chaoren0418-arch/lito-launcher-server --body-file scratch/issue-69/dependency-comment.md`，回覆 `HTTP 401: Requires authentication`，退出碼 1，故本輪沒有送出新留言；交接資訊保存在本報告，標籤已由連接器成功加入。以下「本輪」敘述屬前次 Java 修補階段，最新狀態以上方為準。
+
+## 前次 Java 修補結論與完整驗收證據
 
 已完成本輪 Java 修補及完整重驗；**仍未通過整批語意驗收，不可交付 B-land**。
 
