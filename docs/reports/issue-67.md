@@ -2,40 +2,36 @@
 
 ## 結論
 
-本輪已更新 B06 的 29 個外層類別，Java 17 編譯成功，輸出精確包含 323 個驗收 entry。全新重建的語意結果為 **298 SAME、25 DIFF、0 ONLY_LEFT、0 ONLY_RIGHT**，missingLeft 與 extraLeft 皆空。**本批驗收仍未完成，交主控以 needs:claude 裁定剩餘差異。**
+2026-11-06 使用已合併 #174／#176 的工具，從 29 個 staged Java 重新編譯並完成核准轉換，重驗全部 323 個 entry：**311 SAME、10 SAME_PATHS、2 DIFF**，missing／extra／ONLY_LEFT／ONLY_RIGHT 均為零。**本批驗收未完成，需主控裁定剩餘兩個方法；不得送入 B-land 或以一般 CI 綠燈宣告完成。**
 
-14 個受裁定影響的 record 全部使用 `@AsRecord`，轉換後逐 entry 均 SAME。7 個一般內部類別使用 #153 同一轉換器提供的 `@AsmFinal` 還原欄位旗標。第一次轉換 21 類，第二次轉換 0 類，323 個 class 的 SHA-256 完全相同。
+主控特別指定的 `BattleQuestEncounter#pollPoisons`、`BattleTimeAttackEncounter#pollPoisons` 與 `BattleCubeHarmonyEffects#advance` 均已是 **SAME**，無須改寫。其餘兩項是 `BattleGroundEffects#cast` 的迴圈拒絕與 `BattleTimedStatus#cancelMagicEffects` 超過逐路徑比較 4096 上限。
 
 ## 做了什麼
 
-- 以目前 main `450178d` 為基底，讀取前次遠端 `task/67` 的 `7cbde033` staged 內容，再對照本輪 CFR 0.152 的正式與候選反編譯結果修正。正式、候選兩份 SHA-256 均核對設計文件。原始專案的工作檔維持唯讀，Git commit／push 依任務授權寫入共用 Git 中繼資料。
-- 補齊 14 個 record 的額外欄位、順序、建構鏈與 accessor。Cube 的四個 StatusLease、Ground 的 Lease、Quest／TimeAttack 的 Monster，合計七類，以 `@AsmFinal` 表達候選在舊建構子保留 JVM 預設值的 final 欄位，避免額外初始化指令。
-- 補齊 `ItemWeaponEnchantSpell.consumesItem`、GroupHealing／NaturesBlessing 的治療骰面、WindShackle 初始 area 及完整資料庫 accessor。這些修正涵蓋前次材料消耗與治療骰面的審查意見。
-- 補齊 Quest／TimeAttack `moveForAi` 的 `NativeSourceNpcMovement.allowed` 與 `NativeSourceNpcMotion.moving`，以及一般攻擊入口的距離／朝向、怪物初始化、復活與施法排程。先求值、再 callback、最後寫欄位／呼叫的方法順序均依候選核對。
-- 補齊 companion 馴服來源、zombie 類型、callback、取消／死亡清理、snapshot 來源記憶，以及 Cube／Ground 的 owner、lease、來源狀態、事件證據與狀態讀取守門。修正 CFR 將 Harmony 同一 lease 的 DUP 展開成兩次 new 的情況，保留單一實體。
-- 額外編譯 `src/main` 的這 29 類並逐方法比對候選。將 1,005 個同名無差異方法恢復為現有來源的內容與註解，另恢復 154 個修改方法的原參數名稱。較大型方法保留原迴圈與條件布局後插入候選行為。
-- 僅交付指定 staged Java 與本報告。暫存腳本、CFR、清單、診斷與收據留在本 worktree 的 scratch／target。伺服器、登入器、遊戲與 DB 均未執行。
+- 在既有 `task/67` 工作，未 checkout 或建立分支。起點 `cd84b99`；先 fetch 並以一般 merge 合併最新 `origin/main`（`c724539`），合併提交 `47fffbb`。其中 #174／#176 已合併，主控裁定依 [Issue #67 留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/67#issuecomment-6656318371)。
+- 保留前輪三方移植的全部 29 個 Java、14 個 `@AsRecord` 與 7 個 `@AsmFinal`，本輪沒有修改 Java。新的兩項仍屬 DUP／暫存位置差異，依本輪第 1 項「Java 不改」不自行改寫，也不提高工具限制或新增豁免。第 2 項列出的三個迴圈方法已通過，不觸發其改寫條件。
+- 從 staged 原始碼重新 javac 編譯，唯一後處理是 repo 的 AsRecord CLI（包含 AsmFinal 支援）。未複製候選 class bytes、未在驗收前替換或改名產物。
+- 核對全部現行核准清單的精確 owner；B06 命中 **0 條**。因此 CLI 不傳空清單，也未新增授權。核對包含 access-widen、deviations、effects、exceptions-exempt、extra-methods、layout、metadata-exempt、T029；完整裁切收據為 `scratch/issue-67/replay/approved-scope.json`。
+- 本輪只更新本報告。`docs/REPORT.md` 的變化僅為合併 main 帶入，沒有自行編輯；相對 main 的任務範圍仍是指定 29 個 staged Java 與本報告。
 
 ## 已驗證
 
-### 固定輸入與本輪輸出
+### 固定輸入與編譯輸出
 
 | 項目 | SHA-256／結果 |
 |---|---|
-| 正式 `reference/base-0.6.71.jar` | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
-| 候選 `reference/candidate-50635f7e.jar` | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
-| 重建 staged JAR | `8820abf5684b6fd6c9c55826372a21bad10f5f965880d4a954e57fe22d1640c6` |
+| 正式 reference/base-0.6.71.jar | `e1498871c7be6b287821c57ef5d95933db1740d9b4d4a80f6c3465f21d99d498` |
+| 候選 reference/candidate-50635f7e.jar | `50635f7edca8ec6ce77787cc32371c7590b497e48ea202f8a679caf3f517b729` |
+| 本輪重建 staged.jar | `8820abf5684b6fd6c9c55826372a21bad10f5f965880d4a954e57fe22d1640c6` |
 | JDK | Microsoft JDK 17.0.17，`--release 17 -encoding UTF-8` |
-| 編譯來源 | B06.classes 指定的 29 個 staged 檔 |
-| 輸出集合 | 323／323，缺少 0、多出 0 |
+| 來源與 entry | 29 個來源；323／323 entry；missing=[]、extra=[] |
 | record | 14／14 SAME |
-| 語意 | 298 SAME、25 DIFF，其餘語意狀態皆 0，BYTE_SAME 6 |
-| 後處理 | repo 的 AsRecord CLI，包含其 AsmFinal 支援 |
-| 明確核准的語意豁免 | 本輪使用預設比較，未傳入 effects／layout／deviations |
+| AsRecord／AsmFinal | 第一次轉換 21 類；第二次轉換 0 類；逐 class SHA-256 不變 |
+| 產物來源 | 本輪編譯與核准轉換；JAR hash 與前輪相同，驗證結果改善來自比較器更新 |
 
-編譯 annotation 的 class 放在獨立 classpath 目錄，與 B06 輸出分離。`lib/*` 本 worktree 為空，這 29 類的依賴由兩份 reference 及 annotation classpath 滿足。`--left-classpath` 提供候選的依賴 metadata 給 #166 欄位 owner 解析，左側 JAR 的內容仍完全取自本輪 staged 編譯與核准轉換。
+annotation classes 與本批輸出分離。`lib/*` 在本 worktree 為空，依賴取自兩份 reference 與 annotation 目錄。`--left-classpath` 只提供候選依賴 metadata，不覆蓋左側主 JAR。
 
-本輪從乾淨輸出目錄重建的實際輸出如下。檢查器在發現 25 DIFF 後以退出碼 2 結束，semantic-diff 本身的退出碼為 0。
+實際輸出如下；semantic-diff 遇到 DIFF 仍 exit 0，重現程式的驗收檢查以 exit 2 表示尚未通過。
 
 ```text
 build-as-record exit 0
@@ -50,136 +46,458 @@ entries=323 missing=[] extra=[]
 as-record-idempotent exit 0
 as-record: scanned=323 converted=0
 semantic exit 0
-SUMMARY SAME=298 SAME_EFFECTS=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=25 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=6 ALLOW_METHODS=0
+SUMMARY SAME=311 SAME_EFFECTS=0 SAME_PATHS=10 ORPHAN_IGNORED=0 SAME_LAYOUT=0 DEVIATION=0 DIFF=2 ONLY_LEFT=0 ONLY_RIGHT=0 BYTE_SAME=6 ALLOW_METHODS=0
 ```
 
-### 29 個外層類別的完整驗收分布
+### 全部 323 個 entry 的分布
 
-同一外層的全部 `$` entry 一併計入。每列 SAME 與 DIFF 相加即為該外層的完整 entry 數，合計 323。
+各列涵蓋外層與全部 `$` entry，清單直接取 B06.verify_entries；逐 entry 結果可用下方重現程式產生。
 
-| 外層類別 | SAME | DIFF |
-|---|---:|---:|
-| `BattleAbilityStatus` | 21 | 2 |
-| `BattleBurningWeaponStatus` | 1 | 1 |
-| `BattleCompanion` | 18 | 1 |
-| `BattleCounterMirrorStatus` | 1 | 1 |
-| `BattleCubeHarmonyEffects` | 10 | 1 |
-| `BattleCubeIgnitionEffects` | 13 | 0 |
-| `BattleCubeQuakeEffects` | 15 | 0 |
-| `BattleCubeShockEffects` | 14 | 0 |
-| `BattleDragonSkinStatus` | 1 | 1 |
-| `BattleElementalFallDownStatus` | 3 | 1 |
-| `BattleEraseMagicStatus` | 2 | 0 |
-| `BattleFireBlessStatus` | 1 | 1 |
-| `BattleFireWeaponStatus` | 1 | 1 |
-| `BattleGroundEffects` | 4 | 1 |
-| `BattleGuardBrakeStatus` | 1 | 1 |
-| `BattleHealingRecovery` | 1 | 0 |
-| `BattleHitReactionSuppressCatalog` | 1 | 0 |
-| `BattleNaturesTouchStatus` | 1 | 1 |
-| `BattleQuestEncounter` | 18 | 1 |
-| `BattleResistFearStatus` | 1 | 1 |
-| `BattleSpellCatalog` | 132 | 2 |
-| `BattleStormEyeStatus` | 1 | 1 |
-| `BattleStormShotStatus` | 1 | 1 |
-| `BattleTimeAttackEncounter` | 18 | 1 |
-| `BattleTimedStatus` | 14 | 1 |
-| `BattleTournamentNpcPhysicalDamage` | 1 | 1 |
-| `BattleWeightStatus` | 1 | 1 |
-| `BattleWindShackleStatus` | 1 | 1 |
-| `BattleWindShotStatus` | 1 | 1 |
+| 外層類別 | SAME | SAME_PATHS | DIFF |
+|---|---:|---:|---:|
+| `BattleAbilityStatus` | 21 | 2 | 0 |
+| `BattleBurningWeaponStatus` | 2 | 0 | 0 |
+| `BattleCompanion` | 18 | 1 | 0 |
+| `BattleCounterMirrorStatus` | 1 | 1 | 0 |
+| `BattleCubeHarmonyEffects` | 11 | 0 | 0 |
+| `BattleCubeIgnitionEffects` | 13 | 0 | 0 |
+| `BattleCubeQuakeEffects` | 15 | 0 | 0 |
+| `BattleCubeShockEffects` | 14 | 0 | 0 |
+| `BattleDragonSkinStatus` | 2 | 0 | 0 |
+| `BattleElementalFallDownStatus` | 3 | 1 | 0 |
+| `BattleEraseMagicStatus` | 2 | 0 | 0 |
+| `BattleFireBlessStatus` | 2 | 0 | 0 |
+| `BattleFireWeaponStatus` | 2 | 0 | 0 |
+| `BattleGroundEffects` | 4 | 0 | 1 |
+| `BattleGuardBrakeStatus` | 2 | 0 | 0 |
+| `BattleHealingRecovery` | 1 | 0 | 0 |
+| `BattleHitReactionSuppressCatalog` | 1 | 0 | 0 |
+| `BattleNaturesTouchStatus` | 2 | 0 | 0 |
+| `BattleQuestEncounter` | 19 | 0 | 0 |
+| `BattleResistFearStatus` | 1 | 1 | 0 |
+| `BattleSpellCatalog` | 132 | 2 | 0 |
+| `BattleStormEyeStatus` | 2 | 0 | 0 |
+| `BattleStormShotStatus` | 2 | 0 | 0 |
+| `BattleTimeAttackEncounter` | 19 | 0 | 0 |
+| `BattleTimedStatus` | 14 | 0 | 1 |
+| `BattleTournamentNpcPhysicalDamage` | 2 | 0 | 0 |
+| `BattleWeightStatus` | 1 | 1 | 0 |
+| `BattleWindShackleStatus` | 1 | 1 | 0 |
+| `BattleWindShotStatus` | 2 | 0 | 0 |
 
-### 仍待裁定的 25 個 entry
+### 指定的三個迴圈方法
 
-下表直接取本輪 JSON 的第一處差異，位置是正規化指令的 0-based index。每個名稱前綴均為 `local/lito381/server/`。這些 entry 維持 DIFF，驗收仍要求逐一消除。
-
-| Entry | 方法 | 位置與最小差異 |
-|---|---|---|
-| `BattleAbilityStatus` | `activateDexterity(IJII)I` | 24，`left=ALOAD 0 right=ILOAD 6` |
-| `BattleAbilityStatus$Protection` | `applyTo(I)I` | 15，`left=INVOKESTATIC local/lito381/server/CombatRules.protectedDamage(I)I right=ALOAD 0` |
-| `BattleBurningWeaponStatus` | `activate(JIII)Z` | 22，`left=ASTORE 7 right=LLOAD 1/2` |
-| `BattleCompanion` | `applyDamage(I)Llocal/lito381/server/BattleCompanion$Damage;` | 52，`left=DUP right=ISTORE 4` |
-| `BattleCounterMirrorStatus` | `resolve(JIIIZ)Llocal/lito381/server/BattleCounterMirrorStatus$Decision;` | 39，`left=CONST Long:0 right=ALOAD 0` |
-| `BattleCubeHarmonyEffects` | `advance(JLjava/util/List;Llocal/lito381/server/BattleCubeHarmonyEffects$Alliance;)Ljava/util/List;` | 317，`left=ASTORE 25 right=ALOAD 18` |
-| `BattleDragonSkinStatus` | `activate(JII)Z` | 38，`left=DUP right=LLOAD 1/2` |
-| `BattleElementalFallDownStatus` | `activate(JII)Llocal/lito381/server/BattleElementalFallDownStatus$Activation;` | 36，`left=DUP right=ISTORE 6` |
-| `BattleFireBlessStatus` | `activate(JII)Z` | 21，`left=DUP right=LLOAD 1/2` |
-| `BattleFireWeaponStatus` | `activate(JII)Z` | 21，`left=DUP right=LLOAD 1/2` |
-| `BattleGroundEffects` | `cast(Llocal/lito381/server/BattleSpellCatalog$GroundSpell;JIIIILlocal/lito381/server/ArenaMapCatalog$Arena;J)Llocal/lito381/server/BattleGroundEffects$CastResult;` | 43，`left=DUP right=ASTORE 11` |
-| `BattleGuardBrakeStatus` | `activate(JII)Z` | 38，`left=DUP right=LLOAD 1/2` |
-| `BattleNaturesTouchStatus` | `activate(JI)Z` | 20，`left=DUP right=LLOAD 1/2` |
-| `BattleQuestEncounter` | `pollPoisons(JII)Ljava/util/List;` | 120，`left=NEW local/lito381/server/BattleQuestEncounter$PoisonUpdate right=ALOAD 5` |
-| `BattleResistFearStatus` | `activate(JII)Z` | 36，`left=DUP right=ISTORE 5` |
-| `BattleSpellCatalog$HealingSpell` | `npcHpDelta(II)I` | 4，`left=IF_ICMPLE L1 right=IF_ICMPGT L0` |
-| `BattleSpellCatalog$WindShackleSpell` | `<init>(IIIIIIIIIIIIIIIIIIIIIIIIIDDZZIZJILjava/lang/String;)V` | 53，`left=IFNE L0 right=CONST Integer:0` |
-| `BattleStormEyeStatus` | `activate(JIII)Z` | 22，`left=DUP right=LLOAD 1/2` |
-| `BattleStormShotStatus` | `activate(JIII)Z` | 22，`left=DUP right=LLOAD 1/2` |
-| `BattleTimeAttackEncounter` | `pollPoisons(JII)Ljava/util/List;` | 109，`left=NEW local/lito381/server/BattleTimeAttackEncounter$PoisonUpdate right=ALOAD 5` |
-| `BattleTimedStatus` | `activateBrave(JII)V` | 38，`left=DUP right=LLOAD 1/2` |
-| `BattleTournamentNpcPhysicalDamage` | `againstPlayer(ILlocal/lito381/server/SourceNpcPhysicalStats;Llocal/lito381/server/SourcePhysicalGrowthStats;IIIIIIIJI)Llocal/lito381/server/BattleTournamentNpcPhysicalDamage$Outcome;` | 66，`left=DSTORE 15/16 right=DUP2` |
-| `BattleWeightStatus` | `activate(IJI)V` | 26，`left=LLOAD 5/6 right=ALOAD 0` |
-| `BattleWindShackleStatus` | `cancel()Z` | 18，`left=DUP right=CONST Long:0` |
-| `BattleWindShotStatus` | `activate(JII)Z` | 21，`left=DUP right=LLOAD 1/2` |
-
-### 逐方法補充與限制
-
-- Icons1 更新會在計算到期值後保留 receiver 的 DUP，再 PUTFIELD，最後 bump。Java 的 receiver 暫存／賦值運算式與候選的複製位置不同，#166 在包含多來源 boolean／switch 的整個方法中仍保守回報 DIFF。
-- AbilityStatus 的 replace 在候選用 SWAP 把已算好的回傳值與 sourceBuffLeases receiver 重排。Protection.applyTo 還有讀取 divisor 後 POP 的候選指令，CFR 將該次丟棄讀取省略。這部分仍需主控裁定表達或比對工具的證明方式。
-- HealingSpell.npcHpDelta 的候選在合法範圍路徑保留 `ILOAD healing; POP`。WindShackle record 建構子有明確 `ICONST_0; IF_ICMPNE`，javac 對相同零比較產生單運算元跳躍。兩者仍未通過預設比較。
-- Companion、ElementalFallDown／ResistFear、Ground、Harmony、Quest／TimeAttack poison publication、TimedStatus 與 Tournament 的剩餘項包含 DUP／DUP2、參數或 receiver 暫存的時序差異。全方法的控制流程、複本與來源對應尚未獲比較器證明。
-
-下列列出本輪診斷的全部剩餘一般方法。診斷沿用 repo 的 JarIndex 與 ClassComparer.compareMethod，供定位用途。合成 lambda 仍由正式 CLI 按內容對齊，診斷的原名差異不列為額外缺漏。
+以下同時通過正式 CLI 的整類驗收與針對精確描述子的 ClassComparer.compareMethod 診斷。其整類均為 SAME，沒有使用 SAME_PATHS 或核准清單。
 
 ```text
-BattleAbilityStatus#activateStrength(IJII)I left=ALOAD 0 right=ILOAD 6
-BattleAbilityStatus#activateDexterity(IJII)I left=ALOAD 0 right=ILOAD 6
-BattleAbilityStatus#activateRoyalAura(IJIIIII)I left=ALOAD 0 right=ILOAD 9
-BattleAbilityStatus#removeSkill(I)Z left=ALOAD 0 right=CONST Integer:1
-BattleAbilityStatus$Protection#applyTo(I)I left=INVOKESTATIC local/lito381/server/CombatRules.protectedDamage(I)I right=ALOAD 0
-BattleBurningWeaponStatus#activate(JIII)Z left=ASTORE 7 right=LLOAD 1/2
-BattleCompanion#applyDamage(I)Llocal/lito381/server/BattleCompanion$Damage; left=DUP right=ISTORE 4
-BattleCompanion#receiveItemAndOnGetItemPersisted(Llocal/lito381/server/RuntimeInventory$Item;JJLlocal/lito381/server/DurableCommit;)Llocal/lito381/server/BattleCompanion$GivenItemReceipt; left=DUP right=ASTORE 8
-BattleCounterMirrorStatus#resolve(JIIIZ)Llocal/lito381/server/BattleCounterMirrorStatus$Decision; left=CONST Long:0 right=ALOAD 0
-BattleCubeHarmonyEffects#advance(JLjava/util/List;Llocal/lito381/server/BattleCubeHarmonyEffects$Alliance;)Ljava/util/List; left=ASTORE 25 right=ALOAD 18
-BattleDragonSkinStatus#activate(JII)Z left=DUP right=LLOAD 1/2
-BattleDragonSkinStatus#clear()V left=DUP right=CONST Long:0
-BattleElementalFallDownStatus#activate(JII)Llocal/lito381/server/BattleElementalFallDownStatus$Activation; left=DUP right=ISTORE 6
-BattleFireBlessStatus#activate(JII)Z left=DUP right=LLOAD 1/2
-BattleFireWeaponStatus#activate(JII)Z left=DUP right=LLOAD 1/2
-BattleGroundEffects#cast(Llocal/lito381/server/BattleSpellCatalog$GroundSpell;JIIIILlocal/lito381/server/ArenaMapCatalog$Arena;J)Llocal/lito381/server/BattleGroundEffects$CastResult; left=DUP right=ASTORE 11
-BattleGuardBrakeStatus#activate(JII)Z left=DUP right=LLOAD 1/2
-BattleNaturesTouchStatus#activate(JI)Z left=DUP right=LLOAD 1/2
-BattleQuestEncounter#pollPoisons(JII)Ljava/util/List; left=NEW local/lito381/server/BattleQuestEncounter$PoisonUpdate right=ALOAD 5
-BattleResistFearStatus#activate(JII)Z left=DUP right=ISTORE 5
-BattleSpellCatalog$HealingSpell#npcHpDelta(II)I left=IF_ICMPLE L1 right=IF_ICMPGT L0
-BattleSpellCatalog$WindShackleSpell#<init>(IIIIIIIIIIIIIIIIIIIIIIIIIDDZZIZJILjava/lang/String;)V left=IFNE L0 right=CONST Integer:0
-BattleStormEyeStatus#activate(JIII)Z left=DUP right=LLOAD 1/2
-BattleStormShotStatus#activate(JIII)Z left=DUP right=LLOAD 1/2
-BattleTimeAttackEncounter#pollPoisons(JII)Ljava/util/List; left=NEW local/lito381/server/BattleTimeAttackEncounter$PoisonUpdate right=ALOAD 5
-BattleTimedStatus#activateBrave(JII)V left=DUP right=LLOAD 1/2
-BattleTimedStatus#expireBrave(J)Z left=DUP right=CONST Long:0
-BattleTimedStatus#consumeCounterMagic(J)Z left=CONST Long:0 right=ALOAD 0
-BattleTimedStatus#activateElementalFire(JI)Z left=DUP right=LLOAD 1/2
-BattleTimedStatus#activateSoulOfFlame(JI)Z left=DUP right=LLOAD 1/2
-BattleTimedStatus#cancelMagicEffects()Llocal/lito381/server/BattleTimedStatus$MagicCancellation; left=DUP right=CONST Long:0
-BattleTimedStatus#clear()V left=DUP right=CONST Long:0
-BattleTournamentNpcPhysicalDamage#againstPlayer(ILlocal/lito381/server/SourceNpcPhysicalStats;Llocal/lito381/server/SourcePhysicalGrowthStats;IIIIIIIJI)Llocal/lito381/server/BattleTournamentNpcPhysicalDamage$Outcome; left=DSTORE 15/16 right=DUP2
-BattleWeightStatus#activate(IJI)V left=LLOAD 5/6 right=ALOAD 0
-BattleWeightStatus#expire(J)Z left=CONST Long:0 right=ALOAD 0
-BattleWeightStatus#clear()V left=DUP right=CONST Long:0
-BattleWindShackleStatus#cancel()Z left=DUP right=CONST Long:0
-BattleWindShackleStatus#snapshot(J)Llocal/lito381/server/BattleWindShackleStatus$Snapshot; left=CONST Long:0 right=ALOAD 0
-BattleWindShotStatus#activate(JII)Z left=DUP right=LLOAD 1/2
+BattleQuestEncounter#pollPoisons(JII)Ljava/util/List; SAME
+BattleTimeAttackEncounter#pollPoisons(JII)Ljava/util/List; SAME
+BattleCubeHarmonyEffects#advance(JLjava/util/List;Llocal/lito381/server/BattleCubeHarmonyEffects$Alliance;)Ljava/util/List; SAME
+```
+
+### 仍待裁定的完整差異
+
+下列為兩個 DIFF 方法的**全部正規化指令差異區塊**，不是只取第一處差異。使用同版 JarIndex／ClassComparer.instructions 與 tryCatch，左右附相同 metadata，unified diff 的未列部分相同；沒有以此診斷取代正式 CLI。完整左右方法保留於 `scratch/issue-67/replay/methods/`，診斷程式附在後方可重建。
+
+`BattleGroundEffects#cast` 第一處為 insn[39]，left=DUP、right=ASTORE 11。CLI 理由為 `paths rejected: normal control-flow cycle`。來源的兩個 List 別名與候選暫存位置不同，方法包含建立 Lease 的 for 迴圈。它不是本輪第 2 項特准改寫的三個方法，故依第 1 項保留 Java。
+
+`BattleTimedStatus#cancelMagicEffects` 第一處為 insn[289]，left=DUP、right=CONST Long:0。CLI 理由為 `paths rejected: path limit 4096 exceeded`。這是未完成證明的工具界限，不能據此宣稱等價，也沒有調高上限重跑充當驗收。
+
+精確方法：`BattleGroundEffects#cast(Llocal/lito381/server/BattleSpellCatalog$GroundSpell;JIIIILlocal/lito381/server/ArenaMapCatalog$Arena;J)Llocal/lito381/server/BattleGroundEffects$CastResult;`。
+
+```diff
+--- staged/BattleGroundEffects#cast
++++ candidate/BattleGroundEffects#cast
+@@ -39,12 +39,10 @@
+ ILOAD 7
+ INVOKESPECIAL local/lito381/server/ArenaMapCatalog$Point.<init>(II)V
+ INVOKESTATIC java/util/List.of(Ljava/lang/Object;)Ljava/util/List; itf
+-DUP
+ ASTORE 11
+-ASTORE 12
+ ALOAD 11
+ INVOKEINTERFACE java/util/List.isEmpty()Z itf
+-IFEQ L47
++IFEQ L45
+ INVOKESTATIC local/lito381/server/BattleGroundEffects$CastResult.rejected()Llocal/lito381/server/BattleGroundEffects$CastResult;
+ ARETURN
+ LLOAD 9/10
+@@ -54,12 +52,12 @@
+ CONST Long:1000000000
+ INVOKESTATIC java/lang/Math.multiplyExact(JJ)J
+ INVOKESTATIC java/lang/Math.addExact(JJ)J
+-LSTORE 13/14
++LSTORE 12/13
+ ALOAD 1
+ INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$GroundSpell.pulseIntervalMillis()I
+-IFGT L60
++IFGT L58
+ CONST Long:9223372036854775807
+-GOTO L67
++GOTO L65
+ LLOAD 9/10
+ ALOAD 1
+ INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$GroundSpell.pulseIntervalMillis()I
+@@ -67,17 +65,17 @@
+ CONST Long:1000000
+ INVOKESTATIC java/lang/Math.multiplyExact(JJ)J
+ INVOKESTATIC java/lang/Math.addExact(JJ)J
+-LSTORE 15/16
++LSTORE 14/15
+ ALOAD 11
+ INVOKEINTERFACE java/util/List.iterator()Ljava/util/Iterator; itf
+-ASTORE 17
+-ALOAD 17
++ASTORE 16
++ALOAD 16
+ INVOKEINTERFACE java/util/Iterator.hasNext()Z itf
+-IFEQ L100
+-ALOAD 17
++IFEQ L98
++ALOAD 16
+ INVOKEINTERFACE java/util/Iterator.next()Ljava/lang/Object; itf
+ CHECKCAST local/lito381/server/ArenaMapCatalog$Point
+-ASTORE 18
++ASTORE 17
+ ALOAD 0
+ GETFIELD local/lito381/server/BattleGroundEffects.leases:Ljava/util/List;
+ NEW local/lito381/server/BattleGroundEffects$Lease
+@@ -85,21 +83,21 @@
+ ALOAD 1
+ INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$GroundSpell.skillId()I
+ LLOAD 2/3
+-ALOAD 18
++ALOAD 17
+ INVOKEVIRTUAL local/lito381/server/ArenaMapCatalog$Point.x()I
+-ALOAD 18
++ALOAD 17
+ INVOKEVIRTUAL local/lito381/server/ArenaMapCatalog$Point.y()I
+ ALOAD 1
+ INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$GroundSpell.effectRadius()I
+-LLOAD 13/14
+-LLOAD 15/16
++LLOAD 12/13
++LLOAD 14/15
+ ALOAD 1
+ INVOKEVIRTUAL local/lito381/server/BattleSpellCatalog$GroundSpell.pulseIntervalMillis()I
+ ALOAD 0
+ INVOKESPECIAL local/lito381/server/BattleGroundEffects$Lease.<init>(IJIIIJJILlocal/lito381/server/BattleGroundEffects;)V
+ INVOKEINTERFACE java/util/List.add(Ljava/lang/Object;)Z itf
+ POP
+-GOTO L71
++GOTO L69
+ NEW local/lito381/server/BattleGroundEffects$CastResult
+ DUP
+ CONST Integer:1
+```
+
+精確方法：`BattleTimedStatus#cancelMagicEffects()Llocal/lito381/server/BattleTimedStatus$MagicCancellation;`。
+
+```diff
+--- staged/BattleTimedStatus#cancelMagicEffects
++++ candidate/BattleTimedStatus#cancelMagicEffects
+@@ -289,52 +289,54 @@
+ CONST Integer:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.slowSkillId:I
+ ALOAD 0
+-DUP
+-ASTORE 31
+-CONST Long:0
++CONST Long:0
++LSTORE 31/32
++DUP
++ASTORE 33
++LLOAD 31/32
+ PUTFIELD local/lito381/server/BattleTimedStatus.braveExpiresAtNanos:J
+-ALOAD 31
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Integer:0
+-ISTORE 32
+-ALOAD 0
+-ASTORE 33
+-ALOAD 0
+-ILOAD 32
++ALOAD 33
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Integer:0
++ISTORE 34
++DUP
++ASTORE 35
++ILOAD 34
+ PUTFIELD local/lito381/server/BattleTimedStatus.nativeSourceIcons1BraveSkill:I
+-ALOAD 33
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Integer:0
+-ISTORE 34
+-ALOAD 0
+-ASTORE 35
+-ALOAD 0
+-ILOAD 34
++ALOAD 35
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Integer:0
++ISTORE 36
++DUP
++ASTORE 37
++ILOAD 36
+ PUTFIELD local/lito381/server/BattleTimedStatus.braveMode:I
+-ALOAD 35
++ALOAD 37
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ ALOAD 0
+ GETFIELD local/lito381/server/BattleTimedStatus.blindExpiresAtNanos:J
+ INVOKESTATIC local/lito381/server/NativeBlindSourceState.cleared(J)J
+ PUTFIELD local/lito381/server/BattleTimedStatus.blindExpiresAtNanos:J
+-CONST Long:0
+-LSTORE 36/37
+-ALOAD 0
+-ASTORE 38
+-ALOAD 0
+-LLOAD 36/37
++ALOAD 0
++CONST Long:0
++LSTORE 38/39
++DUP
++ASTORE 40
++LLOAD 38/39
+ PUTFIELD local/lito381/server/BattleTimedStatus.weaknessExpiresAtNanos:J
+-ALOAD 38
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 39/40
+-ALOAD 0
+-ASTORE 41
+-ALOAD 0
+-LLOAD 39/40
++ALOAD 40
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 41/42
++DUP
++ASTORE 43
++LLOAD 41/42
+ PUTFIELD local/lito381/server/BattleTimedStatus.diseaseExpiresAtNanos:J
+-ALOAD 41
++ALOAD 43
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ CONST Long:0
+@@ -342,32 +344,32 @@
+ ALOAD 0
+ CONST Long:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.areaSilenceExpiresAtNanos:J
+-CONST Long:0
+-LSTORE 42/43
+-ALOAD 0
+-ASTORE 44
+-ALOAD 0
+-LLOAD 42/43
++ALOAD 0
++CONST Long:0
++LSTORE 44/45
++DUP
++ASTORE 46
++LLOAD 44/45
+ PUTFIELD local/lito381/server/BattleTimedStatus.decayPotionExpiresAtNanos:J
+-ALOAD 44
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 45/46
+-ALOAD 0
+-ASTORE 47
+-ALOAD 0
+-LLOAD 45/46
++ALOAD 46
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 47/48
++DUP
++ASTORE 49
++LLOAD 47/48
+ PUTFIELD local/lito381/server/BattleTimedStatus.polluteWaterExpiresAtNanos:J
+-ALOAD 47
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 48/49
+-ALOAD 0
+-ASTORE 50
+-ALOAD 0
+-LLOAD 48/49
++ALOAD 49
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 50/51
++DUP
++ASTORE 52
++LLOAD 50/51
+ PUTFIELD local/lito381/server/BattleTimedStatus.strikerGaleExpiresAtNanos:J
+-ALOAD 50
++ALOAD 52
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ CONST Long:0
+@@ -378,32 +380,32 @@
+ ALOAD 0
+ CONST Long:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.wisdomPotionExpiresAtNanos:J
+-CONST Long:0
+-LSTORE 51/52
+-ALOAD 0
+-ASTORE 53
+-ALOAD 0
+-LLOAD 51/52
++ALOAD 0
++CONST Long:0
++LSTORE 53/54
++DUP
++ASTORE 55
++LLOAD 53/54
+ PUTFIELD local/lito381/server/BattleTimedStatus.meditationExpiresAtNanos:J
+-ALOAD 53
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 54/55
+-ALOAD 0
+-ASTORE 56
+-ALOAD 0
+-LLOAD 54/55
++ALOAD 55
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 56/57
++DUP
++ASTORE 58
++LLOAD 56/57
+ PUTFIELD local/lito381/server/BattleTimedStatus.concentrationExpiresAtNanos:J
+-ALOAD 56
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 57/58
+-ALOAD 0
+-ASTORE 59
+-ALOAD 0
+-LLOAD 57/58
++ALOAD 58
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 59/60
++DUP
++ASTORE 61
++LLOAD 59/60
+ PUTFIELD local/lito381/server/BattleTimedStatus.counterMagicExpiresAtNanos:J
+-ALOAD 59
++ALOAD 61
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ CONST Long:0
+@@ -418,13 +420,9 @@
+ CONST Integer:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.poisonSilence:Z
+ ALOAD 0
+-ASTORE 60
+-CONST Long:0
+-LSTORE 61/62
++CONST Long:0
+ ALOAD 0
+ INVOKESTATIC local/lito381/server/NativeAcceptedState.sleepChanged(Llocal/lito381/server/BattleTimedStatus;)V
+-ALOAD 60
+-LLOAD 61/62
+ PUTFIELD local/lito381/server/BattleTimedStatus.sleepExpiresAtNanos:J
+ ALOAD 0
+ CONST Long:0
+@@ -435,44 +433,44 @@
+ ALOAD 0
+ CONST Long:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.burningSpiritExpiresAtNanos:J
+-CONST Long:0
+-LSTORE 63/64
+-ALOAD 0
+-ASTORE 65
+-ALOAD 0
+-LLOAD 63/64
++ALOAD 0
++CONST Long:0
++LSTORE 62/63
++DUP
++ASTORE 64
++LLOAD 62/63
+ PUTFIELD local/lito381/server/BattleTimedStatus.elementalFireExpiresAtNanos:J
+-ALOAD 65
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 66/67
+-ALOAD 0
+-ASTORE 68
+-ALOAD 0
+-LLOAD 66/67
++ALOAD 64
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 65/66
++DUP
++ASTORE 67
++LLOAD 65/66
+ PUTFIELD local/lito381/server/BattleTimedStatus.soulOfFlameExpiresAtNanos:J
+-ALOAD 68
+-INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+-CONST Long:0
+-LSTORE 69/70
+-ALOAD 0
+-ASTORE 71
+-ALOAD 0
+-LLOAD 69/70
++ALOAD 67
++INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
++ALOAD 0
++CONST Long:0
++LSTORE 68/69
++DUP
++ASTORE 70
++LLOAD 68/69
+ PUTFIELD local/lito381/server/BattleTimedStatus.venomResistExpiresAtNanos:J
+-ALOAD 71
++ALOAD 70
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ CONST Long:0
+ PUTFIELD local/lito381/server/BattleTimedStatus.doubleBrakeExpiresAtNanos:J
+-CONST Long:0
+-LSTORE 72/73
+-ALOAD 0
+-ASTORE 74
+-ALOAD 0
+-LLOAD 72/73
++ALOAD 0
++CONST Long:0
++LSTORE 71/72
++DUP
++ASTORE 73
++LLOAD 71/72
+ PUTFIELD local/lito381/server/BattleTimedStatus.horrorOfDeathExpiresAtNanos:J
+-ALOAD 74
++ALOAD 73
+ INVOKESTATIC local/lito381/server/NativeSourceIcons1Epoch.bump(Ljava/lang/Object;)V
+ ALOAD 0
+ CONST Long:0
 ```
 
 ## 可直接重跑的指令
 
-在本 worktree 根目錄執行下列 Python 程式。可將此段另存為 `scratch/issue-67/reproduce.py`，再執行下方 PowerShell。程式自行產生完整 323 條清單，重新編譯兩個 repo 工具、annotation 與 staged，轉換、驗證冪等性、打包，輸出逐 entry JSON／Markdown。ASM 依賴使用 repo 工具同版的 9.7 與固定 SHA-256，缺少時下載至本 worktree target。
+將下列 Python 區塊存成 `scratch/issue-67/reproduce.py`，於本 worktree 根目錄執行。程式從 batches.json 生成完整 323 條清單，建置同版工具與註解、編譯 staged、轉換及檢查冪等性、打包並比對。ASM 9.7 以固定 SHA-256 驗證，優先讀取本機 Maven cache，缺少時下載到本 worktree target。
 
 ```powershell
 Set-Location 'D:\lineage開發\3-lito開發\scratch\wt\task-67'
 & 'C:/Users/CHAOREN/AppData/Local/Programs/Python/Python312/python.exe' -B -X utf8 scratch/issue-67/reproduce.py
-exit $LASTEXITCODE
+# 本版預期 exit 2：2 個 DIFF 尚待裁定，不能當成通過。
 ```
 
 ```python
@@ -264,6 +582,22 @@ with zipfile.ZipFile(jar, 'w') as archive:
         archive.writestr(zipfile.ZipInfo(entry, (1980, 1, 1, 0, 0, 0)), (classes / entry).read_bytes())
 selection = scratch / 'verify_entries.txt'
 selection.write_text('\n'.join(batch['verify_entries']) + '\n', encoding='utf-8')
+selected = {e.removesuffix('.class') for e in batch['verify_entries']}
+approval_scope = {}
+for name in ['access-widen-approved', 'deviations', 'effects-approved', 'exceptions-exempt', 'extra-methods-approved', 'layout-approved', 'metadata-exempt', 't029-methods']:
+    applicable = []
+    for raw in (root / 'docs/combat-merge' / (name + '.txt')).read_text('utf-8-sig').splitlines():
+        raw = raw.strip()
+        if not raw or raw.startswith('#'):
+            continue
+        parts = raw.split()
+        key = parts[1] if parts[0] in ('method-diff', 'ctor-prologue-order') else parts[0]
+        if key.split('#')[0].removesuffix('.class') in selected:
+            applicable.append(raw)
+    approval_scope[name] = applicable
+(scratch / 'approved-scope.json').write_text(json.dumps(approval_scope, indent=2), encoding='utf-8')
+assert all(not entries for entries in approval_scope.values()), 'Approval lists changed; review and clip before running'
+print('B06 applicable approval entries=0')
 semantic_cp = str(target / 'semantic-diff') + os.pathsep + asm_cp
 run([java, '-Dfile.encoding=UTF-8', '-Xmx2g', '-cp', semantic_cp, 'local.lito381.semanticdiff.SemanticDiff', '--left', jar, '--right', candidate, '--left-classpath', candidate, '--classes', selection, '--json', scratch / 'semantic.json', '--md', scratch / 'semantic.md'], 'semantic')
 data = json.loads((scratch / 'semantic.json').read_text('utf-8'))
@@ -274,31 +608,83 @@ assert data['classSelection']['missingLeft'] == [] and data['classSelection']['e
 receipt = {'counts': data['counts'], 'recordSame': 14, 'entries': len(entries), 'jarSha256': hashlib.sha256(jar.read_bytes()).hexdigest(), 'sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}}
 (scratch / 'receipt.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8')
 print(json.dumps(receipt, ensure_ascii=False))
-if data['counts']['DIFF'] or data['counts']['ONLY_LEFT'] or data['counts']['ONLY_RIGHT']:
+if len(data['classes']) != 323 or any(c['status'] not in {'SAME', 'SAME_EFFECTS', 'SAME_PATHS'} for c in data['classes']):
     raise SystemExit(2)
+```
+
+### 完整差異診斷重現
+
+將以下 Java 存成 `scratch/issue-67/CurrentMethods.java`。編譯依賴沿用上段 `asm_cp`，工具 classes 為 `target/issue-67/replay/semantic-diff`，診斷 classes 另放 `target/issue-67/replay/diagnostic`；此診斷只讀驗收 JAR，不寫入 B06 classes。
+
+```java
+package local.lito381.semanticdiff;
+import java.nio.file.*;
+import java.util.*;
+import org.objectweb.asm.tree.*;
+public class CurrentMethods {
+    public static void main(String[] args) throws Exception {
+        JarIndex left = JarIndex.load(Path.of(args[0]));
+        JarIndex right = JarIndex.load(Path.of(args[1]));
+        left.addClasspath(Path.of(args[1]));
+        Path output = Path.of(args[2]);
+        Files.createDirectories(output);
+        Map<String,String> selected = Map.of(
+            "BattleGroundEffects", "cast", "BattleTimedStatus", "cancelMagicEffects",
+            "BattleQuestEncounter", "pollPoisons", "BattleTimeAttackEncounter", "pollPoisons",
+            "BattleCubeHarmonyEffects", "advance");
+        for (var entry : new TreeMap<>(selected).entrySet()) {
+            String name = "local/lito381/server/" + entry.getKey();
+            ClassNode a = left.readTree(name), b = right.readTree(name);
+            for (MethodNode m : a.methods) {
+                if (!m.name.equals(entry.getValue())) continue;
+                MethodNode other = b.methods.stream().filter(n -> n.name.equals(m.name) && n.desc.equals(m.desc)).findFirst().orElseThrow();
+                var diff = ClassComparer.compareMethod(m.name + m.desc, m, other, left, right, false);
+                String key = entry.getKey() + "#" + m.name;
+                System.out.println(key + m.desc + " " + (diff == null ? "SAME" : diff.detail));
+                for (int side = 0; side < 2; side++) {
+                    MethodNode method = side == 0 ? m : other;
+                    JarIndex jar = side == 0 ? left : right;
+                    List<String> lines = new ArrayList<>();
+                    lines.add("METHOD " + method.name + method.desc);
+                    lines.add("ACCESS " + method.access + " SIGNATURE " + method.signature + " EXCEPTIONS " + method.exceptions);
+                    lines.addAll(ClassComparer.instructions(method, jar));
+                    lines.add("TRY " + ClassComparer.tryCatch(method, jar));
+                    Files.write(output.resolve(key + (side == 0 ? "-left.txt" : "-right.txt")), lines);
+                }
+            }
+        }
+    }
+}
+```
+
+以下 Python 接在重現程式的變數初始化與工具建置後執行（或在完整程式最後驗收 exit 之前插入），會輸出五個精確方法的判定與完整左右指令：
+
+```python
+diagnostic = target / 'diagnostic'
+diagnostic.mkdir(exist_ok=True)
+run([javac, '--release', '17', '-encoding', 'UTF-8', '-cp', semantic_cp,
+     '-d', diagnostic, root / 'scratch/issue-67/CurrentMethods.java'], 'diagnostic-build')
+run([java, '-Dfile.encoding=UTF-8', '-Xmx2g', '-cp', str(diagnostic) + os.pathsep + semantic_cp,
+     'local.lito381.semanticdiff.CurrentMethods', jar, candidate, scratch / 'methods'], 'diagnostic')
 ```
 
 ## 產出路徑
 
-- 交付 Java 位於 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，精確包含 B06.classes 的 29 檔。
-- 交付報告為 `docs/reports/issue-67.md`。
-- 本機可重建產物位於 `lito伺服器/LiTo381-Server/target/issue-67/replay/`，其中 `classes/` 是轉換後 B06 classes，`staged.jar` 是驗收輸入。
-- 本機逐 entry 證據位於 `scratch/issue-67/replay/{semantic.json,semantic.md,verify_entries.txt,receipt.json}`，同目錄各步驟 `.log` 是本輪實際輸出。
-- 三方對照與診斷位於 `scratch/issue-67/{formal,candidate,*.diff,three-way-audit.json,original-methods.log,restored-methods.json,methods.log,methods/}`。這些為本機 scratch 資料，完整重跑程式已內嵌於本報告，可在新的 checkout 重建驗收證據。
+- 交付報告：`docs/reports/issue-67.md`。
+- 保留的 29 個來源：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，精確範圍見 B06.classes。
+- 本輪本機證據：`scratch/issue-67/replay/{semantic.json,semantic.md,verify_entries.txt,receipt.json,approved-scope.json}`、各步驟 `.log` 與 `methods/` 完整左右差異。
+- 本輪產物：`lito伺服器/LiTo381-Server/target/issue-67/replay/{classes,staged.jar,as-record,semantic-diff,annotations}`。生成檔不提交。
 
 ## 推測
 
-大部分剩餘 DIFF 可能可透過保持來源對應的局部 stack／控制流程正規化證明等價。這一推測尚未經新正反例驗證，不能據此將 25 項改記 SAME，也不能推導整批執行行為等價。
+兩項可能仍是暫存運送差異；現有工具沒有完成等價證明。不能把「cycle／path limit」解讀為行為相同，也不宣稱 javac 不可表達。
 
 ## 待驗證
 
-- 25 個 DIFF 的修復或主控裁定。現有來源仍有上表列出的指令層差異，B06 完成條件尚未達成。
-- javac 的 unchecked 警告主要來自候選泛型擦除與 owner 回傳的 List<?> 轉型，本輪以語意比對核對 runtime cast 與方法 signature。
-- 本任務的單元測試與行為回歸依設計交 B-land 統一處理，尚待執行。實機登入／戰鬥、正式資料庫與部署亦待後續驗收。
-- 本輪 staged 的 323 entries 才是本批證據。後續一般 Maven CI 的結果應依其實際輸入分開解讀。
+- 2 個 DIFF 尚未清零，B06 尚未完成；需主控就 Ground cast 是否允許調整暫存，以及 TimedStatus 的證明方式作裁定。
+- 單元測試與回歸依 §6-5 不適用於本次 staged 任務，留待 B-land 統一執行。未執行伺服器、登入器、遊戲、正式 DB 或部署。
+- javac 的 unchecked 警告仍存在，編譯成功不代表完成行為回歸。一般 Maven CI 也不能替代本批驗收。
 
 ## 給下一棒的提示
 
-請 Claude 主控先審閱 25 個 DIFF 與逐方法最小差異，再指派可證明安全的 Java 改寫或 semantic-diff 擴充。尤其保留欄位讀取、callback 先後、資料來源與 DUP 複本數，擴充時加入相反行為的負例。等待預設驗收達到 323 SAME 後再交 B-land。
-
-交付沿用 `task/67`。遠端原有 `7cbde033` 是前次已退回的版本，本次以 ours merge 納入其祖先，再提交本次 staged 修正，讓一般 `git push -u origin task/67` 能快轉並保留舊提交可追溯。
+請 Claude 主控裁定本報告兩個完整差異，Issue 加 `needs:claude`。本輪具體第 1 項要求 Java 不改；舊 #62 的一般 effects 自列規則不作為本輪擴大修改核准清單的理由。請明確給出可修改方法或工具／核准方式，取得裁定後仍須用同一組 323 entries 驗收到全數 SAME／SAME_EFFECTS／SAME_PATHS，missing／extra 為空。三個原指定迴圈方法已通過，不需再反覆改寫。不得直接送 B-land、合併 PR 或關閉 Issue。
