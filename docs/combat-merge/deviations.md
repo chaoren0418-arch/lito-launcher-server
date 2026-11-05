@@ -36,6 +36,17 @@
 - **推測**：以上來源端修補可滿足交付需求；比較器結果不證明執行期父鏈回呼不會觀察到差異。
 - **待驗證**：本文件列出的 A-land 執行期單元測試，以及介面 default 實作與五個建構子的最終來源。
 
+## #72：Name 建構子的 Java 17 委派表達
+
+依[同一核准留言第 2 項](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935)，追加一個 private 建構子：
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeInitializerKernel$Name;Llocal/lito381/server/NativeDeNpcTemplate;)V
+```
+
+四個公開 Name overload 先執行 `this(construction, NativeDeInstanceNames.name(construction, name), nativeDeNpcTemplate)`。private 建構子執行 super、寫入 construction 與共用初始化，公開 overload 再寫入各自旗標並呼叫 startNpc。Name 失敗時不會進入 private／父建構子。
+
+新增建構子以一般 left-only deviation 列管；原五個 `ctor-prologue-order` 不擴大。新版比較器尚不展開建構子委派，因此四個公開 overload 仍為 DIFF，不代表已通過驗收。完整建構子鏈、正式 JAR 的子類清單（0 個）、虛擬方法解析與剩餘差異見 `docs/reports/issue-72.md`。A-land #78 仍須執行核准留言第 4 項兩個測試。
 ## #176：PhysicalNpc 的 int／boolean 方法偏離
 
 兩條均由 [#65 主控留言](https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888) 核准，僅作用於下列完整方法識別：
@@ -60,6 +71,25 @@
 
 **推測／待驗證**：指定值域下兩種 boolean 表達相同；B-land 仍須依主控要求補 `sourceState`／`targetState` 回傳 0／1 時兩個 consumer 與候選一致的單元測試。未載入應用類別、啟動伺服器或連接資料庫。命令、稽核腳本與批次結果見 [issue-176 報告](../reports/issue-176.md)。
 
+## #72：四個公開 Name 建構子與 compute 的 method-diff（2026-11-06）
+
+依 [主控最新裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6657400173)，僅追加下列五個完整方法識別。前述舊紀錄中「四個公開 overload 仍為 DIFF」是舊工具的歷史狀態；本輪四個公開 overload 已依此裁定列為 `method-diff`。原有 `ctor-prologue-order` 與新增 private 建構子的 left-only 核准均保留。
+
+```text
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;Z)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V
+local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZZLjava/lang/String;)V
+local/lito381/server/NativeDeCharacterFields$CombatSkillDerived#compute(Ljava/lang/Iterable;)Llocal/lito381/server/NativeDeCharacterFields$CombatSkillDerived;
+```
+
+- **四個 Name 建構子的理由**：依 #72 裁定，`NativeDeInstanceNames.name(construction, name)` 在 super 前求值；`this(...)` 委派給 private 建構子執行父建構、construction 賦值及共用初始化，公開建構子再執行各自的旗標設定與 startNpc。Java 的委派形狀不同，主控核准為方法級刻意偏離；construction 賦值由 super 前移後仍是原先有限核准，不宣稱字節碼或所有父鏈觀測無條件等價。
+- **compute 的理由**：正式版參照不存在的 SKU1／SKU2／SKD1／SKD2／SKD3 欄位，Java 無法直接表達未解析欄位引用。保留六個區域值初始化、Iterable 迭代及 null 元素略過，在首個非 null 元素原 GETSTATIC SKU1 處明確 `throw new NoSuchFieldError("SKU1")`。後四個 GETSTATIC 永遠不可達，Java 不保留不可達敘述，也不補空表或替代技能值。根本原因另由 #184 調查。
+- **比較界線**：`method-diff` 比較精確名稱及描述子，左右方法均須存在；其餘方法、欄位、metadata 與 entry 完整性照常驗證。169 個 public bridge 及 lambda 差異沒有加入任何豁免。
+- **已驗證**：49 份 staged Java 以 Java 17 編譯，185 個 entry 完整；NativeDeCharacterFields 為 SAME，CombatSkillDerived 為 DEVIATION，四個公開 Name 建構子逐方法 DEVIATION。整個 Instance 類別仍為 DIFF，詳見 issue-72 報告。
+- **待驗證（#78 A-land）**：construction 的父鏈可觀測性；四個 Name overload 的成功／失敗求值與初始化順序、各布林組合及字串邊界；compute 空集合及全 null 元素正常回傳，含非 null 元素拋 NoSuchFieldError。未執行 staged 應用類別、伺服器、遊戲或資料庫。
+
+**2026-11-06 重驗狀態更新**：依 [最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6663641218)，169 個 bridge 與巢狀 lambda 的裁定已完成，兩者 Java 不改，分別交 #203 第 3、1 項工具規則驗證；不增加任何精確核准識別或整類豁免。本輪合併 main `9678e97`（含 #186）後，直接編譯全部 49 份 staged Java，185 entries 為 183 SAME／1 DEVIATION／1 DIFF，missingLeft/extraLeft 皆空，Instance 仍 DIFF。PR #215 於 2026-11-06 02:32（UTC+08:00）仍 OPEN、merged_at=null，因此等待 #203 合併及全量重驗，尚未通過最終驗收。既有五項 method-diff、private 建構子及 ctor-prologue-order 的精確核准識別均保留；#78 測試要求不變，詳見 [issue-72 報告](../reports/issue-72.md)。
 ## #75：Eye.canOverwrite 的 int／boolean 方法偏離
 
 識別：`local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z`，類型 `method-diff`。依 [#75 主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411) 保留 staged Java，僅核准此精確方法的表示差異。
