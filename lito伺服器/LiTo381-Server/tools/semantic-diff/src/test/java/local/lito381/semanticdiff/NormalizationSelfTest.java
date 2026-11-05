@@ -54,7 +54,10 @@ public final class NormalizationSelfTest implements Opcodes {
 
         ClassNode normal = effects(false, 1);
         ClassNode stack = effects(true, 500);
-        diff("unapproved-stack", normal, stack);
+        // Keep testing the approval gate independently of #254's new proof.
+        System.setProperty("semanticdiff.disable", "discarded-loads");
+        try { diff("unapproved-stack", normal, stack); }
+        finally { System.clearProperty("semanticdiff.disable"); }
         compare("approved-stack", normal, stack, APPROVED, "SAME_EFFECTS");
         compare("approved-identical", normal, normal, APPROVED, "SAME_EFFECTS");
         ClassNode dup2 = clazz(), swap = clazz();
@@ -117,7 +120,9 @@ public final class NormalizationSelfTest implements Opcodes {
         compare("effects-catch-count", caught(null, 1), caught(null, 2), APPROVED, "DIFF");
         ClassNode ordered = pair(1, 2), reordered = pair(2, 1);
         compare("constant-bag-order", ordered, reordered, APPROVED, "SAME_EFFECTS");
-        compare("constant-bag-multiplicity", pair(1, 1), pair(1, 2), APPROVED, "SAME_PATHS");
+        System.setProperty("semanticdiff.disable", "discarded-loads");
+        try { compare("constant-bag-multiplicity", pair(1, 1), pair(1, 2), APPROVED, "SAME_PATHS"); }
+        finally { System.clearProperty("semanticdiff.disable"); }
         ClassNode incrementLeft = pair(1, 2), incrementRight = pair(1, 2);
         incrementLeft.methods.get(0).instructions.insert(new IincInsnNode(1, 1));
         incrementRight.methods.get(0).instructions.insert(new IincInsnNode(500, 1));
