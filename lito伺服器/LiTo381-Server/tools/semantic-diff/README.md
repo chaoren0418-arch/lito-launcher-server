@@ -26,7 +26,7 @@
 - `lambda$…$N` 用描述子與正規化內容的 SHA-256 識別，包含方法 metadata 與 try 表；相同內容的重複方法合併，呼叫及 bootstrap handle 同步引用內容識別。名稱前綴、數字與已遮罩的 SYNTHETIC 不影響識別。不同本體或不同呼叫目標仍 DIFF；循環 lambda 參照會報錯，避免遞迴失控。精確核准的原名仍固定，不會藉內容配對擴大授權。
 - invokedynamic 的 bootstrap 參數只對「同一類別、private、非 static、非建構子」的實例 method handle 統一 H5/H7；外部 owner、public、一般呼叫指令與 LDC handle 保持原狀。
 - Object 子類建構子的 `ALOAD 0; Object.<init>()V` 前移至開頭。直線前綴以堆疊追蹤確認 this 只作自身已宣告欄位的 PUTFIELD receiver，其餘計算不得使用 this；無法安全解析、分支或非法 this 用法報錯。非 Object 父類不套用。
-- 每類 `$SwitchMap$` 合成欄位依 class 欄位表首次出現的順序重命名，宣告及跨類別欄位引用／handle 共用映射。不是各方法各自重編，因此交換兩個 switch map 的使用仍 DIFF。
+- 每類名稱以 `$SwitchMap$` 開頭且描述子為 `[I` 的欄位依 class 欄位表宣告順序重命名，不要求 ACC_SYNTHETIC；宣告及跨類別欄位引用／handle 共用映射。不是各方法各自重編，因此交換兩個 switch map 的使用仍 DIFF。
 - try 區間向內裁掉 LABEL／LINE／FRAME、NOP、GOTO、區域 xLOAD／xSTORE、數字／字串常數，以及方法內沒有 MONITORENTER 時的 return 系列。Class／MethodType／MethodHandle／condy 常數保留可能拋例外的邊界。空區間刪除，handler 不移動；未使用的標籤移除，同位置標籤共用識別。
 
 新增三個必須明確傳入的精確清單：
@@ -164,3 +164,13 @@ ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線�
 `--exceptions-exempt <file>` 預設不啟用。每行必須是 `類別#原名及完整描述子  # approved: https://核准連結`，可有空白行、整行註解及 UTF-8 BOM。僅忽略精確方法的 Exceptions（throws）屬性；指令、handler、方法存取、signature、註解及其他方法均照常比較。類別不在比較集合、方法任一側不存在、拼錯或缺少核准 URL 都報錯；不把 overload／其他合成方法視為核准對象。JSON 的 `exceptionsExempt` 與 Markdown 受控例外清單會列出實際使用條目。初始清單在 `docs/combat-merge/exceptions-exempt.txt`，只含 #62 核准的 `captureOutput`。
 
 `selftest.sh` 新增 `FifthSelfTest`。正反例的 framed class bytes 同時用於實際 CLI 比對與隔離 ClassLoader 執行；含 try gap／呼叫覆蓋／handler 與優先序、null 全路徑／缺路徑／覆寫／例外回復／迴圈新值、LOAD 跨 IINC／STORE、暫存複本數／副作用順序／live-out，以及多來源區塊入口但不合併來源的案例。既有 #153／#166 審查反例繼續執行。
+
+## T020i-7 正規化（Issue #186）
+
+- `$SwitchMap$` 以名稱前綴與 `[I` 描述子識別，兩側均依各宣告類別的欄位順序編號，與 ACC_SYNTHETIC 無關。欄位旗標沿用 #132 遮掉 SYNTHETIC；類別 metadata 仍須既有 metadata-exempt。一般名稱或其他描述子的欄位不改名，交換使用點或 enum／ordinal 對應仍為 DIFF。
+- 同一類別宣告的 private 實例方法，直接呼叫 INVOKESPECIAL／INVOKEVIRTUAL 統一為 INVOKESPECIAL；不處理建構子、static、非 private、其他 owner（包含 nestmate）。沿用原有 bootstrap handle 規則，不擴張方法解析範圍。
+- `RethrowHandlers` 在成對方法比較前，只對左側建立候選副本。handler 必須恰為 ASTORE t、ALOAD t、INVOKESTATIC H，可接不可達 ATHROW／RETURN／GOTO，或落至有正常入口的共用 continuation。入口／中間不得有其他跳轉或 handler 參照（包含同 offset 的別名 label）、指令／try 註解、其他 handler 涵蓋或普通 fallthrough。只移除 handler 及例外表項，保留受保護的業務指令；移除後的 goto-next 可消去。
+- H 必須已列入 `--extra-methods`，且為本類 private static、非 synchronized／native／abstract；保守保留跨類 helper，避免略過類別初始化及解析副作用。工具實際讀取 H 本體，要求有效指令只有 ALOAD 0、零至多個 CHECKCAST、ATHROW。每個 cast 都須沿已知 superclass 證明可涵蓋 catch 型別，不能把 IOException 改成 ClassCastException；缺少型別資料則拒絕。
+- 依 #174 的 harmless／逐指令涵蓋規則，先以有序的可能拋例外操作建立左右對應；任一操作無法精確對應，或被移除 try 涵蓋的對應右側操作仍有任何 handler，就保留原方法。其他區段的右側 handler 不受影響。候選仍須通過完整比較或原先已核准的 effects 規則；核准 helper 存在本身不代表 handler 可移除，也不新增任何核准條目。
+
+診斷消融開關：`-Dsemanticdiff.disable=private-calls`、`-Dsemanticdiff.disable=rethrow`。改寫只在比較器記憶體副本，不輸出 class。`SeventhSelfTest` 已接入 `selftest.sh`；四個指定 handler 反例以同一份 framed JAR 分別交 CLI 與 platform-parent 隔離 ClassLoader，核對例外型別、物件 identity、記錄計數與正常返回。

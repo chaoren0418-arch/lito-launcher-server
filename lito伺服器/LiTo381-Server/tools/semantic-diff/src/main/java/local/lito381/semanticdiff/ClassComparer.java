@@ -323,6 +323,7 @@ final class ClassComparer {
 
     static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
             JarIndex leftJar, JarIndex rJar, boolean effects) {
+        lm = RethrowHandlers.normalize(lm, rm, leftJar, rJar);
         FirstDiff d = compareLinear(key,lm,rm,leftJar,rJar,effects);
         if (d == null) return null;
         if (leftJar.approved(leftJar.methodDiffs,lm) && lm.name.equals(rm.name) && lm.desc.equals(rm.desc)) {
@@ -460,7 +461,7 @@ final class ClassComparer {
             return map;
         }
         for (FieldNode field : node.fields) {
-            map.put(jar.remapField(node.name, field.name) + ":" + field.desc, field);
+            map.put(jar.remapField(node.name, field.name, field.desc) + ":" + field.desc, field);
         }
         return map;
     }
@@ -619,7 +620,7 @@ final class ClassComparer {
             return op + " " + n.desc;
         }
         if (insn instanceof FieldInsnNode n) {
-            return op + " " + jar.fieldOwner(n.owner, n.name, n.desc, n.getOpcode()) + "." + jar.remapField(n.owner, n.name) + ":" + n.desc;
+            return op + " " + jar.fieldOwner(n.owner, n.name, n.desc, n.getOpcode()) + "." + jar.remapField(n.owner, n.name, n.desc) + ":" + n.desc;
         }
         if (insn instanceof MethodInsnNode n) {
             return op + " " + n.owner + "." + jar.remapMethod(n.owner, n.name, n.desc) + n.desc
@@ -721,7 +722,7 @@ final class ClassComparer {
             int op = insn.getOpcode();
             String effect = null;
             if (insn instanceof FieldInsnNode n) {
-                effect = opcodeName(op) + " " + n.owner + "." + jar.remapField(n.owner, n.name);
+                effect = opcodeName(op) + " " + n.owner + "." + jar.remapField(n.owner, n.name, n.desc);
             } else if (insn instanceof MethodInsnNode || insn instanceof InvokeDynamicInsnNode
                     || op == Opcodes.NEW || op == Opcodes.CHECKCAST || op == Opcodes.INSTANCEOF) {
                 // invokedynamic has no owner: retain name/descriptor, bootstrap handle and arguments.
@@ -793,7 +794,7 @@ final class ClassComparer {
     private static String handle(Handle handle, JarIndex jar) {
         return "H" + handle.getTag()
                 + " " + handle.getOwner()
-                + "." + (handle.getTag() <= Opcodes.H_PUTSTATIC ? jar.remapField(handle.getOwner(), handle.getName())
+                + "." + (handle.getTag() <= Opcodes.H_PUTSTATIC ? jar.remapField(handle.getOwner(), handle.getName(), handle.getDesc())
                         : jar.remapMethod(handle.getOwner(), handle.getName(), handle.getDesc()))
                 + handle.getDesc()
                 + (handle.isInterface() ? " itf" : "");
