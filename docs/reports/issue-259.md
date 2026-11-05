@@ -5,7 +5,7 @@
 沿用 worktree `task-259` 與分支 `task/259`，起點為 `8df7c89c3a9b4dbdb8eb01b40a5b53462dbac0f8`，其中已包含 #254。此次依 #70 `989417ab` 的 B09 附錄，兌現 PLAN.md M2 不確定項 U2-1 的第 2 張，達到原估計 2 張。後續比較器缺口交主控依估計調整流程裁定。
 
 1. `TemporaryValues` 在 LocalWebs 切開槽位重用後，檢查唯一寫入、每次讀取的唯一 reaching definition、型別與寬度、wide 重疊、指令註解及 handler 可達區域。符合條件的跨區塊暫存以保存值綁定表示，按生產者編號放在正常區塊出口。
-2. `BlockExpressions` 以原值表示區塊內 local／stack 搬移，純常數保留型別及完整值。ASM Frame 執行 DUP 系列與 SWAP，保留寬度、operand 順序及跨邊 stack 關聯。呼叫、欄位／陣列操作、monitor、throw、return、分支與例外邊比較完整有序事件及引數。
+2. `BlockExpressions` 以原值表示區塊內 local／stack 搬移，純常數保留型別及完整值。ASM Frame 執行 DUP 系列與 SWAP，保留寬度、operand 順序及跨邊 stack 關聯。單次寫入而完全無讀取的保存值可消去，生產者與其他 stack 用途仍保留。呼叫、欄位／陣列操作、monitor、throw、return、分支與例外邊比較完整有序事件及引數。
 3. `LocalTransport` 擴充既有唯一前驅 null-return 證明，接受中間 CHECKCAST。cast 的位置與例外涵蓋仍受完整比較。
 4. 移除舊 `tempStores` 的 DUP 配額摘要消除。連續 ASTORE 改由完整值來源證明處理。effects 的區塊證明失敗時，原核准摘要保留全部 ASTORE，之後可由既有 paths／CFG 證明。paths 沿用逐路徑 Frame。
 5. `SwitchMaps` 驗證完整 enum-map 初始化與 NoSuchFieldError 區間，從 classpath 確認實際 enum 類別。欄位依 enum＋完整常數→case 值內容識別，引用與 field handle 共用映射。`<clinit>` 以完整 enum 段排序，段內指令／catch 順序照比。未知形狀、額外呼叫、重複內容或缺失 enum metadata 保留原名。
@@ -13,7 +13,7 @@
 
 ## 已驗證／怎麼驗證
 
-Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。本機 11 套 Java 自測均以 `-Xverify:all` 執行，共 **2086 checks**，包含本輪 **241 checks**。
+Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。本機 11 套 Java 自測均以 `-Xverify:all` 執行，共 **2106 checks**，包含本輪 **261 checks**。
 
 同份 framed JAR 供雙向 CLI、直接 paths／CFG 及 platform-parent 隔離 ClassLoader 使用。反例須實際產生不同結果，VerifyError 不計入行為差異。
 
@@ -25,6 +25,7 @@ Microsoft OpenJDK 17.0.17，ASM／asm-tree／asm-analysis 9.7。本機 11 套 Ja
 | 預壓常數不同 | 0／1 | 雙向 DIFF，paths／CFG 拒絕 |
 | handler 讀取不同保存值 | 1／2 | 雙向 DIFF，暫存資格拒絕 |
 | wide shuffle 的值不同 | 2／0 | 雙向 DIFF，paths／CFG 拒絕 |
+| 死暫存的生產者具有副作用，input=0 | 0／1 | 雙向 DIFF，paths／CFG 拒絕 |
 | switch-map case 值不同 | 7／17 | 雙向 DIFF |
 | switch-map 常數集合不同 | 7／2 | 雙向 DIFF |
 

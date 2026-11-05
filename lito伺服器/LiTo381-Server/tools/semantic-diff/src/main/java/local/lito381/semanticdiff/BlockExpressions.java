@@ -141,7 +141,9 @@ final class BlockExpressions implements Opcodes {
                 count++;
             }
             // No reads in any other block (including handlers), hence not live at the exit.
-            if(ok&&count>0){temps.add(e.getKey());reads.put(e.getKey(),count);}
+            // A single dead save after DUP is transport too. Its producer and all
+            // remaining stack uses stay in the ordered expression/event graph.
+            if(ok&&(count>0||FourthNormalizations.enabled("value-flow"))){temps.add(e.getKey());reads.put(e.getKey(),count);}
         }
         Set<Integer> deferred = new HashSet<>();
         if (FourthNormalizations.enabled("value-flow")) {

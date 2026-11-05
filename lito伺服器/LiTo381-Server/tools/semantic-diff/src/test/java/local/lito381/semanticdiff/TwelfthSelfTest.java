@@ -32,6 +32,8 @@ public final class TwelfthSelfTest implements Opcodes {
         pair("handler-observed-local",handlerObserved(false),handlerObserved(true),false,true);
         pair("wide-shuffle",wideShuffle(false,false),wideShuffle(true,false),true,true);
         pair("wide-different-value",wideShuffle(false,false),wideShuffle(true,true),false,true);
+        pair("dead-duplicate-save",deadSave(false,false),deadSave(true,false),true,true);
+        pair("dead-save-producer-effect",deadSave(false,false),deadSave(true,true),false,true);
         for (int opcode : new int[]{DUP_X1,DUP_X2,DUP2,DUP2_X1,DUP2_X2,SWAP})
             pair("shuffle-"+opcode,stackShuffle(opcode,false),stackShuffle(opcode,true),true,true);
         pair("switch-content",switches(false,0),switches(true,0),true,false);
@@ -214,6 +216,17 @@ public final class TwelfthSelfTest implements Opcodes {
         if(shuffle)ins(m,LCONST_0,different?LCONST_0:LCONST_1,DUP2_X2);
         else ins(m,LCONST_1,LCONST_0,LCONST_1);
         ins(m,LADD,LADD,L2I,IRETURN);return c;
+    }
+    private static ClassNode deadSave(boolean save,boolean effect) {
+        ClassNode c=clazz();MethodNode m=method(c,ACC_PUBLIC|ACC_STATIC,"m","(I)I");
+        c.fields.add(new FieldNode(ACC_PUBLIC|ACC_STATIC,"trace","I",null,null));
+        var(m,ILOAD,0);
+        if(save){ins(m,DUP);var(m,ISTORE,1);}
+        if(effect){call(m,"Fixture","tick","()I");var(m,ISTORE,2);}
+        field(m,GETSTATIC,"trace","I");ins(m,IADD,IRETURN);
+        MethodNode tick=method(c,ACC_PUBLIC|ACC_STATIC,"tick","()I");
+        field(tick,GETSTATIC,"trace","I");ins(tick,ICONST_1,IADD,DUP);field(tick,PUTSTATIC,"trace","I");ins(tick,IRETURN);
+        return c;
     }
     private static ClassNode stackShuffle(int opcode,boolean shuffle) {
         int[] input,output;
