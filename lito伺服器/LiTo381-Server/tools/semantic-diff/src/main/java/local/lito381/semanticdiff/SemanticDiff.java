@@ -96,6 +96,7 @@ public final class SemanticDiff {
         left.deviations = parsed.deviations;
         left.ctorOrders = parsed.ctorOrders;
         left.exceptionsExempt = parsed.exceptionsExempt;
+        left.extraMethods = parsed.extraMethods;
 
         Set<String> universe = new TreeSet<>();
         universe.addAll(left.classes.keySet());
@@ -512,7 +513,8 @@ public final class SemanticDiff {
         }
         lines.add("| 產生時間 | " + Instant.now().truncatedTo(ChronoUnit.SECONDS) + " |");
         lines.add("| 正規化 | 移除 debug 與 frames；不比較 max_stack／max_locals／常數池順序；lambda 依描述子與正規化內容識別、相同內容去重；access$ 依出現順序正規化 |");
-        lines.add("| T020i-3 正規化 | 同類 private 實例 bootstrap handle H5/H7 統一；Object super 前移並驗證 this 用法；合成 SwitchMap 欄位依宣告首次出現順序重命名；try 邊界裁掉不會拋例外的指令，刪除空區間 |");
+        lines.add("| T020i-3 正規化 | 同類 private 實例 bootstrap handle H5/H7 統一；Object super 前移並驗證 this 用法；SwitchMap [I 欄位依宣告順序重命名；try 邊界裁掉不會拋例外的指令，刪除空區間 |");
+        lines.add("| T020i-7 正規化 | SwitchMap 不依賴 SYNTHETIC；同類 private 實例呼叫 182/183 統一；左側核准原樣轉拋 handler 經 helper 本體與右側逐指令涵蓋驗證後移除 |");
         lines.add("| T020i 正規化 | 數值常數依型別與值統一；方法／欄位遮掉 ACC_SYNTHETIC；catch-any 視為 java/lang/Throwable |");
         lines.add("| T020i-5 正規化 | 逐條可能拋例外指令的有序 handler 涵蓋；所有路徑已成功取用的多餘 null 檢查；基本區塊內 local／stack 值、複本數與副作用順序證明 |");
         lines.add("| T020i-2 正規化 | InnerClasses 只比本類別及直接內部類；忽略類別 ACC_SUPER；右側無建構子時允許左側唯一的空 Object 建構子；非參數槽位依首次出現一對一重編號（含 wide 第二格） |");
