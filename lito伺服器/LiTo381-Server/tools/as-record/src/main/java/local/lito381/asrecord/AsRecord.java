@@ -22,6 +22,7 @@ import org.objectweb.asm.tree.*;
 /** 將 javac 可接受的欄位宣告還原為保有額外實例欄位的 JVM record。 */
 public final class AsRecord implements Opcodes {
     private static final String MARKER = "Llocal/lito381/server/AsRecord;";
+    private static final String FINAL_MARKER = "Llocal/lito381/server/AsmFinal;";
     private static final Handle BOOTSTRAP = new Handle(H_INVOKESTATIC,
             "java/lang/runtime/ObjectMethods", "bootstrap",
             "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/TypeDescriptor;"
@@ -70,10 +71,16 @@ public final class AsRecord implements Opcodes {
         ClassReader reader = new ClassReader(input);
         ClassNode node = new ClassNode(ASM9);
         reader.accept(node, 0);
+        boolean finalChanged = applyFinal(node);
         List<AnnotationNode> markers = new ArrayList<>();
         collect(node.visibleAnnotations, markers);
         collect(node.invisibleAnnotations, markers);
-        if (markers.isEmpty()) return input;
+        if (markers.isEmpty()) {
+            if (!finalChanged) return input;
+            ClassWriter writer = new ClassWriter(reader, 0);
+            node.accept(writer);
+            return writer.toByteArray();
+        }
         require(markers.size() == 1, "duplicate @AsRecord");
         require(node.version >= V16, "record requires class version >= 60");
         require("java/lang/Object".equals(node.superName), "superclass must be java/lang/Object");
@@ -164,6 +171,25 @@ public final class AsRecord implements Opcodes {
         };
         new SignatureReader(signature).accept(writer);
         return writer.toString();
+    }
+
+    private static boolean applyFinal(ClassNode node) {
+        List<AnnotationNode> markers = new ArrayList<>();
+        for (List<AnnotationNode> annotations : java.util.Arrays.asList(node.visibleAnnotations, node.invisibleAnnotations)) {
+            if (annotations != null) for (AnnotationNode a : annotations) if (FINAL_MARKER.equals(a.desc)) markers.add(a);
+        }
+        if (markers.isEmpty()) return false;
+        require(markers.size() == 1, "duplicate @AsmFinal");
+        for (String name : names(markers.get(0), "value", true)) {
+            List<FieldNode> fields = node.fields.stream().filter(f -> f.name.equals(name)).toList();
+            require(fields.size() == 1, "@AsmFinal field missing or ambiguous: " + name);
+            FieldNode field = fields.get(0);
+            require((field.access & ACC_VOLATILE) == 0, "@AsmFinal field must not be volatile: " + name);
+            field.access |= ACC_FINAL;
+        }
+        if (node.visibleAnnotations != null) node.visibleAnnotations.removeIf(a -> FINAL_MARKER.equals(a.desc));
+        if (node.invisibleAnnotations != null) node.invisibleAnnotations.removeIf(a -> FINAL_MARKER.equals(a.desc));
+        return true;
     }
 
     private static void addObjectMethod(ClassNode node, String name, String desc, int returnOpcode, Object[] args) {

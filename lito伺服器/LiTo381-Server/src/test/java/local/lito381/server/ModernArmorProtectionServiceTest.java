@@ -50,7 +50,7 @@ class ModernArmorProtectionServiceTest {
             });
             assertEquals(ModernWorldProtocol.Status.OK,f.prepare().status());
             ModernNpcServiceTest.await(()->f.read(1).lifecycle().phase()==ModernWorldProtocol.Phase.ABORTED);
-            assertNull(f.read(1).view());f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());
+            assertNull(f.read(1).view());f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void actualServicePublishesDamageProtectionHealingAndDepartureWithoutLosingHistory()throws Exception {
@@ -71,7 +71,7 @@ class ModernArmorProtectionServiceTest {
             complete(f.move(0,1).receipt().view(),ext);
             assertArrayEquals(retained,ModernBattleWire.encodeArmorProtection(view));
             assertNotEquals(f.read(0).view().personal().scope(),f.read(1).view().personal().scope());
-            f.leave(0);complete(f.read(1).view(),ext);f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(0);complete(f.read(1).view(),ext);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void completeServiceDurableSetRetainsProtectionAndHealingState()throws Exception {
