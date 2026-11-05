@@ -1,22 +1,39 @@
-# Issue #62／T020-B01 審查回覆與 #203 依賴阻塞
+# Issue #62／T020-B01：已整合 #186，等待 #203 合併後正式重驗
 
 ## 結論
 
-**B01 正式驗收尚未通過；依最新主控裁定，Java 不改，等待 #186、#203 合併後重驗。** 本輪（2026-11-06）已補回 Forest 的 B 類完整正規化差異與核准證據，更新下一棒提示。前輪正式 CLI 結果維持 **20 SAME、1 SAME_EFFECTS、0 SAME_PATHS、1 DIFF**，不是本輪重新執行所得。
+**B01 正式驗收尚未通過；本輪已整合最新 main，但 #203 的 PR #215 仍未合併，不能完成審查要求的正式重驗。** 依[最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664714583)，Java 不改。前輪正式 CLI 結果仍為 **20 SAME、1 SAME_EFFECTS、0 SAME_PATHS、1 DIFF**；這是保留的舊證據，本輪未重新編譯或執行語意比對。
 
-剩餘 `NativeWeaponBreakTargetLifecycle` 的 lambda 呼叫點配對已由[最新主控裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6662268131)交給 #203，無須再次要求相同裁定。直接診斷的 87 條路徑相同不能取代正式 CLI 全批通過。
+## 本輪做了什麼／怎麼驗證（已驗證）
 
-## 本輪審查回覆（已驗證）
+- 在既有 `task/62`，由 `574c188d882968e1f4cb9cd0e249a75cd001e0b8` 合併 `origin/main` 的 `295c19c14b06c73fdb4dc1d8e151dbd84e217bce`；合併提交為 `0b39c6c215e28660cadb0255988db1e3fa97a45e`。未 checkout 或建立分支。
+- 合併唯一衝突在 `docs/combat-merge/effects-approved.txt`：保留 main 原有 A04 條目及本分支原有 B01 Forest 條目；相對 main 僅多出既有 B01 核准行，未擴大豁免。
+- 查核時間 **2026-11-05T19:12:17.4534620Z（臺北 2026-11-06 03:12）**：#186 的 [PR #202](https://github.com/chaoren0418-arch/lito-launcher-server/pull/202) 已於 `2026-11-05T17:21:31Z` 合併，merge commit 為 `bccc2cb746e408bc8a496cf46c224d61616b9076`，已包含在本次 main。
+- #203 的 [PR #215](https://github.com/chaoren0418-arch/lito-launcher-server/pull/215) 為 `OPEN`，`mergedAt=null`、`mergeCommit=null`，head 為 `1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe`；#203 為 `OPEN / task:review / gate:pass`。`git merge-base --is-ancestor origin/task/203 origin/main` 退出碼 1。沒有把未合併工具帶入本分支。
+- #62 本文仍為 `depends_on: [102, 132, 135, 153, 166, 174, 176]`，未補上主控指定的 186、203；這是尚待主控／調度器處理的派工依賴缺口。本輪不更改工作流佇列或主控裁定。
+- `git diff --name-only 574c188 HEAD -- lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged` 無輸出；17 個 B01 Java 均維持原 bytes。批次表為 17 個外層類／22 entries，17 個指定標頭齊全。
+- `git diff --name-only origin/main...HEAD` 恰為本批 19 檔：17 個 staged Java、此報告及 effects 核准清單。`docs/REPORT.md` 與 main 相同，沒有本任務編輯。工具變更全部來自已合併 main。
+- 本輪 `git diff --check` 通過。全 PR 預設 whitespace 檢查會把既有 Forest／Summon Java 的 CRLF 視為 trailing whitespace；設定 `core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol` 後全 PR 檢查退出碼 0。依「Java 不改」保留既有行尾，未把全 PR 預設檢查宣稱為通過。
 
-- 在既有 `task/62` 從 `e2753408400367b14306a79f2e0403304537952b` 合併最新 `origin/main`：`422f92e563c8de2201f7caaf5fcc228bd5623438`，合併提交 `f94c24d7729837d7b54bcfb7257ea6d450980552`；未 checkout 或建立分支。
-- `2026-11-05T17:12:06.772929+00:00` 查核 GitHub：#203 為 OPEN／task:queued，`task/203` 的全狀態 PR 查詢為 `[]`；#186 為 OPEN／task:review。最新 main 尚不含 #203。原始查詢命令、退出碼與回應保存在 `scratch/issue-62/dependency-check.json`。
-- #62 本文仍列 `depends_on: [102, 132, 135, 153, 166, 174, 176]`，尚未加入最新裁定所列 186、203。這是派工依賴缺口，交主控／調度器修正。
-- 本輪只修改本報告；17 個 B01 Java、核准清單與 semantic-diff／AsRecord 工具相對 `e275340` 均無差異，因此未用舊工具重跑未滿足依賴的正式驗收。
-- 已核對前輪 JAR 與 classes：精確 22 個 entries，逐檔 bytes 相同，無缺漏或多出；17 個來源標頭齊全。前輪原始 JSON 的 `missingLeft`／`extraLeft` 均為空，Forest `apply` 逐方法狀態為 SAME_EFFECTS，原始命令包含 `--effects-methods` 與 `--exceptions-exempt`。
-- 補回附錄 E：完整 Forest diff、B 類分類、核准行、逐方法 JSON 與原始證據 SHA-256。Forest Java 與核准範圍均未擴大。
-- 本 PR 對最新 main 的完整範圍仍為 19 檔：B01 的 17 個 staged Java、`docs/reports/issue-62.md`、`docs/combat-merge/effects-approved.txt`。PR #79 描述應與本次推送 head 一併更新，明確保留驗收未通過及 #203 依賴。
+### 本輪依賴查核原始收據
 
-以下編譯命令、日誌、診斷、雜湊及附錄 A–D 均是 **`e275340` 前輪原始證據**；本輪保留並核對，未宣稱是含 #203 的重驗結果。
+原始 argv、退出碼及完整 GitHub 回應保存在 `scratch/issue-62/dependency-check-current.json`，SHA-256：`71891c38e5e93f2af4d14bd9c8af7b7c3a5a923c15c2c7a6f2ce0c790c146f37`。四筆 `gh` 查詢退出碼均為 0。
+
+```powershell
+gh pr view 215 --repo chaoren0418-arch/lito-launcher-server --json state,mergedAt,mergeCommit,headRefOid,url
+gh pr view 202 --repo chaoren0418-arch/lito-launcher-server --json state,mergedAt,mergeCommit,url
+gh issue view 203 --repo chaoren0418-arch/lito-launcher-server --json state,labels
+gh issue view 62 --repo chaoren0418-arch/lito-launcher-server --json body,labels
+```
+
+PR 原始輸出：
+
+```json
+{"headRefOid":"1f5900d7c7cb292e3e4cd724aeebb1379f74cbfe","mergeCommit":null,"mergedAt":null,"state":"OPEN","url":"https://github.com/chaoren0418-arch/lito-launcher-server/pull/215"}
+{"mergeCommit":{"oid":"bccc2cb746e408bc8a496cf46c224d61616b9076"},"mergedAt":"2026-11-05T17:21:31Z","state":"MERGED","url":"https://github.com/chaoren0418-arch/lito-launcher-server/pull/202"}
+```
+
+以下編譯命令、日誌、診斷、雜湊及附錄 A–E 均是 **`e275340` 前輪原始證據**，本輪繼續保留。附錄 E 為前輪審查補齊的 Forest 完整差異，不能替代 #203 合併後的正式全批重驗。直接診斷的 87 條路徑相同，也不能替代正式 CLI 通過。
 
 ## 前輪做了什麼（已驗證）
 
@@ -214,25 +231,28 @@ only left
 
 ## 推測
 
-主控預期 #203 的 lambda 呼叫點配對修正可讓剩餘 DIFF 歸零；因尚未合併，這仍是待正式 CLI 重驗確認的預期。
+主控預期 #203 的 lambda 呼叫點配對修正可讓最後的 WeaponBreak DIFF 歸零；尚未在已合併 main 上正式重驗，不能視為已證實。
 
 ## 待驗證／未完成事項
 
-- P1 尚未解除：等 #186、#203 合併後重編 B01 17 檔，執行核准 AsRecord 轉換與全部核准清單，再驗收 22 entries 全為 SAME／SAME_EFFECTS／SAME_PATHS，DIFF／ONLY_LEFT／ONLY_RIGHT=0，missingLeft／extraLeft 為空。
-- 單元測試與行為回歸依任務規定留待 B-land；本輪未啟動伺服器、登入器、遊戲或連 DB。
-- 報告證據與 PR 描述修復不等同 B01 驗收完成，不能因此合併落地。
+- 審查 P1 尚未解除：等待 #203／PR #215 合併後，再整合 main、重新編譯 B01 全部 17 檔、僅做核准 AsRecord 轉換、帶入核准 effects／exceptions 與其他適用清單，正式驗證全部 22 entries。
+- 通過條件仍為 22 entries 全部 SAME／SAME_EFFECTS／SAME_PATHS；DIFF／ONLY_LEFT／ONLY_RIGHT=0，`missingLeft`／`extraLeft` 為空。須將新命令、原始輸出、雜湊與依賴狀態同步至本報告及 PR #79。
+- 本輪未重跑 javac／AsRecord／semantic-diff，沒有新的編譯或全批語意通過證據。單元測試與行為回歸依任務留待 B-land；未啟動伺服器、登入器、遊戲或連 DB。
 
 ## 產出路徑
 
-- 前輪修正來源為 `lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/` 下上述三個 Java；本輪保持不變。
-- 正式報告為 `docs/reports/issue-62.md`。
-- 本機建置證據為 `lito伺服器/LiTo381-Server/target/issue-62/final-174-176/`。
-- 本機工具輸出為 `scratch/issue-62/final-174-176.{json,md}`，完整正規化輸出在 `scratch/issue-62/final-174-176/{left,right}/`。
-- 本機重跑腳本為 `scratch/issue-62/verify.py`、`decompile.py`、`dump.py`、`probe-weapon-paths.py` 與 `ProbeWeaponPaths.java`。以下附命令收據與診斷程式，供雲端審查。
+- 正式報告：`docs/reports/issue-62.md`。
+- 本輪依賴查詢：`scratch/issue-62/dependency-check-current.json`；Issue 最新裁定快照：`scratch/issue-62/current-issue.json`。
+- 17 個 B01 來源：`lito伺服器/LiTo381-Server/merge-inputs/50635f7e/staged/local/lito381/server/`，本輪保持不變。
+- 前輪建置證據：`lito伺服器/LiTo381-Server/target/issue-62/final-174-176/`。
+- 前輪正式工具輸出：`scratch/issue-62/final-174-176.{json,md}`；完整正規化輸出在 `scratch/issue-62/final-174-176/{left,right}/`。
+- 前輪重跑與診斷腳本：`scratch/issue-62/verify.py`、`decompile.py`、`dump.py`、`probe-weapon-paths.py`、`ProbeWeaponPaths.java`。命令與完整證據保留於下列附錄。
 
 ## 給下一棒的提示
 
-主控／調度器先將派工依賴補上 #186、#203，避免在依賴未合併時重派。最新裁定已確定 **Java 不改、工具修正交 #203**，不必重做相同裁定。#203 合併後交本機執行器在 `task/62` 合併 main，重新編譯全部 17 檔、轉換 Draft、重驗全部 22 entries，更新本報告與 PR #79 的結果、原始輸出及雜湊。`captureOutput` 必須保留 `--exceptions-exempt`，Forest 必須保留既有 `--effects-methods` 與附錄 E 證據。全批正式通過後才交審查及 B-land。
+主控／調度器先依[既有裁定](https://github.com/chaoren0418-arch/lito-launcher-server/issues/62#issuecomment-6664714583)補上 `depends_on` 的 186、203，處理 attempts，並等 #203 合併後再派本機重驗。#186 已合併，不再列為未完成依賴。裁定仍是 **Java 不改、工具修正交 #203**，沒有新的 Java 問題需要再次裁定。
+
+#203 合併後，本機執行器使用既有 `task/62` 整合 main，從乾淨 target 子目錄重編 17 檔、轉換 Draft、重驗 22 entries。`captureOutput` 保留 `--exceptions-exempt`，Forest 保留既有 `--effects-methods` 與附錄 E；勿用未合併分支或局部 87 路徑診斷取代正式驗收。全批通過後交 Claude 審查，使用者合併；其後才接 B-land。
 
 ## 附錄 A　實際命令收據
 
