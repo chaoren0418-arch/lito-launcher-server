@@ -1,5 +1,13 @@
 # ASM 語意比對
 
+## T020i-10（Issue #235）
+
+`--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。
+
+配對後仍比較完整本體及 metadata，只有通過的方法列 DEVIATION。僅比較樹中本類 owner 的 INVOKEVIRTUAL／INVOKESPECIAL 呼叫（包含遞迴）依配對統一；祖先／其他 owner、static／interface 呼叫、method handle、字串不改名。JSON `privateRenames` 與 Markdown 列出核准對應，`methodResults` 記錄實際配對結果及失敗原因。未配對的 synthetic 目標不能由 orphan 規則忽略。範圍外類別、重複配對端點、缺核准 URL 或與其他方法豁免重疊會拒絕，避免跳過完整本體比較。
+
+`TenthSelfTest` 接入 `selftest.sh`；同份 framed JAR 供比較及 platform-parent 隔離 ClassLoader 執行，確認 private 改名仍派送祖先版本，而非 private 覆寫及保留原名的反例確實改變派送結果。
+
 ## T020i-9（Issue #216）
 
 `--metadata-exempt` 新增 `類別 enclosing-method # approved: <url>`。僅略過該類別的 `outerMethod`／`outerMethodDesc`；`outerClass`、Nest、InnerClasses、旗標、註解、欄位及方法仍比較。不展開內部類。舊的純類名條目維持原行為；JSON 分開列出 `metadataExempt` 與 `enclosingMethodExempt`，未知屬性與範圍外類別拒絕。
