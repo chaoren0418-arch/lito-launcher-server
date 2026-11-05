@@ -176,7 +176,7 @@ class ModernVipWorldServiceTest {
             for(int i=0;i<2;i++){var denied=f.inspect(i);assertEquals(Outcome.REJECTED,denied.outcome());assertEquals(ModernBattleVipCommandState.Rejection.NOT_ACTIVE,denied.rejection());assertEquals(SettlementState.SAVED,denied.lifecycle().settlement());}
             assertNull(f.service.vipWorld(p.owner(),f.request(0,ModernBattleWorldProtocol.Action.LEAVE)).world());
             assertEquals(SettlementState.SAVED,f.read(1).lifecycle().settlement());
-            assertNull(f.service.vipWorld(f.player(1).owner(),f.request(1,ModernBattleWorldProtocol.Action.LEAVE)).world());assertEquals(0,f.service.matchCount());
+            assertNull(f.service.vipWorld(f.player(1).owner(),f.request(1,ModernBattleWorldProtocol.Action.LEAVE)).world());ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void disconnectPublishesAbortToSiblingAndPreventsLateReads()throws Exception {
@@ -184,7 +184,7 @@ class ModernVipWorldServiceTest {
             f.active();f.service.detach(f.player(0).owner());var remaining=f.read(1);assertEquals(Phase.ABORTED,remaining.lifecycle().phase());
             assertEquals(AbortReason.DISCONNECTED,remaining.lifecycle().abortReason());assertNotNull(remaining.payload());
             assertThrows(SecurityException.class,()->f.data(0));assertEquals(Outcome.REJECTED,f.inspect(1).outcome());
-            f.service.vipWorld(f.player(1).owner(),f.request(1,ModernBattleWorldProtocol.Action.LEAVE));assertEquals(0,f.service.matchCount());
+            f.service.vipWorld(f.player(1).owner(),f.request(1,ModernBattleWorldProtocol.Action.LEAVE));ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void disconnectAfterCommitAdmissionRetainsDurableSaveButNeverAcknowledgesRetiredOwner()throws Exception {
@@ -195,7 +195,7 @@ class ModernVipWorldServiceTest {
             assertEquals(1,f.stored(0).orElseThrow().revision());assertTrue(f.stored(1).isEmpty());
             assertEquals(Phase.ABORTED,f.read(1).lifecycle().phase());assertThrows(SecurityException.class,()->f.data(0));
             f.service.vipWorld(f.player(1).owner(),f.request(1,ModernBattleWorldProtocol.Action.LEAVE));
-            assertEquals(0,f.service.matchCount());
+            ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void claimedFullReaderReturningOldFighterFailsPreparationWithoutLegacyFallback()throws Exception {

@@ -1,0 +1,23 @@
+package local.lito381.server;
+import java.io.*;import java.util.concurrent.ThreadLocalRandom;
+/** Source133: PET/SUMMON are NPCs but not Monster. They receive the timed skill marker, with no -50 attribute mutation. */
+final class NativeSourceCompanionElemental {
+ static final String P="local/lito381/server/";
+ record Lease(Object life,long deadline){}
+ static BattleTimedStatus status(BattleCompanion actor){return(BattleTimedStatus)CombatAccess.field(actor,"timedStatus");}
+ static void activate(BattleCompanion actor,long now,int seconds){var status=status(actor);synchronized(status){actor.nativeSourceElementalLease=new Lease(NativeCombatAttacker.token(status,true),seconds==0?Long.MAX_VALUE:Math.addExact(now,Math.multiplyExact((long)seconds,1_000_000_000L)));}}
+ static boolean active(BattleCompanion actor,long now){var status=status(actor);synchronized(status){var lease=actor.nativeSourceElementalLease;if(!(lease instanceof Lease l))return false;if(l.deadline<=now||l.life!=NativeCombatAttacker.token(status,true)){actor.nativeSourceElementalLease=null;return false;}return true;}}
+ static void expire(BattleCompanion actor,long now){if(actor.nativeSourceElementalLease!=null)active(actor,now);}
+ static void cancel(BattleCompanion actor){if(!CombatRules.loaded())return;var controls=CombatDatabase.controlsOrNull();if(controls==null||!controls.cancellationImmune().contains(133)||actor.snapshot().hp()<=0){var status=status(actor);synchronized(status){actor.nativeSourceElementalLease=null;}}}
+ static void cast(NativeSourceRemainingMaterials.Aim aim,byte[] packet,BattleSpellCatalog.ElementalFallDownSpell spell,int fixture)throws IOException{
+  if(fixture<0||fixture>100)throw new IllegalArgumentException("invalid Elemental Fall Down roll fixture");var pc=aim.c.pc;var actor=(BattleCompanion)aim.npc.actor();var request=Protocol.attackSpellRequest(packet);var focus=CombatNpcDebuffs.resolve(pc,request);if(focus==null||focus.controlled()!=actor||focus.owner()!=aim.owner||!aim.valid())return;
+  long now=System.nanoTime();var equipment=(SourceEquipmentMagicStats)CombatAccess.call(pc,"requiredEquipmentMagicStats","()L"+P+"SourceEquipmentMagicStats;");var summary=(CharacterSummary)CombatAccess.call(pc,"selectedCharacterSummary","()L"+P+"CharacterSummary;");if(summary==null)return;var eye=((BattleDragonEyeStatus)CombatAccess.field(pc,"dragonEyeStatus")).snapshot(now);var erase=actor.captureEraseMagic(now);int mr=erase.present()?focus.stats().magicResistance()>>2:focus.stats().magicResistance();int hit=spell.includeMagicHit()?Math.addExact(equipment.totalMagicHit(),eye.magicHit()):0;
+  int chance=CombatProbability.dispatch(spell,"probabilityForTarget","(IIIIIIZ)I","casterLevel,targetLevel,effectiveIntelligence,magicLevel,magicHit,targetMagicResistance,targetBoss",new Object[]{summary.level(),focus.actor().level(),equipment.effectiveIntelligence(CombatAccess.integerCall(pc,"baseIntelligence","(J)I",now)),spell.includeMagicLevel()?CombatRules.magicLevel(summary.type(),summary.level()):0,hit,mr,focus.stats().boss()},pc,new Object[]{actor});
+  if(!(boolean)CombatAccess.call(pc,"nativeSourceRemainingControlledCost133","([BL"+P+"BattleSpellCatalog$ElementalFallDownSpell;I)Z",packet,spell,fixture))return;
+  long appliedAt=System.nanoTime();boolean success=!actor.earthBindActive(appliedAt)&&chance>0&&chance>=(fixture>0?fixture:ThreadLocalRandom.current().nextInt(1,101));actor.consumeEraseMagic(erase);actor.cancelSleep();boolean countered=success&&!spell.counterMagicBypass()&&status(actor).consumeCounterMagic(appliedAt);if(countered)success=false;if(success)activate(actor,appliedAt,spell.durationSeconds());
+  boolean invisible=(boolean)CombatAccess.field(pc,"invisible");for(var viewer:aim.c.players){if(!invisible||viewer==pc)send(viewer,Protocol.objectAction(pc.playerObjectId(),spell.actionId()),"S_ACTION Source133 controlled");if(success)send(viewer,Protocol.effectObject(aim.id,spell.effectGfx()),"S_EFFECT Source133 controlled marker");if(countered)send(viewer,Protocol.effectObject(aim.id,BattleSpellCatalog.counterMagicSpell(31).effectGfx()),"S_EFFECT Source133 controlled counter magic");}
+  send(pc,Protocol.manaPoint(NativeSourceDamageDisplay.n(pc,"playerMp"),NativeSourceDamageDisplay.n(pc,"playerMaxMp")),"S_MANA_POINT Source133 controlled cost");if(!success&&!countered)send(pc,Protocol.messageCode(spell.failureMessage()),"S_MESSAGE_CODE Source133 controlled failure");
+ }
+ static void send(ClientSession pc,byte[] packet,String note){CombatAccess.call(pc,"sendEncrypted","([BLjava/lang/String;)V",packet,note);}
+ private NativeSourceCompanionElemental(){}
+}

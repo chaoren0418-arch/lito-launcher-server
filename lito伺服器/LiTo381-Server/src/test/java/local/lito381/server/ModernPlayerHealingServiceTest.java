@@ -62,7 +62,7 @@ class ModernPlayerHealingServiceTest {
             assertEquals(NOT_ACTIVE,f.service.playerHeal(f.player(1).owner(),f.intent(1,1,1)).reason());
             assertThrows(SecurityException.class,()->f.service.playerHeal(f.player(0).owner(),q));
             assertEquals(ModernBattleEngine.Phase.ACTIVE,old.world().phase());assertEquals(healed,old.world().actors().get(0).playerHealing());
-            f.leave(1);assertEquals(0,f.service.matchCount());assertEquals(2,f.terminals.get());
+            f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);assertEquals(2,f.terminals.get());
         }
     }
     @Test void botReceiptCarriesTypedSourceIdentityAndCrossSourceUnlearnedDoesNotSpend()throws Exception {
@@ -201,7 +201,7 @@ class ModernPlayerHealingServiceTest {
             assertEquals(events.get(0),finished.lifecycle().result());assertEquals(List.of(7,42),events.get(0).participants().stream().map(p->p.key().sourceId()).toList());
             assertEquals(healing,finished.view().world().actors().get(0).playerHealing());
             assertEquals(ModernBattleEngine.Phase.ACTIVE,retained.world().phase());
-            f.leave(0);complete(f.read(1).view());f.leave(1);assertEquals(0,f.service.matchCount());assertEquals(1,events.size());
+            f.leave(0);complete(f.read(1).view());f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);assertEquals(1,events.size());
         }
     }
     static final class Fixture implements AutoCloseable {

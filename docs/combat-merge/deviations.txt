@@ -1,0 +1,12 @@
+# 無類型的條目只允許方法存在左側；兩側皆有時仍比較。
+local/lito381/server/NativeDeWorldLog#debug(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/153
+# 只移動 this 自有欄位賦值，不移動 NativeDeInstanceNames.name 呼叫。
+ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935
+ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935
+ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;Z)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935
+ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZLjava/lang/String;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935
+ctor-prologue-order local/lito381/server/NativeDeInstanceState#<init>(Llocal/lito381/server/NativeDeInstancePorts$Construction;Llocal/lito381/server/NativeDeNpcTemplate;Llocal/lito381/server/NativeDeInitializerKernel$Name;ZZLjava/lang/String;)V # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/72#issuecomment-6646156935
+
+local/lito381/server/NativeSourcePhysicalNpc#sourceCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888
+local/lito381/server/NativeSourcePhysicalNpc#targetCurrent(Llocal/lito381/server/NativeSourcePhysicalNpc$Origin;)Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/65#issuecomment-6655613888
+local/lito381/server/BattleDragonEyeCatalog$Eye#canOverwrite()Z method-diff # approved: https://github.com/chaoren0418-arch/lito-launcher-server/issues/75#issuecomment-6657773411

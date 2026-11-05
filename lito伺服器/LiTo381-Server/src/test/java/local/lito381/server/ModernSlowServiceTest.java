@@ -31,7 +31,7 @@ class ModernSlowServiceTest {
             var request=new ModernBattleReadProtocol.Request(f.player(0).scope(),f.world);
             assertThrows(SecurityException.class,()->f.service.readBattle(f.player(1).owner(),request));
             f.leave(0);assertEquals(ModernWorldProtocol.Phase.ABORTED,f.read(1).lifecycle().phase());
-            f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
             ModernNpcServiceTest.await(()->f.terminals.get()==2);
             for(int i=0;i<2;i++){assertFalse(f.shops.get(i).frozen());assertTrue(f.shopRead(i).stacks().isEmpty());}
         }
@@ -52,7 +52,7 @@ class ModernSlowServiceTest {
             assertEquals(ModernWorldProtocol.Status.OK,f.prepare().status());
             ModernNpcServiceTest.await(()->f.read(1).lifecycle().phase()==ModernWorldProtocol.Phase.ABORTED);
             assertNull(f.read(1).view());assertEquals(0,f.captures.get());
-            f.leave(0);f.leave(1);assertEquals(0,f.service.matchCount());
+            f.leave(0);f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void providerFailureOrLateReturnCannotFreezeInventoryAfterDeparture()throws Exception {

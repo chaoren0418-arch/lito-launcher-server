@@ -39,7 +39,7 @@ class ModernBattleLifecycleServiceTest {
             assertEquals(ModernBattleEngine.Phase.ACTIVE,old.world().phase());
             assertEquals(Phase.ABORTED,f.lifecycle().phase());assertFalse(f.lifecycle().resultOutstanding());
             assertThrows(SecurityException.class,()->f.read(0));f.leave(1);
-            assertEquals(0,f.service.matchCount());assertEquals(0,f.persisted.get());assertEquals(2,f.terminals.get());
+            ModernWorldServiceTest.awaitNoMatches(f.service);assertEquals(0,f.persisted.get());assertEquals(2,f.terminals.get());
         }
     }
 
@@ -56,7 +56,7 @@ class ModernBattleLifecycleServiceTest {
             assertEquals(won.view().world().result(),f.read(1).view().world().result());
             assertThrows(IllegalArgumentException.class,()->ModernLegacyBattleProjection.from(f.engine.serviceObservation()));
             f.leave(0);assertEquals(ModernBattleEngine.Phase.FINISHED,f.read(1).view().world().phase());
-            f.leave(1);assertEquals(0,f.service.matchCount());assertEquals(1,f.persisted.get());
+            f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);assertEquals(1,f.persisted.get());
         }
     }
 
