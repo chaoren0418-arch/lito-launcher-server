@@ -15,6 +15,7 @@ REPO = SERVER.parent.parent
 SCRATCH = REPO / 'scratch/as-record/selftest'
 OUT = tool.TARGET / 'selftest'
 ANNOTATION = SERVER / 'src/main/java/local/lito381/server/AsRecord.java'
+FINAL_ANNOTATION = SERVER / 'src/main/java/local/lito381/server/AsmFinal.java'
 MARKER = 'import local.lito381.server.AsRecord;\n'
 
 
@@ -28,7 +29,7 @@ def source(group, name, text):
 def compile_group(group, texts, cp):
     output = OUT / group
     paths = [source(group, name, text) for name, text in texts.items()]
-    tool.compile_java([ANNOTATION, *paths], output, cp)
+    tool.compile_java([ANNOTATION, FINAL_ANNOTATION, *paths], output, cp)
     return output
 
 
@@ -39,7 +40,7 @@ def snapshot(directory):
 def convert(directory, cp, error=None):
     result = subprocess.run([tool.jdk('java'), '-Xverify:all', '-cp', cp,
                              'local.lito381.asrecord.AsRecord', str(directory)],
-                            capture_output=True, text=True)
+                            capture_output=True, text=True, encoding='utf-8', errors='replace')
     print(result.stdout, end='')
     if error is None:
         assert result.returncode == 0, result.stderr
@@ -68,6 +69,32 @@ def compare(left, right, classes, label, cp):
 
 def main():
     cp = tool.build()
+    final_classes = compile_group('asm-final', {
+        'Parent': 'class Parent {}',
+        'PlainFinal': '''import local.lito381.server.AsmFinal;
+@AsmFinal({"value", "global"}) class PlainFinal extends Parent {
+ public Object value; public static Object global;
+ public PlainFinal() {} public PlainFinal(Object v) { value = v; }
+}''',
+        'AbstractFinal': '''import local.lito381.server.AsmFinal;
+@AsmFinal({"memo"}) abstract class AbstractFinal { Object memo; }''',
+    }, cp)
+    convert(final_classes, cp)
+    checker = OUT / 'asm-final-check'
+    tool.compile_java([tool.ROOT / 'src/test/java/AsmFinalCheck.java'], checker, cp)
+    tool.run([tool.jdk('java'), '-Xverify:all', '-cp', os.pathsep.join([str(checker), str(final_classes), cp]),
+              'AsmFinalCheck', final_classes])
+    for label, fields, declaration, error in [
+        ('missing', '{"wrong"}', 'Object value;', 'field missing'),
+        ('duplicate', '{"value","value"}', 'Object value;', 'duplicate field'),
+        ('volatile', '{"value"}', 'volatile Object value;', 'must not be volatile')]:
+        bad = compile_group('asm-final-' + label, {
+            'Bad': 'import local.lito381.server.AsmFinal; @AsmFinal(' + fields + ') class Bad { ' + declaration + ' }',
+            'Good': 'import local.lito381.server.AsmFinal; @AsmFinal({"value"}) class Good { Object value; }',
+        }, cp)
+        before = snapshot(bad)
+        convert(bad, cp, error)
+        assert snapshot(bad) == before, 'invalid @AsmFinal partially rewrote batch'
     semantic = OUT / 'semantic-diff'
     tool.compile_java(sorted((SERVER / 'tools/semantic-diff/src/main/java').rglob('*.java')),
                       semantic, tool.dependencies())

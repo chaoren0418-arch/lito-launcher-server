@@ -74,8 +74,80 @@ class ModernBattleWorldProtocolTest {
             assertTrue(both.view().world().actors().stream().allMatch(a->a.pose().loaded()));
             assertEquals(State.DETACHED,f.send(0,action(f.scope(0),Action.LEAVE,both,ModernWorldProtocol.ZERO_DIGEST)).state());
             var aborted=f.send(1,read(f.scope(1),start.world()));assertEquals(ModernWorldProtocol.Phase.ABORTED,aborted.lifecycle().phase());
-            f.send(1,action(f.scope(1),Action.LEAVE,aborted,ModernWorldProtocol.ZERO_DIGEST));assertEquals(0,f.service.matchCount());
+            f.send(1,action(f.scope(1),Action.LEAVE,aborted,ModernWorldProtocol.ZERO_DIGEST));ModernWorldServiceTest.awaitNoMatches(f.service);
             assertEquals(State.DETACHED,f.send(0,read(f.scope(0),null)).state());assertNull(start.view());
+        }
+    }
+    @Test void leaveWaitsForActualRetirementBeforeAssertingNoMatches() throws Exception {
+        try (var f = new Scene(true)) {
+            var start = f.send(0, f.prepare());
+            assertTrue(f.entered.await(2, TimeUnit.SECONDS));
+            // Pause the actual preparation worker immediately AFTER terminal publication.
+            // Both completion latches are zero, but finishWorker has not run yet.
+            var published = new CountDownLatch(1);
+            var retire = new CountDownLatch(1);
+            var gateField = ModernWorldService.class.getDeclaredField("gate");
+            gateField.setAccessible(true);
+            var entriesField = ModernWorldService.class.getDeclaredField("entries");
+            entriesField.setAccessible(true);
+            CountDownLatch releaseDone;
+            var terminalDone = new CountDownLatch(1) {
+                @Override public void countDown() {
+                    super.countDown();
+                    published.countDown();
+                    boolean interrupted = false;
+                    long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+                    try {
+                        while (retire.getCount() != 0) {
+                            long left = deadline - System.nanoTime();
+                            if (left <= 0) throw new AssertionError("retirement barrier timed out");
+                            try { retire.await(left, TimeUnit.NANOSECONDS); }
+                            catch (InterruptedException ignored) { interrupted = true; }
+                        }
+                    } finally { if (interrupted) Thread.currentThread().interrupt(); }
+                }
+            };
+            synchronized (gateField.get(f.service)) {
+                var entries = (java.util.Collection<?>) entriesField.get(f.service);
+                assertEquals(1, entries.size());
+                var entry = entries.iterator().next();
+                var terminalField = entry.getClass().getDeclaredField("terminationDone");
+                terminalField.setAccessible(true);
+                terminalField.set(entry, terminalDone);
+                var releaseField = entry.getClass().getDeclaredField("releaseDone");
+                releaseField.setAccessible(true);
+                releaseDone = (CountDownLatch) releaseField.get(entry);
+            }
+            var checked = new java.util.concurrent.FutureTask<Void>(() -> {
+                ModernWorldServiceTest.awaitNoMatches(f.service);
+                return null;
+            });
+            var checker = new Thread(checked, "leave-retirement-assertion");
+            try {
+                f.release.countDown();
+                assertTrue(published.await(2, TimeUnit.SECONDS));
+                var aborted = f.send(0, read(f.scope(0), start.world()));
+                assertEquals(ModernWorldProtocol.Phase.ABORTED, aborted.lifecycle().phase());
+                for (int i = 0; i < 2; i++)
+                    assertEquals(State.DETACHED, f.send(i, action(f.scope(i), Action.LEAVE,
+                            aborted, ModernWorldProtocol.ZERO_DIGEST)).state());
+                assertEquals(0, releaseDone.getCount());
+                assertEquals(0, terminalDone.getCount());
+                assertEquals(1, f.service.active());
+                assertEquals(1, f.service.matchCount());
+                System.out.println("controlled retirement: releaseDone=0 terminationDone=0 active=1 matchCount=1");
+                checker.start();
+                assertThrows(java.util.concurrent.TimeoutException.class,
+                        () -> checked.get(100, TimeUnit.MILLISECONDS));
+                retire.countDown();
+                checked.get(3, TimeUnit.SECONDS);
+                assertEquals(0, f.service.active());
+                assertEquals(0, f.service.matchCount());
+            } finally {
+                retire.countDown();
+                checker.join(4000);
+                assertFalse(checker.isAlive());
+            }
         }
     }
     @Test void failedPreparationIsAttachedAbortedWithoutInventedBattleData()throws Exception {
@@ -94,7 +166,7 @@ class ModernBattleWorldProtocolTest {
             var loaded=action(q.scope(),Action.LOADED,r,f.world.manifest().digest());encoded(loaded,f.service.battleWorld(f.player(0).owner(),loaded));
             var leave=action(q.scope(),Action.LEAVE,r,ModernWorldProtocol.ZERO_DIGEST);assertEquals(State.DETACHED,f.service.battleWorld(f.player(0).owner(),leave).state());
             var other=read(f.player(1).scope(),r.world());var aborted=f.service.battleWorld(f.player(1).owner(),other);encoded(other,aborted);assertEquals(ModernWorldProtocol.Phase.ABORTED,aborted.lifecycle().phase());
-            f.service.battleWorld(f.player(1).owner(),action(other.scope(),Action.LEAVE,aborted,ModernWorldProtocol.ZERO_DIGEST));assertEquals(0,f.service.matchCount());
+            f.service.battleWorld(f.player(1).owner(),action(other.scope(),Action.LEAVE,aborted,ModernWorldProtocol.ZERO_DIGEST));ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void passiveReadRetainsSavedStateAndExactResultAfterMixedHistory()throws Exception {

@@ -455,7 +455,7 @@ if [[ -d "$ROOT/target/dependency" ]]; then
   ASM_CP="$(printf '%s:' "$ROOT/target/dependency"/*.jar)"
 fi
 if [[ -z "$ASM_CP" || "$ASM_CP" == "$ROOT/target/dependency/*.jar:" ]]; then
-  ASM_CP="$ROOT/target/dependency/asm-9.7.jar:$ROOT/target/dependency/asm-tree-9.7.jar"
+  ASM_CP="$ROOT/target/dependency/asm-9.7.jar:$ROOT/target/dependency/asm-tree-9.7.jar:$ROOT/target/dependency/asm-analysis-9.7.jar"
 fi
 cat > "$BUILD/AnnPatch.java" <<'JAVA'
 import java.io.InputStream;
@@ -577,11 +577,15 @@ run_logged "$BUILD/ann-record.log" \
 echo "PASS SELFTEST 8c record type-ann DIFF=1"
 
 echo
-echo "=== SELFTEST 9: T020i normalization and approved effects ==="
+echo "=== SELFTEST 9: T020i/T020i-2 normalization and approved exceptions ==="
 javac --release 17 -encoding UTF-8 -cp "$ROOT/target/classes:$ASM_CP" -d "$BIN" \
-  "$ROOT/src/test/java/local/lito381/semanticdiff/NormalizationSelfTest.java"
+  "$ROOT/src/test/java/local/lito381/semanticdiff/"*.java
 java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.NormalizationSelfTest \
   "$BUILD/normalization" "$BIN/normalization"
+java -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.AdvancedSelfTest \
+  "$BUILD/advanced" "$BIN/advanced"
+java -Xverify:all -cp "$BIN:$ROOT/target/classes:$ASM_CP" local.lito381.semanticdiff.FourthSelfTest \
+  "$BUILD/fourth" "$BIN/fourth"
 
 echo "=== SELFTEST ALL PASS ==="
 echo "SELFTEST_1 $SUMMARY1"

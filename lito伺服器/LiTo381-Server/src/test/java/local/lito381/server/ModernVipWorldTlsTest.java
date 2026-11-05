@@ -105,7 +105,7 @@ class ModernVipWorldTlsTest {
             assertEquals(168,world(a,ModernBattleWorldProtocol.Action.LEAVE,0,0,w,ModernWorldProtocol.ZERO_DIGEST).length);
             var aborted=read(b,w);assertEquals(ModernWorldProtocol.Phase.ABORTED.ordinal(),aborted[148]);
             world(b,ModernBattleWorldProtocol.Action.LEAVE,0,0,w,ModernWorldProtocol.ZERO_DIGEST);
-            assertEquals(0,read(a,null)[114]);assertEquals(0,f.worlds.matchCount());
+            assertEquals(0,read(a,null)[114]);ModernWorldServiceTest.awaitNoMatches(f.worlds);
             var again=readyAfterLeave(a,b);var next=world(a,ModernBattleWorldProtocol.Action.PREPARE,again.summary().id(),again.summary().revision(),null,ModernWorldProtocol.ZERO_DIGEST);
             assertTrue(identity(next).matchId()>w.matchId());
             world(a,ModernBattleWorldProtocol.Action.LEAVE,0,0,identity(next),ModernWorldProtocol.ZERO_DIGEST);

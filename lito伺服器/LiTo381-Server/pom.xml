@@ -36,6 +36,83 @@
     <build>
         <finalName>LiTo381-Server</finalName>
         <plugins>
+            <!-- 舊 API 只協助 javac；所有成品 JAR 均在下方排除。 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>compile-only-legacy-stubs</id>
+                        <phase>generate-sources</phase>
+                        <goals><goal>add-source</goal></goals>
+                        <configuration>
+                            <sources><source>${project.basedir}/compile-stubs</source></sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <!-- 外掛私有 classpath：不屬於專案 runtime 或 target/lib。 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>9.7</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm-tree</artifactId>
+                        <version>9.7</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>as-record-main</id>
+                        <phase>process-classes</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/as-record-tool"/>
+                                <javac srcdir="${project.basedir}/tools/as-record/src/main/java"
+                                       destdir="${project.build.directory}/as-record-tool"
+                                       release="17" encoding="UTF-8" includeantruntime="false">
+                                    <classpath refid="maven.plugin.classpath"/>
+                                </javac>
+                                <java classname="local.lito381.asrecord.AsRecord" fork="true" failonerror="true">
+                                    <jvmarg value="-Djava.io.tmpdir=${java.io.tmpdir}"/>
+                                    <classpath>
+                                        <pathelement location="${project.build.directory}/as-record-tool"/>
+                                        <path refid="maven.plugin.classpath"/>
+                                    </classpath>
+                                    <arg value="${project.build.outputDirectory}"/>
+                                </java>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>as-record-test</id>
+                        <phase>process-test-classes</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target xmlns:unless="ant:unless">
+                                <java classname="local.lito381.asrecord.AsRecord" fork="true" failonerror="true"
+                                      unless:true="${maven.test.skip}">
+                                    <jvmarg value="-Djava.io.tmpdir=${java.io.tmpdir}"/>
+                                    <classpath>
+                                        <pathelement location="${project.build.directory}/as-record-tool"/>
+                                        <path refid="maven.plugin.classpath"/>
+                                    </classpath>
+                                    <arg value="${project.build.testOutputDirectory}"/>
+                                </java>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -52,6 +129,15 @@
                 <version>3.3.0</version>
                 <executions>
                     <execution>
+                        <id>as-record-test-fixture</id>
+                        <phase>package</phase>
+                        <goals><goal>test-jar</goal></goals>
+                        <configuration>
+                            <classifier>as-record-tests</classifier>
+                            <includes><include>local/lito381/server/AsRecordBuildFixture*.class</include></includes>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>modern-server</id>
                         <phase>package</phase>
                         <goals><goal>jar</goal></goals>
@@ -66,6 +152,11 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <excludes>
+                        <exclude>com/lineage/**</exclude>
+                        <exclude>org/objectweb/asm/**</exclude>
+                        <exclude>local/lito381/asrecord/**</exclude>
+                    </excludes>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>

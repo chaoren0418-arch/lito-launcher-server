@@ -53,7 +53,7 @@ class ModernSlowProtocolTest {
             assertEquals(2,f.reads.get(),"commands must not reacquire unrelated database authority");
             f.leave(0);
             var terminal=f.service.slow(f.player(1).owner(),intent(f.read(1).view(),1,2));
-            assertEquals(ModernSlowCast.Reason.NOT_ACTIVE,terminal.reason());f.leave(1);assertEquals(0,f.service.matchCount());
+            assertEquals(ModernSlowCast.Reason.NOT_ACTIVE,terminal.reason());f.leave(1);ModernWorldServiceTest.awaitNoMatches(f.service);
         }
     }
     @Test void readonly46CannotCastAndFullOwnerRoomRevisionAndTargetIdentityAreRequired()throws Exception {
