@@ -56,3 +56,4 @@
 - 2026-11-06 — #64 T020-B03: 戰鬥併入暫存（new-java，51 類）（code，codex-local，PR #80 已合併）→ [報告](reports/issue-64.md)
 - 2026-11-06 — #273 #83 善後：停止 task/83 的 3307 MariaDB（保留 dump/datadir）＋覆寫刪除憑證檔（使用者授權）（resource，dot，PR #277 已合併）→ [報告](reports/issue-273.md)
 - 2026-11-06 — #83 T020c-2: 準備戰鬥回歸用隔離 SQL 設定（SELECT 專用帳號）— 本機對話（resource，dot，PR #280 已合併）→ [報告](reports/issue-83.md)
+- 2026-11-06 — #283 T013: CHECKLIST 改成實驗環境版（正式 0.6.71＋P24 實驗 schema）（code，codex-local，PR 已合併）→ [報告](reports/issue-283.md)
