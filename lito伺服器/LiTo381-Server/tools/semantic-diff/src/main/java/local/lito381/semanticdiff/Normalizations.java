@@ -13,6 +13,13 @@ final class Normalizations implements Opcodes {
     static void prepare(ClassNode owner) {
         for (MethodNode m : owner.methods) {
             for (AbstractInsnNode n : m.instructions) {
+                if (FourthNormalizations.enabled("private-calls") && n instanceof MethodInsnNode call
+                        && (call.getOpcode() == INVOKESPECIAL || call.getOpcode() == INVOKEVIRTUAL)
+                        && call.owner.equals(owner.name) && !call.name.startsWith("<")
+                        && owner.methods.stream().anyMatch(t -> t.name.equals(call.name) && t.desc.equals(call.desc)
+                            && (t.access & (ACC_PRIVATE | ACC_STATIC)) == ACC_PRIVATE)) {
+                    call.setOpcode(INVOKESPECIAL);
+                }
                 if (n instanceof InvokeDynamicInsnNode indy) {
                     for (int i = 0; i < indy.bsmArgs.length; i++) {
                         if (indy.bsmArgs[i] instanceof Handle h && h.getOwner().equals(owner.name)
@@ -36,6 +43,12 @@ final class Normalizations implements Opcodes {
         if (op < 0 || op == NOP || op == GOTO) return true;
         if (op >= ILOAD && op <= ALOAD || op >= ISTORE && op <= ASTORE) return true;
         if (op >= ACONST_NULL && op <= SIPUSH) return true;
+        if (FourthNormalizations.enabled("coverage")) {
+            if (op >= POP && op <= SWAP || op == IINC) return true;
+            if (op >= IADD && op <= DCMPG && op != IDIV && op != LDIV && op != IREM && op != LREM) return true;
+            if (op >= IFEQ && op <= GOTO || op == IFNULL || op == IFNONNULL
+                    || op == TABLESWITCH || op == LOOKUPSWITCH) return true;
+        }
         if (op >= IRETURN && op <= RETURN) return !monitor;
         // Class/MethodHandle/MethodType/condy resolution can throw; do not trim these.
         return n instanceof LdcInsnNode ldc && (ldc.cst instanceof Number || ldc.cst instanceof String);

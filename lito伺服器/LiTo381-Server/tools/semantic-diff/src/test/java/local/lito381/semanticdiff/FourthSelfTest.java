@@ -39,7 +39,8 @@ public final class FourthSelfTest implements Opcodes {
         check("captures-without-forwarding",captures(false,0),captures(true,0),true);
         check("nested-captures",nestedCaptures(false),nestedCaptures(true),true);
         System.clearProperty("semanticdiff.disable");
-        check("copies-per-origin",copyOrigins(true),copyOrigins(false),false);
+        // Both copies are discarded; #176 compares observable uses rather than copy counts.
+        check("copies-per-origin",copyOrigins(true),copyOrigins(false),true);
         check("web-diamond",diamond(true,false),diamond(false,false),true);
         check("web-diamond-overwrite",diamond(false,true),diamond(false,false),false);
         check("web-loop",loop(7),loop(12),true);
@@ -210,8 +211,8 @@ public final class FourthSelfTest implements Opcodes {
             Path left=jar(name+"-l",List.of(a)),right=jar(name+"-r",List.of(b));boolean layout=name.equals("main-layout-temp");
             cliCheck(name,left,right,layout,signature,layout?"SAME_LAYOUT":"SAME");
             cliCheck(name+"-reverse",right,left,layout,signature,layout?"SAME_LAYOUT":"SAME");
-            if(layout)cliCheck(name+"-unapproved",left,right,false,signature,"DIFF");
-            System.setProperty("semanticdiff.disable","transport");
+            if(layout)cliCheck(name+"-unapproved",left,right,false,signature,"SAME_PATHS");
+            System.setProperty("semanticdiff.disable","transport,paths,cfg");
             try{cliCheck(name+"-disabled",left,right,layout,signature,"DIFF");}
             finally{System.clearProperty("semanticdiff.disable");}
             class Loader extends ClassLoader{Class<?> load(ClassNode c){ClassWriter w=new ClassWriter(0);c.accept(w);byte[] bytes=w.toByteArray();return defineClass("Fixture",bytes,0,bytes.length);}}

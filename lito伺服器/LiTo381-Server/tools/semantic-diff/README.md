@@ -1,5 +1,54 @@
 # ASM 語意比對
 
+## T020i-12（Issue #259）
+
+兩側預設以同一套值編號比較 stack／local 搬移。區塊內沿用原值表示式，純常數以型別及完整值表示；DUP／DUP2／DUP_X*／SWAP 由 ASM Frame 保留精確 operand 順序與寬度。呼叫、欄位與陣列操作、monitor、throw、return、分支及有序例外邊繼續比較完整引數。常數可預先壓入，呼叫與讀寫操作維持原順序。
+
+跨區塊暫存先經 LocalWebs 分開重用槽位，再要求唯一寫入、每個讀取的唯一 reaching definition 均為該寫入、型別／寬度一致、無重疊 wide 槽位或指令註解。handler 的正常後繼可到達的寫入／讀取一律排除。符合者的保存值綁定依生產者編號放在正常區塊出口，區塊內讀取直接沿用原值。所有跨邊 stack 關聯及 local 一對一映射仍須通過。`ASTORE; ALOAD; IFNULL; ALOAD; CHECKCAST; ARETURN` 另沿用唯一前驅證明轉為 DUP 形式，cast 與例外涵蓋保留。
+
+舊 `tempStores` 依對側 DUP 數量選擇性消除 ASTORE 的摘要規則已移除。effects 方法先嘗試完整區塊資料流證明，失敗後既有核准摘要保留全部 ASTORE，再由 paths／CFG 嘗試完整證明。連續多個 store 與只有寫入的死暫存由同一套值來源分析處理，生產者呼叫及其他 stack 用途仍保留；paths 使用原有逐路徑 Frame。
+
+switch-map 只接受完整可辨識的 enum `values → ARRAYLENGTH → NEWARRAY → PUTSTATIC` 與 `enum constant → ordinal → case value → IASTORE` 初始化，逐項驗證 NoSuchFieldError 的涵蓋範圍、跳轉及無後續讀取的 handler 暫存。名稱依 enum 類別與完整「常數→case 值」內容雜湊，宣告、跨類別欄位引用及 field handle 共用映射。`<clinit>` 的完整 enum 段依內容識別排序，段內指令及 catch 順序保留。未知形狀、額外呼叫、重複內容欄位或未涵蓋的 switch 欄位保留原名；case 值／常數集合不同持續 DIFF。
+
+診斷停用為 `-Dsemanticdiff.disable=value-flow` 與 `switch-content`。`TwelfthSelfTest` 接入 `selftest.sh`，同份 framed JAR 用於雙向 CLI、直接 paths／CFG 與 platform-parent 隔離 ClassLoader。包含四連 store、跨區塊讀取、型別重用、handler 可觀察 local、各種 stack shuffle、寬值、null/cast return、預壓 receiver／常數、switch 順序與內容反例。
+
+## T020i-10（Issue #235）
+
+`--deviations` 支援 `類別#左側方法描述子 private-rename 右側方法名 # approved: <url>`。方向固定為左側 Java 改名版本、右側正式原名版本。僅當兩側均宣告 private 實例方法、兩側祖先鏈均有右側同名同描述子的非 private 實例方法，且左側完全沒有右側原名宣告時配對；右側也不能已宣告左側名稱與描述子。缺祖先 classpath 或任一條件不成立時保留 ONLY_LEFT／ONLY_RIGHT 方法差異，整類仍為 DIFF。祖先可由 `--left-classpath`／`--right-classpath` 提供，不載入應用程式。
+
+配對後仍比較完整本體及 metadata，只有通過的方法列 DEVIATION。僅比較樹中本類 owner 的 INVOKEVIRTUAL／INVOKESPECIAL 呼叫（包含遞迴）依配對統一；祖先／其他 owner、static／interface 呼叫、method handle、字串不改名。JSON `privateRenames` 與 Markdown 列出核准對應，`methodResults` 記錄實際配對結果及失敗原因。未配對的 synthetic 目標不能由 orphan 規則忽略。範圍外類別、重複配對端點、缺核准 URL 或與其他方法豁免重疊會拒絕，避免跳過完整本體比較。
+
+`TenthSelfTest` 接入 `selftest.sh`；同份 framed JAR 供比較及 platform-parent 隔離 ClassLoader 執行，確認 private 改名仍派送祖先版本，而非 private 覆寫及保留原名的反例確實改變派送結果。
+
+## T020i-9（Issue #216）
+
+`--metadata-exempt` 新增 `類別 enclosing-method # approved: <url>`。僅略過該類別的 `outerMethod`／`outerMethodDesc`；`outerClass`、Nest、InnerClasses、旗標、註解、欄位及方法仍比較。不展開內部類。舊的純類名條目維持原行為；JSON 分開列出 `metadataExempt` 與 `enclosingMethodExempt`，未知屬性與範圍外類別拒絕。
+
+兩側在 local webs／CFG 比較前都分析純轉拋 handler。只接受從入口 ASTORE 保存同一例外、經安全 local／常數搬移及 POP 後 ATHROW 的直線本體；呼叫、欄位、monitor、配置、cast 等均拒絕。共用 handler 的 try 條目一起處理，禁止正常路徑進入；每個受保護拋出點刪除 handler 後的有序處理鏈，必須等於 ATHROW 處的處理鏈。另以正常／例外 CFG liveness 檢查 catch 寫入不能被外層讀取。只有移除成功的方法才清理殘留 LOAD／POP、DUP／POP 及已證明不再讀取的鎖暫存；有副作用的值產生者保留。原 #186 核准 helper 的單向規則不變。診斷停用：`-Dsemanticdiff.disable=pure-rethrow`。
+
+public `INVOKEVIRTUAL`／`INVOKEINTERFACE` 的 owner 不同時，按方法內呼叫次序提出候選；名稱／描述子相同，兩側 classpath 都成功解析到 public 非 static 方法，owner 有父子關係，且各側呼叫前 stack receiver 型別同為兩個 owner 的子型別，才在比較用副本統一指令拼法。讀取 class header，不初始化應用程式；不明確的介面解析、未知 receiver 匯合、private／package-private、SPECIAL／STATIC 均不套用。完整方法、操作順序及 CFG 仍須比較。診斷停用：`-Dsemanticdiff.disable=virtual-owner`。
+
+CFG 保留 STORE 事件、槽位與順序，但後續 LOAD 的值來源沿用該 STORE 保存的原值，因而可以證明 `DUP; STORE` 與 `STORE; LOAD` 等價；跨區塊 stack 邊界及覆寫檢查不變。`NinthSelfTest` 接入 `selftest.sh`，以同份 framed JAR 雙向比較並用隔離 ClassLoader 實際執行反例。
+
+## T020i-6（Issue #176）
+
+預設在既有完整比較仍 DIFF、方法 metadata 相同時，嘗試有界逐路徑證明。成功另列 `SAME_PATHS`，不計入 `SAME`。方法級 `methodResults` 保留每個後備結果，即使類別仍 DIFF；Markdown 同樣逐方法列出原因。類別優先序為 DIFF → DEVIATION → SAME_PATHS → ORPHAN_IGNORED → SAME_LAYOUT → SAME_EFFECTS → SAME。
+
+- 逐路徑複製 ASM Frame，stack／local 搬移共用表示式，不在匯合點合併來源。一般 CFG 任一分量有 cycle 即拒絕；JSR／RET、不可達指令、未解析欄位 volatile 屬性、指令／local／handler 型別註解或分析失敗均維持 DIFF。
+- 每條路徑保留有序呼叫及引數、欄位／陣列寫入、volatile 讀取、monitor、分支條件及實際走向、回傳／拋出。零比較、反向條件、交換比較運算元一併正規化；switch 保留每個 case／default 的條件。所有出口紀錄使用多重集合比較，不能只比路徑數或去重後集合。
+- 非 volatile 欄位讀值含記憶體狀態版本；呼叫、寫入、volatile、monitor、配置、可能執行 class initializer／condy bootstrap 的讀取會推進版本。因此寫入前後兩次讀值不可互換。已知非 null（this 或本路徑已成功取用）的 receiver 讀取若未被使用，可以消失；未知 receiver 的取用保留 CHECK 與例外邊。陣列讀取亦保留版本、順序與檢查。
+- NEW 和對應 `<init>` 結合成配置事件，保留 NEW 位置及 constructor 完成的事件邊界；中間的參數求值、呼叫、寫入與失敗路徑不消失。只搬移 DUP／SWAP／暫存不增加事件。
+- 可能丟例外的指令逐一列舉有序涵蓋 handler，保存 catch 型別／優先序及未捕捉出口。handler 進入時清空 operand stack，保留指令執行前 locals；例外可能帶來的記憶體變化使用新版本。只對精確 `ASTORE; ALOAD lock; MONITOREXIT; ALOAD exception; ATHROW` 且已證明同一物件成對取得的 self-covering monitor handler 省略自身例外邊。其他例外循環、無法配對的 monitor 均拒絕。
+- 每側超過 4096 出口路徑拒絕；另有 500000 指令步數、32768 表示式大小及遞迴保護，達上限只回報 DIFF。這是保守證明，不是通用迴圈等價檢查或完整 JVM／並行程式驗證。診斷可用 `-Dsemanticdiff.disable=paths` 停用；其他既有正規化不受影響。
+
+`--access-widen` 新增 `類別 # approved: https://...` 格式，限定 InnerClasses 中精確該巢狀類別：左側 private → package-private／protected／public，protected → public。所有選取類別中出現的該條目都套用，允許巢狀類本身不在本批 JAR；兩側選取範圍必須均有該條目。class 自身 access 及 InnerClasses 其餘旗標照比，不擴大至其他巢狀類。JSON `innerAccessWiden` 列出清單。
+
+`--deviations` 新增 `類別#方法描述子 method-diff # approved: https://...`。只豁免精確兩側均存在的方法，另列 DEVIATION 與左右完整正規化內容；其他方法、欄位、類別 metadata 仍驗收。清單外、typo、缺方法或核准 URL 均不豁免。JSON `methodDiffs` 記錄使用條目。初始兩條 producer 的 javap 值域證據見 `docs/combat-merge/deviations.md`。
+
+右側獨有的 private synthetic 方法，只有在原始完整右側 JAR 中無直接呼叫、method handle、bootstrap／遞迴 condy 參數參照，且無同名 LDC 字串時才列 `ORPHAN_IGNORED`。掃描不受 `--classes` 篩選影響；左側獨有、非合成、有參照或有同名字串仍保留差異。
+
+`SixthSelfTest` 接入 `selftest.sh`。有效 framed bytes 同時供 CLI 與隔離 ClassLoader 執行，涵蓋呼叫順序、分支反向、ISUB operands、callback 鎖界線、欄位／陣列讀值版本與 volatile 次數；另測標準／非標準 monitor handler、4096 上限、迴圈、方向性核准、未核准方法、LDC 字串及 method handle／直接參照。先前只差 NOP 或丟棄值的測試按新規格調整；需要測「未核准本體差異」的案例改為實際呼叫差異。既有 ablation 測試同時停用 paths，正式反例仍使用預設比較。
+
 ## T020i-3（Issue #153）
 
 預設新增以下正規化，所有轉換只在讀取的 ASM tree 進行，不改寫輸入 JAR：
@@ -7,7 +56,7 @@
 - `lambda$…$N` 用描述子與正規化內容的 SHA-256 識別，包含方法 metadata 與 try 表；相同內容的重複方法合併，呼叫及 bootstrap handle 同步引用內容識別。名稱前綴、數字與已遮罩的 SYNTHETIC 不影響識別。不同本體或不同呼叫目標仍 DIFF；循環 lambda 參照會報錯，避免遞迴失控。精確核准的原名仍固定，不會藉內容配對擴大授權。
 - invokedynamic 的 bootstrap 參數只對「同一類別、private、非 static、非建構子」的實例 method handle 統一 H5/H7；外部 owner、public、一般呼叫指令與 LDC handle 保持原狀。
 - Object 子類建構子的 `ALOAD 0; Object.<init>()V` 前移至開頭。直線前綴以堆疊追蹤確認 this 只作自身已宣告欄位的 PUTFIELD receiver，其餘計算不得使用 this；無法安全解析、分支或非法 this 用法報錯。非 Object 父類不套用。
-- 每類 `$SwitchMap$` 合成欄位依 class 欄位表首次出現的順序重命名，宣告及跨類別欄位引用／handle 共用映射。不是各方法各自重編，因此交換兩個 switch map 的使用仍 DIFF。
+- 名稱以 `$SwitchMap$` 開頭且描述子為 `[I` 的欄位使用本頁 T020i-12 的完整內容配對，宣告及跨類別欄位引用／handle 共用映射。
 - try 區間向內裁掉 LABEL／LINE／FRAME、NOP、GOTO、區域 xLOAD／xSTORE、數字／字串常數，以及方法內沒有 MONITORENTER 時的 return 系列。Class／MethodType／MethodHandle／condy 常數保留可能拋例外的邊界。空區間刪除，handler 不移動；未使用的標籤移除，同位置標籤共用識別。
 
 新增三個必須明確傳入的精確清單：
@@ -24,7 +73,7 @@
 
 layout 比較使用細分至指令的 CFG，收縮無註解的 GOTO 接邊，匹配指令、具分支角色的正常後繼、依表順序的例外後繼及 handler 型別／註解。保留不可達區塊並驗證全圖同構，區域槽位採全圖一對一映射、參數與 wide 別名固定；不忽略新增 ASTORE／ALOAD。搜尋超過上限或遇到舊式 JSR／RET 子程序時明確報錯。effects 與 layout／建構子例外重疊會拒絕。
 
-`effects` 額外允許對側存在 DUP 時，省去單次寫入、單次讀取、同一直線片段且中間無其他寫入的 ASTORE 暫存。讀取兩次、沒有對應 DUP、標註的 store 均不放寬。這仍是明確核准方法的摘要比較，不是任意堆疊等價證明。
+`effects` 的 ASTORE 搬移現由本頁 T020i-12 的完整資料流證明處理。核准摘要本身仍保留全部 ASTORE。
 
 JSON／Markdown 分列 `SAME_LAYOUT`、`DEVIATION` 與逐方法 `approvedMethods`，即使整類 DIFF 也列出。類別狀態優先序為 DIFF、DEVIATION、SAME_LAYOUT、SAME_EFFECTS、SAME；各方法結果完整保留。交集須加總這五項，不可只算舊三項。`AdvancedSelfTest` 已接入 `selftest.sh`；無法達成 #76 預期 0 DIFF 的固定輸入差異與規格衝突見 `docs/reports/issue-153.md`。
 
@@ -133,3 +182,57 @@ ASM 9.7 新增 `asm-analysis` 依賴，Maven 與無 Maven fallback 都有接線�
 第三次修正新增 CLI 回歸：expiry 四路匯合、STORE 收到合併值、Main 暫存＋layout 皆含左右交換與停用 transport 的 DIFF 對照；Main 未核准仍 DIFF。switch arm 互換、呼叫／欄位順序變更、額外前驅、消耗 stack 前綴、帶註解的 STORE 均有反例，並執行局部改寫後的正常／例外路徑。三套 Java 自測共 709 項（517＋73＋119）；固定四批重跑證據見 `docs/reports/issue-166.md`。
 
 診斷歸因可直接用 Java 的 `-Dsemanticdiff.disable=forward,try,transport,captures,webs,fields` 關閉指定規則；預設沒有關閉任何規則。此屬性僅供重跑前後對照，不是核准清單或忽略差異的入口。未知名稱不影響任何規則。
+
+## T020i-5 預設正規化（Issue #174）
+
+1. **例外涵蓋正規形**取代逐段 try 表比較（涵蓋 #153 邊界裁切與 #166 相鄰合併）。以有效指令位置識別 branch／handler 進入點，對每條可能拋例外指令列出依表順序涵蓋的 handler、例外型別及註解。未被涵蓋以空清單表示。區域變數讀寫、一般常數、stack shuffle、IINC、NOP、GOTO、條件跳轉、switch、非整數除法／餘數的算術與數值轉換不產生例外邊；無 MONITORENTER 的方法忽略 RETURN 系列覆蓋。IDIV／LDIV／IREM／LREM、欄位、呼叫、陣列、monitor、CHECKCAST 等仍保留。LDC 的 class／method handle／method type／condy 可能解析失敗，保守視為會拋例外。只用於 debug 的標籤不再改變指令身份。既有裁切／相鄰合併仍是前處理，但不再決定預設 try 相等性。
+2. **多餘 null 檢查**僅移除 `DUP` 或 `ALOAD n`＋精確 `Objects.requireNonNull(Object)`＋`POP`。來源分析保留參數、local、stack 複製的值身份；控制流程固定點以交集計算「所有路徑都已成功取用」的證據。GETFIELD／PUTFIELD、實例呼叫、陣列操作、monitor 的成功正常邊可建立證據，例外邊只傳入原證據，不能把失敗的 receiver 取用當成成功。重新執行 producer（迴圈）會清掉舊值證據；覆寫 local 後使用新的來源。多來源 union 不作相同值證明；建構子、JSR／RET、local 型別註解、檢查三條指令間的額外入口及指令註解均保守拒絕。帶訊息／Supplier overload 不移除。
+3. **區塊內表示式比較**：以分支目的地、分支後續及 handler 入口切基本區塊，按原順序比較每個區塊，沒有 CFG 重排或跨區塊值合併。入口 stack 依位置表示，入口 local 使用全方法一致的槽位雙射；每個非純運送操作成為依序編號的節點，包含有序 operands、正常分支、例外 handler。LOAD 使用當下 local 值，STORE／IINC 產生新的值版本，故跨覆寫取值仍不同。只有非參數 web 恰有一次 STORE、全部匹配 LOAD 位於同區塊且在 STORE 之後、沒有 IINC／註解／wide 重疊，才展開為被存入的表示式並移除運送。全方法掃描確保不存在區塊外或 handler 讀取；沒有讀取的 STORE 不刪。DUP／DUP2 展開同一節點並逐值核對複本數，出口 stack 保留順序，防止 predecessor／value 互換。其他運算、POP、呼叫、欄位讀寫、monitor 與會拋例外指令都保持順序；不合併兩次 GETFIELD。JSR／RET、未支援的 shuffle、不可達區塊與分析失敗回退既有比較。先嘗試原方法，再嘗試既有 #166 局部改寫的結果；不放寬原 singleton 多來源守門。
+
+新診斷開關為 `-Dsemanticdiff.disable=coverage,nonnull,blocks`。`transport` 也會停用新區塊證明；各條證明可能重疊，單項停用後仍成功不能據此認定該規則沒有作用。
+
+`--exceptions-exempt <file>` 預設不啟用。每行必須是 `類別#原名及完整描述子  # approved: https://核准連結`，可有空白行、整行註解及 UTF-8 BOM。僅忽略精確方法的 Exceptions（throws）屬性；指令、handler、方法存取、signature、註解及其他方法均照常比較。類別不在比較集合、方法任一側不存在、拼錯或缺少核准 URL 都報錯；不把 overload／其他合成方法視為核准對象。JSON 的 `exceptionsExempt` 與 Markdown 受控例外清單會列出實際使用條目。初始清單在 `docs/combat-merge/exceptions-exempt.txt`，只含 #62 核准的 `captureOutput`。
+
+`selftest.sh` 新增 `FifthSelfTest`。正反例的 framed class bytes 同時用於實際 CLI 比對與隔離 ClassLoader 執行；含 try gap／呼叫覆蓋／handler 與優先序、null 全路徑／缺路徑／覆寫／例外回復／迴圈新值、LOAD 跨 IINC／STORE、暫存複本數／副作用順序／live-out，以及多來源區塊入口但不合併來源的案例。既有 #153／#166 審查反例繼續執行。
+
+## T020i-7 正規化（Issue #186）
+
+- `$SwitchMap$` 以名稱前綴與 `[I` 描述子識別，兩側均依各宣告類別的欄位順序編號，與 ACC_SYNTHETIC 無關。欄位旗標沿用 #132 遮掉 SYNTHETIC；類別 metadata 仍須既有 metadata-exempt。一般名稱或其他描述子的欄位不改名，交換使用點或 enum／ordinal 對應仍為 DIFF。
+- 同一類別宣告的 private 實例方法，直接呼叫 INVOKESPECIAL／INVOKEVIRTUAL 統一為 INVOKESPECIAL；不處理建構子、static、非 private、其他 owner（包含 nestmate）。沿用原有 bootstrap handle 規則，不擴張方法解析範圍。
+- `RethrowHandlers` 在成對方法比較前，只對左側建立候選副本。handler 必須恰為 ASTORE t、ALOAD t、INVOKESTATIC H，可接不可達 ATHROW／RETURN／GOTO，或落至有正常入口的共用 continuation。入口／中間不得有其他跳轉或 handler 參照（包含同 offset 的別名 label）、指令／try 註解、其他 handler 涵蓋或普通 fallthrough。只移除 handler 及例外表項，保留受保護的業務指令；移除後的 goto-next 可消去。
+- H 必須已列入 `--extra-methods`，且為本類 private static、非 synchronized／native／abstract；保守保留跨類 helper，避免略過類別初始化及解析副作用。工具實際讀取 H 本體，要求有效指令只有 ALOAD 0、零至多個 CHECKCAST、ATHROW。每個 cast 都須沿已知 superclass 證明可涵蓋 catch 型別，不能把 IOException 改成 ClassCastException；缺少型別資料則拒絕。
+- 依 #174 的 harmless／逐指令涵蓋規則，先以有序的可能拋例外操作建立左右對應；任一操作無法精確對應，或被移除 try 涵蓋的對應右側操作仍有任何 handler，就保留原方法。其他區段的右側 handler 不受影響。候選仍須通過完整比較或原先已核准的 effects 規則；核准 helper 存在本身不代表 handler 可移除，也不新增任何核准條目。
+
+診斷消融開關：`-Dsemanticdiff.disable=private-calls`、`-Dsemanticdiff.disable=rethrow`。改寫只在比較器記憶體副本，不輸出 class。`SeventhSelfTest` 已接入 `selftest.sh`；四個指定 handler 反例以同一份 framed JAR 分別交 CLI 與 platform-parent 隔離 ClassLoader，核對例外型別、物件 identity、記錄計數與正常返回。
+
+## T020i-8 後備證明（Issue #203）
+
+三項預設開啟，不新增逐方法豁免：
+
+1. **Lambda 呼叫點配對**：保留線性內容雜湊優先規則；未配上的 private lambda，從相同外層方法中依 INVOKEDYNAMIC 次序對應。bootstrap、SAM 名稱／型別、呼叫描述子、實作 handle 種類與描述子均須相同；捕獲參數先套用 #166 的既有排列規則。只建立候選，不把呼叫點次序本身當成本體相等的證明。內層先走完整比較流程（線性、所有既有正規化、SAME_PATHS、SAME_CFG），成功後才給兩側共同 handle 身分。外層方法仍須完整比較。候選雙射、共用 lambda 的全部呼叫點涵蓋、巢狀相依任一失敗，整個類別的此次候選交易回復原狀。已經由內容雜湊證明相等的共用方法不重新參與候選雙射。循環／無法唯一解析不作猜測；核准的原名方法不改名。
+2. **CFG 後備**：線性與 paths 未成功時，從入口依帶標籤的邊建立唯一雙向對應。條件 opcode 固定方向並同步互換 true／false 後繼；switch 保留 key／default 次序；僅含無註解 GOTO 的區塊收掉。例外邊仍逐事件保留 handler 型別、註解及優先次序。區塊內沿用 #174 的值來源、STORE／IINC 版本與有序操作，並比對出口 stack；不依文字相似度搜尋區塊，不列舉路徑，故可處理一般迴圈與超過 4096 路徑的方法。不可達區塊、GOTO-only cycle、JSR／RET、未支援 shuffle／metadata 與分析失敗均拒絕這項後備。
+3. **可見性 bridge**：僅左側 `0x1041`、public 本類、依序載入 this／參數、INVOKESPECIAL 直接父類同名同描述子及對應 RETURN；本類左側恰一份宣告、右側無宣告。兩側 classpath 都必須解析到同一非 public 祖先，且為可繼承的實例方法。左側祖先方法必須 public；右側若非 public，只在該祖先方法已有精確 `access-widen` 核准時接受（#72 的 `NativeDeDeletionState#get_showId()I`），仍拒絕 private／static／abstract。不擴大核准範圍。泛型／協變轉換、CHECKCAST、不同目標或 public 宣告祖先都保留差異。
+
+CFG 的純運送處理不再要求 DUP 次數相同：每個實際使用點的運算元來源、寫入事件與出口 stack 已逐一相同時，DUP 與重新載入未覆寫 local 可相等。跨區塊只新增一種精確別名消去：連續 `DUP[2]; STORE a; STORE b`，兩槽皆非參數、全方法唯一寫入、所有讀取由該 STORE 唯一定義、無 IINC／註解／wide 重疊，才能把 b 的讀取改成 a 並刪除冗餘保存。沒有跨分支來源 union 或任意 local 合併；欄位讀取、呼叫、monitor、POP 及會丟例外的操作仍是有序事件。
+
+第 2 次修正明確記錄每個區塊的入口 stack（位置與 JVM category 寬度）。只有入口與出口表示式逐項完全相同的 GOTO 區塊才可收縮；`ILOAD n; GOTO` 會把 local 推到 stack，不能當作空區塊。即使出口深度相同，值來源不同也不能收縮。非空 stack 上的純 GOTO 則可安全保留原值傳遞。
+
+完成入口確定的區塊雙射後，再核對每個入口的全部 predecessor：正常邊以「前驅區塊＋正規化後的分支位置」為鍵，每個 stack 位置指向前驅區塊內的表示式 DAG；event 節點包含已比較的 opcode、有序 operands 與值來源，繼承值指向前驅入口的位置。例外邊另含「事件位置＋handler 優先序」，清空正常 stack，只傳入該事件拋出的單一例外物件。兩邊的前驅鍵、每條邊的 stack 深度、category 寬度與表示式都必須一致；不能以無序來源集合合併不同分支。迴圈以相同的邊界方程核對回邊，無須展開無限表示式。入口／邊不相容或無法建立證明，一律拒絕 SAME_CFG。
+
+新增 stack 回歸用同一份有效 class 在隔離 ClassLoader 執行與 CLI 比較，包含常數三元式、local＋GOTO、分支值互換、兩側有效匯合點的深度不同、迴圈累積值、long 寬值，並雙向直接測試 CFG。單一方法的同一匯合點若收到不同 stack 深度，JVM 會拒絕，因此深度反例使用兩個各自有效、回傳行為不同的方法。
+
+報表新增 `SAME_CFG`、`LAMBDA_PAIRED_BY_CALLSITE`、`VISIBILITY_BRIDGE`，逐方法列於 `methodResults`，JSON 的 `proofMethodCounts` 及 Markdown 方法表另列總數。類別狀態仍先顯示 DIFF／DEVIATION 等優先結果；例如含已核准方法差異的類別可為 DEVIATION，同時列出 169 個 VISIBILITY_BRIDGE，不能把類別數當方法數。
+
+消融開關為 `-Dsemanticdiff.disable=callsites,cfg,visibility`；`-Dsemanticdiff.traceCfg=true` 可輸出第一個不一致區塊。舊規則消融測試會同時關閉可獨立證明的 CFG 後備。`EighthSelfTest` 已接入 `selftest.sh`，用同一份 framed JAR 交 CLI 與 platform-parent 隔離 ClassLoader，包含呼叫點交換／共用不一致／巢狀不同、迴圈分支／呼叫／回邊不同、例外差異、別名覆寫，以及 bridge 的目標、cast、public 祖先反射與子類派送差異。
+
+## T020i-11 無作用載入與相同區塊（Issue #254）
+
+兩側預設套用，不需核准清單，僅處理記憶體中的比較副本。
+
+- `DiscardedLoads` 移除真正相鄰、沒有指令註解的 `xLOAD; POP[2]`、純常數載入後 `POP[2]`、`DUP; POP`。category 寬度必須完全相符，不能讓 `POP2` 多丟掉原 stack 的值；任何 label 都阻止配對，因此不跨跳轉入口或 try 邊界。只接受數值、字串與 null 常數；class／MethodType／MethodHandle／ConstantDynamic 的解析或 bootstrap 可能有副作用，均保留。呼叫、欄位讀取、配置、cast 的結果即使被 POP 也不刪除。
+- 既有純轉拋 handler 先辨識鎖暫存，再做通用載入清理，避免清理掉 #216 所需的證據。其他 try 正規化、local webs 及比較流程維持原有檢查。
+- `CfgComparison` 保留原有 CFG 證明；失敗時先收縮合法 GOTO，再反覆合併完全相同的正規化區塊。鍵包含有序事件、operands、正常後繼、每個事件的有序例外後繼、入口／出口 stack 與複本資訊。#174 區塊內暫存已在建立 view 時消除，活躍 local 不任意改名。
+- 非空入口 stack 逐前驅追蹤；所有進入邊必須證明同一來源或相同純常數，才可合併。來源以生產區塊限定，不能只比 `event[0]`／`stack[0]` 或無序來源集合。無法解析的 phi、循環與超過 256 層的 transport 鏈保守拒絕合併。重新導向所有正常／例外前驅，直到固定點；完成後仍執行原有同構與跨邊 stack 關聯檢查。
+- javac 可能把 finally 內嵌在直線區塊末端。必要時先在空 stack 的 try 邊界、再在其他空 stack 指令邊界切成較小區塊，重新做相同證明；不移動操作，不刪例外邊。原有 view 優先，保留 #174 的區塊暫存證明。
+
+消融開關：`-Dsemanticdiff.disable=discarded-loads`、`-Dsemanticdiff.disable=cfg-merge`。不提高 paths 的 4096 上限。`EleventhSelfTest` 已接入 `selftest.sh`；同一份 framed JAR 供 CLI、直接 CFG 與 platform-parent 隔離 ClassLoader 使用，包含副作用呼叫後 POP、後繼不同、try 覆蓋不同、入口 stack 值不同的實際行為反例，及固定點、內嵌 finally、區塊暫存與相同非空 stack 的正例。

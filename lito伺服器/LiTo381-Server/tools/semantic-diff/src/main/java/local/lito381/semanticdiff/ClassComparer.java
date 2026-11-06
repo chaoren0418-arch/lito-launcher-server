@@ -99,6 +99,7 @@ final class ClassComparer {
             ClassNode left, ClassNode right, ClassNode allowRight, Set<String> allowedMethodKeys,
             JarIndex leftJar, JarIndex rightJar, JarIndex allowJar, Set<String> effectsMethods,
             Set<String> extraMethods, boolean metadataExempt) {
+        FirstDiff methods = compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods, extraMethods);
         FirstDiff d;
         int ignoredAccess = Opcodes.ACC_SUPER | (metadataExempt ? Opcodes.ACC_SYNTHETIC : 0);
         d = cmp("access", hex(left.access & ~ignoredAccess), hex(right.access & ~ignoredAccess));
@@ -122,7 +123,8 @@ final class ClassComparer {
             if (d != null) {
                 return d;
             }
-            d = cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
+            d = leftJar.enclosingMethodExempt.contains(left.name) ? null
+                    : cmp("outerMethod", str(left.outerMethod) + str(left.outerMethodDesc),
                     str(right.outerMethod) + str(right.outerMethodDesc));
             if (d != null) {
                 return d;
@@ -145,7 +147,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        d = cmp("innerClasses", innerClasses(left, metadataExempt), innerClasses(right, metadataExempt));
+        d = cmp("innerClasses", innerClasses(left, metadataExempt, leftJar.innerAccessWiden, right), innerClasses(right, metadataExempt, leftJar.innerAccessWiden, null));
         if (d != null) {
             return d;
         }
@@ -157,7 +159,7 @@ final class ClassComparer {
         if (d != null) {
             return d;
         }
-        return compareMethods(left, right, allowRight, allowedMethodKeys, leftJar, rightJar, allowJar, effectsMethods, extraMethods);
+        return methods;
     }
 
     private static FirstDiff compareFields(ClassNode left, ClassNode right, JarIndex leftJar, JarIndex rightJar) {
@@ -201,14 +203,21 @@ final class ClassComparer {
             JarIndex rightJar,
             JarIndex allowJar,
             Set<String> effectsMethods, Set<String> extraMethods) {
+        LambdaCallsites.pair(left,right,leftJar,rightJar);
         Map<String, MethodNode> lmap = methodMap(left, leftJar);
         Map<String, MethodNode> rmap = methodMap(right, rightJar);
+        Map<String, String> renames = rightJar.privateRenames.getOrDefault(right.name, Map.of());
+        for (var rename : renames.entrySet()) {
+            MethodNode method = rmap.remove(rename.getKey());
+            if (method != null) rmap.put(rename.getValue(), method);
+        }
         Map<String, MethodNode> amap =
                 allowRight == null || allowJar == null ? Map.of() : methodMap(allowRight, allowJar);
         Set<String> keys = new TreeSet<>(unionKeys(lmap, rmap));
         // CLI validates these canonical keys against allow-right before comparison.
         // Include methods absent from BOTH left and right: these are missing ports.
         keys.addAll(allowedMethodKeys);
+        FirstDiff first = null;
         for (String key : keys) {
             MethodNode lm = lmap.get(key);
             MethodNode fromRight = rmap.get(key);
@@ -229,26 +238,46 @@ final class ClassComparer {
                 rightLabel = "right";
             }
             if (lm == null) {
-                return FirstDiff.of("method", key, null, "only " + rightLabel);
+                if (!allow && !rJar.privateRenameTargets.getOrDefault(right.name, Set.of()).contains(rm.name + rm.desc)
+                        && rJar.orphan(rm)) {
+                    rJar.result(rm,"ORPHAN_IGNORED","private synthetic; no JAR references or matching LDC string");
+                    continue;
+                }
+                rJar.result(rm,"ONLY_RIGHT","only " + rightLabel);
+                if(first==null)first=FirstDiff.of("method",key,null,"only "+rightLabel);
+                continue;
             }
             if (rm == null) {
+                if (!allow && VisibilityBridge.matches(left,right,lm,leftJar,rightJar)) {
+                    leftJar.result(lm,"VISIBILITY_BRIDGE","javac bridge to inherited public method declared by non-public ancestor");
+                    continue;
+                }
                 if (!allow && leftJar.approved(leftJar.deviations, lm)
                         && right.methods.stream().noneMatch(m -> m.name.equals(lm.name) && m.desc.equals(lm.desc))) continue;
                 if (!allow && ((extraMethods.contains(lm.name + lm.desc)
                         && right.methods.stream().noneMatch(m -> m.name.equals(lm.name) && m.desc.equals(lm.desc)))
                         || implicitConstructor(left, right, lm))) continue;
-                return FirstDiff.of("method", key, null, "only left");
+                leftJar.result(lm,"ONLY_LEFT","only left");
+                if(first==null)first=FirstDiff.of("method",key,null,"only left");
+                continue;
             }
             if (effectsMethods.contains(rm.name + rm.desc) && !lm.name.equals(rm.name)) {
                 return FirstDiff.of("method", key, null, "effects approval requires exact original method name on both sides");
             }
+            JarIndex.MethodResult pairing=leftJar.methodResults.getOrDefault(left.name,Map.of()).get(lm.name+lm.desc);
             FirstDiff d = compareMethod(key, lm, rm, leftJar, rJar,
                     effectsMethods.contains(lm.name + lm.desc) && effectsMethods.contains(rm.name + rm.desc));
-            if (d != null) {
-                return d;
+            if (!allow && key.equals(renames.get(rm.name + rm.desc))) {
+                leftJar.result(lm, d == null ? "DEVIATION" : "DIFF",
+                        "private-rename " + lm.name + lm.desc + " -> " + rm.name + rm.desc
+                        + (d == null ? "; private shadow guards and full body comparison passed" : "; " + d.oneLine()));
             }
+            if(d==null && leftJar.callsiteIds.containsKey(left.name+"#"+lm.name+lm.desc))
+                leftJar.result(lm,"LAMBDA_PAIRED_BY_CALLSITE",pairing!=null&&pairing.status().equals("LAMBDA_PAIRED_BY_CALLSITE")
+                        ?pairing.detail():rm.name+rm.desc+"; full body comparison passed");
+            if (d != null && first == null) first = d;
         }
-        return null;
+        return first;
     }
 
     private static boolean implicitConstructor(ClassNode left, ClassNode right, MethodNode method) {
@@ -278,7 +307,7 @@ final class ClassComparer {
                 && "()V".equals(call.desc) && !call.itf && code.get(2).getOpcode() == Opcodes.RETURN;
     }
 
-    static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
+    private static FirstDiff methodMetadata(String key, MethodNode lm, MethodNode rm,
             JarIndex leftJar, JarIndex rJar, boolean effects) {
         int leftAccess = lm.access;
         if (leftJar.approved(leftJar.accessWiden, lm) && lm.name.equals(rm.name)
@@ -291,7 +320,8 @@ final class ClassComparer {
         if (d != null) {
             return d.withMember("method", key);
         }
-        d = cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
+        d = leftJar.approved(leftJar.exceptionsExempt, lm) && lm.name.equals(rm.name) ? null
+                : cmp("method " + key + " exceptions", joinSorted(lm.exceptions), joinSorted(rm.exceptions));
         if (d != null) {
             return d.withMember("method", key);
         }
@@ -309,15 +339,47 @@ final class ClassComparer {
         if (d != null) {
             return d.withMember("method", key);
         }
+        return null;
+    }
+
+    static FirstDiff compareMethod(String key, MethodNode lm, MethodNode rm,
+            JarIndex leftJar, JarIndex rJar, boolean effects) {
+        lm = RethrowHandlers.normalize(lm, rm, leftJar, rJar);
+        MethodNode[] virtual = VirtualCalls.normalize(lm, rm, leftJar, rJar);
+        lm = virtual[0]; rm = virtual[1];
+        FirstDiff d = compareLinear(key,lm,rm,leftJar,rJar,effects);
+        if (d == null) return null;
+        if (leftJar.approved(leftJar.methodDiffs,lm) && lm.name.equals(rm.name) && lm.desc.equals(rm.desc)) {
+            leftJar.result(lm,"DEVIATION",d.oneLine()+"\nLEFT\n"+methodIdentity(lm,leftJar)+"\nRIGHT\n"+methodIdentity(rm,rJar));
+            return null;
+        }
+        if (methodMetadata(key,lm,rm,leftJar,rJar,effects)==null) {
+            PathComparison.Result paths=PathComparison.compare(lm,rm,leftJar,rJar);
+            if(paths.same()) { leftJar.result(lm,"SAME_PATHS",paths.reason()); return null; }
+            CfgComparison.Result cfg=CfgComparison.compare(lm,rm,leftJar,rJar);
+            if(cfg.same()) { leftJar.result(lm,"SAME_CFG",cfg.reason()); return null; }
+            d=FirstDiff.of("method",key,d.insnIndex,d.detail+"; "+paths.reason()+"; "+cfg.reason());
+        }
+        leftJar.result(lm,"DIFF",d.oneLine());
+        return d;
+    }
+
+    private static FirstDiff compareLinear(String key, MethodNode lm, MethodNode rm,
+            JarIndex leftJar, JarIndex rJar, boolean effects) {
+        FirstDiff d = methodMetadata(key,lm,rm,leftJar,rJar,effects);
+        if(d != null) return d;
         if (!leftJar.approved(leftJar.layouts,lm) && instructions(lm,leftJar).equals(instructions(rm,rJar))
                 && tryCatch(lm,leftJar).equals(tryCatch(rm,rJar))) return null;
         if (TransportComparison.same(lm, rm, leftJar, rJar, leftJar.approved(leftJar.layouts, lm))) return null;
+        if (BlockExpressions.same(lm, rm, leftJar, rJar)) return null;
         if (effects) {
+            // Transport is accepted only with the ordered operand/exception proof.
+            // A DUP count cannot justify deleting an arbitrary subset of ASTOREs.
             // Keep the existing explicitly approved effects heuristic on physical slots.
             // The default data-flow proof above already used the normalized webs.
             lm = leftJar.beforeWebs.getOrDefault(lm,lm);
             rm = rJar.beforeWebs.getOrDefault(rm,rm);
-            d = cmpList("effects sequence", effectsSequence(lm, leftJar, tempStores(lm, rm)), effectsSequence(rm, rJar, tempStores(rm, lm)));
+            d = cmpList("effects sequence", effectsSequence(lm, leftJar, Set.of()), effectsSequence(rm, rJar, Set.of()));
             if (d == null) d = cmp("effects constants", constants(lm, leftJar).toString(), constants(rm, rJar).toString());
             if (d == null) d = cmpList("effects tryCatch", catchTypes(lm, leftJar), catchTypes(rm, rJar));
             if (d == null) d = cmp("effects branches", Integer.toString(branches(lm)), Integer.toString(branches(rm)));
@@ -360,38 +422,18 @@ final class ClassComparer {
         return null;
     }
 
+    private static boolean innerWider(int left, int right) {
+        int l=left&7, r=right&7;
+        return l==r || r==Opcodes.ACC_PRIVATE && Set.of(0,Opcodes.ACC_PROTECTED,Opcodes.ACC_PUBLIC).contains(l)
+                || r==Opcodes.ACC_PROTECTED && l==Opcodes.ACC_PUBLIC;
+    }
+
     private static boolean wider(int left, int right) {
         int l = left & 7, r = right & 7;
         if (!Set.of(0,1,2,4).contains(l) || !Set.of(0,1,2,4).contains(r)) return false;
         return l == Opcodes.ACC_PUBLIC || l == r
                 || r == Opcodes.ACC_PRIVATE && (l == 0 || l == Opcodes.ACC_PROTECTED)
                 || r == 0 && l == Opcodes.ACC_PROTECTED;
-    }
-
-    private static Set<AbstractInsnNode> tempStores(MethodNode m, MethodNode other) {
-        long dups = java.util.Arrays.stream(other.instructions.toArray()).filter(n -> n.getOpcode() == Opcodes.DUP).count();
-        Set<AbstractInsnNode> result = Collections.newSetFromMap(new IdentityHashMap<>());
-        if (dups == 0) return result;
-        for (AbstractInsnNode n : m.instructions) if (n instanceof VarInsnNode v && v.getOpcode() == Opcodes.ASTORE) {
-            if (n.visibleTypeAnnotations != null || n.invisibleTypeAnnotations != null) continue;
-            int writes = 0, reads = 0; AbstractInsnNode read = null;
-            for (AbstractInsnNode x : m.instructions) {
-                if (x instanceof VarInsnNode t && t.var == v.var) {
-                    if (t.getOpcode() == Opcodes.ASTORE) writes++;
-                    else if (t.getOpcode() == Opcodes.ALOAD) { reads++; read = t; }
-                    else { writes += 2; }
-                }
-                if (x instanceof IincInsnNode t && t.var == v.var) writes += 2;
-            }
-            if (writes != 1 || reads != 1) continue;
-            AbstractInsnNode x = n.getNext();
-            while (x != null && x != read && !(x instanceof LabelNode) && !(x instanceof JumpInsnNode)
-                    && !(x instanceof TableSwitchInsnNode) && !(x instanceof LookupSwitchInsnNode)
-                    && !(x instanceof IincInsnNode) && !(x.getOpcode() >= Opcodes.ISTORE && x.getOpcode() <= Opcodes.ASTORE)
-                    && x.getOpcode() != Opcodes.PUTFIELD && x.getOpcode() != Opcodes.PUTSTATIC) x = x.getNext();
-            if (x == read) result.add(n);
-        }
-        return result.size() <= dups ? result : Set.of();
     }
 
     static String methodIdentity(MethodNode m, JarIndex jar) {
@@ -420,7 +462,7 @@ final class ClassComparer {
             return map;
         }
         for (FieldNode field : node.fields) {
-            map.put(jar.remapField(node.name, field.name) + ":" + field.desc, field);
+            map.put(jar.remapField(node.name, field.name, field.desc) + ":" + field.desc, field);
         }
         return map;
     }
@@ -475,6 +517,7 @@ final class ClassComparer {
         Set<Integer> emitted = new java.util.HashSet<>();
         for (AbstractInsnNode insn : method.instructions.toArray()) {
             if (insn instanceof LabelNode label) {
+                if (FourthNormalizations.enabled("coverage")) continue;
                 if (emitted.add(labels.get(label))) out.add("LABEL " + labelId(labels, label));
                 continue;
             }
@@ -487,6 +530,23 @@ final class ClassComparer {
     }
 
     static List<String> tryCatch(MethodNode method, JarIndex jar) {
+        if (FourthNormalizations.enabled("coverage")) {
+            List<String> out = new ArrayList<>();
+            Map<LabelNode,Integer> ids = labelIds(method);
+            boolean monitor = java.util.Arrays.stream(method.instructions.toArray()).anyMatch(n -> n.getOpcode() == Opcodes.MONITORENTER);
+            int position = 0;
+            for (AbstractInsnNode n : method.instructions) if (n.getOpcode() >= 0) {
+                if (!Normalizations.harmless(n, monitor)) {
+                    List<String> handlers = new ArrayList<>();
+                    for (TryCatchBlockNode t : method.tryCatchBlocks)
+                        if (position >= ids.get(t.start) && position < ids.get(t.end))
+                            handlers.add(ids.get(t.handler) + ":" + graphCatch(t, jar));
+                    if (!handlers.isEmpty()) out.add(position + ":" + handlers);
+                }
+                position++;
+            }
+            return out;
+        }
         Map<LabelNode, Integer> labels = labelIds(method);
         List<String> out = new ArrayList<>();
         if (method.tryCatchBlocks == null) {
@@ -511,6 +571,14 @@ final class ClassComparer {
 
     private static Map<LabelNode, Integer> labelIds(MethodNode method) {
         Map<LabelNode, Integer> ids = new IdentityHashMap<>();
+        if (FourthNormalizations.enabled("coverage")) {
+            int position = 0;
+            for (AbstractInsnNode n : method.instructions) {
+                if (n instanceof LabelNode l) ids.put(l, position);
+                if (n.getOpcode() >= 0) position++;
+            }
+            return ids;
+        }
         int next = 0;
         if (method.instructions != null) {
             boolean newPosition = true;
@@ -553,7 +621,7 @@ final class ClassComparer {
             return op + " " + n.desc;
         }
         if (insn instanceof FieldInsnNode n) {
-            return op + " " + jar.fieldOwner(n.owner, n.name, n.desc, n.getOpcode()) + "." + jar.remapField(n.owner, n.name) + ":" + n.desc;
+            return op + " " + jar.fieldOwner(n.owner, n.name, n.desc, n.getOpcode()) + "." + jar.remapField(n.owner, n.name, n.desc) + ":" + n.desc;
         }
         if (insn instanceof MethodInsnNode n) {
             return op + " " + n.owner + "." + jar.remapMethod(n.owner, n.name, n.desc) + n.desc
@@ -655,7 +723,7 @@ final class ClassComparer {
             int op = insn.getOpcode();
             String effect = null;
             if (insn instanceof FieldInsnNode n) {
-                effect = opcodeName(op) + " " + n.owner + "." + jar.remapField(n.owner, n.name);
+                effect = opcodeName(op) + " " + n.owner + "." + jar.remapField(n.owner, n.name, n.desc);
             } else if (insn instanceof MethodInsnNode || insn instanceof InvokeDynamicInsnNode
                     || op == Opcodes.NEW || op == Opcodes.CHECKCAST || op == Opcodes.INSTANCEOF) {
                 // invokedynamic has no owner: retain name/descriptor, bootstrap handle and arguments.
@@ -727,7 +795,7 @@ final class ClassComparer {
     private static String handle(Handle handle, JarIndex jar) {
         return "H" + handle.getTag()
                 + " " + handle.getOwner()
-                + "." + (handle.getTag() <= Opcodes.H_PUTSTATIC ? jar.remapField(handle.getOwner(), handle.getName())
+                + "." + (handle.getTag() <= Opcodes.H_PUTSTATIC ? jar.remapField(handle.getOwner(), handle.getName(), handle.getDesc())
                         : jar.remapMethod(handle.getOwner(), handle.getName(), handle.getDesc()))
                 + handle.getDesc()
                 + (handle.isInterface() ? " itf" : "");
@@ -911,16 +979,22 @@ final class ClassComparer {
         return sb.toString();
     }
 
-    private static String innerClasses(ClassNode node, boolean metadataExempt) {
+    private static String innerClasses(ClassNode node, boolean metadataExempt, Set<String> approved, ClassNode target) {
         if (node.innerClasses == null || node.innerClasses.isEmpty()) {
             return "";
         }
         List<String> rows = new ArrayList<>();
         for (InnerClassNode inner : node.innerClasses) {
-            if (!node.name.equals(inner.name) && !node.name.equals(inner.outerName)) continue;
+            if (!node.name.equals(inner.name) && !node.name.equals(inner.outerName) && !approved.contains(inner.name)) continue;
             if (metadataExempt && node.name.equals(inner.name)) continue;
+            int access = inner.access;
+            if (target != null && approved.contains(inner.name)) {
+                for (InnerClassNode r : target.innerClasses) if (Objects.equals(inner.name,r.name)
+                        && Objects.equals(inner.outerName,r.outerName) && Objects.equals(inner.innerName,r.innerName)
+                        && innerWider(access,r.access)) { access = (access & ~7) | (r.access & 7); break; }
+            }
             rows.add(str(inner.name) + "|" + str(inner.outerName) + "|" + str(inner.innerName)
-                    + "|" + hex(inner.access));
+                    + "|" + hex(access));
         }
         Collections.sort(rows);
         return String.join("; ", rows);

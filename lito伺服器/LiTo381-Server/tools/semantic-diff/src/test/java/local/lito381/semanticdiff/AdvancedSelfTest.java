@@ -40,7 +40,8 @@ public final class AdvancedSelfTest implements Opcodes {
         unsafe.methods.get(0).instructions.insert(new MethodInsnNode(INVOKEVIRTUAL,"Fixture","bad","()V",false));
         unsafe.methods.get(0).instructions.insert(new VarInsnNode(ALOAD,0));
         rejected("unsafe-super",unsafe,ctor("java/lang/Object",false,false),null,null);
-        check("switch-renamed",switches("one","two",false),switches("red","blue",false),"SAME");
+        // A field name alone supplies no enum-map content proof (#259).
+        check("switch-unproven-renamed",switches("one","two",false),switches("red","blue",false),"DIFF");
         check("switch-swapped",switches("one","two",true),switches("red","blue",false),"DIFF");
         check("access-wide",plain(ACC_PUBLIC),plain(ACC_PROTECTED),"SAME","--access-widen","Fixture#m()V");
         check("access-unlisted",plain(ACC_PUBLIC),plain(ACC_PROTECTED),"DIFF");
@@ -49,7 +50,7 @@ public final class AdvancedSelfTest implements Opcodes {
         check("extra-deviation",extra(true),extra(false),"DEVIATION","--deviations","Fixture#extra()V");
         check("extra-unlisted",extra(true),extra(false),"DIFF");
         check("extra-reverse",extra(false),extra(true),"DIFF");
-        ClassNode changed=extra(true); changed.methods.get(1).instructions.insert(new InsnNode(NOP));
+        ClassNode changed=extra(true); changed.methods.get(1).instructions.insert(new MethodInsnNode(INVOKESTATIC,"Sink","changed","()V",false));
         check("deviation-shared",changed,extra(true),"DIFF","--deviations","Fixture#extra()V");
         check("trim-return",caught(true,false,false),caught(false,false,false),"SAME");
         check("trim-invoke",caught(true,true,false),caught(false,true,false),"DIFF");
@@ -58,7 +59,7 @@ public final class AdvancedSelfTest implements Opcodes {
         ClassNode empty2=copy(empty); empty2.methods.get(0).tryCatchBlocks.clear();
         check("trim-empty",empty,empty2,"SAME");
         check("layout-reordered",layout(false,false),layout(true,false),"SAME_LAYOUT","--layout-methods","Fixture#m()V");
-        check("layout-unlisted",layout(false,false),layout(true,false),"DIFF");
+        check("layout-unlisted",layout(false,false),layout(true,false),"SAME_PATHS");
         check("layout-exception",layout(false,false),layout(true,true),"DIFF","--layout-methods","Fixture#m()V");
         ClassNode changedCall=layout(true,false); for(AbstractInsnNode n:changedCall.methods.get(0).instructions) if(n instanceof MethodInsnNode c && c.name.equals("cleanup")) c.name="different";
         check("layout-instruction",layout(false,false),changedCall,"DIFF","--layout-methods","Fixture#m()V");
@@ -69,11 +70,15 @@ public final class AdvancedSelfTest implements Opcodes {
         check("layout-unreachable-different",unreach,unreach2,"DIFF","--layout-methods","Fixture#m()V");
         ClassNode legacy=plain(ACC_PUBLIC); legacy.methods.get(0).instructions.insert(new VarInsnNode(RET,1));
         rejected("layout-legacy-ret",legacy,legacy,"--layout-methods","Fixture#m()V");
-        check("dup-temp",temp(true,1),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
+        // Isolate the older effects proof from the new discarded LOAD/POP rule.
+        System.setProperty("semanticdiff.disable", "discarded-loads");
+        try {
+        check("dup-temp",temp(true,1),temp(false,1),"SAME_PATHS","--effects-methods","Fixture#m()V");
         // #166 generalizes transport: two reads correspond to DUP's two copies.
         check("dup-temp-twice",temp(true,2),temp(false,1),"SAME_EFFECTS","--effects-methods","Fixture#m()V");
         check("dup-temp-twice-default",temp(true,2),temp(false,1),"SAME");
-        check("dup-temp-unapproved",temp(true,1),temp(false,1),"DIFF");
+        check("dup-temp-unapproved",temp(true,1),temp(false,1),"SAME_PATHS");
+        } finally { System.clearProperty("semanticdiff.disable"); }
         check("ctor-order",ctor("Parent",false,false),ctor("Parent",true,false),"DEVIATION","--deviations","ctor-prologue-order Fixture#<init>(I)V");
         ctorLocalWrites();
         ctorFieldOrder();
